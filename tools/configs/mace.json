@@ -2,67 +2,455 @@
  "asic": "mace",
  "title": "MACE (O2 I/O ASIC)",
  "mode": "spec-backed",
- "status": "stub: census not run",
+ "status": "census run",
  "spec": "MACE I/O ASIC Specification, chip revision 2.0",
  "images": [
-  {
-   "label": "ip27-unix",
-   "dis": "work/dis/ip27-unix.s",
-   "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
-   "path": "root/IP27/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-unix",
-   "dis": "work/dis/ip30-unix.s",
-   "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
-   "path": "root/IP30/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-prom",
-   "dis": "work/dis/ip30-prom.s",
-   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
-   "path": "root/firmware/IP30prom.bin",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
-   "arch": "mips:isa64",
-   "split": "jr31"
-  },
-  {
-   "label": "ip35-kernel-o",
-   "dis": "work/dis/ip35-kernel-o.s",
-   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
-   "kind": "elf",
-   "reloc": true,
-   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
-  },
-  {
-   "label": "ip35-prom",
-   "dis": "work/dis/ip35-prom.s",
-   "path": "root/firmware/ip35prom.img",
-   "kind": "promgen64",
-   "segment": "ip35prom",
-   "vma": "0xc00000001fc00000",
-   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time",
-   "split": "jr31"
-  },
   {
    "label": "ip32-kernel-o",
    "dis": "work/dis/ip32-kernel-o.s",
    "path": "root/IP32/usr/cpu/sysgen/IP32boot/kernel.o",
    "kind": "elf",
    "reloc": true,
-   "note": "IRIX 6.5.30 IP32 kernel object"
+   "note": "IRIX 6.5.30 IP32 kernel object (machine-dependent startup, interrupt, RTC and error code)",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
   },
   {
-   "label": "ip32-prom",
-   "dis": "work/dis/ip32-prom.s",
-   "path": "root/firmware/ip32prom.image",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
-   "split": "jr31",
-   "note": "IP32 PROM flat image; load address assumed from the reset vector, not yet read from the image"
+   "label": "ip32-mace-o",
+   "dis": "work/dis/ip32-mace-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/mace.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 MACE ISA interrupt dispatch object",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-pcimh-o",
+   "dis": "work/dis/ip32-pcimh-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/pcimh.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 MACE PCI host object (pio accessors, PCI error handler, configuration cycles)",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-ecplp-o",
+   "dis": "work/dis/ip32-ecplp-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/ecplp.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 parallel-port (ECP) driver object",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-a3-dd-o",
+   "dis": "work/dis/ip32-a3-dd-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/a3_dd.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 audio driver object",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-mvp-o",
+   "dis": "work/dis/ip32-mvp-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/mvp.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 object that touches the MACE window",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-rad-dd-o",
+   "dis": "work/dis/ip32-rad-dd-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/rad_dd.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 object that touches the MACE window",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-mhpckm-o",
+   "dis": "work/dis/ip32-mhpckm-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/mhpckm.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 PS/2 keyboard and mouse object",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-if-me-o",
+   "dis": "work/dis/ip32-if-me-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/if_me.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 on-board Ethernet driver object",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-if-ecf-o",
+   "dis": "work/dis/ip32-if-ecf-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/if_ecf.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 object that touches the MACE window",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-if-rns-o",
+   "dis": "work/dis/ip32-if-rns-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/if_rns.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 object that touches the MACE window",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-sio-ti16550-o",
+   "dis": "work/dis/ip32-sio-ti16550-o.s",
+   "path": "root/IP32/members/sio_ti16550.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 16550 serial driver member",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-symmon",
+   "dis": "work/dis/ip32-symmon.s",
+   "path": "root/sbin/stand/symmon.IP32",
+   "kind": "elf",
+   "note": "IRIX 6.5.30 IP32 symbol monitor, linked, symbols present",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-ide",
+   "dis": "work/dis/ip32-ide.s",
+   "path": "root/sbin/stand/ide.IP32",
+   "kind": "elf",
+   "note": "IRIX 6.5.30 IP32 diagnostic monitor, linked, stripped",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-sash",
+   "dis": "work/dis/ip32-sash.s",
+   "path": "root/sbin/stand/sash.ARCS",
+   "kind": "elf",
+   "note": "IRIX 6.5.30 IP32 standalone shell (ECOFF), symbols present",
+   "const_windows": [
+    {
+     "lo": "0x1f000000",
+     "hi": "0x1f400000",
+     "name": "mace-phys"
+    },
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffbf400000",
+     "name": "mace-kseg1"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x900000001f400000",
+     "name": "mace-xkphys"
+    },
+    {
+     "lo": "0xbf000000",
+     "hi": "0xbf400000",
+     "name": "mace-kseg1-u32"
+    }
+   ]
   }
  ],
  "report_functions": ".*",
@@ -72,14 +460,97 @@
  "variants": {},
  "variant_model": {
   "default": {
-   "access": "dw64"
+   "access": "mixed"
   }
  },
  "reference": {
   "mace": {
    "datasheets": [],
+   "spec": [
+    {
+     "file": "docs/sources/specs/mace-specification.registers.md",
+     "label": "mace-spec-rev2.0",
+     "headings": [
+      "^PCI host bridge",
+      "^Audio",
+      "^ISA control",
+      "^PS/2",
+      "^I2C",
+      "^Timers",
+      "^External ISA",
+      "^Ethernet",
+      "^Video"
+     ]
+    }
+   ],
    "model": []
   }
  },
- "buckets": []
+ "buckets": [],
+ "const_arg_calls": [
+  {
+   "callee": "^pciio_pio_read8$",
+   "arg": 4,
+   "rw": "r",
+   "width": 1
+  },
+  {
+   "callee": "^pciio_pio_read16$",
+   "arg": 4,
+   "rw": "r",
+   "width": 2
+  },
+  {
+   "callee": "^pciio_pio_read32$",
+   "arg": 4,
+   "rw": "r",
+   "width": 4
+  },
+  {
+   "callee": "^pciio_pio_read64$",
+   "arg": 4,
+   "rw": "r",
+   "width": 8
+  },
+  {
+   "callee": "^pciio_pio_write8$",
+   "arg": 5,
+   "rw": "w",
+   "width": 1
+  },
+  {
+   "callee": "^pciio_pio_write16$",
+   "arg": 5,
+   "rw": "w",
+   "width": 2
+  },
+  {
+   "callee": "^pciio_pio_write32$",
+   "arg": 5,
+   "rw": "w",
+   "width": 4
+  },
+  {
+   "callee": "^pciio_pio_write64$",
+   "arg": 5,
+   "rw": "w",
+   "width": 8
+  }
+ ],
+ "note_windows": "offsets are MACE physical offsets from 0x1f000000 (the PCI block is at 0x80000, ISA control at 0x310000, the ISA peripherals at 0x380000 and up)",
+ "slot_rules": [
+  {
+   "lo": "0x80000",
+   "hi": "0x100000",
+   "bytes": 4
+  },
+  {
+   "lo": "0x380000",
+   "hi": "0x3b0000",
+   "bytes": 256
+  }
+ ],
+ "collapse_above": 268435456,
+ "accessor_calls": "^pciio_pio_(read|write)(8|16|32|64)$",
+ "name_source": "the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code)"
 }

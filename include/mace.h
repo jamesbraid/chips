@@ -10,7 +10,249 @@
 #ifndef MACE_H
 #define MACE_H
 
-/* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: chips/mace/README.md. */
+
+/* ---- PCI host bridge --------------------------------------------- */
+
+#define MACE_PCI_ERR_ADDR                  0x080000   /* [E] width 4 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 4 routine(s) */
+#define MACE_PCI_ERR_FLAGS                 0x080004   /* [E] width 4 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 32 sites, 17 routine(s) */
+#define MACE_PCI_CONTROL                   0x080008   /* [E] width 4 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 9 sites, 5 routine(s) */
+#define   MACE_PCI_CONTROL_V_503           0x503   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_PCI_CONTROL_V_85FF          0x85ff   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_PCI_CONTROL_V_8DFF          0x8dff   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_PCI_CONTROL_V_FE000000      0xfe000000   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_PCI_CONTROL_V_FF000000      0xff000000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_PCI_CONTROL_B_11            0x800   /* [I] load mask: the code isolates these bits (2 sites) */
+#define MACE_PCI_FLUSH_REV                 0x08000c   /* [E] width 4 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 4 sites, 4 routine(s) */
+#define   MACE_PCI_FLUSH_REV_V_1           0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define MACE_PCI_CONFIG_ADDR               0x080cf8   /* [E] width 4 byte(s), access w; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 15 sites, 6 routine(s) */
+#define   MACE_PCI_CONFIG_ADDR_V_4         0x4   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_PCI_CONFIG_ADDR_V_8         0x8   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_PCI_CONFIG_ADDR_V_C         0xc   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_PCI_CONFIG_ADDR_B_7_2       0xfc   /* [I] store mask: the code writes these bits (3 sites) */
+#define MACE_PCI_CONFIG_DATA               0x080cfc   /* [E] width 4 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 25 sites, 6 routine(s) */
+#define   MACE_PCI_CONFIG_DATA_V_3020      0x3020   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_PCI_CONFIG_DATA_V_6         0x6   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_PCI_CONFIG_DATA_B_7_0       0xff   /* [I] load mask: the code isolates these bits (3 sites) */
+#define MACE_VOUT_VHW_CFG                  0x200058   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define   MACE_VOUT_VHW_CFG_B_3_0          0xf   /* [I] load mask: the code isolates these bits (1 sites) */
+
+/* ---- Ethernet ---------------------------------------------------- */
+
+#define MACE_ETH_MAC_CONTROL               0x280000   /* [E] width 4 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 3 routine(s) */
+#define   MACE_ETH_MAC_CONTROL_V_1         0x1   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ETH_MAC_CONTROL_B_7_0       0xff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define MACE_ETH_RX_FIFO                   0x280040   /* [E] width 1 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 7 sites, 1 routine(s) */
+#define MACE_ETH_INTERNAL_RAM              0x280100   /* [E] width 4 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 1 routine(s) */
+
+/* ---- audio ------------------------------------------------------- */
+
+#define MACE_AUD_CONTROL                   0x300000   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 12 sites, 7 routine(s) */
+#define   MACE_AUD_CONTROL_V_1             0x1   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   MACE_AUD_CONTROL_B_1             0x2   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_AUD_CONTROL_B_11_5          0xfe0   /* [I] load mask: the code isolates these bits (3 sites) */
+#define MACE_AUD_CODEC_CNTL                0x300008   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 4 sites, 4 routine(s) */
+#define   MACE_AUD_CODEC_CNTL_V_10000      0x10000   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_AUD_CODEC_CNTL_B_15_0       0xffff   /* [I] store mask: the code writes these bits (1 sites) */
+#define MACE_AUD_CODEC_MASK                0x300010   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 3 sites, 2 routine(s) */
+#define MACE_AUD_CODEC_READ                0x300018   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 3 sites, 3 routine(s) */
+#define   MACE_AUD_CODEC_READ_B_15_0       0xffff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define MACE_AUD_CH1_CNTL                  0x300020   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH1_READ                  0x300028   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH1_WRITE                 0x300030   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH1_DEPTH                 0x300038   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH2_CNTL                  0x300040   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH2_READ                  0x300048   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH2_WRITE                 0x300050   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH2_DEPTH                 0x300058   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH3_CNTL                  0x300060   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH3_READ                  0x300068   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH3_WRITE                 0x300070   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_AUD_CH3_DEPTH                 0x300078   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+
+/* ---- peripheral controller gap (not a listed register) ----------- */
+
+#define MACE_PIOFLUSH                      0x304018   /* [E] width 4 byte(s), access rw; name [I] from pioflush; reached in 3 sites, 1 routine(s) */
+
+/* ---- ISA control, parallel and serial DMA ------------------------ */
+
+#define MACE_ISA_RING_BASE                 0x310000   /* [E] width 4/8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 9 sites, 6 routine(s) */
+#define   MACE_ISA_RING_BASE_V_0           0x0   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_RING_BASE_B_4           0x10   /* [I] load mask: the code isolates these bits (1 sites) */
+#define MACE_ISA_MISC                      0x310008   /* [E] width 4/8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 30 sites, 14 routine(s) */
+#define   MACE_ISA_MISC_V_1                0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_MISC_B_1                0x2   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_MISC_B_4                0x10   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   MACE_ISA_MISC_B_5_4              0x30   /* [I] store mask: the code writes these bits (2 sites) */
+#define   MACE_ISA_MISC_B_7_0              0xff   /* [I] load mask: the code isolates these bits (2 sites) */
+#define MACE_ISA_INT_STAT                  0x310010   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 9 sites, 7 routine(s) */
+#define   MACE_ISA_INT_STAT_B_1            0x2   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_INT_STAT_B_8            0x100   /* [I] load mask: the code isolates these bits (3 sites) */
+#define MACE_ISA_INT_MASK                  0x310018   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 24 sites, 12 routine(s) */
+#define   MACE_ISA_INT_MASK_V_100          0x100   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_INT_MASK_V_18           0x18   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_INT_MASK_V_A00          0xa00   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_INT_MASK_B_7_0          0xff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define MACE_PAR_CNTL_STAT                 0x314010   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 23 sites, 6 routine(s) */
+#define   MACE_PAR_CNTL_STAT_V_1           0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_PAR_CNTL_STAT_V_2           0x2   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_PAR_CNTL_STAT_V_4           0x4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_PAR_CNTL_STAT_B_0           0x1   /* [I] load mask: the code isolates these bits (1 sites) */
+#define MACE_PAR_DIAG                      0x314018   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 2 routine(s) */
+#define   MACE_PAR_DIAG_B_0                0x1   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   MACE_PAR_DIAG_B_1                0x2   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_PAR_DIAG_B_11_0             0xfff   /* [I] load mask: the code isolates these bits (2 sites) */
+#define MACE_S1_TX_CNTL                    0x318000   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 3 sites, 2 routine(s) */
+#define MACE_S1_RX_CNTL                    0x318020   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 3 sites, 2 routine(s) */
+#define MACE_S2_TX_CNTL                    0x31c000   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 3 sites, 2 routine(s) */
+#define MACE_S2_RX_CNTL                    0x31c020   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 3 sites, 2 routine(s) */
+
+/* ---- I2C --------------------------------------------------------- */
+
+#define MACE_I2C_CONTROL                   0x330010   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 13 sites, 4 routine(s) */
+#define   MACE_I2C_CONTROL_V_1             0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_I2C_CONTROL_V_3             0x3   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_I2C_CONTROL_B_0             0x1   /* [I] load mask: the code isolates these bits (3 sites) */
+#define MACE_I2C_DATA                      0x330018   /* [E] width 8 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 1 routine(s) */
+
+/* ---- timers ------------------------------------------------------ */
+
+#define MACE_TMR_UST                       0x340000   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_TMR_COMPARE1                  0x340008   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_TMR_COMPARE2                  0x340010   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_TMR_COMPARE3                  0x340018   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 2 sites, 1 routine(s) */
+#define MACE_TMR_AIN                       0x340020   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_TMR_AOUT1                     0x340028   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define MACE_TMR_AOUT2                     0x340030   /* [E] width 8 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+
+/* ---- external ISA (calendar clock at 0x3a0000) ------------------- */
+
+#define MACE_ISA_PARALLEL                  0x380000   /* [E] width 1 byte(s), access w; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 18 sites, 6 routine(s) */
+#define   MACE_ISA_PARALLEL_V_100          0x100   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_V_2            0x2   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_V_4            0x4   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_V_5            0x5   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_V_55           0x55   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_V_78           0x78   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_V_87           0x87   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_V_AA           0xaa   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_V_FE           0xfe   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_V_FF           0xff   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_B_7_0          0xff   /* [I] store mask: the code writes these bits (3 sites) */
+#define MACE_ISA_PARALLEL_380100           0x380100   /* [E] width 1 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 27 sites, 9 routine(s) */
+#define   MACE_ISA_PARALLEL_380100_B_3     0x8   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_4     0x10   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_5     0x20   /* [I] load mask: the code isolates these bits (6 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_6     0x40   /* [I] load mask: the code isolates these bits (6 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_6_3   0x48   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_7     0x80   /* [I] load mask: the code isolates these bits (3 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_7_5_4 0xb0   /* [I] load mask: the code isolates these bits (3 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_7_0   0xff   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_7_3   0xf8   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_7_4   0xf0   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_PARALLEL_380100_B_7_6_3 0xc8   /* [I] load mask: the code isolates these bits (3 sites) */
+#define MACE_ISA_PARALLEL_380200           0x380200   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 59 sites, 10 routine(s) */
+#define   MACE_ISA_PARALLEL_380200_V_1     0x1   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380200_V_2     0x2   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380200_V_20    0x20   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380200_V_4     0x4   /* [I] a constant the code writes here (9 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380200_V_5     0x5   /* [I] a constant the code writes here (12 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380200_V_7     0x7   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380200_V_8     0x8   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380200_V_D     0xd   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380200_V_E     0xe   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380200_B_6     0x40   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   MACE_ISA_PARALLEL_380200_B_6_3   0x78   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_PARALLEL_380200_B_7_5_4 0xb0   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_PARALLEL_380200_B_7_0   0xff   /* [I] store mask: the code writes these bits (17 sites) */
+#define   MACE_ISA_PARALLEL_380200_B_7_6_3 0xc8   /* [I] load mask: the code isolates these bits (1 sites) */
+#define MACE_ISA_PARALLEL_380300           0x380300   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 46 sites, 7 routine(s) */
+#define   MACE_ISA_PARALLEL_380300_V_1     0x1   /* [I] a constant the code writes here (7 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380300_V_2     0x2   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380300_V_3     0x3   /* [I] a constant the code writes here (9 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380300_V_6     0x6   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380300_V_8     0x8   /* [I] a constant the code writes here (5 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380300_V_9     0x9   /* [I] a constant the code writes here (5 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380300_V_A     0xa   /* [I] a constant the code writes here (5 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380300_B_7_0   0xff   /* [I] store mask: the code writes these bits (1 sites) */
+#define MACE_ISA_PARALLEL_380400           0x380400   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 41 sites, 6 routine(s) */
+#define   MACE_ISA_PARALLEL_380400_V_1A    0x1a   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380400_V_2     0x2   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380400_V_42    0x42   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380400_V_5     0x5   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380400_V_8     0x8   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380400_V_9     0x9   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_PARALLEL_380400_B_7_0   0xff   /* [I] store mask: the code writes these bits (5 sites) */
+#define MACE_ISA_ECP1284                   0x388200   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 45 sites, 10 routine(s) */
+#define   MACE_ISA_ECP1284_V_10            0x10   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_ECP1284_V_40            0x40   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_ECP1284_V_60            0x60   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   MACE_ISA_ECP1284_V_8             0x8   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   MACE_ISA_ECP1284_V_80            0x80   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   MACE_ISA_ECP1284_V_C0            0xc0   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_ECP1284_B_7_0           0xff   /* [I] store mask: the code writes these bits (23 sites) */
+#define MACE_ISA_RTC                       0x3a0000   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 6 sites, 3 routine(s) */
+#define   MACE_ISA_RTC_B_5_0               0x3f   /* [I] load mask: the code isolates these bits (2 sites) */
+#define MACE_ISA_RTC_3A0100                0x3a0100   /* [E] width 1 byte(s), access w; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define   MACE_ISA_RTC_3A0100_V_C0         0xc0   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define MACE_ISA_RTC_3A0200                0x3a0200   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 7 sites, 4 routine(s) */
+#define   MACE_ISA_RTC_3A0200_B_4_0        0x1f   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_RTC_3A0200_B_5_0        0x3f   /* [I] load mask: the code isolates these bits (2 sites) */
+#define MACE_ISA_RTC_3A0300                0x3a0300   /* [E] width 1 byte(s), access w; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define   MACE_ISA_RTC_3A0300_B_7_0        0xff   /* [I] store mask: the code writes these bits (1 sites) */
+#define MACE_ISA_RTC_3A0400                0x3a0400   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 7 sites, 4 routine(s) */
+#define   MACE_ISA_RTC_3A0400_B_4_0        0x1f   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_RTC_3A0400_B_5_0        0x3f   /* [I] load mask: the code isolates these bits (3 sites) */
+#define   MACE_ISA_RTC_3A0400_B_7_0        0xff   /* [I] store mask: the code writes these bits (1 sites) */
+#define MACE_ISA_RTC_3A0500                0x3a0500   /* [E] width 1 byte(s), access w; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define   MACE_ISA_RTC_3A0500_B_7_0        0xff   /* [I] store mask: the code writes these bits (2 sites) */
+#define MACE_ISA_RTC_3A0600                0x3a0600   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 6 sites, 3 routine(s) */
+#define   MACE_ISA_RTC_3A0600_B_2_0        0x7   /* [I] load mask: the code isolates these bits (1 sites) */
+#define MACE_ISA_RTC_3A0700                0x3a0700   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 7 sites, 4 routine(s) */
+#define   MACE_ISA_RTC_3A0700_B_2_0        0x7   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_RTC_3A0700_B_4_0        0x1f   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_RTC_3A0700_B_5_0        0x3f   /* [I] load mask: the code isolates these bits (2 sites) */
+#define MACE_ISA_RTC_3A0800                0x3a0800   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 7 sites, 4 routine(s) */
+#define   MACE_ISA_RTC_3A0800_B_2_0        0x7   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_RTC_3A0800_B_4_0        0x1f   /* [I] load mask: the code isolates these bits (2 sites) */
+#define MACE_ISA_RTC_3A0900                0x3a0900   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 6 sites, 3 routine(s) */
+#define   MACE_ISA_RTC_3A0900_B_2_0        0x7   /* [I] load mask: the code isolates these bits (1 sites) */
+#define MACE_ISA_RTC_3A0A00                0x3a0a00   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 86 sites, 24 routine(s) */
+#define   MACE_ISA_RTC_3A0A00_V_10         0x10   /* [I] a constant the code writes here (6 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A0A00_V_20         0x20   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A0A00_V_30         0x30   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A0A00_B_15_5_3_0   0xffef   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   MACE_ISA_RTC_3A0A00_B_15_7_5_0   0xffbf   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_RTC_3A0A00_B_4          0x10   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   MACE_ISA_RTC_3A0A00_B_6_5        0x60   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   MACE_ISA_RTC_3A0A00_B_7          0x80   /* [I] load mask: the code isolates these bits (7 sites) */
+#define   MACE_ISA_RTC_3A0A00_B_7_0        0xff   /* [I] store mask: the code writes these bits (13 sites) */
+#define MACE_ISA_RTC_3A0B00                0x3a0b00   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 22 sites, 5 routine(s) */
+#define   MACE_ISA_RTC_3A0B00_V_2          0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A0B00_V_80         0x80   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A0B00_V_82         0x82   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A0B00_B_15_3_1_0   0xfffb   /* [I] store mask: the code writes these bits (1 sites) */
+#define   MACE_ISA_RTC_3A0B00_B_15_8_6_0   0xff7f   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_RTC_3A0B00_B_7_0        0xff   /* [I] store mask: the code writes these bits (3 sites) */
+#define MACE_ISA_RTC_3A0C00                0x3a0c00   /* [E] width 1 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 4 sites, 4 routine(s) */
+#define   MACE_ISA_RTC_3A0C00_B_7          0x80   /* [I] load mask: the code isolates these bits (4 sites) */
+#define MACE_ISA_RTC_3A0E00                0x3a0e00   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 3 routine(s) */
+#define   MACE_ISA_RTC_3A0E00_V_1          0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A0E00_B_7_0        0xff   /* [I] store mask: the code writes these bits (2 sites) */
+#define MACE_ISA_RTC_3A4800                0x3a4800   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 6 sites, 3 routine(s) */
+#define MACE_ISA_RTC_3A4900                0x3a4900   /* [E] width 1 byte(s), access w; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 1 sites, 1 routine(s) */
+#define   MACE_ISA_RTC_3A4900_B_7_0        0xff   /* [I] store mask: the code writes these bits (2 sites) */
+#define MACE_ISA_RTC_3A4A00                0x3a4a00   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 34 sites, 10 routine(s) */
+#define   MACE_ISA_RTC_3A4A00_V_8          0x8   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A4A00_B_0          0x1   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_RTC_3A4A00_B_15_2       0xfffc   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   MACE_ISA_RTC_3A4A00_B_1_0        0x3   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   MACE_ISA_RTC_3A4A00_B_7_0        0xff   /* [I] store mask: the code writes these bits (2 sites) */
+#define MACE_ISA_RTC_3A4B00                0x3a4b00   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 28 sites, 6 routine(s) */
+#define   MACE_ISA_RTC_3A4B00_V_2          0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A4B00_V_81         0x81   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A4B00_V_83         0x83   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A4B00_V_9          0x9   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   MACE_ISA_RTC_3A4B00_B_15_2_0     0xfffd   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   MACE_ISA_RTC_3A4B00_B_7_0        0xff   /* [I] store mask: the code writes these bits (1 sites) */
 
 #endif /* MACE_H */
