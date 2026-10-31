@@ -190,6 +190,8 @@ def main():
         elif qc == 'handled-guessed':
             tasks.append('model task: guessed or deferred')
         name = (ds or sp or qm or [{'name': ''}])[0]['name'] if (ds or sp or qm) else ''
+        # hand-written names a config carries for a chip with no specification (register_names)
+        name = name or cfg.get('register_names', {}).get('0x%x' % slot, '')
         out_rows.append({
             'variant': v, 'offset': '0x%x' % slot, 'idx': idx, 'name': name,
             'access_seen': ''.join(sorted(r['rw'])), 'widths': ','.join(str(w) for w in sorted(r['widths'])),
