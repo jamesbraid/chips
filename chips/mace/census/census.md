@@ -26,20 +26,26 @@ Datasheet checkout `` (datasheets, spec transcriptions); model at `?` (model sou
 
 ## Summary
 
-- **754 access sites** resolved to a window offset, folded into **70 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
+- **755 access sites** resolved to a window offset, folded into **70 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
 
 | variant | rows | sites | model: handled+specified | model: handled, guessed or LOG_UNIMP | model: unhandled / out of scope | not in datasheet | not in spec | spec conflict |
 |---|---|---|---|---|---|---|---|---|
-| ? | 70 | 754 | 0 | 0 | 70 | 70 | 1 | 0 |
+| ? | 70 | 755 | 0 | 0 | 70 | 70 | 1 | 0 |
 
 `?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). This census compares only with the published specification: no emulator datasheet or model is read, so the datasheet and model columns carry no information.
 
-Site basis: 754 direct.
+Site basis: 755 direct.
 
 ### Scan coverage and what is unresolved
 
 - Accessor functions seeded (`seeds.args`): .
-- Window pointers passed to a callee the config does not seed (**unresolved**, site in `work/mace/unresolved.tsv`): 0 distinct sites.
+- Window pointers passed to a callee the config does not seed (**unresolved**, site in `work/mace/unresolved.tsv`): 170 distinct sites.
+  - ip32-kernel-o `read_dallas_nvram` @12cd8 calls `splx` with the window pointer in a2
+  - ip32-kernel-o `write_dallas_nvram` @12db0 calls `splx` with the window pointer in a2
+  - ip32-a3-dd-o `a3_idbg_dump_hw` @3300 calls `qprintf` with the window pointer in a1
+  - ip32-a3-dd-o `a3_idbg_dump_hw` @3320 calls `qprintf` with the window pointer in a1
+  - ip32-a3-dd-o `mvpi2c_read_reg` @3700 calls `_mvpi2c_wait_for_ack` with the window pointer in a3
+  - ip32-a3-dd-o `mvpi2c_read_reg` @3728 calls `_mvpi2c_wait_for_ack` with the window pointer in a5
 - Loads and stores whose base register the scan could not resolve and whose displacement looks like a register offset (1829 rows in `suspects.tsv`) are driver record fields and stack frames more often than registers: **unresolved, listed only**.
 - Index registers are not followed: a family reached through an array index is recorded at its base with `idx=1` (device 0..7, interrupt 0..7, ATE). The family extent comes from the datasheet, not the code.
 - Returned pointers: a function that hands back a pointer into the window is recorded as a kind-`a` site at the pointer offset (this is how the one-wire register and the configuration windows are reached).
@@ -100,7 +106,7 @@ Site basis: 754 direct.
 | ? | 0x380200 | rw | 1 | 10 | 59 | present | plpioctl@be0 |
 | ? | 0x380300 | rw | 1 | 7 | 46 | present | plpioctl@e88 |
 | ? | 0x380400 | rw | 1 | 6 | 41 | present | plpfdc_open@349c |
-| ? | 0x388200 | rw | 1 | 10 | 45 | present | plpopen@3fc |
+| ? | 0x388200 | rw | 1 | 10 | 46 | present | plpopen@3fc |
 | ? | 0x3a0000 | rw | 1 | 3 | 6 | present | sub_129e8@12a88 |
 | ? | 0x3a0100 | w | 1 | 1 | 1 | present | set_autopoweron@131a8 |
 | ? | 0x3a0200 | rw | 1 | 4 | 7 | present | sub_129e8@12a98 |

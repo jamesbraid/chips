@@ -155,6 +155,7 @@ ip32-pcimh-o	mace_pci_error	2204	?	0x80000	r	4	jal 0 / ori $4,$4,0x4 / or $19,$2
 ip32-pcimh-o	mace_pci_error	2218	?	0x80004	w	4	sd $17,112($29) / or $17,$2,$0 / or $4,$0,$0 / lui $5,0xbf08 / jal 0 / ori $5,$5,0x4 / lui $6,0x8018 / sd $16,96($29) / and $7,$6,$19
 ip32-ecplp-o	plpopen	3fc	?	0x388200	r	1	lui $11,0x0 / lui $17,0xbf38 / addiu $11,$11,0 / ori $17,$17,0x8200 / jalr $11 / or $4,$17,$0 / lui $6,0x0 / addiu $4,$0,-225 / addiu $6,$6,0
 ip32-ecplp-o	plpopen	418	?	0x388200	w	1	addiu $4,$0,-225 / addiu $6,$6,0 / or $5,$17,$0 / and $4,$2,$4 / jalr $6 / andi $4,$4,0xff / sb $0,3($16) / lui $7,0x0 / addiu $7,$7,0
+ip32-ecplp-o	plpopen	4bc	?	0x388200	r	1	lui $4,0x0 / lui $17,0xbf38 / addiu $4,$4,0 / ori $17,$17,0x8200 / jalr $4 / or $4,$17,$0 / lui $6,0x0 / addiu $4,$0,-225 / addiu $6,$6,0
 ip32-ecplp-o	plpopen	4dc	?	0x388200	w	1	addiu $6,$6,0 / and $4,$2,$4 / or $5,$17,$0 / ori $4,$4,0xc0 / jalr $6 / andi $4,$4,0xff / lbu $7,0($16) / addiu $8,$0,192 / sb $8,3($16)
 ip32-ecplp-o	plpopen	554	?	0x388200	r	1	lui $14,0x0 / lui $17,0xbf38 / addiu $14,$14,0 / ori $17,$17,0x8200 / jalr $14 / or $4,$17,$0 / lui $6,0x0 / addiu $4,$0,-225 / addiu $6,$6,0
 ip32-ecplp-o	plpopen	574	?	0x388200	w	1	addiu $6,$6,0 / and $4,$2,$4 / or $5,$17,$0 / ori $4,$4,0x60 / jalr $6 / andi $4,$4,0xff / lbu $7,0($16) / addiu $8,$0,96 / sb $8,3($16)
