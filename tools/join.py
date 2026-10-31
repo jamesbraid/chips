@@ -81,6 +81,10 @@ def main():
     for s in sites:
         off = int(s['offset'], 16)
         slot = off & ~7
+        if off >= cfg.get('collapse_above', 0x10000):
+            # array regions (translation entries, write-request RAM, configuration windows): a loop's
+            # unrolled iterations are one row per 0x800-byte bucket, flagged as indexed
+            slot, s = off & ~0x7ff, dict(s, idx='1')
         bk = next((b for b in buckets if b['lo'] <= off < b['lo'] + b['size']), None)
         if bk:
             # an access through a PCI device window or the flash window: not this ASIC's register,
@@ -149,7 +153,9 @@ def main():
                     da, ea = norm_access(d.get('access')), norm_access(e.get('access'))
                     if da and ea and da != ea:
                         spc = 'conflict-access'
-        if not vs:
+        if cfg.get('mode') == 'no-spec' and vs and not ds and not qm:
+            dsc, qc, qd = 'n/a', 'n/a', 'no-spec mode: no datasheet or model compared'
+        elif not vs:
             qc, qd = 'out-of-scope', 'variant has no emulator datasheet or model here (hand off to its own census)'
         elif not qm:
             qc, qd = 'unhandled', 'no model entry; undefined-address path'
@@ -165,7 +171,9 @@ def main():
             else:
                 qc, qd = 'handled-specified', qm[0]['name']
         tasks = []
-        if not vs:
+        if dsc == 'n/a':
+            tasks.append('no-spec: inventory from the binaries')
+        elif not vs:
             tasks.append('variant out of scope')
         if dsc == 'absent' and spc in ('present', 'conflict-access'):
             tasks.append('datasheet omits a register the spec lists')

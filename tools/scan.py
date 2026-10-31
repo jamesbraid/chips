@@ -84,17 +84,20 @@ RELOC_RE = re.compile(r'^\s+([0-9a-f]+):\s+(R_MIPS_\w+)\s+(\S+)')
 
 
 class Insn:
-    __slots__ = ('addr', 'mn', 'ops', 'sym', 'reloc')
+    __slots__ = ('addr', 'mn', 'ops', 'sym', 'reloc', 'rsym')
 
     def __init__(self, addr, mn, ops, sym):
         self.addr, self.mn, self.ops, self.sym = addr, mn, ops, sym
         self.reloc = None
+        self.rsym = None
 
     def target(self):
-        for o in reversed(self.ops):
-            if re.fullmatch(r'(?:0x)?[0-9a-f]{6,16}', o) and self.mn not in LOADS and self.mn not in STORES \
-                    and self.mn not in ('lui', 'dli', 'li', 'ori', 'andi', 'daddiu', 'addiu'):
-                return int(o, 16)
+        if not (self.mn in COND or self.mn in UNCOND or self.mn in CALLS) or not self.ops:
+            return None
+        o = self.ops[-1]
+        # linked images print long addresses; relocatable objects print short section offsets
+        if re.fullmatch(r'(?:0x)?[0-9a-f]{1,16}', o) and not o.startswith('$'):
+            return int(o, 16)
         return None
 
 
@@ -125,8 +128,17 @@ def read_functions(path, split=None):
             m = INSN_RE.match(ln)
             if not m:
                 continue
-            ops, sym = parse_ops(m.group(3))
+            body = m.group(3) or ''
+            rl = re.search(r'\t[0-9a-f]+: (R_MIPS_\w+)\t(\S+)\s*$', body)
+            if rl:
+                body = body[:rl.start()]
+            ops, sym = parse_ops(body)
             ins = Insn(int(m.group(1), 16), m.group(2), ops, sym)
+            if rl and rl.group(1) != 'R_MIPS_NONE':
+                ins.reloc = rl.group(1)
+                ins.rsym = re.sub(r'[+-]0x[0-9a-f]+$', '', rl.group(2))
+                if rl.group(1) == 'R_MIPS_26':
+                    ins.sym = ins.rsym
             if split:
                 if cur is None or since_ret == 2:
                     cur = ('prom_%x' % ins.addr, ins.addr, [])
@@ -143,19 +155,22 @@ def read_functions(path, split=None):
 
 
 def load_literals(path):
-    """{address: bytes} from `objdump -s` text for read-only literal sections."""
+    """{(section, offset): byte} from `objdump -s` text, one block per section."""
     mem = {}
     if not path or not os.path.exists(path):
         return mem
+    sect = None
     for ln in open(path, encoding='utf-8', errors='replace'):
-        m = re.match(r'^ ([0-9a-f]+) ((?:[0-9a-f]{1,8} ?){1,4})', ln)
+        m = re.match(r'^Contents of section (\S+):', ln)
         if m:
+            sect = m.group(1)
+            continue
+        m = re.match(r'^ ([0-9a-f]+) ((?:[0-9a-f]{8} ?){1,4})', ln)
+        if m and sect:
             a = int(m.group(1), 16)
             for part in m.group(2).split():
-                b = bytes.fromhex(part.rjust(8, '0')) if len(part) == 8 else bytes.fromhex(part)
-                if len(part) == 8:
-                    for k in range(4):
-                        mem[a + k] = b[k]
+                for k, byte in enumerate(bytes.fromhex(part)):
+                    mem[(sect, a + k)] = byte
                 a += 4
     return mem
 
@@ -234,11 +249,13 @@ class Analyser:
             disp, base = to_int(m.group(1)), int(m.group(2)[1:])
             bv = self.rd(st, base)
             rt = reg(ops[0])
-            if base == 28 and mn in ('ld', 'lw', 'lwu') and self.gp is not None and self.lit:
+            if base == 28 and mn in ('ld', 'lw', 'lwu') and self.gp is not None and self.lit and \
+                    ins.reloc == 'R_MIPS_GPREL16' and ins.rsym == '.lit8':
+                # relocatable object: the displacement is the offset in .lit8 less the gp bias
                 n = 8 if mn == 'ld' else 4
                 a = self.gp + disp
-                if all((a + k) in self.lit for k in range(n)):
-                    val = int.from_bytes(bytes(self.lit[a + k] for k in range(n)), 'big')
+                if all(('.lit8', a + k) in self.lit for k in range(n)):
+                    val = int.from_bytes(bytes(self.lit[('.lit8', a + k)] for k in range(n)), 'big')
                     if mn == 'lw':
                         val = sx32(val) & M64
                     self.wr(st, rt, ('K', val))
@@ -738,7 +755,20 @@ def run(cfg, base, outdir):
     for img in cfg.raw['images']:
         path = os.path.join(base, img['dis'])
         funcs = read_functions(path, img.get('split'))
-        gp = to_int(img['gp']) if img.get('gp') else None
+        gp = None
+        if img.get('gp') == 'auto-min':
+            # object without a stated gp bias: the lowest gp-relative .lit8 displacement it uses is taken
+            # as literal offset 0. Inferred: it fails if the object never loads its first literal.
+            ds = []
+            for _n, _s, ins_l in funcs:
+                for i in ins_l:
+                    if i.reloc == 'R_MIPS_GPREL16' and i.rsym == '.lit8' and len(i.ops) == 2:
+                        mm = MEM_RE.match(i.ops[1])
+                        if mm:
+                            ds.append(to_int(mm.group(1)))
+            gp = -min(ds) if ds else None
+        elif img.get('gp'):
+            gp = to_int(img['gp'])
         lits = load_literals(os.path.join(base, img['literals'])) if img.get('literals') else None
         an = Analyser(cfg, img['label'], img.get('const_windows', []), img.get('variant_hint'), gp, lits)
         an.known_callees = set(f[0] for f in funcs if any(rx.search(f[0]) for rx, _, _ in cfg.seed_args))
