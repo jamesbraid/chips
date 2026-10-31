@@ -67,6 +67,32 @@ chip page and the entry is deleted.
   `hub_error_init`, `hub_error_clear`, `intr_connect_level`.
 - **Bedrock PROM and second window.** The IP35 PROM builds its window base at run time (no sites yet) and the
   0x90000000_18xxxxxx window of `hubspc.o` and `nic.o` is uninterpreted.
+- **Bedrock refused widget read: what the silicon latches.** Established: a read that gets a timeout or error reply
+  is typed in PI error status 0 (type 3 timeout; read types 1 to 3) and the kernel prints "Read timeout, physaddr".
+  Inferred: no pending bit exists for it; the exception is the bus error and the spool entry carries the address.
+  Unknown: whether status 0 and the spool entry are both written for a read, which of the CRB error codes (5, 6) a
+  refused read of a Crosstalk widget produces, and what the processor sees (data bus error or a zero return). No
+  shipped code distinguishes these. Next: read `handle_io_buserr` and `hub_ioerror_handler` in full, and the PROM
+  error dump.
+- **Bedrock error status clear semantics.** Established: the kernel writes all ones to PI `0x438` and `0x458` and zero
+  to `0x448` and `0x468`, and writes the handled bit back to the pending register. Unknown: whether those four
+  are clear-on-read as in the public Hub headers, whether the pending register is write-one-to-clear, and what a
+  second error does to a status whose valid bit is still set beyond setting overrun (bit 62). Route: none from
+  software; a measurement or a published erratum.
+- **Bedrock error spool entry layout.** Established: entries are 8 bytes and `get_matching_spool_addr` matches the
+  address (status 0 bits 61:25 `<< 3`) and size; the status 0 field names are shared. Unknown: the entry's own
+  layout (the Hub error stack packs the fields differently), what writes an entry, and the units of the size
+  register (`4096 << (n - 1)`). Next: read `process_error_spool`, `huberror_process_stack_entry` and
+  `hubpi_spool_get_next` in full.
+- **Bedrock pending bits 25 to 34 and fatal selection.** Established: names from the kernel's table and the fatal
+  and miscellaneous masks. Unknown: what sets bits 29 to 34 beyond their names (crossbar data cycle count, intervention
+  state, state-pending timeout), and why bit 24 is ORed into one interrupt mask only (the first one written).
+- **Bedrock protected-region replies.** Unknown: which status 0 type or CRB error code a protection violation
+  produces, and what the strings "Protection error response" and "Vector response timeout" index. Next: find
+  their table's users in `kernel.o` and read the memory/directory error decode.
+- **Bedrock interrupt numbers.** Established: PI error handler on cause line 6, network interface error on vector
+  126. Unknown: the II error level (chosen at run time by `intr_heuristic`), and whether cause line 6 is the Cause
+  IP6 bit. Next: the interrupt allocator and the CPU exception vector in the PROM.
 - **Harness limits.** `scripts/run_routine.py` replaces calls with `v0 = 0` and has no global data, so a routine
   that reads a table by gp (`pcireg_int_ate_set`, `pcireg_force_always_set`, `pcireg_intr_addr_vect_set`) ends in
   an unmapped read; the routines that touch only the chip record run to completion.
