@@ -27,6 +27,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 import scan  # noqa: E402
+import slots  # noqa: E402
 
 WINDOW = 14
 MASKERS = {'andi', 'ori', 'xori'}
@@ -55,6 +56,7 @@ def main():
     ap.add_argument('--calls', help='accessor-calls.tsv from the scan: constants passed to register accessors')
     a = ap.parse_args()
     cfg = json.load(open(a.config))
+    slot_of, _part_of = slots.make(cfg)
     sites = list(csv.DictReader(open(a.sites), delimiter='\t'))
     want = collections.defaultdict(set)
     for s in sites:
@@ -79,13 +81,16 @@ def main():
                     continue
                 ins = insns[k]
                 off = int(s['offset'], 16)
-                slot = off & ~7
+                slot = slot_of(off)
                 key0 = (s['variant'], slot)
-                rt = scan.reg(ins.ops[0])
+                call = ins.mn in scan.CALLS
+                rt = 2 if call and s['rw'] == 'r' else 4 if call else scan.reg(ins.ops[0])
                 found = []
                 if s['rw'] == 'r':
                     live = {rt}
-                    for j in range(k + 1, min(k + 1 + WINDOW, len(insns))):
+                    # an access made through an accessor routine returns its value in $2 after the call
+                    # and its delay slot
+                    for j in range(k + (2 if call else 1), min(k + 1 + WINDOW, len(insns))):
                         n = insns[j]
                         if n.mn in scan.COND or n.mn in scan.UNCOND:
                             # a compare against a constant right at the branch
@@ -112,7 +117,9 @@ def main():
                             break
                 else:
                     live = {rt}
-                    for j in range(k - 1, max(k - 1 - WINDOW, -1), -1):
+                    # the value of an accessor's write is argument 0; the delay slot of the call can set it
+                    order = ([k + 1] if call and k + 1 < len(insns) else []) + list(range(k - 1, max(k - 1 - WINDOW, -1), -1))
+                    for j in order:
                         n = insns[j]
                         if n.mn in scan.COND or n.mn in scan.UNCOND or n.mn in scan.CALLS:
                             break

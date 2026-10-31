@@ -29,6 +29,9 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(__file__))
+import slots  # noqa: E402
+
 
 def norm_access(a):
     a = (a or '').lower()
@@ -72,6 +75,8 @@ def main():
     cfg = json.load(open(a.config))
     ref = json.load(open(a.ref))
     model = cfg.get('variant_model', {})
+    slot_of, part_of = slots.make(cfg)
+    big = cfg.get('collapse_above', 0x10000)
     sites = list(csv.DictReader(open(a.sites), delimiter='\t'))
 
     rows = collections.OrderedDict()
@@ -80,8 +85,8 @@ def main():
     site_rows = []
     for s in sites:
         off = int(s['offset'], 16)
-        slot = off & ~7
-        if off >= cfg.get('collapse_above', 0x10000):
+        slot = slot_of(off)
+        if off >= big:
             # array regions (translation entries, write-request RAM, configuration windows): a loop's
             # unrolled iterations are one row per 0x800-byte bucket, flagged as indexed
             slot, s = off & ~0x7ff, dict(s, idx='1')
@@ -104,7 +109,7 @@ def main():
                                       'flags': set(), 'bases': set(), 'window': s['window']})
             r['rw'].add(s['rw'])
             r['widths'].add(int(s['width']))
-            r['halves'].add(off & 7)
+            r['halves'].add(part_of(off))
             r['sites'] += 1
             r['funcs'].add(s['function'])
             r['images'].add(s['image'])
@@ -117,7 +122,7 @@ def main():
             if slot < 0x10000 and m.get('access') == 'half32' and w:
                 if w == 8:
                     r['flags'].add('64-bit access to a 32-bit register')
-                if w == 4 and (off & 7) == 0:
+                if w == 4 and part_of(off) == 0:
                     r['flags'].add('32-bit access to the high half')
             if slot < 0x10000 and m.get('access') == 'dw64' and w == 4:
                 r['flags'].add('32-bit access to a 64-bit register')
@@ -142,7 +147,7 @@ def main():
             spc = 'n/a'
         elif not spec_exists:
             spc = 'n/a'
-        elif slot >= 0x10000:
+        elif slot >= big:
             spc = 'not-transcribed'
         elif not sp:
             spc = 'absent'
@@ -229,7 +234,7 @@ def main():
         un = collections.OrderedDict()
         for kind in ('datasheet', 'spec'):
             for e in rr[kind]:
-                if e['kind'] != 'register' or e['hi'] >= 0x10000:
+                if e['kind'] != 'register' or e['hi'] >= big:
                     continue
                 span = range(e['lo'], e['hi'] + 1, 8) if e['hi'] > e['lo'] else [e['lo']]
                 if any(x in got for x in span) or any(st <= e['lo'] < st + IDX_EXTENT for st in starts):
