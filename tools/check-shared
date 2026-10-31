@@ -9,12 +9,14 @@
 #                                       intended change; copy the files and the
 #                                       manifest to every repository
 #
-# The shared files are the container definitions, the wrappers and this script:
-# edit them in one repository, run --update, copy the result to the others, and
-# run this in each.
+# The shared files are the container definitions, the wrappers, this script and
+# the scripts every workspace runs the same way (the inventory, the fact sheet,
+# the claim checker, the pre-push hook and the leak check): edit them in one
+# repository, run --update, copy the result to the others, and run this in each.
 set -eu
 cd "$(dirname "$0")/.."
-files='tools/Containerfile tools/Containerfile.ghidra tools/re-run tools/setup-clone.sh tools/check-shared'
+files='tools/Containerfile tools/Containerfile.ghidra tools/re-run tools/setup-clone.sh tools/check-shared
+scripts/inventory.py scripts/facts.py scripts/check_claims.py scripts/pre-push scripts/check-leaks.sh'
 manifest=tools/shared.sha256
 if [ "${1:-}" = --update ]; then
     # shellcheck disable=SC2086
