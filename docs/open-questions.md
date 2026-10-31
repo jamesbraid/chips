@@ -13,3 +13,6 @@ chip page and the entry is deleted.
   seeds (see HAIKU-BRIEF.md) and run `tools/run.sh`.
 - **Model of a PROM's window base.** A PROM builds its window pointer at run time; the census recovers a
   pointer only where an identity-register probe shows it. Next: constant-fold the PROM's address setup.
+- **IP35 reset window.** The routing rule that returns boot-PROM bytes for uncached memory-space fetches of physical
+  0x1fc0xxxx after bank 0 is enabled, and whether any write ends it, are not visible in the PROM. Tried: full read of
+  the reset, memory and jump-to-RAM path. Next: see [docs/questions/ip35-reset-window.md](questions/ip35-reset-window.md).
