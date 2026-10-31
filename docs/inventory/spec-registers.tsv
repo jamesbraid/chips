@@ -106,7 +106,7 @@ CRIME 1.5	7-3	169	RE	0x21c8	Depth.Zs	1	0	64	W	0	undocumented
 CRIME 1.5	7-3	169	RE	0x21d0	Depth.dzdx	1	0	64	W	0	undocumented		
 CRIME 1.5	7-3	169	RE	0x21d8	Depth.dzdy	1	0	64	W	0	undocumented		
 CRIME 1.5	7-3	169	RE	0x21e0	Stencil.mode	1	0	32	R/W	0	undocumented		
-CRIME 1.5	7-3	170	RE	0x21e8	Stencil.mask	1	0	32	R/W	0	undocumented		
+CRIME 1.5	7-3	170	RE	0x21e8	Stencil.mask	1	0	32	R/W	0	named-only	chips/heart/README.md#register-inventory	Register inventory
 CRIME 1.5	7-3	170	RE	0x21f0	PixPipeNull	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	170	RE	0x21f8	PixPipeFlush	1	0	32	W	0	undocumented		
 CRIME 1.5	7-15	183	RE	0x3000	MTE.mode	1	0	32	R/W	0	undocumented		

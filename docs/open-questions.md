@@ -9,7 +9,7 @@ chip page and the entry is deleted.
   Next: the XBridge and Crossbow specifications' identification-register sections (page images).
 - **TIOCP.** Whether any product in scope carries it is not established. Tried: its part numbers appear only
   in the shared accessors. Next: Linux `pci-xtalk-bridge.c` and its history for the platform that uses it.
-- **Hub, Bedrock, HEART, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
+- **Hub, Bedrock, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
   seeds (see HAIKU-BRIEF.md) and run `tools/run.sh`.
 - **Model of a PROM's window base.** A PROM builds its window pointer at run time; the census recovers a
   pointer only where an identity-register probe shows it. Next: constant-fold the PROM's address setup.
@@ -29,6 +29,15 @@ chip page and the entry is deleted.
   same routine (the PIC branch of the interrupt-register clear at 0xc00000001fc41f38) is missed while the other
   branch is labelled PIC. Next: do not split a PROM pseudo-function at an address a branch from the previous one
   reaches, and fold `movz` of two constants into two sites.
+- **HEART refused-access errors.** What sets CAUSE bits 40, 41 and 42 (bad system read, bad system write, PIU
+  register access error), what a failed or timed-out processor store latches, and which of the level 4 vectors 51 to
+  63 each error raises. Known: the latch registers and decode paths, the widget error type bits (store timeout is
+  type bit 2), the vector formula for widget errors. Unknown: the triggers and the cause-to-vector mapping. Tried:
+  kernel error handler and probe routines, PROM, monitor decode tables. Next: the stripped diagnostic's PIU access
+  and widget error tests, and the PROM error dump. Entries: [chips/heart/README.md](../chips/heart/README.md#open).
+- **HEART registers no held code reaches.** Eleven registers appear only in the diagnostic's register table (SDRAM mode,
+  memory refresh, flow-control timers, MicroLAN divider and control, compare, widget status, control, link layer,
+  target flush); TRIGGER and SYNC are reached but unread. Valid end state unless a routine setting them is found.
 - **PIC error and interrupt service.** `pcibr_error_dump` and `pcibr_error_intr_handler` in `pcibr.o` and the
   PIC branches of the error accessors are not read. Next: read both in full and fill the error and interrupt
   sections of chips/pic/README.md.

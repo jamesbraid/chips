@@ -3079,15 +3079,15 @@ IP35/usr/cpu/sysgen/IP35boot/xvm.a(xvm_gpt.o)	kernel-IP35	kernel-object	object	n
 IP35/usr/cpu/sysgen/IP35boot/xvm.a(xvm_snapshot.o)	kernel-IP35	kernel-object	object	n64	74708	44f50e379c03c023		58	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xvm.a(xvm_irix_snapshot.o)	kernel-IP35	kernel-object	object	n64	22708	be841889d5cb09da		25	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xvmidbg.o	kernel-IP35	kernel-object	object	n64	107400	d257b6091b3a821b		40	symtab	0	0	undocumented		
-firmware/IP30prom.bin	firmware	prom	data	-	879312	ee4722ca6f9b821f		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+firmware/IP30prom.bin	firmware	prom	data	-	879312	ee4722ca6f9b821f		0		0	0	named-only	chips/heart/README.md#heart	HEART
 firmware/io6prom.img	firmware	prom	data	-	365328	024d2f28b526933e		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
 firmware/ip27prom.img	firmware	prom	data	-	912848	0dbd5d5f7027e380		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
 firmware/ip32prom.image	firmware	prom	data	-	431872	11230c353cb14fcc		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
 firmware/ip35prom.img	firmware	prom	data	-	1480360	d74b4b7ef9c11c66		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
 firmware/mmscfw.bin	firmware	prom	data	-	1023075	6c3db7ffd7fb4cc4		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
-sbin/stand/ide.IP30	standalone	diagnostic	executable	n64	1594880	19d7a194cb417330		0	none	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+sbin/stand/ide.IP30	standalone	diagnostic	executable	n64	1594880	19d7a194cb417330		0	none	0	0	named-only	chips/heart/README.md#heart	HEART
 sbin/stand/ide.IP32	standalone	diagnostic	executable	o32	763504	9c2ded7e65b68405		0	none	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
 sbin/stand/sash.ARCS	standalone	diagnostic	data	-	343604	a96e5d2ba76fccae		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
 sbin/stand/sash64	standalone	diagnostic	object	n64	266768	7b86941c14cb8679		345	symtab	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
-sbin/stand/symmon.IP30	standalone	diagnostic	executable	n64	367160	521fd47460bf2d1c		0	none	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+sbin/stand/symmon.IP30	standalone	diagnostic	executable	n64	367160	521fd47460bf2d1c		0	none	0	0	named-only	chips/heart/README.md#heart	HEART
 sbin/stand/symmon.IP32	standalone	diagnostic	executable	n32	502980	12d8ecedae658546		755	symtab (dwarf addresses stale, dropped)	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
