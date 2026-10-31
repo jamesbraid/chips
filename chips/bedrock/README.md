@@ -193,7 +193,11 @@ listing labels them with the preceding name): `md_int_block`,
   (`acktmoclock`, `ackkgclock`, `startkgclock`: `+0x1000118` to `+0x1000158`), error interrupt masks
   (`err_int_unblock_mask`, `hubpi_eint_handler`: `+0x1000400` to `+0x10004d0`). `+0x1030100` is read at 91 sites
   by time-keeping and statistics routines (`callout_time_to_hz`, `bte_copy`, `capture_hub_stats`): a counter
-  or clock (inferred from names).
+  or clock (inferred from names). `md_int_block` makes no call and returns no value. It loads the doubleword at
+  0x9200000001000000 plus the offset 1032 or 1040, clears bit 24 (`lui 0x100`, then `nor`) and stores it back from
+  the delay slot of `jr ra`. The offset is 1040 when bit 0 of the byte at +1320 of the pointer at +8 in the table
+  entry is 1, and 1032 when it is 0. That table entry is indexed by the halfword at `lh` offset -15320 from `zero`,
+  shifted left 4. On return `v0` still holds the address it used.
 - `+0x1600000` to `+0x1681xxx`, `+0x168e7xx`: `+0x1604200` is read at 52 sites by timer routines
   (`counter_intr`, `doadjtime`, `init_timebase`, `generate_unique_id`). The first draft called it a free-running
   counter; the audit found all 52 sites extract bits 13:4 and multiply by five (shift right 4, mask 0x3ff, then
@@ -215,6 +219,8 @@ listing labels them with the preceding name): `md_int_block`,
 - `+0x1e00000` (`get_hub_chiprev`), `+0x1e04000` to `+0x1e04060` (partition and BTE error clear),
   `+0x1e0c000` to `+0x1e0c038` (`vector_read_node`, `vector_write_node`), `+0x1e80000` to `+0x1e80120` (network
   state: `hubni_print_state`, `ni_port_down_reset`).
+  `hubni_print_state`: the branch at 0x188d8 (`beq a0,zero`) is never taken, because `a0` is set to the constant
+  1000000 by the `lui` at 0x188c0 (0xf) and the `ori` at 0x188c8 (0x4240), and nothing changes it before the branch.
 - `+0x1f80000` to `+0x1fe0018`: memory and directory (`memory_read_accessible`, `fetchop_flush`,
   `log_md_errors`, `memerror_sbe_intr`, `check_dir_access`, `get_dir_ent`).
 
