@@ -4170,7 +4170,7 @@ IP27/unix	kernel	n64	.text	0xc00000000001a228	52	restore_rsa_fp	symtab	56a3d8ce7
 IP27/unix	kernel	n64	.text	0xc00000000001a25c	184	syscall_save_rsa	symtab	ebe3e2b91ac7		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001a320	1072	in_cksum_sub	symtab	345c882c1b77		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001a434	796	in_cksum_pref	symtab	ad10fda21bca		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000001a750	544	start	symtab	a77ee005009a		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000001a750	544	start	symtab	a77ee005009a		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/unix	kernel	n64	.text	0xc00000000001a958	24	proc1	symtab	69302c1728cf		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001a970	168	mlclosure	symtab	13e78c22ee16		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001aa18	8	silence_all_audio	symtab	78aa5094d5ec	shared-address	in	undocumented		
@@ -4204,7 +4204,7 @@ IP27/unix	kernel	n64	.text	0xc00000000001cabc	84	router_nic_get	symtab	515ff84d7
 IP27/unix	kernel	n64	.text	0xc00000000001cb10	192	get_routername	symtab	599052be1dba		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001cbd0	568	vector_write_node	symtab	dd3b5b9b7d78		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000001ce08	548	vector_read_node	symtab	b324ba074f6b		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc00000000001d02c	488	vector_exch_node	symtab	e50ea40c6cde		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000001d02c	488	vector_exch_node	symtab	e50ea40c6cde		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/unix	kernel	n64	.text	0xc00000000001d214	72	vector_read	symtab	9a278160ea6e		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001d25c	72	vector_write	symtab	f7bca38f05c5		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001d2a4	72	vector_exch	symtab	6a8367ec40fa		in	undocumented		
@@ -4386,12 +4386,12 @@ IP27/unix	kernel	n64	.text	0xc000000000025ae8	252	do_init_hub_provider_pebrick	s
 IP27/unix	kernel	n64	.text	0xc000000000025be4	84	init_hub_provider	symtab	a1ab80c6013d		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000025c38	448	init_all_devices	symtab	375dd5b62d7e		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000025df8	744	devnamefromarcs	symtab	4acceeb44c9e		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000260e0	1056	mlreset	symtab	a30c14a2c362		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc0000000000260e0	1056	mlreset	symtab	a30c14a2c362		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000026500	736	init_platform_nodepda	symtab	03e7836695eb		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000267e0	380	init_platform_pda	symtab	79f41c132332		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000002695c	184	protect_hub_calias	symtab	65114cf95368		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000026a14	184	protect_nmi_handler_data	symtab	bc1662227105		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000026acc	1000	per_hub_init	symtab	876055da2c48		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc000000000026acc	1000	per_hub_init	symtab	876055da2c48		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000026eb4	268	per_cpu_init	symtab	eee8466580f4		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000026fc0	8	allowintrs	symtab	78aa5094d5ec		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000026fc8	176	cnodetocpu	symtab	992c14a34fc3		in	undocumented		
@@ -4410,22 +4410,22 @@ IP27/unix	kernel	n64	.text	0xc000000000027508	8	get_except_norm	symtab	775191409
 IP27/unix	kernel	n64	.text	0xc000000000027574	96	update_node_information	symtab	3f763c21f286		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000275d4	44	get_region	symtab	ec1ba5c9d2b8		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000027600	24	nasid_to_region	symtab	5bea195aac3f		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000027670	252	hub_ioerror_local	symtab	d2982d7331c6		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000027670	252	hub_ioerror_local	symtab	d2982d7331c6		in	named-only	chips/hub/README.md#error-and-interrupt-handling-established-unless-marked	Error and interrupt handling (established unless marked)
 IP27/unix	kernel	n64	.text	0xc00000000002776c	124	hub_xp_error_handler	symtab	1badca063856		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc0000000000277e8	196	hub_dma_enabled	symtab	425bc5bf53aa		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc0000000000278ac	472	hub_widgetdev_shutdown	symtab	723309ed28d5		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000027a84	160	hub_widgetdev_enable	symtab	9b0bddcac80e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc000000000027b24	196	hub_error_devenable	symtab	ef8f7e2680ad		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc000000000027b24	196	hub_error_devenable	symtab	ef8f7e2680ad		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000027be8	104	is_widget_pio_enabled	symtab	9f7cef361f5c		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000027c50	1028	hub_ioerror_handler	symtab	55654bb2b005		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000028054	3312	crbx	symtab	b253c6579be3		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc000000000028d44	140	hub_merge_clean	symtab	c6c1c5d88188		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000028dd0	252	hub_init_ifdr_war	symtab	14d2ee80bf46		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000028d44	140	hub_merge_clean	symtab	c6c1c5d88188		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
+IP27/unix	kernel	n64	.text	0xc000000000028dd0	252	hub_init_ifdr_war	symtab	14d2ee80bf46		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
 IP27/unix	kernel	n64	.text	0xc000000000028ecc	112	hub_ifdr_check_value	symtab	f92092e12197		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000028f3c	236	hub_ifdr_fix_value	symtab	7118bc70d6b6		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000028f3c	236	hub_ifdr_fix_value	symtab	7118bc70d6b6		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000029028	156	hub_setup_kick	symtab	149dd5e34a5b		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000290c4	128	kick_action	symtab	c8d27f7cb941		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000029144	1308	hub_dmatimeout_kick	symtab	3dc3f7fbecba		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000029144	1308	hub_dmatimeout_kick	symtab	3dc3f7fbecba		in	named-only	chips/hub/README.md#lb-pi-space-registers-outside-the-contiguous-map	LB: PI-space registers outside the contiguous map
 IP27/unix	kernel	n64	.text	0xc000000000029660	424	hub_widget_reset	symtab	d347d4e68106		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000029808	12	he_arcs_set_vectors	symtab	55dc006664bc		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000029978	32	he_arcs_restart	symtab	571f127ddb1c		in	undocumented		
@@ -4538,10 +4538,10 @@ IP27/unix	kernel	n64	.text	0xc00000000002f8a8	244	save_err_io_comp	symtab	f114c6
 IP27/unix	kernel	n64	.text	0xc00000000002f99c	8	save_err_router_comp	symtab	78aa5094d5ec		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000002f9a4	232	save_err_xbow_comp	symtab	cb8e8cdb7635		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000002fa8c	256	save_hub_pi_error	symtab	0371e6b6ef81		in	named-only	chips/bedrock/README.md#error-registers-refused-or-timed-out-writes-and-failed-reads	Error registers: refused or timed-out writes and failed reads
-IP27/unix	kernel	n64	.text	0xc00000000002fb8c	108	save_hub_md_error	symtab	7d05efaa9336		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000002fb8c	108	save_hub_md_error	symtab	7d05efaa9336		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc00000000002fbf8	216	save_hub_io_error	symtab	fb7f5e87dedd		in	named-only	chips/bedrock/README.md#error-registers-refused-or-timed-out-writes-and-failed-reads	Error registers: refused or timed-out writes and failed reads
-IP27/unix	kernel	n64	.text	0xc00000000002fcd0	184	save_hub_err_ext	symtab	4ca28d46b9d2		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000002fd88	88	save_hub_ni_error	symtab	d81aa0cf60dc		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000002fcd0	184	save_hub_err_ext	symtab	4ca28d46b9d2		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
+IP27/unix	kernel	n64	.text	0xc00000000002fd88	88	save_hub_ni_error	symtab	d81aa0cf60dc		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/unix	kernel	n64	.text	0xc00000000002fde0	296	save_hub_err	symtab	f076089c5b2c		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000002ff08	192	save_bridge_err	symtab	1086e246d410		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000002ffc8	180	save_xbow_err	symtab	e562154e597e		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
@@ -4557,7 +4557,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003042c	404	show_err_node_comp	symtab	d3aa
 IP27/unix	kernel	n64	.text	0xc0000000000305c0	996	show_cache_err	symtab	32d8b7d9c3e2		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000309a4	132	show_hub_err	symtab	e4a42cde582b		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000030a28	664	show_hub_pi_err	symtab	d8e89d84af97		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc000000000030cc0	1160	show_hub_md_err	symtab	ab203d8805f6		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000030cc0	1160	show_hub_md_err	symtab	ab203d8805f6		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000031148	912	show_hub_io_err	symtab	9aaa5e332b93		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000314d8	152	get_ni_port_error_bit	symtab	0bc7268686d1		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000031570	156	show_ni_port_error	symtab	6092c00a6fb2		in	undocumented		
@@ -4575,14 +4575,14 @@ IP27/unix	kernel	n64	.text	0xc000000000032894	388	hubii_eint_init	symtab	bddbbd4
 IP27/unix	kernel	n64	.text	0xc000000000032a18	272	hubni_eint_init	symtab	9743c2c2920a		in	named-only	chips/bedrock/README.md#interrupts	Interrupts
 IP27/unix	kernel	n64	.text	0xc000000000032b28	728	hubpi_eint_handler	symtab	43d008fb5bee		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000032e00	320	hubni_print_state	symtab	f1020444a734		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc000000000032f40	604	check_ni_errors	symtab	02217141341d		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003319c	392	hubni_error_handler	symtab	fb5ccc13b46d		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000032f40	604	check_ni_errors	symtab	02217141341d		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
+IP27/unix	kernel	n64	.text	0xc00000000003319c	392	hubni_error_handler	symtab	fb5ccc13b46d		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000033324	36	hubni_eint_handler	symtab	f54be9f6efa7		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000033348	36	hubni_rmteint_handler	symtab	4ae2f25ae5d7		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003336c	316	klsave_md_registers	symtab	c0aa69e82f67		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc0000000000334a8	160	save_md_error	symtab	829d9260cbbf		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000033548	40	probe_md_errors	symtab	b047818e4069		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000033570	552	log_md_errors	symtab	28e8961c07e5		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc000000000033570	552	log_md_errors	symtab	28e8961c07e5		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000033798	588	check_md_errors	symtab	38677a2f0ead		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000339e4	64	md_err_log_first	symtab	00159529999e		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000033a24	168	md_err_log_next	symtab	0064def5aba4		in	undocumented		
@@ -4592,7 +4592,7 @@ IP27/unix	kernel	n64	.text	0xc000000000033bbc	136	md_err_log_new	symtab	e438963f
 IP27/unix	kernel	n64	.text	0xc000000000033c44	360	klsave_spool_registers	symtab	dc5480023638		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000033dac	680	hubpi_spool_get_next	symtab	a721bfddd77e		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000034054	600	huberror_process_rrb_error	symtab	94fd20a4ef8f		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000342ac	556	huberror_process_wrb_error	symtab	37bfe71a6be7		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000342ac	556	huberror_process_wrb_error	symtab	37bfe71a6be7		in	named-only	chips/hub/README.md#error-and-interrupt-handling-established-unless-marked	Error and interrupt handling (established unless marked)
 IP27/unix	kernel	n64	.text	0xc0000000000344d8	192	huberror_process_stack_entry	symtab	b2f3a4974638		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000034598	208	process_error_spool	symtab	c84c8eb7e5ec		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000034668	808	get_matching_spool_addr	symtab	5bcdff9f3b02		in	named-only	docs/open-questions.md#open-questions	Open questions
@@ -4626,12 +4626,12 @@ IP27/unix	kernel	n64	.text	0xc00000000003621c	572	error_check_poisoned_state	sym
 IP27/unix	kernel	n64	.text	0xc000000000036458	312	handle_hspec_buserr	symtab	4acf5a82d5a7		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000036590	444	handle_mspec_buserr	symtab	cbd9f446f419		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003674c	588	handle_io_buserr	symtab	e0a2e27602b7		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP27/unix	kernel	n64	.text	0xc000000000036998	1208	handle_uncac_buserr	symtab	f3a4aab957c8		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc000000000036998	1208	handle_uncac_buserr	symtab	f3a4aab957c8		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000036e50	1644	handle_cac_buserr	symtab	ee54dfa5189a		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc0000000000374bc	312	dump_crb	symtab	5489a722cda5		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc0000000000375f4	380	kl_ioerror_handler	symtab	792ca9dd2802		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000375f4	380	kl_ioerror_handler	symtab	792ca9dd2802		in	named-only	chips/hub/README.md#pi-error-status-error-stack	PI error status, error stack
 IP27/unix	kernel	n64	.text	0xc000000000037770	68	kl_panic_setup	symtab	a86cf0204ad5		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000377b4	48	kl_panic	symtab	d58dc8681f34		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000377b4	48	kl_panic	symtab	d58dc8681f34		in	named-only	chips/hub/README.md#pi-error-interrupt-pending-0x400-mask-0x408-0x410	PI error interrupt pending (`0x400`), mask (`0x408`, `0x410`)
 IP27/unix	kernel	n64	.text	0xc000000000037a5c	124	error_clean_cache_line	symtab	a04dfb26ae8f		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000037ad8	88	initiator_to_cpunum	symtab	c60fcc887f59		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000037b30	368	poison_page	symtab	0420ee502111		in	undocumented		
@@ -4639,7 +4639,7 @@ IP27/unix	kernel	n64	.text	0xc000000000037ca0	68	error_page_discard	symtab	8bdf2
 IP27/unix	kernel	n64	.text	0xc000000000037ce4	28	sn0_error_mark_page	symtab	a82c9ec7bb5f		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000037d00	88	sn0_error_reclaim_page	symtab	60ca3fb87b5e		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000037d58	8	error_reg_partition_handler	symtab	aa4889351fe8		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000037d60	128	error_check_part_page	symtab	e2906ec969ff		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000037d60	128	error_check_part_page	symtab	e2906ec969ff		in	named-only	chips/hub/README.md#pi-error-status-error-stack	PI error status, error stack
 IP27/unix	kernel	n64	.text	0xc000000000037de0	72	partition_handle_error	symtab	7f46021ff674		in	named-only	chips/bedrock/README.md#what-sets-each-bit-and-what-is-latched	What sets each bit and what is latched
 IP27/unix	kernel	n64	.text	0xc000000000037e28	108	errste_prfunc	symtab	7b2030b67120		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000037e94	40	errorste_reset	symtab	f61e992f67b7		in	undocumented		
@@ -4649,7 +4649,7 @@ IP27/unix	kernel	n64	.text	0xc000000000037f58	436	intr_init_vecblk	symtab	24a4aa
 IP27/unix	kernel	n64	.text	0xc000000000038340	40	intr_reserve_level	symtab	035b9963526d		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000038368	40	intr_unreserve_level	symtab	f7a14b197725		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000383ec	668	intr_connect_level	symtab	dd836e80345f		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP27/unix	kernel	n64	.text	0xc000000000038688	428	intr_disconnect_level	symtab	2f7c12d5711c		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000038688	428	intr_disconnect_level	symtab	2f7c12d5711c		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP27/unix	kernel	n64	.text	0xc000000000038834	364	do_intr_block_bit	symtab	9c8bd6e24d45		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc0000000000389a0	28	intr_block_bit	symtab	c18f5276146d		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000389bc	28	intr_unblock_bit	symtab	e209215d8e60		in	undocumented		
@@ -4704,7 +4704,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003ab0c	8	ip28_enable_ucmem	symtab	78aa509
 IP27/unix	kernel	n64	.text	0xc00000000003ab0c	8	ip28_return_ucmem	symtab	78aa5094d5ec	shared-address	in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003ab14	468	bte_error_handler	symtab	942c43bbee42		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000003ace8	308	bte_crb_error_handler	symtab	a6a8b7e3e887		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc00000000003ae1c	944	bte_stall_node	symtab	8de5cc844c93		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003ae1c	944	bte_stall_node	symtab	8de5cc844c93		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
 IP27/unix	kernel	n64	.text	0xc00000000003b1cc	292	bte_bpush_war	symtab	f63eb1c49c47		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b2f0	28	spl0	symtab	77e42c3ec2cb		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	spl1	symtab	d20175b8aee2	shared-address	in	undocumented		
@@ -4735,7 +4735,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003b3f4	28	splxecc	symtab	50d1a155518b	sha
 IP27/unix	kernel	n64	.text	0xc00000000003b410	32	isspl0	symtab	9bdb1538e91c		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b430	8	delay_for_intr	symtab	78aa5094d5ec		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b438	8	hubio_init	symtab	78aa5094d5ec		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003b5a0	792	hub_piomap_alloc	symtab	0fc0a2ee8e00		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc00000000003b5a0	792	hub_piomap_alloc	symtab	0fc0a2ee8e00		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc00000000003b8b8	236	hub_piomap_free	symtab	700a3c1012d3		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000003b9a4	96	hub_piomap_addr	symtab	1349f9e56ec6		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003ba04	8	hub_piomap_done	symtab	78aa5094d5ec		in	undocumented		
@@ -4787,8 +4787,8 @@ IP27/unix	kernel	n64	.text	0xc00000000003cbc0	36	hub_slot_to_crossbow	symtab	112
 IP27/unix	kernel	n64	.text	0xc00000000003cbe4	40	router_slotbits_to_slot	symtab	e3ae1dd4443d		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003cc0c	40	meta_router_slotbits_to_slot	symtab	73c94a5ff325		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003cc9c	156	get_slotname	symtab	2d4c894930a7		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003cd38	44	get_node_slotid	symtab	5a776160aeb4		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003cd64	36	get_my_slotid	symtab	6715f94df110		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003cd38	44	get_node_slotid	symtab	5a776160aeb4		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
+IP27/unix	kernel	n64	.text	0xc00000000003cd64	36	get_my_slotid	symtab	6715f94df110		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc00000000003cd88	36	get_node_crossbow	symtab	7f7507e23e62		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003cdac	48	get_my_slotname	symtab	a73a35930a07		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003cddc	28	get_widget_slotnum	symtab	1573fae26c64		in	undocumented		
@@ -4830,7 +4830,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003e0a8	136	sLine	symtab	22ae3f295db1		in	
 IP27/unix	kernel	n64	.text	0xc00000000003e130	32	sCacheSize	symtab	8d2d001b2026		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003e1f8	368	llp_pfail_barrier	symtab	92aa72bc826a		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003e368	188	llp_pfail_getmode	symtab	04054e405507		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003e424	792	llp_pfail_intr	symtab	0c48287ca601		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003e424	792	llp_pfail_intr	symtab	0c48287ca601		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/unix	kernel	n64	.text	0xc00000000003e73c	196	llp_pfail_switch	symtab	489da709a4cf		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003e800	28	syssgi_pf8	symtab	3a0ae9275b99		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003e81c	28	syssgi_pf16	symtab	dad66742b26e		in	undocumented		
@@ -4842,7 +4842,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003f720	128	sysctlr_rps_query	symtab	8631a
 IP27/unix	kernel	n64	.text	0xc00000000003f7a0	496	sysctlr_init	symtab	bafc5908801a		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003f990	92	sysctlr_power_off	symtab	07e6e2c2ae0a		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003f9ec	616	sysctlr_keepalive	symtab	a26aad5f53b8		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003fc54	100	force_system_shutdown	symtab	cf4c884bd931		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003fc54	100	force_system_shutdown	symtab	cf4c884bd931		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/unix	kernel	n64	.text	0xc00000000003ffd8	148	xbox_sysctlr_rps_query	symtab	36b11def101c		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004006c	216	xbox_sysctlr_init	symtab	2537d798271c		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000040150	144	encode_int_serial	symtab	94215354cacb		in	undocumented		
@@ -5048,7 +5048,7 @@ IP27/unix	kernel	n64	.text	0xc000000000049974	376	mdir_xlate_addr_mem	symtab	cbc
 IP27/unix	kernel	n64	.text	0xc000000000049aec	260	mdir_xlate_addr_pdir	symtab	4f8740ae0e81		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000049bf0	224	mdir_xlate_addr_sdir	symtab	d79ee0f8491f		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000049e74	2596	memerror_sbe_intr	symtab	f636c6f4789f		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc00000000004a898	80	install_eccintr	symtab	60401218ddc9		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000004a898	80	install_eccintr	symtab	60401218ddc9		in	named-only	chips/hub/README.md#interrupts-to-the-processor	Interrupts to the processor
 IP27/unix	kernel	n64	.text	0xc00000000004a8e8	104	memerror_get_stats	symtab	e28d3641359d		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004a950	112	intrgroup_init	symtab	5d4aa07ec5c8		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004a9c0	204	intrgroup_alloc	symtab	c9971420b6c9		in	undocumented		
@@ -5529,7 +5529,7 @@ IP27/unix	kernel	n64	.text	0xc00000000006a76c	596	sn0drv_attach	symtab	523efd55d
 IP27/unix	kernel	n64	.text	0xc00000000006a9c0	28	sndrv_attach	symtab	fc6d6d911582		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006a9dc	44	sn0drv_open	symtab	d548db308532		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006aa08	8	sn0drv_close	symtab	87506497337c		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000006aa10	2252	sn0drv_ioctl	symtab	636163b17102		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000006aa10	2252	sn0drv_ioctl	symtab	636163b17102		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc00000000006b2dc	176	check_router	symtab	f3e15430cc00		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006b38c	196	do_reg_op	symtab	100b3fa36b6c		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006b450	268	do_router_op	symtab	ba74ae4d6b6d		in	undocumented		
@@ -6243,11 +6243,11 @@ IP27/unix	kernel	n64	.text	0xc00000000009aa44	36	elscuart_flush	symtab	5d0eac956
 IP27/unix	kernel	n64	.text	0xc00000000009aa68	40	elsc_mfg_nic_get	symtab	7116fe2f95ce		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009aa90	60	elsc_ust_write	symtab	4dfada1babf7		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009aacc	80	elsc_ust_read	symtab	1c7b655e366f		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000009ab1c	136	i2c_init	symtab	2a14521c9980		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000009ab1c	136	i2c_init	symtab	2a14521c9980		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc00000000009aba4	192	i2c_probe	symtab	31fee44b9398		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000009ac64	528	i2c_arb	symtab	5fb3aaab8a67		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000009ae74	600	i2c_master_xmit	symtab	f468094e27e4		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000009b0cc	680	i2c_master_recv	symtab	bf9331c221a2		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000009ac64	528	i2c_arb	symtab	5fb3aaab8a67		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
+IP27/unix	kernel	n64	.text	0xc00000000009ae74	600	i2c_master_xmit	symtab	f468094e27e4		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
+IP27/unix	kernel	n64	.text	0xc00000000009b0cc	680	i2c_master_recv	symtab	bf9331c221a2		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc00000000009b374	964	i2c_master_xmit_recv	symtab	237c4cf5426b		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009b738	132	i2c_errmsg	symtab	e1be5b7ea39d		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009b7cc	348	i2cinit	symtab	394c27ad473b		in	undocumented		
@@ -7092,7 +7092,7 @@ IP27/unix	kernel	n64	.text	0xc00000000011e868	204	socket	symtab	4d91ecf993ba		in
 IP27/unix	kernel	n64	.text	0xc00000000011e934	200	bind	symtab	5d66d449decc		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000011e9fc	84	listen	symtab	a183272154a6		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000011ea50	172	accept	symtab	8eb4ab9a079f		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000011eafc	148	connect	symtab	bb77fb8db213		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000011eafc	148	connect	symtab	bb77fb8db213		in	named-only	chips/hub/README.md#interrupts-to-the-processor	Interrupts to the processor
 IP27/unix	kernel	n64	.text	0xc00000000011eb90	152	sendto	symtab	91cce618cc23		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000011ec28	144	send	symtab	5e444ff028fe		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000011ed48	240	sendmsg	symtab	351f18eeb486		in	undocumented		
@@ -7503,7 +7503,7 @@ IP27/unix	kernel	n64	.text	0xc000000000153244	516	kf_analysis_tab_print	symtab	5
 IP27/unix	kernel	n64	.text	0xc000000000153448	228	kf_hint_set	symtab	3ccf5d69b7f1		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000015352c	124	kf_cpu_disable	symtab	f8f8e0c257cc		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001535a8	116	translate_hub_mcreg	symtab	7306c15a40eb		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000015361c	660	kf_memory_bank_disable	symtab	91722e4c385c		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000015361c	660	kf_memory_bank_disable	symtab	91722e4c385c		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc0000000001538b0	140	kf_component_index_get	symtab	9f9563a36ddf		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000015393c	92	kf_pci_component_disable	symtab	6e807a744105		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000153998	224	kf_print	symtab	e267a74f608c		in	undocumented		
@@ -7512,7 +7512,7 @@ IP27/unix	kernel	n64	.text	0xc000000000153ae8	152	kf_fru_begin_msg_print	symtab	
 IP27/unix	kernel	n64	.text	0xc000000000153b80	356	kf_board_analyze	symtab	d8b546946e3d		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000153ce4	504	kf_comp_analyze	symtab	0b384eabf661		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000153edc	496	kf_router_analyze	symtab	75ac44ea21a0		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001540cc	876	kf_hub_analyze	symtab	4d706ac4d4a1		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001540cc	876	kf_hub_analyze	symtab	4d706ac4d4a1		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
 IP27/unix	kernel	n64	.text	0xc000000000154438	1484	kf_pi_analyze	symtab	503c72491380		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000154a04	144	kf_mem_error_get	symtab	4c0335f598c4		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000154c78	968	kf_md_analyze	symtab	faf69ecf40a4		in	undocumented		
@@ -9095,7 +9095,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001e5890	96	doacvec	symtab	911d6561f108		in
 IP27/unix	kernel	n64	.text	0xc0000000001e58f0	116	panic_lock	symtab	41b54369d7b5		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e5964	68	panic_unlock	symtab	4b70466b9e2b		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e59a8	12	set_node_panic_flag	symtab	f54d1af48be8		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001e59b4	192	enter_panic_mode	symtab	65081fa86766		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001e59b4	192	enter_panic_mode	symtab	65081fa86766		in	named-only	chips/hub/README.md#pi-error-interrupt-pending-0x400-mask-0x408-0x410	PI error interrupt pending (`0x400`), mask (`0x408`, `0x410`)
 IP27/unix	kernel	n64	.text	0xc0000000001e5a74	32	exit_panic_mode	symtab	fdb517e881f1		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e5a94	8	in_panic_mode	symtab	8bffb2b7e0e4		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e5a9c	12	enter_promlog_mode	symtab	393f671f2027		in	undocumented		
@@ -9220,7 +9220,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001f456c	596	vn_remove_audit_extended	symta
 IP27/unix	kernel	n64	.text	0xc0000000001f47c0	44	creat	symtab	76a77878bc02		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f47ec	608	copen	symtab	c1acee1870da		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f4a4c	100	close	symtab	f3399c991bc1		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001f4fec	28	read	symtab	d34d5a23242c		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
+IP27/unix	kernel	n64	.text	0xc0000000001f4fec	28	read	symtab	d34d5a23242c		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP27/unix	kernel	n64	.text	0xc0000000001f5008	28	pread	symtab	001f3bec7c4b		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f54ec	28	write	symtab	01a427135297		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f5508	28	pwrite	symtab	5a9fbe54bffc		in	undocumented		
@@ -10312,7 +10312,7 @@ IP27/unix	kernel	n64	.text	0xc00000000026c1a0	840	lzf_comp	symtab	e04d95e0757b		
 IP27/unix	kernel	n64	.text	0xc00000000026c4e8	332	lzf_uncomp	symtab	22857a1e3b31		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000026c634	140	migr_intr_prologue_handler	symtab	00d648c341c4		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000026c6c0	564	migr_intr_handler	symtab	bc2ac0c5b686		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000026c940	724	migr_refcnt_init	symtab	0cf929774046		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000026c940	724	migr_refcnt_init	symtab	0cf929774046		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc00000000026cc14	176	migr_refcnt_dealloc	symtab	17b3a3c69216		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000026ccc4	296	migr_refcnt_get_offsets	symtab	73e42dc57d29		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000026cdec	1016	migr_refcnt_update_counters	symtab	31d6f486b4db		in	undocumented		
@@ -10470,7 +10470,7 @@ IP27/unix	kernel	n64	.text	0xc00000000027a0f8	108	mem_refcnt_open	symtab	63e76ac
 IP27/unix	kernel	n64	.text	0xc00000000027a164	8	mem_refcnt_close	symtab	87506497337c		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000027a16c	156	mem_refcnt_mmap	symtab	39829c68335a		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000027a208	8	mem_refcnt_unmap	symtab	87506497337c		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000027a210	532	mem_refcnt_ioctl	symtab	03cb2ae15f4a		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000027a210	532	mem_refcnt_ioctl	symtab	03cb2ae15f4a		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc00000000027a424	1052	mem_tick_init_node	symtab	a5c5f9901586		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000027a840	124	mem_tick_init	symtab	8e7dbbdeea06		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000027a8bc	556	mem_tick	symtab	74b0328b56be		in	undocumented		
@@ -10546,7 +10546,7 @@ IP27/unix	kernel	n64	.text	0xc000000000284804	44	migr_policy_refcnt_init	symtab	
 IP27/unix	kernel	n64	.text	0xc000000000284958	44	plac_policy_roundrobin_init	symtab	2da070583d6f		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000284de8	44	migr_policy_default_init	symtab	0279156fdc77		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000284f74	828	migr_parms_check	symtab	d5d88acffca2		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000002852b0	1216	numa_tune	symtab	6283cee1e226		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000002852b0	1216	numa_tune	symtab	6283cee1e226		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc000000000285770	44	plac_policy_firsttouch_init	symtab	cccb9007cb6e		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000285e80	752	get_shortest_paths_from_node	symtab	bdb4517caa12		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000286170	8	initsplocks	symtab	f211f0c174df		in	undocumented		
@@ -12357,9 +12357,9 @@ IP27/unix	kernel	n64	.text	0xc0000000003964bc	12	gfx_flow_credit_total_get	symta
 IP27/unix	kernel	n64	.text	0xc0000000003964c8	12	gfx_flow_credit_bias_get	symtab	6c27d0b6a88e		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003964d4	72	gfx_flow_credit_count_get	symtab	abc82ab97587		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039651c	8	gfx_flow_detach_requires_credit_flow_disable	symtab	a7e7ca11a6b8		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000396524	344	gfx_flow_attach_me	symtab	ac8d7a099970		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000396524	344	gfx_flow_attach_me	symtab	ac8d7a099970		in	named-only	chips/hub/README.md#addresses-established	Addresses (established)
 IP27/unix	kernel	n64	.text	0xc00000000039667c	76	gfx_flow_attach_me_finish	symtab	288ddc906735		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003966c8	308	gfx_flow_detach_me	symtab	3046e9a7c9c1		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003966c8	308	gfx_flow_detach_me	symtab	3046e9a7c9c1		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP27/unix	kernel	n64	.text	0xc0000000003967fc	68	gfx_flow_am_i_attached	symtab	69360de397b3		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000396840	24	gfx_flow_flush_my_wg	symtab	a73e98930128		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000396858	24	gfx_flow_set_cpu_attachment	symtab	e8cbd9918b0d		in	undocumented		
@@ -14190,7 +14190,7 @@ IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64		0x0		sock
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0xcc	200	bind	dwarf+symtab	5d0c159233fe		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x194	84	listen	dwarf+symtab	2cf534583560		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1e8	172	accept	dwarf+symtab	c9a98f93ddea		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x294	148	connect	dwarf+symtab	881643b5ded2		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x294	148	connect	dwarf+symtab	881643b5ded2		in	named-only	chips/hub/README.md#interrupts-to-the-processor	Interrupts to the processor
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x328	152	sendto	dwarf+symtab	17235241cc55		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x3c0	144	send	dwarf+symtab	99c9e0742e41		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x450	144	irix5_to_msghdr	dwarf+symtab	82c698fc3338		in	undocumented		
@@ -16177,7 +16177,7 @@ IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0x1b10	228	kf_hint_set	dwarf+symtab	67873c832c86		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0x1bf4	124	kf_cpu_disable	dwarf+symtab	7f32fbc174d0		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0x1c70	116	translate_hub_mcreg	dwarf+symtab	7306c15a40eb		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0x1ce4	660	kf_memory_bank_disable	dwarf+symtab	61bafa795db0		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0x1ce4	660	kf_memory_bank_disable	dwarf+symtab	61bafa795db0		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0x1f78	140	kf_component_index_get	dwarf+symtab	9f9563a36ddf		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0x2004	92	kf_pci_component_disable	dwarf+symtab	34dfacc6f519		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0x2060	224	kf_print	dwarf+symtab	4327b4d5b13f		in	undocumented		
@@ -16186,7 +16186,7 @@ IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-object	n64	.text	0
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_node.o)	kernel-object	n64		0x0		kf_board_analyze	dwarf+symtab			in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_node.o)	kernel-object	n64	.text	0x164	504	kf_comp_analyze	dwarf+symtab	2d6d7913f504		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_node.o)	kernel-object	n64	.text	0x35c	496	kf_router_analyze	dwarf+symtab	2984b180d9f3		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_node.o)	kernel-object	n64	.text	0x54c	876	kf_hub_analyze	dwarf+symtab	b8f217573a2f		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_node.o)	kernel-object	n64	.text	0x54c	876	kf_hub_analyze	dwarf+symtab	b8f217573a2f		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_node.o)	kernel-object	n64	.text	0x8b8	1484	kf_pi_analyze	dwarf+symtab	90c8514dc70c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_node.o)	kernel-object	n64	.text	0xe84	144	kf_mem_error_get	dwarf+symtab	739acccddf9c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_node.o)	kernel-object	n64	.text	0xf14	228	kf_check_scache_way_error	dwarf+symtab	9d1eb0605847		in	undocumented		
@@ -16791,11 +16791,11 @@ IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgsubr.o)	kernel-object	n64	.text	0x6c4	35
 IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgsubr.o)	kernel-object	n64	.text	0x824	80	hwgfs_chmod	dwarf+symtab	f4a52ca6fcc2		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgsubr.o)	kernel-object	n64	.text	0x874	140	hwgfs_vertex_destroy	dwarf+symtab	88a5892fb865		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgsubr.o)	kernel-object	n64	.text	0x900	36	hwgfs_vertex_clone	dwarf+symtab	855b9e92a9eb		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64		0x0		i2c_init	dwarf+symtab			in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64		0x0		i2c_init	dwarf+symtab			in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64	.text	0x88	192	i2c_probe	dwarf+symtab	4b91eeb7deb7		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64	.text	0x148	528	i2c_arb	dwarf+symtab	186b330652c4		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64	.text	0x358	600	i2c_master_xmit	dwarf+symtab	4d5a476b6df8		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64	.text	0x5b0	680	i2c_master_recv	dwarf+symtab	0a2caed8504b		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64	.text	0x148	528	i2c_arb	dwarf+symtab	186b330652c4		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
+IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64	.text	0x358	600	i2c_master_xmit	dwarf+symtab	4d5a476b6df8		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
+IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64	.text	0x5b0	680	i2c_master_recv	dwarf+symtab	0a2caed8504b		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64	.text	0x858	964	i2c_master_xmit_recv	dwarf+symtab	21775b7473a8		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-object	n64	.text	0xc1c	132	i2c_errmsg	dwarf+symtab	5d02d996f77c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64		0x0		kqueue_first	dwarf			in	undocumented		
@@ -18475,7 +18475,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x10a8	52	restore_
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x10dc	184	syscall_save_rsa	dwarf+symtab	ebe3e2b91ac7		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x11a0	1072	in_cksum_sub	dwarf+symtab	345c882c1b77		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x12b4	796	in_cksum_pref	symtab	ad10fda21bca		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x15d0	544	start	dwarf+symtab	e656b3ce291c		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x15d0	544	start	dwarf+symtab	e656b3ce291c		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x17d8	24	proc1	symtab	69302c1728cf		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x17f0	168	mlclosure	dwarf+symtab	a1f795dec70c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1898	8	silence_all_audio	dwarf+symtab	78aa5094d5ec	shared-address	in	undocumented		
@@ -18518,7 +18518,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x393c	84	router_n
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3990	192	get_routername	dwarf+symtab	5071ded7d04a		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a50	568	vector_write_node	dwarf+symtab	415fa9068444		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3c88	548	vector_read_node	dwarf+symtab	756dfa18fb4c		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3eac	488	vector_exch_node	dwarf+symtab	a94ae3a5fa0d		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3eac	488	vector_exch_node	dwarf+symtab	a94ae3a5fa0d		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x4094	72	vector_read	dwarf+symtab	bc8b87708e2b		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x40dc	72	vector_write	dwarf+symtab	bc8b87708e2b		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x4124	72	vector_exch	dwarf+symtab	bc8b87708e2b		in	undocumented		
@@ -18730,12 +18730,12 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xc968	252	do_init
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xca64	84	init_hub_provider	dwarf+symtab	7565a2fefdec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xcab8	448	init_all_devices	dwarf+symtab	a3325e46a7f3		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xcc78	744	devnamefromarcs	dwarf+symtab	75440dd5d458		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xcf60	1056	mlreset	dwarf+symtab	0e8c017b2c3e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xcf60	1056	mlreset	dwarf+symtab	0e8c017b2c3e		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xd380	736	init_platform_nodepda	dwarf+symtab	7f097916b26e		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xd660	380	init_platform_pda	dwarf+symtab	65ed2cb589ea		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xd7dc	184	protect_hub_calias	dwarf+symtab	50a756551b4c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xd894	184	protect_nmi_handler_data	dwarf+symtab	3a23de35f5da		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xd94c	1000	per_hub_init	dwarf+symtab	3e1f60d0ccad		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xd94c	1000	per_hub_init	dwarf+symtab	3e1f60d0ccad		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xdd34	268	per_cpu_init	dwarf+symtab	14833b73ff90		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xde40	8	allowintrs	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xde48	176	cnodetocpu	dwarf+symtab	e3347e67a3b3		in	undocumented		
@@ -18757,22 +18757,22 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe3f4	96	update_n
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe454	44	get_region	dwarf+symtab	5f5b9c81a2ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe480	24	nasid_to_region	dwarf+symtab	5bea195aac3f		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe498	88	redo_nodes	dwarf	b61ee64bdd3b		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe4f0	252	hub_ioerror_local	dwarf+symtab	27a6321ee773		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe4f0	252	hub_ioerror_local	dwarf+symtab	27a6321ee773		in	named-only	chips/hub/README.md#error-and-interrupt-handling-established-unless-marked	Error and interrupt handling (established unless marked)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe5ec	124	hub_xp_error_handler	dwarf+symtab	1e1d5dde9d60		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe668	196	hub_dma_enabled	dwarf+symtab	c94e65d763ce		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe72c	472	hub_widgetdev_shutdown	dwarf+symtab	9b92ce5e4087		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe904	160	hub_widgetdev_enable	dwarf+symtab	1d59b65a901e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe9a4	196	hub_error_devenable	dwarf+symtab	e41553c53de8		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe9a4	196	hub_error_devenable	dwarf+symtab	e41553c53de8		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xea68	104	is_widget_pio_enabled	dwarf+symtab	22e0f0219005		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xead0	1028	hub_ioerror_handler	dwarf+symtab	c8788759a583		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xeed4	3312	crbx	dwarf+symtab	bf6b7ceb6840		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfbc4	140	hub_merge_clean	dwarf+symtab	24254022d50a		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfc50	252	hub_init_ifdr_war	dwarf+symtab	c33f7a691317		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfbc4	140	hub_merge_clean	dwarf+symtab	24254022d50a		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfc50	252	hub_init_ifdr_war	dwarf+symtab	c33f7a691317		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfd4c	112	hub_ifdr_check_value	dwarf+symtab	b067b0dc3f96		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfdbc	236	hub_ifdr_fix_value	dwarf+symtab	60505ff9f70d		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfdbc	236	hub_ifdr_fix_value	dwarf+symtab	60505ff9f70d		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfea8	156	hub_setup_kick	dwarf+symtab	e93f3a9c37f7		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xff44	128	kick_action	dwarf+symtab	7edfe0b0273a		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xffc4	1308	hub_dmatimeout_kick	dwarf+symtab	8b7a2ea6a63f		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xffc4	1308	hub_dmatimeout_kick	dwarf+symtab	8b7a2ea6a63f		in	named-only	chips/hub/README.md#lb-pi-space-registers-outside-the-contiguous-map	LB: PI-space registers outside the contiguous map
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x104e0	424	hub_widget_reset	dwarf+symtab	6a4537377e84		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x10688	12	he_arcs_set_vectors	dwarf+symtab	5fe1255fc6ac		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x10694	356	restart	dwarf	e9601b9fb231		in	undocumented		
@@ -18913,10 +18913,10 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16728	244	save_e
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1681c	8	save_err_router_comp	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16824	232	save_err_xbow_comp	dwarf+symtab	2b4373b8c80c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1690c	256	save_hub_pi_error	dwarf+symtab	0c9da6c471a3		in	named-only	chips/bedrock/README.md#error-registers-refused-or-timed-out-writes-and-failed-reads	Error registers: refused or timed-out writes and failed reads
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16a0c	108	save_hub_md_error	dwarf+symtab	7d05efaa9336		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16a0c	108	save_hub_md_error	dwarf+symtab	7d05efaa9336		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16a78	216	save_hub_io_error	dwarf+symtab	0b640e098bc0		in	named-only	chips/bedrock/README.md#error-registers-refused-or-timed-out-writes-and-failed-reads	Error registers: refused or timed-out writes and failed reads
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16b50	184	save_hub_err_ext	dwarf+symtab	9cc99b907fea		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16c08	88	save_hub_ni_error	dwarf+symtab	b1058009ed66		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16b50	184	save_hub_err_ext	dwarf+symtab	9cc99b907fea		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16c08	88	save_hub_ni_error	dwarf+symtab	b1058009ed66		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16c60	296	save_hub_err	dwarf+symtab	ed0080fbb504		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16d88	192	save_bridge_err	dwarf+symtab	a5c2f520228c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x16e48	180	save_xbow_err	dwarf+symtab	2e98fd24a8a8		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
@@ -18932,7 +18932,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x172ac	404	show_e
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x17440	996	show_cache_err	dwarf+symtab	84ce6598a5bc		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x17824	132	show_hub_err	dwarf+symtab	1b6747d48a2b		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x178a8	664	show_hub_pi_err	dwarf+symtab	ac482c61dd97		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x17b40	1160	show_hub_md_err	dwarf+symtab	2d0dd555c451		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x17b40	1160	show_hub_md_err	dwarf+symtab	2d0dd555c451		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x17fc8	912	show_hub_io_err	dwarf+symtab	9fc5510c4154		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x18358	152	get_ni_port_error_bit	dwarf+symtab	adb995e6203f		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x183f0	156	show_ni_port_error	dwarf+symtab	3357c961b35f		in	undocumented		
@@ -18950,14 +18950,14 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19714	388	hubii_
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19898	272	hubni_eint_init	dwarf+symtab	e35ede299d0e		in	named-only	chips/bedrock/README.md#interrupts	Interrupts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x199a8	728	hubpi_eint_handler	dwarf+symtab	9a8ea1309d28		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19c80	320	hubni_print_state	dwarf+symtab	ae700d6d4848		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19dc0	604	check_ni_errors	dwarf+symtab	413d3ef3beb3		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a01c	392	hubni_error_handler	dwarf+symtab	34ee230100be		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19dc0	604	check_ni_errors	dwarf+symtab	413d3ef3beb3		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a01c	392	hubni_error_handler	dwarf+symtab	34ee230100be		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a1a4	36	hubni_eint_handler	dwarf+symtab	c29a69214304		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a1c8	36	hubni_rmteint_handler	dwarf+symtab	737a225fe1e1		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a1ec	316	klsave_md_registers	dwarf+symtab	0046ee987ae2		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a328	160	save_md_error	dwarf+symtab	e4480f75a83b		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a3c8	40	probe_md_errors	dwarf+symtab	7d83dda9dbc8		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a3f0	552	log_md_errors	dwarf+symtab	e6ed5871b772		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a3f0	552	log_md_errors	dwarf+symtab	e6ed5871b772		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a618	588	check_md_errors	dwarf+symtab	fa8a69fbbb02		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a864	64	md_err_log_first	dwarf+symtab	00159529999e		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a8a4	168	md_err_log_next	dwarf+symtab	f83e2e13e071		in	undocumented		
@@ -18967,7 +18967,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1aa3c	136	md_err
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1aac4	360	klsave_spool_registers	dwarf+symtab	e0821fa30655		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1ac2c	680	hubpi_spool_get_next	dwarf+symtab	e44261e612d8		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1aed4	600	huberror_process_rrb_error	dwarf+symtab	85cbc6a9d9c8		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1b12c	556	huberror_process_wrb_error	dwarf+symtab	ad5e71ac4979		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1b12c	556	huberror_process_wrb_error	dwarf+symtab	ad5e71ac4979		in	named-only	chips/hub/README.md#error-and-interrupt-handling-established-unless-marked	Error and interrupt handling (established unless marked)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1b358	192	huberror_process_stack_entry	dwarf+symtab	1851cc65648a		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1b418	208	process_error_spool	dwarf+symtab	5a62b722bc05		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1b4e8	808	get_matching_spool_addr	dwarf+symtab	d845ee44fe05		in	named-only	docs/open-questions.md#open-questions	Open questions
@@ -19002,12 +19002,12 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1d09c	572	error_
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1d2d8	312	handle_hspec_buserr	dwarf+symtab	5c348adde341		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1d410	444	handle_mspec_buserr	dwarf+symtab	c8ac4f74a285		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1d5cc	588	handle_io_buserr	dwarf+symtab	1a32ce3aa8e6		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1d818	1208	handle_uncac_buserr	dwarf+symtab	017e1437ca2b		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1d818	1208	handle_uncac_buserr	dwarf+symtab	017e1437ca2b		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1dcd0	1644	handle_cac_buserr	dwarf+symtab	ea75662f6bbe		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1e33c	312	dump_crb	dwarf+symtab	d51dc5d27234		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1e474	380	kl_ioerror_handler	dwarf+symtab	3db13a20cf22		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1e474	380	kl_ioerror_handler	dwarf+symtab	3db13a20cf22		in	named-only	chips/hub/README.md#pi-error-status-error-stack	PI error status, error stack
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1e5f0	68	kl_panic_setup	dwarf+symtab	84774aadb0ee		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1e634	48	kl_panic	dwarf+symtab	ba2e0984be7f		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1e634	48	kl_panic	dwarf+symtab	ba2e0984be7f		in	named-only	chips/hub/README.md#pi-error-interrupt-pending-0x400-mask-0x408-0x410	PI error interrupt pending (`0x400`), mask (`0x408`, `0x410`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1e664	192	vphys_get_pattr	dwarf	8759d2288f9f		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1e724	124	pde_get_pattr	dwarf	53e382b8b5bc		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1e7a0	316	vtop_attr_get	dwarf	2f4252241d03		in	undocumented		
@@ -19018,7 +19018,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1eb20	68	error_p
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1eb64	28	sn0_error_mark_page	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1eb80	88	sn0_error_reclaim_page	dwarf+symtab	254ccd538bab		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1ebd8	8	error_reg_partition_handler	dwarf+symtab	9bd37e4ef63c		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1ebe0	128	error_check_part_page	dwarf+symtab	fc60015a3190		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1ebe0	128	error_check_part_page	dwarf+symtab	fc60015a3190		in	named-only	chips/hub/README.md#pi-error-status-error-stack	PI error status, error stack
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1ec60	72	partition_handle_error	dwarf+symtab	4533e34210eb		in	named-only	chips/bedrock/README.md#what-sets-each-bit-and-what-is-latched	What sets each bit and what is latched
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1eca8	108	errste_prfunc	dwarf+symtab	46466698bc44		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1ed14	40	errorste_reset	dwarf+symtab	4b72c4301c4f		in	undocumented		
@@ -19030,7 +19030,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f1c0	40	intr_re
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f1e8	40	intr_unreserve_level	dwarf+symtab	60021a688008		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f210	92	intr_get_ptrs	dwarf	b5f12f4f0a46		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f26c	668	intr_connect_level	dwarf+symtab	7cf148d5a60f		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f508	428	intr_disconnect_level	dwarf+symtab	ebaaadc64de6		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f508	428	intr_disconnect_level	dwarf+symtab	ebaaadc64de6		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f6b4	364	do_intr_block_bit	dwarf+symtab	d31b67b878d1		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f820	28	intr_block_bit	dwarf+symtab	9b5b52955f37		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f83c	28	intr_unblock_bit	dwarf+symtab	4e0b7c85ec68		in	undocumented		
@@ -19101,7 +19101,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2198c	8	ip28_ena
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2198c	8	ip28_return_ucmem	symtab	78aa5094d5ec	shared-address	in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21994	468	bte_error_handler	dwarf+symtab	ef0e08a5a7c2		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21b68	308	bte_crb_error_handler	dwarf+symtab	7b4052990f06		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21c9c	944	bte_stall_node	dwarf+symtab	cc9bdf047a13		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21c9c	944	bte_stall_node	dwarf+symtab	cc9bdf047a13		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2204c	292	bte_bpush_war	dwarf+symtab	1d701e1dc957		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22170	28	spl0	dwarf+symtab	77e42c3ec2cb		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	spl1	symtab	d20175b8aee2	shared-address	in	undocumented		
@@ -19133,7 +19133,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22290	32	isspl0	
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x222b0	8	delay_for_intr	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x222b8	8	hubio_init	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x222c0	352	hub_pio_init	dwarf	06c9bbfeff6d		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22420	792	hub_piomap_alloc	dwarf+symtab	b10785d4e897		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22420	792	hub_piomap_alloc	dwarf+symtab	b10785d4e897		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22738	236	hub_piomap_free	dwarf+symtab	d8a471b1bd9a		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22824	96	hub_piomap_addr	dwarf+symtab	1349f9e56ec6		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22884	8	hub_piomap_done	dwarf+symtab	78aa5094d5ec		in	undocumented		
@@ -19190,8 +19190,8 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23a64	40	router_
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23a8c	40	meta_router_slotbits_to_slot	dwarf+symtab	df7aea102d8a		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23ab4	104	get_slotclass	dwarf	5fbba4934a1d		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23b1c	156	get_slotname	dwarf+symtab	82d64ca9ab44		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23bb8	44	get_node_slotid	dwarf+symtab	d9797d0b6d45		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23be4	36	get_my_slotid	dwarf+symtab	11bbdc54832d		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23bb8	44	get_node_slotid	dwarf+symtab	d9797d0b6d45		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23be4	36	get_my_slotid	dwarf+symtab	11bbdc54832d		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23c08	36	get_node_crossbow	dwarf+symtab	23784e861696		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23c2c	48	get_my_slotname	dwarf+symtab	eed8a30f5024		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23c5c	28	get_widget_slotnum	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -19235,7 +19235,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x24fd0	112	msc_ow
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25040	56	msc_owner_cnode	dwarf	2aebfe5fa754		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25078	368	llp_pfail_barrier	dwarf+symtab	955854c18af7		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x251e8	188	llp_pfail_getmode	dwarf+symtab	c5c22cc5d5b7		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x252a4	792	llp_pfail_intr	dwarf+symtab	a7d5e25259ec		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x252a4	792	llp_pfail_intr	dwarf+symtab	a7d5e25259ec		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x255bc	196	llp_pfail_switch	dwarf+symtab	dc890457bfab		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25680	28	syssgi_pf8	dwarf+symtab	9853305f9f76		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2569c	28	syssgi_pf16	dwarf+symtab	e8abac4ae275		in	undocumented		
@@ -19257,7 +19257,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x265a0	128	sysctl
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26620	496	sysctlr_init	dwarf+symtab	c1b080ebe683		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26810	92	sysctlr_power_off	dwarf+symtab	62d3fd6aa3dc		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2686c	616	sysctlr_keepalive	dwarf+symtab	be337905b321		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26ad4	100	force_system_shutdown	dwarf+symtab	4a3caf7e91b1		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26ad4	100	force_system_shutdown	dwarf+symtab	4a3caf7e91b1		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26b38	100	xbox_sysctlr_system_shutdown	dwarf	286b47559733		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26b9c	508	xbox_sysctlr_status_check	dwarf	76e69066266a		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26d98	76	xbox_sysctlr_poll	dwarf	72ac594f8e06		in	undocumented		
@@ -19478,7 +19478,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x30a70	224	mdir_x
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x30b50	120	sbe_printf	dwarf	cfb6b5e4ff94		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x30bc8	300	bank_fatal	dwarf	c1b1b6e6c6d2		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x30cf4	2596	memerror_sbe_intr	dwarf+symtab	7e77ec3cc75f		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x31718	80	install_eccintr	dwarf+symtab	7f2335429bc0		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x31718	80	install_eccintr	dwarf+symtab	7f2335429bc0		in	named-only	chips/hub/README.md#interrupts-to-the-processor	Interrupts to the processor
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x31768	104	memerror_get_stats	dwarf+symtab	e28d3641359d		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x317d0	112	intrgroup_init	dwarf+symtab	92c1f3ad9707		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x31840	204	intrgroup_alloc	dwarf+symtab	765c6ff3e47c		in	undocumented		
@@ -22144,7 +22144,7 @@ IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_queue.o)	kernel-object	n64		0x0		migr_q
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_queue.o)	kernel-object	n64	.text	0x9c	192	migr_periodic_queue_control	dwarf+symtab	a11985f723d9		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_queue.o)	kernel-object	n64	.text	0x15c	780	migr_queue_insert	dwarf+symtab	d7425752ca3c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(numa_tune.o)	kernel-object	n64		0x0		migr_parms_check	dwarf+symtab			in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/numa.a(numa_tune.o)	kernel-object	n64	.text	0x33c	1216	numa_tune	dwarf+symtab	057085dbceb9		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/numa.a(numa_tune.o)	kernel-object	n64	.text	0x33c	1216	numa_tune	dwarf+symtab	057085dbceb9		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/usr/cpu/sysgen/IP27boot/numa.a(numa_stats.o)	kernel-object	n64		0x0		numa_stats_init	dwarf+symtab			in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(numa_stats.o)	kernel-object	n64	.text	0x44	192	numa_stats_get	dwarf+symtab	b50f5280fef6		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(numa_tests.o)	kernel-object	n64		0x0		numa_tests	dwarf+symtab			in	undocumented		
@@ -22323,7 +22323,7 @@ IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_policy_refcnt.o)	kernel-object	n64	.tex
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_policy_refcnt.o)	kernel-object	n64	.text	0xa0	8	migr_policy_refcnt_destroy	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_policy_refcnt.o)	kernel-object	n64	.text	0xa8	172	migr_policy_refcnt_migr_srvc	dwarf+symtab	0668941985c1		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_refcnt.o)	kernel-object	n64		0x0		migr_refcnt_supersetbase_get	dwarf+symtab			in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_refcnt.o)	kernel-object	n64	.text	0x4c	724	migr_refcnt_init	dwarf+symtab	0c165ba904ac		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_refcnt.o)	kernel-object	n64	.text	0x4c	724	migr_refcnt_init	dwarf+symtab	0c165ba904ac		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_refcnt.o)	kernel-object	n64	.text	0x320	176	migr_refcnt_dealloc	dwarf+symtab	36c3a3a86ea3		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_refcnt.o)	kernel-object	n64	.text	0x3d0	296	migr_refcnt_get_offsets	dwarf+symtab	ac48b08aca76		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_refcnt.o)	kernel-object	n64	.text	0x4f8	1016	migr_refcnt_update_counters	dwarf+symtab	1d9018ae4daa		in	undocumented		
@@ -22336,7 +22336,7 @@ IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x34	1
 IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0xa0	8	mem_refcnt_close	dwarf+symtab	87506497337c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0xa8	156	mem_refcnt_mmap	dwarf+symtab	3bfd1fbcfea6		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x144	8	mem_refcnt_unmap	dwarf+symtab	87506497337c		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x14c	532	mem_refcnt_ioctl	dwarf+symtab	8a7058e10147		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x14c	532	mem_refcnt_ioctl	dwarf+symtab	8a7058e10147		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/usr/cpu/sysgen/IP27boot/numa.a(cpuset_mem.o)	kernel-object	n64		0x0		cpuset_init_memsys	dwarf+symtab			in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(cpuset_mem.o)	kernel-object	n64	.text	0x8c	44	cpuset_destroy_memsys	dwarf+symtab	9fd3d018cf30		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(cpuset_mem.o)	kernel-object	n64	.text	0xb8	28	cpuset_kick_vhand	dwarf+symtab	85492f2ccd8a		in	undocumented		
@@ -24421,7 +24421,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1ba0	96	doacv
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1c00	116	panic_lock	dwarf+symtab	181fc64609d4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1c74	68	panic_unlock	dwarf+symtab	09f11a8e433c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1cb8	12	set_node_panic_flag	dwarf+symtab	f54d1af48be8		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1cc4	192	enter_panic_mode	dwarf+symtab	4139477b95c7		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1cc4	192	enter_panic_mode	dwarf+symtab	4139477b95c7		in	named-only	chips/hub/README.md#pi-error-interrupt-pending-0x400-mask-0x408-0x410	PI error interrupt pending (`0x400`), mask (`0x408`, `0x410`)
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1d84	32	exit_panic_mode	dwarf+symtab	94deafadd1df		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1da4	8	in_panic_mode	dwarf+symtab	8bffb2b7e0e4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1dac	12	enter_promlog_mode	dwarf+symtab	393f671f2027		in	undocumented		
@@ -25135,7 +25135,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	c
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x518	100	close	dwarf+symtab	4cd8456121a7		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x57c	148	set_ioflags	dwarf+symtab	9893a22bb9e8		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	_read	dwarf+symtab	2b0269ab5378		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
+IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	657db5992417		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		in	undocumented		
@@ -27692,7 +27692,7 @@ IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64		0x0		sn0drv_attach	dwar
 IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x254	28	sndrv_attach	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x270	44	sn0drv_open	dwarf+symtab	f9d1635c8956		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x29c	8	sn0drv_close	dwarf+symtab	87506497337c		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x2a4	2252	sn0drv_ioctl	dwarf+symtab	d6202b2a8681		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x2a4	2252	sn0drv_ioctl	dwarf+symtab	d6202b2a8681		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xb70	176	check_router	dwarf+symtab	acc778e136e1		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xc20	196	do_reg_op	dwarf+symtab	ea93e975e918		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xce4	268	do_router_op	dwarf+symtab	391c5971c788		in	undocumented		
@@ -36491,7 +36491,7 @@ IP30/unix	kernel	n64	.text	0xa800000020011980	128	resetcounter_val	symtab	75f17e
 IP30/unix	kernel	n64	.text	0xa800000020011a00	96	trimcompare	symtab	60ae07e06eed		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011a80	28	initcounter	symtab	6e26752754ef		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011a9c	32	resetlatency	symtab	287e0e70123b		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020011ac0	436	start	symtab	8e1897da98c8		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020011ac0	436	start	symtab	8e1897da98c8		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP30/unix	kernel	n64	.text	0xa800000020011c5c	24	proc1	symtab	69302c1728cf		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011c74	168	mlclosure	symtab	c2126e783ed7		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011d1c	80	silence_all_audio	symtab	befd6f409210	shared-address	in	undocumented		
@@ -36502,7 +36502,7 @@ IP30/unix	kernel	n64	.text	0xa800000020011e10	1072	in_cksum_sub	symtab	345c882c1
 IP30/unix	kernel	n64	.text	0xa800000020011f24	796	in_cksum_pref	symtab	ad10fda21bca		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020012240	268	etoh	symtab	65dcde10b523		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020012424	44	getsysid	symtab	bb8e55dfc9f6		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020012450	864	mlreset	symtab	a48199e45751		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP30/unix	kernel	n64	.text	0xa800000020012450	864	mlreset	symtab	a48199e45751		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64	.text	0xa8000000200127b0	32	fp_find	symtab	d55cf0bf1653		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200127d0	28	fp_init	symtab	2f00cc6973ed		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200127ec	28	pg_setcachable	symtab	f64fae1e00e0		in	undocumented		
@@ -38881,7 +38881,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200f691c	204	socket	symtab	123dba9e1e92		in
 IP30/unix	kernel	n64	.text	0xa8000000200f69e8	200	bind	symtab	606b80d3ac6e		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200f6ab0	84	listen	symtab	24c87a915435		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200f6b04	172	accept	symtab	801a5277a66e		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200f6bb0	148	connect	symtab	a812a184b6fa		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200f6bb0	148	connect	symtab	a812a184b6fa		in	named-only	chips/hub/README.md#interrupts-to-the-processor	Interrupts to the processor
 IP30/unix	kernel	n64	.text	0xa8000000200f6c44	152	sendto	symtab	531d9a468075		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200f6cdc	144	send	symtab	ade0140b6831		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200f6dfc	240	sendmsg	symtab	d6da83db09f6		in	undocumented		
@@ -40892,7 +40892,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201b5870	596	vn_remove_audit_extended	symta
 IP30/unix	kernel	n64	.text	0xa8000000201b5ac4	44	creat	symtab	5adde406a17d		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5af0	608	copen	symtab	965dafb25d17		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5d50	100	close	symtab	4420c397d7ba		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201b62f0	28	read	symtab	dcf0d42ffa47		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
+IP30/unix	kernel	n64	.text	0xa8000000201b62f0	28	read	symtab	dcf0d42ffa47		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP30/unix	kernel	n64	.text	0xa8000000201b630c	28	pread	symtab	b470a6fb64fa		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b67f0	28	write	symtab	a30dea0a2ea3		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b680c	28	pwrite	symtab	b82ce096fbe8		in	undocumented		
@@ -41185,7 +41185,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201d39c4	96	doacvec	symtab	defbb2a99c9f		in
 IP30/unix	kernel	n64	.text	0xa8000000201d3a24	116	panic_lock	symtab	4840f32c4764		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3a98	68	panic_unlock	symtab	12d12b0a54eb		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3adc	12	set_node_panic_flag	symtab	6c6eedc337eb		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201d3ae8	192	enter_panic_mode	symtab	12c8ba92c190		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201d3ae8	192	enter_panic_mode	symtab	12c8ba92c190		in	named-only	chips/hub/README.md#pi-error-interrupt-pending-0x400-mask-0x408-0x410	PI error interrupt pending (`0x400`), mask (`0x408`, `0x410`)
 IP30/unix	kernel	n64	.text	0xa8000000201d3ba8	32	exit_panic_mode	symtab	7cd10cdd3ca4		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3bc8	8	in_panic_mode	symtab	d0c72c97d0a6		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3bd0	12	enter_promlog_mode	symtab	35eecd1df509		in	undocumented		
@@ -44410,9 +44410,9 @@ IP30/unix	kernel	n64	.text	0xa80000002038f67c	8	gfx_flow_credit_bias_get	symtab	
 IP30/unix	kernel	n64	.text	0xa80000002038f684	36	gfx_flow_credit_count_get	symtab	95a6633c531e		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f6a8	44	gfx_flow_credit_count_set	symtab	6a4079d34702		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f6d4	8	gfx_flow_detach_requires_credit_flow_disable	symtab	a7e7ca11a6b8		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002038f6dc	220	gfx_flow_attach_me	symtab	8ff6289b1106		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002038f6dc	220	gfx_flow_attach_me	symtab	8ff6289b1106		in	named-only	chips/hub/README.md#addresses-established	Addresses (established)
 IP30/unix	kernel	n64	.text	0xa80000002038f7b8	8	gfx_flow_attach_me_finish	symtab	78aa5094d5ec		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002038f7c0	180	gfx_flow_detach_me	symtab	8ba2c936b1a3		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002038f7c0	180	gfx_flow_detach_me	symtab	8ba2c936b1a3		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP30/unix	kernel	n64	.text	0xa80000002038f874	20	gfx_flow_am_i_attached	symtab	921a653eec05		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f888	12	gfx_flow_flush_my_wg	symtab	7fe8cb51a490		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f894	8	gfx_flow_disable_heart_fc	symtab	78aa5094d5ec		in	undocumented		
@@ -46034,7 +46034,7 @@ IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64		0x0		sock
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0xcc	200	bind	dwarf+symtab	5d0c159233fe		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x194	84	listen	dwarf+symtab	2cf534583560		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1e8	172	accept	dwarf+symtab	c9a98f93ddea		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x294	148	connect	dwarf+symtab	881643b5ded2		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x294	148	connect	dwarf+symtab	881643b5ded2		in	named-only	chips/hub/README.md#interrupts-to-the-processor	Interrupts to the processor
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x328	152	sendto	dwarf+symtab	17235241cc55		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x3c0	144	send	dwarf+symtab	99c9e0742e41		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x450	144	irix5_to_msghdr	dwarf+symtab	82c698fc3338		in	undocumented		
@@ -50015,7 +50015,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1800	128	resetco
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1880	96	trimcompare	dwarf+symtab	60ae07e06eed		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1900	28	initcounter	dwarf+symtab	6e26752754ef		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x191c	32	resetlatency	dwarf+symtab	287e0e70123b		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1940	436	start	dwarf+symtab	26627aa32e40		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1940	436	start	dwarf+symtab	26627aa32e40		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1adc	24	proc1	symtab	69302c1728cf		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1af4	168	mlclosure	dwarf+symtab	a1f795dec70c		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1b9c	80	silence_all_audio	dwarf+symtab	6c90e9c71373	shared-address	in	undocumented		
@@ -50027,7 +50027,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1da4	796	in_cksu
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x20c0	268	etoh	dwarf+symtab	3ce9ed208821		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x21cc	216	init_sysid	dwarf	3dabc8a3d881		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x22a4	44	getsysid	dwarf+symtab	4375123f1bed		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x22d0	864	mlreset	dwarf+symtab	02bc302ba60c		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x22d0	864	mlreset	dwarf+symtab	02bc302ba60c		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2630	32	fp_find	dwarf+symtab	238de725f6ed		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2650	28	fp_init	dwarf+symtab	7817ac548105		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x266c	28	pg_setcachable	dwarf+symtab	f64fae1e00e0		in	undocumented		
@@ -54638,7 +54638,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1810	96	doacv
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1870	116	panic_lock	dwarf+symtab	181fc64609d4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x18e4	68	panic_unlock	dwarf+symtab	09f11a8e433c		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1928	12	set_node_panic_flag	dwarf+symtab	6c6eedc337eb		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1934	192	enter_panic_mode	dwarf+symtab	f366fc3db86c		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1934	192	enter_panic_mode	dwarf+symtab	f366fc3db86c		in	named-only	chips/hub/README.md#pi-error-interrupt-pending-0x400-mask-0x408-0x410	PI error interrupt pending (`0x400`), mask (`0x408`, `0x410`)
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x19f4	32	exit_panic_mode	dwarf+symtab	b19b273831fd		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a14	8	in_panic_mode	dwarf+symtab	d0c72c97d0a6		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a1c	12	enter_promlog_mode	dwarf+symtab	35eecd1df509		in	undocumented		
@@ -55324,7 +55324,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	c
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x518	100	close	dwarf+symtab	4cd8456121a7		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x57c	148	set_ioflags	dwarf+symtab	9893a22bb9e8		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	_read	dwarf+symtab	5ccac8e0090e		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
+IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	63714ef59212		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		in	undocumented		
@@ -62171,7 +62171,7 @@ IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32		0x0		sock
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0xcc	200	bind	dwarf+symtab	e9dd69fa7808		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x194	84	listen	dwarf+symtab	4a7622c6aa10		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x1e8	172	accept	dwarf+symtab	7e6cfa53a73b		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x294	148	connect	dwarf+symtab	42371ade15a9		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x294	148	connect	dwarf+symtab	42371ade15a9		in	named-only	chips/hub/README.md#interrupts-to-the-processor	Interrupts to the processor
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x328	152	sendto	dwarf+symtab	c79de5a02f03		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x3c0	144	send	dwarf+symtab	680a7147e61a		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x450	196	sendmsg	dwarf+symtab	8da2de377a00		in	undocumented		
@@ -66178,7 +66178,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1534	160	wait_fo
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15ac	40	wait_for_interrupt_fix_loc	symtab	7c7a779ebf10		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15d4	1072	in_cksum_sub	symtab	345c882c1b77		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x16e8	808	in_cksum_pref	symtab	1c188c509085		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1a10	400	start	symtab	d835e00ba776		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1a10	400	start	symtab	d835e00ba776		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1b54	76	proc1	symtab	eee0406b0ed6		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1ba0	72	mlclosure	symtab	a294fea60df5		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1be8	8	silence_all_audio	symtab	78aa5094d5ec	shared-address	in	undocumented		
@@ -66337,7 +66337,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8160	8	add_ioboa
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x81e4	216	add_cpuboard	symtab	9b2b408e83de		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x82bc	268	init_sysid	symtab	2a61486e82df		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8504	564	early_gbe_stop	symtab	e911ead8ba71		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8738	672	mlreset	symtab	9034f85615ef		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8738	672	mlreset	symtab	9034f85615ef		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x89d8	88	timestamp_init	symtab	4b9b771fe735		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8a30	440	init_all_devices	symtab	0687c468fe37		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8be8	200	allowboot	symtab	29ed372df219		in	undocumented		
@@ -71210,7 +71210,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x15fc	96	doacv
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x165c	92	panic_lock	dwarf+symtab	fb40bed77a66		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16b8	48	panic_unlock	dwarf+symtab	4a18a5aa1f73		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16e8	12	set_node_panic_flag	dwarf+symtab	d41f813c0b8b		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16f4	200	enter_panic_mode	dwarf+symtab	952615e036d8		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16f4	200	enter_panic_mode	dwarf+symtab	952615e036d8		in	named-only	chips/hub/README.md#pi-error-interrupt-pending-0x400-mask-0x408-0x410	PI error interrupt pending (`0x400`), mask (`0x408`, `0x410`)
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17bc	32	exit_panic_mode	dwarf+symtab	a0ba509be171		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17dc	8	in_panic_mode	dwarf+symtab	d7f907bf0613		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17e4	12	enter_promlog_mode	dwarf+symtab	3281419519de		in	undocumented		
@@ -71878,7 +71878,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x248	604	c
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x4a4	100	close	dwarf+symtab	77be312f8200		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x508	164	set_ioflags	dwarf+funcnames+symtab	b99109792617		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x5ac	1104	_read	dwarf+funcnames+symtab	6842c4b25eda		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x9fc	28	read	dwarf+symtab	295c861fb3cd		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
+IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x9fc	28	read	dwarf+symtab	295c861fb3cd		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xa18	28	pread	dwarf+symtab	2f5516b0c7d3		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xa34	1140	_write	dwarf+funcnames+symtab	f70651bf104f		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xea8	28	write	dwarf+symtab	295c861fb3cd		in	undocumented		
@@ -78457,7 +78457,7 @@ IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64		0x0		sock
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0xcc	200	bind	dwarf+symtab	5d0c159233fe		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x194	84	listen	dwarf+symtab	2cf534583560		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1e8	172	accept	dwarf+symtab	c9a98f93ddea		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x294	148	connect	dwarf+symtab	881643b5ded2		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x294	148	connect	dwarf+symtab	881643b5ded2		in	named-only	chips/hub/README.md#interrupts-to-the-processor	Interrupts to the processor
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x328	152	sendto	dwarf+symtab	17235241cc55		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x3c0	144	send	dwarf+symtab	99c9e0742e41		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x450	144	irix5_to_msghdr	dwarf+symtab	82c698fc3338		in	undocumented		
@@ -83375,7 +83375,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13d0	300	set_sn1
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x14fc	100	get_chimera_type	dwarf+symtab	e83cd0860867		in	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1560	1072	in_cksum_sub	dwarf+symtab	345c882c1b77		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1674	796	in_cksum_pref	symtab	ad10fda21bca		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1990	544	start	dwarf+symtab	141340c889b5		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1990	544	start	dwarf+symtab	141340c889b5		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b98	24	proc1	symtab	69302c1728cf		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1bb0	168	mlclosure	dwarf+symtab	a1f795dec70c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1c58	8	silence_all_audio	dwarf+symtab	78aa5094d5ec	shared-address	in	undocumented		
@@ -83637,12 +83637,12 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xd26c	84	init_hub
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xd2c0	472	init_all_devices	dwarf+symtab	5a5985f3cf0b		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xd498	744	devnamefromarcs	dwarf+symtab	4f3a3a1feb86		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xd780	76	io_brick_map_widget	dwarf+symtab	00094af2470c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xd7cc	1152	mlreset	dwarf+symtab	b3fd14bfeff8		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xd7cc	1152	mlreset	dwarf+symtab	b3fd14bfeff8		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xdc4c	928	init_platform_nodepda	dwarf+symtab	d597d679c43d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xdfec	304	init_platform_pda	dwarf+symtab	d5323f4c3edc		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe11c	64	protect_hub_calias	dwarf+symtab	d065f6cfedbd		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe15c	64	protect_nmi_handler_data	dwarf+symtab	d065f6cfedbd		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe19c	612	per_hub_init	dwarf+symtab	8df14dfeb9f4		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe19c	612	per_hub_init	dwarf+symtab	8df14dfeb9f4		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe400	268	per_cpu_init	dwarf+symtab	ee56a2fd4f91		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe50c	8	allowintrs	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe514	192	cnodetocpu	dwarf+symtab	fa9891e00878		in	undocumented		
@@ -83772,12 +83772,12 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13274	408	save_e
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1340c	312	save_router_err	dwarf+symtab	885ecf3c5d90		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13544	232	save_err_xbow_comp	dwarf+symtab	a65a83fd49a1		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1362c	216	save_hub_pi_error	dwarf+symtab	2e647f802b9c		in	named-only	chips/bedrock/README.md#error-registers-refused-or-timed-out-writes-and-failed-reads	Error registers: refused or timed-out writes and failed reads
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13704	236	save_hub_md_error	dwarf+symtab	760f5cd22641		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13704	236	save_hub_md_error	dwarf+symtab	760f5cd22641		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x137f0	92	save_hub_io_crb	dwarf+symtab	0b4f7f3e6747		in	named-only	chips/bedrock/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1384c	28	save_hub_io_ieph	dwarf+symtab	901b17e8b67a		in	named-only	chips/bedrock/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13868	164	save_hub_io_error	dwarf+symtab	d607c7f53344		in	named-only	chips/bedrock/README.md#error-registers-refused-or-timed-out-writes-and-failed-reads	Error registers: refused or timed-out writes and failed reads
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1390c	184	save_hub_err_ext	dwarf+symtab	9cc99b907fea		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x139c4	100	save_hub_ni_error	dwarf+symtab	9a40dcb9d4b7		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1390c	184	save_hub_err_ext	dwarf+symtab	9cc99b907fea		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x139c4	100	save_hub_ni_error	dwarf+symtab	9a40dcb9d4b7		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13a28	136	save_hub_lb_error	dwarf+symtab	b6faa38fc806		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13ab0	328	save_hub_xb_error	dwarf+symtab	8d4781c52f20		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13bf8	416	save_hub_err	dwarf+symtab	5c003f709880		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -83797,7 +83797,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x14a10	180	show_h
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x14ac4	332	show_pi_error_spool_entry	dwarf+symtab	be8dd32dd86a		in	named-only	chips/bedrock/README.md#error-registers-refused-or-timed-out-writes-and-failed-reads	Error registers: refused or timed-out writes and failed reads
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x14c10	1480	show_hub_pi_err	dwarf+symtab	d9e5f8c2c380		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x151d8	376	show_hub_md_misc_error_flags	dwarf	7934c6c5e501		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x15350	1552	show_hub_md_err	dwarf+symtab	2b4b56710f2e		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x15350	1552	show_hub_md_err	dwarf+symtab	2b4b56710f2e		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x15960	356	show_hub_io_ieph	dwarf+symtab	b1f3f1634632		in	named-only	chips/bedrock/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x15ac4	944	show_hub_io_err	dwarf+symtab	d9a79d940af0		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x15e74	24	get_ni_port_error_bit	dwarf+symtab	11351216af07		in	undocumented		
@@ -83821,14 +83821,14 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18828	332	hubni_
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18974	176	ni_port_down_reset	dwarf+symtab	23aa035c4b50		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18a24	764	check_ni_errors_nasid	dwarf	9e6e71bde5c2		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18d20	416	hubni_error_handler_nasid	dwarf	82d726d704e5		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18ec0	36	check_ni_errors	dwarf+symtab	655d74afe350		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18ee4	56	hubni_error_handler	dwarf+symtab	708b7075489f		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18ec0	36	check_ni_errors	dwarf+symtab	655d74afe350		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18ee4	56	hubni_error_handler	dwarf+symtab	708b7075489f		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18f1c	36	hubni_eint_handler	dwarf+symtab	32da5129a57e		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18f40	36	hubni_rmteint_handler	dwarf+symtab	ba31dac2a79f		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18f64	368	klsave_md_registers	dwarf+symtab	a753e3238975		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x190d4	196	save_md_error	dwarf+symtab	377b857f5bd8		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x19198	48	probe_md_errors	dwarf+symtab	5d0f9e837455		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x191c8	760	log_md_errors	dwarf+symtab	e957fd5e7785		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x191c8	760	log_md_errors	dwarf+symtab	e957fd5e7785		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x194c0	620	check_md_errors	dwarf+symtab	dc5ab098df6a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1972c	56	md_err_log_first	dwarf+symtab	ac6c7c978ff2		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x19764	148	md_err_log_next	dwarf+symtab	45cc3f3bf2a6		in	undocumented		
@@ -83838,7 +83838,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x198cc	128	md_err
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1994c	468	klsave_spool_registers	dwarf+symtab	fd6b3dfa1340		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x19b20	560	hubpi_spool_get_next	dwarf+symtab	00591c790495		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x19d50	1344	huberror_process_rrb_error	dwarf+symtab	8ac65039fb82		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1a290	1148	huberror_process_wrb_error	dwarf+symtab	46f33e81a79e		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1a290	1148	huberror_process_wrb_error	dwarf+symtab	46f33e81a79e		in	named-only	chips/hub/README.md#error-and-interrupt-handling-established-unless-marked	Error and interrupt handling (established unless marked)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1a70c	248	huberror_process_stack_entry	dwarf+symtab	6ddf3093cb5d		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1a804	144	process_error_spool	dwarf+symtab	c61ee671a86f		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1a894	548	get_matching_spool_addr	dwarf+symtab	5b63565c4f29		in	named-only	docs/open-questions.md#open-questions	Open questions
@@ -83877,12 +83877,12 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1c824	576	error_
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ca64	312	handle_hspec_buserr	dwarf+symtab	01f318a52984		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1cb9c	448	handle_mspec_buserr	dwarf+symtab	f1cd5bb54640		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1cd5c	592	handle_io_buserr	dwarf+symtab	52cce9a3fe09		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1cfac	2308	handle_uncac_buserr	dwarf+symtab	876d63779917		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1cfac	2308	handle_uncac_buserr	dwarf+symtab	876d63779917		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1d8b0	2420	handle_cac_buserr	dwarf+symtab	01e503c7053f		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1e224	312	dump_crb	dwarf+symtab	f35b4a1324ad		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1e35c	388	kl_ioerror_handler	dwarf+symtab	9f0bf4d4a33a		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1e35c	388	kl_ioerror_handler	dwarf+symtab	9f0bf4d4a33a		in	named-only	chips/hub/README.md#pi-error-status-error-stack	PI error status, error stack
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1e4e0	72	kl_panic_setup	dwarf+symtab	250d66b35c1c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1e528	48	kl_panic	dwarf+symtab	ba2e0984be7f		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1e528	48	kl_panic	dwarf+symtab	ba2e0984be7f		in	named-only	chips/hub/README.md#pi-error-interrupt-pending-0x400-mask-0x408-0x410	PI error interrupt pending (`0x400`), mask (`0x408`, `0x410`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1e558	192	vphys_get_pattr	dwarf	180b94e59da8		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1e618	124	pde_get_pattr	dwarf	077685a6b9bc		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1e694	316	vtop_attr_get	dwarf	54c479f1c880		in	undocumented		
@@ -83893,7 +83893,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ea3c	68	error_p
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ea80	28	sn0_error_mark_page	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ea9c	88	sn0_error_reclaim_page	dwarf+symtab	254ccd538bab		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1eaf4	8	error_reg_partition_handler	dwarf+symtab	c9e8dbe0b10a		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1eafc	128	error_check_part_page	dwarf+symtab	7024f0a50473		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1eafc	128	error_check_part_page	dwarf+symtab	7024f0a50473		in	named-only	chips/hub/README.md#pi-error-status-error-stack	PI error status, error stack
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1eb7c	72	partition_handle_error	dwarf+symtab	3e823a27c2d3		in	named-only	chips/bedrock/README.md#what-sets-each-bit-and-what-is-latched	What sets each bit and what is latched
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ebc4	108	errste_prfunc	dwarf+symtab	9c3621f39b8d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ec30	40	errorste_reset	dwarf+symtab	5a1f9db070f6		in	undocumented		
@@ -83905,7 +83905,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f0dc	40	intr_re
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f104	40	intr_unreserve_level	dwarf+symtab	8ebcc900aecb		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f12c	92	intr_get_ptrs	dwarf	9031cd7e9ea7		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f188	792	intr_connect_level	dwarf+symtab	a9fec1e15331		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f4a0	468	intr_disconnect_level	dwarf+symtab	24e58cc3589a		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f4a0	468	intr_disconnect_level	dwarf+symtab	24e58cc3589a		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f674	448	do_intr_block_bit	dwarf+symtab	5408de21eb92		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f834	28	intr_block_bit	dwarf+symtab	9b5b52955f37		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f850	28	intr_unblock_bit	dwarf+symtab	4e0b7c85ec68		in	undocumented		
@@ -84003,7 +84003,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21ef0	32	isspl0	
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21f10	8	delay_for_intr	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21f18	28	hubio_init	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21f34	352	hub_pio_init	dwarf	1424ce2f654a		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22094	792	hub_piomap_alloc	dwarf+symtab	cfabe0b57dfa		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22094	792	hub_piomap_alloc	dwarf+symtab	cfabe0b57dfa		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x223ac	236	hub_piomap_free	dwarf+symtab	764d80c20d32		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22498	96	hub_piomap_addr	dwarf+symtab	1349f9e56ec6		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x224f8	8	hub_piomap_done	dwarf+symtab	78aa5094d5ec		in	undocumented		
@@ -84266,7 +84266,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b990	80	mdir_xl
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b9e0	120	sbe_printf	dwarf	cfb6b5e4ff94		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2ba58	272	bank_fatal	dwarf	7956fe3587bb		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2bb68	2456	memerror_sbe_intr	dwarf+symtab	55e8df881d8f		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2c500	88	install_eccintr	dwarf+symtab	99e3fc3c4278		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2c500	88	install_eccintr	dwarf+symtab	99e3fc3c4278		in	named-only	chips/hub/README.md#interrupts-to-the-processor	Interrupts to the processor
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2c558	112	memerror_get_stats	dwarf+symtab	d3e4e9eec7a1		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2c5c8	384	assign_wards	dwarf+symtab	1102ecb611a5		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2c748	80	guardian_selector	dwarf	56466d069ec9		in	undocumented		
@@ -84471,12 +84471,12 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x378b8	52	earlyba
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x378f0	8	_dummy_proc	dwarf+symtab	78aa5094d5ec	shared-address	in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x378f0	8	first_address	symtab	78aa5094d5ec	shared-address	in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x378f8	8	cpu_waitforreset	dwarf+symtab	8579e750668a		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37900	252	hub_ioerror_local	dwarf+symtab	05c0fc339e09		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37900	252	hub_ioerror_local	dwarf+symtab	05c0fc339e09		in	named-only	chips/hub/README.md#error-and-interrupt-handling-established-unless-marked	Error and interrupt handling (established unless marked)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x379fc	232	hub_xp_error_handler	dwarf+symtab	a65ff4e8889e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37ae4	104	is_widget_pio_enabled	dwarf+symtab	584d520e1dc4		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37b4c	1028	hub_ioerror_handler	dwarf+symtab	39de90e9f21c		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37f50	3196	crbx	dwarf+symtab	53ced12a3a27		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38bcc	192	hub_error_devenable	dwarf+symtab	a31d64059b53		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38bcc	192	hub_error_devenable	dwarf+symtab	a31d64059b53		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38c8c	160	hub_widgetdev_enable	dwarf+symtab	9b3b2b205150		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38d2c	528	hub_widgetdev_shutdown	dwarf+symtab	6ca727cf21d7		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38f3c	196	hub_dma_enabled	dwarf+symtab	8b48768f380e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -87066,7 +87066,7 @@ IP35/usr/cpu/sysgen/IP35boot/numa.a(mem_tick.o)	kernel-object	n64		0x0		mem_tick
 IP35/usr/cpu/sysgen/IP35boot/numa.a(migr_control.o)	kernel-object	n64		0x0		migr_control_init	dwarf+symtab			in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/numa.a(migr_init.o)	kernel-object	n64		0x0		migr_init	dwarf+symtab			in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/numa.a(numa_tune.o)	kernel-object	n64		0x0		migr_parms_check	dwarf+symtab			in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/numa.a(numa_tune.o)	kernel-object	n64	.text	0x31c	836	numa_tune	dwarf+symtab	20ce655679f6		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/numa.a(numa_tune.o)	kernel-object	n64	.text	0x31c	836	numa_tune	dwarf+symtab	20ce655679f6		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP35/usr/cpu/sysgen/IP35boot/numa.a(numa_stats.o)	kernel-object	n64		0x0		numa_stats_init	dwarf+symtab			in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/numa.a(numa_stats.o)	kernel-object	n64	.text	0x44	192	numa_stats_get	dwarf+symtab	b50f5280fef6		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/numa.a(numa_tests.o)	kernel-object	n64		0x0		numa_tests	dwarf+symtab			in	undocumented		
@@ -87249,7 +87249,7 @@ IP35/usr/cpu/sysgen/IP35boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x34	8
 IP35/usr/cpu/sysgen/IP35boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x3c	8	mem_refcnt_close	dwarf+symtab	87506497337c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x44	8	mem_refcnt_mmap	dwarf+symtab	2e17cd3f3806		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x4c	8	mem_refcnt_unmap	dwarf+symtab	87506497337c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x54	8	mem_refcnt_ioctl	dwarf+symtab	2e17cd3f3806		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/numa.a(mem_refcnt.o)	kernel-object	n64	.text	0x54	8	mem_refcnt_ioctl	dwarf+symtab	2e17cd3f3806		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP35/usr/cpu/sysgen/IP35boot/numa.a(cpuset_mem.o)	kernel-object	n64		0x0		cpuset_init_memsys	dwarf+symtab			in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/numa.a(cpuset_mem.o)	kernel-object	n64	.text	0x90	44	cpuset_destroy_memsys	dwarf+symtab	daddd005a462		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/numa.a(cpuset_mem.o)	kernel-object	n64	.text	0xbc	28	cpuset_kick_vhand	dwarf+symtab	24863dbb5f05		in	undocumented		
@@ -89213,7 +89213,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1c00	116	doac
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1c74	116	panic_lock	dwarf+symtab	181fc64609d4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1ce8	68	panic_unlock	dwarf+symtab	09f11a8e433c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1d2c	12	set_node_panic_flag	dwarf+symtab	230c83f00493		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1d38	192	enter_panic_mode	dwarf+symtab	d46eea6c8546		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1d38	192	enter_panic_mode	dwarf+symtab	d46eea6c8546		in	named-only	chips/hub/README.md#pi-error-interrupt-pending-0x400-mask-0x408-0x410	PI error interrupt pending (`0x400`), mask (`0x408`, `0x410`)
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1df8	32	exit_panic_mode	dwarf+symtab	7b04eb86f86d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e18	8	in_panic_mode	dwarf+symtab	1df2ef79d3d9		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e20	12	enter_promlog_mode	dwarf+symtab	3ebbd034647f		in	undocumented		
@@ -89914,7 +89914,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	c
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x518	100	close	dwarf+symtab	4cd8456121a7		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x57c	148	set_ioflags	dwarf+symtab	9893a22bb9e8		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	_read	dwarf+symtab	d74b738e95fc		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
+IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	33ceab58b0bf		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		in	undocumented		
@@ -97678,7 +97678,7 @@ sbin/stand/symmon.IP32	diagnostic	n32		0x0		txtsrch	dwarf+funcnames			in	undocum
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		vprf	dwarf+funcnames			in	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		walk	dwarf+funcnames			in	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		walk_path	dwarf+funcnames			in	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010200	320	start	symtab	5c941b5fa6f4		in	undocumented		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010200	320	start	symtab	5c941b5fa6f4		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010340	8	_quit	symtab	e6e69c7e1b9c		in	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010348	8	db_printf	symtab	9edc8e153884		in	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010350	1608	symmon_brkhandler	symtab	9c11d17faac2		in	undocumented		

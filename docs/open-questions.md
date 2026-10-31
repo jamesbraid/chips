@@ -44,7 +44,7 @@ chip page and the entry is deleted.
   the JUICE field (control bits 7:5), the watchdog's operation (only a store of 0), and the contents of 0x58 and 0x270.
   Valid end state unless a PROM or diagnostic routine that sets them is found. The PROM's bank-sizing loops use
   indexed addresses, so the census records only their bases, and the diagnostic's CRIME routines are stripped.
-- **Hub, Bedrock, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
+- **Bedrock, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
   seeds (see HAIKU-BRIEF.md) and run `tools/run.sh`.
 - **Model of a PROM's window base.** A PROM builds its window pointer at run time; the census recovers a
   pointer only where an identity-register probe shows it. Next: constant-fold the PROM's address setup.
@@ -64,6 +64,21 @@ chip page and the entry is deleted.
   same routine (the PIC branch of the interrupt-register clear at 0xc00000001fc41f38) is missed while the other
   branch is labelled PIC. Next: do not split a PROM pseudo-function at an address a branch from the previous one
   reaches, and fold `movz` of two constants into two sites.
+- **Hub PI write-buffer errors: which fault sets which.** PI error pending bits 4 to 7 (write response block timeout and write
+  error) and 18 and 19 (error during spool), the status 0 and 1 latches (address, command, type 0 write error, 1 partial write error,
+  3 timeout), the clear sequence and the interrupt (cause level 6) are read from the kernel (graded entries in
+  [chips/hub/README.md](../chips/hub/README.md#error-reporting-for-a-refused-or-timed-out-uncached-write-and-read)). Unknown: the
+  transaction that raises each bit, whether a 4-byte store differs, the unit of the CRB time-out (`0x30`, `0x38`), the processor line
+  that cause level 6 is, the level number the I/O error interrupt is given, and whether reading the status 0 clear alias
+  (`0x438`, `0x458`) clears it. Tried: the error initialisation, the PI, I/O and network handlers, the spool and stack routines,
+  the shipped decode text. Next: `hub_ioerror_handler`, `handle_uncac_buserr` and `hubni_error_handler` in full, the trap dispatcher
+  that indexes the cause table, `intr_heuristic`.
+- **Hub registers with no named role.** `0x2000c8`, `0x2000d0`, `0x2000d8`, `0x2000e0`, `0x400160`, `0x400190` and `0x4002c8` are
+  touched by `per_hub_init`, `hub_ifdr_fix_value`, `hub_piomap_alloc`, `mlreset` and `hub_error_devenable` and are not in the public
+  headers. Next: read those routines in full. The I/O-board PROM is not in the Hub census.
+- **Hub directory error labels.** The shipped decode text labels directory error bit 61 uncorrectable and bit 63 correctable; the
+  single-bit-error handler and the public header have them the other way round. Next: read `log_md_errors` and the decode routine
+  `show_hub_md_err` in full.
 - **HEART refused-access errors.** What sets CAUSE bits 40, 41 and 42 (bad system read, bad system write, PIU
   register access error), what a failed or timed-out processor store latches, and which of the level 4 vectors 51 to
   63 each error raises. Known: the latch registers and decode paths, the widget error type bits (store timeout is
