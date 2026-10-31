@@ -11,7 +11,8 @@ fill for a gap. Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`,
 - `pic_attach2` builds the per-chip record (2752 bytes) and stores chip type 2 in the halfword at record +114
   and a count of 1024 in the halfword at +112 (the number of internal address-translation entries it clears,
   below). It stores slot numbers 0 and 3 in the bytes at +56 and +57 (four slots numbered 0 to 3) before the
-  hints may change them.
+  hints may change them. `pic_attach2` returns -1 when `pcibr_hints_get` returns a hints record whose word at +12 is nonzero
+  (this check runs before the 2752-byte record is allocated) and returns 0 on the normal path.
 - It reads the 64-bit identification register at +0x0 (`pcireg_id_get`) and forms `revision | (part << 4)` from
   bits 31:28 and 27:12. It accepts parts 0xd102 and 0xd112, each at revisions 1, 2 and 3 (the six constants
   0xd1021, 0xd1022, 0xd1023, 0xd1121, 0xd1122, 0xd1123). Any other value is not rejected: it only changes the
