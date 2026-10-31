@@ -2023,7 +2023,7 @@ IP32/usr/cpu/sysgen/IP32boot/lofs.a(lofs_vnops.o)	kernel-IP32	kernel-object	obje
 IP32/usr/cpu/sysgen/IP32boot/lofs.a(lofs_icrash.o)	kernel-IP32	kernel-object	object	n32	9092	85a35a54a72488a3		1	none	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/lofsstubs.a(lofsstubs.o)	kernel-IP32	kernel-object	object	n32	2324	5a7f9f9818d889bb		1	none	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP32/usr/cpu/sysgen/IP32boot/log.o	kernel-IP32	kernel-object	object	n32	14552	e492cd99b37d145e		12	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-IP32	kernel-object	object	n32	9704	5c8a35eeeef61004		12	symtab	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-IP32	kernel-object	object	n32	9704	5c8a35eeeef61004		12	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/macstubs.a(macstubs.o)	kernel-IP32	kernel-object	object	n32	16532	d921a0010e90e7dd		83	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP32/usr/cpu/sysgen/IP32boot/magellan.o	kernel-IP32	kernel-object	object	n32	17720	c81fc7a55e994397		16	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mem.o	kernel-IP32	kernel-object	object	n32	11640	2b35f014642b5c47		12	symtab	0	0	undocumented		
@@ -2631,7 +2631,7 @@ IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-IP35	kernel-object	object	n64	
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-IP35	kernel-object	object	n64	10388	ec4f92f302364497		7	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/eag.a(eag.o)	kernel-IP35	kernel-object	object	n64	10500	e426d45372fc7e48		6	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP35/usr/cpu/sysgen/IP35boot/ecpplp.o	kernel-IP35	kernel-object	object	n64	57232	ce5fcac545bae5eb		33	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/eeprom.o	kernel-IP35	kernel-object	object	n64	44384	968fe5a88d27c279		42	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/eeprom.o	kernel-IP35	kernel-object	object	n64	44384	968fe5a88d27c279		42	symtab	0	0	named-only	docs/chips/bedrock.md#window-and-how-it-is-reached	Window and how it is reached
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_bitmap.o)	kernel-IP35	kernel-object	object	n64	8644	7b1564a782fc1999		4	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_bmap.o)	kernel-IP35	kernel-object	object	n64	15204	16b19f581a5cdce0		6	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dalloc.o)	kernel-IP35	kernel-object	object	n64	13044	a9cab3b7004aa03d		5	symtab	0	0	undocumented		
@@ -2716,7 +2716,7 @@ IP35/usr/cpu/sysgen/IP35boot/io6.o	kernel-IP35	kernel-object	object	n64	6776	db2
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-IP35	kernel-object	object	n64	27688	5e69438504a0ae29		27	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ioc3_pckm.o	kernel-IP35	kernel-object	object	n64	37480	307a39f751ae13a4		36	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ioc3ei.o	kernel-IP35	kernel-object	object	n64	21168	bdfefd9773253391		19	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-IP35	kernel-object	object	n64	23976	e15e32c04c326024		21	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-IP35	kernel-object	object	n64	23976	e15e32c04c326024		21	symtab	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
 IP35/usr/cpu/sysgen/IP35boot/ioc4_ei.o	kernel-IP35	kernel-object	object	n64	21512	d1296012cdbeec0d		19	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ioc4_pckm.o	kernel-IP35	kernel-object	object	n64	36408	c2d08701d772ec62		35	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-IP35	kernel-object	object	n64	41144	86743841a0450c23		34	symtab	0	0	undocumented		
@@ -2807,8 +2807,8 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-IP35	kernel-obje
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-IP35	kernel-object	object	n64	61140	27a33eca8ebf6a84		97	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(klstat.o)	kernel-IP35	kernel-object	object	n64	10676	15bff1086695505c		7	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mrlock.o)	kernel-IP35	kernel-object	object	n64	6260	f074b7566fe5c0a1		8	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-IP35	kernel-object	object	n64	55640	cf461fa67eb3150e		61	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-IP35	kernel-object	object	n64	60216	ab5c3f4dce4eda0b		86	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-IP35	kernel-object	object	n64	55640	cf461fa67eb3150e		61	symtab	0	0	named-only	docs/chips/bedrock.md#window-and-how-it-is-reached	Window and how it is reached
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-IP35	kernel-object	object	n64	60216	ab5c3f4dce4eda0b		86	symtab	0	0	named-only	docs/chips/bedrock.md#window-and-how-it-is-reached	Window and how it is reached
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2.o)	kernel-IP35	kernel-object	object	n64	32916	9c0b72fd2dce806b		23	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2dlpi.o)	kernel-IP35	kernel-object	object	n64	41636	e96c1d973dbbc038		40	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/lockd.o	kernel-IP35	kernel-object	object	n64	144336	36bbbaa1b3f33569		128	symtab+dwarf	0	0	undocumented		
@@ -3099,7 +3099,7 @@ IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-IP35	kernel-object	object	n64	47872	
 IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-IP35	kernel-object	object	n64	27528	aadca7cfd050b4f2		18	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciiox.o	kernel-IP35	kernel-object	object	n64	6120	bc9406dffebc6428		2	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pgrpidbg.a(pgrpidbg.o)	kernel-IP35	kernel-object	object	n64	10724	987ce2fa3e8bcc60		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
-IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-IP35	kernel-object	object	n64	32656	4ccc69e42c0fde78		13	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-IP35	kernel-object	object	n64	32656	4ccc69e42c0fde78		13	symtab	0	0	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/pipefs.a(pipevnops.o)	kernel-IP35	kernel-object	object	n64	23332	2f0d0d7e3624700a		21	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP35/usr/cpu/sysgen/IP35boot/pipefsstubs.a(pipefsstubs.o)	kernel-IP35	kernel-object	object	n64	2916	f5e35432c13651aa		1	none	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP35/usr/cpu/sysgen/IP35boot/pipemod.o	kernel-IP35	kernel-object	object	n64	5656	c00b0aebd600bac7		3	symtab	0	0	undocumented		
