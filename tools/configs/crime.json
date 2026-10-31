@@ -1,0 +1,85 @@
+{
+ "asic": "crime",
+ "title": "CRIME (O2 memory controller and rendering engine)",
+ "mode": "spec-backed",
+ "status": "stub: census not run",
+ "spec": "CRIME 1.5 Specification, revision 0.3",
+ "images": [
+  {
+   "label": "ip27-unix",
+   "dis": "work/dis/ip27-unix.s",
+   "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
+   "path": "root/IP27/unix",
+   "kind": "elf"
+  },
+  {
+   "label": "ip30-unix",
+   "dis": "work/dis/ip30-unix.s",
+   "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
+   "path": "root/IP30/unix",
+   "kind": "elf"
+  },
+  {
+   "label": "ip30-prom",
+   "dis": "work/dis/ip30-prom.s",
+   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
+   "path": "root/IP30/usr/cpu/firmware/IP30prom.bin",
+   "kind": "raw",
+   "vma": "0xffffffffbfc00000",
+   "arch": "mips:isa64",
+   "split": "jr31"
+  },
+  {
+   "label": "ip35-kernel-o",
+   "dis": "work/dis/ip35-kernel-o.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
+  },
+  {
+   "label": "ip35-prom",
+   "dis": "work/dis/ip35-prom.s",
+   "path": "root/IP35/usr/cpu/firmware/ip35prom.img",
+   "kind": "promgen64",
+   "segment": "ip35prom",
+   "vma": "0xc00000001fc00000",
+   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time",
+   "split": "jr31"
+  },
+  {
+   "label": "ip32-kernel-o",
+   "dis": "work/dis/ip32-kernel-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/kernel.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 kernel object"
+  },
+  {
+   "label": "ip32-prom",
+   "dis": "work/dis/ip32-prom.s",
+   "path": "root/IP32/usr/cpu/firmware/ip32prom.image",
+   "kind": "raw",
+   "vma": "0xffffffffbfc00000",
+   "split": "jr31",
+   "note": "IP32 PROM flat image; load address assumed from the reset vector, not yet read from the image"
+  }
+ ],
+ "report_functions": ".*",
+ "seeds": {},
+ "field_rules": [],
+ "discriminators": {},
+ "variants": {},
+ "variant_model": {
+  "default": {
+   "access": "dw64"
+  }
+ },
+ "reference": {
+  "crime": {
+   "datasheets": [],
+   "model": []
+  }
+ },
+ "buckets": []
+}

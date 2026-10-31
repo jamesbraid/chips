@@ -1,0 +1,460 @@
+{
+ "asic": "bridge",
+ "title": "Bridge / XBridge (and the PIC and TIOCP variants the same accessors serve)",
+ "images": [
+  {
+   "label": "ip27-unix",
+   "dis": "work/dis/ip27-unix.s",
+   "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
+   "path": "root/IP27/unix",
+   "kind": "elf"
+  },
+  {
+   "label": "ip30-unix",
+   "dis": "work/dis/ip30-unix.s",
+   "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
+   "path": "root/IP30/unix",
+   "kind": "elf"
+  },
+  {
+   "label": "ip30-prom",
+   "dis": "work/dis/ip30-prom.s",
+   "split": "jr31",
+   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
+   "const_windows": [
+    {
+     "lo": "0xffffffffbf000000",
+     "hi": "0xffffffffc0000000",
+     "name": "bridge"
+    },
+    {
+     "lo": "0x900000001f000000",
+     "hi": "0x9000000020000000",
+     "name": "bridge"
+    }
+   ],
+   "variant_hint": "bridge",
+   "path": "root/IP30/usr/cpu/firmware/IP30prom.bin",
+   "kind": "raw",
+   "vma": "0xffffffffbfc00000",
+   "arch": "mips:isa64"
+  },
+  {
+   "label": "ip35-kernel-o",
+   "dis": "work/dis/ip35-kernel-o.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
+  },
+  {
+   "label": "ip35-prom",
+   "dis": "work/dis/ip35-prom.s",
+   "path": "root/IP35/usr/cpu/firmware/ip35prom.img",
+   "kind": "promgen64",
+   "segment": "ip35prom",
+   "vma": "0xc00000001fc00000",
+   "split": "jr31",
+   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time"
+  }
+ ],
+ "type_const_in": "^pcireg_",
+ "report_functions": "^(pcireg_|pcibr_|xbridge_|bridge_)",
+ "no_pointer_args": [
+  "splhi",
+  "splx",
+  "spl7",
+  "spinlock",
+  "mutex_lock",
+  "mutex_unlock",
+  "panic",
+  "cmn_err",
+  "printf",
+  "pcibr_debug"
+ ],
+ "seeds": {
+  "args": [
+   {
+    "functions": "^pcireg_",
+    "reg": 4,
+    "off": 0
+   }
+  ],
+  "calls": [
+   {
+    "callee": "xtalk_piotrans_addr",
+    "in": "^(pcibr_|xbridge_|pcireg_)",
+    "off_arg": 6
+   }
+  ],
+  "returns": [
+   {
+    "callee": "pcibr_bridge_ptr_get",
+    "off": 0
+   }
+  ],
+  "probe": {
+   "disp": 4,
+   "shift": 12
+  }
+ },
+ "field_rules": [
+  {
+   "functions": "^pcireg_",
+   "load": "ld",
+   "disp": 8,
+   "kind": "pointer",
+   "off": 0
+  },
+  {
+   "functions": "^pcireg_",
+   "load": "lh",
+   "disp": 114,
+   "kind": "type"
+  }
+ ],
+ "discriminators": {
+  "type": {
+   "load": "lh",
+   "disp": 114
+  },
+  "part": {
+   "id_disp": 4,
+   "shift": 12,
+   "mask": "0xffff"
+  }
+ },
+ "variants": {
+  "type": {
+   "0": "bridge",
+   "1": "xbridge",
+   "2": "pic",
+   "3": "tiocp"
+  },
+  "part": {
+   "0xc002": "bridge",
+   "0xd002": "xbridge",
+   "0xd102": "pic",
+   "0xd112": "pic",
+   "0xe000": "tiocp",
+   "0xe010": "tiocp",
+   "0xd000": "xbridge-xbow-face",
+   "0xd100": "pic-xbow-face"
+  }
+ },
+ "variant_model": {
+  "bridge": {
+   "access": "half32"
+  },
+  "xbridge": {
+   "access": "half32"
+  },
+  "pic": {
+   "access": "dw64"
+  },
+  "tiocp": {
+   "access": "dw64"
+  },
+  "default": {
+   "access": "half32"
+  }
+ },
+ "reference": {
+  "bridge": {
+   "datasheets": [
+    {
+     "file": "docs/datasheets/bridge.md",
+     "label": "bridge.md",
+     "headings": [
+      "^Common widget registers",
+      "^Bridge-specific registers",
+      "^Interrupt registers",
+      "^Device registers",
+      "^Widget address space"
+     ]
+    }
+   ],
+   "spec": [
+    {
+     "file": "sgi-bridge-asic-spec-rev4.0.registers.md",
+     "label": "bridge-spec-rev4.0",
+     "headings": [
+      "^Widget configuration",
+      "^PMU and map",
+      "^PCI/GIO",
+      "^Interrupt",
+      "^Device"
+     ]
+    }
+   ],
+   "model": [
+    {
+     "file": "sgi-bridge.c",
+     "adapter": "table",
+     "row_slot": "SGI_BRIDGE_SLOT",
+     "extra_consts": {
+      "SGI_BRIDGE_REG_SLOT": 8
+     },
+     "extra_handled": [
+      "BRIDGE_RESERVED_DATA_HALF"
+     ],
+     "regions": [
+      {
+       "name": "address translation entries",
+       "lo": "BRIDGE_ATE_BASE",
+       "size": 1024,
+       "guessed": false
+      },
+      {
+       "name": "address translation low view",
+       "lo": "BRIDGE_ATE_LOW_BASE",
+       "size": 512
+      },
+      {
+       "name": "external SSRAM",
+       "lo": "BRIDGE_SSRAM_BASE",
+       "size": 524288,
+       "guessed": true,
+       "note": "unpopulated on this board"
+      },
+      {
+       "name": "PCI type 0 configuration",
+       "lo": 131072,
+       "size": 32768
+      },
+      {
+       "name": "PCI type 1 configuration",
+       "lo": 163840,
+       "size": 4096
+      },
+      {
+       "name": "device windows",
+       "lo": 2097152,
+       "size": 10485760
+      },
+      {
+       "name": "external flash",
+       "lo": "BRIDGE_FLASH_BASE",
+       "size": 4194304
+      }
+     ]
+    }
+   ]
+  },
+  "xbridge": {
+   "datasheets": [
+    {
+     "file": "docs/datasheets/xbridge.md",
+     "label": "xbridge.md",
+     "headings": [
+      "^Bridge half: registers that change"
+     ]
+    },
+    {
+     "file": "docs/datasheets/bridge.md",
+     "label": "bridge.md (XBridge inherits unchanged registers)",
+     "headings": [
+      "^Common widget registers",
+      "^Bridge-specific registers",
+      "^Interrupt registers",
+      "^Device registers",
+      "^Widget address space"
+     ]
+    }
+   ],
+   "datasheet_supplement": [
+    {
+     "lo": 384,
+     "hi": 440,
+     "stride": 8,
+     "name": "force-always interrupt 0-7 (xbridge.md Bridge half table, 0x180 to 0x1b8)",
+     "access": "write only",
+     "kind": "register",
+     "section": "Bridge half",
+     "line": 244
+    },
+    {
+     "lo": 448,
+     "hi": 504,
+     "stride": 8,
+     "name": "force-with-pin interrupt 0-7 (xbridge.md, 0x1c0 to 0x1f8)",
+     "access": "write only",
+     "kind": "register",
+     "section": "Bridge half",
+     "line": 245
+    },
+    {
+     "lo": 768,
+     "hi": 1016,
+     "stride": 8,
+     "name": "buffer 0-15 address match (xbridge.md, 0x300 to 0x3f8)",
+     "access": "read only",
+     "kind": "register",
+     "section": "Bridge half",
+     "line": 261
+    },
+    {
+     "lo": 1024,
+     "hi": 1528,
+     "stride": 8,
+     "name": "performance counters, even buffers (xbridge.md, 0x400 to 0x5f8)",
+     "access": "read/write",
+     "kind": "register",
+     "section": "Bridge half",
+     "line": 262
+    }
+   ],
+   "spec": [
+    {
+     "file": "sgi-xbridge-asic-spec-rev0.5.registers.md",
+     "label": "xbridge-spec-rev0.5",
+     "headings": [
+      "^Widget configuration, PMU",
+      "^Interrupt$",
+      "^Device$"
+     ],
+     "prose": true
+    }
+   ],
+   "spec_supplement": [
+    {
+     "lo": 768,
+     "hi": 1016,
+     "stride": 8,
+     "name": "buffer address match upper/lower, 16 buffers",
+     "access": "read only",
+     "kind": "register",
+     "section": "Buffer address match registers",
+     "line": 205,
+     "source": "xbridge-spec-rev0.5"
+    },
+    {
+     "lo": 1024,
+     "hi": 1528,
+     "stride": 8,
+     "name": "buffer performance registers, even buffers",
+     "access": "read/write",
+     "kind": "register",
+     "section": "Buffer performance registers",
+     "line": 212,
+     "source": "xbridge-spec-rev0.5"
+    }
+   ],
+   "model": [
+    {
+     "file": "sgi-xbridge.c",
+     "adapter": "case-function",
+     "defined": [
+      "xbridge_register_defined"
+     ],
+     "unimp": [
+      "xbridge_deferred"
+     ],
+     "regions": [
+      {
+       "name": "translation table RAM (size from the datasheet; the model's entry count is a header constant)",
+       "lo": 65536,
+       "size": 4096
+      },
+      {
+       "name": "PCI configuration (xbridge_read, 0x20000 to 0x28fff)",
+       "lo": 131072,
+       "size": 36864
+      },
+      {
+       "name": "PCI device windows (xbridge_pio)",
+       "lo": 2097152,
+       "size": 10485760
+      }
+     ]
+    }
+   ]
+  },
+  "pic": {
+   "datasheets": [
+    {
+     "file": "docs/datasheets/pic.md",
+     "label": "pic.md",
+     "headings": [
+      "^Address and access contract"
+     ]
+    }
+   ],
+   "model": [
+    {
+     "file": "sgi-pic.c",
+     "adapter": "case-function",
+     "defined": [
+      "pic_defined"
+     ]
+    }
+   ]
+  }
+ },
+ "buckets": [
+  {
+   "lo": 2097152,
+   "size": 2097152,
+   "name": "device window 0"
+  },
+  {
+   "lo": 4194304,
+   "size": 2097152,
+   "name": "device window 1"
+  },
+  {
+   "lo": 6291456,
+   "size": 1048576,
+   "name": "device window 2"
+  },
+  {
+   "lo": 7340032,
+   "size": 1048576,
+   "name": "device window 3"
+  },
+  {
+   "lo": 8388608,
+   "size": 1048576,
+   "name": "device window 4"
+  },
+  {
+   "lo": 9437184,
+   "size": 1048576,
+   "name": "device window 5"
+  },
+  {
+   "lo": 10485760,
+   "size": 1048576,
+   "name": "device window 6"
+  },
+  {
+   "lo": 11534336,
+   "size": 1048576,
+   "name": "device window 7"
+  },
+  {
+   "lo": 12582912,
+   "size": 4194304,
+   "name": "external flash window"
+  },
+  {
+   "lo": 131072,
+   "size": 32768,
+   "name": "PCI type 0 configuration (per 4 KB device slot)"
+  },
+  {
+   "lo": 163840,
+   "size": 4096,
+   "name": "PCI type 1 configuration"
+  },
+  {
+   "lo": 196608,
+   "size": 8,
+   "name": "PCI interrupt acknowledge"
+  }
+ ],
+ "mode": "spec-backed",
+ "accessor_calls": "^pcireg_",
+ "status": "census run (Bridge, XBridge; PIC and TIOCP rows come from the shared accessors)",
+ "spec": "Bridge ASIC Specification, revision 4.0; XBridge ASIC Specification, revision 0.5"
+}

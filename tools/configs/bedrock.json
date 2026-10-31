@@ -1,0 +1,64 @@
+{
+ "asic": "bedrock",
+ "title": "Bedrock (node controller: processor interface, memory directory, I/O interface, network interface, local block)",
+ "mode": "no-spec",
+ "images": [
+  {
+   "label": "ip35-kernel-o",
+   "dis": "work/dis/ip35-kernel-o.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
+   "kind": "elf",
+   "reloc": true,
+   "literals": "work/dis/ip35-kernel-o.lit8.txt",
+   "lit_sections": [
+    ".lit8"
+   ],
+   "gp": "0x7ff0",
+   "variant_hint": "bedrock",
+   "const_windows": [
+    {
+     "lo": "0x9200000000000000",
+     "hi": "0x9200000200000000",
+     "name": "local-registers"
+    }
+   ],
+   "note": "IP35 kernel object, relocatable; gp-relative literals read from the object (gp bias 0x7ff0, the usual relocatable bias, checked: every literal offset lands on an 8-byte boundary)"
+  },
+  {
+   "label": "ip35-prom",
+   "dis": "work/dis/ip35-prom.s",
+   "path": "root/IP35/usr/cpu/firmware/ip35prom.img",
+   "kind": "promgen64",
+   "segment": "ip35prom",
+   "vma": "0xc00000001fc00000",
+   "split": "jr31",
+   "variant_hint": "bedrock",
+   "const_windows": [
+    {
+     "lo": "0x9200000000000000",
+     "hi": "0x9200000200000000",
+     "name": "local-registers"
+    }
+   ],
+   "note": "IP35 CPU PROM, promgen64 segment unpacked"
+  }
+ ],
+ "report_functions": ".*",
+ "seeds": {},
+ "field_rules": [],
+ "discriminators": {},
+ "variants": {},
+ "variant_model": {
+  "default": {
+   "access": "dw64"
+  }
+ },
+ "reference": {
+  "bedrock": {
+   "datasheets": [],
+   "model": []
+  }
+ },
+ "buckets": [],
+ "status": "pilot"
+}
