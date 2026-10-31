@@ -829,6 +829,7 @@ class Analyser:
                 delay = insns[i + 1] if i + 1 < len(insns) else None
                 if mn in CALLS and mn not in COND:
                     # call: arguments are read before the delay slot runs
+                    self.call_target = st.get(reg(ins.ops[-1])) if mn == 'jalr' and ins.ops else None
                     if delay is not None:
                         self.step(fn, delay, st, record)
                     self.argsnap = {r: st.get(r) for r in range(4, 12)}
@@ -910,7 +911,8 @@ class Analyser:
     def note_call(self, fn, ins, st):
         cfg = self.cfg
         if ins.mn == 'jalr' and not ins.sym and ins.ops:
-            fv = st.get(reg(ins.ops[-1]))
+            # the target register as it stood at the jalr: its delay slot often reuses it for the first argument
+            fv = self.call_target
             if fv and fv[0] == 'F':
                 shim = Insn(ins.addr, ins.mn, ins.ops, fv[1])
                 ins = shim
@@ -966,6 +968,7 @@ class Analyser:
     known_callees = set()
     cur_fn = ''
     argsnap = {}
+    call_target = None
 
 
 def sx64(v):
