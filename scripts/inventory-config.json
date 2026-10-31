@@ -4,10 +4,11 @@
  "docs": {
   "prose": [
    "docs/*.md",
-   "docs/chips/*.md"
+   "chips/*/README.md",
+   "chips/*/notes/*.md"
   ],
   "headers": [
-   "*.h"
+   "include/*.h"
   ],
   "tables": [],
   "index": [
@@ -87,7 +88,17 @@
    ]
   }
  ],
- "exclude": [],
+ "exclude": [
+  "**/gfx.o",
+  "**/gfxs.a",
+  "**/gfxstubs.a",
+  "**/rrm.o",
+  "**/tport.a",
+  "**/odyssey*",
+  "**/kona*",
+  "**/mgras*",
+  "**/*stubs.a"
+ ],
  "windows": [
   {
    "name": "CRIME",
@@ -212,7 +223,7 @@
  "tokens": {
   "window": "CRIME",
   "docs": [
-   "docs/chips/crime.md"
+   "chips/crime/README.md"
   ],
   "sources": []
  },
@@ -221,7 +232,7 @@
   "ranges": [],
   "min_decimal": 1000000000,
   "docs": [
-   "docs/chips/crime.md"
+   "chips/crime/README.md"
   ],
   "dispatchers": [],
   "classes": []

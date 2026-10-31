@@ -101,6 +101,64 @@ class Insn:
         return None
 
 
+def is_return(ins):
+    return ins.mn == 'jr' and ins.ops == ['$31']
+
+
+def split_functions(funcs, raw):
+    """Cut routines the listing glued together, by control flow rather than by symbol or by return.
+
+    A new routine starts after a return and its delay slot when nothing in the listing branches or jumps
+    to that address (a code span a branch reaches belongs to the routine that branches to it), and at the
+    target of a call. A routine holding a jump through a register other than ra is not cut after that
+    point: its case arms are reached through a table the scan cannot see. Routines cut out of a labelled
+    one are named sub_<address>; in a raw image every routine is named prom_<address>."""
+    targets, calls = set(), set()
+    for _n, _s, insns in funcs:
+        for i in insns:
+            if i.mn in COND or i.mn in ('b', 'j'):
+                t = i.target()
+                if t is not None:
+                    targets.add(t)
+            elif i.mn in CALLS:
+                t = i.target()
+                if t is not None and not i.reloc:
+                    calls.add(t)
+    out = []
+    for name, start, insns in funcs:
+        cur, k, tabled = [], 0, False
+        label = name
+        pieces = []
+        for idx, i in enumerate(insns):
+            if cur:
+                prev = cur[-1]
+                cut = False
+                if i.addr in calls:
+                    cut = True
+                elif idx >= 2 and is_return(insns[idx - 2]) and not tabled and i.addr not in targets and cur[-1] is insns[idx - 1]:
+                    cut = True
+                if cut:
+                    pieces.append(cur)
+                    cur, tabled = [], False
+            cur.append(i)
+            if i.mn == 'jr' and i.ops != ['$31']:
+                # a switch: the register was just loaded from a table (or computed from an index)
+                prior = insns[max(0, idx - 5):idx]
+                if any(p.mn in LOADS and p.ops and p.ops[0] == i.ops[0] for p in prior):
+                    tabled = True
+        if cur:
+            pieces.append(cur)
+        for n, p in enumerate(pieces):
+            if raw:
+                nm = 'prom_%x' % p[0].addr
+            elif n == 0:
+                nm = label
+            else:
+                nm = 'sub_%x' % p[0].addr
+            out.append((nm, p[0].addr, p))
+    return out
+
+
 def read_functions(path, split=None):
     """[(name, start, [Insn])]. A raw image has no symbols: split='jr31' starts a new
     pseudo-function after every return and its delay slot, named prom_<address>."""
@@ -140,18 +198,36 @@ def read_functions(path, split=None):
                 if rl.group(1) == 'R_MIPS_26':
                     ins.sym = ins.rsym
             if split:
-                if cur is None or since_ret == 2:
-                    cur = ('prom_%x' % ins.addr, ins.addr, [])
+                if cur is None:
+                    cur = ('image', ins.addr, [])
                     funcs.append(cur)
-                    since_ret = None
-                if ins.mn == 'jr' and ops == ['$31']:
-                    since_ret = 0
-                if since_ret is not None:
-                    since_ret += 1
                 cur[2].append(ins)
             elif cur is not None:
                 cur[2].append(ins)
-    return funcs
+    return split_functions(funcs, bool(split))
+
+
+
+def gp_from_options(path):
+    """The gp value in an object's option record (.MIPS.options: kind 1, the register-information
+    descriptor, whose last eight bytes are ri_gp_value). None if the dump is absent or has no such descriptor."""
+    if not path or not os.path.exists(path):
+        return None
+    data = bytearray()
+    for ln in open(path, encoding='utf-8', errors='replace'):
+        m = re.match(r'^\s+0x[0-9a-f]+ ((?:[0-9a-f]{1,8} ?){1,4})', ln)
+        if m:
+            for part in m.group(1).split():
+                data += bytes.fromhex(part.rjust(8, '0')) if len(part) == 8 else b''
+    o = 0
+    while o + 8 <= len(data):
+        kind, size = data[o], data[o + 1]
+        if size == 0:
+            break
+        if kind == 1 and size >= 0x28:
+            return int.from_bytes(data[o + 32:o + 40], 'big')
+        o += size
+    return None
 
 
 def load_literals(path):
@@ -264,7 +340,7 @@ class Analyser:
                 key = 'S%d' % disp
                 if mn in STORES:
                     v = self.rd(st, rt)
-                    if v is not None and mn in ('sd', 'sw') and v[0] in ('B', 'K', 'T', 'KI'):
+                    if v is not None and mn in ('sd', 'sw') and v[0] in ('B', 'K', 'T', 'KI', 'KM'):
                         st[key] = v
                     else:
                         st.pop(key, None)
@@ -293,6 +369,20 @@ class Analyser:
                         nv = ('IDW',)
                     self.wr(st, rt, nv)
                 return
+            if bv is not None and bv[0] == 'KM' and self.windows:
+                hit = False
+                for base_v in sorted(bv[1]):
+                    w = self.window_of(base_v)
+                    if w:
+                        hit = True
+                        if record:
+                            self.cond = True
+                            self.record(fn, ins, mn, ((base_v + disp) & M64) - w[0], len(bv) > 2 and bv[2], st, w[2])
+                            self.cond = False
+                if mn in LOADS:
+                    self.wr(st, rt, None)
+                if hit:
+                    return
             if bv is not None and bv[0] == 'KI' and self.windows:
                 addr = (bv[1] + disp) & M64
                 hit = self.window_of(bv[1])
@@ -337,6 +427,8 @@ class Analyser:
                 v = ('K', (s[1] + imm) & M64)
                 if mn in ('addiu', 'addi'):
                     v = ('K', sx32(s[1] + imm) & M64)
+            elif s and s[0] == 'KM':
+                v = ('KM', frozenset((x + imm) & M64 for x in s[1])) + tuple(s[2:])
             elif s and s[0] == 'B' and mn in ('daddiu', 'daddi'):
                 v = ('B', s[1] + imm, s[2])
             else:
@@ -355,6 +447,31 @@ class Analyser:
             else:
                 v = None
             self.wr(st, reg(ops[0]), v)
+        elif mn in ('movz', 'movn') and len(ops) == 3:
+            # a conditional move picks between two values: keep both as alternatives
+            a, b = rdv(st, reg(ops[0])), rdv(st, reg(ops[1]))
+            va = {a[1]} if a and a[0] == 'K' else (set(a[1]) if a and a[0] == 'KM' else None)
+            vb = {b[1]} if b and b[0] == 'K' else (set(b[1]) if b and b[0] == 'KM' else None)
+            if va is not None and vb is not None and len(va | vb) <= 4:
+                u = va | vb
+                self.wr(st, reg(ops[0]), ('K', next(iter(u))) if len(u) == 1 else ('KM', frozenset(u)))
+            else:
+                self.wr(st, reg(ops[0]), None)
+        elif mn in ('or', 'addu', 'daddu') and len(ops) == 3 and mn == 'daddu' and (
+                (rdv(st, reg(ops[1])) or ('',))[0] == 'KM' or (rdv(st, reg(ops[2])) or ('',))[0] == 'KM'):
+            a, b = rdv(st, reg(ops[1])), rdv(st, reg(ops[2]))
+            va = {a[1]} if a and a[0] == 'K' else (set(a[1]) if a and a[0] == 'KM' else None)
+            vb = {b[1]} if b and b[0] == 'K' else (set(b[1]) if b and b[0] == 'KM' else None)
+            ia = bool(a and a[0] == 'KM' and len(a) > 2 and a[2])
+            ib = bool(b and b[0] == 'KM' and len(b) > 2 and b[2])
+            if va is not None and vb is not None and len(va) * len(vb) <= 4:
+                u = frozenset((x + y) & M64 for x in va for y in vb)
+                self.wr(st, reg(ops[0]), ('KM', u, ia or ib))
+            elif (va is not None) != (vb is not None) and reg(ops[1]) not in (28, 29) and reg(ops[2]) not in (28, 29):
+                # alternatives plus an index we cannot see
+                self.wr(st, reg(ops[0]), ('KM', frozenset(va if va is not None else vb), True))
+            else:
+                self.wr(st, reg(ops[0]), None)
         elif mn in ('or', 'addu', 'daddu') and len(ops) == 3:
             a, b = rdv(st, reg(ops[1])), rdv(st, reg(ops[2]))
             if mn == 'or' and reg(ops[2]) == 0:
@@ -420,6 +537,8 @@ class Analyser:
         w = LOADS.get(mn) or STORES.get(mn)
         variant = self.variant(st)
         basis = 'refined' if variant != '?' else 'direct'
+        if getattr(self, 'cond', False):
+            basis = 'conditional'
         if variant == '?' and self.hint:
             variant, basis = self.hint, 'image-hint'
         if getattr(self, 'auto', None) and not any(rx.search(fn) for rx, _, _ in self.cfg.seed_args):
@@ -580,6 +699,19 @@ class Analyser:
                 key = self.key(st)
                 tab = IN[succ]
                 if key in tab:
+                    continue
+                if tab and succ <= k:
+                    # a back edge: a counter that differs per iteration becomes unknown rather than
+                    # unrolling the loop one state per pass
+                    merged = st
+                    for o in tab.values():
+                        merged = self.join(merged, o)
+                    mk = self.key(merged)
+                    if mk in tab and len(tab) == 1:
+                        continue
+                    tab.clear()
+                    tab[mk] = merged
+                    work.append((succ, merged))
                     continue
                 if len(tab) >= STATE_CAP:
                     merged = st
@@ -756,7 +888,11 @@ def run(cfg, base, outdir):
         path = os.path.join(base, img['dis'])
         funcs = read_functions(path, img.get('split'))
         gp = None
-        if img.get('gp') == 'auto-min':
+        opt = gp_from_options(os.path.join(base, img['dis'][:-2] + '.opts.txt'))
+        if opt is not None and img.get('literals'):
+            gp = opt
+            stats[img['label'] + ':gp'] = 'options record 0x%x' % opt
+        elif img.get('gp') == 'auto-min':
             # object without a stated gp bias: the lowest gp-relative .lit8 displacement it uses is taken
             # as literal offset 0. Inferred: it fails if the object never loads its first literal.
             ds = []
@@ -767,6 +903,7 @@ def run(cfg, base, outdir):
                         if mm:
                             ds.append(to_int(mm.group(1)))
             gp = -min(ds) if ds else None
+            stats[img['label'] + ':gp'] = 'inferred (lowest literal displacement), options record absent'
         elif img.get('gp'):
             gp = to_int(img['gp'])
         lits = load_literals(os.path.join(base, img['literals'])) if img.get('literals') else None

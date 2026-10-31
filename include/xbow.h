@@ -11,6 +11,6 @@
 #define XBOW_H
 
 /* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: docs/chips/xbow.md. */
+ * Mode and sources: chips/xbow/README.md. */
 
 #endif /* XBOW_H */

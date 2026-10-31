@@ -31,7 +31,7 @@ chip page and the entry is deleted.
   reaches, and fold `movz` of two constants into two sites.
 - **PIC error and interrupt service.** `pcibr_error_dump` and `pcibr_error_intr_handler` in `pcibr.o` and the
   PIC branches of the error accessors are not read. Next: read both in full and fill the error and interrupt
-  sections of docs/chips/pic.md.
+  sections of chips/pic/README.md.
 - **PIC direct map and revision-1 steps.** `pcibr_directmap_init` is not read; what the revision-1-only
   writes (control bit 29 test, request timeout 0x750, enable bits 39 and 9, response buffer bits) fix is unknown.
 - **PIC +0x18000 banks.** Three banks of 256 doublewords are cleared at attach; their contents are unknown.
@@ -44,3 +44,10 @@ chip page and the entry is deleted.
 - **Harness limits.** `scripts/run_routine.py` replaces calls with `v0 = 0` and has no global data, so a routine
   that reads a table by gp (`pcireg_int_ate_set`, `pcireg_force_always_set`, `pcireg_intr_addr_vect_set`) ends in
   an unmapped read; the routines that touch only the chip record run to completion.
+- **Scanner fixes after the first audit.** Since that audit the scan reads gp from each object's options record
+  (the auto-min rule is a flagged fallback and no object needed it), alternatives chosen by a conditional move
+  are kept as separate conditional sites, loop counters are widened to an indexed site instead of one site per
+  pass, and routines are cut by control flow (after a return that nothing branches to, and at call targets)
+  rather than by symbol or by every return. Remaining: a PROM branch that labels a non-PIC path `pic` (the
+  32-bit stores at +0x10c, +0x114 appear under both `pic` and `probe?`), and large code spans with no return
+  (PROM data disassembled as code) stay single routines.

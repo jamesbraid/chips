@@ -20,6 +20,7 @@ for i in c['images']:
         print("mips64-linux-gnuabi64-objdump -d %s -w -M no-aliases,gpr-names=numeric --no-show-raw-insn %s > %s" % ('-r' if i.get('reloc') else '', i['path'], out))
         print("mips64-linux-gnuabi64-nm -n -S %s > %s.nm" % (i['path'], out[:-2]))
         if i.get('literals'):
+            print("mips64-linux-gnuabi64-readelf -x .MIPS.options %s > %s.opts.txt 2>/dev/null || true" % (i['path'], out[:-2]))
             secs = ' '.join('-j %s' % x for x in i.get('lit_sections', ['.lit8', '.srdata']))
             print("mips64-linux-gnuabi64-objdump -s %s %s > %s" % (secs, i['path'], i['literals']))
     elif i['kind'] == 'promgen64':

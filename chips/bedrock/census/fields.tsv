@@ -1,7 +1,6 @@
 variant	register	source	kind	bits_or_value	sites	functions	example
 bedrock	0x20	load	mask	0	2	2	hubpi_eint_handler@184b4
 bedrock	0x20	load	shift	shift 0	4	4	get_slice@12d4
-bedrock	0x20	load	shift	shift 62	1	1	save_hub_err@13c68
 bedrock	0x20	load	shift	shift 1	1	1	hubpi_eint_handler@184b4
 bedrock	0x28	load	shift	shift 0	2	2	memory_iscalias@100cc
 bedrock	0x90	store	const	0x7	1	1	sendintr@20754
@@ -12,17 +11,18 @@ bedrock	0x4c8	load	shift	shift 63	1	1	hubpi_eint_handler@184ac
 bedrock	0x4c8	load	shift	shift 17	1	1	hubpi_eint_handler@184ac
 bedrock	0x400130	load	mask	15:0	2	1	ii_llp_error_monitor@1b1a0
 bedrock	0x400130	load	shift	shift 16	1	1	ii_llp_error_monitor@1b1a0
+bedrock	0x4001f8	store	const	0x20000	1	1	sub_3d1d8@3d324
 bedrock	0x600000	load	mask	1:0	2	2	is_fine_dirmode@12e4
 bedrock	0x600000	load	mask	7:0	1	1	get_nasid@12b8
 bedrock	0x600000	load	shift	shift 48	2	1	get_nasid@12b8
 bedrock	0x600000	load	shift	shift 46	2	2	is_fine_dirmode@12e4
-bedrock	0x604200	load	mask	9:0	52	31	numalinkstats_up2date@23d4
-bedrock	0x604200	load	shift	shift 4	52	31	numalinkstats_up2date@23d4
-bedrock	0x604200	load	shift	shift 2	52	31	numalinkstats_up2date@23d4
-bedrock	0x604200	load	shift	shift 1	51	30	numalinkstats_up2date@23d4
-bedrock	0x680000	load	mask	0	1	1	router_map_get@11988
-bedrock	0x680000	load	shift	shift 1	1	1	router_map_get@11988
-bedrock	0x680010	store	const	0x1	2	2	he_arcs_set_vectors@121c
+bedrock	0x604200	load	mask	9:0	54	32	numalinkstats_up2date@23d4
+bedrock	0x604200	load	shift	shift 4	54	32	numalinkstats_up2date@23d4
+bedrock	0x604200	load	shift	shift 2	54	32	numalinkstats_up2date@23d4
+bedrock	0x604200	load	shift	shift 1	53	31	numalinkstats_up2date@23d4
+bedrock	0x680000	load	mask	0	1	1	sub_11804@11988
+bedrock	0x680000	load	shift	shift 1	1	1	sub_11804@11988
+bedrock	0x680010	store	const	0x1	2	2	sub_10c0@121c
 bedrock	0x680120	load	mask	3:0	3	1	ni_llp_error_monitor@1b208
 bedrock	0x680120	load	shift	shift 16	1	1	ni_llp_error_monitor@1b208
 bedrock	0x680120	load	shift	shift 24	1	1	ni_llp_error_monitor@1b208
@@ -33,20 +33,24 @@ bedrock	0x680120	load	shift	shift 44	1	1	ni_llp_error_monitor@1b208
 bedrock	0x780008	load	mask	1:0	3	3	mdir_xlate_addr_mem@2b870
 bedrock	0x780008	load	shift	shift 30	3	3	mdir_xlate_addr_mem@2b870
 bedrock	0x7a0038	load	mask	0	1	1	doacvec@1c14
-bedrock	0x800000	load	shift	shift 0	4	3	show_hub_pi_err@14ed8
 bedrock	0x800000	load	shift	shift 1	1	1	part_interrupt@2460
 bedrock	0x800020	load	shift	shift 62	1	1	save_hub_err@13c68
 bedrock	0x800028	load	shift	shift 0	1	1	move_buffer@2cb0
 bedrock	0x800038	store	const	0x200000	1	1	per_hub_init@e3a0
+bedrock	0x800040	load	shift	shift 0	1	1	hub_error_init@17b40
+bedrock	0x800048	load	shift	shift 0	1	1	hub_error_init@17b64
 bedrock	0x800098	load	mask	4	1	1	brl1_intr_poll@1e00
-bedrock	0x800428	load	shift	shift 0	1	1	hub_error_init@17d5c
+bedrock	0x800428	load	shift	shift 0	3	3	show_hub_pi_err@14ed8
+bedrock	0xa00040	load	shift	shift 0	1	1	hub_error_init@17b40
+bedrock	0xa00048	load	shift	shift 0	1	1	hub_error_init@17b64
+bedrock	0xa00428	load	shift	shift 0	2	2	show_hub_pi_err@14ed8
 bedrock	0xc00008	load	shift	shift 31	1	1	hubii_eint_handler@1b098
 bedrock	0xc00008	load	shift	shift 54	1	1	hubii_eint_handler@1b098
 bedrock	0xc00020	load	mask	3:0	1	1	hub_widget_id@12a8
 bedrock	0xc00020	load	shift	shift 46	1	1	hub_set_piomode@22e34
 bedrock	0xc00128	load	mask	1	3	3	per_hub_init@e33c
-bedrock	0xc00128	load	mask	13	2	2	restorenoderun@b950
-bedrock	0xc00128	load	mask	10:0	1	1	restorenoderun@b950
+bedrock	0xc00128	load	mask	13	2	2	sub_b91c@b950
+bedrock	0xc00128	load	mask	10:0	1	1	sub_b91c@b950
 bedrock	0xc00128	load	shift	shift 12	3	3	per_hub_init@e33c
 bedrock	0xc00130	load	mask	15:0	2	1	capture_hub_stats@2b140
 bedrock	0xc00130	load	shift	shift 16	1	1	capture_hub_stats@2b140
@@ -111,7 +115,7 @@ bedrock	0xfc0018	load	shift	shift 1	1	1	log_md_errors@19224
 bedrock	0xfc0018	load	shift	shift 2	1	1	memerror_sbe_intr@2bc0c
 bedrock	0xfc0028	load	shift	shift 63	1	1	log_md_errors@1922c
 bedrock	0xfe0010	load	shift	shift 3	1	1	memerror_sbe_intr@2bbfc
-bedrock	0xfe0018	load	mask	0	1	1	memerror_sbe_intr@2bc10
+bedrock	0xfe0018	load	mask	0	3	1	memerror_sbe_intr@2bc10
+bedrock	0xfe0018	load	shift	shift 11	3	1	memerror_sbe_intr@2bc10
+bedrock	0xfe0018	load	shift	shift 52	3	1	memerror_sbe_intr@2bc10
 bedrock	0xfe0018	load	shift	shift 3	2	2	log_md_errors@19220
-bedrock	0xfe0018	load	shift	shift 11	1	1	memerror_sbe_intr@2bc10
-bedrock	0xfe0018	load	shift	shift 52	1	1	memerror_sbe_intr@2bc10

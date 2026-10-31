@@ -11,6 +11,6 @@
 #define MACE_H
 
 /* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: docs/chips/mace.md. */
+ * Mode and sources: chips/mace/README.md. */
 
 #endif /* MACE_H */

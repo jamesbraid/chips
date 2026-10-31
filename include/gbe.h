@@ -11,6 +11,6 @@
 #define GBE_H
 
 /* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: docs/chips/gbe.md. */
+ * Mode and sources: chips/gbe/README.md. */
 
 #endif /* GBE_H */

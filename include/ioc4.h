@@ -11,6 +11,6 @@
 #define IOC4_H
 
 /* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: docs/chips/ioc4.md. */
+ * Mode and sources: chips/ioc4/README.md. */
 
 #endif /* IOC4_H */

@@ -10,7 +10,7 @@ spec-backed or no-spec.
 | 3 reference | `ref.py` | `ref.json` (datasheet, specification, model entries), spec-backed only |
 | 4 join | `join.py` | `CHIP-census.tsv`, `-census-sites.tsv`, `-census-windows.tsv` |
 | 4b fields | `fields.py` | `CHIP-fields.tsv`, `CHIP-context.tsv` |
-| 5 report | `report.py` | `docs/census/CHIP/census.md` |
+| 5 report | `report.py` | `chips/*/census/CHIP/census.md` |
 
 `run.sh CONFIG DATASHEET_REPO MODEL_CHECKOUT [REF]` runs all of it (the comparison needs the emulator's
 datasheets and model source; without them run stages 1, 2 and 4b by hand). `setup-clone.sh` makes a clone with a

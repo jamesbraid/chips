@@ -34,7 +34,7 @@ CHIPS = {
  'gbe':  ('gbe', None, 0, 'GBE (O2 display back end)', None),
  'vice': ('vice', None, 0, 'VICE (O2 video engine, presence only)', None),
 }
-BEDROCK_BLOCKS = [  # inferred from routine-name prefixes (see docs/chips/bedrock.md)
+BEDROCK_BLOCKS = [  # inferred from routine-name prefixes (see chips/bedrock/README.md)
  (0x1000000, 0x1200000, 'PROCESSOR_INTERFACE_LIKE', 'low window: interrupt send, clocks, error masks, time counter'),
  (0x1600000, 0x1800000, 'NETWORK_INTERFACE_LIKE', 'ports, router tables, a counter'),
  (0x1800000, 0x1c00000, 'PROCESSOR_INTERFACE_ALIAS', 'second alias: dump and error routines'),
@@ -101,7 +101,7 @@ def gen(chip, spec):
            ' * the code applies; their meaning is not read. Reset values: [U] throughout.', ' */',
            '#ifndef %s_H' % P, '#define %s_H' % P, '']
     if not rows:
-        out += ['/* No census rows yet: nothing is established for this chip by the census.', ' * Mode and sources: docs/chips/%s.md. */' % chip, '', '#endif /* %s_H */' % P, '']
+        out += ['/* No census rows yet: nothing is established for this chip by the census.', ' * Mode and sources: chips/%s/README.md. */' % chip, '', '#endif /* %s_H */' % P, '']
         return '\n'.join(out)
     cur_block = None
     seen = set()

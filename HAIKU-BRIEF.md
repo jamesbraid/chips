@@ -35,7 +35,7 @@ a hypothesis, stated as such, never evidence.
    register-like displacement through an unresolved base). Each is a to-do, not an error.
 4. Spec-backed only: `tools/ref.py` and `tools/join.py` (or `tools/run.sh`) for the comparison.
 5. `python3 tools/fields.py ...` for field evidence. Then write entries (AGENTS.md labels) in
-   `docs/chips/<chip>.md`, one heading per register with the offset in backticks, and regenerate the
+   `chips/<chip>/README.md`, one heading per register with the offset in backticks, and regenerate the
    inventory.
 
 ## Good fits for a cheap worker

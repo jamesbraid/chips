@@ -1,26 +1,28 @@
 window	inner_offset	rw	width	sites	functions	images	example
-PCI type 0 configuration (per 4 KB device slot)	0x0	a	0	8	1	ip27-unix,ip30-unix	pcireg_type0_cfg_addr@088504
-PCI type 0 configuration (per 4 KB device slot)	0x2004	r	4	4	4	ip30-prom	prom_ffffffffbfc162c0@c16318
-PCI type 0 configuration (per 4 KB device slot)	0x2004	w	4	2	2	ip30-prom	prom_ffffffffbfc162c0@c16320
-PCI type 0 configuration (per 4 KB device slot)	0x2010	w	4	2	2	ip30-prom	prom_ffffffffbfc162c0@c16328
+PCI type 0 configuration (per 4 KB device slot)	0x0	a	0	2	1	ip27-unix,ip30-unix	pcireg_type0_cfg_addr@088504
+PCI type 0 configuration (per 4 KB device slot)	0x2004	r	4	4	4	ip30-prom	prom_ffffffffbfc16300@c16318
+PCI type 0 configuration (per 4 KB device slot)	0x2004	w	4	2	2	ip30-prom	prom_ffffffffbfc16300@c16320
+PCI type 0 configuration (per 4 KB device slot)	0x2010	w	4	2	2	ip30-prom	prom_ffffffffbfc16300@c16328
 PCI type 0 configuration (per 4 KB device slot)	0x2040	r	4	2	2	ip30-prom	prom_ffffffffbfc16680@c16e3c
 PCI type 0 configuration (per 4 KB device slot)	0x2044	r	4	2	2	ip30-prom	prom_ffffffffbfc16680@c16e10
-PCI type 1 configuration	0x0	a	0	8	1	ip27-unix,ip30-unix	pcireg_type1_cfg_addr@08878c
-device window 2	0x28	r	4	32	8	ip30-prom	prom_ffffffffbfc01b04@c023cc
-device window 2	0x28	w	4	16	10	ip30-prom	prom_ffffffffbfc01b04@c023f4
-device window 2	0x34	w	4	7	4	ip30-prom	prom_ffffffffbfc00000@c00984
-device window 2	0x3c	w	4	2	2	ip30-prom	prom_ffffffffbfc162c0@c16334
-device window 2	0x40	w	4	6	4	ip30-prom	prom_ffffffffbfc00000@c00a28
-device window 2	0x44	w	4	6	4	ip30-prom	prom_ffffffffbfc00000@c00a24
-device window 2	0x50	w	4	6	2	ip30-prom	prom_ffffffffbfc00000@c0097c
-device window 2	0x50	r	4	1	1	ip30-prom	prom_ffffffffbfc1875c@c30c3c
-device window 2	0x20178	w	1	2	2	ip30-prom	prom_ffffffffbfc162c0@c16364
-device window 2	0x20179	w	1	4	2	ip30-prom	prom_ffffffffbfc162c0@c1635c
-device window 2	0x2017a	w	1	4	2	ip30-prom	prom_ffffffffbfc162c0@c16384
-device window 2	0x2017b	w	1	4	2	ip30-prom	prom_ffffffffbfc162c0@c16354
-device window 2	0x2017f	w	1	2	2	ip30-prom	prom_ffffffffbfc162c0@c1636c
-device window 2	0x80000	w	1	2	2	ip30-prom	prom_ffffffffbfc00000@c00a30
-device window 2	0xa0000	w	1	46	8	ip30-prom	prom_ffffffffbfc01b04@c02404
-device window 2	0xc0000	w	1	25	8	ip30-prom	prom_ffffffffbfc01b04@c0240c
-device window 2	0xc0000	r	1	21	7	ip30-prom	prom_ffffffffbfc01b04@c02414
-device window 4	0x0	a	0	2	1	ip27-unix,ip30-unix	pcibr_bridge_ptr_get@0751a8
+PCI type 1 configuration	0x0	a	0	2	1	ip27-unix,ip30-unix	pcireg_type1_cfg_addr@08878c
+device window 2	0x28	r	4	32	8	ip30-prom	prom_ffffffffbfc02388@c023cc
+device window 2	0x28	w	4	16	10	ip30-prom	prom_ffffffffbfc02388@c023f4
+device window 2	0x34	w	4	7	4	ip30-prom	prom_ffffffffbfc00634@c00984
+device window 2	0x3c	w	4	2	2	ip30-prom	prom_ffffffffbfc16300@c16334
+device window 2	0x40	w	4	6	6	ip30-prom	prom_ffffffffbfc00634@c00a28
+device window 2	0x44	w	4	8	6	ip30-prom	prom_ffffffffbfc00634@c00a24
+device window 2	0x50	w	4	6	2	ip30-prom	prom_ffffffffbfc00634@c0097c
+device window 2	0x50	r	4	1	1	ip30-prom	prom_ffffffffbfc304e0@c30c3c
+device window 2	0xb0	w	4	4	2	ip30-prom	prom_ffffffffbfc16140@c16154
+device window 2	0xb0	r	4	2	2	ip30-prom	prom_ffffffffbfc16140@c16158
+device window 2	0x20178	w	1	4	4	ip30-prom	prom_ffffffffbfc16300@c16364
+device window 2	0x20179	w	1	4	2	ip30-prom	prom_ffffffffbfc16300@c1635c
+device window 2	0x2017a	w	1	4	2	ip30-prom	prom_ffffffffbfc16300@c16384
+device window 2	0x2017b	w	1	4	2	ip30-prom	prom_ffffffffbfc16300@c16354
+device window 2	0x2017d	r	1	2	2	ip30-prom	prom_ffffffffbfc1643c@c16448
+device window 2	0x2017f	w	1	2	2	ip30-prom	prom_ffffffffbfc16300@c1636c
+device window 2	0x80000	w	1	2	2	ip30-prom	prom_ffffffffbfc00634@c00a30
+device window 2	0xa0000	w	1	48	8	ip30-prom	prom_ffffffffbfc02388@c02404
+device window 2	0xc0000	w	1	26	8	ip30-prom	prom_ffffffffbfc02388@c0240c
+device window 2	0xc0000	r	1	22	8	ip30-prom	prom_ffffffffbfc02388@c02414

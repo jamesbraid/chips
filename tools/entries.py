@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Stage 6 (no-spec mode): a register table with call-site context, from a census run.
 
-Usage: entries.py CONFIG.json --dir work/CHIP --fields docs/census/CHIP/fields.tsv --variant V [--variant V2 ...]
+Usage: entries.py CONFIG.json --dir work/CHIP --fields chips/*/census/CHIP/fields.tsv --variant V [--variant V2 ...]
                   [--window-base 0x1000000] --out FILE
 
 One row per register slot: offset, widths, access, site and function counts, the accessor or caller names

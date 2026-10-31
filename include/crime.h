@@ -11,6 +11,6 @@
 #define CRIME_H
 
 /* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: docs/chips/crime.md. */
+ * Mode and sources: chips/crime/README.md. */
 
 #endif /* CRIME_H */

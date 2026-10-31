@@ -13,80 +13,76 @@
 
 /* ---- registers (8-byte slots) ------------------------------------ */
 
-#define BRIDGE_XBRIDGE_ATTACH              0x000000   /* [E] width 4 byte(s), access r; name [I] from xbridge_attach, pcibr_alloc_all_rrbs, id; reached in 14 sites, 5 routine(s) */
-#define   BRIDGE_XBRIDGE_ATTACH_B_10_0     0x7ff   /* [I] load mask: the code isolates these bits (180 sites) */
-#define   BRIDGE_XBRIDGE_ATTACH_B_10_0     0x7ff   /* [I] load mask: the code isolates these bits (6 sites) */
-#define   BRIDGE_XBRIDGE_ATTACH_B_15_0     0xffff   /* [I] load mask: the code isolates these bits (226 sites) */
-#define   BRIDGE_XBRIDGE_ATTACH_B_15_0     0xffff   /* [I] load mask: the code isolates these bits (4 sites) */
-#define BRIDGE_STAT                        0x000008   /* [E] width 4 byte(s), access r; name [I] from stat; reached in 2 sites, 1 routine(s) */
-#define BRIDGE_BUS_ERR                     0x000010   /* [E] width 4 byte(s), access r; name [I] from bus_err, prom_ffffffffbfc16680, prom_ffffffffbfc36300; reached in 6 sites, 3 routine(s) */
+#define BRIDGE_PCIBR_ALLOC_ALL_RRBS        0x000000   /* [E] width 4 byte(s), access r; name [I] from pcibr_alloc_all_rrbs, xbridge_attach, id; reached in 14 sites, 3 routine(s) */
+#define   BRIDGE_PCIBR_ALLOC_ALL_RRBS_B_10_0 0x7ff   /* [I] load mask: the code isolates these bits (180 sites) */
+#define   BRIDGE_PCIBR_ALLOC_ALL_RRBS_B_10_0 0x7ff   /* [I] load mask: the code isolates these bits (6 sites) */
+#define   BRIDGE_PCIBR_ALLOC_ALL_RRBS_B_15_0 0xffff   /* [I] load mask: the code isolates these bits (220 sites) */
+#define   BRIDGE_PCIBR_ALLOC_ALL_RRBS_B_15_0 0xffff   /* [I] load mask: the code isolates these bits (4 sites) */
+#define BRIDGE_STAT                        0x000008   /* [E] width 4 byte(s), access r; name [I] from stat; reached in 4 sites, 1 routine(s) */
+#define BRIDGE_BUS_ERR                     0x000010   /* [E] width 4 byte(s), access r; name [I] from bus_err, prom_ffffffffbfc16680, prom_ffffffffbfc36300; reached in 8 sites, 3 routine(s) */
 #define   BRIDGE_BUS_ERR_B_10_0            0x7ff   /* [I] load mask: the code isolates these bits (2 sites) */
-#define BRIDGE_BUS_ERR_18                  0x000018   /* [E] width 4 byte(s), access r; name [I] from bus_err; reached in 2 sites, 1 routine(s) */
-#define BRIDGE_CONTROL                     0x000020   /* [E] width 4 byte(s), access rw; name [I] from control, ssram_size; reached in 28 sites, 5 routine(s) */
-#define   BRIDGE_CONTROL_B_31              0x80000000   /* [I] store clear-mask via pcireg_control_bit_clr: the code writes these bits (1 sites) */
-#define   BRIDGE_CONTROL_B_21              0x200000   /* [I] store const via pcireg_control_bit_set: the code writes these bits (1 sites) */
-#define   BRIDGE_CONTROL_B_31              0x80000000   /* [I] store const via pcireg_control_bit_set: the code writes these bits (1 sites) */
-#define BRIDGE_REQ_TIMEOUT                 0x000028   /* [E] width 4 byte(s), access rw; name [I] from req_timeout; reached in 4 sites, 2 routine(s) */
-#define BRIDGE_INTR_DST_TARGET_ID          0x000030   /* [E] width 4 byte(s), access rw; name [I] from intr_dst_target_id, intr_dst_addr, intr_dst; reached in 26 sites, 7 routine(s) */
+#define BRIDGE_BUS_ERR_18                  0x000018   /* [E] width 4 byte(s), access r; name [I] from bus_err; reached in 4 sites, 1 routine(s) */
+#define BRIDGE_SSRAM_SIZE                  0x000020   /* [E] width 4 byte(s), access rw; name [I] from ssram_size, control; reached in 72 sites, 5 routine(s) */
+#define   BRIDGE_SSRAM_SIZE_B_31           0x80000000   /* [I] store clear-mask via pcireg_control_bit_clr: the code writes these bits (1 sites) */
+#define   BRIDGE_SSRAM_SIZE_B_21           0x200000   /* [I] store const via pcireg_control_bit_set: the code writes these bits (1 sites) */
+#define   BRIDGE_SSRAM_SIZE_B_31           0x80000000   /* [I] store const via pcireg_control_bit_set: the code writes these bits (1 sites) */
+#define BRIDGE_REQ_TIMEOUT                 0x000028   /* [E] width 4 byte(s), access rw; name [I] from req_timeout; reached in 6 sites, 2 routine(s) */
+#define BRIDGE_INTR_DST_TARGET_ID          0x000030   /* [E] width 4 byte(s), access rw; name [I] from intr_dst_target_id, intr_dst_addr, intr_dst; reached in 50 sites, 7 routine(s) */
 #define   BRIDGE_INTR_DST_TARGET_ID_B_10_0 0x7ff   /* [I] load mask: the code isolates these bits (4 sites) */
 #define   BRIDGE_INTR_DST_TARGET_ID_B_15_0 0xffff   /* [I] load mask: the code isolates these bits (2 sites) */
 #define   BRIDGE_INTR_DST_TARGET_ID_B_15_0 0xffff   /* [I] store mask: the code writes these bits (2 sites) */
 #define   BRIDGE_INTR_DST_TARGET_ID_B_3_0  0xf   /* [I] load mask: the code isolates these bits (2 sites) */
 #define   BRIDGE_INTR_DST_TARGET_ID_B_5_0  0x3f   /* [I] load mask: the code isolates these bits (2 sites) */
-#define BRIDGE_INTR_DST                    0x000038   /* [E] width 4 byte(s), access rw; name [I] from intr_dst, intr_dst_addr, intr_addr_addr; reached in 10 sites, 5 routine(s) */
-#define BRIDGE_CMDWORD_ERR                 0x000040   /* [E] width 4 byte(s), access r; name [I] from cmdword_err, prom_ffffffffbfc16680, prom_ffffffffbfc36300; reached in 4 sites, 3 routine(s) */
-#define BRIDGE_LLP_CFG                     0x000048   /* [E] width 4 byte(s), access rw; name [I] from llp_cfg; reached in 6 sites, 2 routine(s) */
+#define   BRIDGE_INTR_DST_TARGET_ID_B_5_0  0x3f   /* [I] load mask: the code isolates these bits (2 sites) */
+#define BRIDGE_INTR_DST                    0x000038   /* [E] width 4 byte(s), access rw; name [I] from intr_dst, intr_dst_addr, intr_addr_addr; reached in 18 sites, 5 routine(s) */
+#define BRIDGE_CMDWORD_ERR                 0x000040   /* [E] width 4 byte(s), access r; name [I] from cmdword_err, prom_ffffffffbfc16680, prom_ffffffffbfc36300; reached in 6 sites, 3 routine(s) */
+#define BRIDGE_LLP_CFG                     0x000048   /* [E] width 4 byte(s), access rw; name [I] from llp_cfg; reached in 12 sites, 2 routine(s) */
 #define BRIDGE_TFLUSH                      0x000050   /* [E] width 4 byte(s), access r; name [I] from tflush; reached in 2 sites, 1 routine(s) */
-#define BRIDGE_LINKSIDE_ERR                0x000058   /* [E] width 4 byte(s), access r; name [I] from linkside_err, prom_ffffffffbfc16680, prom_ffffffffbfc36300; reached in 4 sites, 3 routine(s) */
-#define BRIDGE_RESP_ERR                    0x000060   /* [E] width 4 byte(s), access r; name [I] from resp_err, resp_err_addr, resp_err_buf; reached in 10 sites, 6 routine(s) */
+#define BRIDGE_LINKSIDE_ERR                0x000058   /* [E] width 4 byte(s), access r; name [I] from linkside_err, prom_ffffffffbfc16680, prom_ffffffffbfc36300; reached in 6 sites, 3 routine(s) */
+#define BRIDGE_RESP_ERR                    0x000060   /* [E] width 4 byte(s), access r; name [I] from resp_err, resp_err_addr, resp_err_buf; reached in 18 sites, 6 routine(s) */
 #define   BRIDGE_RESP_ERR_B_10_0           0x7ff   /* [I] load mask: the code isolates these bits (4 sites) */
 #define   BRIDGE_RESP_ERR_B_15_0           0xffff   /* [I] load mask: the code isolates these bits (2 sites) */
 #define   BRIDGE_RESP_ERR_B_2_0            0x7   /* [I] load mask: the code isolates these bits (2 sites) */
 #define   BRIDGE_RESP_ERR_B_3_0            0xf   /* [I] load mask: the code isolates these bits (2 sites) */
-#define BRIDGE_RESP_ERR_68                 0x000068   /* [E] width 4 byte(s), access r; name [I] from resp_err, resp_err_addr, prom_ffffffffbfc16680; reached in 6 sites, 4 routine(s) */
-#define BRIDGE_DIRMAP_WID                  0x000080   /* [E] width 4 byte(s), access rw; name [I] from dirmap_wid, dirmap_diroff, dirmap; reached in 28 sites, 6 routine(s) */
+#define BRIDGE_RESP_ERR_68                 0x000068   /* [E] width 4 byte(s), access r; name [I] from resp_err, resp_err_addr, prom_ffffffffbfc16680; reached in 10 sites, 4 routine(s) */
+#define BRIDGE_DIRMAP_WID                  0x000080   /* [E] width 4 byte(s), access rw; name [I] from dirmap_wid, dirmap_diroff, dirmap_add512; reached in 46 sites, 6 routine(s) */
 #define BRIDGE_SSRAM_PARITY                0x000090   /* [E] width 4 byte(s), access r; name [I] from ssram_parity; reached in 2 sites, 1 routine(s) */
-#define BRIDGE_ARBITRATION                 0x0000a0   /* [E] width 4 byte(s), access rw; name [I] from arbitration; reached in 12 sites, 4 routine(s) */
+#define BRIDGE_ARBITRATION                 0x0000a0   /* [E] width 4 byte(s), access rw; name [I] from arbitration; reached in 22 sites, 4 routine(s) */
 #define   BRIDGE_ARBITRATION_B_1           0x2   /* [I] store const via pcireg_arbitration_bit_set: the code writes these bits (1 sites) */
 #define   BRIDGE_ARBITRATION_B_23_20       0xf00000   /* [I] store const via pcireg_arbitration_bit_set: the code writes these bits (1 sites) */
-#define BRIDGE_NIC                         0x0000b0   /* [E] width 0 byte(s), access a; name [I] from nic; reached in 2 sites, 1 routine(s) */
-#define BRIDGE_TIMEOUT                     0x0000c0   /* [E] width 4 byte(s), access rw; name [I] from timeout; reached in 12 sites, 4 routine(s) */
+#define BRIDGE_TIMEOUT                     0x0000c0   /* [E] width 4 byte(s), access rw; name [I] from timeout; reached in 22 sites, 4 routine(s) */
 #define   BRIDGE_TIMEOUT_B_9_0             0x3ff   /* [I] store clear-mask via pcireg_timeout_bit_clr: the code writes these bits (1 sites) */
-#define BRIDGE_TYPE1_CNTR                  0x0000c8   /* [E] width 4 byte(s), access rw; name [I] from type1_cntr; reached in 4 sites, 2 routine(s) */
-#define BRIDGE_PCI_BUS_ADDR                0x0000d0   /* [E] width 4 byte(s), access r; name [I] from pci_bus_addr, pci_bus_addr_addr, prom_ffffffffbfc16680; reached in 6 sites, 4 routine(s) */
+#define BRIDGE_TYPE1_CNTR                  0x0000c8   /* [E] width 4 byte(s), access rw; name [I] from type1_cntr; reached in 6 sites, 2 routine(s) */
+#define BRIDGE_PCI_BUS_ADDR                0x0000d0   /* [E] width 4 byte(s), access r; name [I] from pci_bus_addr, pci_bus_addr_addr, prom_ffffffffbfc16680; reached in 10 sites, 4 routine(s) */
 #define   BRIDGE_PCI_BUS_ADDR_B_10_0       0x7ff   /* [I] load mask: the code isolates these bits (4 sites) */
 #define   BRIDGE_PCI_BUS_ADDR_B_15_0       0xffff   /* [I] load mask: the code isolates these bits (2 sites) */
-#define BRIDGE_PCI_BUS_ADDR_D8             0x0000d8   /* [E] width 4 byte(s), access r; name [I] from pci_bus_addr, pci_bus_addr_addr, prom_ffffffffbfc16680; reached in 6 sites, 4 routine(s) */
-#define BRIDGE_INTR_STATUS                 0x000100   /* [E] width 4 byte(s), access r; name [I] from intr_status, prom_ffffffffbfc00d40, prom_ffffffffbfc310d0; reached in 14 sites, 11 routine(s) */
+#define BRIDGE_PCI_BUS_ADDR_D8             0x0000d8   /* [E] width 4 byte(s), access r; name [I] from pci_bus_addr, pci_bus_addr_addr, prom_ffffffffbfc16680; reached in 10 sites, 4 routine(s) */
+#define BRIDGE_INTR_STATUS                 0x000100   /* [E] width 4 byte(s), access r; name [I] from intr_status, prom_ffffffffbfc00c10, prom_ffffffffbfc00dc0; reached in 16 sites, 13 routine(s) */
 #define   BRIDGE_INTR_STATUS_B_5           0x20   /* [I] load mask: the code isolates these bits (4 sites) */
 #define   BRIDGE_INTR_STATUS_B_6           0x40   /* [I] load mask: the code isolates these bits (6 sites) */
-#define BRIDGE_INTR_ENABLE                 0x000108   /* [E] width 4 byte(s), access rw; name [I] from intr_enable; reached in 12 sites, 4 routine(s) */
-#define BRIDGE_INTR_RESET                  0x000110   /* [E] width 4 byte(s), access rw; name [I] from intr_reset; reached in 6 sites, 2 routine(s) */
-#define BRIDGE_INTR_MODE                   0x000118   /* [E] width 4 byte(s), access rw; name [I] from intr_mode; reached in 12 sites, 4 routine(s) */
-#define BRIDGE_INTR_DEVICE                 0x000120   /* [E] width 4 byte(s), access rw; name [I] from intr_device; reached in 12 sites, 4 routine(s) */
-#define   BRIDGE_INTR_DEVICE_B_12_10_1     0x1c02   /* [I] store const via pcireg_intr_device_bit_set: the code writes these bits (0 sites) */
-#define   BRIDGE_INTR_DEVICE_B_12_10_6_4_1_0 0x1c53   /* [I] store const via pcireg_intr_device_bit_set: the code writes these bits (0 sites) */
-#define   BRIDGE_INTR_DEVICE_B_12_11_9_6_3_0 0x1a4f   /* [I] store const via pcireg_intr_device_bit_set: the code writes these bits (1 sites) */
-#define   BRIDGE_INTR_DEVICE_B_12_11_9_6_3_2 0x1a4c   /* [I] store const via pcireg_intr_device_bit_set: the code writes these bits (0 sites) */
-#define   BRIDGE_INTR_DEVICE_B_12_11_9_7_6_3_2_0 0x1acd   /* [I] store const via pcireg_intr_device_bit_set: the code writes these bits (0 sites) */
-#define   BRIDGE_INTR_DEVICE_B_12_11_9_5_2_0 0x1be7   /* [I] store const via pcireg_intr_device_bit_set: the code writes these bits (0 sites) */
-#define   BRIDGE_INTR_DEVICE_B_12_11_9_6_4_3_1_0 0x1bdb   /* [I] store const via pcireg_intr_device_bit_set: the code writes these bits (0 sites) */
-#define   BRIDGE_INTR_DEVICE_B_12_11_9_8_6_4_3_1 0x1b5a   /* [I] store const via pcireg_intr_device_bit_set: the code writes these bits (0 sites) */
-#define BRIDGE_INTR_HOST_ERR               0x000128   /* [E] width 4 byte(s), access rw; name [I] from intr_host_err; reached in 4 sites, 2 routine(s) */
-#define BRIDGE_INTR_ADDR_VECT              0x000130   /* [E] width 0/4 byte(s), access arw, indexed (family base); name [I] from intr_addr_vect, intr_addr_addr, intr_addr; reached in 26 sites, 7 routine(s) */
+#define BRIDGE_INTR_ENABLE                 0x000108   /* [E] width 4 byte(s), access rw; name [I] from intr_enable; reached in 22 sites, 4 routine(s) */
+#define BRIDGE_INTR_RESET                  0x000110   /* [E] width 4 byte(s), access rw; name [I] from intr_reset; reached in 10 sites, 2 routine(s) */
+#define BRIDGE_INTR_MODE                   0x000118   /* [E] width 4 byte(s), access rw; name [I] from intr_mode; reached in 22 sites, 4 routine(s) */
+#define BRIDGE_INTR_DEVICE                 0x000120   /* [E] width 4 byte(s), access rw; name [I] from intr_device; reached in 22 sites, 4 routine(s) */
+#define   BRIDGE_INTR_DEVICE_B_1_0         0x3   /* [I] store const via pcireg_intr_device_bit_set: the code writes these bits (1 sites) */
+#define BRIDGE_INTR_HOST_ERR               0x000128   /* [E] width 4 byte(s), access rw; name [I] from intr_host_err; reached in 6 sites, 2 routine(s) */
+#define BRIDGE_INTR_ADDR_VECT              0x000130   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from intr_addr_vect, intr_addr_addr, intr_addr; reached in 24 sites, 6 routine(s) */
+#define   BRIDGE_INTR_ADDR_VECT_B_10_0     0x7ff   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   BRIDGE_INTR_ADDR_VECT_B_7_0      0xff   /* [I] load mask: the code isolates these bits (4 sites) */
 #define   BRIDGE_INTR_ADDR_VECT_B_7_0      0xff   /* [I] load mask: the code isolates these bits (2 sites) */
 #define BRIDGE_DEVICE                      0x000200   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from device; reached in 12 sites, 4 routine(s) */
-#define BRIDGE_PROM_FFFFFFFFBFC162C0       0x000210   /* [E] width 4 byte(s), access w; name [I] from prom_ffffffffbfc162c0, prom_ffffffffbfc35f80; reached in 2 sites, 2 routine(s) */
-#define   BRIDGE_PROM_FFFFFFFFBFC162C0_V_1000 0x1000   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
-#define   BRIDGE_PROM_FFFFFFFFBFC162C0_V_4 0x4   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define BRIDGE_PROM_FFFFFFFFBFC16300       0x000210   /* [E] width 4 byte(s), access w; name [I] from prom_ffffffffbfc16300, prom_ffffffffbfc35f80; reached in 2 sites, 2 routine(s) */
+#define   BRIDGE_PROM_FFFFFFFFBFC16300_V_1000 0x1000   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   BRIDGE_PROM_FFFFFFFFBFC16300_V_4 0x4   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
 #define BRIDGE_WRB_FLUSH                   0x000240   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from wrb_flush; reached in 2 sites, 1 routine(s) */
-#define BRIDGE_RRB                         0x000280   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from rrb; reached in 12 sites, 4 routine(s) */
-#define BRIDGE_RRB_STATUS                  0x000290   /* [E] width 4 byte(s), access r; name [I] from rrb_status; reached in 2 sites, 1 routine(s) */
+#define BRIDGE_RRB                         0x000280   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from rrb; reached in 20 sites, 4 routine(s) */
+#define   BRIDGE_RRB_B_10_0                0x7ff   /* [I] load mask: the code isolates these bits (2 sites) */
+#define BRIDGE_RRB_STATUS                  0x000290   /* [E] width 4 byte(s), access r; name [I] from rrb_status; reached in 4 sites, 1 routine(s) */
 #define BRIDGE_RRB_CLEAR                   0x000298   /* [E] width 4 byte(s), access w; name [I] from rrb_clear; reached in 2 sites, 1 routine(s) */
 
 /* ---- arrays and windows (offset is the array base) --------------- */
 
-#define BRIDGE_INT_ATE                     0x010000   /* [E] width 0/8 byte(s), access arw, indexed (family base); name [I] from int_ate; reached in 6 sites, 3 routine(s) */
-#define BRIDGE_EXT_ATE                     0x080000   /* [E] width 0/8 byte(s), access arw, indexed (family base); name [I] from ext_ate; reached in 6 sites, 3 routine(s) */
+#define BRIDGE_INT_ATE                     0x010000   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from int_ate; reached in 4 sites, 2 routine(s) */
+#define BRIDGE_EXT_ATE                     0x080000   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from ext_ate; reached in 16 sites, 2 routine(s) */
 
 #endif /* BRIDGE_H */

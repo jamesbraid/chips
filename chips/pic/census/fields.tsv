@@ -1,10 +1,20 @@
 variant	register	source	kind	bits_or_value	sites	functions	example
-?	0x0	load	mask	15:0	111	107	pcibr_bridge_ptr_get@45f4
+?	0x0	load	mask	15:0	108	107	pcibr_bridge_ptr_get@45f4
 ?	0x0	load	mask	10:0	90	90	pcireg_id_get@efb0
 ?	0x0	load	shift	shift 1	283	105	pcireg_id_get@efb0
-?	0x0	load	shift	shift 12	111	107	pcibr_bridge_ptr_get@45f4
+?	0x0	load	shift	shift 12	108	107	pcibr_bridge_ptr_get@45f4
+?	0x30	load	mask	5:0	1	1	pcireg_intr_addr_addr_get@15c38
+?	0x130	load	mask	7:0	2	1	pcireg_intr_addr_vect_get@157dc
+?	0x130	load	mask	10:0	1	1	pcireg_intr_addr_get@1523c
+?	0x130	load	shift	shift 1	1	1	pcireg_intr_addr_get@1523c
+?	0x130	load	shift	shift 48	1	1	pcireg_intr_addr_vect_get@157dc
+?	0x130	load	shift	shift 2	1	1	pcireg_intr_addr_addr_get@15c34
+?	0x280	load	mask	10:0	1	1	pcireg_rrb_get@17540
+?	0x280	load	shift	shift 1	1	1	pcireg_rrb_get@17540
 bridge	0x0	load	mask	10:0	2	1	pcibr_alloc_all_rrbs@65bc
+bridge	0x0	load	mask	15:0	1	1	pcibr_alloc_all_rrbs@660c
 bridge	0x0	load	shift	shift 1	2	1	pcibr_alloc_all_rrbs@65bc
+bridge	0x0	load	shift	shift 12	1	1	pcibr_alloc_all_rrbs@660c
 bridge	0x10	load	mask	10:0	1	1	pcireg_bus_err_get@f2d0
 bridge	0x30	load	mask	10:0	2	2	pcireg_intr_dst_get@10210
 bridge	0x30	load	mask	3:0	1	1	pcireg_intr_dst_target_id_get@104e8
@@ -22,18 +32,24 @@ bridge	0xd0	load	mask	10:0	2	2	pcireg_pci_bus_addr_get@136c4
 bridge	0xd0	load	mask	15:0	1	1	pcireg_pci_bus_addr_addr_get@13838
 bridge	0x130	load	mask	7:0	1	1	pcireg_intr_addr_vect_get@157f4
 bridge	0x130	load	shift	shift 2	1	1	pcireg_intr_addr_addr_get@15c34
-pic	0x0	load	mask	10:0	3	2	pcibr_bridge_ptr_get@4628
-pic	0x0	load	mask	15:0	1	1	pcibr_bridge_ptr_get@4614
-pic	0x0	load	shift	shift 1	3	2	pcibr_bridge_ptr_get@4628
-pic	0x0	load	shift	shift 12	1	1	pcibr_bridge_ptr_get@4614
+bridge|xbridge	0x10	load	mask	10:0	1	1	pcireg_bus_err_get@f2d0
+bridge|xbridge	0x30	load	mask	10:0	2	2	pcireg_intr_dst_get@10210
+bridge|xbridge	0x30	load	mask	3:0	1	1	pcireg_intr_dst_target_id_get@104e8
+bridge|xbridge	0x30	load	mask	15:0	1	1	pcireg_intr_dst_addr_get@107f0
+bridge|xbridge	0x30	store	mask	15:0	1	1	pcireg_intr_dst_addr_set@1098c
+bridge|xbridge	0x30	load	shift	shift 16	1	1	pcireg_intr_dst_target_id_get@104e8
+bridge|xbridge	0x60	load	mask	10:0	2	2	pcireg_resp_err_get@11280
+bridge|xbridge	0x60	load	mask	15:0	1	1	pcireg_resp_err_addr_get@113f0
+bridge|xbridge	0x60	load	mask	3:0	1	1	pcireg_resp_err_buf_get@11570
+bridge|xbridge	0x60	load	mask	2:0	1	1	pcireg_resp_err_dev_get@116e4
+bridge|xbridge	0x60	load	shift	shift 16	1	1	pcireg_resp_err_buf_get@11570
+bridge|xbridge	0x60	load	shift	shift 20	1	1	pcireg_resp_err_dev_get@116e4
+bridge|xbridge	0xd0	load	mask	10:0	2	2	pcireg_pci_bus_addr_get@136c4
+bridge|xbridge	0xd0	load	mask	15:0	1	1	pcireg_pci_bus_addr_addr_get@13838
+pic	0x0	load	mask	10:0	4	2	pcibr_bridge_ptr_get@4628
+pic	0x0	load	shift	shift 1	4	2	pcibr_bridge_ptr_get@4628
 pic	0x20	load	mask	5:4	1	1	pcireg_speed_get@fcac
 pic	0x20	load	shift	shift 4	1	1	pcireg_speed_get@fcac
-pic	0x38	load	mask	3:0	1	1	pcireg_intr_dst_target_id_get@1050c
-pic	0x38	load	shift	shift 48	1	1	pcireg_intr_dst_target_id_get@1050c
-pic	0x60	load	mask	3:0	1	1	pcireg_resp_err_buf_get@1159c
-pic	0x60	load	mask	2:0	1	1	pcireg_resp_err_dev_get@11710
-pic	0x60	load	shift	shift 16	1	1	pcireg_resp_err_buf_get@1159c
-pic	0x60	load	shift	shift 20	1	1	pcireg_resp_err_dev_get@11710
 pic	0x110	store	const	0xffff	1	1	prom_c00000001fc41f38@c41f84
 pic	0x130	load	mask	10:0	1	1	pcireg_intr_addr_get@1523c
 pic	0x130	load	mask	7:0	1	1	pcireg_intr_addr_vect_get@157dc
@@ -43,12 +59,15 @@ pic	0x280	load	mask	10:0	1	1	pcireg_rrb_get@17540
 pic	0x280	load	shift	shift 1	1	1	pcireg_rrb_get@17540
 pic	0x10000	load	mask	10:0	1	1	pcireg_int_ate_get@192f0
 pic	0x10000	load	shift	shift 1	1	1	pcireg_int_ate_get@192f0
-probe?	0x0	load	mask	15:0	4	2	prom_c00000001fc41f38@c41f38
-probe?	0x0	load	mask	10:0	2	1	prom_c00000001fc46030@c461dc
-probe?	0x0	load	shift	shift 12	4	2	prom_c00000001fc41f38@c41f38
-probe?	0x0	load	shift	shift 1	2	1	prom_c00000001fc46030@c461dc
+pic|tiocp	0x38	load	mask	3:0	1	1	pcireg_intr_dst_target_id_get@1050c
+pic|tiocp	0x38	load	shift	shift 48	1	1	pcireg_intr_dst_target_id_get@1050c
+pic|tiocp	0x60	load	mask	3:0	1	1	pcireg_resp_err_buf_get@1159c
+pic|tiocp	0x60	load	mask	2:0	1	1	pcireg_resp_err_dev_get@11710
+pic|tiocp	0x60	load	shift	shift 16	1	1	pcireg_resp_err_buf_get@1159c
+pic|tiocp	0x60	load	shift	shift 20	1	1	pcireg_resp_err_dev_get@11710
+probe?	0x0	load	mask	15:0	2	1	prom_c00000001fc41f38@c41f38
+probe?	0x0	load	shift	shift 12	2	1	prom_c00000001fc41f38@c41f38
 probe?	0x110	store	const	0xffff	1	1	prom_c00000001fc41f38@c41f84
-probe?	0x200	load	shift	shift 20	1	1	prom_c00000001fc46030@c46098
 tiocp	0x20	load	mask	5:4	1	1	pcireg_speed_get@fc88
 tiocp	0x20	load	shift	shift 4	1	1	pcireg_speed_get@fc88
 tiocp	0x38	load	mask	3:0	1	1	pcireg_intr_dst_target_id_get@1050c
@@ -63,23 +82,9 @@ tiocp	0x10000	load	mask	10:0	1	1	pcireg_int_ate_get@192b0
 tiocp	0x10000	load	shift	shift 1	1	1	pcireg_int_ate_get@192b0
 xbridge	0x0	load	mask	10:0	2	1	pcibr_alloc_all_rrbs@67c8
 xbridge	0x0	load	shift	shift 1	2	1	pcibr_alloc_all_rrbs@67c8
-xbridge	0x10	load	mask	10:0	1	1	pcireg_bus_err_get@f2d0
 xbridge	0x20	load	mask	5:4	1	1	pcireg_speed_get@fccc
 xbridge	0x20	load	shift	shift 4	1	1	pcireg_speed_get@fccc
-xbridge	0x30	load	mask	10:0	2	2	pcireg_intr_dst_get@10210
-xbridge	0x30	load	mask	3:0	1	1	pcireg_intr_dst_target_id_get@104e8
-xbridge	0x30	load	mask	15:0	1	1	pcireg_intr_dst_addr_get@107f0
-xbridge	0x30	store	mask	15:0	1	1	pcireg_intr_dst_addr_set@1098c
 xbridge	0x30	load	mask	5:0	1	1	pcireg_intr_addr_addr_get@15c38
-xbridge	0x30	load	shift	shift 16	1	1	pcireg_intr_dst_target_id_get@104e8
-xbridge	0x60	load	mask	10:0	2	2	pcireg_resp_err_get@11280
-xbridge	0x60	load	mask	15:0	1	1	pcireg_resp_err_addr_get@113f0
-xbridge	0x60	load	mask	3:0	1	1	pcireg_resp_err_buf_get@11570
-xbridge	0x60	load	mask	2:0	1	1	pcireg_resp_err_dev_get@116e4
-xbridge	0x60	load	shift	shift 16	1	1	pcireg_resp_err_buf_get@11570
-xbridge	0x60	load	shift	shift 20	1	1	pcireg_resp_err_dev_get@116e4
-xbridge	0xd0	load	mask	10:0	2	2	pcireg_pci_bus_addr_get@136c4
-xbridge	0xd0	load	mask	15:0	1	1	pcireg_pci_bus_addr_addr_get@13838
 xbridge	0x130	load	mask	7:0	1	1	pcireg_intr_addr_vect_get@157f4
 xbridge	0x130	load	shift	shift 2	1	1	pcireg_intr_addr_addr_get@15c34
 xbridge	0x10000	load	mask	10:0	1	1	pcireg_int_ate_get@19334

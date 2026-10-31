@@ -1,4 +1,0 @@
-window	inner_offset	rw	width	sites	functions	images	example
-PCI type 0 configuration (per 4 KB device slot)	0x0	a	0	4	1	ip35-pcibr	pcireg_type0_cfg_addr@18820
-PCI type 1 configuration	0x0	a	0	4	1	ip35-pcibr	pcireg_type1_cfg_addr@18aa8
-device window 4	0x0	a	0	1	1	ip35-pcibr	pcibr_bridge_ptr_get@4650

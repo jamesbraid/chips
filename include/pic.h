@@ -13,50 +13,49 @@
 
 /* ---- registers (8-byte slots) ------------------------------------ */
 
-#define PIC_PCIBR_BRIDGE_PTR               0x000000   /* [E] width 4/8 byte(s), access r; name [I] from pcibr_bridge_ptr, id, prom_c00000001fc41f38; reached in 5 sites, 3 routine(s) */
+#define PIC_PCIBR_BRIDGE_PTR               0x000000   /* [E] width 4/8 byte(s), access r; name [I] from pcibr_bridge_ptr, prom_c00000001fc41f38, id; reached in 5 sites, 3 routine(s) */
 #define   PIC_PCIBR_BRIDGE_PTR_B_10_0      0x7ff   /* [I] load mask: the code isolates these bits (90 sites) */
-#define   PIC_PCIBR_BRIDGE_PTR_B_10_0      0x7ff   /* [I] load mask: the code isolates these bits (3 sites) */
-#define   PIC_PCIBR_BRIDGE_PTR_B_15_0      0xffff   /* [I] load mask: the code isolates these bits (111 sites) */
-#define   PIC_PCIBR_BRIDGE_PTR_B_15_0      0xffff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   PIC_PCIBR_BRIDGE_PTR_B_10_0      0x7ff   /* [I] load mask: the code isolates these bits (4 sites) */
+#define   PIC_PCIBR_BRIDGE_PTR_B_15_0      0xffff   /* [I] load mask: the code isolates these bits (108 sites) */
 #define PIC_BUS_ERR                        0x000018   /* [E] width 8 byte(s), access r; name [I] from bus_err; reached in 1 sites, 1 routine(s) */
-#define PIC_CONTROL                        0x000020   /* [E] width 4/8 byte(s), access rw; name [I] from control, ssram_size, speed; reached in 15 sites, 6 routine(s) */
-#define   PIC_CONTROL_B_5_4                0x30   /* [I] load mask: the code isolates these bits (1 sites) */
+#define PIC_SSRAM_SIZE                     0x000020   /* [E] width 4/8 byte(s), access rw; name [I] from ssram_size, control, speed; reached in 20 sites, 6 routine(s) */
+#define   PIC_SSRAM_SIZE_B_5_4             0x30   /* [I] load mask: the code isolates these bits (1 sites) */
 #define PIC_REQ_TIMEOUT                    0x000028   /* [E] width 8 byte(s), access rw; name [I] from req_timeout; reached in 2 sites, 2 routine(s) */
-#define PIC_INTR_DST_TARGET_ID             0x000038   /* [E] width 8 byte(s), access rw; name [I] from intr_dst_target_id, intr_dst_addr, intr_dst; reached in 12 sites, 6 routine(s) */
-#define   PIC_INTR_DST_TARGET_ID_B_3_0     0xf   /* [I] load mask: the code isolates these bits (1 sites) */
+#define PIC_INTR_DST_TARGET_ID             0x000038   /* [E] width 8 byte(s), access rw; name [I] from intr_dst_target_id, intr_dst_addr, intr_dst; reached in 16 sites, 6 routine(s) */
 #define PIC_CMDWORD_ERR                    0x000040   /* [E] width 8 byte(s), access r; name [I] from cmdword_err; reached in 1 sites, 1 routine(s) */
 #define PIC_LLP_CFG                        0x000048   /* [E] width 8 byte(s), access rw; name [I] from llp_cfg; reached in 3 sites, 2 routine(s) */
 #define PIC_TFLUSH                         0x000050   /* [E] width 8 byte(s), access r; name [I] from tflush; reached in 1 sites, 1 routine(s) */
 #define PIC_LINKSIDE_ERR                   0x000058   /* [E] width 8 byte(s), access r; name [I] from linkside_err; reached in 1 sites, 1 routine(s) */
 #define PIC_RESP_ERR_BUF                   0x000060   /* [E] width 8 byte(s), access r; name [I] from resp_err_buf, resp_err_dev; reached in 2 sites, 2 routine(s) */
-#define   PIC_RESP_ERR_BUF_B_2_0           0x7   /* [I] load mask: the code isolates these bits (1 sites) */
-#define   PIC_RESP_ERR_BUF_B_3_0           0xf   /* [I] load mask: the code isolates these bits (1 sites) */
 #define PIC_RESP_ERR                       0x000068   /* [E] width 8 byte(s), access r; name [I] from resp_err, resp_err_addr; reached in 2 sites, 2 routine(s) */
 #define PIC_LINKSIDE_ERR_ADDR              0x000078   /* [E] width 8 byte(s), access r; name [I] from linkside_err_addr; reached in 1 sites, 1 routine(s) */
 #define PIC_DIRMAP_WID                     0x000080   /* [E] width 8 byte(s), access rw; name [I] from dirmap_wid, dirmap_diroff, dirmap; reached in 14 sites, 6 routine(s) */
 #define PIC_SSRAM_PARITY                   0x000090   /* [E] width 4/8 byte(s), access r; name [I] from ssram_parity, map_fault; reached in 2 sites, 2 routine(s) */
 #define PIC_ARBITRATION                    0x0000a0   /* [E] width 8 byte(s), access rw; name [I] from arbitration; reached in 6 sites, 4 routine(s) */
-#define PIC_NIC                            0x0000b0   /* [E] width 0/8 byte(s), access ar; name [I] from nic, parity_err; reached in 2 sites, 2 routine(s) */
+#define PIC_PARITY_ERR                     0x0000b0   /* [E] width 8 byte(s), access r; name [I] from parity_err; reached in 1 sites, 1 routine(s) */
 #define PIC_TIMEOUT                        0x0000c0   /* [E] width 8 byte(s), access rw; name [I] from timeout; reached in 6 sites, 4 routine(s) */
 #define PIC_TYPE1_CNTR                     0x0000c8   /* [E] width 8 byte(s), access rw; name [I] from type1_cntr; reached in 2 sites, 2 routine(s) */
 #define PIC_PCI_BUS_ADDR                   0x0000d8   /* [E] width 8 byte(s), access r; name [I] from pci_bus_addr, pci_bus_addr_addr; reached in 2 sites, 2 routine(s) */
 #define PIC_INTR_STATUS                    0x000100   /* [E] width 8 byte(s), access r; name [I] from intr_status; reached in 1 sites, 1 routine(s) */
-#define PIC_INTR_ENABLE                    0x000108   /* [E] width 4/8 byte(s), access rw; name [I] from intr_enable, prom_c00000001fc41f38; reached in 7 sites, 5 routine(s) */
-#define PIC_INTR_RESET                     0x000110   /* [E] width 4/8 byte(s), access rw; name [I] from intr_reset, prom_c00000001fc41f38; reached in 4 sites, 3 routine(s) */
+#define PIC_INTR_ENABLE                    0x000108   /* [E] width 4/8 byte(s), access rw; name [I] from intr_enable, prom_c00000001fc41f38; reached in 8 sites, 5 routine(s) */
+#define PIC_INTR_RESET                     0x000110   /* [E] width 4/8 byte(s), access rw; name [I] from intr_reset, prom_c00000001fc41f38; reached in 5 sites, 3 routine(s) */
 #define   PIC_INTR_RESET_V_FFFF            0xffff   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define PIC_INTR_MODE                      0x000118   /* [E] width 8 byte(s), access rw; name [I] from intr_mode; reached in 6 sites, 4 routine(s) */
 #define PIC_INTR_DEVICE                    0x000120   /* [E] width 8 byte(s), access rw; name [I] from intr_device; reached in 6 sites, 4 routine(s) */
-#define PIC_INTR_HOST_ERR                  0x000128   /* [E] width 4/8 byte(s), access rw; name [I] from intr_host_err, prom_c00000001fc41f38; reached in 3 sites, 3 routine(s) */
-#define PIC_INTR_ADDR_VECT                 0x000130   /* [E] width 0/8 byte(s), access arw, indexed (family base); name [I] from intr_addr_vect, intr_addr_addr, intr_addr; reached in 13 sites, 7 routine(s) */
+#define PIC_INTR_HOST_ERR                  0x000128   /* [E] width 8 byte(s), access rw; name [I] from intr_host_err; reached in 2 sites, 2 routine(s) */
+#define PIC_INTR_ADDR_VECT                 0x000130   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from intr_addr_vect, intr_addr_addr, intr_addr; reached in 12 sites, 6 routine(s) */
 #define   PIC_INTR_ADDR_VECT_B_10_0        0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   PIC_INTR_ADDR_VECT_B_10_0        0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   PIC_INTR_ADDR_VECT_B_7_0         0xff   /* [I] load mask: the code isolates these bits (2 sites) */
 #define   PIC_INTR_ADDR_VECT_B_7_0         0xff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define PIC_INTR_VIEW                      0x000170   /* [E] width 8 byte(s), access r; name [I] from intr_view; reached in 1 sites, 1 routine(s) */
 #define PIC_INTR_MULTIPLE                  0x000178   /* [E] width 8 byte(s), access r; name [I] from intr_multiple; reached in 1 sites, 1 routine(s) */
-#define PIC_FORCE_ALWAYS                   0x000180   /* [E] width 0/8 byte(s), access aw, indexed (family base); name [I] from force_always, force_always_addr; reached in 2 sites, 2 routine(s) */
+#define PIC_FORCE_ALWAYS                   0x000180   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from force_always; reached in 1 sites, 1 routine(s) */
 #define PIC_FORCE_INTR                     0x0001c0   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from force_intr; reached in 1 sites, 1 routine(s) */
 #define PIC_DEVICE                         0x000200   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from device; reached in 6 sites, 4 routine(s) */
 #define PIC_WRB_FLUSH                      0x000240   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from wrb_flush; reached in 1 sites, 1 routine(s) */
 #define PIC_RRB                            0x000280   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from rrb; reached in 6 sites, 4 routine(s) */
+#define   PIC_RRB_B_10_0                   0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define   PIC_RRB_B_10_0                   0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define PIC_RRB_STATUS                     0x000290   /* [E] width 8 byte(s), access r; name [I] from rrb_status; reached in 1 sites, 1 routine(s) */
 #define PIC_RRB_CLEAR                      0x000298   /* [E] width 8 byte(s), access w; name [I] from rrb_clear; reached in 1 sites, 1 routine(s) */
@@ -70,11 +69,11 @@
 
 /* ---- arrays and windows (offset is the array base) --------------- */
 
-#define PIC_INT_ATE                        0x010000   /* [E] width 0/8 byte(s), access arw, indexed (family base); name [I] from int_ate; reached in 3 sites, 3 routine(s) */
+#define PIC_INT_ATE                        0x010000   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from int_ate; reached in 2 sites, 2 routine(s) */
 #define   PIC_INT_ATE_B_10_0               0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
-#define PIC_PIC_ATTACH2                    0x018000   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from pic_attach2; reached in 48 sites, 1 routine(s) */
-#define PIC_PIC_ATTACH2_18800              0x018800   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from pic_attach2; reached in 48 sites, 1 routine(s) */
-#define PIC_PIC_ATTACH2_19000              0x019000   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from pic_attach2; reached in 48 sites, 1 routine(s) */
-#define PIC_EXT_ATE                        0x080000   /* [E] width 0/8 byte(s), access arw, indexed (family base); name [I] from ext_ate; reached in 3 sites, 3 routine(s) */
+#define PIC_PIC_ATTACH2                    0x018000   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from pic_attach2; reached in 4 sites, 1 routine(s) */
+#define PIC_PIC_ATTACH2_18800              0x018800   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from pic_attach2; reached in 4 sites, 1 routine(s) */
+#define PIC_PIC_ATTACH2_19000              0x019000   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from pic_attach2; reached in 4 sites, 1 routine(s) */
+#define PIC_EXT_ATE                        0x080000   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from ext_ate; reached in 4 sites, 2 routine(s) */
 
 #endif /* PIC_H */

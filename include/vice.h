@@ -11,6 +11,6 @@
 #define VICE_H
 
 /* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: docs/chips/vice.md. */
+ * Mode and sources: chips/vice/README.md. */
 
 #endif /* VICE_H */

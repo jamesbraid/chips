@@ -36,8 +36,8 @@ report agreement or disagreement, never to supply a fact.
 
 ## Where things go
 
-- `docs/chips/<chip>.md`: one page per chip. Register entries with labels. Chips with no entry yet say so.
-- `docs/census/<chip>/`: machine-made census tables (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`).
+- `chips/<chip>/README.md`: one page per chip. Register entries with labels. Chips with no entry yet say so.
+- `chips/<chip>/census/`: machine-made census tables (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`).
   Never edit by hand; fix the tool or the config and rerun.
 - `docs/inventory/` and `docs/coverage.md`: written by `scripts/inventory.py`. Never edit by hand.
 - `tools/`: the census scanner and its configs (one per chip, marked spec-backed or no-spec); `scripts/`: the
@@ -95,7 +95,7 @@ samples `understood` rows and re-derives them from the binaries; the result goes
 1. Fill `root/` (IRIX_FILES.md) and run `scripts/inventory.py` to see the rows.
 2. Write the chip's census config (`tools/configs/<chip>.json`): the images, the seeds that tell the scanner
    which functions receive the chip's window pointer, the chip-type compares, and the literal-pool settings.
-3. `tools/run.sh tools/configs/<chip>.json` (see tools/README.md) and read `docs/census/<chip>/census.md`.
-4. Take each register to an entry in `docs/chips/<chip>.md` using `fields.tsv` and `context.tsv` as the
+3. `tools/run.sh tools/configs/<chip>.json` (see tools/README.md) and read `chips/<chip>/census/census.md`.
+4. Take each register to an entry in `chips/<chip>/README.md` using `fields.tsv` and `context.tsv` as the
    starting evidence, then read the function in full before labelling anything established.
 5. Regenerate the inventory in the same commit as the finding.

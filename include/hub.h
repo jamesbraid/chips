@@ -11,6 +11,6 @@
 #define HUB_H
 
 /* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: docs/chips/hub.md. */
+ * Mode and sources: chips/hub/README.md. */
 
 #endif /* HUB_H */
