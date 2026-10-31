@@ -1,0 +1,35 @@
+window	inner_offset	rw	width	sites	functions	images	example
+driver state record (not hardware)	0x0	r	4	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_error_handler@148c
+driver state record (not hardware)	0x0	r	8	3	1	ip27-xswitch-o,ip30-xswitch-o,ip35-xswitch-o	xswitch_info_get@1c
+driver state record (not hardware)	0x0	a	0	4	2	ip27-xswitch-o,ip30-xswitch-o,ip35-kernel-o,ip35-xswitch-o	xswitch_info_get@38
+driver state record (not hardware)	0x8	r	4	10	4	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_errintr_handler@f54
+driver state record (not hardware)	0x18	r	8	30	2	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_errintr_handler@f78
+driver state record (not hardware)	0x20	w	4	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1c8c
+driver state record (not hardware)	0x24	r	1	6	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1bdc
+driver state record (not hardware)	0x24	w	1	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1c1c
+driver state record (not hardware)	0x25	r	1	9	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1ba0
+driver state record (not hardware)	0x25	w	1	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1c0c
+driver state record (not hardware)	0x26	w	1	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1c14
+driver state record (not hardware)	0x27	w	1	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1c08
+driver state record (not hardware)	0x28	r	8	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1c48
+driver state record (not hardware)	0x34	r	1	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1bdc
+driver state record (not hardware)	0x35	r	1	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1be8
+driver state record (not hardware)	0x40	r	8	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_update_perf_counters@1a44
+driver state record (not hardware)	0x40	w	8	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_update_perf_counters@1a54
+driver state record (not hardware)	0x40	a	0	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_get_perf_counters@1ae0
+driver state record (not hardware)	0x72	r	2	1	1	ip35-kernel-o	intr_heuristic@1fe24
+driver state record (not hardware)	0x78	r	4	1	1	ip27-kernel-o	sub_22b8c@22d48
+driver state record (not hardware)	0x140	a	0	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_get_llp_status@1ccc
+driver state record (not hardware)	0x140	r	8	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_update_llp_status@1d58
+driver state record (not hardware)	0x140	w	8	6	2	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_update_llp_status@1d6c
+driver state record (not hardware)	0x148	r	8	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_update_llp_status@1d50
+driver state record (not hardware)	0x148	w	8	6	2	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_update_llp_status@1d60
+driver state record (not hardware)	0x1c4	r	4	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_update_llp_status@1d84
+driver state record (not hardware)	0x1c4	w	4	6	2	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_disable_llp_monitor@1e24
+driver state record (not hardware)	0x1d0	r	8	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_prio_bw_alloc@2518
+driver state record (not hardware)	0x210	r	8	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_prio_bw_alloc@2510
+driver state record (not hardware)	0x210	w	8	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_prio_bw_alloc@25c0
+driver state record (not hardware)	0x828	r	8	2	1	ip27-kernel-o	sub_22b8c@22d54
+driver state record (not hardware)	0x830	r	8	1	1	ip35-kernel-o	intr_heuristic@1fe40
+link register reached as a negative displacement from an unseen port index (xbow_enable_perf_counter: 0x40*port - 0xf4 is link control 0x10c + 0x40*(port-8))	0xf0c	r	4	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1c28
+link register reached as a negative displacement from an unseen port index (xbow_enable_perf_counter: 0x40*port - 0xf4 is link control 0x10c + 0x40*(port-8))	0xf0c	w	4	3	1	ip27-xbow-o,ip30-xbow-o,ip35-xbow-o	xbow_enable_perf_counter@1c40
