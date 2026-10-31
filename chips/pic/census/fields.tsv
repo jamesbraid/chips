@@ -15,21 +15,7 @@ bridge	0x0	load	mask	10:0	2	1	pcibr_alloc_all_rrbs@65bc
 bridge	0x0	load	mask	15:0	1	1	pcibr_alloc_all_rrbs@660c
 bridge	0x0	load	shift	shift 1	2	1	pcibr_alloc_all_rrbs@65bc
 bridge	0x0	load	shift	shift 12	1	1	pcibr_alloc_all_rrbs@660c
-bridge	0x10	load	mask	10:0	1	1	pcireg_bus_err_get@f2d0
-bridge	0x30	load	mask	10:0	2	2	pcireg_intr_dst_get@10210
-bridge	0x30	load	mask	3:0	1	1	pcireg_intr_dst_target_id_get@104e8
-bridge	0x30	load	mask	15:0	1	1	pcireg_intr_dst_addr_get@107f0
-bridge	0x30	store	mask	15:0	1	1	pcireg_intr_dst_addr_set@1098c
 bridge	0x30	load	mask	5:0	1	1	pcireg_intr_addr_addr_get@15c38
-bridge	0x30	load	shift	shift 16	1	1	pcireg_intr_dst_target_id_get@104e8
-bridge	0x60	load	mask	10:0	2	2	pcireg_resp_err_get@11280
-bridge	0x60	load	mask	15:0	1	1	pcireg_resp_err_addr_get@113f0
-bridge	0x60	load	mask	3:0	1	1	pcireg_resp_err_buf_get@11570
-bridge	0x60	load	mask	2:0	1	1	pcireg_resp_err_dev_get@116e4
-bridge	0x60	load	shift	shift 16	1	1	pcireg_resp_err_buf_get@11570
-bridge	0x60	load	shift	shift 20	1	1	pcireg_resp_err_dev_get@116e4
-bridge	0xd0	load	mask	10:0	2	2	pcireg_pci_bus_addr_get@136c4
-bridge	0xd0	load	mask	15:0	1	1	pcireg_pci_bus_addr_addr_get@13838
 bridge	0x130	load	mask	7:0	1	1	pcireg_intr_addr_vect_get@157f4
 bridge	0x130	load	shift	shift 2	1	1	pcireg_intr_addr_addr_get@15c34
 bridge|xbridge	0x10	load	mask	10:0	1	1	pcireg_bus_err_get@f2d0
@@ -50,7 +36,6 @@ pic	0x0	load	mask	10:0	4	2	pcibr_bridge_ptr_get@4628
 pic	0x0	load	shift	shift 1	4	2	pcibr_bridge_ptr_get@4628
 pic	0x20	load	mask	5:4	1	1	pcireg_speed_get@fcac
 pic	0x20	load	shift	shift 4	1	1	pcireg_speed_get@fcac
-pic	0x110	store	const	0xffff	1	1	prom_c00000001fc41f38@c41f84
 pic	0x130	load	mask	10:0	1	1	pcireg_intr_addr_get@1523c
 pic	0x130	load	mask	7:0	1	1	pcireg_intr_addr_vect_get@157dc
 pic	0x130	load	shift	shift 1	1	1	pcireg_intr_addr_get@1523c
@@ -70,12 +55,6 @@ probe?	0x0	load	shift	shift 12	2	1	prom_c00000001fc41f38@c41f38
 probe?	0x110	store	const	0xffff	1	1	prom_c00000001fc41f38@c41f84
 tiocp	0x20	load	mask	5:4	1	1	pcireg_speed_get@fc88
 tiocp	0x20	load	shift	shift 4	1	1	pcireg_speed_get@fc88
-tiocp	0x38	load	mask	3:0	1	1	pcireg_intr_dst_target_id_get@1050c
-tiocp	0x38	load	shift	shift 48	1	1	pcireg_intr_dst_target_id_get@1050c
-tiocp	0x60	load	mask	3:0	1	1	pcireg_resp_err_buf_get@1159c
-tiocp	0x60	load	mask	2:0	1	1	pcireg_resp_err_dev_get@11710
-tiocp	0x60	load	shift	shift 16	1	1	pcireg_resp_err_buf_get@1159c
-tiocp	0x60	load	shift	shift 20	1	1	pcireg_resp_err_dev_get@11710
 tiocp	0x130	load	mask	7:0	1	1	pcireg_intr_addr_vect_get@157dc
 tiocp	0x130	load	shift	shift 48	1	1	pcireg_intr_addr_vect_get@157dc
 tiocp	0x10000	load	mask	10:0	1	1	pcireg_int_ate_get@192b0

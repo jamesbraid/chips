@@ -12,7 +12,7 @@ ip35-kernel	ni_reset_port	13c0	bedrock	0x680010	w	8	ld $4,-32736($28) / ld $2,-3
 ip35-kernel	ni_reset_port	13cc	bedrock	0x680008	w	8	addiu $3,$0,1 / sd $3,0($4) / addiu $1,$0,6 / jr $31 / sd $1,0($2)
 ip35-kernel	numalinkstats_up2date	23d0	bedrock	0x30100	r	8	addiu $13,$10,1 / dsll $6,$10,0x3 / bne $2,$0,2378 / daddu $6,$12,$6 / ld $5,0($25) / ld $6,0($24) / dsrl $6,$6,0x4 / andi $6,$6,0x3ff / sll $3,$6,0x2
 ip35-kernel	numalinkstats_up2date	23d4	bedrock	0x604200	r	8	dsll $6,$10,0x3 / bne $2,$0,2378 / daddu $6,$12,$6 / ld $5,0($25) / ld $6,0($24) / dsrl $6,$6,0x4 / andi $6,$6,0x3ff / sll $3,$6,0x2 / addu $3,$3,$6
-ip35-kernel	router_acquire_info	2b2c	bedrock	0x30100	r	8	ld $23,8($29) / jr $31 / daddiu $29,$29,80 / ld $4,-32680($28) / ld $4,0($4) / sb $0,7($18) / beq $0,$0,2a6c / sd $4,48($18) / addiu $8,$0,2
+ip35-kernel	router_acquire_info	2b2c	bedrock	0x30100	r	8	ld $23,8($29) / jr $31 / daddiu $29,$29,80 / ld $4,-32680($28) / ld $4,0($4) / sb $0,7($18) / beq $0,$0,2a6c / sd $4,48($18)
 ip35-kernel	capture_router_stats	3150	bedrock	0x30100	r	8	jal 2d04 / or $4,$16,$0 / beq $2,$0,3188 / ld $2,-32680($28) / ld $2,0($2) / sb $0,568($16) / bne $17,$0,3190 / sd $2,560($16) / beq $0,$0,31a0
 ip35-kernel	capture_router_stats	3170	bedrock	0x30100	r	8	beq $0,$0,31a0 / lw $2,0($28) / ld $5,560($16) / lw $3,0($28) / ld $4,0($8) / dsubu $4,$4,$5 / sltu $3,$3,$4 / beq $3,$0,3188 / sll $0,$0,0x0
 ip35-kernel	router_init	344c	bedrock	0x30100	r	8	lw $12,0($12) / sw $19,32($16) / sd $18,24($16) / sw $12,556($16) / ld $11,0($11) / sw $21,528($16) / sd $11,48($16) / sd $11,40($16) / ld $10,0($10)
@@ -38,6 +38,11 @@ ip35-kernel	vector_read_node	6f88	bedrock	0xe0c030	r	8	ori $11,$11,0xfff8 / and 
 ip35-kernel	ust_init	a5f4	bedrock	0x604200	r	8	ld $3,-32672($28) / ld $4,0($3) / dsrl $4,$4,0x4 / andi $4,$4,0x3ff / sll $2,$4,0x2 / addu $2,$2,$4
 ip35-kernel	ust_init	a624	bedrock	0x604200	r	8	addiu $2,$2,10 / ddiv $0,$5,$2 / mflo $4 / sw $4,0($28) / ld $3,0($3) / dsrl $3,$3,0x4 / andi $3,$3,0x3ff / sll $1,$3,0x2 / teq $2,$0,0x7
 ip35-kernel	sub_b91c	b950	bedrock	0xc00128	r	8	lh $5,10($5) / ld $7,-32720($28) / dsll32 $5,$5,0x1 / daddu $7,$5,$7 / ld $7,296($7) / addiu $6,$0,-55 / andi $7,$7,0x2000 / dsll32 $6,$6,0x19 / ld $31,16($29)
+ip35-kernel	mlreset	db00	bedrock	0x800018	w	8	daddu $25,$11,$25 / daddu $2,$8,$2 / ld $1,0($28) / daddu $25,$8,$25 / sd $1,0($2) / bne $31,$0,dad4 / sd $24,0($25) / sd $0,400($12) / lw $3,0($28)
+ip35-kernel	mlreset	db00	bedrock	0xa00018	w	8	daddu $25,$11,$25 / daddu $2,$8,$2 / ld $1,0($28) / daddu $25,$8,$25 / sd $1,0($2) / bne $31,$0,dad4 / sd $24,0($25) / sd $0,400($12) / lw $3,0($28)
+ip35-kernel	mlreset	db08	bedrock	0x800028	w	8	ld $1,0($28) / daddu $25,$8,$25 / sd $1,0($2) / bne $31,$0,dad4 / sd $24,0($25) / sd $0,400($12) / lw $3,0($28) / slt $3,$10,$3 / daddu $11,$10,$10
+ip35-kernel	mlreset	db08	bedrock	0xa00028	w	8	ld $1,0($28) / daddu $25,$8,$25 / sd $1,0($2) / bne $31,$0,dad4 / sd $24,0($25) / sd $0,400($12) / lw $3,0($28) / slt $3,$10,$3 / daddu $11,$10,$10
+ip35-kernel	mlreset	db0c	bedrock	0xc00190	w	8	daddu $25,$8,$25 / sd $1,0($2) / bne $31,$0,dad4 / sd $24,0($25) / sd $0,400($12) / lw $3,0($28) / slt $3,$10,$3 / daddu $11,$10,$10 / bne $3,$0,dac0
 ip35-kernel	per_hub_init	e338	bedrock	0xc003a8	w	8	sd $5,192($6) / ld $2,-32720($28) / daddu $2,$21,$2 / addiu $9,$0,240 / sd $9,936($2) / ld $8,296($2) / addiu $7,$0,8 / dsrl $8,$8,0xc / addiu $9,$0,4
 ip35-kernel	per_hub_init	e33c	bedrock	0xc00128	r	8	ld $2,-32720($28) / daddu $2,$21,$2 / addiu $9,$0,240 / sd $9,936($2) / ld $8,296($2) / addiu $7,$0,8 / dsrl $8,$8,0xc / addiu $9,$0,4 / andi $8,$8,0x2
 ip35-kernel	per_hub_init	e354	bedrock	0xc00200	w	8	dsrl $8,$8,0xc / addiu $9,$0,4 / andi $8,$8,0x2 / movz $7,$9,$8 / sd $7,512($2) / lw $6,0($28) / slti $6,$6,33 / dli $4,0xfffe / lui $5,0xff
@@ -66,7 +71,7 @@ ip35-kernel	memory_iscalias	100cc	bedrock	0x28	r	8	ld $2,-32504($28) / addiu $7,
 ip35-kernel	page_local_calias	10128	bedrock	0x28	r	8	ld $2,-32504($28) / ld $2,0($2) / dsll32 $7,$4,0x0 / addiu $8,$0,4096 / dsrl $7,$7,0x12 / beq $2,$0,10154
 ip35-kernel	fetchop_flush	101c8	bedrock	0xf80028	r	8	daddu $9,$11,$9 / daddu $14,$11,$14 / beq $6,$0,10258 / sll $0,$0,0x0 / ld $5,40($9) / dsrl $8,$5,0x6 / dsrl32 $24,$5,0x1f / addiu $6,$6,1 / and $8,$10,$8
 ip35-kernel	fetchop_flush	1025c	bedrock	0xf80020	r	8	addiu $2,$0,1 / jr $31 / daddiu $29,$29,16 / beq $0,$0,101cc / ld $5,32($9)
-ip35-kernel	sub_11804	11988	bedrock	0x680000	r	8	addiu $11,$0,1 / beq $0,$0,118e4 / sd $11,48($29) / ld $2,-32488($28) / ld $2,0($2) / dsrl $2,$2,0x1 / jr $31 / andi $2,$2,0x1
+ip35-kernel	sub_11984	11988	bedrock	0x680000	r	8	ld $2,-32488($28) / ld $2,0($2) / dsrl $2,$2,0x1 / jr $31 / andi $2,$2,0x1
 ip35-kernel	router_lock	122a0	bedrock	0x30100	r	8	jal 0 / or $4,$18,$0 / ld $8,-32680($28) / ld $10,-32672($28) / ld $8,0($8) / ld $10,0($10) / dsrl $10,$10,0x4 / andi $10,$10,0x3ff / sll $9,$10,0x2
 ip35-kernel	router_lock	122a4	bedrock	0x604200	r	8	or $4,$18,$0 / ld $8,-32680($28) / ld $10,-32672($28) / ld $8,0($8) / ld $10,0($10) / dsrl $10,$10,0x4 / andi $10,$10,0x3ff / sll $9,$10,0x2 / addu $9,$9,$10
 ip35-kernel	router_lock	12328	bedrock	0x30100	r	8	sd $9,0($29) / ld $11,8($29) / ld $14,-32680($28) / ld $24,-32672($28) / ld $14,0($14) / ld $24,0($24) / dsrl $24,$24,0x4 / andi $24,$24,0x3ff / sll $15,$24,0x2
@@ -190,12 +195,26 @@ ip35-kernel	ni_port_down_reset	189c4	bedrock	0xe80120	r	8	and $24,$24,$25 / ld $
 ip35-kernel	ni_port_down_reset	189d4	bedrock	0xe80120	r	8	ld $31,288($16) / and $31,$31,$1 / beq $31,$0,189e0 / ld $31,16($29) / ld $2,288($16) / sd $0,256($16) / ld $31,16($29) / ld $16,24($29) / jr $31
 ip35-kernel	ni_port_down_reset	189d8	bedrock	0xe80100	w	8	and $31,$31,$1 / beq $31,$0,189e0 / ld $31,16($29) / ld $2,288($16) / sd $0,256($16) / ld $31,16($29) / ld $16,24($29) / jr $31 / daddiu $29,$29,32
 ip35-kernel	ni_port_down_reset	18a04	bedrock	0xe80000	r	8	beq $6,$0,18a1c / sd $4,0($29) / jal 0 / addiu $4,$0,200 / ld $3,0($16) / ld $4,0($29) / andi $3,$3,0x2 / addiu $4,$4,1 / beq $3,$0,189f4
-ip35-kernel	ni_port_down_reset	18a44	bedrock	0xe80100	r	8	ld $1,-32328($28) / dsll32 $2,$4,0x1 / sd $16,8($29) / daddu $17,$2,$17 / ld $16,256($17) / ld $3,-32656($28) / sd $18,24($29) / and $1,$16,$1 / daddu $2,$2,$3
-ip35-kernel	ni_port_down_reset	18a58	bedrock	0xe80000	r	8	ld $3,-32656($28) / sd $18,24($29) / and $1,$16,$1 / daddu $2,$2,$3 / ld $6,0($17) / or $18,$4,$0 / beq $1,$0,18a98 / ld $2,160($2) / jal 0
-ip35-kernel	ni_port_down_reset	18a64	bedrock	0x8000a0	r	8	daddu $2,$2,$3 / ld $6,0($17) / or $18,$4,$0 / beq $1,$0,18a98 / ld $2,160($2) / jal 0 / sll $0,$0,0x0 / blez $2,18ad0 / addiu $2,$0,1
-ip35-kernel	ni_port_down_reset	18c7c	bedrock	0x680110	r	8	ld $6,-32312($28) / daddiu $5,$17,2232 / addiu $4,$0,20 / jal 0 / ld $6,0($6) / ld $6,-32304($28) / daddiu $5,$17,2256 / addiu $4,$0,20 / jal 0
-ip35-kernel	ni_port_down_reset	18c90	bedrock	0x680118	r	8	ld $6,-32304($28) / daddiu $5,$17,2256 / addiu $4,$0,20 / jal 0 / ld $6,0($6) / jal 0 / addiu $4,$0,103 / jal 0 / addiu $4,$0,104
-ip35-kernel	ni_port_down_reset	18d3c	bedrock	0xe80100	r	8	sd $17,24($29) / dsll32 $17,$5,0x1 / ld $1,-32328($28) / daddu $17,$17,$24 / ld $7,256($17) / sd $6,0($29) / sd $31,40($29) / and $1,$7,$1 / sd $16,16($29)
+ip35-kernel	sub_18a24	18a44	bedrock	0xe80100	r	8	ld $1,-32328($28) / dsll32 $2,$4,0x1 / sd $16,8($29) / daddu $17,$2,$17 / ld $16,256($17) / ld $3,-32656($28) / sd $18,24($29) / and $1,$16,$1 / daddu $2,$2,$3
+ip35-kernel	sub_18a24	18a58	bedrock	0xe80000	r	8	ld $3,-32656($28) / sd $18,24($29) / and $1,$16,$1 / daddu $2,$2,$3 / ld $6,0($17) / or $18,$4,$0 / beq $1,$0,18a98 / ld $2,160($2) / jal 0
+ip35-kernel	sub_18a24	18a64	bedrock	0x8000a0	r	8	daddu $2,$2,$3 / ld $6,0($17) / or $18,$4,$0 / beq $1,$0,18a98 / ld $2,160($2) / jal 0 / sll $0,$0,0x0 / blez $2,18ad0 / addiu $2,$0,1
+ip35-kernel	sub_18a24	18a78	bedrock	0xe80120	r	8	jal 0 / sll $0,$0,0x0 / blez $2,18ad0 / addiu $2,$0,1 / ld $24,288($17) / sd $0,256($17) / jal 0 / or $4,$18,$0 / ld $25,288($17)
+ip35-kernel	sub_18a24	18a7c	bedrock	0xe80100	w	8	sll $0,$0,0x0 / blez $2,18ad0 / addiu $2,$0,1 / ld $24,288($17) / sd $0,256($17) / jal 0 / or $4,$18,$0 / ld $25,288($17) / or $2,$0,$0
+ip35-kernel	sub_18a24	18a88	bedrock	0xe80120	r	8	ld $24,288($17) / sd $0,256($17) / jal 0 / or $4,$18,$0 / ld $25,288($17) / or $2,$0,$0 / beq $0,$0,18ab8 / sd $25,-32720($28) / andi $31,$6,0x3
+ip35-kernel	sub_18a24	18ae0	bedrock	0xe80010	r	8	dsll32 $2,$2,0x14 / and $3,$2,$16 / beq $3,$0,18b1c / sd $3,0($29) / ld $3,16($17) / bne $3,$0,18b1c / sd $3,-32720($28) / ld $5,-32144($28) / addiu $4,$0,21
+ip35-kernel	sub_18a24	18b08	bedrock	0xe80120	r	8	jal 0 / daddiu $5,$5,1256 / jal 0 / or $4,$18,$0 / ld $6,288($17) / sd $0,256($17) / or $2,$0,$0 / beq $0,$0,18ab8 / sd $6,-32720($28)
+ip35-kernel	sub_18a24	18b0c	bedrock	0xe80100	w	8	daddiu $5,$5,1256 / jal 0 / or $4,$18,$0 / ld $6,288($17) / sd $0,256($17) / or $2,$0,$0 / beq $0,$0,18ab8 / sd $6,-32720($28) / ld $17,-32144($28)
+ip35-kernel	sub_18a24	18c68	bedrock	0x680108	r	8	ld $6,-32320($28) / daddiu $5,$17,2208 / addiu $4,$0,20 / jal 0 / ld $6,0($6) / ld $6,-32312($28) / daddiu $5,$17,2232 / addiu $4,$0,20 / jal 0
+ip35-kernel	sub_18a24	18c7c	bedrock	0x680110	r	8	ld $6,-32312($28) / daddiu $5,$17,2232 / addiu $4,$0,20 / jal 0 / ld $6,0($6) / ld $6,-32304($28) / daddiu $5,$17,2256 / addiu $4,$0,20 / jal 0
+ip35-kernel	sub_18a24	18c90	bedrock	0x680118	r	8	ld $6,-32304($28) / daddiu $5,$17,2256 / addiu $4,$0,20 / jal 0 / ld $6,0($6) / jal 0 / addiu $4,$0,103 / jal 0 / addiu $4,$0,104
+ip35-kernel	sub_18a24	18cac	bedrock	0xe80010	r	8	jal 0 / addiu $4,$0,104 / beq $0,$0,18ab8 / addiu $2,$0,1 / ld $7,16($17) / bne $7,$0,18ce4 / sd $7,-32720($28) / ld $5,-32144($28) / addiu $4,$0,21
+ip35-kernel	sub_18a24	18cd0	bedrock	0xe80120	r	8	jal 0 / daddiu $5,$5,1256 / jal 0 / or $4,$18,$0 / ld $6,288($17) / sd $0,256($17) / or $2,$0,$0 / beq $0,$0,18ab8 / sd $6,-32720($28)
+ip35-kernel	sub_18a24	18cd4	bedrock	0xe80100	w	8	daddiu $5,$5,1256 / jal 0 / or $4,$18,$0 / ld $6,288($17) / sd $0,256($17) / or $2,$0,$0 / beq $0,$0,18ab8 / sd $6,-32720($28) / ld $17,-32144($28)
+ip35-kernel	sub_18d20	18d3c	bedrock	0xe80100	r	8	sd $17,24($29) / dsll32 $17,$5,0x1 / ld $1,-32328($28) / daddu $17,$17,$24 / ld $7,256($17) / sd $6,0($29) / sd $31,40($29) / and $1,$7,$1 / sd $16,16($29)
+ip35-kernel	sub_18d20	18d74	bedrock	0xe80120	r	8	blez $2,18d80 / ld $7,32($29) / jal 0 / or $4,$16,$0 / ld $25,288($17) / beq $0,$0,18e6c / sd $25,-32712($28) / addiu $31,$0,1 / dsll32 $31,$31,0x14
+ip35-kernel	sub_18d20	18d94	bedrock	0xe80010	r	8	dsll32 $31,$31,0x14 / and $31,$7,$31 / beq $31,$0,18da0 / sll $0,$0,0x0 / ld $1,16($17) / beq $1,$0,18e94 / sd $1,-32712($28) / jal 0 / sll $0,$0,0x0
+ip35-kernel	sub_18d20	18ea4	bedrock	0xe80120	r	8	ld $5,-32144($28) / addiu $4,$0,21 / jal 0 / daddiu $5,$5,2424 / ld $6,288($17) / or $4,$16,$0 / jal 0 / sd $6,-32712($28) / ld $7,288($17)
+ip35-kernel	sub_18d20	18eb4	bedrock	0xe80120	r	8	ld $6,288($17) / or $4,$16,$0 / jal 0 / sd $6,-32712($28) / ld $7,288($17) / beq $0,$0,18e6c / sd $7,-32712($28)
 ip35-kernel	klsave_md_registers	19090	bedrock	0x30100	r	8	sd $17,344($4) / ld $8,0($29) / ld $7,-32680($28) / sd $8,352($4) / ld $7,0($7) / beq $0,$0,19058 / sd $7,336($4) / sd $17,312($4) / ld $9,0($9)
 ip35-kernel	klsave_md_registers	190a0	bedrock	0x30100	r	8	ld $7,0($7) / beq $0,$0,19058 / sd $7,336($4) / sd $17,312($4) / ld $9,0($9) / beq $0,$0,19058 / sd $9,304($4) / ld $10,-32680($28) / sd $17,296($4)
 ip35-kernel	klsave_md_registers	190b4	bedrock	0x30100	r	8	beq $0,$0,19058 / sd $9,304($4) / ld $10,-32680($28) / sd $17,296($4) / ld $10,0($10) / beq $0,$0,19058 / sd $10,288($4) / ld $11,-32680($28) / sd $17,328($4)
@@ -268,8 +287,21 @@ ip35-kernel	klerror_global_check	1bae4	bedrock	0x30100	r	8	ld $6,-32680($28) / b
 ip35-kernel	klerror_global_check	1bb24	bedrock	0x30100	r	8	sltiu $3,$3,30 / movz $2,$4,$3 / jr $31 / sll $0,$0,0x0 / ld $5,0($6) / sw $0,-32528($28) / or $2,$0,$0 / jr $31 / sd $5,-32536($28)
 ip35-kernel	klerror_check_recoverable	1bbfc	bedrock	0x30100	r	8	daddiu $29,$29,48 / ld $2,8($16) / beq $2,$0,1bc6c / ld $5,-32680($28) / ld $25,0($5) / lwu $31,4($16) / dsubu $25,$25,$2 / sltu $25,$25,$31 / beq $25,$0,1bc6c
 ip35-kernel	klerror_check_recoverable	1bc6c	bedrock	0x30100	r	8	beq $2,$0,1bc98 / addiu $5,$0,20 / beq $0,$0,1bbd4 / addiu $2,$0,-1 / ld $6,0($5) / sd $18,16($16) / sb $0,1($16) / sd $19,24($16) / or $2,$0,$0
-ip35-kernel	sn0_skip_dump	1bd38	bedrock	0x20	r	8	addiu $10,$0,-1 / sd $17,16($29) / addiu $25,$0,144 / lui $14,0x20 / ld $1,0($11) / addiu $17,$0,264 / addiu $16,$0,263 / sd $23,32($29) / addiu $23,$0,4
-ip35-kernel	sn0_skip_dump	1bd74	bedrock	0x600000	r	8	beq $1,$0,1befc / or $6,$19,$0 / sd $0,0($5) / ld $24,-32712($28) / ld $5,0($24) / dsrl32 $5,$5,0xe / andi $5,$5,0x3 / beq $5,$0,1bf04 / sd $18,80($29)
+ip35-kernel	sub_1bcf0	1bd38	bedrock	0x20	r	8	addiu $10,$0,-1 / sd $17,16($29) / addiu $25,$0,144 / lui $14,0x20 / ld $1,0($11) / addiu $17,$0,264 / addiu $16,$0,263 / sd $23,32($29) / addiu $23,$0,4
+ip35-kernel	sub_1bcf0	1bd6c	bedrock	0x410	w	8	addiu $19,$0,1 / ld $31,-32192($28) / beq $1,$0,1befc / or $6,$19,$0 / sd $0,0($5) / ld $24,-32712($28) / ld $5,0($24) / dsrl32 $5,$5,0xe / andi $5,$5,0x3
+ip35-kernel	sub_1bcf0	1bd74	bedrock	0x600000	r	8	beq $1,$0,1befc / or $6,$19,$0 / sd $0,0($5) / ld $24,-32712($28) / ld $5,0($24) / dsrl32 $5,$5,0xe / andi $5,$5,0x3 / beq $5,$0,1bf04 / sd $18,80($29)
+ip35-kernel	sub_1bcf0	1bd98	bedrock	0x604020	r	8	beq $5,$6,1bd98 / addiu $18,$0,2 / beq $5,$7,1bf0c / ld $18,0($29) / ld $20,0($13) / ld $31,0($31) / ld $9,0($8) / ld $12,0($24) / dsrl32 $12,$12,0x0
+ip35-kernel	sub_1bcf0	1bd9c	bedrock	0x780000	r	8	addiu $18,$0,2 / beq $5,$7,1bf0c / ld $18,0($29) / ld $20,0($13) / ld $31,0($31) / ld $9,0($8) / ld $12,0($24) / dsrl32 $12,$12,0x0 / dsll $5,$18,0x6
+ip35-kernel	sub_1bcf0	1bda0	bedrock	0x604028	r	8	beq $5,$7,1bf0c / ld $18,0($29) / ld $20,0($13) / ld $31,0($31) / ld $9,0($8) / ld $12,0($24) / dsrl32 $12,$12,0x0 / dsll $5,$18,0x6 / andi $12,$12,0xff
+ip35-kernel	sub_1bcf0	1bda4	bedrock	0x600000	r	8	ld $18,0($29) / ld $20,0($13) / ld $31,0($31) / ld $9,0($8) / ld $12,0($24) / dsrl32 $12,$12,0x0 / dsll $5,$18,0x6 / andi $12,$12,0xff / dsll32 $12,$12,0x10
+ip35-kernel	sub_1bcf0	1be64	bedrock	0xfa0038	w	8	or $7,$0,$0 / daddu $1,$30,$24 / or $5,$0,$0 / beq $0,$0,1beb0 / sd $19,56($1) / or $13,$25,$0 / movn $13,$14,$5 / daddu $13,$24,$13 / daddu $13,$15,$13
+ip35-kernel	sub_1bcf0	1be7c	bedrock	0x800090	w	8	movn $13,$14,$5 / daddu $13,$24,$13 / daddu $13,$15,$13 / bne $12,$8,1be98 / sd $16,0($13) / ld $1,0($11) / or $13,$25,$0 / movn $13,$14,$5 / daddu $13,$24,$13
+ip35-kernel	sub_1bcf0	1be7c	bedrock	0xa00090	w	8	movn $13,$14,$5 / daddu $13,$24,$13 / daddu $13,$15,$13 / bne $12,$8,1be98 / sd $16,0($13) / ld $1,0($11) / or $13,$25,$0 / movn $13,$14,$5 / daddu $13,$24,$13
+ip35-kernel	sub_1bcf0	1be80	bedrock	0x20	r	8	daddu $13,$24,$13 / daddu $13,$15,$13 / bne $12,$8,1be98 / sd $16,0($13) / ld $1,0($11) / or $13,$25,$0 / movn $13,$14,$5 / daddu $13,$24,$13 / beq $6,$1,1be9c
+ip35-kernel	sub_1bcf0	1be98	bedrock	0x800090	w	8	movn $13,$14,$5 / daddu $13,$24,$13 / beq $6,$1,1be9c / daddu $13,$15,$13 / sd $17,0($13) / addiu $5,$5,1 / slti $1,$5,2 / addiu $6,$6,2 / beq $1,$0,1bdd4
+ip35-kernel	sub_1bcf0	1be98	bedrock	0xa00090	w	8	movn $13,$14,$5 / daddu $13,$24,$13 / beq $6,$1,1be9c / daddu $13,$15,$13 / sd $17,0($13) / addiu $5,$5,1 / slti $1,$5,2 / addiu $6,$6,2 / beq $1,$0,1bdd4
+ip35-kernel	sub_1bcf0	1beb8	bedrock	0x20	r	8	beq $1,$0,1bdd4 / addiu $7,$7,2 / bne $12,$8,1be6c / or $13,$25,$0 / ld $2,0($11) / beq $7,$2,1be80 / sll $0,$0,0x0 / beq $0,$0,1be6c / or $13,$25,$0
+ip35-kernel	sub_1bcf0	1bf00	bedrock	0x408	w	8	ld $30,40($29) / jr $31 / daddiu $29,$29,96 / beq $0,$0,1bd70 / sd $0,0($9) / beq $0,$0,1bd98 / addiu $18,$0,1 / addiu $18,$0,4 / beq $0,$0,1bd98
 ip35-kernel	handle_io_buserr	1cef8	bedrock	0x400	r	8	lbu $9,1320($9) / ld $4,-32360($28) / lui $19,0x20 / andi $9,$9,0x1 / ld $8,0($4) / lui $10,0x10 / sltiu $9,$9,1 / movz $19,$10,$9 / and $8,$19,$8
 ip35-kernel	handle_io_buserr	1cf3c	bedrock	0x400	w	8	jal 0 / daddiu $7,$7,1784 / ld $8,-32360($28) / beq $0,$0,1ce64 / sd $19,0($8) / addiu $5,$0,20 / addiu $4,$0,2925 / jal 0 / daddiu $6,$6,1752
 ip35-kernel	handle_uncac_buserr	1d07c	bedrock	0x400	r	8	ld $21,-32360($28) / sltiu $25,$25,1 / lui $31,0x10 / lui $20,0x20 / ld $24,0($21) / movz $20,$31,$25 / dsrl32 $17,$16,0x1 / and $24,$20,$24 / dsll32 $17,$17,0x10
@@ -299,14 +331,24 @@ ip35-kernel	sub_200f0	20110	bedrock	0x98	r	8	sd $20,8($29) / sd $18,56($29) / ld
 ip35-kernel	sub_200f0	20170	bedrock	0x90	w	8	addiu $4,$4,1 / sw $4,208($5) / jal 0 / or $4,$17,$0 / sd $2,0($19) / dsll $16,$2,0x3 / ld $8,-14928($0) / daddu $16,$16,$2 / dsll $16,$16,0x3
 ip35-kernel	sub_200f0	20198	bedrock	0x98	r	8	lw $6,24($8) / andi $6,$6,0x1000 / or $20,$2,$0 / beq $6,$0,20238 / ld $5,0($18) / ld $2,8($8) / beq $2,$0,201bc / sll $0,$0,0x0 / ld $4,16($8)
 ip35-kernel	sub_200f0	201ec	bedrock	0x98	r	8	jal 0 / sll $0,$0,0x0 / beq $0,$0,2014c / dsllv $3,$22,$20 / ld $7,0($18) / ld $6,-14944($0) / and $6,$6,$7 / bne $6,$0,20158 / or $17,$6,$0
-ip35-kernel	sub_200f0	2026c	bedrock	0xa0	r	8	sd $17,24($29) / sd $18,16($29) / ld $24,-32144($28) / ld $18,-14936($0) / ld $24,0($24) / ld $17,-32152($28) / sd $20,32($29) / and $18,$18,$24 / sd $19,0($29)
-ip35-kernel	sendintr	20754	bedrock	0x90	w	8	ld $6,-32152($28) / ld $3,-32160($28) / andi $5,$5,0x1 / addiu $5,$5,7 / sd $5,0($6) / lbu $2,-16256($0) / ld $3,0($3) / beq $2,$0,207b8 / lw $7,0($28)
-ip35-kernel	sendintr	2075c	bedrock	0x98	r	8	andi $5,$5,0x1 / addiu $5,$5,7 / sd $5,0($6) / lbu $2,-16256($0) / ld $3,0($3) / beq $2,$0,207b8 / lw $7,0($28) / beq $7,$0,207b8 / sll $0,$0,0x0
-ip35-kernel	install_cpuintr	208b8	bedrock	0x90	w	8	ld $6,-32152($28) / ld $4,-31944($28) / andi $5,$5,0x1 / addiu $5,$5,100 / sd $5,0($6) / daddiu $4,$4,520 / jal 0 / ld $1,0($1) / ld $31,0($29)
-ip35-kernel	install_cpuintr	208c4	bedrock	0x98	r	8	addiu $5,$5,100 / sd $5,0($6) / daddiu $4,$4,520 / jal 0 / ld $1,0($1) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
-ip35-kernel	install_dbgintr	209b8	bedrock	0x90	w	8	ld $3,-32152($28) / ld $1,-32160($28) / andi $2,$2,0x1 / addiu $2,$2,107 / sd $2,0($3) / jal 0 / ld $1,0($1) / ld $31,0($29) / jr $31
-ip35-kernel	install_dbgintr	209c0	bedrock	0x98	r	8	andi $2,$2,0x1 / addiu $2,$2,107 / sd $2,0($3) / jal 0 / ld $1,0($1) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip35-kernel	sub_20250	2026c	bedrock	0xa0	r	8	sd $17,24($29) / sd $18,16($29) / ld $24,-32144($28) / ld $18,-14936($0) / ld $24,0($24) / ld $17,-32152($28) / sd $20,32($29) / and $18,$18,$24 / sd $19,0($29)
+ip35-kernel	sub_20250	202a8	bedrock	0x90	w	8	sw $25,208($31) / jal 0 / or $4,$18,$0 / addiu $11,$2,64 / sd $11,0($17) / dsll $10,$2,0x3 / ld $9,-14920($0) / daddu $10,$10,$2 / dsll $10,$10,0x3
+ip35-kernel	sub_20250	202cc	bedrock	0x98	r	8	daddu $9,$9,$10 / ld $10,0($9) / or $20,$2,$0 / beq $10,$0,20320 / ld $31,0($16) / ld $4,16($9) / jalr $10 / or $5,$19,$0 / addiu $12,$0,1
+ip35-kernel	sendintr	20700	bedrock	0x800090	w	8	daddu $15,$8,$15 / dsubu $15,$15,$24 / ori $14,$6,0x100 / jr $31 / sd $14,0($15) / addiu $6,$7,7 / beq $0,$0,206e8 / sll $0,$0,0x0
+ip35-kernel	sendintr	20700	bedrock	0xa00090	w	8	daddu $15,$8,$15 / dsubu $15,$15,$24 / ori $14,$6,0x100 / jr $31 / sd $14,0($15) / addiu $6,$7,7 / beq $0,$0,206e8 / sll $0,$0,0x0
+ip35-kernel	sub_20710	20754	bedrock	0x90	w	8	ld $6,-32152($28) / ld $3,-32160($28) / andi $5,$5,0x1 / addiu $5,$5,7 / sd $5,0($6) / lbu $2,-16256($0) / ld $3,0($3) / beq $2,$0,207b8 / lw $7,0($28)
+ip35-kernel	sub_20710	2075c	bedrock	0x98	r	8	andi $5,$5,0x1 / addiu $5,$5,7 / sd $5,0($6) / lbu $2,-16256($0) / ld $3,0($3) / beq $2,$0,207b8 / lw $7,0($28) / beq $7,$0,207b8 / sll $0,$0,0x0
+ip35-kernel	sub_20884	208b8	bedrock	0x90	w	8	ld $6,-32152($28) / ld $4,-31944($28) / andi $5,$5,0x1 / addiu $5,$5,100 / sd $5,0($6) / daddiu $4,$4,520 / jal 0 / ld $1,0($1) / ld $31,0($29)
+ip35-kernel	sub_20884	208c4	bedrock	0x98	r	8	addiu $5,$5,100 / sd $5,0($6) / daddiu $4,$4,520 / jal 0 / ld $1,0($1) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip35-kernel	sub_20988	209b8	bedrock	0x90	w	8	ld $3,-32152($28) / ld $1,-32160($28) / andi $2,$2,0x1 / addiu $2,$2,107 / sd $2,0($3) / jal 0 / ld $1,0($1) / ld $31,0($29) / jr $31
+ip35-kernel	sub_20988	209c0	bedrock	0x98	r	8	andi $2,$2,0x1 / addiu $2,$2,107 / sd $2,0($3) / jal 0 / ld $1,0($1) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
 ip35-kernel	chkdebug	20bd8	bedrock	0xa0	r	8	lbu $3,1320($3) / ld $1,-32144($28) / andi $3,$3,0x1 / addiu $2,$0,1 / ld $1,0($1) / addiu $3,$3,36 / dsllv $2,$2,$3 / and $1,$1,$2 / daddiu $29,$29,-16
+ip35-kernel	debug_stop_all_cpus	20cec	bedrock	0x800090	w	8	andi $9,$2,0x1 / daddiu $9,$9,100 / dsubu $10,$10,$11 / ori $9,$9,0x100 / sd $9,0($10) / lw $6,0($28) / addiu $16,$16,1 / slt $13,$16,$6 / beq $13,$0,20d68
+ip35-kernel	debug_stop_all_cpus	20cec	bedrock	0xa00090	w	8	andi $9,$2,0x1 / daddiu $9,$9,100 / dsubu $10,$10,$11 / ori $9,$9,0x100 / sd $9,0($10) / lw $6,0($28) / addiu $16,$16,1 / slt $13,$16,$6 / beq $13,$0,20d68
+ip35-kernel	sub_20ee0	20f1c	bedrock	0x90	w	8	and $2,$2,$3 / sllv $11,$10,$5 / beq $2,$0,20f24 / slti $9,$5,64 / sd $6,0($8) / ld $4,0($7) / beq $9,$0,20f50 / addiu $6,$6,1 / addiu $5,$5,1
+ip35-kernel	sub_20ee0	20f20	bedrock	0x98	r	8	sllv $11,$10,$5 / beq $2,$0,20f24 / slti $9,$5,64 / sd $6,0($8) / ld $4,0($7) / beq $9,$0,20f50 / addiu $6,$6,1 / addiu $5,$5,1 / ld $9,0($29)
+ip35-kernel	sub_20ee0	20f40	bedrock	0x90	w	8	ld $9,0($29) / and $9,$9,$11 / beq $9,$0,20f48 / slti $9,$5,64 / sd $6,0($8) / ld $12,0($7) / bne $9,$0,20f00 / addiu $6,$6,1 / jr $31
+ip35-kernel	sub_20ee0	20f44	bedrock	0x98	r	8	and $9,$9,$11 / beq $9,$0,20f48 / slti $9,$5,64 / sd $6,0($8) / ld $12,0($7) / bne $9,$0,20f00 / addiu $6,$6,1 / jr $31 / daddiu $29,$29,16
 ip35-kernel	intr_clear_all	2100c	bedrock	0x8000a8	w	8	daddu $9,$19,$9 / daddu $25,$17,$25 / daddu $8,$19,$8 / daddu $9,$17,$9 / sd $0,0($25) / daddu $8,$17,$8 / daddu $24,$19,$24 / sd $0,0($9) / daddu $5,$19,$5
 ip35-kernel	intr_clear_all	2100c	bedrock	0xa000a8	w	8	daddu $9,$19,$9 / daddu $25,$17,$25 / daddu $8,$19,$8 / daddu $9,$17,$9 / sd $0,0($25) / daddu $8,$17,$8 / daddu $24,$19,$24 / sd $0,0($9) / daddu $5,$19,$5
 ip35-kernel	intr_clear_all	21018	bedrock	0x8000b8	w	8	daddu $9,$17,$9 / sd $0,0($25) / daddu $8,$17,$8 / daddu $24,$19,$24 / sd $0,0($9) / daddu $5,$19,$5 / daddu $24,$17,$24 / sd $0,0($8) / daddu $5,$17,$5
@@ -348,12 +390,16 @@ ip35-kernel	init_timebase	27940	bedrock	0x604200	r	8	sll $0,$0,0x0 / lw $12,0($2
 ip35-kernel	query_fasttimer	27acc	bedrock	0x604200	r	8	ld $3,-32672($28) / ld $3,0($3) / dsrl $3,$3,0x4 / andi $3,$3,0x3ff / sll $2,$3,0x2 / addu $2,$2,$3
 ip35-kernel	tick_maint	27b34	bedrock	0x30100	r	8	bne $3,$0,27b0c / addiu $2,$5,-1 / ld $4,-32680($28) / ld $9,-32672($28) / ld $4,0($4) / ld $9,0($9) / dsrl $9,$9,0x4 / andi $9,$9,0x3ff / sll $8,$9,0x2
 ip35-kernel	tick_maint	27b38	bedrock	0x604200	r	8	addiu $2,$5,-1 / ld $4,-32680($28) / ld $9,-32672($28) / ld $4,0($4) / ld $9,0($9) / dsrl $9,$9,0x4 / andi $9,$9,0x3ff / sll $8,$9,0x2 / addu $8,$8,$9
-ip35-kernel	tick_actions	27ec0	bedrock	0x604200	r	8	sll $0,$0,0x0 / beq $0,$0,27e48 / lw $14,0($28) / ld $6,-32672($28) / ld $3,0($6) / dsrl $3,$3,0x4 / andi $3,$3,0x3ff / sll $2,$3,0x2 / addu $2,$2,$3
-ip35-kernel	tick_actions	27efc	bedrock	0x604200	r	8	ddiv $0,$8,$2 / lw $5,0($28) / mflo $7 / ddiv $0,$7,$5 / ld $6,0($6) / dsrl $6,$6,0x4 / andi $6,$6,0x3ff / sll $4,$6,0x2 / addu $4,$4,$6
+ip35-kernel	sub_27ebc	27ec0	bedrock	0x604200	r	8	ld $6,-32672($28) / ld $3,0($6) / dsrl $3,$3,0x4 / andi $3,$3,0x3ff / sll $2,$3,0x2 / addu $2,$2,$3
+ip35-kernel	sub_27ebc	27efc	bedrock	0x604200	r	8	ddiv $0,$8,$2 / lw $5,0($28) / mflo $7 / ddiv $0,$7,$5 / ld $6,0($6) / dsrl $6,$6,0x4 / andi $6,$6,0x3ff / sll $4,$6,0x2 / addu $4,$4,$6
 ip35-kernel	rtc_read	27f64	bedrock	0x30100	r	8	ld $2,-32680($28) / jr $31 / ld $2,0($2)
 ip35-kernel	rtc_resolution	27f6c	bedrock	0x604200	r	8	ld $3,-32672($28) / ld $3,0($3) / dsrl $3,$3,0x4 / andi $3,$3,0x3ff / sll $2,$3,0x2 / addu $2,$2,$3
 ip35-kernel	set_timer_intr	2800c	bedrock	0x30100	r	8	lui $13,0x20 / sd $31,0($29) / ori $2,$13,0x110 / beq $5,$0,28098 / ld $8,0($12) / dsubu $1,$5,$8 / blez $1,28098 / daddu $8,$14,$11 / ld $8,8($8)
+ip35-kernel	set_timer_intr	28050	bedrock	0x800110	w	8	slti $8,$8,0 / movz $2,$14,$8 / daddu $11,$4,$2 / dsubu $11,$11,$10 / sd $5,0($11) / sync  / lh $15,-15320($0) / ld $8,0($12) / bne $15,$9,2807c
+ip35-kernel	set_timer_intr	28050	bedrock	0xa00110	w	8	slti $8,$8,0 / movz $2,$14,$8 / daddu $11,$4,$2 / dsubu $11,$11,$10 / sd $5,0($11) / sync  / lh $15,-15320($0) / ld $8,0($12) / bne $15,$9,2807c
 ip35-kernel	set_timer_intr	2805c	bedrock	0x30100	r	8	dsubu $11,$11,$10 / sd $5,0($11) / sync  / lh $15,-15320($0) / ld $8,0($12) / bne $15,$9,2807c / addiu $2,$0,1 / sltu $24,$8,$5 / bne $24,$0,2808c
+ip35-kernel	set_timer_intr	280cc	bedrock	0x800108	w	8	movz $1,$2,$8 / daddu $1,$4,$1 / dsubu $1,$1,$10 / beq $0,$0,28054 / sd $5,0($1) / addiu $6,$0,1 / ld $5,-31608($28) / jal 0 / dsra32 $4,$4,0x10
+ip35-kernel	set_timer_intr	280cc	bedrock	0xa00108	w	8	movz $1,$2,$8 / daddu $1,$4,$1 / dsubu $1,$1,$10 / beq $0,$0,28054 / sd $5,0($1) / addiu $6,$0,1 / ld $5,-31608($28) / jal 0 / dsra32 $4,$4,0x10
 ip35-kernel	timeout_get_queuehead	282b4	bedrock	0x30100	r	8	addiu $2,$0,1 / ld $4,-32680($28) / or $16,$2,$0 / jal 27f8c / ld $4,0($4) / lui $7,0x7fff / ori $7,$7,0xffff / ld $6,-32584($28) / sltu $8,$7,$16
 ip35-kernel	timeout_get_queuehead	28324	bedrock	0x30100	r	8	and $9,$10,$25 / ld $4,-32680($28) / or $16,$2,$0 / jal 27f8c / ld $4,0($4) / lui $7,0x7fff / ori $7,$7,0xffff / ld $6,-32576($28) / sltu $8,$7,$16
 ip35-kernel	chktimeout_tick	28428	bedrock	0x30100	r	8	or $7,$19,$0 / beq $2,$0,284b8 / or $16,$2,$0 / ld $6,-32680($28) / ld $6,0($6) / addiu $2,$0,3 / addiu $4,$0,4 / ld $5,-32584($28) / beq $18,$0,2846c
@@ -372,7 +418,11 @@ ip35-kernel	migrate_timeouts	28b04	bedrock	0xa00108	w	8	dsll32 $6,$2,0x1 / daddu
 ip35-kernel	doadjtime	28bd8	bedrock	0x604200	r	8	slti $4,$4,0 / slti $1,$16,1000 / beq $1,$0,28cfc / ori $25,$5,0x4240 / ld $5,0($2) / dsrl $5,$5,0x4 / andi $5,$5,0x3ff / sll $3,$5,0x2 / addu $3,$3,$5
 ip35-kernel	doadjtime	28d08	bedrock	0x604200	r	8	daddiu $29,$29,48 / slt $25,$25,$16 / bne $25,$0,28d50 / sll $0,$0,0x0 / ld $31,0($2) / dsrl $31,$31,0x4 / andi $31,$31,0x3ff / sll $25,$31,0x2 / addu $25,$25,$31
 ip35-kernel	doadjtime	28d50	bedrock	0x604200	r	8	dsll $18,$18,0x2 / daddu $18,$18,$24 / beq $0,$0,28d90 / dsll $18,$18,0x2 / ld $25,0($2) / dsrl $25,$25,0x4 / andi $25,$25,0x3ff / sll $24,$25,0x2 / addu $24,$24,$25
-ip35-kernel	doadjtime	28e64	bedrock	0x30100	r	8	ld $11,-32680($28) / addiu $12,$12,1 / sw $12,-32644($28) / sync  / ld $11,0($11) / ld $1,-32640($28) / ld $13,-32672($28) / lui $9,0x3b9a / ld $14,-31640($28)
+ip35-kernel	sub_28e3c	28e64	bedrock	0x30100	r	8	ld $11,-32680($28) / addiu $12,$12,1 / sw $12,-32644($28) / sync  / ld $11,0($11) / ld $1,-32640($28) / ld $13,-32672($28) / lui $9,0x3b9a / ld $14,-31640($28)
+ip35-kernel	sub_28e3c	28e94	bedrock	0x604200	r	8	or $5,$11,$0 / ld $10,-32640($28) / dsubu $10,$11,$10 / dmult $3,$10 / ld $1,0($13) / dsrl $1,$1,0x4 / andi $1,$1,0x3ff / sll $31,$1,0x2 / addu $31,$31,$1
+ip35-kernel	sub_28e3c	28f58	bedrock	0x604200	r	8	sd $7,0($28) / sd $8,0($28) / sd $5,0($28) / ld $24,8($14) / ld $31,0($13) / dsrl $31,$31,0x4 / andi $31,$31,0x3ff / sll $25,$31,0x2 / addu $25,$25,$31
+ip35-kernel	sub_28e3c	28fa0	bedrock	0x604200	r	8	slt $24,$24,$9 / bne $24,$0,29048 / or $7,$0,$0 / ld $8,8($14) / ld $24,0($13) / dsrl $24,$24,0x4 / andi $24,$24,0x3ff / sll $10,$24,0x2 / addu $10,$10,$24
+ip35-kernel	sub_28e3c	2904c	bedrock	0x604200	r	8	ld $31,0($29) / jr $31 / daddiu $29,$29,16 / ld $8,8($14) / ld $10,0($13) / dsrl $10,$10,0x4 / andi $10,$10,0x3ff / sll $9,$10,0x2 / addu $9,$9,$10
 ip35-kernel	nanotime_syscall	29104	bedrock	0x30100	r	8	sync  / ld $12,-32640($28) / lw $15,0($10) / ld $11,8($10) / ld $14,0($5) / ld $13,0($28) / ld $8,0($28) / ld $9,0($28) / sync 
 ip35-kernel	nanotime_syscall	29134	bedrock	0x604200	r	8	lw $6,0($28) / dsubu $24,$14,$12 / ld $25,-32672($28) / dmult $6,$24 / ld $5,0($25) / dsrl $5,$5,0x4 / andi $5,$5,0x3ff / sll $4,$5,0x2 / addu $4,$4,$5
 ip35-kernel	nanotime_syscall	291c0	bedrock	0x604200	r	8	mflo $7 / ddiv $0,$7,$8 / teq $8,$0,0x7 / mflo $9 / ld $1,0($25) / dsrl $1,$1,0x4 / andi $1,$1,0x3ff / sll $14,$1,0x2 / addu $14,$14,$1
@@ -390,9 +440,14 @@ ip35-kernel	tstoclock	2963c	bedrock	0x604200	r	8	lui $10,0x3b9a / ori $10,$10,0x
 ip35-kernel	tstoclock	29688	bedrock	0x30100	r	8	daddiu $2,$2,1 / jr $31 / sll $0,$0,0x0 / ld $11,-32680($28) / ld $11,0($11) / jr $31 / daddu $2,$2,$11
 ip35-kernel	tvtoclock	296ac	bedrock	0x604200	r	8	ori $8,$8,0xca00 / dmult $7,$8 / ld $6,-32672($28) / ld $8,8($4) / ld $6,0($6) / dsll $7,$8,0x5 / dsrl $6,$6,0x4 / dsubu $7,$7,$8 / andi $6,$6,0x3ff
 ip35-kernel	tvtoclock	29708	bedrock	0x30100	r	8	daddiu $2,$2,1 / jr $31 / sll $0,$0,0x0 / ld $9,-32680($28) / ld $9,0($9) / jr $31 / daddu $2,$2,$9
-ip35-kernel	timepoke	29764	bedrock	0x30100	r	8	jal 0 / sd $16,32($29) / ld $16,-32680($28) / sd $2,8($29) / ld $1,0($16) / or $4,$0,$0 / jal 0 / sd $1,0($29) / ld $3,-32672($28)
-ip35-kernel	timepoke	29778	bedrock	0x604200	r	8	or $4,$0,$0 / jal 0 / sd $1,0($29) / ld $3,-32672($28) / ld $3,0($3) / dsrl $3,$3,0x4 / andi $3,$3,0x3ff / sll $2,$3,0x2 / addu $2,$2,$3
-ip35-kernel	timepoke	297a4	bedrock	0x30100	r	8	ori $9,$9,0xca00 / addiu $2,$2,10 / ddiv $0,$9,$2 / ld $7,0($29) / ld $3,0($16) / mflo $8 / daddu $7,$7,$8 / sltu $3,$3,$7 / beq $3,$0,2980c
+ip35-kernel	sub_2973c	29764	bedrock	0x30100	r	8	jal 0 / sd $16,32($29) / ld $16,-32680($28) / sd $2,8($29) / ld $1,0($16) / or $4,$0,$0 / jal 0 / sd $1,0($29) / ld $3,-32672($28)
+ip35-kernel	sub_2973c	29778	bedrock	0x604200	r	8	or $4,$0,$0 / jal 0 / sd $1,0($29) / ld $3,-32672($28) / ld $3,0($3) / dsrl $3,$3,0x4 / andi $3,$3,0x3ff / sll $2,$3,0x2 / addu $2,$2,$3
+ip35-kernel	sub_2973c	297a4	bedrock	0x30100	r	8	ori $9,$9,0xca00 / addiu $2,$2,10 / ddiv $0,$9,$2 / ld $7,0($29) / ld $3,0($16) / mflo $8 / daddu $7,$7,$8 / sltu $3,$3,$7 / beq $3,$0,2980c
+ip35-kernel	sub_2973c	297bc	bedrock	0x30100	r	8	daddu $7,$7,$8 / sltu $3,$3,$7 / beq $3,$0,2980c / teq $2,$0,0x7 / ld $4,0($16) / sltu $4,$4,$7 / beq $4,$0,2980c / sll $0,$0,0x0 / ld $5,0($16)
+ip35-kernel	sub_2973c	297cc	bedrock	0x30100	r	8	ld $4,0($16) / sltu $4,$4,$7 / beq $4,$0,2980c / sll $0,$0,0x0 / ld $5,0($16) / sltu $5,$5,$7 / beq $5,$0,2980c / sll $0,$0,0x0 / ld $6,0($16)
+ip35-kernel	sub_2973c	297dc	bedrock	0x30100	r	8	ld $5,0($16) / sltu $5,$5,$7 / beq $5,$0,2980c / sll $0,$0,0x0 / ld $6,0($16) / sltu $6,$6,$7 / beq $6,$0,2980c / sll $0,$0,0x0 / ld $8,0($16)
+ip35-kernel	sub_2973c	297ec	bedrock	0x30100	r	8	ld $6,0($16) / sltu $6,$6,$7 / beq $6,$0,2980c / sll $0,$0,0x0 / ld $8,0($16) / sltu $8,$8,$7 / beq $8,$0,2980c / sll $0,$0,0x0 / ld $9,0($16)
+ip35-kernel	sub_2973c	297fc	bedrock	0x30100	r	8	ld $8,0($16) / sltu $8,$8,$7 / beq $8,$0,2980c / sll $0,$0,0x0 / ld $9,0($16) / sltu $9,$9,$7 / bne $9,$0,297bc / sll $0,$0,0x0 / jal 0
 ip35-kernel	us_delay	298d4	bedrock	0x30100	r	8	ld $6,-32680($28) / ld $2,-32672($28) / ld $7,0($6) / ld $2,0($2) / dsrl $2,$2,0x4 / andi $2,$2,0x3ff / sll $1,$2,0x2
 ip35-kernel	us_delay	298d8	bedrock	0x604200	r	8	ld $6,-32680($28) / ld $2,-32672($28) / ld $7,0($6) / ld $2,0($2) / dsrl $2,$2,0x4 / andi $2,$2,0x3ff / sll $1,$2,0x2 / addu $1,$1,$2
 ip35-kernel	us_delay	29930	bedrock	0x30100	r	8	lui $3,0xf / ori $3,$3,0x4240 / mflo $9 / ddiv $0,$9,$3 / ld $2,0($6) / mflo $8 / daddu $7,$7,$8 / sltu $2,$2,$7 / teq $3,$0,0x7
@@ -452,6 +507,8 @@ ip35-kernel	memerror_sbe_intr	2bcc0	bedrock	0xfc0000	r	8	sd $2,88($29) / sd $7,1
 ip35-kernel	memerror_sbe_intr	2c224	bedrock	0xfe0018	r	8	and $2,$20,$2 / ld $30,112($29) / or $2,$2,$3 / ld $31,0($2) / ld $30,24($30) / dsll $31,$30,0xb / dsrl32 $30,$30,0x14 / bgez $31,2c2ac / andi $30,$30,0x1
 ip35-kernel	memerror_sbe_intr	2c270	bedrock	0xfe0018	r	8	ld $30,112($29) / or $1,$1,$3 / sh $0,0($1) / ld $31,0($2) / ld $30,24($30) / dsll $31,$30,0xb / dsrl32 $30,$30,0x14 / bltz $31,2c428 / andi $30,$30,0x1
 ip35-kernel	memerror_sbe_intr	2c3e8	bedrock	0xfc0018	r	8	addiu $5,$0,8 / ld $5,64($29) / daddiu $4,$17,688 / jal 2b9e0 / ld $5,24($5) / beq $0,$0,2bce0 / or $21,$0,$0 / sw $0,4($16) / beq $0,$0,2bf18
+ip35-kernel	sendgroupintr	2cef4	bedrock	0x800090	w	8	daddu $2,$2,$3 / lbu $1,0($1) / dsubu $2,$2,$13 / ori $1,$1,0x100 / sd $1,0($2) / beq $0,$0,2ce80 / lw $8,0($28) / sra $6,$10,0x6 / dsll $6,$6,0x3
+ip35-kernel	sendgroupintr	2cef4	bedrock	0xa00090	w	8	daddu $2,$2,$3 / lbu $1,0($1) / dsubu $2,$2,$13 / ori $1,$1,0x100 / sd $1,0($2) / beq $0,$0,2ce80 / lw $8,0($28) / sra $6,$10,0x6 / dsll $6,$6,0x3
 ip35-kernel	hub_ioerror_local	37988	bedrock	0x800000	r	8	ld $9,-32656($28) / dsll32 $7,$5,0x1 / daddu $7,$7,$9 / addiu $9,$0,1 / ld $7,0($7) / dsllv $9,$9,$2 / sd $2,8($29) / and $7,$7,$9 / sd $5,0($29)
 ip35-kernel	hub_xp_error_handler	37a14	bedrock	0xc001e8	r	8	sd $5,40($29) / dsll32 $1,$5,0x1 / sd $6,24($29) / daddu $1,$1,$2 / ld $1,488($1) / sd $7,32($29) / sd $8,16($29) / andi $1,$1,0x11 / addiu $11,$0,7
 ip35-kernel	is_widget_pio_enabled	37b14	bedrock	0xc00110	r	8	dsll32 $8,$11,0x1 / beq $11,$10,37b44 / daddu $8,$8,$2 / lbu $13,7($4) / ld $12,272($8) / addiu $2,$0,1 / dsllv $13,$2,$13 / and $12,$12,$13 / beq $12,$0,37b34
@@ -478,8 +535,8 @@ ip35-kernel	sub_3d1d8	3d2e0	bedrock	0x604200	r	8	slti $14,$14,33 / ld $30,8($29)
 ip35-kernel	sub_3d1d8	3d324	bedrock	0x4001f8	w	8	ld $16,16($29) / jr $31 / daddiu $29,$29,32 / lui $1,0x2 / sd $1,0($4) / beq $0,$0,3d28c / sw $0,76($16)
 ip35-kernel	bte_get_all_interfaces	3dac8	bedrock	0x30100	r	8	sll $0,$0,0x0 / ld $4,0($17) / ld $4,0($4) / lw $30,104($17) / ld $31,0($22) / and $1,$23,$4 / and $6,$19,$4 / beq $1,$0,3da7c / daddu $30,$30,$31
 ip35-kernel	bte_get_all_interfaces	3daf4	bedrock	0x30100	r	8	ld $7,32($17) / ld $7,0($7) / beq $19,$7,3da7c / sll $0,$0,0x0 / ld $8,0($22) / sltu $8,$30,$8 / bne $8,$0,3da7c / sll $0,$0,0x0 / jal 0
-ip35-kernel	bte_get_all_interfaces	3dc20	bedrock	0xc00200	r	8	ld $3,24($3) / dsll32 $2,$2,0x1 / sd $3,0($29) / daddu $2,$2,$4 / ld $1,512($2) / addiu $4,$0,400 / ori $1,$1,0x100 / jal 0 / sd $1,512($2)
-ip35-kernel	bte_get_all_interfaces	3dc30	bedrock	0xc00200	w	8	ld $1,512($2) / addiu $4,$0,400 / ori $1,$1,0x100 / jal 0 / sd $1,512($2) / or $4,$16,$0 / jal 0 / lw $5,76($16) / jal 0
+ip35-kernel	sub_3dbbc	3dc20	bedrock	0xc00200	r	8	ld $3,24($3) / dsll32 $2,$2,0x1 / sd $3,0($29) / daddu $2,$2,$4 / ld $1,512($2) / addiu $4,$0,400 / ori $1,$1,0x100 / jal 0 / sd $1,512($2)
+ip35-kernel	sub_3dbbc	3dc30	bedrock	0xc00200	w	8	ld $1,512($2) / addiu $4,$0,400 / ori $1,$1,0x100 / jal 0 / sd $1,512($2) / or $4,$16,$0 / jal 0 / lw $5,76($16) / jal 0
 ip35-kernel	bte_copy	3dfe8	bedrock	0x30100	r	8	jal 0 / sd $9,24($30) / jal 0 / lw $4,0($29) / ld $7,0($21) / ld $10,0($18) / lw $6,104($16) / addiu $4,$0,-1 / sd $19,272($29)
 ip35-kernel	bte_copy	3e194	bedrock	0x30100	r	8	addiu $4,$0,-1 / addiu $10,$0,1 / beq $0,$0,3e06c / sd $10,272($29) / ld $11,0($21) / sltu $11,$11,$6 / beq $11,$0,3e004 / sll $0,$0,0x0 / ld $12,0($18)
 ip35-kernel	bte_copy	3e1b0	bedrock	0x30100	r	8	sll $0,$0,0x0 / ld $12,0($18) / bne $4,$12,3e004 / sll $0,$0,0x0 / ld $13,0($21) / sltu $13,$13,$6 / beq $13,$0,3e004 / sll $0,$0,0x0 / ld $14,0($18)

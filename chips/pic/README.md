@@ -38,39 +38,39 @@ are what the instructions do). On the PIC path every register is accessed as a 6
 
 | register | widths | access | sites | accessors and callers (names from the binary) | field evidence | role (inferred from the names) |
 |---|---|---|---:|---|---|---|
-| `+0x0` | 4,8 | r | 116 | `pcibr_bridge_ptr_get`, `pcibr_alloc_all_rrbs`, `id_get`, `stat_get`, `bus_err_get`, `control_get` (+102) | load mask 10:0 (3 sites); load mask 10:0 (90 sites); load mask 15:0 (1 sites); load mask 15:0 (111 sites); load shift shift 1 (283 sites) | unknown unless the names say: see the entry |
+| `+0x0` | 4,8 | r | 113 | `pcibr_bridge_ptr_get`, `id_get`, `prom_c00000001fc41f38`, `pcibr_alloc_all_rrbs`, `stat_get`, `bus_err_get` (+102) | load mask 10:0 (4 sites); load mask 10:0 (90 sites); load mask 15:0 (108 sites); load shift shift 1 (283 sites); load shift shift 1 (4 sites) | unknown unless the names say: see the entry |
 | `+0x18` | 8 | r | 1 | `bus_err_get` |  | unknown unless the names say: see the entry |
-| `+0x20` | 4,8 | rw | 15 | `ssram_size_set`, `control_bit_clr`, `control_bit_set`, `control_set`, `control_get`, `speed_get` | load mask 5:4 (1 sites); load shift shift 4 (1 sites) | unknown unless the names say: see the entry |
+| `+0x20` | 4,8 | rw | 20 | `ssram_size_set`, `control_bit_clr`, `control_bit_set`, `control_set`, `control_get`, `speed_get` | load mask 5:4 (1 sites); load shift shift 4 (1 sites) | unknown unless the names say: see the entry |
 | `+0x28` | 8 | rw | 2 | `req_timeout_get`, `req_timeout_set` |  | unknown unless the names say: see the entry |
-| `+0x38` | 8 | rw | 12 | `intr_dst_target_id_set`, `intr_dst_addr_set`, `intr_dst_get`, `intr_dst_set`, `intr_dst_target_id_get`, `intr_dst_addr_get` | load mask 3:0 (1 sites); load shift shift 48 (1 sites) | unknown unless the names say: see the entry |
+| `+0x38` | 8 | rw | 16 | `intr_dst_target_id_set`, `intr_dst_addr_set`, `intr_dst_get`, `intr_dst_set`, `intr_dst_target_id_get`, `intr_dst_addr_get` |  | unknown unless the names say: see the entry |
 | `+0x40` | 8 | r | 1 | `cmdword_err_get` |  | unknown unless the names say: see the entry |
 | `+0x48` | 8 | rw | 3 | `llp_cfg_set`, `llp_cfg_get` |  | unknown unless the names say: see the entry |
 | `+0x50` | 8 | r | 1 | `tflush_get` |  | unknown unless the names say: see the entry |
 | `+0x58` | 8 | r | 1 | `linkside_err_get` |  | unknown unless the names say: see the entry |
-| `+0x60` | 8 | r | 2 | `resp_err_buf_get`, `resp_err_dev_get` | load mask 2:0 (1 sites); load mask 3:0 (1 sites); load shift shift 16 (1 sites); load shift shift 20 (1 sites) | unknown unless the names say: see the entry |
+| `+0x60` | 8 | r | 2 | `resp_err_buf_get`, `resp_err_dev_get` |  | unknown unless the names say: see the entry |
 | `+0x68` | 8 | r | 2 | `resp_err_get`, `resp_err_addr_get` |  | unknown unless the names say: see the entry |
 | `+0x78` | 8 | r | 1 | `linkside_err_addr_get` |  | unknown unless the names say: see the entry |
 | `+0x80` | 8 | rw | 14 | `dirmap_wid_set`, `dirmap_diroff_set`, `dirmap_add512_set`, `dirmap_add512_clr`, `dirmap_get`, `dirmap_set` |  | unknown unless the names say: see the entry |
 | `+0x90` | 4,8 | r | 2 | `ssram_parity_get`, `map_fault_get` |  | unknown unless the names say: see the entry |
 | `+0xa0` | 8 | rw | 6 | `arbitration_bit_set`, `arbitration_bit_clr`, `arbitration_get`, `arbitration_set` |  | unknown unless the names say: see the entry |
-| `+0xb0` | 0,8 | ar | 2 | `nic_addr`, `parity_err_get` |  | unknown unless the names say: see the entry |
+| `+0xb0` | 8 | r | 1 | `parity_err_get` |  | unknown unless the names say: see the entry |
 | `+0xc0` | 8 | rw | 6 | `timeout_bit_set`, `timeout_bit_clr`, `timeout_get`, `timeout_set` |  | unknown unless the names say: see the entry |
 | `+0xc8` | 8 | rw | 2 | `type1_cntr_get`, `type1_cntr_set` |  | unknown unless the names say: see the entry |
 | `+0xd8` | 8 | r | 2 | `pci_bus_addr_get`, `pci_bus_addr_addr_get` |  | unknown unless the names say: see the entry |
 | `+0x100` | 8 | r | 1 | `intr_status_get` |  | unknown unless the names say: see the entry |
-| `+0x108` | 4,8 | rw | 7 | `intr_enable_bit_clr`, `intr_enable_bit_set`, `intr_enable_get`, `intr_enable_set`, `prom_c00000001fc41f38` |  | unknown unless the names say: see the entry |
-| `+0x110` | 4,8 | rw | 4 | `intr_reset_bit_set`, `intr_reset_set`, `prom_c00000001fc41f38` | store const 0xffff (1 sites) | unknown unless the names say: see the entry |
+| `+0x108` | 8 | rw | 7 | `intr_enable_bit_clr`, `intr_enable_bit_set`, `intr_enable_get`, `intr_enable_set`, `prom_c00000001fc41f38` |  | unknown unless the names say: see the entry |
+| `+0x110` | 8 | rw | 4 | `intr_reset_bit_set`, `intr_reset_set`, `prom_c00000001fc41f38` |  | unknown unless the names say: see the entry |
 | `+0x118` | 8 | rw | 6 | `intr_mode_bit_set`, `intr_mode_bit_clr`, `intr_mode_get`, `intr_mode_set` |  | unknown unless the names say: see the entry |
 | `+0x120` | 8 | rw | 6 | `intr_device_bit_set`, `intr_device_bit_clr`, `intr_device_get`, `intr_device_set` |  | unknown unless the names say: see the entry |
-| `+0x128` | 4,8 | rw | 3 | `intr_host_err_get`, `intr_host_err_set`, `prom_c00000001fc41f38` |  | unknown unless the names say: see the entry |
-| `+0x130` + unseen index | 0,8 | arw | 13 | `intr_addr_vect_set`, `intr_addr_addr_set`, `intr_addr_get`, `intr_addr_set`, `intr_addr_addr`, `intr_addr_vect_get` (+1) | load mask 10:0 (1 sites); load mask 7:0 (1 sites); load shift shift 1 (1 sites); load shift shift 48 (1 sites) | unknown unless the names say: see the entry |
+| `+0x128` | 8 | rw | 2 | `intr_host_err_get`, `intr_host_err_set` |  | unknown unless the names say: see the entry |
+| `+0x130` + unseen index | 8 | rw | 12 | `intr_addr_vect_set`, `intr_addr_addr_set`, `intr_addr_get`, `intr_addr_set`, `intr_addr_vect_get`, `intr_addr_addr_get` | load mask 10:0 (1 sites); load mask 10:0 (1 sites); load mask 7:0 (1 sites); load mask 7:0 (2 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
 | `+0x170` | 8 | r | 1 | `intr_view_get` |  | unknown unless the names say: see the entry |
 | `+0x178` | 8 | r | 1 | `intr_multiple_get` |  | unknown unless the names say: see the entry |
-| `+0x180` + unseen index | 0,8 | aw | 2 | `force_always_set`, `force_always_addr_get` |  | unknown unless the names say: see the entry |
+| `+0x180` + unseen index | 8 | w | 1 | `force_always_set` |  | unknown unless the names say: see the entry |
 | `+0x1c0` + unseen index | 8 | w | 1 | `force_intr_set` |  | unknown unless the names say: see the entry |
 | `+0x200` + unseen index | 8 | rw | 6 | `device_bit_set`, `device_bit_clr`, `device_get`, `device_set` |  | unknown unless the names say: see the entry |
 | `+0x240` + unseen index | 8 | r | 1 | `wrb_flush_get` |  | unknown unless the names say: see the entry |
-| `+0x280` + unseen index | 8 | rw | 6 | `rrb_bit_set`, `rrb_bit_clr`, `rrb_get`, `rrb_set` | load mask 10:0 (1 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
+| `+0x280` + unseen index | 8 | rw | 6 | `rrb_bit_set`, `rrb_bit_clr`, `rrb_get`, `rrb_set` | load mask 10:0 (1 sites); load mask 10:0 (1 sites); load shift shift 1 (1 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
 | `+0x290` | 8 | r | 1 | `rrb_status_get` |  | unknown unless the names say: see the entry |
 | `+0x298` | 8 | w | 1 | `rrb_clear_set` |  | unknown unless the names say: see the entry |
 | `+0x600` | 8 | r | 1 | `pcix_bus_err_addr_get` |  | unknown unless the names say: see the entry |
@@ -80,17 +80,14 @@ are what the instructions do). On the PIC path every register is accessed as a 6
 | `+0x620` | 8 | r | 1 | `pcix_pio_split_attr_get` |  | unknown unless the names say: see the entry |
 | `+0x628` | 8 | r | 1 | `pcix_req_err_attr_get` |  | unknown unless the names say: see the entry |
 | `+0x630` | 8 | r | 1 | `pcix_req_err_addr_get` |  | unknown unless the names say: see the entry |
-| `+0x10000` + unseen index | 0,8 | arw | 3 | `int_ate_get`, `int_ate_set`, `int_ate_addr` | load mask 10:0 (1 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
+| `+0x10000` + unseen index | 8 | rw | 2 | `int_ate_get`, `int_ate_set` | load mask 10:0 (1 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
 | `+0x18000` + unseen index | 8 | w | 3 | `pic_attach2` |  | unknown unless the names say: see the entry |
-| `+0x18008` to `+0x182c8` (45 slots) | 8 | w | 45 | `pic_attach2` |  | unknown unless the names say: see the entry |
+| `+0x18008` | 8 | w | 1 | `pic_attach2` |  | unknown unless the names say: see the entry |
 | `+0x18800` + unseen index | 8 | w | 3 | `pic_attach2` |  | unknown unless the names say: see the entry |
-| `+0x18808` to `+0x18ac8` (45 slots) | 8 | w | 45 | `pic_attach2` |  | unknown unless the names say: see the entry |
+| `+0x18808` | 8 | w | 1 | `pic_attach2` |  | unknown unless the names say: see the entry |
 | `+0x19000` + unseen index | 8 | w | 3 | `pic_attach2` |  | unknown unless the names say: see the entry |
-| `+0x19008` to `+0x192c8` (45 slots) | 8 | w | 45 | `pic_attach2` |  | unknown unless the names say: see the entry |
-| `+0x20000` + unseen index | 0 | a | 1 | `type0_cfg_addr` |  | unknown unless the names say: see the entry |
-| `+0x28000` + unseen index | 0 | a | 1 | `type1_cfg_addr` |  | unknown unless the names say: see the entry |
-| `+0x80000` + unseen index | 0,8 | arw | 3 | `ext_ate_get`, `ext_ate_set`, `ext_ate_addr` |  | unknown unless the names say: see the entry |
-| `+0x800000` | 0 | a | 1 | `pcibr_bridge_ptr_get` |  | unknown unless the names say: see the entry |
+| `+0x19008` | 8 | w | 1 | `pic_attach2` |  | unknown unless the names say: see the entry |
+| `+0x80000` + unseen index | 8 | rw | 4 | `ext_ate_get`, `ext_ate_set` |  | unknown unless the names say: see the entry |
 
 Names are the shipped routines' own (`id_get`, `control_bit_set`, ...): `_get` reads, `_set` writes the whole
 register, `_bit_set` and `_bit_clr` read-modify-write. A `+0x18000` run is the write-request RAM cleared in the
@@ -194,9 +191,10 @@ The IP35 PROM routine at 0xc00000001fc41f38 (read in full, 0xc00000001fc41f38 to
 kernel runs, and it has two paths on the identification word. For parts 0xd102 and 0xd112 with manufacturer 36 it
 stores 64-bit zero to `+0x108` and 64-bit all-ones to `+0x110` (established). Only for any other part does it use
 the 32-bit stores at `+0x10c`, `+0x114` (0xffff) and `+0x12c`. So the census rows of the PROM `sw` stores at those
-three offsets belong to a Bridge-family path, not to the PIC: the scanner assigned them to the PIC because (inferred)
-it treats the fall-through of the part compare as the PIC variant, and it never saw the PIC stores because the
-PROM image is split after each return and the PIC block sits behind one. The register table's `4,8` widths for
+three offsets belong to a Bridge-family path, not to the PIC: the scanner assigned them to the PIC because it kept the part-number
+variant after the manufacturer check failed, and it missed the PIC stores because the PROM image was split after each
+return. Both are fixed: a failed manufacturer check withdraws the variant and routines are cut by control flow, so the
+census now has the 64-bit PIC stores under `pic` and the 32-bit stores under `probe?` (chip not named). The register table's `4,8` widths for
 `+0x108`, `+0x110` and `+0x128` and the `+0x110` constant 0xffff come from those rows; the PIC value the PROM
 writes to `+0x110` is all-ones, the kernel's is 0x7f.
 

@@ -14,20 +14,20 @@ Datasheet checkout `` (datasheets, spec transcriptions); model at `70ec32fdbd00`
 
 ## Summary
 
-- **722 access sites** resolved to a window offset, folded into **178 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
+- **636 access sites** resolved to a window offset, folded into **178 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
 
 | variant | rows | sites | model: handled+specified | model: handled, guessed or LOG_UNIMP | model: unhandled / out of scope | not in datasheet | not in spec | spec conflict |
 |---|---|---|---|---|---|---|---|---|
 | ? | 10 | 151 | 0 | 0 | 0 | 0 | 0 | 0 |
-| bridge | 35 | 249 | 0 | 0 | 35 | 35 | 0 | 0 |
-| pic | 47 | 172 | 0 | 0 | 0 | 0 | 0 | 0 |
+| bridge | 35 | 168 | 0 | 0 | 35 | 35 | 0 | 0 |
+| pic | 47 | 170 | 0 | 0 | 0 | 0 | 0 | 0 |
 | probe? | 4 | 5 | 0 | 0 | 4 | 4 | 0 | 0 |
-| tiocp | 43 | 166 | 0 | 0 | 43 | 43 | 0 | 0 |
+| tiocp | 43 | 163 | 0 | 0 | 43 | 43 | 0 | 0 |
 | xbridge | 39 | 152 | 0 | 0 | 39 | 39 | 0 | 0 |
 
 `?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). `tiocp` has no emulator datasheet or model, so its rows are listed but not judged.
 
-Site basis: 546 refined, 148 direct, 12 image-hint, 11 probe-seed, 5 returned-pointer.
+Site basis: 462 refined, 148 direct, 12 image-hint, 9 probe-seed, 5 returned-pointer.
 
 ### Scan coverage and what is unresolved
 
@@ -36,7 +36,7 @@ Site basis: 546 refined, 148 direct, 12 image-hint, 11 probe-seed, 5 returned-po
 - Loads and stores in the seeded scope whose base register the scan could not resolve and whose displacement falls where registers live (0x100..0x2ff): 104, almost all `xbridge_attach` writing its own state record (**unresolved, inspected only by listing; `suspects.tsv`**).
 - Index registers are not followed: a family reached through an array index is recorded at its base with `idx=1` (device 0..7, interrupt 0..7, ATE). The family extent comes from the datasheet, not the code.
 - Returned pointers: a function that hands back a pointer into the window is recorded as a kind-`a` site at the pointer offset (this is how the one-wire register and the configuration windows are reached).
-- Basic blocks never reached by the flow analysis (jump tables) in the seeded scope: ip35-pcibr 49, ip35-pic 0, ip35-prom 0.
+- Basic blocks never reached by the flow analysis (jump tables) in the seeded scope: ip35-pcibr 30, ip35-pic 0, ip35-prom 0.
 
 ## Top unmodelled or guessed registers: bridge
 

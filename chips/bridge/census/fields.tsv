@@ -13,40 +13,20 @@ variant	register	source	kind	bits_or_value	sites	functions	example
 ?	0x280	load	mask	10:0	2	1	pcireg_rrb_get@087224
 ?	0x280	load	shift	shift 1	2	1	pcireg_rrb_get@087224
 bridge	0x0	load	mask	10:0	6	2	xbridge_attach@070424
-bridge	0x0	load	mask	15:0	4	2	xbridge_attach@0705b0
+bridge	0x0	load	mask	15:0	2	1	pcibr_alloc_all_rrbs@0771e0
 bridge	0x0	load	shift	shift 1	6	2	xbridge_attach@070424
-bridge	0x0	load	shift	shift 12	4	2	xbridge_attach@0705b0
-bridge	0x10	load	mask	10:0	2	1	pcireg_bus_err_get@07efb4
+bridge	0x0	load	shift	shift 12	2	1	pcibr_alloc_all_rrbs@0771e0
 bridge	0x10	load	shift	shift 16	8	2	prom_ffffffffbfc16680@c16cb0
-bridge	0x20	store	clear-mask via pcireg_control_bit_clr	31	1	1	pcibr_unmap@071520
-bridge	0x20	store	const via pcireg_control_bit_set	21	1	1	xbridge_attach@0707ec
-bridge	0x20	store	const via pcireg_control_bit_set	31	1	1	pcibr_map@0714a8
-bridge	0x30	load	mask	10:0	4	2	pcireg_intr_dst_get@07fef4
-bridge	0x30	load	mask	3:0	2	1	pcireg_intr_dst_target_id_get@0801cc
-bridge	0x30	load	mask	15:0	2	1	pcireg_intr_dst_addr_get@0804d4
-bridge	0x30	store	mask	15:0	2	1	pcireg_intr_dst_addr_set@080670
 bridge	0x30	load	mask	5:0	2	1	pcireg_intr_addr_addr_get@08591c
-bridge	0x30	load	shift	shift 16	2	1	pcireg_intr_dst_target_id_get@0801cc
 bridge	0x40	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16c84
 bridge	0x58	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16d08
-bridge	0x60	load	mask	10:0	4	2	pcireg_resp_err_get@080f64
-bridge	0x60	load	mask	15:0	2	1	pcireg_resp_err_addr_get@0810d4
-bridge	0x60	load	mask	3:0	2	1	pcireg_resp_err_buf_get@081254
-bridge	0x60	load	mask	2:0	2	1	pcireg_resp_err_dev_get@0813c8
-bridge	0x60	load	shift	shift 16	6	3	pcireg_resp_err_buf_get@081254
-bridge	0x60	load	shift	shift 20	2	1	pcireg_resp_err_dev_get@0813c8
+bridge	0x60	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16d34
 bridge	0x68	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16d60
-bridge	0xa0	store	const via pcireg_arbitration_bit_set	23:20	1	1	pcibr_error_intr_handler@07aa50
-bridge	0xa0	store	const via pcireg_arbitration_bit_set	1	1	1	pcibr_error_intr_handler@07aa50
-bridge	0xc0	store	clear-mask via pcireg_timeout_bit_clr	9:0	1	1	xbridge_attach@070c7c
-bridge	0xd0	load	mask	10:0	4	2	pcireg_pci_bus_addr_get@0833a8
-bridge	0xd0	load	mask	15:0	2	1	pcireg_pci_bus_addr_addr_get@08351c
 bridge	0xd0	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16d8c
 bridge	0xd8	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16db8
 bridge	0x100	load	mask	6	6	6	prom_ffffffffbfc00c10@c00d44
 bridge	0x100	load	mask	5	4	4	prom_ffffffffbfc00dc0@c00dcc
 bridge	0x100	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16c58
-bridge	0x120	store	const via pcireg_intr_device_bit_set	1:0	1	1	pcibr_intr_alloc@07884c
 bridge	0x130	load	mask	7:0	2	1	pcireg_intr_addr_vect_get@0854d8
 bridge	0x130	load	shift	shift 2	2	1	pcireg_intr_addr_addr_get@085918
 bridge	0x210	store	const	0x1000	2	2	prom_ffffffffbfc16300@c1630c
@@ -133,7 +113,6 @@ pic	0x20	load	shift	shift 4	2	1	pcireg_speed_get@07f990
 pic	0xa0	store	const via pcireg_arbitration_bit_set	23:20	1	1	pcibr_error_intr_handler@07aa50
 pic	0xa0	store	const via pcireg_arbitration_bit_set	1	1	1	pcibr_error_intr_handler@07aa50
 pic	0xc0	store	clear-mask via pcireg_timeout_bit_clr	9:0	1	1	xbridge_attach@070c7c
-pic	0x110	store	const	0xffff	1	1	prom_c00000001fc41f38@c41f84
 pic	0x110	store	const via pcireg_intr_reset_set	0x7f	1	1	xbridge_attach@0707c8
 pic	0x110	store	const via pcireg_intr_reset_set	0x41	1	1	pcibr_error_cleanup@07aff4
 pic	0x110	store	const via pcireg_intr_reset_set	0x1	1	1	pcibr_error_cleanup@07aff4
@@ -170,12 +149,6 @@ tiocp	0x20	store	const via pcireg_control_bit_set	21	1	1	xbridge_attach@0707ec
 tiocp	0x20	store	const via pcireg_control_bit_set	31	1	1	pcibr_map@0714a8
 tiocp	0x20	load	mask	5:4	2	1	pcireg_speed_get@07f96c
 tiocp	0x20	load	shift	shift 4	2	1	pcireg_speed_get@07f96c
-tiocp	0x38	load	mask	3:0	2	1	pcireg_intr_dst_target_id_get@0801f0
-tiocp	0x38	load	shift	shift 48	2	1	pcireg_intr_dst_target_id_get@0801f0
-tiocp	0x60	load	mask	3:0	2	1	pcireg_resp_err_buf_get@081280
-tiocp	0x60	load	mask	2:0	2	1	pcireg_resp_err_dev_get@0813f4
-tiocp	0x60	load	shift	shift 16	2	1	pcireg_resp_err_buf_get@081280
-tiocp	0x60	load	shift	shift 20	2	1	pcireg_resp_err_dev_get@0813f4
 tiocp	0xa0	store	const via pcireg_arbitration_bit_set	23:20	1	1	pcibr_error_intr_handler@07aa50
 tiocp	0xa0	store	const via pcireg_arbitration_bit_set	1	1	1	pcibr_error_intr_handler@07aa50
 tiocp	0xc0	store	clear-mask via pcireg_timeout_bit_clr	9:0	1	1	xbridge_attach@070c7c

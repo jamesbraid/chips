@@ -32,58 +32,107 @@ inferred from the prefixes of the routine names that touch it (`hub_`, `hubii_`/
 
 | register | widths | access | sites | accessors and callers (names from the binary) | field evidence | role (inferred from the names) |
 |---|---|---|---:|---|---|---|
-| `+0x1000000` + unseen index | 8 | rw | 4 | `md_int_block`, `md_int_unblock` |  | unknown unless the names say: see the entry |
 | `+0x1000018` | 8 | r | 1 | `handle_cac_buserr` |  | unknown unless the names say: see the entry |
-| `+0x1000020` | 8 | r | 9 | `get_slice`, `getcpuid`, `save_cache_error`, `save_hub_err`, `hubpi_eint_handler`, `klsave_spool_registers` (+3) | load mask 0 (2 sites); load shift shift 0 (4 sites); load shift shift 1 (1 sites); load shift shift 62 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1000020` | 8 | r | 10 | `sub_1bcf0`, `get_slice`, `getcpuid`, `save_cache_error`, `hubpi_eint_handler`, `klsave_spool_registers` (+2) | load mask 0 (2 sites); load shift shift 0 (4 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1000028` | 8 | r | 2 | `memory_iscalias`, `page_local_calias` | load shift shift 0 (2 sites) | unknown unless the names say: see the entry |
 | `+0x1000078` | 8 | r | 1 | `nic_get_phase_bits` |  | unknown unless the names say: see the entry |
-| `+0x1000090` | 8 | w | 3 | `sendintr`, `install_cpuintr`, `install_dbgintr` | store const 0x64 (1 sites); store const 0x6b (1 sites); store const 0x7 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1000098` | 8 | r | 4 | `cause_intr_disconnect`, `sendintr`, `install_cpuintr`, `install_dbgintr` |  | unknown unless the names say: see the entry |
-| `+0x10000a0` | 4,8 | r | 6 | `cpuprom_detailed_inventory_info_add`, `prom_has_vga_support`, `cause_intr_disconnect`, `chkdebug` |  | unknown unless the names say: see the entry |
+| `+0x1000090` | 8 | w | 7 | `sub_20ee0`, `sub_200f0`, `sub_20250`, `sub_20710`, `sub_20884`, `sub_20988` | store const 0x40 (1 sites); store const 0x64 (1 sites); store const 0x6b (1 sites); store const 0x7 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1000098` | 8 | r | 9 | `sub_200f0`, `sub_20ee0`, `sub_20250`, `sub_20710`, `sub_20884`, `sub_20988` |  | unknown unless the names say: see the entry |
+| `+0x10000a0` | 4,8 | r | 6 | `cpuprom_detailed_inventory_info_add`, `prom_has_vga_support`, `sub_20250`, `chkdebug` |  | unknown unless the names say: see the entry |
 | `+0x1000118` | 8 | w | 2 | `startkgclock`, `prof_intr` |  | unknown unless the names say: see the entry |
 | `+0x1000120` to `+0x1000128` (2 slots) | 8 | w | 2 | `acktmoclock` |  | unknown unless the names say: see the entry |
 | `+0x1000130` to `+0x1000138` (2 slots) | 8 | w | 2 | `ackkgclock` |  | unknown unless the names say: see the entry |
 | `+0x1000150` to `+0x1000158` (2 slots) | 8 | w | 4 | `startkgclock`, `slowkgclock` |  | unknown unless the names say: see the entry |
 | `+0x1000400` | 8 | rw | 14 | `hubpi_eint_handler`, `handle_uncac_buserr`, `handle_io_buserr`, `err_int_unblock_mask` |  | unknown unless the names say: see the entry |
+| `+0x1000408` to `+0x1000410` (2 slots) | 8 | rw | 20 | `err_int_block_mask`, `err_int_unblock_mask`, `md_int_block`, `md_int_unblock`, `hubpi_eint_handler`, `sub_1bcf0` |  | unknown unless the names say: see the entry |
+| `+0x1000418` to `+0x1000420` (2 slots) | 8 | r | 2 | `hubpi_spool_get_next` |  | unknown unless the names say: see the entry |
+| `+0x1000430` | 8 | r | 1 | `hubpi_spool_get_next` |  | unknown unless the names say: see the entry |
+| `+0x1000440` | 8 | r | 1 | `hubpi_spool_get_next` |  | unknown unless the names say: see the entry |
+| `+0x1000448` | 8 | w | 1 | `hubpi_spool_get_next` |  | unknown unless the names say: see the entry |
+| `+0x1000450` | 8 | r | 1 | `hubpi_spool_get_next` |  | unknown unless the names say: see the entry |
+| `+0x1000460` | 8 | r | 1 | `hubpi_spool_get_next` |  | unknown unless the names say: see the entry |
+| `+0x1000468` | 8 | w | 1 | `hubpi_spool_get_next` |  | unknown unless the names say: see the entry |
 | `+0x10004c8` to `+0x10004d0` (2 slots) | 8 | rw | 4 | `hubpi_eint_handler` | load mask 7:0 (1 sites); load shift shift 17 (1 sites); load shift shift 63 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1030100` | 8 | r | 91 | `restore_hub_err`, `us_delay`, `clear_hub_md_error`, `klsave_md_registers`, `bte_copy`, `init_timebase` (+44) |  | unknown unless the names say: see the entry |
+| `+0x1030100` | 8 | r | 96 | `restore_hub_err`, `sub_2973c`, `us_delay`, `clear_hub_md_error`, `klsave_md_registers`, `bte_copy` (+44) |  | unknown unless the names say: see the entry |
 | `+0x1400130` | 8 | rw | 2 | `ii_llp_error_monitor` | load mask 15:0 (2 sites); load shift shift 16 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1600000` | 8 | r | 3 | `get_nasid`, `is_fine_dirmode`, `sn0_skip_dump` | load mask 1:0 (2 sites); load mask 7:0 (1 sites); load shift shift 46 (2 sites); load shift shift 48 (2 sites) | unknown unless the names say: see the entry |
-| `+0x1604200` | 8 | r | 52 | `nanotime_syscall`, `init_timebase`, `doadjtime`, `nanotime`, `startkgclock`, `prof_intr` (+25) | load mask 9:0 (52 sites); load shift shift 1 (51 sites); load shift shift 2 (52 sites); load shift shift 4 (52 sites) | unknown unless the names say: see the entry |
-| `+0x1680000` | 8 | r | 2 | `router_map_get`, `part_discovery` | load mask 0 (1 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1680008` to `+0x1680010` (2 slots) | 8 | w | 4 | `he_arcs_set_vectors`, `ni_reset_port` |  | unknown unless the names say: see the entry |
-| `+0x1680110` to `+0x1680118` (2 slots) | 8 | r | 2 | `ni_port_down_reset` |  | unknown unless the names say: see the entry |
+| `+0x14001f8` | 8 | w | 2 | `sub_3d1d8` | store const 0x20000 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1600000` | 8 | r | 4 | `sub_1bcf0`, `get_nasid`, `is_fine_dirmode` | load mask 1:0 (2 sites); load mask 7:0 (2 sites); load shift shift 46 (2 sites); load shift shift 48 (4 sites) | unknown unless the names say: see the entry |
+| `+0x1604020` to `+0x1604028` (2 slots) | 8 | r | 2 | `sub_1bcf0` |  | unknown unless the names say: see the entry |
+| `+0x1604200` | 8 | r | 58 | `sub_28e3c`, `nanotime_syscall`, `init_timebase`, `doadjtime`, `nanotime`, `startkgclock` (+27) | load mask 9:0 (58 sites); load shift shift 1 (57 sites); load shift shift 2 (58 sites); load shift shift 4 (58 sites) | unknown unless the names say: see the entry |
+| `+0x1680000` | 8 | r | 2 | `sub_11984`, `part_discovery` | load mask 0 (1 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1680008` to `+0x1680010` (2 slots) | 8 | w | 4 | `sub_10c0`, `ni_reset_port` |  | unknown unless the names say: see the entry |
+| `+0x1680108` to `+0x1680118` (3 slots) | 8 | r | 3 | `sub_18a24` |  | unknown unless the names say: see the entry |
 | `+0x1680120` | 8 | r | 1 | `ni_llp_error_monitor` | load mask 3:0 (3 sites); load shift shift 11 (1 sites); load shift shift 16 (1 sites); load shift shift 24 (1 sites); load shift shift 40 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1681000` + unseen index | 8 | r | 4 | `part_discovery` |  | unknown unless the names say: see the entry |
-| `+0x1681008` to `+0x16812f0` (94 slots) | 8 | r | 94 | `part_discovery` |  | unknown unless the names say: see the entry |
-| `+0x168e730` to `+0x168e740` (3 slots) | 8 | r | 3 | `part_discovery` |  | unknown unless the names say: see the entry |
+| `+0x1681000` + unseen index | 8 | r | 5 | `part_discovery` |  | unknown unless the names say: see the entry |
+| `+0x1681008` to `+0x1681018` (3 slots) | 8 | r | 3 | `part_discovery` |  | unknown unless the names say: see the entry |
+| `+0x1682000` + unseen index | 8 | r | 3 | `part_discovery` |  | unknown unless the names say: see the entry |
+| `+0x1682008` | 8 | r | 1 | `part_discovery` |  | unknown unless the names say: see the entry |
+| `+0x1780000` | 8 | r | 1 | `sub_1bcf0` | load shift shift 48 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1780008` | 8 | r | 3 | `mdir_xlate_addr_mem`, `mdir_xlate_addr_pdir`, `mdir_xlate_addr_sdir` | load mask 1:0 (3 sites); load shift shift 30 (3 sites) | unknown unless the names say: see the entry |
 | `+0x17a0038` | 8 | r | 1 | `doacvec` | load mask 0 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1800000` + unseen index | 8 | rw | 80 | `hub_error_init`, `hub_error_clear`, `do_intr_block_bit`, `intr_clear_all`, `hub_rtc_init`, `part_init_node` (+23) | load shift shift 0 (4 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1800018` + unseen index | 8 | r | 3 | `part_terminate`, `part_add_regions`, `part_rm_regions` |  | unknown unless the names say: see the entry |
+| `+0x1800000` + unseen index | 8 | rw | 19 | `intr_dumpvec`, `part_interrupt`, `timeout_poll`, `show_hub_pi_err`, `dump_error_spool`, `intr_connect_level` (+10) | load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1800010` + unseen index | 8 | w | 1 | `part_init_node` |  | unknown unless the names say: see the entry |
+| `+0x1800018` + unseen index | 8 | rw | 8 | `part_terminate`, `part_add_regions`, `part_rm_regions`, `mlreset`, `part_init_node` |  | unknown unless the names say: see the entry |
 | `+0x1800020` + unseen index | 8 | r | 1 | `save_hub_err` | load shift shift 62 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1800028` + unseen index | 8 | r | 1 | `move_buffer` | load shift shift 0 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1800028` + unseen index | 8 | rw | 2 | `mlreset`, `move_buffer` | load shift shift 0 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1800038` + unseen index | 8 | w | 1 | `per_hub_init` | store const 0x200000 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1800090` + unseen index | 8 | w | 1 | `brl1_intr_poll` |  | unknown unless the names say: see the entry |
-| `+0x1800098` + unseen index | 8 | r | 2 | `brl1_intr_poll` | load mask 4 (1 sites) | unknown unless the names say: see the entry |
-| `+0x18000a0` + unseen index | 8 | r | 2 | `ni_port_down_reset`, `hubii_eint_handler` |  | unknown unless the names say: see the entry |
-| `+0x1800428` + unseen index | 8 | r | 2 | `hub_error_init` | load shift shift 0 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1800040` to `+0x1800058` (4 slots) | 8 | r | 6 | `hub_error_init` | load shift shift 0 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1800090` + unseen index | 8 | w | 8 | `sub_1bcf0`, `cleanup_remote_pi`, `intr_connect_level`, `sendintr`, `debug_stop_all_cpus`, `sendgroupintr` (+1) | store const 0x100 (2 sites); store const 0x64 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1800098` + unseen index | 8 | r | 3 | `brl1_intr_poll`, `intr_connect_level` | load mask 4 (1 sites) | unknown unless the names say: see the entry |
+| `+0x18000a0` + unseen index | 8 | r | 2 | `sub_18a24`, `hubii_eint_handler` |  | unknown unless the names say: see the entry |
+| `+0x18000a8` to `+0x18000b8` (3 slots) | 8 | w | 3 | `intr_clear_all` |  | unknown unless the names say: see the entry |
+| `+0x18000c0` + unseen index | 8 | rw | 5 | `do_intr_block_bit`, `intr_clear_all` |  | unknown unless the names say: see the entry |
+| `+0x18000c8` to `+0x18000d0` (2 slots) | 8 | w | 4 | `part_activate`, `part_heartbeat` |  | unknown unless the names say: see the entry |
+| `+0x18000e8` + unseen index | 8 | w | 1 | `part_init_node` |  | unknown unless the names say: see the entry |
+| `+0x18000f0` + unseen index | 8 | rw | 2 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x1800108` to `+0x1800110` (2 slots) | 8 | w | 6 | `set_timer_intr`, `timein_body`, `migrate_timeouts` |  | unknown unless the names say: see the entry |
+| `+0x1800140` to `+0x1800158` (4 slots) | 8 | w | 4 | `hub_rtc_init` |  | unknown unless the names say: see the entry |
+| `+0x1800400` + unseen index | 8 | rw | 3 | `sub_3ec6c`, `hub_error_clear` |  | unknown unless the names say: see the entry |
+| `+0x1800408` to `+0x1800410` (2 slots) | 8 | rw | 10 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x1800418` to `+0x1800420` (2 slots) | 8 | r | 2 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x1800428` + unseen index | 8 | r | 6 | `show_hub_pi_err`, `hub_error_init`, `dump_error_spool` | load shift shift 0 (3 sites) | unknown unless the names say: see the entry |
+| `+0x1800438` + unseen index | 8 | w | 1 | `hub_error_clear` |  | unknown unless the names say: see the entry |
+| `+0x1800448` + unseen index | 8 | w | 1 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x1800458` + unseen index | 8 | w | 1 | `hub_error_clear` |  | unknown unless the names say: see the entry |
+| `+0x1800468` + unseen index | 8 | w | 1 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x18004c8` to `+0x18004d0` (2 slots) | 8 | w | 2 | `hub_error_clear` |  | unknown unless the names say: see the entry |
+| `+0x1a00000` to `+0x1a00010` (2 slots) | 8 | w | 2 | `part_init_node` |  | unknown unless the names say: see the entry |
+| `+0x1a00018` + unseen index | 8 | w | 5 | `mlreset`, `part_init_node`, `part_terminate`, `part_add_regions`, `part_rm_regions` |  | unknown unless the names say: see the entry |
+| `+0x1a00028` + unseen index | 8 | w | 1 | `mlreset` |  | unknown unless the names say: see the entry |
 | `+0x1a00038` + unseen index | 8 | w | 1 | `per_hub_init` |  | unknown unless the names say: see the entry |
+| `+0x1a00040` to `+0x1a00058` (4 slots) | 8 | r | 6 | `hub_error_init` | load shift shift 0 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1a00090` + unseen index | 8 | w | 7 | `sub_1bcf0`, `cleanup_remote_pi`, `intr_connect_level`, `sendintr`, `debug_stop_all_cpus`, `sendgroupintr` | store const 0x100 (2 sites); store const 0x64 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1a00098` + unseen index | 8 | r | 1 | `intr_connect_level` |  | unknown unless the names say: see the entry |
+| `+0x1a000a8` to `+0x1a000b8` (3 slots) | 8 | w | 3 | `intr_clear_all` |  | unknown unless the names say: see the entry |
+| `+0x1a000c0` + unseen index | 8 | rw | 5 | `do_intr_block_bit`, `intr_clear_all` |  | unknown unless the names say: see the entry |
+| `+0x1a000e8` + unseen index | 8 | w | 1 | `part_init_node` |  | unknown unless the names say: see the entry |
+| `+0x1a000f0` + unseen index | 8 | rw | 2 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x1a00108` to `+0x1a00110` (2 slots) | 8 | w | 6 | `set_timer_intr`, `timein_body`, `migrate_timeouts` |  | unknown unless the names say: see the entry |
+| `+0x1a00140` to `+0x1a00158` (4 slots) | 8 | w | 4 | `hub_rtc_init` |  | unknown unless the names say: see the entry |
+| `+0x1a00400` + unseen index | 8 | rw | 3 | `sub_3ec6c`, `hub_error_clear` |  | unknown unless the names say: see the entry |
+| `+0x1a00408` to `+0x1a00410` (2 slots) | 8 | rw | 10 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x1a00418` to `+0x1a00420` (2 slots) | 8 | r | 2 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x1a00428` + unseen index | 8 | r | 4 | `show_hub_pi_err`, `dump_error_spool` | load shift shift 0 (2 sites) | unknown unless the names say: see the entry |
+| `+0x1a00438` + unseen index | 8 | w | 1 | `hub_error_clear` |  | unknown unless the names say: see the entry |
+| `+0x1a00448` + unseen index | 8 | w | 1 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x1a00458` + unseen index | 8 | w | 1 | `hub_error_clear` |  | unknown unless the names say: see the entry |
+| `+0x1a00468` + unseen index | 8 | w | 1 | `hub_error_init` |  | unknown unless the names say: see the entry |
+| `+0x1a004c8` to `+0x1a004d0` (2 slots) | 8 | w | 2 | `hub_error_clear` |  | unknown unless the names say: see the entry |
 | `+0x1a10000` + unseen index | 8 | w | 2 | `md_perf_start_count`, `md_perf_stop_count` |  | unknown unless the names say: see the entry |
 | `+0x1c00008` + unseen index | 8 | r | 2 | `hubii_check_widget_disabled`, `hubii_eint_handler` | load shift shift 31 (1 sites); load shift shift 54 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1c00020` + unseen index | 8 | r | 2 | `hub_widget_id`, `hub_set_piomode` | load mask 3:0 (1 sites); load shift shift 46 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1c00110` + unseen index | 8 | rw | 6 | `hub_set_piomode`, `hub_device_inquiry`, `is_widget_pio_enabled` |  | unknown unless the names say: see the entry |
 | `+0x1c00118` + unseen index | 8 | r | 2 | `hub_device_inquiry`, `hub_dma_enabled` |  | unknown unless the names say: see the entry |
 | `+0x1c00120` + unseen index | 8 | rw | 5 | `hub_widgetdev_enable`, `hub_widgetdev_shutdown`, `hub_device_inquiry` |  | unknown unless the names say: see the entry |
-| `+0x1c00128` + unseen index | 8 | rw | 6 | `hubii_eint_init`, `restorenoderun`, `per_hub_init`, `hub_xtalk_link_up`, `capture_hub_stats` | load mask 1 (3 sites); load mask 10:0 (1 sites); load mask 13 (2 sites); load shift shift 12 (3 sites) | unknown unless the names say: see the entry |
+| `+0x1c00128` + unseen index | 8 | rw | 6 | `hubii_eint_init`, `sub_b91c`, `per_hub_init`, `hub_xtalk_link_up`, `capture_hub_stats` | load mask 1 (3 sites); load mask 10:0 (1 sites); load mask 13 (2 sites); load shift shift 12 (3 sites) | unknown unless the names say: see the entry |
 | `+0x1c00130` + unseen index | 8 | rw | 3 | `capture_hub_stats`, `init_hub_stats` | load mask 15:0 (2 sites); load shift shift 16 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1c00138` + unseen index | 8 | rw | 7 | `hub_error_clear`, `hubii_eint_handler`, `bte_error_handler`, `hubii_eint_init` | store const 0x1000000 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1c00160` + unseen index | 8 | rw | 4 | `hub_piomap_alloc`, `hub_piomap_free`, `hub_ioerror_handler` | load mask 3:0 (1 sites); load mask 4:0 (1 sites); load mask 7:0 (1 sites); load shift shift 29 (1 sites); load shift shift 48 (2 sites) | unknown unless the names say: see the entry |
+| `+0x1c00160` + unseen index | 8 | rw | 5 | `hub_piomap_alloc`, `sub_21f34`, `hub_piomap_free`, `hub_ioerror_handler` | load mask 3:0 (1 sites); load mask 4:0 (1 sites); load mask 7:0 (1 sites); load shift shift 29 (1 sites); load shift shift 48 (2 sites) | unknown unless the names say: see the entry |
 | `+0x1c00190` + unseen index | 8 | w | 1 | `mlreset` |  | unknown unless the names say: see the entry |
 | `+0x1c00198` + unseen index | 8 | rw | 7 | `hub_error_clear`, `hubiio_prb_error_handler`, `hub_setup_prb`, `hubii_check_widget_disabled` | load shift shift 15 (2 sites) | unknown unless the names say: see the entry |
 | `+0x1c001e8` + unseen index | 8 | rw | 4 | `bte_error_handler`, `hubii_eint_handler`, `hub_xp_error_handler` | load mask 0 (1 sites); load mask 4 (1 sites); load mask 4,0 (1 sites); load mask 8 (1 sites); store const 0x101 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1c001f8` + unseen index | 8 | rw | 5 | `bte_error_handler`, `hub_error_clear`, `hubii_check_widget_disabled`, `hubii_eint_handler` | store const 0xff0000 (1 sites); store const 0xffff (1 sites) | unknown unless the names say: see the entry |
-| `+0x1c00200` + unseen index | 8 | rw | 5 | `bte_get_all_interfaces`, `bte_error_handler`, `per_hub_init` |  | unknown unless the names say: see the entry |
+| `+0x1c001f8` + unseen index | 8 | rw | 5 | `bte_error_handler`, `hub_error_clear`, `sub_1aee8`, `hubii_eint_handler` | store const 0xff0000 (1 sites); store const 0xffff (1 sites) | unknown unless the names say: see the entry |
+| `+0x1c00200` + unseen index | 8 | rw | 5 | `sub_3dbbc`, `bte_error_handler`, `per_hub_init` |  | unknown unless the names say: see the entry |
 | `+0x1c00220` + unseen index | 8 | rw | 2 | `bte_error_handler` |  | unknown unless the names say: see the entry |
 | `+0x1c00228` + unseen index | 8 | w | 1 | `bte_error_handler` |  | unknown unless the names say: see the entry |
 | `+0x1c002c8` + unseen index | 8 | r | 1 | `hub_error_devenable` | load shift shift 63 (1 sites) | unknown unless the names say: see the entry |
@@ -105,36 +154,39 @@ inferred from the prefixes of the routine names that touch it (`hub_`, `hubii_`/
 | `+0x1e04040` + unseen index | 8 | r | 1 | `bte_error_handler` |  | unknown unless the names say: see the entry |
 | `+0x1e04048` to `+0x1e04050` (2 slots) | 8 | w | 4 | `hub_error_clear`, `bte_error_handler` |  | unknown unless the names say: see the entry |
 | `+0x1e04058` to `+0x1e04060` (2 slots) | 8 | w | 2 | `bte_error_handler` |  | unknown unless the names say: see the entry |
+| `+0x1e08010` + unseen index | 8 | w | 2 | `sub_10c0` |  | unknown unless the names say: see the entry |
 | `+0x1e0c000` + unseen index | 8 | rw | 6 | `vector_write_node`, `vector_read_node` |  | unknown unless the names say: see the entry |
 | `+0x1e0c008` + unseen index | 8 | w | 2 | `vector_write_node`, `vector_read_node` |  | unknown unless the names say: see the entry |
 | `+0x1e0c010` + unseen index | 8 | w | 1 | `vector_write_node` |  | unknown unless the names say: see the entry |
 | `+0x1e0c020` + unseen index | 8 | r | 4 | `vector_write_node`, `vector_read_node` |  | unknown unless the names say: see the entry |
 | `+0x1e0c030` + unseen index | 8 | rw | 2 | `vector_read_node` |  | unknown unless the names say: see the entry |
 | `+0x1e0c038` + unseen index | 8 | r | 2 | `vector_write_node`, `vector_read_node` |  | unknown unless the names say: see the entry |
-| `+0x1e80000` + unseen index | 8 | r | 4 | `ni_port_down_reset`, `init_hub_stats` | load mask 1 (1 sites); load mask 2:1 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1e80100` + unseen index | 8 | rw | 5 | `ni_port_down_reset`, `hubni_print_state` |  | unknown unless the names say: see the entry |
-| `+0x1e80120` + unseen index | 8 | r | 6 | `ni_port_down_reset`, `hub_error_clear`, `capture_hub_stats`, `init_hub_stats` | load mask 7:0 (2 sites); load shift shift 16 (1 sites); load shift shift 8 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1e80000` + unseen index | 8 | r | 4 | `ni_port_down_reset`, `sub_18a24`, `init_hub_stats` | load mask 1 (1 sites); load mask 2:1 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1e80010` + unseen index | 8 | r | 3 | `sub_18a24`, `sub_18d20` |  | unknown unless the names say: see the entry |
+| `+0x1e80100` + unseen index | 8 | rw | 8 | `sub_18a24`, `ni_port_down_reset`, `hubni_print_state`, `sub_18d20` |  | unknown unless the names say: see the entry |
+| `+0x1e80120` + unseen index | 8 | r | 13 | `sub_18a24`, `ni_port_down_reset`, `sub_18d20`, `hub_error_clear`, `capture_hub_stats`, `init_hub_stats` | load mask 7:0 (2 sites); load shift shift 16 (1 sites); load shift shift 8 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1f00120` + unseen index | 8 | w | 2 | `hub_error_clear` |  | unknown unless the names say: see the entry |
 | `+0x1f80000` to `+0x1f80008` (2 slots) | 8 | rw | 7 | `memory_read_accessible`, `memory_write_accessible`, `part_init_node` |  | unknown unless the names say: see the entry |
 | `+0x1f80020` to `+0x1f80028` (2 slots) | 8 | r | 2 | `fetchop_flush` |  | unknown unless the names say: see the entry |
 | `+0x1f80040` + unseen index | 8 | r | 1 | `log_md_errors` |  | unknown unless the names say: see the entry |
 | `+0x1f80058` + unseen index | 8 | r | 2 | `hub_error_clear`, `log_md_errors` |  | unknown unless the names say: see the entry |
 | `+0x1fa0008` + unseen index | 8 | rw | 2 | `cpuprom_map` |  | unknown unless the names say: see the entry |
-| `+0x1fa0038` + unseen index | 8 | w | 1 | `per_hub_init` |  | unknown unless the names say: see the entry |
+| `+0x1fa0038` + unseen index | 8 | w | 2 | `per_hub_init`, `sub_1bcf0` |  | unknown unless the names say: see the entry |
 | `+0x1fc0000` + unseen index | 8 | r | 30 | `show_dir_state`, `part_init_node`, `part_pfdat_permit`, `part_export_page_perms`, `part_unexport_page_nocheck`, `adjust_nmi_handler` (+12) | load mask 0 (28 sites) | unknown unless the names say: see the entry |
 | `+0x1fc0010` + unseen index | 8 | r | 1 | `memerror_sbe_intr` | load shift shift 63 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1fc0018` + unseen index | 8 | r | 3 | `hub_error_clear`, `log_md_errors`, `memerror_sbe_intr` | load shift shift 1 (1 sites); load shift shift 2 (1 sites); load shift shift 63 (2 sites) | unknown unless the names say: see the entry |
+| `+0x1fc0018` + unseen index | 8 | r | 4 | `memerror_sbe_intr`, `hub_error_clear`, `log_md_errors` | load shift shift 1 (1 sites); load shift shift 2 (1 sites); load shift shift 63 (2 sites) | unknown unless the names say: see the entry |
 | `+0x1fc0028` + unseen index | 8 | r | 2 | `hub_error_clear`, `log_md_errors` | load shift shift 63 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1fc0040` + unseen index | 8 | w | 1 | `migr_effthreshold_diff_set` |  | unknown unless the names say: see the entry |
+| `+0x1fc0050` + unseen index | 8 | rw | 2 | `sub_1242c` |  | unknown unless the names say: see the entry |
 | `+0x1fe0010` + unseen index | 8 | r | 1 | `memerror_sbe_intr` | load shift shift 3 (1 sites) | unknown unless the names say: see the entry |
-| `+0x1fe0018` + unseen index | 8 | r | 3 | `hub_error_clear`, `log_md_errors`, `memerror_sbe_intr` | load mask 0 (1 sites); load shift shift 11 (1 sites); load shift shift 3 (2 sites); load shift shift 52 (1 sites) | unknown unless the names say: see the entry |
+| `+0x1fe0018` + unseen index | 8 | r | 5 | `memerror_sbe_intr`, `hub_error_clear`, `log_md_errors` | load mask 0 (3 sites); load shift shift 11 (3 sites); load shift shift 3 (2 sites); load shift shift 52 (3 sites) | unknown unless the names say: see the entry |
 
 ## Groups by routine names (inferred)
 
 - `+0x1000000` to `+0x10004d0`, `+0x1030100`: processor-interface-like registers (audit correction on the `+0x1000090` store: none of its three census sites is in the routine it is credited to.
-The named routine `sendintr` stores to a computed address, `+0x1800090` or `+0x1820090` chosen by a slice bit, with
+The named routine `sendintr` stores to a computed address, `+0x1800090` or `+0x1a00090` chosen by a slice bit (the second is 0x200000 above the first: `lui` 0x20 gives 0x200000, so a `+0x1820090` reading drops a digit; derived from `sendintr` at 0x206a4 to 0x20700 and the literal at `.lit8`+0x268, which is minus 0x9200000001800000 and is subtracted), with
 0x100 plus 107 or, for one caller argument, 0x100 plus 7; the `+0x1000090` stores of 7, 100 and 107 plus the slice
-are in three routines with no symbol that follow `sendintr`, `install_cpuintr` and `install_dbgintr` in the object, so the
+are in routines with no symbol (the census now names them `sub_<address>`: `sub_20710`, `sub_20884`, `sub_20988`) that follow `sendintr`, `install_cpuintr` and `install_dbgintr` in the object, so the
 listing labels them with the preceding name): `md_int_block`,
   `get_myid`/`get_slice`/`getcpuid` (read `+0x1000020`), interrupt send and cause (`sendintr`,
   `install_cpuintr`, `cause_intr_disconnect`: `+0x1000090` write, `+0x1000098` read), clock acknowledge and start
@@ -154,8 +206,8 @@ listing labels them with the preceding name): `md_int_block`,
 - `+0x1800000` and up (80 sites at the base): processor-interface-like again at a second alias (dump and error
   routines, `intr_connect_level`, `do_intr_block_bit`); `+0x1800018` is read by the partition routines. Audit
   correction: the 80 sites at the bare base are not all the base. Many add a displacement the scanner dropped
-  (`dump_error_spool` reads `+0x1800428` or `+0x1820428`, chosen with a slice bit by `movz`; `hub_error_clear` writes
-  `+0x1800400`, `+0x1800438`, `+0x1800458`, `+0x18004c8`, `+0x18004d0` and their `+0x1820000` aliases), so treat that row
+  (`dump_error_spool` reads `+0x1800428` or `+0x1a00428`, chosen with a slice bit by `movz` between 0x428 and 0x200428 added to the literal 0x9200000001800000; `+0x1820428` would need 0x20428, but the code builds 0x20 << 16; `hub_error_clear` writes
+  `+0x1800400`, `+0x1800438`, `+0x1800458`, `+0x18004c8`, `+0x18004d0` and their `+0x1a00000` aliases (0x200000 above, same arithmetic)), so treat that row
   as unresolved sites, not as an array base.
 - `+0x1c00000` and up: I/O-interface-like (`hub_widget_id` at `+0x1c00020`, `hubii_*`, `hub_widgetdev_*`,
   `bte_error_handler`, CRB routines `crbx`/`dump_crb`/`hubiio_crb_*` at `+0x1c00400` to `+0x1c00418`);

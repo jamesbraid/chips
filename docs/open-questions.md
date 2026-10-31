@@ -48,6 +48,7 @@ chip page and the entry is deleted.
   (the auto-min rule is a flagged fallback and no object needed it), alternatives chosen by a conditional move
   are kept as separate conditional sites, loop counters are widened to an indexed site instead of one site per
   pass, and routines are cut by control flow (after a return that nothing branches to, and at call targets)
-  rather than by symbol or by every return. Remaining: a PROM branch that labels a non-PIC path `pic` (the
-  32-bit stores at +0x10c, +0x114 appear under both `pic` and `probe?`), and large code spans with no return
+  rather than by symbol or by every return. Fixed since: the PROM's non-PIC 32-bit stores are no longer
+  labelled `pic`, and routines following an unconditional branch or reached only as a delay-slot duplicate are
+  cut or merged by control flow. Remaining: large code spans with no return
   (PROM data disassembled as code) stay single routines.

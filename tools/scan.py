@@ -105,6 +105,10 @@ def is_return(ins):
     return ins.mn == 'jr' and ins.ops == ['$31']
 
 
+def is_uncond(ins):
+    return ins.mn in ('b', 'j') or (ins.mn == 'beq' and len(ins.ops) >= 2 and ins.ops[0] == ins.ops[1])
+
+
 def split_functions(funcs, raw):
     """Cut routines the listing glued together, by control flow rather than by symbol or by return.
 
@@ -126,7 +130,13 @@ def split_functions(funcs, raw):
                     calls.add(t)
     out = []
     for name, start, insns in funcs:
-        cur, k, tabled = [], 0, False
+        cur, k = [], 0
+        # a switch anywhere in the routine means case arms follow it in the listing that nothing branches
+        # to directly: do not cut such a routine except at call targets
+        tabled = any(i.mn == 'jr' and i.ops != ['$31'] and
+                     any(p.mn in LOADS and p.ops and p.ops[0] == i.ops[0] for p in insns[max(0, n - 5):n])
+                     for n, i in enumerate(insns))
+        always_tabled = tabled
         label = name
         pieces = []
         for idx, i in enumerate(insns):
@@ -135,19 +145,41 @@ def split_functions(funcs, raw):
                 cut = False
                 if i.addr in calls:
                     cut = True
-                elif idx >= 2 and is_return(insns[idx - 2]) and not tabled and i.addr not in targets and cur[-1] is insns[idx - 1]:
+                elif idx >= 2 and (is_return(insns[idx - 2]) or is_uncond(insns[idx - 2])) and not tabled and i.addr not in targets and cur[-1] is insns[idx - 1]:
                     cut = True
                 if cut:
                     pieces.append(cur)
-                    cur, tabled = [], False
+                    cur = []
+                    tabled = always_tabled
             cur.append(i)
             if i.mn == 'jr' and i.ops != ['$31']:
                 # a switch: the register was just loaded from a table (or computed from an index)
                 prior = insns[max(0, idx - 5):idx]
-                if any(p.mn in LOADS and p.ops and p.ops[0] == i.ops[0] for p in prior):
-                    tabled = True
+                pass
         if cur:
             pieces.append(cur)
+        # a piece that an earlier piece branches into is part of that routine, not a routine of its own
+        # (the first instruction of a delay-slot-duplicated target can look like a start)
+        merged = []
+        for p in pieces:
+            addrs = {i.addr for i in p}
+            starts_call = p[0].addr in calls
+            into = False
+            if merged and not starts_call:
+                for q in merged:
+                    for i in q:
+                        if (i.mn in COND or i.mn in ('b', 'j')):
+                            t = i.target()
+                            if t in addrs:
+                                into = True
+                                break
+                    if into:
+                        break
+            if into:
+                merged[-1] = merged[-1] + p
+            else:
+                merged.append(p)
+        pieces = merged
         for n, p in enumerate(pieces):
             if raw:
                 nm = 'prom_%x' % p[0].addr
@@ -442,6 +474,8 @@ class Analyser:
             c = self.cfg.part_disc
             if s and s[0] == 'PART' and c and to_int(ops[2]) == to_int(c.get('mask', '0xffff')):
                 v = ('PART',)
+            elif s and s[0] == 'IDM' and to_int(ops[2]) == 0x7ff:
+                v = ('MFG',)
             elif s and s[0] == 'K':
                 v = ('K', s[1] & to_int(ops[2]))
             else:
@@ -505,6 +539,10 @@ class Analyser:
                 v = ('K', (a[1] - b[1]) & M64)
             elif a and a[0] == 'B' and b and b[0] == 'K':
                 v = ('B', a[1] - b[1], a[2])
+            elif a and a[0] == 'KM' and b and b[0] == 'K':
+                v = ('KM', frozenset((x - b[1]) & M64 for x in a[1])) + tuple(a[2:])
+            elif a and a[0] == 'K' and b and b[0] == 'KM':
+                v = ('KM', frozenset((a[1] - y) & M64 for y in b[1])) + tuple(b[2:])
             else:
                 v = None
             self.wr(st, reg(ops[0]), v)
@@ -527,6 +565,8 @@ class Analyser:
                     v = ('K', x >> (sh + 32))
             elif s and s[0] == 'IDW' and mn == 'srl' and self.cfg.part_disc and sh == self.cfg.part_disc.get('shift', 12):
                 v = ('PART',)
+            elif s and s[0] == 'IDW' and mn in ('srl', 'dsrl') and sh == 1:
+                v = ('IDM',)      # the manufacturer field (bits 11:1) before it is masked
             self.wr(st, reg(ops[0]), v)
         else:
             d = self.dest_of(ins)
@@ -812,6 +852,11 @@ class Analyser:
         mn, ops = ins.mn, ins.ops
         if mn in ('beq', 'bne', 'beql', 'bnel') and len(ops) >= 3:
             a, b = self.rd(st, reg(ops[0])), self.rd(st, reg(ops[1]))
+            for x, y in ((a, b), (b, a)):
+                if x and y and x[0] == 'MFG' and y[0] == 'K':
+                    # a failed manufacturer check withdraws the chip the part number suggested
+                    bad = fall if mn in ('beq', 'beql') else taken
+                    bad.pop('@v', None)
             if a and b and a[0] == 'K' and b[0] == 'K':
                 same = (a[1] & M64) == (b[1] & M64)
                 if same and ops[0] != ops[1] and self.cfg.type_const_in.search(self.cur_fn) and sx64(a[1]) in self.cfg.type_variants:

@@ -3,25 +3,26 @@ bedrock	0x20	load	mask	0	2	2	hubpi_eint_handler@184b4
 bedrock	0x20	load	shift	shift 0	4	4	get_slice@12d4
 bedrock	0x20	load	shift	shift 1	1	1	hubpi_eint_handler@184b4
 bedrock	0x28	load	shift	shift 0	2	2	memory_iscalias@100cc
-bedrock	0x90	store	const	0x7	1	1	sendintr@20754
-bedrock	0x90	store	const	0x64	1	1	install_cpuintr@208b8
-bedrock	0x90	store	const	0x6b	1	1	install_dbgintr@209b8
+bedrock	0x90	store	const	0x40	1	1	sub_20250@202a8
+bedrock	0x90	store	const	0x7	1	1	sub_20710@20754
+bedrock	0x90	store	const	0x64	1	1	sub_20884@208b8
+bedrock	0x90	store	const	0x6b	1	1	sub_20988@209b8
 bedrock	0x4c8	load	mask	7:0	1	1	hubpi_eint_handler@184ac
 bedrock	0x4c8	load	shift	shift 63	1	1	hubpi_eint_handler@184ac
 bedrock	0x4c8	load	shift	shift 17	1	1	hubpi_eint_handler@184ac
 bedrock	0x400130	load	mask	15:0	2	1	ii_llp_error_monitor@1b1a0
 bedrock	0x400130	load	shift	shift 16	1	1	ii_llp_error_monitor@1b1a0
 bedrock	0x4001f8	store	const	0x20000	1	1	sub_3d1d8@3d324
+bedrock	0x600000	load	mask	7:0	2	2	get_nasid@12b8
 bedrock	0x600000	load	mask	1:0	2	2	is_fine_dirmode@12e4
-bedrock	0x600000	load	mask	7:0	1	1	get_nasid@12b8
-bedrock	0x600000	load	shift	shift 48	2	1	get_nasid@12b8
+bedrock	0x600000	load	shift	shift 48	4	2	get_nasid@12b8
 bedrock	0x600000	load	shift	shift 46	2	2	is_fine_dirmode@12e4
-bedrock	0x604200	load	mask	9:0	54	32	numalinkstats_up2date@23d4
-bedrock	0x604200	load	shift	shift 4	54	32	numalinkstats_up2date@23d4
-bedrock	0x604200	load	shift	shift 2	54	32	numalinkstats_up2date@23d4
-bedrock	0x604200	load	shift	shift 1	53	31	numalinkstats_up2date@23d4
-bedrock	0x680000	load	mask	0	1	1	sub_11804@11988
-bedrock	0x680000	load	shift	shift 1	1	1	sub_11804@11988
+bedrock	0x604200	load	mask	9:0	58	33	numalinkstats_up2date@23d4
+bedrock	0x604200	load	shift	shift 4	58	33	numalinkstats_up2date@23d4
+bedrock	0x604200	load	shift	shift 2	58	33	numalinkstats_up2date@23d4
+bedrock	0x604200	load	shift	shift 1	57	32	numalinkstats_up2date@23d4
+bedrock	0x680000	load	mask	0	1	1	sub_11984@11988
+bedrock	0x680000	load	shift	shift 1	1	1	sub_11984@11988
 bedrock	0x680010	store	const	0x1	2	2	sub_10c0@121c
 bedrock	0x680120	load	mask	3:0	3	1	ni_llp_error_monitor@1b208
 bedrock	0x680120	load	shift	shift 16	1	1	ni_llp_error_monitor@1b208
@@ -30,6 +31,7 @@ bedrock	0x680120	load	shift	shift 11	1	1	ni_llp_error_monitor@1b208
 bedrock	0x680120	load	shift	shift 40	1	1	ni_llp_error_monitor@1b208
 bedrock	0x680120	load	shift	shift 48	1	1	ni_llp_error_monitor@1b208
 bedrock	0x680120	load	shift	shift 44	1	1	ni_llp_error_monitor@1b208
+bedrock	0x780000	load	shift	shift 48	1	1	sub_1bcf0@1bd9c
 bedrock	0x780008	load	mask	1:0	3	3	mdir_xlate_addr_mem@2b870
 bedrock	0x780008	load	shift	shift 30	3	3	mdir_xlate_addr_mem@2b870
 bedrock	0x7a0038	load	mask	0	1	1	doacvec@1c14
@@ -39,10 +41,14 @@ bedrock	0x800028	load	shift	shift 0	1	1	move_buffer@2cb0
 bedrock	0x800038	store	const	0x200000	1	1	per_hub_init@e3a0
 bedrock	0x800040	load	shift	shift 0	1	1	hub_error_init@17b40
 bedrock	0x800048	load	shift	shift 0	1	1	hub_error_init@17b64
+bedrock	0x800090	store	const	0x100	2	2	debug_stop_all_cpus@20cec
+bedrock	0x800090	store	const	0x64	1	1	debug_stop_all_cpus@20cec
 bedrock	0x800098	load	mask	4	1	1	brl1_intr_poll@1e00
 bedrock	0x800428	load	shift	shift 0	3	3	show_hub_pi_err@14ed8
 bedrock	0xa00040	load	shift	shift 0	1	1	hub_error_init@17b40
 bedrock	0xa00048	load	shift	shift 0	1	1	hub_error_init@17b64
+bedrock	0xa00090	store	const	0x100	2	2	debug_stop_all_cpus@20cec
+bedrock	0xa00090	store	const	0x64	1	1	debug_stop_all_cpus@20cec
 bedrock	0xa00428	load	shift	shift 0	2	2	show_hub_pi_err@14ed8
 bedrock	0xc00008	load	shift	shift 31	1	1	hubii_eint_handler@1b098
 bedrock	0xc00008	load	shift	shift 54	1	1	hubii_eint_handler@1b098

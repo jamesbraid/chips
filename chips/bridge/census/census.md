@@ -16,21 +16,21 @@ Datasheet checkout `f09106cb71b7` (datasheets, spec transcriptions); model at `7
 
 ## Summary
 
-- **1673 access sites** resolved to a window offset, folded into **179 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
+- **1501 access sites** resolved to a window offset, folded into **179 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
 
 | variant | rows | sites | model: handled+specified | model: handled, guessed or LOG_UNIMP | model: unhandled / out of scope | not in datasheet | not in spec | spec conflict |
 |---|---|---|---|---|---|---|---|---|
 | ? | 10 | 306 | 6 | 4 | 0 | 0 | 0 | 0 |
-| bridge | 36 | 532 | 31 | 5 | 0 | 0 | 0 | 0 |
-| pic | 44 | 314 | 14 | 1 | 29 | 7 | 0 | 0 |
+| bridge | 36 | 368 | 31 | 5 | 0 | 0 | 0 | 0 |
+| pic | 44 | 312 | 14 | 1 | 29 | 7 | 0 | 0 |
 | pic-xbow-face | 2 | 4 | 0 | 0 | 2 | 2 | 0 | 0 |
 | probe? | 5 | 11 | 0 | 0 | 5 | 5 | 0 | 0 |
-| tiocp | 43 | 332 | 0 | 0 | 43 | 43 | 0 | 0 |
+| tiocp | 43 | 326 | 0 | 0 | 43 | 43 | 0 | 0 |
 | xbridge | 39 | 306 | 38 | 0 | 1 | 0 | 0 | 0 |
 
 `?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). `tiocp` has no emulator datasheet or model, so its rows are listed but not judged.
 
-Site basis: 1098 refined, 300 direct, 244 image-hint, 21 probe-seed, 10 returned-pointer.
+Site basis: 928 refined, 300 direct, 244 image-hint, 19 probe-seed, 10 returned-pointer.
 
 ### Scan coverage and what is unresolved
 
@@ -41,17 +41,17 @@ Site basis: 1098 refined, 300 direct, 244 image-hint, 21 probe-seed, 10 returned
 - Loads and stores in the seeded scope whose base register the scan could not resolve and whose displacement falls where registers live (0x100..0x2ff): 108, almost all `xbridge_attach` writing its own state record (**unresolved, inspected only by listing; `suspects.tsv`**).
 - Index registers are not followed: a family reached through an array index is recorded at its base with `idx=1` (device 0..7, interrupt 0..7, ATE). The family extent comes from the datasheet, not the code.
 - Returned pointers: a function that hands back a pointer into the window is recorded as a kind-`a` site at the pointer offset (this is how the one-wire register and the configuration windows are reached).
-- Basic blocks never reached by the flow analysis (jump tables) in the seeded scope: ip27-unix 38, ip30-unix 37, ip30-prom 0, ip35-kernel-o 0, ip35-prom 0.
+- Basic blocks never reached by the flow analysis (jump tables) in the seeded scope: ip27-unix 30, ip30-unix 29, ip30-prom 0, ip35-kernel-o 0, ip35-prom 0.
 
 ## Top unmodelled or guessed registers: bridge
 
 | rank | offset | name (datasheet/spec/model) | access | widths | functions | sites | model class | detail | datasheet | spec |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 1 | 0x30 | Interrupt destination, upper | rw | 4 | 7 | 50 | handled-guessed | comment says: No specified power-up value; zero is this mode | listed | present |
-| 2 | 0x38 | Interrupt destination, lower | rw | 4 | 5 | 18 | handled-guessed | whole-word storage, fields unmodelled | listed | present |
+| 1 | 0x30 | Interrupt destination, upper | rw | 4 | 7 | 26 | handled-guessed | comment says: No specified power-up value; zero is this mode | listed | present |
+| 2 | 0x38 | Interrupt destination, lower | rw | 4 | 5 | 10 | handled-guessed | whole-word storage, fields unmodelled | listed | present |
 | 3 | 0x280+8n | Even read response buffers | rw | 4 | 4 | 20 | handled-guessed | comment says: Storage: every read completes before returning | listed | present |
 | 4 | 0x80000+8n | External static RAM, holding the extende | rw | 8 | 2 | 16 | handled-guessed | unpopulated on this board | listed | not-transcribed |
-| 5 | 0x128 | Host error field | rw | 4 | 2 | 6 | handled-guessed | comment says: The chip's own error bit. The table gives no p | listed | present |
+| 5 | 0x128 | Host error field | rw | 4 | 2 | 4 | handled-guessed | comment says: The chip's own error bit. The table gives no p | listed | present |
 
 ## Top unmodelled or guessed registers: xbridge
 
