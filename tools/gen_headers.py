@@ -27,7 +27,7 @@ CHIPS = {
  'bedrock':('bedrock', 'bedrock', 0, 'Bedrock (node controller), IP35', 'bedrock'),
  'xbow': ('xbow', None, 0, 'Xbow (crossbar)', None),
  'heart':('heart', None, 0, 'HEART (IP30 system controller)', 'heart'),
- 'hub':  ('hub', None, 0, 'Hub (IP27 node controller)', None),
+ 'hub':  ('hub', None, 0, 'Hub (IP27 node controller)', 'hub'),
  'ioc3': ('ioc3', None, 0, 'IOC3 (PCI I/O controller)', None),
  'ioc4': ('ioc4', None, 0, 'IOC4 (PCI I/O controller, later)', None),
  'crime':('crime', None, 0, 'CRIME (O2 memory controller)', None),
@@ -50,6 +50,19 @@ HEART_BLOCKS = [  # (first offset, name); the widget block is reported 0x100000 
  (0x10000, 'interrupt registers: mask per processor, status, cause'),
  (0x20000, 'timer, trigger, processor number, sync'),
  (0x100000, "widget block of HEART's own XIO port (physical 0x18000000), offset = 0x100000 + widget offset"),
+]
+
+
+HUB_BLOCKS = [  # (first offset, name); both aliases (local 0x01000000, node-addressed 0x01800000) share these offsets
+ (0x0, 'PI: processor interface, 8-byte slots (identity, interrupts, real-time clock, error latches)'),
+ (0x20000, 'PI space above 0x20000: the hard-reset bit and the real-time counter (the local block, grouped by address)'),
+ (0x200000, 'MD: memory and directory (configuration, migration, error latches)'),
+ (0x210000, 'MD performance counters'),
+ (0x220000, 'MD junk-bus block: microcontroller registers, slot id, LEDs'),
+ (0x400000, 'II: I/O interface (widget, protection, error, CRB and PRB registers)'),
+ (0x410000, 'II block transfer engines 0 and 1'),
+ (0x430000, 'II performance counters'),
+ (0x600000, 'NI: network interface (status, port, vector, routing tables)'),
 ]
 
 
@@ -123,11 +136,17 @@ def gen(chip, spec):
     cur_block = None
     seen = set()
     emitted = set()
+    cfg = json.load(open(cfgp)) if os.path.exists(cfgp) else {}
+    skip = set(cfg.get('header_skip', []))
     for r in sorted(rows, key=lambda r: (int(r['offset'], 16), r['idx'])):
         off = int(r['offset'], 16)
-        if (off, r['idx']) in seen:
+        if r['offset'] in skip:
             continue
-        seen.add((off, r['idx']))
+        # the Hub is reached through two aliases of one register file: one define per offset
+        key = (off,) if rules == 'hub' else (off, r['idx'])
+        if key in seen:
+            continue
+        seen.add(key)
         blk = 'registers'
         if rules == 'bedrock':
             for lo, hi, n, d in BEDROCK_BLOCKS:
@@ -136,6 +155,8 @@ def gen(chip, spec):
             full = off if off >= 0x1000000 else off
         elif rules == 'heart':
             blk = [n for lo, n in HEART_BLOCKS if off >= lo][-1]
+        elif rules == 'hub':
+            blk = [n for lo, n in HUB_BLOCKS if off >= lo][-1]
         elif off >= 0x10000:
             blk = 'arrays and windows (offset is the array base)'
         else:

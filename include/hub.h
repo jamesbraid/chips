@@ -10,7 +10,331 @@
 #ifndef HUB_H
 #define HUB_H
 
-/* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: chips/hub/README.md. */
+
+/* ---- PI: processor interface, 8-byte slots (identity, interrupts, real-time clock, error latches) --- */
+
+#define HUB_PI_REGION_PRESENT              0x000018   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define   HUB_PI_REGION_PRESENT_V_1        0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_PI_CPU_NUM                     0x000020   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 136 sites, 20 routine(s) */
+#define HUB_PI_CALIAS_SIZE                 0x000028   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 3 routine(s) */
+#define   HUB_PI_CALIAS_SIZE_V_1           0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_CALIAS_SIZE_V_2           0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_PI_MAX_CRB_TIMEOUT             0x000030   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define HUB_PI_CRB_SFACTOR                 0x000038   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define HUB_PI_CPU_PRESENT_A               0x000040   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_PI_CPU_PRESENT_B               0x000048   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define HUB_PI_CPU_ENABLE_A                0x000050   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_PI_CPU_ENABLE_B                0x000058   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_PI_NMI_A                       0x000070   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 3 routine(s) */
+#define HUB_PI_INT_PEND_MOD                0x000090   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 9 sites, 8 routine(s) */
+#define   HUB_PI_INT_PEND_MOD_V_100        0x100   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   HUB_PI_INT_PEND_MOD_V_40         0x40   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_INT_PEND_MOD_V_69         0x69   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_INT_PEND_MOD_V_6B         0x6b   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_INT_PEND_MOD_V_7          0x7   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_INT_PEND_MOD_V_76         0x76   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define HUB_PI_INT_PEND0                   0x000098   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 11 sites, 8 routine(s) */
+#define HUB_PI_INT_PEND1                   0x0000a0   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 5 sites, 4 routine(s) */
+#define   HUB_PI_INT_PEND1_B_0             0x1   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_PI_INT_MASK0_A                 0x0000a8   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 4 sites, 4 routine(s) */
+#define HUB_PI_INT_MASK1_A                 0x0000b0   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 4 sites, 4 routine(s) */
+#define HUB_PI_INT_MASK0_B                 0x0000b8   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_PI_INT_MASK1_B                 0x0000c0   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 6 sites, 3 routine(s) */
+#define HUB_PI_RT_COMPARE_A                0x000108   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 25 sites, 6 routine(s) */
+#define   HUB_PI_RT_COMPARE_A_V_1          0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_2          0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_2A         0x2a   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_2B         0x2b   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_3          0x3   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_35         0x35   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_36         0x36   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_4          0x4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_5          0x5   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_5D         0x5d   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_5E         0x5e   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_5F         0x5f   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_60         0x60   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_81         0x81   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_83         0x83   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_84         0x84   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_A          0xa   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_A6         0xa6   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_B          0xb   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_B4         0xb4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_RT_COMPARE_A_V_C          0xc   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_PI_RT_COMPARE_B                0x000110   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 3 routine(s) */
+#define HUB_PI_PROFILE_COMPARE             0x000118   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_PI_RT_PEND_A                   0x000120   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_PI_RT_PEND_B                   0x000128   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_PI_PROF_PEND_A                 0x000130   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_PI_PROF_PEND_B                 0x000138   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_PI_RT_EN_A                     0x000140   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define   HUB_PI_RT_EN_A_V_1               0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_PI_RT_EN_B                     0x000148   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_PI_PROF_EN_A                   0x000150   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_PI_PROF_EN_B                   0x000158   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define   HUB_PI_PROF_EN_B_V_1             0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_PI_RT_LOCAL_CTRL               0x000160   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 6 sites, 1 routine(s) */
+#define   HUB_PI_RT_LOCAL_CTRL_V_10000     0x10000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_PI_GFX_INT_CMP_A               0x000320   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_PI_GFX_INT_CMP_B               0x000348   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_PI_ERR_INT_PEND                0x000400   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 13 sites, 5 routine(s) */
+#define   HUB_PI_ERR_INT_PEND_V_FF0000     0xff0000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_PI_ERR_INT_PEND_V_FFFF       0xffff   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_PI_ERR_INT_MASK_A              0x000408   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 5 sites, 2 routine(s) */
+#define HUB_PI_ERR_INT_MASK_B              0x000410   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 5 sites, 2 routine(s) */
+#define HUB_PI_ERR_STACK_ADDR_A            0x000418   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 4 sites, 3 routine(s) */
+#define   HUB_PI_ERR_STACK_ADDR_A_B_8      0x100   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_PI_ERR_STACK_ADDR_B            0x000420   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 7 sites, 3 routine(s) */
+#define HUB_PI_ERR_STACK_SIZE              0x000428   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define HUB_PI_ERR_STATUS0_A               0x000430   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 5 sites, 4 routine(s) */
+#define HUB_PI_ERR_STATUS1_A               0x000440   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 3 routine(s) */
+#define HUB_PI_ERR_STATUS1_A_RCLR          0x000448   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_PI_ERR_STATUS0_B               0x000450   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 5 sites, 4 routine(s) */
+#define HUB_PI_ERR_STATUS1_B               0x000460   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 3 routine(s) */
+#define HUB_PI_ERR_STATUS1_B_RCLR          0x000468   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+
+/* ---- PI space above 0x20000: the hard-reset bit and the real-time counter (the local block, grouped by address) --- */
+
+#define HUB_PI_HARDRESET_BIT               0x020068   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_PI_RT_COUNT                    0x030100   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 161 sites, 80 routine(s) */
+#define   HUB_PI_RT_COUNT_B_11_0           0xfff   /* [I] load mask: the code isolates these bits (1 sites) */
+
+/* ---- MD: memory and directory (configuration, migration, error latches) --- */
+
+#define HUB_MD_MEMORY_CONFIG               0x200018   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 3 routine(s) */
+#define   HUB_MD_MEMORY_CONFIG_B_1_0       0x3   /* [I] load mask: the code isolates these bits (3 sites) */
+#define HUB_MD_REFRESH_CONTROL             0x200020   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define   HUB_MD_REFRESH_CONTROL_B_11_0    0xfff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_MD_FANDOP_CAC_STAT             0x200028   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_MD_MIG_DIFF_THRESH             0x200030   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 6 sites, 3 routine(s) */
+#define HUB_MD_MIG_VALUE_THRESH            0x200038   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 10 sites, 5 routine(s) */
+#define HUB_MD_MIG_CANDIDATE_CLR           0x200048   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_MD_DIR_ERROR                   0x200050   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_MD_DIR_ERROR_CLR               0x200058   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_MD_PROTOCOL_ERROR              0x200060   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_MD_PROTOCOL_ERROR_CLR          0x200068   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_MD_MEM_ERROR                   0x200070   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_MD_MEM_ERROR_CLR               0x200078   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define   HUB_MD_MEM_ERROR_CLR_B_0         0x1   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_MD_MISC_ERROR                  0x200080   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_MD_MISC_ERROR_CLR              0x200088   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define   HUB_MD_MISC_ERROR_CLR_B_9_0      0x3ff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_MD_MOQ_SIZE                    0x2000a0   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_MD_MLAN_CTL                    0x2000a8   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 6 sites, 1 routine(s) */
+#define   HUB_MD_MLAN_CTL_B_0              0x1   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_MD_MLAN_CTL_B_1              0x2   /* [I] load mask: the code isolates these bits (5 sites) */
+#define HUB_PER_HUB_INIT                   0x2000c8   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from per_hub_init; reached in 1 sites, 1 routine(s) */
+#define HUB_HUB_IFDR_FIX_VALUE             0x2000d0   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from hub_ifdr_fix_value; reached in 1 sites, 1 routine(s) */
+#define   HUB_HUB_IFDR_FIX_VALUE_B_6_0     0x7f   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_HUB_IFDR_FIX_VALUE_2000D8      0x2000d8   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from hub_ifdr_fix_value; reached in 1 sites, 1 routine(s) */
+#define   HUB_HUB_IFDR_FIX_VALUE_2000D8_B_6_0 0x7f   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_PER_HUB_INIT_2000E0            0x2000e0   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from per_hub_init; reached in 3 sites, 1 routine(s) */
+#define   HUB_PER_HUB_INIT_2000E0_V_100    0x100   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+
+/* ---- MD performance counters ------------------------------------- */
+
+#define HUB_MD_PERF_SEL                    0x210000   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_MD_PERF_CNT0                   0x210010   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+
+/* ---- MD junk-bus block: microcontroller registers, slot id, LEDs --- */
+
+#define HUB_MD_UREG0_0                     0x220000   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 6 sites, 2 routine(s) */
+#define   HUB_MD_UREG0_0_V_1               0x1   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_0_V_1C              0x1c   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_0_V_7F              0x7f   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_0_V_8               0x8   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_0_V_FE              0xfe   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_0_B_7_0             0xff   /* [I] load mask: the code isolates these bits (6 sites) */
+#define HUB_MD_UREG0_1                     0x220008   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 9 sites, 2 routine(s) */
+#define   HUB_MD_UREG0_1_V_45              0x45   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_1_V_80              0x80   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_1_V_A0              0xa0   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_1_V_C0              0xc0   /* [I] a constant the code writes here (4 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_1_V_C5              0xc5   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   HUB_MD_UREG0_1_B_0               0x1   /* [I] load mask: the code isolates these bits (3 sites) */
+#define   HUB_MD_UREG0_1_B_3               0x8   /* [I] load mask: the code isolates these bits (4 sites) */
+#define   HUB_MD_UREG0_1_B_4_2_1           0x16   /* [I] load mask: the code isolates these bits (14 sites) */
+#define   HUB_MD_UREG0_1_B_7_0             0xff   /* [I] load mask: the code isolates these bits (14 sites) */
+#define HUB_MD_SLOTID_USTAT                0x220048   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define   HUB_MD_SLOTID_USTAT_B_3_0        0xf   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_MD_SLOTID_USTAT_B_7_0        0xff   /* [I] load mask: the code isolates these bits (3 sites) */
+#define HUB_MD_LED0                        0x220050   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 4 sites, 1 routine(s) */
+#define   HUB_MD_LED0_V_1                  0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_2                  0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_23                 0x23   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_2A                 0x2a   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_2B                 0x2b   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_3                  0x3   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_31                 0x31   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_35                 0x35   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_36                 0x36   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_3F                 0x3f   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_4                  0x4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_46                 0x46   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_47                 0x47   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_48                 0x48   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_5                  0x5   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_5D                 0x5d   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_81                 0x81   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_83                 0x83   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_84                 0x84   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_9                  0x9   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_97                 0x97   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_A                  0xa   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_A6                 0xa6   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_B                  0xb   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_B4                 0xb4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_C                  0xc   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_CF                 0xcf   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_F                  0xf   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_F3                 0xf3   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_LED0_V_FC                 0xfc   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_MD_UREG1_0                     0x220080   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 38 sites, 9 routine(s) */
+#define   HUB_MD_UREG1_0_V_1               0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_2               0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_23              0x23   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_2A              0x2a   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_2B              0x2b   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_3               0x3   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_31              0x31   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_35              0x35   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_36              0x36   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_3F              0x3f   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_4               0x4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_46              0x46   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_47              0x47   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_48              0x48   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_5               0x5   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_5D              0x5d   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_81              0x81   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_83              0x83   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_84              0x84   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_97              0x97   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_A               0xa   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_A6              0xa6   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_B               0xb   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_B4              0xb4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_C               0xc   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_CF              0xcf   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_F               0xf   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_F3              0xf3   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_MD_UREG1_0_V_FC              0xfc   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+
+/* ---- II: I/O interface (widget, protection, error, CRB and PRB registers) --- */
+
+#define HUB_IIO_WSTAT                      0x400008   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_IIO_WCR                        0x400020   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define   HUB_IIO_WCR_B_3_0                0xf   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_IIO_IOWA                       0x400110   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 6 sites, 3 routine(s) */
+#define HUB_IIO_IIWA                       0x400118   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_IIO_IIDEM                      0x400120   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 5 sites, 3 routine(s) */
+#define HUB_IIO_ILCSR                      0x400128   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define   HUB_IIO_ILCSR_V_100              0x100   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_IIO_ILCSR_B_1                0x2   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_IIO_ILCSR_B_13               0x2000   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   HUB_IIO_ILCSR_B_15_0             0xffff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_IIO_ILLR                       0x400130   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define   HUB_IIO_ILLR_B_15_0              0xffff   /* [I] load mask: the code isolates these bits (4 sites) */
+#define HUB_IIO_IIDSR                      0x400138   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 12 sites, 5 routine(s) */
+#define   HUB_IIO_IIDSR_V_1000000          0x1000000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_IIO_IGFX_0                     0x400140   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define HUB_HUB_PIOMAP_ALLOC               0x400160   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from hub_piomap_alloc, hub_ioerror_handler, sub_c00000000003b440; reached in 5 sites, 4 routine(s) */
+#define   HUB_HUB_PIOMAP_ALLOC_V_300       0x300   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_HUB_PIOMAP_ALLOC_B_3_0       0xf   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_HUB_PIOMAP_ALLOC_B_4_0       0x1f   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_HUB_PIOMAP_ALLOC_B_7_0       0xff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_MLRESET                        0x400190   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from mlreset; reached in 1 sites, 1 routine(s) */
+#define HUB_IIO_IOPRB_0                    0x400198   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 7 sites, 4 routine(s) */
+#define HUB_IIO_IMEM                       0x4001e8   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 4 sites, 3 routine(s) */
+#define   HUB_IIO_IMEM_V_101               0x101   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_IIO_IMEM_B_0                 0x1   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_IIO_IMEM_B_4                 0x10   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_IIO_IMEM_B_4_0               0x11   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_IIO_IMEM_B_8                 0x100   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_IIO_IECLR                      0x4001f8   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define   HUB_IIO_IECLR_V_20000            0x20000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_IIO_IECLR_V_FF0000           0xff0000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_IIO_IECLR_V_FFFF             0xffff   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_IIO_IBCN                       0x400200   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define   HUB_IIO_IBCN_V_2                 0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_HUB_ERROR_DEVENABLE            0x4002c8   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from hub_error_devenable; reached in 1 sites, 1 routine(s) */
+#define HUB_IIO_PRTE_0                     0x400308   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 4 sites, 1 routine(s) */
+#define   HUB_IIO_PRTE_0_B_7_0             0xff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HUB_IIO_IPDR                       0x400388   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 5 sites, 2 routine(s) */
+#define   HUB_IIO_IPDR_V_10                0x10   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   HUB_IIO_IPDR_B_4                 0x10   /* [I] load mask: the code isolates these bits (2 sites) */
+#define HUB_IIO_ICDR                       0x400390   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 1 routine(s) */
+#define   HUB_IIO_ICDR_V_10                0x10   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_IIO_ICDR_B_4                 0x10   /* [I] load mask: the code isolates these bits (2 sites) */
+#define HUB_IIO_IFDR                       0x400398   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 8 sites, 3 routine(s) */
+#define   HUB_IIO_IFDR_B_6_0               0x7f   /* [I] load mask: the code isolates these bits (2 sites) */
+#define HUB_IIO_ICMR                       0x4003a8   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 6 sites, 3 routine(s) */
+#define   HUB_IIO_ICMR_V_40                0x40   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_IIO_ICCR                       0x4003b0   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 7 sites, 1 routine(s) */
+#define HUB_IIO_ICTO                       0x4003b8   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define   HUB_IIO_ICTO_V_FF                0xff   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_IIO_ICTP                       0x4003c0   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define   HUB_IIO_ICTP_V_1000              0x1000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_IIO_ICRB0_A                    0x400400   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 14 sites, 9 routine(s) */
+#define   HUB_IIO_ICRB0_A_B_0              0x1   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_IIO_ICRB0_A_B_2_0            0x7   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_IIO_ICRB0_A_B_3_0            0xf   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_IIO_ICRB0_A_B_4_0            0x1f   /* [I] load mask: the code isolates these bits (2 sites) */
+#define HUB_IIO_ICRB0_B                    0x400408   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 11 sites, 6 routine(s) */
+#define   HUB_IIO_ICRB0_B_B_1_0            0x3   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_IIO_ICRB0_B_B_4_0            0x1f   /* [I] load mask: the code isolates these bits (2 sites) */
+#define HUB_IIO_ICRB0_C                    0x400410   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 6 sites, 5 routine(s) */
+#define HUB_IIO_ICRB0_D                    0x400418   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_IIO_ICRB1_B                    0x400428   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+
+/* ---- II block transfer engines 0 and 1 --------------------------- */
+
+#define HUB_IIO_IBLS_0                     0x410000   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_IIO_IBSA_0                     0x410008   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_IIO_IBDA_0                     0x410010   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_IIO_IBCT_0                     0x410018   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_IIO_IBLS_1                     0x420000   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define   HUB_IIO_IBLS_1_V_1               0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_IIO_IBLS_1_V_100000          0x100000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_IIO_IBSA_1                     0x420008   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_IIO_IBDA_1                     0x420010   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_IIO_IBCT_1                     0x420018   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 1 routine(s) */
+#define   HUB_IIO_IBCT_1_V_10              0x10   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_IIO_IBNA_1                     0x420020   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+
+/* ---- II performance counters ------------------------------------- */
+
+#define HUB_IIO_IPCR                       0x430000   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 4 sites, 2 routine(s) */
+#define HUB_IIO_IPPR                       0x430008   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+
+/* ---- NI: network interface (status, port, vector, routing tables) --- */
+
+#define HUB_NI_STATUS_REV_ID               0x600000   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 18 sites, 16 routine(s) */
+#define   HUB_NI_STATUS_REV_ID_B_0         0x1   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   HUB_NI_STATUS_REV_ID_B_3_0       0xf   /* [I] load mask: the code isolates these bits (6 sites) */
+#define   HUB_NI_STATUS_REV_ID_B_7_0       0xff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HUB_NI_STATUS_REV_ID_B_8_0       0x1ff   /* [I] load mask: the code isolates these bits (3 sites) */
+#define HUB_NI_PORT_RESET                  0x600008   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 6 sites, 6 routine(s) */
+#define   HUB_NI_PORT_RESET_V_2            0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HUB_NI_PORT_RESET_V_81           0x81   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HUB_NI_PROTECTION                  0x600010   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 2 routine(s) */
+#define HUB_NI_GLOBAL_PARMS                0x600018   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define HUB_NI_SCRATCH_REG0                0x600100   /* [E] width 8 byte(s), access w; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_NI_SCRATCH_REG1                0x600108   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 14 sites, 2 routine(s) */
+#define HUB_NI_DIAG_PARMS                  0x600110   /* [E] width 8 byte(s), access rw; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 1 routine(s) */
+#define HUB_NI_VECTOR_PARMS                0x600200   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 3 routine(s) */
+#define HUB_NI_VECTOR                      0x600208   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 3 routine(s) */
+#define HUB_NI_VECTOR_DATA                 0x600210   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 2 sites, 2 routine(s) */
+#define HUB_NI_VECTOR_STATUS               0x600300   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_NI_VECTOR_READ_DATA            0x600310   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 4 sites, 2 routine(s) */
+#define HUB_NI_VECTOR_CLEAR                0x600380   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 3 sites, 3 routine(s) */
+#define HUB_NI_AGE_CPU0_MEMORY             0x600500   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 9 sites, 3 routine(s) */
+#define HUB_NI_AGE_CPU1_MEMORY             0x600510   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 9 sites, 3 routine(s) */
+#define HUB_NI_PORT_ERROR                  0x608008   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 4 sites, 4 routine(s) */
+#define HUB_NI_PORT_ERROR_CLEAR            0x608088   /* [E] width 8 byte(s), access r; name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 10 sites, 4 routine(s) */
+#define   HUB_NI_PORT_ERROR_CLEAR_B_7_0    0xff   /* [I] load mask: the code isolates these bits (5 sites) */
+#define HUB_NI_META_TABLE0                 0x638000   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
+#define HUB_NI_LOCAL_TABLE0                0x638100   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names); reached in 1 sites, 1 routine(s) */
 
 #endif /* HUB_H */
