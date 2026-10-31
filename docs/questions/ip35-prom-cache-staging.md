@@ -197,12 +197,14 @@ which merges quadwords 0 and 1 (ignoring PA[6:4] on Index Store Data (S)) would 
 Question. The 36-bit words some PROM code stores with Index Store Data (I) are not a plain instruction in TagLo with
 four extra bits in TagHi. What do they look like, and where do they come from?
 
-Short answer. Established from the IP35 PROM's own table of hardware-captured words: the PROM does not transform
-instruction words in software. The only 36-bit words that are not raw flash words come from a table in the PROM
-(0x1fc89a20 to 0x1fc8a0a0), loaded verbatim by a separate routine at 0x1fc028cc. The routine of this page reads its
-words back from a hardware refill and stores them unchanged. The table words are the predecoded form: the 26 non-opcode
-instruction bits are rearranged, the 6-bit opcode becomes 10 bits, and the parity bit is the even parity of all 36.
-`tools/predecode_table.py` reproduces the numbers below.
+Short answer. Established from the code: the PROM does not transform instruction words in software. The only
+36-bit words that are not raw flash words come from a table in the PROM (0x1fc89a20 to 0x1fc8a0a0), loaded verbatim by a
+separate routine at 0x1fc028cc. The routine of this page stores the words it reads back with Index Load Data (I)
+unchanged. Established by exact comparison with the flash instructions at the same addresses: the table words follow
+one layout (the 26 non-opcode instruction bits rearranged, the 6-bit opcode replaced by 10 bits, the parity bit the
+even parity of all 36). Inferred: that the table is the hardware's own predecode output (a capture of what the cache
+holds after a refill) rather than something generated another way. `tools/predecode_table.py` reproduces the
+numbers below.
 
 **1. Every Index Store Data (I) in the three PROMs, and the source of what it stores** (code areas only, found by
 scanning for the encoding and reading the surrounding instructions):
@@ -219,9 +221,10 @@ scanning for the encoding and reading the surrounding instructions):
 | IP30 4.17 | 0x1fc174d4, 0x1fc4b3e4 | a library routine storing the TagHi/TagLo/ECC its caller passes in memory | caller-supplied, not decoded |
 
 No instruction between a load of a flash word and an Index Store Data (I) shifts, masks or inserts bits: the table words
-are used as they are, and the copy routine's words are the hardware's. So the PROM does not document the layout
-by transforming; the table does, because each table word is the hardware's predecode of the flash instruction at the
-same address.
+are used as they are, and the copy routine's words are the hardware's. So the PROM does not transform. The table words
+sit beside the flash instruction at the same address and follow one regular layout (established); that they are
+the hardware's predecode of that instruction is inferred from the regularity and from the PROM storing them without
+change, not shown by anything in the PROM or the manual.
 
 **2. Table words beside flash instructions.** The table's eight lines are tagged at 0x1fc027c0 to 0x1fc029ff through
 0xa80000001fc0xxxx (way 0). Lines 0 to 4 (0x1fc027c0 to 0x1fc028ff) carry TagLo 0x01fc024c (tag PA[35:12] = 0x1fc02,
@@ -261,11 +264,12 @@ except four (below), by exact comparison of bits 25:0:
 - ECC[0] equals the even parity of the 36 stored bits in all 49 words (the bit is 1 when the data has an odd number of ones).
   The pattern test stores ECC bits that do not follow this rule (all ones with ECC 1, 0xaaaaaaaa with 0), so the cell is
   directly writable and not computed on Index Store Data (I).
-- Four words do not follow the layout because the table was built from code with different address constants: the
-  `daddiu` at 0x1fc028d8 and 0x1fc028f0 decode to immediate 0x1fc8 (flash has 0x1fc9), the ones at 0x1fc028e0 and 0x1fc028f8
-  to 0x7620 and 0x7ca0 (flash has 0x9a20 and 0xa0a0). Every other field of those four follows the layout. So the staged
-  line is not byte-equivalent to flash there: the table was written for a build in which the table sat at a different
-  address (the first constant pair decodes to 0x1fc87620).
+- Four words do not equal the flash instruction at their address (established): the `daddiu` at 0x1fc028d8 and
+  0x1fc028f0 decode, through the layout, to immediate 0x1fc8 (flash has 0x1fc9), the ones at 0x1fc028e0 and 0x1fc028f8
+  to 0x7620 and 0x7ca0 (flash has 0x9a20 and 0xa0a0). Every other field of those four follows the layout. The staged
+  line is therefore not byte-equivalent to flash there. Inferred, not shown: that the table was produced from a build
+  whose address constants differed (the first constant pair decodes to 0x1fc87620, an address that is not this image's table);
+  the observation is only that these four immediates differ from flash.
 
 For the sample words the extra bits are not a bit inserted inside the instruction: the instruction fields are permuted and
 the opcode is expanded. Example: `addiu $4,$0,2` is 0x3:44200004; opcode 001001 becomes class 0011010001 at bits 35:26, immediate
@@ -284,8 +288,8 @@ instruction executed is the decode of those words, not TagLo.
 **Consequence for a model.** Either keep the primary instruction cache data opaque and self-consistent (store what Index
 Store Data (I) gives, return it from Index Load Data (I), and execute by decoding it with the layout above, which needs
 the class bits for the opcodes it meets), or hold the architectural word beside the 36-bit value and execute that. In
-the second case the table's words need the architectural word from the table, not from TagLo, and the four stale
-constants above must be reproduced if the code that uses them runs from the cache. The layout above is exact for the
+the second case the table's words need the architectural word from the table, not from TagLo, and the four
+mismatched immediates above must be reproduced if the code that uses them runs from the cache. The layout above is exact for the
 sampled opcodes and a model cannot derive it from the manual, which says only that the word is 36 bits.
 
 ## Where the manual is silent, and what the PROM requires
