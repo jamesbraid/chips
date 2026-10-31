@@ -9,6 +9,23 @@ chip page and the entry is deleted.
   Next: the XBridge and Crossbow specifications' identification-register sections (page images).
 - **TIOCP.** Whether any product in scope carries it is not established. Tried: its part numbers appear only
   in the shared accessors. Next: Linux `pci-xtalk-bridge.c` and its history for the platform that uses it.
+- **Xbow: the PROMs' large crossbar routines.** The census seeds only the small routines it could tie to the
+  Crossbow (link-usable tests, link reset, error save, the IP30 interrupt service). Routines that touch the
+  link-block displacements and were not read: IP27 PROM `0x1fc444b0`; I/O-board PROM `0x11c1d4ac`, `0x11c21c58`,
+  `0x11c3250c`, `0x11c517f4`, `0x11c52f80`, `0x11c5ce08`; IP35 PROM `0x1fc4ca98`; IP30 PROM `0xbfc4528c`,
+  `0xbfc48038`, `0xbfc48384`, `0xbfc75020`. Some may be Bridge-family code: the Bridge shares the widget-common
+  offsets 0x4 to 0x5c and has registers from 0x100 up, so a displacement pattern alone does not say which chip.
+  They take their window pointer from a record field or a global, which the scan does not follow. They hold the
+  link credit and arbitration setup, the diagnostics and any write of widget 0 control, packet time-out, LLP control and
+  arbitration reload. Next: read each by hand, or constant-fold the record fields; settle the input-buffer flush
+  register, the packet time-out and arbitration reload values and the NIC register.
+- **Xbow: interrupt vector assignment.** IRIX writes the vector into interrupt destination upper from the interrupt
+  layer at run time; which number each product uses is not in `xbow.o`. Next: the interrupt allocation code of the node
+  controller and HEART, and any PROM routine that programs the register.
+- **Xbow: write-error behaviour.** The graded answers (what sets each error bit, what is latched on a refused register
+  write, how the vector is chosen) are in chips/xbow/README.md, "Error reporting for a refused or timed-out register
+  write". Open there: what a link-level time-out latches, how a 4-byte access reaches a double-word-only register
+  file, a second error's effect, and the registers of the PXBOW part.
 - **Hub, Bedrock, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
   seeds (see HAIKU-BRIEF.md) and run `tools/run.sh`.
 - **Model of a PROM's window base.** A PROM builds its window pointer at run time; the census recovers a
