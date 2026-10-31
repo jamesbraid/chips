@@ -1,0 +1,87 @@
+#!/bin/sh
+# Run a command in the toolchain container with this repository mounted at /work.
+#
+#   tools/re-run [--ghidra] [--workspace DIR] [--] [COMMAND...]
+#
+#   tools/re-run python3 scripts/inventory.py
+#   tools/re-run mips64-linux-gnuabi64-objdump -h root/unix
+#   tools/re-run                       # a shell in the container
+#   tools/re-run --ghidra analyzeHeadless /tmp/ghidra-projects p -import root/unix
+#
+# Needs Podman (rootless is fine) and nothing else. The image is built from
+# tools/Containerfile the first time and again whenever that file changes; it
+# is tagged with a hash of the file. --ghidra uses the optional second image,
+# built from tools/Containerfile.ghidra (large; fetches Ghidra from its
+# release page). It has analyzeHeadless on PATH and a JDK, but not the
+# toolchain: run Python tools without --ghidra.
+#
+# The repository is mounted read-write at /work, as your own user id, so
+# generated files are yours. root/ (the IRIX files you copied in, see
+# IRIX_FILES.md) is inside it. If root/ is a symlink to a directory elsewhere,
+# that directory is mounted read-only at the path the link resolves to inside
+# the container, so the link works. A link that resolves into a system
+# directory of the container (/usr, /etc, /var and so on) is refused: make
+# root/ a real directory instead. Links inside root/ that point outside it are
+# not followed. scripts/populate-root writes into root/: run it on the host
+# (it only needs python3), not here.
+#
+#   RE_ENGINE=CMD   container command to use instead of podman
+#   RE_NOTTY=1      never allocate a terminal
+set -eu
+here=$(cd "$(dirname "$0")" && pwd -P)
+repo=$(dirname "$here")
+engine=${RE_ENGINE:-podman}
+workspace=$repo
+ghidra=
+while [ $# -gt 0 ]; do
+    case $1 in
+        --workspace) workspace=$2; shift 2 ;;
+        --ghidra) ghidra=1; shift ;;
+        --) shift; break ;;
+        -h|--help) sed -n '2,/^set -eu/{/^set -eu/!p;}' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+        *) break ;;
+    esac
+done
+if [ ! -d "$workspace" ]; then
+    printf 're-run: workspace %s is not a directory\n' "$workspace" >&2
+    exit 2
+fi
+workspace=$(cd "$workspace" && pwd -P)
+
+if [ -n "$ghidra" ]; then
+    file=$here/Containerfile.ghidra; name=re-ghidra
+else
+    file=$here/Containerfile; name=re-toolchain
+fi
+tag=$name:$(sha256sum "$file" | cut -c1-12)
+if ! $engine image exists "$tag" >/dev/null 2>&1; then
+    printf 're-run: building %s from %s\n' "$tag" "${file#"$repo"/}" >&2
+    $engine build -q -t "$tag" -f "$file" "$here" >/dev/null
+fi
+
+# A symlinked root/ gets its target bind-mounted where the link points.
+mounts=
+if [ -L "$workspace/root" ]; then
+    target=$(readlink "$workspace/root")
+    real=$(cd "$workspace/root" && pwd -P)
+    case $target in /*) dest=$target ;; *) dest=$(realpath -m --no-symlinks "/work/$target") ;; esac
+    case $real$dest in *[[:space:]]*|*:*|*,*)
+        printf 're-run: root/ paths with spaces, colons or commas are not supported\n' >&2; exit 2 ;;
+    esac
+    case $dest in
+        /work/*) ;;                          # already inside the workspace mount
+        /|/bin|/bin/*|/boot|/boot/*|/dev|/dev/*|/etc|/etc/*|/lib*|/proc|/proc/*|/run|/run/*|/sbin|/sbin/*|/sys|/sys/*|/tmp|/tmp/*|/usr|/usr/*|/var|/var/*)
+           printf 're-run: root/ points at %s, which would shadow container files; make root/ a real directory or link it elsewhere\n' "$dest" >&2
+           exit 2 ;;
+        *) mounts="-v $real:$dest:ro" ;;
+    esac
+fi
+
+[ $# -gt 0 ] || set -- bash
+tty=
+if [ -z "${RE_NOTTY:-}" ] && [ -t 0 ] && [ -t 1 ]; then tty=-it; fi
+# --userns=keep-id maps you to the same id inside, label=disable lets bind
+# mounts work on SELinux hosts.
+# shellcheck disable=SC2086
+exec $engine run --rm $tty --userns=keep-id --security-opt label=disable \
+    -v "$workspace:/work" $mounts -w /work -e HOME=/tmp "$tag" "$@"

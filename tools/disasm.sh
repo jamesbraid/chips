@@ -2,14 +2,13 @@
 # Stage 1: disassemble every image a census config names, inside the build container.
 #   tools/disasm.sh CONFIG.json            run from the census directory (the workspace)
 # root/ in the workspace holds one symlink per IRIX tree (see HAIKU-BRIEF.md, setup).
-# The container is the build image's wrapper: pass RR=/path/rr-chips.sh (made by setup-clone.sh) or RE_RUN=/path/re-run.
+# The container is tools/re-run; RR=/path/to/wrapper or RE_RUN=/path/to/re-run override it.
 set -eu
 cd "$(dirname "$0")/.."
 CONFIG=${1:?usage: disasm.sh CONFIG.json}
-# RR is a workspace wrapper made by setup-clone.sh (rr-chips.sh); RE_RUN is the bare container tool.
+# RR is a wrapper that takes the command alone; RE_RUN takes --workspace DIR -- COMMAND.
 RR=${RR:-}
-RE_RUN=${RE_RUN:-re-run}
-export UV_CACHE_DIR=${UV_CACHE_DIR:-$HOME/.cache/uv}
+RE_RUN=${RE_RUN:-tools/re-run}
 mkdir -p work/dis work/prom
 python3 - "$CONFIG" > work/dis/.commands.sh <<'PY'
 import json, sys

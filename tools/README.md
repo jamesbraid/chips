@@ -13,8 +13,8 @@ spec-backed or no-spec.
 | 5 report | `report.py` | `chips/*/census/CHIP/census.md` |
 
 `run.sh CONFIG DATASHEET_REPO MODEL_CHECKOUT [REF]` runs all of it (the comparison needs the emulator's
-datasheets and model source; without them run stages 1, 2 and 4b by hand). `setup-clone.sh` makes a clone with a
-container wrapper.
+datasheets and model source; without them run stages 1, 2 and 4b by hand). `setup-clone.sh` prepares a clone and `re-run` runs a command in the toolchain container
+(see the README).
 
 How the scan works: a forward data-flow over each function's basic blocks, keeping the distinct states that
 reach a block (path-sensitive, capped), tracking constants, window pointers (plus an index flag), the chip-type
