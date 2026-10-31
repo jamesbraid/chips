@@ -256,6 +256,156 @@ the first draft did not list it.
 **Interrupt connect (`intr_connect_level`).** Stores into `+0x1800000` plus an index, ORs a bit into a
 per-CPU mask `1 << level`; the register offsets are indexed and not resolved (inferred from context).
 
+## Error registers: refused or timed-out writes and failed reads
+
+Read from `kernel.o` of the IP35 boot directory (IRIX 6.5.30): `hub_error_init`, `hub_error_clear`,
+`hubpi_eint_handler`, `handle_uncac_buserr`, `get_matching_spool_addr`, `save_hub_pi_error`, `save_hub_io_error`,
+`show_hub_pi_err`, `show_pi_error_spool_entry`, `hubii_eint_init`, `hubii_eint_handler`,
+`hubiio_crb_error_handler`, `hubiio_prb_error_handler`, `dump_crb` and the message tables they print from. No
+Bedrock specification is held, so the binaries are the evidence and the public Linux Hub headers are compared
+afterwards (below), never used to fill a field. Offsets are within a block. The processor interface (PI) block is
+at the alias base, the I/O interface (II) block at alias base `+0x400000`. The kernel reaches the blocks at a
+local alias (`+0x1000000`, II at `+0x1400000`) and at a node-indexed alias (`+0x1800000`, II at `+0x1c00000`);
+`hub_error_init`, `hub_error_clear` and `save_hub_err` visit a second PI register file at `+0x200000` above the
+first (established: the 0x200000 addend is in each routine). That there are two PIs, each with a CPU A and a CPU B
+side, is established by the table strings ("Processor interface 0", "Processor interface 1", "CPU A", "CPU B") and
+by the `BEDROCK PI %d ... %c` print formats. All registers are read and written as 64-bit doublewords.
+
+### Graded register table
+
+Grade is of the role and fields: **E** established (the routine read in full, or an arithmetic the code performs,
+or a field range the binary prints), **I** inferred, **U** unknown. Names are descriptive, taken from the message
+tables and routine names; they are not specification names.
+
+| block offset | register | access seen | who touches it (`kernel.o`) | what the code does | grade |
+|---|---|---|---|---|---|
+| PI `0x040`, `0x048` | CPU present A, B | r | `hub_error_init` | read per PI and combined with the enable word of the same side | I |
+| PI `0x050`, `0x058` | CPU enable A, B | r | `hub_error_init`, `save_hub_pi_error` | when the A word is zero the saved pending word has every CPU A bit cleared (mask `0xfffffffaab555555`), when the B word is zero every CPU B bit (mask `0xfffffffd55aaaaaa`) | E |
+| PI `0x400` | error interrupt pending | rw | `hubpi_eint_handler`, `hub_error_clear`, `handle_uncac_buserr`, `save_hub_pi_error` | bits 0 to 34 named below; handler writes the one bit it handled; `hub_error_clear` writes all ones | E (bits; that a write of one clears is inferred) |
+| PI `0x408`, `0x410` | error interrupt mask A, B | rw | `hubpi_eint_handler`, `hub_error_init` | handler ANDs pending with the mask of its own CPU side (side from bit 0 of a per-CPU slice byte); init stores fatal or miscellaneous masks and clears bit 21 in A and bit 20 in B | E |
+| PI `0x418`, `0x420` | error spool address A, B | r | `hub_error_init`, `show_hub_pi_err` | read per side and kept in the per-node record; `show_hub_pi_err` walks 8-byte entries from it | I |
+| PI `0x428` | error spool size | r | `hub_error_init`, `show_hub_pi_err` | when nonzero the spool size is `4096 << (value - 1)` | E (the unit is not shown) |
+| PI `0x430`, `0x450` | error status 0 A, B | r | `save_hub_pi_error`, `show_hub_pi_err` | saved only when bit 63 is set; fields below | E |
+| PI `0x438`, `0x458` | status 0 A, B, second address | w | `hub_error_clear` | all ones written | U (role) |
+| PI `0x440`, `0x460` | error status 1 A, B | r | `save_hub_pi_error`, `show_hub_pi_err` | fields below | E |
+| PI `0x448`, `0x468` | status 1 A, B, second address | w | `hub_error_init` | zero written at init | U (role) |
+| PI `0x4c8` | spurious message header 0 | rw | `hubpi_eint_handler`, `save_hub_pi_error`, `hub_error_clear` | fields below; zero written to re-arm | E |
+| PI `0x4d0` | spurious message header 1 | rw | same | bits 63:53 message source; zero written to re-arm | E |
+| II `0x008` | widget status | r | `hubii_eint_handler`, `save_hub_io_error`, `hubii_check_widget_disabled` | bit 32 error ("crazy"); with it set, bit 9 retry timeout, bit 5 tail timeout, bit 4 credit timeout name the reason | E |
+| II `0x138` | interrupt destination | rw | `hubii_eint_init`, `hubii_eint_handler`, `hub_error_clear` | bits 6:0 level, bit 8 PI side, bits 16:9 node, bit 24 set at init, bit 28 cleared by the handler and by `hub_error_clear` | E (fields; the enable and sent meaning of bits 24 and 28 is inferred) |
+| II `0x198 + 8i`, i = 0 to 8 | pending request buffer entries (PRB) | rw | `hubiio_prb_error_handler`, `hub_error_clear`, `dump_crb` | entry 0 is widget 0, entries 1 to 8 widgets 8 to 15; only bit 48 is tested; bits 48 to 51 named below | E |
+| II `0x1e8` | shutdown status | r | `hubii_eint_handler`, `bte_error_handler`, `hub_xp_error_handler` | bit 0 widget 0 shut down, bit 4 BTE 0, bit 8 BTE 1 | E |
+| II `0x1f8` | error clear | w | `hubii_eint_handler`, `hub_error_clear` | `0xffffff` after the buffers are handled; `hub_error_clear` writes all ones | E (the per-source meaning of the bits is inferred) |
+| II `0x220`, `0x228` | error header 1, 2 | r | `save_hub_io_ieph`, `show_hub_io_ieph` | fields below; saved raw | E |
+| II `0x400 + 0x20i`, i = 0 to 14 | CRB entry A | r | `hubiio_crb_error_handler`, `save_hub_io_crb`, `dump_crb` | fields below | E |
+| II `0x408 + 0x20i` | CRB entry B | r | same | bits 32:30 and 41:40 are compared with constants to tell a BTE entry from a processor one; fields not named in the dump | I |
+| II `0x410 + 0x20i` | CRB entry C | r | same | bit 48 chooses which bit of entry B is handed to the BTE handler | I |
+| II `0x10000`, `0x20000` | BTE 0, BTE 1 status | r | `save_hub_io_error` | bits 15:0 length in cache lines, bit 16 error | E |
+
+Totals: 22 rows, graded **16 established, 4 inferred, 2 unknown**. The sub-items inside E rows that are only inferred or unknown are listed in the open questions.
+
+**PI error status 0** (the binary prints these ranges): bits 2:0 error type; 5:3 request-buffer number; 16:6
+message supplemental; 24:17 message command (name table indexed 0 to 255); 61:25 error address, printed
+as `value << 3`; bit 62 overrun; bit 63 valid. The type is named from one of two tables chosen by bit 42 of status 1
+(0 read buffer, 1 write buffer). Read: 0 access error, 1 uncached partial error, 2 directory error, 3 timeout error,
+4 poisoned access violation, 5 too many NACKs, 6 response data error, 7 packet length error. Write: 0 access
+error, 1 uncached partial error, 3 timeout error, 6 response data error, 7 packet length error; 2, 4 and 5 are
+"undefined". (Established: both tables dumped from the data section.)
+
+**PI error status 1**: 20:0 spool count; 28:21 CRB timeout counter; 38:29 invalidate counter; 41:39 read or write
+buffer number; 42 write-buffer flag (selects the type table above and "WRB" or "RRB" in the print); 52:43 CRB status;
+63:53 message source. (Established.)
+
+**PI spurious header 0**: bit 0 error status B was valid, bit 1 error status A was valid, 16:6 message supplemental,
+24:17 message command, 61:25 address (`<< 3`), 62 tail bit, 63 valid. (Established.)
+
+**Pending bits (`+0x400`), named by the kernel's table**, B side at even bit numbers 0 to 24 and A side at the odd:
+0/1 spool count compare; 2/3 spurious message; **4/5 CPU write timeout error**; **6/7 CPU write error response
+(a WERR or PWERR reply)**; 8/9 SysState parity; 10/11 SysAD ECC during data cycle; 12/13 SysAD ECC during address
+cycle; 14/15 SysCmd parity during data cycle; 16/17 SysCmd parity during address cycle; 18/19 WERR or TERR during
+spool; **20/21 CPU received an uncorrectable error during an uncached load**; 22/23 SysState tag error; 24
+memory/directory uncorrectable error; 25/26 SysAD data quality bad (B at 25, A at 26); 27/28 uncorrectable error
+during a cached load (B 27, A 28); 29/30 data from the crossbar with the wrong number of cycles (B 29, A 30);
+31/32 illegal intervention or invalidate type and state response (B 31, A 32); 33/34 timeout waiting for the
+head of the state-pending FIFO (B 33, A 34). Bits 25 to 34 alternate B, A starting at B. The kernel's fatal masks
+are `0x5408aaa00` (A) and `0x2a0455500` (B), its miscellaneous masks `0x142000aa` (A) and `0xa100055` (B): fatal A
+is bits 9, 11, 13, 15, 17, 19, 23, 30, 32, 34; miscellaneous A is bits 1, 3, 5, 7, 21, 26, 28 (established:
+initialised words in the small-data section).
+
+**II CRB entry A** (printed by `dump_crb`): bit 0 I/O write operation; bit 1 valid; 39:2 network address (`<< 2`);
+44:40 transaction number of the Crosstalk request; 48:45 source id; 49 error set in the incoming Crosstalk request;
+50 entry has been marked; 51 uncorrectable error on incoming data from the network; 54:52 error code; 55 entry has an
+error. **PRB bits**: 48 write response packet error; 49 read response timeout; 50 spurious write response; 51
+spurious read response. **Error header 1**: 6:0 command, 18:8 supplemental, 30:20 source, 35:32 error type
+(long or short, request or reply packet), 40 overrun. **Error header 2**: 37:0 address, 40 tail. (Established.)
+
+### What sets each bit and what is latched
+
+1. **Failed or timed-out uncached write.** The PI sets pending bit 4/5 (timeout) or 6/7 (a WERR or PWERR reply was
+   received) for the CPU side that issued it, and latches status 0 (type, command, address) and status 1 for that
+   side if its valid bit is clear; a second error sets overrun instead (established for the field layout and
+   names, from the print code). The kernel's handler for these four bits calls `process_error_spool` and then
+   writes only the handled bit back to `+0x400`. That the hardware latches at the moment of the refusal rather than
+   later is inferred; the order of the pending bit and the status valid bit is unknown.
+2. **Failed uncached read.** Pending bit 20/21 (uncorrectable error during an uncached load) is what
+   `handle_uncac_buserr` tests, for its own CPU side, after the bus-error exception; if it is set and the faulting
+   address belongs to another partition the error is passed to `partition_handle_error` and the bit is written
+   back. A read that gets a timeout reply is recorded with type 3 (timeout) in a status 0 and in the in-memory
+   spool, not in a pending bit of its own (inferred: no read-timeout bit exists in the table; the type names are
+   established). `hub_error_init` clears bit 21 in mask A and bit 20 in mask B at init, so the uncorrectable-read
+   interrupt is masked by the kernel (established: the AND constants are in `hub_error_init`); that the bus-error
+   exception is then the report path is inferred.
+3. **Error spool.** `get_matching_spool_addr` compares the faulting physical address and access size with the
+   spooled address (status 0 bits 61:25 `<< 3`) of each 8-byte entry to decide whether the exception is the one it
+   is looking at (established: the routine's compares). What triggers an entry to be written to memory and the
+   entry layout beyond the shared fields: unknown.
+4. **I/O writes and reads that leave the node (II).** A failed or timed-out PIO request sets the error bit in the
+   CRB entry (bit 55) with a code in bits 54:52; the kernel's table names the eight codes: 0 directory error,
+   1 poison error, 2 write error, 3 access error, 4 partial write error, 5 partial read error, 6 timeout error, 7
+   Crosstalk error packet. `hubiio_crb_error_handler` treats 0, 5, 6 and 7 as fatal (error dump and a "Fatal ... on hub" message) and
+   1 to 4 as recoverable (it calls `hub_ioerror_handler` and frees the entry; message "PIO Write error from widget
+   %d, cleaning up and continuing" for the write case). Established from the jump table and both message paths.
+   Which CRB error code a refused write to a nonexistent widget, to a protected region or to a full request buffer
+   produces: unknown.
+5. **Protected-region replies.** The kernel carries the strings "Protection error response" and "Vector response
+   timeout" (their table was not read), and prints protection-index, protection-value and protection-rights ECC
+   fields in its memory/directory error decode (strings only; those routines were not read). Which of the status 0 types a protection violation
+   sets, and whether it is the same as the poisoned access violation (type 4) or the access error (type 0):
+   unknown.
+
+### Interrupts
+
+- **PI error interrupt.** `hub_error_init` connects `hubpi_eint_handler` with `cause_intr_connect(6, handler, 1)`,
+  a table indexed by CPU cause line (the routine refuses 2, 3 and anything above 7). That the line is Cause IP6
+  and that all four pending-bit pairs share it: inferred (the kernel handles the vector in one handler and tests
+  all 35 bits there).
+- **II error interrupt.** `hubii_eint_init` reserves a level at run time (`intr_heuristic`, name "HUB IO error
+  interrupt"), connects `hubii_eint_handler` and stores level, PI side, node and bit 24 in `+0x138`. The level
+  number is chosen at run time: unknown from the object. The handler reads status (`+0x8`) first: bit 32 set means
+  the link failed (reason from bits 9, 5, 4 or from `+0x1e8`), otherwise it processes the CRB and PRB entries, writes
+  `0xffffff` to `+0x1f8` and clears bit 28 of `+0x138`.
+- **Network interface error interrupt.** `hubni_eint_init` connects the handler with vector 126 (established: the
+  constant is in the call). The handler is shared with the remote-partition cleanup path.
+
+### Against the public Linux Hub headers (v6.6; reported after the reading above)
+
+Hub is the previous node controller, a sibling, so agreement is a hypothesis check and disagreement a finding.
+
+- **Agree.** PI registers `0x400` to `0x468` have the same offsets and the same order as the Hub headers (pending,
+  mask A and B, spool address A and B, spool size, status 0 and 1 for A and B, each followed by an eighth-byte
+  neighbour). Pending bits 0 to 24 are the same events in the same positions. Linux's fatal and miscellaneous
+  masks for CPU A are bit-for-bit the Bedrock masks restricted to bits 24 and below. Status 0 and 1 field
+  ranges are identical (type 2:0, request 5:3, supplemental 16:6, command 24:17, address 61:25, overrun 62, valid
+  63; spool 20:0, timeout count 28:21, invalidate count 38:29, buffer number 41:39, write-buffer flag 42, CRB
+  status 52:43, source 63:53). Error types agree by number (read 1, 2, 3; write 0, 1, 3). II widget status
+  error bit 32 and retry timeout bit 9, the interrupt destination enable bit 24 and sent bit 28, the clear
+  register at II `0x1f8` and the CRB error codes 0 to 5 and 7 agree.
+- **Disagree.** The Hub destination register has a six-bit level and an eight-bit node at bit 8; the Bedrock code
+  masks seven bits of level, puts a PI-side bit at bit 8 and the node at bits 16:9. Pending bits 25 to 34 and the
+  PRB-bit-48 handler are not in the Hub header. Linux names `0x438` and the three like it "clear on read"; the
+  Bedrock kernel only writes them, so whether a read clears is unknown for Bedrock.
+- **Not comparable.** The Hub headers have no Bedrock-style second PI register file.
+
 ## Reset expectations
 
 Unknown for every register; `per_hub_init` and `hub_error_init` write fixed values (above) without reading
@@ -263,4 +413,4 @@ first, which is the only reset-related evidence, and states what the driver sets
 
 ## Open
 
-See docs/open-questions.md: block boundaries, indexed families, the PROM window base, and the `window-18` space.
+See docs/open-questions.md: block boundaries, indexed families, the PROM window base, the `window-18` space, and the error-register questions listed there (what a refused widget read latches, the clear semantics of the status registers, the error spool entry layout, the protection-reply types, the interrupt level numbers).
