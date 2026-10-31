@@ -1,0 +1,243 @@
+variant	register	source	kind	bits_or_value	sites	functions	example
+?	0x0	store	const	0xa8	1	1	sub_c00000000039ba34@39bb30
+?	0x0	store	const	0x24	1	1	sub_c00000000039ba34@39bb3c
+?	0x0	store	const	0x40	1	1	sub_c00000000039bb68@39bbd4
+?	0x18	store	const	0x1	1	1	mlreset@02638c
+?	0x20	load	shift	shift 16	59	9	prom_c00000001fc00000@c008a8
+?	0x20	load	shift	shift 3	58	8	prom_c00000001fc00000@c0082c
+?	0x20	load	shift	shift 5	36	8	prom_c00000001fc00000@c00988
+?	0x20	load	shift	shift 0	4	4	get_slice@01d684
+?	0x20	load	shift	shift 10	2	2	prom_c00000001fc04ed0@c04f48
+?	0x28	store	const	0x2	1	1	mlreset@026394
+?	0x28	store	const	0x1	1	1	prom_c00000001fc00000@c01140
+?	0x28	load	shift	shift 0	3	3	memory_iscalias@02b0b0
+?	0x90	store	const	0x100	4	4	debug_stop_all_cpus@039c6c
+?	0x90	store	const	0x76	2	2	sub_c0000000000397fc@03982c
+?	0x90	store	const	0x40	1	1	sub_c0000000000391ec@039244
+?	0x90	store	const	0x7	1	1	sub_c000000000039688@0396c8
+?	0x90	store	const	0x6b	1	1	sub_c0000000000398f8@039924
+?	0x90	store	const	0x69	1	1	llp_pfail_switch@03e7c0
+?	0xa0	load	mask	0	1	1	prom_c00000001fc04884@c049b0
+?	0x108	store	const	0x81	2	1	prom_c00000001fc01cd8@c01fcc
+?	0x108	store	const	0x5e	1	1	prom_c00000001fc00000@c00850
+?	0x108	store	const	0x5f	1	1	prom_c00000001fc00000@c00c64
+?	0x108	store	const	0xb4	1	1	prom_c00000001fc00000@c00d08
+?	0x108	store	const	0x60	1	1	prom_c00000001fc00000@c00e78
+?	0x108	store	const	0xa6	1	1	prom_c00000001fc00000@c00f18
+?	0x108	store	const	0x5d	1	1	prom_c00000001fc00000@c00fe8
+?	0x108	store	const	0x3	1	1	prom_c00000001fc00000@c010a4
+?	0x108	store	const	0x35	1	1	prom_c00000001fc00000@c01178
+?	0x108	store	const	0x36	1	1	prom_c00000001fc011a4@c01234
+?	0x108	store	const	0x4	1	1	prom_c00000001fc011a4@c01324
+?	0x108	store	const	0x83	1	1	prom_c00000001fc011a4@c013e8
+?	0x108	store	const	0x5	1	1	prom_c00000001fc011a4@c014a4
+?	0x108	store	const	0x84	1	1	prom_c00000001fc011a4@c01568
+?	0x108	store	const	0xa	1	1	prom_c00000001fc011a4@c01624
+?	0x108	store	const	0xb	1	1	prom_c00000001fc011a4@c016e0
+?	0x108	store	const	0xc	1	1	prom_c00000001fc011a4@c0179c
+?	0x108	store	const	0x2a	1	1	prom_c00000001fc011a4@c01858
+?	0x108	store	const	0x2b	1	1	prom_c00000001fc011a4@c0194c
+?	0x108	store	const	0x1	1	1	prom_c00000001fc01cd8@c01d1c
+?	0x108	store	const	0x2	1	1	prom_c00000001fc01cd8@c01f08
+?	0x140	store	const	0x1	1	1	hub_rtc_init@048534
+?	0x158	store	const	0x1	1	1	startkgclock@048630
+?	0x160	store	const	0x10000	1	1	prom_c00000001fc5ac50@c5ac90
+?	0x400	store	const	0xffff	1	1	hub_error_clear@0324d4
+?	0x400	store	const	0xff0000	1	1	hub_error_clear@0324d4
+?	0x400	load	shift	shift 39	1	1	hubpi_eint_handler@032b88
+?	0x418	load	mask	8	1	1	prom_c00000001fc011a4@c012c8
+?	0x428	load	shift	shift 0	2	2	hub_error_init@03265c
+?	0x430	load	shift	shift 25	2	2	save_hub_pi_error@02fac8
+?	0x430	load	shift	shift 63	1	1	get_matching_spool_addr@0348b0
+?	0x430	load	shift	shift 3	1	1	get_matching_spool_addr@0348b0
+?	0x450	load	shift	shift 25	2	2	save_hub_pi_error@02fb1c
+?	0x450	load	shift	shift 63	1	1	get_matching_spool_addr@0348b0
+?	0x450	load	shift	shift 3	1	1	get_matching_spool_addr@0348b0
+?	0x30100	load	mask	11:0	1	1	uuid_create@25b718
+?	0x30100	load	shift	shift 3	34	10	llp_pfail_barrier@03e1fc
+?	0x30100	load	shift	shift 2	33	9	llp_pfail_barrier@03e1fc
+?	0x30100	load	shift	shift 5	33	9	llp_pfail_barrier@03e1fc
+?	0x30100	load	shift	shift 0	10	4	xbow_reset_link@06ef74
+?	0x200018	load	mask	1:0	3	3	mdir_xlate_addr_mem@049990
+?	0x200018	load	shift	shift 35	6	6	check_dir_access@02a1c0
+?	0x200018	load	shift	shift 1	1	1	mdir_xlate_addr_sdir@049bfc
+?	0x200020	load	mask	11:0	1	1	prom_c00000001fc04700@c047bc
+?	0x200020	load	shift	shift 12	1	1	prom_c00000001fc04700@c047bc
+?	0x200048	load	shift	shift 63	2	2	migr_intr_prologue_handler@26c654
+?	0x200050	load	shift	shift 63	2	2	save_hub_md_error@02fb94
+?	0x200050	load	shift	shift 1	1	1	save_hub_md_error@02fb94
+?	0x200058	load	shift	shift 63	2	2	log_md_errors@0335c0
+?	0x200058	load	shift	shift 2	1	1	memerror_sbe_intr@049f04
+?	0x200060	load	shift	shift 63	1	1	save_hub_md_error@02fbbc
+?	0x200068	load	shift	shift 63	1	1	log_md_errors@0335c4
+?	0x200070	load	shift	shift 63	2	2	save_hub_md_error@02fba8
+?	0x200078	load	mask	0	1	1	memerror_sbe_intr@049f08
+?	0x200078	load	shift	shift 62	3	1	memerror_sbe_intr@049f08
+?	0x200078	load	shift	shift 63	2	2	log_md_errors@0335bc
+?	0x200078	load	shift	shift 1	1	1	memerror_sbe_intr@049f08
+?	0x200088	load	mask	9:0	1	1	log_md_errors@0335cc
+?	0x2000a8	load	mask	1	5	1	sub_c00000000006a4d0@06a564
+?	0x2000a8	load	mask	0	1	1	sub_c00000000006a4d0@06a5a4
+?	0x2000d0	load	mask	6:0	1	1	hub_ifdr_fix_value@028fb0
+?	0x2000d0	load	shift	shift 17	1	1	hub_ifdr_fix_value@028fb0
+?	0x2000d8	load	mask	6:0	1	1	hub_ifdr_fix_value@028fc0
+?	0x2000d8	load	shift	shift 17	1	1	hub_ifdr_fix_value@028fc0
+?	0x2000e0	store	const	0x100	1	1	per_hub_init@026d5c
+?	0x220000	store	const	0x7f	4	3	i2c_init@09ab3c
+?	0x220000	store	const	0x1c	4	3	i2c_init@09ab4c
+?	0x220000	store	const	0xfe	3	3	i2c_master_xmit@09b064
+?	0x220000	store	const	0x1	2	2	i2c_master_recv@09b194
+?	0x220000	store	const	0x8	1	1	i2c_init@09ab94
+?	0x220000	load	mask	7:0	6	3	i2c_init@09ab54
+?	0x220008	store	const	0x80	4	3	i2c_init@09ab34
+?	0x220008	store	const	0xa0	4	3	i2c_init@09ab44
+?	0x220008	store	const	0xc0	4	3	i2c_init@09ab98
+?	0x220008	store	const	0xc5	3	3	i2c_master_xmit@09af38
+?	0x220008	store	const	0x45	3	3	i2c_master_xmit@09b05c
+?	0x220008	load	mask	7:0	14	3	i2c_master_xmit@09af00
+?	0x220008	load	mask	4,2:1	14	3	i2c_master_xmit@09af00
+?	0x220008	load	mask	3	4	3	i2c_master_xmit@09af3c
+?	0x220008	load	mask	0	3	1	i2c_arb@09acd0
+?	0x220048	load	mask	7:0	3	3	get_node_slotid@03cd44
+?	0x220048	load	mask	3:0	1	1	sn0drv_ioctl@06b070
+?	0x220048	load	shift	shift 4	1	1	sn0drv_ioctl@06b070
+?	0x220050	store	const	0xa	3	3	prom_c00000001fc011a4@c016a0
+?	0x220050	store	const	0xb	3	3	prom_c00000001fc011a4@c0175c
+?	0x220050	store	const	0xc	2	2	prom_c00000001fc011a4@c01818
+?	0x220050	store	const	0x2a	2	2	prom_c00000001fc011a4@c018d4
+?	0x220050	store	const	0x81	2	1	prom_c00000001fc01cd8@c02048
+?	0x220050	store	const	0x9	1	1	sub_c000000000025998@025a34
+?	0x220050	store	const	0xf	1	1	per_hub_init@026bf0
+?	0x220050	store	const	0x3f	1	1	prom_c00000001fc00000@c009ac
+?	0x220050	store	const	0xcf	1	1	prom_c00000001fc00000@c00a34
+?	0x220050	store	const	0xf3	1	1	prom_c00000001fc00000@c00abc
+?	0x220050	store	const	0xfc	1	1	prom_c00000001fc00000@c00b44
+?	0x220050	store	const	0x31	1	1	prom_c00000001fc00000@c00bcc
+?	0x220050	store	const	0xb4	1	1	prom_c00000001fc00000@c00d84
+?	0x220050	store	const	0xa6	1	1	prom_c00000001fc00000@c00f94
+?	0x220050	store	const	0x5d	1	1	prom_c00000001fc00000@c01064
+?	0x220050	store	const	0x3	1	1	prom_c00000001fc00000@c01120
+?	0x220050	store	const	0x35	1	1	prom_c00000001fc011a4@c011f4
+?	0x220050	store	const	0x36	1	1	prom_c00000001fc011a4@c012b0
+?	0x220050	store	const	0x4	1	1	prom_c00000001fc011a4@c013a0
+?	0x220050	store	const	0x83	1	1	prom_c00000001fc011a4@c01464
+?	0x220050	store	const	0x5	1	1	prom_c00000001fc011a4@c01520
+?	0x220050	store	const	0x84	1	1	prom_c00000001fc011a4@c015e4
+?	0x220050	store	const	0x2b	1	1	prom_c00000001fc011a4@c019c8
+?	0x220050	store	const	0x97	1	1	prom_c00000001fc011a4@c01a4c
+?	0x220050	store	const	0x1	1	1	prom_c00000001fc01cd8@c01d98
+?	0x220050	store	const	0x2	1	1	prom_c00000001fc01cd8@c01f84
+?	0x220050	store	const	0x46	1	1	prom_c00000001fc04884@c04a60
+?	0x220050	store	const	0x47	1	1	prom_c00000001fc04884@c04b28
+?	0x220050	store	const	0x48	1	1	prom_c00000001fc04884@c04bc4
+?	0x220050	store	const	0x23	1	1	prom_c00000001fc05340@c053f0
+?	0x220080	store	const	0xa	3	3	prom_c00000001fc011a4@c016a0
+?	0x220080	store	const	0xb	3	3	prom_c00000001fc011a4@c0175c
+?	0x220080	store	const	0xc	2	2	prom_c00000001fc011a4@c01818
+?	0x220080	store	const	0x2a	2	2	prom_c00000001fc011a4@c018d4
+?	0x220080	store	const	0x81	2	1	prom_c00000001fc01cd8@c02048
+?	0x220080	store	const	0xf	1	1	per_hub_init@026bf0
+?	0x220080	store	const	0x3f	1	1	prom_c00000001fc00000@c009ac
+?	0x220080	store	const	0xcf	1	1	prom_c00000001fc00000@c00a34
+?	0x220080	store	const	0xf3	1	1	prom_c00000001fc00000@c00abc
+?	0x220080	store	const	0xfc	1	1	prom_c00000001fc00000@c00b44
+?	0x220080	store	const	0x31	1	1	prom_c00000001fc00000@c00bcc
+?	0x220080	store	const	0xb4	1	1	prom_c00000001fc00000@c00d84
+?	0x220080	store	const	0xa6	1	1	prom_c00000001fc00000@c00f94
+?	0x220080	store	const	0x5d	1	1	prom_c00000001fc00000@c01064
+?	0x220080	store	const	0x3	1	1	prom_c00000001fc00000@c01120
+?	0x220080	store	const	0x35	1	1	prom_c00000001fc011a4@c011f4
+?	0x220080	store	const	0x36	1	1	prom_c00000001fc011a4@c012b0
+?	0x220080	store	const	0x4	1	1	prom_c00000001fc011a4@c013a0
+?	0x220080	store	const	0x83	1	1	prom_c00000001fc011a4@c01464
+?	0x220080	store	const	0x5	1	1	prom_c00000001fc011a4@c01520
+?	0x220080	store	const	0x84	1	1	prom_c00000001fc011a4@c015e4
+?	0x220080	store	const	0x2b	1	1	prom_c00000001fc011a4@c019c8
+?	0x220080	store	const	0x97	1	1	prom_c00000001fc011a4@c01a4c
+?	0x220080	store	const	0x1	1	1	prom_c00000001fc01cd8@c01d98
+?	0x220080	store	const	0x2	1	1	prom_c00000001fc01cd8@c01f84
+?	0x220080	store	const	0x46	1	1	prom_c00000001fc04884@c04a60
+?	0x220080	store	const	0x47	1	1	prom_c00000001fc04884@c04b28
+?	0x220080	store	const	0x48	1	1	prom_c00000001fc04884@c04bc4
+?	0x220080	store	const	0x23	1	1	prom_c00000001fc05340@c053f0
+?	0x400008	load	shift	shift 31	1	1	hubii_eint_handler@034f34
+?	0x400008	load	shift	shift 54	1	1	hubii_eint_handler@034f34
+?	0x400020	load	mask	3:0	1	1	hub_widget_id@01d658
+?	0x400020	load	shift	shift 46	1	1	hub_set_piomode@03c410
+?	0x400128	store	const	0x100	2	2	sub_c00000000003eb4c@03ebc4
+?	0x400128	load	mask	13	2	2	sub_c00000000002471c@024750
+?	0x400128	load	mask	15:0	1	1	sub_c00000000002471c@024750
+?	0x400128	load	mask	1	1	1	hubii_eint_init@0328f0
+?	0x400128	load	shift	shift 12	1	1	hubii_eint_init@0328f0
+?	0x400130	load	mask	15:0	4	2	ii_llp_error_monitor@035098
+?	0x400130	load	shift	shift 16	2	2	ii_llp_error_monitor@035098
+?	0x400138	store	const	0x1000000	1	1	bte_error_handler@03ac0c
+?	0x400160	store	const	0x300	1	1	hub_piomap_free@03b950
+?	0x400160	load	mask	4:0	1	1	hub_ioerror_handler@027e0c
+?	0x400160	load	mask	3:0	1	1	hub_ioerror_handler@027e0c
+?	0x400160	load	mask	7:0	1	1	hub_ioerror_handler@027e0c
+?	0x400160	store	mask	4:0	1	1	hub_piomap_alloc@03b7f0
+?	0x400160	load	shift	shift 48	2	1	hub_ioerror_handler@027e0c
+?	0x400160	load	shift	shift 8	1	1	hub_ioerror_handler@027e0c
+?	0x400160	load	shift	shift 29	1	1	hub_ioerror_handler@027e0c
+?	0x400198	load	shift	shift 15	2	1	hubiio_prb_error_handler@034e2c
+?	0x4001e8	store	const	0x101	1	1	bte_error_handler@03abcc
+?	0x4001e8	load	mask	4,0	1	1	hub_xp_error_handler@027778
+?	0x4001e8	load	mask	0	1	1	hubii_eint_handler@034ff4
+?	0x4001e8	load	mask	4	1	1	hubii_eint_handler@034ff4
+?	0x4001e8	load	mask	8	1	1	hubii_eint_handler@034ff4
+?	0x4001f8	store	const	0x20000	1	1	sub_c00000000002bf5c@02c038
+?	0x4001f8	store	const	0xffff	1	1	hubii_eint_handler@034f78
+?	0x4001f8	store	const	0xff0000	1	1	hubii_eint_handler@034f78
+?	0x400200	store	const	0x2	1	1	per_hub_init@026d7c
+?	0x4002c8	load	shift	shift 7	1	1	hub_error_devenable@027bb4
+?	0x400308	load	mask	7:0	1	1	hub_widget_reset@029714
+?	0x400308	load	shift	shift 3	3	1	hub_widget_reset@0296ec
+?	0x400308	load	shift	shift 7	2	1	hub_widget_reset@0296ec
+?	0x400308	load	shift	shift 24	1	1	hub_widget_reset@029714
+?	0x400388	store	const	0x10	2	1	hub_widget_reset@029740
+?	0x400388	load	mask	4	2	1	hub_widget_reset@029744
+?	0x400390	store	const	0x10	1	1	hubiio_crb_free@0349d0
+?	0x400390	load	mask	4	2	1	hubiio_crb_free@0349e0
+?	0x400398	load	mask	6:0	2	2	hub_init_ifdr_war@028e3c
+?	0x400398	load	shift	shift 8	2	2	hub_init_ifdr_war@028e3c
+?	0x4003a8	store	const	0x40	1	1	per_hub_init@026d90
+?	0x4003a8	load	shift	shift 36	1	1	hub_merge_clean@028d64
+?	0x4003b8	store	const	0xff	1	1	per_hub_init@026db0
+?	0x4003c0	store	const	0x1000	1	1	per_hub_init@026da8
+?	0x400400	load	mask	4:0	2	2	hub_widgetdev_shutdown@027988
+?	0x400400	load	mask	0	1	1	hubiio_crb_error_handler@034b24
+?	0x400400	load	mask	3:0	1	1	hubiio_crb_error_handler@034b24
+?	0x400400	load	mask	2:0	1	1	hubiio_crb_error_handler@034b24
+?	0x400400	load	shift	shift 13	5	3	hub_widgetdev_shutdown@027988
+?	0x400400	load	shift	shift 40	2	2	hub_widgetdev_shutdown@027988
+?	0x400400	load	shift	shift 2	2	2	hubiio_crb_error_handler@034b24
+?	0x400400	load	shift	shift 8	1	1	hub_widgetdev_shutdown@027988
+?	0x400400	load	shift	shift 45	1	1	hubiio_crb_error_handler@034b24
+?	0x400400	load	shift	shift 52	1	1	hubiio_crb_error_handler@034b24
+?	0x400400	load	shift	shift 3	1	1	bte_stall_node@03b05c
+?	0x400408	load	mask	4:0	2	1	kf_hub_analyze@154310
+?	0x400408	load	mask	1:0	1	1	crbx@02833c
+?	0x400408	load	shift	shift 25	3	2	crbx@02833c
+?	0x400408	load	shift	shift 41	1	1	crbx@02833c
+?	0x400410	load	shift	shift 15	4	3	save_hub_io_error@02fc98
+?	0x420000	store	const	0x1	1	1	bte_stall_node@03afac
+?	0x420000	store	const	0x100000	1	1	bte_stall_node@03afac
+?	0x420018	store	const	0x10	1	1	bte_stall_node@03afbc
+?	0x430008	load	shift	shift 2	1	1	io_perf_update_count@05ad48
+?	0x600000	load	mask	3:0	6	5	get_hub_chiprev@01d6b0
+?	0x600000	load	mask	8:0	3	2	get_nasid@01d668
+?	0x600000	load	mask	0	2	2	is_fine_dirmode@01d694
+?	0x600000	load	mask	7:0	1	1	prom_c00000001fc04848@c04858
+?	0x600000	load	shift	shift 8	12	10	start@01a780
+?	0x600000	load	shift	shift 4	6	5	get_hub_chiprev@01d6b0
+?	0x600000	load	shift	shift 48	2	1	get_nasid@01d668
+?	0x600000	load	shift	shift 17	1	1	is_fine_dirmode@01d694
+?	0x600000	load	shift	shift 29	1	1	sub_c00000000002e58c@02e590
+?	0x600008	store	const	0x2	1	1	hubni_error_handler@033240
+?	0x600008	store	const	0x81	1	1	prom_c00000001fc00000@c00ee0
+?	0x600100	store	const	-0x1	1	1	prom_c00000001fc00000@c00e94
+?	0x608088	load	mask	7:0	5	2	ni_llp_error_monitor@035120
+?	0x608088	load	shift	shift 16	2	2	ni_llp_error_monitor@035120
+?	0x608088	load	shift	shift 8	2	2	ni_llp_error_monitor@035120
+?	0x608088	load	shift	shift 36	1	1	check_ni_errors@033008

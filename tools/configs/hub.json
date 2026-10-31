@@ -1,8 +1,8 @@
 {
  "asic": "hub",
- "title": "Hub (processor interface, memory directory, I/O interface, network interface)",
+ "title": "Hub (IP27 node controller: processor interface, memory directory, I/O interface, network interface)",
  "mode": "no-spec",
- "status": "stub: census not run",
+ "status": "pilot",
  "spec": null,
  "images": [
   {
@@ -10,63 +10,70 @@
    "dis": "work/dis/ip27-unix.s",
    "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
    "path": "root/IP27/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-unix",
-   "dis": "work/dis/ip30-unix.s",
-   "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
-   "path": "root/IP30/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-prom",
-   "dis": "work/dis/ip30-prom.s",
-   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
-   "path": "root/firmware/IP30prom.bin",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
-   "arch": "mips:isa64",
-   "split": "jr31"
-  },
-  {
-   "label": "ip35-kernel-o",
-   "dis": "work/dis/ip35-kernel-o.s",
-   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
    "kind": "elf",
-   "reloc": true,
-   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
+   "literals": "work/dis/ip27-unix.sdata.txt",
+   "lit_sections": [
+    ".sdata",
+    ".lit8",
+    ".srdata"
+   ],
+   "linked_literals": true,
+   "const_windows": [
+    {
+     "lo": "0x9200000001000000",
+     "hi": "0x9200000001800000",
+     "name": "hub-local"
+    },
+    {
+     "lo": "0x9200000001800000",
+     "hi": "0x9200000002000000",
+     "name": "hub-node"
+    },
+    {
+     "lo": "0x9200000002000000",
+     "hi": "0x9200000003000000",
+     "name": "hub-local-hi"
+    }
+   ]
   },
   {
-   "label": "ip35-prom",
-   "dis": "work/dis/ip35-prom.s",
-   "path": "root/firmware/ip35prom.img",
+   "label": "ip27-prom",
+   "dis": "work/dis/ip27-prom.s",
+   "path": "root/firmware/ip27prom.img",
    "kind": "promgen64",
-   "segment": "ip35prom",
+   "segment": "ip27prom",
    "vma": "0xc00000001fc00000",
-   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time",
-   "split": "jr31"
-  },
-  {
-   "label": "ip32-kernel-o",
-   "dis": "work/dis/ip32-kernel-o.s",
-   "path": "root/IP32/usr/cpu/sysgen/IP32boot/kernel.o",
-   "kind": "elf",
-   "reloc": true,
-   "note": "IRIX 6.5.30 IP32 kernel object"
-  },
-  {
-   "label": "ip32-prom",
-   "dis": "work/dis/ip32-prom.s",
-   "path": "root/firmware/ip32prom.image",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
+   "note": "IP27 CPU PROM, promgen64 container",
    "split": "jr31",
-   "note": "IP32 PROM flat image; load address assumed from the reset vector, not yet read from the image"
+   "const_windows": [
+    {
+     "lo": "0x9200000001000000",
+     "hi": "0x9200000001800000",
+     "name": "hub-local"
+    },
+    {
+     "lo": "0x9200000001800000",
+     "hi": "0x9200000002000000",
+     "name": "hub-node"
+    },
+    {
+     "lo": "0x9200000002000000",
+     "hi": "0x9200000003000000",
+     "name": "hub-local-hi"
+    }
+   ]
   }
  ],
  "report_functions": ".*",
- "seeds": {},
+ "seeds": {
+  "args": [
+   {
+    "functions": "^save_hub_(pi|md|io|ni)_error$|^save_hub_err_ext$",
+    "reg": 4,
+    "off": 0
+   }
+  ]
+ },
  "field_rules": [],
  "discriminators": {},
  "variants": {},
@@ -81,5 +88,138 @@
    "model": []
   }
  },
- "buckets": []
+ "buckets": [],
+ "collapse_above": 268435456,
+ "note_windows": "local Hub register window: physical 0x01000000 (uncached I/O alias 0x9200000001000000); offsets are reported relative to it, so a register at 0x1400208 is row 0x400208. A node's remote window (node number in bits 39:32) is the same block seen through the index flag.",
+ "register_names": {
+  "0x18": "PI_REGION_PRESENT",
+  "0x20": "PI_CPU_NUM",
+  "0x28": "PI_CALIAS_SIZE",
+  "0x30": "PI_MAX_CRB_TIMEOUT",
+  "0x38": "PI_CRB_SFACTOR",
+  "0x40": "PI_CPU_PRESENT_A",
+  "0x48": "PI_CPU_PRESENT_B",
+  "0x50": "PI_CPU_ENABLE_A",
+  "0x58": "PI_CPU_ENABLE_B",
+  "0x70": "PI_NMI_A",
+  "0x90": "PI_INT_PEND_MOD",
+  "0x98": "PI_INT_PEND0",
+  "0xa0": "PI_INT_PEND1",
+  "0xa8": "PI_INT_MASK0_A",
+  "0xb0": "PI_INT_MASK1_A",
+  "0xb8": "PI_INT_MASK0_B",
+  "0xc0": "PI_INT_MASK1_B",
+  "0x108": "PI_RT_COMPARE_A",
+  "0x110": "PI_RT_COMPARE_B",
+  "0x118": "PI_PROFILE_COMPARE",
+  "0x120": "PI_RT_PEND_A",
+  "0x128": "PI_RT_PEND_B",
+  "0x130": "PI_PROF_PEND_A",
+  "0x138": "PI_PROF_PEND_B",
+  "0x140": "PI_RT_EN_A",
+  "0x148": "PI_RT_EN_B",
+  "0x150": "PI_PROF_EN_A",
+  "0x158": "PI_PROF_EN_B",
+  "0x160": "PI_RT_LOCAL_CTRL",
+  "0x320": "PI_GFX_INT_CMP_A",
+  "0x348": "PI_GFX_INT_CMP_B",
+  "0x400": "PI_ERR_INT_PEND",
+  "0x408": "PI_ERR_INT_MASK_A",
+  "0x410": "PI_ERR_INT_MASK_B",
+  "0x418": "PI_ERR_STACK_ADDR_A",
+  "0x420": "PI_ERR_STACK_ADDR_B",
+  "0x428": "PI_ERR_STACK_SIZE",
+  "0x430": "PI_ERR_STATUS0_A",
+  "0x440": "PI_ERR_STATUS1_A",
+  "0x448": "PI_ERR_STATUS1_A_RCLR",
+  "0x450": "PI_ERR_STATUS0_B",
+  "0x460": "PI_ERR_STATUS1_B",
+  "0x468": "PI_ERR_STATUS1_B_RCLR",
+  "0x20068": "PI_HARDRESET_BIT",
+  "0x30100": "PI_RT_COUNT",
+  "0x200018": "MD_MEMORY_CONFIG",
+  "0x200020": "MD_REFRESH_CONTROL",
+  "0x200028": "MD_FANDOP_CAC_STAT",
+  "0x200030": "MD_MIG_DIFF_THRESH",
+  "0x200038": "MD_MIG_VALUE_THRESH",
+  "0x200048": "MD_MIG_CANDIDATE_CLR",
+  "0x200050": "MD_DIR_ERROR",
+  "0x200058": "MD_DIR_ERROR_CLR",
+  "0x200060": "MD_PROTOCOL_ERROR",
+  "0x200068": "MD_PROTOCOL_ERROR_CLR",
+  "0x200070": "MD_MEM_ERROR",
+  "0x200078": "MD_MEM_ERROR_CLR",
+  "0x200080": "MD_MISC_ERROR",
+  "0x200088": "MD_MISC_ERROR_CLR",
+  "0x2000a0": "MD_MOQ_SIZE",
+  "0x2000a8": "MD_MLAN_CTL",
+  "0x210000": "MD_PERF_SEL",
+  "0x210010": "MD_PERF_CNT0",
+  "0x220000": "MD_UREG0_0",
+  "0x220008": "MD_UREG0_1",
+  "0x220048": "MD_SLOTID_USTAT",
+  "0x220050": "MD_LED0",
+  "0x220080": "MD_UREG1_0",
+  "0x400008": "IIO_WSTAT",
+  "0x400020": "IIO_WCR",
+  "0x400110": "IIO_IOWA",
+  "0x400118": "IIO_IIWA",
+  "0x400120": "IIO_IIDEM",
+  "0x400128": "IIO_ILCSR",
+  "0x400130": "IIO_ILLR",
+  "0x400138": "IIO_IIDSR",
+  "0x400140": "IIO_IGFX_0",
+  "0x400198": "IIO_IOPRB_0",
+  "0x4001e8": "IIO_IMEM",
+  "0x4001f8": "IIO_IECLR",
+  "0x400200": "IIO_IBCN",
+  "0x400308": "IIO_PRTE_0",
+  "0x400388": "IIO_IPDR",
+  "0x400390": "IIO_ICDR",
+  "0x400398": "IIO_IFDR",
+  "0x4003a8": "IIO_ICMR",
+  "0x4003b0": "IIO_ICCR",
+  "0x4003b8": "IIO_ICTO",
+  "0x4003c0": "IIO_ICTP",
+  "0x400400": "IIO_ICRB0_A",
+  "0x400408": "IIO_ICRB0_B",
+  "0x400410": "IIO_ICRB0_C",
+  "0x400418": "IIO_ICRB0_D",
+  "0x400428": "IIO_ICRB1_B",
+  "0x410000": "IIO_IBLS_0",
+  "0x410008": "IIO_IBSA_0",
+  "0x410010": "IIO_IBDA_0",
+  "0x410018": "IIO_IBCT_0",
+  "0x420000": "IIO_IBLS_1",
+  "0x420008": "IIO_IBSA_1",
+  "0x420010": "IIO_IBDA_1",
+  "0x420018": "IIO_IBCT_1",
+  "0x420020": "IIO_IBNA_1",
+  "0x430000": "IIO_IPCR",
+  "0x430008": "IIO_IPPR",
+  "0x600000": "NI_STATUS_REV_ID",
+  "0x600008": "NI_PORT_RESET",
+  "0x600010": "NI_PROTECTION",
+  "0x600018": "NI_GLOBAL_PARMS",
+  "0x600100": "NI_SCRATCH_REG0",
+  "0x600108": "NI_SCRATCH_REG1",
+  "0x600110": "NI_DIAG_PARMS",
+  "0x600200": "NI_VECTOR_PARMS",
+  "0x600208": "NI_VECTOR",
+  "0x600210": "NI_VECTOR_DATA",
+  "0x600300": "NI_VECTOR_STATUS",
+  "0x600310": "NI_VECTOR_READ_DATA",
+  "0x600380": "NI_VECTOR_CLEAR",
+  "0x600500": "NI_AGE_CPU0_MEMORY",
+  "0x600510": "NI_AGE_CPU1_MEMORY",
+  "0x608008": "NI_PORT_ERROR",
+  "0x608088": "NI_PORT_ERROR_CLEAR",
+  "0x638000": "NI_META_TABLE0",
+  "0x638100": "NI_LOCAL_TABLE0"
+ },
+ "name_source": "the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names)",
+ "header_skip": [
+  "0x0"
+ ],
+ "note_names": "names are the public Linux Hub header names matched by offset after the census, plus the shipped kernel's own CRB entry names (ICRB0_A and so on); row 0x0 with the index flag is a base plus a caller-supplied offset, not PI_CPU_PROTECT, and is left unnamed"
 }
