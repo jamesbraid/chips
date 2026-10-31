@@ -26,6 +26,24 @@ chip page and the entry is deleted.
   write, how the vector is chosen) are in chips/xbow/README.md, "Error reporting for a refused or timed-out register
   write". Open there: what a link-level time-out latches, how a 4-byte access reaches a double-word-only register
   file, a second error's effect, and the registers of the PXBOW part.
+- **CRIME: identification register upper word.** `get_crimerev` in the IP32 kernel object reads bits 63:32 of the
+  identification doubleword and returns 0x13 for 1 and 0x14 for anything larger, while the specification defines only
+  bits 7:0 and the PROM and diagnostic compare the low word with 0xa0 and 0xa1 only. Tried: the kernel, PROM,
+  diagnostic and monitor censuses; the public Linux and NetBSD revision constants (0x11, 0x13, 0x14) match the kernel's
+  return values but not how the kernel derives them. Next: the other IP32 objects that read the register (the
+  graphics driver's identification probe and its callers), and the history of the public drivers' revision constants.
+- **CRIME: CPU error status location on CRIME 1.5.** The specification puts it at 0x4048 for 1.5 and 0x48 for 1.1; every
+  IP32 routine uses 0x48. Next: the graphics driver's error paths and any public source that
+  reads the status register by its 1.5 address.
+- **CRIME: write-error behaviour.** The graded answers (what sets CPU error status bit 2, what a failed or timed-out
+  uncached store latches, which interrupt bits fire, how the kernel detects a failed store) are in chips/crime/README.md,
+  "Write-error questions". Open there: which addresses are "invalid", whether a read and a write differ in the
+  three-bit layout, whether a failed store also takes a bus error exception, which CRIME bit the MACE PCI error
+  handler is attached to, second-error handling, and whether the interrupt asserts with its enable bit clear.
+- **CRIME: registers no scanned image reaches.** Refresh counter (0x248), memory control bit 1 (replacement select),
+  the JUICE field (control bits 7:5), the watchdog's operation (only a store of 0), and the contents of 0x58 and 0x270.
+  Valid end state unless a PROM or diagnostic routine that sets them is found. The PROM's bank-sizing loops use
+  indexed addresses, so the census records only their bases, and the diagnostic's CRIME routines are stripped.
 - **Hub, Bedrock, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
   seeds (see HAIKU-BRIEF.md) and run `tools/run.sh`.
 - **Model of a PROM's window base.** A PROM builds its window pointer at run time; the census recovers a
