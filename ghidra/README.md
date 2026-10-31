@@ -64,11 +64,10 @@ or `[N]`. Set `pointer_bytes` (8 for a 64-bit kernel, 4 for o32 and N32 objects)
 pointer width is skipped on the other, since the offsets differ. Only fields
 with a source belong in a spec; an unnamed gap stays `field_0x..` in the output.
 
-Decompiler output and
-similarity scores are navigation, not evidence. The decompiler folds stores,
+Decompiler output and similarity scores are navigation, not evidence. The decompiler folds stores,
 misses switches and invents parameters; a typed field name only says that a
 definition was applied; BSim says two bodies look alike and does not say they are
-the same routine, and it cannot say anything about routines under about 64 bytes.
-Kernels and PROM payloads work the same way as libraries. A committed claim still rests on the disassembly and the fact sheets. Quote the
+the same routine, and it cannot say anything about small routines (under about 128 bytes).
+A committed claim still rests on the disassembly and the fact sheets. Quote the
 instruction, not the C.
 Kernels and PROM payloads go through the same commands as libraries.
