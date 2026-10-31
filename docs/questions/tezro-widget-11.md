@@ -33,7 +33,9 @@ xtalk/11 and xtalk/15.
    the words read are at 0x1d4 and 0x1fc.
 3. **Established** (public capture). The Bedrock itself is crossbar port 0xa ("HUB at 0x0 attached as widget
    0xa", "Check_master: link 10 is master"). The PICs are ports 0xb and 0xf. The capture runs the bridge
-   diagnostic at base 0x920000000b000000 and then 0x920000000f000000, so the PROM treats widget 0xb as a bridge.
+   diagnostic at base 0x920000000b000000 and then 0x920000000f000000, so the PROM treats widget 0xb as a bridge,
+   and it prints "Found PIC at 0x920000000b000000": the PROM prints that name only for part 0xd102 or 0xd112 with
+   manufacturer 0x24 (0x1fc4b748 to 0x1fc4b778), so widget 0xb is a PIC.
 4. **Established.** For each usable non-hub link the PROM reads the widget's identity word at window offset 4
    (widget n at n<<24), and for bridge-class parts (0xc002, 0xd002, 0xd102, 0xd112) runs the link reset routine
    (0x1fc4bd30): read the link's status-clearing register (+0x2c), write link control (+0x0c) 0x00080000, write
