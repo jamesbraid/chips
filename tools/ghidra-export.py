@@ -35,15 +35,15 @@ A flat image, such as a PROM, has no header Ghidra can read, so say what it is:
   --load ADDR            the address the first byte (after --header) has in the
                          machine's address space, for example 0x1fc00000
   --header N             skip N bytes of container header first (default 0)
-  --processor LANG       Ghidra language (default MIPS:BE:64:64-32addr). A PROM
-                         whose code holds 64-bit pointers wants MIPS:BE:64:default,
-                         which also finds more routines; MIPS:BE:32:default is for
-                         a 32-bit processor
+  --processor LANG       Ghidra language (default MIPS:BE:64:default, which holds
+                         the 64-bit pointers a PROM's code uses). MIPS:BE:64:64-32addr
+                         has 32-bit addresses; MIPS:BE:32:default is for a 32-bit
+                         processor
   --window ADDR          for a 64-bit language, the upper bits the image is placed
                          under so a program that holds 64-bit pointers (a PROM
                          running in the extended cached window) resolves them;
-                         default 0xc000000000000000 for a 64-bit language that has
-                         full-width addresses, none otherwise
+                         default 0xc000000000000000 for a language with full-width
+                         64-bit addresses, none otherwise
 A flat image has no names: functions are `FUN_` placeholders, found by Ghidra's
 analysis, so ask for them by `@0xADDR` or with --decompile-all. `address` in the
 JSON is the machine address (--load), `ghidra_address` is where Ghidra holds it, and
@@ -66,7 +66,7 @@ WIDE_ARCH = {0x20000000, 0x30000000, 0x40000000, 0x60000000, 0x80000000}
 EF_MIPS_ABI2 = 0x20
 SHF_EXECINSTR = 4
 ET_REL = 1
-FLAT_DEFAULT_LANGUAGE = 'MIPS:BE:64:64-32addr'
+FLAT_DEFAULT_LANGUAGE = 'MIPS:BE:64:default'
 WIDE_WINDOW = 0xc000000000000000
 PLAIN = re.compile(r'[A-Za-z0-9._-]+')
 
@@ -187,7 +187,7 @@ def parser():
     p.add_argument('--flat', action='store_true')
     p.add_argument('--load', type=lambda v: int(v, 0), metavar='ADDR')
     p.add_argument('--header', type=int, default=0, metavar='N')
-    p.add_argument('--processor', default=FLAT_DEFAULT_LANGUAGE)
+    p.add_argument('--processor', default=None)
     p.add_argument('--window', type=lambda v: int(v, 0), default=None, metavar='ADDR')
     p.add_argument('--timeout', type=int, default=3600)
     p.add_argument('--cpus', type=int, default=2)
@@ -216,9 +216,10 @@ def prepare(argv):
             die('--flat needs --load ADDR')
         if not 0 <= args.header < obj.stat().st_size:
             die('--header %d is outside the file' % args.header)
+        args.processor = args.processor or FLAT_DEFAULT_LANGUAGE
         window = args.window
         if window is None:
-            window = 0 if args.processor == FLAT_DEFAULT_LANGUAGE or ':32:' in args.processor else WIDE_WINDOW
+            window = 0 if '64-32addr' in args.processor or ':32:' in args.processor else WIDE_WINDOW
         if window and ':64:' not in args.processor:
             die('--window needs a 64-bit language')
         if window and args.load & window:
@@ -229,7 +230,7 @@ def prepare(argv):
         for opt in ('load', 'window'):
             if getattr(args, opt) is not None:
                 die('--%s belongs to --flat' % opt)
-        if args.header or args.processor != FLAT_DEFAULT_LANGUAGE:
+        if args.header or args.processor:
             die('--header and --processor belong to --flat')
         klass, etype, flags = read_header(obj)
         relocatable = etype == ET_REL
