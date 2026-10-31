@@ -6,12 +6,13 @@ physical 0x1fc0xxxx. RAM is enabled at that physical address by then. Does every
 through a 0x98... or 0xa8... alias hit a line the routine staged, and would "a cached fetch reads the boot flash"
 return the same words?
 
-Short answer. Yes to both, for the two paths run (the copy wrapper at 0x1fc05910 and the verify wrapper at
-0x1fc059d0), provided the PROM's word order for secondary-cache doublewords is the one this page infers (see
-"Where the manual is silent"). Every cached fetch is a primary instruction-cache hit on a line staged by CACHE
-operations, except the fetch at 0x980000001fc04f10, which misses the primary cache, hits the secondary cache line
+Short answer. Yes to both, at all eight call sites of the routine (the copy wrapper at 0x1fc05950, the verify
+wrapper at 0x1fc05a14 and the six others, tabulated below), provided the PROM's word order for secondary-cache doublewords is the one this page infers (see
+"Where the manual is silent"). At the six sites that stage a range, every cached fetch is a primary
+instruction-cache hit on a line staged by CACHE operations, except the fetch at 0x980000001fc04f10, which misses the primary cache, hits the secondary cache line
 the routine staged, and is refilled from it. No fetch reaches the system interface. Every word returned equals
-the flash word at the same offset.
+the flash word at the same offset. At two sites the routine refuses to stage a range and the caller never runs
+from a cached alias.
 
 Sources. The shipped IP35 PROM, SGI Version 6.210 (built Aug 26 2004), container segment `ip35prom`, load
 address 0xc00000001fc00000, length 0x1686a8, additive checksum ok; unpacked with `tools/promgen64.py`. MIPS
@@ -96,13 +97,43 @@ It is not served from flash or RAM.
 
 Label: **established** that, given the manual's CACHE semantics and a word order of `lo-hi`, every fetch of both paths
 hits staged lines and returns the flash word. **Inferred** for the fetch algorithm, the refill victim and the word
-order. **Unknown** for the six other callers of the routine (0x1fc027e8, 0x1fc03490, 0x1fc036dc, 0x1fc0394c,
-0x1fc368bc, 0x1fc36fbc), which were not run: the same simulator can run them, each needs its argument registers.
+order. **Unknown** for the code that runs after the first instructions of each caller from the staged lines: the
+simulator stops at the first instruction it does not model (listed below), so branches that leave the staged range
+later are not checked. The whole staged range was fetched word by word instead.
+
+## The other six call sites
+
+`--callers` starts at each call site with the registers the caller's own code builds and runs the routine to its
+return. It then fetches every word of the range the routine staged (the 64-byte line holding the return address up to
+the end address in `$4`, ORed with 0x3c) through the 0x98... alias, and keeps running the caller from the returned
+`$31` until an instruction the interpreter does not model. The four direct calls (`jal`) pass an address in the
+mapped window. The two indirect calls (`jalr` through the table slot at 0x1fd67ce0, whose contents in the image are
+0xc00000001fc04980) pass the words at 0x1fd67cd8 and 0x1fd67cf8 of the image. Secondary cache 1 MB, 128-byte blocks,
+miss returns flash. Output is byte-identical for secondary caches of 512 KB, 1 MB, 4 MB and 16 MB, blocks of 64 and
+128 bytes, and both miss policies (16 runs).
+
+| Call site | End address `$4` | Word order `lo-hi` | Word order `hi-lo` |
+| --- | --- | --- | --- |
+| 0x1fc027e8 | 0xc00000001fc028cc | stages 0x...27c0 to 0x...28fc: 80 of 80 words hit, 0 miss, 0 differ from flash; caller then fetches 2 words from the staged lines until `mtc0` to CP0 register 25 | returns with `$31` unchanged: pass one's own fetches differ (below), no range staged |
+| 0x1fc03490 | 0xc00000001fc03630 | 0x...3480 to 0x...363c: 112 of 112 hit, 0 miss, 0 differ; 15 caller fetches, all staged, stop at `xori` | as above |
+| 0x1fc036dc | 0xc00000001fc03894 | 0x...36c0 to 0x...38bc: 128 of 128 hit, 0 miss, 0 differ; 16 caller fetches, stop at `xori` | as above |
+| 0x1fc0394c | 0xc00000001fc039a8 | 0x...3940 to 0x...39bc: 32 of 32 hit, 0 miss, 0 differ; 11 caller fetches, stop at a load from an address the interpreter has no value for | as above |
+| 0x1fc368bc (`jalr $8`) | 0xc00000001fc0dacc | pass one only; pass two refuses (end address lies below the return address, `$4 - $5` unsigned is above 0x4000, test at 0x1fc04a44 to 0x1fc04a4c), routine returns with `$31` still in the mapped window: no cached fetch after pass one | as above |
+| 0x1fc36fbc (`jalr $7`) | 0xc00000001fc0dad4 | as 0x1fc368bc | as above |
+
+Pass one's own fetches (the routine's 0x...4a28 to 0x...4e7c, and 0x...4f10, 0x...4f14, 0x...4f18) are the same at
+every site. Under `lo-hi`: 184 slot refills (0x...4f10), 13 further staged fetches, all equal to flash. Under
+`hi-lo`: 562 cached fetches, 378 differ (all 184 of 0x...4f10 return 0 instead of `jr $10`, all 184 of 0x...4f14 return
+`jr $10` instead of 0, all 10 staged fetches from 0x...4a28 on), 0 miss both caches, and the pair-swapped code takes
+a branch to the routine's return at 0x1fc04e78 (observed for the call at 0x1fc027e8) before pass two, leaving `$31`
+unconverted. So under `hi-lo` none of the eight sites reaches a cached caller.
 
 ## Where the manual is silent, and what the PROM requires
 
-1. **Word order of a secondary-cache doubleword (inferred).** Figure 14-33 says TagHi carries doubleword bits 63:32
-   and TagLo bits 31:0. The routine loads a doubleword `d` from flash (big-endian, first word in the high half) and
+1. **Word order of a secondary-cache doubleword (inferred).** Contradicted: Figure 14-33 (p. 283), and the text of
+   10.19 and 14.23, say TagHi carries doubleword bits 63:32 and TagLo bits 31:0. Left open: how the quadword
+   halves of the secondary data array map to the words of a primary-cache refill and to memory order; sections 10.17,
+   10.20 and Figure 14-31 describe only the registers. The routine loads a doubleword `d` from flash (big-endian, first word in the high half) and
    writes `TagHi = d[31:0]`, `TagLo = d[63:32]`, the opposite. With the manual's literal order (`hi-lo`) the staged
    words come out pair-swapped relative to flash: the staged fetches from 0x980000001fc04a28 on return different
    words than flash and the run diverges (378 of 562 fetches differ at `--copy-len 0x2000`, including all 184 fetches of
@@ -114,8 +145,9 @@ order. **Unknown** for the six other callers of the routine (0x1fc027e8, 0x1fc03
    not.
 2. **Refill victim (inferred).** The routine marks way 1 Invalid and way 0 Valid with a non-matching tag, then reads
    back from way 1. That works only if a refill takes an Invalid way before a Valid one. With "always way 0" the run does
-   not terminate (stopped at the step limit) and the staged lines differ from flash. The manual gives an LRU bit
-   in each primary tag (TagLo[3], set in both tags here) without its encoding.
+   not terminate (stopped at the step limit) and the staged lines differ from flash. Left open: section 4.1 gives "least-recently-used" replacement
+   and Figure 14-28 (p. 279) a one-bit LRU field in each primary tag (TagLo[3], set in both tags here), with the
+   encoding and whether an Invalid way is preferred unstated; nothing there contradicts the PROM's reading.
 3. **Predecode (unspecified).** Index Load Data (I) returns 36 bits per instruction, four more than the word, and
    Index Store Data (I) writes them back unchanged (10.17, 10.20). The extra bits are not defined in the manual; the
    routine copies them without looking at them, so the architectural word is unaffected. The model keeps them zero.
@@ -130,10 +162,11 @@ order. **Unknown** for the six other callers of the routine (0x1fc027e8, 0x1fc03
 
 ## Implication for an emulator
 
-For the two paths run, an approximation "cached (algorithm 3) fetches of 0x1fc0xxxx read the flash" returns
-byte-identical words to what the real caches would supply: 0 differences in 673,733 fetches, because the routine copies
+At all eight call sites, an approximation "cached (algorithm 3) fetches of 0x1fc0xxxx read the flash" returns
+byte-identical words to what the real caches would supply: 0 differences in every fetch of the staged ranges (673,733 on the copy and verify paths, and 80 + 112 + 128 + 32 words
+at the four other staging sites; the two remaining sites stage no range), because the routine copies
 verbatim flash bytes into the lines it forges and the one hand-built word, `jr $10` at 0x1fc04f10, is also in the
-flash image. It is therefore sufficient for those paths, but it does not follow the hardware: on silicon those fetches
+flash image. It is therefore sufficient for what was simulated, but it does not follow the hardware: on silicon those fetches
 never reach the bus, and a store to RAM at the same physical address would not change what runs. The approximation
 breaks if RAM is written there, if the caches are flushed, or if a different caller stages different bytes.
 
@@ -145,6 +178,7 @@ the behaviour a hardware capture would show only if the staging is missing.
 
 ## Next
 
-Run the six other callers through the simulator before claiming the approximation is byte-exact for the whole PROM.
-If one fetches a word that differs from flash, that caller decides between modelling the cache operations and
-leaving the approximation. A physical test is not needed to settle this question.
+The simulator stops at the first unmodelled instruction after each caller returns, so a branch out of a staged range
+into another 0x98... target later in the caller's code is not checked. Extending the interpreter over those
+caller bodies (CP0 moves, `xori` and a few others) would close that. A physical test is not needed to settle this
+question.

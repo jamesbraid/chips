@@ -236,8 +236,8 @@ class Machine:
 
     def run(self, pc, stop, limit=5_000_000):
         self.pc = pc
-        nxt = None
-        while self.pc != stop:
+        stops = stop if isinstance(stop, (set, frozenset)) else {stop}
+        while self.pc not in stops:
             self.steps += 1
             if self.steps > limit:
                 raise Stop('step limit')
@@ -325,6 +325,13 @@ class Machine:
             r(n(ops[0]), int(g(ops[1]) < (imm(ops[2]) & M64)))
         elif m == 'sltu':
             r(n(ops[0]), int(g(ops[1]) < g(ops[2])))
+        elif m in ('lw', 'sw'):
+            off, base = ops[1].split('(')
+            ea = (g(base.rstrip(')')) + (int(off, 0) if off else 0)) & M64
+            if m == 'lw':
+                r(n(ops[0]), s32(self.ld(ea, 4)))
+            else:
+                self.st_(ea, g(ops[0]), 4)
         elif m in ('ld', 'sd'):
             off, base = ops[1].split('(')
             off = int(off, 0) if off else 0
@@ -451,6 +458,105 @@ def run_pair(flash, args):
     return out
 
 
+CALLERS = (  # call site, kind, register set at the site (the values the caller's own code builds)
+    (0x1fc027e8, 'jal', {'a0': 0xc00000001fc028cc}),
+    (0x1fc03490, 'jal', {'a0': 0xc00000001fc03630}),
+    (0x1fc036dc, 'jal', {'a0': 0xc00000001fc03894}),
+    (0x1fc0394c, 'jal', {'a0': 0xc00000001fc039a8}),
+    # indirect calls through a global-pointer table slot (0x1fd67ce0) holding 0xc00000001fc04980;
+    # a0 is the word in the slot the caller loads just before (0x1fd67cd8 and 0x1fd67cf8 in the image)
+    (0x1fc368bc, 'jalr', {'t0': 0xc00000001fc04980, 'a0': 0xc00000001fc0dacc}),
+    (0x1fc36fbc, 'jalr', {'a3': 0xc00000001fc04980, 'a0': 0xc00000001fc0dad4}),
+)
+
+
+def run_caller(flash, args, site, regs, follow=20000):
+    """Enter at the call site, let the routine return, then (a) fetch every word of the range it
+    staged through the 0x98 alias and (b) keep running the caller's own code until an instruction the
+    interpreter does not model."""
+    m = Machine(flash, args.sc_size, args.sc_block, args.dword, args.miss, args.victim)
+    m.r[REG['sp']] = 0x9600000000100000
+    m.r[REG['gp']] = 0xc00000001fd6f740
+    for k, v in regs.items():
+        m.r[REG[k]] = v
+    pc0 = 0xc000000000000000 | site
+    # run the call, delay slot and routine until it executes its final `jr $31` (0x1fc04e78 or 0x1fc04e84)
+    m.pc = pc0
+    stops = {0xc00000001fc04e78, 0x980000001fc04e78}
+    err = None
+    try:
+        m.run(pc0, stops)
+        ret = m.r[REG['ra']]
+        # execute the `jr $31` and its delay slot
+        m.run(m.pc, {ret})
+    except Stop as e:
+        err = str(e)
+        ret = None
+    pre = classify(m)
+    out = dict(site=site, err=err, ret=ret, staged=None, static=None, dyn=None, pre=pre,
+               flags=m.f.get('$f6', 0) & 0xf)
+    if err:
+        return m, out
+    out['alias'] = (ret >> 59) == 0x13 and ret >> 62 == 2
+    a0 = regs['a0']
+    # range the routine stages: from the line holding the return address to the end address, 64-byte lines
+    if out['alias']:
+        lo = ret & ~0x3f
+        hi = (a0 & 0x1fffffff | 0x9800000000000000) | 0x3c
+        out['range'] = (lo, hi)
+        res = dict(words=0, hit=0, miss=0, differ=0, miss_pcs=[], diff_pcs=[])
+        for va in range(lo, hi + 4 - ((hi + 4) & 3), 4):
+            w, how = m.fetch(va)
+            kind, pa, cca = m.xlate(va)
+            fw = m.flash_word(pa)
+            res['words'] += 1
+            if 'S-miss' in how:
+                res['miss'] += 1
+                res['miss_pcs'].append(va)
+            else:
+                res['hit'] += 1
+            if fw is not None and fw != w:
+                res['differ'] += 1
+                res['diff_pcs'].append(va)
+        out['static'] = res
+    # follow the caller's code
+    m.fetchlog = []
+    m.steps = 0
+    try:
+        m.run(ret, set(), limit=follow)
+    except Stop as e:
+        out['dyn'] = str(e)
+    cls = classify(m)
+    out['dynfetch'] = {k: (v[0], v[1]) for k, v in cls.items()}
+    out['ops'] = len([e for e in m.log if not e[2].startswith('CACHED')])
+    return m, out
+
+
+def callers_report(flash, args):
+    for dw in ('lo-hi', 'hi-lo'):
+        args.dword = dw
+        print('## word order %s, secondary cache %d KB / %d-byte blocks, miss %s, victim %s'
+              % (dw, args.sc_size >> 10, args.sc_block, args.miss, args.victim))
+        for site, kind, regs in CALLERS:
+            m, o = run_caller(flash, args, site, regs)
+            line = '%#x (%s): ' % (site, kind)
+            if o['err']:
+                line += 'STOPPED in routine: ' + o['err']
+            elif not o['alias']:
+                line += 'returned with $31 unchanged (%#x), no cached alias, flags %#x (%s), %d CACHE ops' % (
+                    o['ret'], o['flags'], {4: 'success', 8: 'failure'}.get(o['flags'], 'left before pass two staged anything'), o['ops'])
+                line += '; cached fetches during the call: ' + (', '.join('%s %d (%d differ)' % (k, v[0], v[1]) for k, v in sorted(o['pre'].items())) or 'none')
+            else:
+                st = o['static']
+                line += 'staged %#x-%#x, %d words: %d hit, %d miss, %d differ from flash' % (
+                    o['range'][0], o['range'][1], st['words'], st['hit'], st['miss'], st['differ'])
+                if st['diff_pcs']:
+                    line += ' (first differing %#x)' % st['diff_pcs'][0]
+                dyn = o['dynfetch']
+                line += '; then ran the caller: ' + ', '.join('%s %d (%d differ)' % (k, v[0], v[1]) for k, v in sorted(dyn.items())) + ' until ' + (o['dyn'] or 'step limit')
+            print('  ' + line)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('prom')
@@ -462,12 +568,16 @@ def main():
     ap.add_argument('--copy-len', type=lambda x: int(x, 0), default=0x1686a8)
     ap.add_argument('--trace', action='store_true', help='print every CACHE op')
     ap.add_argument('--regions', action='store_true', help='print the address ranges fetched in each class')
+    ap.add_argument('--callers', action='store_true', help='run the other call sites of the routine')
     ap.add_argument('--matrix', action='store_true', help='one line per cache size, block size, word order and miss policy')
     args = ap.parse_args()
     flash = open(args.prom, 'rb').read()
     for label, d in (('first word', 0x0140000800000000), ('second word', 0x01400008)):
         print('check bits for a doubleword holding 0x01400008 in its %s: %#x (the routine stores 0x395)'
               % (label, prom_ecc(flash, d)))
+    if args.callers:
+        callers_report(flash, args)
+        return
     if args.matrix:
         for dw in ('lo-hi', 'hi-lo'):
             for miss in ('flash', 'zero'):
