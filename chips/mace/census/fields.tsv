@@ -1,0 +1,188 @@
+variant	register	source	kind	bits_or_value	sites	functions	example
+?	0x80004	load	shift	shift 0	20	8	badaddr@142c0
+?	0x80008	store	const	0xfe000000	2	1	mlreset@897c
+?	0x80008	store	const	0x8dff	1	1	mlreset@897c
+?	0x80008	store	const	0x85ff	1	1	mlreset@89c8
+?	0x80008	store	const	0x503	1	1	sub_a00bc360@0bc3a4
+?	0x80008	store	const	0xff000000	1	1	sub_a00bc360@0bc3a4
+?	0x80008	load	mask	11	2	1	rad_attach@4f10
+?	0x8000c	store	const	0x1	1	1	pcimh_flush_buffers@18ac
+?	0x80cf8	store	const	0x4	2	1	if_ecfattach@3c4c
+?	0x80cf8	store	const	0xc	2	1	if_ecfattach@3c78
+?	0x80cf8	store	const	0x8	1	1	if_ecfattach@3c34
+?	0x80cf8	store	mask	7:2	3	3	pcimh_config_ptr_get@1e64
+?	0x80cfc	store	const	0x6	1	1	if_ecfattach@3c6c
+?	0x80cfc	store	const	0x3020	1	1	if_ecfattach@3ca0
+?	0x80cfc	load	mask	7:0	3	2	if_ecfattach@3c38
+?	0x200058	load	mask	3:0	1	1	mvpprobe@735c
+?	0x280000	store	const	0x1	2	2	sub_a00e178c@0e17a8
+?	0x280000	load	mask	7:0	1	1	sub_a00e1740@0e1744
+?	0x280000	load	shift	shift 29	1	1	sub_a00e1740@0e1744
+?	0x300000	store	const	0x1	4	2	a3_probe@2c
+?	0x300000	load	mask	11:5	3	2	a3_start_dma@2930
+?	0x300000	load	mask	1	1	1	a3_probe@10
+?	0x300000	load	shift	shift 0	6	5	a3_probe@10
+?	0x300000	load	shift	shift 4	2	2	a3_start_dma@2930
+?	0x300000	load	shift	shift 2	2	1	a3_start_dma@2930
+?	0x300000	load	shift	shift 11	1	1	a3_start_dma@2930
+?	0x300000	load	shift	shift 3	1	1	a3_update_subsys@2e10
+?	0x300008	store	const	0x10000	2	2	a3_probe@50
+?	0x300008	store	mask	15:0	1	1	do_write_codec_reg@28bc
+?	0x300008	load	shift	shift 0	3	1	a3_idbg_dump_hw@3244
+?	0x300010	load	shift	shift 0	3	1	a3_idbg_dump_hw@325c
+?	0x300018	load	mask	15:0	1	1	do_read_codec_reg@27d8
+?	0x300018	load	shift	shift 0	3	1	a3_idbg_dump_hw@3274
+?	0x300020	load	shift	shift 0	3	1	a3_idbg_dump_hw@328c
+?	0x300028	load	shift	shift 0	3	1	a3_idbg_dump_hw@32a4
+?	0x300030	load	shift	shift 0	3	1	a3_idbg_dump_hw@32bc
+?	0x300038	load	shift	shift 0	2	1	a3_idbg_dump_hw@32d4
+?	0x300040	load	shift	shift 0	2	1	a3_idbg_dump_hw@32ec
+?	0x300048	load	shift	shift 0	2	1	a3_idbg_dump_hw@330c
+?	0x300050	load	shift	shift 0	3	1	a3_idbg_dump_hw@332c
+?	0x300058	load	shift	shift 0	3	1	a3_idbg_dump_hw@3344
+?	0x300060	load	shift	shift 0	3	1	a3_idbg_dump_hw@335c
+?	0x300068	load	shift	shift 0	3	1	a3_idbg_dump_hw@3374
+?	0x300070	load	shift	shift 0	2	1	a3_idbg_dump_hw@338c
+?	0x300078	load	shift	shift 0	1	1	a3_idbg_dump_hw@33a4
+?	0x310000	store	const	0x0	2	1	sub_a00e25a4@0e25fc
+?	0x310000	load	mask	4	1	1	pckm_attach@40
+?	0x310000	load	shift	shift 0	1	1	pckm_attach@40
+?	0x310008	store	const	0x1	1	1	sub_a00277cc@0277e0
+?	0x310008	load	mask	7:0	2	2	sub_2540@2544
+?	0x310008	load	mask	4	2	1	bump_leds@10e60
+?	0x310008	store	mask	5:4	2	2	crm_deadloop@0285e8
+?	0x310008	load	mask	1	1	1	sub_a00fcec8@0fcecc
+?	0x310008	load	shift	shift 0	1	1	sub_a00e472c@0e4748
+?	0x310010	load	mask	8	3	3	cpu_waitforreset@112b0
+?	0x310010	load	mask	1	1	1	a3_err_intr@262c
+?	0x310010	load	shift	shift 0	2	1	a3_err_intr@262c
+?	0x310018	store	const	0x100	1	1	sub_121f4@1229c
+?	0x310018	store	const	0x18	1	1	mace_mask_enable@7c
+?	0x310018	store	const	0xa00	1	1	pckm_enable_interrupt@1754
+?	0x310018	load	mask	7:0	1	1	pckm_enable_interrupt@1744
+?	0x310018	load	shift	shift 0	4	4	a3_start_subsys@39c
+?	0x314010	store	const	0x2	2	1	plp_io@1810
+?	0x314010	store	const	0x1	1	1	plp_io@17c4
+?	0x314010	store	const	0x4	1	1	plp_reset_dmacntxts@2338
+?	0x314010	load	mask	0	1	1	plpclose@848
+?	0x314018	load	mask	11:0	2	2	plp_tmout@12ac
+?	0x314018	load	mask	0	2	1	plp_rbflush@2668
+?	0x314018	load	mask	1	1	1	plp_rbflush@2668
+?	0x314018	load	shift	shift 2	2	2	plp_tmout@12ac
+?	0x330010	store	const	0x1	1	1	mvpi2c_read_reg@3748
+?	0x330010	store	const	0x3	1	1	mvpi2c_read_reg@37fc
+?	0x330010	load	mask	0	3	1	_mvpi2c_force_bus_idle@3610
+?	0x330010	load	shift	shift 59	2	2	_mvpi2c_wait_for_xfer_done@3558
+?	0x330010	load	shift	shift 58	2	1	_mvpi2c_wait_for_ack@3590
+?	0x330010	load	shift	shift 7	1	1	_mvpi2c_force_bus_idle@3664
+?	0x330018	load	shift	shift 0	1	1	mvpi2c_read_reg@37b8
+?	0x380000	store	const	0x4	2	2	plpfdc_cpp@3048
+?	0x380000	store	const	0xff	2	1	plpfdc_cpp@305c
+?	0x380000	store	const	0x2	2	2	plpfdc_open@3380
+?	0x380000	store	const	0x5	2	2	plpfdc_open@33f0
+?	0x380000	store	const	0xfe	1	1	plpfdc_cpp@3004
+?	0x380000	store	const	0xaa	1	1	plpfdc_cpp@3020
+?	0x380000	store	const	0x55	1	1	plpfdc_cpp@3034
+?	0x380000	store	const	0x87	1	1	plpfdc_cpp@30d8
+?	0x380000	store	const	0x78	1	1	plpfdc_cpp@311c
+?	0x380000	store	const	0x100	1	1	plpfdc_cpp@3184
+?	0x380000	store	mask	7:0	3	2	plpioctl@ba0
+?	0x380100	load	mask	6	6	3	plp_negotiate@29d8
+?	0x380100	load	mask	5	6	3	plp_negotiate@2adc
+?	0x380100	load	mask	7	3	2	plp_io@1914
+?	0x380100	load	mask	7,5:4	3	2	plp_negotiate@2954
+?	0x380100	load	mask	7:6,3	3	1	plp_phase_reset@2c28
+?	0x380100	load	mask	6:3	2	1	plp_negotiate@289c
+?	0x380100	load	mask	7:0	2	1	plpfdc_cpp@316c
+?	0x380100	load	mask	4	1	1	plpioctl@d20
+?	0x380100	load	mask	7:4	1	1	plpfdc_cpp@3084
+?	0x380100	load	mask	7:3	1	1	plpfdc_cpp@30f4
+?	0x380100	load	mask	3	1	1	plpfdc_cpp@31fc
+?	0x380100	load	mask	6,3	1	1	plpfdc_cpp@3264
+?	0x380200	store	const	0x5	12	3	plpfdc_cpp@319c
+?	0x380200	store	const	0x4	9	5	plp_phase_reset@2cd4
+?	0x380200	store	const	0x2	3	3	plp_negotiate@288c
+?	0x380200	store	const	0x7	3	2	plpfdc_open@3418
+?	0x380200	store	const	0x1	2	2	plp_io@1a3c
+?	0x380200	store	const	0xd	2	2	plpfdc_open@33bc
+?	0x380200	store	const	0x20	1	1	plp_io@1798
+?	0x380200	store	const	0x8	1	1	plp_reset@275c
+?	0x380200	store	const	0xe	1	1	plp_reset@2784
+?	0x380200	store	mask	7:0	17	6	plpioctl@be0
+?	0x380200	load	mask	6	2	2	plp_phase_reset@2ce4
+?	0x380200	load	mask	6:3	1	1	plp_negotiate@2870
+?	0x380200	load	mask	7,5:4	1	1	plp_negotiate@2938
+?	0x380200	load	mask	7:6,3	1	1	plp_phase_reset@2bf8
+?	0x380300	store	const	0x3	9	4	plpfdc_open@348c
+?	0x380300	store	const	0x1	7	3	plpfdc_read@3b58
+?	0x380300	store	const	0x8	5	1	plpfdc_fifo_ctrl@37a0
+?	0x380300	store	const	0x9	5	1	plpfdc_fifo_ctrl@37ac
+?	0x380300	store	const	0xa	5	1	plpfdc_fifo_ctrl@37b8
+?	0x380300	store	const	0x2	4	2	plpfdc_hdout@4110
+?	0x380300	store	const	0x6	3	2	plpfdc_read@3ab8
+?	0x380300	store	mask	7:0	1	1	plpioctl@e88
+?	0x380400	store	const	0x2	4	4	plpfdc_fifo_ctrl@3768
+?	0x380400	store	const	0x8	2	2	plpfdc_read@3d64
+?	0x380400	store	const	0x9	2	2	plpfdc_hdout@4124
+?	0x380400	store	const	0x5	2	2	plpfdc_hdout@417c
+?	0x380400	store	const	0x1a	1	1	plpfdc_read@3c0c
+?	0x380400	store	const	0x42	1	1	plpfdc_dmatc@4298
+?	0x380400	store	mask	7:0	5	4	plpfdc_fifo_ctrl@3768
+?	0x380400	load	shift	shift 16	15	1	plpfdc_fifo_ctrl@37d0
+?	0x388200	store	const	0x80	4	4	plpopen@664
+?	0x388200	store	const	0x60	3	2	plpopen@574
+?	0x388200	store	const	0x40	2	1	plpopen@5c4
+?	0x388200	store	const	0x8	2	1	plp_io@17ec
+?	0x388200	store	const	0xc0	1	1	plpopen@4dc
+?	0x388200	store	const	0x10	1	1	plpopen@608
+?	0x388200	store	mask	7:0	23	10	plpopen@418
+?	0x3a0000	load	mask	5:0	2	1	sub_129e8@12a88
+?	0x3a0100	store	const	0xc0	1	1	set_autopoweron@131a8
+?	0x3a0200	load	mask	5:0	2	1	sub_129e8@12a98
+?	0x3a0200	load	mask	4:0	1	1	sub_129e8@12a98
+?	0x3a0300	store	mask	7:0	1	1	set_autopoweron@1312c
+?	0x3a0400	load	mask	5:0	3	2	sub_129e8@12aa4
+?	0x3a0400	load	mask	4:0	1	1	sub_129e8@12aa4
+?	0x3a0400	store	mask	7:0	1	1	sub_129e8@12b78
+?	0x3a0400	store	mask	5:0	1	1	sub_129e8@12b78
+?	0x3a0500	store	mask	7:0	2	1	set_autopoweron@13150
+?	0x3a0600	load	mask	2:0	1	1	sub_129e8@12ae4
+?	0x3a0700	load	mask	5:0	2	2	sub_129e8@12ab8
+?	0x3a0700	load	mask	4:0	1	1	sub_129e8@12ab8
+?	0x3a0700	load	mask	2:0	1	1	sub_129e8@12ab8
+?	0x3a0800	load	mask	4:0	2	2	sub_129e8@12ac8
+?	0x3a0800	load	mask	2:0	1	1	sub_129e8@12ac8
+?	0x3a0900	load	mask	2:0	1	1	sub_129e8@12ad8
+?	0x3a0a00	store	const	0x10	6	6	power_dump@11348
+?	0x3a0a00	store	const	0x30	1	1	sub_129e8@12b14
+?	0x3a0a00	store	const	0x20	1	1	sub_a00ff4f4@0ff540
+?	0x3a0a00	store	mask	7:0	13	9	power_dump@11348
+?	0x3a0a00	load	mask	7	7	4	sub_a002a4b4@02a4e8
+?	0x3a0a00	load	mask	6:5	2	2	sub_a002a4b4@02a4b8
+?	0x3a0a00	load	mask	4	2	2	sub_a002a4b4@02a4d8
+?	0x3a0a00	load	mask	15:5,3:0	2	2	sub_a00ef6b4@0ef710
+?	0x3a0a00	load	mask	15:7,5:0	1	1	sub_a00ef6b4@0ef6cc
+?	0x3a0a00	store	mask	15:7,5:0	1	1	sub_a00ff4f4@0ff540
+?	0x3a0b00	store	const	0x80	3	2	sub_129e8@12a68
+?	0x3a0b00	store	const	0x2	1	1	sub_121f4@12230
+?	0x3a0b00	store	const	0x82	1	1	sub_a00ff4f4@0ff530
+?	0x3a0b00	store	mask	7:0	3	1	sub_129e8@12a68
+?	0x3a0b00	store	mask	15:3,1:0	1	1	sub_a00ff4f4@0ff530
+?	0x3a0b00	load	mask	15:8,6:0	1	1	sub_a00ff4f4@0ff544
+?	0x3a0c00	load	mask	7	4	4	cpu_waitforreset@112c0
+?	0x3a0e00	store	const	0x1	1	1	sub_12dd8@12e28
+?	0x3a0e00	store	mask	7:0	2	2	sub_12dd8@12e28
+?	0x3a4900	store	mask	7:0	2	1	set_autopoweron@13198
+?	0x3a4a00	store	const	0x8	3	2	cpu_powerdown@111b0
+?	0x3a4a00	store	mask	7:0	2	2	power_dump@11380
+?	0x3a4a00	load	mask	1:0	2	2	cpu_powerdown@027580
+?	0x3a4a00	load	mask	15:2	2	2	sub_a00ef6b4@0ef704
+?	0x3a4a00	store	mask	15:2	2	2	sub_a00ef6b4@0ef70c
+?	0x3a4a00	load	mask	0	1	1	cpu_waitforreset@1127c
+?	0x3a4b00	store	const	0x81	4	4	cpu_powerdown@11198
+?	0x3a4b00	store	const	0x9	1	1	sub_121f4@1226c
+?	0x3a4b00	store	const	0x2	1	1	set_autopoweron@131c8
+?	0x3a4b00	store	const	0x83	1	1	cpu_powerdown@027564
+?	0x3a4b00	store	mask	7:0	1	1	set_autopoweron@131c8
+?	0x3a4b00	load	mask	15:2,0	1	1	sub_a00ef6b4@0ef6ec
+?	0x3a4b00	store	mask	15:2,0	1	1	sub_a00ef6b4@0ef6f4
