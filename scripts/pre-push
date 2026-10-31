@@ -1,0 +1,47 @@
+#!/bin/sh
+# Git pre-push check: compares the entries this push changes with the binaries
+# (scripts/check_claims.py). Install it once per clone:
+#
+#   ln -s ../../scripts/pre-push .git/hooks/pre-push
+#
+# It needs the toolchain environment (MIPS objdump, pyelftools). Outside it,
+# set CHECK_CLAIMS_RUN to the command that runs a command there, for example
+# CHECK_CLAIMS_RUN=/path/to/re-run-wrapper.sh. Without either it says so and
+# lets the push through.
+#
+# The report is printed for every class; the push is refused only for a
+# mismatch in a class with near-zero false positives (BLOCKING in
+# scripts/check_claims.py) on an entry the push changes. CHECK_CLAIMS=off
+# skips the claim check. A repository's scripts/check-leaks.sh, when present,
+# runs as well and its failure also refuses the push.
+top=$(git rev-parse --show-toplevel) || exit 0
+cd "$top" || exit 0
+status=0
+# a repository's own leak check, where it has one, runs first and always
+if [ -x scripts/check-leaks.sh ]; then
+    scripts/check-leaks.sh >&2 || status=1
+fi
+[ "${CHECK_CLAIMS:-on}" = off ] && exit $status
+z=0000000000000000000000000000000000000000
+while read -r lref lsha rref rsha; do
+    [ "$lsha" = "$z" ] && continue
+    if [ "$rsha" = "$z" ]; then
+        base=$(git merge-base "$lsha" origin/main 2>/dev/null) || continue
+    else
+        base=$rsha
+    fi
+    git diff --quiet "$base" "$lsha" -- docs && continue
+    if command -v mips64-linux-gnuabi64-objdump >/dev/null 2>&1 || [ -n "$MIPS_OBJDUMP" ]; then
+        set -- python3 scripts/check_claims.py
+    elif [ -n "$CHECK_CLAIMS_RUN" ]; then
+        set -- $CHECK_CLAIMS_RUN python3 scripts/check_claims.py
+    else
+        echo "pre-push: no MIPS toolchain and no CHECK_CLAIMS_RUN; claims not checked" >&2
+        continue
+    fi
+    "$@" --status all --quiet --blocking --changed "$base" >&2 || status=1
+done
+if [ $status -ne 0 ]; then
+    echo "pre-push: a blocking claim mismatch (above) in a changed entry; fix the entry or push with CHECK_CLAIMS=off" >&2
+fi
+exit $status
