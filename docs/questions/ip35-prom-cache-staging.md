@@ -343,6 +343,55 @@ the second case the table's words need the architectural word from the table, no
 mismatched immediates above must be reproduced if the code that uses them runs from the cache. The layout above is exact for the
 sampled opcodes and a model cannot derive it from the manual, which says only that the word is 36 bits.
 
+## Pass one in order, and what it needs from the primary instruction cache
+
+Answers to a model trace in which the routine's primary-I way 1 ends up holding zero words (352 Index Store Data (I)
+operations of zero, covering 0x1fc04980 to 0x1fc04eff, then Index Store Tag (I) on sets 38 to 60 with TagLo 0x01fc0444).
+All from the code and the simulator's operation log (word order `lo-hi`, copy call at 0x1fc05950); "needs" statements follow from the code.
+
+**Order (established).** There is no zero fill of the primary cache in this routine. The only zero fill is of the
+secondary slot (0x1fc04abc, 0x1fc04ac0, before the loop). Pass one, per 8-byte piece, 176 pieces from 0x1fc04980 to
+0x1fc04f00:
+
+1. 0x1fc04c64 Index Store Data (S) of the piece into slot quadword 0; 0x1fc04c68, 0x1fc04c8c, 0x1fc04cc8, 0x1fc04cdc
+   Index Load Data (S) readbacks and compares.
+2. 0x1fc04d04 Index Store Tag (I) set 60 way 1 Invalid (TagLo 0x8); 0x1fc04d28 Index Store Tag (I) set 60 way 0 Valid
+   with the bogus tag (TagLo 0xffffff4c, TagHi 0xf). Set 60 is the slot's set (VA[13:6] of 0x980000001fc04f00).
+3. 0x1fc04d34 `jalr` fetches 0x980000001fc04f10: primary miss, secondary hit, refill of the Invalid way 1.
+4. 0x1fc04d40 Index Load Data (I) set 60 way 1 word 0; 0x1fc04d44 Index Store Data (I) of that word to the target
+   (set 38 onward, way 1 in pass one); 0x1fc04d48 Index Load Data (I) word 1; 0x1fc04d4c Index Store Data (I) of it.
+5. After the last piece: 0x1fc04d68 Index Store Tag (S) invalidates the slot; then 0x1fc04e10 Index Store Tag (I),
+   one per 64-byte target line, way 1, sets 38 to 59 (22 lines) and set 60 (the 23rd, the slot line), TagHi 0,
+   TagLo 0x01fc0444 for the first line (tag PA[35:12] = 0x1fc04, Valid, parity bit set).
+
+So the 352 Index Store Data (I) are the readback-then-store copies, and the tags come last. The data is never "filled with zero and
+later overwritten": what the copies store is the data. If the Index Load Data (I) at 0x1fc04d40 and 0x1fc04d48 return
+zero, the 352 stores are zero and the tags then make them Valid, which reproduces the trace's state exactly. I confirmed
+it by forcing both loads to zero in the simulator: 352 stores, 352 zero, 22 way-1 line tags on sets 38 to 59 with TagLo
+0x01fc0444. Normally 320 of the 352 are nonzero (the other 32 are nop words of the code).
+
+**What the copy reads (established).** Only set 60 way 1, words 0 and 1 (operands 0x980000001fc04f01 and 0x980000001fc04f05),
+every piece. It does not read the lines at sets 38 to 59 and does not read lines executed earlier from 0x98... : before pass
+one the routine runs from the mapped uncached window (0xc00000001fc0xxxx), and the first and every cached fetch in pass one up to the
+`jr` at 0x1fc049f4 is the trampoline fetch at 0x980000001fc04f10. The routine does depend on a line filled by an
+ordinary cached fetch: the Index Load Data (I) reads the line the fetch at 0x980000001fc04f10 just refilled from the
+secondary cache. A model that does not fill the primary cache on a cached fetch that misses it returns empty contents there.
+
+**On hardware (inferred).** The refill fills the way the cache picks, the tag equals the physical address, and the words are the
+predecoded form of the secondary data (this is how the PROM gets predecoded words without doing the predecode: the secondary
+holds raw flash words, the refill predecodes them, the copy moves the predecoded form; the word format section above
+gives the layout and the table-driven loader stores the same layout). The routine requires the refill to choose way 1
+(the way it set Invalid) and to predecode; the manual specifies neither (see below). In the simulator the first piece's Index Load
+Data (I) returned 0x44223000 (word 0) and 0x30430010 (word 1), the staged flash words, since the simulator's refill copies
+words unpredecoded; the simulator does fill the primary cache on a cached fetch that misses the primary and hits the secondary
+(`fetch()` refill), and only then.
+
+**Intent (inferred).** Not execution from the other way and not from the secondary cache. After the loop the routine
+invalidates the slot in the secondary cache (0x1fc04d68) and writes no secondary tag for the target range, so the secondary cache
+cannot supply 0x1fc04980 onward. Execution continues from primary way 1 at 0x980000001fc04a28 (the `jr` built at
+0x1fc049f4 to 0x1fc04a24) out of the lines it just copied and tagged Valid. A zero-filled way 1 is therefore a symptom of the
+readbacks, not a design: the copy only works if the Index Load Data (I) readbacks contain the refilled words.
+
 ## Where the manual is silent, and what the PROM requires
 
 1. **Word order of a secondary-cache doubleword (inferred).** Contradicted: Figure 14-33 (p. 283), and the text of
