@@ -35,3 +35,15 @@
 	path = openbsd
 	url = https://github.com/openbsd/src.git
 	shallow = true
+[submodule "gxemul"]
+	path = gxemul
+	url = https://github.com/retroprom/gxemul.git
+	shallow = true
+[submodule "mame"]
+	path = mame
+	url = https://github.com/mamedev/mame.git
+	shallow = true
+[submodule "arcboot"]
+	path = arcboot
+	url = https://github.com/agx/arcboot.git
+	shallow = true
