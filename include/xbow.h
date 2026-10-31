@@ -10,7 +10,62 @@
 #ifndef XBOW_H
 #define XBOW_H
 
-/* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: chips/xbow/README.md. */
+
+/* ---- registers (8-byte slots) ------------------------------------ */
+
+#define XBOW_XB_ID                         0x000000   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 20 sites, 6 routine(s) */
+#define   XBOW_XB_ID_B_10_0                0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   XBOW_XB_ID_B_15_0                0xffff   /* [I] load mask: the code isolates these bits (15 sites) */
+#define XBOW_XB_ID_0                       0x000000   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 4 sites, 4 routine(s) */
+#define   XBOW_XB_ID_0_B_10_0              0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   XBOW_XB_ID_0_B_15_0              0xffff   /* [I] load mask: the code isolates these bits (15 sites) */
+#define XBOW_XB_STAT                       0x000008   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 7 sites, 3 routine(s) */
+#define   XBOW_XB_STAT_B_5_2               0x24   /* [I] load mask: the code isolates these bits (1 sites) */
+#define XBOW_XB_STAT_8                     0x000008   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 5 sites, 4 routine(s) */
+#define   XBOW_XB_STAT_8_B_5_2             0x24   /* [I] load mask: the code isolates these bits (1 sites) */
+#define XBOW_XB_ERR_UPPER                  0x000010   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 10 sites, 4 routine(s) */
+#define XBOW_XB_ERR_UPPER_10               0x000010   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 5 sites, 4 routine(s) */
+#define XBOW_XB_ERR_LOWER                  0x000018   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 10 sites, 4 routine(s) */
+#define XBOW_XB_ERR_LOWER_18               0x000018   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 5 sites, 4 routine(s) */
+#define XBOW_XB_CTRL                       0x000020   /* [E] width 4 byte(s), access rw; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 9 sites, 3 routine(s) */
+#define   XBOW_XB_CTRL_V_24                0x24   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   XBOW_XB_CTRL_B_3_0               0xf   /* [I] load mask: the code isolates these bits (4 sites) */
+#define   XBOW_XB_CTRL_B_7_0               0xff   /* [I] load mask: the code isolates these bits (4 sites) */
+#define XBOW_XB_CTRL_20                    0x000020   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 4 sites, 2 routine(s) */
+#define   XBOW_XB_CTRL_20_V_24             0x24   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   XBOW_XB_CTRL_20_B_3_0            0xf   /* [I] load mask: the code isolates these bits (4 sites) */
+#define   XBOW_XB_CTRL_20_B_7_0            0xff   /* [I] load mask: the code isolates these bits (4 sites) */
+#define XBOW_XB_PKT_TO                     0x000028   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 3 sites, 1 routine(s) */
+#define XBOW_XB_INT_UPPER                  0x000030   /* [E] width 4 byte(s), access rw; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 6 sites, 2 routine(s) */
+#define   XBOW_XB_INT_UPPER_B_15_0         0xffff   /* [I] store mask: the code writes these bits (3 sites) */
+#define XBOW_XB_INT_LOWER                  0x000038   /* [E] width 4 byte(s), access rw; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 6 sites, 2 routine(s) */
+#define XBOW_XB_ERR_CMDWORD                0x000040   /* [E] width 4 byte(s), access rw; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 14 sites, 4 routine(s) */
+#define XBOW_XB_ERR_CMDWORD_40             0x000040   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 5 sites, 4 routine(s) */
+#define XBOW_XB_LLP_CTRL                   0x000048   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 3 sites, 1 routine(s) */
+#define XBOW_XB_STAT_CLR                   0x000050   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 3 sites, 1 routine(s) */
+#define XBOW_XB_ARB_RELOAD                 0x000058   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 3 sites, 1 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH            0x000108   /* [E] width 4 byte(s), access rw; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 9 sites, 1 routine(s) */
+#define   XBOW_XB_LINK_IBUF_FLUSH_V_80000  0x80000   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   XBOW_XB_LINK_IBUF_FLUSH_B_3      0x8   /* [I] load mask: the code isolates these bits (6 sites) */
+#define XBOW_XB_LINK_IBUF_FLUSH_108        0x000108   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 30 sites, 8 routine(s) */
+#define   XBOW_XB_LINK_IBUF_FLUSH_108_V_80000 0x80000   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   XBOW_XB_LINK_IBUF_FLUSH_108_B_3  0x8   /* [I] load mask: the code isolates these bits (6 sites) */
+#define XBOW_XB_LINK_IBUF_FLUSH_110        0x000110   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 3 sites, 3 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_110        0x000110   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 29 sites, 18 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_118        0x000118   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 15 sites, 5 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_120        0x000120   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 15 sites, 5 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_128        0x000128   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 3 sites, 1 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_128        0x000128   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 8 sites, 4 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_130        0x000130   /* [E] width 4 byte(s), access w, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 5 sites, 3 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_138        0x000138   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 6 sites, 4 routine(s) */
+#define   XBOW_XB_LINK_IBUF_FLUSH_138_B_5  0x20   /* [I] load mask: the code isolates these bits (13 sites) */
+#define   XBOW_XB_LINK_IBUF_FLUSH_138_B_7_0 0xff   /* [I] load mask: the code isolates these bits (3 sites) */
+#define XBOW_XB_LINK_IBUF_FLUSH_138        0x000138   /* [E] width 4 byte(s), access r, indexed (family base); name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 29 sites, 16 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_148        0x000148   /* [E] width 4 byte(s), access rw; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 9 sites, 1 routine(s) */
+#define   XBOW_XB_LINK_IBUF_FLUSH_148_B_3  0x8   /* [I] load mask: the code isolates these bits (3 sites) */
+#define XBOW_XB_LINK_IBUF_FLUSH_150        0x000150   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 3 sites, 3 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_168        0x000168   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 3 sites, 1 routine(s) */
+#define XBOW_XB_LINK_IBUF_FLUSH_178        0x000178   /* [E] width 4 byte(s), access r; name [I] from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code; reached in 6 sites, 4 routine(s) */
+#define   XBOW_XB_LINK_IBUF_FLUSH_178_B_5  0x20   /* [I] load mask: the code isolates these bits (2 sites) */
 
 #endif /* XBOW_H */

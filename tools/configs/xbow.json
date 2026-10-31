@@ -1,33 +1,89 @@
 {
  "asic": "xbow",
- "title": "Xbow, the crossbar (Crossbow)",
+ "title": "Xbow, the crossbar (Crossbow), and the PXBOW face the IP35 code also probes",
  "mode": "spec-backed",
- "status": "stub: census not run",
+ "status": "census run",
  "spec": "Crossbow ASIC Specification, revision 12.0",
  "images": [
   {
-   "label": "ip27-unix",
-   "dis": "work/dis/ip27-unix.s",
-   "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
-   "path": "root/IP27/unix",
-   "kind": "elf"
+   "label": "ip27-xbow-o",
+   "dis": "work/dis/ip27-xbow-o.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/xbow.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP27 Xbow driver object"
   },
   {
-   "label": "ip30-unix",
-   "dis": "work/dis/ip30-unix.s",
-   "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
-   "path": "root/IP30/unix",
-   "kind": "elf"
+   "label": "ip27-xswitch-o",
+   "dis": "work/dis/ip27-xswitch-o.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/xswitch.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP27 crossbar link-reset object"
   },
   {
-   "label": "ip30-prom",
-   "dis": "work/dis/ip30-prom.s",
-   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
-   "path": "root/firmware/IP30prom.bin",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
-   "arch": "mips:isa64",
-   "split": "jr31"
+   "label": "ip27-kernel-o",
+   "dis": "work/dis/ip27-kernel-o.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/kernel.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP27 kernel object (Xbow error save and show routines)",
+   "literals": "work/dis/ip27-kernel-o.lit8.txt",
+   "lit_sections": [
+    ".lit8"
+   ],
+   "gp": "auto-min",
+   "const_windows": [
+    {
+     "lo": "0x92000000e0000000",
+     "hi": "0x92000000e0001000",
+     "name": "xbow-window"
+    }
+   ]
+  },
+  {
+   "label": "ip30-xbow-o",
+   "dis": "work/dis/ip30-xbow-o.s",
+   "path": "root/IP30/usr/cpu/sysgen/IP30boot/xbow.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP30 Xbow driver object",
+   "literals": "work/dis/ip30-xbow-o.lit8.txt",
+   "lit_sections": [
+    ".lit8"
+   ],
+   "gp": "auto-min",
+   "const_windows": [
+    {
+     "lo": "0x9000000010000000",
+     "hi": "0x9000000010001000",
+     "name": "xbow-window"
+    }
+   ]
+  },
+  {
+   "label": "ip30-xswitch-o",
+   "dis": "work/dis/ip30-xswitch-o.s",
+   "path": "root/IP30/usr/cpu/sysgen/IP30boot/xswitch.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP30 crossbar link-reset object"
+  },
+  {
+   "label": "ip35-xbow-o",
+   "dis": "work/dis/ip35-xbow-o.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/xbow.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 Xbow driver object"
+  },
+  {
+   "label": "ip35-xswitch-o",
+   "dis": "work/dis/ip35-xswitch-o.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/xswitch.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 crossbar link-reset object"
   },
   {
    "label": "ip35-kernel-o",
@@ -35,7 +91,29 @@
    "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
    "kind": "elf",
    "reloc": true,
-   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
+   "note": "IRIX 6.5.30 IP35 kernel object (Xbow error save and show routines)",
+   "literals": "work/dis/ip35-kernel-o.lit8.txt",
+   "lit_sections": [
+    ".lit8"
+   ],
+   "gp": "auto-min",
+   "const_windows": [
+    {
+     "lo": "0x92000000e0000000",
+     "hi": "0x92000000e0001000",
+     "name": "xbow-window"
+    }
+   ]
+  },
+  {
+   "label": "ip30-prom",
+   "dis": "work/dis/ip30-prom.s",
+   "path": "root/firmware/IP30prom.bin",
+   "kind": "raw",
+   "vma": "0xffffffffbfc00000",
+   "arch": "mips:isa64",
+   "split": "jr31",
+   "note": "IP30 PROM flat image at 0xbfc00000"
   },
   {
    "label": "ip35-prom",
@@ -44,42 +122,198 @@
    "kind": "promgen64",
    "segment": "ip35prom",
    "vma": "0xc00000001fc00000",
-   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time",
-   "split": "jr31"
-  },
-  {
-   "label": "ip32-kernel-o",
-   "dis": "work/dis/ip32-kernel-o.s",
-   "path": "root/IP32/usr/cpu/sysgen/IP32boot/kernel.o",
-   "kind": "elf",
-   "reloc": true,
-   "note": "IRIX 6.5.30 IP32 kernel object"
-  },
-  {
-   "label": "ip32-prom",
-   "dis": "work/dis/ip32-prom.s",
-   "path": "root/firmware/ip32prom.image",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
    "split": "jr31",
-   "note": "IP32 PROM flat image; load address assumed from the reset vector, not yet read from the image"
+   "note": "IP35 CPU PROM, promgen64 segment unpacked",
+   "const_windows": [
+    {
+     "lo": "0x9200000000000000",
+     "hi": "0x9200000000001000",
+     "name": "xbow-window"
+    },
+    {
+     "lo": "0x9200000000800000",
+     "hi": "0x9200000000801000",
+     "name": "xbow-window-alias"
+    }
+   ]
+  },
+  {
+   "label": "ip27-prom",
+   "dis": "work/dis/ip27-prom.s",
+   "path": "root/firmware/ip27prom.img",
+   "kind": "promgen64",
+   "segment": "ip27prom",
+   "vma": "0xc00000001fc00000",
+   "split": "jr31",
+   "note": "IP27 CPU PROM, promgen64 segment unpacked (checksum ok)",
+   "const_windows": [
+    {
+     "lo": "0x9200000000000000",
+     "hi": "0x9200000000001000",
+     "name": "xbow-window"
+    },
+    {
+     "lo": "0x9200000000800000",
+     "hi": "0x9200000000801000",
+     "name": "xbow-window-alias"
+    }
+   ]
+  },
+  {
+   "label": "io6-prom",
+   "dis": "work/dis/io6-prom.s",
+   "path": "root/firmware/io6prom.img",
+   "kind": "promgen64",
+   "segment": "io6prom",
+   "vma": "0xc000000011c00000",
+   "split": "jr31",
+   "note": "I/O board PROM (the IP27 PROM main program), promgen64 segment unpacked (checksum ok)",
+   "const_windows": [
+    {
+     "lo": "0x9200000000000000",
+     "hi": "0x9200000000001000",
+     "name": "xbow-window"
+    },
+    {
+     "lo": "0x9200000000800000",
+     "hi": "0x9200000000801000",
+     "name": "xbow-window-alias"
+    }
+   ]
   }
  ],
  "report_functions": ".*",
- "seeds": {},
- "field_rules": [],
- "discriminators": {},
- "variants": {},
+ "seeds": {
+  "args": [
+   {
+    "functions": "^(xbow_link_alive|xbow_widget_present|xbow_intr_preset|idbg_xbowregs)$",
+    "reg": 4,
+    "off": 0
+   },
+   {
+    "functions": "^(xbow_errintr_handler|xbow_error_handler)$",
+    "reg": 4,
+    "off": 1048576
+   },
+   {
+    "functions": "^prom_(c00000001fc43758|c00000001fc425a0|c00000001fc44bbc|c00000001fc4a500|c00000001fc4bd30|c00000001fc4f3ec|ffffffffbfc094f4|ffffffffbfc6b098|ffffffffbfc6b198|ffffffffbfc6ac2c)$",
+    "reg": 4,
+    "off": 0
+   },
+   {
+    "functions": "^prom_(c00000001fc08ff0|c000000011c39e00|c00000001fc0aeec)$",
+    "reg": 24,
+    "off": 1048576
+   }
+  ],
+  "calls": [
+   {
+    "callee": "xtalk_piotrans_addr",
+    "in": "^xbow_attach$",
+    "off_arg": 6
+   }
+  ],
+  "returns": [
+   {
+    "callee": "hwgraph_fastinfo_get",
+    "off": 1048576
+   }
+  ]
+ },
+ "field_rules": [
+  {
+   "functions": "^(xbow_|idbg_xbow)",
+   "load": "ld",
+   "disp": 16,
+   "kind": "pointer",
+   "base_off": 1048576,
+   "off": 0
+  },
+  {
+   "functions": "^xbow_update_perf_counters$",
+   "load": "ld",
+   "disp": 8,
+   "kind": "pointer",
+   "base_off": 1048608,
+   "off": 100
+  },
+  {
+   "functions": "^xbow_update_perf_counters$",
+   "load": "ld",
+   "disp": 8,
+   "kind": "pointer",
+   "base_off": 1048624,
+   "off": 108
+  }
+ ],
+ "discriminators": {
+  "part": {
+   "id_disp": 4,
+   "shift": 12,
+   "mask": "0xffff"
+  }
+ },
+ "variants": {
+  "part": {
+   "0xd100": "pxbow",
+   "0xd000": "part-0xd000",
+   "0xc002": "bridge",
+   "0xd002": "xbridge"
+  }
+ },
  "variant_model": {
   "default": {
-   "access": "dw64"
+   "access": "half32"
   }
  },
  "reference": {
   "xbow": {
    "datasheets": [],
+   "spec": [
+    {
+     "file": "docs/sources/specs/crossbow-asic-specification-rev12.0.registers.md",
+     "label": "crossbow-spec-rev12.0",
+     "headings": [
+      "^Common registers",
+      "^Link registers"
+     ]
+    }
+   ],
    "model": []
   }
  },
- "buckets": []
+ "buckets": [
+  {
+   "lo": 1048576,
+   "size": 1048576,
+   "name": "driver state record (not hardware)"
+  },
+  {
+   "lo": -4096,
+   "size": 4096,
+   "name": "link register reached as a negative displacement from an unseen port index (xbow_enable_perf_counter: 0x40*port - 0xf4 is link control 0x10c + 0x40*(port-8))"
+  }
+ ],
+ "type_const_in": "^$",
+ "no_pointer_args": [
+  "splhi",
+  "splx",
+  "spl7",
+  "spinlock",
+  "mutex_lock",
+  "mutex_unlock",
+  "panic",
+  "cmn_err",
+  "cmn_err_tag",
+  "printf",
+  "qprintf",
+  "kdebug",
+  "timeout",
+  "us_delay",
+  "copyin",
+  "copyout"
+ ],
+ "collapse_above": 65536,
+ "accessor_calls": "^$",
+ "name_source": "the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code"
 }

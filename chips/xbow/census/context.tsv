@@ -1,0 +1,443 @@
+image	function	addr	variant	offset	rw	width	instructions_around_site
+ip27-xbow-o	xbow_attach	138	?	0x4	r	4	or $7,$20,$0 / sd $2,24($16) / jal 0 / daddiu $5,$21,8 / lw $8,4($17) / srl $9,$8,0xc / srl $8,$8,0x1c / andi $9,$9,0xffff / sll $9,$9,0x4
+ip27-xbow-o	xbow_attach	224	?	0x24	w	4	ld $5,-30696($28) / jal 0 / or $6,$16,$0 / addiu $7,$0,36 / sw $7,36($17) / jal 0 / or $4,$19,$0 / or $20,$2,$0 / addiu $16,$0,8
+ip27-xbow-o	xbow_attach	258	?	0x10c	r	4	andi $5,$16,0xff / andi $25,$16,0x7 / dsll $25,$25,0x6 / daddu $25,$17,$25 / lw $31,268($25) / addiu $24,$0,-465 / and $24,$24,$31 / or $24,$18,$24 / sw $24,268($25)
+ip27-xbow-o	xbow_attach	268	?	0x10c	w	4	lw $31,268($25) / addiu $24,$0,-465 / and $24,$24,$31 / or $24,$18,$24 / sw $24,268($25) / addiu $16,$16,1 / slti $31,$16,16 / beq $31,$0,2a8 / or $4,$19,$0
+ip27-xbow-o	xbow_widget_present	864	?	0x4	r	4	lw $1,4($4) / addiu $2,$0,1 / srl $1,$1,0x1c / andi $10,$5,0x7 / sllv $1,$2,$1
+ip27-xbow-o	xbow_widget_present	888	?	0x4	r	4	dsll $9,$10,0x6 / beq $1,$0,8b8 / daddu $8,$4,$9 / dli $6,0xd100 / lw $3,4($4) / srl $3,$3,0xc / andi $3,$3,0xffff / bne $3,$6,8b8 / sll $0,$0,0x0
+ip27-xbow-o	xbow_widget_present	89c	pxbow	0x4	r	4	srl $3,$3,0xc / andi $3,$3,0xffff / bne $3,$6,8b8 / sll $0,$0,0x0 / lw $6,4($4) / srl $6,$6,0x1 / andi $6,$6,0x7ff / bne $6,$0,8b8 / addiu $11,$0,15
+ip27-xbow-o	xbow_widget_present	8b8	?	0x13c	r	4	bne $6,$0,8b8 / addiu $11,$0,15 / beq $5,$11,8c0 / sll $0,$0,0x0 / lw $2,316($8) / andi $2,$2,0x20 / jr $31 / sll $0,$0,0x0
+ip27-xbow-o	xbow_widget_present	8b8	pxbow	0x13c	r	4	bne $6,$0,8b8 / addiu $11,$0,15 / beq $5,$11,8c0 / sll $0,$0,0x0 / lw $2,316($8) / andi $2,$2,0x20 / jr $31 / sll $0,$0,0x0
+ip27-xbow-o	xbow_link_alive	8d4	?	0x114	r	4	andi $2,$5,0x7 / dsll $2,$2,0x6 / daddu $2,$4,$2 / lw $2,276($2) / jr $31 / srl $2,$2,0x1f
+ip27-xbow-o	xbow_intr_preset	9d8	?	0x34	w	4	dsrl32 $2,$7,0x0 / andi $2,$2,0xffff / or $1,$1,$3 / or $1,$1,$2 / sw $1,52($4) / jr $31 / sw $7,60($4)
+ip27-xbow-o	xbow_intr_preset	9e0	?	0x3c	w	4	or $1,$1,$3 / or $1,$1,$2 / sw $1,52($4) / jr $31 / sw $7,60($4)
+ip27-xbow-o	xbow_errintr_handler	d50	?	0x24	r	4	sd $16,152($29) / sd $30,144($29) / ld $30,16($4) / sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30)
+ip27-xbow-o	xbow_errintr_handler	d54	?	0x54	r	4	sd $30,144($29) / ld $30,16($4) / sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1
+ip27-xbow-o	xbow_errintr_handler	d58	?	0x44	r	4	ld $30,16($4) / sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80
+ip27-xbow-o	xbow_errintr_handler	d5c	?	0x14	r	4	sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80 / sw $0,68($30)
+ip27-xbow-o	xbow_errintr_handler	d60	?	0x1c	r	4	lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80 / sw $0,68($30) / addiu $16,$0,8
+ip27-xbow-o	xbow_errintr_handler	d6c	?	0x44	w	4	lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80 / sw $0,68($30) / addiu $16,$0,8 / lui $21,0x2 / sd $9,104($29) / lui $1,0xff00
+ip27-xbow-o	xbow_errintr_handler	e30	?	0x10c	r	4	beq $25,$0,ed4 / and $24,$19,$24 / beq $24,$0,e04 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17
+ip27-xbow-o	xbow_errintr_handler	e34	?	0x12c	r	4	and $24,$19,$24 / beq $24,$0,e04 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18)
+ip27-xbow-o	xbow_errintr_handler	e44	?	0x13c	r	4	lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18) / sd $25,192($29) / beq $24,$0,e5c / and $17,$22,$17 / ld $24,184($29)
+ip27-xbow-o	xbow_errintr_handler	e30	?	0x14c	r	4	beq $25,$0,ed4 / and $24,$19,$24 / beq $24,$0,e04 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17
+ip27-xbow-o	xbow_errintr_handler	e34	?	0x16c	r	4	and $24,$19,$24 / beq $24,$0,e04 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18)
+ip27-xbow-o	xbow_errintr_handler	e44	?	0x17c	r	4	lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18) / sd $25,192($29) / beq $24,$0,e5c / and $17,$22,$17 / ld $24,184($29)
+ip27-xbow-o	xbow_errintr_handler	e30	?	0x10c	r	4	beq $25,$0,ed4 / and $24,$19,$24 / beq $24,$0,e04 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17
+ip27-xbow-o	xbow_errintr_handler	e34	?	0x12c	r	4	and $24,$19,$24 / beq $24,$0,e04 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18)
+ip27-xbow-o	xbow_errintr_handler	e44	?	0x13c	r	4	lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18) / sd $25,192($29) / beq $24,$0,e5c / and $17,$22,$17 / ld $24,184($29)
+ip27-xbow-o	xbow_errintr_handler	e88	?	0x10c	w	4	ld $1,208($29) / addiu $2,$0,-9 / and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,df4 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29)
+ip27-xbow-o	xbow_errintr_handler	e90	?	0x10c	r	4	and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,df4 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29) / ld $4,200($29) / sh $16,6($29)
+ip27-xbow-o	xbow_errintr_handler	e88	?	0x14c	w	4	ld $1,208($29) / addiu $2,$0,-9 / and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,df4 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29)
+ip27-xbow-o	xbow_errintr_handler	e90	?	0x14c	r	4	and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,df4 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29) / ld $4,200($29) / sh $16,6($29)
+ip27-xbow-o	xbow_errintr_handler	e88	?	0x10c	w	4	ld $1,208($29) / addiu $2,$0,-9 / and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,df4 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29)
+ip27-xbow-o	xbow_errintr_handler	e90	?	0x10c	r	4	and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,df4 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29) / ld $4,200($29) / sh $16,6($29)
+ip27-xbow-o	xbow_errintr_handler	f54	?	0x100008	r	4	beq $0,$0,10d4 / sd $0,176($29) / or $5,$16,$0 / jal 0 / lw $4,8($4) / jal 0 / or $4,$2,$0 / or $8,$2,$0 / ld $6,200($29)
+ip27-xbow-o	xbow_errintr_handler	f78	?	0x100018	r	8	daddiu $5,$23,600 / addiu $4,$0,6 / or $7,$16,$0 / jal 0 / ld $6,24($6) / lui $7,0x4 / and $7,$7,$20 / bne $7,$0,1190 / ld $5,-30720($28)
+ip27-xbow-o	xbow_errintr_handler	10e8	?	0x100018	r	8	ld $6,200($29) / daddiu $5,$23,1000 / addiu $4,$0,6 / jal 0 / ld $6,24($6) / andi $7,$19,0x1 / bne $7,$0,129c / andi $8,$19,0x4 / bne $8,$0,12b8
+ip27-xbow-o	xbow_error_handler	1310	?	0x100008	r	4	lw $9,8($4) / ld $2,16($4) / daddiu $29,$29,-144 / sd $22,104($29) / sd $31,112($29)
+ip27-xbow-o	xbow_error_handler	1358	?	0xc	r	4	sd $21,88($29) / or $21,$7,$0 / beq $17,$0,1450 / sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8
+ip27-xbow-o	xbow_error_handler	135c	?	0x44	r	4	or $21,$7,$0 / beq $17,$0,1450 / sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8 / sd $4,32($29)
+ip27-xbow-o	xbow_error_handler	1360	?	0x14	r	4	beq $17,$0,1450 / sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8 / sd $4,32($29) / bne $1,$0,1384
+ip27-xbow-o	xbow_error_handler	1364	?	0x1c	r	4	sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8 / sd $4,32($29) / bne $1,$0,1384 / sd $3,40($29)
+ip27-xbow-o	xbow_error_handler	13dc	?	0x10c	r	4	jr $31 / daddiu $29,$29,144 / dsll $12,$12,0x6 / daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29)
+ip27-xbow-o	xbow_error_handler	13e0	?	0x114	r	4	daddiu $29,$29,144 / dsll $12,$12,0x6 / daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29) / addiu $10,$0,1
+ip27-xbow-o	xbow_error_handler	13e4	?	0x13c	r	4	dsll $12,$12,0x6 / daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29) / addiu $10,$0,1 / srl $11,$11,0x1c
+ip27-xbow-o	xbow_error_handler	13e8	?	0x4	r	4	daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29) / addiu $10,$0,1 / srl $11,$11,0x1c / sd $14,0($29)
+ip27-xbow-o	xbow_error_handler	140c	?	0x4	r	4	sllv $10,$10,$11 / sd $13,24($29) / beq $10,$0,1420 / sd $12,48($29) / lw $13,4($2) / srl $13,$13,0xc / andi $13,$13,0xffff / dli $14,0xd100 / beq $13,$14,14e8
+ip27-xbow-o	xbow_error_handler	148c	?	0x100000	r	4	or $5,$17,$0 / addiu $1,$0,-1 / beq $2,$1,153c / sll $0,$0,0x0 / lw $3,0($20) / bne $3,$2,150c / or $4,$2,$0 / beq $19,$0,1554 / addiu $4,$0,6
+ip27-xbow-o	xbow_error_handler	14e8	pxbow	0x4	r	4	bne $8,$0,1830 / ld $5,-30720($28) / beq $0,$0,13a8 / addiu $2,$0,6 / lw $9,4($2) / srl $9,$9,0x1 / andi $9,$9,0x7ff / bne $9,$0,1420 / addiu $10,$0,15
+ip27-xbow-o	xbow_error_handler	1578	?	0x100018	r	8	or $2,$0,$0 / ld $5,-30720($28) / addiu $4,$0,1 / or $7,$17,$0 / ld $6,24($20) / jal 0 / daddiu $5,$5,1736 / beq $0,$0,1394 / andi $7,$18,0x4
+ip27-xbow-o	xbow_error_handler	1598	?	0x100018	r	8	andi $7,$18,0x4 / ld $8,24($21) / or $7,$17,$0 / daddiu $5,$16,1816 / ld $6,24($20) / jal 0 / addiu $4,$0,1 / beq $0,$0,13a0 / lh $8,0($28)
+ip27-xbow-o	xbow_error_handler	1644	?	0x100018	r	8	beq $0,$0,13a8 / addiu $2,$0,6 / ld $5,-30720($28) / addiu $4,$0,1 / ld $6,24($20) / jal 0 / daddiu $5,$5,1208 / beq $0,$0,1460 / andi $31,$18,0x4
+ip27-xbow-o	xbow_error_handler	1660	?	0x100018	r	8	beq $0,$0,1460 / andi $31,$18,0x4 / ld $7,24($21) / daddiu $5,$16,1280 / ld $6,24($20) / jal 0 / addiu $4,$0,1 / beq $0,$0,1468 / sll $0,$0,0x0
+ip27-xbow-o	xbow_error_handler	1788	?	0x100018	r	8	daddiu $7,$7,1944 / ld $16,-30720($28) / addiu $4,$0,1 / or $9,$17,$0 / ld $8,24($20) / jal 0 / daddiu $5,$16,1592 / ld $8,8($29) / beq $8,$0,17b0
+ip27-xbow-o	xbow_error_handler	17fc	?	0x100018	r	8	ld $16,-30720($28) / ld $5,-30720($28) / addiu $4,$0,1 / or $7,$17,$0 / ld $6,24($20) / jal 0 / daddiu $5,$5,1360 / beq $0,$0,14cc / andi $7,$18,0x4
+ip27-xbow-o	xbow_error_handler	181c	?	0x100018	r	8	andi $7,$18,0x4 / ld $8,24($21) / or $7,$17,$0 / daddiu $5,$16,1440 / ld $6,24($20) / jal 0 / addiu $4,$0,1 / beq $0,$0,14d8 / lh $8,0($28)
+ip27-xbow-o	xbow_error_handler	193c	?	0x100018	r	8	ld $7,-30720($28) / daddiu $7,$7,1944 / daddiu $5,$16,1592 / addiu $4,$0,1 / ld $8,24($20) / jal 0 / or $9,$17,$0 / ld $8,8($29) / beq $8,$0,1964
+ip27-xbow-o	xbow_update_perf_counters	1a44	?	0x100040	r	8	daddu $1,$20,$1 / and $25,$19,$25 / daddu $31,$31,$1 / dsll32 $25,$25,0x0 / ld $1,64($31) / dsrl32 $25,$25,0x0 / or $5,$2,$0 / daddu $25,$25,$1 / sd $25,64($31)
+ip27-xbow-o	xbow_update_perf_counters	1a54	?	0x100040	w	8	ld $1,64($31) / dsrl32 $25,$25,0x0 / or $5,$2,$0 / daddu $25,$25,$1 / sd $25,64($31) / or $4,$18,$0 / jal 0 / sw $24,0($16) / addiu $17,$17,1
+ip27-xbow-o	xbow_enable_perf_counter	1ba0	?	0x100025	r	1	sd $4,24($29) / dsll $12,$16,0x4 / sd $2,16($29) / daddu $12,$17,$12 / lbu $2,37($12) / or $10,$0,$0 / beq $2,$0,1bd0 / addiu $11,$19,-8 / beq $18,$0,1bd0
+ip27-xbow-o	xbow_enable_perf_counter	1bdc	?	0x100024	r	1	sll $0,$0,0x0 / beq $16,$10,1bc0 / dsll $7,$10,0x4 / daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1bc0 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1bc4
+ip27-xbow-o	xbow_enable_perf_counter	1bdc	?	0x100034	r	1	sll $0,$0,0x0 / beq $16,$10,1bc0 / dsll $7,$10,0x4 / daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1bc0 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1bc4
+ip27-xbow-o	xbow_enable_perf_counter	1bdc	?	0x100024	r	1	sll $0,$0,0x0 / beq $16,$10,1bc0 / dsll $7,$10,0x4 / daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1bc0 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1bc4
+ip27-xbow-o	xbow_enable_perf_counter	1be8	?	0x100025	r	1	daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1bc0 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1bc4 / addiu $10,$10,1 / ld $4,24($29) / jal 0
+ip27-xbow-o	xbow_enable_perf_counter	1be8	?	0x100035	r	1	daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1bc0 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1bc4 / addiu $10,$10,1 / ld $4,24($29) / jal 0
+ip27-xbow-o	xbow_enable_perf_counter	1be8	?	0x100025	r	1	daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1bc0 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1bc4 / addiu $10,$10,1 / ld $4,24($29) / jal 0
+ip27-xbow-o	xbow_enable_perf_counter	1c08	?	0x100027	w	1	jal 0 / ld $5,16($29) / beq $0,$0,1b60 / addiu $4,$0,-1 / sb $18,39($12) / sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6
+ip27-xbow-o	xbow_enable_perf_counter	1c0c	?	0x100025	w	1	ld $5,16($29) / beq $0,$0,1b60 / addiu $4,$0,-1 / sb $18,39($12) / sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6 / sb $11,36($12)
+ip27-xbow-o	xbow_enable_perf_counter	1c14	?	0x100026	w	1	addiu $4,$0,-1 / sb $18,39($12) / sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6 / sb $11,36($12) / daddu $7,$7,$8 / lui $9,0x3000
+ip27-xbow-o	xbow_enable_perf_counter	1c1c	?	0x100024	w	1	sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6 / sb $11,36($12) / daddu $7,$7,$8 / lui $9,0x3000 / lw $6,-244($7) / nor $9,$9,$0
+ip27-xbow-o	xbow_enable_perf_counter	1c28	?	-0xf4	r	4	dsll $8,$19,0x6 / sb $11,36($12) / daddu $7,$7,$8 / lui $9,0x3000 / lw $6,-244($7) / nor $9,$9,$0 / andi $8,$18,0x3 / sll $8,$8,0x1c / and $6,$6,$9
+ip27-xbow-o	xbow_enable_perf_counter	1c40	?	-0xf4	w	4	andi $8,$18,0x3 / sll $8,$8,0x1c / and $6,$6,$9 / or $6,$6,$8 / sw $6,-244($7) / lui $10,0xf / ld $13,40($12) / ori $10,$10,0xffff / ld $5,8($29)
+ip27-xbow-o	xbow_enable_perf_counter	1c48	?	0x100028	r	8	and $6,$6,$9 / or $6,$6,$8 / sw $6,-244($7) / lui $10,0xf / ld $13,40($12) / ori $10,$10,0xffff / ld $5,8($29) / andi $11,$11,0x7 / sll $11,$11,0x14
+ip27-xbow-o	xbow_enable_perf_counter	1c8c	?	0x100020	w	4	or $9,$9,$11 / sw $9,0($13) / and $9,$9,$10 / jal 0 / sw $9,32($12) / ld $4,24($29) / jal 0 / ld $5,16($29) / beq $0,$0,1b60
+ip27-xbow-o	xbow_update_llp_status	1d18	?	0x100008	r	4	lui $20,0x7fff / ld $21,16($2) / addiu $17,$0,8 / ori $20,$20,0xffe7 / lw $4,8($19) / jal 0 / or $5,$17,$0 / jal 0 / or $4,$2,$0
+ip27-xbow-o	xbow_update_llp_status	1d34	?	0x13c	r	4	jal 0 / or $4,$2,$0 / dsll $8,$16,0x6 / daddu $8,$21,$8 / lw $5,316($8) / lw $8,300($8) / srl $24,$8,0x1f / srl $11,$5,0x18 / and $10,$20,$8
+ip27-xbow-o	xbow_update_llp_status	1d38	?	0x12c	r	4	or $4,$2,$0 / dsll $8,$16,0x6 / daddu $8,$21,$8 / lw $5,316($8) / lw $8,300($8) / srl $24,$8,0x1f / srl $11,$5,0x18 / and $10,$20,$8 / beq $24,$0,1d70
+ip27-xbow-o	xbow_update_llp_status	1d50	?	0x100148	r	8	srl $11,$5,0x18 / and $10,$20,$8 / beq $24,$0,1d70 / srl $6,$5,0x10 / ld $13,8($18) / andi $12,$6,0xff / ld $9,0($18) / daddu $12,$12,$13 / sd $12,8($18)
+ip27-xbow-o	xbow_update_llp_status	1d58	?	0x100140	r	8	beq $24,$0,1d70 / srl $6,$5,0x10 / ld $13,8($18) / andi $12,$6,0xff / ld $9,0($18) / daddu $12,$12,$13 / sd $12,8($18) / daddu $9,$9,$11 / bne $10,$0,1dc8
+ip27-xbow-o	xbow_update_llp_status	1d60	?	0x100148	w	8	ld $13,8($18) / andi $12,$6,0xff / ld $9,0($18) / daddu $12,$12,$13 / sd $12,8($18) / daddu $9,$9,$11 / bne $10,$0,1dc8 / sd $9,0($18) / addiu $16,$16,1
+ip27-xbow-o	xbow_update_llp_status	1d6c	?	0x100140	w	8	daddu $12,$12,$13 / sd $12,8($18) / daddu $9,$9,$11 / bne $10,$0,1dc8 / sd $9,0($18) / addiu $16,$16,1 / slti $14,$16,8 / addiu $17,$17,1 / bne $14,$0,1d18
+ip27-xbow-o	xbow_update_llp_status	1d84	?	0x1001c4	r	4	slti $14,$16,8 / addiu $17,$17,1 / bne $14,$0,1d18 / daddiu $18,$18,16 / lw $15,452($19) / beq $15,$0,1da4 / ld $5,0($29) / dsll32 $5,$5,0x0 / addiu $6,$0,100
+ip27-xbow-o	xbow_disable_llp_monitor	1e14	?	0x100148	w	8	dsll $1,$6,0x4 / addiu $6,$6,1 / daddu $1,$7,$1 / slti $2,$6,8 / sd $0,328($1) / bne $2,$0,1e04 / sd $0,320($1) / or $2,$0,$0 / sw $0,452($7)
+ip27-xbow-o	xbow_disable_llp_monitor	1e1c	?	0x100140	w	8	daddu $1,$7,$1 / slti $2,$6,8 / sd $0,328($1) / bne $2,$0,1e04 / sd $0,320($1) / or $2,$0,$0 / sw $0,452($7) / jr $31 / daddiu $29,$29,16
+ip27-xbow-o	xbow_disable_llp_monitor	1e24	?	0x1001c4	w	4	sd $0,328($1) / bne $2,$0,1e04 / sd $0,320($1) / or $2,$0,$0 / sw $0,452($7) / jr $31 / daddiu $29,$29,16
+ip27-xbow-o	xbow_enable_llp_monitor	1e78	?	0x1001c4	w	4	ld $30,8($29) / daddiu $29,$29,32 / addiu $6,$0,1 / jr $31 / sw $6,452($7)
+ip27-xbow-o	xbow_disable	2124	?	0x100008	r	4	jal 0 / or $4,$16,$0 / daddiu $7,$29,0 / daddiu $6,$29,264 / lw $16,8($2) / daddiu $5,$29,8 / addiu $8,$0,2 / sd $8,0($29) / jal 0
+ip27-xbow-o	xbow_reset_link	2258	?	0x10c	r	4	ld $18,16($2) / andi $24,$17,0x7 / dsll $24,$24,0x6 / daddu $18,$18,$24 / lw $6,268($18) / sw $0,308($18) / lw $4,0($28) / jal 0 / sd $6,8($29)
+ip27-xbow-o	xbow_reset_link	225c	?	0x134	w	4	andi $24,$17,0x7 / dsll $24,$24,0x6 / daddu $18,$18,$24 / lw $6,268($18) / sw $0,308($18) / lw $4,0($28) / jal 0 / sd $6,8($29) / ld $17,0($16)
+ip27-xbow-o	xbow_reset_link	2280	?	0x114	r	4	beq $0,$0,2280 / sll $17,$17,0x0 / jal 0 / lw $4,0($28) / lw $24,276($18) / srl $24,$24,0x1f / bne $24,$0,22b0 / lw $25,-30696($28) / ld $31,0($16)
+ip27-xbow-o	xbow_reset_link	22b8	?	0x10c	w	4	beq $0,$0,22bc / addiu $2,$0,-1 / ld $1,8($29) / or $2,$0,$0 / sw $1,268($18) / ld $31,32($29) / ld $18,16($29) / ld $16,24($29) / ld $17,40($29)
+ip27-xbow-o	idbg_xbowregs	2334	?	0x4	r	4	ld $17,-30720($28) / or $5,$18,$0 / jal 0 / daddiu $4,$17,2088 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18)
+ip27-xbow-o	idbg_xbowregs	2338	?	0xc	r	4	or $5,$18,$0 / jal 0 / daddiu $4,$17,2088 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18)
+ip27-xbow-o	idbg_xbowregs	233c	?	0x14	r	4	jal 0 / daddiu $4,$17,2088 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0
+ip27-xbow-o	idbg_xbowregs	2340	?	0x1c	r	4	daddiu $4,$17,2088 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,2136
+ip27-xbow-o	idbg_xbowregs	2344	?	0x24	r	4	lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,2136 / lw $5,52($18)
+ip27-xbow-o	idbg_xbowregs	2348	?	0x2c	r	4	lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,2136 / lw $5,52($18) / lw $6,60($18)
+ip27-xbow-o	idbg_xbowregs	2354	?	0x34	r	4	lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,2136 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18)
+ip27-xbow-o	idbg_xbowregs	2358	?	0x3c	r	4	lw $10,44($18) / jal 0 / daddiu $4,$17,2136 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0
+ip27-xbow-o	idbg_xbowregs	235c	?	0x44	r	4	jal 0 / daddiu $4,$17,2136 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0 / daddiu $4,$17,2200
+ip27-xbow-o	idbg_xbowregs	2360	?	0x4c	r	4	daddiu $4,$17,2136 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0 / daddiu $4,$17,2200 / addiu $16,$0,8
+ip27-xbow-o	idbg_xbowregs	2364	?	0x5c	r	4	lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0 / daddiu $4,$17,2200 / addiu $16,$0,8 / daddiu $4,$17,2264
+ip27-xbow-o	idbg_xbowregs	238c	?	0x10c	r	4	or $5,$16,$0 / andi $9,$16,0x7 / dsll $9,$9,0x6 / daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2288
+ip27-xbow-o	idbg_xbowregs	2390	?	0x114	r	4	andi $9,$16,0x7 / dsll $9,$9,0x6 / daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2288 / jal 0
+ip27-xbow-o	idbg_xbowregs	2394	?	0x11c	r	4	dsll $9,$9,0x6 / daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2288 / jal 0 / lw $9,316($9)
+ip27-xbow-o	idbg_xbowregs	2398	?	0x124	r	4	daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2288 / jal 0 / lw $9,316($9) / addiu $16,$16,1
+ip27-xbow-o	idbg_xbowregs	23a4	?	0x13c	r	4	lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2288 / jal 0 / lw $9,316($9) / addiu $16,$16,1 / slti $10,$16,16 / bne $10,$0,2374 / ld $31,8($29)
+ip27-xbow-o	xbow_prio_bw_alloc	2510	?	0x100210	r	8	or $4,$2,$0 / or $6,$2,$0 / dsll $8,$17,0x3 / daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3
+ip27-xbow-o	xbow_prio_bw_alloc	2518	?	0x1001d0	r	8	dsll $8,$17,0x3 / daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20)
+ip27-xbow-o	xbow_prio_bw_alloc	251c	?	0x11c	r	4	daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3
+ip27-xbow-o	xbow_prio_bw_alloc	2528	?	0x11c	r	4	ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3 / sltu $3,$3,$4 / sllv $5,$5,$11 / and $2,$5,$2
+ip27-xbow-o	xbow_prio_bw_alloc	251c	?	0x124	r	4	daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3
+ip27-xbow-o	xbow_prio_bw_alloc	2528	?	0x124	r	4	ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3 / sltu $3,$3,$4 / sllv $5,$5,$11 / and $2,$5,$2
+ip27-xbow-o	xbow_prio_bw_alloc	25bc	?	0x11c	w	4	and $11,$7,$11 / and $10,$5,$10 / or $10,$10,$11 / jal 0 / sw $10,0($20) / sd $2,528($17) / beq $0,$0,2558 / or $16,$0,$0
+ip27-xbow-o	xbow_prio_bw_alloc	25c0	?	0x100210	w	8	and $10,$5,$10 / or $10,$10,$11 / jal 0 / sw $10,0($20) / sd $2,528($17) / beq $0,$0,2558 / or $16,$0,$0
+ip27-xbow-o	xbow_prio_bw_alloc	25bc	?	0x124	w	4	and $11,$7,$11 / and $10,$5,$10 / or $10,$10,$11 / jal 0 / sw $10,0($20) / sd $2,528($17) / beq $0,$0,2558 / or $16,$0,$0
+ip27-xswitch-o	xswitch_info_get	1c	?	0x100000	r	8	jal 0 / sd $4,0($29) / beq $2,$0,2c / or $16,$2,$0 / ld $1,0($2) / ld $2,-30720($28) / bne $1,$2,40 / ld $5,-30712($28) / ld $31,8($29)
+ip27-kernel-o	sub_b59c	b5e8	?	0x4	r	4	andi $7,$7,0x2000 / ld $31,16($29) / beq $7,$0,b618 / daddu $5,$5,$6 / lw $6,4($5) / srl $8,$6,0x1c / sw $8,4($16) / srl $7,$6,0xc / srl $6,$6,0x1
+ip27-kernel-o	sub_bdd8	bebc	?	0x4	r	4	lh $10,0($10) / ld $11,-32640($28) / dsll32 $10,$10,0x0 / daddu $10,$10,$11 / lw $6,4($10) / sra $6,$6,0xc / dli $7,0xc002 / andi $6,$6,0xffff / dli $5,0xd100
+ip27-kernel-o	sub_bdd8	c0c0	?	0x24	r	4	bne $9,$0,bf54 / or $16,$0,$0 / beq $0,$0,bf54 / addiu $16,$0,1 / lw $6,36($10) / andi $6,$6,0xf / andi $6,$6,0xff / beq $0,$0,bf04 / sb $6,18908($18)
+ip27-kernel-o	sub_bdd8	c0f4	?	0x24	r	4	jal bcbc / or $5,$19,$0 / beq $0,$0,c06c / ld $19,64($29) / lw $7,36($10) / or $4,$0,$0 / or $8,$17,$0 / daddiu $5,$5,464 / andi $7,$7,0xf
+ip27-kernel-o	save_xbow_err	16e90	?	0xc	r	4	ld $31,16($29) / dsll32 $9,$30,0x0 / ld $30,0($29) / daddu $2,$8,$9 / lw $5,12($2) / sw $5,0($16) / lw $4,20($2) / sw $4,4($16) / lw $3,28($2)
+ip27-kernel-o	save_xbow_err	16e98	?	0x14	r	4	ld $30,0($29) / daddu $2,$8,$9 / lw $5,12($2) / sw $5,0($16) / lw $4,20($2) / sw $4,4($16) / lw $3,28($2) / sw $3,8($16) / lw $2,68($2)
+ip27-kernel-o	save_xbow_err	16ea0	?	0x1c	r	4	lw $5,12($2) / sw $5,0($16) / lw $4,20($2) / sw $4,4($16) / lw $3,28($2) / sw $3,8($16) / lw $2,68($2) / addiu $7,$0,8 / or $5,$0,$0
+ip27-kernel-o	save_xbow_err	16ea8	?	0x44	r	4	lw $4,20($2) / sw $4,4($16) / lw $3,28($2) / sw $3,8($16) / lw $2,68($2) / addiu $7,$0,8 / or $5,$0,$0 / sw $2,12($16) / andi $6,$7,0x7
+ip27-kernel-o	save_xbow_err	16ed4	?	0x114	r	4	dsll $10,$5,0x2 / daddu $6,$8,$6 / addiu $5,$5,1 / daddu $10,$16,$10 / lw $12,276($6) / slti $11,$5,8 / sw $12,16($10) / lw $6,316($6) / addiu $7,$7,1
+ip27-kernel-o	save_xbow_err	16ee0	?	0x13c	r	4	daddu $10,$16,$10 / lw $12,276($6) / slti $11,$5,8 / sw $12,16($10) / lw $6,316($6) / addiu $7,$7,1 / bne $11,$0,16eb8 / sw $6,48($10) / ld $16,8($29)
+ip27-kernel-o	sub_22b8c	22d48	?	0x100078	r	4	lui $14,0xc / beq $2,$0,22c3c / lw $4,0($28) / ori $14,$14,0x22 / lw $13,120($2) / bne $13,$14,22c40 / daddiu $10,$29,8 / ld $15,2088($2) / beq $15,$0,22c40
+ip27-kernel-o	sub_22b8c	22d54	?	0x100828	r	8	ori $14,$14,0x22 / lw $13,120($2) / bne $13,$14,22c40 / daddiu $10,$29,8 / ld $15,2088($2) / beq $15,$0,22c40 / daddiu $10,$29,8 / bne $4,$0,22c40 / daddiu $10,$29,8
+ip27-kernel-o	sub_22b8c	22d90	?	0x100828	r	8	daddiu $5,$19,160 / bne $2,$0,22c40 / daddiu $10,$29,8 / ld $19,16($29) / ld $19,2088($19) / lh $19,36($19) / addiu $24,$0,-1 / beq $19,$24,22de8 / or $4,$19,$0
+ip27-kernel-o	is_xbox_config	23ddc	?	0x4	r	4	ld $7,-32640($28) / beq $1,$0,23dfc / dsll32 $2,$4,0x0 / daddu $3,$2,$7 / lw $3,4($3) / sra $3,$3,0xc / andi $3,$3,0xffff / beq $3,$0,23df4 / addiu $2,$0,1
+ip30-xbow-o	xbow_attach	138	?	0x4	r	4	or $7,$20,$0 / sd $2,24($16) / jal 0 / daddiu $5,$21,8 / lw $8,4($17) / srl $9,$8,0xc / srl $8,$8,0x1c / andi $9,$9,0xffff / sll $9,$9,0x4
+ip30-xbow-o	xbow_attach	224	?	0x24	w	4	ld $5,-30696($28) / jal 0 / or $6,$16,$0 / addiu $7,$0,36 / sw $7,36($17) / jal 0 / or $4,$19,$0 / or $20,$2,$0 / addiu $16,$0,8
+ip30-xbow-o	xbow_attach	258	?	0x10c	r	4	andi $5,$16,0xff / andi $25,$16,0x7 / dsll $25,$25,0x6 / daddu $25,$17,$25 / lw $31,268($25) / addiu $24,$0,-465 / and $24,$24,$31 / or $24,$18,$24 / sw $24,268($25)
+ip30-xbow-o	xbow_attach	268	?	0x10c	w	4	lw $31,268($25) / addiu $24,$0,-465 / and $24,$24,$31 / or $24,$18,$24 / sw $24,268($25) / addiu $16,$16,1 / slti $31,$16,16 / beq $31,$0,2a8 / or $4,$19,$0
+ip30-xbow-o	xbow_widget_present	854	?	0x4	r	4	lw $1,4($4) / addiu $2,$0,1 / srl $1,$1,0x1c / andi $10,$5,0x7 / sllv $1,$2,$1
+ip30-xbow-o	xbow_widget_present	878	?	0x4	r	4	dsll $9,$10,0x6 / beq $1,$0,8a8 / daddu $8,$4,$9 / dli $6,0xd100 / lw $3,4($4) / srl $3,$3,0xc / andi $3,$3,0xffff / bne $3,$6,8a8 / sll $0,$0,0x0
+ip30-xbow-o	xbow_widget_present	88c	pxbow	0x4	r	4	srl $3,$3,0xc / andi $3,$3,0xffff / bne $3,$6,8a8 / sll $0,$0,0x0 / lw $6,4($4) / srl $6,$6,0x1 / andi $6,$6,0x7ff / bne $6,$0,8a8 / addiu $11,$0,15
+ip30-xbow-o	xbow_widget_present	8a8	?	0x13c	r	4	bne $6,$0,8a8 / addiu $11,$0,15 / beq $5,$11,8b0 / sll $0,$0,0x0 / lw $2,316($8) / andi $2,$2,0x20 / jr $31 / sll $0,$0,0x0
+ip30-xbow-o	xbow_widget_present	8a8	pxbow	0x13c	r	4	bne $6,$0,8a8 / addiu $11,$0,15 / beq $5,$11,8b0 / sll $0,$0,0x0 / lw $2,316($8) / andi $2,$2,0x20 / jr $31 / sll $0,$0,0x0
+ip30-xbow-o	xbow_link_alive	8c4	?	0x114	r	4	andi $2,$5,0x7 / dsll $2,$2,0x6 / daddu $2,$4,$2 / lw $2,276($2) / jr $31 / srl $2,$2,0x1f
+ip30-xbow-o	xbow_intr_preset	994	?	0x34	w	4	dsrl32 $2,$7,0x0 / andi $2,$2,0xffff / or $1,$1,$3 / or $1,$1,$2 / sw $1,52($4) / jr $31 / sw $7,60($4)
+ip30-xbow-o	xbow_intr_preset	99c	?	0x3c	w	4	or $1,$1,$3 / or $1,$1,$2 / sw $1,52($4) / jr $31 / sw $7,60($4)
+ip30-xbow-o	xbow_errintr_handler	d0c	?	0x24	r	4	sd $16,152($29) / sd $30,144($29) / ld $30,16($4) / sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30)
+ip30-xbow-o	xbow_errintr_handler	d10	?	0x54	r	4	sd $30,144($29) / ld $30,16($4) / sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1
+ip30-xbow-o	xbow_errintr_handler	d14	?	0x44	r	4	ld $30,16($4) / sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80
+ip30-xbow-o	xbow_errintr_handler	d18	?	0x14	r	4	sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80 / sw $0,68($30)
+ip30-xbow-o	xbow_errintr_handler	d1c	?	0x1c	r	4	lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80 / sw $0,68($30) / addiu $16,$0,8
+ip30-xbow-o	xbow_errintr_handler	d28	?	0x44	w	4	lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80 / sw $0,68($30) / addiu $16,$0,8 / lui $21,0x2 / sd $9,104($29) / lui $1,0xff00
+ip30-xbow-o	xbow_errintr_handler	dec	?	0x10c	r	4	beq $25,$0,e90 / and $24,$19,$24 / beq $24,$0,dc0 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17
+ip30-xbow-o	xbow_errintr_handler	df0	?	0x12c	r	4	and $24,$19,$24 / beq $24,$0,dc0 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18)
+ip30-xbow-o	xbow_errintr_handler	e00	?	0x13c	r	4	lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18) / sd $25,192($29) / beq $24,$0,e18 / and $17,$22,$17 / ld $24,184($29)
+ip30-xbow-o	xbow_errintr_handler	dec	?	0x14c	r	4	beq $25,$0,e90 / and $24,$19,$24 / beq $24,$0,dc0 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17
+ip30-xbow-o	xbow_errintr_handler	df0	?	0x16c	r	4	and $24,$19,$24 / beq $24,$0,dc0 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18)
+ip30-xbow-o	xbow_errintr_handler	e00	?	0x17c	r	4	lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18) / sd $25,192($29) / beq $24,$0,e18 / and $17,$22,$17 / ld $24,184($29)
+ip30-xbow-o	xbow_errintr_handler	dec	?	0x10c	r	4	beq $25,$0,e90 / and $24,$19,$24 / beq $24,$0,dc0 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17
+ip30-xbow-o	xbow_errintr_handler	df0	?	0x12c	r	4	and $24,$19,$24 / beq $24,$0,dc0 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18)
+ip30-xbow-o	xbow_errintr_handler	e00	?	0x13c	r	4	lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18) / sd $25,192($29) / beq $24,$0,e18 / and $17,$22,$17 / ld $24,184($29)
+ip30-xbow-o	xbow_errintr_handler	e44	?	0x10c	w	4	ld $1,208($29) / addiu $2,$0,-9 / and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,db0 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29)
+ip30-xbow-o	xbow_errintr_handler	e4c	?	0x10c	r	4	and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,db0 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29) / ld $4,200($29) / sh $16,6($29)
+ip30-xbow-o	xbow_errintr_handler	e44	?	0x14c	w	4	ld $1,208($29) / addiu $2,$0,-9 / and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,db0 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29)
+ip30-xbow-o	xbow_errintr_handler	e4c	?	0x14c	r	4	and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,db0 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29) / ld $4,200($29) / sh $16,6($29)
+ip30-xbow-o	xbow_errintr_handler	e44	?	0x10c	w	4	ld $1,208($29) / addiu $2,$0,-9 / and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,db0 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29)
+ip30-xbow-o	xbow_errintr_handler	e4c	?	0x10c	r	4	and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,db0 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29) / ld $4,200($29) / sh $16,6($29)
+ip30-xbow-o	xbow_errintr_handler	f10	?	0x100008	r	4	beq $0,$0,10a0 / sd $0,176($29) / or $5,$16,$0 / jal 0 / lw $4,8($4) / jal 0 / or $4,$2,$0 / or $8,$2,$0 / ld $6,200($29)
+ip30-xbow-o	xbow_errintr_handler	f34	?	0x100018	r	8	daddiu $5,$23,544 / addiu $4,$0,6 / or $7,$16,$0 / jal 0 / ld $6,24($6) / lui $7,0x4 / and $7,$7,$20 / bne $7,$0,1160 / ld $5,-30720($28)
+ip30-xbow-o	xbow_errintr_handler	10b4	?	0x100018	r	8	ld $6,200($29) / daddiu $5,$23,944 / addiu $4,$0,6 / jal 0 / ld $6,24($6) / andi $7,$19,0x1 / bne $7,$0,125c / andi $8,$19,0x4 / bne $8,$0,1278
+ip30-xbow-o	xbow_error_handler	12cc	?	0x100008	r	4	lw $9,8($4) / ld $2,16($4) / daddiu $29,$29,-144 / sd $22,104($29) / sd $31,112($29)
+ip30-xbow-o	xbow_error_handler	1314	?	0xc	r	4	sd $21,88($29) / or $21,$7,$0 / beq $17,$0,1410 / sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8
+ip30-xbow-o	xbow_error_handler	1318	?	0x44	r	4	or $21,$7,$0 / beq $17,$0,1410 / sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8 / sd $4,32($29)
+ip30-xbow-o	xbow_error_handler	131c	?	0x14	r	4	beq $17,$0,1410 / sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8 / sd $4,32($29) / bne $1,$0,1340
+ip30-xbow-o	xbow_error_handler	1320	?	0x1c	r	4	sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8 / sd $4,32($29) / bne $1,$0,1340 / sd $3,40($29)
+ip30-xbow-o	xbow_error_handler	139c	?	0x10c	r	4	jr $31 / daddiu $29,$29,144 / dsll $12,$12,0x6 / daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29)
+ip30-xbow-o	xbow_error_handler	13a0	?	0x114	r	4	daddiu $29,$29,144 / dsll $12,$12,0x6 / daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29) / addiu $10,$0,1
+ip30-xbow-o	xbow_error_handler	13a4	?	0x13c	r	4	dsll $12,$12,0x6 / daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29) / addiu $10,$0,1 / srl $11,$11,0x1c
+ip30-xbow-o	xbow_error_handler	13a8	?	0x4	r	4	daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29) / addiu $10,$0,1 / srl $11,$11,0x1c / sd $14,0($29)
+ip30-xbow-o	xbow_error_handler	13cc	?	0x4	r	4	sllv $10,$10,$11 / sd $13,24($29) / beq $10,$0,13e0 / sd $12,48($29) / lw $13,4($2) / srl $13,$13,0xc / andi $13,$13,0xffff / dli $14,0xd100 / beq $13,$14,14a8
+ip30-xbow-o	xbow_error_handler	144c	?	0x100000	r	4	or $5,$17,$0 / addiu $1,$0,-1 / beq $2,$1,1500 / sll $0,$0,0x0 / lw $3,0($20) / bne $3,$2,14d0 / or $4,$2,$0 / beq $19,$0,1518 / addiu $4,$0,6
+ip30-xbow-o	xbow_error_handler	14a8	pxbow	0x4	r	4	bne $8,$0,17f0 / ld $5,-30720($28) / beq $0,$0,1368 / addiu $2,$0,6 / lw $9,4($2) / srl $9,$9,0x1 / andi $9,$9,0x7ff / bne $9,$0,13e4 / ld $14,48($29)
+ip30-xbow-o	xbow_error_handler	1538	?	0x100018	r	8	beq $0,$0,1368 / or $2,$0,$0 / addiu $4,$0,1 / or $7,$17,$0 / ld $6,24($20) / jal 0 / daddiu $5,$5,1680 / beq $0,$0,1354 / andi $7,$18,0x4
+ip30-xbow-o	xbow_error_handler	1558	?	0x100018	r	8	andi $7,$18,0x4 / ld $8,24($21) / or $7,$17,$0 / daddiu $5,$16,1760 / ld $6,24($20) / jal 0 / addiu $4,$0,1 / beq $0,$0,1360 / lh $8,0($28)
+ip30-xbow-o	xbow_error_handler	1604	?	0x100018	r	8	beq $0,$0,1368 / addiu $2,$0,6 / ld $5,-30720($28) / addiu $4,$0,1 / ld $6,24($20) / jal 0 / daddiu $5,$5,1152 / beq $0,$0,1420 / andi $31,$18,0x4
+ip30-xbow-o	xbow_error_handler	1620	?	0x100018	r	8	beq $0,$0,1420 / andi $31,$18,0x4 / ld $7,24($21) / daddiu $5,$16,1224 / ld $6,24($20) / jal 0 / addiu $4,$0,1 / beq $0,$0,1428 / sll $0,$0,0x0
+ip30-xbow-o	xbow_error_handler	1748	?	0x100018	r	8	daddiu $7,$7,1888 / ld $16,-30720($28) / addiu $4,$0,1 / or $9,$17,$0 / ld $8,24($20) / jal 0 / daddiu $5,$16,1536 / ld $8,8($29) / beq $8,$0,1770
+ip30-xbow-o	xbow_error_handler	17bc	?	0x100018	r	8	ld $16,-30720($28) / ld $5,-30720($28) / addiu $4,$0,1 / or $7,$17,$0 / ld $6,24($20) / jal 0 / daddiu $5,$5,1304 / beq $0,$0,148c / andi $7,$18,0x4
+ip30-xbow-o	xbow_error_handler	17dc	?	0x100018	r	8	andi $7,$18,0x4 / ld $8,24($21) / or $7,$17,$0 / daddiu $5,$16,1384 / ld $6,24($20) / jal 0 / addiu $4,$0,1 / beq $0,$0,1498 / lh $8,0($28)
+ip30-xbow-o	xbow_error_handler	18fc	?	0x100018	r	8	ld $7,-30720($28) / daddiu $7,$7,1888 / daddiu $5,$16,1536 / addiu $4,$0,1 / ld $8,24($20) / jal 0 / or $9,$17,$0 / ld $8,8($29) / beq $8,$0,1924
+ip30-xbow-o	xbow_update_perf_counters	1a04	?	0x100040	r	8	daddu $1,$20,$1 / and $25,$19,$25 / daddu $31,$31,$1 / dsll32 $25,$25,0x0 / ld $1,64($31) / dsrl32 $25,$25,0x0 / or $5,$2,$0 / daddu $25,$25,$1 / sd $25,64($31)
+ip30-xbow-o	xbow_update_perf_counters	1a14	?	0x100040	w	8	ld $1,64($31) / dsrl32 $25,$25,0x0 / or $5,$2,$0 / daddu $25,$25,$1 / sd $25,64($31) / or $4,$18,$0 / jal 0 / sw $24,0($16) / addiu $17,$17,1
+ip30-xbow-o	xbow_enable_perf_counter	1b60	?	0x100025	r	1	sd $4,24($29) / dsll $12,$16,0x4 / sd $2,16($29) / daddu $12,$17,$12 / lbu $2,37($12) / or $10,$0,$0 / beq $2,$0,1b90 / addiu $11,$19,-8 / beq $18,$0,1b90
+ip30-xbow-o	xbow_enable_perf_counter	1b9c	?	0x100024	r	1	sll $0,$0,0x0 / beq $16,$10,1b80 / dsll $7,$10,0x4 / daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b80 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b84
+ip30-xbow-o	xbow_enable_perf_counter	1b9c	?	0x100034	r	1	sll $0,$0,0x0 / beq $16,$10,1b80 / dsll $7,$10,0x4 / daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b80 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b84
+ip30-xbow-o	xbow_enable_perf_counter	1b9c	?	0x100024	r	1	sll $0,$0,0x0 / beq $16,$10,1b80 / dsll $7,$10,0x4 / daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b80 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b84
+ip30-xbow-o	xbow_enable_perf_counter	1ba8	?	0x100025	r	1	daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b80 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b84 / addiu $10,$10,1 / ld $4,24($29) / jal 0
+ip30-xbow-o	xbow_enable_perf_counter	1ba8	?	0x100035	r	1	daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b80 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b84 / addiu $10,$10,1 / ld $4,24($29) / jal 0
+ip30-xbow-o	xbow_enable_perf_counter	1ba8	?	0x100025	r	1	daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b80 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b84 / addiu $10,$10,1 / ld $4,24($29) / jal 0
+ip30-xbow-o	xbow_enable_perf_counter	1bc8	?	0x100027	w	1	jal 0 / ld $5,16($29) / beq $0,$0,1b20 / addiu $4,$0,-1 / sb $18,39($12) / sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6
+ip30-xbow-o	xbow_enable_perf_counter	1bcc	?	0x100025	w	1	ld $5,16($29) / beq $0,$0,1b20 / addiu $4,$0,-1 / sb $18,39($12) / sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6 / sb $11,36($12)
+ip30-xbow-o	xbow_enable_perf_counter	1bd4	?	0x100026	w	1	addiu $4,$0,-1 / sb $18,39($12) / sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6 / sb $11,36($12) / daddu $7,$7,$8 / lui $9,0x3000
+ip30-xbow-o	xbow_enable_perf_counter	1bdc	?	0x100024	w	1	sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6 / sb $11,36($12) / daddu $7,$7,$8 / lui $9,0x3000 / lw $6,-244($7) / nor $9,$9,$0
+ip30-xbow-o	xbow_enable_perf_counter	1be8	?	-0xf4	r	4	dsll $8,$19,0x6 / sb $11,36($12) / daddu $7,$7,$8 / lui $9,0x3000 / lw $6,-244($7) / nor $9,$9,$0 / andi $8,$18,0x3 / sll $8,$8,0x1c / and $6,$6,$9
+ip30-xbow-o	xbow_enable_perf_counter	1c00	?	-0xf4	w	4	andi $8,$18,0x3 / sll $8,$8,0x1c / and $6,$6,$9 / or $6,$6,$8 / sw $6,-244($7) / lui $10,0xf / ld $13,40($12) / ori $10,$10,0xffff / ld $5,8($29)
+ip30-xbow-o	xbow_enable_perf_counter	1c08	?	0x100028	r	8	and $6,$6,$9 / or $6,$6,$8 / sw $6,-244($7) / lui $10,0xf / ld $13,40($12) / ori $10,$10,0xffff / ld $5,8($29) / andi $11,$11,0x7 / sll $11,$11,0x14
+ip30-xbow-o	xbow_enable_perf_counter	1c4c	?	0x100020	w	4	or $9,$9,$11 / sw $9,0($13) / and $9,$9,$10 / jal 0 / sw $9,32($12) / ld $4,24($29) / jal 0 / ld $5,16($29) / beq $0,$0,1b20
+ip30-xbow-o	xbow_update_llp_status	1cd8	?	0x100008	r	4	lui $20,0x7fff / ld $21,16($2) / addiu $17,$0,8 / ori $20,$20,0xffe7 / lw $4,8($19) / jal 0 / or $5,$17,$0 / jal 0 / or $4,$2,$0
+ip30-xbow-o	xbow_update_llp_status	1cf4	?	0x13c	r	4	jal 0 / or $4,$2,$0 / dsll $8,$16,0x6 / daddu $8,$21,$8 / lw $5,316($8) / lw $8,300($8) / srl $24,$8,0x1f / srl $11,$5,0x18 / and $10,$20,$8
+ip30-xbow-o	xbow_update_llp_status	1cf8	?	0x12c	r	4	or $4,$2,$0 / dsll $8,$16,0x6 / daddu $8,$21,$8 / lw $5,316($8) / lw $8,300($8) / srl $24,$8,0x1f / srl $11,$5,0x18 / and $10,$20,$8 / beq $24,$0,1d30
+ip30-xbow-o	xbow_update_llp_status	1d10	?	0x100148	r	8	srl $11,$5,0x18 / and $10,$20,$8 / beq $24,$0,1d30 / srl $6,$5,0x10 / ld $13,8($18) / andi $12,$6,0xff / ld $9,0($18) / daddu $12,$12,$13 / sd $12,8($18)
+ip30-xbow-o	xbow_update_llp_status	1d18	?	0x100140	r	8	beq $24,$0,1d30 / srl $6,$5,0x10 / ld $13,8($18) / andi $12,$6,0xff / ld $9,0($18) / daddu $12,$12,$13 / sd $12,8($18) / daddu $9,$9,$11 / bne $10,$0,1d88
+ip30-xbow-o	xbow_update_llp_status	1d20	?	0x100148	w	8	ld $13,8($18) / andi $12,$6,0xff / ld $9,0($18) / daddu $12,$12,$13 / sd $12,8($18) / daddu $9,$9,$11 / bne $10,$0,1d88 / sd $9,0($18) / addiu $16,$16,1
+ip30-xbow-o	xbow_update_llp_status	1d2c	?	0x100140	w	8	daddu $12,$12,$13 / sd $12,8($18) / daddu $9,$9,$11 / bne $10,$0,1d88 / sd $9,0($18) / addiu $16,$16,1 / slti $14,$16,8 / addiu $17,$17,1 / bne $14,$0,1cd8
+ip30-xbow-o	xbow_update_llp_status	1d44	?	0x1001c4	r	4	slti $14,$16,8 / addiu $17,$17,1 / bne $14,$0,1cd8 / daddiu $18,$18,16 / lw $15,452($19) / beq $15,$0,1d64 / ld $5,0($29) / dsll32 $5,$5,0x0 / addiu $6,$0,100
+ip30-xbow-o	xbow_disable_llp_monitor	1dd4	?	0x100148	w	8	dsll $1,$6,0x4 / addiu $6,$6,1 / daddu $1,$7,$1 / slti $2,$6,8 / sd $0,328($1) / bne $2,$0,1dc4 / sd $0,320($1) / or $2,$0,$0 / sw $0,452($7)
+ip30-xbow-o	xbow_disable_llp_monitor	1ddc	?	0x100140	w	8	daddu $1,$7,$1 / slti $2,$6,8 / sd $0,328($1) / bne $2,$0,1dc4 / sd $0,320($1) / or $2,$0,$0 / sw $0,452($7) / jr $31 / daddiu $29,$29,16
+ip30-xbow-o	xbow_disable_llp_monitor	1de4	?	0x1001c4	w	4	sd $0,328($1) / bne $2,$0,1dc4 / sd $0,320($1) / or $2,$0,$0 / sw $0,452($7) / jr $31 / daddiu $29,$29,16
+ip30-xbow-o	xbow_enable_llp_monitor	1e38	?	0x1001c4	w	4	ld $30,8($29) / daddiu $29,$29,32 / addiu $6,$0,1 / jr $31 / sw $6,452($7)
+ip30-xbow-o	xbow_reset_link	1e84	?	0x10c	r	4	ld $24,-30720($28) / andi $18,$2,0x7 / dsll $18,$18,0x6 / daddu $18,$18,$24 / lw $2,268($18) / sw $0,308($18) / lw $4,0($28) / jal 0 / sd $2,0($29)
+ip30-xbow-o	xbow_reset_link	1e88	?	0x134	w	4	andi $18,$2,0x7 / dsll $18,$18,0x6 / daddu $18,$18,$24 / lw $2,268($18) / sw $0,308($18) / lw $4,0($28) / jal 0 / sd $2,0($29) / ld $17,0($16)
+ip30-xbow-o	xbow_reset_link	1eac	?	0x114	r	4	beq $0,$0,1eac / sll $17,$17,0x0 / jal 0 / lw $4,0($28) / lw $24,276($18) / srl $24,$24,0x1f / bne $24,$0,1edc / lw $25,-30696($28) / ld $31,0($16)
+ip30-xbow-o	xbow_reset_link	1ee4	?	0x10c	w	4	beq $0,$0,1ee8 / addiu $2,$0,-1 / ld $1,0($29) / or $2,$0,$0 / sw $1,268($18) / ld $31,24($29) / ld $16,8($29) / ld $17,32($29) / ld $18,40($29)
+ip30-xbow-o	idbg_xbowregs	1f64	?	0x4	r	4	ld $17,-30720($28) / or $5,$18,$0 / jal 0 / daddiu $4,$17,1928 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18)
+ip30-xbow-o	idbg_xbowregs	1f68	?	0xc	r	4	or $5,$18,$0 / jal 0 / daddiu $4,$17,1928 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18)
+ip30-xbow-o	idbg_xbowregs	1f6c	?	0x14	r	4	jal 0 / daddiu $4,$17,1928 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0
+ip30-xbow-o	idbg_xbowregs	1f70	?	0x1c	r	4	daddiu $4,$17,1928 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,1976
+ip30-xbow-o	idbg_xbowregs	1f74	?	0x24	r	4	lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,1976 / lw $5,52($18)
+ip30-xbow-o	idbg_xbowregs	1f78	?	0x2c	r	4	lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,1976 / lw $5,52($18) / lw $6,60($18)
+ip30-xbow-o	idbg_xbowregs	1f84	?	0x34	r	4	lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,1976 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18)
+ip30-xbow-o	idbg_xbowregs	1f88	?	0x3c	r	4	lw $10,44($18) / jal 0 / daddiu $4,$17,1976 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0
+ip30-xbow-o	idbg_xbowregs	1f8c	?	0x44	r	4	jal 0 / daddiu $4,$17,1976 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0 / daddiu $4,$17,2040
+ip30-xbow-o	idbg_xbowregs	1f90	?	0x4c	r	4	daddiu $4,$17,1976 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0 / daddiu $4,$17,2040 / addiu $16,$0,8
+ip30-xbow-o	idbg_xbowregs	1f94	?	0x5c	r	4	lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0 / daddiu $4,$17,2040 / addiu $16,$0,8 / daddiu $4,$17,2104
+ip30-xbow-o	idbg_xbowregs	1fbc	?	0x10c	r	4	or $5,$16,$0 / andi $9,$16,0x7 / dsll $9,$9,0x6 / daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2128
+ip30-xbow-o	idbg_xbowregs	1fc0	?	0x114	r	4	andi $9,$16,0x7 / dsll $9,$9,0x6 / daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2128 / jal 0
+ip30-xbow-o	idbg_xbowregs	1fc4	?	0x11c	r	4	dsll $9,$9,0x6 / daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2128 / jal 0 / lw $9,316($9)
+ip30-xbow-o	idbg_xbowregs	1fc8	?	0x124	r	4	daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2128 / jal 0 / lw $9,316($9) / addiu $16,$16,1
+ip30-xbow-o	idbg_xbowregs	1fd4	?	0x13c	r	4	lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2128 / jal 0 / lw $9,316($9) / addiu $16,$16,1 / slti $10,$16,16 / bne $10,$0,1fa4 / ld $31,8($29)
+ip30-xbow-o	xbow_prio_bw_alloc	2140	?	0x100210	r	8	or $4,$2,$0 / or $6,$2,$0 / dsll $8,$17,0x3 / daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3
+ip30-xbow-o	xbow_prio_bw_alloc	2148	?	0x1001d0	r	8	dsll $8,$17,0x3 / daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20)
+ip30-xbow-o	xbow_prio_bw_alloc	214c	?	0x11c	r	4	daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3
+ip30-xbow-o	xbow_prio_bw_alloc	2158	?	0x11c	r	4	ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3 / sltu $3,$3,$4 / sllv $5,$5,$11 / and $2,$5,$2
+ip30-xbow-o	xbow_prio_bw_alloc	214c	?	0x124	r	4	daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3
+ip30-xbow-o	xbow_prio_bw_alloc	2158	?	0x124	r	4	ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3 / sltu $3,$3,$4 / sllv $5,$5,$11 / and $2,$5,$2
+ip30-xbow-o	xbow_prio_bw_alloc	21ec	?	0x11c	w	4	and $11,$7,$11 / and $10,$5,$10 / or $10,$10,$11 / jal 0 / sw $10,0($20) / sd $2,528($17) / beq $0,$0,2188 / or $16,$0,$0
+ip30-xbow-o	xbow_prio_bw_alloc	21f0	?	0x100210	w	8	and $10,$5,$10 / or $10,$10,$11 / jal 0 / sw $10,0($20) / sd $2,528($17) / beq $0,$0,2188 / or $16,$0,$0
+ip30-xbow-o	xbow_prio_bw_alloc	21ec	?	0x124	w	4	and $11,$7,$11 / and $10,$5,$10 / or $10,$10,$11 / jal 0 / sw $10,0($20) / sd $2,528($17) / beq $0,$0,2188 / or $16,$0,$0
+ip30-xswitch-o	xswitch_info_get	1c	?	0x100000	r	8	jal 0 / sd $4,0($29) / beq $2,$0,2c / or $16,$2,$0 / ld $1,0($2) / ld $2,-30720($28) / bne $1,$2,40 / ld $5,-30712($28) / ld $31,8($29)
+ip35-xbow-o	xbow_attach	128	?	0x4	r	4	or $7,$0,$0 / sd $2,24($16) / jal 0 / daddiu $5,$21,8 / lw $8,4($17) / srl $9,$8,0xc / srl $8,$8,0x1c / andi $9,$9,0xffff / sll $9,$9,0x4
+ip35-xbow-o	xbow_attach	210	?	0x24	w	4	ld $5,-30696($28) / jal 0 / or $6,$16,$0 / addiu $7,$0,36 / sw $7,36($17) / jal 0 / or $4,$20,$0 / or $19,$2,$0 / addiu $16,$0,8
+ip35-xbow-o	xbow_attach	244	?	0x10c	r	4	andi $5,$16,0xff / andi $25,$16,0x7 / dsll $25,$25,0x6 / daddu $25,$17,$25 / lw $31,268($25) / addiu $24,$0,-465 / and $24,$24,$31 / or $24,$18,$24 / sw $24,268($25)
+ip35-xbow-o	xbow_attach	254	?	0x10c	w	4	lw $31,268($25) / addiu $24,$0,-465 / and $24,$24,$31 / or $24,$18,$24 / sw $24,268($25) / addiu $16,$16,1 / slti $31,$16,16 / beq $31,$0,294 / or $4,$20,$0
+ip35-xbow-o	xbow_widget_present	818	?	0x4	r	4	lw $1,4($4) / addiu $2,$0,1 / srl $1,$1,0x1c / andi $10,$5,0x7 / sllv $1,$2,$1
+ip35-xbow-o	xbow_widget_present	83c	?	0x4	r	4	dsll $9,$10,0x6 / beq $1,$0,86c / daddu $8,$4,$9 / dli $6,0xd100 / lw $3,4($4) / srl $3,$3,0xc / andi $3,$3,0xffff / bne $3,$6,86c / sll $0,$0,0x0
+ip35-xbow-o	xbow_widget_present	850	pxbow	0x4	r	4	srl $3,$3,0xc / andi $3,$3,0xffff / bne $3,$6,86c / sll $0,$0,0x0 / lw $6,4($4) / srl $6,$6,0x1 / andi $6,$6,0x7ff / bne $6,$0,86c / addiu $11,$0,15
+ip35-xbow-o	xbow_widget_present	86c	?	0x13c	r	4	bne $6,$0,86c / addiu $11,$0,15 / beq $5,$11,874 / sll $0,$0,0x0 / lw $2,316($8) / andi $2,$2,0x20 / jr $31 / sll $0,$0,0x0
+ip35-xbow-o	xbow_widget_present	86c	pxbow	0x13c	r	4	bne $6,$0,86c / addiu $11,$0,15 / beq $5,$11,874 / sll $0,$0,0x0 / lw $2,316($8) / andi $2,$2,0x20 / jr $31 / sll $0,$0,0x0
+ip35-xbow-o	xbow_link_alive	888	?	0x114	r	4	andi $2,$5,0x7 / dsll $2,$2,0x6 / daddu $2,$4,$2 / lw $2,276($2) / jr $31 / srl $2,$2,0x1f
+ip35-xbow-o	xbow_intr_preset	958	?	0x34	w	4	dsrl32 $2,$7,0x0 / andi $2,$2,0xffff / or $1,$1,$3 / or $1,$1,$2 / sw $1,52($4) / jr $31 / sw $7,60($4)
+ip35-xbow-o	xbow_intr_preset	960	?	0x3c	w	4	or $1,$1,$3 / or $1,$1,$2 / sw $1,52($4) / jr $31 / sw $7,60($4)
+ip35-xbow-o	xbow_errintr_handler	cd0	?	0x24	r	4	sd $16,152($29) / sd $30,144($29) / ld $30,16($4) / sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30)
+ip35-xbow-o	xbow_errintr_handler	cd4	?	0x54	r	4	sd $30,144($29) / ld $30,16($4) / sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1
+ip35-xbow-o	xbow_errintr_handler	cd8	?	0x44	r	4	ld $30,16($4) / sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80
+ip35-xbow-o	xbow_errintr_handler	cdc	?	0x14	r	4	sd $19,136($29) / lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80 / sw $0,68($30)
+ip35-xbow-o	xbow_errintr_handler	ce0	?	0x1c	r	4	lw $2,36($30) / lw $19,84($30) / lw $9,68($30) / lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80 / sw $0,68($30) / addiu $16,$0,8
+ip35-xbow-o	xbow_errintr_handler	cec	?	0x44	w	4	lw $8,20($30) / lw $7,28($30) / addiu $5,$0,1 / lui $3,0x80 / sw $0,68($30) / addiu $16,$0,8 / lui $21,0x2 / sd $9,104($29) / lui $1,0xff00
+ip35-xbow-o	xbow_errintr_handler	db0	?	0x10c	r	4	beq $25,$0,e54 / and $24,$19,$24 / beq $24,$0,d84 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17
+ip35-xbow-o	xbow_errintr_handler	db4	?	0x12c	r	4	and $24,$19,$24 / beq $24,$0,d84 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18)
+ip35-xbow-o	xbow_errintr_handler	dc4	?	0x13c	r	4	lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18) / sd $25,192($29) / beq $24,$0,ddc / and $17,$22,$17 / ld $24,184($29)
+ip35-xbow-o	xbow_errintr_handler	db0	?	0x14c	r	4	beq $25,$0,e54 / and $24,$19,$24 / beq $24,$0,d84 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17
+ip35-xbow-o	xbow_errintr_handler	db4	?	0x16c	r	4	and $24,$19,$24 / beq $24,$0,d84 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18)
+ip35-xbow-o	xbow_errintr_handler	dc4	?	0x17c	r	4	lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18) / sd $25,192($29) / beq $24,$0,ddc / and $17,$22,$17 / ld $24,184($29)
+ip35-xbow-o	xbow_errintr_handler	db0	?	0x10c	r	4	beq $25,$0,e54 / and $24,$19,$24 / beq $24,$0,d84 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17
+ip35-xbow-o	xbow_errintr_handler	db4	?	0x12c	r	4	and $24,$19,$24 / beq $24,$0,d84 / sll $0,$0,0x0 / lw $17,268($18) / lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18)
+ip35-xbow-o	xbow_errintr_handler	dc4	?	0x13c	r	4	lw $20,300($18) / sd $17,208($29) / and $17,$17,$20 / and $24,$21,$17 / lw $25,316($18) / sd $25,192($29) / beq $24,$0,ddc / and $17,$22,$17 / ld $24,184($29)
+ip35-xbow-o	xbow_errintr_handler	e08	?	0x10c	w	4	ld $1,208($29) / addiu $2,$0,-9 / and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,d74 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29)
+ip35-xbow-o	xbow_errintr_handler	e10	?	0x10c	r	4	and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,d74 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29) / ld $4,200($29) / sh $16,6($29)
+ip35-xbow-o	xbow_errintr_handler	e08	?	0x14c	w	4	ld $1,208($29) / addiu $2,$0,-9 / and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,d74 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29)
+ip35-xbow-o	xbow_errintr_handler	e10	?	0x14c	r	4	and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,d74 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29) / ld $4,200($29) / sh $16,6($29)
+ip35-xbow-o	xbow_errintr_handler	e08	?	0x10c	w	4	ld $1,208($29) / addiu $2,$0,-9 / and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,d74 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29)
+ip35-xbow-o	xbow_errintr_handler	e10	?	0x10c	r	4	and $1,$2,$1 / sd $1,208($29) / sw $1,268($18) / beq $0,$0,d74 / lw $31,268($18) / lui $4,0x4100 / sw $4,0($29) / ld $4,200($29) / sh $16,6($29)
+ip35-xbow-o	xbow_errintr_handler	ed4	?	0x100008	r	4	beq $0,$0,105c / sd $0,176($29) / or $5,$16,$0 / jal 0 / lw $4,8($4) / jal 0 / or $4,$2,$0 / or $8,$2,$0 / ld $6,200($29)
+ip35-xbow-o	xbow_errintr_handler	ef8	?	0x100018	r	8	daddiu $5,$23,528 / addiu $4,$0,6 / or $7,$16,$0 / jal 0 / ld $6,24($6) / lui $7,0x4 / and $7,$7,$20 / bne $7,$0,111c / ld $5,-30720($28)
+ip35-xbow-o	xbow_errintr_handler	1070	?	0x100018	r	8	ld $6,200($29) / daddiu $5,$23,928 / addiu $4,$0,6 / jal 0 / ld $6,24($6) / andi $7,$19,0x1 / bne $7,$0,1220 / andi $8,$19,0x4 / bne $8,$0,123c
+ip35-xbow-o	xbow_error_handler	1290	?	0x100008	r	4	lw $9,8($4) / ld $2,16($4) / daddiu $29,$29,-144 / sd $22,104($29) / sd $31,112($29)
+ip35-xbow-o	xbow_error_handler	12d8	?	0xc	r	4	sd $21,88($29) / or $21,$7,$0 / beq $17,$0,13d0 / sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8
+ip35-xbow-o	xbow_error_handler	12dc	?	0x44	r	4	or $21,$7,$0 / beq $17,$0,13d0 / sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8 / sd $4,32($29)
+ip35-xbow-o	xbow_error_handler	12e0	?	0x14	r	4	beq $17,$0,13d0 / sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8 / sd $4,32($29) / bne $1,$0,1304
+ip35-xbow-o	xbow_error_handler	12e4	?	0x1c	r	4	sd $16,128($29) / lw $4,12($2) / lw $3,68($2) / lw $23,20($2) / lw $22,28($2) / slti $1,$17,8 / sd $4,32($29) / bne $1,$0,1304 / sd $3,40($29)
+ip35-xbow-o	xbow_error_handler	135c	?	0x10c	r	4	jr $31 / daddiu $29,$29,144 / dsll $12,$12,0x6 / daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29)
+ip35-xbow-o	xbow_error_handler	1360	?	0x114	r	4	daddiu $29,$29,144 / dsll $12,$12,0x6 / daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29) / addiu $10,$0,1
+ip35-xbow-o	xbow_error_handler	1364	?	0x13c	r	4	dsll $12,$12,0x6 / daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29) / addiu $10,$0,1 / srl $11,$11,0x1c
+ip35-xbow-o	xbow_error_handler	1368	?	0x4	r	4	daddu $12,$2,$12 / lw $14,268($12) / lw $13,276($12) / lw $12,316($12) / lw $11,4($2) / sd $9,16($29) / addiu $10,$0,1 / srl $11,$11,0x1c / sd $14,0($29)
+ip35-xbow-o	xbow_error_handler	138c	?	0x4	r	4	sllv $10,$10,$11 / sd $13,24($29) / beq $10,$0,13a0 / sd $12,48($29) / lw $13,4($2) / srl $13,$13,0xc / andi $13,$13,0xffff / dli $14,0xd100 / beq $13,$14,1468
+ip35-xbow-o	xbow_error_handler	140c	?	0x100000	r	4	or $5,$17,$0 / addiu $1,$0,-1 / beq $2,$1,14bc / sll $0,$0,0x0 / lw $3,0($20) / bne $3,$2,148c / or $4,$2,$0 / beq $19,$0,14d4 / addiu $4,$0,6
+ip35-xbow-o	xbow_error_handler	1468	pxbow	0x4	r	4	bne $8,$0,17ac / ld $5,-30720($28) / beq $0,$0,1328 / addiu $2,$0,6 / lw $9,4($2) / srl $9,$9,0x1 / andi $9,$9,0x7ff / bne $9,$0,13a0 / addiu $10,$0,15
+ip35-xbow-o	xbow_error_handler	14f8	?	0x100018	r	8	or $2,$0,$0 / ld $5,-30720($28) / addiu $4,$0,1 / or $7,$17,$0 / ld $6,24($20) / jal 0 / daddiu $5,$5,1664 / beq $0,$0,1314 / andi $7,$18,0x4
+ip35-xbow-o	xbow_error_handler	1518	?	0x100018	r	8	andi $7,$18,0x4 / ld $8,24($21) / or $7,$17,$0 / daddiu $5,$16,1744 / ld $6,24($20) / jal 0 / addiu $4,$0,1 / beq $0,$0,1320 / lh $8,0($28)
+ip35-xbow-o	xbow_error_handler	15c4	?	0x100018	r	8	beq $0,$0,1328 / addiu $2,$0,6 / ld $5,-30720($28) / addiu $4,$0,1 / ld $6,24($20) / jal 0 / daddiu $5,$5,1136 / beq $0,$0,13e0 / andi $31,$18,0x4
+ip35-xbow-o	xbow_error_handler	15e0	?	0x100018	r	8	beq $0,$0,13e0 / andi $31,$18,0x4 / ld $7,24($21) / daddiu $5,$16,1208 / ld $6,24($20) / jal 0 / addiu $4,$0,1 / beq $0,$0,13e8 / sll $0,$0,0x0
+ip35-xbow-o	xbow_error_handler	1704	?	0x100018	r	8	daddiu $7,$7,1872 / ld $16,-30720($28) / addiu $4,$0,1 / or $9,$17,$0 / ld $8,24($20) / jal 0 / daddiu $5,$16,1520 / ld $8,8($29) / beq $8,$0,172c
+ip35-xbow-o	xbow_error_handler	1778	?	0x100018	r	8	ld $16,-30720($28) / ld $5,-30720($28) / addiu $4,$0,1 / or $7,$17,$0 / ld $6,24($20) / jal 0 / daddiu $5,$5,1288 / beq $0,$0,144c / andi $7,$18,0x4
+ip35-xbow-o	xbow_error_handler	1798	?	0x100018	r	8	andi $7,$18,0x4 / ld $8,24($21) / or $7,$17,$0 / daddiu $5,$16,1368 / ld $6,24($20) / jal 0 / addiu $4,$0,1 / beq $0,$0,1458 / lh $8,0($28)
+ip35-xbow-o	xbow_error_handler	18b8	?	0x100018	r	8	ld $7,-30720($28) / daddiu $7,$7,1872 / daddiu $5,$16,1520 / addiu $4,$0,1 / ld $8,24($20) / jal 0 / or $9,$17,$0 / ld $8,8($29) / beq $8,$0,18e0
+ip35-xbow-o	xbow_update_perf_counters	19c4	?	0x100040	r	8	daddu $1,$20,$1 / and $25,$19,$25 / daddu $31,$31,$1 / dsll32 $25,$25,0x0 / ld $1,64($31) / dsrl32 $25,$25,0x0 / or $5,$2,$0 / daddu $25,$25,$1 / sd $25,64($31)
+ip35-xbow-o	xbow_update_perf_counters	19d4	?	0x100040	w	8	ld $1,64($31) / dsrl32 $25,$25,0x0 / or $5,$2,$0 / daddu $25,$25,$1 / sd $25,64($31) / or $4,$18,$0 / jal 0 / sw $24,0($16) / addiu $17,$17,1
+ip35-xbow-o	xbow_enable_perf_counter	1b20	?	0x100025	r	1	sd $4,24($29) / dsll $12,$16,0x4 / sd $2,16($29) / daddu $12,$17,$12 / lbu $2,37($12) / or $10,$0,$0 / beq $2,$0,1b50 / addiu $11,$19,-8 / beq $18,$0,1b50
+ip35-xbow-o	xbow_enable_perf_counter	1b5c	?	0x100024	r	1	sll $0,$0,0x0 / beq $16,$10,1b40 / dsll $7,$10,0x4 / daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b40 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b44
+ip35-xbow-o	xbow_enable_perf_counter	1b5c	?	0x100034	r	1	sll $0,$0,0x0 / beq $16,$10,1b40 / dsll $7,$10,0x4 / daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b40 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b44
+ip35-xbow-o	xbow_enable_perf_counter	1b5c	?	0x100024	r	1	sll $0,$0,0x0 / beq $16,$10,1b40 / dsll $7,$10,0x4 / daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b40 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b44
+ip35-xbow-o	xbow_enable_perf_counter	1b68	?	0x100025	r	1	daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b40 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b44 / addiu $10,$10,1 / ld $4,24($29) / jal 0
+ip35-xbow-o	xbow_enable_perf_counter	1b68	?	0x100035	r	1	daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b40 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b44 / addiu $10,$10,1 / ld $4,24($29) / jal 0
+ip35-xbow-o	xbow_enable_perf_counter	1b68	?	0x100025	r	1	daddu $7,$17,$7 / lbu $14,36($7) / bne $11,$14,1b40 / sll $0,$0,0x0 / lbu $8,37($7) / beq $8,$0,1b44 / addiu $10,$10,1 / ld $4,24($29) / jal 0
+ip35-xbow-o	xbow_enable_perf_counter	1b88	?	0x100027	w	1	jal 0 / ld $5,16($29) / beq $0,$0,1ae0 / addiu $4,$0,-1 / sb $18,39($12) / sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6
+ip35-xbow-o	xbow_enable_perf_counter	1b8c	?	0x100025	w	1	ld $5,16($29) / beq $0,$0,1ae0 / addiu $4,$0,-1 / sb $18,39($12) / sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6 / sb $11,36($12)
+ip35-xbow-o	xbow_enable_perf_counter	1b94	?	0x100026	w	1	addiu $4,$0,-1 / sb $18,39($12) / sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6 / sb $11,36($12) / daddu $7,$7,$8 / lui $9,0x3000
+ip35-xbow-o	xbow_enable_perf_counter	1b9c	?	0x100024	w	1	sb $18,37($12) / ld $7,0($29) / sb $11,38($12) / dsll $8,$19,0x6 / sb $11,36($12) / daddu $7,$7,$8 / lui $9,0x3000 / lw $6,-244($7) / nor $9,$9,$0
+ip35-xbow-o	xbow_enable_perf_counter	1ba8	?	-0xf4	r	4	dsll $8,$19,0x6 / sb $11,36($12) / daddu $7,$7,$8 / lui $9,0x3000 / lw $6,-244($7) / nor $9,$9,$0 / andi $8,$18,0x3 / sll $8,$8,0x1c / and $6,$6,$9
+ip35-xbow-o	xbow_enable_perf_counter	1bc0	?	-0xf4	w	4	andi $8,$18,0x3 / sll $8,$8,0x1c / and $6,$6,$9 / or $6,$6,$8 / sw $6,-244($7) / lui $10,0xf / ld $13,40($12) / ori $10,$10,0xffff / ld $5,8($29)
+ip35-xbow-o	xbow_enable_perf_counter	1bc8	?	0x100028	r	8	and $6,$6,$9 / or $6,$6,$8 / sw $6,-244($7) / lui $10,0xf / ld $13,40($12) / ori $10,$10,0xffff / ld $5,8($29) / andi $11,$11,0x7 / sll $11,$11,0x14
+ip35-xbow-o	xbow_enable_perf_counter	1c0c	?	0x100020	w	4	or $9,$9,$11 / sw $9,0($13) / and $9,$9,$10 / jal 0 / sw $9,32($12) / ld $4,24($29) / jal 0 / ld $5,16($29) / beq $0,$0,1ae0
+ip35-xbow-o	xbow_update_llp_status	1c98	?	0x100008	r	4	lui $20,0x7fff / ld $21,16($2) / addiu $17,$0,8 / ori $20,$20,0xffe7 / lw $4,8($19) / jal 0 / or $5,$17,$0 / jal 0 / or $4,$2,$0
+ip35-xbow-o	xbow_update_llp_status	1cb4	?	0x13c	r	4	jal 0 / or $4,$2,$0 / dsll $8,$16,0x6 / daddu $8,$21,$8 / lw $5,316($8) / lw $8,300($8) / srl $24,$8,0x1f / srl $11,$5,0x18 / and $10,$20,$8
+ip35-xbow-o	xbow_update_llp_status	1cb8	?	0x12c	r	4	or $4,$2,$0 / dsll $8,$16,0x6 / daddu $8,$21,$8 / lw $5,316($8) / lw $8,300($8) / srl $24,$8,0x1f / srl $11,$5,0x18 / and $10,$20,$8 / beq $24,$0,1cf0
+ip35-xbow-o	xbow_update_llp_status	1cd0	?	0x100148	r	8	srl $11,$5,0x18 / and $10,$20,$8 / beq $24,$0,1cf0 / srl $6,$5,0x10 / ld $13,8($18) / andi $12,$6,0xff / ld $9,0($18) / daddu $12,$12,$13 / sd $12,8($18)
+ip35-xbow-o	xbow_update_llp_status	1cd8	?	0x100140	r	8	beq $24,$0,1cf0 / srl $6,$5,0x10 / ld $13,8($18) / andi $12,$6,0xff / ld $9,0($18) / daddu $12,$12,$13 / sd $12,8($18) / daddu $9,$9,$11 / bne $10,$0,1d48
+ip35-xbow-o	xbow_update_llp_status	1ce0	?	0x100148	w	8	ld $13,8($18) / andi $12,$6,0xff / ld $9,0($18) / daddu $12,$12,$13 / sd $12,8($18) / daddu $9,$9,$11 / bne $10,$0,1d48 / sd $9,0($18) / addiu $16,$16,1
+ip35-xbow-o	xbow_update_llp_status	1cec	?	0x100140	w	8	daddu $12,$12,$13 / sd $12,8($18) / daddu $9,$9,$11 / bne $10,$0,1d48 / sd $9,0($18) / addiu $16,$16,1 / slti $14,$16,8 / addiu $17,$17,1 / bne $14,$0,1c98
+ip35-xbow-o	xbow_update_llp_status	1d04	?	0x1001c4	r	4	slti $14,$16,8 / addiu $17,$17,1 / bne $14,$0,1c98 / daddiu $18,$18,16 / lw $15,452($19) / beq $15,$0,1d24 / ld $5,0($29) / dsll32 $5,$5,0x0 / addiu $6,$0,100
+ip35-xbow-o	xbow_disable_llp_monitor	1d94	?	0x100148	w	8	dsll $1,$6,0x4 / addiu $6,$6,1 / daddu $1,$7,$1 / slti $2,$6,8 / sd $0,328($1) / bne $2,$0,1d84 / sd $0,320($1) / or $2,$0,$0 / sw $0,452($7)
+ip35-xbow-o	xbow_disable_llp_monitor	1d9c	?	0x100140	w	8	daddu $1,$7,$1 / slti $2,$6,8 / sd $0,328($1) / bne $2,$0,1d84 / sd $0,320($1) / or $2,$0,$0 / sw $0,452($7) / jr $31 / daddiu $29,$29,16
+ip35-xbow-o	xbow_disable_llp_monitor	1da4	?	0x1001c4	w	4	sd $0,328($1) / bne $2,$0,1d84 / sd $0,320($1) / or $2,$0,$0 / sw $0,452($7) / jr $31 / daddiu $29,$29,16
+ip35-xbow-o	xbow_enable_llp_monitor	1df8	?	0x1001c4	w	4	ld $30,8($29) / daddiu $29,$29,32 / addiu $6,$0,1 / jr $31 / sw $6,452($7)
+ip35-xbow-o	xbow_reset_link	1e60	?	0x10c	r	4	ld $18,16($2) / andi $24,$17,0x7 / dsll $24,$24,0x6 / daddu $18,$18,$24 / lw $6,268($18) / sw $0,308($18) / lw $4,0($28) / jal 0 / sd $6,8($29)
+ip35-xbow-o	xbow_reset_link	1e64	?	0x134	w	4	andi $24,$17,0x7 / dsll $24,$24,0x6 / daddu $18,$18,$24 / lw $6,268($18) / sw $0,308($18) / lw $4,0($28) / jal 0 / sd $6,8($29) / ld $17,0($16)
+ip35-xbow-o	xbow_reset_link	1e88	?	0x114	r	4	beq $0,$0,1e88 / sll $17,$17,0x0 / jal 0 / lw $4,0($28) / lw $24,276($18) / srl $24,$24,0x1f / bne $24,$0,1eb8 / lw $25,-30696($28) / ld $31,0($16)
+ip35-xbow-o	xbow_reset_link	1ec0	?	0x10c	w	4	beq $0,$0,1ec4 / addiu $2,$0,-1 / ld $1,8($29) / or $2,$0,$0 / sw $1,268($18) / ld $31,32($29) / ld $18,16($29) / ld $16,24($29) / ld $17,40($29)
+ip35-xbow-o	idbg_xbowregs	1f3c	?	0x4	r	4	ld $17,-30720($28) / or $5,$18,$0 / jal 0 / daddiu $4,$17,1936 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18)
+ip35-xbow-o	idbg_xbowregs	1f40	?	0xc	r	4	or $5,$18,$0 / jal 0 / daddiu $4,$17,1936 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18)
+ip35-xbow-o	idbg_xbowregs	1f44	?	0x14	r	4	jal 0 / daddiu $4,$17,1936 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0
+ip35-xbow-o	idbg_xbowregs	1f48	?	0x1c	r	4	daddiu $4,$17,1936 / lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,1984
+ip35-xbow-o	idbg_xbowregs	1f4c	?	0x24	r	4	lw $5,4($18) / lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,1984 / lw $5,52($18)
+ip35-xbow-o	idbg_xbowregs	1f50	?	0x2c	r	4	lw $6,12($18) / lw $7,20($18) / lw $8,28($18) / lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,1984 / lw $5,52($18) / lw $6,60($18)
+ip35-xbow-o	idbg_xbowregs	1f5c	?	0x34	r	4	lw $9,36($18) / lw $10,44($18) / jal 0 / daddiu $4,$17,1984 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18)
+ip35-xbow-o	idbg_xbowregs	1f60	?	0x3c	r	4	lw $10,44($18) / jal 0 / daddiu $4,$17,1984 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0
+ip35-xbow-o	idbg_xbowregs	1f64	?	0x44	r	4	jal 0 / daddiu $4,$17,1984 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0 / daddiu $4,$17,2048
+ip35-xbow-o	idbg_xbowregs	1f68	?	0x4c	r	4	daddiu $4,$17,1984 / lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0 / daddiu $4,$17,2048 / addiu $16,$0,8
+ip35-xbow-o	idbg_xbowregs	1f6c	?	0x5c	r	4	lw $5,52($18) / lw $6,60($18) / lw $7,68($18) / lw $8,76($18) / lw $9,92($18) / jal 0 / daddiu $4,$17,2048 / addiu $16,$0,8 / daddiu $4,$17,2112
+ip35-xbow-o	idbg_xbowregs	1f94	?	0x10c	r	4	or $5,$16,$0 / andi $9,$16,0x7 / dsll $9,$9,0x6 / daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2136
+ip35-xbow-o	idbg_xbowregs	1f98	?	0x114	r	4	andi $9,$16,0x7 / dsll $9,$9,0x6 / daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2136 / jal 0
+ip35-xbow-o	idbg_xbowregs	1f9c	?	0x11c	r	4	dsll $9,$9,0x6 / daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2136 / jal 0 / lw $9,316($9)
+ip35-xbow-o	idbg_xbowregs	1fa0	?	0x124	r	4	daddu $9,$18,$9 / lw $5,268($9) / lw $6,276($9) / lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2136 / jal 0 / lw $9,316($9) / addiu $16,$16,1
+ip35-xbow-o	idbg_xbowregs	1fac	?	0x13c	r	4	lw $7,284($9) / lw $8,292($9) / daddiu $4,$17,2136 / jal 0 / lw $9,316($9) / addiu $16,$16,1 / slti $10,$16,16 / bne $10,$0,1f7c / ld $31,8($29)
+ip35-xbow-o	xbow_prio_bw_alloc	2118	?	0x100210	r	8	or $4,$2,$0 / or $6,$2,$0 / dsll $8,$17,0x3 / daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3
+ip35-xbow-o	xbow_prio_bw_alloc	2120	?	0x1001d0	r	8	dsll $8,$17,0x3 / daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20)
+ip35-xbow-o	xbow_prio_bw_alloc	2124	?	0x11c	r	4	daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3
+ip35-xbow-o	xbow_prio_bw_alloc	2130	?	0x11c	r	4	ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3 / sltu $3,$3,$4 / sllv $5,$5,$11 / and $2,$5,$2
+ip35-xbow-o	xbow_prio_bw_alloc	2124	?	0x124	r	4	daddu $8,$18,$8 / ld $4,528($8) / addiu $5,$0,31 / ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3
+ip35-xbow-o	xbow_prio_bw_alloc	2130	?	0x124	r	4	ld $3,464($8) / lw $7,0($20) / andi $11,$16,0x3 / daddu $4,$6,$4 / lw $2,0($20) / sll $11,$11,0x3 / sltu $3,$3,$4 / sllv $5,$5,$11 / and $2,$5,$2
+ip35-xbow-o	xbow_prio_bw_alloc	21c4	?	0x11c	w	4	and $11,$7,$11 / and $10,$5,$10 / or $10,$10,$11 / jal 0 / sw $10,0($20) / sd $2,528($17) / beq $0,$0,2160 / or $16,$0,$0
+ip35-xbow-o	xbow_prio_bw_alloc	21c8	?	0x100210	w	8	and $10,$5,$10 / or $10,$10,$11 / jal 0 / sw $10,0($20) / sd $2,528($17) / beq $0,$0,2160 / or $16,$0,$0
+ip35-xbow-o	xbow_prio_bw_alloc	21c4	?	0x124	w	4	and $11,$7,$11 / and $10,$5,$10 / or $10,$10,$11 / jal 0 / sw $10,0($20) / sd $2,528($17) / beq $0,$0,2160 / or $16,$0,$0
+ip35-xswitch-o	xswitch_info_get	1c	?	0x100000	r	8	jal 0 / sd $4,0($29) / beq $2,$0,2c / or $16,$2,$0 / ld $1,0($2) / ld $2,-30720($28) / bne $1,$2,40 / ld $5,-30712($28) / ld $31,8($29)
+ip35-kernel-o	sub_c4ac	c5a8	?	0x4	r	4	lh $10,0($16) / ld $11,-32640($28) / dsll32 $10,$10,0x1 / daddu $10,$10,$11 / lw $6,4($10) / sra $6,$6,0xc / dli $7,0xc002 / andi $6,$6,0xffff / dli $5,0xd100
+ip35-kernel-o	sub_c4ac	c768	?	0x24	r	4	jal 0 / or $4,$16,$0 / beq $0,$0,c700 / lw $4,16($29) / lw $6,36($10) / andi $6,$6,0xf / andi $6,$6,0xff / beq $0,$0,c5f0 / sb $6,-31172($18)
+ip35-kernel-o	sub_c4ac	c78c	?	0x24	r	4	bne $5,$0,c628 / dli $7,0xd000 / beq $0,$0,c73c / sll $0,$0,0x0 / lw $7,36($10) / or $4,$0,$0 / or $8,$17,$0 / daddiu $5,$5,560 / andi $7,$7,0xf
+ip35-kernel-o	save_xbow_err	1403c	?	0xc	r	4	ld $31,16($29) / dsll32 $9,$30,0x1 / ld $30,0($29) / daddu $2,$8,$9 / lw $5,12($2) / sw $5,0($16) / lw $4,20($2) / sw $4,4($16) / lw $3,28($2)
+ip35-kernel-o	save_xbow_err	14044	?	0x14	r	4	ld $30,0($29) / daddu $2,$8,$9 / lw $5,12($2) / sw $5,0($16) / lw $4,20($2) / sw $4,4($16) / lw $3,28($2) / sw $3,8($16) / lw $2,68($2)
+ip35-kernel-o	save_xbow_err	1404c	?	0x1c	r	4	lw $5,12($2) / sw $5,0($16) / lw $4,20($2) / sw $4,4($16) / lw $3,28($2) / sw $3,8($16) / lw $2,68($2) / addiu $7,$0,8 / or $5,$0,$0
+ip35-kernel-o	save_xbow_err	14054	?	0x44	r	4	lw $4,20($2) / sw $4,4($16) / lw $3,28($2) / sw $3,8($16) / lw $2,68($2) / addiu $7,$0,8 / or $5,$0,$0 / sw $2,12($16) / andi $6,$7,0x7
+ip35-kernel-o	save_xbow_err	14080	?	0x114	r	4	dsll $10,$5,0x2 / daddu $6,$8,$6 / addiu $5,$5,1 / daddu $10,$16,$10 / lw $12,276($6) / slti $11,$5,8 / sw $12,16($10) / lw $6,316($6) / addiu $7,$7,1
+ip35-kernel-o	save_xbow_err	1408c	?	0x13c	r	4	daddu $10,$16,$10 / lw $12,276($6) / slti $11,$5,8 / sw $12,16($10) / lw $6,316($6) / addiu $7,$7,1 / bne $11,$0,14064 / sw $6,48($10) / ld $16,8($29)
+ip35-kernel-o	intr_heuristic	1fe24	?	0x100072	r	2	jal 0 / lw $4,4($29) / beq $16,$0,1fe70 / sd $16,352($29) / lh $5,114($16) / addiu $7,$0,1 / or $2,$16,$0 / beq $5,$7,1fe40 / addiu $16,$0,-1
+ip35-kernel-o	intr_heuristic	1fe40	?	0x100830	r	8	beq $5,$7,1fe40 / addiu $16,$0,-1 / bne $5,$0,1fcf8 / sll $0,$0,0x0 / ld $5,2096($2) / beq $5,$0,1fe78 / sll $0,$0,0x0 / lh $16,36($5) / ld $4,-31912($28)
+ip30-prom	prom_ffffffffbfc094f4	c09500	?	0x13c	r	4	andi $2,$5,0x7 / dsll $2,$2,0x6 / daddu $2,$4,$2 / lw $1,316($2) / andi $1,$1,0x20 / beq $1,$0,0xffffffffbfc09528 / lui $4,0x8000 / lw $3,276($2)
+ip30-prom	prom_ffffffffbfc094f4	c09510	?	0x114	r	4	lw $1,316($2) / andi $1,$1,0x20 / beq $1,$0,0xffffffffbfc09528 / lui $4,0x8000 / lw $3,276($2) / and $3,$3,$4 / beq $3,$0,0xffffffffbfc09528 / addiu $2,$0,1 / jr $31
+ip30-prom	prom_ffffffffbfc6ac2c	c6ac4c	?	0xc	r	4	sd $31,40($29) / sd $16,48($29) / sd $17,56($29) / sd $20,8($29) / lw $20,12($4) / sd $21,64($29) / lui $1,0xff80 / sd $23,72($29) / and $1,$20,$1
+ip30-prom	prom_ffffffffbfc6ac2c	c6acf4	?	0x114	r	4	beq $7,$0,0xffffffffbfc6accc / sll $19,$2,0x6 / daddu $19,$22,$19 / daddiu $7,$17,560 / lw $30,276($19) / or $5,$18,$0 / daddiu $4,$16,24 / jal 0xffffffffbfc8bab0 / or $6,$30,$0
+ip30-prom	prom_ffffffffbfc6ac2c	c6ad18	?	0x13c	r	4	daddiu $6,$17,1176 / lui $24,0x2 / daddiu $4,$16,56 / ori $24,$24,0x2 / lw $5,316($19) / and $24,$24,$30 / jal 0xffffffffbfc8bab0 / movn $21,$23,$24 / ld $25,16($29)
+ip30-prom	prom_ffffffffbfc6ac2c	c6acf4	?	0x154	r	4	beq $7,$0,0xffffffffbfc6accc / sll $19,$2,0x6 / daddu $19,$22,$19 / daddiu $7,$17,560 / lw $30,276($19) / or $5,$18,$0 / daddiu $4,$16,24 / jal 0xffffffffbfc8bab0 / or $6,$30,$0
+ip30-prom	prom_ffffffffbfc6ac2c	c6ad18	?	0x17c	r	4	daddiu $6,$17,1176 / lui $24,0x2 / daddiu $4,$16,56 / ori $24,$24,0x2 / lw $5,316($19) / and $24,$24,$30 / jal 0xffffffffbfc8bab0 / movn $21,$23,$24 / ld $25,16($29)
+ip30-prom	prom_ffffffffbfc6ac2c	c6acf4	?	0x114	r	4	beq $7,$0,0xffffffffbfc6accc / sll $19,$2,0x6 / daddu $19,$22,$19 / daddiu $7,$17,560 / lw $30,276($19) / or $5,$18,$0 / daddiu $4,$16,24 / jal 0xffffffffbfc8bab0 / or $6,$30,$0
+ip30-prom	prom_ffffffffbfc6ac2c	c6ad18	?	0x13c	r	4	daddiu $6,$17,1176 / lui $24,0x2 / daddiu $4,$16,56 / ori $24,$24,0x2 / lw $5,316($19) / and $24,$24,$30 / jal 0xffffffffbfc8bab0 / movn $21,$23,$24 / ld $25,16($29)
+ip30-prom	prom_ffffffffbfc6ac2c	c6ad58	?	0x44	r	4	lui $7,0x9fcc / daddiu $6,$6,0 / daddiu $7,$7,9784 / dsll32 $6,$6,0x0 / lw $5,68($22) / jal 0xffffffffbfc8bab0 / dadd $6,$6,$7 / lw $5,28($22) / lw $6,20($22)
+ip30-prom	prom_ffffffffbfc6ac2c	c6ad64	?	0x1c	r	4	dsll32 $6,$6,0x0 / lw $5,68($22) / jal 0xffffffffbfc8bab0 / dadd $6,$6,$7 / lw $5,28($22) / lw $6,20($22) / dsll32 $6,$6,0x0 / dsll32 $5,$5,0x0 / daddiu $4,$16,112
+ip30-prom	prom_ffffffffbfc6ac2c	c6ad68	?	0x14	r	4	lw $5,68($22) / jal 0xffffffffbfc8bab0 / dadd $6,$6,$7 / lw $5,28($22) / lw $6,20($22) / dsll32 $6,$6,0x0 / dsll32 $5,$5,0x0 / daddiu $4,$16,112 / dsrl32 $5,$5,0x0
+ip30-prom	prom_ffffffffbfc6ac2c	c6ad90	?	0x44	w	4	or $5,$5,$6 / ld $6,16($29) / beq $6,$0,0xffffffffbfc6ad94 / sll $0,$0,0x0 / sw $0,68($22) / ld $18,24($29) / ld $19,32($29) / ld $22,0($29) / ld $16,48($29)
+ip30-prom	prom_ffffffffbfc6b098	c6b0a4	?	0x13c	r	4	andi $2,$5,0x7 / dsll $2,$2,0x6 / daddu $2,$4,$2 / lw $1,316($2) / andi $1,$1,0x20 / beq $1,$0,0xffffffffbfc6b0cc / lui $4,0x8000 / lw $3,276($2)
+ip30-prom	prom_ffffffffbfc6b098	c6b0b4	?	0x114	r	4	lw $1,316($2) / andi $1,$1,0x20 / beq $1,$0,0xffffffffbfc6b0cc / lui $4,0x8000 / lw $3,276($2) / and $3,$3,$4 / beq $3,$0,0xffffffffbfc6b0cc / addiu $2,$0,1 / jr $31
+ip30-prom	prom_ffffffffbfc6b198	c6b1a4	?	0x114	r	4	andi $1,$5,0x7 / sll $1,$1,0x6 / daddu $1,$4,$1 / lw $2,276($1) / sw $0,268($1) / sw $0,284($1) / sw $0,292($1) / jr $31
+ip30-prom	prom_ffffffffbfc6b198	c6b1a8	?	0x10c	w	4	andi $1,$5,0x7 / sll $1,$1,0x6 / daddu $1,$4,$1 / lw $2,276($1) / sw $0,268($1) / sw $0,284($1) / sw $0,292($1) / jr $31 / sw $0,308($1)
+ip30-prom	prom_ffffffffbfc6b198	c6b1ac	?	0x11c	w	4	sll $1,$1,0x6 / daddu $1,$4,$1 / lw $2,276($1) / sw $0,268($1) / sw $0,284($1) / sw $0,292($1) / jr $31 / sw $0,308($1)
+ip30-prom	prom_ffffffffbfc6b198	c6b1b0	?	0x124	w	4	daddu $1,$4,$1 / lw $2,276($1) / sw $0,268($1) / sw $0,284($1) / sw $0,292($1) / jr $31 / sw $0,308($1)
+ip30-prom	prom_ffffffffbfc6b198	c6b1b8	?	0x134	w	4	sw $0,268($1) / sw $0,284($1) / sw $0,292($1) / jr $31 / sw $0,308($1)
+ip35-prom	prom_c00000001fc0aeec	c0afa8	?	0xc	r	4	dsll32 $9,$17,0x1 / addiu $8,$0,-55 / dsll32 $8,$8,0x19 / daddu $7,$8,$9 / lw $12,12($7) / sw $12,0($16) / lw $11,20($7) / sw $11,4($16) / lw $10,28($7)
+ip35-prom	prom_c00000001fc0aeec	c0afb0	?	0x14	r	4	dsll32 $8,$8,0x19 / daddu $7,$8,$9 / lw $12,12($7) / sw $12,0($16) / lw $11,20($7) / sw $11,4($16) / lw $10,28($7) / sw $10,8($16) / or $4,$16,$0
+ip35-prom	prom_c00000001fc0aeec	c0afb8	?	0x1c	r	4	lw $12,12($7) / sw $12,0($16) / lw $11,20($7) / sw $11,4($16) / lw $10,28($7) / sw $10,8($16) / or $4,$16,$0 / lw $7,68($7) / addiu $6,$0,8
+ip35-prom	prom_c00000001fc0aeec	c0afc4	?	0x44	r	4	sw $11,4($16) / lw $10,28($7) / sw $10,8($16) / or $4,$16,$0 / lw $7,68($7) / addiu $6,$0,8 / addiu $10,$0,16 / sw $7,12($16) / andi $11,$6,0x7
+ip35-prom	prom_c00000001fc0aeec	c0afe4	?	0x114	r	4	andi $11,$6,0x7 / sll $11,$11,0x6 / daddu $11,$9,$11 / daddu $11,$8,$11 / lw $12,276($11) / addiu $6,$6,1 / sw $12,16($4) / daddiu $4,$4,4 / lw $11,316($11)
+ip35-prom	prom_c00000001fc0aeec	c0aff4	?	0x13c	r	4	lw $12,276($11) / addiu $6,$6,1 / sw $12,16($4) / daddiu $4,$4,4 / lw $11,316($11) / bne $6,$10,0xc00000001fc0afd4 / sw $11,44($4) / jal 0xc00000001fc6b99c / ld $4,104($29)
+ip35-prom	prom_c00000001fc4a500	c4a5d8	?	0x13c	r	4	sll $2,$2,0x6 / daddu $2,$18,$2 / beq $10,$0,0xc00000001fc4a5b0 / sll $0,$0,0x0 / lw $11,316($2) / andi $11,$11,0x20 / beq $11,$0,0xc00000001fc4a5b0 / sll $0,$0,0x0 / lw $3,276($2)
+ip35-prom	prom_c00000001fc4a500	c4a5d8	?	0x17c	r	4	sll $2,$2,0x6 / daddu $2,$18,$2 / beq $10,$0,0xc00000001fc4a5b0 / sll $0,$0,0x0 / lw $11,316($2) / andi $11,$11,0x20 / beq $11,$0,0xc00000001fc4a5b0 / sll $0,$0,0x0 / lw $3,276($2)
+ip35-prom	prom_c00000001fc4a500	c4a5d8	?	0x13c	r	4	sll $2,$2,0x6 / daddu $2,$18,$2 / beq $10,$0,0xc00000001fc4a5b0 / sll $0,$0,0x0 / lw $11,316($2) / andi $11,$11,0x20 / beq $11,$0,0xc00000001fc4a5b0 / sll $0,$0,0x0 / lw $3,276($2)
+ip35-prom	prom_c00000001fc4a500	c4a5e8	?	0x114	r	4	lw $11,316($2) / andi $11,$11,0x20 / beq $11,$0,0xc00000001fc4a5b0 / sll $0,$0,0x0 / lw $3,276($2) / and $3,$19,$3 / bne $3,$0,0xc00000001fc4a5b0 / or $5,$18,$0 / ld $4,8($29)
+ip35-prom	prom_c00000001fc4a500	c4a5e8	?	0x154	r	4	lw $11,316($2) / andi $11,$11,0x20 / beq $11,$0,0xc00000001fc4a5b0 / sll $0,$0,0x0 / lw $3,276($2) / and $3,$19,$3 / bne $3,$0,0xc00000001fc4a5b0 / or $5,$18,$0 / ld $4,8($29)
+ip35-prom	prom_c00000001fc4a500	c4a5e8	?	0x114	r	4	lw $11,316($2) / andi $11,$11,0x20 / beq $11,$0,0xc00000001fc4a5b0 / sll $0,$0,0x0 / lw $3,276($2) / and $3,$19,$3 / bne $3,$0,0xc00000001fc4a5b0 / or $5,$18,$0 / ld $4,8($29)
+ip35-prom	prom_c00000001fc4bd30	c4bd54	?	0x12c	r	4	sd $17,0($29) / sll $18,$18,0x6 / sd $19,16($29) / daddu $18,$4,$18 / lw $2,300($18) / lui $1,0x8 / sw $1,268($18) / addiu $19,$0,100 / sw $0,284($18)
+ip35-prom	prom_c00000001fc4bd30	c4bd5c	?	0x10c	w	4	sd $19,16($29) / daddu $18,$4,$18 / lw $2,300($18) / lui $1,0x8 / sw $1,268($18) / addiu $19,$0,100 / sw $0,284($18) / lui $17,0x8000 / or $16,$0,$0
+ip35-prom	prom_c00000001fc4bd30	c4bd64	?	0x11c	w	4	lw $2,300($18) / lui $1,0x8 / sw $1,268($18) / addiu $19,$0,100 / sw $0,284($18) / lui $17,0x8000 / or $16,$0,$0 / sw $0,292($18) / lw $24,276($18)
+ip35-prom	prom_c00000001fc4bd30	c4bd70	?	0x124	w	4	addiu $19,$0,100 / sw $0,284($18) / lui $17,0x8000 / or $16,$0,$0 / sw $0,292($18) / lw $24,276($18) / and $24,$17,$24 / bne $24,$0,0xc00000001fc4bd98 / sll $0,$0,0x0
+ip35-prom	prom_c00000001fc4bd30	c4bd74	?	0x114	r	4	sw $0,284($18) / lui $17,0x8000 / or $16,$0,$0 / sw $0,292($18) / lw $24,276($18) / and $24,$17,$24 / bne $24,$0,0xc00000001fc4bd98 / sll $0,$0,0x0 / jal 0xc00000001fc4d61c
+ip35-prom	prom_c00000001fc4f3ec	c4f3f8	?	0x4	r	4	daddiu $29,$29,-32 / sd $4,16($29) / ld $10,16($29) / lw $10,4($10) / andi $3,$5,0x7 / ld $2,16($29) / sll $3,$3,0x6 / daddu $2,$2,$3
+ip35-prom	prom_c00000001fc4f3ec	c4f40c	?	0x114	r	4	andi $3,$5,0x7 / ld $2,16($29) / sll $3,$3,0x6 / daddu $2,$2,$3 / lw $1,276($2) / or $6,$5,$0 / lui $11,0x8000 / sra $13,$10,0xc / and $1,$11,$1
+ip35-prom	prom_c00000001fc4f3ec	c4f430	?	0x13c	r	4	dli $14,0xd100 / andi $13,$13,0xffff / beq $1,$0,0xc00000001fc4f448 / daddiu $9,$2,256 / lw $12,316($2) / andi $12,$12,0x20 / beq $12,$0,0xc00000001fc4f448 / addiu $2,$0,1 / jr $31
+ip35-prom	prom_c00000001fc4f3ec	c4f450	?	0x13c	r	4	jr $31 / daddiu $29,$29,32 / beq $13,$14,0xc00000001fc4f478 / srl $24,$10,0x1c / lw $14,60($9) / andi $14,$14,0x20 / beq $14,$0,0xc00000001fc4f470 / sll $0,$0,0x0 / lw $15,20($9)
+ip35-prom	prom_c00000001fc4f3ec	c4f460	?	0x114	r	4	lw $14,60($9) / andi $14,$14,0x20 / beq $14,$0,0xc00000001fc4f470 / sll $0,$0,0x0 / lw $15,20($9) / and $15,$11,$15 / beq $15,$0,0xc00000001fc4f498 / sd $31,0($29) / beq $0,$0,0xc00000001fc4f440
+ip27-prom	prom_c00000001fc08ff0	c090ac	?	0xc	r	4	dsll32 $9,$17,0x0 / addiu $8,$0,-55 / dsll32 $8,$8,0x19 / daddu $7,$8,$9 / lw $12,12($7) / sw $12,0($16) / lw $11,20($7) / sw $11,4($16) / lw $10,28($7)
+ip27-prom	prom_c00000001fc08ff0	c090b4	?	0x14	r	4	dsll32 $8,$8,0x19 / daddu $7,$8,$9 / lw $12,12($7) / sw $12,0($16) / lw $11,20($7) / sw $11,4($16) / lw $10,28($7) / sw $10,8($16) / or $4,$16,$0
+ip27-prom	prom_c00000001fc08ff0	c090bc	?	0x1c	r	4	lw $12,12($7) / sw $12,0($16) / lw $11,20($7) / sw $11,4($16) / lw $10,28($7) / sw $10,8($16) / or $4,$16,$0 / lw $7,68($7) / addiu $6,$0,8
+ip27-prom	prom_c00000001fc08ff0	c090c8	?	0x44	r	4	sw $11,4($16) / lw $10,28($7) / sw $10,8($16) / or $4,$16,$0 / lw $7,68($7) / addiu $6,$0,8 / addiu $10,$0,16 / sw $7,12($16) / andi $11,$6,0x7
+ip27-prom	prom_c00000001fc08ff0	c090e8	?	0x114	r	4	andi $11,$6,0x7 / sll $11,$11,0x6 / daddu $11,$9,$11 / daddu $11,$8,$11 / lw $12,276($11) / addiu $6,$6,1 / sw $12,16($4) / daddiu $4,$4,4 / lw $11,316($11)
+ip27-prom	prom_c00000001fc08ff0	c090f8	?	0x13c	r	4	lw $12,276($11) / addiu $6,$6,1 / sw $12,16($4) / daddiu $4,$4,4 / lw $11,316($11) / bne $6,$10,0xc00000001fc090d8 / sw $11,44($4) / jal 0xc00000001fc5af4c / ld $4,104($29)
+ip27-prom	prom_c00000001fc425a0	c4264c	?	0x13c	r	4	sll $2,$2,0x6 / daddu $2,$18,$2 / beq $25,$0,0xc00000001fc42624 / sll $0,$0,0x0 / lw $31,316($2) / andi $31,$31,0x20 / beq $31,$0,0xc00000001fc42624 / sll $0,$0,0x0 / lw $3,276($2)
+ip27-prom	prom_c00000001fc425a0	c4264c	?	0x17c	r	4	sll $2,$2,0x6 / daddu $2,$18,$2 / beq $25,$0,0xc00000001fc42624 / sll $0,$0,0x0 / lw $31,316($2) / andi $31,$31,0x20 / beq $31,$0,0xc00000001fc42624 / sll $0,$0,0x0 / lw $3,276($2)
+ip27-prom	prom_c00000001fc425a0	c4264c	?	0x13c	r	4	sll $2,$2,0x6 / daddu $2,$18,$2 / beq $25,$0,0xc00000001fc42624 / sll $0,$0,0x0 / lw $31,316($2) / andi $31,$31,0x20 / beq $31,$0,0xc00000001fc42624 / sll $0,$0,0x0 / lw $3,276($2)
+ip27-prom	prom_c00000001fc425a0	c4265c	?	0x114	r	4	lw $31,316($2) / andi $31,$31,0x20 / beq $31,$0,0xc00000001fc42624 / sll $0,$0,0x0 / lw $3,276($2) / and $3,$19,$3 / bne $3,$0,0xc00000001fc42624 / or $5,$18,$0 / ld $4,8($29)
+ip27-prom	prom_c00000001fc425a0	c4265c	?	0x154	r	4	lw $31,316($2) / andi $31,$31,0x20 / beq $31,$0,0xc00000001fc42624 / sll $0,$0,0x0 / lw $3,276($2) / and $3,$19,$3 / bne $3,$0,0xc00000001fc42624 / or $5,$18,$0 / ld $4,8($29)
+ip27-prom	prom_c00000001fc425a0	c4265c	?	0x114	r	4	lw $31,316($2) / andi $31,$31,0x20 / beq $31,$0,0xc00000001fc42624 / sll $0,$0,0x0 / lw $3,276($2) / and $3,$19,$3 / bne $3,$0,0xc00000001fc42624 / or $5,$18,$0 / ld $4,8($29)
+ip27-prom	prom_c00000001fc43758	c4377c	?	0x12c	r	4	sd $17,0($29) / sll $18,$18,0x6 / sd $19,16($29) / daddu $18,$4,$18 / lw $2,300($18) / lui $1,0x8 / sw $1,268($18) / sw $0,284($18) / addiu $19,$0,100
+ip27-prom	prom_c00000001fc43758	c43784	?	0x10c	w	4	sd $19,16($29) / daddu $18,$4,$18 / lw $2,300($18) / lui $1,0x8 / sw $1,268($18) / sw $0,284($18) / addiu $19,$0,100 / sw $0,292($18) / lui $17,0x8000
+ip27-prom	prom_c00000001fc43758	c43788	?	0x11c	w	4	daddu $18,$4,$18 / lw $2,300($18) / lui $1,0x8 / sw $1,268($18) / sw $0,284($18) / addiu $19,$0,100 / sw $0,292($18) / lui $17,0x8000 / or $16,$0,$0
+ip27-prom	prom_c00000001fc43758	c43790	?	0x124	w	4	lui $1,0x8 / sw $1,268($18) / sw $0,284($18) / addiu $19,$0,100 / sw $0,292($18) / lui $17,0x8000 / or $16,$0,$0 / sw $0,308($18) / lw $24,276($18)
+ip27-prom	prom_c00000001fc43758	c4379c	?	0x134	w	4	addiu $19,$0,100 / sw $0,292($18) / lui $17,0x8000 / or $16,$0,$0 / sw $0,308($18) / lw $24,276($18) / and $24,$17,$24 / bne $24,$0,0xc00000001fc437c4 / sll $0,$0,0x0
+ip27-prom	prom_c00000001fc43758	c437a0	?	0x114	r	4	sw $0,292($18) / lui $17,0x8000 / or $16,$0,$0 / sw $0,308($18) / lw $24,276($18) / and $24,$17,$24 / bne $24,$0,0xc00000001fc437c4 / sll $0,$0,0x0 / jal 0xc00000001fc45350
+ip27-prom	prom_c00000001fc44bbc	c44bc8	?	0x4	r	4	daddiu $29,$29,-32 / sd $4,16($29) / ld $10,16($29) / lw $10,4($10) / andi $3,$5,0x7 / ld $2,16($29) / sll $3,$3,0x6 / daddu $2,$2,$3
+ip27-prom	prom_c00000001fc44bbc	c44bdc	?	0x114	r	4	andi $3,$5,0x7 / ld $2,16($29) / sll $3,$3,0x6 / daddu $2,$2,$3 / lw $1,276($2) / or $6,$5,$0 / lui $11,0x8000 / sra $13,$10,0xc / and $1,$11,$1
+ip27-prom	prom_c00000001fc44bbc	c44c00	?	0x13c	r	4	dli $14,0xd100 / andi $13,$13,0xffff / beq $1,$0,0xc00000001fc44c18 / daddiu $9,$2,256 / lw $12,316($2) / andi $12,$12,0x20 / beq $12,$0,0xc00000001fc44c18 / addiu $2,$0,1 / jr $31
+ip27-prom	prom_c00000001fc44bbc	c44c20	?	0x13c	r	4	jr $31 / daddiu $29,$29,32 / beq $13,$14,0xc00000001fc44c48 / srl $24,$10,0x1c / lw $14,60($9) / andi $14,$14,0x20 / beq $14,$0,0xc00000001fc44c40 / sll $0,$0,0x0 / lw $15,20($9)
+ip27-prom	prom_c00000001fc44bbc	c44c30	?	0x114	r	4	lw $14,60($9) / andi $14,$14,0x20 / beq $14,$0,0xc00000001fc44c40 / sll $0,$0,0x0 / lw $15,20($9) / and $15,$11,$15 / beq $15,$0,0xc00000001fc44c68 / sd $31,0($29) / beq $0,$0,0xc00000001fc44c10
+io6-prom	prom_c000000011c39e00	c39ebc	?	0xc	r	4	dsll32 $9,$17,0x0 / addiu $8,$0,-55 / dsll32 $8,$8,0x19 / daddu $7,$8,$9 / lw $12,12($7) / sw $12,0($16) / lw $11,20($7) / sw $11,4($16) / lw $10,28($7)
+io6-prom	prom_c000000011c39e00	c39ec4	?	0x14	r	4	dsll32 $8,$8,0x19 / daddu $7,$8,$9 / lw $12,12($7) / sw $12,0($16) / lw $11,20($7) / sw $11,4($16) / lw $10,28($7) / sw $10,8($16) / or $4,$16,$0
+io6-prom	prom_c000000011c39e00	c39ecc	?	0x1c	r	4	lw $12,12($7) / sw $12,0($16) / lw $11,20($7) / sw $11,4($16) / lw $10,28($7) / sw $10,8($16) / or $4,$16,$0 / lw $7,68($7) / addiu $6,$0,8
+io6-prom	prom_c000000011c39e00	c39ed8	?	0x44	r	4	sw $11,4($16) / lw $10,28($7) / sw $10,8($16) / or $4,$16,$0 / lw $7,68($7) / addiu $6,$0,8 / addiu $10,$0,16 / sw $7,12($16) / andi $11,$6,0x7
+io6-prom	prom_c000000011c39e00	c39ef8	?	0x114	r	4	andi $11,$6,0x7 / sll $11,$11,0x6 / daddu $11,$9,$11 / daddu $11,$8,$11 / lw $12,276($11) / addiu $6,$6,1 / sw $12,16($4) / daddiu $4,$4,4 / lw $11,316($11)
+io6-prom	prom_c000000011c39e00	c39f08	?	0x13c	r	4	lw $12,276($11) / addiu $6,$6,1 / sw $12,16($4) / daddiu $4,$4,4 / lw $11,316($11) / bne $6,$10,0xc000000011c39ee8 / sw $11,44($4) / jal 0xc000000011c8451c / ld $4,104($29)
