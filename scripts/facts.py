@@ -1053,6 +1053,12 @@ class Routine:
                 st.f.pop(f, None)
         st.r[2] = ('ret', callee)
         st.f[0] = ('ret', callee)
+        # The callee may write any stack slot whose address the routine handed out (a reply buffer, an
+        # out-parameter), so a slot keeps its value only when it saved an incoming register or gp.
+        for k in list(st.m):
+            v = st.m[k]
+            if not (v[0] == 'in' or (is_c(v) and self.img.gp is not None and v[1] == self.img.gp)):
+                del st.m[k]
 
     # ---------------------------------------------------------- control flow
 

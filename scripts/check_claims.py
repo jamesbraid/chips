@@ -23,6 +23,9 @@ scripts/facts.py builds for that routine in that build. The claims read are:
   bytes-per-pass  "N bytes a pass"
   immediate    0x constants that the routine does not form, load or compare
   offset       "+N" offsets the routine does not reach from any base
+  width        "word" or "doubleword at +N" against the width of the accesses at that offset
+  width-absolute  the same for absolute process-page words ("the word at address 4128")
+  width-narrow "byte" or "halfword at +N" (often a field inside a wider load: report only)
   addiu-word   "the word at +N" where +N is only an address formed with addiu
   stack        "sp+N", "N(sp)" slots that are never stored, or hold a saved register
   position     "the Nth instruction/word"
@@ -54,7 +57,8 @@ sys.path.insert(0, HERE)
 import facts  # noqa: E402
 
 # classes whose mismatches block a push (near-zero false positives on the Established entries)
-BLOCKING = ('address', 'size', 'got', 'duplicate', 'delay-slot', 'insn-address', 'addiu-word', 'branch-likely', 'offset')
+BLOCKING = ('address', 'size', 'got', 'duplicate', 'delay-slot', 'insn-address', 'addiu-word', 'branch-likely', 'offset',
+            'width-absolute')
 
 DEFAULT_DOCS = ['docs/*.md', 'chips/*/README.md']
 STATUS_RE = re.compile(r'\b(Established|Inferred|Unverified)\b\.?\**\s*$', re.I)
@@ -681,17 +685,41 @@ class Checker:
                 acc = [a for a in c.raw_offsets.get(v, []) if not a.get('stack')]
             if not acc:
                 continue    # the offset check reports it
-            widths = sorted({a['width'] for a in acc})
-            cls = 'width' if want >= 4 else 'width-narrow'
-            st = max(t.rfind('. ', 0, m.start()), 0)
-            sent = t[st:t.find('. ', m.end()) if t.find('. ', m.end()) > 0 else len(t)]
-            if want in widths or (want == 4 and 8 in widths and re.search(r'64-bit word|8-byte|doubleword', sent)):
-                self.ok(cls, m.group(0))
-            else:
-                a = next(a for a in acc)
-                self.mismatch(cls, m.group(0), '%s accesses +%d with width %s (%s)' % (
-                    a.get('text', '?').split()[0], v, '/'.join(map(str, widths)), a.get('text', '')),
-                    'the access at that offset is not a %s' % kind)
+            self._judge_width(m, kind, want, acc, '+%d' % v)
+        # absolute process-page words: "the context word at address 4128", "the word at absolute 0x1088",
+        # "process-page word 4128", "process doubleword 4128"
+        apat = (r'\b(byte|half-?word|(?:double-?)?word|dword)\s+(?:at\s+)?(?:the\s+)?'
+                r'(?:absolute\s+(?:address\s+)?|(?:process(?:-page)?\s+)?address\s+|process(?:-page)?\s+(?:word\s+)?)'
+                r'(0x[0-9a-f]+|\d+)\b'
+                r'|\bprocess(?:-page)?\s+(byte|half-?word|(?:double-?)?word)\s+(0x[0-9a-f]+|\d+)\b')
+        for m in re.finditer(apat, t, re.I):
+            kind = (m.group(1) or m.group(3)).lower()
+            want = self.WIDTH_WORDS.get(kind)
+            v = int(m.group(2) or m.group(4), 0)
+            if not (0x200 <= v < 0x100000):
+                continue
+            pre = t[max(0, m.start() - 40):m.start()]
+            if re.search(r'\b(no|not|never|without)\b[^.;]{0,25}$', pre):
+                continue
+            acc = c.abs_loads.get(v, [])
+            if acc:
+                self._judge_width(m, kind, want, acc, 'absolute 0x%x' % v, absolute=True)
+
+    def _judge_width(self, m, kind, want, acc, where, absolute=False):
+        t = self.text
+        widths = sorted({a['width'] for a in acc})
+        cls = ('width-absolute' if absolute else 'width') if want >= 4 else 'width-narrow'
+        # the claim's own clause: between the nearest , ; : ( ) or sentence end on either side
+        lo = max([t.rfind(x, 0, m.start()) for x in (',', ';', ':', '(', ')', '. ')] + [-1]) + 1
+        his = [i for i in (t.find(x, m.end()) for x in (',', ';', ':', '(', ')', '. ')) if i >= 0]
+        clause = t[lo:min(his) if his else len(t)]
+        if want in widths or (want == 4 and 8 in widths and re.search(r'64-bit word|8-byte|doubleword', clause)):
+            self.ok(cls, m.group(0))
+        else:
+            a = acc[0]
+            self.mismatch(cls, m.group(0), '%s accesses %s with width %s (%s)' % (
+                a.get('text', '?').split()[0], where, '/'.join(map(str, widths)), a.get('text', '')),
+                'the access there is not a %s' % kind)
 
     def frame(self):
         for m in re.finditer(r'(?<![\w.])(0x[0-9a-f]+|\d+)-byte (?:stack )?frame(?![- ]?buffer)|frame (?:is|of) (0x[0-9a-f]+|\d+) bytes', self.text):
@@ -1568,6 +1596,8 @@ class Checker:
 def expand_docs(args):
     out = []
     for d in args or DEFAULT_DOCS:
+        if os.path.isdir(os.path.join(REPO, d)):
+            d = os.path.join(d, '*.md')
         for p in sorted(glob.glob(os.path.join(REPO, d))):
             if os.path.isfile(p) and '/inventory/' not in p:
                 out.append(os.path.relpath(p, REPO))
