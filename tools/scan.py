@@ -714,7 +714,10 @@ class Analyser:
                     if i.mn == 'lui':
                         v = sx32(v) & M64
                     for lo, hi, _ in self.windows:
-                        # a constant built in pieces first shows its top half in a lui or dli
+                        # a constant built in pieces first shows its top half in a lui or dli; a
+                        # lui, shift, or, shift chain (the Hub PROMs) carries it in the 32-bit half
+                        if i.mn == 'lui' and (v & 0xffffffff) >> 16 == lo >> 48 and lo >> 48:
+                            return True
                         if (lo >> 16) <= (v >> 16) <= (hi >> 16) or (lo >> 32) == (v >> 32) and v != 0:
                             return True
         return False
@@ -907,6 +910,11 @@ class Analyser:
             return
         for r in range(4, 12):
             v = st.get(r)
+            if v and v[0] in ('K', 'KI') and self.windows:
+                # a window constant (with or without a node index) handed over as a pointer
+                w = self.window_of(v[1])
+                if w:
+                    v = ('B', (v[1] - w[0]) & M64, v[0] == 'KI')
             if v and v[0] == 'B' and ins.sym not in self.known_callees and ins.sym not in cfg.raw.get('no_pointer_args', []):
                 self.unres.append({'image': self.label, 'function': fn, 'addr': '%x' % ins.addr,
                                    'callee': ins.sym or '(indirect)', 'arg': 'a%d' % (r - 4),
