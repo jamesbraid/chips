@@ -69,6 +69,18 @@ or `[N]`. Set `pointer_bytes` (8 for a 64-bit kernel, 4 for o32 and N32 objects)
 pointer width is skipped on the other, since the offsets differ. Only fields
 with a source belong in a spec; an unnamed gap stays `field_0x..` in the output.
 
+A flat image (a PROM) has no header for Ghidra to read, so describe it. `--flat --load ADDR` reads the
+file as raw bytes with its first byte at machine address `ADDR`, `--header N` skips a container header,
+and `--processor` picks the language (a PROM that holds 64-bit pointers wants `MIPS:BE:64:default`). A
+flat image has no names: ask for routines by `@0xADDR` or use `--decompile-all`. In the JSON, `address`
+is the machine address and `ghidra_address` where Ghidra holds it (the C text uses Ghidra's).
+
+```sh
+# the routine at 0x1fc04980 of the IP35 PROM: a 4096-byte container header, then the payload at 0x1fc00000
+tools/re-run --ghidra-export root/firmware/ip35prom.img --flat --header 4096 --load 0x1fc00000 \
+    --processor MIPS:BE:64:default --decompile-symbol @0x1fc04980
+```
+
 Decompiler output and similarity scores are navigation, not evidence. The decompiler folds stores,
 misses switches and invents parameters; a typed field name only says that a
 definition was applied; BSim says two bodies look alike and does not say they are
