@@ -17,6 +17,7 @@ __pycache__/
 irixhistory
 
 # Proprietary IRIX binaries (see IRIX_FILES.md)
+root
 root/
 
 # Local clones of the sibling workspaces used by the inventory
