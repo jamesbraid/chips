@@ -304,6 +304,11 @@ class Config:
         self.probe = c.get('seeds', {}).get('probe')
         ac = c.get('accessor_calls')
         self.accessor_calls = re.compile(ac) if ac else None
+        # Accessor routines that take the register address as an argument (the MACE kernel code reads and
+        # writes through pciio_pio_read8 and friends): a constant address inside a window passed in the named
+        # argument register is one access of the stated width.
+        self.const_arg_calls = [(re.compile(x['callee']), int(x['arg']), x['rw'], int(x['width']))
+                                for x in c.get('const_arg_calls', [])]
         self.suspect_range = tuple(to_int(x) for x in c.get('suspect_range', ['0x100', '0x300']))
         self.type_const_in = re.compile(c.get('type_const_in', '$^'))
 
@@ -457,6 +462,11 @@ class Analyser:
             return
 
         rdv = self.rd
+        if ins.reloc == 'R_MIPS_LO16' and mn in ('addiu', 'daddiu') and len(ops) == 3 and ins.rsym and \
+                any(rx.search(ins.rsym) for rx, _a, _r, _w in cfg.const_arg_calls):
+            # the address of an accessor routine, called later through jalr
+            self.wr(st, reg(ops[0]), ('F', ins.rsym))
+            return
         if ins.reloc and ins.reloc != 'R_MIPS_26':
             # an immediate the linker fills in: not a value we know
             d = self.dest_of(ins)
@@ -899,6 +909,22 @@ class Analyser:
 
     def note_call(self, fn, ins, st):
         cfg = self.cfg
+        if ins.mn == 'jalr' and not ins.sym and ins.ops:
+            fv = st.get(reg(ins.ops[-1]))
+            if fv and fv[0] == 'F':
+                shim = Insn(ins.addr, ins.mn, ins.ops, fv[1])
+                ins = shim
+        for rx, areg, rw, width in cfg.const_arg_calls:
+            if ins.sym and rx.search(ins.sym):
+                v = st.get(areg)
+                w = self.window_of(v[1]) if v and v[0] == 'K' else None
+                if w:
+                    self.sites.append({
+                        'image': self.label, 'function': fn, 'addr': '%x' % ins.addr, 'insn': ins.sym,
+                        'rw': rw, 'width': width, 'partial': 0, 'window': w[2], 'offset': v[1] - w[0],
+                        'idx': 0, 'variant': self.hint or '?', 'basis': 'direct'})
+                else:
+                    self.stats['const_arg_calls_unresolved'] += 1
         if cfg.accessor_calls and ins.sym and cfg.accessor_calls.search(ins.sym):
             args = []
             for r in range(5, 9):          # a1..a4: a0 is the window pointer
