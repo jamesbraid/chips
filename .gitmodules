@@ -1,0 +1,16 @@
+[submodule "m2c"]
+	path = m2c
+	url = https://github.com/techomancer/m2c.git
+	branch = irixn32
+[submodule "spimdisasm"]
+	path = spimdisasm
+	url = https://github.com/Decompollaborate/spimdisasm.git
+[submodule "linux"]
+	path = linux
+	url = https://github.com/torvalds/linux.git
+[submodule "netbsd"]
+	path = netbsd
+	url = https://github.com/NetBSD/src.git
+[submodule "openbsd"]
+	path = openbsd
+	url = https://github.com/openbsd/src.git

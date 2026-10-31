@@ -1,0 +1,15 @@
+/* Compile check: every header must parse together. Built by tools/check-headers.sh. */
+#include "pic.h"
+#include "bridge.h"
+#include "xbridge.h"
+#include "bedrock.h"
+#include "xbow.h"
+#include "heart.h"
+#include "hub.h"
+#include "ioc3.h"
+#include "ioc4.h"
+#include "crime.h"
+#include "mace.h"
+#include "gbe.h"
+#include "vice.h"
+int chips_headers_ok(void) { return 1; }
