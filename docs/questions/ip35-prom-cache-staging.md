@@ -192,6 +192,102 @@ that runs on through 0x1fc04f18 to 0x1fc04ffc and then page by page is therefore
 quadword 1 (PA[4] = 1, written once at 0x1fc04af4 before quadword 0 is rewritten 208 or more times), and that a model
 which merges quadwords 0 and 1 (ignoring PA[6:4] on Index Store Data (S)) would overwrite it (reasoning from the operation order, not simulated).
 
+## Primary-I word format
+
+Question. The 36-bit words some PROM code stores with Index Store Data (I) are not a plain instruction in TagLo with
+four extra bits in TagHi. What do they look like, and where do they come from?
+
+Short answer. Established from the IP35 PROM's own table of hardware-captured words: the PROM does not transform
+instruction words in software. The only 36-bit words that are not raw flash words come from a table in the PROM
+(0x1fc89a20 to 0x1fc8a0a0), loaded verbatim by a separate routine at 0x1fc028cc. The routine of this page reads its
+words back from a hardware refill and stores them unchanged. The table words are the predecoded form: the 26 non-opcode
+instruction bits are rearranged, the 6-bit opcode becomes 10 bits, and the parity bit is the even parity of all 36.
+`tools/predecode_table.py` reproduces the numbers below.
+
+**1. Every Index Store Data (I) in the three PROMs, and the source of what it stores** (code areas only, found by
+scanning for the encoding and reading the surrounding instructions):
+
+| PROM | Site | TagHi, TagLo, ECC come from | Label |
+| --- | --- | --- | --- |
+| IP35 6.210 | 0x1fc02934 (routine 0x1fc028cc, called from 0x1fc00de8) | `lwu` of a 12-byte triple in the table at 0x1fc89a20 per word, sixteen per line, eight lines; before each line `cache 8` with the table's tag; direct flash data, no transform | established |
+| IP35 6.210 | 0x1fc04d44, 0x1fc04d4c (this page's routine) | Index Load Data (I) at 0x1fc04d40 and 0x1fc04d48, nothing in between; hardware readback of a line refilled from the secondary cache | established |
+| IP35 6.210 | 0x1fc02c90, 0x1fc02c94 (test at 0x1fc02c2c) | pattern table at 0x1fc8a130 (all ones, 0xaaaaaaaa, 0x55555555, 0; TagHi 0xf, 0xa, 0x5, 0; ECC bit 1, 0, 1, 0); stored then read back with Index Load Data (I) and compared on both ways | established |
+| IP35 6.210 | 0x1fc02f60, 0x1fc02f64 | TagHi, TagLo, ECC all zero (0x1fc02f18 to 0x1fc02f20): clears the cache | established |
+| IP27 6.156 | 0x1fc03210, 0x1fc03214 | pattern test, same shape as the IP35 test (table at 0x1fc74b30) | established |
+| IP27 6.156 | 0x1fc034cc, 0x1fc034d0 | zero (the same clear) | established |
+| IP30 4.17 | 0x1fc01908 and 0x1fc31cd8 (32 operations each) | zero | established |
+| IP30 4.17 | 0x1fc174d4, 0x1fc4b3e4 | a library routine storing the TagHi/TagLo/ECC its caller passes in memory | caller-supplied, not decoded |
+
+No instruction between a load of a flash word and an Index Store Data (I) shifts, masks or inserts bits: the table words
+are used as they are, and the copy routine's words are the hardware's. So the PROM does not document the layout
+by transforming; the table does, because each table word is the hardware's predecode of the flash instruction at the
+same address.
+
+**2. Table words beside flash instructions.** The table's eight lines are tagged at 0x1fc027c0 to 0x1fc029ff through
+0xa80000001fc0xxxx (way 0). Lines 0 to 4 (0x1fc027c0 to 0x1fc028ff) carry TagLo 0x01fc024c (tag PA[35:12] = 0x1fc02,
+state Valid) and the predecoded words of the code at those addresses. Lines 5 to 7 carry TagLo 0 (Invalid) and zero words. 49
+distinct nonzero instruction words are in the five valid lines; samples (TagHi:TagLo is the stored 36-bit value, ECC the parity bit):
+
+| Address | Flash instruction | Stored TagHi:TagLo | ECC |
+| --- | --- | --- | --- |
+| 0x1fc0280c | 0x24040002 `addiu $4,$0,2` | 0x3:44200004 | 0 |
+| 0x1fc02818 | 0x24040022 `addiu $4,$0,0x22` | 0x3:46200004 | 1 |
+| 0x1fc027c0 | 0x240400f7 `addiu $4,$0,0xf7` | 0x3:47718004 | 0 |
+| 0x1fc028b4 | 0x00021438 `dsll $2,$2,16` | 0x1:03880042 | 1 |
+| 0x1fc027cc | 0x03e0c825 `or $25,$31,$0` | 0x3:02507c19 | 1 |
+| 0x1fc028c4 | 0x03e00008 `jr $31` | 0x8:20807c00 | 0 |
+| 0x1fc027c4 | 0x0bf007d9 `j 0x1fc01f64` | 0x8:299ffe00 | 1 |
+| 0x1fc027e8 | 0x0ff01260 `jal 0x1fc04980` | 0x8:0e04fe02 | 1 |
+| 0x1fc027f4 | 0x4080c806 `mtc0 $0,$25,6` | 0x7:e0601019 | 0 |
+| 0x1fc028ac | 0x3c02c000 `lui $2,0xc000` | 0x3:5c000302 | 1 |
+| 0x1fc028fc | 0xdc4c0000 `ld $12,0($2)` | 0x6:dc00080c | 0 |
+| 0x1fc02840 | 0xbc8b0000 `cache 0xb,0($4)` | 0x6:bc001160 | 1 |
+
+Layout, with `f` the flash word and `p` the 36-bit stored word (TagHi[3:0] is bits 35:32). Established for all 49 words
+except four (below), by exact comparison of bits 25:0:
+
+- `p[25:20] = f[5:0]` (funct, or immediate bits 5:0), `p[19:15] = f[10:6]` (shift amount, or immediate bits 10:6),
+  `p[14:10] = f[25:21]` (rs), and the two remaining five-bit groups f[20:16] and f[15:11] fill `p[9:5]` and `p[4:0]`.
+- `p[4:0]` holds the destination register. For the operations that write rt (`addi`, `addiu`, `ori`, `lui`, `daddiu`, `ld`
+  in the sample) `p[4:0] = f[20:16]` and `p[9:5] = f[15:11]`. For the others (SPECIAL, `jr`, `j`, `jal`, `mtc0`, `cache`, the
+  conditional branch, all in the sample) `p[4:0] = f[15:11]` and `p[9:5] = f[20:16]`.
+- The 6-bit opcode is not stored. `p[28:26] = f[28:26]` (opcode bits 2:0) in every sample; `p[35:29]` is a 7-bit class that
+  depends on the opcode and, for SPECIAL, on the function. Observed (`p[35:26]`): `jr` 1000001000, `or` 0011000000, `dsll` and
+  `dsll32` 0001000000, nop 0000000000, op 1 (branch on rs) 1110001001, `j` 1000001010, `jal` 1000000011, `addi` 0011010000,
+  `addiu` 0011010001, `ori` 0011010101, `lui` 0011010111, `daddiu` 0011110001, `mtc0` 0111111000, `cache` 0110101111, `ld`
+  0110110111. Only these opcodes were sampled, so the class encoding is known for them and not beyond: it is an expansion of
+  the opcode into 10 bits (the four extra bits and the six that replace the opcode), and it groups by kind (ALU
+  immediate, memory, branch or jump, coprocessor 0) but this sample does not give the individual bits a name.
+- ECC[0] equals the even parity of the 36 stored bits in all 49 words (the bit is 1 when the data has an odd number of ones).
+  The pattern test stores ECC bits that do not follow this rule (all ones with ECC 1, 0xaaaaaaaa with 0), so the cell is
+  directly writable and not computed on Index Store Data (I).
+- Four words do not follow the layout because the table was built from code with different address constants: the
+  `daddiu` at 0x1fc028d8 and 0x1fc028f0 decode to immediate 0x1fc8 (flash has 0x1fc9), the ones at 0x1fc028e0 and 0x1fc028f8
+  to 0x7620 and 0x7ca0 (flash has 0x9a20 and 0xa0a0). Every other field of those four follows the layout. So the staged
+  line is not byte-equivalent to flash there: the table was written for a build in which the table sat at a different
+  address (the first constant pair decodes to 0x1fc87620).
+
+For the sample words the extra bits are not a bit inserted inside the instruction: the instruction fields are permuted and
+the opcode is expanded. Example: `addiu $4,$0,2` is 0x3:44200004; opcode 001001 becomes class 0011010001 at bits 35:26, immediate
+2 sits at bits 25:20 and register 4 at bits 4:0. `lui $2,0xc000` (0x3c02c000) is 0x3:5c000302: rt = 2 at bits 4:0, immediate bits 15:11 (11000 = 0x18) at bits 9:5.
+
+**3. The simulator's hit path.** The simulator returned `TagLo` as the instruction word on every primary hit
+(`e['w'][wi] & 0xffffffff`) and kept TagHi's four bits unused. That is correct only for the routine it ran: it models
+the refill as copying the secondary data words unchanged, so Index Load Data (I) returns the raw flash word in TagLo
+and Index Store Data (I) stores it back, which is why every fetch equalled flash. It did not run the table routine at
+0x1fc028cc (reached from the reset path at 0x1fc00de8, not from the eight call sites this page covers), and it had no
+predecode, so the table words (TagLo 0x44200004 for an `addiu` that flash holds as 0x24040002) were never presented to it.
+Executing TagLo as the instruction would be wrong for every one of those table words. On silicon the refill predecodes
+and the routine copies the predecoded words, so the staged lines hold predecoded words for the copy path too and the
+instruction executed is the decode of those words, not TagLo.
+
+**Consequence for a model.** Either keep the primary instruction cache data opaque and self-consistent (store what Index
+Store Data (I) gives, return it from Index Load Data (I), and execute by decoding it with the layout above, which needs
+the class bits for the opcodes it meets), or hold the architectural word beside the 36-bit value and execute that. In
+the second case the table's words need the architectural word from the table, not from TagLo, and the four stale
+constants above must be reproduced if the code that uses them runs from the cache. The layout above is exact for the
+sampled opcodes and a model cannot derive it from the manual, which says only that the word is 36 bits.
+
 ## Where the manual is silent, and what the PROM requires
 
 1. **Word order of a secondary-cache doubleword (inferred).** Contradicted: Figure 14-33 (p. 283), and the text of
