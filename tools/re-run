@@ -2,18 +2,32 @@
 # Run a command in the toolchain container with this repository mounted at /work.
 #
 #   tools/re-run [--ghidra] [--workspace DIR] [--] [COMMAND...]
+#   tools/re-run [--workspace DIR] --ghidra-export OBJECT [OPTIONS...]
 #
 #   tools/re-run python3 scripts/inventory.py
 #   tools/re-run mips64-linux-gnuabi64-objdump -h root/unix
 #   tools/re-run                       # a shell in the container
 #   tools/re-run --ghidra analyzeHeadless /tmp/ghidra-projects p -import root/unix
+#   tools/re-run --ghidra-export root/usr/gfx/arch/IP27KONA32/libGLcore.so \
+#       --decompile-symbol NAME --types ghidra/types/ctx.types.json
 #
 # Needs Podman (rootless is fine) and nothing else. The image is built from
 # tools/Containerfile the first time and again whenever that file changes; it
 # is tagged with a hash of the file. --ghidra uses the optional second image,
 # built from tools/Containerfile.ghidra (large; fetches Ghidra from its
 # release page). It has analyzeHeadless on PATH and a JDK, but not the
-# toolchain: run Python tools without --ghidra.
+# toolchain: run Python tools without --ghidra. The image also carries the
+# Ghidra scripts under /opt/re-scripts, built from tools/ghidra-scripts/.
+#
+# --ghidra-export OBJECT runs Ghidra over OBJECT, an ELF file in the
+# repository (a linked library, a kernel, a relocatable driver object), and
+# writes decompiled C per function as JSON under .cache/ghidra-export/, naming
+# the file on stdout. OPTIONS: --decompile-symbol NAME|GLOB|@0xADDR (repeat),
+# --decompile-list FILE, --decompile-all, --decompile-timeout S, --types
+# SPEC.json, --bsim-db NAME --bsim-label LABEL (similarity database under
+# .cache/ghidra-bsim), --timeout S, --cpus N. It builds both images and needs
+# the repository itself as the workspace. Decompiler and BSim output is
+# navigation, not evidence. tools/ghidra-export.py has the full list.
 #
 # The repository is mounted read-write at /work, as your own user id, so
 # generated files are yours. root/ (the IRIX files you copied in, see
@@ -33,10 +47,12 @@ repo=$(dirname "$here")
 engine=${RE_ENGINE:-podman}
 workspace=$repo
 ghidra=
+export=
 while [ $# -gt 0 ]; do
     case $1 in
         --workspace) workspace=$2; shift 2 ;;
         --ghidra) ghidra=1; shift ;;
+        --ghidra-export) export=${2:?--ghidra-export needs an object}; shift 2; break ;;
         --) shift; break ;;
         -h|--help) sed -n '2,/^set -eu/{/^set -eu/!p;}' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
         *) break ;;
@@ -48,12 +64,29 @@ if [ ! -d "$workspace" ]; then
 fi
 workspace=$(cd "$workspace" && pwd -P)
 
+if [ -n "$export" ]; then
+    [ "$workspace" = "$repo" ] || { printf 're-run: --ghidra-export runs on this repository itself\n' >&2; exit 2; }
+    case $export in "$repo"/*) export=${export#"$repo"/} ;; /*)
+        printf 're-run: --ghidra-export: %s is outside the repository\n' "$export" >&2; exit 2 ;; esac
+    job=.cache/ghidra-export/$(date +%Y%m%d-%H%M%S)-$$
+    mkdir -p "$repo/$job"
+    export RE_NOTTY=1
+    "$0" -- python3 tools/ghidra-export.py prepare --job "$job" "$@" "$export" || exit $?
+    "$0" --ghidra -- sh "$job/ghidra.sh" || exit $?
+    exec "$0" -- python3 tools/ghidra-export.py finish --job "$job"
+fi
+
 if [ -n "$ghidra" ]; then
     file=$here/Containerfile.ghidra; name=re-ghidra
 else
     file=$here/Containerfile; name=re-toolchain
 fi
-tag=$name:$(sha256sum "$file" | cut -c1-12)
+# The Ghidra image also holds tools/ghidra-scripts, so they are part of its tag.
+if [ -n "$ghidra" ]; then
+    tag=$name:$(cat "$file" "$here"/ghidra-scripts/* | sha256sum | cut -c1-12)
+else
+    tag=$name:$(sha256sum "$file" | cut -c1-12)
+fi
 if ! $engine image exists "$tag" >/dev/null 2>&1; then
     printf 're-run: building %s from %s\n' "$tag" "${file#"$repo"/}" >&2
     $engine build -q -t "$tag" -f "$file" "$here" >/dev/null
@@ -84,4 +117,4 @@ if [ -z "${RE_NOTTY:-}" ] && [ -t 0 ] && [ -t 1 ]; then tty=-it; fi
 # mounts work on SELinux hosts.
 # shellcheck disable=SC2086
 exec $engine run --rm $tty --userns=keep-id --security-opt label=disable \
-    -v "$workspace:/work" $mounts -w /work -e HOME=/tmp "$tag" "$@"
+    -v "$workspace:/work" $mounts -w /work -e HOME=/tmp -e XDG_CONFIG_HOME=/tmp/.config "$tag" "$@"

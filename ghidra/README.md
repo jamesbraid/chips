@@ -37,22 +37,27 @@ the toolchain image without.)
 
 ## Decompiled C as JSON, typed structures and function similarity
 
-`re-run --ghidra-export OBJECT` runs Ghidra over one object under `root/` and
-writes the result outside the workspace, printing where. It writes nothing into
-the repository, so there is nothing to commit by accident.
+`tools/re-run --ghidra-export OBJECT` runs Ghidra over one ELF object under `root/` (a linked
+library or kernel, or a relocatable driver object) and prints the path of the JSON it wrote under
+`.cache/ghidra-export/`, which git ignores, so there is nothing to commit by accident. It builds the
+Ghidra image on first use. A relocatable object has no load address: name its functions, do not give
+addresses (Ghidra places such an object itself, so the addresses in its JSON are Ghidra's, not section offsets). The options are listed at the top of [tools/ghidra-export.py](../tools/ghidra-export.py);
+function-similarity databases live in `.cache/ghidra-bsim/`.
 
 ```sh
 # decompiled C per function, as JSON with the decompiler's warnings
-re-run --workspace . --ghidra-export root/IP30/unix \
+tools/re-run --ghidra-export root/IP30/unix \
     --decompile-symbol NAME --decompile-symbol 'prefix_*' --decompile-symbol @0xADDRESS
 # the same, with named structure fields
-re-run --workspace . --ghidra-export root/IP30/unix \
+tools/re-run --ghidra-export root/IP30/unix \
     --decompile-symbol NAME --types ghidra/types/context.types.json
+# a routine of a relocatable kernel object: name it
+tools/re-run --ghidra-export root/IP35/usr/cpu/sysgen/IP35boot/kernel.o --decompile-symbol NAME
 # every function, or a list file (one name, glob or @address per line)
-re-run --workspace . --ghidra-export OBJECT --decompile-all
-re-run --workspace . --ghidra-export OBJECT --decompile-list names.txt
+tools/re-run --ghidra-export OBJECT --decompile-all
+tools/re-run --ghidra-export OBJECT --decompile-list names.txt
 # function similarity: one object per run, each matched against those before it
-re-run --workspace . --ghidra-export OBJECT --bsim-db kernels --bsim-label board-name
+tools/re-run --ghidra-export OBJECT --bsim-db kernels --bsim-label board-name
 ```
 
 `--types` takes a JSON file kept in the repository, with `structs`
