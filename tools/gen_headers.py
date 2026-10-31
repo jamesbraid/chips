@@ -25,7 +25,7 @@ CHIPS = {
  'xbridge':('bridge', 'xbridge', 0, 'XBridge (XIO-to-PCI bridge, later), IP27 and IP30', None),
  'bedrock':('bedrock', 'bedrock', 0, 'Bedrock (node controller), IP35', 'bedrock'),
  'xbow': ('xbow', None, 0, 'Xbow (crossbar)', None),
- 'heart':('heart', None, 0, 'HEART (IP30 system controller)', None),
+ 'heart':('heart', None, 0, 'HEART (IP30 system controller)', 'heart'),
  'hub':  ('hub', None, 0, 'Hub (IP27 node controller)', None),
  'ioc3': ('ioc3', None, 0, 'IOC3 (PCI I/O controller)', None),
  'ioc4': ('ioc4', None, 0, 'IOC4 (PCI I/O controller, later)', None),
@@ -41,6 +41,14 @@ BEDROCK_BLOCKS = [  # inferred from routine-name prefixes (see chips/bedrock/REA
  (0x1c00000, 0x1e00000, 'IO_INTERFACE_LIKE', 'widget, crossbar-buffer and error registers'),
  (0x1e00000, 0x1f00000, 'LOCAL_BLOCK_LIKE', 'chip revision, partition, vector, network state'),
  (0x1f00000, 0x2000000, 'MEMORY_DIRECTORY_LIKE', 'memory and directory'),
+]
+
+
+HEART_BLOCKS = [  # (first offset, name); the widget block is reported 0x100000 above its widget offset
+ (0x0, 'PIU registers (8-byte slots): mode, memory, flow control, status, error latches'),
+ (0x10000, 'interrupt registers: mask per processor, status, cause'),
+ (0x20000, 'timer, trigger, processor number, sync'),
+ (0x100000, "widget block of HEART's own XIO port (physical 0x18000000), offset = 0x100000 + widget offset"),
 ]
 
 
@@ -98,7 +106,10 @@ def gen(chip, spec):
            ' * Labels: [E] established, [I] inferred, [U] unknown.',
            ' * Offsets and widths: [E] a load or store in the cited routine reaches that offset with that width.',
            ' * Names: [I] from the accessor routine names the shipped objects carry. Fields: [I] masks and constants',
-           ' * the code applies; their meaning is not read. Reset values: [U] throughout.', ' */',
+           ' * the code applies; their meaning is not read. Reset values: [U] throughout.'] + (
+          [' * HEART: names come from the config register_names (the shipped diagnostic prints them, or the public',
+           ' * Linux driver where it prints none); offsets 0x100000 and up are the widget block, see the chip page.']
+          if rules == 'heart' else []) + [' */',
            '#ifndef %s_H' % P, '#define %s_H' % P, '']
     if not rows:
         out += ['/* No census rows yet: nothing is established for this chip by the census.', ' * Mode and sources: chips/%s/README.md. */' % chip, '', '#endif /* %s_H */' % P, '']
@@ -117,6 +128,8 @@ def gen(chip, spec):
                 if lo <= off + 0 < hi or (off < 0x1000000 and lo <= off + 0x1000000 < hi):
                     blk = '%s: %s [I, routine-name prefixes]' % (n, d)
             full = off if off >= 0x1000000 else off
+        elif rules == 'heart':
+            blk = [n for lo, n in HEART_BLOCKS if off >= lo][-1]
         elif off >= 0x10000:
             blk = 'arrays and windows (offset is the array base)'
         else:
@@ -125,14 +138,16 @@ def gen(chip, spec):
             out += ['', '/* ---- %s %s */' % (blk, '-' * max(3, 60 - len(blk))), '']
             cur_block = blk
         names = [n for n, _ in nm.get(off, collections.Counter()).most_common(3)]
-        label = ident(names[0]) if names else '%X' % off
+        given = r.get('name', '')
+        label = ident(given) if given else (ident(names[0]) if names else '%X' % off)
         macro = '%s_%s' % (P, label)
         if '%s ' % macro in ''.join(out[-400:]):
             macro += '_%X' % off
         w = r['widths'].replace(',', '/')
         acc = r['access_seen']
         out.append('#define %-34s 0x%06x   /* [E] width %s byte(s), access %s%s; name [I] from %s; reached in %s sites, %s routine(s) */' % (
-            macro, base + off, w, acc, ', indexed (family base)' if r['idx'] == '1' else '', ', '.join(names) or 'no accessor name',
+            macro, base + off, w, acc, ', indexed (family base)' if r['idx'] == '1' else '',
+            'the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names)' if given else (', '.join(names) or 'no accessor name'),
             r['sites'], r['functions']))
         for f in sorted(fl.get(off, []), key=lambda x: (x['kind'], x['bits_or_value'])):
             b = f['bits_or_value']
