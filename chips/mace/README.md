@@ -185,8 +185,8 @@ specification states for the external ISA space. The routines call the chip a "d
   it, clears bit 4 of A. `cpu_waitforreset` loops on ISA status bit 8 and register `0xc` bit 7, sets bit 4 of A, and
   calls `cpu_powerdown` when register `0x4a` bit 0 is set.
 - `set_autopoweron` writes registers 1, 3, 5 (alarm seconds, minutes, hours by position) and `0x49`.
-- `read_dallas_nvram` accepts offset plus length below 114 and reads bytes at `0x3a0e08 + offset + index`, **one
-  byte apart**. Every other register of this block is 256 bytes apart. The two spacings cannot both describe one
+- `read_dallas_nvram` accepts offset plus length below 114 and an offset above 0 (it returns 1 for anything else and
+  0 after a read) and reads bytes at `0x3a0e08 + offset + index`, **one byte apart**. Every other register of this block is 256 bytes apart. The two spacings cannot both describe one
   chip; **unknown** which the hardware decodes (open question).
 
 ## Other established sequences
@@ -210,7 +210,8 @@ specification states for the external ISA space. The routines call the chip a "d
   and schedules the volume handler: the status is level, so masking it is how the driver silences it.
 - **I2C.** `_mvpi2c_force_bus_idle` reads control bit 0, writes it 0 to request the bus and polls up to 200 times
   for bit 0 to read idle, then checks bit 7; `_mvpi2c_wait_for_ack` polls bit 5 (up to 200 reads) and calls
-  `_mvpi2c_wait_for_xfer_done` for bit 4. A poll that runs out returns 5.
+  `_mvpi2c_wait_for_xfer_done` for bit 4. `_mvpi2c_wait_for_ack` returns 0 when the wait succeeds, 5 when a poll
+  runs out and -1 when the transfer wait reports failure.
 - **PS/2 command polling.** `_pckm_pollcmd` sends a command byte through the helper, then polls status (`+0x18`) up
   to 400 times at 250 us. With `mace_rev` 1 a set status bit 6 makes it read and discard the data word and resend
   (bounded by a retry count), which matches the specification's "parity error". With `mace_rev` 0 it ignores that
