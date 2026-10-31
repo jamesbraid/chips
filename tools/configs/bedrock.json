@@ -27,7 +27,7 @@
   {
    "label": "ip35-prom",
    "dis": "work/dis/ip35-prom.s",
-   "path": "root/IP35/usr/cpu/firmware/ip35prom.img",
+   "path": "root/firmware/ip35prom.img",
    "kind": "promgen64",
    "segment": "ip35prom",
    "vma": "0xc00000001fc00000",

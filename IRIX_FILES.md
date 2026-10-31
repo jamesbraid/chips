@@ -9,31 +9,614 @@ file system, plus `spec/` (text extractions of the published specifications, see
 
 ```files
 IP27/unix
-IP27/usr/cpu/sysgen/IP27boot/kernel.o
 IP30/unix
-IP30/usr/cpu/sysgen/IP30boot/kernel.o
-IP30/usr/cpu/firmware/IP30prom.bin
-IP30/sbin/stand/ide.IP30
-IP35/usr/cpu/sysgen/IP35boot/kernel.o
-IP35/usr/cpu/firmware/ip35prom.img
-IP32/usr/cpu/sysgen/IP32boot/kernel.o
-IP32/usr/cpu/sysgen/IP32boot/mace.o
-IP32/usr/cpu/sysgen/IP32boot/os.a
-IP32/usr/cpu/firmware/ip32prom.image
-IP32/sbin/stand/ide.IP32
-IP32/sbin/stand/symmon.IP32
+firmware/IP30prom.bin
+firmware/io6prom.img
+firmware/ip27prom.img
+firmware/ip32prom.image
+firmware/ip35prom.img
+firmware/mmscfw.bin
+sbin/stand/ide.IP30
+sbin/stand/ide.IP32
+sbin/stand/sash.ARCS
+sbin/stand/sash64
+sbin/stand/symmon.IP30
+sbin/stand/symmon.IP32
 ```
 
-What is held and what is not (each gap is a question in docs/open-questions.md):
+What is held (each remaining gap is a question in docs/open-questions.md):
 
 - `IP27/unix` and `IP30/unix` are linked kernels with symbols and line tables. They carry every driver,
   including the Bridge, XBridge, PIC and TIOCP register accessors, Hub, Xbow and IOC3 code (IP27) and the HEART
   code (IP30). Each is one build, so a branch for another chip in it is code the build carries, not proof that
   machine uses it.
-- `IP35` has only the kernel object `kernel.o`. The Bridge-family driver object, the Hub driver objects and
-  the linked IP35 kernel are not held. The kernel object has Hub, node-interrupt and error code and unresolved
-  references to the Bridge-family routines.
-- `IP32` has the kernel object, `mace.o` and `os.a`; the CRIME driver archive is in the graphics workspace, not here.
-- PROMs held: IP30, IP35 (a promgen64 container whose single segment `tools/promgen64.py` unpacks, checksum
-  verified) and IP32. No IP27 PROM or I/O-board PROM is held.
-- Diagnostics held: `ide` for IP30 and IP32, `symmon` for IP32. No `ide` for IP27 or IP35.
+- Every `usr/cpu/sysgen/IPxxboot/` object and archive of the four builds (IP27 292 files, IP30 274, IP32 230,
+  IP35 353), including the chip driver objects (`pic.o`, `pcibr.o`, `xbow.o`, `hubspc.o`, `ioc3.o`, `ioc4.o`,
+  `l1.o`, and so on). The linked IP35 and IP32 kernels are not held; the IP35 kernel exists only as `kernel.o`
+  plus these objects.
+- PROMs: IP27, IP30, IP32 and IP35 CPU PROMs and the I/O-board PROM (`io6prom.img`), all in `firmware/`. The
+  IP35 and IP27 images are promgen64 containers; `tools/promgen64.py` unpacks them (checksum verified).
+- Diagnostics and loaders in `sbin/stand/`: `ide` for IP30 and IP32, `symmon` for IP30 and IP32, `sash`.
+  No `ide` for IP27 or IP35.
+- System-controller firmware `l1.bin`, `l2.bin` and `mmscfw.bin` are listed on the media; only `mmscfw.bin` is a file here.
+
+## How the tree is filled
+
+Copy each build's whole `usr/cpu/sysgen/IPxxboot/` directory (the three installation overlay discs hold the
+files; later discs add a few objects to the same directories) into `root/IPxx/usr/cpu/sysgen/IPxxboot/`; copy
+`usr/cpu/firmware/*` into `root/firmware/` and `sbin/stand/*` into `root/sbin/stand/`; put the linked kernels
+`unix` for IP27 and IP30 at `root/IP27/unix` and `root/IP30/unix`. Then run `scripts/populate-root`, which
+unpacks every archive below into `ARCHIVE_members/` beside it and links each member into `root/IPxx/members/`.
+
+```archives
+root/IP27/usr/cpu/sysgen/IP27boot/acl.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/aclstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/asidbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/autofs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/autofsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/bsd.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/cachefs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/cachefsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/capability.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/cellstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/cfsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/compression.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/cpr.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/cprstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/crypto.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/cryptostubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/cxfsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/disp.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/disp_idbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/dmi.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/dmistubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/dms.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/ds.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/eag.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/efs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/efsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/failoverstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/fcadp.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/fd.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/fddi.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/fifofs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/frsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/fru.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/gfxs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/graph.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/grio.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/grio2.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/grio2cellstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/grio2stubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/griostubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/gsnstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/hardlocks.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/hwgfs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/idbgstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/if_clstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/io.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/ipv6.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/ipv6stubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/jlimits.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/jlimitsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/kdsp.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/keyboard.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/kmem.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/kona.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/ksync.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/ksync_named.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/llc2.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/lofs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/lofsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/macstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/mgras.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/mgvstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/mouse.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/namefs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/nfs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/nfs3.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/nfsidbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/nfsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/nlmstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/nolocks.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/noncell.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/numa.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/numa_idbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/numaidbgstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/odysseystubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/oncrpc.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/oncrpcidbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/oplockstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/os.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/partitionstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/pciiostubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/pgrpidbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/pipefs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/prfstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/proc.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/procidbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/ptc.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/qlfc.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/qlfcstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/rad1pci.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/rand.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/sat.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/satstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/sduart.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/sesmgrstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/sessionidbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/sgi.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/snfs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/snif.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/socket.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/spec_idbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/specfs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/stp.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/stpstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/stream.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/suser.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/tpisocket.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/tport.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/tportpckbd.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/tsv.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/udf.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/udfstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/uds.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/umfs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/umfsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/vgastubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/vmidbg.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xfs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xfsdmapi.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xfsdmapistubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xfsquotas.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xfsquotasstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xfsrt.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xfsrtstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xfsstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xlv.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xlv_plex.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xpcstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xpmemstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xtimer.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xvm.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xvmcellstubs.a root/IP27/members
+root/IP27/usr/cpu/sysgen/IP27boot/xvmstubs.a root/IP27/members
+root/IP30/usr/cpu/sysgen/IP30boot/acl.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/aclstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/asidbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/autofs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/autofsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/bsd.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/cachefs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/cachefsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/capability.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/cellstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/cfsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/compression.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/cpr.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/cprstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/crypto.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/cryptostubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/cxfsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/disp.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/disp_idbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/dmi.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/dmistubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/dms.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/ds.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/eag.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/efs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/efsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/failoverstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/fcadp.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/fd.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/fddi.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/fifofs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/fire.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/fireidbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/frsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/gfxs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/graph.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/grio.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/grio2.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/grio2cellstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/grio2stubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/griostubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/hardlocks.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/hwgfs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/idbgstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/if_clstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/io.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/ipv6.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/ipv6stubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/jlimits.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/jlimitsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/kdsp.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/keyboard.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/kmem.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/ksync.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/ksync_named.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/llc2.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/lofs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/lofsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/macstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/mgras.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/mgvstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/mouse.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/namefs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/nfs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/nfs3.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/nfsidbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/nfsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/nlmstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/nolocks.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/noncell.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/numa.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/odyssey.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/odysseystubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/oncrpc.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/oncrpcidbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/oplockstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/os.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/partitionstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/pciiostubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/pgrpidbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/pipefs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/prfstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/proc.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/procidbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/ptc.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/qlfc.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/qlfcstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/rand.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/sat.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/satstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/sduart.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/sesmgrstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/sessionidbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/sgi.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/snfs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/snif.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/socket.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/spec_idbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/specfs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/stp.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/stpstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/stream.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/suser.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/tpisocket.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/tport.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/tportpckbd.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/tsv.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/udf.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/udfstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/uds.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/umfs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/umfsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/vgastubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/vmidbg.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xfs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xfsdmapi.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xfsdmapistubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xfsquotas.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xfsquotasstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xfsrt.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xfsrtstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xfsstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xlv.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xlv_plex.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xpcstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xpmemstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xtimer.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xvm.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xvmcellstubs.a root/IP30/members
+root/IP30/usr/cpu/sysgen/IP30boot/xvmstubs.a root/IP30/members
+root/IP32/usr/cpu/sysgen/IP32boot/acl.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/aclstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/adphim.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/asidbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/autofs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/autofsstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/bsd.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/cachefs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/cachefsstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/capability.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/cellstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/compression.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/cpr.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/cprstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/crime.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/crypto.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/cryptostubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/dhardlocks.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/disp.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/disp_idbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/dmi.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/dmistubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/dms.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/ds.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/efs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/efsstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/failoverstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/fd.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/fddi.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/fifofs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/fire.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/fireidbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/frsstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/gfxs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/graph.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/grio.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/grio2.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/grio2cellstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/grio2stubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/griostubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/hwgfs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/idbgstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/if_clstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/io.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/ipv6.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/ipv6stubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/jlimits.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/jlimitsstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/kdsp.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/keyboard.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/kitchenstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/kmem.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/ksync.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/ksync_named.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/llc2.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/lofs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/lofsstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/macstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/mgvstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/mouse.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/namefs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/nfs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/nfs3.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/nfsidbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/nfsstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/nlmstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/nolocks.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/noncell.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/numa.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/odysseystubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/oncrpc.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/oncrpcidbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/oplockstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/os.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/partitionstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/pciiostubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/pgrpidbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/pipefs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/proc.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/procidbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/ptc.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/qlfc.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/qlfcstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/rand.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/sat.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/satstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/sduart.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/sesmgrstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/sessionidbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/sgi.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/snfs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/snif.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/socket.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/spec_idbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/specfs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/stream.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/suser.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/tpisocket.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/tport.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/tportpckbd.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/tsv.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/udf.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/udfstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/uds.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/umfs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/umfsstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/vgastubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/vmidbg.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xfs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xfsdmapi.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xfsdmapistubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xfsquotas.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xfsquotasstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xfsrt.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xfsrtstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xfsstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xlv.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xlv_plex.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xpmemstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xvm.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xvmcellstubs.a root/IP32/members
+root/IP32/usr/cpu/sysgen/IP32boot/xvmstubs.a root/IP32/members
+root/IP35/usr/cpu/sysgen/IP35boot/acl.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/aclstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/asidbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/atmstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/autofs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/autofsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/bpqueuestubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/bsd.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/cachefs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/cachefsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/capability.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/cellstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/cfsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/compression.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/cpr.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/cprstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/crimestubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/crypto.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/cryptostubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/cxfsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/devicestubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/dfsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/disp.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/disp_idbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/dmi.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/dmistubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/dms.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/dnstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/ds.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/eag.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/efs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/efsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/failoverstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/fcadp.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/fd.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/fddi.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/fifofs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/fire.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/fireidbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/frsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/fru.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/frustubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/gfxs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/gfxstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/gr2stubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/graph.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/grio.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/grio2.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/grio2cellstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/grio2stubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/griostubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/hardlocks.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/hwgfs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/idbgstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/if_clstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/io.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/ipv6.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/ipv6stubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/jlimits.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/jlimitsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/jtagio.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/kaiostubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/kdsp.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/keyboard.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/klistiostubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/kmem.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/kona.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/ksync.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/ksync_named.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/llc2.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/lockdstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/lofs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/lofsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/macstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/mgrasstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/mgvstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/mouse.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/namefs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/nfs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/nfs3.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/nfsidbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/nfsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/ng1stubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/nlmstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/nolocks.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/noncell.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/numa.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/numa_idbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/numaidbgstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/odyssey.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/odysseystubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/oncrpc.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/oncrpcidbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/oplockstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/os.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/partitionstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/pciiostubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/pgrpidbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/pipefs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/pipefsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/postwaitstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/prfstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/proc.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/procidbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/ptc.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/pts.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/qlfc.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/qlfcstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/quotasstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/rand.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/sat.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/satstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/sduart.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/sesmgrstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/sessionidbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/sgi.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/snfs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/snif.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/socket.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/spec_idbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/specfs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/stp.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/stpstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/stream.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/suser.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/swipestubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/tpisocket.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/tpisocketstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/tport.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/tportpckbd.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/tportstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/tsv.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/udf.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/udfstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/uds.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/umfs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/umfsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/uncstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/usb.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/usbidbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/usbidbgstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/vga.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/vgastubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/vidstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/vmestubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/vmidbg.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xfs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xfsdmapi.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xfsdmapistubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xfsquotas.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xfsquotasstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xfsrt.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xfsrtstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xfsstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xlv.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xlv_plex.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xlvplexstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xlvstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xpcstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xpmemstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xtimer.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xvm.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xvmcellstubs.a root/IP35/members
+root/IP35/usr/cpu/sysgen/IP35boot/xvmstubs.a root/IP35/members
+```
+
+```links
+```

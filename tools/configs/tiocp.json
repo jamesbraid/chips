@@ -23,7 +23,7 @@
    "label": "ip30-prom",
    "dis": "work/dis/ip30-prom.s",
    "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
-   "path": "root/IP30/usr/cpu/firmware/IP30prom.bin",
+   "path": "root/firmware/IP30prom.bin",
    "kind": "raw",
    "vma": "0xffffffffbfc00000",
    "arch": "mips:isa64",
@@ -40,7 +40,7 @@
   {
    "label": "ip35-prom",
    "dis": "work/dis/ip35-prom.s",
-   "path": "root/IP35/usr/cpu/firmware/ip35prom.img",
+   "path": "root/firmware/ip35prom.img",
    "kind": "promgen64",
    "segment": "ip35prom",
    "vma": "0xc00000001fc00000",
@@ -58,7 +58,7 @@
   {
    "label": "ip32-prom",
    "dis": "work/dis/ip32-prom.s",
-   "path": "root/IP32/usr/cpu/firmware/ip32prom.image",
+   "path": "root/firmware/ip32prom.image",
    "kind": "raw",
    "vma": "0xffffffffbfc00000",
    "split": "jr31",

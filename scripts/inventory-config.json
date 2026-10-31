@@ -28,16 +28,41 @@
  "binaries": [
   {
    "group": "kernel-IP27",
-   "role": "kernel",
+   "role": "kernel-object",
    "paths": [
-    "IP27/unix"
+    "IP27/usr/cpu/sysgen/IP27boot/*.o",
+    "IP27/usr/cpu/sysgen/IP27boot/*.a"
+   ]
+  },
+  {
+   "group": "kernel-IP30",
+   "role": "kernel-object",
+   "paths": [
+    "IP30/usr/cpu/sysgen/IP30boot/*.o",
+    "IP30/usr/cpu/sysgen/IP30boot/*.a"
+   ]
+  },
+  {
+   "group": "kernel-IP32",
+   "role": "kernel-object",
+   "paths": [
+    "IP32/usr/cpu/sysgen/IP32boot/*.o",
+    "IP32/usr/cpu/sysgen/IP32boot/*.a"
+   ]
+  },
+  {
+   "group": "kernel-IP35",
+   "role": "kernel-object",
+   "paths": [
+    "IP35/usr/cpu/sysgen/IP35boot/*.o",
+    "IP35/usr/cpu/sysgen/IP35boot/*.a"
    ]
   },
   {
    "group": "kernel-IP27",
-   "role": "kernel-object",
+   "role": "kernel",
    "paths": [
-    "IP27/usr/cpu/sysgen/IP27boot/kernel.o"
+    "IP27/unix"
    ]
   },
   {
@@ -48,54 +73,17 @@
    ]
   },
   {
-   "group": "kernel-IP30",
-   "role": "kernel-object",
-   "paths": [
-    "IP30/usr/cpu/sysgen/IP30boot/kernel.o"
-   ]
-  },
-  {
-   "group": "kernel-IP35",
-   "role": "kernel-object",
-   "paths": [
-    "IP35/usr/cpu/sysgen/IP35boot/kernel.o"
-   ]
-  },
-  {
-   "group": "kernel-IP32",
-   "role": "kernel-object",
-   "paths": [
-    "IP32/usr/cpu/sysgen/IP32boot/kernel.o",
-    "IP32/usr/cpu/sysgen/IP32boot/mace.o"
-   ]
-  },
-  {
-   "group": "kernel-IP32",
-   "role": "kernel-archive",
-   "paths": [
-    "IP32/usr/cpu/sysgen/IP32boot/os.a"
-   ],
-   "members": [
-    "intr.o",
-    "tile.o"
-   ]
-  },
-  {
    "group": "standalone",
    "role": "diagnostic",
    "paths": [
-    "IP30/sbin/stand/ide.IP30",
-    "IP32/sbin/stand/ide.IP32",
-    "IP32/sbin/stand/symmon.IP32"
+    "sbin/stand/*"
    ]
   },
   {
    "group": "firmware",
    "role": "prom",
    "paths": [
-    "IP30/usr/cpu/firmware/IP30prom.bin",
-    "IP35/usr/cpu/firmware/ip35prom.img",
-    "IP32/usr/cpu/firmware/ip32prom.image"
+    "firmware/*"
    ]
   }
  ],

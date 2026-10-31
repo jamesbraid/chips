@@ -1,45 +1,26 @@
 window	offset	name	access	sites	binaries	functions	evidence	example	status	doc	section
-CRIME	0x0	ID-Revision	r8	2	1	__sysad_wbflush;get_crimerev	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:__sysad_wbflush	undocumented		
-CRIME	0x4	ID-Revision	r4	3	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x8	CPU Interface Control	r8,w8	14	3	.text;badaddr;badaddr_val;crm_hardreset;crm_softreset;earlybadaddr;+5 more	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x10	Interrupt Status	r8,w8	6	2	.text;add_ioboard;crime_intr_disable;intr;mlreset	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
+CRIME	0x0	ID-Revision	r8	4	2	__sysad_wbflush;crimeInitInfo;crimeProbe;get_crimerev	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o):crimeInitInfo	undocumented		
+CRIME	0x8	CPU Interface Control	r8,w8	10	1	badaddr;badaddr_val;earlybadaddr;flushbus;mlreset;wbadaddr;+1 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:badaddr	undocumented		
+CRIME	0x10	Interrupt Status	r8,w8	6	2	add_ioboard;crimeFifoFullHandler;crime_intr_disable;intr;mlreset	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o):crimeFifoFullHandler	undocumented		
 CRIME	0x18	Interrupt Enable	r8,w8	13	1	VEC_int;kpreemption;mlreset;proc1;spl0;spl7;+5 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_int	undocumented		
 CRIME	0x20	Software Interrupt	r8,w8	10	1	intr;synthackkgclock;synthclock	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:intr	undocumented		
-CRIME	0x28	Hardware Interrupt	r8	5	1	badaddr;badaddr_val;earlybadaddr;wbadaddr;wbadaddr_val	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:badaddr	undocumented		
+CRIME	0x28	Hardware Interrupt	r8,w8	15	4	badaddr;badaddr_val;crimePreblankHandler;crimeRetraceHandler;crime_hli_handler;crime_init;+4 more	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o):crime_init	undocumented		
 CRIME	0x30	Watchdog Timer	w8	1	1	mlreset	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:mlreset	undocumented		
-CRIME	0x38	Crime Timer	r8,w8	20	3	.text;_cpuclkper100ticks;_ticksper1024inst;absolute_rtc_current_time;delay_calibrate;usecwait	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x40	CPU Error Address	r8	5	2	VEC_dbe;VEC_ibe;ecc_handler;exception;unmap_physaddr	constant address	IP32/sbin/stand/symmon.IP32:exception	undocumented		
-CRIME	0x48		r8,w8	27	2	VEC_dbe;VEC_ibe;badaddr;badaddr_val;baerror;earlybadaddr;+7 more	constant address	IP32/sbin/stand/symmon.IP32:exception	undocumented		
+CRIME	0x38	Crime Timer	r8,w8	7	1	_cpuclkper100ticks;_ticksper1024inst;absolute_rtc_current_time;delay_calibrate	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:_cpuclkper100ticks	undocumented		
+CRIME	0x40	CPU Error Address	r8	4	1	VEC_dbe;VEC_ibe;ecc_handler;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
+CRIME	0x48		r8,w8	26	1	VEC_dbe;VEC_ibe;badaddr;badaddr_val;baerror;earlybadaddr;+6 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
 CRIME	0x50		w8	1	1	mlreset	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:mlreset	undocumented		
-CRIME	0x58		r8	4	2	VEC_dbe;VEC_ibe;exception;unmap_physaddr	constant address	IP32/sbin/stand/symmon.IP32:exception	undocumented		
-CRIME	0x200	MC Status/Control	r8,w8	4	3	.text;ecc_disable;ecc_enable;wbflush	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x208	Bank 0 Control	r4,r8	2	2	.text;cpu_get_memsize	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x20c	Bank 0 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x210	Bank 1 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x214	Bank 1 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x218	Bank 2 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x21c	Bank 2 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x220	Bank 3 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x224	Bank 3 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x228	Bank 4 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x22c	Bank 4 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x230	Bank 5 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x234	Bank 5 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x238	Bank 6 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x23c	Bank 6 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x240	Bank 7 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x244	Bank 7 Control	r4	1	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		
-CRIME	0x250	Memory Error Status	r8,w8	27	2	VEC_dbe;VEC_ibe;badaddr;badaddr_val;baerror;earlybadaddr;+8 more	constant address	IP32/sbin/stand/symmon.IP32:exception	undocumented		
-CRIME	0x258	Memory Error Address	r8	5	2	VEC_dbe;VEC_ibe;ecc_handler;exception;unmap_physaddr	constant address	IP32/sbin/stand/symmon.IP32:exception	undocumented		
-CRIME	0x260	ECC Syndrome Bits	r8	4	2	dobuserre;ecc_handler;exception;unmap_physaddr	constant address	IP32/sbin/stand/symmon.IP32:exception	undocumented		
-CRIME	0x268	ECC Generated Check Bits	r8	3	2	dobuserre;exception;unmap_physaddr	constant address	IP32/sbin/stand/symmon.IP32:exception	undocumented		
-CRIME	0x270	ECC Replacement Check Bits	r8	1	1	exception	constant address	IP32/sbin/stand/symmon.IP32:exception	undocumented		
+CRIME	0x58		r8	3	1	VEC_dbe;VEC_ibe;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
+CRIME	0x200	MC Status/Control	w8	2	1	ecc_disable;ecc_enable	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:ecc_disable	undocumented		
+CRIME	0x250	Memory Error Status	r8,w8	26	1	VEC_dbe;VEC_ibe;badaddr;badaddr_val;baerror;earlybadaddr;+7 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
+CRIME	0x258	Memory Error Address	r8	4	1	VEC_dbe;VEC_ibe;ecc_handler;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
+CRIME	0x260	ECC Syndrome Bits	r8	3	1	dobuserre;ecc_handler;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:dobuserre	undocumented		
+CRIME	0x268	ECC Generated Check Bits	r8	2	1	dobuserre;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:dobuserre	undocumented		
 GBE	0x4	DOTCLK	r4,w4	2	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
-GBE	0x10000	VT_0	w4	1	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
+GBE	0x10000	VT_0	r4,w4	2	2	early_gbe_stop;mvptransfer_stop_dma-0x87c	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
 GBE	0x20004	OVR_1	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
 GBE	0x20008	OVR_2	r4,w4	4	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
 GBE	0x30008	FRM_2	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
 GBE	0x3000c	FRM_3	r4,w4	4	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
 GBE	0x40000	DID	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
 GBE	0x40004	DID_SHADOW	r4,w4	4	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
-RE	0x400	IntfBuf.addr[128];IntfBuf.ctl	r4	2	1	.text	constant address	IP32/sbin/stand/ide.IP32:.text	undocumented		

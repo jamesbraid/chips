@@ -34,7 +34,7 @@
     }
    ],
    "variant_hint": "bridge",
-   "path": "root/IP30/usr/cpu/firmware/IP30prom.bin",
+   "path": "root/firmware/IP30prom.bin",
    "kind": "raw",
    "vma": "0xffffffffbfc00000",
    "arch": "mips:isa64"
@@ -50,7 +50,7 @@
   {
    "label": "ip35-prom",
    "dis": "work/dis/ip35-prom.s",
-   "path": "root/IP35/usr/cpu/firmware/ip35prom.img",
+   "path": "root/firmware/ip35prom.img",
    "kind": "promgen64",
    "segment": "ip35prom",
    "vma": "0xc00000001fc00000",
