@@ -1,21 +1,21 @@
 window	offset	name	access	sites	binaries	functions	evidence	example	status	doc	section
 CRIME	0x0	ID-Revision	r8	4	2	__sysad_wbflush;crimeInitInfo;crimeProbe;get_crimerev	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o):crimeInitInfo	undocumented		
 CRIME	0x8	CPU Interface Control	r8,w8	10	1	badaddr;badaddr_val;earlybadaddr;flushbus;mlreset;wbadaddr;+1 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:badaddr	undocumented		
-CRIME	0x10	Interrupt Status	r8,w8	6	2	add_ioboard;crimeFifoFullHandler;crime_intr_disable;intr;mlreset	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o):crimeFifoFullHandler	undocumented		
+CRIME	0x10	Interrupt Status	r8,w8	6	2	crimeFifoFullHandler;intr;mlreset;routine@0x8168;routine@0xa2cc	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o):crimeFifoFullHandler	undocumented		
 CRIME	0x18	Interrupt Enable	r8,w8	13	1	VEC_int;kpreemption;mlreset;proc1;spl0;spl7;+5 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_int	undocumented		
 CRIME	0x20	Software Interrupt	r8,w8	10	1	intr;synthackkgclock;synthclock	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:intr	undocumented		
 CRIME	0x28	Hardware Interrupt	r8,w8	15	4	badaddr;badaddr_val;crimePreblankHandler;crimeRetraceHandler;crime_hli_handler;crime_init;+4 more	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o):crime_init	undocumented		
 CRIME	0x30	Watchdog Timer	w8	1	1	mlreset	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:mlreset	undocumented		
 CRIME	0x38	Crime Timer	r8,w8	7	1	_cpuclkper100ticks;_ticksper1024inst;absolute_rtc_current_time;delay_calibrate	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:_cpuclkper100ticks	undocumented		
-CRIME	0x40	CPU Error Address	r8	4	1	VEC_dbe;VEC_ibe;ecc_handler;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
+CRIME	0x40	CPU Error Address	r8	4	1	VEC_dbe;VEC_ibe;ecc_handler;routine@0xff08	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
 CRIME	0x48		r8,w8	26	1	VEC_dbe;VEC_ibe;badaddr;badaddr_val;baerror;earlybadaddr;+6 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
 CRIME	0x50		w8	1	1	mlreset	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:mlreset	undocumented		
-CRIME	0x58		r8	3	1	VEC_dbe;VEC_ibe;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
+CRIME	0x58		r8	3	1	VEC_dbe;VEC_ibe;routine@0xff08	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
 CRIME	0x200	MC Status/Control	w8	2	1	ecc_disable;ecc_enable	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:ecc_disable	undocumented		
 CRIME	0x250	Memory Error Status	r8,w8	26	1	VEC_dbe;VEC_ibe;badaddr;badaddr_val;baerror;earlybadaddr;+7 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
-CRIME	0x258	Memory Error Address	r8	4	1	VEC_dbe;VEC_ibe;ecc_handler;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
-CRIME	0x260	ECC Syndrome Bits	r8	3	1	dobuserre;ecc_handler;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:dobuserre	undocumented		
-CRIME	0x268	ECC Generated Check Bits	r8	2	1	dobuserre;unmap_physaddr	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:dobuserre	undocumented		
+CRIME	0x258	Memory Error Address	r8	4	1	VEC_dbe;VEC_ibe;ecc_handler;routine@0xff08	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	undocumented		
+CRIME	0x260	ECC Syndrome Bits	r8	3	1	dobuserre;routine@0xddec;routine@0xff08	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:dobuserre	undocumented		
+CRIME	0x268	ECC Generated Check Bits	r8	2	1	dobuserre;routine@0xff08	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:dobuserre	undocumented		
 GBE	0x4	DOTCLK	r4,w4	2	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
 GBE	0x10000	VT_0	r4,w4	2	2	early_gbe_stop;mvptransfer_stop_dma-0x87c	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
 GBE	0x20004	OVR_1	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
