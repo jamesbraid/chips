@@ -1,0 +1,26 @@
+# Disk images and archives
+*.img
+*.zip
+*.raw
+*.iso
+*.chd
+*.tar.zst
+
+# Disassembly and dump outputs
+*_disasm.txt
+*_dwarfdump.txt
+
+# Temporary and cache files
+*.m2c
+__pycache__/
+*.tmp
+irixhistory
+
+# Proprietary IRIX binaries (see IRIX_FILES.md)
+root/
+
+# Local clones of the sibling workspaces used by the inventory
+/.cache/
+
+# Census intermediates (disassembly, unpacked PROMs, model copies)
+/work/
