@@ -552,5 +552,15 @@
  ],
  "collapse_above": 268435456,
  "accessor_calls": "^pciio_pio_(read|write)(8|16|32|64)$",
- "name_source": "the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code)"
+ "name_source": "the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code)",
+ "no_pointer_args": [
+  "pciio_pio_read8",
+  "pciio_pio_read16",
+  "pciio_pio_read32",
+  "pciio_pio_read64",
+  "pciio_pio_write8",
+  "pciio_pio_write16",
+  "pciio_pio_write32",
+  "pciio_pio_write64"
+ ]
 }

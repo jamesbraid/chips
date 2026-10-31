@@ -182,7 +182,7 @@
 #define   MACE_ISA_PARALLEL_380400_V_8     0x8   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
 #define   MACE_ISA_PARALLEL_380400_V_9     0x9   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
 #define   MACE_ISA_PARALLEL_380400_B_7_0   0xff   /* [I] store mask: the code writes these bits (5 sites) */
-#define MACE_ISA_ECP1284                   0x388200   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 45 sites, 10 routine(s) */
+#define MACE_ISA_ECP1284                   0x388200   /* [E] width 1 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 46 sites, 10 routine(s) */
 #define   MACE_ISA_ECP1284_V_10            0x10   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   MACE_ISA_ECP1284_V_40            0x40   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
 #define   MACE_ISA_ECP1284_V_60            0x60   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
