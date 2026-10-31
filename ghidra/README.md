@@ -22,11 +22,11 @@ Run a component's `tests/run-ghidra.sh` in the Ghidra image, then its
 `tests/check.py` on the dump directory it writes:
 
 ```sh
-re-run --workspace . --ghidra -- ghidra/processors/NAME/tests/run-ghidra.sh .cache/NAME
-re-run --workspace . -- python3 ghidra/processors/NAME/tests/check.py .cache/NAME
+tools/re-run --ghidra -- ghidra/processors/NAME/tests/run-ghidra.sh .cache/NAME
+tools/re-run python3 ghidra/processors/NAME/tests/check.py .cache/NAME
 ```
 
-(`re-run` mounts the workspace at `/work`, the Ghidra image with `--ghidra` and
+(`tools/re-run` mounts the workspace at `/work`, the Ghidra image with `--ghidra` and
 the toolchain image without.)
 
 ## Components

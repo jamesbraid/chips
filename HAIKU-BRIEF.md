@@ -2,7 +2,7 @@
 
 You produce register-access evidence for one chip from the shipped IRIX binaries, then write entries from it.
 Read AGENTS.md first: the labels and the reading rules there are the contract. Run commands from the
-repository root, inside the container wrapper (`rr.sh`, or `RR=...` for `tools/disasm.sh`). Do not read any
+repository root, inside the container wrapper (`tools/re-run COMMAND`; `tools/disasm.sh` uses it by default). Do not read any
 IRIX source tree and do not open any document store other than this repository and the paths named here.
 
 ## Two modes
