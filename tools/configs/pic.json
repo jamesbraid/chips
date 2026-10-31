@@ -2,40 +2,25 @@
  "asic": "pic",
  "title": "PIC (dual-head PCI-X bridge)",
  "mode": "no-spec",
- "status": "stub: census not run",
+ "status": "pilot",
  "spec": null,
  "images": [
   {
-   "label": "ip27-unix",
-   "dis": "work/dis/ip27-unix.s",
-   "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
-   "path": "root/IP27/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-unix",
-   "dis": "work/dis/ip30-unix.s",
-   "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
-   "path": "root/IP30/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-prom",
-   "dis": "work/dis/ip30-prom.s",
-   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
-   "path": "root/firmware/IP30prom.bin",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
-   "arch": "mips:isa64",
-   "split": "jr31"
-  },
-  {
-   "label": "ip35-kernel-o",
-   "dis": "work/dis/ip35-kernel-o.s",
-   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
+   "label": "ip35-pcibr",
+   "dis": "work/dis/ip35-pcibr.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/pcibr.o",
    "kind": "elf",
    "reloc": true,
-   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
+   "note": "IRIX 6.5.30 IP35 Bridge-family driver object (pcireg accessors and pcibr_*)"
+  },
+  {
+   "label": "ip35-pic",
+   "dis": "work/dis/ip35-pic.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/pic.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 PIC attach object",
+   "variant_hint": "pic"
   },
   {
    "label": "ip35-prom",
@@ -44,42 +29,185 @@
    "kind": "promgen64",
    "segment": "ip35prom",
    "vma": "0xc00000001fc00000",
-   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time",
-   "split": "jr31"
-  },
-  {
-   "label": "ip32-kernel-o",
-   "dis": "work/dis/ip32-kernel-o.s",
-   "path": "root/IP32/usr/cpu/sysgen/IP32boot/kernel.o",
-   "kind": "elf",
-   "reloc": true,
-   "note": "IRIX 6.5.30 IP32 kernel object"
-  },
-  {
-   "label": "ip32-prom",
-   "dis": "work/dis/ip32-prom.s",
-   "path": "root/firmware/ip32prom.image",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
    "split": "jr31",
-   "note": "IP32 PROM flat image; load address assumed from the reset vector, not yet read from the image"
+   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok)"
   }
  ],
- "report_functions": ".*",
- "seeds": {},
- "field_rules": [],
- "discriminators": {},
- "variants": {},
+ "report_functions": "^(pcireg_|pcibr_|xbridge_|bridge_)",
+ "seeds": {
+  "args": [
+   {
+    "functions": "^pcireg_",
+    "reg": 4,
+    "off": 0
+   },
+   {
+    "functions": "^pic_attach2$",
+    "reg": 5,
+    "off": 0
+   }
+  ],
+  "calls": [
+   {
+    "callee": "xtalk_piotrans_addr",
+    "in": "^(pcibr_|xbridge_|pcireg_)",
+    "off_arg": 6
+   }
+  ],
+  "returns": [
+   {
+    "callee": "pcibr_bridge_ptr_get",
+    "off": 0
+   }
+  ],
+  "probe": {
+   "disp": 4,
+   "shift": 12
+  }
+ },
+ "field_rules": [
+  {
+   "functions": "^pcireg_",
+   "load": "ld",
+   "disp": 8,
+   "kind": "pointer",
+   "off": 0
+  },
+  {
+   "functions": "^pcireg_",
+   "load": "lh",
+   "disp": 114,
+   "kind": "type"
+  }
+ ],
+ "discriminators": {
+  "type": {
+   "load": "lh",
+   "disp": 114
+  },
+  "part": {
+   "id_disp": 4,
+   "shift": 12,
+   "mask": "0xffff"
+  }
+ },
+ "variants": {
+  "type": {
+   "0": "bridge",
+   "1": "xbridge",
+   "2": "pic",
+   "3": "tiocp"
+  },
+  "part": {
+   "0xc002": "bridge",
+   "0xd002": "xbridge",
+   "0xd102": "pic",
+   "0xd112": "pic",
+   "0xe000": "tiocp",
+   "0xe010": "tiocp",
+   "0xd000": "xbridge-xbow-face",
+   "0xd100": "pic-xbow-face"
+  }
+ },
  "variant_model": {
-  "default": {
+  "bridge": {
+   "access": "half32"
+  },
+  "xbridge": {
+   "access": "half32"
+  },
+  "pic": {
    "access": "dw64"
+  },
+  "tiocp": {
+   "access": "dw64"
+  },
+  "default": {
+   "access": "half32"
   }
  },
  "reference": {
   "pic": {
    "datasheets": [],
+   "spec": [],
    "model": []
   }
  },
- "buckets": []
+ "buckets": [
+  {
+   "lo": 2097152,
+   "size": 2097152,
+   "name": "device window 0"
+  },
+  {
+   "lo": 4194304,
+   "size": 2097152,
+   "name": "device window 1"
+  },
+  {
+   "lo": 6291456,
+   "size": 1048576,
+   "name": "device window 2"
+  },
+  {
+   "lo": 7340032,
+   "size": 1048576,
+   "name": "device window 3"
+  },
+  {
+   "lo": 8388608,
+   "size": 1048576,
+   "name": "device window 4"
+  },
+  {
+   "lo": 9437184,
+   "size": 1048576,
+   "name": "device window 5"
+  },
+  {
+   "lo": 10485760,
+   "size": 1048576,
+   "name": "device window 6"
+  },
+  {
+   "lo": 11534336,
+   "size": 1048576,
+   "name": "device window 7"
+  },
+  {
+   "lo": 12582912,
+   "size": 4194304,
+   "name": "external flash window"
+  },
+  {
+   "lo": 131072,
+   "size": 32768,
+   "name": "PCI type 0 configuration (per 4 KB device slot)"
+  },
+  {
+   "lo": 163840,
+   "size": 4096,
+   "name": "PCI type 1 configuration"
+  },
+  {
+   "lo": 196608,
+   "size": 8,
+   "name": "PCI interrupt acknowledge"
+  }
+ ],
+ "no_pointer_args": [
+  "splhi",
+  "splx",
+  "spl7",
+  "spinlock",
+  "mutex_lock",
+  "mutex_unlock",
+  "panic",
+  "cmn_err",
+  "printf",
+  "pcibr_debug"
+ ],
+ "type_const_in": "^pcireg_",
+ "accessor_calls": "^pcireg_",
+ "variant_hint_note": "pic.o is the PIC attach code: every access in it is a PIC access"
 }
