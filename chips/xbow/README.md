@@ -103,16 +103,25 @@ scanned routine.
   whose link is alive (`xbow_link_alive`) and whose widget is present (`xbow_widget_present`) it replaces the control
   word by `(old & 0xfffffe2f) | 0x3002b`: it clears bits 8, 7, 6 and 4 and sets bits 17, 16, 5, 3, 1 and 0
   (established arithmetic). `xbow_enable_perf_counter` replaces bits 29:28 with the mode (0, 1 or 2; the range test
-  rejects 3). `xbow_errintr_handler` writes the port's control back with bit 3 clear when `xbow_xmit_retry_error`
+  rejects 3 and negative values). `xbow_enable_perf_counter` returns -1 when a1 is outside 8 to 15, a2 is outside
+  0 to 2 or a3 is outside 0 and 1 (checked before the lock). Under the lock it also returns -1 when the counter's
+  byte at +37 is nonzero and a2 is nonzero, or when the other counter has the same port (byte +36) and a nonzero
+  byte at +37; it releases the lock first. It returns 0 otherwise.
+  `xbow_errintr_handler` writes the port's control back with bit 3 clear when `xbow_xmit_retry_error`
   returns 0 (that routine returns 1 after counting and writing back a bridge register for the two bridge parts it
   recognises, and also when it cannot look the port up); it also clears bit 17 in its local copy of the masked status
   after an illegal destination is handled, with no hardware write.
-  `xbow_reset_link` reads it first and writes the same value back at the end.
+  `xbow_reset_link` reads it first and writes the same value back only on success: it returns 0 once bit 31 of the
+  word at +276 of the port's block is set, and -1 when its timed wait expires first, which skips the write-back.
 - `0x118` and `0x120` (`xbow_prio_bw_alloc`, `xbow.o`, offset 0x2458, read in full): the register is `0x11c + 0x40 *
   (port & 7)` for sources 8 to 11 and `0x124 + ...` for sources 12 to 15; the field is 5 bits at `8 * (source & 3)`;
   the routine adds or subtracts a count converted from a byte rate by `xbow_bytes_to_gbr` (a division by 0x3d0900 =
   4000000, rounded up) and refuses a result of 32 or more (established). `xbow_attach` fills an array of eight 64-bit
   values in its record with 0x2faf0800 (800000000) and another with 0; `xbow_prio_bw_alloc` compares sums with them.
+  It returns 1 when it refuses the request and 0 when it stores it.
+  It refuses when the new count (the request in register units plus the field's current value) is 32 or more, or
+  when the request in bytes (a2) plus the 64-bit word at +528 of the element is above the word at +464 (unsigned
+  compare). The element is 8 bytes at the record base plus 8 times a2.
   Their role as a bandwidth budget is inferred from the names.
 - `0x130` link reset (`xbow_reset_link`, IP27 `xbow.o` offset 0x21f4, IP30 0x1e3c, IP35 0x1dfc): save control, write 0
   to `+0x134`, delay `xbow_reset_delay` microseconds, poll status bit 31 with `us_delay` until set or a limit, restore
