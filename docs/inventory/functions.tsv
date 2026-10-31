@@ -4399,7 +4399,7 @@ IP27/unix	kernel	n64	.text	0xc000000000027078	204	cnode_subnode_to_cpu	symtab	9c
 IP27/unix	kernel	n64	.text	0xc000000000027144	52	get_compact_nodeid	symtab	73554084c0cb		undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000027178	116	getcpuid	symtab	b85114f83529		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc0000000000271ec	60	cpu_unenable	symtab	1a16fbd7a28f		undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000027228	56	cpu_enabled	symtab	0e0d206acf6e		undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000027228	56	cpu_enabled	symtab	0e0d206acf6e		named-only	docs/chips/bedrock.md#access-sequences-from-the-call-site-context-of-each-store-inferred-unless-noted	Access sequences (from the call-site context of each store, inferred unless noted)
 IP27/unix	kernel	n64	.text	0xc000000000027260	180	cnode_slice_to_cpuid	symtab	0061c27f32c9		undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000027314	264	build_cpumap	symtab	d816b4af7b77		undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000027494	48	is_cpuless	symtab	14de882a529f		undocumented		
@@ -4610,7 +4610,7 @@ IP27/unix	kernel	n64	.text	0xc000000000035338	88	hub_error_count_get	symtab	9eb4
 IP27/unix	kernel	n64	.text	0xc000000000035390	52	decode_xrb_err	symtab	130252205080		undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000353c4	100	decode_crb_stat	symtab	6d01143db599		undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000035428	184	print_spool_entry	symtab	67d163031451		undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000354e0	292	dump_error_spool	symtab	fc68464d997d		undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000354e0	292	dump_error_spool	symtab	fc68464d997d		named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000035604	68	err_int_block_mask	symtab	c226cd8bc1d7		undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000035648	76	err_int_unblock_mask	symtab	919cb07bc3fe		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000035694	108	recover_error_init	symtab	68588a2a53b1		undocumented		
@@ -6100,7 +6100,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000934d4	68	pciio_hostinfo_get	symtab	5de65
 IP27/unix	kernel	n64	.text	0xc000000000093518	88	pciio_info_set	symtab	a045f6d76711		undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000093570	8	pciio_info_dev_get	symtab	2d3084abca7d		undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000093578	8	pciio_info_hostdev_get	symtab	55470fa05862		undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000093580	8	pciio_info_bus_get	symtab	33a74c6e12a2		undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000093580	8	pciio_info_bus_get	symtab	33a74c6e12a2		named-only	docs/chips/pic.md#access-sequences	Access sequences
 IP27/unix	kernel	n64	.text	0xc000000000093588	8	pciio_info_slot_get	symtab	ebbd3bbc6e9f		undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000093590	44	pciio_info_hostslot_get	symtab	7961a5bee03e		undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000935bc	8	pciio_info_function_get	symtab	1c97aa57fad9		undocumented		
@@ -19175,7 +19175,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xdef8	204	cnode_s
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xdfc4	52	get_compact_nodeid	dwarf+symtab	71b50d8df730		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xdff8	116	getcpuid	dwarf+symtab	9fb2049ccde3		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe06c	60	cpu_unenable	dwarf+symtab	175b8ddee4ed		undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe0a8	56	cpu_enabled	dwarf+symtab	0cb506f8581c		undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe0a8	56	cpu_enabled	dwarf+symtab	0cb506f8581c		named-only	docs/chips/bedrock.md#access-sequences-from-the-call-site-context-of-each-store-inferred-unless-noted	Access sequences (from the call-site context of each store, inferred unless noted)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe0e0	180	cnode_slice_to_cpuid	dwarf+symtab	b400e291c9fe		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe194	264	build_cpumap	dwarf+symtab	0c414ed1f343		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe29c	120	gen_region_mask	dwarf	fe243a82526a		undocumented		
@@ -19418,7 +19418,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c1b8	88	hub_err
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c210	52	decode_xrb_err	dwarf+symtab	a5b4ff162435		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c244	100	decode_crb_stat	dwarf+symtab	cc1c3461f2b8		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c2a8	184	print_spool_entry	dwarf+symtab	f1100d7757de		undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c360	292	dump_error_spool	dwarf+symtab	65ec50149073		undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c360	292	dump_error_spool	dwarf+symtab	65ec50149073		named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c484	68	err_int_block_mask	dwarf+symtab	ffbbbf45f54a		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c4c8	76	err_int_unblock_mask	dwarf+symtab	4d2d31bc9bf0		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c514	108	recover_error_init	dwarf+symtab	0dd34a5330f3		undocumented		
@@ -26426,7 +26426,7 @@ IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64	.text	0x1450	292	part
 IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64	.text	0x1574	796	part_terminate	dwarf+symtab	be49598b59f4		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64	.text	0x1890	108	part_copy_fault	dwarf+symtab	b6ebf87c3d3a		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64	.text	0x18fc	788	part_probe_nasid	dwarf+symtab	b2ee94a9f22a		undocumented		
-IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64	.text	0x1c10	404	part_discovery	dwarf+symtab	2d60143c2edf		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64	.text	0x1c10	404	part_discovery	dwarf+symtab	2d60143c2edf		named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64	.text	0x1da4	104	part_spurious_interrupt	dwarf+symtab	34e471daaf5d		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64	.text	0x1e0c	284	part_interrupt_thread	dwarf+symtab	c134ba45054e		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64	.text	0x1f28	72	part_interrupt_thread_setup	dwarf+symtab	3b517bdeb2f5		undocumented		
@@ -26847,7 +26847,7 @@ IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xbb8	68	pciio_host
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xbfc	88	pciio_info_set	dwarf+symtab	23ab0fe50d13		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xc54	8	pciio_info_dev_get	dwarf+symtab	2d3084abca7d		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xc5c	8	pciio_info_hostdev_get	dwarf+symtab	55470fa05862		undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xc64	8	pciio_info_bus_get	dwarf+symtab	33a74c6e12a2		undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xc64	8	pciio_info_bus_get	dwarf+symtab	33a74c6e12a2		named-only	docs/chips/pic.md#access-sequences	Access sequences
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xc6c	8	pciio_info_slot_get	dwarf+symtab	ebbd3bbc6e9f		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xc74	44	pciio_info_hostslot_get	dwarf+symtab	bcd0285ba8c0		undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xca0	8	pciio_info_function_get	dwarf+symtab	1c97aa57fad9		undocumented		
@@ -37984,7 +37984,7 @@ IP30/unix	kernel	n64	.text	0xa800000020012808	8	pte_cachebits	symtab	49e298b4a7c
 IP30/unix	kernel	n64	.text	0xa800000020012810	96	set_leds	symtab	d1d36afda351		undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020012870	28	reset_leds	symtab	a95d3559205d		undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001288c	28	sys_setled	symtab	ec58991314ea		undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020012a54	20	cpu_enabled	symtab	463fded8373b		undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020012a54	20	cpu_enabled	symtab	463fded8373b		named-only	docs/chips/bedrock.md#access-sequences-from-the-call-site-context-of-each-store-inferred-unless-noted	Access sequences (from the call-site context of each store, inferred unless noted)
 IP30/unix	kernel	n64	.text	0xa800000020012a68	980	allowboot	symtab	adb8aefe526b		undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020012e3c	424	cboot	symtab	516575dc8b75		undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020013064	92	cont_nmi_dump	symtab	788cdafd0cf9		undocumented		
@@ -39292,7 +39292,7 @@ IP30/unix	kernel	n64	.text	0xa80000002005fd5c	68	pciio_hostinfo_get	symtab	df23c
 IP30/unix	kernel	n64	.text	0xa80000002005fda0	88	pciio_info_set	symtab	16040f6e32cc		undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005fdf8	8	pciio_info_dev_get	symtab	2d3084abca7d		undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005fe00	8	pciio_info_hostdev_get	symtab	55470fa05862		undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002005fe08	8	pciio_info_bus_get	symtab	33a74c6e12a2		undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002005fe08	8	pciio_info_bus_get	symtab	33a74c6e12a2		named-only	docs/chips/pic.md#access-sequences	Access sequences
 IP30/unix	kernel	n64	.text	0xa80000002005fe10	8	pciio_info_slot_get	symtab	ebbd3bbc6e9f		undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005fe18	44	pciio_info_hostslot_get	symtab	0d25ca2284bd		undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005fe44	8	pciio_info_function_get	symtab	1c97aa57fad9		undocumented		
@@ -51758,7 +51758,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x270c	28	sys_setl
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2728	348	dobootduty	dwarf	d4aeee827e3f		undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2884	48	cpu_disable	dwarf	a902ef13a125		undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28b4	32	cpu_exists	dwarf	3151317b3d13		undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28d4	20	cpu_enabled	dwarf+symtab	4b82f3c90019		undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28d4	20	cpu_enabled	dwarf+symtab	4b82f3c90019		named-only	docs/chips/bedrock.md#access-sequences-from-the-call-site-context-of-each-store-inferred-unless-noted	Access sequences (from the call-site context of each store, inferred unless noted)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28e8	980	allowboot	dwarf+symtab	346df109e278		undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2cbc	424	cboot	dwarf+symtab	9c532ced7935		undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2e64	128	init_nmi_dump	dwarf	16ba034392f1		undocumented		
@@ -58287,7 +58287,7 @@ IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xbb8	68	pciio_host
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xbfc	88	pciio_info_set	dwarf+symtab	23ab0fe50d13		undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xc54	8	pciio_info_dev_get	dwarf+symtab	2d3084abca7d		undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xc5c	8	pciio_info_hostdev_get	dwarf+symtab	55470fa05862		undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xc64	8	pciio_info_bus_get	dwarf+symtab	33a74c6e12a2		undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xc64	8	pciio_info_bus_get	dwarf+symtab	33a74c6e12a2		named-only	docs/chips/pic.md#access-sequences	Access sequences
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xc6c	8	pciio_info_slot_get	dwarf+symtab	ebbd3bbc6e9f		undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xc74	44	pciio_info_hostslot_get	dwarf+symtab	bcd0285ba8c0		undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xca0	8	pciio_info_function_get	dwarf+symtab	1c97aa57fad9		undocumented		
@@ -75340,7 +75340,7 @@ IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xb98	68	pciio_host
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xbdc	92	pciio_info_set	dwarf+symtab	fb8e03e7a03f		undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xc38	8	pciio_info_dev_get	dwarf+symtab	f300cc2a20ca		undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xc40	8	pciio_info_hostdev_get	dwarf+symtab	2d3084abca7d		undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xc48	8	pciio_info_bus_get	dwarf+symtab	57751cca47b2		undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xc48	8	pciio_info_bus_get	dwarf+symtab	57751cca47b2		named-only	docs/chips/pic.md#access-sequences	Access sequences
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xc50	8	pciio_info_slot_get	dwarf+symtab	1c66a3999274		undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xc58	44	pciio_info_hostslot_get	dwarf+symtab	222df23ffa66		undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xc84	8	pciio_info_function_get	dwarf+symtab	ed99a76f6b60		undocumented		
@@ -87130,7 +87130,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x12f8	28	get_hub_
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1314	160	verify_snchip_rev	dwarf+symtab	fd7015c6c56d		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13b4	28	ni_reset_port	dwarf+symtab	b4c7e14a1552		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13d0	300	set_sn12_type	dwarf+symtab	0b86ccadce81		undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x14fc	100	get_chimera_type	dwarf+symtab	e83cd0860867		undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x14fc	100	get_chimera_type	dwarf+symtab	e83cd0860867		named-only	docs/chips/pic.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1560	1072	in_cksum_sub	dwarf+symtab	345c882c1b77		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1674	796	in_cksum_pref	symtab	ad10fda21bca		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1990	544	start	dwarf+symtab	141340c889b5		undocumented		
@@ -87408,7 +87408,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe5d4	272	cnode_s
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe6e4	52	get_compact_nodeid	dwarf+symtab	0e1feeef0951		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe718	116	getcpuid	dwarf+symtab	c2a5d13a8b4d		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe78c	60	cpu_unenable	dwarf+symtab	2f4ac3d777eb		undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe7c8	56	cpu_enabled	dwarf+symtab	f01373c79bc7		undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe7c8	56	cpu_enabled	dwarf+symtab	f01373c79bc7		named-only	docs/chips/bedrock.md#access-sequences-from-the-call-site-context-of-each-store-inferred-unless-noted	Access sequences (from the call-site context of each store, inferred unless noted)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe800	188	cnode_slice_to_cpuid	dwarf+symtab	4e733726b2df		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe8bc	264	build_cpumap	dwarf+symtab	02f31f988092		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xe9c4	120	gen_region_mask	dwarf	fe243a82526a		undocumented		
@@ -87616,7 +87616,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b4e4	88	hub_err
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b53c	52	decode_xrb_err	dwarf+symtab	735b7135a2bb		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b570	180	decode_crb_stat	dwarf+symtab	9874d26b2dd4		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b624	328	print_spool_entry	dwarf+symtab	ebb70d812c92		undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b76c	464	dump_error_spool	dwarf+symtab	fc9eee91a9cd		undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b76c	464	dump_error_spool	dwarf+symtab	fc9eee91a9cd		named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b93c	68	err_int_block_mask	dwarf+symtab	cd5a9628eb2e		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b980	76	err_int_unblock_mask	dwarf+symtab	62bcb135e0a8		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b9cc	76	md_int_block	dwarf+symtab	439aa65ee171		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -94515,7 +94515,7 @@ IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64	.text	0x1754	292	part
 IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64	.text	0x1878	848	part_terminate	dwarf+symtab	6063f400c4c8		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64	.text	0x1bc8	108	part_copy_fault	dwarf+symtab	70ff6f42e0df		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64	.text	0x1c34	824	part_probe_nasid	dwarf+symtab	f61237d6b609		undocumented		
-IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64	.text	0x1f6c	724	part_discovery	dwarf+symtab	24d8e3a34c46		named-only	docs/chips/bedrock.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64	.text	0x1f6c	724	part_discovery	dwarf+symtab	24d8e3a34c46		named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64	.text	0x2240	104	part_spurious_interrupt	dwarf+symtab	34e471daaf5d		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64	.text	0x22a8	284	part_interrupt_thread	dwarf+symtab	c134ba45054e		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64	.text	0x23c4	72	part_interrupt_thread_setup	dwarf+symtab	3d6f2aea33ff		undocumented		
@@ -94911,7 +94911,7 @@ IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xb60	68	pciio_host
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xba4	88	pciio_info_set	dwarf+symtab	1c934379f88d		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xbfc	8	pciio_info_dev_get	dwarf+symtab	2d3084abca7d		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xc04	8	pciio_info_hostdev_get	dwarf+symtab	55470fa05862		undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xc0c	8	pciio_info_bus_get	dwarf+symtab	33a74c6e12a2		undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xc0c	8	pciio_info_bus_get	dwarf+symtab	33a74c6e12a2		named-only	docs/chips/pic.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xc14	8	pciio_info_slot_get	dwarf+symtab	ebbd3bbc6e9f		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xc1c	44	pciio_info_hostslot_get	dwarf+symtab	bcd0285ba8c0		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xc48	8	pciio_info_function_get	dwarf+symtab	1c97aa57fad9		undocumented		
@@ -94987,7 +94987,7 @@ IP35/usr/cpu/sysgen/IP35boot/pgrpidbg.a(pgrpidbg.o)	kernel-object	n64	.text	0x60
 IP35/usr/cpu/sysgen/IP35boot/pgrpidbg.a(pgrpidbg.o)	kernel-object	n64	.text	0x10c	192	vpgrpprint	dwarf+symtab	723eae76bc8c		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pgrpidbg.a(pgrpidbg.o)	kernel-object	n64	.text	0x1cc	136	idbg_vpgrp_bhv_print	dwarf+symtab	3b69af3faa6a		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pgrpidbg.a(pgrpidbg.o)	kernel-object	n64	.text	0x254	580	idbg_vpgrp	dwarf+symtab	006d8274af7f		undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64		0x0		pic_init	dwarf+symtab			undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64		0x0		pic_init	dwarf+symtab			named-only	docs/chips/pic.md#what-identifies-a-pic-established-pic_attach2-in-pico-read-in-full	What identifies a PIC (established, `pic_attach2` in `pic.o`, read in full)
 IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x3c	172	pic_bus1_inventory_dup	dwarf+symtab	2f097496e0ab		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0xe8	376	pic_bus1_widget_info_dup	dwarf+symtab	37ab2a14c91d		undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x260	48	pic_bus1_device_desc_dup	dwarf+symtab	d58c583e7a79		undocumented		

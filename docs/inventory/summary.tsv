@@ -1,14 +1,14 @@
 table	rows	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3391	0	0	0	0	0	249	3142	0	0.0	0.0	7.3	0.0							0			
-functions	102957	0	0	0	0	5	550	102402	0	0.0	0.0	0.5	0.0							0	6	1167	
-functions (distinct names)	24329	0	0	0	0	1	157	24171	0	0.0	0.0	0.6	0.0							0			
+functions	102957	0	0	0	0	5	566	102386	0	0.0	0.0	0.6	0.0							0	6	1167	
+functions (distinct names)	24329	0	0	0	0	1	162	24166	0	0.0	0.0	0.7	0.0							0			
 mmio	25	0	0	0	0	0	0	25	0	0.0	0.0	0.0	0.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ucode	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0						0	0			
 spec-registers	174	0	0	0	0	0	0	174	0	0.0	0.0	0.0	0.0							0			
 input root manifest	1155																						0997e046b5c45f7010948bcb081b255b2b02b627b839c334db8958bc554c6b4a
-functions in IP27/unix	13484	0	0	0	0	1	138	13345	0	0.0	0.0	1.0	0.0							0	0	148	
+functions in IP27/unix	13484	0	0	0	0	1	141	13342	0	0.0	0.0	1.1	0.0							0	0	148	
 functions in IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	16	0	0	0	0	0	0	16	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/acl_hwg.o	3	0	0	0	0	0	0	3	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/acl_nfs3.o	2	0	0	0	0	0	0	2	0	0.0	0.0	0.0	0.0							0	0	0	
@@ -298,7 +298,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/kbd.o	42	0	0	0	0	0	0	42	0	0.0	0.0	0.0	
 functions in IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_di.o)	134	0	0	0	0	0	0	134	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_events.o)	25	0	0	0	0	0	0	25	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/kdsp.a(audutil.o)	94	0	0	0	0	0	0	94	0	0.0	0.0	0.0	0.0							0	0	24	
-functions in IP27/usr/cpu/sysgen/IP27boot/kernel.o	1361	0	0	0	0	0	98	1263	0	0.0	0.0	7.2	0.0							0	1	112	
+functions in IP27/usr/cpu/sysgen/IP27boot/kernel.o	1361	0	0	0	0	0	100	1261	0	0.0	0.0	7.3	0.0							0	1	112	
 functions in IP27/usr/cpu/sysgen/IP27boot/keyboard.a(pckbd.o)	14	0	0	0	0	0	0	14	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/kitchen_sync.o	10	0	0	0	0	0	0	10	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/klidbg.o	19	0	0	0	0	0	0	19	0	0.0	0.0	0.0	0.0							0	0	0	
@@ -654,7 +654,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/partition.o	70	0	0	0	0	0	6	64	0	0.0	0.
 functions in IP27/usr/cpu/sysgen/IP27boot/partitionstubs.a(partitionstubs.o)	33	0	0	0	0	0	3	30	0	0.0	0.0	9.1	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciba.o	25	0	0	0	0	0	0	25	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pcibr.o	259	0	0	0	0	1	25	233	0	0.0	0.4	10.0	0.0							0	0	0	
-functions in IP27/usr/cpu/sysgen/IP27boot/pciio.o	108	0	0	0	0	0	0	108	0	0.0	0.0	0.0	0.0							0	0	0	
+functions in IP27/usr/cpu/sysgen/IP27boot/pciio.o	108	0	0	0	0	0	1	107	0	0.0	0.0	0.9	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	18	0	0	0	0	0	0	18	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciiostubs.a(pciiostubs.o)	2	0	0	0	0	0	0	2	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciiox.o	2	0	0	0	0	0	0	2	0	0.0	0.0	0.0	0.0							0	0	0	
@@ -965,7 +965,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/xvmcellstubs.a(xvmcellstubs.o)	12	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/xvmidbg.o	40	0	0	0	0	0	0	40	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/xvmstubs.a(xvmstubs.o)	7	0	0	0	0	0	0	7	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/zero.o	8	0	0	0	0	0	0	8	0	0.0	0.0	0.0	0.0							0	0	0	
-functions in IP30/unix	13087	0	0	0	0	1	45	13041	0	0.0	0.0	0.4	0.0							0	0	172	
+functions in IP30/unix	13087	0	0	0	0	1	47	13039	0	0.0	0.0	0.4	0.0							0	0	172	
 functions in IP30/usr/cpu/sysgen/IP30boot/acl.a(acl.o)	16	0	0	0	0	0	0	16	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/asidbg.a(asidbg.o)	38	0	0	0	0	0	0	38	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	20	0	0	0	0	0	0	20	0	0.0	0.0	0.0	0.0							0	0	0	
@@ -1172,7 +1172,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/kbd.o	42	0	0	0	0	0	0	42	0	0.0	0.0	0.0	
 functions in IP30/usr/cpu/sysgen/IP30boot/kdsp.a(kdsp_di.o)	134	0	0	0	0	0	0	134	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/kdsp.a(kdsp_events.o)	25	0	0	0	0	0	0	25	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/kdsp.a(audutil.o)	94	0	0	0	0	0	0	94	0	0.0	0.0	0.0	0.0							0	0	24	
-functions in IP30/usr/cpu/sysgen/IP30boot/kernel.o	726	0	0	0	0	0	13	713	0	0.0	0.0	1.8	0.0							0	0	134	
+functions in IP30/usr/cpu/sysgen/IP30boot/kernel.o	726	0	0	0	0	0	14	712	0	0.0	0.0	1.9	0.0							0	0	134	
 functions in IP30/usr/cpu/sysgen/IP30boot/keyboard.a(pckbd.o)	14	0	0	0	0	0	0	14	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/kitchen_sync.o	10	0	0	0	0	0	0	10	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/klog.o	7	0	0	0	0	0	0	7	0	0.0	0.0	0.0	0.0							0	0	0	
@@ -1454,7 +1454,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	15	0	0	0	0	0	0	15	0	0.
 functions in IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	10	0	0	0	0	0	0	10	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/pciba.o	25	0	0	0	0	0	0	25	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/pcibr.o	259	0	0	0	0	1	25	233	0	0.0	0.4	10.0	0.0							0	0	0	
-functions in IP30/usr/cpu/sysgen/IP30boot/pciio.o	108	0	0	0	0	0	0	108	0	0.0	0.0	0.0	0.0							0	0	0	
+functions in IP30/usr/cpu/sysgen/IP30boot/pciio.o	108	0	0	0	0	0	1	107	0	0.0	0.0	0.9	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	18	0	0	0	0	0	0	18	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/pciiox.o	2	0	0	0	0	0	0	2	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/pgrpidbg.a(pgrpidbg.o)	5	0	0	0	0	0	0	5	0	0.0	0.0	0.0	0.0							0	0	0	
@@ -2225,7 +2225,7 @@ functions in IP32/usr/cpu/sysgen/IP32boot/os.a(xthread_table.o)	10	0	0	0	0	0	0	1
 functions in IP32/usr/cpu/sysgen/IP32boot/os.a(mtext.o)	46	0	0	0	0	0	0	46	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/partitionstubs.a(partitionstubs.o)	33	0	0	0	0	0	3	30	0	0.0	0.0	9.1	0.0							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/pciba.o	23	0	0	0	0	0	0	23	0	0.0	0.0	0.0	0.0							0	0	0	
-functions in IP32/usr/cpu/sysgen/IP32boot/pciio.o	108	0	0	0	0	0	0	108	0	0.0	0.0	0.0	0.0							0	0	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/pciio.o	108	0	0	0	0	0	1	107	0	0.0	0.0	0.9	0.0							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/pciiostubs.a(pciiostubs.o)	2	0	0	0	0	0	0	2	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/pcimh.o	63	0	0	0	0	0	0	63	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/pgrpidbg.a(pgrpidbg.o)	5	0	0	0	0	0	0	5	0	0.0	0.0	0.0	0.0							0	0	0	
@@ -2705,7 +2705,7 @@ functions in IP35/usr/cpu/sysgen/IP35boot/kbd.o	42	0	0	0	0	0	0	42	0	0.0	0.0	0.0	
 functions in IP35/usr/cpu/sysgen/IP35boot/kdsp.a(kdsp_di.o)	134	0	0	0	0	0	0	134	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/kdsp.a(kdsp_events.o)	25	0	0	0	0	0	0	25	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/kdsp.a(audutil.o)	94	0	0	0	0	0	0	94	0	0.0	0.0	0.0	0.0							0	0	24	
-functions in IP35/usr/cpu/sysgen/IP35boot/kernel.o	1318	0	0	0	0	0	102	1216	0	0.0	0.0	7.7	0.0							0	1	112	
+functions in IP35/usr/cpu/sysgen/IP35boot/kernel.o	1318	0	0	0	0	0	105	1213	0	0.0	0.0	8.0	0.0							0	1	112	
 functions in IP35/usr/cpu/sysgen/IP35boot/keyboard.a(pckbd.o)	14	0	0	0	0	0	0	14	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/kitchen_sync.o	10	0	0	0	0	0	0	10	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/klidbg.o	19	0	0	0	0	0	0	19	0	0.0	0.0	0.0	0.0							0	0	0	
@@ -3035,11 +3035,11 @@ functions in IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	10	0	0	0	0	0	0	1
 functions in IP35/usr/cpu/sysgen/IP35boot/partition.o	72	0	0	0	0	0	8	64	0	0.0	0.0	11.1	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pciba.o	25	0	0	0	0	0	0	25	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pcibr.o	265	0	0	0	0	1	25	239	0	0.0	0.4	9.8	0.0							0	0	0	
-functions in IP35/usr/cpu/sysgen/IP35boot/pciio.o	108	0	0	0	0	0	0	108	0	0.0	0.0	0.0	0.0							0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/pciio.o	108	0	0	0	0	0	1	107	0	0.0	0.0	0.9	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	18	0	0	0	0	0	0	18	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pciiox.o	2	0	0	0	0	0	0	2	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pgrpidbg.a(pgrpidbg.o)	5	0	0	0	0	0	0	5	0	0.0	0.0	0.0	0.0							0	0	0	
-functions in IP35/usr/cpu/sysgen/IP35boot/pic.o	13	0	0	0	0	0	4	9	0	0.0	0.0	30.8	0.0							0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/pic.o	13	0	0	0	0	0	5	8	0	0.0	0.0	38.5	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pipefs.a(pipevnops.o)	21	0	0	0	0	0	0	21	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pipefsstubs.a(pipefsstubs.o)	1	0	0	0	0	0	0	1	0	0.0	0.0	0.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pipemod.o	3	0	0	0	0	0	0	3	0	0.0	0.0	0.0	0.0							0	0	0	

@@ -16,11 +16,19 @@ chip page and the entry is deleted.
 - **IP35 reset window.** The routing rule that returns boot-PROM bytes for uncached memory-space fetches of physical
   0x1fc0xxxx after bank 0 is enabled, and whether any write ends it, are not visible in the PROM. Tried: full read of
   the reset, memory and jump-to-RAM path. Next: see [docs/questions/ip35-reset-window.md](questions/ip35-reset-window.md).
-- **Literal-pool bases (PIC and Bedrock objects).** In a relocatable object a gp-relative literal load carries
-  an offset relative to a base the object does not state for all objects. `kernel.o` and `pcibr.o` state 0x7ff0
-  in their option records; for `pic.o`, `partition.o` and the others the census takes the lowest `.lit8`
-  displacement used as offset 0 (`gp: auto-min`). Masks and constants read this way are labelled inferred.
-  Next: the linked kernel's literal for the same routine, or the relocation records of the linked image.
+- **Literal-pool bases (PIC and Bedrock objects): settled by audit.** Every object's options record carries its
+  gp (0x7ff0 for `kernel.o`, 0x7800 for the eleven others checked, including `pic.o`), and in each of them the
+  lowest `.lit8` displacement equals minus gp and the pool is exactly covered by the displacements used, so
+  `gp: auto-min` gives the stated base. The constants read this way can be labelled established where the function
+  is read in full. Remaining: the census tool could read the gp from the options record instead of inferring it.
+- **Census scanner faults found by the audit.** (1) A load or store whose displacement is added at run time through
+  a `movz`-selected constant or a loop counter is recorded at the window base or at one iteration's slot
+  (`dump_error_spool`, `hub_error_clear`, `part_discovery`); the families they build need their bounds read from the
+  code. (2) A site in a routine with no symbol is credited to the preceding named routine (the three `+0x1000090`
+  stores). (3) The IP35 PROM image is split after each return, so a block that is jumped to from earlier in the
+  same routine (the PIC branch of the interrupt-register clear at 0xc00000001fc41f38) is missed while the other
+  branch is labelled PIC. Next: do not split a PROM pseudo-function at an address a branch from the previous one
+  reaches, and fold `movz` of two constants into two sites.
 - **PIC error and interrupt service.** `pcibr_error_dump` and `pcibr_error_intr_handler` in `pcibr.o` and the
   PIC branches of the error accessors are not read. Next: read both in full and fill the error and interrupt
   sections of docs/chips/pic.md.

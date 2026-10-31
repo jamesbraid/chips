@@ -7,10 +7,12 @@ Census: [docs/census/bedrock/](../census/bedrock/census.md).
 
 ## Window and how it is reached
 
-The kernel object keeps 64-bit literals in its literal pool. The census reads them (`.lit8`, base 0x7ff0 for
-`kernel.o`: established by the object's own gp value; other objects: the lowest literal offset used is taken as
-zero, inferred). Literals with top byte 0x92 and low 24 bits below 0x1ffffff are the base of the
-register space: 71 of them in `kernel.o`. Other objects that hold such literals: `partition_part.o` (loaded as
+The kernel object keeps 64-bit literals in its literal pool. The census reads them (`.lit8`, gp 0x7ff0 for
+`kernel.o`; the other objects carry gp 0x7800 in their own options section, and the census's `auto-min` rule, which
+takes the lowest literal displacement as offset 0, gives the same base in all eleven objects checked (established by
+audit: gp read from each object, and each object's literal pool size equals eight bytes times its distinct
+displacements, so no literal is skipped)). Literals with top byte 0x92 and low 24 bits below 0x1ffffff are the base
+of the register space: 61 of the 119 literals in `kernel.o` (the first draft said 71; recounted from the pool). Other objects that hold such literals: `partition_part.o` (loaded as
 `partition.o`), `hubspc.o`, `nic.o`, `l1.o`, `l1_command.o`, `eeprom.o`, `klconfig.o`, `numa_hw.o`, `pda.o`,
 `vmdump.o`, `syssgi.o`, and graphics objects (not counted). The register offsets below are the low 24 bits of
 the literal plus the displacement of the load or store; a second window with literals starting 0x90000000_18
@@ -129,7 +131,11 @@ inferred from the prefixes of the routine names that touch it (`hub_`, `hubii_`/
 
 ## Groups by routine names (inferred)
 
-- `+0x1000000` to `+0x10004d0`, `+0x1030100`: processor-interface-like registers: `md_int_block`,
+- `+0x1000000` to `+0x10004d0`, `+0x1030100`: processor-interface-like registers (audit correction on the `+0x1000090` store: none of its three census sites is in the routine it is credited to.
+The named routine `sendintr` stores to a computed address, `+0x1800090` or `+0x1820090` chosen by a slice bit, with
+0x100 plus 107 or, for one caller argument, 0x100 plus 7; the `+0x1000090` stores of 7, 100 and 107 plus the slice
+are in three routines with no symbol that follow `sendintr`, `install_cpuintr` and `install_dbgintr` in the object, so the
+listing labels them with the preceding name): `md_int_block`,
   `get_myid`/`get_slice`/`getcpuid` (read `+0x1000020`), interrupt send and cause (`sendintr`,
   `install_cpuintr`, `cause_intr_disconnect`: `+0x1000090` write, `+0x1000098` read), clock acknowledge and start
   (`acktmoclock`, `ackkgclock`, `startkgclock`: `+0x1000118` to `+0x1000158`), error interrupt masks
@@ -137,13 +143,20 @@ inferred from the prefixes of the routine names that touch it (`hub_`, `hubii_`/
   by time-keeping and statistics routines (`callout_time_to_hz`, `bte_copy`, `capture_hub_stats`): a counter
   or clock (inferred from names).
 - `+0x1600000` to `+0x1681xxx`, `+0x168e7xx`: `+0x1604200` is read at 52 sites by timer routines
-  (`counter_intr`, `doadjtime`, `init_timebase`, `generate_unique_id`): a free-running counter (inferred);
+  (`counter_intr`, `doadjtime`, `init_timebase`, `generate_unique_id`). The first draft called it a free-running
+  counter; the audit found all 52 sites extract bits 13:4 and multiply by five (shift right 4, mask 0x3ff, then
+  `sll 2` and add), which reads as a configuration value such as a clock ratio, not a counter (still inferred);
   `+0x1680000` and following: network-interface-like (`ni_reset_port` writes +0x1680008 and +0x1680010;
-  `ni_port_down_reset` reads +0x1680110 and +0x1680118; `part_discovery` reads a table of about 190 registers at
-  `+0x1681000` to `+0x16812f8`).
+  `ni_port_down_reset` reads +0x1680110 and +0x1680118; `part_discovery` reads a table at `+0x1681000`: the loop checks 128
+  entries of 8 bytes, `+0x1681000` to `+0x16813f8`, and the census's 94 slots and the offset it prints for the
+  individual sites are one loop iteration each, an artifact of the scanner unrolling a constant counter, not a measured extent).
 - `+0x1780008`, `+0x17a0038`: directory translation (`mdir_xlate_addr_*`) and a vector read (`doacvec`).
 - `+0x1800000` and up (80 sites at the base): processor-interface-like again at a second alias (dump and error
-  routines, `intr_connect_level`, `do_intr_block_bit`); `+0x1800018` is read by the partition routines.
+  routines, `intr_connect_level`, `do_intr_block_bit`); `+0x1800018` is read by the partition routines. Audit
+  correction: the 80 sites at the bare base are not all the base. Many add a displacement the scanner dropped
+  (`dump_error_spool` reads `+0x1800428` or `+0x1820428`, chosen with a slice bit by `movz`; `hub_error_clear` writes
+  `+0x1800400`, `+0x1800438`, `+0x1800458`, `+0x18004c8`, `+0x18004d0` and their `+0x1820000` aliases), so treat that row
+  as unresolved sites, not as an array base.
 - `+0x1c00000` and up: I/O-interface-like (`hub_widget_id` at `+0x1c00020`, `hubii_*`, `hub_widgetdev_*`,
   `bte_error_handler`, CRB routines `crbx`/`dump_crb`/`hubiio_crb_*` at `+0x1c00400` to `+0x1c00418`);
   `+0x1c30000` performance counters (`io_perf_*`).
@@ -155,19 +168,29 @@ inferred from the prefixes of the routine names that touch it (`hub_`, `hubii_`/
 
 ## Access sequences (from the call-site context of each store, inferred unless noted)
 
-**Error clear (`hub_error_clear`).** Zeroes arrays of registers at `+0x1800000` plus per-index offsets, reads
-the error log registers (`+0x1fc0018`, `+0x1fe0018`, `+0x1f80058`, `+0x1fc0028`), writes the I/O-interface error
-registers `+0x1c00198` and `+0x1c001f8` (read-modify-write with an OR of 3 in the first), clears bits through a
-mask at `+0x1c00138`, writes `+0x1e04048` and `+0x1e04050`, then loops writing zero over a range of 14 slots at
-`+0x1f00120`.
+**Error clear (`hub_error_clear`; established by audit, read in full, 0x1a0 bytes).** For each of two
+processor-interface aliases (`+0x1800000` and `+0x1820000`) it writes all-ones to `+0x400`, `+0x438` and `+0x458`
+and zero to `+0x4c8` and `+0x4d0`. It reads and discards the memory error log registers (`+0x1fc0018`, `+0x1fe0018`,
+`+0x1f80058`, `+0x1fc0028`; a read with a possible clear-on-read effect is inferred, nothing tests the values).
+Nine registers at `+0x1c00198 + 8i` (i from 0 to 8) are each read, ANDed with 0xffff07ffffffffff, ORed with bit 43,
+ANDed with 0xffffffc000c00000 and ORed with 3; all-ones goes to `+0x1c001f8`; `+0x1c00138` is read and bit 28 cleared;
+`+0x1e04048` gets all-ones and `+0x1e04050` zero (the first draft said these were zero-fills); last, zero is written
+to 15 registers at `+0x1f00120 + 8i` (i from 0 to 14; the first draft said 14). Everything is indexed by the node
+number shifted left 33.
 
-**Widget reset handshake (`hub_widget_reset`).** Reads `+0x1c00308` and tests a field, writes zero to
-`+0x1c00308`, writes 0x10 to a register at `+0x1c00388` and polls its bit 4 (`andi 0x10`) in a bounded loop.
-(The context window shows the store, the read-back and the mask; the bound is not read.)
+**Widget reset handshake (`hub_widget_reset`; established by audit, read in full).** `+0x1c00308` is the base of
+eight registers, `+0x1c00308 + 8i`. For i from 0 to 7 it reads the register and skips it unless bit 63 is set and
+bits 31:24 equal the widget number passed in. For the matching entry it writes zero to that register, writes
+0x10 plus i to the single register `+0x1c00388`, reads `+0x1c00388` back once, and if bit 4 is set reports an
+error through an assertion call; it then goes on with the next i. There is no polling loop (the first draft said
+there was one). The meaning of the registers is unknown.
 
 **Node initialisation (`per_hub_init`).** Stores 240 (0xf0) at `+0x1c003a8`, reads `+0x1c00128` and tests bit 13
-to choose 4 or 8 for `+0x1c00200`, writes 0xfffe or 0xfffffe (depending on a global compared with 33) at
-`+0x1c003c0`, 255 at `+0x1c003b8`, and 0x200000 at `+0x1800038` and `+0x1a00038`, zero at `+0x1fa0038`.
+to choose 4 (bit clear) or 8 (bit set) for `+0x1c00200`, writes 0xfffe or 0xfffffe (depending on a global compared with 33) at
+`+0x1c003c0`, 255 at `+0x1c003b8`, and 0x200000 at `+0x1800038` and `+0x1a00038`, zero at `+0x1fa0038` (established by audit, read in full). It also stores
+15 at `0x9000000030000000` plus the node offset plus `8 * slice + 192` for each of the four processor slices
+that `cpu_enabled` reports as absent, in the second window (`window-18`), which this page does not interpret;
+the first draft did not list it.
 
 **Network port reset (`ni_reset_port`, read in full: 8 instructions).** Writes 1 to `+0x1680010` and 6 to
 `+0x1680008`. (established; roles unknown)

@@ -14,7 +14,11 @@ fill for a gap. Census: [docs/census/pic/](../census/pic/census.md) (`census.tsv
   hints may change them.
 - It reads the 64-bit identification register at +0x0 (`pcireg_id_get`) and forms `revision | (part << 4)` from
   bits 31:28 and 27:12. It accepts parts 0xd102 and 0xd112, each at revisions 1, 2 and 3 (the six constants
-  0xd1021, 0xd1022, 0xd1023, 0xd1121, 0xd1122, 0xd1123), and takes any other value to a failure path.
+  0xd1021, 0xd1022, 0xd1023, 0xd1121, 0xd1122, 0xd1123). Any other value is not rejected: it only changes the
+  revision name in the attach debug message (revisions 1, 2, 3 print `A`, `B`, `C`, anything else prints `unknown`;
+  the mapping of the string pointers to those names is inferred from the strings at the offsets the code adds) and
+  attach carries on (audited: every branch rejoins at the same debug call). `pic_init` registers the driver for
+  part 0xd102 with manufacturer 36 only.
 - The shared accessor routines in `pcibr.o` (`pcireg_*`) choose among four chips by that halfword at +114
   (0 and 1 are Bridge-family, 2 PIC, 3 a fourth chip TIOCP) and, when given a raw pointer, by the part number in
   the identification word (0xc002, 0xd002 for the Bridge family; 0xd102, 0xd112 PIC; 0xe000, 0xe010 TIOCP).
@@ -30,7 +34,7 @@ and field columns are **inferred** from the accessor names and the masks the cod
 are what the instructions do). On the PIC path every register is accessed as a 64-bit doubleword
 (`ld`/`sd`), with one exception noted below; the IP35 PROM touches four slots with 32-bit stores
 (`sw`) at +0x10c, +0x114 and +0x12c, which on a 64-bit register are the low halves of the doublewords at
-+0x108, +0x110 and +0x128 (inferred from big-endian layout: not read from a source).
++0x108, +0x110 and +0x128 (inferred from big-endian layout: not read from a source; the audit found the PROM stores belong to the non-PIC path, see Reset expectations).
 
 | register | widths | access | sites | accessors and callers (names from the binary) | field evidence | role (inferred from the names) |
 |---|---|---|---:|---|---|---|
@@ -95,13 +99,16 @@ attach sequence below.
 ### Registers whose use is established by reading the code
 
 - `+0x0` identification (read, 64-bit): see above. Fields used: 31:28 revision, 27:12 part number, 11:1 a
-  manufacturer number the attach compares with 36 or 54 (decimal) in the Bridge-family branch of the
-  accessors (`pcibr_bridge_ptr_get`); bit 0 not used by the code. (established for the fields the code isolates)
+  manufacturer number that the `pcireg_*` accessors in `pcibr.o` compare with 36 when given a raw pointer to a PIC,
+  TIOCP-part or 0xd002 chip, and with 54 for part 0xc002 only; bit 0 not used by the code. (established for the
+  fields the code isolates; the compare lives in the accessors, not in `pcibr_bridge_ptr_get`)
 - `+0x20` control: written through `pcireg_control_set`, `_bit_set`, `_bit_clr`; the attach sets bit 21
-  (0x200000) always, and bit 29 (0x20000000) when the identification revision is not 1 (inferred: the revision
-  test is `(1 << revision) & 2`); it also ORs 0xc0000000 and writes the caller's value into bits 55:48 after
-  clearing them (inferred: the two clearing masks are literal-pool constants read from `pic.o` on the assumption
-  that the first literal is the first one the code loads; see the open question on literal bases). Bits 5:4 are
+  (0x200000) always, and bit 29 (0x20000000) when the identification revision is not 1 (established: the revision
+  test is `(1 << revision) & 2`); it also ORs 0xc0000000 (bits 31:30) and writes the caller's value into bits 55:48
+  after clearing them. The two literal-pool masks are established (audit): the object's own options section gives
+  gp 0x7800, so the lowest literal displacement is literal 0; they are 0xff00ffffffffffff (clears 55:48) and
+  0x9fff00ffffffffff (clears bits 62:61 and 47:40, which the first draft of this page left out). The write goes
+  through `pcireg_control_set`, which on the PIC path stores the doubleword and reads it straight back. Bits 5:4 are
   returned by `pcireg_speed_get` as the bus speed field (established: the code shifts right 4 and masks 3).
   Reset value: unknown.
 - `+0x28` request timeout: `pcireg_req_timeout_set(0x750)` on revision 1 of the PIC only (established).
@@ -150,7 +157,9 @@ attach sequence below.
    `pcibr_setwidint` and writes `+0x38` and `+0x128`; read the programmed destination back
    (`intr_dst_target_id_get`, `intr_dst_addr_get`) for a debug message.
 9. Read enable, OR in `0x00003eff7ffffe00` (bits 30:9, 39:32 and 45:41), and write it back with
-   `pcireg_intr_enable_set`; on revision 1 clear bits 39 and 9 first. Constants: inferred (literal-pool bases).
+   `pcireg_intr_enable_set`. On revision 1 (chip type 2 only) the value is first ANDed with 0xffffff7ffffffdff,
+   after the OR, so bits 39 and 9 end up clear, and `pcireg_req_timeout_set(0x750)` is called before the write.
+   Constants: established (audit: literal 2 and 3 of `pic.o` against gp 0x7800).
 10. `pcireg_intr_mode_set(0)`, read the target-flush register (`pcireg_tflush_get`, the read is the operation: inferred).
 11. On revision 1 set the response buffer bits at +0x280 and +0x288 (above); then per slot: slot info, address
     space, device init, PCI-X rbar init, device attach; last, for a device whose two identity words equal 4116
@@ -158,10 +167,16 @@ attach sequence below.
     meaning unknown).
 
 **Programmed-I/O flush workaround (established: `pic_pio_flush_new`, `issue_force_interrupt`, `pio_spin_wait`).**
-For chip type 2 and certain devices, the driver takes a spin lock and picks a pin from a per-chip mask, writes
-the pin's per-pin host address vector 237 (0xed) and address (`pcireg_intr_addr_vect_set`, `intr_addr_addr_set`),
-then forces that interrupt through `+0x180 + 8*pin` (`pcireg_force_always_set`) and spins until a counter in its
-own record equals 493. Purpose: ordering PIO writes by making an interrupt arrive: inferred from the structure.
+For chip type 2 and certain devices, the driver takes a spin lock and picks a pin from a per-chip mask (the mask
+is the byte-wide word at record +2744, initially 255, and the chosen pin is removed from it; which pins are allowed
+depends on the device: the mask is ANDed with 0xd0 when a byte field of the device record equals 1 and its two
+identity words are 4265 and 4106, otherwise with 0xcc, or 0x88 when `get_chimera_type` returns 3 and
+`pciio_info_bus_get` returns 2; the meaning of those tests is not read). It writes the pin's per-pin host address vector 237 (0xed)
+(`pcireg_intr_addr_vect_set`) and, as the address (`intr_addr_addr_set`), the address of the counter at +80 of the
+caller's flush record. `issue_force_interrupt` then zeroes that counter and forces the interrupt by writing the value
+1 to `+0x180 + 8*pin` (`pcireg_force_always_set`, pins 0 to 7; the chip-type 0 path of that accessor panics), and
+`pio_spin_wait` spins until the counter equals 493. Nothing in these routines writes 493: the interrupt service
+routine is not read. Purpose: ordering PIO writes by making an interrupt arrive: inferred from the structure.
 
 **Error handling and interrupt service: unknown** (not read). The accessors for the error registers
 (`+0x18`, `+0x40`, `+0x58`, `+0x60`, `+0x68`, `+0x78`, `+0x90`, `+0xb0`, `+0xd8`, `+0x600` to `+0x630`) are named
@@ -174,6 +189,16 @@ own record equals 493. Purpose: ordering PIO writes by making an interrupt arriv
 Unknown for every register: no routine reads a register before writing it in the attach sequence, apart from
 read-modify-write of control and enable (so it expects whatever the hardware presents, and clears or sets
 listed bits). The attach itself writes: `+0x110` 0x7f, `+0x120` 0x6db6db, `+0x118` 0, the banks and entries zero.
+
+The IP35 PROM routine at 0xc00000001fc41f38 (read in full, 0xc00000001fc41f38 to 0xc00000001fc41fb4) clears the interrupt registers before the
+kernel runs, and it has two paths on the identification word. For parts 0xd102 and 0xd112 with manufacturer 36 it
+stores 64-bit zero to `+0x108` and 64-bit all-ones to `+0x110` (established). Only for any other part does it use
+the 32-bit stores at `+0x10c`, `+0x114` (0xffff) and `+0x12c`. So the census rows of the PROM `sw` stores at those
+three offsets belong to a Bridge-family path, not to the PIC: the scanner assigned them to the PIC because (inferred)
+it treats the fall-through of the part compare as the PIC variant, and it never saw the PIC stores because the
+PROM image is split after each return and the PIC block sits behind one. The register table's `4,8` widths for
+`+0x108`, `+0x110` and `+0x128` and the `+0x110` constant 0xffff come from those rows; the PIC value the PROM
+writes to `+0x110` is all-ones, the kernel's is 0x7f.
 
 ## Against the emulator's datasheet (reported after the reading above)
 
