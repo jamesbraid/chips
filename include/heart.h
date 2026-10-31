@@ -6,11 +6,81 @@
  * Offsets and widths: [E] a load or store in the cited routine reaches that offset with that width.
  * Names: [I] from the accessor routine names the shipped objects carry. Fields: [I] masks and constants
  * the code applies; their meaning is not read. Reset values: [U] throughout.
+ * HEART: names come from the config register_names (the shipped diagnostic prints them, or the public
+ * Linux driver where it prints none); offsets 0x100000 and up are the widget block, see the chip page.
  */
 #ifndef HEART_H
 #define HEART_H
 
-/* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: chips/heart/README.md. */
+
+/* ---- PIU registers (8-byte slots): mode, memory, flow control, status, error latches --- */
+
+#define HEART_MODE                         0x000000   /* [E] width 8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 78 sites, 34 routine(s) */
+#define   HEART_MODE_V_200000              0x200000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HEART_MODE_V_400000              0x400000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HEART_MODE_B_3_0                 0xf   /* [I] load mask: the code isolates these bits (2 sites) */
+#define HEART_MEM_ARB                      0x000018   /* [E] width 8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 12 sites, 4 routine(s) */
+#define   HEART_MEM_ARB_V_100000           0x100000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HEART_MEMCFG0                      0x000020   /* [E] width 8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 4 sites, 4 routine(s) */
+#define HEART_MEMCFG0_20                   0x000020   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 9 sites, 9 routine(s) */
+#define HEART_MEMCFG1                      0x000028   /* [E] width 8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 4 sites, 4 routine(s) */
+#define HEART_MEMCFG2                      0x000030   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 2 sites, 2 routine(s) */
+#define HEART_MEMCFG3                      0x000038   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 2 sites, 2 routine(s) */
+#define HEART_FC_MODE                      0x000040   /* [E] width 8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 17 sites, 9 routine(s) */
+#define   HEART_FC_MODE_V_45               0x45   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HEART_FC_LIMIT                     0x000048   /* [E] width 8 byte(s), access w; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 1 sites, 1 routine(s) */
+#define HEART_FC0_ADDR                     0x000050   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 2 sites, 2 routine(s) */
+#define HEART_FC0_COUNT                    0x000060   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 5 sites, 5 routine(s) */
+#define HEART_STATUS                       0x000080   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 48 sites, 40 routine(s) */
+#define   HEART_STATUS_B_11                0x800   /* [I] load mask: the code isolates these bits (3 sites) */
+#define   HEART_STATUS_B_3_0               0xf   /* [I] load mask: the code isolates these bits (11 sites) */
+#define   HEART_STATUS_B_7_4               0xf0   /* [I] load mask: the code isolates these bits (5 sites) */
+#define HEART_BERR_ADDR                    0x000088   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 9 sites, 7 routine(s) */
+#define HEART_BERR_MISC                    0x000090   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 10 sites, 8 routine(s) */
+#define HEART_MEM_ERR                      0x000098   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 14 sites, 12 routine(s) */
+#define HEART_BAD_MEM                      0x0000a0   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 12 sites, 10 routine(s) */
+#define HEART_PIU_ERR                      0x0000a8   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 9 sites, 7 routine(s) */
+
+/* ---- interrupt registers: mask per processor, status, cause ------ */
+
+#define HEART_IMR0                         0x010000   /* [E] width 8 byte(s), access w; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
+#define HEART_IMR0_10000                   0x010000   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 46 sites, 21 routine(s) */
+#define HEART_IMR1                         0x010008   /* [E] width 8 byte(s), access w; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
+#define HEART_IMR2                         0x010010   /* [E] width 8 byte(s), access w; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
+#define HEART_IMR3                         0x010018   /* [E] width 8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 9 sites, 5 routine(s) */
+#define   HEART_IMR3_V_1                   0x1   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define HEART_SET_ISR                      0x010020   /* [E] width 8 byte(s), access w; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 7 sites, 6 routine(s) */
+#define HEART_CLR_ISR                      0x010028   /* [E] width 8 byte(s), access w; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 21 sites, 20 routine(s) */
+#define HEART_ISR                          0x010030   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 27 sites, 17 routine(s) */
+#define HEART_IMSR                         0x010038   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 13 sites, 10 routine(s) */
+#define HEART_CAUSE                        0x010040   /* [E] width 8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 58 sites, 22 routine(s) */
+#define   HEART_CAUSE_V_1                  0x1   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
+#define   HEART_CAUSE_B_0                  0x1   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   HEART_CAUSE_B_1                  0x2   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   HEART_CAUSE_B_1_0                0x3   /* [I] load mask: the code isolates these bits (2 sites) */
+
+/* ---- timer, trigger, processor number, sync ---------------------- */
+
+#define HEART_COUNT                        0x020000   /* [E] width 4/8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 162 sites, 80 routine(s) */
+#define   HEART_COUNT_B_11_0               0xfff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define HEART_TRIGGER                      0x040000   /* [E] width 8 byte(s), access w; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 4 sites, 2 routine(s) */
+#define HEART_PRID                         0x050000   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 84 sites, 33 routine(s) */
+#define HEART_SYNC                         0x060000   /* [E] width 8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 6 sites, 1 routine(s) */
+
+/* ---- widget block of HEART's own XIO port (physical 0x18000000), offset = 0x100000 + widget offset --- */
+
+#define HEART_WID_ID                       0x100000   /* [E] width 4/8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 28 sites, 21 routine(s) */
+#define HEART_WID_ERR_UPPER                0x100010   /* [E] width 4 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
+#define HEART_WID_ERR_LOWER                0x100018   /* [E] width 4 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
+#define HEART_WID_REQ_TIMEOUT              0x100028   /* [E] width 4 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 4 sites, 2 routine(s) */
+#define   HEART_WID_REQ_TIMEOUT_V_80       0x80   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HEART_WID_ERR_CMDWORD              0x100040   /* [E] width 4/8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 12 sites, 11 routine(s) */
+#define HEART_WID_ERR_TYPE                 0x100060   /* [E] width 4/8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 20 sites, 11 routine(s) */
+#define HEART_WID_ERR_MASK                 0x100068   /* [E] width 8 byte(s), access w; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 2 sites, 1 routine(s) */
+#define   HEART_WID_ERR_MASK_V_2C07        0x2c07   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   HEART_WID_ERR_MASK_V_3FF60000    0x3ff60000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define HEART_WID_PIO_ERR_UPPER            0x100070   /* [E] width 4/8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
+#define HEART_WID_PIO_ERR_LOWER            0x100078   /* [E] width 4/8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
+#define HEART_WID_PIO_RTO_ADDR             0x100090   /* [E] width 4/8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
 
 #endif /* HEART_H */

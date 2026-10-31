@@ -2,67 +2,134 @@
  "asic": "heart",
  "title": "HEART (IP30 system controller)",
  "mode": "no-spec",
- "status": "stub: census not run",
+ "status": "pilot",
  "spec": null,
  "images": [
-  {
-   "label": "ip27-unix",
-   "dis": "work/dis/ip27-unix.s",
-   "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
-   "path": "root/IP27/unix",
-   "kind": "elf"
-  },
   {
    "label": "ip30-unix",
    "dis": "work/dis/ip30-unix.s",
    "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
    "path": "root/IP30/unix",
-   "kind": "elf"
+   "kind": "elf",
+   "const_windows": [
+    {
+     "lo": "0xffffffffaff00000",
+     "hi": "0xffffffffaff80000",
+     "name": "piu"
+    },
+    {
+     "lo": "0x900000000ff00000",
+     "hi": "0x900000000ff80000",
+     "name": "piu"
+    },
+    {
+     "lo": "0x9000000017f00000",
+     "hi": "0x9000000018001000",
+     "name": "widget-8"
+    },
+    {
+     "lo": "0xffffffffb7f00000",
+     "hi": "0xffffffffb8001000",
+     "name": "widget-8"
+    }
+   ],
+   "literals": "work/dis/ip30-unix.sdata.txt",
+   "lit_sections": [
+    ".sdata",
+    ".lit8",
+    ".srdata"
+   ],
+   "linked_literals": true
   },
   {
    "label": "ip30-prom",
    "dis": "work/dis/ip30-prom.s",
-   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
+   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); no symbols, window addresses are built as constants",
    "path": "root/firmware/IP30prom.bin",
    "kind": "raw",
    "vma": "0xffffffffbfc00000",
    "arch": "mips:isa64",
-   "split": "jr31"
-  },
-  {
-   "label": "ip35-kernel-o",
-   "dis": "work/dis/ip35-kernel-o.s",
-   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
-   "kind": "elf",
-   "reloc": true,
-   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
-  },
-  {
-   "label": "ip35-prom",
-   "dis": "work/dis/ip35-prom.s",
-   "path": "root/firmware/ip35prom.img",
-   "kind": "promgen64",
-   "segment": "ip35prom",
-   "vma": "0xc00000001fc00000",
-   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time",
-   "split": "jr31"
-  },
-  {
-   "label": "ip32-kernel-o",
-   "dis": "work/dis/ip32-kernel-o.s",
-   "path": "root/IP32/usr/cpu/sysgen/IP32boot/kernel.o",
-   "kind": "elf",
-   "reloc": true,
-   "note": "IRIX 6.5.30 IP32 kernel object"
-  },
-  {
-   "label": "ip32-prom",
-   "dis": "work/dis/ip32-prom.s",
-   "path": "root/firmware/ip32prom.image",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
    "split": "jr31",
-   "note": "IP32 PROM flat image; load address assumed from the reset vector, not yet read from the image"
+   "const_windows": [
+    {
+     "lo": "0xffffffffaff00000",
+     "hi": "0xffffffffaff80000",
+     "name": "piu"
+    },
+    {
+     "lo": "0x900000000ff00000",
+     "hi": "0x900000000ff80000",
+     "name": "piu"
+    },
+    {
+     "lo": "0x9000000017f00000",
+     "hi": "0x9000000018001000",
+     "name": "widget-8"
+    },
+    {
+     "lo": "0xffffffffb7f00000",
+     "hi": "0xffffffffb8001000",
+     "name": "widget-8"
+    }
+   ]
+  },
+  {
+   "label": "ip30-ide",
+   "dis": "work/dis/ip30-ide.s",
+   "path": "root/sbin/stand/ide.IP30",
+   "kind": "elf",
+   "note": "IP30 diagnostic program, linked, stripped",
+   "const_windows": [
+    {
+     "lo": "0xffffffffaff00000",
+     "hi": "0xffffffffaff80000",
+     "name": "piu"
+    },
+    {
+     "lo": "0x900000000ff00000",
+     "hi": "0x900000000ff80000",
+     "name": "piu"
+    },
+    {
+     "lo": "0x9000000017f00000",
+     "hi": "0x9000000018001000",
+     "name": "widget-8"
+    },
+    {
+     "lo": "0xffffffffb7f00000",
+     "hi": "0xffffffffb8001000",
+     "name": "widget-8"
+    }
+   ]
+  },
+  {
+   "label": "ip30-symmon",
+   "dis": "work/dis/ip30-symmon.s",
+   "path": "root/sbin/stand/symmon.IP30",
+   "kind": "elf",
+   "note": "IP30 symbolic monitor, linked, stripped",
+   "const_windows": [
+    {
+     "lo": "0xffffffffaff00000",
+     "hi": "0xffffffffaff80000",
+     "name": "piu"
+    },
+    {
+     "lo": "0x900000000ff00000",
+     "hi": "0x900000000ff80000",
+     "name": "piu"
+    },
+    {
+     "lo": "0x9000000017f00000",
+     "hi": "0x9000000018001000",
+     "name": "widget-8"
+    },
+    {
+     "lo": "0xffffffffb7f00000",
+     "hi": "0xffffffffb8001000",
+     "name": "widget-8"
+    }
+   ]
   }
  ],
  "report_functions": ".*",
@@ -81,5 +148,62 @@
    "model": []
   }
  },
- "buckets": []
+ "buckets": [],
+ "collapse_above": 268435456,
+ "note_windows": "window offsets: the PIU registers at physical 0x0ff00000 are reported at their own offset; the registers of HEART's own XIO widget (physical 0x18000000) are reported 0x100000 above their widget offset (offset 0x100004 is widget offset 0x4)",
+ "register_names": {
+  "0x0": "MODE",
+  "0x8": "SDRAM_MODE",
+  "0x10": "MEM_REF",
+  "0x18": "MEM_ARB",
+  "0x20": "MEMCFG0",
+  "0x28": "MEMCFG1",
+  "0x30": "MEMCFG2",
+  "0x38": "MEMCFG3",
+  "0x40": "FC_MODE",
+  "0x48": "FC_LIMIT",
+  "0x50": "FC0_ADDR",
+  "0x58": "FC1_ADDR",
+  "0x60": "FC0_COUNT",
+  "0x68": "FC1_COUNT",
+  "0x70": "FC0_TIMER",
+  "0x78": "FC1_TIMER",
+  "0x80": "STATUS",
+  "0x88": "BERR_ADDR",
+  "0x90": "BERR_MISC",
+  "0x98": "MEM_ERR",
+  "0xa0": "BAD_MEM",
+  "0xa8": "PIU_ERR",
+  "0xb0": "MLAN_CLK_DIV",
+  "0xb8": "MLAN_CTL",
+  "0x10000": "IMR0",
+  "0x10008": "IMR1",
+  "0x10010": "IMR2",
+  "0x10018": "IMR3",
+  "0x10020": "SET_ISR",
+  "0x10028": "CLR_ISR",
+  "0x10030": "ISR",
+  "0x10038": "IMSR",
+  "0x10040": "CAUSE",
+  "0x20000": "COUNT",
+  "0x30000": "COMPARE",
+  "0x40000": "TRIGGER",
+  "0x50000": "PRID",
+  "0x60000": "SYNC",
+  "0x100000": "WID_ID",
+  "0x100008": "WID_STAT",
+  "0x100010": "WID_ERR_UPPER",
+  "0x100018": "WID_ERR_LOWER",
+  "0x100020": "WID_CONTROL",
+  "0x100028": "WID_REQ_TIMEOUT",
+  "0x100040": "WID_ERR_CMDWORD",
+  "0x100048": "WID_LLP",
+  "0x100050": "WID_TARG_FLUSH",
+  "0x100060": "WID_ERR_TYPE",
+  "0x100068": "WID_ERR_MASK",
+  "0x100070": "WID_PIO_ERR_UPPER",
+  "0x100078": "WID_PIO_ERR_LOWER",
+  "0x100090": "WID_PIO_RTO_ADDR"
+ },
+ "note_names": "names are the shipped IP30 diagnostic's own HEART_* register strings where it prints one; SET_ISR, CLR_ISR, ISR, IMSR, COUNT, TRIGGER, PRID and SYNC are printed by none of the held files and take the public Linux driver's names (inferred)"
 }

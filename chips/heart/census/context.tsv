@@ -1,0 +1,766 @@
+image	function	addr	variant	offset	rw	width	instructions_around_site
+ip30-unix	_get_timestamp	011330	?	0x20004	r	4	lui $2,0xaff2 / jr $31 / lwu $2,4($2)
+ip30-unix	getcpuid	01133c	?	0x50000	r	8	lui $2,0xaff5 / jr $31 / ld $2,0($2)
+ip30-unix	nmi_dump	01134c	?	0x50000	r	8	addiu $26,$0,128 / mtc0 $26,$12 / lui $26,0xaff5 / ld $27,0($26) / lui $26,0xa800 / dsll32 $26,$26,0x0 / ori $26,$26,0x400 / lw $26,16($26)
+ip30-unix	_ticksper1024inst	011600	?	0x20000	r	8	sync  / addiu $4,$0,511 / lui $12,0xaff2 / sll $0,$0,0x0 / ld $2,0($12) / addiu $13,$0,10 / bgtz $13,a800000020011608 / addiu $13,$13,-1 / bgtz $4,a800000020011604
+ip30-unix	_ticksper1024inst	011618	?	0x20000	r	8	bgtz $13,a800000020011608 / addiu $13,$13,-1 / bgtz $4,a800000020011604 / addiu $4,$4,-1 / ld $3,0($12) / jr $31 / dsubu $2,$3,$2
+ip30-unix	mlreset	012528	?	0x0	r	8	sh $2,-26016($28) / lui $11,0xaff0 / addiu $17,$0,1 / or $8,$0,$0 / ld $12,0($11) / addiu $4,$0,4 / addiu $7,$0,60 / ld $11,128($11) / dsllv $14,$17,$7
+ip30-unix	mlreset	012534	?	0x80	r	8	or $8,$0,$0 / ld $12,0($11) / addiu $4,$0,4 / addiu $7,$0,60 / ld $11,128($11) / dsllv $14,$17,$7 / addiu $7,$7,1 / and $14,$12,$14 / dsllv $6,$17,$4
+ip30-unix	sub_a800000020012a04	012a14	?	0x0	r	8	dsll $5,$4,0x2 / lui $3,0xaff0 / addiu $4,$4,60 / addiu $6,$0,1 / ld $2,0($3) / daddiu $1,$28,-1136 / dsllv $4,$6,$4 / daddu $1,$1,$5 / or $2,$2,$4
+ip30-unix	sub_a800000020012a04	012a28	?	0x0	w	8	daddiu $1,$28,-1136 / dsllv $4,$6,$4 / daddu $1,$1,$5 / or $2,$2,$4 / sd $2,0($3) / jr $31 / sw $0,0($1)
+ip30-unix	sub_a800000020012a34	012a40	?	0x80	r	8	lui $2,0xaff0 / addiu $4,$4,4 / addiu $3,$0,1 / ld $2,128($2) / dsllv $3,$3,$4 / and $2,$2,$3 / jr $31 / sll $2,$2,0x0
+ip30-unix	sub_a8000000200130d0	013158	?	0x20000	r	8	dmult $7,$10 / ori $15,$11,0x4240 / mflo $6 / ddiv $0,$6,$15 / ld $4,0($9) / ld $24,0($9) / mflo $5 / daddu $4,$4,$5 / sltu $24,$24,$4
+ip30-unix	sub_a8000000200130d0	01315c	?	0x20000	r	8	ori $15,$11,0x4240 / mflo $6 / ddiv $0,$6,$15 / ld $4,0($9) / ld $24,0($9) / mflo $5 / daddu $4,$4,$5 / sltu $24,$24,$4 / andi $2,$8,0x1
+ip30-unix	sub_a8000000200130d0	013178	?	0x20000	r	8	sltu $24,$24,$4 / andi $2,$8,0x1 / beq $24,$0,a8000000200131c8 / teq $15,$0,0x7 / ld $7,0($9) / sltu $7,$7,$4 / beq $7,$0,a8000000200131c8 / sll $0,$0,0x0 / ld $10,0($9)
+ip30-unix	sub_a8000000200130d0	013188	?	0x20000	r	8	ld $7,0($9) / sltu $7,$7,$4 / beq $7,$0,a8000000200131c8 / sll $0,$0,0x0 / ld $10,0($9) / sltu $10,$10,$4 / beq $10,$0,a8000000200131c8 / sll $0,$0,0x0 / ld $11,0($9)
+ip30-unix	sub_a8000000200130d0	013198	?	0x20000	r	8	ld $10,0($9) / sltu $10,$10,$4 / beq $10,$0,a8000000200131c8 / sll $0,$0,0x0 / ld $11,0($9) / sltu $11,$11,$4 / beq $11,$0,a8000000200131c8 / sll $0,$0,0x0 / ld $12,0($9)
+ip30-unix	sub_a8000000200130d0	0131a8	?	0x20000	r	8	ld $11,0($9) / sltu $11,$11,$4 / beq $11,$0,a8000000200131c8 / sll $0,$0,0x0 / ld $12,0($9) / sltu $12,$12,$4 / beq $12,$0,a8000000200131c8 / sll $0,$0,0x0 / ld $13,0($9)
+ip30-unix	sub_a8000000200130d0	0131b8	?	0x20000	r	8	ld $12,0($9) / sltu $12,$12,$4 / beq $12,$0,a8000000200131c8 / sll $0,$0,0x0 / ld $13,0($9) / sltu $13,$13,$4 / bne $13,$0,a800000020013178 / sll $0,$0,0x0 / jr $31
+ip30-unix	sub_a8000000200136b4	0136b8	?	0x80	r	8	lui $12,0xaff0 / ld $12,128($12) / lui $14,0x1000 / andi $12,$12,0xf / addiu $15,$0,-7 / dsll $11,$12,0x18
+ip30-unix	sendintr	013a3c	?	0x10020	w	8	addiu $3,$4,46 / addiu $1,$0,1 / lui $2,0xaff1 / dsllv $1,$1,$3 / sd $1,32($2) / jr $31 / or $2,$0,$0
+ip30-unix	debug_stop_all_cpus	013a8c	?	0x10020	w	8	addiu $6,$6,1 / lh $12,-15456($0) / beq $12,$5,a800000020013a94 / sll $0,$0,0x0 / sd $9,0($10) / lw $7,-32732($28) / addiu $5,$5,1 / slt $13,$5,$7 / dsllv $9,$8,$6
+ip30-unix	debug_stop_all_cpus	013ab4	?	0x10020	w	8	addiu $6,$6,1 / lh $14,-15456($0) / beq $14,$5,a800000020013a6c / sll $0,$0,0x0 / sd $9,0($10) / beq $0,$0,a800000020013a6c / lw $7,-32732($28) / jr $31 / sll $0,$0,0x0
+ip30-unix	heart_set_cpu_intr	013f20	?	0x10020	w	8	addiu $1,$0,1 / lui $2,0xaff1 / sllv $1,$1,$4 / jr $31 / sd $1,32($2)
+ip30-unix	counter_intr	014400	?	0x20000	r	8	beq $4,$0,a800000020014474 / sd $16,40($29) / addiu $4,$0,-1 / jal a800000020011980 / ld $16,0($17) / ld $7,-21976($28) / lh $8,-15456($0) / dsll $8,$8,0x2 / daddiu $7,$7,16
+ip30-unix	counter_intr	014474	?	0x20000	r	8	beq $6,$0,a8000000200143b4 / ld $31,32($29) / beq $0,$0,a800000020014958 / addiu $5,$0,108 / ld $16,0($17) / ld $2,-15016($0) / sltu $7,$16,$2 / beq $7,$0,a800000020014588 / daddiu $5,$2,1200
+ip30-unix	counter_intr	0144a8	?	0x20000	r	8	mflo $10 / sltu $9,$9,$10 / beq $9,$0,a8000000200148d4 / teq $8,$0,0x7 / ld $16,0($17) / sltu $12,$16,$2 / beq $12,$0,a8000000200144f8 / sll $0,$0,0x0 / ld $16,0($17)
+ip30-unix	counter_intr	0144b8	?	0x20000	r	8	ld $16,0($17) / sltu $12,$16,$2 / beq $12,$0,a8000000200144f8 / sll $0,$0,0x0 / ld $16,0($17) / sltu $13,$16,$2 / beq $13,$0,a8000000200144f8 / sll $0,$0,0x0 / ld $16,0($17)
+ip30-unix	counter_intr	0144c8	?	0x20000	r	8	ld $16,0($17) / sltu $13,$16,$2 / beq $13,$0,a8000000200144f8 / sll $0,$0,0x0 / ld $16,0($17) / sltu $14,$16,$2 / beq $14,$0,a8000000200144f8 / sll $0,$0,0x0 / ld $16,0($17)
+ip30-unix	counter_intr	0144d8	?	0x20000	r	8	ld $16,0($17) / sltu $14,$16,$2 / beq $14,$0,a8000000200144f8 / sll $0,$0,0x0 / ld $16,0($17) / sltu $15,$16,$2 / beq $15,$0,a8000000200144f8 / sll $0,$0,0x0 / ld $16,0($17)
+ip30-unix	counter_intr	0144e8	?	0x20000	r	8	ld $16,0($17) / sltu $15,$16,$2 / beq $15,$0,a8000000200144f8 / sll $0,$0,0x0 / ld $16,0($17) / sltu $24,$16,$2 / bne $24,$0,a8000000200144a8 / sll $0,$0,0x0 / jal a800000020011a9c
+ip30-unix	counter_intr	01469c	?	0x20000	r	8	addiu $2,$2,1 / sw $2,-15008($0) / daddu $6,$8,$6 / sd $6,-15032($0) / ld $16,0($17) / sltu $9,$16,$6 / bne $9,$0,a8000000200146f4 / sll $0,$0,0x0 / lw $11,0($7)
+ip30-unix	counter_intr	0146bc	?	0x20000	r	8	lw $11,0($7) / beq $11,$0,a800000020014770 / daddu $6,$8,$6 / sd $6,-15032($0) / ld $16,0($17) / sltu $12,$16,$6 / bne $12,$0,a8000000200146f4 / sll $0,$0,0x0 / lw $13,0($7)
+ip30-unix	counter_intr	0147e8	?	0x20000	r	8	sd $6,-15032($0) / lw $11,-32592($28) / daddu $2,$11,$2 / sd $2,-15024($0) / ld $16,0($17) / sltu $9,$16,$2 / bne $9,$0,a80000002001473c / sll $0,$0,0x0 / lw $12,0($7)
+ip30-unix	startrtclock	014acc	?	0x20000	r	8	sw $5,-1068($28) / sw $0,-15000($0) / lui $11,0xaff2 / lui $24,0x3 / ld $11,0($11) / lui $25,0x1 / ori $24,$24,0xd08f / ori $25,$25,0xe848 / daddu $24,$11,$24
+ip30-unix	init_timebase	014d60	?	0x20000	r	8	sd $17,0($29) / sw $2,2456($28) / ld $24,-21976($28) / lui $16,0xaff2 / ld $25,0($16) / sd $25,-1032($28) / sw $0,-1036($28) / sw $0,-1040($28) / sw $2,0($24)
+ip30-unix	init_timebase	014d80	?	0x20000	r	8	sw $2,0($24) / sd $0,8($24) / sd $0,-1008($28) / sd $0,-1016($28) / ld $1,0($16) / lui $17,0x17d / ld $2,-1032($28) / ori $17,$17,0x7840 / daddu $2,$17,$2
+ip30-unix	init_timebase	014da8	?	0x20000	r	8	beq $1,$0,a800000020014de8 / ld $5,-21968($28) / beq $0,$0,a800000020014dc0 / sll $0,$0,0x0 / ld $31,0($16) / ld $1,-1032($28) / daddu $1,$17,$1 / sltu $31,$31,$1 / beq $31,$0,a800000020014de8
+ip30-unix	tick_maint	014ff4	?	0x20000	r	8	bne $3,$0,a800000020014fcc / addiu $2,$5,-1 / lui $4,0xaff2 / lui $7,0xfffe / ld $4,0($4) / ori $7,$7,0x17b8 / daddu $4,$4,$7 / beq $0,$0,a800000020014fc8 / sd $4,-1048($28)
+ip30-unix	rtc_read	015240	?	0x20000	r	8	lui $2,0xaff2 / jr $31 / ld $2,0($2)
+ip30-unix	set_timer_intr	0152b8	?	0x20000	r	8	lui $8,0xaff2 / sd $31,0($29) / or $7,$0,$0 / jal a8000000200152c8 / ld $8,0($8) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-unix	timeout_get_queuehead	0156b4	?	0x20000	r	8	addiu $2,$0,1 / lui $4,0xaff2 / or $16,$2,$0 / jal a80000002001524c / ld $4,0($4) / lui $7,0x7fff / ori $7,$7,0xffff / ld $6,-976($28) / sltu $8,$7,$16
+ip30-unix	timeout_get_queuehead	015724	?	0x20000	r	8	and $9,$10,$25 / lui $4,0xaff2 / or $16,$2,$0 / jal a80000002001524c / ld $4,0($4) / lui $7,0x7fff / ori $7,$7,0xffff / ld $6,-968($28) / sltu $8,$7,$16
+ip30-unix	chktimeout_tick	015828	?	0x20000	r	8	or $7,$19,$0 / beq $2,$0,a8000000200158b4 / or $16,$2,$0 / lui $6,0xaff2 / ld $6,0($6) / addiu $2,$0,3 / addiu $4,$0,4 / ld $5,-976($28) / beq $18,$0,a800000020015868
+ip30-unix	callout_time_to_hz	0159c8	?	0x20000	r	8	lui $3,0xaff2 / ld $3,0($3) / ld $5,-968($28) / dsubu $3,$4,$3 / ddivu $0,$3,$5 / teq $5,$0,0x7
+ip30-unix	timein_body	015ab0	?	0x20000	r	8	ld $16,24($17) / beq $16,$0,a800000020015b24 / or $18,$2,$0 / ld $5,0($16) / ld $6,0($20) / sltu $6,$6,$5 / beq $6,$0,a800000020015a48 / sll $0,$0,0x0 / lw $4,168($17)
+ip30-unix	migrate_timeouts	015d08	?	0x20000	r	8	jal a80000002022d9a0 / or $5,$2,$0 / jal a800000020177510 / or $4,$16,$0 / ld $31,0($22) / ld $16,0($29) / dsubu $31,$16,$31 / ddivu $0,$31,$21 / mflo $5
+ip30-unix	sub_a800000020016030	016058	?	0x20000	r	8	lui $11,0xaff2 / addiu $12,$12,1 / sw $12,-1036($28) / sync  / ld $11,0($11) / ld $1,-1032($28) / lui $24,0xbe / ld $13,-21976($28) / ori $14,$24,0xbc20
+ip30-unix	nanotime_syscall	016288	?	0x20000	r	8	sync  / ld $11,-1032($28) / lw $12,0($15) / ld $13,8($15) / ld $8,0($5) / ld $14,-1008($28) / ld $9,-1016($28) / ld $10,-1024($28) / sync 
+ip30-unix	nanotime	0163f8	?	0x20000	r	8	sync  / lw $10,-1036($28) / bne $10,$12,a8000000200163d4 / sll $7,$7,0x0 / ld $14,0($11) / dsll32 $12,$7,0x0 / dsubu $14,$14,$8 / dsll $13,$14,0x2 / dsrl32 $12,$12,0x0
+ip30-unix	nanotime	01642c	?	0x20000	r	8	daddu $13,$12,$13 / slt $13,$13,$10 / bne $13,$0,a800000020016480 / sll $0,$0,0x0 / ld $9,0($11) / dsubu $9,$9,$8 / dsll $7,$9,0x2 / daddu $7,$7,$9 / lui $9,0xc465
+ip30-unix	nanotime	016480	?	0x20000	r	8	sd $7,8($4) / sw $6,0($4) / jr $31 / sll $0,$0,0x0 / ld $9,0($11) / dsubu $9,$9,$8 / dsll $7,$9,0x2 / daddu $7,$7,$9 / dsll $7,$7,0x4
+ip30-unix	local_settime	0165ac	?	0x20000	r	8	lui $14,0xaff2 / addiu $15,$15,1 / sw $15,-1036($28) / sync  / ld $14,0($14) / dsll $12,$16,0x5 / sw $17,2456($28) / dsubu $12,$12,$16 / sd $14,-1032($28)
+ip30-unix	get_realtime_ticks	016680	?	0x20000	r	8	ld $5,-1048($28) / lui $4,0xaff2 / ld $4,0($4) / ld $3,-968($28) / dsubu $4,$4,$5 / ddiv $0,$4,$3 / teq $3,$0,0x7
+ip30-unix	tstoclock	0166e0	?	0x20000	r	8	daddiu $2,$2,1 / jr $31 / sll $0,$0,0x0 / lui $9,0xaff2 / ld $9,0($9) / jr $31 / daddu $2,$2,$9
+ip30-unix	tvtoclock	016740	?	0x20000	r	8	daddiu $2,$2,1 / jr $31 / sll $0,$0,0x0 / lui $9,0xaff2 / ld $9,0($9) / jr $31 / daddu $2,$2,$9
+ip30-unix	sub_a800000020018014	01803c	?	0x20000	r	8	sd $17,32($29) / jal a80000002001bb14 / sd $16,40($29) / lui $16,0xaff2 / ld $7,0($16) / ld $17,0($16) / bne $17,$7,a800000020018070 / sd $2,0($29) / ld $17,0($16)
+ip30-unix	sub_a800000020018014	018040	?	0x20000	r	8	jal a80000002001bb14 / sd $16,40($29) / lui $16,0xaff2 / ld $7,0($16) / ld $17,0($16) / bne $17,$7,a800000020018070 / sd $2,0($29) / ld $17,0($16) / bne $17,$7,a800000020018070
+ip30-unix	sub_a800000020018014	01804c	?	0x20000	r	8	ld $7,0($16) / ld $17,0($16) / bne $17,$7,a800000020018070 / sd $2,0($29) / ld $17,0($16) / bne $17,$7,a800000020018070 / sll $0,$0,0x0 / ld $17,0($16) / bne $17,$7,a800000020018070
+ip30-unix	sub_a800000020018014	018058	?	0x20000	r	8	sd $2,0($29) / ld $17,0($16) / bne $17,$7,a800000020018070 / sll $0,$0,0x0 / ld $17,0($16) / bne $17,$7,a800000020018070 / sll $0,$0,0x0 / ld $17,0($16) / beq $17,$7,a80000002001804c
+ip30-unix	sub_a800000020018014	018064	?	0x20000	r	8	sll $0,$0,0x0 / ld $17,0($16) / bne $17,$7,a800000020018070 / sll $0,$0,0x0 / ld $17,0($16) / beq $17,$7,a80000002001804c / sll $0,$0,0x0 / jal a800000020026a90 / sll $0,$0,0x0
+ip30-unix	sub_a800000020018014	018078	?	0x20000	r	8	beq $17,$7,a80000002001804c / sll $0,$0,0x0 / jal a800000020026a90 / sll $0,$0,0x0 / ld $1,0($16) / daddiu $7,$17,12500 / sltu $1,$1,$7 / beq $1,$0,a8000000200180dc / sd $2,8($29)
+ip30-unix	sub_a800000020018014	01808c	?	0x20000	r	8	daddiu $7,$17,12500 / sltu $1,$1,$7 / beq $1,$0,a8000000200180dc / sd $2,8($29) / ld $2,0($16) / sltu $2,$2,$7 / beq $2,$0,a8000000200180dc / sll $0,$0,0x0 / ld $3,0($16)
+ip30-unix	sub_a800000020018014	01809c	?	0x20000	r	8	ld $2,0($16) / sltu $2,$2,$7 / beq $2,$0,a8000000200180dc / sll $0,$0,0x0 / ld $3,0($16) / sltu $3,$3,$7 / beq $3,$0,a8000000200180dc / sll $0,$0,0x0 / ld $4,0($16)
+ip30-unix	sub_a800000020018014	0180ac	?	0x20000	r	8	ld $3,0($16) / sltu $3,$3,$7 / beq $3,$0,a8000000200180dc / sll $0,$0,0x0 / ld $4,0($16) / sltu $4,$4,$7 / beq $4,$0,a8000000200180dc / sll $0,$0,0x0 / ld $5,0($16)
+ip30-unix	sub_a800000020018014	0180bc	?	0x20000	r	8	ld $4,0($16) / sltu $4,$4,$7 / beq $4,$0,a8000000200180dc / sll $0,$0,0x0 / ld $5,0($16) / sltu $5,$5,$7 / beq $5,$0,a8000000200180dc / sll $0,$0,0x0 / ld $6,0($16)
+ip30-unix	sub_a800000020018014	0180cc	?	0x20000	r	8	ld $5,0($16) / sltu $5,$5,$7 / beq $5,$0,a8000000200180dc / sll $0,$0,0x0 / ld $6,0($16) / sltu $6,$6,$7 / bne $6,$0,a80000002001808c / sll $0,$0,0x0 / ld $16,40($29)
+ip30-unix	heartclock_intr	01824c	?	0x10028	w	8	addiu $1,$0,1 / lui $2,0xaff1 / dsll32 $1,$1,0x12 / jr $31 / sd $1,40($2)
+ip30-unix	update_ust	01a3c8	?	0x20000	r	8	lui $12,0xaff2 / daddiu $13,$28,-32560 / ld $2,0($12) / jr $31 / sd $2,0($13)
+ip30-unix	flushbus	01c1c8	?	0x50000	r	8	lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / sll $0,$0,0x0
+ip30-unix	flushbus	01c1d0	?	0x100000	r	8	lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / sll $0,$0,0x0 / jr $31 / sll $0,$0,0x0
+ip30-unix	badaddr	01c218	?	0x100060	r	8	mfc0 $12,$12 / addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1
+ip30-unix	badaddr	01c21c	?	0x100040	w	8	addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40
+ip30-unix	badaddr	01c220	?	0x100000	r	8	mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2)
+ip30-unix	badaddr	01c224	?	0x100060	w	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2)
+ip30-unix	badaddr	01c230	?	0x10040	r	8	ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0)
+ip30-unix	badaddr	01c234	?	0x10040	w	8	sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0) / addiu $2,$0,1
+ip30-unix	badaddr	01c23c	?	0x50000	r	8	ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0) / addiu $2,$0,1 / sh $2,246($14) / addiu $1,$0,1
+ip30-unix	badaddr	01c2d0	?	0x50000	r	8	dsll $5,$5,0x10 / jal a8000000201c6b00 / daddiu $5,$5,2280 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $13,$13
+ip30-unix	badaddr	01c2d8	?	0x100000	r	8	daddiu $5,$5,2280 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $13,$13 / andi $13,$13,0x4000 / bne $13,$0,a80000002001c908
+ip30-unix	badaddr	01c2fc	?	0x10040	r	8	sll $0,$0,0x0 / lui $13,0xaff1 / ori $13,$13,0x40 / lui $1,0x1 / ld $13,0($13) / and $13,$13,$1 / bne $13,$0,a80000002001c908 / sll $0,$0,0x0 / ld $14,-16352($0)
+ip30-unix	badaddr_val	01c340	?	0x100060	r	8	mfc0 $12,$12 / addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1
+ip30-unix	badaddr_val	01c344	?	0x100040	w	8	addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40
+ip30-unix	badaddr_val	01c348	?	0x100000	r	8	mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2)
+ip30-unix	badaddr_val	01c34c	?	0x100060	w	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2)
+ip30-unix	badaddr_val	01c358	?	0x10040	r	8	ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0)
+ip30-unix	badaddr_val	01c35c	?	0x10040	w	8	sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0) / beq $14,$0,a80000002001c380
+ip30-unix	badaddr_val	01c364	?	0x50000	r	8	ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0) / beq $14,$0,a80000002001c380 / addiu $2,$0,1 / sh $2,246($14)
+ip30-unix	badaddr_val	01c428	?	0x50000	r	8	dsll $5,$5,0x10 / jal a8000000201c6b00 / daddiu $5,$5,2289 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $13,$13
+ip30-unix	badaddr_val	01c430	?	0x100000	r	8	daddiu $5,$5,2289 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $13,$13 / andi $13,$13,0x4000 / bne $13,$0,a80000002001c908
+ip30-unix	badaddr_val	01c454	?	0x10040	r	8	sll $0,$0,0x0 / lui $13,0xaff1 / ori $13,$13,0x40 / lui $1,0x1 / ld $13,0($13) / and $13,$13,$1 / bne $13,$0,a80000002001c908 / sll $0,$0,0x0 / ld $14,-16352($0)
+ip30-unix	wbadaddr	01c4ac	?	0x100060	r	8	mfc0 $12,$12 / addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1
+ip30-unix	wbadaddr	01c4b0	?	0x100040	w	8	addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40
+ip30-unix	wbadaddr	01c4b4	?	0x100000	r	8	mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2)
+ip30-unix	wbadaddr	01c4b8	?	0x100060	w	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2)
+ip30-unix	wbadaddr	01c4c4	?	0x10040	r	8	ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0)
+ip30-unix	wbadaddr	01c4c8	?	0x10040	w	8	sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0) / addiu $2,$0,1
+ip30-unix	wbadaddr	01c4d0	?	0x50000	r	8	ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0) / addiu $2,$0,1 / sh $2,246($14) / addiu $1,$0,1
+ip30-unix	wbadaddr	01c564	?	0x50000	r	8	dsll $5,$5,0x10 / jal a8000000201c6b00 / daddiu $5,$5,2302 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / lui $1,0xaff5
+ip30-unix	wbadaddr	01c56c	?	0x100000	r	8	daddiu $5,$5,2302 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800
+ip30-unix	wbadaddr	01c578	?	0x50000	r	8	lui $1,0xb800 / ld $0,0($1) / sync  / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / addiu $1,$0,9
+ip30-unix	wbadaddr	01c580	?	0x100000	r	8	sync  / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / addiu $1,$0,9 / dsll32 $1,$1,0x1c / lw $14,0($1)
+ip30-unix	wbadaddr	01c5b4	?	0x10040	r	8	sll $0,$0,0x0 / lui $13,0xaff1 / ori $13,$13,0x40 / lui $1,0x1 / ld $13,0($13) / and $13,$13,$1 / bne $13,$0,a80000002001c908 / sll $0,$0,0x0 / ld $14,-16352($0)
+ip30-unix	wbadaddr_val	01c5f8	?	0x100060	r	8	mfc0 $12,$12 / addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1
+ip30-unix	wbadaddr_val	01c5fc	?	0x100040	w	8	addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40
+ip30-unix	wbadaddr_val	01c600	?	0x100000	r	8	mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2)
+ip30-unix	wbadaddr_val	01c604	?	0x100060	w	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2)
+ip30-unix	wbadaddr_val	01c610	?	0x10040	r	8	ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0)
+ip30-unix	wbadaddr_val	01c614	?	0x10040	w	8	sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0) / addiu $2,$0,1
+ip30-unix	wbadaddr_val	01c61c	?	0x50000	r	8	ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / ld $14,-16352($0) / addiu $2,$0,1 / sh $2,246($14) / addiu $1,$0,1
+ip30-unix	wbadaddr_val	01c6d0	?	0x50000	r	8	dsll $5,$5,0x10 / jal a8000000201c6b00 / daddiu $5,$5,2312 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / lui $1,0xaff5
+ip30-unix	wbadaddr_val	01c6d8	?	0x100000	r	8	daddiu $5,$5,2312 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800
+ip30-unix	wbadaddr_val	01c6e4	?	0x50000	r	8	lui $1,0xb800 / ld $0,0($1) / sync  / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / addiu $1,$0,9
+ip30-unix	wbadaddr_val	01c6ec	?	0x100000	r	8	sync  / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / addiu $1,$0,9 / dsll32 $1,$1,0x1c / lw $14,0($1)
+ip30-unix	wbadaddr_val	01c71c	?	0x10040	r	8	sll $0,$0,0x0 / lui $13,0xaff1 / ori $13,$13,0x40 / lui $1,0x1 / ld $13,0($13) / and $13,$13,$1 / bne $13,$0,a80000002001c908 / sll $0,$0,0x0 / ld $14,-16352($0)
+ip30-unix	earlybadaddr	01c760	?	0x100060	r	8	mfc0 $12,$12 / addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1
+ip30-unix	earlybadaddr	01c764	?	0x100040	w	8	addiu $13,$0,160 / mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40
+ip30-unix	earlybadaddr	01c768	?	0x100000	r	8	mtc0 $13,$12 / lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2)
+ip30-unix	earlybadaddr	01c76c	?	0x100060	w	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2)
+ip30-unix	earlybadaddr	01c778	?	0x10040	r	8	ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / addiu $2,$0,9
+ip30-unix	earlybadaddr	01c77c	?	0x10040	w	8	sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / addiu $2,$0,9 / lui $1,0xa800
+ip30-unix	earlybadaddr	01c784	?	0x50000	r	8	ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / addiu $2,$0,9 / lui $1,0xa800 / daddiu $1,$1,0 / dsll $1,$1,0x10
+ip30-unix	earlybadaddr	01c814	?	0x50000	r	8	dsll $5,$5,0x10 / jal a8000000201c6b00 / daddiu $5,$5,2326 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $13,$13
+ip30-unix	earlybadaddr	01c81c	?	0x100000	r	8	daddiu $5,$5,2326 / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $13,$13 / andi $13,$13,0x4000 / bne $13,$0,a80000002001c964
+ip30-unix	earlybadaddr	01c840	?	0x10040	r	8	sll $0,$0,0x0 / lui $13,0xaff1 / ori $13,$13,0x40 / lui $1,0x1 / ld $13,0($13) / and $13,$13,$1 / bne $13,$0,a80000002001c964 / sll $0,$0,0x0 / lui $1,0xa800
+ip30-unix	wbadmemaddr	01c8c8	?	0x10040	r	8	lw $2,0($4) / lui $13,0xaff1 / ori $13,$13,0x40 / lui $1,0x1 / ld $13,0($13) / and $13,$13,$1 / bne $13,$0,a80000002001c908 / sll $0,$0,0x0 / lui $1,0xa800
+ip30-unix	baerror	01c90c	?	0x100060	r	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1
+ip30-unix	baerror	01c910	?	0x100040	w	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40
+ip30-unix	baerror	01c914	?	0x100000	r	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2)
+ip30-unix	baerror	01c918	?	0x100060	w	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2)
+ip30-unix	baerror	01c924	?	0x10040	r	8	ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / mtc0 $12,$12
+ip30-unix	baerror	01c928	?	0x10040	w	8	sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / mtc0 $12,$12 / ld $14,-16352($0)
+ip30-unix	baerror	01c930	?	0x50000	r	8	ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / mtc0 $12,$12 / ld $14,-16352($0) / beq $14,$0,a80000002001c950 / addiu $2,$0,1
+ip30-unix	earlybaerror	01c968	?	0x100060	r	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1
+ip30-unix	earlybaerror	01c96c	?	0x100040	w	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40
+ip30-unix	earlybaerror	01c970	?	0x100000	r	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2)
+ip30-unix	earlybaerror	01c974	?	0x100060	w	8	lui $2,0xb800 / ld $1,96($2) / sd $0,64($2) / ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2)
+ip30-unix	earlybaerror	01c980	?	0x10040	r	8	ld $0,0($2) / sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / mtc0 $12,$12
+ip30-unix	earlybaerror	01c984	?	0x10040	w	8	sd $1,96($2) / lui $2,0xaff1 / ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / mtc0 $12,$12 / lui $1,0xa800
+ip30-unix	earlybaerror	01c98c	?	0x50000	r	8	ori $2,$2,0x40 / ld $1,0($2) / sd $1,0($2) / lui $1,0xaff5 / ld $0,0($1) / mtc0 $12,$12 / lui $1,0xa800 / addiu $2,$0,1 / daddiu $1,$1,0
+ip30-unix	_ecc_errorvec	01dd4c	?	0x50000	r	8	mtc0 $27,$18 / dsrl32 $27,$27,0x0 / mtc0 $27,$19 / lui $27,0xaff5 / ld $27,0($27) / dsll $27,$27,0x3 / ld $27,4080($27) / sd $26,200($27) / sd $1,0($27)
+ip30-unix	_ecc_end	01ddac	?	0x20	r	4	sll $3,$4,0x2 / ori $2,$2,0x20 / daddu $2,$2,$3 / jr $31 / lw $2,0($2)
+ip30-unix	dobuserr_common	024054	?	0x0	r	8	beq $2,$0,a800000020024020 / lui $3,0xaff0 / ld $6,-21376($28) / dsll $5,$22,0x3 / ld $23,0($3) / sd $23,664($29) / daddu $5,$5,$6 / lui $2,0xaff1 / sd $23,0($5)
+ip30-unix	dobuserr_common	024068	?	0x10040	r	8	sd $23,664($29) / daddu $5,$5,$6 / lui $2,0xaff1 / sd $23,0($5) / ld $23,64($2) / sd $23,16($5) / ld $20,168($3) / sd $20,32($5) / ld $15,144($3)
+ip30-unix	dobuserr_common	024070	?	0xa8	r	8	lui $2,0xaff1 / sd $23,0($5) / ld $23,64($2) / sd $23,16($5) / ld $20,168($3) / sd $20,32($5) / ld $15,144($3) / sd $15,704($29) / ld $7,-24336($28)
+ip30-unix	dobuserr_common	024078	?	0x90	r	8	ld $23,64($2) / sd $23,16($5) / ld $20,168($3) / sd $20,32($5) / ld $15,144($3) / sd $15,704($29) / ld $7,-24336($28) / sd $15,48($5) / ld $14,136($3)
+ip30-unix	dobuserr_common	024088	?	0x88	r	8	ld $15,144($3) / sd $15,704($29) / ld $7,-24336($28) / sd $15,48($5) / ld $14,136($3) / sd $14,616($29) / ld $8,-24376($28) / ld $4,-24384($28) / sd $20,728($29)
+ip30-unix	dobuserr_common	0240a0	?	0x100060	r	8	ld $8,-24376($28) / ld $4,-24384($28) / sd $20,728($29) / sd $14,64($5) / ld $20,0($4) / sd $20,80($5) / lw $13,0($8) / ld $9,-24344($28) / ld $12,-24368($28)
+ip30-unix	dobuserr_common	0240a8	?	0x100044	r	4	sd $20,728($29) / sd $14,64($5) / ld $20,0($4) / sd $20,80($5) / lw $13,0($8) / ld $9,-24344($28) / ld $12,-24368($28) / dsll32 $13,$13,0x0 / dsrl32 $13,$13,0x0
+ip30-unix	dobuserr_common	0240c0	?	0x100014	r	4	ld $12,-24368($28) / dsll32 $13,$13,0x0 / dsrl32 $13,$13,0x0 / sd $13,96($5) / lw $12,0($12) / ld $10,-24352($28) / ld $11,-24360($28) / dsll32 $12,$12,0x0 / dsrl32 $12,$12,0x0
+ip30-unix	dobuserr_common	0240d8	?	0x10001c	r	4	ld $11,-24360($28) / dsll32 $12,$12,0x0 / dsrl32 $12,$12,0x0 / sd $12,112($5) / lw $11,0($11) / sd $13,680($29) / sd $12,696($29) / dsll32 $11,$11,0x0 / dsrl32 $11,$11,0x0
+ip30-unix	dobuserr_common	0240f4	?	0x100090	r	8	dsll32 $11,$11,0x0 / dsrl32 $11,$11,0x0 / sd $11,688($29) / sd $11,128($5) / ld $10,0($10) / sd $10,592($29) / sd $10,144($5) / ld $9,0($9) / sd $9,752($29)
+ip30-unix	dobuserr_common	024100	?	0x100070	r	8	sd $11,128($5) / ld $10,0($10) / sd $10,592($29) / sd $10,144($5) / ld $9,0($9) / sd $9,752($29) / sd $9,160($5) / ld $7,0($7) / sd $7,712($29)
+ip30-unix	dobuserr_common	02410c	?	0x100078	r	8	sd $10,144($5) / ld $9,0($9) / sd $9,752($29) / sd $9,160($5) / ld $7,0($7) / sd $7,712($29) / sd $7,176($5) / ld $6,152($3) / sd $6,776($29)
+ip30-unix	dobuserr_common	024118	?	0x98	r	8	sd $9,160($5) / ld $7,0($7) / sd $7,712($29) / sd $7,176($5) / ld $6,152($3) / sd $6,776($29) / sd $6,192($5) / ld $6,792($29) / ld $3,160($3)
+ip30-unix	dobuserr_common	024128	?	0xa0	r	8	ld $6,152($3) / sd $6,776($29) / sd $6,192($5) / ld $6,792($29) / ld $3,160($3) / sd $3,672($29) / beq $6,$0,a8000000200248e8 / sd $3,208($5) / ld $7,792($29)
+ip30-unix	dobuserr_common	0242d0	?	0x10030	r	8	bne $21,$0,a8000000200246e8 / sd $11,136($29) / beq $0,$0,a8000000200246fc / lui $12,0x1000 / ld $13,0($20) / and $13,$19,$13 / beq $13,$0,a800000020024a80 / or $4,$21,$0 / jal a80000002003fe98
+ip30-unix	dobuserr_common	0245d4	?	0x100044	w	4	lui $31,0x4f0 / and $25,$25,$31 / beq $25,$0,a8000000200245d8 / ld $31,-24376($28) / sw $0,0($31) / xor $19,$20,$19 / beq $19,$0,a8000000200245e8 / ld $1,-24384($28) / sd $19,0($1)
+ip30-unix	dobuserr_common	0245e4	?	0x100060	w	8	sw $0,0($31) / xor $19,$20,$19 / beq $19,$0,a8000000200245e8 / ld $1,-24384($28) / sd $19,0($1) / xor $17,$23,$17 / beq $17,$0,a800000020024604 / ld $3,360($29) / lui $2,0xaff1
+ip30-unix	dobuserr_common	0245fc	?	0x10040	w	8	beq $17,$0,a800000020024604 / ld $3,360($29) / lui $2,0xaff1 / ori $2,$2,0x40 / sd $17,0($2) / ld $3,360($29) / beq $3,$0,a800000020024638 / lui $8,0xaff1 / lh $7,-15456($0)
+ip30-unix	dobuserr_common	02463c	?	0x10040	r	8	jal a80000002003e868 / or $6,$6,$7 / lui $8,0xaff1 / ori $8,$8,0x40 / ld $8,0($8) / beq $8,$0,a800000020024664 / ld $13,792($29) / lh $11,-15456($0) / lui $10,0xaff1
+ip30-unix	dobuserr_common	02465c	?	0x10020	w	8	lui $10,0xaff1 / addiu $9,$0,1 / addiu $11,$11,59 / dsllv $9,$9,$11 / sd $9,32($10) / ld $13,792($29) / addiu $12,$0,1 / ld $24,384($29) / daddiu $15,$28,-32528
+ip30-unix	dobuserr_common	02508c	?	0x10040	w	8	addiu $13,$0,-7 / ori $11,$11,0x40 / lui $12,0xaff6 / dsll32 $13,$13,0x1c / sd $14,0($11) / ld $15,0($12) / or $13,$2,$13 / ld $13,0($13) / ld $11,0($11)
+ip30-unix	dobuserr_common	025090	?	0x60000	r	8	ori $11,$11,0x40 / lui $12,0xaff6 / dsll32 $13,$13,0x1c / sd $14,0($11) / ld $15,0($12) / or $13,$2,$13 / ld $13,0($13) / ld $11,0($11) / lui $25,0xaff0
+ip30-unix	dobuserr_common	02509c	?	0x10040	r	8	sd $14,0($11) / ld $15,0($12) / or $13,$2,$13 / ld $13,0($13) / ld $11,0($11) / lui $25,0xaff0 / ld $24,0($12) / ld $24,24($25) / lui $31,0x10
+ip30-unix	dobuserr_common	0250a4	?	0x60000	r	8	or $13,$2,$13 / ld $13,0($13) / ld $11,0($11) / lui $25,0xaff0 / ld $24,0($12) / ld $24,24($25) / lui $31,0x10 / sd $24,216($29) / addiu $15,$0,-11
+ip30-unix	dobuserr_common	0250a8	?	0x18	r	8	ld $13,0($13) / ld $11,0($11) / lui $25,0xaff0 / ld $24,0($12) / ld $24,24($25) / lui $31,0x10 / sd $24,216($29) / addiu $15,$0,-11 / dsll32 $15,$15,0x1b
+ip30-unix	dobuserr_common	0250c0	?	0x18	w	8	sd $24,216($29) / addiu $15,$0,-11 / dsll32 $15,$15,0x1b / or $24,$24,$31 / sd $24,24($25) / or $14,$2,$0 / or $14,$2,$15 / ld $24,0($12) / lld $13,0($14)
+ip30-unix	dobuserr_common	0250cc	?	0x60000	r	8	or $24,$24,$31 / sd $24,24($25) / or $14,$2,$0 / or $14,$2,$15 / ld $24,0($12) / lld $13,0($14) / daddu $15,$13,$0 / or $13,$15,$0 / scd $15,0($14)
+ip30-unix	dobuserr_common	0250f0	?	0x60000	r	8	beql $15,$0,a8000000200250d0 / sll $0,$0,0x0 / addiu $5,$0,8 / or $4,$14,$0 / ld $12,0($12) / andi $11,$11,0x1 / jal a80000002001b008 / sd $11,808($29) / ld $2,504($29)
+ip30-unix	dobuserr_common	025114	?	0x60000	r	8	ld $10,808($29) / ld $15,216($29) / lui $14,0xaff6 / lui $24,0xaff0 / ld $25,0($14) / ori $24,$24,0x18 / sd $15,0($24) / addiu $11,$0,1 / beq $0,$0,a800000020024fec
+ip30-unix	dobuserr_common	02511c	?	0x18	w	8	lui $14,0xaff6 / lui $24,0xaff0 / ld $25,0($14) / ori $24,$24,0x18 / sd $15,0($24) / addiu $11,$0,1 / beq $0,$0,a800000020024fec / ld $14,0($14) / ld $16,-21384($28)
+ip30-unix	dobuserr_common	025128	?	0x60000	r	8	ori $24,$24,0x18 / sd $15,0($24) / addiu $11,$0,1 / beq $0,$0,a800000020024fec / ld $14,0($14) / ld $16,-21384($28) / addiu $4,$0,6 / daddiu $6,$16,608 / jal a8000000201c6b00
+ip30-unix	VEC_dbe	026964	?	0x50000	r	8	lui $12,0xaff5 / ld $12,0($12) / lui $13,0xaff1 / dsll $14,$12,0x3 / daddiu $15,$12,8 / daddu $13,$13,$14
+ip30-unix	VEC_dbe	026980	?	0x10000	r	8	daddiu $15,$12,8 / daddu $13,$13,$14 / addiu $14,$0,1 / dsllv $14,$14,$15 / ld $15,0($13) / ori $14,$14,0x1000 / dsll32 $14,$14,0x13 / nor $14,$14,$0 / and $15,$15,$14
+ip30-unix	VEC_dbe	026994	?	0x10000	w	8	ori $14,$14,0x1000 / dsll32 $14,$14,0x13 / nor $14,$14,$0 / and $15,$15,$14 / sd $15,0($13) / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1)
+ip30-unix	VEC_dbe	02699c	?	0x50000	r	8	nor $14,$14,$0 / and $15,$15,$14 / sd $15,0($13) / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / lh $12,-15456($0)
+ip30-unix	VEC_dbe	0269a4	?	0x100000	r	8	sd $15,0($13) / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / lh $12,-15456($0) / j a80000002001b9d0 / sd $12,320($4)
+ip30-unix	ecc_handler	028478	?	0x10040	r	8	addiu $24,$24,1 / beq $25,$0,a80000002002851c / sw $24,52($17) / lui $31,0xaff1 / ld $31,64($31) / andi $31,$31,0x2 / beq $31,$0,a8000000200285b0 / lui $19,0xaff0 / ld $19,152($19)
+ip30-unix	ecc_handler	028488	?	0x98	r	8	ld $31,64($31) / andi $31,$31,0x2 / beq $31,$0,a8000000200285b0 / lui $19,0xaff0 / ld $19,152($19) / addiu $24,$0,-1 / lui $2,0x7f / dsrl $24,$24,0x1e / ori $2,$2,0xffc0
+ip30-unix	VEC_ibe	02bf90	?	0x50000	r	8	daddiu $6,$6,4 / lui $12,0xaff5 / sd $6,272($27) / lui $13,0xaff1 / ld $12,0($12) / dsll $14,$12,0x3 / daddiu $15,$12,8 / daddu $13,$13,$14 / addiu $14,$0,1
+ip30-unix	VEC_ibe	02bfa8	?	0x10000	r	8	daddiu $15,$12,8 / daddu $13,$13,$14 / addiu $14,$0,1 / dsllv $14,$14,$15 / ld $15,0($13) / ori $14,$14,0x1000 / dsll32 $14,$14,0x13 / nor $14,$14,$0 / and $15,$15,$14
+ip30-unix	VEC_ibe	02bfbc	?	0x10000	w	8	ori $14,$14,0x1000 / dsll32 $14,$14,0x13 / nor $14,$14,$0 / and $15,$15,$14 / sd $15,0($13) / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1)
+ip30-unix	VEC_ibe	02bfc4	?	0x50000	r	8	nor $14,$14,$0 / and $15,$15,$14 / sd $15,0($13) / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / lh $12,-15456($0)
+ip30-unix	VEC_ibe	02bfcc	?	0x100000	r	8	sd $15,0($13) / lui $1,0xaff5 / ld $0,0($1) / lui $1,0xb800 / ld $0,0($1) / sync  / lh $12,-15456($0) / j a80000002001b9d0 / sd $12,320($4)
+ip30-unix	xbow_reset_link	03d48c	?	0x20000	r	8	sw $0,308($18) / lw $4,-28876($28) / jal a800000020011640 / sd $2,0($29) / ld $17,0($16) / beq $0,$0,a80000002003d4a0 / sll $17,$17,0x0 / jal a800000020011640 / lw $4,-28876($28)
+ip30-unix	xbow_reset_link	03d4b0	?	0x20000	r	8	lw $24,276($18) / srl $24,$24,0x1f / bne $24,$0,a80000002003d4d0 / lw $25,-28872($28) / ld $31,0($16) / sll $31,$31,0x0 / subu $31,$31,$17 / sltu $25,$25,$31 / beq $25,$0,a80000002003d498
+ip30-unix	xbow_reset_link	03d4f4	?	0x20000	r	8	ld $17,32($29) / ld $18,40($29) / jr $31 / daddiu $29,$29,48 / ld $17,0($16) / addiu $4,$0,1000 / jal a800000020011640 / sll $17,$17,0x0 / ld $24,0($16)
+ip30-unix	xbow_reset_link	03d504	?	0x20000	r	8	ld $17,0($16) / addiu $4,$0,1000 / jal a800000020011640 / sll $17,$17,0x0 / ld $24,0($16) / ld $2,16($29) / sll $24,$24,0x0 / subu $24,$24,$17 / beq $0,$0,a80000002003d454
+ip30-unix	heart_imr_bits_rmw	03e8e4	?	0x10000	r	8	jal a800000020016e8c / or $6,$18,$0 / beq $2,$0,a80000002003e954 / sll $0,$0,0x0 / ld $18,0($19) / and $24,$20,$18 / or $24,$21,$24 / jal a80000002001c1c4 / sd $24,0($19)
+ip30-unix	heart_imr_bits_rmw	03e8f4	?	0x10000	w	8	ld $18,0($19) / and $24,$20,$18 / or $24,$21,$24 / jal a80000002001c1c4 / sd $24,0($19) / addiu $25,$0,-1 / sd $25,0($17) / or $4,$16,$0 / jal a80000002001bb64
+ip30-unix	heart_imr_bits_rmw	03e934	?	0x10000	r	8	ld $17,32($29) / ld $2,40($29) / jr $31 / daddiu $29,$29,64 / ld $1,0($19) / sd $1,40($29) / and $1,$20,$1 / or $1,$6,$1 / jal a80000002001c1c4
+ip30-unix	heart_imr_bits_rmw	03e948	?	0x10000	w	8	sd $1,40($29) / and $1,$20,$1 / or $1,$6,$1 / jal a80000002001c1c4 / sd $1,0($19) / beq $0,$0,a80000002003e910 / ld $18,0($29) / jal a80000002001bb64 / or $4,$16,$0
+ip30-unix	sub_a80000002003ec64	03ec84	?	0x10028	w	8	sd $31,0($29) / dsllv $1,$1,$2 / lui $2,0xaff1 / jal a8000000201d39c4 / sd $1,40($2) / jal a8000000201d3684 / sll $0,$0,0x0 / ld $31,0($29) / jr $31
+ip30-unix	sub_a80000002003ec9c	03ecc4	?	0x10028	w	8	dsllv $1,$1,$2 / lui $2,0xaff1 / daddiu $4,$4,88 / jal a80000002001c9dc / sd $1,40($2) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-unix	chkdebug	03ece0	?	0x10030	r	8	lh $8,-15456($0) / lui $7,0xaff1 / addiu $6,$0,1 / ld $1,48($7) / addiu $8,$8,42 / dsllv $6,$6,$8 / and $1,$6,$1 / daddiu $29,$29,-16
+ip30-unix	chkdebug	03ed00	?	0x10028	w	8	daddiu $29,$29,-16 / beq $1,$0,a80000002003ed0c / sd $31,0($29) / ld $4,-20680($28) / sd $6,40($7) / jal a80000002001c9dc / daddiu $4,$4,88 / ld $31,0($29) / jr $31
+ip30-unix	clear_cpu_intr	03ed2c	?	0x10028	w	8	addiu $1,$0,1 / lui $2,0xaff1 / dsllv $1,$1,$3 / jr $31 / sd $1,40($2)
+ip30-unix	heart_mlreset	03ed50	?	0x100068	w	8	ld $31,0($29) / ld $5,-24376($28) / ld $8,-24264($28) / ld $7,-24384($28) / sd $0,0($8) / lui $4,0xaff1 / ld $6,0($7) / sd $6,0($7) / lui $7,0x3ff6
+ip30-unix	heart_mlreset	03ed58	?	0x100060	r	8	ld $8,-24264($28) / ld $7,-24384($28) / sd $0,0($8) / lui $4,0xaff1 / ld $6,0($7) / sd $6,0($7) / lui $7,0x3ff6 / dsll32 $2,$2,0x10 / addiu $1,$0,1
+ip30-unix	heart_mlreset	03ed5c	?	0x100060	w	8	ld $7,-24384($28) / sd $0,0($8) / lui $4,0xaff1 / ld $6,0($7) / sd $6,0($7) / lui $7,0x3ff6 / dsll32 $2,$2,0x10 / addiu $1,$0,1 / dsra32 $2,$2,0x10
+ip30-unix	heart_mlreset	03ed70	?	0x100044	w	4	lui $7,0x3ff6 / dsll32 $2,$2,0x10 / addiu $1,$0,1 / dsra32 $2,$2,0x10 / sw $0,0($5) / ld $9,64($4) / addiu $3,$2,46 / addiu $6,$2,42 / sd $9,64($4)
+ip30-unix	heart_mlreset	03ed74	?	0x10040	r	8	dsll32 $2,$2,0x10 / addiu $1,$0,1 / dsra32 $2,$2,0x10 / sw $0,0($5) / ld $9,64($4) / addiu $3,$2,46 / addiu $6,$2,42 / sd $9,64($4) / addiu $5,$2,59
+ip30-unix	heart_mlreset	03ed80	?	0x10040	w	8	sw $0,0($5) / ld $9,64($4) / addiu $3,$2,46 / addiu $6,$2,42 / sd $9,64($4) / addiu $5,$2,59 / dsll $2,$2,0x3 / ori $7,$7,0x2c07 / sd $7,0($8)
+ip30-unix	heart_mlreset	03ed90	?	0x100068	w	8	sd $9,64($4) / addiu $5,$2,59 / dsll $2,$2,0x3 / ori $7,$7,0x2c07 / sd $7,0($8) / dsllv $3,$1,$3 / daddiu $29,$29,16 / sd $0,0($4) / dsllv $5,$1,$5
+ip30-unix	heart_mlreset	03ed9c	?	0x10000	w	8	ori $7,$7,0x2c07 / sd $7,0($8) / dsllv $3,$1,$3 / daddiu $29,$29,16 / sd $0,0($4) / dsllv $5,$1,$5 / sd $0,8($4) / dsllv $1,$1,$6 / or $3,$3,$5
+ip30-unix	heart_mlreset	03eda4	?	0x10008	w	8	dsllv $3,$1,$3 / daddiu $29,$29,16 / sd $0,0($4) / dsllv $5,$1,$5 / sd $0,8($4) / dsllv $1,$1,$6 / or $3,$3,$5 / sd $0,16($4) / or $1,$1,$3
+ip30-unix	heart_mlreset	03edb0	?	0x10010	w	8	dsllv $5,$1,$5 / sd $0,8($4) / dsllv $1,$1,$6 / or $3,$3,$5 / sd $0,16($4) / or $1,$1,$3 / addiu $3,$0,-1 / sd $0,24($4) / daddu $2,$4,$2
+ip30-unix	heart_mlreset	03edbc	?	0x10018	w	8	or $3,$3,$5 / sd $0,16($4) / or $1,$1,$3 / addiu $3,$0,-1 / sd $0,24($4) / daddu $2,$4,$2 / dsll32 $3,$3,0x1f / or $1,$1,$3 / jr $31
+ip30-unix	heart_mlreset	03edd0	?	0x10000	w	8	daddu $2,$4,$2 / dsll32 $3,$3,0x1f / or $1,$1,$3 / jr $31 / sd $1,0($2)
+ip30-unix	heart_mp_intr_init	03ee14	?	0x10000	w	8	dsll32 $3,$3,0x1f / daddu $2,$2,$4 / or $1,$1,$3 / jr $31 / sd $1,0($2)
+ip30-unix	heart_startup	03ee6c	?	0x80	r	8	sd $16,40($29) / lui $16,0xaff0 / addiu $5,$0,128 / beq $1,$0,a80000002003f024 / ld $16,128($16) / sw $5,0($2) / ld $5,-20680($28) / daddiu $6,$29,0 / jal a80000002023cbbc
+ip30-unix	heart_startup	03ee70	?	0x10002c	w	4	lui $16,0xaff0 / addiu $5,$0,128 / beq $1,$0,a80000002003f024 / ld $16,128($16) / sw $5,0($2) / ld $5,-20680($28) / daddiu $6,$29,0 / jal a80000002023cbbc / daddiu $5,$5,104
+ip30-unix	heart_startup	03f028	?	0x10002c	w	4	ld $21,80($29) / jr $31 / daddiu $29,$29,96 / beq $0,$0,a80000002003ee74 / sw $6,0($2)
+ip30-unix	heart_intr_prealloc	03f864	?	0x80	r	8	jal a80000002003e9a8 / dsllv $4,$4,$5 / ld $9,32($29) / lui $6,0xaff0 / ld $6,128($6) / ld $4,24($29) / addiu $7,$0,128 / or $8,$30,$0 / ld $5,16($29)
+ip30-unix	heart_intr	03febc	?	0x10038	r	8	sd $22,48($29) / sd $30,8($29) / sd $20,40($29) / lui $20,0xaff1 / ld $2,56($20) / or $30,$4,$0 / or $22,$5,$0 / sd $21,24($29) / addiu $21,$0,1
+ip30-unix	heart_intr	03ff0c	?	0x10028	w	8	or $4,$19,$0 / slti $3,$18,3 / beq $3,$0,a80000002003ff10 / dsllv $2,$21,$18 / sd $2,0($20) / ld $2,0($17) / and $2,$2,$22 / beq $2,$0,a80000002003ffa8 / addiu $16,$16,1
+ip30-unix	heart_intr	03ff10	?	0x10038	r	8	slti $3,$18,3 / beq $3,$0,a80000002003ff10 / dsllv $2,$21,$18 / sd $2,0($20) / ld $2,0($17) / and $2,$2,$22 / beq $2,$0,a80000002003ffa8 / addiu $16,$16,1 / jal a800000020011580
+ip30-unix	heart_intr	03ff4c	?	0x10028	w	8	dsllv $11,$21,$2 / daddu $8,$23,$9 / bne $10,$0,a80000002003ff50 / sll $0,$0,0x0 / sd $11,0($20) / lw $4,24($8) / andi $4,$4,0x1000 / beq $4,$0,a80000002003ff94 / daddiu $19,$8,32
+ip30-unix	heart_rev	0401f8	?	0x100004	r	4	sll $0,$0,0x0 / jr $31 / sll $0,$0,0x0 / ld $2,-24248($28) / lw $2,0($2) / srl $2,$2,0x1c / jr $31 / sw $2,-28828($28)
+ip30-unix	giobr_attach	040ae4	?	0x10002c	r	4	ld $2,-24256($28) / lw $1,0($2) / daddiu $29,$29,-64 / sltiu $1,$1,128 / sd $17,24($29) / or $17,$4,$0
+ip30-unix	giobr_attach	040b04	?	0x10002c	w	4	or $17,$4,$0 / beq $1,$0,a800000020040b08 / sd $31,40($29) / addiu $3,$0,128 / sw $3,0($2) / or $4,$17,$0 / or $5,$0,$0 / or $6,$0,$0 / lui $7,0x100
+ip30-unix	sub_a8000000200b37c4	0b411c	?	0x20000	r	8	daddiu $6,$6,15336 / beq $0,$0,a8000000200b3a48 / lbu $1,236($17) / lui $4,0xaff2 / ld $4,0($4) / addiu $6,$0,-1 / dsrl32 $6,$6,0x0 / addiu $5,$0,5 / and $4,$4,$6
+ip30-unix	ftrc_event	0b7310	?	0x20000	r	8	jal a80000002022d954 / sd $4,80($29) / ld $4,80($29) / lui $6,0xaff2 / ld $6,0($6) / or $5,$2,$0 / ld $2,48($18) / ld $3,40($18) / sd $2,56($29)
+ip30-unix	sub_a8000000200b99e8	0baad4	?	0x20000	r	8	beq $0,$0,a8000000200ba95c / ld $6,936($16) / lui $4,0xaff2 / sw $0,1176($16) / ld $4,0($4) / addiu $6,$0,-1 / dsrl32 $6,$6,0x0 / addiu $5,$0,5 / and $4,$4,$6
+ip30-unix	sub_a8000000200bf9a0	0bfb24	?	0x20000	r	8	beq $0,$0,a8000000200bfa2c / ld $18,48($29) / lui $4,0xaff2 / sw $0,904($16) / ld $4,0($4) / addiu $6,$0,-1 / dsrl32 $6,$6,0x0 / addiu $5,$0,5 / and $4,$4,$6
+ip30-unix	strread	12bda8	?	0x20000	r	8	or $17,$2,$0 / lui $6,0xaff2 / or $18,$2,$0 / addiu $5,$0,-1 / ld $6,0($6) / addiu $4,$0,3 / dsrl32 $5,$5,0x0 / dsll32 $4,$4,0x0 / and $5,$5,$6
+ip30-unix	du_conpoll	1481dc	?	0x20000	r	8	jal a800000020144494 / ld $4,1464($28) / beq $2,$0,a800000020148180 / lui $2,0xaff2 / ld $2,0($2) / lw $8,1484($28) / lw $7,-996($28) / sll $2,$2,0x0 / subu $8,$2,$8
+ip30-unix	sub_a800000020156254	156298	?	0x20000	r	8	daddu $5,$16,$19 / addiu $6,$0,16 / addiu $7,$0,16 / or $8,$0,$0 / ld $4,0($17) / jal a80000002015612c / or $9,$0,$0 / addiu $16,$16,16 / slt $1,$16,$18
+ip30-unix	sub_a800000020156254	1562f8	?	0x20000	r	8	or $8,$0,$0 / lui $4,0xaff2 / or $9,$0,$0 / jal a80000002015612c / ld $4,0($4) / ld $19,0($29) / ld $31,16($29) / ld $18,8($29) / ld $16,24($29)
+ip30-unix	xthread_periodic_timeout	191a08	?	0x20000	r	8	ld $7,-11840($28) / jal a800000020191430 / or $8,$16,$0 / lui $9,0xaff2 / ld $9,0($9) / or $4,$16,$0 / jal a8000000201918a8 / sd $9,64($16) / beq $0,$0,a800000020191984
+ip30-unix	sub_a8000000201c8f44	1c8fc4	?	0x20000	r	8	sd $17,40($29) / sll $6,$4,0x2 / addu $6,$6,$4 / lui $17,0x1 / ld $7,0($7) / dsll32 $6,$6,0x0 / ori $17,$17,0x86a0 / dsrl32 $6,$6,0x0 / daddu $6,$6,$7
+ip30-unix	sub_a8000000201c8f44	1c9010	?	0x20000	r	8	jal a8000000201c8af4 / addiu $4,$0,3 / ld $9,0($29) / lui $10,0xaff2 / ld $10,0($10) / sltu $9,$9,$10 / beq $9,$0,a8000000201c8fe0 / sll $0,$0,0x0 / ld $11,4352($16)
+ip30-unix	enter_panic_mode	1d3b6c	?	0x20000	r	8	bne $7,$0,a8000000201d3b2c / sll $0,$0,0x0 / beq $0,$0,a8000000201d3b38 / slt $2,$5,$8 / ld $7,0($13) / daddiu $29,$29,16 / jr $31 / sd $7,4376($28) / or $6,$0,$0
+ip30-unix	log_tstamp_event	1f2794	?	0x20000	r	8	ld $13,776($16) / sltu $13,$11,$13 / lui $12,0xaff2 / beq $13,$0,a8000000201f27a0 / ld $12,0($12) / beq $0,$0,a8000000201f27a4 / daddiu $2,$11,48 / ld $2,760($16) / sd $2,768($16)
+ip30-unix	log_tstamp_event	1f2860	?	0x20000	r	8	daddu $11,$11,$12 / lw $13,0($11) / lui $12,0xaff2 / beq $13,$0,a8000000201f288c / ld $12,0($12) / ld $15,0($17) / addiu $24,$0,1 / ll $14,0($15) / addu $25,$14,$24
+ip30-unix	log_tstamp_vevent	1f2a88	?	0x20000	r	8	dsll $4,$4,0x4 / daddu $4,$2,$4 / sltu $25,$11,$4 / lui $10,0xaff2 / ld $10,0($10) / beq $25,$0,a8000000201f2aa4 / or $9,$4,$0 / ld $9,760($16) / dsubu $9,$11,$9
+ip30-unix	log_tstamp_vevent	1f2c70	?	0x20000	r	8	ld $4,56($29) / dsll $21,$21,0x4 / lui $6,0xaff2 / daddu $21,$10,$21 / ld $6,0($6) / sll $4,$4,0x0 / or $19,$21,$0 / addiu $4,$4,-1 / lw $25,0($19)
+ip30-unix	ktimer_init	1fc4c0	?	0x20000	r	8	sw $5,736($4) / lui $1,0xaff2 / ld $1,0($1) / sw $1,740($4) / jr $31 / sd $1,728($4)
+ip30-unix	ktimer_switch	1fc4dc	?	0x20000	r	8	lw $3,736($4) / ld $6,728($4) / lui $1,0xaff2 / ld $1,0($1) / dsll $3,$3,0x3 / sw $1,740($4) / daddu $3,$4,$3 / ld $2,640($3)
+ip30-unix	ktimer_readticks	1fc530	?	0x20000	r	8	ld $10,640($11) / lw $12,736($4) / bne $12,$5,a8000000201fc564 / sll $0,$0,0x0 / ld $12,0($9) / ld $14,728($4) / lw $13,740($4) / dsll32 $13,$13,0x0 / and $14,$2,$14
+ip30-unix	ktimer_read	1fc5a0	?	0x20000	r	8	ld $11,640($12) / lw $13,736($4) / bne $13,$5,a8000000201fc600 / sll $0,$0,0x0 / ld $13,0($10) / ld $25,728($4) / lw $24,740($4) / dsll32 $24,$24,0x0 / and $25,$9,$25
+ip30-unix	ktimer_slptime	1fc630	?	0x20000	r	8	sll $0,$0,0x0 / beq $2,$8,a8000000201fc648 / sll $0,$0,0x0 / ld $3,728($4) / ld $2,0($9) / dsubu $2,$2,$3 / slti $1,$2,0 / movn $2,$0,$1 / jr $31
+ip30-unix	uuid_create	214418	?	0x20000	r	8	ori $9,$9,0x9680 / mflo $7 / dmult $8,$9 / lui $6,0xaff2 / ld $6,0($6) / addiu $10,$0,1 / sll $6,$6,0x0 / andi $6,$6,0xfff / ld $8,-22896($28)
+ip30-unix	rfscall	2d3ab8	?	0x20000	r	8	beq $5,$0,a8000000202d3ad8 / sd $4,272($29) / lui $6,0xaff2 / addiu $5,$0,-1 / ld $6,0($6) / addiu $4,$0,1 / dsrl32 $5,$5,0x0 / dsll32 $4,$4,0x2 / and $5,$5,$6
+ip30-unix	gfP_OdsySaveHwShadow	358c98	?	0x80	r	8	sd $31,0($1) / sync  / or $5,$16,$0 / jal a800000020177568 / ld $25,0($25) / lw $3,2300($20) / beq $3,$0,a800000020358d38 / sll $0,$0,0x0 / jal a800000020177f30
+ip30-unix	odsyRestartContext	35de18	?	0x80	r	8	lw $5,188($17) / lui $3,0xaff0 / or $4,$17,$0 / beq $10,$0,a80000002035e214 / ld $3,128($3) / beq $5,$0,a80000002035e21c / addiu $8,$5,-1 / or $5,$8,$0 / addiu $7,$0,-1
+ip30-unix	gf_OdsyInitialize	360260	?	0x80	r	8	addiu $31,$31,1 / sw $31,80($2) / or $7,$0,$0 / jal a8000000200cc864 / ld $25,128($25) / lw $18,4($20) / andi $18,$18,0x3 / beq $18,$0,a8000000203602e0 / sll $0,$0,0x0
+ip30-unix	gf_OdsyInitialize	360544	?	0x80	r	8	ld $15,40($20) / lui $24,0xaff0 / ori $24,$24,0x80 / lw $14,80($15) / ld $24,0($24) / addiu $14,$14,-1 / sw $14,80($15) / ld $23,88($29) / ld $21,80($29)
+ip30-unix	odsyReset	360be4	?	0x80	r	8	lui $24,0xaff0 / daddiu $20,$17,200 / or $4,$20,$0 / jal a80000002001738c / ld $24,128($24) / ld $5,-2272($28) / addiu $6,$0,16 / or $4,$20,$0 / lh $7,790($17)
+ip30-unix	odsyInitCfifo	36137c	?	0x80	r	8	sw $31,0($16) / sync  / or $4,$17,$0 / jal a80000002035ef64 / ld $25,0($25) / ld $6,824($17) / lui $5,0x20 / ori $5,$5,0x1594 / daddu $5,$5,$6
+ip30-unix	gf_OdsySchedSwapBuf	365b70	?	0x80	r	8	jal a800000020363608 / or $5,$30,$0 / lui $3,0xaff0 / beq $18,$0,a800000020365e1c / ld $3,128($3) / addiu $23,$0,1 / addiu $5,$0,25 / daddiu $18,$16,28504 / jal a8000000201535f4
+ip30-unix	gf_OdsyAttach	36f930	?	0x80	r	8	ld $1,0($1) / addiu $10,$10,16 / bgtz $11,a80000002036f900 / sd $1,0($3) / ld $3,128($8) / beq $6,$0,a80000002036f950 / sd $31,272($29) / ld $31,272($29) / ld $16,256($29)
+ip30-unix	gf_OdsyAttach	36fa28	?	0x80	r	8	lui $7,0xaff0 / ori $7,$7,0x80 / or $2,$0,$0 / beq $0,$0,a80000002036f93c / ld $7,0($7) / addiu $14,$0,2 / beq $0,$0,a80000002036f98c / addiu $10,$0,2 / addiu $4,$0,4
+ip30-unix	gf_OdsyDestroyDDRN	38b75c	?	0x80	r	8	sd $20,48($29) / sd $17,40($29) / lui $2,0xaff0 / ld $17,112($6) / ld $2,128($2) / ld $1,40($5) / sd $19,16($29) / ld $1,8($1) / sd $16,32($29)
+ip30-unix	odsyDMAOp	38de38	?	0x80	r	8	sd $2,256($19) / lui $4,0xaff0 / or $21,$0,$0 / beq $0,$0,a80000002038d960 / ld $4,128($4) / or $2,$4,$0 / daddiu $6,$2,2 / sltu $6,$6,$21 / bne $6,$0,a80000002038db2c
+ip30-unix	gfx_flow_delayed_hiwater_intr_prehandler	38f1ec	?	0x40	r	8	jal a80000002022d954 / daddiu $4,$28,6196 / lui $7,0xaff0 / or $5,$2,$0 / ld $6,64($7) / daddiu $4,$28,6196 / addiu $8,$0,-769 / and $6,$6,$8 / jal a80000002022d9a0
+ip30-unix	gfx_flow_delayed_hiwater_intr_prehandler	38f200	?	0x40	w	8	daddiu $4,$28,6196 / addiu $8,$0,-769 / and $6,$6,$8 / jal a80000002022d9a0 / sd $6,64($7) / beq $0,$0,a80000002038f220 / ld $31,0($29) / ld $9,40($7) / or $5,$0,$0
+ip30-unix	sub_a80000002038f230	38f258	?	0x40	w	8	ld $5,-1784($28) / sd $2,-25040($28) / addiu $6,$0,69 / lui $7,0xaff0 / sd $6,64($7) / jal a80000002022d728 / daddiu $5,$5,96 / ld $31,0($29) / jr $31
+ip30-unix	sub_a80000002038f270	38f2a0	?	0x48	w	8	sd $4,0($8) / lui $7,0xaff0 / lwu $6,32($4) / or $3,$7,$0 / sd $6,72($7) / daddu $2,$2,$3 / lwu $7,28($4) / sd $7,96($2) / lui $6,0xff
+ip30-unix	sub_a80000002038f270	38f2ac	?	0x60	w	8	or $3,$7,$0 / sd $6,72($7) / daddu $2,$2,$3 / lwu $7,28($4) / sd $7,96($2) / lui $6,0xff / ld $3,16($4) / ori $6,$6,0xffe0 / ld $1,8($4)
+ip30-unix	sub_a80000002038f270	38f2dc	?	0x50	w	8	and $1,$1,$5 / dsll32 $3,$3,0x3 / or $1,$1,$3 / jal a80000002022d954 / sd $1,80($2) / or $5,$2,$0 / lui $10,0xaff0 / addiu $12,$30,8 / addiu $11,$0,1
+ip30-unix	sub_a80000002038f270	38f2f0	?	0x40	r	8	or $5,$2,$0 / lui $10,0xaff0 / addiu $12,$30,8 / addiu $11,$0,1 / ld $9,64($10) / daddiu $4,$28,6196 / sllv $11,$11,$12 / or $9,$9,$11 / jal a80000002022d9a0
+ip30-unix	sub_a80000002038f270	38f304	?	0x40	w	8	daddiu $4,$28,6196 / sllv $11,$11,$12 / or $9,$9,$11 / jal a80000002022d9a0 / sd $9,64($10) / ld $31,0($29) / ld $30,8($29) / jr $31 / daddiu $29,$29,16
+ip30-unix	gfx_flow_alloc	38f4e4	?	0x10028	w	8	sllv $31,$31,$1 / lui $1,0xaff1 / ld $4,48($29) / ori $1,$1,0x28 / sd $31,0($1) / jal a800000020040208 / ld $5,-1776($28) / ld $2,48($29) / ld $3,56($29)
+ip30-unix	gfx_flow_dealloc	38f570	?	0x40	r	8	addiu $19,$0,1 / lui $7,0xaff0 / addiu $8,$8,8 / or $5,$2,$0 / ld $6,64($7) / sllv $8,$19,$8 / daddiu $4,$28,6196 / nor $8,$8,$0 / and $6,$6,$8
+ip30-unix	gfx_flow_dealloc	38f588	?	0x40	w	8	daddiu $4,$28,6196 / nor $8,$8,$0 / and $6,$6,$8 / jal a80000002022d9a0 / sd $6,64($7) / jal a80000002022d954 / daddiu $4,$28,-25032 / lw $9,6192($28) / sd $18,24($29)
+ip30-unix	gfx_flow_dealloc	38f624	?	0x10028	w	8	sllv $12,$12,$18 / ori $13,$13,0x28 / or $4,$16,$0 / jal a80000002004028c / sd $12,0($13) / addiu $16,$16,1 / slti $13,$16,2 / bne $13,$0,a80000002038f604 / addiu $18,$18,1
+ip30-unix	gfx_flow_credit_count_get	38f698	?	0x60	r	8	lui $2,0xaff0 / ori $2,$2,0x60 / dsll $3,$3,0x3 / daddu $2,$2,$3 / ld $2,0($2) / dsll $2,$2,0x3 / jr $31 / sll $2,$2,0x0
+ip30-unix	gfx_flow_credit_count_set	38f6d0	?	0x60	w	8	dsll $3,$3,0x3 / dsrl32 $1,$1,0x0 / daddu $2,$2,$3 / jr $31 / sd $1,0($2)
+ip30-unix	gfx_flow_attach_me	38f738	?	0x50	w	8	sw $30,88($4) / daddu $2,$2,$7 / dsll32 $6,$6,0x3 / or $3,$3,$6 / sd $3,80($2) / or $16,$4,$0 / lwu $1,28($4) / daddiu $4,$28,6196 / jal a80000002022d954
+ip30-unix	gfx_flow_attach_me	38f74c	?	0x60	w	8	or $16,$4,$0 / lwu $1,28($4) / daddiu $4,$28,6196 / jal a80000002022d954 / sd $1,96($2) / lw $12,88($16) / or $5,$2,$0 / daddiu $4,$28,6196 / addiu $15,$0,3
+ip30-unix	gfx_flow_attach_me	38f770	?	0x40	r	8	addu $12,$12,$12 / lui $11,0xaff0 / addiu $12,$12,10 / addiu $14,$30,8 / ld $13,64($11) / sllv $15,$15,$12 / addiu $10,$0,1 / nor $15,$15,$0 / sllv $12,$30,$12
+ip30-unix	gfx_flow_attach_me	38f798	?	0x40	w	8	sllv $10,$10,$14 / or $12,$12,$13 / or $10,$10,$12 / jal a80000002022d9a0 / sd $10,64($11) / ld $30,16($29) / jal a8000000200402f4 / lw $4,88($16) / ld $31,8($29)
+ip30-unix	gfx_flow_detach_me	38f7fc	?	0x40	r	8	sllv $1,$1,$2 / lui $2,0xaff0 / addiu $4,$0,3 / addiu $6,$6,10 / ld $3,64($2) / nor $1,$1,$0 / sllv $4,$4,$6 / or $3,$3,$4 / daddiu $4,$28,6196
+ip30-unix	gfx_flow_detach_me	38f818	?	0x40	w	8	or $3,$3,$4 / daddiu $4,$28,6196 / and $1,$1,$3 / jal a80000002022d9a0 / sd $1,64($2) / jal a800000020040330 / lw $4,88($16) / lw $5,88($16) / addiu $7,$0,-1
+ip30-unix	gfx_flow_detach_me	38f848	?	0x60	r	8	ori $6,$6,0x60 / dsrl $5,$5,0x1d / sh $7,92($16) / daddu $6,$6,$5 / ld $6,0($6) / sw $6,28($16) / ld $4,-25040($28) / ld $31,0($29) / daddu $4,$4,$5
+ip30-unix	gfx_flow_flush_my_wg	38f890	?	0x80	r	8	lui $1,0xaff0 / jr $31 / ld $1,128($1)
+ip30-prom	prom_ffffffffbfc00000	c00414	?	0x20000	r	8	dmfc0 $26,c0_errorepc / dmtc1 $26,$f2 / dmtc1 $27,$f1 / lui $26,0xaff2 / ld $27,0($26) / lui $26,0xbe / ori $26,$26,0xbc20 / daddu $27,$27,$26 / lui $26,0xaff2
+ip30-prom	prom_ffffffffbfc00000	c00428	?	0x20000	r	8	lui $26,0xbe / ori $26,$26,0xbc20 / daddu $27,$27,$26 / lui $26,0xaff2 / ld $26,0($26) / dsub $26,$27,$26 / bgtz $26,0xffffffffbfc00424 / sll $0,$0,0x0 / dmfc1 $27,$f2
+ip30-prom	prom_ffffffffbfc00634	c00880	?	0x50000	r	8	mtc0 $0,c0_perfcnt,1 / mtc0 $0,c0_perfcnt,3 / lui $4,0xaff5 / addiu $3,$0,1 / ld $4,0($4) / daddi $2,$4,4 / dsllv $5,$3,$2 / lui $3,0xaff0 / daddi $2,$5,-1
+ip30-prom	prom_ffffffffbfc00634	c00894	?	0x80	r	8	daddi $2,$4,4 / dsllv $5,$3,$2 / lui $3,0xaff0 / daddi $2,$5,-1 / ld $3,128($3) / andi $3,$3,0xf0 / and $2,$2,$3 / beq $2,$0,0xffffffffbfc00918 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc00634	c008c0	?	0x50000	r	8	dsll $29,$29,0x10 / addiu $5,$0,1 / lui $2,0xaff5 / ori $29,$29,0x20ff / ld $2,0($2) / dsllv $3,$5,$3 / dsll $29,$29,0x10 / ori $29,$29,0xf000 / dsll $2,$2,0xf
+ip30-prom	prom_ffffffffbfc00634	c00920	?	0x0	r	8	j 0xffffffffbfc15870 / sll $0,$0,0x0 / lui $4,0xaff0 / xor $5,$5,$3 / ld $6,0($4) / dsll32 $5,$5,0x18 / or $5,$5,$6 / jal 0xffffffffbfc16e70 / sd $5,0($4)
+ip30-prom	prom_ffffffffbfc00634	c00930	?	0x0	w	8	ld $6,0($4) / dsll32 $5,$5,0x18 / or $5,$5,$6 / jal 0xffffffffbfc16e70 / sd $5,0($4) / jal 0xffffffffbfc16120 / sll $0,$0,0x0 / jal 0xffffffffbfc16130 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc00634	c00a50	?	0x0	r	8	sll $0,$0,0x0 / jal 0xffffffffbfc00dc0 / sll $0,$0,0x0 / lui $2,0xaff0 / ld $3,0($2) / lui $1,0xffdf / ori $1,$1,0xffff / and $3,$3,$1 / jal 0xffffffffbfc00c10
+ip30-prom	prom_ffffffffbfc00634	c00a64	?	0x0	w	8	lui $1,0xffdf / ori $1,$1,0xffff / and $3,$3,$1 / jal 0xffffffffbfc00c10 / sd $3,0($2) / j 0xffffffffbfc15870 / sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x20
+ip30-prom	prom_ffffffffbfc00634	c00a7c	?	0x20	r	8	sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x20 / lui $27,0x8000 / ld $26,0($26) / and $26,$26,$27 / bne $26,$0,0xffffffffbfc00afc / sll $0,$0,0x0 / lui $26,0xaff0
+ip30-prom	prom_ffffffffbfc00634	c00a94	?	0x28	r	8	bne $26,$0,0xffffffffbfc00afc / sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x28 / ld $26,0($26) / and $26,$26,$27 / bne $26,$0,0xffffffffbfc00afc / sll $0,$0,0x0 / lui $26,0xaff0
+ip30-prom	prom_ffffffffbfc00634	c00aac	?	0x30	r	8	bne $26,$0,0xffffffffbfc00afc / sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x30 / ld $26,0($26) / and $26,$26,$27 / bne $26,$0,0xffffffffbfc00afc / sll $0,$0,0x0 / lui $26,0xaff0
+ip30-prom	prom_ffffffffbfc00634	c00ac4	?	0x38	r	8	bne $26,$0,0xffffffffbfc00afc / sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x38 / ld $26,0($26) / and $26,$26,$27 / bne $26,$0,0xffffffffbfc00afc / sll $0,$0,0x0 / lui $27,0xaff5
+ip30-prom	prom_ffffffffbfc00634	c00ad8	?	0x50000	r	8	and $26,$26,$27 / bne $26,$0,0xffffffffbfc00afc / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / beq $27,$0,0xffffffffbfc00aec / sll $0,$0,0x0 / beq $0,$0,0xffffffffbfc00ae4 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc00634	c00b30	?	0x50000	r	8	dsll32 $26,$26,0x0 / ori $26,$26,0x400 / lui $27,0xaff5 / ld $26,16($26) / ld $27,0($27) / bne $27,$26,0xffffffffbfc00b54 / sll $0,$0,0x0 / lui $26,0xa800 / dsll32 $26,$26,0x0
+ip30-prom	prom_ffffffffbfc00634	c00b94	?	0x50000	r	8	beq $0,$0,0xffffffffbfc00b90 / ld $26,16($26) / or $26,$0,$0 / lui $27,0xaff5 / ld $27,0($27) / bne $27,$26,0xffffffffbfc00ba8 / sll $0,$0,0x0 / j 0xffffffffbfc01b04 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc00634	c00bac	?	0x20000	r	8	sll $0,$0,0x0 / j 0xffffffffbfc01b04 / sll $0,$0,0x0 / lui $26,0xaff2 / ld $27,0($26) / lui $26,0x17d / ori $26,$26,0x7840 / daddu $27,$27,$26 / lui $26,0xaff2
+ip30-prom	prom_ffffffffbfc00634	c00bc0	?	0x20000	r	8	lui $26,0x17d / ori $26,$26,0x7840 / daddu $27,$27,$26 / lui $26,0xaff2 / ld $26,0($26) / dsub $26,$27,$26 / bgtz $26,0xffffffffbfc00bbc / sll $0,$0,0x0 / j 0xffffffffbfc01b0c
+ip30-prom	prom_ffffffffbfc00c10	c00cd0	?	0x50000	r	8	dsll32 $1,$1,0x1c / or $3,$3,$1 / sd $29,0($3) / lui $29,0x9000 / ld $2,0($2) / dsll $29,$29,0x10 / ori $29,$29,0x20ff / dsll $2,$2,0xf / dsll $29,$29,0x10
+ip30-prom	prom_ffffffffbfc00c10	c00da0	?	0x40000	w	8	dmfc0 $6,c0_epc / beq $0,$0,0xffffffffbfc00d9c / addiu $4,$0,4 / lui $2,0xaff4 / sd $5,0($2) / beq $30,$0,0xffffffffbfc00db8 / sd $6,0($2) / or $26,$30,$0 / jr $26
+ip30-prom	prom_ffffffffbfc00c10	c00da8	?	0x40000	w	8	addiu $4,$0,4 / lui $2,0xaff4 / sd $5,0($2) / beq $30,$0,0xffffffffbfc00db8 / sd $6,0($2) / or $26,$30,$0 / jr $26 / or $30,$0,$0 / j 0xffffffffbfc1791c
+ip30-prom	prom_ffffffffbfc00dc0	c00de8	?	0x20	w	8	lui $2,0xaff0 / mthi $0 / or $22,$0,$0 / ori $2,$2,0x20 / sd $0,0($2) / sd $0,8($2) / lui $5,0x81bf / or $4,$22,$0 / jal 0xffffffffbfc017a8
+ip30-prom	prom_ffffffffbfc00dc0	c00dec	?	0x28	w	8	mthi $0 / or $22,$0,$0 / ori $2,$2,0x20 / sd $0,0($2) / sd $0,8($2) / lui $5,0x81bf / or $4,$22,$0 / jal 0xffffffffbfc017a8 / ori $5,$5,0x40
+ip30-prom	prom_ffffffffbfc01350	c0150c	?	0x100004	r	4	and $19,$18,$1 / lui $1,0xb800 / ori $1,$1,0x4 / dsrl $19,$19,0x10 / lwu $1,0($1) / addi $19,$19,1 / dsrl $1,$1,0x1c / slti $1,$1,6 / beq $1,$0,0xffffffffbfc0159c
+ip30-prom	prom_ffffffffbfc01610	c0168c	?	0x100004	r	4	beq $0,$0,0xffffffffbfc016d0 / ori $2,$2,0x10 / lui $1,0xb800 / ori $1,$1,0x4 / lwu $1,0($1) / dsrl $1,$1,0x1c / slti $1,$1,6 / bne $1,$0,0xffffffffbfc016a4 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc017a8	c017b8	?	0x20	w	4	lui $12,0xaff0 / ori $12,$12,0x20 / dsll $4,$4,0x2 / daddu $12,$12,$4 / sw $5,0($12) / lui $1,0xb800 / ld $0,0($1) / jr $31 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc017a8	c017c0	?	0x100000	r	8	dsll $4,$4,0x2 / daddu $12,$12,$4 / sw $5,0($12) / lui $1,0xb800 / ld $0,0($1) / jr $31 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc017cc	c017e0	?	0x20	r	4	ori $12,$12,0x20 / dsll $4,$4,0x2 / daddu $12,$12,$4 / jr $31 / lwu $2,0($12)
+ip30-prom	prom_ffffffffbfc01ac0	c01bf8	?	0x50000	r	8	dsll $4,$4,0x10 / jal 0xffffffffbfc16414 / daddiu $4,$4,-15934 / lui $4,0xaff5 / ld $4,0($4) / jal 0xffffffffbfc1643c / addi $4,$4,48 / lui $4,0x0 / daddiu $4,$4,0
+ip30-prom	prom_ffffffffbfc0aea8	c0b460	?	0x20000	r	8	sw $11,0($12) / lui $14,0xaff2 / ori $10,$10,0x5e10 / sd $10,16($29) / ld $8,0($14) / ld $9,16($29) / daddu $8,$8,$9 / sd $8,16($29) / sh $4,0($5)
+ip30-prom	prom_ffffffffbfc0aea8	c0b490	?	0x20000	r	8	lui $3,0x2fa / sh $6,0($5) / ori $3,$3,0xf080 / sd $3,24($29) / ld $1,0($14) / ld $2,24($29) / daddu $1,$1,$2 / beq $0,$0,0xffffffffbfc0b4b8 / sd $1,24($29)
+ip30-prom	prom_ffffffffbfc0fd78	c0fdd0	?	0x20000	r	8	addiu $9,$0,-1 / lui $3,0xaff2 / addiu $5,$0,-1 / dsrl $9,$9,0x8 / ld $3,0($3) / addiu $10,$0,1 / dsll32 $5,$5,0x18 / and $4,$4,$5 / and $3,$3,$9
+ip30-prom	prom_ffffffffbfc10000	c10064	?	0x10000	r	8	dsll $6,$6,0x3 / addiu $7,$0,1 / daddu $6,$6,$8 / dsll32 $7,$7,0x9 / ld $5,0($6) / nor $7,$7,$0 / and $5,$5,$7 / jal 0xffffffffbfc17740 / sd $5,0($6)
+ip30-prom	prom_ffffffffbfc10000	c10074	?	0x10000	w	8	ld $5,0($6) / nor $7,$7,$0 / and $5,$5,$7 / jal 0xffffffffbfc17740 / sd $5,0($6) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-prom	prom_ffffffffbfc10874	c1087c	?	0x10038	r	8	lui $1,0xaff1 / addiu $2,$0,1 / ld $1,56($1) / dsll32 $2,$2,0x9 / and $1,$1,$2 / daddiu $29,$29,-16 / beq $1,$0,0xffffffffbfc1089c
+ip30-prom	prom_ffffffffbfc108f4	c108fc	?	0x20000	r	8	lui $2,0xaff2 / lui $1,0xbe / ld $2,0($2) / ori $1,$1,0xbc20 / ddivu $0,$2,$1 / mflo $2 / jr $31
+ip30-prom	prom_ffffffffbfc11b5c	c11b70	?	0x20	r	4	dsll $3,$4,0x2 / ori $2,$2,0x20 / daddu $2,$2,$3 / jr $31 / lw $2,0($2)
+ip30-prom	prom_ffffffffbfc146b4	c146bc	?	0x0	r	8	lui $2,0xaff0 / daddiu $29,$29,-16 / ld $1,0($2) / lui $3,0x40 / sd $31,0($29) / or $1,$1,$3 / jal 0xffffffffbfc17740
+ip30-prom	prom_ffffffffbfc146b4	c146d0	?	0x0	w	8	lui $3,0x40 / sd $31,0($29) / or $1,$1,$3 / jal 0xffffffffbfc17740 / sd $1,0($2) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-prom	prom_ffffffffbfc14960	c14aa4	?	0x10028	w	8	addiu $7,$0,1 / dsllv $7,$7,$8 / lui $8,0xaff1 / jal 0xffffffffbfc1707c / sd $7,40($8) / jal 0xffffffffbfc01ac0 / sll $0,$0,0x0 / lui $4,0x3400 / jal 0xffffffffbfc17690
+ip30-prom	prom_ffffffffbfc1527c	c152cc	?	0x10000	r	8	lui $7,0xaff1 / dsll $6,$6,0x3 / daddu $6,$6,$7 / addiu $7,$0,1 / ld $5,0($6) / dsll32 $7,$7,0x9 / or $5,$5,$7 / jal 0xffffffffbfc0e4a4 / sd $5,0($6)
+ip30-prom	prom_ffffffffbfc1527c	c152dc	?	0x10000	w	8	ld $5,0($6) / dsll32 $7,$7,0x9 / or $5,$5,$7 / jal 0xffffffffbfc0e4a4 / sd $5,0($6) / slti $7,$2,2 / beq $7,$0,0xffffffffbfc15310 / lui $4,0x9000 / jal 0xffffffffbfc17740
+ip30-prom	prom_ffffffffbfc1555c	c1557c	?	0x20000	r	8	sd $31,16($29) / addiu $24,$0,12500 / mult $4,$24 / lui $17,0xaff2 / ld $17,0($17) / mflo $24 / sll $0,$0,0x0 / daddu $17,$17,$24 / jal 0xffffffffbfc177cc
+ip30-prom	prom_ffffffffbfc1555c	c155a0	?	0x10030	r	8	sd $16,8($29) / lui $16,0xaff1 / addiu $31,$2,46 / addiu $25,$0,1 / ld $24,48($16) / dsllv $25,$25,$31 / and $24,$24,$25 / beq $24,$0,0xffffffffbfc15618 / ori $16,$16,0x30
+ip30-prom	prom_ffffffffbfc1555c	c155bc	?	0x10030	r	8	beq $24,$0,0xffffffffbfc15618 / ori $16,$16,0x30 / jal 0xffffffffbfc177cc / ld $17,0($29) / ld $1,0($16) / addiu $3,$2,46 / addiu $2,$0,1 / dsllv $2,$2,$3 / and $1,$1,$2
+ip30-prom	prom_ffffffffbfc1555c	c155f4	?	0x10028	w	8	addiu $5,$0,1 / dsllv $5,$5,$6 / lui $6,0xaff1 / addiu $4,$0,1 / sd $5,40($6) / ld $31,16($29) / or $2,$4,$0 / ld $16,8($29) / jr $31
+ip30-prom	prom_ffffffffbfc1555c	c1561c	?	0x20000	r	8	dsrl $17,$17,0xc / beq $0,$0,0xffffffffbfc1558c / sll $0,$0,0x0 / lui $2,0xaff2 / ld $24,0($2) / sltu $24,$24,$17 / beq $24,$0,0xffffffffbfc155b4 / sll $0,$0,0x0 / beq $0,$0,0xffffffffbfc15644
+ip30-prom	prom_ffffffffbfc1555c	c15634	?	0x20000	r	8	beq $24,$0,0xffffffffbfc155b4 / sll $0,$0,0x0 / beq $0,$0,0xffffffffbfc15644 / sll $0,$0,0x0 / ld $25,0($25) / sltu $25,$25,$17 / beq $25,$0,0xffffffffbfc155b4 / sll $0,$0,0x0 / jal 0xffffffffbfc177cc
+ip30-prom	prom_ffffffffbfc1555c	c1564c	?	0x10030	r	8	beq $25,$0,0xffffffffbfc155b4 / sll $0,$0,0x0 / jal 0xffffffffbfc177cc / sll $0,$0,0x0 / ld $31,0($16) / addiu $2,$2,46 / addiu $1,$0,1 / dsllv $1,$1,$2 / and $31,$31,$1
+ip30-prom	prom_ffffffffbfc156a4	c15734	?	0x80	r	8	and $31,$31,$1 / lui $2,0xaff0 / beq $31,$0,0xffffffffbfc15754 / ori $2,$2,0x80 / ld $2,0($2) / and $2,$2,$3 / beq $2,$0,0xffffffffbfc15754 / lui $3,0xaff0 / ld $3,0($3)
+ip30-prom	prom_ffffffffbfc156a4	c15744	?	0x0	r	8	ld $2,0($2) / and $2,$2,$3 / beq $2,$0,0xffffffffbfc15754 / lui $3,0xaff0 / ld $3,0($3) / dsllv $4,$21,$18 / and $3,$3,$4 / beq $3,$0,0xffffffffbfc1579c / addiu $4,$0,2
+ip30-prom	prom_ffffffffbfc156a4	c157b0	?	0x20000	r	8	lui $10,0xaff1 / ld $7,0($29) / beq $5,$0,0xffffffffbfc15810 / ori $10,$10,0x20 / ld $8,0($23) / daddu $7,$7,$8 / dsllv $8,$21,$19 / sd $8,0($10) / ld $9,0($22)
+ip30-prom	prom_ffffffffbfc156a4	c157bc	?	0x10020	w	8	ori $10,$10,0x20 / ld $8,0($23) / daddu $7,$7,$8 / dsllv $8,$21,$19 / sd $8,0($10) / ld $9,0($22) / and $9,$8,$9 / beq $9,$0,0xffffffffbfc15800 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc156a4	c157c0	?	0x10030	r	8	ld $8,0($23) / daddu $7,$7,$8 / dsllv $8,$21,$19 / sd $8,0($10) / ld $9,0($22) / and $9,$8,$9 / beq $9,$0,0xffffffffbfc15800 / sll $0,$0,0x0 / ld $11,0($23)
+ip30-prom	prom_ffffffffbfc156a4	c157d0	?	0x20000	r	8	ld $9,0($22) / and $9,$8,$9 / beq $9,$0,0xffffffffbfc15800 / sll $0,$0,0x0 / ld $11,0($23) / sltu $11,$11,$7 / beq $11,$0,0xffffffffbfc15800 / sll $0,$0,0x0 / ld $12,0($22)
+ip30-prom	prom_ffffffffbfc156a4	c157e0	?	0x10030	r	8	ld $11,0($23) / sltu $11,$11,$7 / beq $11,$0,0xffffffffbfc15800 / sll $0,$0,0x0 / ld $12,0($22) / and $12,$8,$12 / beq $12,$0,0xffffffffbfc15800 / sll $0,$0,0x0 / ld $13,0($23)
+ip30-prom	prom_ffffffffbfc156a4	c157f0	?	0x20000	r	8	ld $12,0($22) / and $12,$8,$12 / beq $12,$0,0xffffffffbfc15800 / sll $0,$0,0x0 / ld $13,0($23) / sltu $13,$13,$7 / bne $13,$0,0xffffffffbfc157e0 / sll $0,$0,0x0 / ld $14,0($22)
+ip30-prom	prom_ffffffffbfc156a4	c15800	?	0x10030	r	8	ld $13,0($23) / sltu $13,$13,$7 / bne $13,$0,0xffffffffbfc157e0 / sll $0,$0,0x0 / ld $14,0($22) / and $14,$8,$14 / beq $0,$0,0xffffffffbfc15754 / movn $20,$21,$14 / addiu $7,$0,-1
+ip30-prom	prom_ffffffffbfc1581c	c158cc	?	0x80	r	8	addiu $19,$0,1 / lui $17,0x20f0 / lui $25,0xaff0 / daddiu $17,$17,0 / ld $25,128($25) / dsllv $30,$19,$30 / lui $16,0xa800 / daddiu $30,$30,-1 / daddiu $16,$16,0
+ip30-prom	prom_ffffffffbfc1581c	c15958	?	0x10028	w	8	addiu $1,$2,46 / dsllv $1,$19,$1 / lui $2,0xaff1 / jal 0xffffffffbfc15670 / sd $1,40($2) / ld $2,40($29) / daddu $3,$2,$17 / sw $19,0($3) / sw $0,0($20)
+ip30-prom	prom_ffffffffbfc1581c	c159e4	?	0x0	r	8	dsllv $6,$19,$6 / addiu $7,$0,-1 / lui $20,0xaff0 / dsll32 $7,$7,0x1c / ld $5,0($20) / xor $6,$6,$7 / or $5,$5,$6 / sd $5,0($20) / ld $3,0($20)
+ip30-prom	prom_ffffffffbfc1581c	c159f0	?	0x0	w	8	dsll32 $7,$7,0x1c / ld $5,0($20) / xor $6,$6,$7 / or $5,$5,$6 / sd $5,0($20) / ld $3,0($20) / lui $4,0x2 / or $3,$3,$4 / jal 0xffffffffbfc15514
+ip30-prom	prom_ffffffffbfc1581c	c159f4	?	0x0	r	8	ld $5,0($20) / xor $6,$6,$7 / or $5,$5,$6 / sd $5,0($20) / ld $3,0($20) / lui $4,0x2 / or $3,$3,$4 / jal 0xffffffffbfc15514 / sd $3,0($20)
+ip30-prom	prom_ffffffffbfc1581c	c15a04	?	0x0	w	8	ld $3,0($20) / lui $4,0x2 / or $3,$3,$4 / jal 0xffffffffbfc15514 / sd $3,0($20) / beq $2,$0,0xffffffffbfc15a18 / sll $0,$0,0x0 / jal 0xffffffffbfc17634 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc1581c	c15a40	?	0x10000	w	8	or $4,$16,$0 / jal 0xffffffffbfc16f24 / sll $0,$0,0x0 / lui $10,0xaff1 / sd $0,0($10) / sd $0,8($10) / sd $0,16($10) / lui $11,0x1f00 / sd $0,24($10)
+ip30-prom	prom_ffffffffbfc1581c	c15a44	?	0x10008	w	8	jal 0xffffffffbfc16f24 / sll $0,$0,0x0 / lui $10,0xaff1 / sd $0,0($10) / sd $0,8($10) / sd $0,16($10) / lui $11,0x1f00 / sd $0,24($10) / ori $10,$11,0x3c
+ip30-prom	prom_ffffffffbfc1581c	c15a48	?	0x10010	w	8	sll $0,$0,0x0 / lui $10,0xaff1 / sd $0,0($10) / sd $0,8($10) / sd $0,16($10) / lui $11,0x1f00 / sd $0,24($10) / ori $10,$11,0x3c / lui $9,0x9000
+ip30-prom	prom_ffffffffbfc1581c	c15a50	?	0x10018	w	8	sd $0,0($10) / sd $0,8($10) / sd $0,16($10) / lui $11,0x1f00 / sd $0,24($10) / ori $10,$11,0x3c / lui $9,0x9000 / ld $12,0($20) / dsll32 $9,$9,0x0
+ip30-prom	prom_ffffffffbfc1581c	c15d10	?	0x10000	r	8	dsll $1,$31,0x3 / addiu $31,$31,59 / daddu $1,$4,$1 / dsllv $31,$19,$31 / ld $5,0($1) / dsll $6,$18,0x3 / xor $5,$31,$5 / daddu $4,$4,$6 / or $3,$3,$5
+ip30-prom	prom_ffffffffbfc1581c	c15d24	?	0x10000	w	8	dsll $6,$18,0x3 / xor $5,$31,$5 / daddu $4,$4,$6 / or $3,$3,$5 / sd $3,0($4) / beq $18,$2,0xffffffffbfc15ca0 / sd $31,0($1) / lui $4,0x3400 / jal 0xffffffffbfc17690
+ip30-prom	prom_ffffffffbfc1581c	c15d2c	?	0x10000	w	8	daddu $4,$4,$6 / or $3,$3,$5 / sd $3,0($4) / beq $18,$2,0xffffffffbfc15ca0 / sd $31,0($1) / lui $4,0x3400 / jal 0xffffffffbfc17690 / ori $4,$4,0x4081 / jal 0xffffffffbfc01ac0
+ip30-prom	prom_ffffffffbfc1581c	c15f5c	?	0x80	r	8	sd $8,88($29) / lui $24,0xaff0 / sd $11,72($29) / ori $24,$24,0x80 / ld $24,0($24) / sd $10,80($29) / sd $9,0($29) / and $24,$24,$25 / sd $4,168($29)
+ip30-prom	prom_ffffffffbfc1581c	c15fb4	?	0x20000	r	8	ld $4,168($29) / ld $8,88($29) / lui $12,0xaff2 / ld $2,176($29) / ld $13,0($12) / lw $15,0($2) / ld $9,0($29) / lui $14,0xbe / addiu $7,$0,2
+ip30-prom	prom_ffffffffbfc16680	c16940	?	0x10030	r	8	daddiu $4,$4,15440 / lui $4,0xaff1 / ori $4,$4,0x30 / jal 0xffffffffbfc163a4 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c1696c	?	0x10040	r	8	daddiu $4,$4,15454 / lui $4,0xaff1 / ori $4,$4,0x40 / jal 0xffffffffbfc163a4 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16998	?	0x88	r	8	daddiu $4,$4,15464 / lui $4,0xaff0 / ori $4,$4,0x88 / jal 0xffffffffbfc163a4 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c169c4	?	0x90	r	8	daddiu $4,$4,15480 / lui $4,0xaff0 / ori $4,$4,0x90 / jal 0xffffffffbfc163a4 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c169f0	?	0x98	r	8	daddiu $4,$4,15494 / lui $4,0xaff0 / ori $4,$4,0x98 / jal 0xffffffffbfc163a4 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16a1c	?	0xa0	r	8	daddiu $4,$4,15514 / lui $4,0xaff0 / ori $4,$4,0xa0 / jal 0xffffffffbfc163a4 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16a48	?	0xa8	r	8	daddiu $4,$4,15531 / lui $4,0xaff0 / ori $4,$4,0xa8 / jal 0xffffffffbfc163a4 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16a74	?	0x100040	r	4	daddiu $4,$4,15546 / lui $4,0xb800 / ori $4,$4,0x40 / jal 0xffffffffbfc16394 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16aa0	?	0x100010	r	4	daddiu $4,$4,15567 / lui $4,0xb800 / ori $4,$4,0x10 / jal 0xffffffffbfc16394 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16acc	?	0x100018	r	4	daddiu $4,$4,15587 / lui $4,0xb800 / ori $4,$4,0x18 / jal 0xffffffffbfc16394 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16af8	?	0x100060	r	4	daddiu $4,$4,15589 / lui $4,0xb800 / ori $4,$4,0x60 / jal 0xffffffffbfc16394 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16b24	?	0x100070	r	4	daddiu $4,$4,15611 / lui $4,0xb800 / ori $4,$4,0x70 / jal 0xffffffffbfc16394 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16b50	?	0x100078	r	4	daddiu $4,$4,15635 / lui $4,0xb800 / ori $4,$4,0x78 / jal 0xffffffffbfc16394 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16680	c16b7c	?	0x100090	r	4	daddiu $4,$4,15637 / lui $4,0xb800 / ori $4,$4,0x90 / jal 0xffffffffbfc16394 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24638
+ip30-prom	prom_ffffffffbfc16e70	c16e80	?	0x10018	w	8	lui $21,0xaff1 / or $27,$31,$0 / addiu $5,$0,1 / ori $21,$21,0x18 / sd $5,0($21) / ld $6,0($21) / bne $5,$6,0xffffffffbfc16ea4 / sll $0,$0,0x0 / dsll $5,$5,0x1
+ip30-prom	prom_ffffffffbfc16e70	c16e84	?	0x10018	r	8	or $27,$31,$0 / addiu $5,$0,1 / ori $21,$21,0x18 / sd $5,0($21) / ld $6,0($21) / bne $5,$6,0xffffffffbfc16ea4 / sll $0,$0,0x0 / dsll $5,$5,0x1 / bne $5,$0,0xffffffffbfc16e80
+ip30-prom	prom_ffffffffbfc16e70	c16ea0	?	0x10018	w	8	dsll $5,$5,0x1 / bne $5,$0,0xffffffffbfc16e80 / sll $0,$0,0x0 / jr $27 / sd $0,0($21) / jal 0xffffffffbfc16300 / sll $0,$0,0x0 / jal 0xffffffffbfc1647c / or $4,$21,$0
+ip30-prom	prom_ffffffffbfc17740	c17744	?	0x100000	r	8	lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $2,c0_status / mfc0 $2,c0_status / jr $31
+ip30-prom	prom_ffffffffbfc17740	c1779c	?	0x20000	r	8	sll $0,$0,0x0 / lui $4,0x1 / lui $12,0xaff2 / ori $4,$4,0xe848 / ld $5,0($12) / mfc0 $2,c0_count / ld $6,0($12) / mfc0 $3,c0_count / dsubu $6,$6,$5
+ip30-prom	prom_ffffffffbfc17740	c177a4	?	0x20000	r	8	lui $12,0xaff2 / ori $4,$4,0xe848 / ld $5,0($12) / mfc0 $2,c0_count / ld $6,0($12) / mfc0 $3,c0_count / dsubu $6,$6,$5 / slt $1,$6,$4 / bne $1,$0,0xffffffffbfc177a8
+ip30-prom	prom_ffffffffbfc177cc	c177d4	?	0x50000	r	8	lui $2,0xaff5 / jr $31 / ld $2,0($2)
+ip30-prom	prom_ffffffffbfc17934	c17938	?	0x20000	r	8	lui $4,0xaff2 / ld $5,0($4) / lui $4,0x5f / ori $4,$4,0x5e10 / daddu $5,$5,$4 / lui $4,0xaff2
+ip30-prom	prom_ffffffffbfc17934	c1794c	?	0x20000	r	8	lui $4,0x5f / ori $4,$4,0x5e10 / daddu $5,$5,$4 / lui $4,0xaff2 / ld $4,0($4) / dsub $4,$5,$4 / bgtz $4,0xffffffffbfc17948 / sll $0,$0,0x0 / lui $4,0x9000
+ip30-prom	prom_ffffffffbfc17934	c17a08	?	0x20000	r	8	addiu $4,$0,8 / sb $4,0($13) / addiu $4,$0,14 / sb $4,0($12) / ld $7,0($6) / lui $6,0x773 / lb $0,0($13) / ori $6,$6,0x5940 / daddu $7,$7,$6
+ip30-prom	prom_ffffffffbfc17934	c17a20	?	0x20000	r	8	lb $0,0($13) / ori $6,$6,0x5940 / daddu $7,$7,$6 / lui $6,0xaff2 / ld $6,0($6) / dsub $6,$7,$6 / bgtz $6,0xffffffffbfc17a1c / sll $0,$0,0x0 / beq $0,$0,0xffffffffbfc179ec
+ip30-prom	prom_ffffffffbfc17a40	c17ad4	?	0x10000	r	8	lui $4,0xaff0 / lui $7,0xaff2 / dsll $2,$2,0x3 / daddu $3,$2,$3 / ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4)
+ip30-prom	prom_ffffffffbfc17a40	c17ae0	?	0x10000	w	8	daddu $3,$2,$3 / ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4) / jal 0xffffffffbfc17a40 / or $5,$6,$1 / lui $7,0xaff2
+ip30-prom	prom_ffffffffbfc17a40	c17ae4	?	0x0	r	8	ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4) / jal 0xffffffffbfc17a40 / or $5,$6,$1 / lui $7,0xaff2 / dli $13,0xf424
+ip30-prom	prom_ffffffffbfc17a40	c17af8	?	0x20000	r	8	jal 0xffffffffbfc17a40 / or $5,$6,$1 / lui $7,0xaff2 / dli $13,0xf424 / ld $12,0($7) / daddu $12,$12,$13 / ld $13,0($7) / sltu $1,$13,$12 / bne $1,$0,0xffffffffbfc17b00
+ip30-prom	prom_ffffffffbfc17d40	c17d80	?	0x20000	r	8	addiu $4,$0,511 / lui $12,0xaff2 / ld $2,0($12) / addiu $13,$0,10 / bgtz $13,0xffffffffbfc17d88 / addiu $13,$13,-1 / bgtz $4,0xffffffffbfc17d84
+ip30-prom	prom_ffffffffbfc17d40	c17d98	?	0x20000	r	8	bgtz $13,0xffffffffbfc17d88 / addiu $13,$13,-1 / bgtz $4,0xffffffffbfc17d84 / addiu $4,$4,-1 / ld $3,0($12) / jr $31 / dsubu $2,$3,$2
+ip30-prom	prom_ffffffffbfc304e0	c30658	?	0x50000	r	8	mtc0 $0,c0_perfcnt,1 / mtc0 $0,c0_perfcnt,3 / lui $4,0xaff5 / addiu $3,$0,1 / ld $4,0($4) / daddi $2,$4,4 / dsllv $5,$3,$2 / lui $3,0xaff0 / daddi $2,$5,-1
+ip30-prom	prom_ffffffffbfc304e0	c3066c	?	0x80	r	8	daddi $2,$4,4 / dsllv $5,$3,$2 / lui $3,0xaff0 / daddi $2,$5,-1 / ld $3,128($3) / andi $3,$3,0xf0 / and $2,$2,$3 / beq $2,$0,0xffffffffbfc306d0 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc304e0	c30698	?	0x50000	r	8	dsll $29,$29,0x10 / addiu $5,$0,1 / lui $2,0xaff5 / ori $29,$29,0x20ff / ld $2,0($2) / dsllv $3,$5,$3 / dsll $29,$29,0x10 / ori $29,$29,0xf000 / dsll $2,$2,0xf
+ip30-prom	prom_ffffffffbfc304e0	c306d8	?	0x0	r	8	j 0xffffffffbfc327ec / sll $0,$0,0x0 / lui $4,0xaff0 / xor $5,$5,$3 / ld $6,0($4) / dsll32 $5,$5,0x18 / or $5,$5,$6 / jal 0xffffffffbfc3a7d0 / sd $5,0($4)
+ip30-prom	prom_ffffffffbfc304e0	c306e8	?	0x0	w	8	ld $6,0($4) / dsll32 $5,$5,0x18 / or $5,$5,$6 / jal 0xffffffffbfc3a7d0 / sd $5,0($4) / jal 0xffffffffbfc354e0 / sll $0,$0,0x0 / jal 0xffffffffbfc354f0 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc304e0	c30808	?	0x0	r	8	sll $0,$0,0x0 / jal 0xffffffffbfc31150 / sll $0,$0,0x0 / lui $2,0xaff0 / ld $3,0($2) / lui $1,0xffdf / ori $1,$1,0xffff / and $3,$3,$1 / jal 0xffffffffbfc30fa0
+ip30-prom	prom_ffffffffbfc304e0	c3081c	?	0x0	w	8	lui $1,0xffdf / ori $1,$1,0xffff / and $3,$3,$1 / jal 0xffffffffbfc30fa0 / sd $3,0($2) / j 0xffffffffbfc327ec / sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x20
+ip30-prom	prom_ffffffffbfc304e0	c30834	?	0x20	r	8	sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x20 / lui $27,0x8000 / ld $26,0($26) / and $26,$26,$27 / bne $26,$0,0xffffffffbfc308b4 / sll $0,$0,0x0 / lui $26,0xaff0
+ip30-prom	prom_ffffffffbfc304e0	c3084c	?	0x28	r	8	bne $26,$0,0xffffffffbfc308b4 / sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x28 / ld $26,0($26) / and $26,$26,$27 / bne $26,$0,0xffffffffbfc308b4 / sll $0,$0,0x0 / lui $26,0xaff0
+ip30-prom	prom_ffffffffbfc304e0	c30864	?	0x30	r	8	bne $26,$0,0xffffffffbfc308b4 / sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x30 / ld $26,0($26) / and $26,$26,$27 / bne $26,$0,0xffffffffbfc308b4 / sll $0,$0,0x0 / lui $26,0xaff0
+ip30-prom	prom_ffffffffbfc304e0	c3087c	?	0x38	r	8	bne $26,$0,0xffffffffbfc308b4 / sll $0,$0,0x0 / lui $26,0xaff0 / ori $26,$26,0x38 / ld $26,0($26) / and $26,$26,$27 / bne $26,$0,0xffffffffbfc308b4 / sll $0,$0,0x0 / lui $27,0xaff5
+ip30-prom	prom_ffffffffbfc304e0	c30890	?	0x50000	r	8	and $26,$26,$27 / bne $26,$0,0xffffffffbfc308b4 / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / beq $27,$0,0xffffffffbfc308a4 / sll $0,$0,0x0 / beq $0,$0,0xffffffffbfc3089c / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc304e0	c308e8	?	0x50000	r	8	dsll32 $26,$26,0x0 / ori $26,$26,0x400 / lui $27,0xaff5 / ld $26,16($26) / ld $27,0($27) / bne $27,$26,0xffffffffbfc3090c / sll $0,$0,0x0 / lui $26,0xa800 / dsll32 $26,$26,0x0
+ip30-prom	prom_ffffffffbfc304e0	c3094c	?	0x50000	r	8	beq $0,$0,0xffffffffbfc30948 / ld $26,16($26) / or $26,$0,$0 / lui $27,0xaff5 / ld $27,0($27) / bne $27,$26,0xffffffffbfc30960 / sll $0,$0,0x0 / j 0xffffffffbfc31ed4 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc304e0	c30964	?	0x20000	r	8	sll $0,$0,0x0 / j 0xffffffffbfc31ed4 / sll $0,$0,0x0 / lui $26,0xaff2 / ld $27,0($26) / lui $26,0x17d / ori $26,$26,0x7840 / daddu $27,$27,$26 / lui $26,0xaff2
+ip30-prom	prom_ffffffffbfc304e0	c30978	?	0x20000	r	8	lui $26,0x17d / ori $26,$26,0x7840 / daddu $27,$27,$26 / lui $26,0xaff2 / ld $26,0($26) / dsub $26,$27,$26 / bgtz $26,0xffffffffbfc30974 / sll $0,$0,0x0 / j 0xffffffffbfc31edc
+ip30-prom	prom_ffffffffbfc304e0	c30a84	?	0x50000	r	8	daddiu $1,$1,21752 / lui $2,0xaff5 / sd $29,0($1) / lui $29,0xa800 / ld $2,0($2) / dsll $29,$29,0x10 / ori $29,$29,0x20ff / dsll $2,$2,0xf / dsll $29,$29,0x10
+ip30-prom	prom_ffffffffbfc304e0	c30ae8	?	0x50000	r	8	dsll32 $2,$2,0x0 / ori $2,$2,0x400 / lui $3,0xaff5 / ld $2,16($2) / ld $3,0($3) / beq $2,$3,0xffffffffbfc30b88 / sll $0,$0,0x0 / lui $29,0xa800 / dsll $29,$29,0x10
+ip30-prom	prom_ffffffffbfc304e0	c30b04	?	0x50000	r	8	lui $29,0xa800 / dsll $29,$29,0x10 / lui $2,0xaff5 / ori $29,$29,0x20ff / ld $2,0($2) / lui $12,0xaff2 / dsll $29,$29,0x10 / ld $14,0($12) / ori $29,$29,0xf000
+ip30-prom	prom_ffffffffbfc304e0	c30b10	?	0x20000	r	8	ori $29,$29,0x20ff / ld $2,0($2) / lui $12,0xaff2 / dsll $29,$29,0x10 / ld $14,0($12) / ori $29,$29,0xf000 / dsll $2,$2,0xf / dsubu $29,$29,$2 / addiu $2,$0,46
+ip30-prom	prom_ffffffffbfc304e0	c30b44	?	0x20000	r	8	ori $1,$1,0x68c0 / dsllv $2,$3,$2 / ori $5,$5,0x30 / daddu $14,$14,$1 / ld $13,0($12) / slt $1,$14,$13 / bne $1,$0,0xffffffffbfc30b6c / sll $0,$0,0x0 / ld $4,0($5)
+ip30-prom	prom_ffffffffbfc304e0	c30b54	?	0x10030	r	8	ld $13,0($12) / slt $1,$14,$13 / bne $1,$0,0xffffffffbfc30b6c / sll $0,$0,0x0 / ld $4,0($5) / and $4,$4,$2 / beq $4,$0,0xffffffffbfc30b44 / sll $0,$0,0x0 / jal 0xffffffffbfc333f0
+ip30-prom	prom_ffffffffbfc304e0	c30b70	?	0x0	r	8	sll $0,$0,0x0 / jal 0xffffffffbfc333f0 / or $4,$16,$0 / lui $4,0xaff0 / ld $5,0($4) / lui $1,0x40 / or $5,$5,$1 / sd $5,0($4) / beq $0,$0,0xffffffffbfc30b6c
+ip30-prom	prom_ffffffffbfc304e0	c30b7c	?	0x0	w	8	lui $4,0xaff0 / ld $5,0($4) / lui $1,0x40 / or $5,$5,$1 / sd $5,0($4) / beq $0,$0,0xffffffffbfc30b6c / ld $0,0($4) / lui $5,0xa800 / addiu $4,$0,2
+ip30-prom	prom_ffffffffbfc304e0	c30b84	?	0x0	r	8	lui $1,0x40 / or $5,$5,$1 / sd $5,0($4) / beq $0,$0,0xffffffffbfc30b6c / ld $0,0($4) / lui $5,0xa800 / addiu $4,$0,2 / dsll32 $5,$5,0x0 / ori $5,$5,0x600
+ip30-prom	prom_ffffffffbfc304e0	c30be8	?	0x20000	r	8	sll $0,$0,0x0 / beq $0,$0,0xffffffffbfc30b98 / daddiu $5,$5,128 / lui $12,0xaff2 / ld $4,0($12) / lui $1,0x9 / ori $1,$1,0x8968 / daddu $4,$4,$1 / ld $5,0($12)
+ip30-prom	prom_ffffffffbfc304e0	c30bf8	?	0x20000	r	8	ld $4,0($12) / lui $1,0x9 / ori $1,$1,0x8968 / daddu $4,$4,$1 / ld $5,0($12) / sltu $1,$5,$4 / bne $1,$0,0xffffffffbfc30bf8 / sll $0,$0,0x0 / jal 0xffffffffbfc58440
+ip30-prom	prom_ffffffffbfc304e0	c30d44	?	0x50000	r	8	daddiu $1,$1,21752 / lui $2,0xaff5 / sd $29,0($1) / lui $29,0xa800 / ld $2,0($2) / dsll $29,$29,0x10 / ori $29,$29,0x20ff / dsll $2,$2,0xf / dsll $29,$29,0x10
+ip30-prom	prom_ffffffffbfc30e30	c30f48	?	0x50000	r	8	dsll $1,$1,0x10 / daddiu $1,$1,21752 / sd $29,0($1) / lui $29,0xa800 / ld $2,0($2) / dsll $29,$29,0x10 / ori $29,$29,0x20ff / dsll $2,$2,0xf / dsll $29,$29,0x10
+ip30-prom	prom_ffffffffbfc30fa0	c31060	?	0x50000	r	8	dsll32 $1,$1,0x1c / or $3,$3,$1 / sd $29,0($3) / lui $29,0x9000 / ld $2,0($2) / dsll $29,$29,0x10 / ori $29,$29,0x20ff / dsll $2,$2,0xf / dsll $29,$29,0x10
+ip30-prom	prom_ffffffffbfc30fa0	c31130	?	0x40000	w	8	dmfc0 $6,c0_epc / beq $0,$0,0xffffffffbfc3112c / addiu $4,$0,4 / lui $2,0xaff4 / sd $5,0($2) / beq $30,$0,0xffffffffbfc31148 / sd $6,0($2) / or $26,$30,$0 / jr $26
+ip30-prom	prom_ffffffffbfc30fa0	c31138	?	0x40000	w	8	addiu $4,$0,4 / lui $2,0xaff4 / sd $5,0($2) / beq $30,$0,0xffffffffbfc31148 / sd $6,0($2) / or $26,$30,$0 / jr $26 / or $30,$0,$0 / j 0xffffffffbfc582dc
+ip30-prom	prom_ffffffffbfc31150	c31178	?	0x20	w	8	lui $2,0xaff0 / mthi $0 / or $22,$0,$0 / ori $2,$2,0x20 / sd $0,0($2) / sd $0,8($2) / lui $5,0x81bf / or $4,$22,$0 / jal 0xffffffffbfc31b78
+ip30-prom	prom_ffffffffbfc31150	c3117c	?	0x28	w	8	mthi $0 / or $22,$0,$0 / ori $2,$2,0x20 / sd $0,0($2) / sd $0,8($2) / lui $5,0x81bf / or $4,$22,$0 / jal 0xffffffffbfc31b78 / ori $5,$5,0x40
+ip30-prom	prom_ffffffffbfc316e0	c3189c	?	0x100004	r	4	and $19,$18,$1 / lui $1,0xb800 / ori $1,$1,0x4 / dsrl $19,$19,0x10 / lwu $1,0($1) / addi $19,$19,1 / dsrl $1,$1,0x1c / slti $1,$1,6 / beq $1,$0,0xffffffffbfc3196c
+ip30-prom	prom_ffffffffbfc319e0	c31a5c	?	0x100004	r	4	beq $0,$0,0xffffffffbfc31aa0 / ori $2,$2,0x10 / lui $1,0xb800 / ori $1,$1,0x4 / lwu $1,0($1) / dsrl $1,$1,0x1c / slti $1,$1,6 / bne $1,$0,0xffffffffbfc31a74 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc31b78	c31b88	?	0x20	w	4	lui $12,0xaff0 / ori $12,$12,0x20 / dsll $4,$4,0x2 / daddu $12,$12,$4 / sw $5,0($12) / lui $1,0xb800 / ld $0,0($1) / jr $31 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc31b78	c31b90	?	0x100000	r	8	dsll $4,$4,0x2 / daddu $12,$12,$4 / sw $5,0($12) / lui $1,0xb800 / ld $0,0($1) / jr $31 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc31b9c	c31bb0	?	0x20	r	4	ori $12,$12,0x20 / dsll $4,$4,0x2 / daddu $12,$12,$4 / jr $31 / lwu $2,0($12)
+ip30-prom	prom_ffffffffbfc31e90	c31fbc	?	0x50000	r	8	dsll $4,$4,0x10 / jal 0xffffffffbfc36094 / daddiu $4,$4,12188 / lui $4,0xaff5 / ld $4,0($4) / jal 0xffffffffbfc360bc / addi $4,$4,48 / lui $4,0x0 / daddiu $4,$4,0
+ip30-prom	prom_ffffffffbfc32730	c3285c	?	0x80	r	8	lui $18,0x20f2 / daddiu $17,$17,0 / daddiu $18,$18,20876 / dsll32 $17,$17,0x0 / ld $24,128($24) / dadd $17,$17,$18 / lui $18,0xa800 / daddiu $30,$30,-1 / daddiu $18,$18,0
+ip30-prom	prom_ffffffffbfc32730	c328ec	?	0x10028	w	8	addiu $24,$2,46 / dsllv $24,$21,$24 / lui $25,0xaff1 / jal 0xffffffffbfc33804 / sd $24,40($25) / daddu $25,$22,$23 / jal 0xffffffffbfc36ae4 / sw $21,0($25) / jal 0xffffffffbfc3592c
+ip30-prom	prom_ffffffffbfc32730	c3298c	?	0x0	r	8	addiu $1,$0,-1 / lui $30,0xaff0 / lui $16,0x0 / dsll32 $1,$1,0x1c / ld $25,0($30) / daddiu $16,$16,0 / xor $31,$31,$1 / lui $24,0x9fc9 / or $25,$25,$31
+ip30-prom	prom_ffffffffbfc32730	c329a0	?	0x0	w	8	daddiu $16,$16,0 / xor $31,$31,$1 / lui $24,0x9fc9 / or $25,$25,$31 / sd $25,0($30) / dsll32 $16,$16,0x0 / daddiu $24,$24,8640 / ld $5,0($30) / dadd $16,$16,$24
+ip30-prom	prom_ffffffffbfc32730	c329ac	?	0x0	r	8	or $25,$25,$31 / sd $25,0($30) / dsll32 $16,$16,0x0 / daddiu $24,$24,8640 / ld $5,0($30) / dadd $16,$16,$24 / lui $6,0x2 / or $5,$5,$6 / jal 0xffffffffbfc34944
+ip30-prom	prom_ffffffffbfc32730	c329c0	?	0x0	w	8	dadd $16,$16,$24 / lui $6,0x2 / or $5,$5,$6 / jal 0xffffffffbfc34944 / sd $5,0($30) / beq $2,$0,0xffffffffbfc329d8 / addiu $4,$0,-11 / jal 0xffffffffbfc4b544 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc32730	c32a00	?	0x10000	w	8	or $4,$18,$0 / jal 0xffffffffbfc4ae34 / sll $0,$0,0x0 / lui $8,0xaff1 / sd $0,0($8) / sd $0,8($8) / sd $0,16($8) / lui $9,0x1f00 / sd $0,24($8)
+ip30-prom	prom_ffffffffbfc32730	c32a04	?	0x10008	w	8	jal 0xffffffffbfc4ae34 / sll $0,$0,0x0 / lui $8,0xaff1 / sd $0,0($8) / sd $0,8($8) / sd $0,16($8) / lui $9,0x1f00 / sd $0,24($8) / ori $8,$9,0x3c
+ip30-prom	prom_ffffffffbfc32730	c32a08	?	0x10010	w	8	sll $0,$0,0x0 / lui $8,0xaff1 / sd $0,0($8) / sd $0,8($8) / sd $0,16($8) / lui $9,0x1f00 / sd $0,24($8) / ori $8,$9,0x3c / lui $7,0x9000
+ip30-prom	prom_ffffffffbfc32730	c32a10	?	0x10018	w	8	sd $0,0($8) / sd $0,8($8) / sd $0,16($8) / lui $9,0x1f00 / sd $0,24($8) / ori $8,$9,0x3c / lui $7,0x9000 / ld $10,0($30) / dsll32 $7,$7,0x0
+ip30-prom	prom_ffffffffbfc32730	c32e9c	?	0x0	r	8	bne $24,$0,0xffffffffbfc32c34 / sd $4,160($29) / lui $31,0xaff0 / dsllv $1,$21,$22 / ld $25,0($31) / nor $1,$1,$0 / sllv $4,$21,$19 / and $25,$25,$1 / sd $25,0($31)
+ip30-prom	prom_ffffffffbfc32730	c32eac	?	0x0	w	8	ld $25,0($31) / nor $1,$1,$0 / sllv $4,$21,$19 / and $25,$25,$1 / sd $25,0($31) / jal 0xffffffffbfc339b0 / or $5,$0,$0 / ld $2,64($29) / ld $4,160($29)
+ip30-prom	prom_ffffffffbfc32730	c32fc0	?	0x80	r	8	beq $20,$19,0xffffffffbfc33080 / dsllv $14,$21,$5 / lui $13,0xaff0 / ori $13,$13,0x80 / ld $13,0($13) / sd $5,144($29) / sd $10,56($29) / and $13,$13,$14 / sd $9,64($29)
+ip30-prom	prom_ffffffffbfc32730	c32fe4	?	0x0	r	8	beq $13,$0,0xffffffffbfc33080 / sd $4,152($29) / lui $15,0xaff0 / dsllv $24,$21,$22 / ld $14,0($15) / sd $24,0($29) / nor $24,$24,$0 / and $14,$14,$24 / jal 0xffffffffbfc58100
+ip30-prom	prom_ffffffffbfc32730	c32ff8	?	0x0	w	8	sd $24,0($29) / nor $24,$24,$0 / and $14,$14,$24 / jal 0xffffffffbfc58100 / sd $14,0($15) / sllv $4,$21,$19 / jal 0xffffffffbfc339b0 / or $5,$0,$0 / ld $4,152($29)
+ip30-prom	prom_ffffffffbfc32730	c33010	?	0x20000	r	8	jal 0xffffffffbfc339b0 / or $5,$0,$0 / ld $4,152($29) / lui $11,0xaff2 / ld $2,0($11) / lw $3,0($23) / ld $5,144($29) / lui $12,0xbe / addiu $8,$0,2
+ip30-prom	prom_ffffffffbfc32730	c33194	?	0x10000	r	8	dsll $7,$6,0x3 / addiu $6,$6,59 / daddu $7,$9,$7 / dsllv $6,$21,$6 / ld $10,0($7) / dsll $11,$20,0x3 / xor $10,$6,$10 / daddu $9,$9,$11 / or $8,$8,$10
+ip30-prom	prom_ffffffffbfc32730	c331a8	?	0x10000	w	8	dsll $11,$20,0x3 / xor $10,$6,$10 / daddu $9,$9,$11 / or $8,$8,$10 / sd $8,0($9) / beq $0,$0,0xffffffffbfc32c68 / sd $6,0($7) / daddu $9,$2,$9 / lw $9,0($9)
+ip30-prom	prom_ffffffffbfc32730	c331b0	?	0x10000	w	8	daddu $9,$9,$11 / or $8,$8,$10 / sd $8,0($9) / beq $0,$0,0xffffffffbfc32c68 / sd $6,0($7) / daddu $9,$2,$9 / lw $9,0($9) / bne $9,$0,0xffffffffbfc32ba4 / addiu $11,$0,-11
+ip30-prom	prom_ffffffffbfc32730	c33244	?	0x0	r	8	ld $24,40($29) / beq $0,$0,0xffffffffbfc33080 / sw $19,0($24) / lui $31,0xaff0 / ld $25,0($31) / or $25,$25,$1 / beq $0,$0,0xffffffffbfc33080 / sd $25,0($31) / ld $3,0($11)
+ip30-prom	prom_ffffffffbfc32730	c33250	?	0x0	w	8	lui $31,0xaff0 / ld $25,0($31) / or $25,$25,$1 / beq $0,$0,0xffffffffbfc33080 / sd $25,0($31) / ld $3,0($11) / sltu $3,$3,$2 / beq $3,$0,0xffffffffbfc33038 / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc333f0	c3354c	?	0x10028	w	8	addiu $7,$0,1 / dsllv $7,$7,$8 / lui $8,0xaff1 / jal 0xffffffffbfc4af8c / sd $7,40($8) / jal 0xffffffffbfc31e90 / sll $0,$0,0x0 / lui $4,0x3400 / jal 0xffffffffbfc53f60
+ip30-prom	prom_ffffffffbfc3389c	c338bc	?	0x20000	r	8	sd $31,16($29) / addiu $24,$0,12500 / mult $4,$24 / lui $17,0xaff2 / ld $17,0($17) / mflo $24 / sll $0,$0,0x0 / daddu $17,$17,$24 / jal 0xffffffffbfc5818c
+ip30-prom	prom_ffffffffbfc3389c	c338e0	?	0x10030	r	8	sd $16,8($29) / lui $16,0xaff1 / addiu $31,$2,46 / addiu $25,$0,1 / ld $24,48($16) / dsllv $25,$25,$31 / and $24,$24,$25 / beq $24,$0,0xffffffffbfc33958 / ori $16,$16,0x30
+ip30-prom	prom_ffffffffbfc3389c	c338fc	?	0x10030	r	8	beq $24,$0,0xffffffffbfc33958 / ori $16,$16,0x30 / jal 0xffffffffbfc5818c / ld $17,0($29) / ld $1,0($16) / addiu $3,$2,46 / addiu $2,$0,1 / dsllv $2,$2,$3 / and $1,$1,$2
+ip30-prom	prom_ffffffffbfc3389c	c33934	?	0x10028	w	8	addiu $5,$0,1 / dsllv $5,$5,$6 / lui $6,0xaff1 / addiu $4,$0,1 / sd $5,40($6) / ld $31,16($29) / or $2,$4,$0 / ld $16,8($29) / jr $31
+ip30-prom	prom_ffffffffbfc3389c	c3395c	?	0x20000	r	8	dsrl $17,$17,0xc / beq $0,$0,0xffffffffbfc338cc / sll $0,$0,0x0 / lui $2,0xaff2 / ld $24,0($2) / sltu $24,$24,$17 / beq $24,$0,0xffffffffbfc338f4 / sll $0,$0,0x0 / beq $0,$0,0xffffffffbfc33984
+ip30-prom	prom_ffffffffbfc3389c	c33974	?	0x20000	r	8	beq $24,$0,0xffffffffbfc338f4 / sll $0,$0,0x0 / beq $0,$0,0xffffffffbfc33984 / sll $0,$0,0x0 / ld $25,0($25) / sltu $25,$25,$17 / beq $25,$0,0xffffffffbfc338f4 / sll $0,$0,0x0 / jal 0xffffffffbfc5818c
+ip30-prom	prom_ffffffffbfc3389c	c3398c	?	0x10030	r	8	beq $25,$0,0xffffffffbfc338f4 / sll $0,$0,0x0 / jal 0xffffffffbfc5818c / sll $0,$0,0x0 / ld $31,0($16) / addiu $2,$2,46 / addiu $1,$0,1 / dsllv $1,$1,$2 / and $31,$31,$1
+ip30-prom	prom_ffffffffbfc339b0	c33a40	?	0x80	r	8	and $31,$31,$1 / lui $2,0xaff0 / beq $31,$0,0xffffffffbfc33a64 / ori $2,$2,0x80 / ld $2,0($2) / and $2,$2,$3 / beq $2,$0,0xffffffffbfc33a64 / lui $3,0xaff0 / ld $3,0($3)
+ip30-prom	prom_ffffffffbfc339b0	c33a50	?	0x0	r	8	ld $2,0($2) / and $2,$2,$3 / beq $2,$0,0xffffffffbfc33a64 / lui $3,0xaff0 / ld $3,0($3) / dsllv $4,$21,$18 / and $3,$3,$4 / beq $3,$0,0xffffffffbfc33aac / ld $5,8($29)
+ip30-prom	prom_ffffffffbfc339b0	c33abc	?	0x20000	r	8	lui $10,0xaff1 / ld $7,0($29) / beq $5,$0,0xffffffffbfc33b1c / ori $10,$10,0x20 / ld $8,0($23) / daddu $7,$7,$8 / dsllv $8,$21,$19 / sd $8,0($10) / ld $9,0($22)
+ip30-prom	prom_ffffffffbfc339b0	c33ac8	?	0x10020	w	8	ori $10,$10,0x20 / ld $8,0($23) / daddu $7,$7,$8 / dsllv $8,$21,$19 / sd $8,0($10) / ld $9,0($22) / and $9,$8,$9 / beq $9,$0,0xffffffffbfc33b0c / sll $0,$0,0x0
+ip30-prom	prom_ffffffffbfc339b0	c33acc	?	0x10030	r	8	ld $8,0($23) / daddu $7,$7,$8 / dsllv $8,$21,$19 / sd $8,0($10) / ld $9,0($22) / and $9,$8,$9 / beq $9,$0,0xffffffffbfc33b0c / sll $0,$0,0x0 / ld $11,0($23)
+ip30-prom	prom_ffffffffbfc339b0	c33adc	?	0x20000	r	8	ld $9,0($22) / and $9,$8,$9 / beq $9,$0,0xffffffffbfc33b0c / sll $0,$0,0x0 / ld $11,0($23) / sltu $11,$11,$7 / beq $11,$0,0xffffffffbfc33b0c / sll $0,$0,0x0 / ld $12,0($22)
+ip30-prom	prom_ffffffffbfc339b0	c33aec	?	0x10030	r	8	ld $11,0($23) / sltu $11,$11,$7 / beq $11,$0,0xffffffffbfc33b0c / sll $0,$0,0x0 / ld $12,0($22) / and $12,$8,$12 / beq $12,$0,0xffffffffbfc33b0c / sll $0,$0,0x0 / ld $13,0($23)
+ip30-prom	prom_ffffffffbfc339b0	c33afc	?	0x20000	r	8	ld $12,0($22) / and $12,$8,$12 / beq $12,$0,0xffffffffbfc33b0c / sll $0,$0,0x0 / ld $13,0($23) / sltu $13,$13,$7 / bne $13,$0,0xffffffffbfc33aec / sll $0,$0,0x0 / ld $14,0($22)
+ip30-prom	prom_ffffffffbfc339b0	c33b0c	?	0x10030	r	8	ld $13,0($23) / sltu $13,$13,$7 / bne $13,$0,0xffffffffbfc33aec / sll $0,$0,0x0 / ld $14,0($22) / and $14,$8,$14 / beq $0,$0,0xffffffffbfc33a64 / movn $20,$21,$14 / addiu $7,$0,-1
+ip30-prom	prom_ffffffffbfc34198	c3425c	?	0x80	r	8	sltiu $24,$24,1 / addiu $20,$0,4 / movn $19,$25,$24 / daddiu $9,$16,1336 / ld $24,0($23) / daddiu $8,$16,1304 / dsllv $25,$21,$20 / dsllv $3,$21,$22 / and $24,$24,$25
+ip30-prom	prom_ffffffffbfc34198	c34298	?	0x0	r	8	daddiu $7,$16,1300 / beq $31,$0,0xffffffffbfc34298 / sll $0,$0,0x0 / daddiu $6,$16,1296 / ld $1,0($2) / and $1,$1,$3 / beq $1,$0,0xffffffffbfc342ac / sll $0,$0,0x0 / daddiu $7,$16,1296
+ip30-prom	prom_ffffffffbfc34198	c343a0	?	0x80	r	8	slti $1,$2,2 / beq $1,$0,0xffffffffbfc3450c / or $17,$2,$0 / lui $2,0xaff0 / ld $3,128($2) / addiu $4,$17,4 / dsllv $4,$18,$4 / and $3,$3,$4 / beq $3,$0,0xffffffffbfc34510
+ip30-prom	prom_ffffffffbfc34198	c34464	?	0x80	r	8	addiu $31,$0,2 / dsllv $25,$18,$9 / lui $24,0xaff0 / ori $24,$24,0x80 / ld $24,0($24) / and $24,$24,$25 / sllv $25,$18,$4 / beq $24,$0,0xffffffffbfc34480 / and $25,$19,$25
+ip30-prom	prom_ffffffffbfc34198	c34584	?	0x0	r	8	jal 0xffffffffbfc8bab0 / or $5,$17,$0 / ld $10,8($29) / lui $9,0xaff0 / ld $8,0($9) / or $8,$8,$10 / beq $0,$0,0xffffffffbfc345a0 / sd $8,0($9) / daddiu $4,$16,1904
+ip30-prom	prom_ffffffffbfc34198	c34590	?	0x0	w	8	lui $9,0xaff0 / ld $8,0($9) / or $8,$8,$10 / beq $0,$0,0xffffffffbfc345a0 / sd $8,0($9) / daddiu $4,$16,1904 / jal 0xffffffffbfc8bab0 / or $5,$17,$0 / beq $0,$0,0xffffffffbfc34370
+ip30-prom	prom_ffffffffbfc34198	c34840	?	0x0	r	8	jal 0xffffffffbfc8bab0 / or $5,$17,$0 / ld $3,8($29) / lui $2,0xaff0 / ld $2,0($2) / and $2,$2,$3 / beq $2,$0,0xffffffffbfc34858 / ld $17,48($29) / jal 0xffffffffbfc8bab0
+ip30-prom	prom_ffffffffbfc358bc	c358c0	?	0x0	r	8	lui $2,0xaff0 / ld $5,0($2) / lui $3,0x20 / addiu $6,$0,-128 / and $4,$4,$6 / or $5,$5,$3
+ip30-prom	prom_ffffffffbfc358bc	c358d4	?	0x0	w	8	lui $3,0x20 / addiu $6,$0,-128 / and $4,$4,$6 / or $5,$5,$3 / sd $5,0($2) / sd $0,0($4) / sd $0,8($4) / sd $0,16($4) / sd $0,24($4)
+ip30-prom	prom_ffffffffbfc358bc	c35918	?	0x0	r	8	sd $0,96($4) / sd $0,104($4) / sd $0,112($4) / sd $0,120($4) / ld $1,0($2) / nor $3,$3,$0 / and $1,$1,$3 / jr $31 / sd $1,0($2)
+ip30-prom	prom_ffffffffbfc358bc	c35928	?	0x0	w	8	ld $1,0($2) / nor $3,$3,$0 / and $1,$1,$3 / jr $31 / sd $1,0($2)
+ip30-prom	prom_ffffffffbfc36300	c365c0	?	0x10030	r	8	daddiu $4,$4,15280 / lui $4,0xaff1 / ori $4,$4,0x30 / jal 0xffffffffbfc36024 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c365ec	?	0x10040	r	8	daddiu $4,$4,15294 / lui $4,0xaff1 / ori $4,$4,0x40 / jal 0xffffffffbfc36024 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c36618	?	0x88	r	8	daddiu $4,$4,15304 / lui $4,0xaff0 / ori $4,$4,0x88 / jal 0xffffffffbfc36024 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c36644	?	0x90	r	8	daddiu $4,$4,15320 / lui $4,0xaff0 / ori $4,$4,0x90 / jal 0xffffffffbfc36024 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c36670	?	0x98	r	8	daddiu $4,$4,15334 / lui $4,0xaff0 / ori $4,$4,0x98 / jal 0xffffffffbfc36024 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c3669c	?	0xa0	r	8	daddiu $4,$4,15354 / lui $4,0xaff0 / ori $4,$4,0xa0 / jal 0xffffffffbfc36024 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c366c8	?	0xa8	r	8	daddiu $4,$4,15371 / lui $4,0xaff0 / ori $4,$4,0xa8 / jal 0xffffffffbfc36024 / ld $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c366f4	?	0x100040	r	4	daddiu $4,$4,15386 / lui $4,0xb800 / ori $4,$4,0x40 / jal 0xffffffffbfc36014 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c36720	?	0x100010	r	4	daddiu $4,$4,15407 / lui $4,0xb800 / ori $4,$4,0x10 / jal 0xffffffffbfc36014 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c3674c	?	0x100018	r	4	daddiu $4,$4,15427 / lui $4,0xb800 / ori $4,$4,0x18 / jal 0xffffffffbfc36014 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c36778	?	0x100060	r	4	daddiu $4,$4,15429 / lui $4,0xb800 / ori $4,$4,0x60 / jal 0xffffffffbfc36014 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c367a4	?	0x100070	r	4	daddiu $4,$4,15451 / lui $4,0xb800 / ori $4,$4,0x70 / jal 0xffffffffbfc36014 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c367d0	?	0x100078	r	4	daddiu $4,$4,15475 / lui $4,0xb800 / ori $4,$4,0x78 / jal 0xffffffffbfc36014 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc36300	c367fc	?	0x100090	r	4	daddiu $4,$4,15477 / lui $4,0xb800 / ori $4,$4,0x90 / jal 0xffffffffbfc36014 / lw $4,0($4) / lui $4,0x0 / daddiu $4,$4,0 / dsll $4,$4,0x10 / daddiu $4,$4,-24629
+ip30-prom	prom_ffffffffbfc37ee0	c37f68	?	0x80	r	8	jal 0xffffffffbfc8fa18 / daddiu $4,$29,0 / beq $17,$0,0xffffffffbfc380c4 / lui $4,0xaff0 / ld $4,128($4) / beq $17,$0,0xffffffffbfc38064 / andi $4,$4,0xf0 / addiu $6,$0,1 / dsrl $5,$4,0x4
+ip30-prom	prom_ffffffffbfc392ec	c392f8	?	0x20000	r	8	lui $6,0xaff2 / sll $8,$4,0x2 / subu $8,$8,$4 / ld $7,0($6) / ld $1,0($6) / sll $8,$8,0x2 / daddu $7,$7,$8 / sltu $1,$1,$7
+ip30-prom	prom_ffffffffbfc392ec	c392fc	?	0x20000	r	8	lui $6,0xaff2 / sll $8,$4,0x2 / subu $8,$8,$4 / ld $7,0($6) / ld $1,0($6) / sll $8,$8,0x2 / daddu $7,$7,$8 / sltu $1,$1,$7 / beq $1,$0,0xffffffffbfc39324
+ip30-prom	prom_ffffffffbfc392ec	c39314	?	0x20000	r	8	daddu $7,$7,$8 / sltu $1,$1,$7 / beq $1,$0,0xffffffffbfc39324 / sll $0,$0,0x0 / ld $9,0($6) / sltu $9,$9,$7 / bne $9,$0,0xffffffffbfc39314 / sll $0,$0,0x0 / jr $31
+ip30-prom	prom_ffffffffbfc3a7d0	c3a7e0	?	0x10018	w	8	lui $21,0xaff1 / or $27,$31,$0 / addiu $5,$0,1 / ori $21,$21,0x18 / sd $5,0($21) / ld $6,0($21) / bne $5,$6,0xffffffffbfc3a804 / sll $0,$0,0x0 / dsll $5,$5,0x1
+ip30-prom	prom_ffffffffbfc3a7d0	c3a7e4	?	0x10018	r	8	or $27,$31,$0 / addiu $5,$0,1 / ori $21,$21,0x18 / sd $5,0($21) / ld $6,0($21) / bne $5,$6,0xffffffffbfc3a804 / sll $0,$0,0x0 / dsll $5,$5,0x1 / bne $5,$0,0xffffffffbfc3a7e0
+ip30-prom	prom_ffffffffbfc3a7d0	c3a800	?	0x10018	w	8	dsll $5,$5,0x1 / bne $5,$0,0xffffffffbfc3a7e0 / sll $0,$0,0x0 / jr $27 / sd $0,0($21) / jal 0xffffffffbfc35f80 / sll $0,$0,0x0 / jal 0xffffffffbfc360fc / or $4,$21,$0
+ip30-prom	prom_ffffffffbfc3ab10	c3ab20	?	0x80	r	8	daddiu $29,$29,-80 / sd $18,24($29) / sd $19,32($29) / lui $1,0xaff0 / ld $1,128($1) / sd $20,40($29) / sd $31,48($29) / andi $1,$1,0x800 / sd $16,56($29)
+ip30-prom	prom_ffffffffbfc3b7d0	c3b7d4	?	0x40	r	8	lui $2,0xaff0 / ld $1,64($2) / addiu $3,$0,-769 / and $1,$1,$3 / jr $31 / sd $1,64($2)
+ip30-prom	prom_ffffffffbfc3b7d0	c3b7e4	?	0x40	w	8	ld $1,64($2) / addiu $3,$0,-769 / and $1,$1,$3 / jr $31 / sd $1,64($2)
+ip30-prom	prom_ffffffffbfc48624	c48844	?	0x0	r	8	lui $31,0x1000 / ori $31,$31,0x4 / lui $8,0xaff0 / or $25,$25,$31 / ld $2,0($8) / lw $25,0($25) / srl $25,$25,0x1c / slti $25,$25,5 / beq $25,$0,0xffffffffbfc48898
+ip30-prom	prom_ffffffffbfc48624	c48894	?	0x0	w	8	or $9,$9,$10 / lui $10,0x80 / or $9,$9,$10 / beq $0,$0,0xffffffffbfc48740 / sd $9,0($8) / beq $0,$0,0xffffffffbfc48818 / addiu $2,$0,1
+ip30-prom	prom_ffffffffbfc4e5f0	c4e718	?	0x50000	r	8	jr $31 / daddiu $29,$29,16 / or $1,$27,$0 / lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-prom	prom_ffffffffbfc4e5f0	c4e748	?	0x50000	r	8	daddiu $26,$26,21768 / daddu $26,$26,$27 / sd $1,120($26) / lui $27,0xaff5 / ld $27,0($27) / lui $1,0xa800 / daddiu $1,$1,0 / dsll $1,$1,0x10 / daddiu $1,$1,8434
+ip30-prom	prom_ffffffffbfc4e5f0	c4e830	?	0x50000	r	8	sll $0,$0,0x0 / break 0x1 / or $1,$27,$0 / lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-prom	prom_ffffffffbfc4e5f0	c4e86c	?	0x50000	r	8	lui $1,0xa800 / daddiu $1,$1,0 / lui $27,0xaff5 / dsll $1,$1,0x10 / ld $27,0($27) / daddiu $1,$1,8434 / dsll $1,$1,0x10 / daddiu $1,$1,24280 / sll $27,$27,0x3
+ip30-prom	prom_ffffffffbfc4e5f0	c4e8a0	?	0x50000	r	8	j 0xffffffffbfc4e974 / sd $1,16($26) / or $1,$27,$0 / lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-prom	prom_ffffffffbfc4e5f0	c4e8dc	?	0x50000	r	8	lui $1,0xa800 / daddiu $1,$1,0 / lui $27,0xaff5 / dsll $1,$1,0x10 / ld $27,0($27) / daddiu $1,$1,8434 / dsll $1,$1,0x10 / daddiu $1,$1,24280 / sll $27,$27,0x3
+ip30-prom	prom_ffffffffbfc4e5f0	c4e910	?	0x50000	r	8	j 0xffffffffbfc4e974 / sd $1,16($26) / or $1,$27,$0 / lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-prom	prom_ffffffffbfc4e5f0	c4e94c	?	0x50000	r	8	lui $1,0xa800 / daddiu $1,$1,0 / lui $27,0xaff5 / dsll $1,$1,0x10 / ld $27,0($27) / daddiu $1,$1,8434 / dsll $1,$1,0x10 / daddiu $1,$1,24280 / sll $27,$27,0x3
+ip30-prom	prom_ffffffffbfc4ed0c	c4ed10	?	0x50000	r	8	lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-prom	prom_ffffffffbfc4ed0c	c4ef40	?	0x50000	r	8	ld $27,120($26) / jr $27 / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / lui $26,0xa800 / daddiu $26,$26,0 / dsll $26,$26,0x10 / daddiu $26,$26,8434
+ip30-prom	prom_ffffffffbfc4ed0c	c4ef90	?	0x50000	r	8	sll $0,$0,0x0 / eret  / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / lui $26,0xa800 / daddiu $26,$26,0 / dsll $26,$26,0x10 / daddiu $26,$26,8434
+ip30-prom	prom_ffffffffbfc4ed0c	c4efe0	?	0x50000	r	8	sll $0,$0,0x0 / eret  / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / lui $26,0xa800 / daddiu $26,$26,0 / dsll $26,$26,0x10 / daddiu $26,$26,8434
+ip30-prom	prom_ffffffffbfc4ed0c	c4f034	?	0x50000	r	8	sll $0,$0,0x0 / eret  / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / lui $26,0xa800 / daddiu $26,$26,0 / dsll $26,$26,0x10 / daddiu $26,$26,8434
+ip30-prom	prom_ffffffffbfc50c94	c50ca0	?	0x80	r	8	lui $3,0x0 / lui $4,0xaff0 / daddiu $3,$3,0 / ld $2,128($4) / lui $5,0x9fcc / dsll32 $3,$3,0x0 / ld $4,0($4) / daddiu $5,$5,5328
+ip30-prom	prom_ffffffffbfc50c94	c50cac	?	0x0	r	8	daddiu $3,$3,0 / ld $2,128($4) / lui $5,0x9fcc / dsll32 $3,$3,0x0 / ld $4,0($4) / daddiu $5,$5,5328 / dsrl $2,$2,0x4 / dadd $3,$3,$5 / dsrl32 $4,$4,0x1c
+ip30-prom	prom_ffffffffbfc50cdc	c50ce8	?	0x80	r	8	lui $3,0x0 / lui $2,0xaff0 / lui $4,0x9fcc / ld $2,128($2) / daddiu $3,$3,0 / daddiu $4,$4,5328 / dsll32 $3,$3,0x0 / dsrl $2,$2,0x4
+ip30-prom	prom_ffffffffbfc50cdc	c50d18	?	0x80	r	8	daddu $2,$2,$3 / jr $31 / lbu $2,0($2) / lui $5,0xaff0 / ld $3,128($5) / ld $5,0($5) / dsrl $3,$3,0x4 / addiu $2,$0,1 / dsrl32 $5,$5,0x1c
+ip30-prom	prom_ffffffffbfc50cdc	c50d1c	?	0x0	r	8	jr $31 / lbu $2,0($2) / lui $5,0xaff0 / ld $3,128($5) / ld $5,0($5) / dsrl $3,$3,0x4 / addiu $2,$0,1 / dsrl32 $5,$5,0x1c / nor $5,$5,$0
+ip30-prom	prom_ffffffffbfc50d48	c50d98	?	0x10000	r	8	lui $7,0xaff1 / dsll $6,$6,0x3 / daddu $6,$6,$7 / addiu $7,$0,1 / ld $5,0($6) / dsll32 $7,$7,0x9 / or $5,$5,$7 / jal 0xffffffffbfc5c09c / sd $5,0($6)
+ip30-prom	prom_ffffffffbfc50d48	c50da8	?	0x10000	w	8	ld $5,0($6) / dsll32 $7,$7,0x9 / or $5,$5,$7 / jal 0xffffffffbfc5c09c / sd $5,0($6) / slti $7,$2,2 / beq $7,$0,0xffffffffbfc50ddc / lui $4,0x9000 / jal 0xffffffffbfc58100
+ip30-prom	prom_ffffffffbfc50dfc	c50e60	?	0x10000	r	8	dsll $6,$6,0x3 / addiu $7,$0,1 / daddu $6,$6,$8 / dsll32 $7,$7,0x9 / ld $5,0($6) / nor $7,$7,$0 / and $5,$5,$7 / jal 0xffffffffbfc58100 / sd $5,0($6)
+ip30-prom	prom_ffffffffbfc50dfc	c50e70	?	0x10000	w	8	ld $5,0($6) / nor $7,$7,$0 / and $5,$5,$7 / jal 0xffffffffbfc58100 / sd $5,0($6) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-prom	prom_ffffffffbfc51058	c5106c	?	0x20	r	4	dsll $3,$4,0x2 / ori $2,$2,0x20 / daddu $2,$2,$3 / jr $31 / lw $2,0($2)
+ip30-prom	prom_ffffffffbfc5141c	c51750	?	0x80	r	8	lui $1,0xaff0 / sd $17,8($29) / or $17,$4,$0 / jal 0xffffffffbfc5141c / ld $1,128($1) / jal 0xffffffffbfc50cdc / sd $18,24($29) / or $18,$2,$0 / slti $2,$2,2
+ip30-prom	prom_ffffffffbfc5180c	c518fc	?	0x10000	r	8	lw $7,4($2) / lui $10,0xaff1 / dsll $7,$7,0x3 / daddu $7,$10,$7 / ld $6,0($7) / addiu $4,$0,1 / nor $9,$30,$0 / addiu $8,$0,15 / and $6,$6,$9
+ip30-prom	prom_ffffffffbfc5180c	c51910	?	0x10000	w	8	addiu $4,$0,1 / nor $9,$30,$0 / addiu $8,$0,15 / and $6,$6,$9 / sd $6,0($7) / addiu $19,$19,1 / addiu $17,$17,1 / daddu $18,$20,$18 / beq $19,$8,0xffffffffbfc5195c
+ip30-prom	prom_ffffffffbfc519ac	c519b4	?	0x0	r	8	lui $2,0xaff0 / daddiu $29,$29,-16 / ld $1,0($2) / lui $3,0x40 / sd $31,0($29) / or $1,$1,$3 / jal 0xffffffffbfc58100
+ip30-prom	prom_ffffffffbfc519ac	c519c8	?	0x0	w	8	lui $3,0x40 / sd $31,0($29) / or $1,$1,$3 / jal 0xffffffffbfc58100 / sd $1,0($2) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-prom	prom_ffffffffbfc51c6c	c51c74	?	0x10038	r	8	lui $1,0xaff1 / addiu $2,$0,1 / ld $1,56($1) / dsll32 $2,$2,0x9 / and $1,$1,$2 / daddiu $29,$29,-16 / beq $1,$0,0xffffffffbfc51c94
+ip30-prom	prom_ffffffffbfc51cbc	c51e2c	?	0x10040	r	8	ld $17,48($29) / beq $0,$0,0xffffffffbfc51e64 / addiu $2,$0,1 / lui $5,0xaff1 / ld $3,64($5) / addiu $6,$0,1 / addiu $2,$0,-1 / andi $4,$3,0x3 / ori $18,$5,0x40
+ip30-prom	prom_ffffffffbfc51cbc	c51e5c	?	0x10040	w	8	and $2,$2,$3 / beq $2,$0,0xffffffffbfc51e60 / sll $0,$0,0x0 / jal 0xffffffffbfc58100 / sd $2,64($5) / or $2,$0,$0 / ld $31,40($29) / ld $19,24($29) / ld $18,32($29)
+ip30-prom	prom_ffffffffbfc51cbc	c51e7c	?	0x98	r	8	ld $18,32($29) / jr $31 / daddiu $29,$29,64 / lui $4,0xaff0 / ld $19,152($4) / ld $4,160($4) / ori $3,$2,0x1 / sd $3,64($5) / jal 0xffffffffbfc58100
+ip30-prom	prom_ffffffffbfc51cbc	c51e80	?	0xa0	r	8	jr $31 / daddiu $29,$29,64 / lui $4,0xaff0 / ld $19,152($4) / ld $4,160($4) / ori $3,$2,0x1 / sd $3,64($5) / jal 0xffffffffbfc58100 / sd $4,8($29)
+ip30-prom	prom_ffffffffbfc51cbc	c51e88	?	0x10040	w	8	lui $4,0xaff0 / ld $19,152($4) / ld $4,160($4) / ori $3,$2,0x1 / sd $3,64($5) / jal 0xffffffffbfc58100 / sd $4,8($29) / lui $6,0xaff0 / ld $5,24($6)
+ip30-prom	prom_ffffffffbfc51cbc	c51e98	?	0x18	r	8	sd $3,64($5) / jal 0xffffffffbfc58100 / sd $4,8($29) / lui $6,0xaff0 / ld $5,24($6) / lui $7,0x10 / sd $5,0($29) / or $5,$5,$7 / jal 0xffffffffbfc58100
+ip30-prom	prom_ffffffffbfc51cbc	c51eac	?	0x18	w	8	lui $7,0x10 / sd $5,0($29) / or $5,$5,$7 / jal 0xffffffffbfc58100 / sd $5,24($6) / lui $9,0x7fff / ori $9,$9,0xffff / addiu $10,$0,-11 / dsll $9,$9,0x3
+ip30-prom	prom_ffffffffbfc51cbc	c51ef0	?	0x18	w	8	lui $11,0xaff0 / ld $10,0($29) / ori $11,$11,0x18 / jal 0xffffffffbfc58100 / sd $10,0($11) / ld $2,0($18) / andi $12,$2,0x1 / beq $12,$0,0xffffffffbfc51f3c / addiu $13,$0,-1
+ip30-prom	prom_ffffffffbfc51cbc	c51ef4	?	0x10040	r	8	ld $10,0($29) / ori $11,$11,0x18 / jal 0xffffffffbfc58100 / sd $10,0($11) / ld $2,0($18) / andi $12,$2,0x1 / beq $12,$0,0xffffffffbfc51f3c / addiu $13,$0,-1 / dsll32 $13,$13,0x1c
+ip30-prom	prom_ffffffffbfc51cbc	c51f14	?	0x10040	w	8	dsll32 $13,$13,0x1c / and $13,$13,$2 / ori $13,$13,0x1 / jal 0xffffffffbfc58100 / sd $13,0($18) / lui $18,0x0 / lui $24,0x9fc9 / daddiu $18,$18,0 / daddiu $24,$24,30376
+ip30-prom	prom_ffffffffbfc529c4	c529cc	?	0x20000	r	8	lui $2,0xaff2 / lui $1,0xbe / ld $2,0($2) / ori $1,$1,0xbc20 / ddivu $0,$2,$1 / mflo $2 / jr $31
+ip30-prom	prom_ffffffffbfc58100	c58104	?	0x100000	r	8	lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $2,c0_status / mfc0 $2,c0_status / jr $31
+ip30-prom	prom_ffffffffbfc58150	c5815c	?	0x20000	r	8	lui $4,0x1 / lui $12,0xaff2 / ori $4,$4,0xe848 / ld $5,0($12) / mfc0 $2,c0_count / ld $6,0($12) / mfc0 $3,c0_count / dsubu $6,$6,$5
+ip30-prom	prom_ffffffffbfc58150	c58164	?	0x20000	r	8	lui $12,0xaff2 / ori $4,$4,0xe848 / ld $5,0($12) / mfc0 $2,c0_count / ld $6,0($12) / mfc0 $3,c0_count / dsubu $6,$6,$5 / slt $1,$6,$4 / bne $1,$0,0xffffffffbfc58168
+ip30-prom	prom_ffffffffbfc58150	c58178	?	0x20000	r	8	mfc0 $3,c0_count / dsubu $6,$6,$5 / slt $1,$6,$4 / bne $1,$0,0xffffffffbfc58168 / ld $6,0($12) / dsubu $2,$3,$2 / dsll32 $2,$2,0x0 / jr $31 / dsrl32 $2,$2,0x0
+ip30-prom	prom_ffffffffbfc5818c	c58194	?	0x50000	r	8	lui $2,0xaff5 / jr $31 / ld $2,0($2)
+ip30-prom	prom_ffffffffbfc582f4	c582f8	?	0x20000	r	8	lui $4,0xaff2 / ld $5,0($4) / lui $4,0x5f / ori $4,$4,0x5e10 / daddu $5,$5,$4 / lui $4,0xaff2
+ip30-prom	prom_ffffffffbfc582f4	c5830c	?	0x20000	r	8	lui $4,0x5f / ori $4,$4,0x5e10 / daddu $5,$5,$4 / lui $4,0xaff2 / ld $4,0($4) / dsub $4,$5,$4 / bgtz $4,0xffffffffbfc58308 / sll $0,$0,0x0 / lui $4,0x9000
+ip30-prom	prom_ffffffffbfc582f4	c583c8	?	0x20000	r	8	addiu $4,$0,8 / sb $4,0($13) / addiu $4,$0,14 / sb $4,0($12) / ld $7,0($6) / lui $6,0x773 / lb $0,0($13) / ori $6,$6,0x5940 / daddu $7,$7,$6
+ip30-prom	prom_ffffffffbfc582f4	c583e0	?	0x20000	r	8	lb $0,0($13) / ori $6,$6,0x5940 / daddu $7,$7,$6 / lui $6,0xaff2 / ld $6,0($6) / dsub $6,$7,$6 / bgtz $6,0xffffffffbfc583dc / sll $0,$0,0x0 / beq $0,$0,0xffffffffbfc583ac
+ip30-prom	prom_ffffffffbfc58440	c58494	?	0x10000	r	8	lui $4,0xaff0 / lui $7,0xaff2 / dsll $2,$2,0x3 / daddu $3,$2,$3 / ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4)
+ip30-prom	prom_ffffffffbfc58440	c584a0	?	0x10000	w	8	daddu $3,$2,$3 / ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4) / jal 0xffffffffbfc58400 / or $5,$6,$1 / lui $7,0xaff2
+ip30-prom	prom_ffffffffbfc58440	c584a4	?	0x0	r	8	ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4) / jal 0xffffffffbfc58400 / or $5,$6,$1 / lui $7,0xaff2 / dli $13,0xf424
+ip30-prom	prom_ffffffffbfc58440	c584b8	?	0x20000	r	8	jal 0xffffffffbfc58400 / or $5,$6,$1 / lui $7,0xaff2 / dli $13,0xf424 / ld $12,0($7) / daddu $12,$12,$13 / ld $13,0($7) / sltu $1,$13,$12 / bne $1,$0,0xffffffffbfc584c0
+ip30-prom	prom_ffffffffbfc58440	c584c0	?	0x20000	r	8	lui $7,0xaff2 / dli $13,0xf424 / ld $12,0($7) / daddu $12,$12,$13 / ld $13,0($7) / sltu $1,$13,$12 / bne $1,$0,0xffffffffbfc584c0 / sll $0,$0,0x0 / jr $27
+ip30-prom	prom_ffffffffbfc5bad4	c5baf4	?	0x10030	r	8	jal 0xffffffffbfc5818c / or $21,$4,$0 / sd $20,104($29) / lui $2,0xaff1 / ld $19,48($2) / sd $16,112($29) / sd $18,120($29) / beq $19,$0,0xffffffffbfc5bd78 / sd $17,128($29)
+ip30-prom	prom_ffffffffbfc5bad4	c5bb08	?	0x10038	r	8	sd $16,112($29) / sd $18,120($29) / beq $19,$0,0xffffffffbfc5bd78 / sd $17,128($29) / ld $4,56($2) / ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6)
+ip30-prom	prom_ffffffffbfc5bad4	c5bb0c	?	0x10040	r	8	sd $18,120($29) / beq $19,$0,0xffffffffbfc5bd78 / sd $17,128($29) / ld $4,56($2) / ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6) / ld $7,136($6)
+ip30-prom	prom_ffffffffbfc5bad4	c5bb18	?	0xa8	r	8	ld $4,56($2) / ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6) / ld $7,136($6) / sd $7,0($29) / lui $16,0x0 / sd $3,64($29)
+ip30-prom	prom_ffffffffbfc5bad4	c5bb1c	?	0x88	r	8	ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6) / ld $7,136($6) / sd $7,0($29) / lui $16,0x0 / sd $3,64($29) / lui $24,0x9fca
+ip30-prom	prom_ffffffffbfc5bad4	c5bb34	?	0x90	r	8	lui $16,0x0 / sd $3,64($29) / lui $24,0x9fca / daddiu $16,$16,0 / ld $17,144($6) / lui $2,0x9000 / lui $4,0x1800 / sd $17,56($29) / dsll32 $2,$2,0x0
+ip30-prom	prom_ffffffffbfc5bad4	c5bb4c	?	0x98	r	8	lui $4,0x1800 / sd $17,56($29) / dsll32 $2,$2,0x0 / ori $20,$4,0x60 / ld $17,152($6) / dsll32 $16,$16,0x0 / or $20,$2,$20 / ld $6,160($6) / ori $5,$4,0x90
+ip30-prom	prom_ffffffffbfc5bad4	c5bb58	?	0xa0	r	8	ori $20,$4,0x60 / ld $17,152($6) / dsll32 $16,$16,0x0 / or $20,$2,$20 / ld $6,160($6) / ori $5,$4,0x90 / ori $3,$4,0x44 / ld $20,0($20) / or $3,$2,$3
+ip30-prom	prom_ffffffffbfc5bad4	c5bd44	?	0x10040	w	8	beq $0,$0,0xffffffffbfc5bd50 / sll $0,$0,0x0 / beq $21,$0,0xffffffffbfc5bd50 / lui $4,0xaff1 / sd $18,64($4) / jal 0xffffffffbfc58100 / sd $19,40($4) / ld $20,104($29) / ld $16,112($29)
+ip30-prom	prom_ffffffffbfc5bad4	c5bd4c	?	0x10028	w	8	beq $21,$0,0xffffffffbfc5bd50 / lui $4,0xaff1 / sd $18,64($4) / jal 0xffffffffbfc58100 / sd $19,40($4) / ld $20,104($29) / ld $16,112($29) / ld $18,120($29) / ld $31,80($29)
+ip30-prom	prom_ffffffffbfc5bad4	c5bdf4	?	0x10030	r	8	sd $17,32($29) / sd $18,40($29) / lui $18,0xaff1 / daddiu $17,$29,0 / ld $6,48($18) / ori $7,$18,0x10 / or $5,$18,$0 / ld $18,56($18) / daddiu $5,$5,8
+ip30-prom	prom_ffffffffbfc5bad4	c5be00	?	0x10038	r	8	daddiu $17,$29,0 / ld $6,48($18) / ori $7,$18,0x10 / or $5,$18,$0 / ld $18,56($18) / daddiu $5,$5,8 / daddiu $17,$17,8 / ld $24,-8($5) / bne $7,$5,0xffffffffbfc5be04
+ip30-prom	prom_ffffffffbfc5bad4	c5be94	?	0x10040	r	8	daddiu $24,$24,21848 / dsll32 $17,$17,0x0 / lui $5,0xaff1 / dadd $17,$17,$24 / ld $5,64($5) / jal 0xffffffffbfc8bab0 / daddiu $6,$17,6280 / daddiu $6,$17,3520 / lui $5,0xaff0
+ip30-prom	prom_ffffffffbfc5bad4	c5beb0	?	0xa8	r	8	daddiu $6,$17,3520 / lui $5,0xaff0 / daddiu $4,$16,80 / jal 0xffffffffbfc8bab0 / ld $5,168($5) / lui $5,0xaff0 / daddiu $4,$16,112 / jal 0xffffffffbfc8bab0 / ld $5,136($5)
+ip30-prom	prom_ffffffffbfc5bad4	c5bec0	?	0x88	r	8	ld $5,168($5) / lui $5,0xaff0 / daddiu $4,$16,112 / jal 0xffffffffbfc8bab0 / ld $5,136($5) / daddiu $6,$17,3080 / lui $5,0xaff0 / daddiu $4,$16,144 / jal 0xffffffffbfc8bab0
+ip30-prom	prom_ffffffffbfc5bad4	c5bed4	?	0x90	r	8	daddiu $6,$17,3080 / lui $5,0xaff0 / daddiu $4,$16,144 / jal 0xffffffffbfc8bab0 / ld $5,144($5) / daddiu $6,$17,3320 / lui $5,0xaff0 / daddiu $4,$16,168 / jal 0xffffffffbfc8bab0
+ip30-prom	prom_ffffffffbfc5bad4	c5bee8	?	0x98	r	8	daddiu $6,$17,3320 / lui $5,0xaff0 / daddiu $4,$16,168 / jal 0xffffffffbfc8bab0 / ld $5,152($5) / lui $5,0xaff0 / daddiu $4,$16,424 / jal 0xffffffffbfc8bab0 / ld $5,160($5)
+ip30-prom	prom_ffffffffbfc5bad4	c5bef8	?	0xa0	r	8	ld $5,152($5) / lui $5,0xaff0 / daddiu $4,$16,424 / jal 0xffffffffbfc8bab0 / ld $5,160($5) / lui $5,0x9000 / lui $7,0x1800 / ori $7,$7,0x60 / dsll32 $5,$5,0x0
+ip30-prom	prom_ffffffffbfc5bad4	c5bfd0	?	0x0	r	8	dsrl32 $5,$5,0x0 / jal 0xffffffffbfc8bab0 / or $5,$5,$6 / lui $18,0xaff0 / ld $18,0($18) / daddiu $4,$16,568 / jal 0xffffffffbfc8bab0 / or $5,$18,$0 / daddiu $6,$17,200
+ip30-prom	prom_ffffffffbfc5bad4	c5c01c	?	0x80	r	8	ld $18,40($29) / lui $5,0xaff0 / daddiu $4,$16,640 / jal 0xffffffffbfc8bab0 / ld $5,128($5) / ld $31,48($29) / ld $16,56($29) / jr $31 / daddiu $29,$29,64
+ip30-prom	prom_ffffffffbfc5c030	c5c034	?	0x10040	r	8	lui $7,0xaff1 / ld $8,64($7) / daddiu $29,$29,-16 / dsll32 $8,$8,0xf / lui $12,0x1800 / lui $11,0x9000
+ip30-prom	prom_ffffffffbfc5c030	c5c074	?	0x10030	r	8	ld $9,0($10) / sw $0,0($11) / sd $9,0($10) / lui $5,0xaff1 / ld $6,48($5) / beq $6,$0,0xffffffffbfc5c090 / sd $31,0($29) / ld $12,0($7) / sd $12,0($7)
+ip30-prom	prom_ffffffffbfc5c030	c5c080	?	0x10040	r	8	lui $5,0xaff1 / ld $6,48($5) / beq $6,$0,0xffffffffbfc5c090 / sd $31,0($29) / ld $12,0($7) / sd $12,0($7) / jal 0xffffffffbfc58100 / sd $6,40($5) / ld $31,0($29)
+ip30-prom	prom_ffffffffbfc5c030	c5c084	?	0x10040	w	8	ld $6,48($5) / beq $6,$0,0xffffffffbfc5c090 / sd $31,0($29) / ld $12,0($7) / sd $12,0($7) / jal 0xffffffffbfc58100 / sd $6,40($5) / ld $31,0($29) / jr $31
+ip30-prom	prom_ffffffffbfc5c030	c5c08c	?	0x10028	w	8	sd $31,0($29) / ld $12,0($7) / sd $12,0($7) / jal 0xffffffffbfc58100 / sd $6,40($5) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-prom	prom_ffffffffbfc60cd0	c60ef8	?	0x20000	r	8	sw $1,0($12) / lui $24,0xaff2 / ori $25,$25,0x5e10 / sd $25,16($29) / ld $13,0($24) / ld $15,16($29) / daddu $13,$13,$15 / sd $13,16($29) / sh $4,0($5)
+ip30-prom	prom_ffffffffbfc60cd0	c60f28	?	0x20000	r	8	lui $8,0x2fa / sh $9,0($5) / ori $8,$8,0xf080 / sd $8,24($29) / ld $6,0($24) / ld $7,24($29) / daddu $6,$6,$7 / beq $0,$0,0xffffffffbfc60f50 / sd $6,24($29)
+ip30-prom	prom_ffffffffbfc630c0	c63118	?	0x20000	r	8	addiu $9,$0,-1 / lui $3,0xaff2 / addiu $5,$0,-1 / dsrl $9,$9,0x8 / ld $3,0($3) / addiu $10,$0,1 / dsll32 $5,$5,0x18 / and $4,$4,$5 / and $3,$3,$9
+ip30-prom	prom_ffffffffbfc6c6c0	c6c700	?	0x20000	r	8	addiu $4,$0,511 / lui $12,0xaff2 / ld $2,0($12) / addiu $13,$0,10 / bgtz $13,0xffffffffbfc6c708 / addiu $13,$13,-1 / bgtz $4,0xffffffffbfc6c704
+ip30-prom	prom_ffffffffbfc6c6c0	c6c718	?	0x20000	r	8	bgtz $13,0xffffffffbfc6c708 / addiu $13,$13,-1 / bgtz $4,0xffffffffbfc6c704 / addiu $4,$4,-1 / ld $3,0($12) / jr $31 / dsubu $2,$3,$2
+ip30-ide	sub_a800000020812100	812140	?	0x50000	r	8	mtc0 $12,$12 / sll $0,$0,0x0 / or $2,$29,$0 / lui $12,0xaff5 / ld $12,0($12) / addiu $13,$0,9 / sllv $12,$12,$13 / lui $13,0xa800 / daddiu $13,$13,0
+ip30-ide	sub_a80000002086a764	86a784	?	0x0	r	8	sd $17,16($29) / lui $17,0xaff0 / or $22,$4,$0 / dsll32 $1,$1,0x4 / ld $2,0($17) / or $21,$5,$0 / sd $31,8($29) / nor $1,$1,$0 / and $1,$1,$2
+ip30-ide	sub_a80000002086a764	86a79c	?	0x0	w	8	sd $31,8($29) / nor $1,$1,$0 / and $1,$1,$2 / jal 0xa8000000208b284c / sd $1,0($17) / lui $3,0xa800 / lui $4,0x20a2 / daddiu $3,$3,0 / daddiu $4,$4,-20572
+ip30-ide	sub_a80000002086a764	86a824	?	0x0	r	8	addiu $4,$0,4 / or $4,$22,$0 / jal 0xa80000002086ad40 / or $5,$21,$0 / ld $5,0($17) / addiu $6,$0,1 / addu $21,$2,$20 / dsll32 $6,$6,0x4 / or $5,$5,$6
+ip30-ide	sub_a80000002086a764	86a83c	?	0x0	w	8	addu $21,$2,$20 / dsll32 $6,$6,0x4 / or $5,$5,$6 / jal 0xa8000000208a8360 / sd $5,0($17) / lui $4,0x40 / sd $19,64($29) / jal 0xa8000000208a8370 / or $4,$2,$4
+ip30-ide	sub_a80000002086a764	86a918	?	0x0	r	8	ld $18,56($29) / ld $23,48($29) / addiu $24,$0,1 / lui $25,0xaff0 / ld $31,0($25) / dsll32 $24,$24,0x4 / ld $16,40($29) / nor $24,$24,$0 / and $24,$24,$31
+ip30-ide	sub_a80000002086a764	86a930	?	0x0	w	8	ld $16,40($29) / nor $24,$24,$0 / and $24,$24,$31 / jal 0xa8000000208a8360 / sd $24,0($25) / lui $4,0x40 / nor $4,$4,$0 / jal 0xa8000000208a8370 / and $4,$2,$4
+ip30-ide	sub_a80000002086b154	86b9d8	?	0x90	r	8	dadd $12,$12,$16 / jalr $12 / sll $0,$0,0x0 / lui $4,0xaff0 / ld $4,144($4) / lui $12,0xa800 / daddiu $12,$12,0 / dsll $12,$12,0x10 / daddiu $12,$12,8327
+ip30-ide	sub_a80000002086b154	86ba40	?	0x98	r	8	dadd $12,$12,$16 / jalr $12 / sll $0,$0,0x0 / lui $4,0xaff0 / ld $4,152($4) / lui $12,0xa800 / daddiu $12,$12,0 / dsll $12,$12,0x10 / daddiu $12,$12,8327
+ip30-ide	sub_a80000002086b154	86baa8	?	0x10030	r	8	dadd $12,$12,$16 / jalr $12 / sll $0,$0,0x0 / lui $4,0xaff1 / ld $4,48($4) / lui $12,0xa800 / daddiu $12,$12,0 / dsll $12,$12,0x10 / daddiu $12,$12,8327
+ip30-ide	sub_a80000002086b154	86bb10	?	0x10038	r	8	dadd $12,$12,$16 / jalr $12 / sll $0,$0,0x0 / lui $4,0xaff1 / ld $4,56($4) / lui $12,0xa800 / daddiu $12,$12,0 / dsll $12,$12,0x10 / daddiu $12,$12,8327
+ip30-ide	sub_a80000002086bca8	86bcc0	?	0x0	r	8	ori $4,$4,0xff0 / dsll $4,$4,0x10 / addiu $5,$0,1 / dsll32 $5,$5,0x4 / ld $6,0($4) / and $6,$6,$5 / beq $6,$0,0xa80000002086bcc0 / sll $0,$0,0x0 / jr $31
+ip30-ide	sub_a80000002087ef7c	87ef98	?	0x0	r	8	addiu $1,$0,1 / sd $21,16($29) / lui $21,0xaff0 / dsll32 $1,$1,0x4 / ld $2,0($21) / or $20,$5,$0 / sd $31,8($29) / nor $1,$1,$0 / and $1,$1,$2
+ip30-ide	sub_a80000002087ef7c	87efb0	?	0x0	w	8	sd $31,8($29) / nor $1,$1,$0 / and $1,$1,$2 / jal 0xa8000000208b284c / sd $1,0($21) / lui $3,0xa800 / lui $4,0x20a2 / daddiu $3,$3,0 / daddiu $4,$4,-20572
+ip30-ide	sub_a80000002087ef7c	87f008	?	0x0	r	8	daddiu $5,$16,56 / ld $4,0($29) / jal 0xa80000002086b154 / or $5,$20,$0 / ld $24,0($21) / addiu $25,$0,1 / or $20,$2,$0 / dsll32 $25,$25,0x4 / or $24,$24,$25
+ip30-ide	sub_a80000002087ef7c	87f020	?	0x0	w	8	or $20,$2,$0 / dsll32 $25,$25,0x4 / or $24,$24,$25 / jal 0xa8000000208a8360 / sd $24,0($21) / lui $4,0x40 / sd $18,56($29) / jal 0xa8000000208a8370 / or $4,$2,$4
+ip30-ide	sub_a80000002087ef7c	87f124	?	0x0	r	8	ld $18,56($29) / ld $19,48($29) / ld $17,40($29) / addiu $7,$0,1 / ld $8,0($21) / dsll32 $7,$7,0x4 / ld $16,32($29) / nor $7,$7,$0 / and $7,$7,$8
+ip30-ide	sub_a80000002087ef7c	87f13c	?	0x0	w	8	ld $16,32($29) / nor $7,$7,$0 / and $7,$7,$8 / jal 0xa8000000208a8360 / sd $7,0($21) / lui $4,0x40 / nor $4,$4,$0 / jal 0xa8000000208a8370 / and $4,$2,$4
+ip30-ide	sub_a8000000208a028c	8a0298	?	0x80	r	8	lui $3,0xa800 / lui $4,0xaff0 / daddiu $3,$3,0 / ld $2,128($4) / lui $5,0x2095 / dsll32 $3,$3,0x0 / ld $4,0($4) / daddiu $5,$5,-12544
+ip30-ide	sub_a8000000208a028c	8a02a4	?	0x0	r	8	daddiu $3,$3,0 / ld $2,128($4) / lui $5,0x2095 / dsll32 $3,$3,0x0 / ld $4,0($4) / daddiu $5,$5,-12544 / dsrl $2,$2,0x4 / dadd $3,$3,$5 / dsrl32 $4,$4,0x1c
+ip30-ide	sub_a8000000208a02d4	8a02e0	?	0x80	r	8	lui $3,0xa800 / lui $2,0xaff0 / lui $4,0x2095 / ld $2,128($2) / daddiu $3,$3,0 / daddiu $4,$4,-12544 / dsll32 $3,$3,0x0 / dsrl $2,$2,0x4
+ip30-ide	sub_a8000000208a030c	8a0310	?	0x80	r	8	lui $5,0xaff0 / ld $3,128($5) / ld $5,0($5) / dsrl $3,$3,0x4 / addiu $2,$0,1 / dsrl32 $5,$5,0x1c
+ip30-ide	sub_a8000000208a030c	8a0314	?	0x0	r	8	lui $5,0xaff0 / ld $3,128($5) / ld $5,0($5) / dsrl $3,$3,0x4 / addiu $2,$0,1 / dsrl32 $5,$5,0x1c / nor $5,$5,$0
+ip30-ide	sub_a8000000208a0340	8a0390	?	0x10000	r	8	lui $7,0xaff1 / dsll $6,$6,0x3 / daddu $6,$6,$7 / addiu $7,$0,1 / ld $5,0($6) / dsll32 $7,$7,0x9 / or $5,$5,$7 / jal 0xa8000000208b3b14 / sd $5,0($6)
+ip30-ide	sub_a8000000208a0340	8a03a0	?	0x10000	w	8	ld $5,0($6) / dsll32 $7,$7,0x9 / or $5,$5,$7 / jal 0xa8000000208b3b14 / sd $5,0($6) / slti $7,$2,2 / beq $7,$0,0xa8000000208a03d4 / lui $4,0x9000 / jal 0xa8000000208b27c0
+ip30-ide	sub_a8000000208a03f4	8a0458	?	0x10000	r	8	dsll $6,$6,0x3 / addiu $7,$0,1 / daddu $6,$6,$8 / dsll32 $7,$7,0x9 / ld $5,0($6) / nor $7,$7,$0 / and $5,$5,$7 / jal 0xa8000000208b27c0 / sd $5,0($6)
+ip30-ide	sub_a8000000208a03f4	8a0468	?	0x10000	w	8	ld $5,0($6) / nor $7,$7,$0 / and $5,$5,$7 / jal 0xa8000000208b27c0 / sd $5,0($6) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-ide	sub_a8000000208a0650	8a0664	?	0x20	r	4	dsll $3,$4,0x2 / ori $2,$2,0x20 / daddu $2,$2,$3 / jr $31 / lw $2,0($2)
+ip30-ide	sub_a8000000208a0a14	8a0d48	?	0x80	r	8	lui $1,0xaff0 / sd $17,8($29) / or $17,$4,$0 / jal 0xa8000000208a0a14 / ld $1,128($1) / jal 0xa8000000208a02d4 / sd $18,24($29) / or $18,$2,$0 / slti $2,$2,2
+ip30-ide	sub_a8000000208a0e04	8a0ef4	?	0x10000	r	8	lw $7,4($2) / lui $10,0xaff1 / dsll $7,$7,0x3 / daddu $7,$10,$7 / ld $6,0($7) / addiu $4,$0,1 / nor $9,$30,$0 / addiu $8,$0,15 / and $6,$6,$9
+ip30-ide	sub_a8000000208a0e04	8a0f08	?	0x10000	w	8	addiu $4,$0,1 / nor $9,$30,$0 / addiu $8,$0,15 / and $6,$6,$9 / sd $6,0($7) / addiu $19,$19,1 / addiu $17,$17,1 / daddu $18,$20,$18 / beq $19,$8,0xa8000000208a0f54
+ip30-ide	sub_a8000000208a0fa4	8a0fac	?	0x0	r	8	lui $2,0xaff0 / daddiu $29,$29,-16 / ld $1,0($2) / lui $3,0x40 / sd $31,0($29) / or $1,$1,$3 / jal 0xa8000000208b27c0
+ip30-ide	sub_a8000000208a0fa4	8a0fc0	?	0x0	w	8	lui $3,0x40 / sd $31,0($29) / or $1,$1,$3 / jal 0xa8000000208b27c0 / sd $1,0($2) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-ide	sub_a8000000208a1264	8a126c	?	0x10038	r	8	lui $1,0xaff1 / addiu $2,$0,1 / ld $1,56($1) / dsll32 $2,$2,0x9 / and $1,$1,$2 / daddiu $29,$29,-16 / beq $1,$0,0xa8000000208a128c
+ip30-ide	sub_a8000000208a12b4	8a1424	?	0x10040	r	8	ld $17,48($29) / beq $0,$0,0xa8000000208a145c / addiu $2,$0,1 / lui $5,0xaff1 / ld $3,64($5) / addiu $6,$0,1 / addiu $2,$0,-1 / andi $4,$3,0x3 / ori $18,$5,0x40
+ip30-ide	sub_a8000000208a12b4	8a1454	?	0x10040	w	8	and $2,$2,$3 / beq $2,$0,0xa8000000208a1458 / sll $0,$0,0x0 / jal 0xa8000000208b27c0 / sd $2,64($5) / or $2,$0,$0 / ld $31,40($29) / ld $19,24($29) / ld $18,32($29)
+ip30-ide	sub_a8000000208a12b4	8a1474	?	0x98	r	8	ld $18,32($29) / jr $31 / daddiu $29,$29,64 / lui $4,0xaff0 / ld $19,152($4) / ld $4,160($4) / ori $3,$2,0x1 / sd $3,64($5) / jal 0xa8000000208b27c0
+ip30-ide	sub_a8000000208a12b4	8a1478	?	0xa0	r	8	jr $31 / daddiu $29,$29,64 / lui $4,0xaff0 / ld $19,152($4) / ld $4,160($4) / ori $3,$2,0x1 / sd $3,64($5) / jal 0xa8000000208b27c0 / sd $4,8($29)
+ip30-ide	sub_a8000000208a12b4	8a1480	?	0x10040	w	8	lui $4,0xaff0 / ld $19,152($4) / ld $4,160($4) / ori $3,$2,0x1 / sd $3,64($5) / jal 0xa8000000208b27c0 / sd $4,8($29) / lui $6,0xaff0 / ld $5,24($6)
+ip30-ide	sub_a8000000208a12b4	8a1490	?	0x18	r	8	sd $3,64($5) / jal 0xa8000000208b27c0 / sd $4,8($29) / lui $6,0xaff0 / ld $5,24($6) / lui $7,0x10 / sd $5,0($29) / or $5,$5,$7 / jal 0xa8000000208b27c0
+ip30-ide	sub_a8000000208a12b4	8a14a4	?	0x18	w	8	lui $7,0x10 / sd $5,0($29) / or $5,$5,$7 / jal 0xa8000000208b27c0 / sd $5,24($6) / lui $9,0x7fff / ori $9,$9,0xffff / addiu $10,$0,-11 / dsll $9,$9,0x3
+ip30-ide	sub_a8000000208a12b4	8a14e8	?	0x18	w	8	lui $11,0xaff0 / ld $10,0($29) / ori $11,$11,0x18 / jal 0xa8000000208b27c0 / sd $10,0($11) / ld $2,0($18) / andi $12,$2,0x1 / beq $12,$0,0xa8000000208a1534 / addiu $13,$0,-1
+ip30-ide	sub_a8000000208a12b4	8a14ec	?	0x10040	r	8	ld $10,0($29) / ori $11,$11,0x18 / jal 0xa8000000208b27c0 / sd $10,0($11) / ld $2,0($18) / andi $12,$2,0x1 / beq $12,$0,0xa8000000208a1534 / addiu $13,$0,-1 / dsll32 $13,$13,0x1c
+ip30-ide	sub_a8000000208a12b4	8a150c	?	0x10040	w	8	dsll32 $13,$13,0x1c / and $13,$13,$2 / ori $13,$13,0x1 / jal 0xa8000000208b27c0 / sd $13,0($18) / lui $18,0xa800 / lui $24,0x2091 / daddiu $18,$18,0 / daddiu $24,$24,26440
+ip30-ide	sub_a8000000208a1fbc	8a1fc4	?	0x20000	r	8	lui $2,0xaff2 / lui $1,0xbe / ld $2,0($2) / ori $1,$1,0xbc20 / ddivu $0,$2,$1 / mflo $2 / jr $31
+ip30-ide	sub_a8000000208a8e90	8a8ea0	?	0x80	r	8	daddiu $29,$29,-80 / sd $18,24($29) / sd $19,32($29) / lui $1,0xaff0 / ld $1,128($1) / sd $20,40($29) / sd $31,48($29) / andi $1,$1,0x800 / sd $16,56($29)
+ip30-ide	sub_a8000000208a9b50	8a9b54	?	0x40	r	8	lui $2,0xaff0 / ld $1,64($2) / addiu $3,$0,-769 / and $1,$1,$3 / jr $31 / sd $1,64($2)
+ip30-ide	sub_a8000000208a9b50	8a9b64	?	0x40	w	8	ld $1,64($2) / addiu $3,$0,-769 / and $1,$1,$3 / jr $31 / sd $1,64($2)
+ip30-ide	sub_a8000000208b1c18	8b1d48	?	0x50000	r	8	jr $31 / daddiu $29,$29,16 / or $1,$27,$0 / lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-ide	sub_a8000000208b1c18	8b1d78	?	0x50000	r	8	daddiu $26,$26,-20136 / daddu $26,$26,$27 / sd $1,120($26) / lui $27,0xaff5 / ld $27,0($27) / lui $1,0xa800 / daddiu $1,$1,0 / dsll $1,$1,0x10 / daddiu $1,$1,8354
+ip30-ide	sub_a8000000208b1c18	8b1e60	?	0x50000	r	8	sll $0,$0,0x0 / break 0x1 / or $1,$27,$0 / lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-ide	sub_a8000000208b1c18	8b1e9c	?	0x50000	r	8	lui $1,0xa800 / daddiu $1,$1,0 / lui $27,0xaff5 / dsll $1,$1,0x10 / ld $27,0($27) / daddiu $1,$1,8354 / dsll $1,$1,0x10 / daddiu $1,$1,-17624 / sll $27,$27,0x3
+ip30-ide	sub_a8000000208b1c18	8b1ed0	?	0x50000	r	8	j 0xa8000000208b1fa4 / sd $1,16($26) / or $1,$27,$0 / lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-ide	sub_a8000000208b1c18	8b1f0c	?	0x50000	r	8	lui $1,0xa800 / daddiu $1,$1,0 / lui $27,0xaff5 / dsll $1,$1,0x10 / ld $27,0($27) / daddiu $1,$1,8354 / dsll $1,$1,0x10 / daddiu $1,$1,-17624 / sll $27,$27,0x3
+ip30-ide	sub_a8000000208b1c18	8b1f40	?	0x50000	r	8	j 0xa8000000208b1fa4 / sd $1,16($26) / or $1,$27,$0 / lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-ide	sub_a8000000208b1c18	8b1f7c	?	0x50000	r	8	lui $1,0xa800 / daddiu $1,$1,0 / lui $27,0xaff5 / dsll $1,$1,0x10 / ld $27,0($27) / daddiu $1,$1,8354 / dsll $1,$1,0x10 / daddiu $1,$1,-17624 / sll $27,$27,0x3
+ip30-ide	sub_a8000000208b233c	8b2340	?	0x50000	r	8	lui $27,0xaff5 / ld $27,0($27) / addiu $26,$0,9 / sllv $27,$27,$26 / lui $26,0xa800 / daddiu $26,$26,0
+ip30-ide	sub_a8000000208b233c	8b2570	?	0x50000	r	8	ld $27,120($26) / jr $27 / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / lui $26,0xa800 / daddiu $26,$26,0 / dsll $26,$26,0x10 / daddiu $26,$26,8354
+ip30-ide	sub_a8000000208b233c	8b25c0	?	0x50000	r	8	sll $0,$0,0x0 / eret  / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / lui $26,0xa800 / daddiu $26,$26,0 / dsll $26,$26,0x10 / daddiu $26,$26,8354
+ip30-ide	sub_a8000000208b233c	8b2610	?	0x50000	r	8	sll $0,$0,0x0 / eret  / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / lui $26,0xa800 / daddiu $26,$26,0 / dsll $26,$26,0x10 / daddiu $26,$26,8354
+ip30-ide	sub_a8000000208b233c	8b2664	?	0x50000	r	8	sll $0,$0,0x0 / eret  / sll $0,$0,0x0 / lui $27,0xaff5 / ld $27,0($27) / lui $26,0xa800 / daddiu $26,$26,0 / dsll $26,$26,0x10 / daddiu $26,$26,8354
+ip30-ide	sub_a8000000208b27c0	8b27c4	?	0x100000	r	8	lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $2,$12 / mfc0 $2,$12 / jr $31
+ip30-ide	sub_a8000000208b2810	8b281c	?	0x20000	r	8	lui $4,0x1 / lui $12,0xaff2 / ori $4,$4,0xe848 / ld $5,0($12) / mfc0 $2,$9 / ld $6,0($12) / mfc0 $3,$9 / dsubu $6,$6,$5
+ip30-ide	sub_a8000000208b2810	8b2824	?	0x20000	r	8	lui $12,0xaff2 / ori $4,$4,0xe848 / ld $5,0($12) / mfc0 $2,$9 / ld $6,0($12) / mfc0 $3,$9 / dsubu $6,$6,$5 / slt $1,$6,$4 / bne $1,$0,0xa8000000208b2828
+ip30-ide	sub_a8000000208b2810	8b2838	?	0x20000	r	8	mfc0 $3,$9 / dsubu $6,$6,$5 / slt $1,$6,$4 / bne $1,$0,0xa8000000208b2828 / ld $6,0($12) / dsubu $2,$3,$2 / dsll32 $2,$2,0x0 / jr $31 / dsrl32 $2,$2,0x0
+ip30-ide	sub_a8000000208b284c	8b2854	?	0x50000	r	8	lui $2,0xaff5 / jr $31 / ld $2,0($2)
+ip30-ide	sub_a8000000208b29b4	8b29b8	?	0x20000	r	8	lui $4,0xaff2 / ld $5,0($4) / lui $4,0x5f / ori $4,$4,0x5e10 / daddu $5,$5,$4 / lui $4,0xaff2
+ip30-ide	sub_a8000000208b29b4	8b29cc	?	0x20000	r	8	lui $4,0x5f / ori $4,$4,0x5e10 / daddu $5,$5,$4 / lui $4,0xaff2 / ld $4,0($4) / dsub $4,$5,$4 / bgtz $4,0xa8000000208b29c8 / sll $0,$0,0x0 / lui $4,0x9000
+ip30-ide	sub_a8000000208b29b4	8b2a88	?	0x20000	r	8	addiu $4,$0,8 / sb $4,0($13) / addiu $4,$0,14 / sb $4,0($12) / ld $7,0($6) / lui $6,0x773 / lb $0,0($13) / ori $6,$6,0x5940 / daddu $7,$7,$6
+ip30-ide	sub_a8000000208b29b4	8b2aa0	?	0x20000	r	8	lb $0,0($13) / ori $6,$6,0x5940 / daddu $7,$7,$6 / lui $6,0xaff2 / ld $6,0($6) / dsub $6,$7,$6 / bgtz $6,0xa8000000208b2a9c / sll $0,$0,0x0 / beq $0,$0,0xa8000000208b2a6c
+ip30-ide	sub_a8000000208b2ac0	8b2b54	?	0x10000	r	8	lui $4,0xaff0 / lui $7,0xaff2 / dsll $2,$2,0x3 / daddu $3,$2,$3 / ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4)
+ip30-ide	sub_a8000000208b2ac0	8b2b60	?	0x10000	w	8	daddu $3,$2,$3 / ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4) / jal 0xa8000000208b2ac0 / or $5,$6,$1 / lui $7,0xaff2
+ip30-ide	sub_a8000000208b2ac0	8b2b64	?	0x0	r	8	ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4) / jal 0xa8000000208b2ac0 / or $5,$6,$1 / lui $7,0xaff2 / dli $13,0xf424
+ip30-ide	sub_a8000000208b2ac0	8b2b78	?	0x20000	r	8	jal 0xa8000000208b2ac0 / or $5,$6,$1 / lui $7,0xaff2 / dli $13,0xf424 / ld $12,0($7) / daddu $12,$12,$13 / ld $13,0($7) / sltu $1,$13,$12 / bne $1,$0,0xa8000000208b2b80
+ip30-ide	sub_a8000000208b354c	8b356c	?	0x10030	r	8	jal 0xa8000000208b284c / or $21,$4,$0 / sd $20,104($29) / lui $2,0xaff1 / ld $19,48($2) / sd $16,112($29) / sd $18,120($29) / beq $19,$0,0xa8000000208b37f0 / sd $17,128($29)
+ip30-ide	sub_a8000000208b354c	8b3580	?	0x10038	r	8	sd $16,112($29) / sd $18,120($29) / beq $19,$0,0xa8000000208b37f0 / sd $17,128($29) / ld $4,56($2) / ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6)
+ip30-ide	sub_a8000000208b354c	8b3584	?	0x10040	r	8	sd $18,120($29) / beq $19,$0,0xa8000000208b37f0 / sd $17,128($29) / ld $4,56($2) / ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6) / ld $7,136($6)
+ip30-ide	sub_a8000000208b354c	8b3590	?	0xa8	r	8	ld $4,56($2) / ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6) / ld $7,136($6) / sd $7,0($29) / lui $16,0xa800 / sd $3,64($29)
+ip30-ide	sub_a8000000208b354c	8b3594	?	0x88	r	8	ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6) / ld $7,136($6) / sd $7,0($29) / lui $16,0xa800 / sd $3,64($29) / lui $24,0x2092
+ip30-ide	sub_a8000000208b354c	8b35ac	?	0x90	r	8	lui $16,0xa800 / sd $3,64($29) / lui $24,0x2092 / daddiu $16,$16,0 / ld $17,144($6) / lui $2,0x9000 / lui $4,0x1800 / sd $17,56($29) / dsll32 $2,$2,0x0
+ip30-ide	sub_a8000000208b354c	8b35c4	?	0x98	r	8	lui $4,0x1800 / sd $17,56($29) / dsll32 $2,$2,0x0 / ori $20,$4,0x60 / ld $17,152($6) / dsll32 $16,$16,0x0 / or $20,$2,$20 / ld $6,160($6) / ori $5,$4,0x90
+ip30-ide	sub_a8000000208b354c	8b35d0	?	0xa0	r	8	ori $20,$4,0x60 / ld $17,152($6) / dsll32 $16,$16,0x0 / or $20,$2,$20 / ld $6,160($6) / ori $5,$4,0x90 / ori $3,$4,0x44 / ld $20,0($20) / or $3,$2,$3
+ip30-ide	sub_a8000000208b354c	8b37bc	?	0x10040	w	8	beq $0,$0,0xa8000000208b37c8 / sll $0,$0,0x0 / beq $21,$0,0xa8000000208b37c8 / lui $4,0xaff1 / sd $18,64($4) / jal 0xa8000000208b27c0 / sd $19,40($4) / ld $20,104($29) / ld $16,112($29)
+ip30-ide	sub_a8000000208b354c	8b37c4	?	0x10028	w	8	beq $21,$0,0xa8000000208b37c8 / lui $4,0xaff1 / sd $18,64($4) / jal 0xa8000000208b27c0 / sd $19,40($4) / ld $20,104($29) / ld $16,112($29) / ld $18,120($29) / ld $31,80($29)
+ip30-ide	sub_a8000000208b354c	8b386c	?	0x10030	r	8	sd $17,32($29) / sd $18,40($29) / lui $18,0xaff1 / daddiu $17,$29,0 / ld $6,48($18) / ori $7,$18,0x10 / or $5,$18,$0 / ld $18,56($18) / daddiu $5,$5,8
+ip30-ide	sub_a8000000208b354c	8b3878	?	0x10038	r	8	daddiu $17,$29,0 / ld $6,48($18) / ori $7,$18,0x10 / or $5,$18,$0 / ld $18,56($18) / daddiu $5,$5,8 / daddiu $17,$17,8 / ld $24,-8($5) / bne $7,$5,0xa8000000208b387c
+ip30-ide	sub_a8000000208b354c	8b390c	?	0x10040	r	8	daddiu $24,$24,5672 / dsll32 $17,$17,0x0 / lui $5,0xaff1 / dadd $17,$17,$24 / ld $5,64($5) / jal 0xa8000000208e188c / daddiu $6,$17,6280 / daddiu $6,$17,3520 / lui $5,0xaff0
+ip30-ide	sub_a8000000208b354c	8b3928	?	0xa8	r	8	daddiu $6,$17,3520 / lui $5,0xaff0 / daddiu $4,$16,80 / jal 0xa8000000208e188c / ld $5,168($5) / lui $5,0xaff0 / daddiu $4,$16,112 / jal 0xa8000000208e188c / ld $5,136($5)
+ip30-ide	sub_a8000000208b354c	8b3938	?	0x88	r	8	ld $5,168($5) / lui $5,0xaff0 / daddiu $4,$16,112 / jal 0xa8000000208e188c / ld $5,136($5) / daddiu $6,$17,3080 / lui $5,0xaff0 / daddiu $4,$16,144 / jal 0xa8000000208e188c
+ip30-ide	sub_a8000000208b354c	8b394c	?	0x90	r	8	daddiu $6,$17,3080 / lui $5,0xaff0 / daddiu $4,$16,144 / jal 0xa8000000208e188c / ld $5,144($5) / daddiu $6,$17,3320 / lui $5,0xaff0 / daddiu $4,$16,168 / jal 0xa8000000208e188c
+ip30-ide	sub_a8000000208b354c	8b3960	?	0x98	r	8	daddiu $6,$17,3320 / lui $5,0xaff0 / daddiu $4,$16,168 / jal 0xa8000000208e188c / ld $5,152($5) / lui $5,0xaff0 / daddiu $4,$16,424 / jal 0xa8000000208e188c / ld $5,160($5)
+ip30-ide	sub_a8000000208b354c	8b3970	?	0xa0	r	8	ld $5,152($5) / lui $5,0xaff0 / daddiu $4,$16,424 / jal 0xa8000000208e188c / ld $5,160($5) / lui $5,0x9000 / lui $7,0x1800 / ori $7,$7,0x60 / dsll32 $5,$5,0x0
+ip30-ide	sub_a8000000208b354c	8b3a48	?	0x0	r	8	dsrl32 $5,$5,0x0 / jal 0xa8000000208e188c / or $5,$5,$6 / lui $18,0xaff0 / ld $18,0($18) / daddiu $4,$16,568 / jal 0xa8000000208e188c / or $5,$18,$0 / daddiu $6,$17,200
+ip30-ide	sub_a8000000208b354c	8b3a94	?	0x80	r	8	ld $18,40($29) / lui $5,0xaff0 / daddiu $4,$16,640 / jal 0xa8000000208e188c / ld $5,128($5) / ld $31,48($29) / ld $16,56($29) / jr $31 / daddiu $29,$29,64
+ip30-ide	sub_a8000000208b3aa8	8b3aac	?	0x10040	r	8	lui $7,0xaff1 / ld $8,64($7) / daddiu $29,$29,-16 / dsll32 $8,$8,0xf / lui $12,0x1800 / lui $11,0x9000
+ip30-ide	sub_a8000000208b3aa8	8b3aec	?	0x10030	r	8	ld $9,0($10) / sw $0,0($11) / sd $9,0($10) / lui $5,0xaff1 / ld $6,48($5) / beq $6,$0,0xa8000000208b3b08 / sd $31,0($29) / ld $12,0($7) / sd $12,0($7)
+ip30-ide	sub_a8000000208b3aa8	8b3af8	?	0x10040	r	8	lui $5,0xaff1 / ld $6,48($5) / beq $6,$0,0xa8000000208b3b08 / sd $31,0($29) / ld $12,0($7) / sd $12,0($7) / jal 0xa8000000208b27c0 / sd $6,40($5) / ld $31,0($29)
+ip30-ide	sub_a8000000208b3aa8	8b3afc	?	0x10040	w	8	ld $6,48($5) / beq $6,$0,0xa8000000208b3b08 / sd $31,0($29) / ld $12,0($7) / sd $12,0($7) / jal 0xa8000000208b27c0 / sd $6,40($5) / ld $31,0($29) / jr $31
+ip30-ide	sub_a8000000208b3aa8	8b3b04	?	0x10028	w	8	sd $31,0($29) / ld $12,0($7) / sd $12,0($7) / jal 0xa8000000208b27c0 / sd $6,40($5) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-ide	sub_a8000000208b96c0	8b9700	?	0x20000	r	8	addiu $4,$0,511 / lui $12,0xaff2 / ld $2,0($12) / addiu $13,$0,10 / bgtz $13,0xa8000000208b9708 / addiu $13,$13,-1 / bgtz $4,0xa8000000208b9704
+ip30-ide	sub_a8000000208b96c0	8b9718	?	0x20000	r	8	bgtz $13,0xa8000000208b9708 / addiu $13,$13,-1 / bgtz $4,0xa8000000208b9704 / addiu $4,$4,-1 / ld $3,0($12) / jr $31 / dsubu $2,$3,$2
+ip30-ide	sub_a8000000208b9740	8b9844	?	0x20000	r	8	sw $1,0($12) / lui $24,0xaff2 / ori $25,$25,0x5e10 / sd $25,16($29) / ld $13,0($24) / ld $15,16($29) / daddu $13,$13,$15 / sd $13,16($29) / sh $4,0($5)
+ip30-ide	sub_a8000000208b9740	8b9874	?	0x20000	r	8	lui $8,0x2fa / sh $9,0($5) / ori $8,$8,0xf080 / sd $8,24($29) / ld $6,0($24) / ld $7,24($29) / daddu $6,$6,$7 / beq $0,$0,0xa8000000208b989c / sd $6,24($29)
+ip30-ide	sub_a8000000208bba0c	8bba64	?	0x20000	r	8	addiu $9,$0,-1 / lui $3,0xaff2 / addiu $5,$0,-1 / dsrl $9,$9,0x8 / ld $3,0($3) / addiu $10,$0,1 / dsll32 $5,$5,0x18 / and $4,$4,$5 / and $3,$3,$9
+ip30-ide	sub_a8000000208bf870	8bfa90	?	0x0	r	8	lui $31,0x1000 / ori $31,$31,0x4 / lui $8,0xaff0 / or $25,$25,$31 / ld $2,0($8) / lw $25,0($25) / srl $25,$25,0x1c / slti $25,$25,5 / beq $25,$0,0xa8000000208bfae4
+ip30-ide	sub_a8000000208bf870	8bfae0	?	0x0	w	8	or $9,$9,$10 / lui $10,0x80 / or $9,$9,$10 / beq $0,$0,0xa8000000208bf98c / sd $9,0($8) / beq $0,$0,0xa8000000208bfa64 / addiu $2,$0,1
+ip30-symmon	sub_a8000000200102f0	01030c	?	0x50000	r	8	sll $0,$0,0x0 / or $1,$26,$0 / lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0 / dsll $27,$27,0x10
+ip30-symmon	sub_a8000000200102f0	01034c	?	0x50000	r	8	j 0xa800000020010494 / sw $26,232($27) / lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0 / dsll $27,$27,0x10
+ip30-symmon	sub_a8000000200102f0	01038c	?	0x50000	r	8	j 0xa800000020010494 / sw $26,232($27) / lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0 / dsll $27,$27,0x10
+ip30-symmon	sub_a8000000200102f0	0103cc	?	0x50000	r	8	j 0xa800000020010494 / sw $26,232($27) / lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0 / dsll $27,$27,0x10
+ip30-symmon	sub_a8000000200102f0	01040c	?	0x50000	r	8	j 0xa800000020010494 / sw $26,232($27) / lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0 / dsll $27,$27,0x10
+ip30-symmon	sub_a8000000200102f0	010454	?	0x50000	r	8	addiu $26,$0,160 / mtc0 $26,$12 / lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0 / dsll $27,$27,0x10
+ip30-symmon	sub_a8000000200106c0	0106c8	?	0x50000	r	8	lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / addiu $1,$0,1 / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0
+ip30-symmon	sub_a8000000200106c0	01070c	?	0x50000	r	8	jal 0xa800000020020750 / sll $0,$0,0x0 / lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0 / dsll $27,$27,0x10
+ip30-symmon	sub_a80000002001086c	010888	?	0x50000	r	8	addiu $27,$0,9 / or $2,$4,$0 / sd $28,0($29) / or $4,$5,$0 / ld $26,0($26) / or $5,$6,$0 / or $6,$7,$0 / sllv $26,$26,$27 / or $7,$8,$0
+ip30-symmon	sub_a800000020010918	010920	?	0x50000	r	8	lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0 / dsll $27,$27,0x10
+ip30-symmon	sub_a800000020010918	010994	?	0x50000	r	8	jalr $26 / sll $0,$0,0x0 / lui $26,0xaff5 / addiu $27,$0,9 / ld $26,0($26) / sllv $26,$26,$27 / lui $27,0xa800 / daddiu $27,$27,0 / dsll $27,$27,0x10
+ip30-symmon	sub_a800000020010918	0109ec	?	0x50000	r	8	addiu $27,$0,9 / daddiu $1,$1,0 / lui $26,0xaff5 / dsll $1,$1,0x10 / ld $26,0($26) / daddiu $1,$1,8197 / dsll $1,$1,0x10 / daddiu $1,$1,1576 / sllv $26,$26,$27
+ip30-symmon	sub_a800000020010af4	010b00	?	0x80	r	8	lui $7,0xaff0 / addiu $3,$4,4 / addiu $2,$0,1 / ld $1,128($7) / dsllv $3,$2,$3 / and $1,$1,$3 / beq $1,$0,0xa800000020010b28 / addiu $6,$4,60
+ip30-symmon	sub_a800000020010af4	010b18	?	0x0	r	8	and $1,$1,$3 / beq $1,$0,0xa800000020010b28 / addiu $6,$4,60 / dsllv $6,$2,$6 / ld $5,0($7) / and $5,$5,$6 / beq $5,$0,0xa800000020010b2c / sll $0,$0,0x0 / or $2,$0,$0
+ip30-symmon	sub_a800000020010b3c	0110ac	?	0x20000	r	8	daddiu $29,$29,-16 / lui $6,0xaff2 / lui $4,0xa800 / lui $5,0x2004 / ld $6,0($6) / daddiu $4,$4,0 / daddiu $5,$5,22360 / dsll32 $4,$4,0x0 / dadd $4,$4,$5
+ip30-symmon	sub_a800000020026544	026550	?	0x80	r	8	lui $3,0xa800 / lui $4,0xaff0 / daddiu $3,$3,0 / ld $2,128($4) / lui $5,0x2005 / dsll32 $3,$3,0x0 / ld $4,0($4) / daddiu $5,$5,28280
+ip30-symmon	sub_a800000020026544	02655c	?	0x0	r	8	daddiu $3,$3,0 / ld $2,128($4) / lui $5,0x2005 / dsll32 $3,$3,0x0 / ld $4,0($4) / daddiu $5,$5,28280 / dsrl $2,$2,0x4 / dadd $3,$3,$5 / dsrl32 $4,$4,0x1c
+ip30-symmon	sub_a80000002002658c	026598	?	0x80	r	8	lui $3,0xa800 / lui $2,0xaff0 / lui $4,0x2005 / ld $2,128($2) / daddiu $3,$3,0 / daddiu $4,$4,28280 / dsll32 $3,$3,0x0 / dsrl $2,$2,0x4
+ip30-symmon	sub_a80000002002658c	0265c8	?	0x80	r	8	daddu $2,$2,$3 / jr $31 / lbu $2,0($2) / lui $5,0xaff0 / ld $3,128($5) / ld $5,0($5) / dsrl $3,$3,0x4 / addiu $2,$0,1 / dsrl32 $5,$5,0x1c
+ip30-symmon	sub_a80000002002658c	0265cc	?	0x0	r	8	jr $31 / lbu $2,0($2) / lui $5,0xaff0 / ld $3,128($5) / ld $5,0($5) / dsrl $3,$3,0x4 / addiu $2,$0,1 / dsrl32 $5,$5,0x1c / nor $5,$5,$0
+ip30-symmon	sub_a8000000200265f8	026648	?	0x10000	r	8	lui $7,0xaff1 / dsll $6,$6,0x3 / daddu $6,$6,$7 / addiu $7,$0,1 / ld $5,0($6) / dsll32 $7,$7,0x9 / or $5,$5,$7 / jal 0xa80000002002d4f8 / sd $5,0($6)
+ip30-symmon	sub_a8000000200265f8	026658	?	0x10000	w	8	ld $5,0($6) / dsll32 $7,$7,0x9 / or $5,$5,$7 / jal 0xa80000002002d4f8 / sd $5,0($6) / slti $7,$2,2 / beq $7,$0,0xa80000002002668c / lui $4,0x9000 / jal 0xa80000002002c700
+ip30-symmon	sub_a8000000200265f8	026710	?	0x10000	r	8	dsll $6,$6,0x3 / addiu $7,$0,1 / daddu $6,$6,$8 / dsll32 $7,$7,0x9 / ld $5,0($6) / nor $7,$7,$0 / and $5,$5,$7 / jal 0xa80000002002c700 / sd $5,0($6)
+ip30-symmon	sub_a8000000200265f8	026720	?	0x10000	w	8	ld $5,0($6) / nor $7,$7,$0 / and $5,$5,$7 / jal 0xa80000002002c700 / sd $5,0($6) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-symmon	sub_a800000020026908	02691c	?	0x20	r	4	dsll $3,$4,0x2 / ori $2,$2,0x20 / daddu $2,$2,$3 / jr $31 / lw $2,0($2)
+ip30-symmon	sub_a800000020026ccc	027000	?	0x80	r	8	lui $1,0xaff0 / sd $17,8($29) / or $17,$4,$0 / jal 0xa800000020026ccc / ld $1,128($1) / jal 0xa80000002002658c / sd $18,24($29) / or $18,$2,$0 / slti $2,$2,2
+ip30-symmon	sub_a800000020026ccc	0271ac	?	0x10000	r	8	lw $7,4($2) / lui $10,0xaff1 / dsll $7,$7,0x3 / daddu $7,$10,$7 / ld $6,0($7) / addiu $4,$0,1 / nor $9,$30,$0 / addiu $8,$0,15 / and $6,$6,$9
+ip30-symmon	sub_a800000020026ccc	0271c0	?	0x10000	w	8	addiu $4,$0,1 / nor $9,$30,$0 / addiu $8,$0,15 / and $6,$6,$9 / sd $6,0($7) / addiu $19,$19,1 / addiu $17,$17,1 / daddu $18,$20,$18 / beq $19,$8,0xa80000002002720c
+ip30-symmon	sub_a800000020026ccc	027264	?	0x0	r	8	beq $0,$0,0xa8000000200271dc / dsllv $30,$4,$17 / lui $2,0xaff0 / daddiu $29,$29,-16 / ld $1,0($2) / lui $3,0x40 / sd $31,0($29) / or $1,$1,$3 / jal 0xa80000002002c700
+ip30-symmon	sub_a800000020026ccc	027278	?	0x0	w	8	lui $3,0x40 / sd $31,0($29) / or $1,$1,$3 / jal 0xa80000002002c700 / sd $1,0($2) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-symmon	sub_a80000002002751c	027524	?	0x10038	r	8	lui $1,0xaff1 / addiu $2,$0,1 / ld $1,56($1) / dsll32 $2,$2,0x9 / and $1,$1,$2 / daddiu $29,$29,-16 / beq $1,$0,0xa800000020027544
+ip30-symmon	sub_a800000020027550	02772c	?	0x98	r	8	ld $18,32($29) / jr $31 / daddiu $29,$29,64 / lui $4,0xaff0 / ld $19,152($4) / ld $4,160($4) / ori $3,$2,0x1 / sd $3,64($5) / jal 0xa80000002002c700
+ip30-symmon	sub_a800000020027550	027730	?	0xa0	r	8	jr $31 / daddiu $29,$29,64 / lui $4,0xaff0 / ld $19,152($4) / ld $4,160($4) / ori $3,$2,0x1 / sd $3,64($5) / jal 0xa80000002002c700 / sd $4,8($29)
+ip30-symmon	sub_a800000020027550	027748	?	0x18	r	8	sd $3,64($5) / jal 0xa80000002002c700 / sd $4,8($29) / lui $6,0xaff0 / ld $5,24($6) / lui $7,0x10 / sd $5,0($29) / or $5,$5,$7 / jal 0xa80000002002c700
+ip30-symmon	sub_a800000020027550	02775c	?	0x18	w	8	lui $7,0x10 / sd $5,0($29) / or $5,$5,$7 / jal 0xa80000002002c700 / sd $5,24($6) / lui $9,0x7fff / ori $9,$9,0xffff / addiu $10,$0,-11 / dsll $9,$9,0x3
+ip30-symmon	sub_a800000020027550	0277a0	?	0x18	w	8	lui $11,0xaff0 / ld $10,0($29) / ori $11,$11,0x18 / jal 0xa80000002002c700 / sd $10,0($11) / ld $2,0($18) / andi $12,$2,0x1 / beq $12,$0,0xa8000000200277ec / addiu $13,$0,-1
+ip30-symmon	sub_a800000020028274	02827c	?	0x20000	r	8	lui $2,0xaff2 / lui $1,0xbe / ld $2,0($2) / ori $1,$1,0xbc20 / ddivu $0,$2,$1 / mflo $2 / jr $31
+ip30-symmon	sub_a80000002002c700	02c704	?	0x100000	r	8	lui $1,0xb800 / ld $0,0($1) / sync  / mfc0 $2,$12 / mfc0 $2,$12 / jr $31
+ip30-symmon	sub_a80000002002c750	02c75c	?	0x20000	r	8	lui $4,0x1 / lui $12,0xaff2 / ori $4,$4,0xe848 / ld $5,0($12) / mfc0 $2,$9 / ld $6,0($12) / mfc0 $3,$9 / dsubu $6,$6,$5
+ip30-symmon	sub_a80000002002c750	02c764	?	0x20000	r	8	lui $12,0xaff2 / ori $4,$4,0xe848 / ld $5,0($12) / mfc0 $2,$9 / ld $6,0($12) / mfc0 $3,$9 / dsubu $6,$6,$5 / slt $1,$6,$4 / bne $1,$0,0xa80000002002c768
+ip30-symmon	sub_a80000002002c750	02c778	?	0x20000	r	8	mfc0 $3,$9 / dsubu $6,$6,$5 / slt $1,$6,$4 / bne $1,$0,0xa80000002002c768 / ld $6,0($12) / dsubu $2,$3,$2 / dsll32 $2,$2,0x0 / jr $31 / dsrl32 $2,$2,0x0
+ip30-symmon	sub_a80000002002c78c	02c794	?	0x50000	r	8	lui $2,0xaff5 / jr $31 / ld $2,0($2)
+ip30-symmon	sub_a80000002002c8f4	02c8f8	?	0x20000	r	8	lui $4,0xaff2 / ld $5,0($4) / lui $4,0x5f / ori $4,$4,0x5e10 / daddu $5,$5,$4 / lui $4,0xaff2
+ip30-symmon	sub_a80000002002c8f4	02c90c	?	0x20000	r	8	lui $4,0x5f / ori $4,$4,0x5e10 / daddu $5,$5,$4 / lui $4,0xaff2 / ld $4,0($4) / dsub $4,$5,$4 / bgtz $4,0xa80000002002c908 / sll $0,$0,0x0 / lui $4,0x9000
+ip30-symmon	sub_a80000002002c8f4	02c9c8	?	0x20000	r	8	addiu $4,$0,8 / sb $4,0($13) / addiu $4,$0,14 / sb $4,0($12) / ld $7,0($6) / lui $6,0x773 / lb $0,0($13) / ori $6,$6,0x5940 / daddu $7,$7,$6
+ip30-symmon	sub_a80000002002c8f4	02c9e0	?	0x20000	r	8	lb $0,0($13) / ori $6,$6,0x5940 / daddu $7,$7,$6 / lui $6,0xaff2 / ld $6,0($6) / dsub $6,$7,$6 / bgtz $6,0xa80000002002c9dc / sll $0,$0,0x0 / beq $0,$0,0xa80000002002c9ac
+ip30-symmon	sub_a80000002002ca00	02ca94	?	0x10000	r	8	lui $4,0xaff0 / lui $7,0xaff2 / dsll $2,$2,0x3 / daddu $3,$2,$3 / ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4)
+ip30-symmon	sub_a80000002002ca00	02caa0	?	0x10000	w	8	daddu $3,$2,$3 / ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4) / jal 0xa80000002002ca00 / or $5,$6,$1 / lui $7,0xaff2
+ip30-symmon	sub_a80000002002ca00	02caa4	?	0x0	r	8	ld $2,0($3) / and $2,$2,$1 / lui $1,0x400 / sd $2,0($3) / ld $6,0($4) / jal 0xa80000002002ca00 / or $5,$6,$1 / lui $7,0xaff2 / dli $13,0xf424
+ip30-symmon	sub_a80000002002ca00	02cab8	?	0x20000	r	8	jal 0xa80000002002ca00 / or $5,$6,$1 / lui $7,0xaff2 / dli $13,0xf424 / ld $12,0($7) / daddu $12,$12,$13 / ld $13,0($7) / sltu $1,$13,$12 / bne $1,$0,0xa80000002002cac0
+ip30-symmon	sub_a80000002002cf30	02cf50	?	0x10030	r	8	jal 0xa80000002002c78c / or $21,$4,$0 / sd $20,104($29) / lui $2,0xaff1 / ld $19,48($2) / sd $16,112($29) / sd $18,120($29) / beq $19,$0,0xa80000002002d1d4 / sd $17,128($29)
+ip30-symmon	sub_a80000002002cf30	02cf64	?	0x10038	r	8	sd $16,112($29) / sd $18,120($29) / beq $19,$0,0xa80000002002d1d4 / sd $17,128($29) / ld $4,56($2) / ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6)
+ip30-symmon	sub_a80000002002cf30	02cf68	?	0x10040	r	8	sd $18,120($29) / beq $19,$0,0xa80000002002d1d4 / sd $17,128($29) / ld $4,56($2) / ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6) / ld $7,136($6)
+ip30-symmon	sub_a80000002002cf30	02cf74	?	0xa8	r	8	ld $4,56($2) / ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6) / ld $7,136($6) / sd $7,0($29) / lui $16,0xa800 / sd $3,64($29)
+ip30-symmon	sub_a80000002002cf30	02cf78	?	0x88	r	8	ld $18,64($2) / sd $4,72($29) / lui $6,0xaff0 / ld $3,168($6) / ld $7,136($6) / sd $7,0($29) / lui $16,0xa800 / sd $3,64($29) / lui $24,0x2005
+ip30-symmon	sub_a80000002002cf30	02cf90	?	0x90	r	8	lui $16,0xa800 / sd $3,64($29) / lui $24,0x2005 / daddiu $16,$16,0 / ld $17,144($6) / lui $2,0x9000 / lui $4,0x1800 / sd $17,56($29) / dsll32 $2,$2,0x0
+ip30-symmon	sub_a80000002002cf30	02cfa8	?	0x98	r	8	lui $4,0x1800 / sd $17,56($29) / dsll32 $2,$2,0x0 / ori $20,$4,0x60 / ld $17,152($6) / dsll32 $16,$16,0x0 / or $20,$2,$20 / ld $6,160($6) / ori $5,$4,0x90
+ip30-symmon	sub_a80000002002cf30	02cfb4	?	0xa0	r	8	ori $20,$4,0x60 / ld $17,152($6) / dsll32 $16,$16,0x0 / or $20,$2,$20 / ld $6,160($6) / ori $5,$4,0x90 / ori $3,$4,0x44 / ld $20,0($20) / or $3,$2,$3
+ip30-symmon	sub_a80000002002cf30	02d1a0	?	0x10040	w	8	beq $0,$0,0xa80000002002d1ac / sll $0,$0,0x0 / beq $21,$0,0xa80000002002d1ac / lui $4,0xaff1 / sd $18,64($4) / jal 0xa80000002002c700 / sd $19,40($4) / ld $20,104($29) / ld $16,112($29)
+ip30-symmon	sub_a80000002002cf30	02d1a8	?	0x10028	w	8	beq $21,$0,0xa80000002002d1ac / lui $4,0xaff1 / sd $18,64($4) / jal 0xa80000002002c700 / sd $19,40($4) / ld $20,104($29) / ld $16,112($29) / ld $18,120($29) / ld $31,80($29)
+ip30-symmon	sub_a80000002002d234	02d250	?	0x10030	r	8	sd $17,32($29) / sd $18,40($29) / lui $18,0xaff1 / daddiu $17,$29,0 / ld $6,48($18) / ori $7,$18,0x10 / or $5,$18,$0 / ld $18,56($18) / daddiu $5,$5,8
+ip30-symmon	sub_a80000002002d234	02d25c	?	0x10038	r	8	daddiu $17,$29,0 / ld $6,48($18) / ori $7,$18,0x10 / or $5,$18,$0 / ld $18,56($18) / daddiu $5,$5,8 / daddiu $17,$17,8 / ld $24,-8($5) / bne $7,$5,0xa80000002002d260
+ip30-symmon	sub_a80000002002d234	02d2f0	?	0x10040	r	8	daddiu $24,$24,31224 / dsll32 $17,$17,0x0 / lui $5,0xaff1 / dadd $17,$17,$24 / ld $5,64($5) / jal 0xa8000000200422b0 / daddiu $6,$17,6280 / daddiu $6,$17,3520 / lui $5,0xaff0
+ip30-symmon	sub_a80000002002d234	02d30c	?	0xa8	r	8	daddiu $6,$17,3520 / lui $5,0xaff0 / daddiu $4,$16,80 / jal 0xa8000000200422b0 / ld $5,168($5) / lui $5,0xaff0 / daddiu $4,$16,112 / jal 0xa8000000200422b0 / ld $5,136($5)
+ip30-symmon	sub_a80000002002d234	02d31c	?	0x88	r	8	ld $5,168($5) / lui $5,0xaff0 / daddiu $4,$16,112 / jal 0xa8000000200422b0 / ld $5,136($5) / daddiu $6,$17,3080 / lui $5,0xaff0 / daddiu $4,$16,144 / jal 0xa8000000200422b0
+ip30-symmon	sub_a80000002002d234	02d330	?	0x90	r	8	daddiu $6,$17,3080 / lui $5,0xaff0 / daddiu $4,$16,144 / jal 0xa8000000200422b0 / ld $5,144($5) / daddiu $6,$17,3320 / lui $5,0xaff0 / daddiu $4,$16,168 / jal 0xa8000000200422b0
+ip30-symmon	sub_a80000002002d234	02d344	?	0x98	r	8	daddiu $6,$17,3320 / lui $5,0xaff0 / daddiu $4,$16,168 / jal 0xa8000000200422b0 / ld $5,152($5) / lui $5,0xaff0 / daddiu $4,$16,424 / jal 0xa8000000200422b0 / ld $5,160($5)
+ip30-symmon	sub_a80000002002d234	02d354	?	0xa0	r	8	ld $5,152($5) / lui $5,0xaff0 / daddiu $4,$16,424 / jal 0xa8000000200422b0 / ld $5,160($5) / lui $5,0x9000 / lui $7,0x1800 / ori $7,$7,0x60 / dsll32 $5,$5,0x0
+ip30-symmon	sub_a80000002002d234	02d42c	?	0x0	r	8	dsrl32 $5,$5,0x0 / jal 0xa8000000200422b0 / or $5,$5,$6 / lui $18,0xaff0 / ld $18,0($18) / daddiu $4,$16,568 / jal 0xa8000000200422b0 / or $5,$18,$0 / daddiu $6,$17,200
+ip30-symmon	sub_a80000002002d234	02d478	?	0x80	r	8	ld $18,40($29) / lui $5,0xaff0 / daddiu $4,$16,640 / jal 0xa8000000200422b0 / ld $5,128($5) / ld $31,48($29) / ld $16,56($29) / jr $31 / daddiu $29,$29,64
+ip30-symmon	sub_a80000002002d48c	02d490	?	0x10040	r	8	lui $7,0xaff1 / ld $8,64($7) / daddiu $29,$29,-16 / dsll32 $8,$8,0xf / lui $12,0x1800 / lui $11,0x9000
+ip30-symmon	sub_a80000002002d48c	02d4d0	?	0x10030	r	8	ld $9,0($10) / sw $0,0($11) / sd $9,0($10) / lui $5,0xaff1 / ld $6,48($5) / beq $6,$0,0xa80000002002d4ec / sd $31,0($29) / ld $12,0($7) / sd $12,0($7)
+ip30-symmon	sub_a80000002002d48c	02d4dc	?	0x10040	r	8	lui $5,0xaff1 / ld $6,48($5) / beq $6,$0,0xa80000002002d4ec / sd $31,0($29) / ld $12,0($7) / sd $12,0($7) / jal 0xa80000002002c700 / sd $6,40($5) / ld $31,0($29)
+ip30-symmon	sub_a80000002002d48c	02d4e0	?	0x10040	w	8	ld $6,48($5) / beq $6,$0,0xa80000002002d4ec / sd $31,0($29) / ld $12,0($7) / sd $12,0($7) / jal 0xa80000002002c700 / sd $6,40($5) / ld $31,0($29) / jr $31
+ip30-symmon	sub_a80000002002d48c	02d4e8	?	0x10028	w	8	sd $31,0($29) / ld $12,0($7) / sd $12,0($7) / jal 0xa80000002002c700 / sd $6,40($5) / ld $31,0($29) / jr $31 / daddiu $29,$29,16
+ip30-symmon	sub_a80000002002e6bc	02e6cc	?	0x80	r	8	daddiu $29,$29,-80 / sd $18,24($29) / sd $19,32($29) / lui $1,0xaff0 / ld $1,128($1) / sd $20,40($29) / sd $31,48($29) / andi $1,$1,0x800 / sd $16,56($29)
+ip30-symmon	sub_a80000002002f37c	02f380	?	0x40	r	8	lui $2,0xaff0 / ld $1,64($2) / addiu $3,$0,-769 / and $1,$1,$3 / jr $31 / sd $1,64($2)
+ip30-symmon	sub_a80000002002f37c	02f390	?	0x40	w	8	ld $1,64($2) / addiu $3,$0,-769 / and $1,$1,$3 / jr $31 / sd $1,64($2)
+ip30-symmon	sub_a800000020038900	038940	?	0x20000	r	8	addiu $4,$0,511 / lui $12,0xaff2 / ld $2,0($12) / addiu $13,$0,10 / bgtz $13,0xa800000020038948 / addiu $13,$13,-1 / bgtz $4,0xa800000020038944
+ip30-symmon	sub_a800000020038900	038958	?	0x20000	r	8	bgtz $13,0xa800000020038948 / addiu $13,$13,-1 / bgtz $4,0xa800000020038944 / addiu $4,$4,-1 / ld $3,0($12) / jr $31 / dsubu $2,$3,$2
