@@ -1,0 +1,216 @@
+image	function	addr	variant	offset	rw	width	instructions_around_site
+ip32-kernel-o	VEC_int	c	?	0x18	r	8	lui $17,0xb400 / lw $20,-23840($0) / ori $17,$17,0x18 / ld $26,0($17) / dsll32 $20,$20,0x0 / or $26,$26,$20 / sd $26,312($27) / addiu $26,$0,24
+ip32-kernel-o	VEC_int	2c	?	0x18	w	8	addiu $26,$0,24 / sw $26,-23840($0) / ld $26,-23880($26) / dsrl32 $20,$20,0x0 / sd $26,0($17) / lui $26,0x1 / ori $26,$26,0x4 / and $26,$26,$16 / ori $26,$26,0x1
+ip32-kernel-o	VEC_int	64	?	0x18	w	8	sw $20,-23840($0) / ld $18,-23880($20) / lui $26,0xb400 / addiu $26,$26,24 / sd $18,0($26) / andi $18,$16,0xff00 / mtc0 $18,c0_sr / or $27,$17,$0
+ip32-kernel-o	kpreemption	1d8	?	0x18	w	8	sw $20,-23840($0) / ld $4,-23880($20) / lui $27,0xb400 / addiu $27,$27,24 / sd $4,0($27) / or $27,$17,$0 / j 0 / sll $0,$0,0x0 / or $6,$29,$0
+ip32-kernel-o	__sysad_wbflush	13ec	?	0x0	r	8	sync  / lui $2,0xb400 / jr $31 / ld $2,0($2)
+ip32-kernel-o	proc1	1b64	?	0x18	w	8	ld $27,-23880($0) / lui $2,0xb400 / sw $0,-23840($0) / ori $2,$2,0x18 / sd $27,0($2) / dli $2,0x8713 / mtc0 $2,c0_sr / lui $27,0x1000 / sb $0,-24513($0)
+ip32-kernel-o	sub_8168	81a0	?	0x10	r	8	jal 0 / sw $0,444($3) / lui $4,0xb400 / dli $5,0x8000 / ld $4,16($4) / dsll $5,$5,0x10 / and $4,$4,$5 / beq $4,$0,81d8 / lui $8,0xb700
+ip32-kernel-o	mlreset	8754	?	0x8	r	8	sd $16,0($29) / lui $16,0xb400 / addiu $4,$4,0 / jal 0 / ld $16,8($16) / sw $2,0($28) / lui $24,0xb400 / sd $0,72($24) / jal 0
+ip32-kernel-o	mlreset	8760	?	0x48	w	8	jal 0 / ld $16,8($16) / sw $2,0($28) / lui $24,0xb400 / sd $0,72($24) / jal 0 / sd $0,592($24) / beq $2,$0,8998 / lui $6,0xb400
+ip32-kernel-o	mlreset	8768	?	0x250	w	8	sw $2,0($28) / lui $24,0xb400 / sd $0,72($24) / jal 0 / sd $0,592($24) / beq $2,$0,8998 / lui $6,0xb400 / jal 0 / sll $0,$0,0x0
+ip32-kernel-o	mlreset	87ac	?	0x8	w	8	and $4,$16,$6 / beq $0,$0,87ac / sll $0,$0,0x0 / ori $4,$5,0x3000 / sd $4,0($9) / lui $10,0xb400 / sd $0,24($10) / jal 0 / sd $0,16($10)
+ip32-kernel-o	mlreset	87b4	?	0x18	w	8	sll $0,$0,0x0 / ori $4,$5,0x3000 / sd $4,0($9) / lui $10,0xb400 / sd $0,24($10) / jal 0 / sd $0,16($10) / or $5,$0,$0 / or $4,$0,$0
+ip32-kernel-o	mlreset	87bc	?	0x10	w	8	sd $4,0($9) / lui $10,0xb400 / sd $0,24($10) / jal 0 / sd $0,16($10) / or $5,$0,$0 / or $4,$0,$0 / addiu $4,$4,1 / slti $11,$4,5
+ip32-kernel-o	mlreset	887c	?	0x30	w	8	jal 0 / addiu $6,$6,0 / lui $7,0xb400 / jal 83c8 / sd $0,48($7) / jal 0 / sll $0,$0,0x0 / jal 0 / sll $0,$0,0x0
+ip32-kernel-o	mlreset	89a0	?	0x50	w	8	jr $31 / addiu $29,$29,16 / addiu $5,$0,1023 / beq $0,$0,8774 / sd $5,80($6) / lw $8,0($28) / sra $7,$8,0xb / srl $7,$7,0x14 / addu $7,$7,$8
+ip32-kernel-o	ecc_enable	9254	?	0x200	w	8	beq $5,$0,9258 / lui $6,0xb400 / beq $4,$0,9258 / sll $0,$0,0x0 / sd $7,512($6) / jr $31 / addiu $29,$29,16
+ip32-kernel-o	ecc_disable	9268	?	0x200	w	8	lui $1,0xb400 / jr $31 / sd $0,512($1)
+ip32-kernel-o	synthclock	a008	?	0x20	r	8	addiu $29,$29,-48 / sd $17,16($29) / lw $2,-32648($28) / lui $3,0xb400 / ld $1,32($3) / or $17,$4,$0 / sd $19,0($29) / lui $19,0xefff / sd $18,8($29)
+ip32-kernel-o	synthclock	a02c	?	0x20	w	8	ori $18,$3,0x20 / ori $19,$19,0xffff / and $1,$19,$1 / beq $2,$0,a044 / sd $1,32($3) / ld $19,0($29) / ld $18,8($29) / ld $17,16($29) / jr $31
+ip32-kernel-o	synthclock	a078	?	0x20	r	8	sd $16,24($29) / or $4,$17,$0 / jal 0 / lw $5,-24552($0) / ld $1,0($18) / and $1,$19,$1 / jal 0 / sd $1,0($18) / lw $8,0($28)
+ip32-kernel-o	synthclock	a084	?	0x20	w	8	lw $5,-24552($0) / ld $1,0($18) / and $1,$19,$1 / jal 0 / sd $1,0($18) / lw $8,0($28) / lw $7,0($28) / sltiu $8,$8,2 / or $4,$2,$0
+ip32-kernel-o	synthackkgclock	a0ec	?	0x20	r	8	sd $20,16($29) / lw $2,-32644($28) / lui $3,0xb400 / or $20,$4,$0 / ld $1,32($3) / or $19,$5,$0 / sd $18,8($29) / lui $18,0xdfff / sd $17,24($29)
+ip32-kernel-o	synthackkgclock	a110	?	0x20	w	8	ori $17,$3,0x20 / ori $18,$18,0xffff / and $1,$18,$1 / bne $2,$0,a194 / sd $1,32($3) / lw $24,0($28) / sd $16,32($29) / addiu $2,$2,1 / beq $24,$0,a188
+ip32-kernel-o	synthackkgclock	a13c	?	0x20	r	8	lw $25,-32680($28) / or $4,$20,$0 / jalr $25 / or $5,$19,$0 / ld $1,0($17) / and $1,$18,$1 / jal 0 / sd $1,0($17) / lw $9,0($28)
+ip32-kernel-o	synthackkgclock	a148	?	0x20	w	8	or $5,$19,$0 / ld $1,0($17) / and $1,$18,$1 / jal 0 / sd $1,0($17) / lw $9,0($28) / lw $8,0($28) / sltiu $9,$9,2 / or $4,$2,$0
+ip32-kernel-o	sub_a2cc	a304	?	0x10	r	8	lui $10,0xb400 / ld $18,312($4) / addiu $16,$29,0 / lui $20,0x0 / ld $10,16($10) / addiu $22,$0,-1 / sd $31,136($29) / addiu $20,$20,1408 / sd $19,128($29)
+ip32-kernel-o	sub_a2cc	a32c	?	0x10	r	8	beq $0,$0,a56c / sll $10,$10,0x0 / lui $10,0xb400 / ori $10,$10,0x10 / ld $10,0($10) / and $10,$10,$18 / sll $10,$10,0x0 / beq $10,$0,a538 / addiu $8,$20,144
+ip32-kernel-o	intr	a5d4	?	0x10	r	8	lui $1,0xb400 / ld $30,312($22) / addiu $31,$0,-1 / addiu $17,$17,1408 / ld $1,16($1) / dsrl32 $31,$31,0x0 / sd $20,72($29) / and $31,$30,$31 / dsrl32 $30,$30,0x0
+ip32-kernel-o	intr	a6bc	?	0x20	r	8	lbu $2,1696($2) / beq $0,$0,a638 / and $16,$3,$16 / lui $7,0xb400 / ld $2,32($7) / lw $3,0($28) / lui $4,0x3000 / lw $6,-32644($28) / ori $7,$7,0x20
+ip32-kernel-o	intr	a700	?	0x20	w	8	beq $6,$0,a778 / and $10,$2,$4 / beq $10,$0,a704 / sll $0,$0,0x0 / sd $2,0($7) / lw $13,-24028($0) / lw $12,208($13) / addu $12,$19,$12 / sw $12,208($13)
+ip32-kernel-o	spl0	b1f4	?	0x18	w	8	mtc0 $14,c0_sr / ld $12,-23880($0) / lui $13,0xb400 / ori $13,$13,0x18 / sd $12,0($13) / lw $12,-23840($0) / lui $1,0xffff / ori $1,$1,0xff / and $2,$2,$1
+ip32-kernel-o	splhi	b258	?	0x18	w	8	mtc0 $14,c0_sr / ld $12,-23880($13) / lui $14,0xb400 / ori $14,$14,0x18 / sd $12,0($14) / lw $12,-23840($0) / lui $1,0xffff / ori $1,$1,0xff / and $2,$2,$1
+ip32-kernel-o	splprof	b344	?	0x18	w	8	mtc0 $14,c0_sr / ld $12,-23880($13) / lui $14,0xb400 / ori $14,$14,0x18 / sd $12,0($14) / lw $12,-23840($0) / lui $1,0xffff / ori $1,$1,0xff / and $2,$2,$1
+ip32-kernel-o	spl7	b3c8	?	0x18	w	8	mtc0 $14,c0_sr / ld $12,-23880($13) / lui $14,0xb400 / ori $14,$14,0x18 / sd $12,0($14) / lw $12,-23840($0) / lui $1,0xffff / ori $1,$1,0xff / and $2,$2,$1
+ip32-kernel-o	splx	b4a4	?	0x18	w	8	mtc0 $14,c0_sr / ld $13,-23880($12) / lui $14,0xb400 / ori $14,$14,0x18 / sd $13,0($14) / sw $12,-23840($0) / jr $31 / mtc0 $4,c0_sr
+ip32-kernel-o	splint	b4d4	?	0x18	w	8	ori $3,$3,0x1 / ld $12,-23880($4) / lui $14,0xb400 / ori $14,$14,0x18 / sd $12,0($14) / lw $12,-23840($0) / lui $1,0xffff / ori $1,$1,0xff / and $2,$2,$1
+ip32-kernel-o	ecc_handler	d9ec	?	0x48	r	8	addiu $4,$0,3 / bgez $11,dd10 / sb $4,176($17) / lui $5,0xb400 / ld $2,72($5) / and $2,$23,$2 / sll $2,$2,0x0 / dsll32 $2,$2,0x0 / dsrl32 $2,$2,0x0
+ip32-kernel-o	ecc_handler	da04	?	0x250	r	8	sll $2,$2,0x0 / dsll32 $2,$2,0x0 / dsrl32 $2,$2,0x0 / sd $2,56($18) / ld $25,592($5) / and $25,$23,$25 / sll $25,$25,0x0 / dsll32 $25,$25,0x0 / dsrl32 $25,$25,0x0
+ip32-kernel-o	ecc_handler	da1c	?	0x40	r	8	sll $25,$25,0x0 / dsll32 $25,$25,0x0 / dsrl32 $25,$25,0x0 / sd $25,64($18) / ld $1,64($5) / sd $1,80($18) / ld $31,600($5) / and $31,$23,$31 / lui $24,0x24
+ip32-kernel-o	ecc_handler	da24	?	0x258	r	8	dsrl32 $25,$25,0x0 / sd $25,64($18) / ld $1,64($5) / sd $1,80($18) / ld $31,600($5) / and $31,$23,$31 / lui $24,0x24 / sll $31,$31,0x0 / and $25,$24,$25
+ip32-kernel-o	ecc_handler	da64	?	0x48	w	8	andi $6,$2,0x5 / addiu $7,$0,5 / bne $6,$7,da7c / or $4,$19,$0 / sd $0,72($5) / ld $7,72($18) / ld $6,80($18) / dsll32 $7,$7,0x0 / beq $0,$0,dabc
+ip32-kernel-o	ecc_handler	dc24	?	0x250	w	8	beq $0,$0,db14 / sw $7,132($29) / beq $0,$0,db28 / addiu $21,$0,1 / sd $0,592($5) / ld $6,88($18) / lui $8,0x1000 / sltu $9,$6,$8 / bne $9,$0,dac0
+ip32-kernel-o	ecc_handler	dcb4	?	0x48	w	8	addiu $5,$0,1 / sw $5,0($28) / beq $0,$0,d984 / or $2,$18,$0 / sd $0,72($5) / ld $7,72($18) / ld $6,80($18) / dsll32 $7,$7,0x0 / beq $0,$0,dabc
+ip32-kernel-o	sub_ddec	de3c	?	0x260	r	8	lw $12,128($7) / sw $11,132($7) / sw $11,136($7) / lui $10,0xb400 / ld $10,608($10) / addiu $2,$0,1 / jr $31 / sw $10,140($7) / lw $13,120($7)
+ip32-kernel-o	sub_ff08	ff0c	?	0x48	r	8	lui $1,0xb400 / ld $8,72($1) / sd $8,0($28) / ld $7,64($1) / sd $7,0($28) / ld $6,592($1)
+ip32-kernel-o	sub_ff08	ff14	?	0x40	r	8	lui $1,0xb400 / ld $8,72($1) / sd $8,0($28) / ld $7,64($1) / sd $7,0($28) / ld $6,592($1) / sd $6,0($28) / ld $5,600($1)
+ip32-kernel-o	sub_ff08	ff1c	?	0x250	r	8	ld $8,72($1) / sd $8,0($28) / ld $7,64($1) / sd $7,0($28) / ld $6,592($1) / sd $6,0($28) / ld $5,600($1) / sd $5,0($28) / ld $4,88($1)
+ip32-kernel-o	sub_ff08	ff24	?	0x258	r	8	ld $7,64($1) / sd $7,0($28) / ld $6,592($1) / sd $6,0($28) / ld $5,600($1) / sd $5,0($28) / ld $4,88($1) / sd $4,0($28) / ld $3,616($1)
+ip32-kernel-o	sub_ff08	ff2c	?	0x58	r	8	ld $6,592($1) / sd $6,0($28) / ld $5,600($1) / sd $5,0($28) / ld $4,88($1) / sd $4,0($28) / ld $3,616($1) / sd $3,0($28) / ld $2,608($1)
+ip32-kernel-o	sub_ff08	ff34	?	0x268	r	8	ld $5,600($1) / sd $5,0($28) / ld $4,88($1) / sd $4,0($28) / ld $3,616($1) / sd $3,0($28) / ld $2,608($1) / sd $2,0($28) / sd $0,72($1)
+ip32-kernel-o	sub_ff08	ff3c	?	0x260	r	8	ld $4,88($1) / sd $4,0($28) / ld $3,616($1) / sd $3,0($28) / ld $2,608($1) / sd $2,0($28) / sd $0,72($1) / jr $31 / sd $0,592($1)
+ip32-kernel-o	sub_ff08	ff44	?	0x48	w	8	ld $3,616($1) / sd $3,0($28) / ld $2,608($1) / sd $2,0($28) / sd $0,72($1) / jr $31 / sd $0,592($1)
+ip32-kernel-o	sub_ff08	ff4c	?	0x250	w	8	ld $2,608($1) / sd $2,0($28) / sd $0,72($1) / jr $31 / sd $0,592($1)
+ip32-kernel-o	ecc_error_correction	ffd8	?	0x250	w	8	sd $2,8($29) / ld $4,0($29) / lui $6,0xb400 / jal 0 / sd $0,592($6) / jal 0 / ld $4,8($29) / ld $31,24($29) / beq $0,$0,ff64
+ip32-kernel-o	dobuserre	10288	?	0x268	r	8	sd $31,0($29) / beq $0,$0,102a4 / or $4,$0,$0 / lui $2,0xb400 / ld $3,616($2) / sd $3,0($28) / ld $2,608($2) / jal 10754 / sd $2,0($28)
+ip32-kernel-o	dobuserre	10290	?	0x260	r	8	or $4,$0,$0 / lui $2,0xb400 / ld $3,616($2) / sd $3,0($28) / ld $2,608($2) / jal 10754 / sd $2,0($28) / ld $31,0($29) / or $4,$2,$0
+ip32-kernel-o	absolute_rtc_current_time	11828	?	0x38	r	8	lui $2,0xb400 / addiu $3,$0,-1 / ld $2,56($2) / dsrl32 $3,$3,0x0 / jr $31 / and $2,$2,$3
+ip32-kernel-o	get_crimerev	1184c	?	0x0	r	8	addiu $7,$0,1 / lw $2,-32508($28) / beq $1,$0,1187c / lui $8,0xb400 / ld $9,0($8) / andi $2,$9,0xf / dsrl32 $6,$9,0x0 / sw $0,-32504($28) / beq $2,$0,11868
+ip32-kernel-o	flushbus	11cd4	?	0x8	r	8	lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / jr $31 / sll $0,$0,0x0
+ip32-kernel-o	_ticksper1024inst	140d0	?	0x38	r	8	lui $12,0xb400 / addiu $12,$12,56 / addiu $13,$0,1 / addiu $15,$0,2 / ld $14,0($12) / bgtz $13,140d4 / addiu $13,$13,-1 / ld $2,0($12) / addiu $15,$15,-1
+ip32-kernel-o	_ticksper1024inst	140dc	?	0x38	r	8	addiu $15,$0,2 / ld $14,0($12) / bgtz $13,140d4 / addiu $13,$13,-1 / ld $2,0($12) / addiu $15,$15,-1 / addiu $13,$0,512 / bgtz $15,140d0 / dsubu $2,$2,$14
+ip32-kernel-o	_cpuclkper100ticks	14130	?	0x38	w	8	cache 0x14,64($8) / cache 0x14,96($8) / cache 0x14,128($8) / mtc0 $0,c0_count / sd $0,0($13) / addiu $12,$0,23496 / ld $14,0($13) / dsll32 $14,$14,0x0 / dsra32 $14,$14,0x0
+ip32-kernel-o	_cpuclkper100ticks	14138	?	0x38	r	8	cache 0x14,128($8) / mtc0 $0,c0_count / sd $0,0($13) / addiu $12,$0,23496 / ld $14,0($13) / dsll32 $14,$14,0x0 / dsra32 $14,$14,0x0 / mfc0 $2,c0_count / sltu $8,$14,$12
+ip32-kernel-o	delay_calibrate	141b4	?	0x38	r	8	lui $12,0xb400 / addiu $12,$12,56 / addiu $13,$0,1 / addiu $15,$0,2 / ld $14,0($12) / bgtz $13,141b8 / addiu $13,$13,-1 / ld $2,0($12) / lui $13,0x1
+ip32-kernel-o	delay_calibrate	141dc	?	0x38	r	8	addiu $15,$0,2 / ld $14,0($12) / bgtz $13,141b8 / addiu $13,$13,-1 / ld $2,0($12) / lui $13,0x1 / addiu $15,$15,-1 / ori $13,$13,0x869f / bgtz $15,141b4
+ip32-kernel-o	badaddr	142a4	?	0x48	w	8	sd $31,8($29) / mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08
+ip32-kernel-o	badaddr	142a8	?	0x250	w	8	mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4
+ip32-kernel-o	badaddr	142ac	?	0x250	r	8	mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2)
+ip32-kernel-o	badaddr	142b0	?	0x48	r	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2) / lw $0,0($2)
+ip32-kernel-o	badaddr	14348	?	0x8	r	8	jal 0 / addiu $4,$0,0 / lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $13,0xb400 / ld $13,40($13) / lui $1,0x30 / ori $1,$1,0x80
+ip32-kernel-o	badaddr	14364	?	0x28	r	8	lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $13,0xb400 / ld $13,40($13) / lui $1,0x30 / ori $1,$1,0x80 / and $13,$13,$1 / bne $13,$0,149a8
+ip32-kernel-o	badaddr_val	143dc	?	0x48	w	8	sd $31,8($29) / mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08
+ip32-kernel-o	badaddr_val	143e0	?	0x250	w	8	mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4
+ip32-kernel-o	badaddr_val	143e4	?	0x250	r	8	mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2)
+ip32-kernel-o	badaddr_val	143e8	?	0x48	r	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2) / lw $0,0($2)
+ip32-kernel-o	badaddr_val	144b0	?	0x8	r	8	jal 0 / addiu $4,$0,0 / lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $13,0xb400 / ld $13,40($13) / lui $1,0x30 / ori $1,$1,0x80
+ip32-kernel-o	badaddr_val	144cc	?	0x28	r	8	lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $13,0xb400 / ld $13,40($13) / lui $1,0x30 / ori $1,$1,0x80 / and $13,$13,$1 / bne $13,$0,149a8
+ip32-kernel-o	wbadaddr	14558	?	0x48	w	8	sd $31,8($29) / mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08
+ip32-kernel-o	wbadaddr	1455c	?	0x250	w	8	mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4
+ip32-kernel-o	wbadaddr	14560	?	0x250	r	8	mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2)
+ip32-kernel-o	wbadaddr	14564	?	0x48	r	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2) / lw $0,0($2)
+ip32-kernel-o	wbadaddr	145fc	?	0x8	r	8	jal 0 / addiu $4,$0,0 / lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $14,0xa000
+ip32-kernel-o	wbadaddr	1461c	?	0x8	r	8	ori $1,$1,0x8 / ld $1,0($1) / lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $14,0xa000 / lw $14,0($14) / sll $0,$0,0x0 / lui $13,0xb400
+ip32-kernel-o	wbadaddr	14644	?	0x28	r	8	lui $14,0xa000 / lw $14,0($14) / sll $0,$0,0x0 / lui $13,0xb400 / ld $13,40($13) / lui $1,0x30 / ori $1,$1,0x80 / and $13,$13,$1 / bne $13,$0,149a8
+ip32-kernel-o	wbadaddr_val	146bc	?	0x48	w	8	sd $31,8($29) / mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08
+ip32-kernel-o	wbadaddr_val	146c0	?	0x250	w	8	mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4
+ip32-kernel-o	wbadaddr_val	146c4	?	0x250	r	8	mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2)
+ip32-kernel-o	wbadaddr_val	146c8	?	0x48	r	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2) / lw $0,0($2)
+ip32-kernel-o	wbadaddr_val	14780	?	0x8	r	8	jal 0 / addiu $4,$0,0 / lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $14,0xa000
+ip32-kernel-o	wbadaddr_val	147a0	?	0x8	r	8	ori $1,$1,0x8 / ld $1,0($1) / lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $14,0xa000 / lw $14,0($14) / lui $13,0xb400 / ld $13,40($13)
+ip32-kernel-o	wbadaddr_val	147c4	?	0x28	r	8	ld $1,0($1) / lui $14,0xa000 / lw $14,0($14) / lui $13,0xb400 / ld $13,40($13) / lui $1,0x30 / ori $1,$1,0x80 / and $13,$13,$1 / bne $13,$0,149a8
+ip32-kernel-o	earlybadaddr	1483c	?	0x48	w	8	sd $31,8($29) / mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08
+ip32-kernel-o	earlybadaddr	14840	?	0x250	w	8	mfc0 $12,c0_sr / mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4
+ip32-kernel-o	earlybadaddr	14844	?	0x250	r	8	mtc0 $0,c0_sr / lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2)
+ip32-kernel-o	earlybadaddr	14848	?	0x48	r	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2) / lw $0,0($2)
+ip32-kernel-o	earlybadaddr	148cc	?	0x8	r	8	jal 0 / addiu $4,$0,0 / lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $13,0xb400 / ld $13,40($13) / lui $1,0x30 / ori $1,$1,0x80
+ip32-kernel-o	earlybadaddr	148e8	?	0x28	r	8	lui $1,0xb400 / ori $1,$1,0x8 / ld $1,0($1) / lui $13,0xb400 / ld $13,40($13) / lui $1,0x30 / ori $1,$1,0x80 / and $13,$13,$1 / bne $13,$0,14a0c
+ip32-kernel-o	baerror	149ac	?	0x48	w	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08
+ip32-kernel-o	baerror	149b0	?	0x250	w	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4
+ip32-kernel-o	baerror	149b4	?	0x250	r	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2)
+ip32-kernel-o	baerror	149b8	?	0x48	r	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2) / lw $0,0($2)
+ip32-kernel-o	earlybaerror	14a10	?	0x48	w	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08
+ip32-kernel-o	earlybaerror	14a14	?	0x250	w	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4
+ip32-kernel-o	earlybaerror	14a18	?	0x250	r	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2)
+ip32-kernel-o	earlybaerror	14a1c	?	0x48	r	8	lui $2,0xb400 / sd $0,72($2) / sd $0,592($2) / ld $0,592($2) / ld $0,72($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2) / lw $0,0($2)
+ip32-kernel-o	stkscr3	194c0	?	0x18	w	8	sw $4,-23840($0) / ld $4,-23880($4) / lui $26,0xb400 / ori $26,$26,0x18 / sd $4,0($26) / mfc0 $4,c0_sr / lui $26,0x1 / ori $26,$26,0x4 / and $4,$26,$4
+ip32-kernel-o	VEC_dbe	1c2d8	?	0x48	r	8	lui $12,0xb400 / ld $13,72($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,64($12)
+ip32-kernel-o	VEC_dbe	1c2e8	?	0x40	r	8	ld $13,72($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,64($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,592($12)
+ip32-kernel-o	VEC_dbe	1c2f8	?	0x250	r	8	ld $13,64($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,592($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,600($12)
+ip32-kernel-o	VEC_dbe	1c308	?	0x258	r	8	ld $13,592($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,600($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,88($12)
+ip32-kernel-o	VEC_dbe	1c318	?	0x58	r	8	ld $13,600($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,88($12) / lui $1,0x0 / addiu $1,$1,0 / lui $2,0xb400 / sd $13,0($1)
+ip32-kernel-o	VEC_dbe	1c32c	?	0x250	w	8	lui $1,0x0 / addiu $1,$1,0 / lui $2,0xb400 / sd $13,0($1) / sd $0,592($2) / sd $0,72($2) / ld $0,72($2) / ld $0,592($2) / lui $2,0xbf08
+ip32-kernel-o	VEC_dbe	1c330	?	0x48	w	8	addiu $1,$1,0 / lui $2,0xb400 / sd $13,0($1) / sd $0,592($2) / sd $0,72($2) / ld $0,72($2) / ld $0,592($2) / lui $2,0xbf08 / ori $2,$2,0x4
+ip32-kernel-o	VEC_dbe	1c334	?	0x48	r	8	lui $2,0xb400 / sd $13,0($1) / sd $0,592($2) / sd $0,72($2) / ld $0,72($2) / ld $0,592($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2)
+ip32-kernel-o	VEC_dbe	1c338	?	0x250	r	8	sd $13,0($1) / sd $0,592($2) / sd $0,72($2) / ld $0,72($2) / ld $0,592($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2) / lh $12,-24176($0)
+ip32-kernel-o	VEC_ibe	20ddc	?	0x48	r	8	sll $0,$0,0x0 / addiu $6,$6,4 / sd $6,272($27) / lui $12,0xb400 / ld $13,72($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,64($12)
+ip32-kernel-o	VEC_ibe	20dec	?	0x40	r	8	ld $13,72($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,64($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,592($12)
+ip32-kernel-o	VEC_ibe	20dfc	?	0x250	r	8	ld $13,64($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,592($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,600($12)
+ip32-kernel-o	VEC_ibe	20e0c	?	0x258	r	8	ld $13,592($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,600($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,88($12)
+ip32-kernel-o	VEC_ibe	20e1c	?	0x58	r	8	ld $13,600($12) / lui $1,0x0 / addiu $1,$1,0 / sd $13,0($1) / ld $13,88($12) / lui $1,0x0 / addiu $1,$1,0 / lui $2,0xb400 / sd $13,0($1)
+ip32-kernel-o	VEC_ibe	20e30	?	0x250	w	8	lui $1,0x0 / addiu $1,$1,0 / lui $2,0xb400 / sd $13,0($1) / sd $0,592($2) / sd $0,72($2) / ld $0,72($2) / ld $0,592($2) / lui $2,0xbf08
+ip32-kernel-o	VEC_ibe	20e34	?	0x48	w	8	addiu $1,$1,0 / lui $2,0xb400 / sd $13,0($1) / sd $0,592($2) / sd $0,72($2) / ld $0,72($2) / ld $0,592($2) / lui $2,0xbf08 / ori $2,$2,0x4
+ip32-kernel-o	VEC_ibe	20e38	?	0x48	r	8	lui $2,0xb400 / sd $13,0($1) / sd $0,592($2) / sd $0,72($2) / ld $0,72($2) / ld $0,592($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2)
+ip32-kernel-o	VEC_ibe	20e3c	?	0x250	r	8	sd $13,0($1) / sd $0,592($2) / sd $0,72($2) / ld $0,72($2) / ld $0,592($2) / lui $2,0xbf08 / ori $2,$2,0x4 / sw $0,0($2) / lh $12,-24176($0)
+ip32-crime-o	crimeFifoFullHandler	1dc	?	0x10	r	8	or $18,$5,$0 / beq $1,$0,334 / sd $19,32($29) / lui $3,0xb400 / ld $3,16($3) / sll $3,$3,0x0 / dsll32 $3,$3,0x5 / bgez $3,270 / lw $7,0($28)
+ip32-crime-o	crime_init	554c	?	0x28	r	8	addiu $21,$0,-2 / lui $16,0xb400 / and $18,$18,$21 / sw $18,20($20) / ld $15,40($16) / lui $18,0xfff0 / sll $15,$15,0x0 / ori $18,$18,0xffff / and $15,$15,$18
+ip32-crime-o	crime_init	5564	?	0x28	w	8	sll $15,$15,0x0 / ori $18,$18,0xffff / and $15,$15,$18 / sll $15,$15,0x0 / sd $15,40($16) / lw $14,4($20) / lui $12,0x1 / lui $11,0xff / addu $14,$12,$14
+ip32-symmon	exception	0104c8	?	0x40	r	8	sd $31,56($29) / sd $26,40($29) / lui $26,0xb400 / ori $26,$26,0x40 / ld $26,0($26) / sd $26,64($29) / lui $26,0xb400 / ori $26,$26,0x48 / ld $26,0($26)
+ip32-symmon	exception	0104d8	?	0x48	r	8	ld $26,0($26) / sd $26,64($29) / lui $26,0xb400 / ori $26,$26,0x48 / ld $26,0($26) / sd $26,72($29) / lui $26,0xb400 / ori $26,$26,0x58 / ld $26,0($26)
+ip32-symmon	exception	0104e8	?	0x58	r	8	ld $26,0($26) / sd $26,72($29) / lui $26,0xb400 / ori $26,$26,0x58 / ld $26,0($26) / sd $26,80($29) / lui $26,0xb400 / ori $26,$26,0x250 / ld $26,0($26)
+ip32-symmon	exception	0104f8	?	0x250	r	8	ld $26,0($26) / sd $26,80($29) / lui $26,0xb400 / ori $26,$26,0x250 / ld $26,0($26) / sd $26,88($29) / lui $26,0xb400 / ori $26,$26,0x258 / ld $26,0($26)
+ip32-symmon	exception	010508	?	0x258	r	8	ld $26,0($26) / sd $26,88($29) / lui $26,0xb400 / ori $26,$26,0x258 / ld $26,0($26) / sd $26,96($29) / lui $26,0xb400 / ori $26,$26,0x260 / ld $26,0($26)
+ip32-symmon	exception	010518	?	0x260	r	8	ld $26,0($26) / sd $26,96($29) / lui $26,0xb400 / ori $26,$26,0x260 / ld $26,0($26) / sd $26,104($29) / lui $26,0xb400 / ori $26,$26,0x268 / ld $26,0($26)
+ip32-symmon	exception	010528	?	0x268	r	8	ld $26,0($26) / sd $26,104($29) / lui $26,0xb400 / ori $26,$26,0x268 / ld $26,0($26) / sd $26,112($29) / lui $26,0xb400 / ori $26,$26,0x270 / ld $26,0($26)
+ip32-symmon	exception	010538	?	0x270	r	8	ld $26,0($26) / sd $26,112($29) / lui $26,0xb400 / ori $26,$26,0x270 / ld $26,0($26) / sd $26,120($29) / addiu $1,$0,0 / mfc0 $26,c0_sr / and $26,$26,$1
+ip32-symmon	cpu_get_memsize	027e44	?	0x208	r	8	lui $9,0xb400 / ld $9,520($9) / lui $10,0x800 / andi $1,$9,0x100 / beq $1,$0,a0027ea4 / lui $12,0x200
+ip32-symmon	cpu_get_memsize	027e78	?	0x210	r	8	beq $0,$0,a0027e78 / ori $6,$6,0x210 / beq $7,$11,a0027e9c / lui $14,0xa006 / ld $8,0($6) / addiu $6,$6,8 / beq $9,$8,a0027e70 / addiu $7,$7,1 / andi $13,$8,0x100
+ip32-symmon	cpu_get_memsize	027e78	?	0x218	r	8	beq $0,$0,a0027e78 / ori $6,$6,0x210 / beq $7,$11,a0027e9c / lui $14,0xa006 / ld $8,0($6) / addiu $6,$6,8 / beq $9,$8,a0027e70 / addiu $7,$7,1 / andi $13,$8,0x100
+ip32-symmon	wbflush	028528	?	0x8	r	8	lui $4,0xb400 / addiu $4,$4,0 / ld $0,8($4) / ld $0,512($4) / lui $4,0xbf31 / addiu $4,$4,0 / jr $31
+ip32-symmon	wbflush	02852c	?	0x200	r	8	lui $4,0xb400 / addiu $4,$4,0 / ld $0,8($4) / ld $0,512($4) / lui $4,0xbf31 / addiu $4,$4,0 / jr $31 / ld $0,8($4)
+ip32-symmon	crm_softreset	0285ac	?	0x8	w	8	lui $4,0xb400 / addiu $5,$0,1024 / addiu $4,$4,8 / bgezal $0,a00285d4 / sd $5,0($4) / beq $0,$0,a002859c / sll $0,$0,0x0
+ip32-symmon	crm_hardreset	0285c8	?	0x8	w	8	lui $4,0xb400 / addiu $5,$0,2048 / addiu $4,$4,8 / bgezal $0,a00285d4 / sd $5,0($4) / beq $0,$0,a00285b8 / sll $0,$0,0x0
+ip32-symmon	ticksper1024inst	028698	?	0x38	r	8	addiu $15,$15,-31092 / lui $15,0xa003 / addiu $15,$15,-31056 / addiu $13,$0,512 / ld $14,0($12) / bgtz $13,a002869c / addiu $13,$13,-1 / ld $2,0($12) / jr $15
+ip32-symmon	ticksper1024inst	0286a4	?	0x38	r	8	addiu $13,$0,512 / ld $14,0($12) / bgtz $13,a002869c / addiu $13,$13,-1 / ld $2,0($12) / jr $15 / dsubu $2,$2,$14 / jr $31 / sll $0,$0,0x0
+ip32-symmon	cpuclkper100ticks	0286f0	?	0x38	w	8	addiu $8,$8,-30996 / addiu $11,$0,0 / addiu $24,$0,0 / mtc0 $0,c0_count / sd $0,0($13) / addiu $12,$0,23496 / ld $14,0($13) / dsll32 $14,$14,0x0 / dsra32 $14,$14,0x0
+ip32-symmon	cpuclkper100ticks	0286f8	?	0x38	r	8	addiu $24,$0,0 / mtc0 $0,c0_count / sd $0,0($13) / addiu $12,$0,23496 / ld $14,0($13) / dsll32 $14,$14,0x0 / dsra32 $14,$14,0x0 / mfc0 $2,c0_count / sltu $8,$14,$12
+ip32-symmon	_ticksper1024inst	029194	?	0x38	r	8	cache 0x14,0($15) / cache 0x14,32($15) / cache 0x14,64($15) / addiu $13,$0,511 / ld $14,0($12) / bgtz $13,a0029198 / addiu $13,$13,-1 / ld $2,0($12) / jr $31
+ip32-symmon	_ticksper1024inst	0291a0	?	0x38	r	8	addiu $13,$0,511 / ld $14,0($12) / bgtz $13,a0029198 / addiu $13,$13,-1 / ld $2,0($12) / jr $31 / dsubu $2,$2,$14
+ip32-symmon	_cpuclkper100ticks	0291e4	?	0x38	r	8	cache 0x14,32($8) / cache 0x14,64($8) / cache 0x14,96($8) / cache 0x14,128($8) / ld $8,0($13) / mfc0 $3,c0_count / daddu $12,$8,$9 / ld $14,0($13) / mfc0 $2,c0_count
+ip32-symmon	_cpuclkper100ticks	0291f0	?	0x38	r	8	cache 0x14,128($8) / ld $8,0($13) / mfc0 $3,c0_count / daddu $12,$8,$9 / ld $14,0($13) / mfc0 $2,c0_count / sltu $8,$14,$12 / bne $8,$0,a00291f0 / sll $0,$0,0x0
+ip32-symmon	usecwait	029f64	?	0x38	w	8	addiu $6,$0,66 / mult $4,$6 / lui $5,0xb400 / ori $5,$5,0x38 / sd $0,0($5) / mflo $4 / add $4,$4,$0 / sll $0,$0,0x0 / ld $6,0($5)
+ip32-symmon	usecwait	029f74	?	0x38	r	8	sd $0,0($5) / mflo $4 / add $4,$4,$0 / sll $0,$0,0x0 / ld $6,0($5) / dsll32 $6,$6,0x0 / dsra32 $6,$6,0x0 / sub $6,$4,$6 / bgtz $6,a0029f74
+ip32-ide	sub_a00c4ba0	0c4bac	?	0x10	r	8	addiu $29,$29,-32 / sw $31,20($29) / lui $14,0xb400 / ld $15,16($14) / lui $5,0xa021 / addiu $5,$5,-23040 / andi $24,$15,0xffff / dsll32 $7,$24,0x0
+ip32-ide	sub_a00e44bc	0e4514	?	0x4	r	4	beq $2,$0,0xa00e4510 / addiu $14,$0,1 / sw $14,24($29) / lui $15,0xb400 / lw $2,4($15) / addiu $1,$0,161 / bnel $2,$1,0xa00e45ec / lw $31,20($29) / jal 0xa00e4244
+ip32-ide	sub_a00e472c	0e4734	?	0x8	r	8	lui $4,0xb400 / addiu $4,$4,0 / ld $0,8($4) / ld $0,512($4) / lui $4,0xbf31 / addiu $4,$4,0 / jr $31
+ip32-ide	sub_a00e472c	0e4738	?	0x200	r	8	lui $4,0xb400 / addiu $4,$4,0 / ld $0,8($4) / ld $0,512($4) / lui $4,0xbf31 / addiu $4,$4,0 / jr $31 / ld $0,8($4)
+ip32-ide	sub_a00e47a8	0e47b8	?	0x8	w	8	lui $4,0xb400 / addiu $5,$0,1024 / addiu $4,$4,8 / bgezal $0,0xa00e47e0 / sd $5,0($4) / beq $0,$0,0xa00e47ac / lui $4,0xb400
+ip32-ide	sub_a00e47c4	0e47d4	?	0x8	w	8	lui $4,0xb400 / addiu $5,$0,2048 / addiu $4,$4,8 / bgezal $0,0xa00e47e0 / sd $5,0($4) / beq $0,$0,0xa00e47c8 / lui $4,0xb400 / lui $4,0xbf31 / ld $5,8($4)
+ip32-ide	sub_a00e48c4	0e48fc	?	0x38	w	8	addiu $12,$12,18680 / addiu $15,$0,0 / addiu $24,$0,0 / mtc0 $0,c0_count / sd $0,0($9) / addiu $8,$0,23496 / ld $10,0($9) / dsll32 $10,$10,0x0 / dsra32 $10,$10,0x0
+ip32-ide	sub_a00e48c4	0e4904	?	0x38	r	8	addiu $24,$0,0 / mtc0 $0,c0_count / sd $0,0($9) / addiu $8,$0,23496 / ld $10,0($9) / dsll32 $10,$10,0x0 / dsra32 $10,$10,0x0 / mfc0 $2,c0_count / sltu $12,$10,$8
+ip32-ide	sub_a00f0228	0f022c	?	0x20c	r	4	lui $14,0xb400 / lw $25,524($14) / lw $24,520($14) / addiu $29,$29,-40 / lui $4,0x200 / or $3,$4,$0
+ip32-ide	sub_a00f0228	0f0230	?	0x208	r	4	lui $14,0xb400 / lw $25,524($14) / lw $24,520($14) / addiu $29,$29,-40 / lui $4,0x200 / or $3,$4,$0 / sw $25,20($29)
+ip32-ide	sub_a00f0228	0f0260	?	0x210	r	4	lui $2,0xb400 / lui $3,0x800 / lui $2,0xb400 / ori $2,$2,0x210 / lw $12,0($2) / lw $13,4($2) / lw $24,16($29) / lui $5,0x800 / lw $25,20($29)
+ip32-ide	sub_a00f0228	0f0264	?	0x214	r	4	lui $3,0x800 / lui $2,0xb400 / ori $2,$2,0x210 / lw $12,0($2) / lw $13,4($2) / lw $24,16($29) / lui $5,0x800 / lw $25,20($29) / sw $12,24($29)
+ip32-ide	sub_a00f0228	0f02a8	?	0x218	r	4	addu $3,$3,$4 / beq $0,$0,0xa00f02a8 / addu $3,$3,$5 / addu $3,$3,$4 / lw $10,8($2) / lw $11,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29)
+ip32-ide	sub_a00f0228	0f02ac	?	0x21c	r	4	beq $0,$0,0xa00f02a8 / addu $3,$3,$5 / addu $3,$3,$4 / lw $10,8($2) / lw $11,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29) / sw $10,24($29)
+ip32-ide	sub_a00f0228	0f02f0	?	0x220	r	4	addu $3,$3,$4 / beq $0,$0,0xa00f02f0 / addu $3,$3,$5 / addu $3,$3,$4 / lw $8,8($2) / lw $9,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29)
+ip32-ide	sub_a00f0228	0f02f4	?	0x224	r	4	beq $0,$0,0xa00f02f0 / addu $3,$3,$5 / addu $3,$3,$4 / lw $8,8($2) / lw $9,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29) / sw $8,24($29)
+ip32-ide	sub_a00f0228	0f0338	?	0x228	r	4	addu $3,$3,$4 / beq $0,$0,0xa00f0338 / addu $3,$3,$5 / addu $3,$3,$4 / lw $14,8($2) / lw $15,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29)
+ip32-ide	sub_a00f0228	0f033c	?	0x22c	r	4	beq $0,$0,0xa00f0338 / addu $3,$3,$5 / addu $3,$3,$4 / lw $14,8($2) / lw $15,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29) / sw $14,24($29)
+ip32-ide	sub_a00f0228	0f0380	?	0x230	r	4	addu $3,$3,$4 / beq $0,$0,0xa00f0380 / addu $3,$3,$5 / addu $3,$3,$4 / lw $12,8($2) / lw $13,12($2) / lw $24,16($29) / lw $25,20($29) / addiu $2,$2,8
+ip32-ide	sub_a00f0228	0f0384	?	0x234	r	4	beq $0,$0,0xa00f0380 / addu $3,$3,$5 / addu $3,$3,$4 / lw $12,8($2) / lw $13,12($2) / lw $24,16($29) / lw $25,20($29) / addiu $2,$2,8 / sw $12,24($29)
+ip32-ide	sub_a00f0228	0f03c8	?	0x238	r	4	addu $3,$3,$4 / beq $0,$0,0xa00f03c8 / addu $3,$3,$5 / addu $3,$3,$4 / lw $10,8($2) / lw $11,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29)
+ip32-ide	sub_a00f0228	0f03cc	?	0x23c	r	4	beq $0,$0,0xa00f03c8 / addu $3,$3,$5 / addu $3,$3,$4 / lw $10,8($2) / lw $11,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29) / sw $10,24($29)
+ip32-ide	sub_a00f0228	0f0410	?	0x240	r	4	addu $3,$3,$4 / beq $0,$0,0xa00f0410 / addu $3,$3,$5 / addu $3,$3,$4 / lw $8,8($2) / lw $9,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29)
+ip32-ide	sub_a00f0228	0f0414	?	0x244	r	4	beq $0,$0,0xa00f0410 / addu $3,$3,$5 / addu $3,$3,$4 / lw $8,8($2) / lw $9,12($2) / lw $24,16($29) / addiu $2,$2,8 / lw $25,20($29) / sw $8,24($29)
+ip32-ide	sub_a00f9d34	0f9d54	?	0x38	r	8	cache 0x14,0($11) / cache 0x14,32($11) / cache 0x14,64($11) / addiu $9,$0,511 / ld $10,0($8) / bgtz $9,0xa00f9d58 / addiu $9,$9,-1 / ld $2,0($8) / jr $31
+ip32-ide	sub_a00f9d34	0f9d60	?	0x38	r	8	addiu $9,$0,511 / ld $10,0($8) / bgtz $9,0xa00f9d58 / addiu $9,$9,-1 / ld $2,0($8) / jr $31 / dsubu $2,$2,$10 / mtc0 $0,c0_count / lui $9,0xb400
+ip32-ide	sub_a00fea70	0fea80	?	0x38	w	8	addiu $6,$0,66 / mult $4,$6 / lui $5,0xb400 / ori $5,$5,0x38 / sd $0,0($5) / mflo $4 / add $4,$4,$0 / sll $0,$0,0x0 / ld $6,0($5)
+ip32-ide	sub_a00fea70	0fea90	?	0x38	r	8	sd $0,0($5) / mflo $4 / add $4,$4,$0 / sll $0,$0,0x0 / ld $6,0($5) / dsll32 $6,$6,0x0 / dsra32 $6,$6,0x0 / sub $6,$4,$6 / bgtzl $6,0xa00fea94
+ip32-ide	sub_a00fea70	0feaa4	?	0x38	r	8	dsll32 $6,$6,0x0 / dsra32 $6,$6,0x0 / sub $6,$4,$6 / bgtzl $6,0xa00fea94 / ld $6,0($5) / jr $31 / sll $0,$0,0x0
+ip32-ide	sub_a010c780	10c7bc	?	0x4	r	4	sll $0,$0,0x0 / addiu $29,$29,-32 / sw $31,20($29) / lui $14,0xb400 / lw $2,4($14) / addiu $1,$0,160 / bne $2,$1,0xa010c7d4 / lui $1,0xa033 / beq $0,$0,0xa010c9b0
+ip32-prom	prom_ffffffffbfc00000	c00208	?	0x270	w	8	beq $0,$0,0xffffffffbfc004a8 / sll $0,$0,0x0 / mtc0 $4,c0_lladdr / lui $24,0xb400 / sd $4,624($24) / lui $24,0xb400 / addiu $24,$24,512 / beq $0,$0,0xffffffffbfc00620 / sd $0,0($24)
+ip32-prom	prom_ffffffffbfc00000	c00218	?	0x200	w	8	sd $4,624($24) / lui $24,0xb400 / addiu $24,$24,512 / beq $0,$0,0xffffffffbfc00620 / sd $0,0($24) / beq $30,$0,0xffffffffbfc00490 / sll $0,$0,0x0 / jr $30 / addiu $4,$0,0
+ip32-prom	prom_ffffffffbfc00000	c004c8	?	0x8	r	8	beq $26,$0,0xffffffffbfc008e8 / sll $0,$0,0x0 / lui $26,0xb400 / addiu $26,$26,8 / ld $26,0($26) / andi $26,$26,0x3000 / addi $26,$26,-12288 / beq $26,$0,0xffffffffbfc008e8 / sll $0,$0,0x0
+ip32-prom	prom_ffffffffbfc00000	c00848	?	0x8	w	8	lui $4,0xb400 / addiu $5,$0,1024 / addiu $4,$4,8 / bgezal $0,0xffffffffbfc00870 / sd $5,0($4) / beq $0,$0,0xffffffffbfc00838 / sll $0,$0,0x0 / lui $4,0xb400 / addiu $5,$0,2048
+ip32-prom	prom_ffffffffbfc00000	c00864	?	0x8	w	8	lui $4,0xb400 / addiu $5,$0,2048 / addiu $4,$4,8 / bgezal $0,0xffffffffbfc00870 / sd $5,0($4) / beq $0,$0,0xffffffffbfc00854 / sll $0,$0,0x0 / lui $4,0xbf31 / ld $5,8($4)
+ip32-prom	prom_ffffffffbfc008f0	c0098c	?	0x38	r	8	ori $26,$26,0x80 / mtc0 $26,c0_status / lui $26,0xb400 / ori $26,$26,0x38 / ld $27,0($26) / lui $26,0x7f2 / ori $26,$26,0x8008 / daddu $27,$27,$26 / lui $26,0xb400
+ip32-prom	prom_ffffffffbfc008f0	c009a4	?	0x38	r	8	ori $26,$26,0x8008 / daddu $27,$27,$26 / lui $26,0xb400 / ori $26,$26,0x38 / ld $26,0($26) / dsub $26,$27,$26 / bgtz $26,0xffffffffbfc0099c / sll $0,$0,0x0 / lui $26,0x8000
+ip32-prom	prom_ffffffffbfc019b0	c0467c	?	0x200	w	8	and $21,$21,$8 / and $20,$20,$8 / lui $8,0xb400 / addiu $8,$8,512 / sd $0,0($8) / addiu $18,$0,64 / or $19,$0,$0 / addu $18,$16,$18 / beq $19,$0,0xffffffffbfc04698
+ip32-prom	prom_ffffffffbfc05ad4	c05c34	?	0x8	r	8	jal 0xffffffffbfc05934 / addiu $4,$29,112 / lui $3,0xb400 / ori $3,$3,0x8 / ld $2,0($3) / addiu $15,$0,-2 / lui $4,0xbfc0 / and $14,$2,$15 / sd $14,0($3)
+ip32-prom	prom_ffffffffbfc05ad4	c05c44	?	0x8	w	8	ld $2,0($3) / addiu $15,$0,-2 / lui $4,0xbfc0 / and $14,$2,$15 / sd $14,0($3) / jal 0xffffffffbfc04d74 / addiu $4,$4,27732 / lui $22,0xbfc0 / lui $20,0xbfc0
+ip32-prom	prom_ffffffffbfc061f0	c06214	?	0x8	r	8	sw $31,20($29) / sw $4,96($29) / sw $5,100($29) / sw $6,104($29) / ld $2,0($3) / addiu $15,$0,-2 / lui $4,0xbfc0 / and $14,$2,$15 / sd $14,0($3)
+ip32-prom	prom_ffffffffbfc061f0	c06224	?	0x8	w	8	ld $2,0($3) / addiu $15,$0,-2 / lui $4,0xbfc0 / and $14,$2,$15 / sd $14,0($3) / jal 0xffffffffbfc04d74 / addiu $4,$4,28216 / lui $8,0xbfc0 / lui $7,0xbfc0
+ip32-prom	prom_ffffffffbfc06730	c067c0	?	0x38	w	8	addiu $6,$0,66 / mult $4,$6 / lui $5,0xb400 / ori $5,$5,0x38 / sd $0,0($5) / mflo $4 / add $4,$4,$0 / sll $0,$0,0x0 / ld $6,0($5)
+ip32-prom	prom_ffffffffbfc06730	c0680c	?	0x0	r	8	or $4,$4,$5 / jr $31 / sd $4,0($6) / lui $2,0xb400 / ld $2,0($2) / jr $31 / andi $2,$2,0xf / jr $31 / or $2,$0,$0
+ip32-prom	prom_ffffffffbfc06b28	c08390	?	0x200	w	8	or $6,$0,$0 / lui $14,0xb400 / ori $14,$14,0x200 / lui $15,0xb400 / sd $0,0($14) / ori $15,$15,0x18 / lui $24,0xb400 / sd $0,0($15) / ori $24,$24,0x20
+ip32-prom	prom_ffffffffbfc06b28	c0839c	?	0x18	w	8	lui $15,0xb400 / sd $0,0($14) / ori $15,$15,0x18 / lui $24,0xb400 / sd $0,0($15) / ori $24,$24,0x20 / lui $25,0xb400 / sd $0,0($24) / ori $25,$25,0x28
+ip32-prom	prom_ffffffffbfc06b28	c083a8	?	0x20	w	8	lui $24,0xb400 / sd $0,0($15) / ori $24,$24,0x20 / lui $25,0xb400 / sd $0,0($24) / ori $25,$25,0x28 / lui $8,0xb400 / sd $0,0($25) / ori $8,$8,0x50
+ip32-prom	prom_ffffffffbfc06b28	c083b4	?	0x28	w	8	lui $25,0xb400 / sd $0,0($24) / ori $25,$25,0x28 / lui $8,0xb400 / sd $0,0($25) / ori $8,$8,0x50 / sd $0,0($8) / or $18,$0,$0 / addiu $16,$0,21
+ip32-prom	prom_ffffffffbfc06b28	c083bc	?	0x50	w	8	ori $25,$25,0x28 / lui $8,0xb400 / sd $0,0($25) / ori $8,$8,0x50 / sd $0,0($8) / or $18,$0,$0 / addiu $16,$0,21 / jal 0xffffffffb0004080 / or $4,$0,$0
+ip32-prom	prom_ffffffffbfc06b28	c0bf34	?	0x200	w	8	jal 0xffffffffb103a76c / sw $6,24($29) / lw $6,24($29) / lui $8,0xb400 / sd $0,512($8) / sw $6,24($29) / or $4,$6,$0 / jal 0xffffffffb1040d28 / lui $5,0x1
+ip32-prom	prom_ffffffffbfc06b28	c0cff0	?	0x208	r	8	sll $0,$0,0x0 / jr $31 / or $2,$0,$0 / lui $14,0xb400 / ld $4,520($14) / lui $7,0x200 / or $3,$7,$0 / andi $15,$4,0x100 / beq $15,$0,0xffffffffbfc0d00c
+ip32-prom	prom_ffffffffbfc06b28	c0e0a0	?	0x0	r	8	or $4,$4,$5 / jr $31 / sd $4,0($6) / lui $2,0xb400 / ld $2,0($2) / jr $31 / andi $2,$2,0xf / lui $4,0xb400 / addiu $4,$4,0
+ip32-prom	prom_ffffffffbfc06b28	c0e0b4	?	0x8	r	8	jr $31 / andi $2,$2,0xf / lui $4,0xb400 / addiu $4,$4,0 / ld $0,8($4) / ld $0,512($4) / lui $4,0xbf31 / addiu $4,$4,0 / jr $31
+ip32-prom	prom_ffffffffbfc06b28	c0e0b8	?	0x200	r	8	andi $2,$2,0xf / lui $4,0xb400 / addiu $4,$4,0 / ld $0,8($4) / ld $0,512($4) / lui $4,0xbf31 / addiu $4,$4,0 / jr $31 / ld $0,8($4)
+ip32-prom	prom_ffffffffbfc06b28	c0e144	?	0x8	w	8	lui $4,0xb400 / addiu $5,$0,1024 / addiu $4,$4,8 / bgezal $0,0xffffffffbfc0e16c / sd $5,0($4) / beq $0,$0,0xffffffffbfc0e134 / sll $0,$0,0x0 / lui $4,0xb400 / addiu $5,$0,2048
+ip32-prom	prom_ffffffffbfc06b28	c0e160	?	0x8	w	8	lui $4,0xb400 / addiu $5,$0,2048 / addiu $4,$4,8 / bgezal $0,0xffffffffbfc0e16c / sd $5,0($4) / beq $0,$0,0xffffffffbfc0e150 / sll $0,$0,0x0 / lui $4,0xbf31 / ld $5,8($4)
+ip32-prom	prom_ffffffffbfc06b28	c0e228	?	0x38	r	8	lui $11,0x8100 / addiu $8,$8,56 / addiu $11,$11,20260 / addiu $9,$0,512 / ld $10,0($8) / bgtz $9,0xffffffffbfc0e22c / addiu $9,$9,-1 / ld $2,0($8) / jr $31
+ip32-prom	prom_ffffffffbfc06b28	c0f550	?	0x38	w	8	addiu $6,$0,66 / mult $4,$6 / lui $5,0xb400 / ori $5,$5,0x38 / sd $0,0($5) / mflo $4 / add $4,$4,$0 / sll $0,$0,0x0 / ld $6,0($5)
+ip32-prom	prom_ffffffffbfc06b28	c0f59c	?	0x0	r	8	or $4,$4,$5 / jr $31 / sd $4,0($6) / lui $2,0xb400 / ld $2,0($2) / jr $31 / andi $2,$2,0xf / addiu $29,$29,-176 / sd $1,136($29)
+ip32-prom	prom_ffffffffbfc06b28	c102e0	?	0x38	w	8	addiu $6,$0,66 / mult $4,$6 / lui $5,0xb400 / ori $5,$5,0x38 / sd $0,0($5) / mflo $4 / add $4,$4,$0 / sll $0,$0,0x0 / ld $6,0($5)
+ip32-prom	prom_ffffffffbfc06b28	c2cb94	?	0x20c	r	4	sll $0,$0,0x0 / jr $31 / or $2,$0,$0 / lui $14,0xb400 / lw $25,524($14) / lw $24,520($14) / addiu $29,$29,-40 / lui $4,0x200 / or $3,$4,$0
+ip32-prom	prom_ffffffffbfc06b28	c2cb98	?	0x208	r	4	jr $31 / or $2,$0,$0 / lui $14,0xb400 / lw $25,524($14) / lw $24,520($14) / addiu $29,$29,-40 / lui $4,0x200 / or $3,$4,$0 / sw $25,20($29)
+ip32-prom	prom_ffffffffbfc06b28	c38bdc	?	0x4	r	4	sll $0,$0,0x0 / addiu $29,$29,-32 / sw $31,20($29) / lui $14,0xb400 / lw $2,4($14) / addiu $1,$0,160 / bne $2,$1,0xffffffffbfc38bf4 / lui $1,0x8106 / beq $0,$0,0xffffffffbfc38dd0

@@ -1,59 +1,127 @@
 {
  "asic": "crime",
- "title": "CRIME (O2 memory controller and rendering engine)",
+ "title": "CRIME (O2 memory controller, CPU interface, interrupt controller and timer)",
  "mode": "spec-backed",
- "status": "stub: census not run",
+ "status": "census run",
  "spec": "CRIME 1.5 Specification, revision 0.3",
  "images": [
-  {
-   "label": "ip27-unix",
-   "dis": "work/dis/ip27-unix.s",
-   "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
-   "path": "root/IP27/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-unix",
-   "dis": "work/dis/ip30-unix.s",
-   "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
-   "path": "root/IP30/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-prom",
-   "dis": "work/dis/ip30-prom.s",
-   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
-   "path": "root/firmware/IP30prom.bin",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
-   "arch": "mips:isa64",
-   "split": "jr31"
-  },
-  {
-   "label": "ip35-kernel-o",
-   "dis": "work/dis/ip35-kernel-o.s",
-   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
-   "kind": "elf",
-   "reloc": true,
-   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
-  },
-  {
-   "label": "ip35-prom",
-   "dis": "work/dis/ip35-prom.s",
-   "path": "root/firmware/ip35prom.img",
-   "kind": "promgen64",
-   "segment": "ip35prom",
-   "vma": "0xc00000001fc00000",
-   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time",
-   "split": "jr31"
-  },
   {
    "label": "ip32-kernel-o",
    "dis": "work/dis/ip32-kernel-o.s",
    "path": "root/IP32/usr/cpu/sysgen/IP32boot/kernel.o",
    "kind": "elf",
    "reloc": true,
-   "note": "IRIX 6.5.30 IP32 kernel object"
+   "note": "IRIX 6.5.30 IP32 kernel object (relocatable, N32)",
+   "const_windows": [
+    {
+     "lo": "0xffffffffb4000000",
+     "hi": "0xffffffffb4004100",
+     "name": "crime-kseg1"
+    },
+    {
+     "lo": "0x14000000",
+     "hi": "0x14004100",
+     "name": "crime-phys"
+    },
+    {
+     "lo": "0x9000000014000000",
+     "hi": "0x9000000014004100",
+     "name": "crime-xkphys"
+    },
+    {
+     "lo": "0xb4000000",
+     "hi": "0xb4004100",
+     "name": "crime-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-crime-o",
+   "dis": "work/dis/ip32-crime-o.s",
+   "path": "root/IP32/usr/cpu/sysgen/IP32boot/crime.a_members/crime.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP32 CRIME graphics object (cross-reference only)",
+   "const_windows": [
+    {
+     "lo": "0xffffffffb4000000",
+     "hi": "0xffffffffb4004100",
+     "name": "crime-kseg1"
+    },
+    {
+     "lo": "0x14000000",
+     "hi": "0x14004100",
+     "name": "crime-phys"
+    },
+    {
+     "lo": "0x9000000014000000",
+     "hi": "0x9000000014004100",
+     "name": "crime-xkphys"
+    },
+    {
+     "lo": "0xb4000000",
+     "hi": "0xb4004100",
+     "name": "crime-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-symmon",
+   "dis": "work/dis/ip32-symmon.s",
+   "path": "root/sbin/stand/symmon.IP32",
+   "kind": "elf",
+   "note": "IP32 monitor, linked, symbols present",
+   "const_windows": [
+    {
+     "lo": "0xffffffffb4000000",
+     "hi": "0xffffffffb4004100",
+     "name": "crime-kseg1"
+    },
+    {
+     "lo": "0x14000000",
+     "hi": "0x14004100",
+     "name": "crime-phys"
+    },
+    {
+     "lo": "0x9000000014000000",
+     "hi": "0x9000000014004100",
+     "name": "crime-xkphys"
+    },
+    {
+     "lo": "0xb4000000",
+     "hi": "0xb4004100",
+     "name": "crime-kseg1-u32"
+    }
+   ]
+  },
+  {
+   "label": "ip32-ide",
+   "dis": "work/dis/ip32-ide.s",
+   "path": "root/sbin/stand/ide.IP32",
+   "kind": "elf",
+   "note": "IP32 diagnostic, linked, stripped (routines are named by address)",
+   "const_windows": [
+    {
+     "lo": "0xffffffffb4000000",
+     "hi": "0xffffffffb4004100",
+     "name": "crime-kseg1"
+    },
+    {
+     "lo": "0x14000000",
+     "hi": "0x14004100",
+     "name": "crime-phys"
+    },
+    {
+     "lo": "0x9000000014000000",
+     "hi": "0x9000000014004100",
+     "name": "crime-xkphys"
+    },
+    {
+     "lo": "0xb4000000",
+     "hi": "0xb4004100",
+     "name": "crime-kseg1-u32"
+    }
+   ]
   },
   {
    "label": "ip32-prom",
@@ -61,8 +129,31 @@
    "path": "root/firmware/ip32prom.image",
    "kind": "raw",
    "vma": "0xffffffffbfc00000",
+   "arch": "mips:isa64",
    "split": "jr31",
-   "note": "IP32 PROM flat image; load address assumed from the reset vector, not yet read from the image"
+   "note": "IP32 PROM flat image at 0xbfc00000: a header, then code; the scan covers whatever decodes as instructions (sites reach 0xbfc38e10) and the pseudo-function names are only address labels",
+   "const_windows": [
+    {
+     "lo": "0xffffffffb4000000",
+     "hi": "0xffffffffb4004100",
+     "name": "crime-kseg1"
+    },
+    {
+     "lo": "0x14000000",
+     "hi": "0x14004100",
+     "name": "crime-phys"
+    },
+    {
+     "lo": "0x9000000014000000",
+     "hi": "0x9000000014004100",
+     "name": "crime-xkphys"
+    },
+    {
+     "lo": "0xb4000000",
+     "hi": "0xb4004100",
+     "name": "crime-kseg1-u32"
+    }
+   ]
   }
  ],
  "report_functions": ".*",
@@ -78,8 +169,43 @@
  "reference": {
   "crime": {
    "datasheets": [],
+   "spec": [
+    {
+     "file": "docs/sources/specs/crime-1.5-specification-rev0.3.registers.md",
+     "label": "crime-spec-rev0.3",
+     "headings": [
+      "^CPU interface registers",
+      "^Memory controller registers"
+     ]
+    }
+   ],
    "model": []
   }
  },
- "buckets": []
+ "buckets": [],
+ "no_pointer_args": [
+  "splhi",
+  "splx",
+  "spl7",
+  "spinlock",
+  "mutex_lock",
+  "mutex_unlock",
+  "panic",
+  "cmn_err",
+  "printf",
+  "qprintf",
+  "kdebug",
+  "us_delay",
+  "copyin",
+  "copyout",
+  "dprintf"
+ ],
+ "type_const_in": "^$",
+ "accessor_calls": "^$",
+ "collapse_above": 65536,
+ "name_source": "the CRIME 1.5 Specification revision 0.3 register name (Name column), applied by the census join after the offsets were read from the code; CRM_VICE_ERROR_ADDR is the shipped kernel's own symbol crm_vice_error_addr and CRM_CPU_ERROR_ENA the public NetBSD driver's CRIME_CPU_ERROR_ENA (neither is in the specification)",
+ "register_names": {
+  "0x50": "CRM_CPU_ERROR_ENA",
+  "0x58": "CRM_VICE_ERROR_ADDR"
+ }
 }

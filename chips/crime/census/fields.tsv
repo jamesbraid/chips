@@ -1,0 +1,16 @@
+variant	register	source	kind	bits_or_value	sites	functions	example
+?	0x0	load	mask	3:0	4	3	get_crimerev@1184c
+?	0x0	load	shift	shift 0	1	1	get_crimerev@1184c
+?	0x8	store	const	0x3000	1	1	mlreset@87ac
+?	0x8	load	mask	13:12	1	1	prom_ffffffffbfc00000@c004c8
+?	0x10	load	mask	15:0	1	1	sub_a00c4ba0@0c4bac
+?	0x10	load	shift	shift 0	3	2	sub_a2cc@a304
+?	0x10	load	shift	shift 37	1	1	crimeFifoFullHandler@1dc
+?	0x20	load	shift	shift 0	1	1	intr@a6bc
+?	0x28	load	shift	shift 0	2	1	crime_init@554c
+?	0x48	load	shift	shift 0	1	1	ecc_handler@d9ec
+?	0x208	load	mask	8	4	3	cpu_get_memsize@027e44
+?	0x210	load	mask	8	1	1	cpu_get_memsize@027e78
+?	0x218	load	mask	8	1	1	cpu_get_memsize@027e78
+?	0x250	load	shift	shift 0	1	1	ecc_handler@da04
+?	0x258	load	shift	shift 0	1	1	ecc_handler@da24
