@@ -107,7 +107,7 @@ scanned routine.
   0 to 2 or a3 is outside 0 and 1 (checked before the lock). Under the lock it also returns -1 when the counter's
   byte at +37 is nonzero and a2 is nonzero, or when the other counter has the same port (byte +36) and a nonzero
   byte at +37; it releases the lock first. It returns 0 otherwise.
-  `xbow_errintr_handler` writes the port's control back with bit 3 clear when `xbow_xmit_retry_error`
+  `xbow_errintr_handler` writes the port's control back with bit 3 clear when the call to `xbow_xmit_retry_error`
   returns 0 (that routine returns 1 after counting and writing back a bridge register for the two bridge parts it
   recognises, and also when it cannot look the port up); it also clears bit 17 in its local copy of the masked status
   after an illegal destination is handled, with no hardware write.
