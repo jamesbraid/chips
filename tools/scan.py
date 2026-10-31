@@ -309,8 +309,9 @@ class Config:
 
 
 class Analyser:
-    def __init__(self, cfg, label, windows=(), hint=None, gp=None, literals=None):
+    def __init__(self, cfg, label, windows=(), hint=None, gp=None, literals=None, linked=False):
         self.cfg, self.label, self.hint = cfg, label, hint
+        self.linked = linked
         self.gp = gp
         self.lit = literals or {}
         self.windows = [(to_int(w['lo']), to_int(w['hi']), w['name']) for w in windows]
@@ -368,6 +369,21 @@ class Analyser:
                         val = sx32(val) & M64
                     self.wr(st, rt, ('K', val))
                     return
+            if base == 28 and mn in ('ld', 'lw', 'lwu') and self.linked and self.gp is not None and self.lit \
+                    and self.windows:
+                # linked image: a gp-relative load of a data word. Only a word that holds an address inside a
+                # configured window is taken as a constant, so a variable's initial value is never mistaken for one.
+                n = 8 if mn == 'ld' else 4
+                a = self.gp + disp
+                for sect in {k[0] for k in self.lit}:
+                    if all((sect, a + k) in self.lit for k in range(n)):
+                        val = int.from_bytes(bytes(self.lit[(sect, a + k)] for k in range(n)), 'big')
+                        if mn == 'lw':
+                            val = sx32(val) & M64
+                        if self.window_of(val):
+                            self.wr(st, rt, ('K', val))
+                            return
+                        break
             if base == 29:
                 key = 'S%d' % disp
                 if mn in STORES:
@@ -952,7 +968,8 @@ def run(cfg, base, outdir):
         elif img.get('gp'):
             gp = to_int(img['gp'])
         lits = load_literals(os.path.join(base, img['literals'])) if img.get('literals') else None
-        an = Analyser(cfg, img['label'], img.get('const_windows', []), img.get('variant_hint'), gp, lits)
+        an = Analyser(cfg, img['label'], img.get('const_windows', []), img.get('variant_hint'), gp, lits,
+                      bool(img.get('linked_literals')))
         an.known_callees = set(f[0] for f in funcs if any(rx.search(f[0]) for rx, _, _ in cfg.seed_args))
         for name, start, insns in funcs:
             an.analyse(name, start, insns, True)
