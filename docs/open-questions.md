@@ -16,3 +16,23 @@ chip page and the entry is deleted.
 - **IP35 reset window.** The routing rule that returns boot-PROM bytes for uncached memory-space fetches of physical
   0x1fc0xxxx after bank 0 is enabled, and whether any write ends it, are not visible in the PROM. Tried: full read of
   the reset, memory and jump-to-RAM path. Next: see [docs/questions/ip35-reset-window.md](questions/ip35-reset-window.md).
+- **Literal-pool bases (PIC and Bedrock objects).** In a relocatable object a gp-relative literal load carries
+  an offset relative to a base the object does not state for all objects. `kernel.o` and `pcibr.o` state 0x7ff0
+  in their option records; for `pic.o`, `partition.o` and the others the census takes the lowest `.lit8`
+  displacement used as offset 0 (`gp: auto-min`). Masks and constants read this way are labelled inferred.
+  Next: the linked kernel's literal for the same routine, or the relocation records of the linked image.
+- **PIC error and interrupt service.** `pcibr_error_dump` and `pcibr_error_intr_handler` in `pcibr.o` and the
+  PIC branches of the error accessors are not read. Next: read both in full and fill the error and interrupt
+  sections of docs/chips/pic.md.
+- **PIC direct map and revision-1 steps.** `pcibr_directmap_init` is not read; what the revision-1-only
+  writes (control bit 29 test, request timeout 0x750, enable bits 39 and 9, response buffer bits) fix is unknown.
+- **PIC +0x18000 banks.** Three banks of 256 doublewords are cleared at attach; their contents are unknown.
+- **Bedrock block boundaries and indexed families.** Registers are listed by offset; membership of the
+  processor interface, memory, I/O, network and local blocks is inferred from routine-name prefixes only.
+  Many accesses add a node or block index the scan does not follow. Next: read the index arithmetic in
+  `hub_error_init`, `hub_error_clear`, `intr_connect_level`.
+- **Bedrock PROM and second window.** The IP35 PROM builds its window base at run time (no sites yet) and the
+  0x90000000_18xxxxxx window of `hubspc.o` and `nic.o` is uninterpreted.
+- **Harness limits.** `scripts/run_routine.py` replaces calls with `v0 = 0` and has no global data, so a routine
+  that reads a table by gp (`pcireg_int_ate_set`, `pcireg_force_always_set`, `pcireg_intr_addr_vect_set`) ends in
+  an unmapped read; the routines that touch only the chip record run to completion.
