@@ -1,0 +1,55 @@
+variant	register	source	kind	bits_or_value	sites	functions	example
+?	0x0	store	const	0x400000	1	1	prom_ffffffffbfc304e0@c30b7c
+?	0x0	store	const	0x200000	1	1	prom_ffffffffbfc358bc@c358d4
+?	0x0	load	mask	3:0	2	2	prom_ffffffffbfc48624@c48844
+?	0x0	load	shift	shift 60	6	6	prom_ffffffffbfc50c94@c50cac
+?	0x0	load	shift	shift 36	2	2	prom_ffffffffbfc48624@c48844
+?	0x0	load	shift	shift 0	1	1	prom_ffffffffbfc304e0@c30b84
+?	0x18	store	const	0x100000	1	1	dobuserr_common@0250c0
+?	0x40	store	const	0x45	1	1	sub_a80000002038f230@38f258
+?	0x60	load	shift	shift 3	1	1	gfx_flow_credit_count_get@38f698
+?	0x60	load	shift	shift 0	1	1	gfx_flow_credit_count_get@38f698
+?	0x80	load	mask	3:0	11	9	sub_a8000000200136b4@0136b8
+?	0x80	load	mask	7:4	5	5	prom_ffffffffbfc00634@c00894
+?	0x80	load	mask	11	3	3	prom_ffffffffbfc3ab10@c3ab20
+?	0x80	load	shift	shift 4	10	8	prom_ffffffffbfc37ee0@c37f68
+?	0x80	load	shift	shift 0	1	1	sub_a800000020012a34@012a40
+?	0x80	load	shift	shift 24	1	1	sub_a8000000200136b4@0136b8
+?	0x88	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16998
+?	0x90	load	shift	shift 16	6	3	prom_ffffffffbfc16680@c169c4
+?	0x98	load	shift	shift 16	6	3	prom_ffffffffbfc16680@c169f0
+?	0xa0	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16a1c
+?	0xa8	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16a48
+?	0x10018	store	const	0x1	2	2	prom_ffffffffbfc16e70@c16e80
+?	0x10030	load	shift	shift 16	6	3	prom_ffffffffbfc16680@c16940
+?	0x10038	load	shift	shift 16	2	1	sub_a80000002086b154@86bb10
+?	0x10038	load	shift	shift 6	1	1	heart_intr@03ff10
+?	0x10040	store	const	0x1	3	3	dobuserr_common@02508c
+?	0x10040	load	mask	1:0	2	2	prom_ffffffffbfc51cbc@c51e2c
+?	0x10040	load	mask	0	2	2	prom_ffffffffbfc51cbc@c51ef4
+?	0x10040	load	mask	1	1	1	ecc_handler@028478
+?	0x10040	load	shift	shift 16	8	4	earlybadaddr@01c778
+?	0x10040	load	shift	shift 47	3	3	prom_ffffffffbfc5c030@c5c034
+?	0x20000	load	mask	11:0	1	1	uuid_create@214418
+?	0x20000	load	shift	shift 16	10	5	prom_ffffffffbfc17934@c1794c
+?	0x20000	load	shift	shift 0	6	3	xbow_reset_link@03d48c
+?	0x20000	load	shift	shift 2	3	1	nanotime@0163f8
+?	0x20000	load	shift	shift 4	3	1	nanotime@0163f8
+?	0x50000	load	shift	shift 3	19	7	_ecc_errorvec@01dd4c
+?	0x50000	load	shift	shift 0	18	7	badaddr@01c23c
+?	0x50000	load	shift	shift 15	8	5	prom_ffffffffbfc00634@c008c0
+?	0x50000	load	shift	shift 16	8	2	prom_ffffffffbfc01ac0@c01bf8
+?	0x50000	load	shift	shift 51	2	2	VEC_dbe@026964
+?	0x60000	load	shift	shift 59	1	1	dobuserr_common@025090
+?	0x100000	load	shift	shift 0	17	12	flushbus@01c1d0
+?	0x100000	load	shift	shift 28	5	5	heart_rev@0401f8
+?	0x100010	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16aa0
+?	0x100018	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16acc
+?	0x100028	store	const	0x80	1	1	giobr_attach@040b04
+?	0x100040	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16a74
+?	0x100060	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16af8
+?	0x100068	store	const	0x2c07	1	1	heart_mlreset@03ed90
+?	0x100068	store	const	0x3ff60000	1	1	heart_mlreset@03ed90
+?	0x100070	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16b24
+?	0x100078	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16b50
+?	0x100090	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16b7c
