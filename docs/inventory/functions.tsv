@@ -5750,7 +5750,7 @@ IP27/unix	kernel	n64	.text	0xc000000000077074	980	pcibr_alloc_all_rrbs	symtab	71
 IP27/unix	kernel	n64	.text	0xc000000000077448	948	pcibr_slot_initial_rrb_alloc	symtab	62765e16a578		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000777fc	856	pcibr_initial_rrb	symtab	6825a373778e		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000077b54	468	pcibr_rrb_debug	symtab	be4a1b253b44		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000077d28	264	pcibr_hints_get	symtab	177fe48fb03a		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000077d28	264	pcibr_hints_get	symtab	177fe48fb03a		in	named-only	chips/pic/README.md#what-identifies-a-pic-established-pic_attach2-in-pico-read-in-full	What identifies a PIC (established, `pic_attach2` in `pic.o`, read in full)
 IP27/unix	kernel	n64	.text	0xc000000000077e30	76	pcibr_hints_fix_some_rrbs	symtab	b32b115b66c3		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000077e7c	28	pcibr_hints_fix_rrbs	symtab	70381565e6b8		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000077e98	92	pcibr_hints_dualslot	symtab	b1ac67122d10		in	undocumented		
@@ -25538,7 +25538,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x6234	980	pcibr_al
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x6608	948	pcibr_slot_initial_rrb_alloc	dwarf+symtab	dafc61c3089b		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x69bc	856	pcibr_initial_rrb	dwarf+symtab	71efe9867da8		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x6d14	468	pcibr_rrb_debug	dwarf+symtab	879a6d309482		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x6ee8	264	pcibr_hints_get	dwarf+symtab	73b32cfe74ff		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x6ee8	264	pcibr_hints_get	dwarf+symtab	73b32cfe74ff		in	named-only	chips/pic/README.md#what-identifies-a-pic-established-pic_attach2-in-pico-read-in-full	What identifies a PIC (established, `pic_attach2` in `pic.o`, read in full)
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x6ff0	76	pcibr_hints_fix_some_rrbs	dwarf+symtab	e0184405cd71		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x703c	28	pcibr_hints_fix_rrbs	dwarf+symtab	52f7472441b2		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x7058	92	pcibr_hints_dualslot	dwarf+symtab	b887cdb268cd		in	undocumented		
@@ -37515,7 +37515,7 @@ IP30/unix	kernel	n64	.text	0xa800000020048b48	980	pcibr_alloc_all_rrbs	symtab	6e
 IP30/unix	kernel	n64	.text	0xa800000020048f1c	948	pcibr_slot_initial_rrb_alloc	symtab	e0b130cb041b		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200492d0	856	pcibr_initial_rrb	symtab	0f51feaafd22		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020049628	468	pcibr_rrb_debug	symtab	8c0d2a639622		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200497fc	264	pcibr_hints_get	symtab	31154a4b2cc9		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200497fc	264	pcibr_hints_get	symtab	31154a4b2cc9		in	named-only	chips/pic/README.md#what-identifies-a-pic-established-pic_attach2-in-pico-read-in-full	What identifies a PIC (established, `pic_attach2` in `pic.o`, read in full)
 IP30/unix	kernel	n64	.text	0xa800000020049904	76	pcibr_hints_fix_some_rrbs	symtab	187f73b1326b		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020049950	28	pcibr_hints_fix_rrbs	symtab	37db03d36b9d		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002004996c	92	pcibr_hints_dualslot	symtab	3e9888ed6588		in	undocumented		
@@ -55657,7 +55657,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x6008	980	pcibr_al
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x63dc	948	pcibr_slot_initial_rrb_alloc	dwarf+symtab	f58fc9cf3981		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x6790	856	pcibr_initial_rrb	dwarf+symtab	7be77918728f		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x6ae8	468	pcibr_rrb_debug	dwarf+symtab	290a47d40615		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x6cbc	264	pcibr_hints_get	dwarf+symtab	cf16eed97335		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x6cbc	264	pcibr_hints_get	dwarf+symtab	cf16eed97335		in	named-only	chips/pic/README.md#what-identifies-a-pic-established-pic_attach2-in-pico-read-in-full	What identifies a PIC (established, `pic_attach2` in `pic.o`, read in full)
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x6dc4	76	pcibr_hints_fix_some_rrbs	dwarf+symtab	640900b1744a		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x6e10	28	pcibr_hints_fix_rrbs	dwarf+symtab	52f7472441b2		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x6e2c	92	pcibr_hints_dualslot	dwarf+symtab	65cfb771b433		in	undocumented		
@@ -90317,7 +90317,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x64a0	980	pcibr_al
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x6874	948	pcibr_slot_initial_rrb_alloc	dwarf+symtab	d4472b479e2e		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x6c28	856	pcibr_initial_rrb	dwarf+symtab	8f781b7acc60		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x6f80	468	pcibr_rrb_debug	dwarf+symtab	f01ffcfb1b5d		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x7154	264	pcibr_hints_get	dwarf+symtab	73b32cfe74ff		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x7154	264	pcibr_hints_get	dwarf+symtab	73b32cfe74ff		in	named-only	chips/pic/README.md#what-identifies-a-pic-established-pic_attach2-in-pico-read-in-full	What identifies a PIC (established, `pic_attach2` in `pic.o`, read in full)
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x725c	76	pcibr_hints_fix_some_rrbs	dwarf+symtab	e0184405cd71		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x72a8	28	pcibr_hints_fix_rrbs	dwarf+symtab	52f7472441b2		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x72c4	92	pcibr_hints_dualslot	dwarf+symtab	b887cdb268cd		in	undocumented		
