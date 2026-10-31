@@ -105,6 +105,7 @@ def gen(chip, spec):
         return '\n'.join(out)
     cur_block = None
     seen = set()
+    emitted = set()
     for r in sorted(rows, key=lambda r: (int(r['offset'], 16), r['idx'])):
         off = int(r['offset'], 16)
         if (off, r['idx']) in seen:
@@ -139,6 +140,10 @@ def gen(chip, spec):
                 if not re.fullmatch(r'[0-9:,]+', b):
                     continue
                 m = mask_of(b)
+                nm2 = '%s_B_%s' % (macro, b.replace(':', '_').replace(',', '_'))
+                if nm2 in emitted:
+                    continue
+                emitted.add(nm2)
                 out.append('#define   %-32s 0x%x   /* [I] %s %s: the code %s these bits (%s sites) */' % (
                     '%s_B_%s' % (macro, b.replace(':', '_').replace(',', '_')), m, f['source'], f['kind'],
                     'isolates' if f['source'] == 'load' else 'writes', f['sites']))

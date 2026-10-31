@@ -15,9 +15,7 @@
 
 #define BRIDGE_PCIBR_ALLOC_ALL_RRBS        0x000000   /* [E] width 4 byte(s), access r; name [I] from pcibr_alloc_all_rrbs, xbridge_attach, id; reached in 14 sites, 3 routine(s) */
 #define   BRIDGE_PCIBR_ALLOC_ALL_RRBS_B_10_0 0x7ff   /* [I] load mask: the code isolates these bits (180 sites) */
-#define   BRIDGE_PCIBR_ALLOC_ALL_RRBS_B_10_0 0x7ff   /* [I] load mask: the code isolates these bits (6 sites) */
 #define   BRIDGE_PCIBR_ALLOC_ALL_RRBS_B_15_0 0xffff   /* [I] load mask: the code isolates these bits (220 sites) */
-#define   BRIDGE_PCIBR_ALLOC_ALL_RRBS_B_15_0 0xffff   /* [I] load mask: the code isolates these bits (4 sites) */
 #define BRIDGE_STAT                        0x000008   /* [E] width 4 byte(s), access r; name [I] from stat; reached in 4 sites, 1 routine(s) */
 #define BRIDGE_BUS_ERR                     0x000010   /* [E] width 4 byte(s), access r; name [I] from bus_err, prom_ffffffffbfc16680, prom_ffffffffbfc36300; reached in 8 sites, 3 routine(s) */
 #define   BRIDGE_BUS_ERR_B_10_0            0x7ff   /* [I] load mask: the code isolates these bits (2 sites) */
@@ -25,14 +23,11 @@
 #define BRIDGE_SSRAM_SIZE                  0x000020   /* [E] width 4 byte(s), access rw; name [I] from ssram_size, control; reached in 72 sites, 5 routine(s) */
 #define   BRIDGE_SSRAM_SIZE_B_31           0x80000000   /* [I] store clear-mask via pcireg_control_bit_clr: the code writes these bits (1 sites) */
 #define   BRIDGE_SSRAM_SIZE_B_21           0x200000   /* [I] store const via pcireg_control_bit_set: the code writes these bits (1 sites) */
-#define   BRIDGE_SSRAM_SIZE_B_31           0x80000000   /* [I] store const via pcireg_control_bit_set: the code writes these bits (1 sites) */
 #define BRIDGE_REQ_TIMEOUT                 0x000028   /* [E] width 4 byte(s), access rw; name [I] from req_timeout; reached in 6 sites, 2 routine(s) */
 #define BRIDGE_INTR_DST_TARGET_ID          0x000030   /* [E] width 4 byte(s), access rw; name [I] from intr_dst_target_id, intr_dst_addr, intr_dst; reached in 50 sites, 7 routine(s) */
 #define   BRIDGE_INTR_DST_TARGET_ID_B_10_0 0x7ff   /* [I] load mask: the code isolates these bits (4 sites) */
 #define   BRIDGE_INTR_DST_TARGET_ID_B_15_0 0xffff   /* [I] load mask: the code isolates these bits (2 sites) */
-#define   BRIDGE_INTR_DST_TARGET_ID_B_15_0 0xffff   /* [I] store mask: the code writes these bits (2 sites) */
 #define   BRIDGE_INTR_DST_TARGET_ID_B_3_0  0xf   /* [I] load mask: the code isolates these bits (2 sites) */
-#define   BRIDGE_INTR_DST_TARGET_ID_B_5_0  0x3f   /* [I] load mask: the code isolates these bits (2 sites) */
 #define   BRIDGE_INTR_DST_TARGET_ID_B_5_0  0x3f   /* [I] load mask: the code isolates these bits (2 sites) */
 #define BRIDGE_INTR_DST                    0x000038   /* [E] width 4 byte(s), access rw; name [I] from intr_dst, intr_dst_addr, intr_addr_addr; reached in 18 sites, 5 routine(s) */
 #define BRIDGE_CMDWORD_ERR                 0x000040   /* [E] width 4 byte(s), access r; name [I] from cmdword_err, prom_ffffffffbfc16680, prom_ffffffffbfc36300; reached in 6 sites, 3 routine(s) */
@@ -69,7 +64,6 @@
 #define BRIDGE_INTR_ADDR_VECT              0x000130   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from intr_addr_vect, intr_addr_addr, intr_addr; reached in 24 sites, 6 routine(s) */
 #define   BRIDGE_INTR_ADDR_VECT_B_10_0     0x7ff   /* [I] load mask: the code isolates these bits (2 sites) */
 #define   BRIDGE_INTR_ADDR_VECT_B_7_0      0xff   /* [I] load mask: the code isolates these bits (4 sites) */
-#define   BRIDGE_INTR_ADDR_VECT_B_7_0      0xff   /* [I] load mask: the code isolates these bits (2 sites) */
 #define BRIDGE_DEVICE                      0x000200   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from device; reached in 12 sites, 4 routine(s) */
 #define BRIDGE_PROM_FFFFFFFFBFC16300       0x000210   /* [E] width 4 byte(s), access w; name [I] from prom_ffffffffbfc16300, prom_ffffffffbfc35f80; reached in 2 sites, 2 routine(s) */
 #define   BRIDGE_PROM_FFFFFFFFBFC16300_V_1000 0x1000   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */

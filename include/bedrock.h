@@ -182,7 +182,6 @@
 #define   BEDROCK_HUB_PIOMAP_ALLOC_V_300   0x300   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   BEDROCK_HUB_PIOMAP_ALLOC_B_3_0   0xf   /* [I] load mask: the code isolates these bits (1 sites) */
 #define   BEDROCK_HUB_PIOMAP_ALLOC_B_4_0   0x1f   /* [I] store mask: the code writes these bits (1 sites) */
-#define   BEDROCK_HUB_PIOMAP_ALLOC_B_4_0   0x1f   /* [I] load mask: the code isolates these bits (1 sites) */
 #define   BEDROCK_HUB_PIOMAP_ALLOC_B_7_0   0xff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define BEDROCK_HUB_ERROR_CLEAR_C00198     0xc00198   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from hub_error_clear, hubiio_prb_error_handler, hub_setup_prb; reached in 7 sites, 4 routine(s) */
 #define BEDROCK_BTE_ERROR_HANDLER          0xc001e8   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from bte_error_handler, hubii_eint_handler, hub_xp_error_handler; reached in 4 sites, 3 routine(s) */

@@ -15,7 +15,6 @@
 
 #define XBRIDGE_PCIBR_ALLOC_ALL_RRBS       0x000000   /* [E] width 4 byte(s), access r; name [I] from pcibr_alloc_all_rrbs, xbridge_attach, id; reached in 8 sites, 3 routine(s) */
 #define   XBRIDGE_PCIBR_ALLOC_ALL_RRBS_B_10_0 0x7ff   /* [I] load mask: the code isolates these bits (180 sites) */
-#define   XBRIDGE_PCIBR_ALLOC_ALL_RRBS_B_10_0 0x7ff   /* [I] load mask: the code isolates these bits (6 sites) */
 #define   XBRIDGE_PCIBR_ALLOC_ALL_RRBS_B_15_0 0xffff   /* [I] load mask: the code isolates these bits (220 sites) */
 #define XBRIDGE_STAT                       0x000008   /* [E] width 4 byte(s), access r; name [I] from stat; reached in 2 sites, 1 routine(s) */
 #define XBRIDGE_BUS_ERR                    0x000010   /* [E] width 4 byte(s), access r; name [I] from bus_err; reached in 2 sites, 1 routine(s) */
@@ -24,7 +23,6 @@
 #define   XBRIDGE_CONTROL_B_5_4            0x30   /* [I] load mask: the code isolates these bits (2 sites) */
 #define XBRIDGE_REQ_TIMEOUT                0x000028   /* [E] width 4 byte(s), access rw; name [I] from req_timeout; reached in 4 sites, 2 routine(s) */
 #define XBRIDGE_INTR_DST_TARGET_ID         0x000030   /* [E] width 4 byte(s), access rw; name [I] from intr_dst_target_id, intr_dst_addr, intr_dst; reached in 26 sites, 7 routine(s) */
-#define   XBRIDGE_INTR_DST_TARGET_ID_B_5_0 0x3f   /* [I] load mask: the code isolates these bits (2 sites) */
 #define   XBRIDGE_INTR_DST_TARGET_ID_B_5_0 0x3f   /* [I] load mask: the code isolates these bits (2 sites) */
 #define XBRIDGE_INTR_DST                   0x000038   /* [E] width 4 byte(s), access rw; name [I] from intr_dst, intr_dst_addr, intr_addr_addr; reached in 10 sites, 5 routine(s) */
 #define XBRIDGE_CMDWORD_ERR                0x000040   /* [E] width 4 byte(s), access r; name [I] from cmdword_err; reached in 2 sites, 1 routine(s) */
@@ -49,7 +47,6 @@
 #define XBRIDGE_INTR_ADDR_VECT             0x000130   /* [E] width 4 byte(s), access rw, indexed (family base); name [I] from intr_addr_vect, intr_addr_addr, intr_addr; reached in 24 sites, 6 routine(s) */
 #define   XBRIDGE_INTR_ADDR_VECT_B_10_0    0x7ff   /* [I] load mask: the code isolates these bits (2 sites) */
 #define   XBRIDGE_INTR_ADDR_VECT_B_7_0     0xff   /* [I] load mask: the code isolates these bits (4 sites) */
-#define   XBRIDGE_INTR_ADDR_VECT_B_7_0     0xff   /* [I] load mask: the code isolates these bits (2 sites) */
 #define XBRIDGE_INTR_VIEW                  0x000170   /* [E] width 4 byte(s), access r; name [I] from intr_view; reached in 2 sites, 1 routine(s) */
 #define XBRIDGE_INTR_MULTIPLE              0x000178   /* [E] width 4 byte(s), access r; name [I] from intr_multiple; reached in 2 sites, 1 routine(s) */
 #define XBRIDGE_FORCE_ALWAYS               0x000180   /* [E] width 4 byte(s), access w, indexed (family base); name [I] from force_always; reached in 2 sites, 1 routine(s) */

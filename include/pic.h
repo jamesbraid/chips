@@ -15,7 +15,6 @@
 
 #define PIC_PCIBR_BRIDGE_PTR               0x000000   /* [E] width 4/8 byte(s), access r; name [I] from pcibr_bridge_ptr, prom_c00000001fc41f38, id; reached in 5 sites, 3 routine(s) */
 #define   PIC_PCIBR_BRIDGE_PTR_B_10_0      0x7ff   /* [I] load mask: the code isolates these bits (90 sites) */
-#define   PIC_PCIBR_BRIDGE_PTR_B_10_0      0x7ff   /* [I] load mask: the code isolates these bits (4 sites) */
 #define   PIC_PCIBR_BRIDGE_PTR_B_15_0      0xffff   /* [I] load mask: the code isolates these bits (108 sites) */
 #define PIC_BUS_ERR                        0x000018   /* [E] width 8 byte(s), access r; name [I] from bus_err; reached in 1 sites, 1 routine(s) */
 #define PIC_SSRAM_SIZE                     0x000020   /* [E] width 4/8 byte(s), access rw; name [I] from ssram_size, control, speed; reached in 20 sites, 6 routine(s) */
@@ -45,9 +44,7 @@
 #define PIC_INTR_HOST_ERR                  0x000128   /* [E] width 8 byte(s), access rw; name [I] from intr_host_err; reached in 2 sites, 2 routine(s) */
 #define PIC_INTR_ADDR_VECT                 0x000130   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from intr_addr_vect, intr_addr_addr, intr_addr; reached in 12 sites, 6 routine(s) */
 #define   PIC_INTR_ADDR_VECT_B_10_0        0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
-#define   PIC_INTR_ADDR_VECT_B_10_0        0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define   PIC_INTR_ADDR_VECT_B_7_0         0xff   /* [I] load mask: the code isolates these bits (2 sites) */
-#define   PIC_INTR_ADDR_VECT_B_7_0         0xff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define PIC_INTR_VIEW                      0x000170   /* [E] width 8 byte(s), access r; name [I] from intr_view; reached in 1 sites, 1 routine(s) */
 #define PIC_INTR_MULTIPLE                  0x000178   /* [E] width 8 byte(s), access r; name [I] from intr_multiple; reached in 1 sites, 1 routine(s) */
 #define PIC_FORCE_ALWAYS                   0x000180   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from force_always; reached in 1 sites, 1 routine(s) */
@@ -55,7 +52,6 @@
 #define PIC_DEVICE                         0x000200   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from device; reached in 6 sites, 4 routine(s) */
 #define PIC_WRB_FLUSH                      0x000240   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from wrb_flush; reached in 1 sites, 1 routine(s) */
 #define PIC_RRB                            0x000280   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from rrb; reached in 6 sites, 4 routine(s) */
-#define   PIC_RRB_B_10_0                   0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define   PIC_RRB_B_10_0                   0x7ff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define PIC_RRB_STATUS                     0x000290   /* [E] width 8 byte(s), access r; name [I] from rrb_status; reached in 1 sites, 1 routine(s) */
 #define PIC_RRB_CLEAR                      0x000298   /* [E] width 8 byte(s), access w; name [I] from rrb_clear; reached in 1 sites, 1 routine(s) */
