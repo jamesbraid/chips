@@ -9,13 +9,16 @@
 #                                       intended change; copy the files and the
 #                                       manifest to every repository
 #
-# The shared files are the container definitions, the wrappers, this script and
+# The shared files are the container definitions, the wrappers, the Ghidra export helper
+# and scripts, this script and
 # the scripts every workspace runs the same way (the inventory, the fact sheet,
 # the claim checker, the pre-push hook and the leak check): edit them in one
 # repository, run --update, copy the result to the others, and run this in each.
 set -eu
 cd "$(dirname "$0")/.."
 files='tools/Containerfile tools/Containerfile.ghidra tools/re-run tools/setup-clone.sh tools/check-shared
+tools/ghidra-export.py tools/ghidra-scripts/ReBSimAdd.java tools/ghidra-scripts/ReDecompileExport.java
+tools/ghidra-scripts/ReMipsGp.java tools/ghidra-scripts/ReObjectSymbols.java
 scripts/inventory.py scripts/facts.py scripts/check_claims.py scripts/pre-push scripts/check-leaks.sh'
 manifest=tools/shared.sha256
 if [ "${1:-}" = --update ]; then
