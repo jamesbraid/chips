@@ -1,0 +1,306 @@
+variant	register	source	kind	bits_or_value	sites	functions	example
+?	0x0	load	mask	15:0	226	108	xbridge_attach@070408
+?	0x0	load	mask	10:0	180	90	pcireg_id_get@07ec94
+?	0x0	load	shift	shift 1	566	105	pcireg_id_get@07ec94
+?	0x0	load	shift	shift 12	226	108	xbridge_attach@070408
+bridge	0x0	load	mask	10:0	6	2	xbridge_attach@070424
+bridge	0x0	load	mask	15:0	4	3	xbridge_attach@0705b0
+bridge	0x0	load	shift	shift 1	6	2	xbridge_attach@070424
+bridge	0x0	load	shift	shift 12	4	3	xbridge_attach@0705b0
+bridge	0x0	load	shift	shift 28	2	2	prom_ffffffffbfc12f94@c12f9c
+bridge	0x0	load	shift	shift 4	2	2	prom_ffffffffbfc12f94@c12fa0
+bridge	0x10	load	mask	10:0	2	1	pcireg_bus_err_get@07efb4
+bridge	0x10	load	shift	shift 16	8	2	prom_ffffffffbfc16680@c16cb0
+bridge	0x20	store	clear-mask via pcireg_control_bit_clr	31	1	1	pcibr_unmap@071520
+bridge	0x20	store	const via pcireg_control_bit_set	21	1	1	xbridge_attach@0707ec
+bridge	0x20	store	const via pcireg_control_bit_set	31	1	1	pcibr_map@0714a8
+bridge	0x30	load	mask	10:0	4	2	pcireg_intr_dst_get@07fef4
+bridge	0x30	load	mask	3:0	2	1	pcireg_intr_dst_target_id_get@0801cc
+bridge	0x30	load	mask	15:0	2	1	pcireg_intr_dst_addr_get@0804d4
+bridge	0x30	store	mask	15:0	2	1	pcireg_intr_dst_addr_set@080670
+bridge	0x30	load	mask	5:0	2	1	pcireg_intr_addr_addr_get@08591c
+bridge	0x30	load	shift	shift 16	2	1	pcireg_intr_dst_target_id_get@0801cc
+bridge	0x40	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16c84
+bridge	0x58	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16d08
+bridge	0x60	load	mask	10:0	4	2	pcireg_resp_err_get@080f64
+bridge	0x60	load	mask	15:0	2	1	pcireg_resp_err_addr_get@0810d4
+bridge	0x60	load	mask	3:0	2	1	pcireg_resp_err_buf_get@081254
+bridge	0x60	load	mask	2:0	2	1	pcireg_resp_err_dev_get@0813c8
+bridge	0x60	load	shift	shift 16	6	3	pcireg_resp_err_buf_get@081254
+bridge	0x60	load	shift	shift 20	2	1	pcireg_resp_err_dev_get@0813c8
+bridge	0x68	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16d60
+bridge	0xa0	store	const via pcireg_arbitration_bit_set	23:20	1	1	pcibr_error_intr_handler@07aa50
+bridge	0xa0	store	const via pcireg_arbitration_bit_set	1	1	1	pcibr_error_intr_handler@07aa50
+bridge	0xc0	store	clear-mask via pcireg_timeout_bit_clr	9:0	1	1	xbridge_attach@070c7c
+bridge	0xd0	load	mask	10:0	4	2	pcireg_pci_bus_addr_get@0833a8
+bridge	0xd0	load	mask	15:0	2	1	pcireg_pci_bus_addr_addr_get@08351c
+bridge	0xd0	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16d8c
+bridge	0xd8	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16db8
+bridge	0x100	load	mask	6	6	6	prom_ffffffffbfc00d40@c00d44
+bridge	0x100	load	mask	5	4	4	prom_ffffffffbfc00d40@c00dcc
+bridge	0x100	load	shift	shift 16	8	4	prom_ffffffffbfc1647c@c16584
+bridge	0x110	store	const via pcireg_intr_reset_set	0x7f	1	1	xbridge_attach@0707c8
+bridge	0x110	store	const via pcireg_intr_reset_set	0x41	1	1	pcibr_error_cleanup@07aff4
+bridge	0x110	store	const via pcireg_intr_reset_set	0x1	1	1	pcibr_error_cleanup@07aff4
+bridge	0x110	store	const via pcireg_intr_reset_set	0x10	1	1	pcibr_dmard_error@07be9c
+bridge	0x110	store	const via pcireg_intr_reset_set	0x40	1	1	pcibr_piomap_probe@07e82c
+bridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,6,3:0	1	1	pcibr_intr_alloc@07884c
+bridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,6,3:2	0	0	
+bridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,7:6,3:2,0	0	0	
+bridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:8,6,4:3,1	0	0	
+bridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:6,4:3,1:0	0	0	
+bridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:5,2:0	0	0	
+bridge	0x120	store	const via pcireg_intr_device_bit_set	12:10,1	0	0	
+bridge	0x120	store	const via pcireg_intr_device_bit_set	12:10,6,4,1:0	0	0	
+bridge	0x120	store	const via pcireg_intr_device_set	0xffffffff	1	1	xbridge_attach@0707d4
+bridge	0x130	load	mask	7:0	2	1	pcireg_intr_addr_vect_get@0854d8
+bridge	0x130	load	shift	shift 2	2	1	pcireg_intr_addr_addr_get@085918
+bridge	0x200	store	const via pcireg_device_set	0x10000	1	1	pcibr_slot_device_init@07df20
+bridge	0x210	store	const	0x1000	2	2	prom_ffffffffbfc162c0@c1630c
+bridge	0x210	store	const	0x4	2	2	prom_ffffffffbfc162c0@c1630c
+bridge	0x280	store	const via pcireg_rrb_set	0xadb	1	1	pcibr_alloc_all_rrbs@0772f8
+bridge	0x280	store	const via pcireg_rrb_set	0xadc	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xadd	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xade	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xadf	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xad8	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xad9	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xada	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xae8	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xae9	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xaea	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xaeb	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xaec	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xaed	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xaee	0	0	
+bridge	0x280	store	const via pcireg_rrb_set	0xaef	0	0	
+bridge	0x10000	store	const via pcireg_int_ate_set	0xffffffffffffffff	1	1	ate_write@0759c4
+bridge	0x22000	store	const	0x2	2	2	prom_ffffffffbfc162c0@c16320
+bridge	0x22000	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16de4
+bridge	0x22010	store	const	0x400000	2	2	prom_ffffffffbfc162c0@c16328
+bridge	0x22040	load	shift	shift 16	8	2	prom_ffffffffbfc16680@c16e10
+bridge	0x80000	store	const via pcireg_ext_ate_set	0xffffffffffffffff	1	1	ate_write@0759f0
+bridge	0x600028	store	const	0x40000	8	8	prom_ffffffffbfc01b04@c023f4
+bridge	0x600028	store	const	0x20000	2	2	prom_ffffffffbfc162c0@c16338
+bridge	0x600028	load	shift	shift 0	2	2	prom_ffffffffbfc01b04@c02438
+bridge	0x600028	load	shift	shift 16	2	2	prom_ffffffffbfc15e08@c161c4
+bridge	0x600030	store	const	0x10	3	2	prom_ffffffffbfc00000@c00984
+bridge	0x600030	store	const	0x3	2	2	prom_ffffffffbfc00000@c00a1c
+bridge	0x600030	store	const	0xc3	2	2	prom_ffffffffbfc162c0@c16344
+bridge	0x600030	store	const	0x200000	2	2	prom_ffffffffbfc162c0@c16344
+bridge	0x600040	store	const	0x1	2	2	prom_ffffffffbfc00000@c00a28
+bridge	0x600050	store	const	0x1	4	2	prom_ffffffffbfc00000@c0097c
+bridge	0x600050	load	shift	shift 0	5	1	prom_ffffffffbfc1875c@c30c3c
+bridge	0x620178	store	const	0x0	4	2	prom_ffffffffbfc162c0@c1635c
+bridge	0x620178	store	const	0x80	2	2	prom_ffffffffbfc162c0@c16354
+bridge	0x620178	store	const	0x30	2	2	prom_ffffffffbfc162c0@c16364
+bridge	0x620178	store	const	0x6	2	2	prom_ffffffffbfc162c0@c1636c
+bridge	0x620178	store	const	0x3	2	2	prom_ffffffffbfc162c0@c16374
+bridge	0x620178	store	const	0x1	2	2	prom_ffffffffbfc162c0@c16384
+bridge	0x6a0000	store	const	0xe	7	7	prom_ffffffffbfc01b04@c02428
+bridge	0x6a0000	store	const	0x4a	6	4	prom_ffffffffbfc17804@c178c4
+bridge	0x6a0000	store	const	0xa	4	4	prom_ffffffffbfc17804@c178b8
+bridge	0x6a0000	store	const	0x4b	4	4	prom_ffffffffbfc17804@c178d8
+bridge	0x6a0000	store	const	0x74	2	2	prom_ffffffffbfc01b04@c02410
+bridge	0x6a0000	store	const	0xb	2	2	prom_ffffffffbfc17804@c17878
+bridge	0x6a0000	store	const	0x75	2	2	prom_ffffffffbfc17804@c17894
+bridge	0x6a0000	store	const	0xc	2	2	prom_ffffffffbfc17804@c178f8
+bridge	0x6c0000	store	const	0x20	8	6	prom_ffffffffbfc01b04@c0240c
+bridge	0x6c0000	store	const	0x30	4	4	prom_ffffffffbfc17804@c178c0
+bridge	0x6c0000	store	const	0x81	4	4	prom_ffffffffbfc17804@c178f4
+bridge	0x6c0000	store	const	0x6	2	2	prom_ffffffffbfc17804@c17890
+bridge	0x6c0000	store	const	0x8	2	2	prom_ffffffffbfc1791c@c179fc
+bridge	0x6c0000	load	mask	7	2	2	prom_ffffffffbfc17804@c1787c
+bridge	0x6c0000	store	mask	7	2	2	prom_ffffffffbfc17804@c17890
+bridge	0x6c0000	load	mask	5	2	2	prom_ffffffffbfc17804@c178dc
+bridge	0x6c0000	store	mask	5	2	2	prom_ffffffffbfc17804@c178f4
+bridge	0x6c0000	load	mask	5,3,1	2	2	prom_ffffffffbfc1791c@c179d8
+bridge	0x6c0000	store	mask	5,3,1	2	2	prom_ffffffffbfc1791c@c179e8
+bridge	0x6c0000	load	shift	shift 0	4	2	prom_ffffffffbfc1791c@c17a10
+pic	0x0	load	mask	10:0	5	2	pcibr_bridge_ptr_get@075180
+pic	0x0	load	mask	15:0	2	1	pcibr_bridge_ptr_get@07516c
+pic	0x0	load	shift	shift 1	5	2	pcibr_bridge_ptr_get@075180
+pic	0x0	load	shift	shift 12	2	1	pcibr_bridge_ptr_get@07516c
+pic	0x20	store	clear-mask via pcireg_control_bit_clr	31	1	1	pcibr_unmap@071520
+pic	0x20	store	const via pcireg_control_bit_set	21	1	1	xbridge_attach@0707ec
+pic	0x20	store	const via pcireg_control_bit_set	31	1	1	pcibr_map@0714a8
+pic	0x20	load	mask	5:4	2	1	pcireg_speed_get@07f990
+pic	0x20	load	shift	shift 4	2	1	pcireg_speed_get@07f990
+pic	0x38	load	mask	3:0	2	1	pcireg_intr_dst_target_id_get@0801f0
+pic	0x38	load	shift	shift 48	2	1	pcireg_intr_dst_target_id_get@0801f0
+pic	0x60	load	mask	3:0	2	1	pcireg_resp_err_buf_get@081280
+pic	0x60	load	mask	2:0	2	1	pcireg_resp_err_dev_get@0813f4
+pic	0x60	load	shift	shift 16	2	1	pcireg_resp_err_buf_get@081280
+pic	0x60	load	shift	shift 20	2	1	pcireg_resp_err_dev_get@0813f4
+pic	0xa0	store	const via pcireg_arbitration_bit_set	23:20	1	1	pcibr_error_intr_handler@07aa50
+pic	0xa0	store	const via pcireg_arbitration_bit_set	1	1	1	pcibr_error_intr_handler@07aa50
+pic	0xc0	store	clear-mask via pcireg_timeout_bit_clr	9:0	1	1	xbridge_attach@070c7c
+pic	0x110	store	const	0xffff	1	1	prom_c00000001fc41f38@c41f84
+pic	0x110	store	const via pcireg_intr_reset_set	0x7f	1	1	xbridge_attach@0707c8
+pic	0x110	store	const via pcireg_intr_reset_set	0x41	1	1	pcibr_error_cleanup@07aff4
+pic	0x110	store	const via pcireg_intr_reset_set	0x1	1	1	pcibr_error_cleanup@07aff4
+pic	0x110	store	const via pcireg_intr_reset_set	0x10	1	1	pcibr_dmard_error@07be9c
+pic	0x110	store	const via pcireg_intr_reset_set	0x40	1	1	pcibr_piomap_probe@07e82c
+pic	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,6,3:0	1	1	pcibr_intr_alloc@07884c
+pic	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,6,3:2	0	0	
+pic	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,7:6,3:2,0	0	0	
+pic	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:8,6,4:3,1	0	0	
+pic	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:6,4:3,1:0	0	0	
+pic	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:5,2:0	0	0	
+pic	0x120	store	const via pcireg_intr_device_bit_set	12:10,1	0	0	
+pic	0x120	store	const via pcireg_intr_device_bit_set	12:10,6,4,1:0	0	0	
+pic	0x120	store	const via pcireg_intr_device_set	0xffffffff	1	1	xbridge_attach@0707d4
+pic	0x130	load	mask	10:0	2	1	pcireg_intr_addr_get@084f20
+pic	0x130	load	mask	7:0	2	1	pcireg_intr_addr_vect_get@0854c0
+pic	0x130	load	shift	shift 1	2	1	pcireg_intr_addr_get@084f20
+pic	0x130	load	shift	shift 48	2	1	pcireg_intr_addr_vect_get@0854c0
+pic	0x200	store	const via pcireg_device_set	0x10000	1	1	pcibr_slot_device_init@07df20
+pic	0x280	store	const via pcireg_rrb_set	0xadb	1	1	pcibr_alloc_all_rrbs@0772f8
+pic	0x280	store	const via pcireg_rrb_set	0xadc	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xadd	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xade	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xadf	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xad8	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xad9	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xada	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xae8	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xae9	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xaea	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xaeb	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xaec	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xaed	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xaee	0	0	
+pic	0x280	store	const via pcireg_rrb_set	0xaef	0	0	
+pic	0x280	load	mask	10:0	2	1	pcireg_rrb_get@087224
+pic	0x280	load	shift	shift 1	2	1	pcireg_rrb_get@087224
+pic	0x10000	store	const via pcireg_int_ate_set	0xffffffffffffffff	1	1	ate_write@0759c4
+pic	0x10000	load	mask	10:0	2	1	pcireg_int_ate_get@088fd4
+pic	0x10000	load	shift	shift 1	2	1	pcireg_int_ate_get@088fd4
+pic	0x80000	store	const via pcireg_ext_ate_set	0xffffffffffffffff	1	1	ate_write@0759f0
+pic-xbow-face	0x0	load	mask	10:0	2	1	xbow_widget_present@06d5a4
+pic-xbow-face	0x0	load	shift	shift 1	2	1	xbow_widget_present@06d5a4
+pic-xbow-face	0x138	load	mask	5	2	1	xbow_widget_present@06d5c0
+pic-xbow-face	0x138	load	shift	shift 6	2	1	xbow_widget_present@06d5c0
+probe?	0x0	load	mask	15:0	6	3	xbow_widget_present@06d590
+probe?	0x0	load	mask	10:0	2	1	prom_c00000001fc46030@c461dc
+probe?	0x0	load	shift	shift 12	6	3	xbow_widget_present@06d590
+probe?	0x0	load	shift	shift 28	2	1	xbow_widget_present@06d56c
+probe?	0x0	load	shift	shift 1	2	1	prom_c00000001fc46030@c461dc
+probe?	0x110	store	const	0xffff	1	1	prom_c00000001fc41f38@c41f84
+probe?	0x110	load	shift	shift 31	2	1	xbow_widget_present@06d5dc
+probe?	0x138	load	mask	5	2	1	xbow_widget_present@06d5c0
+probe?	0x138	load	shift	shift 6	2	1	xbow_widget_present@06d5c0
+probe?	0x200	load	shift	shift 20	1	1	prom_c00000001fc46030@c46098
+tiocp	0x20	store	clear-mask via pcireg_control_bit_clr	31	1	1	pcibr_unmap@071520
+tiocp	0x20	store	const via pcireg_control_bit_set	21	1	1	xbridge_attach@0707ec
+tiocp	0x20	store	const via pcireg_control_bit_set	31	1	1	pcibr_map@0714a8
+tiocp	0x20	load	mask	5:4	2	1	pcireg_speed_get@07f96c
+tiocp	0x20	load	shift	shift 4	2	1	pcireg_speed_get@07f96c
+tiocp	0x38	load	mask	3:0	2	1	pcireg_intr_dst_target_id_get@0801f0
+tiocp	0x38	load	shift	shift 48	2	1	pcireg_intr_dst_target_id_get@0801f0
+tiocp	0x60	load	mask	3:0	2	1	pcireg_resp_err_buf_get@081280
+tiocp	0x60	load	mask	2:0	2	1	pcireg_resp_err_dev_get@0813f4
+tiocp	0x60	load	shift	shift 16	2	1	pcireg_resp_err_buf_get@081280
+tiocp	0x60	load	shift	shift 20	2	1	pcireg_resp_err_dev_get@0813f4
+tiocp	0xa0	store	const via pcireg_arbitration_bit_set	23:20	1	1	pcibr_error_intr_handler@07aa50
+tiocp	0xa0	store	const via pcireg_arbitration_bit_set	1	1	1	pcibr_error_intr_handler@07aa50
+tiocp	0xc0	store	clear-mask via pcireg_timeout_bit_clr	9:0	1	1	xbridge_attach@070c7c
+tiocp	0x110	store	const via pcireg_intr_reset_set	0x7f	1	1	xbridge_attach@0707c8
+tiocp	0x110	store	const via pcireg_intr_reset_set	0x41	1	1	pcibr_error_cleanup@07aff4
+tiocp	0x110	store	const via pcireg_intr_reset_set	0x1	1	1	pcibr_error_cleanup@07aff4
+tiocp	0x110	store	const via pcireg_intr_reset_set	0x10	1	1	pcibr_dmard_error@07be9c
+tiocp	0x110	store	const via pcireg_intr_reset_set	0x40	1	1	pcibr_piomap_probe@07e82c
+tiocp	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,6,3:0	1	1	pcibr_intr_alloc@07884c
+tiocp	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,6,3:2	0	0	
+tiocp	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,7:6,3:2,0	0	0	
+tiocp	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:8,6,4:3,1	0	0	
+tiocp	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:6,4:3,1:0	0	0	
+tiocp	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:5,2:0	0	0	
+tiocp	0x120	store	const via pcireg_intr_device_bit_set	12:10,1	0	0	
+tiocp	0x120	store	const via pcireg_intr_device_bit_set	12:10,6,4,1:0	0	0	
+tiocp	0x120	store	const via pcireg_intr_device_set	0xffffffff	1	1	xbridge_attach@0707d4
+tiocp	0x130	load	mask	7:0	2	1	pcireg_intr_addr_vect_get@0854c0
+tiocp	0x130	load	shift	shift 48	2	1	pcireg_intr_addr_vect_get@0854c0
+tiocp	0x200	store	const via pcireg_device_set	0x10000	1	1	pcibr_slot_device_init@07df20
+tiocp	0x280	store	const via pcireg_rrb_set	0xadb	1	1	pcibr_alloc_all_rrbs@0772f8
+tiocp	0x280	store	const via pcireg_rrb_set	0xadc	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xadd	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xade	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xadf	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xad8	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xad9	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xada	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xae8	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xae9	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xaea	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xaeb	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xaec	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xaed	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xaee	0	0	
+tiocp	0x280	store	const via pcireg_rrb_set	0xaef	0	0	
+tiocp	0x10000	store	const via pcireg_int_ate_set	0xffffffffffffffff	1	1	ate_write@0759c4
+tiocp	0x10000	load	mask	10:0	2	1	pcireg_int_ate_get@088f94
+tiocp	0x10000	load	shift	shift 1	2	1	pcireg_int_ate_get@088f94
+tiocp	0x80000	store	const via pcireg_ext_ate_set	0xffffffffffffffff	1	1	ate_write@0759f0
+xbridge	0x0	load	mask	10:0	6	2	xbridge_attach@070cd0
+xbridge	0x0	load	shift	shift 1	6	2	xbridge_attach@070cd0
+xbridge	0x10	load	mask	10:0	2	1	pcireg_bus_err_get@07efb4
+xbridge	0x20	store	clear-mask via pcireg_control_bit_clr	31	1	1	pcibr_unmap@071520
+xbridge	0x20	store	const via pcireg_control_bit_set	21	1	1	xbridge_attach@0707ec
+xbridge	0x20	store	const via pcireg_control_bit_set	31	1	1	pcibr_map@0714a8
+xbridge	0x20	load	mask	5:4	2	1	pcireg_speed_get@07f9b0
+xbridge	0x20	load	shift	shift 4	2	1	pcireg_speed_get@07f9b0
+xbridge	0x30	load	mask	10:0	4	2	pcireg_intr_dst_get@07fef4
+xbridge	0x30	load	mask	3:0	2	1	pcireg_intr_dst_target_id_get@0801cc
+xbridge	0x30	load	mask	15:0	2	1	pcireg_intr_dst_addr_get@0804d4
+xbridge	0x30	store	mask	15:0	2	1	pcireg_intr_dst_addr_set@080670
+xbridge	0x30	load	mask	5:0	2	1	pcireg_intr_addr_addr_get@08591c
+xbridge	0x30	load	shift	shift 16	2	1	pcireg_intr_dst_target_id_get@0801cc
+xbridge	0x60	load	mask	10:0	4	2	pcireg_resp_err_get@080f64
+xbridge	0x60	load	mask	15:0	2	1	pcireg_resp_err_addr_get@0810d4
+xbridge	0x60	load	mask	3:0	2	1	pcireg_resp_err_buf_get@081254
+xbridge	0x60	load	mask	2:0	2	1	pcireg_resp_err_dev_get@0813c8
+xbridge	0x60	load	shift	shift 16	2	1	pcireg_resp_err_buf_get@081254
+xbridge	0x60	load	shift	shift 20	2	1	pcireg_resp_err_dev_get@0813c8
+xbridge	0xa0	store	const via pcireg_arbitration_bit_set	23:20	1	1	pcibr_error_intr_handler@07aa50
+xbridge	0xa0	store	const via pcireg_arbitration_bit_set	1	1	1	pcibr_error_intr_handler@07aa50
+xbridge	0xc0	store	clear-mask via pcireg_timeout_bit_clr	9:0	1	1	xbridge_attach@070c7c
+xbridge	0xd0	load	mask	10:0	4	2	pcireg_pci_bus_addr_get@0833a8
+xbridge	0xd0	load	mask	15:0	2	1	pcireg_pci_bus_addr_addr_get@08351c
+xbridge	0x110	store	const via pcireg_intr_reset_set	0x7f	1	1	xbridge_attach@0707c8
+xbridge	0x110	store	const via pcireg_intr_reset_set	0x41	1	1	pcibr_error_cleanup@07aff4
+xbridge	0x110	store	const via pcireg_intr_reset_set	0x1	1	1	pcibr_error_cleanup@07aff4
+xbridge	0x110	store	const via pcireg_intr_reset_set	0x10	1	1	pcibr_dmard_error@07be9c
+xbridge	0x110	store	const via pcireg_intr_reset_set	0x40	1	1	pcibr_piomap_probe@07e82c
+xbridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,6,3:0	1	1	pcibr_intr_alloc@07884c
+xbridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,6,3:2	0	0	
+xbridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9,7:6,3:2,0	0	0	
+xbridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:8,6,4:3,1	0	0	
+xbridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:6,4:3,1:0	0	0	
+xbridge	0x120	store	const via pcireg_intr_device_bit_set	12:11,9:5,2:0	0	0	
+xbridge	0x120	store	const via pcireg_intr_device_bit_set	12:10,1	0	0	
+xbridge	0x120	store	const via pcireg_intr_device_bit_set	12:10,6,4,1:0	0	0	
+xbridge	0x120	store	const via pcireg_intr_device_set	0xffffffff	1	1	xbridge_attach@0707d4
+xbridge	0x130	load	mask	7:0	2	1	pcireg_intr_addr_vect_get@0854d8
+xbridge	0x130	load	shift	shift 2	2	1	pcireg_intr_addr_addr_get@085918
+xbridge	0x200	store	const via pcireg_device_set	0x10000	1	1	pcibr_slot_device_init@07df20
+xbridge	0x280	store	const via pcireg_rrb_set	0xadb	1	1	pcibr_alloc_all_rrbs@0772f8
+xbridge	0x280	store	const via pcireg_rrb_set	0xadc	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xadd	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xade	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xadf	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xad8	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xad9	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xada	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xae8	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xae9	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xaea	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xaeb	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xaec	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xaed	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xaee	0	0	
+xbridge	0x280	store	const via pcireg_rrb_set	0xaef	0	0	
+xbridge	0x10000	store	const via pcireg_int_ate_set	0xffffffffffffffff	1	1	ate_write@0759c4
+xbridge	0x10000	load	mask	10:0	2	1	pcireg_int_ate_get@089018
+xbridge	0x10000	load	shift	shift 1	2	1	pcireg_int_ate_get@089018
+xbridge	0x80000	store	const via pcireg_ext_ate_set	0xffffffffffffffff	1	1	ate_write@0759f0

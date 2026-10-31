@@ -1,0 +1,15 @@
+binary	group	role	kind	abi	bytes	sha256	copies	functions	address_source	access_sites	unresolved_sites	status	doc	section
+IP27/unix	kernel-IP27	kernel	executable	n64	11101184	567474674eaa83d3		13484	symtab (dwarf addresses stale, dropped)	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-IP27	kernel-object	object	n64	1248568	0e5875e8ed602411		1361	symtab+dwarf	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP30/sbin/stand/ide.IP30	standalone	diagnostic	executable	n64	1594880	19d7a194cb417330		0	none	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP30/unix	kernel-IP30	kernel	executable	n64	10716216	607a432f441d15f7		13087	symtab (dwarf addresses stale, dropped)	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP30/usr/cpu/firmware/IP30prom.bin	firmware	prom	data	-	879312	ee4722ca6f9b821f		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-IP30	kernel-object	object	n64	577112	32d900592e14a557		726	symtab+dwarf	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP32/sbin/stand/ide.IP32	standalone	diagnostic	executable	o32	763504	9c2ded7e65b68405		0	none	31	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP32/sbin/stand/symmon.IP32	standalone	diagnostic	executable	n32	502980	12d8ecedae658546		755	symtab (dwarf addresses stale, dropped)	19	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP32/usr/cpu/firmware/ip32prom.image	firmware	prom	data	-	431872	11230c353cb14fcc		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-IP32	kernel-object	object	n32	504132	ebf09eeae80f3726		811	symtab (dwarf addresses stale, dropped)	154	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-IP32	kernel-object	object	n32	9704	5c8a35eeeef61004		12	symtab	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP32/usr/cpu/sysgen/IP32boot/os.a(tile.o)	kernel-IP32	kernel-archive	object	n32	31124	dbe331ca2334e1f6		24	symtab	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP35/usr/cpu/firmware/ip35prom.img	firmware	prom	data	-	1480360	d74b4b7ef9c11c66		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-IP35	kernel-object	object	n64	1288752	2e847fdcadfdb958		1318	symtab+dwarf	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads

@@ -1,0 +1,19 @@
+table	rows	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
+binaries	14	0	0	0	0	0	14	0	0	0.0	0.0	100.0	0.0							0			
+functions	31578	0	0	0	0	0	0	31578	0	0.0	0.0	0.0	0.0							0	2	891	
+functions (distinct names)	15998	0	0	0	0	0	0	15998	0	0.0	0.0	0.0	0.0							0			
+mmio	44	0	0	0	0	0	0	44	0	0.0	0.0	0.0	0.0	0						0			
+tokens	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
+ioctls	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
+ucode	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0						0	0			
+spec-registers	174	0	0	0	0	0	0	174	0	0.0	0.0	0.0	0.0							0			
+input root manifest	14																						eff7fe85ccdc1367296d1f7f272a3e2576ff7cabd04949b167b98ee880aab7fb
+functions in IP27/unix	13484	0	0	0	0	0	0	13484	0	0.0	0.0	0.0	0.0							0	0	148	
+functions in IP27/usr/cpu/sysgen/IP27boot/kernel.o	1361	0	0	0	0	0	0	1361	0	0.0	0.0	0.0	0.0							0	1	112	
+functions in IP30/unix	13087	0	0	0	0	0	0	13087	0	0.0	0.0	0.0	0.0							0	0	172	
+functions in IP30/usr/cpu/sysgen/IP30boot/kernel.o	726	0	0	0	0	0	0	726	0	0.0	0.0	0.0	0.0							0	0	134	
+functions in IP32/sbin/stand/symmon.IP32	755	0	0	0	0	0	0	755	0	0.0	0.0	0.0	0.0							0	0	72	
+functions in IP32/usr/cpu/sysgen/IP32boot/kernel.o	811	0	0	0	0	0	0	811	0	0.0	0.0	0.0	0.0							0	0	141	
+functions in IP32/usr/cpu/sysgen/IP32boot/mace.o	12	0	0	0	0	0	0	12	0	0.0	0.0	0.0	0.0							0	0	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/os.a(tile.o)	24	0	0	0	0	0	0	24	0	0.0	0.0	0.0	0.0							0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/kernel.o	1318	0	0	0	0	0	0	1318	0	0.0	0.0	0.0	0.0							0	1	112	
