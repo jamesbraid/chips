@@ -26,9 +26,28 @@ entry per function with the decompiler's C, warnings and signature. Decompiler
 output and BSim similarity are navigation, not evidence: a committed claim still
 rests on the disassembly.
 
-Only ELF objects are handled: a linked library, a kernel or a relocatable driver
-object. The language and calling convention come from the ELF header; names the
-loader ignores (.mdebug) are seeded before analysis.
+An ELF object (a linked library, a kernel or a relocatable driver object) takes its
+language and calling convention from its header; names the loader ignores (.mdebug)
+are seeded before analysis.
+
+A flat image, such as a PROM, has no header Ghidra can read, so say what it is:
+  --flat                 read OBJECT as raw bytes
+  --load ADDR            the address the first byte (after --header) has in the
+                         machine's address space, for example 0x1fc00000
+  --header N             skip N bytes of container header first (default 0)
+  --processor LANG       Ghidra language (default MIPS:BE:64:64-32addr). A PROM
+                         whose code holds 64-bit pointers wants MIPS:BE:64:default,
+                         which also finds more routines; MIPS:BE:32:default is for
+                         a 32-bit processor
+  --window ADDR          for a 64-bit language, the upper bits the image is placed
+                         under so a program that holds 64-bit pointers (a PROM
+                         running in the extended cached window) resolves them;
+                         default 0xc000000000000000 for a 64-bit language that has
+                         full-width addresses, none otherwise
+A flat image has no names: functions are `FUN_` placeholders, found by Ghidra's
+analysis, so ask for them by `@0xADDR` or with --decompile-all. `address` in the
+JSON is the machine address (--load), `ghidra_address` is where Ghidra holds it, and
+the C text uses Ghidra's addresses.
 """
 import argparse
 import hashlib
@@ -47,6 +66,8 @@ WIDE_ARCH = {0x20000000, 0x30000000, 0x40000000, 0x60000000, 0x80000000}
 EF_MIPS_ABI2 = 0x20
 SHF_EXECINSTR = 4
 ET_REL = 1
+FLAT_DEFAULT_LANGUAGE = 'MIPS:BE:64:64-32addr'
+WIDE_WINDOW = 0xc000000000000000
 PLAIN = re.compile(r'[A-Za-z0-9._-]+')
 
 
@@ -163,6 +184,11 @@ def parser():
     p.add_argument('--bsim-label', metavar='LABEL')
     p.add_argument('--bsim-dir', default='.cache/ghidra-bsim')
     p.add_argument('--bsim-min', type=float, default=0.7)
+    p.add_argument('--flat', action='store_true')
+    p.add_argument('--load', type=lambda v: int(v, 0), metavar='ADDR')
+    p.add_argument('--header', type=int, default=0, metavar='N')
+    p.add_argument('--processor', default=FLAT_DEFAULT_LANGUAGE)
+    p.add_argument('--window', type=lambda v: int(v, 0), default=None, metavar='ADDR')
     p.add_argument('--timeout', type=int, default=3600)
     p.add_argument('--cpus', type=int, default=2)
     return p
@@ -184,9 +210,30 @@ def prepare(argv):
         die('--bsim-label needs --bsim-db')
     if args.types and not exporting:
         die('--types applies to an export')
-    klass, etype, flags = read_header(obj)
-    relocatable = etype == ET_REL
-    language, spec = plan_language(klass, flags)
+    flat = None
+    if args.flat:
+        if args.load is None:
+            die('--flat needs --load ADDR')
+        if not 0 <= args.header < obj.stat().st_size:
+            die('--header %d is outside the file' % args.header)
+        window = args.window
+        if window is None:
+            window = 0 if args.processor == FLAT_DEFAULT_LANGUAGE or ':32:' in args.processor else WIDE_WINDOW
+        if window and ':64:' not in args.processor:
+            die('--window needs a 64-bit language')
+        if window and args.load & window:
+            die('--load %#x overlaps the window %#x' % (args.load, window))
+        flat = {'load': args.load, 'window': window, 'processor': args.processor}
+        relocatable, language, spec = False, args.processor, None
+    else:
+        for opt in ('load', 'window'):
+            if getattr(args, opt) is not None:
+                die('--%s belongs to --flat' % opt)
+        if args.header or args.processor != FLAT_DEFAULT_LANGUAGE:
+            die('--header and --processor belong to --flat')
+        klass, etype, flags = read_header(obj)
+        relocatable = etype == ET_REL
+        language, spec = plan_language(klass, flags)
 
     wanted = list(args.decompile_symbol)
     if args.decompile_list:
@@ -199,7 +246,8 @@ def prepare(argv):
     for item in wanted:
         item = pattern(item, relocatable)
         if item.startswith('@0x'):
-            addresses.append(item[1:])
+            native = int(item[1:], 16) + (flat['window'] if flat else 0)
+            addresses.append('0x%x' % native)
         elif '*' in item:
             globs.append(item)
         else:
@@ -209,11 +257,16 @@ def prepare(argv):
                'types': types_spec(args.types, relocatable) if args.types else None}
     (job / 'export.json').write_text(json.dumps(request, indent=1) + '\n')
 
-    seeds = [] if relocatable else mdebug_seeds(obj)
+    seeds = [] if relocatable or flat else mdebug_seeds(obj)
     (job / 'seeds.tsv').write_text(''.join('0x%016x\t0\t%s\n' % (a, n) for a, n in seeds))
 
     sha = hashlib.sha256(obj.read_bytes()).hexdigest()
     image = obj
+    if flat:
+        stage = job / 'flat'
+        stage.mkdir()
+        image = stage / obj.name
+        image.write_bytes(obj.read_bytes()[args.header:])
     lines = ['set -u', 'JOB=%s' % shlex.quote(str(job))]
     if args.bsim_db:
         for what, value in (('--bsim-db', args.bsim_db), ('--bsim-label', args.bsim_label or 'x')):
@@ -225,15 +278,25 @@ def prepare(argv):
             # BSim keys an executable by file name, and every libGLcore is called the same.
             stage = job / 'stage'
             stage.mkdir()
-            image = stage / args.bsim_label
-            image.write_bytes(obj.read_bytes())
+            labelled = stage / args.bsim_label
+            labelled.write_bytes(image.read_bytes())
+            image = labelled
         db = bsim / args.bsim_db
         lines.append('[ -f %s.mv.db ] || bsim createdatabase file:%s medium_nosize --name %s || exit 1'
                      % (shlex.quote(str(db)), shlex.quote(str(db)), args.bsim_db))
     argv = ['analyzeHeadless', '"$GP"', 'firmware', '-import', str(image)]
     if language:
-        argv += ['-processor', language, '-cspec', spec]
-    argv += ['-scriptPath', SCRIPTS, '-preScript', 'ReMipsGp.java', 'loader', '-']
+        argv += ['-processor', language]
+        if spec:
+            argv += ['-cspec', spec]
+    if flat:
+        base = flat['load'] + flat['window']
+        argv += ['-loader', 'BinaryLoader', '-loader-baseAddr', '0x%x' % base]
+        # No header states the global pointer or the entry: recover gp from the
+        # code, and start disassembly at the first byte.
+        argv += ['-scriptPath', SCRIPTS, '-preScript', 'ReMipsGp.java', 'auto', '0x%x' % base]
+    else:
+        argv += ['-scriptPath', SCRIPTS, '-preScript', 'ReMipsGp.java', 'loader', '-']
     if seeds:
         argv += ['-preScript', 'ReObjectSymbols.java', str(job / 'seeds.tsv')]
     if exporting:
@@ -252,9 +315,14 @@ def prepare(argv):
     (job / 'plan.json').write_text(json.dumps({
         'object': str(obj), 'image_sha256': sha, 'language': language or 'default (from the ELF header)',
         'compiler_spec_requested': spec, 'relocatable': relocatable, 'exporting': exporting,
-        'bsim': bool(args.bsim_db), 'mdebug_seeds': len(seeds), 'object_path': args.object}, indent=1) + '\n')
+        'bsim': bool(args.bsim_db), 'mdebug_seeds': len(seeds), 'object_path': args.object,
+        'flat': flat}, indent=1) + '\n')
     print('ghidra-export: %s (%s, %d .mdebug names seeded)'
           % (args.object, language or 'language from the ELF header', len(seeds)), file=sys.stderr)
+    if flat:
+        print('ghidra-export: flat image, %d header bytes skipped, loaded at %#x%s'
+              % (args.header, flat['load'], ' under window %#x' % flat['window'] if flat['window'] else ''),
+              file=sys.stderr)
 
 
 MARKER = re.compile(r're-export-(begin|end) (0x[0-9a-f]+)')
@@ -306,6 +374,11 @@ def finish(argv):
             row = json.loads(line)
             row['warnings'] = row.get('warnings', []) + warnings.get(row['address'], [])
             row['ghidra_address'] = row['address']
+            window = (plan.get('flat') or {}).get('window', 0)
+            if window:
+                for key in ('address', 'end'):
+                    if row.get(key):
+                        row[key] = hex(int(row[key], 16) - window)
             functions.append(row)
         types = json.loads((job / 'types.json').read_text(encoding='utf-8'))
         version = re.search(r'=(\S+)', (job / 'version').read_text()) if (job / 'version').is_file() else None
