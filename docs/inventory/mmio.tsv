@@ -1,5 +1,5 @@
 window	offset	name	access	sites	binaries	functions	evidence	example	status	doc	section
-CRIME	0x0	ID-Revision	r8	4	2	__sysad_wbflush;crimeInitInfo;crimeProbe;get_crimerev	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o):crimeInitInfo	undocumented		
+CRIME	0x0	ID-Revision	r8	4	2	__sysad_wbflush;crimeInitInfo;crimeProbe;get_crimerev	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o):crimeInitInfo	named-only	chips/crime/README.md#addresses-and-widths-established	Addresses and widths (established)
 CRIME	0x8	CPU Interface Control	r8,w8	10	1	badaddr;badaddr_val;earlybadaddr;flushbus;mlreset;wbadaddr;+1 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:badaddr	undocumented		
 CRIME	0x10	Interrupt Status	r8,w8	6	2	crimeFifoFullHandler;intr;mlreset;routine@0x8168;routine@0xa2cc	constant address	IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o):crimeFifoFullHandler	undocumented		
 CRIME	0x18	Interrupt Enable	r8,w8	13	1	VEC_int;kpreemption;mlreset;proc1;spl0;spl7;+5 more	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_int	undocumented		

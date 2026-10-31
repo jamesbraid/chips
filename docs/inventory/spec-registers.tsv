@@ -1,5 +1,5 @@
 spec	table	page	window	offset	name	count	stride	width	rw	reached_in_code	status	doc	section
-CRIME 1.5	5-7	113	CRIME	0x0	ID-Revision	1	0	64		1	undocumented		
+CRIME 1.5	5-7	113	CRIME	0x0	ID-Revision	1	0	64		1	named-only	chips/crime/README.md#addresses-and-widths-established	Addresses and widths (established)
 CRIME 1.5	5-7	113	CRIME	0x8	CPU Interface Control	1	0	64		1	undocumented		
 CRIME 1.5	5-7	113	CRIME	0x10	Interrupt Status	1	0	64		1	undocumented		
 CRIME 1.5	5-7	113	CRIME	0x18	Interrupt Enable	1	0	64		1	undocumented		
@@ -24,9 +24,9 @@ CRIME 1.5	6-12	150	CRIME	0x260	ECC Syndrome Bits	1	0	64		1	undocumented
 CRIME 1.5	6-12	150	CRIME	0x268	ECC Generated Check Bits	1	0	64		1	undocumented		
 CRIME 1.5	6-12	150	CRIME	0x270	ECC Replacement Check Bits	1	0	64		0	undocumented		
 CRIME 1.5	5-7	113	CRIME	0x4048	CPU Error Status	1	0	64		0	undocumented		
-CRIME 1.5	7-1	163	RE	0x0	IntfBuf.data[128]	128	8	64	R/W	0	undocumented		
-CRIME 1.5	7-1	164	RE	0x200	IntfBuf.addr[128]	128	8	64	R/W	0	undocumented		
-CRIME 1.5	7-1	164	RE	0x400	IntfBuf.ctl	1	0	32	W	0	undocumented		
+CRIME 1.5	7-1	163	RE	0x0	IntfBuf.data[128]	128	8	64	R/W	0	named-only	chips/crime/README.md#crime	CRIME
+CRIME 1.5	7-1	164	RE	0x200	IntfBuf.addr[128]	128	8	64	R/W	0	named-only	chips/crime/README.md#cpu-error-status-0x48-and-address-0x40	CPU error status (`0x48`) and address (`0x40`)
+CRIME 1.5	7-1	164	RE	0x400	IntfBuf.ctl	1	0	32	W	0	named-only	chips/crime/README.md#cpu-error-status-0x48-and-address-0x40	CPU error status (`0x48`) and address (`0x40`)
 CRIME 1.5	7-2	164	RE	0x1000	TLB.fbA[64]	64	8	64	R/W	0	undocumented		
 CRIME 1.5	7-2	164	RE	0x1200	TLB.fbB[64]	64	8	64	R/W	0	undocumented		
 CRIME 1.5	7-2	164	RE	0x1400	TLB.fbC[64]	64	8	64	R/W	0	undocumented		
@@ -56,7 +56,7 @@ CRIME 1.5	7-3	166	RE	0x2088	Vertex.GL[1].x	1	0	32	W	0	undocumented
 CRIME 1.5	7-3	166	RE	0x208c	Vertex.GL[1].y	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	166	RE	0x2090	Vertex.GL[2].x	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	166	RE	0x2094	Vertex.GL[2].y	1	0	32	W	0	undocumented		
-CRIME 1.5	7-3	166	RE	0x20a0	PixelXfer.src.addr	1	0	32	W	0	undocumented		
+CRIME 1.5	7-3	166	RE	0x20a0	PixelXfer.src.addr	1	0	32	W	0	named-only	chips/crime/README.md#cpu-error-status-0x48-and-address-0x40	CPU error status (`0x48`) and address (`0x40`)
 CRIME 1.5	7-3	166	RE	0x20a8	PixelXfer.src.xStep	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	166	RE	0x20ac	PixelXfer.src.yStep	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	166	RE	0x20b0	PixelXfer.dst.linAddr	1	0	32	W	0	undocumented		
@@ -106,7 +106,7 @@ CRIME 1.5	7-3	169	RE	0x21c8	Depth.Zs	1	0	64	W	0	undocumented
 CRIME 1.5	7-3	169	RE	0x21d0	Depth.dzdx	1	0	64	W	0	undocumented		
 CRIME 1.5	7-3	169	RE	0x21d8	Depth.dzdy	1	0	64	W	0	undocumented		
 CRIME 1.5	7-3	169	RE	0x21e0	Stencil.mode	1	0	32	R/W	0	undocumented		
-CRIME 1.5	7-3	170	RE	0x21e8	Stencil.mask	1	0	32	R/W	0	named-only	chips/heart/README.md#register-inventory	Register inventory
+CRIME 1.5	7-3	170	RE	0x21e8	Stencil.mask	1	0	32	R/W	0	named-only	chips/crime/README.md#cpu-interface-control-0x8	CPU interface control (`0x8`)
 CRIME 1.5	7-3	170	RE	0x21f0	PixPipeNull	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	170	RE	0x21f8	PixPipeFlush	1	0	32	W	0	undocumented		
 CRIME 1.5	7-15	183	RE	0x3000	MTE.mode	1	0	32	R/W	0	undocumented		
