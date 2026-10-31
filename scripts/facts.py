@@ -275,6 +275,14 @@ class Image:
             cands = [x for x in self.byname.get(routine, []) if x[4]] or self.byname.get(routine, [])
             if not cands:
                 raise SystemExit('facts: %s not found in %s' % (routine, self.path))
+            if len({x[0] for x in cands}) > 1:
+                # same-named static routines: guessing would document the wrong one
+                seen = {}
+                for x in sorted(cands, key=lambda x: (x[0], -x[1])):
+                    seen.setdefault(x[0], x[1])
+                raise SystemExit('facts: %s matches %d routines in %s:\n%s\npass 0xADDR --size N to choose one' % (
+                    routine, len(seen), self.path,
+                    '\n'.join('  0x%x  size %s' % (a, '0x%x' % n if n else 'unknown') for a, n in seen.items())))
             x = sorted(cands, key=lambda x: (x[0], -x[1]))[0]
         a, sz = x[0], size or x[1]
         self.size_source = 'given' if size else 'symbol' if x[1] and x[5] in ('symtab', 'dynsym') else \

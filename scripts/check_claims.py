@@ -75,7 +75,11 @@ GL_ERRORS = {1280: ('invalid enum', 'invalid-enum', 'invalid enumeration', 'inva
              1284: ('stack underflow', 'stack-underflow'),
              1285: ('out of memory', 'out-of-memory'),
              0x8031: ('table too large', 'table-too-large')}
-LIKELY_MN = {'beql', 'bnel', 'blezl', 'bgtzl', 'bltzl', 'bgezl', 'beqzl', 'bnezl', 'bc1tl', 'bc1fl'}
+# every MIPS IV branch-likely form: the compare branches, the REGIMM branches (the -al forms also link, so
+# facts.py counts them as calls), the pseudo-forms beqzl/bnezl and the coprocessor branches
+LIKELY_MN = {'beql', 'bnel', 'blezl', 'bgtzl', 'bltzl', 'bgezl', 'bltzall', 'bgezall', 'beqzl', 'bnezl',
+             'bc0tl', 'bc0fl', 'bc1tl', 'bc1fl', 'bc2tl', 'bc2fl'}
+LIKELY_RE = r'\b(%s)\b' % '|'.join(sorted(LIKELY_MN))
 MNEMONICS = set('''add addi addiu addu and andi b bal beq beql beqz beqzl bgez bgezal bgezall bgezl bgtz bgtzl blez
 blezl bltz bltzal bltzall bltzl bne bnel bnez bnezl break bc1f bc1fl bc1t bc1tl cache cfc1 ctc1 dadd daddi daddiu daddu
 ddiv ddivu div divu dmfc0 dmfc1 dmtc0 dmtc1 dmult dmultu dsll dsll32 dsllv dsra dsra32 dsrav dsrl dsrl32 dsrlv dsub
@@ -305,6 +309,9 @@ class Facts:
                 # of that name can exist more than once, so read the stated address
                 order = [('0x%x' % address, size)]
                 debug_elsewhere = True
+            elif syms and address is not None and len({x[0] for x in syms}) > 1:
+                # facts.py refuses a name that matches several routines; the stated address says which
+                order = [('0x%x' % address, size)]
             elif syms:
                 order = [(name, None)]
             elif address is not None:
@@ -533,8 +540,10 @@ class Ctx:
                 self.stack[a['offset']].append(a)
         self.likely = [b for b in fs['branches'] if b.get('likely') and b['mnemonic'] not in facts.CALLS]
         self.likely_mn = set()
-        for b in self.likely:
-            self.likely_mn |= canon(b['text'])
+        # the linking forms (bltzall, bgezall) are branch-likely too, though self.likely leaves calls out
+        for b in fs['branches']:
+            if b.get('likely'):
+                self.likely_mn |= canon(b['text'])
         self.branch_at = {int(b['address'], 16): b for b in fs['branches']}
         self.delay_at = {int(b['delay_address'], 16): b for b in fs['branches'] if b.get('delay_address')}
 
@@ -935,7 +944,7 @@ class Checker:
 
     def likely(self):
         c, t = self.c, self.text
-        for m in re.finditer(r'\b(beql|bnel|blezl|bgtzl|bltzl|bgezl|beqzl|bnezl|bc1tl|bc1fl)\b', t):
+        for m in re.finditer(LIKELY_RE, t):
             mn = m.group(1)
             pre = t[max(0, m.start() - 50):m.start()]
             if re.search(r'\b(no|not|never|without|instead of|rather than|public)\b(?:[^.;]|\.\w)*$', pre):
