@@ -578,7 +578,7 @@ class Checker:
         self.out(cls, 'unchecked', claim, '', reason)
 
     def run(self):
-        for f in (self.address, self.size, self.frame, self.got, self.callee, self.errors, self.likely,
+        for f in (self.address, self.size, self.frame, self.width, self.got, self.callee, self.errors, self.likely,
                   self.delay, self.returns, self.args, self.arglist, self.never, self.store_order, self.store_value, self.arg_offsets, self.callee_at, self.return_omission, self.per_pass, self.immediates,
                   self.offsets, self.stack, self.position, self.insn_address, self.sections, self.clauses):
             try:
@@ -657,6 +657,41 @@ class Checker:
                 self.ok('size', m.group(0))
             elif re.match(r'[Ss]ame ', m.group(0)):
                 self.mismatch('size', m.group(0), '%d words' % (c.size // 4), 'word count differs from the routine size')
+
+    WIDTH_WORDS = {'byte': 1, 'halfword': 2, 'half-word': 2, 'word': 4, 'doubleword': 8, 'double-word': 8,
+                   'dword': 8}
+
+    def width(self):
+        """ "the word at +N", "the doubleword at context +N", "+N (a halfword)": the access width there."""
+        c, t = self.c, self.text
+        pat = (r'\b(byte|half-?word|(?:double-?)?word|dword)\s+at\s+(?:the\s+)?'
+               r'(?:(?:context|record|object|array|leaf|branch|vertex|texture|pointer|block|entry|struct|table|'
+               r'structure|argument|first argument|second argument|third argument|state|buffer)\s+)?'
+               r'(?:offset\s+)?\+(0x[0-9a-f]+|\d+)\b(?![\w.]*\()')
+        for m in re.finditer(pat, t, re.I):
+            kind = m.group(1).lower()
+            want = self.WIDTH_WORDS.get(kind)
+            v = int(m.group(2), 0)
+            pre = t[max(0, m.start() - 40):m.start()]
+            if re.search(r'\b(?:float|single|double|pair|two|three|four|eight|several|\d+)\s*$', pre) or \
+                    re.search(r'\b(no|not|never|without)\b[^.;]{0,25}$', pre):
+                continue
+            acc = [a for a in c.offsets_access.get(v, []) if 'width' in a and not a.get('stack')]
+            if not acc:
+                acc = [a for a in c.raw_offsets.get(v, []) if not a.get('stack')]
+            if not acc:
+                continue    # the offset check reports it
+            widths = sorted({a['width'] for a in acc})
+            cls = 'width' if want >= 4 else 'width-narrow'
+            st = max(t.rfind('. ', 0, m.start()), 0)
+            sent = t[st:t.find('. ', m.end()) if t.find('. ', m.end()) > 0 else len(t)]
+            if want in widths or (want == 4 and 8 in widths and re.search(r'64-bit word|8-byte|doubleword', sent)):
+                self.ok(cls, m.group(0))
+            else:
+                a = next(a for a in acc)
+                self.mismatch(cls, m.group(0), '%s accesses +%d with width %s (%s)' % (
+                    a.get('text', '?').split()[0], v, '/'.join(map(str, widths)), a.get('text', '')),
+                    'the access at that offset is not a %s' % kind)
 
     def frame(self):
         for m in re.finditer(r'(?<![\w.])(0x[0-9a-f]+|\d+)-byte (?:stack )?frame(?![- ]?buffer)|frame (?:is|of) (0x[0-9a-f]+|\d+) bytes', self.text):
