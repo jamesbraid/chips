@@ -128,6 +128,70 @@ every site. Under `lo-hi`: 184 slot refills (0x...4f10), 13 further staged fetch
 a branch to the routine's return at 0x1fc04e78 (observed for the call at 0x1fc027e8) before pass two, leaving `$31`
 unconverted. So under `hi-lo` none of the eight sites reaches a cached caller.
 
+## Staged range and operand translation
+
+`--staged` prints, per call site, every CACHE operation's operand and the staged set at the routine's return
+(secondary cache 1 MB, 128-byte blocks, word order `lo-hi`; the set numbers below depend on that geometry, nothing else does).
+
+**Operands (established from the code, simulated).** No CACHE operation uses a mapped address. Every operand is an
+xkphys cache-algorithm-3 alias, VA[63:59] = 0x13 (0x98...), which is unmapped: the physical address is VA[35:0]. The
+routine builds them as `(PA & 0x1fffffff) | 0x13 << 59 | way`: the slot register at 0x1fc04a88 to 0x1fc04aa4
+(`$7` = 0x980000001fc04f00) and the target register at 0x1fc04a78 to 0x1fc04a84 (`$6`, advanced by 8 per piece, bit 0 =
+way). The code itself runs from the mapped window 0xc00000001fc0xxxx, but that address is only a fetch address and a
+data-read address (`ld` at 0x1fc04bfc); no CACHE operation takes it. Translation of the operands is therefore the
+identity on the low 32 bits.
+
+| Operation (instruction address) | Operand VA | Physical | Index bits used |
+| --- | --- | --- | --- |
+| Index Store Data (S), zero fill (0x1fc04abc, 0x1fc04ac0) | 0x980000001fc04f00 to 0x...4f70 step 0x10, way bit 0 then 1 | 0x1fc04f00 to 0x1fc04f70 | set PA[19:7] = 0x9e, way PA[0], quadword PA[6:4], doubleword PA[3] |
+| Index Store Data (S), trampoline (0x1fc04af4) | 0x980000001fc04f10 | 0x1fc04f10 | set 0x9e, way 0, quadword 1, doubleword 0 |
+| Index Store Tag/Load Tag (S) (0x1fc04b84, 0x1fc04b90, 0x1fc04b94, 0x1fc04bcc, 0x1fc04d68) | 0x980000001fc04f00 and 0x...4f01 | 0x1fc04f00, 0x1fc04f01 | set 0x9e, way PA[0] |
+| Index Store/Load Data (S), per piece (0x1fc04c64, 0x1fc04c68, 0x1fc04c8c, 0x1fc04cc8, 0x1fc04cdc) | 0x980000001fc04f00, +0x10, +8, +0xc | 0x1fc04f00 to 0x1fc04f10 | set 0x9e, way 0, quadword 0 or 1 |
+| Index Store Tag (I) on the slot set (0x1fc04d04, 0x1fc04d28) | 0x980000001fc04f01 (way 1), 0x980000001fc04f00 (way 0) | 0x1fc04f00 | primary set VA[13:6] = 0x3c, way VA[0] |
+| Index Load Data (I) from the slot (0x1fc04d40, 0x1fc04d48) | 0x980000001fc04f01, 0x980000001fc04f05 | 0x1fc04f00 | set 0x3c, way 1, word VA[5:2] = 0 and 1 |
+| Index Store Data (I) into the target (0x1fc04d44, 0x1fc04d4c) | 0x98...1fc0xxxx and +4, bit 0 = pass (1 then 0) | the target code's physical address | set VA[13:6], way VA[0], word VA[5:2] |
+| Index Store Tag (I) per target line (0x1fc04e10) | 0x98...1fc0xxx0 per 64-byte line, bit 0 = pass | the line's physical address | set VA[13:6], way VA[0] |
+
+Index by the untranslated VA instead of the translated PA: identical for every operand, because for an unmapped
+xkphys address VA[35:0] equals the PA and the secondary index (at most PA[23:6] for 16 MB) never reaches bit 36. The
+simulator indexes the secondary cache by the PA; rerunning with the 64-bit VA substituted gives the same result at
+all eight sites (same hits, same fetches). Had the operands been the mapped 0xc00000001fc0xxxx alias, translation by TLB
+entry 62 (0xc00000001fc00000 to 0x1fc00000) is also the identity on the low 32 bits, so that would not change the
+set or way either. The simulator has no TLB; it models the mapped window as that identity.
+
+**Staged set per call site (established, simulated).** Primary data cache: none, no D-cache CACHE operation is issued.
+Index Store Data (S) writes one doubleword per operation and zeroes the other doubleword of the quadword. Index Store
+Data (I) writes one word per operation, two per 8-byte piece. Pass one stages the routine itself into way 1 (23 lines,
+PA 0x1fc04980 to 0x1fc04f3f, the last one is the slot line, set 0x3c); pass two stages the caller's code into way 0.
+The slot in the secondary cache is one block (set 0x9e): quadwords 0 to 7 of both ways are zero-filled, quadword 0 is
+rewritten per piece, quadword 1 holds `jr $10`; only way 0 is ever given a valid tag and it is invalidated at 0x1fc04d68,
+so no secondary line is valid at return (16 quadwords written, 2 tags written).
+
+| Call site | Way-0 target lines (primary I) | Target PA span | Way-1 lines | Index Store Data (S) ops | Index Store Data (I) words | Index Store Tag (I) ops |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0x1fc027e8 | 5 | 0x1fc027c0 to 0x1fc028ff | 23 | 258 | 448 | 28 |
+| 0x1fc03490 | 7 | 0x1fc03480 to 0x1fc0363f | 23 | 274 | 480 | 30 |
+| 0x1fc036dc | 8 | 0x1fc036c0 to 0x1fc038bf | 23 | 282 | 496 | 31 |
+| 0x1fc0394c | 2 | 0x1fc03940 to 0x1fc039bf | 23 | 234 | 400 | 25 |
+| 0x1fc05950 (copy) | 3 | 0x1fc05940 to 0x1fc059ff | 23 | 242 | 416 | 26 |
+| 0x1fc05a14 (verify) | 5 | 0x1fc05a00 to 0x1fc05b3f | 23 | 258 | 448 | 28 |
+| 0x1fc368bc | 0 | none staged | 23 | 201 | 368 | 23 |
+| 0x1fc36fbc | 0 | none staged | 23 | 201 | 368 | 23 |
+
+At return every site also leaves one stray valid way-0 line at primary set 0x3c with the bogus tag PA[39:12] =
+0xfffffff (written at 0x1fc04d28, never cleared).
+
+**Sequential fetches after the trampoline (established, simulated).** The fetch at 0x980000001fc04f10 returns `jr $10`
+and the caller resumes at 0x1fc04d3c. The only cached fetches in 0x1fc04f00 to 0x1fc05fff in any run are
+0x1fc04f10 and its delay slot 0x1fc04f14. Nothing is fetched from 0x1fc04f18 to 0x1fc04ffc, 0x1fc05000 or 0x1fc06000 through
+a 0x98... alias, so there is no fall-through to explain. Lines beyond the first 64-byte block of the slot are not staged:
+the primary cache holds way-1 lines only up to 0x1fc04f3f, and the secondary cache holds only the zero-filled slot
+quadwords with no valid tag at return. A fetch of 0x1fc04f40 onward misses both caches and is a system read. A model
+that runs on through 0x1fc04f18 to 0x1fc04ffc and then page by page is therefore executing without ever seeing `jr $10` at 0x1fc04f10
+(or at 0x1fc04f14 under the other word order); the simulation says the word at 0x1fc04f10 must come from secondary
+quadword 1 (PA[4] = 1, written once at 0x1fc04af4 before quadword 0 is rewritten 208 or more times), and that a model
+which merges quadwords 0 and 1 (ignoring PA[6:4] on Index Store Data (S)) would overwrite it (reasoning from the operation order, not simulated).
+
 ## Where the manual is silent, and what the PROM requires
 
 1. **Word order of a secondary-cache doubleword (inferred).** Contradicted: Figure 14-33 (p. 283), and the text of

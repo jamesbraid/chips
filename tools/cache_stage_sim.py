@@ -463,11 +463,33 @@ CALLERS = (  # call site, kind, register set at the site (the values the caller'
     (0x1fc03490, 'jal', {'a0': 0xc00000001fc03630}),
     (0x1fc036dc, 'jal', {'a0': 0xc00000001fc03894}),
     (0x1fc0394c, 'jal', {'a0': 0xc00000001fc039a8}),
+    (0x1fc05950, 'jal', {'a0': 0xc00000001fc059c4}),  # copy wrapper
+    (0x1fc05a14, 'jal', {'a0': 0xc00000001fc05b2c}),  # verify wrapper
     # indirect calls through a global-pointer table slot (0x1fd67ce0) holding 0xc00000001fc04980;
     # a0 is the word in the slot the caller loads just before (0x1fd67cd8 and 0x1fd67cf8 in the image)
     (0x1fc368bc, 'jalr', {'t0': 0xc00000001fc04980, 'a0': 0xc00000001fc0dacc}),
     (0x1fc36fbc, 'jalr', {'a3': 0xc00000001fc04980, 'a0': 0xc00000001fc0dad4}),
 )
+
+
+def snapshot(m):
+    """Cache state at the routine's return."""
+    lines = [(i, w, e['tag']) for i, ways in enumerate(m.ic) for w, e in enumerate(ways) if e['valid']]
+    stags = [(k, t) for k, t in sorted(m.st.items()) if t['state']]
+    return dict(i_lines=lines, s_valid=stags, s_quads=len(m.sd), s_tags=len(m.st))
+
+
+def op_table(m):
+    """CACHE operations grouped by instruction address and operation."""
+    g = {}
+    for st, pc, name, va, pa, tlo, thi, ecc, info in m.log:
+        if name.startswith('CACHED'):
+            continue
+        e = g.setdefault((pc & 0xffffffff, name), dict(n=0, va=[], pa=[]))
+        e['n'] += 1
+        e['va'].append(va)
+        e['pa'].append(pa)
+    return g
 
 
 def run_caller(flash, args, site, regs, follow=20000):
@@ -498,6 +520,9 @@ def run_caller(flash, args, site, regs, follow=20000):
     if err:
         return m, out
     out['alias'] = (ret >> 59) == 0x13 and ret >> 62 == 2
+    out['snap'] = snapshot(m)
+    out['optable'] = op_table(m)
+    out['slotfetch'] = sorted({pa for st, pc, pa, how, w, fw in m.fetchlog if 0x1fc04f00 <= pa < 0x1fc06000})
     a0 = regs['a0']
     # range the routine stages: from the line holding the return address to the end address, 64-byte lines
     if out['alias']:
@@ -530,6 +555,39 @@ def run_caller(flash, args, site, regs, follow=20000):
     out['dynfetch'] = {k: (v[0], v[1]) for k, v in cls.items()}
     out['ops'] = len([e for e in m.log if not e[2].startswith('CACHED')])
     return m, out
+
+
+def staged_report(flash, args):
+    args.dword = 'lo-hi'
+    for site, kind, regs in CALLERS:
+        m, o = run_caller(flash, args, site, regs, follow=1)
+        print('## call site %#x, S-cache %d KB / %d-byte blocks, word order lo-hi' % (site, args.sc_size >> 10, args.sc_block))
+        for (pc, name), e in sorted(o['optable'].items()):
+            vas, pas = e['va'], e['pa']
+            top = sorted({v >> 59 for v in vas})
+            mapped = 'unmapped xkphys (VA[63:59]=%s)' % ','.join('%#x' % t for t in top) if all(v >> 62 == 2 for v in vas) else 'MAPPED/other'
+            if '(I)' in name:
+                idx = sorted({(v >> 6) & 0xff for v in vas})
+                how = 'set VA[13:6] %#x-%#x (%d sets), way VA[0] in %s, word VA[5:2]' % (idx[0], idx[-1], len(idx), sorted({v & 1 for v in vas}))
+            else:
+                sets = sorted({m.s_idx(p & ~1) for p in pas})
+                how = 'set PA[%d:%d] %#x-%#x (%d sets), way PA[0] in %s, quad PA[%d:4], half PA[3]' % (
+                    m.sc_size.bit_length() - 2, m.sc_block.bit_length() - 1, sets[0], sets[-1], len(sets), sorted({p & 1 for p in pas}), m.sc_block.bit_length() - 2)
+            print('  pc %#x %-22s x%-4d va %#x-%#x %s; pa %#x-%#x; %s' % (
+                pc, name, e['n'], min(vas), max(vas), mapped, min(pas), max(pas), how))
+        sn = o['snap']
+        il = sn['i_lines']
+        by = {}
+        for i, w, t in il:
+            by.setdefault(w, []).append(t << 12)
+        print('  at return: primary I %d valid lines (%s); primary D 0 (no D-cache op issued); secondary %d valid tags of %d written, %d quadwords written'
+              % (len(il), ', '.join('way %d: %d lines, PA %#x-%#x' % (w, len(v), min(v), max(v) + 0xfff) for w, v in sorted(by.items())) or 'none',
+                 len(sn['s_valid']), sn['s_tags'], sn['s_quads']))
+        if il:
+            spans = sorted((t << 12) | (i << 6) for i, w, t in il)
+            print('    primary I line PAs %#x-%#x' % (spans[0], spans[-1] + 63))
+        print('  cached fetches of PA 0x1fc04f00-0x1fc05fff during the call: %s'
+              % (', '.join('%#x' % x for x in o['slotfetch']) or 'none'))
 
 
 def callers_report(flash, args):
@@ -568,6 +626,7 @@ def main():
     ap.add_argument('--copy-len', type=lambda x: int(x, 0), default=0x1686a8)
     ap.add_argument('--trace', action='store_true', help='print every CACHE op')
     ap.add_argument('--regions', action='store_true', help='print the address ranges fetched in each class')
+    ap.add_argument('--staged', action='store_true', help='per call site: CACHE operand addresses and the staged set')
     ap.add_argument('--callers', action='store_true', help='run the other call sites of the routine')
     ap.add_argument('--matrix', action='store_true', help='one line per cache size, block size, word order and miss policy')
     args = ap.parse_args()
@@ -575,6 +634,9 @@ def main():
     for label, d in (('first word', 0x0140000800000000), ('second word', 0x01400008)):
         print('check bits for a doubleword holding 0x01400008 in its %s: %#x (the routine stores 0x395)'
               % (label, prom_ecc(flash, d)))
+    if args.staged:
+        staged_report(flash, args)
+        return
     if args.callers:
         callers_report(flash, args)
         return
