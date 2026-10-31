@@ -275,6 +275,57 @@ For the sample words the extra bits are not a bit inserted inside the instructio
 the opcode is expanded. Example: `addiu $4,$0,2` is 0x3:44200004; opcode 001001 becomes class 0011010001 at bits 35:26, immediate
 2 sits at bits 25:20 and register 4 at bits 4:0. `lui $2,0xc000` (0x3c02c000) is 0x3:5c000302: rt = 2 at bits 4:0, immediate bits 15:11 (11000 = 0x18) at bits 9:5.
 
+**Class table, p[35:29] (inferred, from the 80 slots of the five Valid lines).** Each row pairs a class value with the
+instructions the flash holds at the addresses whose table word carries it (the pairing is observed; that the class means
+this opcode for any other occurrence is inferred). p[28:26] is f[28:26]. "Bits 4:0" says which instruction field sits in
+p[4:0]: rt (`f[20:16]`, the operations that write rt) or the rd position (`f[15:11]`: SPECIAL rd, a branch offset's top bits,
+`mtc0` rd, `cache`/`jal` bits). `tools/predecode_table.py` prints these rows.
+
+    class  opcode / funct                         f[31:29]  bits 4:0  p[28:26]            words  source
+    0x00   SPECIAL funct 00 (sll; the nop)        000       -         000                 14     table lines 0-4
+    0x08   SPECIAL funct 38 (dsll), 3c (dsll32)   000       rd        000                 10     table lines 0-4
+    0x18   SPECIAL funct 25 (or)                  000       rd        000                 2      table lines 0-4
+    0x1a   op 08 addi, 09 addiu, 0d ori, 0f lui   001       rt        000,001,101,111     13     table lines 0-4
+    0x1e   op 19 daddiu                           011       rt        001                 12     table lines 0-4
+    0x35   op 2f cache                            101       rd        111                 12     table lines 0-4
+    0x36   op 37 ld                               110       rt        111                 1      table line 4
+    0x3f   op 10 mtc0                             010       rd        000                 12     table lines 0-4
+    0x40   op 03 jal                              000       rd        011                 1      table line 0
+    0x41   SPECIAL funct 08 (jr), op 02 (j)       000       rd        000 (jr), 010 (j)   2      table lines 0, 4
+    0x71   op 01 (REGIMM, branch on rs)           000       rd        001                 1      table line 4
+    0x7f   (pattern data, TagHi:TagLo 0xf:ffffffff, ECC 1)       pattern self-test table 0x1fc8a130
+    0x55   (pattern data, 0xa:aaaaaaaa, ECC 0)                   pattern self-test table
+    0x2a   (pattern data, 0x5:55555555, ECC 1)                   pattern self-test table
+    0x00   (pattern data, all zero, ECC 0)                       pattern self-test table
+
+**The seven classes reported undecodable (0x00, 0x08, 0x1e, 0x35, 0x3f, 0x41, 0x71): all are in the table above.**
+- 0x00 is the nop (`sll $0,$0,0`, 14 of the 80 slots in the Valid lines) and also every word of the three Invalid lines
+  (all 48 table triples there are zero, TagLo 0 so the lines are Invalid and never fetched) and the zero entry of the pattern
+  table. An all-zero 36-bit word is the nop; no other word carries class 0x00 except `sll` with nonzero fields, none in the table.
+- 0x08 `dsll`/`dsll32`, 0x1e `daddiu`, 0x35 `cache`, 0x3f `mtc0`, 0x41 `jr`/`j`, 0x71 branch on rs (op 1): these are the
+  opcodes of the code the PROM runs from the staged lines (by reading the code, not simulated): after the table is loaded, 0x1fc0295c jumps (`jr`) to
+  0x980000001fc027f4, which executes table lines 0 to 4 (the `mtc0` sequence at 0x1fc027f4 to 0x1fc02824, the `dsll`
+  and `cache` words through 0x1fc02884, the `daddiu`/`dsll` address building, the `jr $31` at 0x1fc028c4).
+  The classes the table also carries but that code does not run (0x18, 0x1a, 0x36, 0x40) are the `or`,
+  `addi/addiu/ori/lui`, `ld` and `jal` words.
+- Not instructions: 0x7f, 0x55, 0x2a, and the zero entry. They come from the pattern test (0x1fc02c90), which stores them,
+  reads them back and compares, through the 0xa800000000000000 alias on both ways; the self-test is the only reader.
+  Inferred: never fetched as code.
+
+**Other sources on the paths a Fuel takes.** The table loader at 0x1fc00de8 is reached by straight-line code from the
+cache clear at 0x1fc00de0 after the pattern test, and I found no branch between 0x1fc00c88 and 0x1fc00de8 that depends on
+a board-type value (the conditionals there test the pattern-test result, and the low bit of the 8-byte read at
+0x9200000001000020 only picks which of two LED slots is written). Earlier branches in the reset code (0x1fc00604 to
+0x1fc0064c, 0x1fc00c4c) test Status and Config values and a call result and can bypass it; I did not trace a board-type
+read to them, so that a Fuel runs the loader is not shown here. The other Index Store Data (I) source on the staging
+paths is this page's routine (0x1fc04d44, 0x1fc04d4c), whose words are hardware readbacks of whatever it staged: a model that predecodes
+needs a class for every opcode in the staged range, and the table does not give them all. Opcode/funct values in the
+ranges the eight call sites stage that have no class in the table (data words in a range included): routine itself
+(0x1fc04980 to 0x1fc04f3f) funct 09 16 24 26 2b 2f 3a 3e and ops 04 05 07 0b 0c 11; 0x1fc027e8 none; 0x1fc03490
+funct 24 26 27 2d 3a 3e and ops 04 05 0c 0e 3f; 0x1fc036dc funct 26 27 2d 3a 3e and ops 04 05 0c 0e 3f; 0x1fc0394c funct 24 2d
+3a and op 05; copy: funct 24 and ops 04 05 3f; verify: funct 2d and ops 04 05 3f (`beq` 04 and `bne` 05 are among them).
+These classes are undecodable from this PROM; they are not needed if the model keeps the architectural word.
+
 **3. The simulator's hit path.** The simulator returned `TagLo` as the instruction word on every primary hit
 (`e['w'][wi] & 0xffffffff`) and kept TagHi's four bits unused. That is correct only for the routine it ran: it models
 the refill as copying the secondary data words unchanged, so Index Load Data (I) returns the raw flash word in TagLo

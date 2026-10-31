@@ -70,14 +70,53 @@ def main():
                 print('  opcode[2:0] differs: %08x' % f)
     print('bits 25:0 follow the layout for %d of %d words; parity bit equals the XOR of the 36 data bits for %d of %d'
           % (len(nz) - bad, len(nz), len(nz) - par, len(nz)))
-    print('\nbits 35:26 by instruction (opcode, funct for SPECIAL):')
-    seen = {}
-    for f, v in sorted(nz.items()):
-        for p, e in v:
-            key = (f >> 26, f & 63 if f >> 26 == 0 else None)
-            seen.setdefault(key, set()).add(format(p >> 26, '010b'))
-    for (op, fn), cl in sorted(seen.items(), key=lambda x: (x[0][0], x[0][1] or 0)):
-        print('  op %02x%s: %s' % (op, '' if fn is None else ' funct %02x' % fn, ' '.join(sorted(cl))))
+    # class table: p[35:29] against the instruction it stands for
+    rows = {}
+    for fl, p in slots:
+        c = p >> 29
+        r = rows.setdefault(c, dict(n=0, ops=set(), f3=set(), pos=set(), c3=set()))
+        r['n'] += 1
+        r['f3'].add(fl >> 29)
+        r['c3'].add(p >> 26 & 7)
+        if fl:
+            r['ops'].add((fl >> 26, fl & 63 if fl >> 26 == 0 else None))
+            r['pos'].add('rt' if fl >> 26 in RT_DEST else 'rd')
+        else:
+            r['ops'].add((0, 0))
+    print('\nclass p[35:29] (hex), opcode/funct it stands for, f[31:29], bits 4:0 hold, p[28:26], words in the Valid lines:')
+    for c, r in sorted(rows.items()):
+        ops = ', '.join('op %02x' % o if f is None else 'SPECIAL funct %02x' % f for o, f in sorted(r['ops'], key=lambda x: (x[0], x[1] or 0)))
+        print('  %#04x  %-34s f[31:29]=%s  %s  p[28:26]=%s  %d' % (
+            c, ops, ','.join(format(x, '03b') for x in sorted(r['f3'])), '/'.join(sorted(r['pos'])) or '-',
+            ','.join(format(x, '03b') for x in sorted(r['c3'])), r['n']))
+    zero_invalid = 0
+    o = TABLE - BASE
+    for n in range((END - TABLE) // 0xd0):
+        va, th, tl = struct.unpack('>QII', d[o:o + 16])
+        o += 16
+        for i in range(16):
+            h, l, e = struct.unpack('>III', d[o:o + 12])
+            o += 12
+            if not tl >> 6 & 1:
+                zero_invalid += (h | l | e) == 0
+    print('zero words (all of TagHi, TagLo, ECC) in the Invalid lines 5 to 7: %d of 48' % zero_invalid)
+    print('\npattern test table at 0x1fc8a130 (data, stored and compared, never an instruction):')
+    for k in range(4):
+        q0, q1, q2 = struct.unpack('>QQQ', d[0x8a130 + 24 * k:0x8a130 + 24 * k + 24])
+        v = (q2 >> 32) << 32 | (q2 & 0xffffffff)
+        print('  TagHi:TagLo %#x:%08x  p[35:29] = %#04x  ECC %d' % (v >> 32, v & 0xffffffff, v >> 29, q1 >> 32))
+    known = {k for r in rows.values() for k in r['ops']}
+    print('\nopcodes in the code ranges the 0x1fc04980 routine stages through Index Load/Store Data (I), and whether the table gives their class:')
+    for name, lo, hi in (('routine itself', 0x1fc04980, 0x1fc04f40), ('0x1fc027e8', 0x1fc027c0, 0x1fc02900), ('0x1fc03490', 0x1fc03480, 0x1fc03640),
+                         ('0x1fc036dc', 0x1fc036c0, 0x1fc038c0), ('0x1fc0394c', 0x1fc03940, 0x1fc039c0),
+                         ('copy 0x1fc05950', 0x1fc05940, 0x1fc05a00), ('verify 0x1fc05a14', 0x1fc05a00, 0x1fc05b40)):
+        ops = set()
+        for a in range(lo, hi, 4):
+            f = struct.unpack('>I', d[a - BASE:a - BASE + 4])[0]
+            ops.add((f >> 26, f & 63 if f >> 26 == 0 else None))
+        miss = sorted(ops - known, key=lambda x: (x[0], x[1] or 0))
+        print('  %-18s %2d distinct opcode/funct, %2d without a class in the table: %s' % (
+            name, len(ops), len(miss), ' '.join('%02x' % o if f is None else '00/%02x' % f for o, f in miss) or '-'))
     same = sum(1 for f, p in slots if p == f)
     print('\nof %d slots in Valid lines, %d hold the flash word unchanged in TagLo (zero words and no others); %d are nops'
           % (len(slots), same, sum(1 for f, p in slots if f == 0)))
