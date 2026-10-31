@@ -45,6 +45,37 @@ chip page and the entry is deleted.
   Valid end state unless a PROM or diagnostic routine that sets them is found. The PROM's bank-sizing loops use
   indexed addresses, so the census records only their bases, and the diagnostic's CRIME routines are stripped.
 - **Bedrock, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
+- **MACE: write- and read-failure behaviour.** The graded answers (what sets each PCI error flag, what the error
+  address register latches, which interrupt fires) are in chips/mace/README.md, "Error reporting for a refused or
+  timed-out CPU access". Open there: what sets flags 26, 24 and 23 and what a refused memory or I/O window access
+  sets; whether a posted write's failure differs from a read's at the CPU; whether any MACE address returns the read
+  response error bit; what a PIO to an ISA device that never answers does (the specification gives the peripheral
+  controller no timeout or error flag); a second error's effect on the latched address. Next: CRIME's own error
+  registers (the CRIME census), and the compressed IP32 PROM's PCI and ISA probes once it can be read.
+- **MACE: the compressed IP32 PROM.** `ip32prom.image` holds three segments (`sloader`, `post1`, `firmware`) with
+  an eight-byte `PROM` header and `SHDR` records at `0x108`, `0x4108`, `0x4508`, `0x9308`; their bodies are not plain
+  code. The census therefore holds no PROM access. Tried: the Xbow-era container unpacker (a different layout);
+  string search (only the `sloader` and `post1` banner and a few message strings are readable). Next: read the
+  decompression routine from the `sloader` body (the one segment small enough to read by hand) and unpack
+  `firmware` with it.
+- **MACE: blocks reached through run-time pointers.** The Ethernet driver (`if_me.o`), the 16550 serial driver
+  (`sio_ti16550.o`, `serialio.o`), the video code (`mvp.o`) and the DP-RAM and parallel context registers take their
+  addresses from records. The census has three Ethernet rows (from `ide`) and one video row. Next: constant-fold the
+  record fields, or read the attach routines by hand and add the registers to the page.
+- **MACE: revision strap at `0x310000` bit 4.** `pckm_attach` sets a `mace_rev` flag from bit 4 of the ring base and
+  reset register, which the specification calls reserved; the PS/2 code treats status bit 6 differently when the flag
+  is 0. Tried: the specification's PS/2 and ISA chapters, Linux and NetBSD (neither reads it). Next: the specification
+  revision history pages (host bridge revision 0 versus 1 notes) and the NetBSD PS/2 driver for the same quirk.
+- **MACE: video output `0x200058` bits 35:32.** `mvpprobe` returns bits 35:32 of the 64-bit read; the specification
+  defines bits 18:0 of the hardware configuration register. Next: the specification's video chapter text.
+- **MACE: `0x304018`.** The Ethernet driver writes and reads this address as a flush target. It is not in the
+  specification's register list. Next: confirm the block repeat on the peripheral controller's audio block.
+- **MACE: calendar-clock user RAM spacing.** `read_dallas_nvram` reads one byte apart from `0x3a0e08` while every
+  other register of the block is 256 bytes apart. Next: read the writer and its callers.
+- **MACE: Linux I2C offsets.** `struct mace_i2c` in the Linux header puts control and data at 8 and 0x10; IRIX and the
+  specification use `0x10` and `0x18`. Next: the Linux I2C driver that uses the structure, to see which offsets it
+  reaches in practice.
+- **Hub, Bedrock, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
   seeds (see HAIKU-BRIEF.md) and run `tools/run.sh`.
 - **Model of a PROM's window base.** A PROM builds its window pointer at run time; the census recovers a
   pointer only where an identity-register probe shows it. Next: constant-fold the PROM's address setup.

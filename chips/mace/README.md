@@ -1,9 +1,340 @@
 # MACE
 
-Mode: **spec-backed** (see [docs/specs.md](../../docs/specs.md)).
+Mode: **spec-backed** (see [docs/specs.md](../../docs/specs.md): MACE I/O ASIC Specification, chip revision 2.0,
+31 May 1996; its register tables are transcribed in
+`docs/sources/specs/mace-specification.registers.md`). Every fact below was first read from the IRIX 6.5.30 IP32
+objects `kernel.o`, `mace.o`, `pcimh.o`, `ecplp.o`, `a3_dd.o`, `mvp.o`, `rad_dd.o`, `mhpckm.o`, `if_me.o`,
+`if_ecf.o`, `if_rns.o` and the member `sio_ti16550.o`, and from the monitors `symmon.IP32`, `ide.IP32` and
+`sash.ARCS`. The specification, the public Linux header `arch/mips/include/asm/ip32/mace.h` and the NetBSD
+`sgimips` MACE driver are compared afterwards (sections "Against the published specification" and "Against the
+public drivers") and never supply a fact.
+Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`),
+config [`tools/configs/mace.json`](../../tools/configs/mace.json), header [`include/mace.h`](../../include/mace.h).
 
-O2 I/O ASIC. Spec: MACE I/O ASIC Specification, chip revision 2.0. Builds: IP32.
+MACE is the O2 I/O ASIC. It sits behind CRIME and holds a 4 MB register window at physical `0x1f000000`, split in
+eight 512 KB blocks (specification table 91): a reserved block, the PCI host bridge (`0x80000`), three video
+channels (`0x100000`, `0x180000`, `0x200000`), Ethernet (`0x280000`), the peripheral controller (`0x300000`: audio,
+ISA DMA and control, PS/2, I2C, timers) and the external ISA space (`0x380000`: parallel, two serial ports, the
+calendar clock). **Offsets on this page are from `0x1f000000`.** IRIX reaches the window through the uncached 32-bit
+segment (`lui 0xbf08` is the PCI block, `0xbf31` the ISA control page, `0xbf3a` the calendar clock).
 
-Status: no entries yet. Census config: [`tools/configs/mace.json`](../../tools/configs/mace.json); results land in `census/`.
+## What this census covers, and what it does not
 
-Entries below carry a label (established, inferred, unknown) and a derivation, per AGENTS.md.
+The scan resolves a register when the code builds the address as a constant, either in a load or store or as the
+address argument of the kernel's `pciio_pio_read8/16/32/64` and `pciio_pio_write8/16/32/64` accessors. Most kernel
+and driver traffic goes through those accessors; some routines (the LED, timer and bus-probe code) use plain loads
+and stores. `ecplp.o` calls the accessors through a function pointer it loads with an address relocation, which the
+scan follows. It does **not** reach:
+
+- registers a driver addresses through a pointer or table it fills in at run time: the Ethernet driver `if_me.o`
+  (only the three Ethernet rows the `ide` diagnostic touches are in the census), the 16550 serial driver
+  `sio_ti16550.o` and the video code in `mvp.o` (one probe read). The PS/2 registers are read by hand below,
+  because their base addresses sit in a constant table;
+- the IP32 PROM: the image holds three compressed segments (`sloader`, `post1`, `firmware`) and no tool in this
+  repository unpacks them, so no PROM access is in the census (open question);
+- video channel registers, the DP-RAM, the parallel DMA context registers and the serial ring pointers: no routine
+  read reaches them by constant address.
+
+## What identifies the chip and its revision
+
+- **PCI host bridge revision (established).** The `ide` diagnostic reads `0x8000c` (census site in `sub_a00bc360`)
+  and passes the value to the string "Initializing MACE PCI rev. info 0x%x". The specification defines a read of
+  that register as the host bridge revision (0 for MACE 1.0, 1 for MACE 2.0, page 165). The kernel never reads it.
+- **A `mace_rev` flag (established arithmetic, unexplained).** `pckm_attach` (`mhpckm.o`, read to its first branch)
+  reads the 64-bit register at `0x310000` and tests bit 4: set gives `mace_rev` 1, clear gives 0. The PS/2 code then
+  branches on `mace_rev` (see "Other established sequences"). The specification calls bits 14:1 of that register
+  reserved and read as zero. Whether bit 4 is a revision strap the specification omits is **unknown**.
+
+## Register inventory
+
+The census reaches **70 register rows** (one per 8-byte slot, except the PCI block, folded to 4-byte slots, and the
+calendar-clock and parallel-port blocks, folded to 256-byte slots, the spacing the chip gives its 8-bit registers),
+754 access sites, every one a direct constant. Of the 70, **69 are in the specification's register map** and one
+(`0x304018`) is not. Grade is of the role and fields: **E** established (the routine that uses it read in full, or
+an arithmetic the code performs), **I** inferred, **U** unknown. Names are the specification's, except where the
+audio driver's own strings are quoted. Access and width are what the instructions do (established wherever a site
+exists).
+
+Totals over the 70 rows: **24 established, 44 inferred, 2 unknown.**
+
+### PCI host bridge (6 rows; word accesses only in every routine)
+
+| offset | register | width | access seen | who touches it | what the code does | grade |
+|---|---|---:|---|---|---|---|
+| `0x80000` | PCI error address | 4 | r | `mace_pci_error` (`pcimh.o`), `pci_error_intr` (`kernel.o`) | read second, after the flags, and used as the failing address ("PCI error path") | E |
+| `0x80004` | PCI error flags | 4 | rw | `mace_pci_error`, `pci_error_intr`, `badaddr`, `badaddr_val`, `wbadaddr`, `baerror`, `VEC_dbe`, `VEC_ibe`, `mlreset`, `init_pci` (`symmon`), `ide` | read and tested against `0x80180000`, `0xf0000`, bit 20, bit 21 and `0x3d000000`; **every writer stores 0** | E |
+| `0x80008` | PCI control | 4 | rw | `mlreset`, `rad_attach`, `init_pci` (`symmon`), `ide` | written whole: `0xfe008dff` or `0xfe0085ff` (kernel), `0xff000500` (`symmon`), `0xff000503` (`ide`, read back and compared); bit 11 tested and cleared by `rad_attach` | E |
+| `0x8000c` | read-buffer flush / revision | 4 | rw | `pcimh_flush_buffers`, `ide`, `if_ecf.o` | the kernel writes 1; `ide` reads and prints it | E |
+| `0x80cf8` | CONFIG_ADDRESS | 4 | w | `pcimh_config_ptr_get/set`, `if_ecfattach`, `ide` | written with a per-slot word plus `register & 0xfc`; always a 32-bit store | E |
+| `0x80cfc` | CONFIG_DATA | 4 | rw | same | always a 32-bit load or store; narrower accesses are merged in software | E |
+
+### Other rows
+
+| offset | register | width | access seen | who touches it | what the code does | grade |
+|---|---|---:|---|---|---|---|
+| `0x200058` | video output hardware configuration | 8 | r | `mvpprobe` (`mvp.o`) | returns bits 35:32 of the 64-bit value; the specification defines only bits 18:0 | I |
+| `0x280000` | Ethernet MAC control | 4 (+4) | rw | `ide` only | low word read, then written 0 and 1 (a reset sequence); the driver `if_me.o` is not reached | I |
+| `0x280040` | Ethernet receive FIFO | 1 | r | `ide` only | bytes 5 and 6 read in a wait loop; role not read | U |
+| `0x280100` | Ethernet internal RAM | 4 | rw | `ide` only | one word written at `+4`; role not read | U |
+| `0x300000` | audio control and status (`AUD_CNTRL_STAT`) | 8 | rw | `a3_probe` (read in full), `a3_start_dma`, `a3_update_subsys` | bit 1 is "codec present" (the probe gives up when it is clear); write 1, delay 1 us, write 0 | E |
+| `0x300008` | codec status control (`AUD_CODEC_REG`) | 8 | rw | `a3_probe`, `do_write_codec_reg` (read in full) | the probe writes `0x10000`; a codec register write stores `(reg << 17) \| (value & 0xffff)` | E |
+| `0x300010` | codec status input mask (`AUD_CODEC_INTR_MASK`) | 8 | rw | `write_codec_reg`, dump | written; role from the name | I |
+| `0x300018` | codec status input (`AUD_CODEC_READ`) | 8 | r | `a3_probe` (read in full), `do_read_codec_reg` | the probe keeps bits 3:0 for a hardware-inventory entry; a read returns bits 15:0 | E |
+| `0x300020`-`0x300078` | audio channel 1 to 3 control, read, write and depth (12 rows) | 8 | r | `a3_idbg_dump_hw` (read in full) | printed under the driver's names `AUD_CH1_CNTRL` to `AUD_CH3_DEPTH`; nothing writes them by constant | I (12) |
+| `0x304018` | none: 16 KB above the audio block start | 4 | rw | `pioflush` (`if_me.o`, read in full) | after a write-buffer flush: write 0, write 0, read; a dummy access that pushes earlier writes out | E; not in the specification |
+| `0x310000` | ISA ring base and reset | 8 | rw | `isa_dma_buf_init` (read in full), `pckm_attach`, `ide` | stores the 32 KB-aligned buffer address as one 64-bit write; `ide` writes 0 ("ISA Bus and Parallel Port reset negated") | E |
+| `0x310008` | miscellaneous control | 8 | rw | `set_leds`, `reset_leds`, `bump_leds` (read in full), `ide` | read-modify-write of bits 5:4 only; bit 4 read back to toggle | E |
+| `0x310010` | ISA interrupt status | 8 | r | `mace_intr` (read in full), `powerintr`, `cpu_waitforreset`, `a3_err_intr` | read and tested at bits 8 and 1; never written | E |
+| `0x310018` | ISA interrupt mask | 8 | rw | `mace_mask_enable/disable/update/read/write` (read in full), `pckm_enable_interrupt`, `a3_err_intr`, `sub_121f4` | read-modify-write at interrupt level 7: or `0xa00`, or `0x100`, and-not `0x2` | E |
+| `0x314010` | parallel DMA control and status | 8 | rw | `plp_io`, `plp_reset_dmacntxts`, `plpclose` | written 1, 2 and 4; bit 0 tested | I |
+| `0x314018` | parallel DMA diagnostic | 8 | r | `plp_tmout`, `plp_rbflush` | bits 13:2 isolated (a byte count); bits 1:0 tested | I |
+| `0x318000`, `0x318020`, `0x31c000`, `0x31c020` | serial port 1 and 2 transmit and receive DMA control (4 rows) | 8 | rw | `_ip32_disable_serial_dma`, `_ip32_restore_serial_dma` (read in full) | each read, saved, `& ~0x200` written back; the saved word is restored later | E (4) |
+| `0x330010` | I2C control and status | 8 | rw | `_mvpi2c_force_bus_idle`, `_mvpi2c_wait_for_ack` (read in full), `_mvpi2c_wait_for_xfer_done` | bit 0 (idle), 4 (busy), 5 (no acknowledge) and 7 (bus error) tested; bit 0 written 0 to request the bus | E |
+| `0x330018` | I2C data | 8 | rw | `mvpi2c_read_reg` | written and read around transfers; not read in full | I |
+| `0x340000` | universal system time | 8 | r | `update_ust` (read in full) | 64-bit read, low 32 bits kept, extended in software | E |
+| `0x340008`, `0x340010`, `0x340018` | compare timers 1 to 3 | 8 | r | `ide` timer test | read only by the diagnostic; role from the specification's name | I (3) |
+| `0x340020`, `0x340028`, `0x340030` | audio input, output 1, output 2 MSC and UST | 8 | r | `a3_idbg_dump_hw` | printed as `AIN_MSC_UST`, `AOUT1_MSC_UST`, `AOUT2_MSC_UST` | I (3) |
+| `0x380000` to `0x380400`, `0x388200` | ISA parallel-port and ECP registers (6 rows, byte lane 0) | 1 | rw | `ecplp.o` (many routines) | byte registers 256 bytes apart; the role of each not read | I (6) |
+| `0x3a0a00`, `0x3a0c00`, `0x3a4a00`, `0x3a4b00` | calendar clock registers A, C, 4A and 4B (byte lane 7) | 1 | rw | `cpu_rtcinit`, `cpu_waitforreset`, `powerintr` (read in full) | see "Calendar clock" | E (4) |
+| the other 14 calendar-clock rows (`0x3a0000` to `0x3a0900`, `0x3a0b00`, `0x3a0e00`, `0x3a4800`, `0x3a4900`) | time, alarm, B, user RAM, century | 1 | rw | `sub_129e8`, `set_autopoweron`, `read/write_dallas_nvram`, `ide`, `symmon` | roles from register position and routine names | I (14) |
+
+PS/2 (read by hand; **4 register kinds, not in the census**): the keyboard base `0xbf320000` and mouse base
+`0xbf320020` are two entries of an initialised table in `mhpckm.o`. Every PS/2 routine reaches them through
+`pciio_pio_read64` and `pciio_pio_write64` with `base + 0x8` (receive data, read), `base + 0x10` (control, written
+`(old & 0xff) | 8` by `pckm_enable_interrupt`) and `base + 0x18` (status: bit 4 tested to see data waiting, bit 6
+tested too); transmit goes through a shared helper `outb` (not read). Established for the three offsets and the bit
+tests; the transmit offset `+0x0` is inferred.
+
+## PCI error path (established: `mace_pci_error`, `pci_error_intr`, `badaddr`, `VEC_dbe`, `mlreset`)
+
+- **Hook-up.** `pcimh_attach` calls `setcrimevector(7, 1, mace_pci_error, 0, 0)`: the PCI error handler is the
+  handler of CRIME vector 7. The specification (table 90, page 179) puts "PCI Error Conditions" in CRIME interrupt
+  slot 7.
+- **Enable.** `mlreset` first writes 0 to the error flags, then writes the control register `0xfe008dff`, or
+  `0xfe0085ff` when `ip32_pci_enable_prefetch` is zero: bit 11 differs and nothing else. Bits 31:25 are set and bit
+  24 is not. `rad_attach` reads the control register, and if bit 11 is set prints "rad_dd: Disabling PCI prefetch.",
+  writes the value back with bit 11 cleared and reads it again, printing "PCI prefetch still enabled" if it stuck.
+  `symmon`'s `init_pci` writes flags 0 and control `0xff000500` (bits 31:24, 10 and 8); `ide` writes `0xff000503`
+  and checks that the read-back equals what it wrote.
+- **Handler (`mace_pci_error`).** It reads the flags (`0x80004`), then the address (`0x80000`), then writes 0 to the
+  flags, clearing every bit the chip lets software clear, before it looks at either value. If the flags hold master
+  abort, "address is a configuration address" and "master abort address valid" together (mask `0x80180000`: bits
+  31, 20, 19) it returns without a message unless the variable `pcimh_verbose` is set: an absent device on a
+  configuration cycle is the normal outcome of a bus scan. With none of the four address-valid bits (`0xf0000`) set it
+  prints "PCI %r Error (no PCI address logged)" only when `pcimh_verbose` is set, and otherwise returns. Otherwise
+  flag bit 20 selects configuration decode: the slot is the lowest set bit among address bits 12 to 16 (device `n`
+  at bit `11 + n`, n = 1 to 5), the function is bits 10:8 and the register bits 7:0; it finds the device record with
+  that slot and function and prints "PCI %r Error accessing ... Config reg 0x%x for ..." (a "no device present" form
+  when none is found). With bit 20 clear it takes a type of 4 when flag bit 21 is set and 2 when it is clear, looks
+  for one of the six device windows of that type that contains the address, and calls the generic PCI error handler
+  of the I/O layer for that device; when the handler returns 9 it prints "Address owned by %v ...", and any other
+  result ends the routine silently. With no matching window it prints "(no associated PCI device)". Read in full as
+  branches; the meaning of the types 2 and 4 and of the handler's results is **inferred**.
+- **A handler no one installs.** `pci_error_intr` (`kernel.o`) reads flags then address, prints "catastrophic error
+  on PCI bus. flags = 0x%x addr 0x%x" when `flags & 0x3d000000` is non-zero (bits 29, 28, 27, 26 and 24), and then
+  writes 0 to the flags. No call or address reference to it exists in any IP32 kernel object, driver or archive
+  member held, so the shipped kernel never installs it (established by absence over those files; the PROM, which is
+  not read, could still use it).
+- **Probing.** `badaddr`, `badaddr_val`, `wbadaddr` and `wbadaddr_val` (the kernel's "is there hardware here" probes)
+  store 0 to CRIME offsets `0x48` and `0x250` (read back) and to the MACE error flags (read back), mark the thread
+  "no fault expected", perform the access, read CRIME offset `0x8`, then read CRIME offset `0x28` and test it against
+  `0x300080` (bits 21, 20 and 7). A non-zero result takes `baerror`, which clears the same registers again and
+  reports failure. The probes therefore see a refused access (read or write) through CRIME's interrupt status, not
+  through an exception, and bit 7 of that register is the MACE PCI error line (vector 7 above).
+- **Bus-error exceptions.** `VEC_dbe` and `VEC_ibe` copy CRIME's CPU error status, CPU error address, memory error
+  status, memory error address and the VICE error address (offsets `0x48`, `0x40`, `0x250`, `0x258`, `0x58`) into
+  variables the kernel names `crm_cpu_error_stat`, `crm_cpu_error_addr`, `crm_mem_error_stat`, `crm_mem_error_addr`
+  and `crm_vice_error_addr`, clear the status registers at `0x48` and `0x250` and the MACE flags (store 0), and go to
+  the trap code. They never read the MACE flags: the MACE side of a bus error is only cleared.
+
+## Configuration cycles (established: `pcimh_config_ptr_get`, `pcimh_config_ptr_set`)
+
+The kernel never uses byte or halfword accesses to `0x80cfc`. A read writes the address word (the per-slot word plus
+`register & 0xfc`), reads the 32-bit data and shifts and masks it in software; a write of fewer than 4 bytes reads
+the word first, merges the new bytes and writes 32 bits back (both at interrupt level 7). For register offset 4
+(command and status) the old word that is merged keeps only its low 16 bits, so a write never stores ones into the
+status half (established arithmetic: `and 0xffff` on that path). The base-address sizing code writes all ones and reads
+back, and skips a register that reads all ones; `ide`'s PCI test treats an all-ones read of the first word as "no
+device".
+
+## Interrupts (established: `mace_intr`, `setmaceisavector`, `mace_mask_*`)
+
+`setmaceisavector(vector, mask, handler)` accepts vector 4 or 5 only (anything else panics) and installs the handler
+in a table of ten 56-byte entries; the first use of each vector calls `setcrimevector` with `mace_intr` as the
+handler. `mace_intr` reads the 64-bit ISA interrupt status (`0x310010`) and for each entry whose mask intersects the
+status calls the handler or, for an entry marked as a thread, disables that mask in `0x310018` and wakes the thread
+(which re-enables it). Nothing writes the status register: acknowledgement happens in the device, as the
+specification says (page 62). `powerintr` is installed on vector 5 with mask `0x100` (bit 8, the calendar-clock
+interrupt): the power button is wired through the clock chip.
+
+## Calendar clock (established sequences, inferred chip)
+
+Registers are single bytes, one per 256 bytes, in byte lane 7 (`0x3a0000 + 0x100 * n + 7`), the spacing the
+specification states for the external ISA space. The routines call the chip a "dallas" device
+(`read_dallas_nvram`); the register numbering below is the standard numbering of that part and is **inferred**.
+
+- `cpu_rtcinit` (`symmon`, read in full): register A (`0xa`) `&= ~0x40`, `|= 0x30`; register `0x4b` `&= ~2`, then
+  `|= 0x81`; register `0x4a` `&= ~3`; register A `&= ~0x10`. Bit 4 of A selects the register bank, so the routine
+  selects bank 1, changes bits in two extended control registers and returns to bank 0.
+- `powerintr`: tests ISA status bit 8, then register `0xc` bit 7; sets bit 4 of A, reads `0x4a`, clears bits 2:0 of
+  it, clears bit 4 of A. `cpu_waitforreset` loops on ISA status bit 8 and register `0xc` bit 7, sets bit 4 of A, and
+  calls `cpu_powerdown` when register `0x4a` bit 0 is set.
+- `set_autopoweron` writes registers 1, 3, 5 (alarm seconds, minutes, hours by position) and `0x49`.
+- `read_dallas_nvram` accepts offset plus length below 114 and reads bytes at `0x3a0e08 + offset + index`, **one
+  byte apart**. Every other register of this block is 256 bytes apart. The two spacings cannot both describe one
+  chip; **unknown** which the hardware decodes (open question).
+
+## Other established sequences
+
+- **ISA reset and ring base.** `isa_dma_buf_init` allocates an 8-page contiguous buffer, takes its address `&
+  0xffff8000` and writes it zero-extended as one 64-bit store to `0x310000`, then flushes the bus. Bit 0 of the
+  stored value is 0. The specification gives bit 0 as the reset of the external controller with reset value 1; `ide`
+  also writes 0 and prints "ISA Bus and Parallel Port reset negated", so a write of 0 releases the Super I/O reset
+  (inferred from the specification's bit).
+- **LEDs.** `set_leds(0)` stores `(misc & ~0x30) | 0x10` and `set_leds(n)` for nonzero `n` stores `misc & ~0x30`;
+  `reset_leds` ORs in `0x30` and calls `set_leds(0)`. The specification gives bits 4 and 5 as the red and green LED
+  enables, active low, so zero means lit (the polarity is the specification's; the bit positions are read).
+- **Serial DMA stop.** `_ip32_disable_serial_dma` reads the four channel controls (`0x318000`, `0x318020`,
+  `0x31c000`, `0x31c020`), saves them in a table, clears bit 9 (`0x200`) of each and writes them back;
+  `_ip32_restore_serial_dma` writes the saved words back. Bit 9 is the channel's DMA enable in the specification.
+- **Timer.** `update_ust` reads the 64-bit `0x340000`, keeps the low 32 bits and adds the difference from the last
+  value into a 64-bit software counter. The specification gives it as a 32-bit counter with a 960 ns period.
+- **Audio probe.** `a3_probe` (read in full): read `0x300000` and give up when bit 1 is clear; write 1, delay 1 us,
+  write 0; write `0x10000` to `0x300008`, flush the write buffer, delay 168 us; read `0x300018` and keep bits 3:0 as
+  the codec's hardware-inventory value. `a3_err_intr` reads ISA status bit 1 and, when set, clears bit 1 in the mask
+  and schedules the volume handler: the status is level, so masking it is how the driver silences it.
+- **I2C.** `_mvpi2c_force_bus_idle` reads control bit 0, writes it 0 to request the bus and polls up to 200 times
+  for bit 0 to read idle, then checks bit 7; `_mvpi2c_wait_for_ack` polls bit 5 (up to 200 reads) and calls
+  `_mvpi2c_wait_for_xfer_done` for bit 4. A poll that runs out returns 5.
+- **PS/2 command polling.** `_pckm_pollcmd` sends a command byte through the helper, then polls status (`+0x18`) up
+  to 400 times at 250 us. With `mace_rev` 1 a set status bit 6 makes it read and discard the data word and resend
+  (bounded by a retry count), which matches the specification's "parity error". With `mace_rev` 0 it ignores that
+  meaning and, when bit 6 is set, shifts the received byte right by one and ORs in `0x80`. Why a rev 0 byte needs
+  that is **unknown**.
+
+## Against the published specification
+
+The comparison covers every register the census reached: 69 of 70 rows are in the transcribed map (`census.tsv`
+column `spec` is `present`); `0x304018` is the one that is not. Page numbers are the printed pages of the
+specification.
+
+**Agreements (read in the code first):**
+
+- PCI error flags (pp. 162 to 163): bits 31 master abort and 19 and 20 error-address-valid and type, as used by the
+  handler's `0x80180000` test; software clears flag bits by writing 0 (the kernel writes 0 everywhere; NetBSD writes
+  `flags & ~0xffc00000`).
+- PCI control (pp. 164 to 165): bit 11 is read-ahead for Memory Read Multiple (the specification also calls it
+  prefetch, page 158); `rad_attach` expects writing 0 to clear it. Bits 31:24 are the error interrupt enables (the
+  kernel writes bits 31:25); bit 10 parity response and bit 8 SERR enable are set by `symmon` and `ide`.
+- Read-buffer flush (p. 165): a write flushes whatever value is written; the kernel writes 1.
+- CONFIG_ADDRESS and CONFIG_DATA (p. 161): word registers at `0x1f080cf8` and `0x1f080cfc`. The kernel's use is
+  always 32-bit, a subset of what the specification allows.
+- Interrupt map (table 90, p. 179): PCI error is slot 7; the peripheral controller groups at 4, 5 and 6 match
+  `setmaceisavector`'s vectors 4 and 5 and the audio driver's use.
+- ISA interrupt bits (p. 125): bit 8 calendar clock (`powerintr` mask `0x100`), bits 9 and 11 keyboard and mouse
+  (`0xa00`), bit 1 audio volume change (`a3_err_intr`).
+- ISA control (pp. 122 to 124): ring base and reset at 0x00 with bits 31:15 the base, miscellaneous control at 0x08
+  with bits 4 and 5 the LED enables, interrupt status at 0x10, mask at 0x18; serial channel controls at `0x318000`,
+  `0x318020`, `0x31c000`, `0x31c020` with bit 9 DMA enable.
+- PS/2 (pp. 140 to 142): receive data at +8, control at +0x10 with bit 3 receive interrupt enable, status at +0x18
+  with bit 4 receive buffer full and bit 6 parity error; keyboard at `0x320000`, mouse at `0x320020`.
+- I2C (p. 150): control and status at +0x10 (bit 0 force idle, 4 transfer busy, 5 acknowledge not received, 7 bus
+  error), data at +0x18.
+- Audio (p. 62): control and status with bit 1 codec present, codec control at +8, codec status input at +0x18.
+- Timers (p. 148): universal system time at 0, compare timers at +8, +0x10 and +0x18, the audio MSC and UST pairs at
+  +0x20, +0x28 and +0x30, each read as one 64-bit value.
+- External ISA map (p. 133): one 8-bit register per 256 bytes, the calendar clock at `0x3a0000`, the parallel port at
+  `0x380000` and the ECP registers at `0x388000`.
+- Video output (p. 33): `VHW_CFG` at `0x58` of the output channel.
+
+**Differences that are not contradictions:**
+
+- **PCI control bit 24** (read-buffer overrun interrupt enable) is left clear by the kernel (`0xfe...`) and set by
+  `symmon` and `ide`; with it clear an overrun (flags bit 23) raises no interrupt. Why the kernel leaves it off is
+  not in the binaries.
+- **Narrow configuration accesses.** The specification says byte, halfword and three-byte accesses to `0x80cfc` work;
+  the kernel never uses them. Whether the bug list's note that byte and halfword accesses to PCI I/O space "may not
+  work" (p. 167) is related is unknown.
+- **`0x80000` writes.** NetBSD writes 0 to the error address register at attach; the specification says it is
+  read-only. No IRIX routine writes it.
+
+**Disagreements and gaps (all in docs/open-questions.md):**
+
+- **`0x310000` bit 4** is used as a revision flag (above); the specification says reserved, read as zero.
+- **`0x200058` bits 35:32.** `mvpprobe` returns `(read >> 32) & 0xf`; the specification defines only bits 18:0 of
+  that register.
+- **`0x304018`** is an address inside the peripheral controller's audio block that the specification's register list
+  does not have. The specification says unused space in a block is aliased to existing registers, which would make
+  this an alias of `0x300018` (codec status input, read-only) and the writes harmless; that is not read from the
+  binary, and the specification states the repeat for the whole block (page 181), not for this offset.
+- **Calendar-clock user RAM** spacing (above).
+- **PS/2 rev 0 treatment** of status bit 6 (above).
+
+## Against the public drivers
+
+- Linux `arch/mips/include/asm/ip32/mace.h` (master, retrieved 2026-10-31): the PCI flag and control bit names and
+  positions, the ISA interrupt bit positions, the LED bits 4 and 5 (`MACEISA_LED_RED`, `MACEISA_LED_GREEN`), the
+  timer and audio layouts, the PS/2 port layout (`tx`, `rx`, `control`, `status`) and the calendar clock at
+  `isa + 0x20000` agree with the code. **One disagreement:** the header's `struct mace_i2c` puts `config`, `control`
+  and `data` at 0, 8 and 0x10 (8-byte members); IRIX and the specification put control and status at `0x10` and data
+  at `0x18`. Linux's `ip32-irq.c` comment lists CRIME slot 7 as "PCI bridge errors", as the specification and IRIX do.
+  Linux `ip32-berr.c` prints and stops on a bus error without reading any MACE register.
+- NetBSD `sys/arch/sgimips/mace/pci_mace.c` and `macereg.h` (trunk, retrieved 2026-10-31): the same names. Its PCI
+  error handler reads flags then address, ignores master abort without a message (its comment: "more-or-less normal
+  ... a _lot_ of these errors") and writes back `flags & ~0xffc00000`. IRIX's handler agrees on the order and on
+  dropping master abort on a configuration cycle silently, and differs in clearing every bit before decoding.
+
+## Error reporting for a refused or timed-out CPU access
+
+What the chip sets, latches and signals when an uncached access of the CPU, to MACE or through it to PCI or ISA, is
+refused or times out. Each item carries its grade; items 1 and 2 are answered from the published specification (the
+binaries show only which bits are read and cleared), the rest are open or partial.
+
+1. **What sets each error bit? (established by the specification for the PCI bits; the code only reads them.)** The
+   specification lists the flags (page 163): 31 received master abort, 30 received target abort, 29 data parity
+   error detected, 28 retry error, 27 illegal host transaction, 26 detected system error, 25 interrupt test, 24
+   detected parity error, 23 read buffer overrun, and the read-only 22 signaled system error; bit 4 is signaled
+   target abort. Its text names two triggers: a master abort during a configuration cycle sets 31, 19 and 20 (page
+   162), and an illegal transaction size to any of the six PCI registers sets 27 (page 161). Bit 25 is a test bit
+   the host sets to send one interrupt packet (it clears itself in host bridge revision 0, not in revision 1). The
+   binaries confirm only the master-abort-on-configuration case: IRIX treats it as the normal result of scanning an
+   empty slot and drops it silently. What sets 26, 24 and 23, and what a refused memory or I/O window access sets
+   (a master abort with bit 21, or with neither of 20 and 21), is **unknown** by observation; the kernel's
+   `0x3d000000` mask and NetBSD's per-bit messages show the bits software expects, not their causes.
+2. **What is latched on a failed or timed-out access? (established by the specification for PCI.)** The PCI error
+   address register holds the PCI address of the failing PIO and is valid only while one of flags 16 to 19 is set;
+   clearing flag 28 to 31 clears the matching address-valid bit (page 162). IRIX reads the address once, after the
+   flags, and decodes it as a configuration address (slot from address bits 12 to 16, function bits 10:8, register
+   bits 7:0) when flag 20 is set, and as a PCI memory or I/O address compared with the device windows when it is
+   not. That decode is consistent with the captured value being the configuration address word for a configuration
+   cycle. The specification does not separate a refused **read** from a refused **write**: both are PIO transactions
+   to the host bridge. Whether a posted write's failure differs from a read's is **unknown**. The ISA side has no
+   error register: the specification gives the peripheral controller no timeout or error flag for a PIO to an ISA
+   device that never answers (it lists `IOCHRDY` as an input), so what happens then is **unknown**.
+3. **Which interrupt fires? (established.)** The PCI error group is CRIME interrupt slot 7 (specification table
+   90); IRIX installs `mace_pci_error` on CRIME vector 7. Whether an error raises that line is controlled by control
+   register bits 31:24, one enable per flag (page 164; the kernel writes `0xfe...`). The probe routines read CRIME's
+   status bit 7 (mask `0x300080`) after an access to learn whether it failed, so that line is the report of a
+   refused PCI access the kernel relies on. Which processor interrupt pin slot 7 reaches belongs to CRIME's page.
+4. **What the CPU sees from MACE when a read is refused. (partly established.)** The specification's read data
+   response packet carries an error bit set when the read request is invalid, "because of a reference to an invalid
+   address" (page 178), and says a read of an unlisted address in the PCI block returns `0xff` in every byte lane
+   (page 161). No rule says when MACE sets that bit for other blocks. IRIX's probes do not use an exception: they
+   check CRIME's interrupt status after the access. **Unknown:** whether any MACE address produces an error
+   response.
+5. **What a second error does. (unknown.)** The specification does not say whether a second master abort overwrites
+   the address or is lost; the flags table has no multiple-error bit. The handler clears all flags at once, so no
+   code shows it.
+
+## Reset expectations
+
+The specification gives reset values bit by bit (compared only). No binary reads a register to check a reset value:
+`pckm_attach`'s read of `0x310000` and `a3_probe`'s read of `0x300000` read live state. Reset values are **unknown**
+from the binaries. The kernel writes the PCI error flags to 0 and the control register as a full word at start-up and
+reads the control register again only for bit 11.
+
+## Open
+
+See docs/open-questions.md: the compressed IP32 PROM, the Ethernet, serial and video blocks reached by pointer, the
+failure behaviour above, `0x310000` bit 4, `0x200058` bits 35:32, `0x304018`, the calendar-clock RAM spacing, the
+Linux I2C offsets and the PS/2 revision 0 handling.
