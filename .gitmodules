@@ -11,6 +11,22 @@
 	path = linux
 	url = https://github.com/torvalds/linux.git
 	shallow = true
+[submodule "linux-ia64"]
+	path = linux-ia64
+	url = https://github.com/torvalds/linux.git
+	shallow = true
+[submodule "linux-2.5.40"]
+	path = linux-2.5.40
+	url = https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git
+	shallow = true
+[submodule "linux-2.4.37"]
+	path = linux-2.4.37
+	url = https://github.com/xtreamerdev/linux-mips.git
+	shallow = true
+[submodule "linux-ip30"]
+	path = linux-ip30
+	url = https://github.com/jaaron/linux-mips-ip30.git
+	shallow = true
 [submodule "netbsd"]
 	path = netbsd
 	url = https://github.com/NetBSD/src.git
