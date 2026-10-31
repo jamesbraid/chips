@@ -1,0 +1,173 @@
+variant	offset	idx	name	access_seen	widths	halves	sites	functions	images	example	datasheet	datasheet_ref	spec	spec_ref	model	model_detail	flags	tasks
+?	0x0	0		r	4	4	111	107	ip35-pcibr	pcibr_bridge_ptr_get@45f4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bridge	0x0	0		r	4	4	3	2	ip35-pcibr	pcibr_alloc_all_rrbs@65bc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x8	0		r	4	4	1	1	ip35-pcibr	pcireg_stat_get@f16c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x10	0		r	4	4	1	1	ip35-pcibr	pcireg_bus_err_get@f2d0	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x18	0		r	4	4	1	1	ip35-pcibr	pcireg_bus_err_get@f2d4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x20	0		rw	4	4	14	5	ip35-pcibr	pcireg_control_get@f444	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x28	0		rw	4	4	2	2	ip35-pcibr	pcireg_req_timeout_get@ff4c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x30	0		rw	4	4	13	7	ip35-pcibr	pcireg_intr_dst_get@10210	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x38	0		rw	4	4	5	5	ip35-pcibr	pcireg_intr_dst_get@10214	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x40	0		r	4	4	1	1	ip35-pcibr	pcireg_cmdword_err_get@10b14	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x48	0		rw	4	4	3	2	ip35-pcibr	pcireg_llp_cfg_get@10c78	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x50	0		r	4	4	1	1	ip35-pcibr	pcireg_tflush_get@10f84	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x58	0		r	4	4	1	1	ip35-pcibr	pcireg_linkside_err_get@11118	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x60	0		r	4	4	4	4	ip35-pcibr	pcireg_resp_err_get@11280	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x68	0		r	4	4	2	2	ip35-pcibr	pcireg_resp_err_get@11284	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x80	0		rw	4	4	14	6	ip35-pcibr	pcireg_dirmap_get@119b4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x90	0		r	4	4	1	1	ip35-pcibr	pcireg_ssram_parity_get@12308	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0xa0	0		rw	4	4	6	4	ip35-pcibr	pcireg_arbitration_get@125f8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0xb0	0		a	0	4	1	1	ip35-pcibr	pcireg_nic_addr@12b3c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0xc0	0		rw	4	4	6	4	ip35-pcibr	pcireg_timeout_get@12e58	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0xc8	0		rw	4	4	2	2	ip35-pcibr	pcireg_type1_cntr_get@13408	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0xd0	0		r	4	4	2	2	ip35-pcibr	pcireg_pci_bus_addr_get@136c4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0xd8	0		r	4	4	2	2	ip35-pcibr	pcireg_pci_bus_addr_get@136c8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x100	0		r	4	4	1	1	ip35-pcibr	pcireg_intr_status_get@139b8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x108	0		rw	4	4	6	4	ip35-pcibr	pcireg_intr_enable_get@13b1c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x110	0		rw	4	4	3	2	ip35-pcibr	pcireg_intr_reset_set@140cc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x118	0		rw	4	4	6	4	ip35-pcibr	pcireg_intr_mode_get@1439c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x120	0		rw	4	4	6	4	ip35-pcibr	pcireg_intr_device_get@14950	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x128	0		rw	4	4	2	2	ip35-pcibr	pcireg_intr_host_err_get@14f04	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x130	1		arw	0,4	4	13	7	ip35-pcibr	pcireg_intr_addr_get@151b0	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x200	1		rw	4	4	6	4	ip35-pcibr	pcireg_device_get@169fc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x240	1		r	4	4	1	1	ip35-pcibr	pcireg_wrb_flush_get@17294	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x280	1		rw	4	4	6	4	ip35-pcibr	pcireg_rrb_get@174b4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x290	0		r	4	4	1	1	ip35-pcibr	pcireg_rrb_status_get@17c08	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x298	0		w	4	4	1	1	ip35-pcibr	pcireg_rrb_clear_set@17d70	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x10000	1		arw	0,8	0	3	3	ip35-pcibr	pcireg_int_ate_get@19274	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bridge	0x80000	1		arw	0,8	0	3	3	ip35-pcibr	pcireg_ext_ate_get@18d24	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+pic	0x0	0		r	4,8	0,4	5	3	ip35-pcibr,ip35-prom	pcibr_bridge_ptr_get@4614	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+pic	0x18	0		r	8	0	1	1	ip35-pcibr	pcireg_bus_err_get@f320	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x20	0		rw	4,8	0,4	15	6	ip35-pcibr	pcireg_control_get@f488	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+pic	0x28	0		rw	8	0	2	2	ip35-pcibr	pcireg_req_timeout_get@ff90	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x38	0		rw	8	0	12	6	ip35-pcibr	pcireg_intr_dst_get@10260	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x40	0		r	8	0	1	1	ip35-pcibr	pcireg_cmdword_err_get@10b58	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x48	0		rw	8	0	3	2	ip35-pcibr	pcireg_llp_cfg_get@10ca0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x50	0		r	8	0	1	1	ip35-pcibr	pcireg_tflush_get@10fdc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x58	0		r	8	0	1	1	ip35-pcibr	pcireg_linkside_err_get@1115c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x60	0		r	8	0	2	2	ip35-pcibr	pcireg_resp_err_buf_get@1159c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x68	0		r	8	0	2	2	ip35-pcibr	pcireg_resp_err_get@112d0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x78	0		r	8	0	1	1	ip35-pcibr	pcireg_linkside_err_addr_get@11858	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x80	0		rw	8	0	14	6	ip35-pcibr	pcireg_dirmap_get@119f8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x90	0		r	4,8	0,4	2	2	ip35-pcibr	pcireg_ssram_parity_get@12308	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+pic	0xa0	0		rw	8	0	6	4	ip35-pcibr	pcireg_arbitration_get@1263c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0xb0	0		ar	0,8	0,4	2	2	ip35-pcibr	pcireg_nic_addr@12b3c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0xc0	0		rw	8	0	6	4	ip35-pcibr	pcireg_timeout_get@12e9c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0xc8	0		rw	8	0	2	2	ip35-pcibr	pcireg_type1_cntr_get@1344c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0xd8	0		r	8	0	2	2	ip35-pcibr	pcireg_pci_bus_addr_get@13714	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x100	0		r	8	0	1	1	ip35-pcibr	pcireg_intr_status_get@139fc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x108	0		rw	4,8	0,4	7	5	ip35-pcibr,ip35-prom	pcireg_intr_enable_get@13b60	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+pic	0x110	0		rw	4,8	0,4	4	3	ip35-pcibr,ip35-prom	pcireg_intr_reset_set@14104	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+pic	0x118	0		rw	8	0	6	4	ip35-pcibr	pcireg_intr_mode_get@143e0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x120	0		rw	8	0	6	4	ip35-pcibr	pcireg_intr_device_get@14994	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x128	0		rw	4,8	0,4	3	3	ip35-pcibr,ip35-prom	pcireg_intr_host_err_get@14f48	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+pic	0x130	1		arw	0,8	0	13	7	ip35-pcibr	pcireg_intr_addr_get@1523c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x170	0		r	8	0	1	1	ip35-pcibr	pcireg_intr_view_get@160e8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x178	0		r	8	0	1	1	ip35-pcibr	pcireg_intr_multiple_get@1624c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x180	1		aw	0,8	0	2	2	ip35-pcibr	pcireg_force_always_set@163d8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x1c0	1		w	8	0	1	1	ip35-pcibr	pcireg_force_intr_set@16808	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x200	1		rw	8	0	6	4	ip35-pcibr	pcireg_device_get@16a78	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x240	1		r	8	0	1	1	ip35-pcibr	pcireg_wrb_flush_get@1733c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x280	1		rw	8	0	6	4	ip35-pcibr	pcireg_rrb_get@17540	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x290	0		r	8	0	1	1	ip35-pcibr	pcireg_rrb_status_get@17c4c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x298	0		w	8	0	1	1	ip35-pcibr	pcireg_rrb_clear_set@17da8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x600	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_bus_err_addr_get@17ec0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x608	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_bus_err_attr_get@18024	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x610	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_bus_err_data_get@18184	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x618	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_pio_split_addr_get@182e0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x620	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_pio_split_attr_get@1843c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x628	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_req_err_attr_get@1859c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x630	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_req_err_addr_get@186f8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x10000	1		arw	0,8	0	3	3	ip35-pcibr	pcireg_int_ate_get@192f0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x18000	1		w	8	0	48	1	ip35-pic	pic_attach2@954	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x18800	1		w	8	0	48	1	ip35-pic	pic_attach2@958	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x19000	1		w	8	0	48	1	ip35-pic	pic_attach2@95c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+pic	0x80000	1		arw	0,8	0	3	3	ip35-pcibr	pcireg_ext_ate_get@18d24	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+probe?	0x0	0		r	4	4	6	2	ip35-prom	prom_c00000001fc41f38@c41f38	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+probe?	0x108	0		w	4	4	1	1	ip35-prom	prom_c00000001fc41f38@c41f7c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+probe?	0x110	0		w	4	4	1	1	ip35-prom	prom_c00000001fc41f38@c41f84	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+probe?	0x128	0		w	4	4	1	1	ip35-prom	prom_c00000001fc41f38@c41f8c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+probe?	0x200	1		r	4	4	1	1	ip35-prom	prom_c00000001fc46030@c46098	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x0	0		r	8	0	1	1	ip35-pcibr	pcireg_id_get@f034	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x18	0		r	8	0	1	1	ip35-pcibr	pcireg_bus_err_get@f304	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x20	0		rw	4,8	0,4	15	6	ip35-pcibr	pcireg_control_get@f46c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)	32-bit access to a 64-bit register	variant out of scope
+tiocp	0x28	0		rw	8	0	2	2	ip35-pcibr	pcireg_req_timeout_get@ff74	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x38	0		rw	8	0	12	6	ip35-pcibr	pcireg_intr_dst_get@10244	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x40	0		r	8	0	1	1	ip35-pcibr	pcireg_cmdword_err_get@10b3c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x50	0		r	8	0	1	1	ip35-pcibr	pcireg_tflush_get@10fc0	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x58	0		r	8	0	1	1	ip35-pcibr	pcireg_linkside_err_get@11140	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x60	0		r	8	0	2	2	ip35-pcibr	pcireg_resp_err_buf_get@1159c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x68	0		r	8	0	2	2	ip35-pcibr	pcireg_resp_err_get@112b4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x78	0		r	8	0	1	1	ip35-pcibr	pcireg_linkside_err_addr_get@11874	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x80	0		rw	8	0	18	6	ip35-pcibr	pcireg_dirmap_get@119dc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x90	0		r	4,8	0,4	2	2	ip35-pcibr	pcireg_ssram_parity_get@12308	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)	32-bit access to a 64-bit register	variant out of scope
+tiocp	0xa0	0		rw	8	0	6	4	ip35-pcibr	pcireg_arbitration_get@12620	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0xb0	0		ar	0,8	0,4	2	2	ip35-pcibr	pcireg_nic_addr@12b3c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0xc0	0		rw	8	0	6	4	ip35-pcibr	pcireg_timeout_get@12e80	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0xc8	0		rw	8	0	2	2	ip35-pcibr	pcireg_type1_cntr_get@13430	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0xd8	0		r	8	0	2	2	ip35-pcibr	pcireg_pci_bus_addr_get@136f8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x100	0		r	8	0	1	1	ip35-pcibr	pcireg_intr_status_get@139e0	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x108	0		rw	8	0	6	4	ip35-pcibr	pcireg_intr_enable_get@13b44	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x110	0		rw	8	0	3	2	ip35-pcibr	pcireg_intr_reset_set@140e8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x118	0		rw	8	0	6	4	ip35-pcibr	pcireg_intr_mode_get@143c4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x120	0		rw	8	0	6	4	ip35-pcibr	pcireg_intr_device_get@14978	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x128	0		rw	8	0	2	2	ip35-pcibr	pcireg_intr_host_err_get@14f2c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x130	1		arw	0,8	0	13	7	ip35-pcibr	pcireg_intr_addr_get@1522c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x170	0		r	8	0	1	1	ip35-pcibr	pcireg_intr_view_get@160cc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x178	0		r	8	0	1	1	ip35-pcibr	pcireg_intr_multiple_get@16230	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x180	1		aw	0,8	0	2	2	ip35-pcibr	pcireg_force_always_set@163cc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x1c0	1		w	8	0	1	1	ip35-pcibr	pcireg_force_intr_set@167fc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x200	1		rw	8	0	6	4	ip35-pcibr	pcireg_device_get@16a3c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x240	1		r	8	0	1	1	ip35-pcibr	pcireg_wrb_flush_get@17300	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x280	1		rw	8	0	6	4	ip35-pcibr	pcireg_rrb_get@17530	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x290	0		r	8	0	1	1	ip35-pcibr	pcireg_rrb_status_get@17c30	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x298	0		w	8	0	1	1	ip35-pcibr	pcireg_rrb_clear_set@17d8c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x600	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_bus_err_addr_get@17edc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x608	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_bus_err_attr_get@18040	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x610	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_bus_err_data_get@181a0	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x618	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_pio_split_addr_get@182fc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x620	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_pio_split_attr_get@18458	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x628	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_req_err_attr_get@185b8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x630	0		r	8	0	1	1	ip35-pcibr	pcireg_pcix_req_err_addr_get@18714	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x10000	1		arw	0,8	0	3	3	ip35-pcibr	pcireg_int_ate_get@192b0	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+tiocp	0x80000	1		arw	0,8	0	3	3	ip35-pcibr	pcireg_ext_ate_get@18d24	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x0	0		r	4	4	3	2	ip35-pcibr	pcibr_alloc_all_rrbs@67c8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x8	0		r	4	4	1	1	ip35-pcibr	pcireg_stat_get@f16c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x10	0		r	4	4	1	1	ip35-pcibr	pcireg_bus_err_get@f2d0	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x18	0		r	4	4	1	1	ip35-pcibr	pcireg_bus_err_get@f2d4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x20	0		rw	4	4	15	6	ip35-pcibr	pcireg_control_get@f444	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x28	0		rw	4	4	2	2	ip35-pcibr	pcireg_req_timeout_get@ff4c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x30	0		rw	4	4	13	7	ip35-pcibr	pcireg_intr_dst_get@10210	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x38	0		rw	4	4	5	5	ip35-pcibr	pcireg_intr_dst_get@10214	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x40	0		r	4	4	1	1	ip35-pcibr	pcireg_cmdword_err_get@10b14	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x48	0		rw	4	4	3	2	ip35-pcibr	pcireg_llp_cfg_get@10c78	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x50	0		r	4	4	1	1	ip35-pcibr	pcireg_tflush_get@10f84	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x58	0		r	4	4	1	1	ip35-pcibr	pcireg_linkside_err_get@11118	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x60	0		r	4	4	4	4	ip35-pcibr	pcireg_resp_err_get@11280	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x68	0		r	4	4	2	2	ip35-pcibr	pcireg_resp_err_get@11284	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x80	0		rw	4	4	14	6	ip35-pcibr	pcireg_dirmap_get@119b4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x90	0		r	4	4	2	2	ip35-pcibr	pcireg_ssram_parity_get@12308	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0xa0	0		rw	4	4	6	4	ip35-pcibr	pcireg_arbitration_get@125f8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0xb0	0		a	0	4	1	1	ip35-pcibr	pcireg_nic_addr@12b3c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0xc0	0		rw	4	4	6	4	ip35-pcibr	pcireg_timeout_get@12e58	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0xc8	0		rw	4	4	2	2	ip35-pcibr	pcireg_type1_cntr_get@13408	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0xd0	0		r	4	4	2	2	ip35-pcibr	pcireg_pci_bus_addr_get@136c4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0xd8	0		r	4	4	2	2	ip35-pcibr	pcireg_pci_bus_addr_get@136c8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x100	0		r	4	4	1	1	ip35-pcibr	pcireg_intr_status_get@139b8	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x108	0		rw	4	4	6	4	ip35-pcibr	pcireg_intr_enable_get@13b1c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x110	0		rw	4	4	3	2	ip35-pcibr	pcireg_intr_reset_set@140cc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x118	0		rw	4	4	6	4	ip35-pcibr	pcireg_intr_mode_get@1439c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x120	0		rw	4	4	6	4	ip35-pcibr	pcireg_intr_device_get@14950	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x128	0		rw	4	4	2	2	ip35-pcibr	pcireg_intr_host_err_get@14f04	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x130	1		arw	0,4	4	13	7	ip35-pcibr	pcireg_intr_addr_get@151b0	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x170	0		r	4	4	1	1	ip35-pcibr	pcireg_intr_view_get@160fc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x178	0		r	4	4	1	1	ip35-pcibr	pcireg_intr_multiple_get@16260	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x180	1		aw	0,4	4	2	2	ip35-pcibr	pcireg_force_always_set@163e4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x1c0	1		w	4	4	1	1	ip35-pcibr	pcireg_force_intr_set@16814	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x200	1		rw	4	4	6	4	ip35-pcibr	pcireg_device_get@169fc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x240	1		r	4	4	1	1	ip35-pcibr	pcireg_wrb_flush_get@17294	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x280	1		rw	4	4	6	4	ip35-pcibr	pcireg_rrb_get@174b4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x290	0		r	4	4	1	1	ip35-pcibr	pcireg_rrb_status_get@17c08	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x298	0		w	4	4	1	1	ip35-pcibr	pcireg_rrb_clear_set@17d70	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x10000	1		arw	0,8	0	3	3	ip35-pcibr	pcireg_int_ate_get@19334	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+xbridge	0x80000	1		arw	0,8	0	3	3	ip35-pcibr	pcireg_ext_ate_get@18d24	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope

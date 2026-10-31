@@ -1,0 +1,15 @@
+pcireg_control_set(0x200000): returned [3 call(s) replaced by v0=0]
+    w +0x20 width 8 value 0x200000
+    r +0x20 width 8 read 0x200000
+pcireg_rrb_bit_set(0x0, 0xf000f): returned [1 call(s) replaced by v0=0]
+    r +0x280 width 8 read 0x0
+    w +0x280 width 8 value 0xf000f
+pcireg_rrb_bit_set(0x1, 0xf000f): returned [1 call(s) replaced by v0=0]
+    r +0x288 width 8 read 0x0
+    w +0x288 width 8 value 0xf000f
+pcireg_int_ate_set(0x5, 0x0): STOPPED at +0x-10000000 (Invalid memory read (UC_ERR_READ_UNMAPPED)) [5 call(s) replaced by v0=0]
+pcireg_timeout_bit_clr(0x3ff): returned [1 call(s) replaced by v0=0]
+    r +0xc0 width 8 read 0x0
+    w +0xc0 width 8 value 0x0
+pcireg_force_always_set(0x3): STOPPED at +0x-10000000 (Invalid memory read (UC_ERR_READ_UNMAPPED)) [3 call(s) replaced by v0=0]
+pcireg_intr_addr_vect_set(0x2, 0xed): STOPPED at +0x-10000000 (Invalid memory read (UC_ERR_READ_UNMAPPED)) [2 call(s) replaced by v0=0]
