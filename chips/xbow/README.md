@@ -120,8 +120,9 @@ scanned routine.
   values in its record with 0x2faf0800 (800000000) and another with 0; `xbow_prio_bw_alloc` compares sums with them.
   It returns 1 when it refuses the request and 0 when it stores it.
   It refuses when the new count (the request in register units plus the field's current value) is 32 or more, or
-  when the request in bytes (a2) plus the 64-bit word at +528 of the element is above the word at +464 (unsigned
-  compare). The element is 8 bytes at the record base plus 8 times a2.
+  when the request (a3) in bytes, rounded up to whole register units and converted back to bytes (negated when the
+  request releases bandwidth), plus the 64-bit word at +528 of the element is above the word at +464 (unsigned
+  compare). The element is 8 bytes at the record base plus 8 times the element index (a2).
   Their role as a bandwidth budget is inferred from the names.
 - `0x130` link reset (`xbow_reset_link`, IP27 `xbow.o` offset 0x21f4, IP30 0x1e3c, IP35 0x1dfc): save control, write 0
   to `+0x134`, delay `xbow_reset_delay` microseconds, poll status bit 31 with `us_delay` until set or a limit, restore
