@@ -65,3 +65,56 @@ the purpose is to stop scan-out at a blanking boundary, with the shadow copies t
   p. 44). Established.
   Read at `kernel.o` 0x858c and stored at 0x859c with bit 16 cleared through the mask `0xfffeffff`. Read again at
   0x8650, 32 added, and stored at 0x865c.
+
+## Display register map (published specification)
+
+Each entry below records one register of the GBE rev 1.1 map as the published specification describes it, with the
+reset state of each field. The source is [the specification](../../docs/sources/specs/gbe-specification.pdf), section 3.2
+(pages 36 to 48). Use of these registers by shipped software is covered by the entries above, where the early stop
+routine reads them, and is otherwise not part of this page.
+
+- `0x16000000` (`0x0`): CTRLSTAT, general control (docs/sources/specs/gbe-specification.pdf, section 3.2.1, p. 36). Established.
+  Bits 3:0 hold the chip revision (reset 0001), and bit 4 is a read-only sense_n input from the monitor. The ten general
+  purpose I/O pins io_0 to io_9 occupy bits 7:6 through 25:24, each pair a data bit with an active-low output-enable bit
+  above it. Bit 26 (half_phase) sets the flat panel clock phase against the falling edge of blank_n, and bit 27 makes
+  csync active low. Bits 29:28 choose the dot clock: 00 external TTL pclk, 01 external differential pclk, 11 the internal
+  dot clock PLL.
+
+- `0x16000008` (`0x8`): I2C, CRT I2C control (docs/sources/specs/gbe-specification.pdf, sections 2.11 and 3.2.1, p. 37). Established.
+  Bit 0 is sda and bit 1 is sdc, both open-drain with reset state 1. A write drives the sda_out and sdc_out pins, and a
+  read returns the level actually on the bus, which can differ from the output state. Section 2.11 says the CPU
+  drives this interface directly for DDC2 monitor reads, and that it is the only I2C master on the bus.
+
+- `0x1600000c` (`0x0c`): SYSCLK, system clock PLL control (docs/sources/specs/gbe-specification.pdf, section 3.2.1, p. 37). Established.
+  Bits 0 to 3 are the PLL test and mode inputs tdwni, tupi, tm(1) and tm(0), reset to 0, 0, 0 and 1. Bits 9:8 hold vgain,
+  11:10 cgain and 14:12 divsel, each reset to zero. Bits 7:4 are unused.
+
+- `0x16000010` (`0x10`): I2CFP, flat panel I2C control (docs/sources/specs/gbe-specification.pdf, section 3.2.1, p. 37). Established.
+  The layout matches I2C: bit 0 is the flat panel sda line and bit 1 the flat panel sdc line, both open-drain and reset
+  to 1. This bus is separate from the CRT bus that I2C controls.
+
+- `0x16000014` (`0x14`): DEVICE_ID, device id and chip revision (docs/sources/specs/gbe-specification.pdf, section 3.2.1, p. 37). Established.
+  Bits 31:0 read 0x00000666 after reset. The specification says this is the same identifier the device exposes through
+  its JTAG device ID register.
+
+- `0x16010004` (`0x10004`): VT_1, maximum x and y counts (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 38). Established.
+  Bits 11:0 hold vt_maxx and bits 23:12 hold vt_maxy, both reset to zero. vt_x resets to zero when it equals vt_maxx,
+  and vt_y resets to zero when it equals vt_maxy.
+
+- `0x16010008` (`0x10008`): VT_2, vertical sync window (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 38). Inferred.
+  Bits 11:0 hold vt_vsync_off and bits 23:12 hold vt_vsync_on, both reset to zero. The first field is stated outright:
+  vsync goes inactive when vt_y equals vt_vsync_off. The specification's sentence for bits 23:12 repeats vt_vsync_off,
+  which reads as a typo. Taking the field name at face value, vsync goes active when vt_y equals vt_vsync_on. The
+  specification's text would need a later revision to settle which compare the hardware makes.
+
+- `0x1601000c` (`0x1000c`): VT_3, horizontal sync window (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 38). Established.
+  Bits 11:0 hold vt_hsync_off and bits 23:12 hold vt_hsync_on, both reset to zero. hsync goes inactive when vt_x equals
+  vt_hsync_off and active when vt_x equals vt_hsync_on.
+
+- `0x16010010` (`0x10010`): VT_4, vertical blank window (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 38). Established.
+  Bits 11:0 hold vt_vblank_off and bits 23:12 hold vt_vblank_on, both reset to zero. Blanking ends when vt_y equals
+  vt_vblank_off and begins when vt_y equals vt_vblank_on.
+
+- `0x16010014` (`0x10014`): VT_5, horizontal blank window (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 38). Established.
+  Bits 11:0 hold vt_hblank_off and bits 23:12 hold vt_hblank_on, both reset to zero. Horizontal blanking ends when vt_x
+  equals vt_hblank_off and begins when vt_x equals vt_hblank_on.

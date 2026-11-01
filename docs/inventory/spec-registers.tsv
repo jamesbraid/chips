@@ -121,18 +121,18 @@ CRIME 1.5	7-15	184	RE	0x3040	MTE.srcYStep	1	0	32	R/W	0	undocumented
 CRIME 1.5	7-15	184	RE	0x3048	MTE.dstYStep	1	0	32	R/W	0	undocumented		
 CRIME 1.5	7-15	184	RE	0x3070	MTE.null	1	0	32	W	0	undocumented		
 CRIME 1.5	7-15	184	RE	0x3078	MTE.ﬂush	1	0	32	W	0	undocumented		
-GBE rev 1.1	3.2	36	GBE	0x0	CTRLSTAT	1	0	32	R/W	0	named-only	chips/gbe/README.md#gbe	GBE
+GBE rev 1.1	3.2	36	GBE	0x0	CTRLSTAT	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
 GBE rev 1.1	3.2	36	GBE	0x4	DOTCLK	1	0	32	R/W	1	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
-GBE rev 1.1	3.2	37	GBE	0x8	I2C	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	37	GBE	0xc	SYSCLK	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	37	GBE	0x10	I2CFP	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	37	GBE	0x14	DEVICE_ID	1	0	32	R/W	0	undocumented		
+GBE rev 1.1	3.2	37	GBE	0x8	I2C	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	37	GBE	0xc	SYSCLK	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	37	GBE	0x10	I2CFP	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	37	GBE	0x14	DEVICE_ID	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
 GBE rev 1.1	3.2	38	GBE	0x10000	VT_0	1	0	32	R/W	1	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
-GBE rev 1.1	3.2	38	GBE	0x10004	VT_1	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	38	GBE	0x10008	VT_2	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	38	GBE	0x1000c	VT_3	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	38	GBE	0x10010	VT_4	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	38	GBE	0x10014	VT_5	1	0	32	R/W	0	undocumented		
+GBE rev 1.1	3.2	38	GBE	0x10004	VT_1	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	38	GBE	0x10008	VT_2	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	38	GBE	0x1000c	VT_3	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	38	GBE	0x10010	VT_4	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	38	GBE	0x10014	VT_5	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
 GBE rev 1.1	3.2	39	GBE	0x10018	VT_6	1	0	32	R/W	0	undocumented		
 GBE rev 1.1	3.2	39	GBE	0x1001c	VT_7	1	0	32	R/W	0	undocumented		
 GBE rev 1.1	3.2	39	GBE	0x10020	VT_8	1	0	32	R/W	0	undocumented		
