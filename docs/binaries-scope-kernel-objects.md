@@ -194,6 +194,59 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
   (1400 bytes) handles the cross-partition completion, and `ifcl_xmit_arp` sends ARP requests over it. It uses the
   cluster calls and no network chip.
 
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(dest6.o)` (inferred): the IPv6 destination-options header handler, one routine,
+  `dest6_input` (492 bytes), in a 5460-byte member. It calls `ip6_unknown_opt` for an option it does not know, and
+  `m_pullup` and `m_freem` manage the mbuf chain. No chip is driven. Rule 2 excludes the routine.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(frag6.o)` (inferred): the IPv6 fragment reassembly queue, nine routines in a
+  12868-byte member. `frag6_input` (1904 bytes) takes a fragment, `frag6_enq` and `frag6_deq` queue and dequeue the
+  reassembly entries, `frag6_slowtimo` (236 bytes) ages them, and `frag6_drain` and `frag6_freef` free them. It calls
+  `mutex_lock`, `mutex_unlock`, `kmem_alloc` and `kmem_free`. No chip is driven.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_gif.o)` (inferred): the generic tunnel interface, five routines in a
+  12948-byte member. `gifattach` (460 bytes) registers the interface, `gif_output` (336 bytes) and `gif_input`
+  (304 bytes) move packets, `gif_ioctl` (1740 bytes) configures it, and `gif_encapcheck` (368 bytes) tests an
+  encapsulated packet. It calls `if_attach` and `network_input`, and imports the protocol switches `in_gif_protosw` and
+  `in6_gif_protosw`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)` (inferred): the IPv6 neighbour discovery code, 23 routines in a
+  44292-byte member. `ndp6_rtrequest` (1572 bytes) keeps neighbour routes, `ndsol6_input` (1536 bytes) and
+  `ndadv6_input` (1532 bytes) handle solicitations and advertisements, `redirect6_input` (1224 bytes) handles
+  redirects, and `ndp6_do_dad` runs duplicate address detection. It calls `ip6_output`, `rtrequest1` and `timeout`, and
+  imports 58 symbols in all. Rule 2 excludes the 23 routines.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_sit6.o)` (inferred): the IPv6-over-IPv4 tunnel interface, six routines in a
+  14020-byte member. `sitattach` registers the interface, `sitoutput` (640 bytes) encapsulates a packet, `sit_input`
+  (448 bytes) strips the outer header, `sit_rtrequest` (1156 bytes) handles tunnel routes, and `sitioctl` (424 bytes)
+  configures it. It calls `ip_output` and `network_input`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)` (inferred): the IPv6 interface address code, 27 routines in a 33444-byte
+  member. `in6_control` (3720 bytes) handles the address ioctls, `in6_ifinit` (616 bytes) sets up an interface address,
+  `in6_addmulti` and `in6_delmulti` join and leave multicast groups, `in6_ifconf` (452 bytes) reports the address list,
+  and `in6_init` starts the protocol. It calls `rtinit`, `ndp6_ifinit` and `ndp6_do_dad`. It defines the 16-byte data
+  symbols `in6addr_any`, `in6addr_loopback`, `in6addr_linklocal_allnodes` and `in6addr_linklocal_allrouters`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_gif.o)` (inferred): the tunnel path for IPv6 carried in IPv6, three routines in
+  a 9460-byte member. `in6_gif_output` (784 bytes) wraps a packet, `in6_gif_input` (268 bytes) unwraps one, and
+  `gif_encapcheck6` (608 bytes) matches a tunnel. It calls `ip6_output`, `rtalloc1` and `gif_input`. It defines the
+  4-byte data symbol `ip6_gif_hlim`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)` (inferred): the IPv6 socket address binding code, eight routines in an
+  18836-byte member. `in6_pcbbind` (1132 bytes) binds a local address and port, `in6_pcbconnect` (740 bytes) connects,
+  `in6_pcbrebind` (652 bytes) rebinds, and `in6_pcbnotify` (2236 bytes) passes an error to the sockets it concerns. It
+  calls `in_pcbbind`, `in_pcbconnect` and `rtalloc1`, which are the IPv4 counterparts. It defines the 16-byte data
+  symbol `zeroin6_addr`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_proto.o)` (inferred): the IPv6 protocol switch table. The member holds no
+  routines. Its data symbols are `inet6sw` (1344 bytes), `inet6domain` (80 bytes) and `in6_gif_protosw` (96 bytes), and
+  its imports are the protocol entry points `tcp6_input`, `udp6_input`, `icmp6_input`, `rip6_input` and `frag6_input`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_src.o)` (inferred): the IPv6 source address and route selection code, seven
+  routines in a 13412-byte member. `in6_selectsrc` (1116 bytes) picks a source address, `in6_selectroute` (1236 bytes)
+  picks the outgoing route, `in6_selecthlim` picks the hop limit, `common_prefixlen` (152 bytes) compares prefixes, and
+  `in6_pcbsetport` (464 bytes) assigns a local port. It calls `rtalloc1` and `in_pcbnextport`, and imports
+  `read_random_real` for the port choice.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in_gif.o)` (inferred): the tunnel path for IPv6 carried in IPv4, three routines in
+  an 8916-byte member. `in_gif_output` (664 bytes) wraps a packet, `in_gif_input` (240 bytes) unwraps one, and
+  `gif_encapcheck4` (384 bytes) matches a tunnel. It calls `ip_output` and `rtalloc1`. It defines the 4-byte data symbol
+  `ip_gif_ttl`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)` (inferred): the ICMPv6 protocol, 15 routines in a 30164-byte member.
+  `icmp6_input` (3604 bytes) dispatches received messages, `icmp6_error` (908 bytes) builds error replies,
+  `icmp6_reflect` (688 bytes) returns echo replies, `icmp6_sendgroup` (712 bytes) and `icmp6_send` transmit, and
+  `icmp6_filter_set` and `icmp6_filter_get` keep the socket filter. It calls `ip6_output` and `in6_multi_match`, and
+  imports the neighbour message handlers `ndsol6_input`, `ndadv6_input` and `redirect6_input`.
+
 ## Process, memory, scheduler, lock and debugger objects (scope rule 3)
 
 - `IP27/usr/cpu/sysgen/IP27boot/capability.a(capability.o)` (inferred): the capability set for processes, 11 routines in a
