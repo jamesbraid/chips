@@ -123,3 +123,52 @@ the processor running the code.
   `xswitch_info_link_ok` accepts gets a vertex named with `sprintf` "%d", recorded with `xswitch_info_vhdl_set`, and
   is registered from the identification word at 0x9000000010000004 plus the widget number shifted left 24 in the same
   way. Established.
+- `badaddr_val` (`IP30/unix` `0xa80000002001c328`, 364 bytes, frame 16 bytes)
+  reads one value from an address that may not answer and reports whether the bus complained. `a0` is the address to
+  read, `a1` the width (1, 2,
+  4 or 8) and `a2` the address where the value read is stored with the same width. It saves Status and writes 0xa0 to
+  it. It then clears the error state by: reading the doubleword at 0xffffffffb8000000+0x60, storing 0 to the
+  doubleword at +0x40, reading the doubleword at +0x0, and writing the first value back to +0x60; reading the
+  doubleword at 0xffffffffaff10040 and writing it back; and reading the doubleword at 0xffffffffaff50000. It marks the
+  thread no-fault: when the doubleword at -16352 of the process page is nonzero it stores 1 as the halfword at +246 of
+  that record, otherwise it stores 1 as the word at -15356 of the process page. Then it switches on `a1`: `lb`/`sb`,
+  `lh`/`sh`,
+  `lw`/`sw` or
+  `ld`/`sd` from `a0` to
+  `a2`. Any other width calls `cmn_err` with 0 and the string "baddaddr_val" and then carries on with no access.
+  Afterwards it reads the doubleword at 0xffffffffaff50000 and at 0xffffffffb8000000, executes `sync`, and tests two
+  failure conditions. Coprocessor 0 Cause bit 14 (0x4000) set, or bit 16 of the doubleword at 0xffffffffaff10040,
+  branches to the separate 92-byte routine at `0xa80000002001c908` (symbol `baerror`), which repeats the clear sequence,
+  restores Status, removes the no-fault mark and leaves 1 in v0 for the caller. With neither set it removes the mark in the same way (the halfword
+  at +246, or the word at -15356 when the record pointer is 0), restores Status and returns 0. Established.
+- `heart_intr` (`IP30/unix` `0xa80000002003fe98`, 364 bytes, frame 80 bytes)
+  is the HEART interrupt dispatcher: it runs the handler of each pending, enabled vector until none is left. The first
+  argument (`a0`) is the exception frame, kept in s8 and handed only to `buserror_intr`; the second
+  (`a1`) is the mask of vectors the caller will service. It reads the doubleword at 0xffffffffaff10038 (the interrupt
+  mask-status register the HEART page calls IMSR), ANDs it with `a1`, and stops when the result is 0. Each pass calls
+  `ffintr64` for the highest set bit of that value (the vector number). A vector of 59 or more goes to `buserror_intr`
+  with the frame and writes nothing to the acknowledge register. Below 59 the vector indexes the table `heart_ivec` at
+  64 bytes per vector: for vectors 3 and above it stores 1 shifted left by the vector as a doubleword to
+  0xffffffffaff10028 (the clear register) before the handler, and for vectors 0 to 2 after it. The test that picks the
+  handler is the word at record +24 ANDed with 0x1000. When that bit is clear the handler is the doubleword at
+  record +0, called through `jalr` at `0xa80000002003ff98` with the doubleword at record +8 as its only argument. When
+  it is set the record holds a semaphore at record +32: `valusema` is called and, if its result is below 28673,
+  `vsema` signals it, while from 28673 up `cvsema` is called instead; no handler address is used. After each vector
+  the mask-status register is read again and ANDed with `a1`; a nonzero result loops. On exit it adds the number of
+  vectors it dispatched, minus one, to the word at +208 of the structure that the doubleword at -15224 of the process
+  page points to, by an `ll`/`sc` loop whose `beql` at `0xa80000002003ffec` is the only branch-likely in the routine;
+  when nothing was pending that adds -1. It has no deliberate return value; v0 is 0 on exit, left by the final AND. Established.
+- `wbadaddr_val` (`IP30/unix` `0xa80000002001c5e0`, 360 bytes, frame 16 bytes)
+  is the store-side twin of `badaddr_val`: it copies one value to an address that may not answer and reports a bus
+  complaint. `a0` is the address written, `a1` the width (1,
+  2, 4 or 8) and
+  `a2` the address the value is read from, so the roles of `a0` and `a2` are the reverse of `badaddr_val`. It saves
+  Status, writes 0xa0 to it and runs the same clear sequence on 0xffffffffb8000000 (+0x60 read, +0x40 zeroed, +0x0
+  read, +0x60 written back), 0xffffffffaff10040 (read and written back) and 0xffffffffaff50000 (read). It then stores
+  1 as the halfword at +246 of the record at -16352 of the process page without testing the pointer. A width other
+  than 1, 2, 4 or
+  8 calls `cmn_err` with 0 and the string "wbaddaddr_val" and goes on. After the access it reads 0xffffffffaff50000
+  and 0xffffffffb8000000 and executes `sync`, and does that pair again, then loads the word at 0x9000000000000000, and
+  tests Cause bit 14 and bit 16 of the doubleword at 0xffffffffaff10040 the way `badaddr_val` does. Failure branches to
+  that same routine, so the caller sees 1 in v0; success clears the halfword at +246 (again without a pointer test), restores Status and
+  returns 0. Established.

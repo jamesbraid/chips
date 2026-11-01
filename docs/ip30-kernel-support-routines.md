@@ -159,3 +159,16 @@ running the code and the doubleword at -15744 holds that processor's flag bits.
   whatever the last call returned, apart from the early returns: v0 is the nonzero `console_is_tport` word, or
   0xffffffffaff20000 when `sio_lock_port` returned 0 (the delay slot of that branch builds it), or the nonzero
   `spinlock_islocked` result. Established.
+- `timein_body` (`IP30/unix` `0xa8000000200159f4`, 364 bytes, frame 96 bytes)
+  runs the expired entries of a timeout queue described by the record in `a0`, and returns the value of the last
+  `mutex_spinunlock`. The record's lock is at +8 and the head of the list at +24. Every pass takes the lock with
+  `mutex_spinlock_spl` (second argument the address of `spl65`) and reads the head. A null head releases the lock and
+  returns. Otherwise it compares the head entry's doubleword at +0 (the expiry) with the free-running counter at
+  0xffffffffaff20000. When the counter has not reached it, `set_timer_intr` is called with the word at record +168
+  shifted right 16, the expiry, and 0; a nonzero result unlocks and returns, while a zero result falls through to run
+  the entry anyway. Running an entry unlinks it (the entry's doubleword at +8 becomes the head). If the halfword at
+  entry +70 has bit 1 clear, `timein_entry_ithrd` is called with the record, the entry and the saved level, and the
+  loop restarts at the lock call. If bit 1 is set, the entry's word at +16 is copied to record +104, 1 is stored at
+  record +88, the lock is released, `timein_entry` is called with the entry, and `test_and_set_int64` (an atomic swap)
+  stores 0 at record +88. When the value it returns, the old word, is 2 the code locks again, calls `sv_broadcast` on record +112 and unlocks;
+  either way it loops. Established.
