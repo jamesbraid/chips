@@ -16,11 +16,11 @@ CRIME	0x250	Memory Error Status	r8,w8	26	1	VEC_dbe;VEC_ibe;badaddr;badaddr_val;b
 CRIME	0x258	Memory Error Address	r8	4	1	VEC_dbe;VEC_ibe;ecc_handler;routine@0xff08	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:VEC_dbe	understood	chips/crime/README.md#graded-register-table	Graded register table
 CRIME	0x260	ECC Syndrome Bits	r8	3	1	dobuserre;routine@0xddec;routine@0xff08	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:dobuserre	understood	chips/crime/README.md#graded-register-table	Graded register table
 CRIME	0x268	ECC Generated Check Bits	r8	2	1	dobuserre;routine@0xff08	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:dobuserre	understood	chips/crime/README.md#graded-register-table	Graded register table
-GBE	0x4	DOTCLK	r4,w4	2	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
-GBE	0x10000	VT_0	r4,w4	2	2	early_gbe_stop;mvptransfer_stop_dma-0x87c	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
-GBE	0x20004	OVR_1	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
-GBE	0x20008	OVR_2	r4,w4	4	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
-GBE	0x30008	FRM_2	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
-GBE	0x3000c	FRM_3	r4,w4	4	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
-GBE	0x40000	DID	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
-GBE	0x40004	DID_SHADOW	r4,w4	4	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	undocumented		
+GBE	0x4	DOTCLK	r4,w4	2	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
+GBE	0x10000	VT_0	r4,w4	2	2	early_gbe_stop;mvptransfer_stop_dma-0x87c	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
+GBE	0x20004	OVR_1	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
+GBE	0x20008	OVR_2	r4,w4	4	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
+GBE	0x30008	FRM_2	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
+GBE	0x3000c	FRM_3	r4,w4	4	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
+GBE	0x40000	DID	r4	5	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
+GBE	0x40004	DID_SHADOW	r4,w4	4	1	early_gbe_stop	constant address	IP32/usr/cpu/sysgen/IP32boot/kernel.o:early_gbe_stop	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
