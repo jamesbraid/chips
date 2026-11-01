@@ -66336,7 +66336,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x810c	84	soft_tra
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8160	8	add_ioboard	symtab	78aa5094d5ec		out:9	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x81e4	216	add_cpuboard	symtab	9b2b408e83de		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x82bc	268	init_sysid	symtab	2a61486e82df		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8504	564	early_gbe_stop	symtab	e911ead8ba71		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8504	564	early_gbe_stop	symtab	e911ead8ba71		in	named-only	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8738	672	mlreset	symtab	9034f85615ef		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x89d8	88	timestamp_init	symtab	4b9b771fe735		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8a30	440	init_all_devices	symtab	0687c468fe37		out:9	undocumented		

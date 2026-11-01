@@ -2,8 +2,66 @@
 
 Mode: **spec-backed** (see [docs/specs.md](../../docs/specs.md)).
 
-O2 display back end. Spec: GBE ASIC spec, revision 1.1. Builds: IP32.
+O2 display back end. Spec: GBE ASIC spec, revision 1.1 (18 July 1996). Builds: IP32.
 
-Status: no entries yet. Census config: [`tools/configs/gbe.json`](../../tools/configs/gbe.json); results land in `census/`.
+Census config: [`tools/configs/gbe.json`](../../tools/configs/gbe.json); results land in `census/`.
 
-Entries below carry a label (established, inferred, unknown) and a derivation, per AGENTS.md.
+Entries below carry a label (established, inferred, unknown) and a derivation, per AGENTS.md. Each entry starts with
+the physical address the register has in the GBE window (the offset from `0x16000000` is in brackets), then the
+specification's name, section and page. Offsets are the specification's.
+
+## Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
+
+Established. The routine is 564 bytes at `kernel.o` offset 0x8504 (n32, 141 words), read in full. It takes no
+arguments and sets no return value. It first reads the normal-planes DMA enable (`FRM_2` bit 0). If that bit is
+clear it reads the overlay DMA enable (`OVR_1` bit 0) and the DID DMA enable (`DID` bit 16); if all three are clear
+it returns without a store. Otherwise it clears the shadow enables (`FRM_3` bit 0, `OVR_2` bit 0, `DID_SHADOW`
+bit 16), adds 32 to the three shadow words, polls the live registers until their enables read clear (or 400000
+passes run out), then polls until each live word equals the value its shadow was given. It then stores
+0x80000000 to `VT_0`, clears bit 20 of `DOTCLK` and returns. A call to `flushbus` follows each store except the
+`VT_0` store. Inferred:
+the purpose is to stop scan-out at a blanking boundary, with the shadow copies taking effect at the next blanking.
+
+- `0x16000004` (`0x4`): DOTCLK, dot clock PLL control (spec section 3.2.1, p. 36). Established.
+  The routine loads the word at `kernel.o` 0x86d4, clears bit 20 with a mask built by `lui 0x10` and `nor`, and stores
+  it back at 0x86e4 in the delay slot of the `flushbus` call. The fields M (7:0), N (13:8) and P (15:14) are not
+  touched. The specification leaves bit 20 without a name (`20 - - -`). Open sub-fact: what bit 20 controls. Route: a
+  later revision of the GBE specification or a PLL diagnostic that reads it.
+
+- `0x16010000` (`0x10000`): VT_0, video timing x and y counters (spec section 3.2.2, p. 38). Established.
+  `early_gbe_stop` stores 0x80000000 at `kernel.o` 0x86cc. Bit 31 is `vt_freeze`, which the specification gives a
+  reset value of 1, and the x and y fields (11:0 and 23:12) are written as zero. The specification says `vt_x` counts
+  only while `vt_freeze` is 0, so the store halts the raster counters and zeroes them.
+  A second reader is an unnamed routine at offset 0x0 of IP32 `mvp.o`, which the symbol table does not name. It
+  loads the word, shifts out bits 23:12 (`vt_y`), and returns 1 when `vt_y` is below 1024 and 0 otherwise
+  (instructions 0x0 to 0x2c).
+
+- `0x16020004` (`0x20004`): OVR_1, overlay tile pointer and overlay DMA enable (spec section 3.2.3, p. 42). Established.
+  Only read. Five loads in `early_gbe_stop` (`kernel.o` 0x85dc, 0x8604, 0x8680, 0x86ac, 0x870c). Bit 0 is tested at
+  the entry check (0x870c) and in the first poll loop (0x85e0 and 0x860c). In the second poll loop the whole word is
+  compared with the value stored to `OVR_2` (0x8680 and 0x86ac).
+
+- `0x16020008` (`0x20008`): OVR_2, shadow of the overlay registers, copied at the start of blanking (spec section
+  3.2.3, p. 42). Established.
+  Stored twice. The first store at `kernel.o` 0x8580 writes the loaded word (read at 0x856c) with bit 0 cleared.
+  The second store at 0x8644 writes the word read at 0x8638, after the first store, with 32 added.
+
+- `0x16030008` (`0x30008`): FRM_2, normal-planes tile pointer and DMA enable (spec section 3.2.4, p. 43). Established.
+  Only read, at five sites in `early_gbe_stop` (`kernel.o` 0x8518, 0x85b4, 0x85cc, 0x8674, 0x86a0). The first read
+  tests bit 0 at 0x8528 and selects between the stop sequence and the entry check. The second poll loop compares the
+  whole word with the value stored to `FRM_3` (0x8678 and 0x86a4).
+
+- `0x1603000c` (`0x3000c`): FRM_3, shadow of the normal-planes registers (spec section 3.2.4, p. 43). Established.
+  Read at `kernel.o` 0x8554 and stored at 0x8564 with the loaded word masked by 0xfffffffe, so bit 0 clears. Read
+  again at 0x8628, 32 added, and stored at 0x8634. The entry check does not touch it.
+
+- `0x16040000` (`0x40000`): DID, DID table base and DID DMA enable (spec section 3.2.5, p. 44). Established.
+  Only read, at five sites (`kernel.o` 0x85ec, 0x8614, 0x868c, 0x86b8 and 0x8720). The entry check at 0x8720 shifts
+  the word left by 47, so bit 16 becomes the sign bit that `bltz` at 0x8728 tests. The first poll loop tests bit 16
+  with a mask of 0x10000 (0x85f0 and 0x8618). The second poll loop compares the whole word with the value stored to
+  `DID_SHADOW` (0x868c and 0x86b8).
+
+- `0x16040004` (`0x40004`): DID_SHADOW, the DID base and DMA enable held for the next blanking (spec section 3.2.5,
+  p. 44). Established.
+  Read at `kernel.o` 0x858c and stored at 0x859c with bit 16 cleared through the mask `0xfffeffff`. Read again at
+  0x8650, 32 added, and stored at 0x865c.
