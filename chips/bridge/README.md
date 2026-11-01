@@ -240,6 +240,43 @@ Compared after the reading above. **Agree** means the driver's number or name is
 - **Public register names with no IRIX access:** test pin control (`0x70`), interrupt acknowledge (`0x30000`),
   external flash window (`0xc00000`).
 
+## Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
+
+Read in full from the IRIX 6.5.30 IP27 objects (`IP27/usr/cpu/sysgen/IP27boot/io6.o`, `pciiox.o` and `xbridge.o`, relocatable;
+addresses are offsets in `.text`). `io6.o` and `pciiox.o` each register a callback with `nic_vmc_add` for the part-number
+prefixes of one board. Inferred: the callback receives the Bridge vertex of a matching board, because it passes the
+argument to `pcibr_hints_fix_rrbs` and `xtalk_piotrans_addr`. Both callbacks call `xtalk_piotrans_addr` with offset 0 and length
+`0x1000000` and store words at +644 and +652 of the pointer it returns, which are the low words of the doubleword
+response-buffer registers at `0x280` and `0x288` (see "Bridge block") if that pointer is the register base.
+
+- `io6_init` (`IP27/usr/cpu/sysgen/IP27boot/io6.o` at 0x0, 64 bytes)
+  calls `nic_vmc_add` three times with the callback `io6_vmc` and the part-number prefixes `030-0734-`, `030-1023-` and
+  `030-1124-`, in that order (the strings sit 16 bytes apart in `.rodata`). It returns nothing of its own. Established.
+- `io6_vmc` (`IP27/usr/cpu/sysgen/IP27boot/io6.o` at 0x40, 260 bytes)
+  takes the Bridge vertex in `a0`. It calls `nic_vertex_info_match` with the prefix `030-0734-`, then reads the byte at
+  `0xffffffffffffc523`; when that byte is nonzero it calls `panic` with the string "SN00 without programed nic on mother
+  board" (the match result is not tested there) and the code after it runs if `panic` returns. It then calls `pcibr_hints_dualslot` (vertex, 2, 4),
+  `pcibr_hints_subdevs` (vertex, 2, and `0xbf` when the match was nonzero, else `0xb7`), `xtalk_piotrans_addr` and
+  `pcibr_hints_fix_rrbs`. Using the pointer `xtalk_piotrans_addr` returned it rewrites two words: at +644 it keeps bits 31:28 and
+  sets bits 27:0 to `0x0ca98888`, and at +652 it keeps bits 31:20 and sets bits 19:0 to `0x000c8888`; the second store sits in the
+  delay slot of the `hwgraph_traverse` call that follows with the path `pci/controller`. Last it calls `device_inventory_add`
+  with the vertex that traversal returned, class 21 and four zeros. Established. Inferred: the two words are the low halves of the
+  even and odd response-buffer registers, since the Bridge register inventory records `0x280` and `0x288` as the response buffer
+  registers that `pcibr_alloc_all_rrbs` indexes by 0 and 1 and the stores are 4 bytes past them. The byte at `0xffffffffffffc523` is
+  the one `cpuprom_map` in `hubspc.o` tests; what sets it is unknown, and the route is the stores to that address in the kernel.
+- `pciiox_init` (`IP27/usr/cpu/sysgen/IP27boot/pciiox.o` at 0x0, 32 bytes)
+  calls `nic_vmc_add` once with the callback `pciiox_vmc` and the prefix `030-1062-`. Established.
+- `pciiox_vmc` (`IP27/usr/cpu/sysgen/IP27boot/pciiox.o` at 0x20, 80 bytes)
+  takes the Bridge vertex in `a0`, calls `pcibr_hints_fix_rrbs` and then `xtalk_piotrans_addr`, and stores whole words through the
+  returned pointer: `0x00999888` at +644 and `0x888` at +652 (the second store is in the delay slot of the return). Unlike
+  `io6_vmc` it keeps no bits of the old values and makes no hint or inventory call. Established. Inferred: these are the same
+  response-buffer words as in `io6_vmc`, for the same reason.
+- `xbridge_init` (`IP27/usr/cpu/sysgen/IP27boot/xbridge.o` at 0x0, 84 bytes)
+  calls `pcibr_debug` with 1, 0 and the string "pcibr_init()", then `xwidget_driver_register` twice with the
+  prefix `xbridge_`: for part `0xd002` and manufacturer 36, then for part `0xc002` and manufacturer 54, each with flags 0.
+  Established. Those pairs are the XBridge and Bridge identities listed under "What identifies the chip", so one driver
+  serves both.
+
 ## Open
 
 See docs/open-questions.md: the revision 2 attach path; the interrupt device value at attach; the units and layout of

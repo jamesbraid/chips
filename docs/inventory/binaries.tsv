@@ -234,7 +234,7 @@ IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)	kernel-IP27	kernel-object	object	
 IP27/usr/cpu/sysgen/IP27boot/io.a(idbgactlog.o)	kernel-IP27	kernel-object	object	n64	1220	5c3d048b800a0031	IP30/usr/cpu/sysgen/IP30boot/io.a(idbgactlog.o);IP35/usr/cpu/sysgen/IP35boot/io.a(idbgactlog.o)	0	none	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(ioerror_handling.o)	kernel-IP27	kernel-object	object	n64	17172	8070ea5f495ffa7f		18	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(hwcopy.o)	kernel-IP27	kernel-object	object	n64	4404	6d703d9439b816af		2	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/io6.o	kernel-IP27	kernel-object	object	n64	7016	1593cd3e6572ed28		2	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/io6.o	kernel-IP27	kernel-object	object	n64	7016	1593cd3e6572ed28		2	symtab	0	0	understood	chips/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP27/usr/cpu/sysgen/IP27boot/ioc3.o	kernel-IP27	kernel-object	object	n64	27232	c5505138ceec0c6d		27	symtab	0	0	named-only	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP27/usr/cpu/sysgen/IP27boot/ioc3_pckm.o	kernel-IP27	kernel-object	object	n64	35840	159a1304d5d86fd0		34	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ioc3ei.o	kernel-IP27	kernel-object	object	n64	21248	4441b50f9c67412e		19	symtab	0	0	undocumented		
@@ -584,7 +584,7 @@ IP27/usr/cpu/sysgen/IP27boot/pciba.o	kernel-IP27	kernel-object	object	n64	52096	
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-IP27	kernel-object	object	n64	291328	9076f781d14016f4		259	symtab+dwarf	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-IP27	kernel-object	object	n64	48352	6a9e6e13a1cffd15		108	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-IP27	kernel-object	object	n64	27616	9a38640abd2fb50d		18	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pciiox.o	kernel-IP27	kernel-object	object	n64	6208	bdb46d46a7f510ea		2	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pciiox.o	kernel-IP27	kernel-object	object	n64	6208	bdb46d46a7f510ea		2	symtab	0	0	named-only	chips/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP27/usr/cpu/sysgen/IP27boot/pgrpidbg.a(pgrpidbg.o)	kernel-IP27	kernel-object	object	n64	10804	799c20cfc6568334		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/pipefs.a(pipevnops.o)	kernel-IP27	kernel-object	object	n64	23412	76786039be0830c0		21	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/ppp_fram.o	kernel-IP27	kernel-object	object	n64	34440	dd382528f3fe371d		18	symtab	0	0	undocumented		
@@ -761,7 +761,7 @@ IP27/usr/cpu/sysgen/IP27boot/vmidbg.a(vmidbg.o)	kernel-IP27	kernel-object	object
 IP27/usr/cpu/sysgen/IP27boot/wacom.o	kernel-IP27	kernel-object	object	n64	174776	e7a46650d1ebcce3		95	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xbmon.o	kernel-IP27	kernel-object	object	n64	20064	11990c65cee98201		18	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-IP27	kernel-object	object	n64	38112	2cf831cc85047975		33	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/xbridge.o	kernel-IP27	kernel-object	object	n64	18648	a75cdb5762ff5550		2	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/xbridge.o	kernel-IP27	kernel-object	object	n64	18648	a75cdb5762ff5550		2	symtab	0	0	named-only	chips/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP27/usr/cpu/sysgen/IP27boot/xconn.o	kernel-IP27	kernel-object	object	n64	13680	ef14dfd8a45d96ee		9	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xfs.a(xfs_alloc.o)	kernel-IP27	kernel-object	object	n64	39892	17c370f6a884a388		24	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xfs.a(xfs_alloc_btree.o)	kernel-IP27	kernel-object	object	n64	30084	1ff36426e3f2c43d		21	symtab	0	0	undocumented		
