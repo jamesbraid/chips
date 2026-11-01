@@ -1197,7 +1197,7 @@ IP27/unix	kernel	n64		0x0		ftrc_alloc_bfr	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		ftrc_create_sess	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ftrc_find_bfr	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ftrc_init	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		function_addr_space_assign	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		function_addr_space_assign	dwarf			out:5	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64		0x0		fuserscan	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		gang_clear	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		gang_count	dwarf			out:5	undocumented		
@@ -2398,8 +2398,8 @@ IP27/unix	kernel	n64		0x0		ppb_bus_alloc	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		ppb_bus_free	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ppb_bus_reserve	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ppb_device_init	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		ppb_function_init	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		ppb_function_print	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		ppb_function_init	dwarf			out:5	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP27/unix	kernel	n64		0x0		ppb_function_print	dwarf			out:5	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64		0x0		ppb_link	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ppb_roundup_log2	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ppb_scan	dwarf			out:5	undocumented		
@@ -6051,7 +6051,7 @@ IP27/unix	kernel	n64	.text	0xc00000000009297c	28	pciio_piomap_done	symtab	9f2587
 IP27/unix	kernel	n64	.text	0xc000000000092998	28	pciio_piotrans_addr	symtab	46791ff9d2fe		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP27/unix	kernel	n64	.text	0xc0000000000929b4	300	pciio_pio_addr	symtab	e48dd77f5d1c		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc000000000092ae0	36	pciio_piospace_alloc	symtab	88e36e7e3faf		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/unix	kernel	n64	.text	0xc000000000092b04	28	pciio_piospace_free	symtab	aef48ce547f6		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000092b04	28	pciio_piospace_free	symtab	aef48ce547f6		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64	.text	0xc000000000092b20	28	pciio_pio_flush_read	symtab	37c976f5d612		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000092b3c	28	pciio_pio_flush_del	symtab	3699f117ff84		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000092b58	28	pciio_pio_flush_init	symtab	9f6f3ba49004		in	undocumented		
@@ -6081,7 +6081,7 @@ IP27/unix	kernel	n64	.text	0xc000000000093174	28	pciio_endian_set	symtab	b6ae796
 IP27/unix	kernel	n64	.text	0xc000000000093190	28	pciio_priority_set	symtab	0d1c09be5211		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000931ac	184	pciio_config_get	symtab	f2a85aa29ea3		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc000000000093264	184	pciio_config_get_safe	symtab	276e2b88f9b1		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000009331c	152	pciio_config_set	symtab	a987b213fa9e		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
+IP27/unix	kernel	n64	.text	0xc00000000009331c	152	pciio_config_set	symtab	a987b213fa9e		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64	.text	0xc0000000000933b4	28	pciio_error_extract	symtab	aecf1ae5f03e		in	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc0000000000933d0	28	pciio_reset	symtab	e41f5208fcf3		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000933ec	28	pciio_write_gather_flush	symtab	3f4c26fdfb32		in	undocumented		
@@ -25723,7 +25723,7 @@ IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x60	28	pciio_pioma
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x7c	28	pciio_piotrans_addr	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x98	300	pciio_pio_addr	dwarf+symtab	fc3e5cf6f91d		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x1c4	36	pciio_piospace_alloc	dwarf+symtab	34a53cf03dd2		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x1e8	28	pciio_piospace_free	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x1e8	28	pciio_piospace_free	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x204	28	pciio_pio_flush_read	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x220	28	pciio_pio_flush_del	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x23c	28	pciio_pio_flush_init	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -25754,7 +25754,7 @@ IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x858	28	pciio_endi
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x874	28	pciio_priority_set	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x890	184	pciio_config_get	dwarf+symtab	fb6bd4e7d9ea		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x948	184	pciio_config_get_safe	dwarf+symtab	fb6bd4e7d9ea		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xa00	152	pciio_config_set	dwarf+symtab	ddf38d0cbe1b		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
+IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xa00	152	pciio_config_set	dwarf+symtab	ddf38d0cbe1b		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xa98	28	pciio_error_extract	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xab4	28	pciio_reset	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xad0	28	pciio_write_gather_flush	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -25827,10 +25827,10 @@ IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0x15a0	244	pciio_la
 IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64		0x0		ppb_scan	dwarf+symtab			in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0x2d8	600	do_ppb_scan	dwarf+symtab	2d4b5cd53215		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0x530	400	ppb_device_init	dwarf+symtab	1de81a60c902		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0x6c0	1592	ppb_function_init	dwarf+symtab	aebdd9037d16		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0x6c0	1592	ppb_function_init	dwarf+symtab	aebdd9037d16		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0xcf8	584	ppb_addr_space_assign	dwarf+symtab	4680eeb7b0f7		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0xf40	892	function_addr_space_assign	dwarf+symtab	a426e0900af2		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0x12bc	1248	ppb_function_print	dwarf+symtab	f2103028a5e6		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0xf40	892	function_addr_space_assign	dwarf+symtab	a426e0900af2		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0x12bc	1248	ppb_function_print	dwarf+symtab	f2103028a5e6		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0x179c	236	ppb_link	dwarf+symtab	4bee1a52858d		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0x1888	224	pciio_ppb_intr_map	dwarf+symtab	7067c68105c5		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-object	n64	.text	0x1968	192	ppb_bus_alloc	dwarf+symtab	186df850a768		in	undocumented		
@@ -33463,7 +33463,7 @@ IP30/unix	kernel	n64		0x0		ftrc_alloc_bfr	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		ftrc_create_sess	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ftrc_find_bfr	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ftrc_init	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		function_addr_space_assign	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		function_addr_space_assign	dwarf			out:7	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64		0x0		fuserscan	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		fwohci_remove_from_queue	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		gang_clear	dwarf			out:7	undocumented		
@@ -34690,8 +34690,8 @@ IP30/unix	kernel	n64		0x0		ppb_bus_alloc	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		ppb_bus_free	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ppb_bus_reserve	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ppb_device_init	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		ppb_function_init	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		ppb_function_print	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		ppb_function_init	dwarf			out:7	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/unix	kernel	n64		0x0		ppb_function_print	dwarf			out:7	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64		0x0		ppb_link	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ppb_roundup_log2	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ppb_scan	dwarf			out:7	undocumented		
@@ -37769,7 +37769,7 @@ IP30/unix	kernel	n64	.text	0xa80000002005f204	28	pciio_piomap_done	symtab	6c7623
 IP30/unix	kernel	n64	.text	0xa80000002005f220	28	pciio_piotrans_addr	symtab	88110b3d24ba		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP30/unix	kernel	n64	.text	0xa80000002005f23c	300	pciio_pio_addr	symtab	4a82765d8323		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa80000002005f368	36	pciio_piospace_alloc	symtab	db9e14b5e58a		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP30/unix	kernel	n64	.text	0xa80000002005f38c	28	pciio_piospace_free	symtab	59a6ab9f8ac3		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002005f38c	28	pciio_piospace_free	symtab	59a6ab9f8ac3		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa80000002005f3a8	28	pciio_pio_flush_read	symtab	087d51b34540		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005f3c4	28	pciio_pio_flush_del	symtab	c40a718f39a6		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005f3e0	28	pciio_pio_flush_init	symtab	534224ec79b8		in	undocumented		
@@ -37799,7 +37799,7 @@ IP30/unix	kernel	n64	.text	0xa80000002005f9fc	28	pciio_endian_set	symtab	a79a25d
 IP30/unix	kernel	n64	.text	0xa80000002005fa18	28	pciio_priority_set	symtab	abb84a20b465		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005fa34	184	pciio_config_get	symtab	6f0c50c767cf		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa80000002005faec	184	pciio_config_get_safe	symtab	d729d7f9b715		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002005fba4	152	pciio_config_set	symtab	d7fb98214fae		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
+IP30/unix	kernel	n64	.text	0xa80000002005fba4	152	pciio_config_set	symtab	d7fb98214fae		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa80000002005fc3c	28	pciio_error_extract	symtab	7f9793534f14		in	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa80000002005fc58	28	pciio_reset	symtab	dae9e93a62f3		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005fc74	28	pciio_write_gather_flush	symtab	b803c35f3354		in	undocumented		
@@ -55842,7 +55842,7 @@ IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x60	28	pciio_pioma
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x7c	28	pciio_piotrans_addr	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x98	300	pciio_pio_addr	dwarf+symtab	fc3e5cf6f91d		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x1c4	36	pciio_piospace_alloc	dwarf+symtab	34a53cf03dd2		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x1e8	28	pciio_piospace_free	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x1e8	28	pciio_piospace_free	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x204	28	pciio_pio_flush_read	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x220	28	pciio_pio_flush_del	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x23c	28	pciio_pio_flush_init	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -55873,7 +55873,7 @@ IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x858	28	pciio_endi
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x874	28	pciio_priority_set	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x890	184	pciio_config_get	dwarf+symtab	fb6bd4e7d9ea		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x948	184	pciio_config_get_safe	dwarf+symtab	fb6bd4e7d9ea		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xa00	152	pciio_config_set	dwarf+symtab	ddf38d0cbe1b		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
+IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xa00	152	pciio_config_set	dwarf+symtab	ddf38d0cbe1b		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xa98	28	pciio_error_extract	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xab4	28	pciio_reset	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xad0	28	pciio_write_gather_flush	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -55946,10 +55946,10 @@ IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0x15a0	244	pciio_la
 IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64		0x0		ppb_scan	dwarf+symtab			in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0x2d8	600	do_ppb_scan	dwarf+symtab	2d4b5cd53215		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0x530	400	ppb_device_init	dwarf+symtab	1de81a60c902		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0x6c0	1592	ppb_function_init	dwarf+symtab	aebdd9037d16		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0x6c0	1592	ppb_function_init	dwarf+symtab	aebdd9037d16		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0xcf8	584	ppb_addr_space_assign	dwarf+symtab	4680eeb7b0f7		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0xf40	892	function_addr_space_assign	dwarf+symtab	a426e0900af2		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0x12bc	1248	ppb_function_print	dwarf+symtab	f2103028a5e6		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0xf40	892	function_addr_space_assign	dwarf+symtab	a426e0900af2		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0x12bc	1248	ppb_function_print	dwarf+symtab	f2103028a5e6		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0x179c	236	ppb_link	dwarf+symtab	4bee1a52858d		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0x1888	224	pciio_ppb_intr_map	dwarf+symtab	7067c68105c5		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o	kernel-object	n64	.text	0x1968	192	ppb_bus_alloc	dwarf+symtab	186df850a768		in	undocumented		
@@ -72164,7 +72164,7 @@ IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x60	28	pciio_pioma
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x7c	28	pciio_piotrans_addr	dwarf+symtab	34d7a2e33b85		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x98	300	pciio_pio_addr	dwarf+symtab	c31eca88fb65		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x1c4	40	pciio_piospace_alloc	dwarf+symtab	176c52044905		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x1ec	28	pciio_piospace_free	dwarf+symtab	34d7a2e33b85		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x1ec	28	pciio_piospace_free	dwarf+symtab	34d7a2e33b85		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x208	28	pciio_pio_flush_read	dwarf+symtab	34d7a2e33b85		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x224	28	pciio_pio_flush_del	dwarf+symtab	34d7a2e33b85		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x240	28	pciio_pio_flush_init	dwarf+symtab	34d7a2e33b85		in	undocumented		
@@ -72195,7 +72195,7 @@ IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x804	28	pciio_endi
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x820	28	pciio_priority_set	dwarf+symtab	34d7a2e33b85		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x83c	200	pciio_config_get	dwarf+symtab	6bf71fd37896		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x904	200	pciio_config_get_safe	dwarf+symtab	6bf71fd37896		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x9cc	168	pciio_config_set	dwarf+symtab	d69d37b3b2e4		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
+IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0x9cc	168	pciio_config_set	dwarf+symtab	d69d37b3b2e4		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xa74	28	pciio_error_extract	dwarf+symtab	34d7a2e33b85		in	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xa90	28	pciio_reset	dwarf+symtab	34d7a2e33b85		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xaac	28	pciio_write_gather_flush	dwarf+symtab	34d7a2e33b85		in	undocumented		
@@ -90510,7 +90510,7 @@ IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x60	28	pciio_pioma
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x7c	28	pciio_piotrans_addr	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x98	300	pciio_pio_addr	dwarf+symtab	fc3e5cf6f91d		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x1c4	36	pciio_piospace_alloc	dwarf+symtab	34a53cf03dd2		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x1e8	28	pciio_piospace_free	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x1e8	28	pciio_piospace_free	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x204	28	pciio_pio_flush_read	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x220	28	pciio_pio_flush_del	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x23c	28	pciio_pio_flush_init	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -90541,7 +90541,7 @@ IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x800	28	pciio_endi
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x81c	28	pciio_priority_set	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x838	184	pciio_config_get	dwarf+symtab	fb6bd4e7d9ea		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x8f0	184	pciio_config_get_safe	dwarf+symtab	fb6bd4e7d9ea		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x9a8	152	pciio_config_set	dwarf+symtab	ddf38d0cbe1b		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
+IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x9a8	152	pciio_config_set	dwarf+symtab	ddf38d0cbe1b		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xa40	28	pciio_error_extract	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xa5c	28	pciio_reset	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xa78	28	pciio_write_gather_flush	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -90614,10 +90614,10 @@ IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0x1514	248	pciio_la
 IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64		0x0		ppb_scan	dwarf+symtab			in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0x2d8	600	do_ppb_scan	dwarf+symtab	2d4b5cd53215		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0x530	400	ppb_device_init	dwarf+symtab	1de81a60c902		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0x6c0	1592	ppb_function_init	dwarf+symtab	aebdd9037d16		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0x6c0	1592	ppb_function_init	dwarf+symtab	aebdd9037d16		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0xcf8	584	ppb_addr_space_assign	dwarf+symtab	4680eeb7b0f7		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0xf40	892	function_addr_space_assign	dwarf+symtab	a426e0900af2		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0x12bc	1248	ppb_function_print	dwarf+symtab	f2103028a5e6		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0xf40	892	function_addr_space_assign	dwarf+symtab	a426e0900af2		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0x12bc	1248	ppb_function_print	dwarf+symtab	f2103028a5e6		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0x179c	236	ppb_link	dwarf+symtab	4bee1a52858d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0x1888	224	pciio_ppb_intr_map	dwarf+symtab	7067c68105c5		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-object	n64	.text	0x1968	192	ppb_bus_alloc	dwarf+symtab	186df850a768		in	undocumented		

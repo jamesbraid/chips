@@ -211,8 +211,10 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   rows are in the table.
 - `IP30/usr/cpu/sysgen/IP30boot/pciio_ppb.o` (inferred): the PCI-to-PCI bridge driver, IP30 copy. `pciio_ppb_attach`
   (228 bytes) and `pciio_ppb_intr_map` (224 bytes) match the IP27 routines in name and size. The object names no chip
-  of its own, and it reaches the bridge only through `pciio_device_attach` and `pciio_piospace_alloc`. Scope keeps
-  its 18 rows.
+  of its own. Its largest routines, `ppb_function_init` (1592 bytes), `ppb_function_print` (1248 bytes) and
+  `function_addr_space_assign` (892 bytes), work on the bridge's functions and address windows, and it reaches the bridge
+  through the generic `pciio_*` layer: `pciio_config_get`, `pciio_config_set`, `pciio_device_attach`,
+  `pciio_piospace_alloc` and `pciio_piospace_free`. Scope keeps its 18 rows.
 - `IP30/usr/cpu/sysgen/IP30boot/pciiox.o` (inferred): the one-routine init for the extended PCI layer, `pciiox_init`
   (32 bytes). It imports `pcibr_hints_fix_rrbs`, a Bridge hint routine, `nic_vmc_add` for a vertex record, and
   `xtalk_piotrans_addr`. The Bridge is the chip it configures. Both rows of the object stay in.
@@ -392,6 +394,7 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   `xswitch_provider_register` (40 bytes) keep the switch records, and `xswitch_reset_link` calls `xbow_reset_link` in
   the Xbow driver. The chip under it is the Xbow, and 13 rows stay in.
 - `IP35/usr/cpu/sysgen/IP35boot/xtalk.o` (inferred): the Crosstalk widget layer on the IP35 build. `xwidget_register`
-  (292 bytes), `xtalk_pio_addr` (248 bytes) and `xtalk_device_powerup` (64 bytes) are among its 70 routines, and its
-  30 `hub_*` imports are the provider calls the IP27 copy also makes. The widgets it serves are the Bridge and the
-  Xbow. All 71 rows stay in.
+  (292 bytes), `xtalk_pio_addr` (248 bytes) and `xtalk_device_powerup` (64 bytes) are among its 71 routines, and its
+  30 `hub_*` imports are the provider calls the IP27 copy also makes. The one chip it names is the Xbow, in a
+  fatal-error message; it carries no Bridge string, so that the Bridge is the other widget it serves is inferred from the
+  IP27 copy's use. All 71 rows stay in.

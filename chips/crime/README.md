@@ -645,8 +645,8 @@ depth test at 0x3350 instead. One global register of the group, `Fog.color`, is 
   noted for `Fog.Fs` applies here too.
 - `0x15002188` (`0x2188`): `Fog.dfdy`, the change of the fog factor per pixel step in y (Table 7-3 p. 7-13).
   Established.
-  Third copy: `lw` at 0x3338, `sw` at 0x333c. The spec's description of this register repeats "df/dx", which reads as a
-  typing slip. Table byte 0.
+  Third copy: `lw` at 0x3338, `sw` at 0x333c. The specification's description names df/dy here and df/dx for the
+  previous register, so unlike the texture slope registers it needs no correction. Table byte 0.
 - `0x15002190` (`0x2190`): `Antialias.line`, the line slope and the ideal line's starting minor coordinate packed in one
   word (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-13). Established.
   The loader stores it fourth in the group: `lw` at 0x3340, `sw` at 0x3344. The specification gives its field table
@@ -772,8 +772,9 @@ member objects, not for the PROM, diagnostic or monitor images).
   p. 7-12). Established.
   The step registers switch to 32-bit words here: `lw` at 0x3420, `sw` at 0x3424, shadow +0x158. Table byte 0.
 - `0x1500215c` (`0x215c`): `Texture.dqdy`, the per-pixel step of 1/w in y (CRIME 1.5 Specification rev 0.3, Table 7-3
-  p. 7-12). Established.
-  The final copy of the loader: `lw` at 0x3428, and the `sw` at 0x3430 sits in the delay slot of the `jr ra` at 0x342c,
+  p. 7-12). Established for the copy, inferred for the direction.
+  The specification's description repeats `d(1/w)/dx`, so the y direction rests on the register name and its position
+  after `Texture.dqdx`. The final copy of the loader: `lw` at 0x3428, and the `sw` at 0x3430 sits in the delay slot of the `jr ra` at 0x342c,
   so it completes before the return. Table byte 0.
 - `0x15002160` (`0x2160`): `Texture.borderColor`, the colour used for CLAMP_TO_BORDER sampling (CRIME 1.5
   Specification rev 0.3, Table 7-3 p. 7-12). Established for the copy, inferred for the role.

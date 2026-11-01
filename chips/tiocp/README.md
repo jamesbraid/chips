@@ -17,8 +17,8 @@ when the chip type is 3 or the part number is `0xe000` or `0xe010`: the `tiocp` 
   set, but only in its debug name tables. The object has no text symbol with either name, no call to either and no
   relocation against either: the routines were compiled out of this build or belong to a kernel for another platform. A
   search of every IP27 and IP35 object, member and firmware image for the strings `tio_`, `Tio_`, `TIO_` and `tiocp`
-  finds `tiocp.h` as a header name in the debug line tables of `kernel.o`, `pcibr.o`, `pic.o`, `pciio_ppb.o`, `xbridge.o`
-  and the USB driver, in both builds. A header the compiled code includes; its contents are not in the binaries.
+  finds `tiocp.h` as a header name in the debug line tables of `kernel.o`, `pcibr.o`, `pciio_ppb.o` and `xbridge.o` in
+  both builds, and of `pic.o` and the USB driver in the IP35 build (the IP27 set has `usrpci.o` in the same position). A header the compiled code includes; its contents are not in the binaries.
 - **The software enumeration names it.** The debug type information of `space.o` (a member of `os.a` in both the IP27 and
   IP35 boot sets) defines an enumeration `pciio_asic_type_e` with the values UNKNOWN 0, MACE 1, BRIDGE 2, XBRIDGE 3, PIC 4
   and TIOCP 5. This is the PCI I/O layer's own numbering, not the halfword at record +114 that the accessors test (0 to 3),
