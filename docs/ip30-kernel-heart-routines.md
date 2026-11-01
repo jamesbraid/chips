@@ -230,3 +230,11 @@ the processor running the code.
   delay slot of the `flushbus` call that follows the read. On the locking path the owner word is then set back to -1
   with a doubleword store and `splx` restores the level (the old value is saved at 40(sp) in that call's delay slot),
   which is also the value returned; the already-held path returns it too. Established.
+- `heart_mlreset` (`IP30/unix` `0xa80000002003ed30`, 164 bytes, frame 16 bytes)
+  puts the HEART error and interrupt registers into their start state for the running processor. It calls `getcpuid`
+  (the number is taken as a signed 16-bit value, `c`) and then, using the HEART widget block at 0x9000000018000000, makes
+  these stores in order: a zero doubleword at +0x68; the doubleword at +0x60 read and written back unchanged; a zero word at
+  +0x44; the doubleword at 0xffffffffaff10040 read and written back unchanged; the doubleword 0x3ff62c07 at +0x68 of the
+  widget block; zero doublewords at 0xffffffffaff10000, +8, +0x10 and +0x18 (the four interrupt mask registers). The last
+  store, in the delay slot of the return, writes interrupt mask register `c` (0xffffffffaff10000 + 8c) with bits 42+c,
+  46+c and 59+c and bit 63 set. The routine returns no value; v0 holds the address of that register on exit. Established.
