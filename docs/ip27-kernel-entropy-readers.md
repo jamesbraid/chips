@@ -11,7 +11,7 @@ linked kernel; addresses are the kernel's own. The counter read is the only regi
   `streams_uiomove`). It takes the global lock at `gp + 0x1360` (`strhead_monp_lock`) with `mutex_spinlock`, drops it with
   `spinunlock_pmonitor` (or `nested_spinunlock` and `splx` when the head is gone) and works under the head's own monitor,
   released with `vmonitor` on every exit. In the loop it takes the next message with `getq` from the head's read queue; with none
-  it returns 0 when the head flags (word at +0x10) say hung up (0x10), when a data copy was already done and bit 0x1000000 is
+  it returns 0 when the head flags (doubleword at +0x10) say hung up (0x10), when a data copy was already done and bit 0x1000000 is
   clear, or when the no-delay mark is set, returns 0x5c (92) when the file's type word at +0x20 equals 6, and otherwise sleeps in
   `strwaitq` (mode 2, flags from +0xc, the count at +0x20) and then calls `randproc_input` with the low 32 bits of the doubleword at
   `0x9200000001030100` (the Hub real-time counter, `PI` offset 0x30100) ORed with `0x300000000`, so each wake-up feeds the
