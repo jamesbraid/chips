@@ -172,3 +172,31 @@ the processor running the code.
   tests Cause bit 14 and bit 16 of the doubleword at 0xffffffffaff10040 the way `badaddr_val` does. Failure branches to
   that same routine, so the caller sees 1 in v0; success clears the halfword at +246 (again without a pointer test), restores Status and
   returns 0. Established.
+- `badaddr` (`IP30/unix` `0xa80000002001c200`, 296 bytes, frame 16 bytes)
+  is `badaddr_val` without the copy-out: it probes whether a read of `a0` at width `a1` (1, 2, 4 or 8) is answered and
+  discards the value (the load lands in v0, which the epilogue overwrites). It saves Status in t0, writes 0xa0 to it,
+  and runs the same clear sequence as `badaddr_val` on 0xffffffffb8000000 (read +0x60, store 0 to +0x40, read +0x0,
+  write +0x60 back), 0xffffffffaff10040 (read, write back) and 0xffffffffaff50000 (read). It then stores 1 as the halfword
+  at +246 of the record at -16352 of the process page with no test of the pointer. The width switch is `lb`, `lh`, `lw`
+  or `ld` (compared in that order with 1, 2, 4, 8); anything else calls `cmn_err` with 0 and the string "baddaddr" and
+  carries on. It then reads 0xffffffffaff50000 and 0xffffffffb8000000, executes `sync`, and sends Cause bit 14 set, or
+  bit 16 of the doubleword at 0xffffffffaff10040 set, to `baerror` at `0xa80000002001c908`, which returns 1. With neither
+  set it clears that halfword (again without a pointer test), restores Status and returns 0. Established.
+- `wbadaddr` (`IP30/unix` `0xa80000002001c494`, 332 bytes, frame 16 bytes)
+  probes a write: it stores zero at `a0` with the width in `a1` (`sb`, `sh`, `sw` or `sd` of the zero register, compared
+  with 1, 2, 4, 8 in that order) and reports whether the bus complained. There is no value argument. The prologue is
+  the one of `wbadaddr_val`: Status saved and set to 0xa0, the three-register clear sequence, and 1 stored as the halfword
+  at +246 of the record at -16352 of the process page. Any other width calls `cmn_err` with 0 and the string
+  "wbaddaddr" and goes on. After the store it reads 0xffffffffaff50000 and 0xffffffffb8000000, executes `sync`, repeats
+  that pair and `sync`, then reads the word at 0x9000000000000000 into t2, and tests Cause bit 14 and bit 16 of the
+  doubleword at 0xffffffffaff10040. Failure branches to `baerror`, which leaves 1 in v0 for the caller; success clears the halfword at
+  +246, restores Status and returns 0. Established.
+- `earlybadaddr` (`IP30/unix` `0xa80000002001c748`, 312 bytes, frame 16 bytes)
+  is the read probe for use before the per-thread record exists: instead of the halfword at +246 it stores the word 9
+  into the global `nofault` (address 0xa8000000204af10c). Only widths 1, 2 and 4 are handled (`lb`, `lh`, `lw` into v0,
+  value discarded); width 8 and anything else calls `cmn_err` with 0 and the string "earlybaddaddr" and goes on. The
+  entry sequence is Status saved in t0 and set to 0xa0, then the clear sequence on 0xffffffffb8000000,
+  0xffffffffaff10040 and 0xffffffffaff50000 used by `badaddr`. After the access it reads 0xffffffffaff50000 and
+  0xffffffffb8000000, executes `sync` and tests Cause bit 14 and bit 16 of the doubleword at 0xffffffffaff10040. Failure
+  branches to `earlybaerror` at `0xa80000002001c964`, which repeats the clear sequence, restores Status, stores 0 to
+  `nofault` and leaves 1 in v0; success stores 0 to `nofault`, restores Status and returns 0. Established.
