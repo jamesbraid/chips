@@ -1,0 +1,29 @@
+variant	register	source	kind	bits_or_value	sites	functions	example
+bedrock	0x20	load	shift	shift 0	1	1	get_myid@c40
+bedrock	0x80	store	const	0x7e	1	1	brl1_send_console_packet@21ac
+bedrock	0x80	store	const	0x44	1	1	brl1_send_console_packet@2214
+bedrock	0x80	load	mask	7:0	1	1	uart_getc@88
+bedrock	0x88	load	mask	7:0	4	2	uart_intr_enable@3c8
+bedrock	0x88	store	mask	7:0	3	2	uart_intr_enable@3d8
+bedrock	0x90	store	const	0x7	1	1	uart_init@204
+bedrock	0x90	load	mask	7:0	4	2	brl1_intr_poll@1e4c
+bedrock	0x90	load	mask	2:1	4	2	brl1_intr_poll@1e4c
+bedrock	0x90	load	mask	2	4	2	brl1_intr_poll@1e4c
+bedrock	0x90	load	mask	1	4	2	brl1_intr_poll@1e80
+bedrock	0x98	load	mask	7:0	2	2	uart_intr_enable@3b0
+bedrock	0xa8	load	mask	5	63	4	brl1_send_chars@ec4
+bedrock	0xa8	load	mask	6	2	1	uart_init@110
+bedrock	0xa8	load	mask	7:0	1	1	uart_getc@60
+bedrock	0xa8	load	mask	3:2,0	1	1	uart_getc@60
+bedrock	0xa8	load	mask	0	1	1	uart_getc@60
+bedrock	0xa8	load	mask	3:2	1	1	uart_getc@60
+bedrock	0xa8	load	mask	15:0	1	1	brl1_send_console_packet@2200
+bedrock	0x604200	load	mask	9:0	8	4	uart_init@b4
+bedrock	0x604200	load	shift	shift 4	8	4	uart_init@b4
+bedrock	0x604200	load	shift	shift 2	8	4	uart_init@b4
+bedrock	0x604200	load	shift	shift 1	8	4	uart_init@b4
+bedrock	0x800098	load	mask	4	1	1	brl1_intr_poll@1e00
+hub	0x20	load	shift	shift 0	1	1	get_myid@4
+hub	0x30100	load	shift	shift 2	2	1	elsc_lock@fdc
+hub	0x30100	load	shift	shift 3	2	1	elsc_lock@fdc
+hub	0x30100	load	shift	shift 5	2	1	elsc_lock@fdc

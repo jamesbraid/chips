@@ -37,6 +37,10 @@ chip page and the entry is deleted.
   barrier registers and the diagnostic registers are not reached by constant. Tried: every call to the router accessors
   in both kernels. Next: `do_router_op`'s callers (the user-reachable register read and write), the PROM's router
   probe, and the IP35 `read_rr_reg` scan-chain path of `read_reg.o`.
+- **L1 and ELSC: PCI power request codes and L2 addressing.** The request codes for the I/O brick's PCI slot and bus
+  power and reset routines of `l1_command.o` come from tables the call-argument pass cannot follow
+  (chips/l1/README.md); no routine addresses an L2. Next: dump the request tables through the object's relocations and read
+  the `peer_iobrick_*` forms.
 - **Xbow: the PROMs' large crossbar routines.** The census seeds only the small routines it could tie to the
   Crossbow (link-usable tests, link reset, error save, the IP30 interrupt service). Routines that touch the
   link-block displacements and were not read: IP27 PROM `0x1fc444b0`; I/O-board PROM `0x11c1d4ac`, `0x11c21c58`,
