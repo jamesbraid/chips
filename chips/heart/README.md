@@ -411,6 +411,30 @@ issued, including delay slots, which run before the branch or call they belong t
 - `heart_dmatrans_addr` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xdc0`, 32 bytes, read in full, established):
   moves the entry `a2` into `a0` and the entry `a3` into `a1`, then calls `heart_addr_phys_to_xio` at `0xdcc` with
   those two values. It returns the callee's result.
+- `heart_attach` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x7c4`, 120 bytes, read in full, established): calls
+  `xwidget_info_get` at `0x7d0` with `a0` unchanged, then `xwidget_info_master_get` at `0x7e0` on its result. It calls
+  `hwgraph_edge_add` at `0x7f8` with `a0` the entry `a0`, `a1` the master, and `a2` the `.rodata` pointer plus 152. A
+  second `hwgraph_edge_add` at `0x80c` runs with `a0` the master, `a1` the entry `a0` and `a2` the `.rodata` pointer
+  plus 136. `xwidget_error_register` is called at `0x820` with `a1` set to `heart_error_handler` (the pointer at
+  `gp-30704`) and `a2` the `xwidget_info_get` result, and the routine returns 0 whatever that call gives.
+- `heart_widgetdev_enable` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1b04`, 8 bytes, read in full, established): a
+  `jr ra` at `0x1b04` with a nop at `0x1b08`. It stores nothing, so `v0` returns as the caller left it.
+- `heart_widgetdev_shutdown` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1b0c`, 8 bytes, read in full, established):
+  a single return at `0x1b0c` with the nop at `0x1b10` in its delay slot. No register is written.
+- `heart_dma_enabled` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1b14`, 8 bytes, read in full, established): `jr
+  ra` at `0x1b14`, with `addiu v0,zero,1` in the delay slot at `0x1b18`. The return value is 1.
+- `heart_device_powerup` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1b1c`, 8 bytes, read in full, established): `jr
+  ra` at `0x1b1c` with `or v0,zero,zero` at `0x1b20`. It returns 0.
+- `heart_device_shutdown` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1b24`, 8 bytes, read in full, established):
+  `jr ra` at `0x1b24`, and `or v0,zero,zero` at `0x1b28` supplies a return value of 0.
+- `heart_device_inquiry` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1b2c`, 8 bytes, read in full, established): `jr
+  ra` at `0x1b2c` with `or v0,zero,zero` at `0x1b30`, returning 0.
+- `heart_piomap_done` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xb50`, 8 bytes, read in full, established): a `jr
+  ra` at `0xb50` with a nop at `0xb54`. The body changes no register and reaches no other routine.
+- `heart_dmamap_done` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xdb8`, 8 bytes, read in full, established): a `jr
+  ra` at `0xdb8` and a nop at `0xdbc`. The entry arguments are ignored.
+- `heart_dmamap_drain` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xf4c`, 8 bytes, read in full, established):
+  consists of `jr ra` at `0xf4c` and a nop at `0xf50`. It does nothing else.
 
 ## Open
 
