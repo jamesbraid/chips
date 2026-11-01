@@ -1161,6 +1161,53 @@ tables. Labels are inferred, from the symbol table and the undefined imports. No
   38980-byte member. `in_pcblookupx` (3560 bytes) finds the block for an arriving packet, `in_pcbnotify` (1376 bytes)
   passes an error to the blocks it matches, and `udp_full_assign` (1264 bytes) and `tcp_full_assign` (1060 bytes) set the
   full endpoint. It draws ports with `read_random_real` and `inpcb_randomize_ports`, and works on the `tcb` and `udb` tables.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_proto.o)` (inferred): the IPv4 protocol switch, a member with no routine rows.
+  Its 32 imports are the entry points of the IPv4 protocols: `tcp_input`, `udp_input`, `icmp_input`, `igmp_input` and
+  `rsvp_input` for receive, their control hooks, and the timer and drain hooks `tcp_slowtimo`, `tcp_fasttimo`, `ip_drain`
+  and `igmp_init`. It imports `rn_inithead`, the radix tree head set-up, and the software interface entry points `swinit`,
+  `swinput` and `swoutput`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(ip_icmp.o)` (inferred): ICMP, nine routines in a 13620-byte member. `icmp_input`
+  (1536 bytes) handles inbound messages, `icmp_reflect` (928 bytes) builds replies, `icmp_send` (236 bytes) sends errors,
+  and `iptime` (100 bytes) returns the time stamp for timestamp replies. It takes its settings from
+  `icmp_respond_to_timestamp`, `icmp_respond_to_address_mask` and `icmp_dropredirects`, calls `rtredirect` for redirects,
+  and sends with `ip_output`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(ip_input.o)` (inferred): IPv4 input, 20 routines in a 27860-byte member. `ip_input`
+  (2764 bytes) is the receive entry, `ip_reass_strict` (1548 bytes) and `ip_reass` (1124 bytes) reassemble fragments, with
+  the strict variant chosen by `ipv4_strict_reassembly`, `ip_forward` (1412 bytes) forwards packets, and `ip_dooptions`
+  (1316 bytes) handles IP options. It reads `ipforwarding`, `ipsendredirects` and `ipv4_frag_timeout`, and reports errors
+  through `icmp_error`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(ip_output.o)` (inferred): IPv4 output and options, nine routines in a 25204-byte
+  member. `ip_setmoptions` (1532 bytes) and `ip_getmoptions` (468 bytes) set and read the multicast options, `ip_ctloutput`
+  (1224 bytes) is the socket option entry, and `ip_pcbopts` (440 bytes) and `ip_insertoptions` (384 bytes) hold the option
+  list and insert it into an outgoing header. It joins and leaves groups with `in_addmulti2` and `in_delmulti`, passes
+  multicast packets to `ip_mforward`, and loops packets back through `looutput`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(raw_ip.o)` (inferred): raw sockets on the IPv4 protocol, three routines in an
+  8404-byte member. `rip_output` (528 bytes) sends a raw packet through `ip_output`, `rip_ctloutput` (732 bytes) is the
+  option entry and passes the multicast router and RSVP options to `ip_mrouter_set`, `ip_mrouter_get`, `ip_rsvp_vif_init`
+  and `ip_rsvp_vif_done`, and `rip_input` receives packets for the raw socket through `raw_input`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_debug.o)` (inferred): TCP trace support, one routine, `tcp_trace`, in an 8612-byte
+  member. It imports `printf` and `iptime`, so it prints trace lines with a time stamp. The symbol table gives the routine
+  no size.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_input.o)` (inferred): TCP segment input, 13 routines in a 36612-byte member.
+  `tcp_input_private` (9992 bytes) is the largest. `tcp_input` (1172 bytes) is the entry, `tcp_dooptions` (820 bytes)
+  parses the options, `tcp_mss` (1440 bytes) sets the segment size, and `tcp_defer_segment` (480 bytes) holds segments
+  back. It calls the SACK routines `sack_rcvupdate`, `sack_rcvacked` and `sack_sndlist`, wakes sockets with `sowakeup`,
+  and sends replies with `tcp_output`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_output.o)` (inferred): TCP output, two routines in a 14036-byte member.
+  `tcp_output` is the send routine, and the symbol table gives it no size. `tcp_setpersist` (188 bytes) arms the persist
+  timer. It builds segments with `m_copy` and `m_datacopy`, sends through `ip_output` for IPv4 and `tcp6_output` for IPv6,
+  and reads the settings `tcp_sack`, `tcp_timestamps` and `tcp_mss`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_subr.o)` (inferred): TCP support routines, 29 routines in a 24356-byte member.
+  `tcp_close` (1100 bytes) tears a connection down, `tcp_respond` (820 bytes) sends a reply segment, `tcp_msgsize` (744
+  bytes) sizes a segment, `sack_sndupdate` (660 bytes) updates the SACK scoreboard, and `tcp_template` (608 bytes) builds
+  the header template. The MD5 calls `_BSD_MD5Init`, `_BSD_MD5Update` and `_BSD_MD5Final` take the keys
+  `tcpiss_md5_secret_hi` and `tcpiss_md5_secret_lo`, which points to a digest of the initial sequence number. It allocates
+  from the zone `tcp_pcb_cache` through `kmem_zone_alloc`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_timer.o)` (inferred): TCP timers, five routines in a 13060-byte member.
+  `tcp_timers` (1440 bytes) runs the per-connection timers, `tcp_slowtimo` (896 bytes) walks the connection list on the
+  slow clock, `tcp_zaptw` (712 bytes) reaps connection blocks chosen by `tcp_zaptw_secs`, and `tcp_canceltimers` (36
+  bytes) clears them. It reads `tcp_keepidle`, `tcp_keepintvl` and `tcp_maxpersistidle`, and calls `tcp_close`, `tcp_drop`
+  and `tcp_respond`.
 
 ## Scope questions
 
