@@ -1649,7 +1649,7 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-IP32	kernel-object	objec
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_busts.o)	kernel-IP32	kernel-object	object	n32	980	4b3d4554333ee522		0	none	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-IP32	kernel-object	object	n32	26388	f422bfb8e7ac5464		33	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-IP32	kernel-object	object	n32	45284	b8cf1d46113ad828		52	symtab	0	0	named-only	chips/crime/README.md#serial-and-edid-routines-crime_i2co-crime_inito	Serial and EDID routines (`crime_i2c.o`, `crime_init.o`)
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_db.o)	kernel-IP32	kernel-object	object	n32	4820	cac57fb03217df9b		2	symtab	0	0	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_db.o)	kernel-IP32	kernel-object	object	n32	4820	cac57fb03217df9b		2	symtab	0	0	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_debug.o)	kernel-IP32	kernel-object	object	n32	4244	761feae31d6f6d83		2	symtab	0	0	named-only	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
 IP32/usr/cpu/sysgen/IP32boot/crypto.a(sha2.o)	kernel-IP32	kernel-object	object	n32	13492	00cb162e461125e0		18	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crypto.a(rijndael-alg-fst.o)	kernel-IP32	kernel-object	object	n32	23860	a157e054b441eff8		4	symtab	0	0	undocumented		

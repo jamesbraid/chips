@@ -463,6 +463,26 @@ are offsets inside that object.
   keeps its low byte. It returns 0 for `0xa0` and for any byte whose high nibble is not `0xa`, and 1 for the other bytes whose high
   nibble is `0xa`, which are `0xa1` to `0xaf`. Established.
 
+### Tile bookkeeping (`crime.a(crime_db.o)`)
+
+Both routines take a tile record in `a0`. The word at +8 of the record points to a table of 16-bit entries, one per
+tile index, and the word at +4 counts the tiles the record holds.
+
+- `crmAddBackTiles` (`crime.a(crime_db.o)`, address `0x0`, 252 bytes): with a count of zero it skips the allocation and
+  only does the counter update. Otherwise it fills a stack buffer of 16-bit values through `crmAllocTiles`, with the
+  count, the word at +12 of the record and 3 as its arguments, and returns 1 when that call is nonzero. On success it
+  adds the count to the two 16-bit counters at `crm_tileusage`+2 and +6. For each of the count bytes at `a2`, it
+  stores the next buffer value at the table entry the byte indexes. It then adds the count to the word at +4 of the
+  record, stores the return of `crmNextIncarnation` at +16, and returns 0. Established for the sequence. Inferred: the
+  table holds the per-tile state and the byte array holds the tile indices being returned.
+- `crmSubtractBackTiles` (`crime.a(crime_db.o)`, address `0xfc`, 220 bytes): allocates a buffer of two bytes per
+  requested tile with `kern_malloc`. For each byte at `a2` it reads the table entry that byte indexes; a nonzero entry
+  is copied into the buffer, cleared in the table, and counted. When that number is nonzero it subtracts it from
+  the word at +4 of the record, calls `crmNextIncarnation`, and calls `crmFreeTiles` with the buffer, the number, the
+  word at +12 and the byte at +21 of the record. The return of `crmFreeTiles` goes to +16. It frees the buffer with
+  `kern_free` and returns whatever `kern_free` leaves in v0. Established for the sequence. Inferred: the routine gives
+  back the tiles that a previous add took, the inverse of `crmAddBackTiles`.
+
 ## Open
 
 See [docs/open-questions.md](../../docs/open-questions.md): the identification upper word, the status register location on

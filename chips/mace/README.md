@@ -383,6 +383,54 @@ targets). Each mask routine reads or writes the 64-bit ISA interrupt mask at phy
   the entry plus 44. Otherwise it calls the handler at byte 8 with `a0` 0 and the argument at byte 16. Either way the
   entry's mask bits leave the pending set, and the walk stops when none are left or after ten entries. Established.
 
+### PCI host layer (`pcimh.o`)
+
+The IP32 PCI host provider runs over MACE. Most of its entries are stubs: an empty body, or a single return with a
+fixed value. Each entry below states the value and what the routine touches, which is nothing unless it says otherwise.
+
+- `pcimh_device_unregister` (`pcimh.o`, address `0x2654`, 8 bytes): an empty body. The return at `+0x0` and the nop in its
+  delay slot are the whole routine. Established.
+- `pcimh_driver_reg_callback` (`pcimh.o`, address `0x2664`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop at `+0x4`. Established.
+- `pcimh_driver_unreg_callback` (`pcimh.o`, address `0x266c`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop
+  at `+0x4`; the callback argument is never stored or called. Established.
+- `pcimh_dma_enabled` (`pcimh.o`, address `0x265c`, 8 bytes): puts 1 in v0 in the delay slot at `+0x4`. Its arguments
+  are not read. Established.
+- `pcimh_error_devenable` (`pcimh.o`, address `0x2070`, 8 bytes): sets v0 to 0 in the delay slot at `+0x4`. Established.
+- `pcimh_error_extract` (`pcimh.o`, address `0x2078`, 8 bytes): puts 255 in v0 in the delay slot at `+0x4`, whatever
+  its arguments. Established.
+- `pcimh_intr_cpu_get` (`pcimh.o`, address `0x1bd0`, 8 bytes): puts -1 in v0 in the delay slot at `+0x4`. Established.
+- `pcimh_reset` (`pcimh.o`, address `0x1d9c`, 8 bytes): puts -1 in v0 in the delay slot at `+0x4` and does not touch the
+  bus. Established.
+- `pcimh_priority_set` (`pcimh.o`, address `0x1dd0`, 8 bytes): copies its second argument into v0 in the delay slot at
+  `+0x4`. The first argument is not read. Established.
+- `pcimh_write_gather_flush` (`pcimh.o`, address `0x1d94`, 8 bytes): sets v0 to 0 in the delay slot at `+0x4` and stores
+  nothing. Established.
+- `pcimh_pio_flush_init` (`pcimh.o`, address `0x14b8`, 8 bytes): sets v0 to 0 in the `jr` delay slot at `+0x4`, then returns. Established.
+- `pcimh_pio_flush_del` (`pcimh.o`, address `0x14b0`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop at `+0x4`. Established.
+- `pcimh_intr_setmustrun` (`pcimh.o`, address `0x14c0`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop at `+0x4`. Established.
+- `pcimh_piomap_done` (`pcimh.o`, address `0xe04`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop at `+0x4`. Established.
+- `pcimh_dmamap_done` (`pcimh.o`, address `0x16e4`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop at `+0x4`. Established.
+- `pcimh_dmamap_drain` (`pcimh.o`, address `0x1874`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop at `+0x4`. Established.
+- `pcimh_dmaaddr_drain` (`pcimh.o`, address `0x187c`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop at `+0x4`. Established.
+- `pcimh_dmalist_drain` (`pcimh.o`, address `0x1884`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop at `+0x4`. Established.
+- `pcimh_provider_shutdown` (`pcimh.o`, address `0x1d8c`, 8 bytes): a bare return, with the `jr` at `+0x0` and a nop at `+0x4`. Established.
+- `pcimh_dmamap_free` (`pcimh.o`, address `0x1538`, 28 bytes): calls `kmem_free` with the first argument unchanged and
+  a size of 12 bytes, then returns. Established.
+- `pcimh_intr_free` (`pcimh.o`, address `0x19f0`, 28 bytes): calls `kmem_free` with the first argument unchanged and a
+  size of 56 bytes. Established.
+- `pcimh_piomap_free` (`pcimh.o`, address `0xdac`, 28 bytes): calls `kmem_free` with the first argument unchanged and a
+  size of 28 bytes. Established.
+- `pcimh_provider_startup` (`pcimh.o`, address `0x1d70`, 28 bytes): calls `pciio_init` with its own arguments and returns
+  the value `pciio_init` leaves in v0. Established.
+- `pcimh_config_get_safe` (`pcimh.o`, address `0x1e10`, 28 bytes): calls `pcimh_config_get` with its own arguments and
+  returns that result unchanged. It adds no range or error check of its own. Established.
+- `pcimh_businfo_get` (`pcimh.o`, address `0x2674`, 32 bytes): writes 1 to the words at `+0x0`, `+0x4`, `+0x8` and `+0xc`
+  of a static record in `.bss`, and returns the record's address in v0. Established.
+- `pcimh_pio_flush_read` (`pcimh.o`, address `0x1438`, 120 bytes): copies one value from the buffer at `a1` to the
+  buffer at `a2`, when `a0` is nonzero and `a3` is 1, 2, 4 or 8. The copy is a byte, halfword, word or doubleword for
+  those widths. It returns 1 after a copy and 0 otherwise, including for any other width. Established for the copy and
+  the return. Inferred: the copy reads back the device after a programmed-I/O write, as the name suggests.
+
 ## Open
 
 See docs/open-questions.md: the compressed IP32 PROM, the Ethernet, serial and video blocks reached by pointer, the
