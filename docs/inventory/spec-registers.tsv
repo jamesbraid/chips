@@ -30,8 +30,8 @@ CRIME 1.5	7-1	164	RE	0x400	IntfBuf.ctl	1	0	32	W	0	named-only	chips/bridge/README
 CRIME 1.5	7-2	164	RE	0x1000	TLB.fbA[64]	64	8	64	R/W	0	undocumented		
 CRIME 1.5	7-2	164	RE	0x1200	TLB.fbB[64]	64	8	64	R/W	0	undocumented		
 CRIME 1.5	7-2	164	RE	0x1400	TLB.fbC[64]	64	8	64	R/W	0	undocumented		
-CRIME 1.5	7-2	164	RE	0x1600	TLB.tex[28]	28	8	64	R/W	0	undocumented		
-CRIME 1.5	7-2	164	RE	0x16e0	TLB.cid[4]	4	8	64	R/W	0	undocumented		
+CRIME 1.5	7-2	164	RE	0x1600	TLB.tex[28]	28	8	64	R/W	0	understood	chips/crime/README.md#tlb-pages	TLB pages
+CRIME 1.5	7-2	164	RE	0x16e0	TLB.cid[4]	4	8	64	R/W	0	understood	chips/crime/README.md#tlb-pages	TLB pages
 CRIME 1.5	7-2	164	RE	0x1700	TLB.linearA[16]	16	8	64	R/W	0	undocumented		
 CRIME 1.5	7-2	164	RE	0x1780	TLB.linearB[16]	16	8	64	R/W	0	undocumented		
 CRIME 1.5	7-3	165	RE	0x2000	BufMode.src	1	0	32	R/W	0	understood	chips/crime/README.md#buffer-clip-and-draw-mode	Buffer, clip and draw mode
@@ -77,19 +77,19 @@ CRIME 1.5	7-3	167	RE	0x2100	Shade.dbdx	1	0	32	W	0	understood	chips/crime/README.
 CRIME 1.5	7-3	167	RE	0x2104	Shade.dadx	1	0	32	W	0	understood	chips/crime/README.md#shade-interpolation-registers	Shade interpolation registers
 CRIME 1.5	7-3	167	RE	0x2108	Shade.dbdy	1	0	32	W	0	understood	chips/crime/README.md#shade-interpolation-registers	Shade interpolation registers
 CRIME 1.5	7-3	167	RE	0x210c	Shade.dady	1	0	32	W	0	understood	chips/crime/README.md#shade-interpolation-registers	Shade interpolation registers
-CRIME 1.5	7-3	167	RE	0x2110	Texture.mode	1	0	32	R/W	0	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-CRIME 1.5	7-3	167	RE	0x2118	Texture.format	1	0	64	R/W	0	undocumented		
-CRIME 1.5	7-3	167	RE	0x2120	Texture.SQs	1	0	64	W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x2128	Texture.TQs	1	0	64	W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x2130	Texture.Qs	1	0	32	W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x2138	Texture.dsqdx	1	0	64	W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x2140	Texture.dsqdy	1	0	64	W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x2148	Texture.dtqdx	1	0	64	W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x2150	Texture.dtqdy	1	0	64	W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x2158	Texture.dqdx	1	0	32	W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x215c	Texture.dqdy	1	0	32	W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x2160	Texture.borderColor	1	0	32	R/W	0	undocumented		
-CRIME 1.5	7-3	168	RE	0x2168	Texture.envColor	1	0	32	R/W	0	undocumented		
+CRIME 1.5	7-3	167	RE	0x2110	Texture.mode	1	0	32	R/W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	167	RE	0x2118	Texture.format	1	0	64	R/W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	167	RE	0x2120	Texture.SQs	1	0	64	W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x2128	Texture.TQs	1	0	64	W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x2130	Texture.Qs	1	0	32	W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x2138	Texture.dsqdx	1	0	64	W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x2140	Texture.dsqdy	1	0	64	W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x2148	Texture.dtqdx	1	0	64	W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x2150	Texture.dtqdy	1	0	64	W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x2158	Texture.dqdx	1	0	32	W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x215c	Texture.dqdy	1	0	32	W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x2160	Texture.borderColor	1	0	32	R/W	0	understood	chips/crime/README.md#texture-registers	Texture registers
+CRIME 1.5	7-3	168	RE	0x2168	Texture.envColor	1	0	32	R/W	0	understood	chips/crime/README.md#texture-registers	Texture registers
 CRIME 1.5	7-3	168	RE	0x2170	Fog.color	1	0	32	R/W	0	understood	chips/crime/README.md#fog-and-antialias	Fog and antialias
 CRIME 1.5	7-3	169	RE	0x2178	Fog.Fs	1	0	32	W	0	understood	chips/crime/README.md#fog-and-antialias	Fog and antialias
 CRIME 1.5	7-3	169	RE	0x2180	Fog.dfdx	1	0	32	W	0	understood	chips/crime/README.md#fog-and-antialias	Fog and antialias
@@ -107,20 +107,20 @@ CRIME 1.5	7-3	169	RE	0x21d0	Depth.dzdx	1	0	64	W	0	understood	chips/crime/README.
 CRIME 1.5	7-3	169	RE	0x21d8	Depth.dzdy	1	0	64	W	0	understood	chips/crime/README.md#depth-and-stencil	Depth and stencil
 CRIME 1.5	7-3	169	RE	0x21e0	Stencil.mode	1	0	32	R/W	0	understood	chips/crime/README.md#depth-and-stencil	Depth and stencil
 CRIME 1.5	7-3	170	RE	0x21e8	Stencil.mask	1	0	32	R/W	0	understood	chips/crime/README.md#depth-and-stencil	Depth and stencil
-CRIME 1.5	7-3	170	RE	0x21f0	PixPipeNull	1	0	32	W	0	undocumented		
-CRIME 1.5	7-3	170	RE	0x21f8	PixPipeFlush	1	0	32	W	0	undocumented		
-CRIME 1.5	7-15	183	RE	0x3000	MTE.mode	1	0	32	R/W	0	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-CRIME 1.5	7-15	183	RE	0x3008	MTE.byteMask	1	0	32	R/W	0	undocumented		
-CRIME 1.5	7-15	183	RE	0x3010	MTE.stippleMask	1	0	32	W	0	undocumented		
-CRIME 1.5	7-15	183	RE	0x3018	MTE.fgValue	1	0	32	R/W	0	undocumented		
-CRIME 1.5	7-15	183	RE	0x3020	MTE.src0	1	0	32	R/W	0	undocumented		
-CRIME 1.5	7-15	183	RE	0x3028	MTE.src1	1	0	32	R/W	0	undocumented		
-CRIME 1.5	7-15	183	RE	0x3030	MTE.dst0	1	0	32	W	0	undocumented		
-CRIME 1.5	7-15	183	RE	0x3038	MTE.dst1	1	0	32	W	0	undocumented		
-CRIME 1.5	7-15	184	RE	0x3040	MTE.srcYStep	1	0	32	R/W	0	undocumented		
-CRIME 1.5	7-15	184	RE	0x3048	MTE.dstYStep	1	0	32	R/W	0	undocumented		
+CRIME 1.5	7-3	170	RE	0x21f0	PixPipeNull	1	0	32	W	0	understood	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
+CRIME 1.5	7-3	170	RE	0x21f8	PixPipeFlush	1	0	32	W	0	understood	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
+CRIME 1.5	7-15	183	RE	0x3000	MTE.mode	1	0	32	R/W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
+CRIME 1.5	7-15	183	RE	0x3008	MTE.byteMask	1	0	32	R/W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
+CRIME 1.5	7-15	183	RE	0x3010	MTE.stippleMask	1	0	32	W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
+CRIME 1.5	7-15	183	RE	0x3018	MTE.fgValue	1	0	32	R/W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
+CRIME 1.5	7-15	183	RE	0x3020	MTE.src0	1	0	32	R/W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
+CRIME 1.5	7-15	183	RE	0x3028	MTE.src1	1	0	32	R/W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
+CRIME 1.5	7-15	183	RE	0x3030	MTE.dst0	1	0	32	W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
+CRIME 1.5	7-15	183	RE	0x3038	MTE.dst1	1	0	32	W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
+CRIME 1.5	7-15	184	RE	0x3040	MTE.srcYStep	1	0	32	R/W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
+CRIME 1.5	7-15	184	RE	0x3048	MTE.dstYStep	1	0	32	R/W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
 CRIME 1.5	7-15	184	RE	0x3070	MTE.null	1	0	32	W	0	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-CRIME 1.5	7-15	184	RE	0x3078	MTE.ﬂush	1	0	32	W	0	undocumented		
+CRIME 1.5	7-15	184	RE	0x3078	MTE.ﬂush	1	0	32	W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
 GBE rev 1.1	3.2	36	GBE	0x0	CTRLSTAT	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
 GBE rev 1.1	3.2	36	GBE	0x4	DOTCLK	1	0	32	R/W	1	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
 GBE rev 1.1	3.2	37	GBE	0x8	I2C	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
