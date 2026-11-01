@@ -99,10 +99,10 @@ Totals over the **41 rows** below (families count once each; a row graded for so
 | `0xb0` | number-in-a-can (NIC) | rw | both | `pcireg_nic_addr` | returns a pointer to window +0xb4 instead of accessing it (census kind `a`); the PROM carries a "Number-In-a-Can (NIC)" string | I |
 | `0xc0` | PCI bus timeout | rw | both | `xbridge_attach`, `pcireg_timeout_*` | attach clears bits 9:0 (mask `0x3ff`) when `revision | part << 4` is below `0xc0024` | E (bits 9:0), I (rest) |
 | `0xc8` | PCI configuration (type 1 counter) | rw | both | `pcireg_type1_cntr_get`, `pcireg_type1_cntr_set` | accessors only | I |
-| `0xd0` | PCI bus error address, upper | r | both | `pcireg_pci_bus_addr_get`, `pcibr_error_extract`; PROM error dump | with `0xd8` returned as one address; bits 15:0 are the upper address bits | I |
+| `0xd0` | PCI bus error address, upper | r | both | `pcireg_pci_bus_addr_get`, `pcibr_error_extract`; PROM error dump | the two are returned as one 64-bit address, `0xd0` word shifted left 32 over the `0xd8` word, without a mask in the accessor (Bridge and XBridge read each as a 32-bit word at +4; the PIC layout reads `0xd8` as one doubleword); the width of the upper field is not shown by the accessor | I |
 | `0xd8` | PCI bus error address, lower | r | both | as `0xd0` | as `0xd0` | I |
 | `0x100` | interrupt status | r | both | `pcibr_error_intr_handler`, `pcibr_force_interrupt`, IP30 PROM (three routines) | read; the handler tests bits 31:8 as errors and bits 7:0 are the pin inputs; the IP30 PROM tests mask `0x40` (name `PWR_SWITCH/6` in its table) and mask `0x20` (`PASSWD/5`) | E |
-| `0x108` | interrupt enable | rw | both | `xbridge_attach`, `pcibr_detach`, `pcibr_intr_connect`, `pcibr_intr_disconnect` | attach ORs in a 64-bit literal whose low word is `0x7ffffe00` (bits 30:9) and clears bit 24 when `revision | part << 4` is below `0xc0023`; detach writes 0; connect and disconnect set and clear a pin bit | E |
+| `0x108` | interrupt enable | rw | both | `xbridge_attach`, `pcibr_detach`, `pcibr_intr_connect`, `pcibr_intr_disconnect` | attach reads the register and ORs in a 64-bit literal (`0x00003eff7ffffe00`, low word bits 30:9, no bit is cleared afterwards) in one 64-bit store; detach writes 0; connect and disconnect set and clear a pin bit | E |
 | `0x110` | interrupt reset | w | both | `xbridge_attach`, `pcibr_error_cleanup`, `pcibr_dmard_error` | attach writes `0x7f`; the cleanup passes the 64-bit constant `0x3cff00000041`, of which the 32-bit store keeps `0x41`; `pcibr_dmard_error` writes `0x10`; one more routine writes `0x40` | E |
 | `0x118` | interrupt mode | rw | both | `xbridge_attach` | attach writes 0; set and clear accessors exist | I |
 | `0x120` | interrupt device | rw | both | `xbridge_attach`, `pcibr_intr_alloc`, `pcibr_intr_free` | attach writes `0xffffffff`; alloc clears and sets a field per pin and free clears with mask 7: three bits per pin by the mask | I |
@@ -139,8 +139,8 @@ Totals over the **41 rows** below (families count once each; a row graded for so
   (Bridge part only); identification; the mode and speed accessors, whose result goes to record +116; for
   `revision | part << 4` below `0xc0024`, `pcireg_timeout_bit_clr(0x3ff)`; interrupt reset `0x7f`; interrupt device
   `0xffffffff`; `pcibr_directmap_init`; control `|= 0x200000`; every internal translation entry zeroed; on type 0
-  `pcibr_init_ext_ate_ram`; interrupt enable read, ORed with the literal and with bit 24 cleared below `0xc0023`;
-  interrupt enable written; interrupt mode 0; target flush read. The Bridge revision 2 path (at `0xc000000000070d98`)
+  `pcibr_init_ext_ate_ram`; interrupt enable read, ORed with the literal and written back whole (the `revision | part << 4` tests
+  near it, against `0xc0023` and `0xc0022`, set record fields and never touch the enable); interrupt mode 0; target flush read. The Bridge revision 2 path (at `0xc000000000070d98`)
   builds the enable mask differently and was not decoded.
 - **External translation RAM probe (established, `pcibr_init_ext_ate_ram` at `0xc00000000007566c`, read in full).** For
   sizes 1, 2 and 3 it writes `0x0123456789abcdef` to the last entry of the candidate size from a table of 8192, 16384

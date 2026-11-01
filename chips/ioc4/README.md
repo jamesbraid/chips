@@ -51,7 +51,7 @@ constant is itself the fact), **I** inferred, **U** unknown. Widths are 32-bit w
 | cfg `0x0` | device and vendor id | 2 | r | `xide_attach`, `xide_chip_init` compare the halves with `0x100a` and `0x10a9` | E |
 | cfg `0x4` | command and status | 2, 4 | rw | `ioc4_attach` reads the word and writes it back ORed with `0x146` | E |
 | cfg `0x8` | revision | 4, 1 | r | `ioc4_attach` compares the byte with 79 | E |
-| `0x0` | PCI error address, low | 4 | rw | `ioc4_dma_error_intr` reads it: bit 0 valid, bit 5 multiple errors, bits 31:6 address, bits 3:1 unit; `ioc4_error_handler` reads and writes it | E |
+| `0x0` | PCI error address, low | 4 | rw | `ioc4_dma_error_intr` reads it: bit 0 valid, bit 1 chooses the word RX or TX in the message, bit 5 multiple errors, bits 31:6 address, bits 4:2 serial port number; `ioc4_error_handler` reads and writes it | E |
 | `0x4` | PCI error address, high | 4 | r | `ioc4_dma_error_intr` joins it to the low word | E |
 | `0x8` | serial interrupt status | 4 | rw | `ioc4_attach` writes all ones; `ioc4_pending_intrs` and `ioc4_serial_intr` read it | E |
 | `0xc` | other interrupt status | 4 | rw | `ioc4_attach` writes all ones; `ioc4_dma_error_intr` writes a port's bit; `xide_intr_clear` reads and writes it | E |
@@ -89,7 +89,8 @@ and DMA indices 6 and 8 (no access with a constant index reaches them).
   and `0xc` (the acknowledge pattern, inferred as for IOC3).
 - `ioc4_pending_intrs` (`0x14c`) reads `0x8`, `0xc`, `0x10` and `0x14`; read for its accesses only.
 - `ioc4_dma_error_intr` (`sio_ioc4.o` `0x734`, read in full) writes the port's mask word to `0xc` first, reads `0x0`, and if bit 0 is set
-  prints the unit and address (bits 31:6 of the low word with the high word as bits 63:32, unit from bits 3:1) and, when bit 5 is
+  prints the port and address (bits 31:6 of the low word with the high word as bits 63:32; the port character is `'1'` plus twice
+  the value in bits 4:2, and bit 1 picks the word RX or TX printed after it, inferred from the order of the two strings) and, when bit 5 is
   set, a second message; then it re-enables the port's bit through `ioc4_write_ireg(record, mask, 0, 1)`.
 - `xide_intr_clear` (`ide.o` `0x1634`) reads `0xc` through the ATA accessor, tests bits 1:0, and on bit 1 reads `0x0` and the word at
   index 4 of the same block, which the accessor's four-byte stride turns into `0x10` (not `0x4`). Whether that is intended is
@@ -167,7 +168,7 @@ exists. The PIC and Bedrock side of IP35 is in [../pic/README.md](../pic/README.
 |---|---|---|---|
 | interrupt registers `0x0` to `0x1c` | as in the table | `ioc4_misc_regs`: error address low and high, serial and other status, enable set and clear pairs in the same order | agree |
 | `other_ir` bits 1:0 | ATA interrupt and memory error written as 3 to the enable set | `ioc4_other_int`: `ata_int` bit 0, `ata_memerr` bit 1 | agree |
-| error address low | bit 0 valid, bits 3:1 unit, bit 5 multiple, bits 31:6 address | `ioc4_pci_err_addr_l`: valid, `master_id:4` (bits 4:1), `mul_err`, address 31:6 | agree on valid, multiple and address; IRIX uses bits 3:1 for the unit, Linux four bits |
+| error address low | bit 0 valid, bit 1 RX or TX word, bits 4:2 port number, bit 5 multiple, bits 31:6 address | `ioc4_pci_err_addr_l`: valid, `master_id:4` (bits 4:1), `mul_err`, address 31:6 | agree on valid, multiple and address; IRIX splits bits 4:1 into bit 1 (RX or TX word) and bits 4:2 (port number), Linux calls bits 4:1 one master identifier |
 | control `0x20` | stores `0xf`, waits for bit 7 | `cmd_pulse:4` (bits 3:0) and `sio_diag_idle` at bit 7 | agree on the polled bit; the stored `0xf` is a four-bit field, equal to the public `cmd_pulse` width |
 | `0x24` | read-modify-write below revision 79 on a 33 MHz-class bus (speed value 1) | `unused1` | **differ**: IRIX uses it; role unknown |
 | serial layout | ring bases `0x300` to `0x30c` (pair order low then high), ports at `0x310` and every `0x1c`, UARTs at `0x380` and every 8 | `struct ioc4_serial`: `sbbr01_l`, `sbbr01_h`, `sbbr23_l`, `sbbr23_h`, then four 7-word ports, then four UARTs | agree |
