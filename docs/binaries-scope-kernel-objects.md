@@ -542,6 +542,96 @@ table and undefined imports. No routine body was read in full.
   `in_cksum`, the IP output routines `ip_output` and `tcp6_output`, and `tcp_max_tso_len`, the segment-size routine of the
   offload path.
 
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(tcp_subr.o)` (inferred): TCP support routines, 29 routines in a 30308-byte member.
+  `tcp_close` (1168 bytes) closes a connection, `tcp_respond` (876 bytes) and `tcp_template` (608 bytes) build reply
+  packets, `tcp_msgsize` (772 bytes) sizes a message, and `sack_sndupdate` (676 bytes) keeps the selective-acknowledgement
+  list. It imports the MD5 routines `_BSD_MD5Init`, `_BSD_MD5Update` and `_BSD_MD5Final` and sets up its zones with
+  `kmem_zone_init`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(tcp_timer.o)` (inferred): the TCP timers, five routines in a 16148-byte member.
+  `tcp_timers` (1392 bytes) runs the per-connection timers, `tcp_fasttimo` (988 bytes) and `tcp_slowtimo` (884 bytes) are
+  the periodic entries, `tcp_zaptw` (684 bytes) clears TIME_WAIT blocks, and `tcp_canceltimers` (36 bytes) stops them. It
+  imports `tcp_close`, `tcp_drop`, `tcp_output` and `tcp_respond` to act on expired timers.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(tcp_usrreq.o)` (inferred): the TCP socket requests, five routines in a 15652-byte
+  member. `tcp_usrreq` (1860 bytes) is the socket entry, `tcp_attach` and `tcp_disconnect` (180 bytes each) create and drop
+  a connection, `tcp_usrclosed` (380 bytes) handles a closed socket, and `tcp_ctloutput` (624 bytes) handles options. It
+  calls the IPv4 block routines `in_pcballoc`, `in_pcbbind`, `in_pcbconnect` and `in_pcbdetach`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(udp_usrreq.o)` (inferred): UDP, eight routines in a 23540-byte member. `udp_input`
+  (2724 bytes) demultiplexes datagrams, `udp_usrreq` (2088 bytes) is the socket entry, `udp_output` (1296 bytes) sends them,
+  and `udp_ctlinput` (236 bytes) handles control messages. It finds the block with `in_pcblookupx`, reports errors through
+  `icmp_error`, and reads the NFS port `nfs_port` from its data.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(rsvp_input.o)` (inferred): the RSVP input path, two routines in an 8772-byte member:
+  `rsvp_input` (620 bytes) receives reservation messages and `socket_send` (176 bytes) hands them to the socket layer
+  through `sbappendaddr` and `sowakeup`. It passes raw packets to `rip_input` and checks `rsvp_on`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)` (inferred): fragment vectors for checksum and segmentation offload, ten
+  routines in a 14740-byte member. `build_frag_vec` (1664 bytes) builds the vector, `frgvec_header_copy` (744 bytes) copies
+  the header into it, `frag_vec_coalesce_long_chain` (344 bytes) merges long chains, and `udp_to_frag_vec_cksum` (300 bytes)
+  builds one for UDP. `tcp_max_tso_len` (276 bytes) gives the segment size. It imports no chip routine.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(bsdinit.o)` (inferred): network start-up, five routines in an 8628-byte member.
+  `bsd_init` (192 bytes) calls the protocol, interface and socket initialisers, `sethostid` (116 bytes) and `gethostid`
+  (72 bytes) set and read the host identifier, and `phost_sethostid` and `phost_gethostid` (8 and 12 bytes) are the
+  smaller counterparts. It imports `netisr_init`, `loattach` and `sockd_init` among the start-up calls.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_domain.o)` (inferred): the protocol domain table, 12 routines in a 13236-byte
+  member. `domaininit` (276 bytes) installs the domains, `pffindproto` (304 bytes) searches the protocol switch,
+  `domain_add` and `domain_drain` (264 and 232 bytes) add a domain and drain its queues, and `pfctlinput2` (216 bytes)
+  passes a control input to the protocols. It imports the domain records `inetdomain`, `inet6domain`, `routedomain`,
+  `rawdomain` and `atmarpdomain`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_socket.o)` (inferred): the socket core, 21 routines in a 31684-byte member.
+  `soreceive` (3040 bytes) and `sosend` (1808 bytes) move the data, `soclose` (976 bytes) closes a socket, and `sogetopt`
+  and `sosetopt` (852 and 840 bytes) handle options. It takes locks with `mutex_spinlock` and sends and receives mbuf
+  chains with `m_copy`, `m_flip` and `m_shget`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_socket2.o)` (inferred): socket buffers and wakeups, 27 routines in a 28596-byte
+  member. `sbappendaddr` (2100 bytes), `sbappendrights` (1460 bytes) and `sbappend` (1008 bytes) add to the receive buffer,
+  `sonewconn` (908 bytes) makes a socket for a new connection, and `sbcompress` (504 bytes) packs the buffer. It imports
+  `mp_streams_interrupt` and the atomic add-with-wrap calls.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)` (inferred): the socket system calls, 33 routines in a 26740-byte
+  member. `recvit` (1132 bytes) and `sendit` (636 bytes) carry the data for the receive and send calls, `xpg4_recvmsg` and
+  `xpg5_recvmsg` (464 bytes each) serve the newer message interfaces, and `irix5_to_cmsghdr` (352 bytes) converts the
+  control header from the IRIX 5 layout. It moves user data with `copyin` and `copyout`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_socket1.o)` (inferred): socket control, nine routines in a 17156-byte member.
+  `uipc_accept` (1528 bytes) takes a connection, `soioctl` (952 bytes) is the socket ioctl, `uipc_connect` (432 bytes) and
+  `uipc_getpeername` (368 bytes) answer the address calls, and `sopoll` (428 bytes) supports poll. It forwards interface
+  and route ioctls to `ifioctl` and `rtioctl`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(hashing.o)` (inferred): the generic hash tables, 14 routines in a 14676-byte member.
+  `hash_enum_bestmatch` (340 bytes) and `hash_enum_getnext` (332 bytes) walk a table, and `hash_lookup_refcnt`,
+  `hash_remove_refcnt` and `hash_lookup_remove` (308 bytes each) find and drop entries. It guards its tables with the
+  `mrlock` calls and `splimp` and `splx`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(bsd_icrash.o)` (inferred): a crash-analysis hook, one routine `bsd_icrash` (8 bytes) in a
+  77060-byte member. Most of the member is not code in its symbol table. It imports the network tables `tcb`, `udb`,
+  `rawcb`, `rt_tables`, the hash tables and `ifnet`, plus the stream and page counters, so the crash tools can read the
+  network state of a dump. It calls no chip routine.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(vsocket.o)` (inferred): the virtual socket object, six routines in a 9220-byte member.
+  `vsocreate_internal` (208 bytes) creates one, `vsocket_alloc` (128 bytes) takes it from the zone, `vsocket_hold` and
+  `vsocket_release` (68 and 148 bytes) count references, and `vso_initialize` (88 bytes) sets it up. It joins the object
+  to a behaviour chain with `bhv_insert_initial`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(lsock.o)` (inferred): the local socket glue for kernel users, two routines `lcreate`
+  (112 bytes) and `lclose` (272 bytes) in an 8484-byte member. It wraps the socket calls `socreate`, `sobind`, `soconnect2`
+  and `solisten`, and it drives no chip.
+
+- `IP35/usr/cpu/sysgen/IP35boot/bsdidbg.o` (inferred): the debugger commands for the network stack, 83 routines in a
+  132376-byte object. `idbg_mbcache` (1000 bytes), `idbg_rawif` (860 bytes), `idbg_soc` (788 bytes), `idbg_hashtable`
+  (720 bytes) and `idbg_inpcb` (712 bytes) print the mbuf cache, raw interfaces, sockets, hash tables and protocol blocks.
+  It registers them with `idbg_addfunc` and reads the ARP, IGMP and mbuf state through `llinfo_arp`,
+  `igmp_router_info_head` and `mb_source_cache`. It drives no chip.
+- `IP35/usr/cpu/sysgen/IP35boot/cl.o` (inferred): the cluster device driver that carries data between partitions, 14 routines
+  in a 17296-byte object. `cl_write` (732 bytes) and `cl_read` (684 bytes) move data, `cl_create_device` (428 bytes) and
+  `cl_create_alenlist` (384 bytes) set up a device and its scatter list, and `cl_part_activate` and `cl_async_thread`
+  follow the partition. It imports the cross-partition calls `xpc_send`, `xpc_receive` and `xpc_connect`, and
+  `part_register_handlers` and `part_id`. It drives no chip directly. The same bytes are also at `cl_part.o`.
+- `IP35/usr/cpu/sysgen/IP35boot/clone.o` (inferred): the clone device, two routines in a 7712-byte object. `clnopen` (484
+  bytes) opens the real driver named by the major number, and `clone_get_cdevsw` (152 bytes) finds its switch entry
+  through `hwgraph_cdevsw_get`.
+- `IP35/usr/cpu/sysgen/IP35boot/clshm.o` (inferred): cross-partition shared memory, 36 routines in a 46784-byte object.
+  `ctl_ioctl` (1496 bytes) is the control entry, `allocate_remote_shmid` (1192 bytes) and `allocate_local_shmid` (1188 bytes)
+  set up a segment, and `allocate_cross_pages` (912 bytes) maps pages for it. It registers its device with
+  `hwgraph_char_device_add`, and it finds the partition's memory object through `getpmo_ns`. No chip is driven directly.
+- `IP35/usr/cpu/sysgen/IP35boot/cn.o` (inferred): the console STREAMS multiplexer, 29 routines in a 25752-byte object.
+  `cnwrite` (604 bytes), `cnioctl` (420 bytes) and `cn_write_stream` (404 bytes) serve the console device, and `cn_link`
+  (400 bytes) joins the console stream. It selects among the console back ends through the data symbols
+  `sio_cons_funcs`, `pckm_cons_funcs` and `console_is_tport`, and it imports `ducons_write` and `gfx_earlyinit`.
+- `IP35/usr/cpu/sysgen/IP35boot/connld.o` (inferred): the STREAMS connection module that lets a pipe be opened by name, four
+  routines in a 12800-byte object: `connopen` (1964 bytes), `connvnode`, `connput` and `connclose`. It imports `makepipe`,
+  `fifo_stropen` and `fifo_vnodeops`. No chip is driven.
+
 ## Scope questions
 
 Each object below is listed under the rule shown, but its imports or routine names match a class the scope text keeps.
