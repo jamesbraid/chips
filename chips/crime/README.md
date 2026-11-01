@@ -122,7 +122,7 @@ bits. So the counter is writable and 32 bits of it are used; the PROM's 66 ticks
   specification's Table 5-5 under that rule (bit 28 to IP4, 29 to IP5, 20 and 21 to IP6); `setcrimevector` accepts 0 to 5.
 - Software interrupt (`0x20`): `synthclock` clears bit 28 (AND `0xefffffff`) and `synthackkgclock` clears bit 29 (AND
   `0xdfffffff`); `intr` reads the register and stores it back with bit 28 or 29 set from the pending-clock counters
-  `cause_ip5_count` and `cause_ip6_count`. Established.
+  `cause_ip5_count` and `cause_ip6_count`. Established. `intr` returns 0 or 1.
 - Hardware interrupt (`0x28`): the graphics object's `crime_init` reads it, ANDs `0xfff0ffff` and stores it back,
   clearing the four GBE interrupt bits 19:16 (the specification says a GBE interrupt is cleared by writing 0 to its bit).
   The probes test bits 21, 20 and 7 (below).
