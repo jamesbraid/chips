@@ -77,7 +77,7 @@ Totals over the 70 rows: **24 established, 44 inferred, 2 unknown.**
 
 | offset | register | width | access seen | who touches it | what the code does | grade |
 |---|---|---:|---|---|---|---|
-| `0x200058` | video output hardware configuration | 8 | r | `mvpprobe` (`mvp.o`) | returns bits 35:32 of the 64-bit value; the specification defines only bits 18:0 | I |
+| `0x200058` | video output hardware configuration | 8 | r | `mvpprobe` (`mvp.o`) | returns bits 35:32 of the 64-bit read (twelve instructions, read in full). The specification's video hardware configuration table (rev 2.0 page 53, table 23) names bits 35:32 "Revision Code for MACE"; its register map prints only bits 18:0 | E |
 | `0x280000` | Ethernet MAC control | 4 (+4) | rw | `ide` only | low word read, then written 0 and 1 (a reset sequence); the driver `if_me.o` is not reached | I |
 | `0x280040` | Ethernet receive FIFO | 1 | r | `ide` only | bytes 5 and 6 read in a wait loop; role not read | U |
 | `0x280100` | Ethernet internal RAM | 4 | rw | `ide` only | one word written at `+4`; role not read | U |
@@ -268,8 +268,6 @@ specification.
 **Disagreements and gaps (all in docs/open-questions.md):**
 
 - **`0x310000` bit 4** is used as a revision flag (above); the specification says reserved, read as zero.
-- **`0x200058` bits 35:32.** `mvpprobe` returns `(read >> 32) & 0xf`; the specification defines only bits 18:0 of
-  that register.
 - **`0x304018`** is an address inside the peripheral controller's audio block that the specification's register list
   does not have. The specification says unused space in a block is aliased to existing registers, which would make
   this an alias of `0x300018` (codec status input, read-only) and the writes harmless; that is not read from the
@@ -434,5 +432,5 @@ fixed value. Each entry below states the value and what the routine touches, whi
 ## Open
 
 See docs/open-questions.md: the compressed IP32 PROM, the Ethernet, serial and video blocks reached by pointer, the
-failure behaviour above, `0x310000` bit 4, `0x200058` bits 35:32, `0x304018`, the calendar-clock RAM spacing, the
+failure behaviour above, `0x310000` bit 4, `0x304018`, the calendar-clock RAM spacing, the
 Linux I2C offsets and the PS/2 revision 0 handling.
