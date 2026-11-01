@@ -130,34 +130,34 @@ chip page and the entry is deleted.
   (`0x438`, `0x458`) clears it. Tried: the error initialisation, the PI, I/O and network handlers, the spool and stack routines,
   the shipped decode text. Next: `hub_ioerror_handler`, `handle_uncac_buserr` and `hubni_error_handler` in full, the trap dispatcher
   that indexes the cause table, `intr_heuristic`.
-- **Hub registers with no named role.** `0x2000c8`, `0x2000d0`, `0x2000d8`, `0x2000e0`, `0x400160`, `0x400190` and `0x4002c8` are
+- **Hub registers with no named role.** *[route: software now]* `0x2000c8`, `0x2000d0`, `0x2000d8`, `0x2000e0`, `0x400160`, `0x400190` and `0x4002c8` are
   touched by `per_hub_init`, `hub_ifdr_fix_value`, `hub_piomap_alloc`, `mlreset` and `hub_error_devenable` and are not in the public
   headers. Next: read those routines in full. The I/O-board PROM is not in the Hub census.
-- **Hub directory error labels.** The shipped decode text labels directory error bit 61 uncorrectable and bit 63 correctable; the
+- **Hub directory error labels.** *[route: software now]* The shipped decode text labels directory error bit 61 uncorrectable and bit 63 correctable; the
   single-bit-error handler and the public header have them the other way round. Next: read `log_md_errors` and the decode routine
   `show_hub_md_err` in full.
-- **HEART refused-access errors.** What sets CAUSE bits 40, 41 and 42 (bad system read, bad system write, PIU
+- **HEART refused-access errors.** *[route: software now; the stripped diagnostic half is a missing binary]* What sets CAUSE bits 40, 41 and 42 (bad system read, bad system write, PIU
   register access error), what a failed or timed-out processor store latches, and which of the level 4 vectors 51 to
   63 each error raises. Known: the latch registers and decode paths, the widget error type bits (store timeout is
   type bit 2), the vector formula for widget errors. Unknown: the triggers and the cause-to-vector mapping. Tried:
   kernel error handler and probe routines, PROM, monitor decode tables. Next: the stripped diagnostic's PIU access
   and widget error tests, and the PROM error dump. Entries: [chips/heart/README.md](../chips/heart/README.md#open).
-- **HEART registers no held code reaches.** Eleven registers appear only in the diagnostic's register table (SDRAM mode,
+- **HEART registers no held code reaches.** *[route: software now; proposed: one search of every held image, then accept as no software dependency]* Eleven registers appear only in the diagnostic's register table (SDRAM mode,
   memory refresh, flow-control timers, MicroLAN divider and control, compare, widget status, control, link layer,
   target flush); TRIGGER and SYNC are reached but unread. Valid end state unless a routine setting them is found.
-- **PIC error and interrupt service.** `pcibr_error_dump` and `pcibr_error_intr_handler` in `pcibr.o` and the
+- **PIC error and interrupt service.** *[route: software now]* `pcibr_error_dump` and `pcibr_error_intr_handler` in `pcibr.o` and the
   PIC branches of the error accessors are not read. Next: read both in full and fill the error and interrupt
   sections of chips/pic/README.md.
-- **PIC direct map and revision-1 steps.** `pcibr_directmap_init` is not read; what the revision-1-only
+- **PIC direct map and revision-1 steps.** *[route: software now; proposed: read pcibr_directmap_init in full]* `pcibr_directmap_init` is not read; what the revision-1-only
   writes (control bit 29 test, request timeout 0x750, enable bits 39 and 9, response buffer bits) fix is unknown.
-- **PIC +0x18000 banks.** Three banks of 256 doublewords are cleared at attach; their contents are unknown.
-- **Bedrock block boundaries and indexed families.** Registers are listed by offset; membership of the
+- **PIC +0x18000 banks.** *[route: software now; proposed: every reader and writer of the block in pcibr.o and the PROMs]* Three banks of 256 doublewords are cleared at attach; their contents are unknown.
+- **Bedrock block boundaries and indexed families.** *[route: software now]* Registers are listed by offset; membership of the
   processor interface, memory, I/O, network and local blocks is inferred from routine-name prefixes only.
   Many accesses add a node or block index the scan does not follow. Next: read the index arithmetic in
   `hub_error_init`, `hub_error_clear`, `intr_connect_level`.
-- **Bedrock PROM and second window.** The IP35 PROM builds its window base at run time (no sites yet) and the
+- **Bedrock PROM and second window.** *[route: software now; proposed: constant-fold the IP35 PROM window setup, then read the hubspc.o and nic.o uses]* The IP35 PROM builds its window base at run time (no sites yet) and the
   0x90000000_18xxxxxx window of `hubspc.o` and `nic.o` is uninterpreted.
-- **Bedrock refused widget read: what the silicon latches.** Established: a read that gets a timeout or error reply
+- **Bedrock refused widget read: what the silicon latches.** *[route: software now; hardware residue: what the hardware latches for a refused read, if the handlers do not split it]* Established: a read that gets a timeout or error reply
   is typed in PI error status 0 (type 3 timeout; read types 1 to 3) and the kernel prints "Read timeout, physaddr".
   Inferred: no pending bit exists for it; the exception is the bus error and the spool entry carries the address.
   Unknown: whether status 0 and the spool entry are both written for a read, which of the CRB error codes (5, 6) a
