@@ -209,7 +209,7 @@ IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-IP27	kernel-object	object	n64	12224	0e
 IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-IP27	kernel-object	object	n64	991696	e6c9165004d38eb4		304	symtab+dwarf	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/idev.o	kernel-IP27	kernel-object	object	n64	25896	1f3d93b2c33ae3dd		22	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_cl.o	kernel-IP27	kernel-object	object	n64	49024	f1c0f0c8ea19ab78		35	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-IP27	kernel-object	object	n64	50288	d4acc2e8f87a4d22		47	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-IP27	kernel-object	object	n64	50288	d4acc2e8f87a4d22		47	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-IP27	kernel-object	object	n64	77856	ea32e15258ef4ee2		55	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_ppp.o	kernel-IP27	kernel-object	object	n64	53480	8dfad381a4766ba6		25	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_ptr.o	kernel-IP27	kernel-object	object	n64	129544	fea544dd2746dcb7		69	symtab	0	0	undocumented		
@@ -236,8 +236,8 @@ IP27/usr/cpu/sysgen/IP27boot/io.a(ioerror_handling.o)	kernel-IP27	kernel-object	
 IP27/usr/cpu/sysgen/IP27boot/io.a(hwcopy.o)	kernel-IP27	kernel-object	object	n64	4404	6d703d9439b816af		2	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io6.o	kernel-IP27	kernel-object	object	n64	7016	1593cd3e6572ed28		2	symtab	0	0	understood	chips/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP27/usr/cpu/sysgen/IP27boot/ioc3.o	kernel-IP27	kernel-object	object	n64	27232	c5505138ceec0c6d		27	symtab	0	0	named-only	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
-IP27/usr/cpu/sysgen/IP27boot/ioc3_pckm.o	kernel-IP27	kernel-object	object	n64	35840	159a1304d5d86fd0		34	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ioc3ei.o	kernel-IP27	kernel-object	object	n64	21248	4441b50f9c67412e		19	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ioc3_pckm.o	kernel-IP27	kernel-object	object	n64	35840	159a1304d5d86fd0		34	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/ioc3ei.o	kernel-IP27	kernel-object	object	n64	21248	4441b50f9c67412e		19	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-IP27	kernel-object	object	n64	41232	4b687e356cc9e76d		34	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipc.o	kernel-IP27	kernel-object	object	n64	6680	42cc3529a73945fa	IP30/usr/cpu/sysgen/IP30boot/ipc.o;IP35/usr/cpu/sysgen/IP35boot/ipc.o	5	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipfilter.o	kernel-IP27	kernel-object	object	n64	18880	a2c4abf4f210c027		9	symtab	0	0	undocumented		
@@ -272,7 +272,7 @@ IP27/usr/cpu/sysgen/IP27boot/kbd.o	kernel-IP27	kernel-object	object	n64	65432	93
 IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_di.o)	kernel-IP27	kernel-object	object	n64	160516	ebd554d7c2b05491		134	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_events.o)	kernel-IP27	kernel-object	object	n64	24164	834da7826616c359		25	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kdsp.a(audutil.o)	kernel-IP27	kernel-object	object	n64	36500	c62cfc2956342776		94	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-IP27	kernel-object	object	n64	1248568	0e5875e8ed602411		1361	symtab+dwarf	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-IP27	kernel-object	object	n64	1248568	0e5875e8ed602411		1361	symtab+dwarf	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/keyboard.a(pckbd.o)	kernel-IP27	kernel-object	object	n64	17572	0c39e8c0b9d1d8ea		14	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/kitchen_sync.o	kernel-IP27	kernel-object	object	n64	13992	db3397092dcce7aa		10	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/klidbg.o	kernel-IP27	kernel-object	object	n64	21864	978024c00fa04b77		19	symtab	0	0	undocumented		
@@ -348,7 +348,7 @@ IP27/usr/cpu/sysgen/IP27boot/nfs3.a(nfs3_vfsops.o)	kernel-IP27	kernel-object	obj
 IP27/usr/cpu/sysgen/IP27boot/nfs3.a(xattr_clnt.o)	kernel-IP27	kernel-object	object	n64	15892	5c6ca3bc74c906b3		10	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfs3.a(xattr_subr.o)	kernel-IP27	kernel-object	object	n64	9780	618a8c3874d6cf9d		2	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfsidbg.a(nfsidbg.o)	kernel-IP27	kernel-object	object	n64	12692	9a6dc4c5b531899e		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
-IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-IP27	kernel-object	object	n64	27512	a0edd70296a02543		32	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-IP27	kernel-object	object	n64	27512	a0edd70296a02543		32	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(cnolocks.o)	kernel-IP27	kernel-object	object	n64	8452	647f6e87311a306b		14	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-IP27	kernel-object	object	n64	6212	2c7e109210d3a239		16	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/noncell.a(behavior_noncell.o)	kernel-IP27	kernel-object	object	n64	8260	4bd0ed5a973e1169		15	symtab	0	0	undocumented		
@@ -579,11 +579,11 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(watchpoints.o)	kernel-IP27	kernel-object	objec
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-IP27	kernel-object	object	n64	16820	72a054f22b67472b		15	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-IP27	kernel-object	object	n64	14948	3c986c5edaac4a21		10	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(mtext.o)	kernel-IP27	kernel-object	object	n64	1204	5ef49fb88a63b17c	IP30/usr/cpu/sysgen/IP30boot/os.a(mtext.o);IP35/usr/cpu/sysgen/IP35boot/os.a(mtext.o)	0	none	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-IP27	kernel-object	object	n64	70472	015d3886d676869b		70	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-IP27	kernel-object	object	n64	70472	015d3886d676869b		70	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pciba.o	kernel-IP27	kernel-object	object	n64	52096	b08d9d9bc49a9db0		25	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-IP27	kernel-object	object	n64	291328	9076f781d14016f4		259	symtab+dwarf	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-IP27	kernel-object	object	n64	48352	6a9e6e13a1cffd15		108	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-IP27	kernel-object	object	n64	27616	9a38640abd2fb50d		18	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-IP27	kernel-object	object	n64	291328	9076f781d14016f4		259	symtab+dwarf	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-IP27	kernel-object	object	n64	48352	6a9e6e13a1cffd15		108	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	kernel-IP27	kernel-object	object	n64	27616	9a38640abd2fb50d		18	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pciiox.o	kernel-IP27	kernel-object	object	n64	6208	bdb46d46a7f510ea		2	symtab	0	0	named-only	chips/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP27/usr/cpu/sysgen/IP27boot/pgrpidbg.a(pgrpidbg.o)	kernel-IP27	kernel-object	object	n64	10804	799c20cfc6568334		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/pipefs.a(pipevnops.o)	kernel-IP27	kernel-object	object	n64	23412	76786039be0830c0		21	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
@@ -617,7 +617,7 @@ IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1_init.o)	kernel-IP27	kernel-object	ob
 IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1_tpinit.o)	kernel-IP27	kernel-object	object	n64	9924	529aa6cc5d8c4551		6	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1_tport.o)	kernel-IP27	kernel-object	object	n64	12372	543761b5ba2f66d0		10	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1data.o)	kernel-IP27	kernel-object	object	n64	2852	8c867bb214d79529		0	none	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-IP27	kernel-object	object	n64	139032	7928b382eecc2c62		84	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-IP27	kernel-object	object	n64	139032	7928b382eecc2c62		84	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-IP27	kernel-object	object	n64	13860	c51ef50f3f1ee68d		15	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rand.a(yarrow.o)	kernel-IP27	kernel-object	object	n64	10628	c6689af38b620955		7	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rand.a(harvest.o)	kernel-IP27	kernel-object	object	n64	7028	a5790f8f33909713		6	symtab	0	0	undocumented		
