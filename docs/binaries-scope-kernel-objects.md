@@ -632,6 +632,83 @@ table and undefined imports. No routine body was read in full.
   routines in a 12800-byte object: `connopen` (1964 bytes), `connvnode`, `connput` and `connclose`. It imports `makepipe`,
   `fifo_stropen` and `fifo_vnodeops`. No chip is driven.
 
+## IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
+
+The members below are the process, scheduler, lock and debugger objects of the IP35 build, listed under rule 3. Labels are
+inferred, from each member's symbol table and undefined imports. No routine body was read in full.
+
+- `IP35/usr/cpu/sysgen/IP35boot/capability.a(capability.o)` (inferred): the capability set for processes, 11 routines in a
+  14276-byte member. `cap_set` (812 bytes) and `cap_setpcap` (552 bytes) change the set, `cap_get` (456 bytes) reads it, and
+  `cap_exec_newcap` (248 bytes) computes the set after an exec. It imports the credential locks `pcred_lock` and `pcred_push`.
+- `IP35/usr/cpu/sysgen/IP35boot/capability.a(cap_able.o)` (inferred): the capability checks, three routines in a 6084-byte
+  member. `cap_able_cred` (204 bytes), `cap_able_any` (64 bytes) and `cap_able` (48 bytes) test whether a credential holds a
+  capability. It reads the enable flags `cap_enabled` and `sat_enabled` and calls `get_current_cred`.
+- `IP35/usr/cpu/sysgen/IP35boot/cdl.o` (inferred): the driver and connection-point registry of the hardware graph, 23 routines
+  in a 24488-byte object. `cdl_add_connpt_reg_locked` (1316 bytes) and `cdl_del_connpt_reg_locked` (648 bytes) keep the
+  connection-point table, `cdl_add_driver` (836 bytes) and `cdl_del_driver` (504 bytes) register drivers, and it imports
+  `device_driver_get` and `device_driver_devsw_get`. It drives no chip.
+- `IP35/usr/cpu/sysgen/IP35boot/devpoll.o` (inferred): the `/dev/poll` interface, 27 routines in a 31848-byte object.
+  `devpoll_scan` (1916 bytes) checks the registered descriptors, `devpoll_register` (868 bytes) adds one, and
+  `pollblock_attach` and `pollblock_close` (444 and 532 bytes) manage the poll blocks. It registers its device with
+  `hwgraph_char_device_add`. No chip is driven.
+- `IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)` (inferred): the lock-debugging layer for hardware locks, 63 routines
+  in a 41812-byte member. `bitlockdebug` and `_64bitlockdebug` (612 bytes each) and `spinlockdebug` (600 bytes) are the debug forms of the
+  bit-lock and spin-lock calls, and `initsplocks` (340 bytes) sets the tables up. Its records are kept in an AVL tree
+  (`avl_insert` and `avl_find`), and the member defines the tree's ops and root, `lockmeter_avlops`, `lockmeter_chain` and
+  `lockmeter_tree`.
+- `IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocksasm.o)` (inferred): three try-lock primitives, `try_spinlock`,
+  `try_bitlock` and `try_64bitlock` (44 bytes each), in a 4836-byte member. The member imports nothing, and no chip is driven.
+- `IP35/usr/cpu/sysgen/IP35boot/dial.o` (inferred): the dial-box input driver, 14 routines in a 29840-byte object. `dial_wioctl`
+  (2016 bytes) is the control entry, `dial_open` (1028 bytes) opens the device, `dial_intr` (716 bytes) takes its interrupts
+  and `dial_set_resolution` (612 bytes) sets the value scale. It imports the input-device layer (`idevSetPtr`,
+  `idevGenValEvent` and related calls). The entry sits under rule 3, a label that does not match an input device; the in or
+  out result is unchanged (see the scope questions below).
+- `IP35/usr/cpu/sysgen/IP35boot/dialbox.o` (inferred): the same dial-box driver family as `dial.o`, 14 routines in a 27368-byte
+  object. `dial_wioctl`, `dial_open`, `dial_intr` and `dial_set_resolution` have the same sizes as in `dial.o`. The two differ
+  in `dial_set_LEDs` (72 bytes here, 300 bytes in `dial.o`) and in `dial_enable_buttons` (72 bytes here, 472 bytes in `dial.o`). It imports the same input-device layer.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(gang.o)` (inferred): gang scheduling, 34 routines in a 34468-byte member. `gang_startrun`
+  (1348 bytes) starts a gang on its processors, `gang_find_bindings` (924 bytes) finds the processor set, `dogang` (484 bytes)
+  and `gang_schedule` (440 bytes) run the scheduling step. It uses the processor-set calls `cpu_to_cpuset` and the lock
+  bit calls. No chip is driven.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(runq.o)` (inferred): the run queues, 29 routines in a 29284-byte member. `setinfoRunq`
+  (784 bytes), `idlerunq` (624 bytes), `putrunq` (492 bytes) and `pick_q` (460 bytes) place threads on the queues and pick the
+  next one. It imports the local-queue calls `cpu_insert_localq` and `cpu_remove_localq` and the NUMA affinity call
+  `cpu_numa_affinity`.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(utility.o)` (inferred): scheduler start-up, three routines in a 7908-byte member.
+  `schedinit` (172 bytes) initialises the dispatcher, `_disp_sanity` (132 bytes) checks its state and `force_resched` (12
+  bytes) requests a reschedule. It imports `kmem_zone_init` and `makeRunq`, and the init routines of the batch, gang and
+  real-time classes.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(psched.o)` (inferred): the POSIX scheduling calls, six routines in a 9956-byte member.
+  `sched_setscheduler` (340 bytes), `sched_setparam` (312 bytes), `sched_getparam` (264 bytes) and `sched_rr_get_interval`
+  (368 bytes) set and read a thread's policy and parameters. It copies data with `copyin` and `copyout`.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(wtree.o)` (inferred): the weighted run-time tree that the scheduler's tick walks, nine
+  routines in an 11620-byte member. `wtree_sched_tick` (780 bytes) is the tick step, `wt_run_time` (184 bytes) accounts run
+  time, and `wtree_init` and `wt_init` (168 bytes each) set the tree up. It uses the atomic 64-bit add `atomicAddInt64Hot2`.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(job.o)` (inferred): job objects, ten routines in a 10484-byte member. `job_create`
+  (164 bytes) makes a job, `job_unlink_thread` (148 bytes) and `job_locked_unlink_thread` (96 bytes) detach a thread, and
+  `job_uncache` (124 bytes) drops a cached job. It imports `init_batch` and `wt_init`.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(batch.o)` (inferred): the batch scheduler, 34 routines in a 32244-byte member. `batchd`
+  (704 bytes) is the batch daemon, `batch_set_binding` (680 bytes) and `batch_find_bindings` (412 bytes) bind batch work to
+  processors, and `batch_critical_meter` (492 bytes) measures critical load. The member defines the isolated-processor
+  mask `batch_cpumask` and the batch queue `batch_queue`.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(cpu.o)` (inferred): processor selection, 18 routines in a 22420-byte member.
+  `cpu_select_q` (1192 bytes) and `cpu_select_rq` (672 bytes) choose a run queue for a thread, `cpu_clean_localq` (488 bytes)
+  empties a processor's local queue, and `global_find_work` (452 bytes) takes work from the global queues. It imports the
+  NUMA calls `memaff_getbestnode` and `memaff_getaff`. No chip is driven.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(miser.o)` (inferred): the miser resource-guarantee scheduler, 35 routines in a 34244-byte
+  member. `miser_send_request_scall` (1224 bytes) is the system-call entry, `miser_reset_job` (564 bytes) resets a job's
+  guarantee, `miser_set_quantum` (452 bytes) sets its time slice and `miser_respond` (408 bytes) answers the request. It
+  imports the batch calls `batch_create` and `batch_set_params`.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(rt.o)` (inferred): the real-time scheduler, 22 routines in a 26948-byte member.
+  `rt_add_gq` (1652 bytes) adds a thread to a real-time group queue, `rt_thread_select` (908 bytes) picks the next thread,
+  `rt_nonpreemptable` (708 bytes) handles non-preemptable sections, and `start_rt` (704 bytes) starts the real-time
+  subsystem. It uses the processor-set calls and `physmem_select_masked_neighb`.
+- `IP35/usr/cpu/sysgen/IP35boot/disp.a(cpuset.o)` (inferred): processor sets, 69 routines in an 86868-byte member. `cpuset_create`
+  (3744 bytes) builds a set, `cpuset_attach_pid` (1836 bytes) and `cpuset_attach` (1516 bytes) move processes into it, and
+  `cpuset_destroy` (1432 bytes) removes one. It imports the batch isolation calls `batch_isolate` and `batch_unisolate`, the
+  address-space migration calls `as_migrate` and `as_migrate_close`, and the access-control checks `acl_vtoacl` and
+  `cap_able_cred`.
+
 ## Scope questions
 
 Each object below is listed under the rule shown, but its imports or routine names match a class the scope text keeps.
