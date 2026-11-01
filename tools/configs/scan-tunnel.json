@@ -1,0 +1,31 @@
+{
+ "asic": "scan",
+ "title": "L1 scan-chain tunnel to the network router (IP35 read_rr_reg call arguments)",
+ "mode": "no-spec",
+ "status": "census run",
+ "spec": null,
+ "images": [
+  {
+   "label": "ip35-kernel",
+   "dis": "work/dis/ip35-kernel.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 kernel object"
+  }
+ ],
+ "call_census": {
+  "targets": [
+   {
+    "callee": "read_rr_reg",
+    "arg": 6,
+    "rw": "r",
+    "path": "read_rr_reg_index"
+   }
+  ],
+  "variants": {
+   "ip35-kernel": "ip35"
+  },
+  "value_name": "argument"
+ }
+}

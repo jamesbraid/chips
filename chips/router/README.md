@@ -29,8 +29,8 @@ Census: [census/](census/) (`census.tsv`, `census-sites.tsv`, `call-sites.tsv`, 
 - Reset values are unknown for every register: no code reads one before writing it.
 - One IP35 routine reaches router registers by a different route and is not in this census: `router_acquire_port_info`
   calls `read_rr_reg`, which the member `read_reg.o` of the IP35 boot set defines, and which drives a scan-chain (JTAG)
-  interface (`simp_jtag_open`, `scancmd_init`, `simp_process_scancmd`). That is a second access path to the same chip and is
-  an open question below.
+  interface (`simp_jtag_open`, `scancmd_init`, `simp_process_scancmd`). That is a second access path to the same chip, read in
+  [../scan/README.md](../scan/README.md).
 
 ## How a register is reached (established)
 

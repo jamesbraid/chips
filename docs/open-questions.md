@@ -223,3 +223,11 @@ chip page and the entry is deleted.
   the register's effect are open. The specification prints no entry layout. Routes tried: the shadow loaders, the clear,
   swap and copy routines, and a displacement scan of all 702 member objects. Next: the PROM, diagnostic and monitor
   images, an X server module, and the public CRIME frame-buffer drivers.
+- **Router scan-chain tunnel (IP35).** `read_rr_reg` asks the L1 to shift 197 bits through the router chain and keeps 128 of
+  them; established: the command layout, the bit reversal, the iRouter framing and the address arithmetic
+  (chips/scan/README.md). Unknown: which router state the selector `2*(port-1)` and `2*(port-1)+1` names, what the 128 bits
+  hold, the L1 task value `0xf` that the scan command is addressed to (the public header names tasks 1 to 6), what the `state`
+  values 0, 1 and 16 stand for, and whether the router's JTAG controller registers (public `RR_LB_TO_L2`, `RR_L2_TO_LB`) are the
+  chip side of this path. Tried: the held kernel, the `jtagio.a` and `irouter.o` objects, the `l1_command.o` task census, the public
+  `l1.h` and `router.h`. Next: the L1 command-path callers of task `0xf` in `l1_command.o`, and any diagnostic or monitor image that
+  names the scan operations (none found in the IP35 boot set).

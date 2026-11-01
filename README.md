@@ -5,7 +5,7 @@ kernels, drivers, diagnostics and PROM images, checked against the published spe
 Linux and OpenBSD drivers. Software only: no hardware is needed or assumed.
 
 Chips covered (one page each in [chips/](chips/)): Hub (PI, MD, IO, NI), Bedrock, HEART, Xbow,
-Bridge and XBridge, PIC, TIOCP (only if a product carries it), the network router, the L1 and ELSC system
+Bridge and XBridge, PIC, TIOCP (only if a product carries it), the network router, the router scan-chain tunnel, the L1 and ELSC system
 controllers (host-visible side), IOC3, IOC4, CRIME, MACE, GBE, VICE (presence).
 Builds are named by board, never by product: IP27, IP30, IP32, IP35.
 
@@ -30,7 +30,7 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
 
     AGENTS.md  HAIKU-BRIEF.md  IRIX_FILES.md  LICENSE  README.md
     chips/<chip>/      one directory per chip: README.md (the page), census/ (machine-made tables),
-                       notes/ (working notes). Chips: hub bedrock heart xbow bridge pic tiocp router l1
+                       notes/ (working notes). Chips: hub bedrock heart xbow bridge pic tiocp router scan l1
                        ioc3 ioc4 crime mace gbe vice. bridge/ also holds the XBridge census; router/ is a
                        call-argument census (tools/callargs.py): the router has no memory window.
     include/<chip>.h   generated register headers (tools/gen_headers.py); chips_check.c compiles them together

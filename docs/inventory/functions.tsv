@@ -2214,7 +2214,7 @@ IP27/unix	kernel	n64		0x0		oplock_setattr	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		oplock_write	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		oplockexpire	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		oplocksleep	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		output	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		output	dwarf			out:5	named-only	chips/scan/README.md#reading-one-register-read_rr_reg-established	Reading one register: `read_rr_reg` (established)
 IP27/unix	kernel	n64		0x0		pag_printf	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		pane_cleanup	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		pane_gc	dwarf			out:5	undocumented		
@@ -24450,7 +24450,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0xf34	76	dri
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0xf80	308	prdev	dwarf+symtab	67963f93e301		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x10b4	228	stdname	dwarf+symtab	0c58aea65256		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x1198	76	panic	dwarf+symtab	20001590155a		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x11e4	396	output	dwarf+symtab	adf31b0ec0a0		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x11e4	396	output	dwarf+symtab	adf31b0ec0a0		out:3	named-only	chips/scan/README.md#reading-one-register-read_rr_reg-established	Reading one register: `read_rr_reg` (established)
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x1370	52	errvprintf	dwarf+symtab	60be6fc18b2f		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x13a4	84	console_ready	dwarf+symtab	b744c0b05fd9		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x13f8	1836	errprintf	dwarf+symtab	228796a0473b		out:3	undocumented		
@@ -34538,7 +34538,7 @@ IP30/unix	kernel	n64		0x0		oplock_setattr	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		oplock_write	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		oplockexpire	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		oplocksleep	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		output	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		output	dwarf			out:7	named-only	chips/scan/README.md#reading-one-register-read_rr_reg-established	Reading one register: `read_rr_reg` (established)
 IP30/unix	kernel	n64		0x0		pag_printf	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		pane_cleanup	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		pane_gc	dwarf			out:7	undocumented		
@@ -54667,7 +54667,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0xe84	76	dri
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0xed0	308	prdev	dwarf+symtab	67963f93e301		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1004	228	stdname	dwarf+symtab	0c58aea65256		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x10e8	76	panic	dwarf+symtab	20001590155a		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1134	396	output	dwarf+symtab	adf31b0ec0a0		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1134	396	output	dwarf+symtab	adf31b0ec0a0		out:3	named-only	chips/scan/README.md#reading-one-register-read_rr_reg-established	Reading one register: `read_rr_reg` (established)
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x12c0	52	errvprintf	dwarf+symtab	60be6fc18b2f		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x12f4	80	console_ready	dwarf+symtab	d03ea3a0a4dc		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1344	1740	errprintf	dwarf+symtab	de7947488369		out:3	undocumented		
@@ -71241,7 +71241,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0xe70	76	dri
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0xebc	308	prdev	dwarf+symtab	1a37beeca82b		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0xff0	228	stdname	dwarf+symtab	4f581d7e4457		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x10d4	76	panic	dwarf+symtab	b83dc1a63616		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1120	376	output	dwarf+funcnames+symtab	1ffbd06ecc9c		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1120	376	output	dwarf+funcnames+symtab	1ffbd06ecc9c		out:3	named-only	chips/scan/README.md#reading-one-register-read_rr_reg-established	Reading one register: `read_rr_reg` (established)
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1298	52	errvprintf	dwarf+funcnames+symtab	1e4724cfa572		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x12cc	84	console_ready	dwarf+funcnames+symtab	38d7015a2343		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1320	1740	errprintf	dwarf+funcnames+symtab	d8293b6d1cd0		out:3	undocumented		
@@ -82915,15 +82915,15 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_src.o)	kernel-object	n64	.text	0x1ac	111
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_src.o)	kernel-object	n64	.text	0x608	1236	in6_selectroute	dwarf+symtab	e21f8828d877		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_src.o)	kernel-object	n64	.text	0xadc	48	in6_selecthlim	dwarf+symtab	b3f4f57b0631		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_src.o)	kernel-object	n64	.text	0xb0c	464	in6_pcbsetport	dwarf+symtab	2c73659319c8		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64		0x0		IRouterInitID	dwarf+symtab			out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x14	380	IRouterWritePacket	dwarf+symtab	95e1d881bc86		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x190	400	IRouterReadPacket	dwarf+symtab	a76e4bed0cff		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x320	100	add_frame	dwarf+symtab	3360cf29414f		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x384	60	IRouterFreePacket	dwarf+symtab	c9031c72072b		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x3c0	76	IRouterMakeBlankPacket	dwarf+symtab	e189dcab40ae		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x40c	1072	IRouterMakePacket	dwarf+symtab	000fb3c7f8c4		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x83c	40	get_frame_base	dwarf+symtab	01c5f9ecf1ee		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x864	352	IRouterExtract	dwarf+symtab	843e9355a3c7		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64		0x0		IRouterInitID	dwarf+symtab			out:2	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x14	380	IRouterWritePacket	dwarf+symtab	95e1d881bc86		out:2	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x190	400	IRouterReadPacket	dwarf+symtab	a76e4bed0cff		out:2	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x320	100	add_frame	dwarf+symtab	3360cf29414f		out:2	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x384	60	IRouterFreePacket	dwarf+symtab	c9031c72072b		out:2	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x3c0	76	IRouterMakeBlankPacket	dwarf+symtab	e189dcab40ae		out:2	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x40c	1072	IRouterMakePacket	dwarf+symtab	000fb3c7f8c4		out:2	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x83c	40	get_frame_base	dwarf+symtab	01c5f9ecf1ee		out:2	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-object	n64	.text	0x864	352	IRouterExtract	dwarf+symtab	843e9355a3c7		out:2	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
 IP35/usr/cpu/sysgen/IP35boot/is1.o	kernel-object	n64		0x0		fglrx_hpipe_init_idbg	dwarf			out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/is1.o	kernel-object	n64	.text	0x8	468	checkBoardPointers	dwarf	104388feb140		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/is1.o	kernel-object	n64	.text	0x1dc	344	freeBoardPointers	dwarf	b96d3ec07a9b		out:4	undocumented		
@@ -83014,20 +83014,20 @@ IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x644
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x750	68	job_limit_check	dwarf+symtab	9fafc138c2e7		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x794	492	proc_job_accum	dwarf+symtab	5cd972fe4c3c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x980	160	proc_job_accumcpufin	dwarf+symtab	76828ec1c500		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64		0x0		read_rr_reg	dwarf+symtab			out:3	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64	.text	0x16c	208	extract_mux_data	dwarf+symtab	3422c05ec4fa		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64		0x0		scancmd_create	dwarf+symtab			out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64		0x0		read_rr_reg	dwarf+symtab			out:3	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64	.text	0x16c	208	extract_mux_data	dwarf+symtab	3422c05ec4fa		out:3	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64		0x0		scancmd_create	dwarf+symtab			out:3	named-only	chips/scan/README.md#the-command-record	The command record
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0x84	80	scancmd_init	dwarf+symtab	4cafa8cb36f6		out:3	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0xd4	36	scancmd_destroy	dwarf+symtab	168cf05480ad		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0xf8	8	scancmd_dump	dwarf+symtab	78aa5094d5ec		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0xd4	36	scancmd_destroy	dwarf+symtab	168cf05480ad		out:3	named-only	chips/scan/README.md#objects-established-every-routine-read	Objects (established, every routine read)
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0xf8	8	scancmd_dump	dwarf+symtab	78aa5094d5ec		out:3	named-only	chips/scan/README.md#objects-established-every-routine-read	Objects (established, every routine read)
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64		0x0		simp_jtag_open	dwarf+symtab			out:3	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x68	32	simp_jtag_close	dwarf+symtab	ce78c29f4135		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x88	208	simp_jtag_reset	dwarf+symtab	e0187d5df2df		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x158	288	simp_jtag_scan_ir	dwarf+symtab	8a2a31dddafd		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x278	284	simp_jtag_scan_dr	dwarf+symtab	3f8b7e04185a		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x394	228	simp_jtag_sel_sic	dwarf+symtab	9702f6d76e72		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x68	32	simp_jtag_close	dwarf+symtab	ce78c29f4135		out:3	named-only	chips/scan/README.md#the-command-record	The command record
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x88	208	simp_jtag_reset	dwarf+symtab	e0187d5df2df		out:3	named-only	chips/scan/README.md#what-this-page-covers-and-what-it-does-not	What this page covers, and what it does not
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x158	288	simp_jtag_scan_ir	dwarf+symtab	8a2a31dddafd		out:3	named-only	chips/scan/README.md#the-command-record	The command record
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x278	284	simp_jtag_scan_dr	dwarf+symtab	3f8b7e04185a		out:3	named-only	chips/scan/README.md#the-command-record	The command record
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x394	228	simp_jtag_sel_sic	dwarf+symtab	9702f6d76e72		out:3	named-only	chips/scan/README.md#the-command-record	The command record
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x478	1084	simp_process_scancmd	dwarf+symtab	b5fdc0e4ee63		out:3	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x8b4	496	scancmd_to_irtr	dwarf+symtab	5e7e16c73956		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x8b4	496	scancmd_to_irtr	dwarf+symtab	5e7e16c73956		out:3	located	chips/scan/README.md#sending-the-command-simp_process_scancmd-and-scancmd_to_irtr-established	Sending the command: `simp_process_scancmd` and `scancmd_to_irtr` (established)
 IP35/usr/cpu/sysgen/IP35boot/kbd.o	kernel-object	n64		0x0		kbdopen	dwarf+symtab			out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kbd.o	kernel-object	n64	.text	0x21c	500	kbdclose	dwarf+symtab	5924db6db549		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kbd.o	kernel-object	n64	.text	0x410	264	kbdunlink	dwarf+symtab	edca85c80861		out:4	undocumented		
@@ -85665,10 +85665,10 @@ IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2924	320	sc_open	dwa
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2a64	200	sc_close	dwarf+symtab	719b4ebe5d0f		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2b2c	648	sc_construct_msg	dwarf+symtab	e5b9748bd92f		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2db4	508	sc_interpret_resp	dwarf+symtab	f85b0b392dd5		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2fb0	156	sc_send	dwarf+symtab	003118ceee10		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2fb0	156	sc_send	dwarf+symtab	003118ceee10		in	named-only	chips/scan/README.md#irouter-framing-established-from-the-writer-and-reader	iRouter framing (established from the writer and reader)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x304c	252	subch_pull_msg	dwarf+symtab	005790769314		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x3148	348	sc_recv_poll	dwarf+symtab	47c949bd3e27		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x32a4	332	sc_recv_intr	dwarf+symtab	986fcffdb1b0		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x32a4	332	sc_recv_intr	dwarf+symtab	986fcffdb1b0		in	named-only	chips/scan/README.md#irouter-framing-established-from-the-writer-and-reader	iRouter framing (established from the writer and reader)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x33f0	288	sc_command	dwarf+symtab	a5b4856cce36		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x3510	92	sc_command_kern	dwarf+symtab	a5fb3385d856		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x356c	88	sc_poll	dwarf+symtab	4c1a72276b40		in	undocumented		
@@ -89242,7 +89242,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0xf3c	76	dri
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0xf88	308	prdev	dwarf+symtab	67963f93e301		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x10bc	228	stdname	dwarf+symtab	0c58aea65256		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x11a0	76	panic	dwarf+symtab	20001590155a		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x11ec	396	output	dwarf+symtab	adf31b0ec0a0		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x11ec	396	output	dwarf+symtab	adf31b0ec0a0		out:3	named-only	chips/scan/README.md#reading-one-register-read_rr_reg-established	Reading one register: `read_rr_reg` (established)
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x1378	52	errvprintf	dwarf+symtab	60be6fc18b2f		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x13ac	84	console_ready	dwarf+symtab	b744c0b05fd9		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x1400	1836	errprintf	dwarf+symtab	f0c3e3c228d3		out:3	undocumented		

@@ -1,0 +1,3 @@
+image	function	addr	callee	path	rw	register
+ip35-kernel	router_acquire_port_info	28ac	read_rr_reg	read_rr_reg_index	r	?
+ip35-kernel	router_acquire_port_info	28d0	read_rr_reg	read_rr_reg_index	r	?

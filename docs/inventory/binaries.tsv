@@ -2521,14 +2521,14 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(udp6_usrreq.o)	kernel-IP35	kernel-object	obj
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in_gif.o)	kernel-IP35	kernel-object	object	n64	8820	9aff8212238e4689		3	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ipsec.o)	kernel-IP35	kernel-object	object	n64	7332	19e75b8c2635aab5		11	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_src.o)	kernel-IP35	kernel-object	object	n64	13332	f388696292f8b5d5		7	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-IP35	kernel-object	object	n64	11056	ff4ff8704b1249d2		9	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/irouter.o	kernel-IP35	kernel-object	object	n64	11056	ff4ff8704b1249d2		9	symtab	0	0	understood	chips/scan/README.md#objects-established-every-routine-read	Objects (established, every routine read)
 IP35/usr/cpu/sysgen/IP35boot/is1.o	kernel-IP35	kernel-object	object	n64	88232	0a1a158cda310067		54	symtab+dwarf	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jlimits.o)	kernel-IP35	kernel-object	object	n64	28484	6305d710567aa936		17	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jid.o)	kernel-IP35	kernel-object	object	n64	15412	19a9b2e5e40c69e3		8	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-IP35	kernel-object	object	n64	13716	84e2e62d4d69c4a3		11	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-IP35	kernel-object	object	n64	6148	2f9c278e3e4ee908		2	symtab	0	0	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-IP35	kernel-object	object	n64	4676	6e2bfb6695896655		4	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-IP35	kernel-object	object	n64	14244	3ef9b4924885ded8		8	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-IP35	kernel-object	object	n64	6148	2f9c278e3e4ee908		2	symtab	0	0	understood	chips/scan/README.md#objects-established-every-routine-read	Objects (established, every routine read)
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-IP35	kernel-object	object	n64	4676	6e2bfb6695896655		4	symtab	0	0	understood	chips/scan/README.md#objects-established-every-routine-read	Objects (established, every routine read)
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-IP35	kernel-object	object	n64	14244	3ef9b4924885ded8		8	symtab	0	0	understood	chips/scan/README.md#objects-established-every-routine-read	Objects (established, every routine read)
 IP35/usr/cpu/sysgen/IP35boot/kbd.o	kernel-IP35	kernel-object	object	n64	65344	affd3a10e79df033		42	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kdsp.a(kdsp_di.o)	kernel-IP35	kernel-object	object	n64	160612	5e4ea27de0cf7a18		134	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kdsp.a(kdsp_events.o)	kernel-IP35	kernel-object	object	n64	24068	49b08fe1025d453b		25	symtab	0	0	undocumented		
@@ -2558,7 +2558,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-IP35	kernel-objec
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(klstat.o)	kernel-IP35	kernel-object	object	n64	10676	15bff1086695505c		7	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mrlock.o)	kernel-IP35	kernel-object	object	n64	6260	f074b7566fe5c0a1		8	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-IP35	kernel-object	object	n64	55640	cf461fa67eb3150e		61	symtab	0	0	named-only	chips/bedrock/README.md#window-and-how-it-is-reached	Window and how it is reached
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-IP35	kernel-object	object	n64	60216	ab5c3f4dce4eda0b		86	symtab	0	0	named-only	chips/bedrock/README.md#window-and-how-it-is-reached	Window and how it is reached
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-IP35	kernel-object	object	n64	60216	ab5c3f4dce4eda0b		86	symtab	0	0	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2.o)	kernel-IP35	kernel-object	object	n64	32916	9c0b72fd2dce806b		23	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2dlpi.o)	kernel-IP35	kernel-object	object	n64	41636	e96c1d973dbbc038		40	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/lockd.o	kernel-IP35	kernel-object	object	n64	144336	36bbbaa1b3f33569		128	symtab+dwarf	0	0	undocumented		
@@ -3084,7 +3084,7 @@ firmware/io6prom.img	firmware	prom	data	-	365328	024d2f28b526933e		0		0	0	named-
 firmware/ip27prom.img	firmware	prom	data	-	912848	0dbd5d5f7027e380		0		0	0	named-only	chips/hub/README.md#hub	Hub
 firmware/ip32prom.image	firmware	prom	data	-	431872	11230c353cb14fcc		0		0	0	named-only	docs/open-questions.md#open-questions	Open questions
 firmware/ip35prom.img	firmware	prom	data	-	1480360	d74b4b7ef9c11c66		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
-firmware/mmscfw.bin	firmware	prom	data	-	1023075	6c3db7ffd7fb4cc4		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+firmware/mmscfw.bin	firmware	prom	data	-	1023075	6c3db7ffd7fb4cc4		0		0	0	named-only	chips/scan/README.md#l2-and-the-rack-controller-image	L2 and the rack controller image
 sbin/stand/ide.IP30	standalone	diagnostic	executable	n64	1594880	19d7a194cb417330		0	none	0	0	named-only	chips/heart/README.md#heart	HEART
 sbin/stand/ide.IP32	standalone	diagnostic	executable	o32	763504	9c2ded7e65b68405		0	none	0	0	named-only	chips/crime/README.md#crime	CRIME
 sbin/stand/sash.ARCS	standalone	diagnostic	data	-	343604	a96e5d2ba76fccae		0		0	0	named-only	chips/mace/README.md#mace	MACE
