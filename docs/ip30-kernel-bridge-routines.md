@@ -683,3 +683,10 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   old value and sets no return value. A null handle, type -1 or an unmatched raw window calls `panic` ("pcireg_timeout_set():
   unknown bridgetype") and stores nothing; a record type outside -1 to 3 stores nothing and prints nothing.
   Established.
+- `pcibr_bridge_ptr_get` (`IP30/unix` `0xa800000020046c00`, 172 bytes, frame 16 bytes)
+  returns the address of the register window of a Bridge-family widget. `a0` is the widget handle and `a1` a flag. It
+  calls `xtalk_piotrans_addr` with `a0` unchanged and 0, 0, 8 and 0 for the next four arguments (the 0 for `a1` is set in the
+  call's delay slot), keeping the original `a1` at 8(sp), and reads the identification word at window +0x4. Only when the
+  part (bits 27:12) is 0xd102 or 0xd112 with manufacturer (bits 11:1) 36 and the saved flag equals 1 does it add
+  0x800000 (`lui` 0x80) to the window; every other case returns the window as `xtalk_piotrans_addr` gave it. The read of +0x4 is made
+  through the returned pointer without a null test. It stores nothing. Established.

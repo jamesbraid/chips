@@ -4671,7 +4671,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000399ec	264	protected_broadcast	symtab	676
 IP27/unix	kernel	n64	.text	0xc000000000039af4	80	chkdebug	symtab	9f18032e378f		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000039b44	104	install_gfxintr	symtab	94ea8b0968c6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000039bac	108	hub_migrintr_init	symtab	1346c16ff288		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc000000000039c18	236	debug_stop_all_cpus	symtab	f4e7fd059e3e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc000000000039c18	236	debug_stop_all_cpus	symtab	f4e7fd059e3e		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc000000000039d04	292	intr_reserve_hardwired	symtab	5576d27a22e4		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000039ea0	120	intr_clear_all	symtab	402f37b4a64c		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000003a0d8	608	intr_dumpvec	symtab	b666cd1bfa0c		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -4900,7 +4900,7 @@ IP27/unix	kernel	n64	.text	0xc000000000043730	8	dki_dcache_wbinval	symtab	78aa50
 IP27/unix	kernel	n64	.text	0xc000000000043730	8	dummy_func	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000043738	208	bootstrap	symtab	4a9e2b428ea6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000043808	168	mapped_kernel_setup_tlb	symtab	a4decd02e59c		out:5	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc0000000000438b0	316	nmi_dump	symtab	f9fbc8ca1379		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP27/unix	kernel	n64	.text	0xc0000000000438b0	316	nmi_dump	symtab	f9fbc8ca1379		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000000439ec	140	dumptlb	symtab	fadcdd973278		out:5	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc000000000043a78	156	checkAllTlbsDumped	symtab	7aa8e426d6a8		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000043b20	52	VEC_trap	symtab	f1baeb0a8ad0	shared-address	out:5	undocumented		
@@ -4965,7 +4965,7 @@ IP27/unix	kernel	n64	.text	0xc000000000047550	376	nanotime_syscall	symtab	f9fa7d
 IP27/unix	kernel	n64	.text	0xc0000000000476c8	252	nanotime	symtab	5d679ab43b94		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000000477c4	68	irix5_microtime	symtab	03c72d6aa4b6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047808	68	microtime	symtab	e549a3447e55		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000004784c	216	local_settime	symtab	c517e0062678		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000004784c	216	local_settime	symtab	c517e0062678		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc000000000047924	68	settime	symtab	b290e941e928		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047968	28	clkset	symtab	6c3bac1d9dc7		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047984	8	enable_fastclock	symtab	78aa5094d5ec		out:5	undocumented		
@@ -5034,7 +5034,7 @@ IP27/unix	kernel	n64	.text	0xc000000000048550	56	acktmoclock	symtab	66b98f19c26e
 IP27/unix	kernel	n64	.text	0xc000000000048588	56	ackkgclock	symtab	6bd6f04d5328		in	understood	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/unix	kernel	n64	.text	0xc0000000000485c0	280	startkgclock	symtab	7d1cb5a62451		in	understood	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/unix	kernel	n64	.text	0xc0000000000486d8	216	slowkgclock	symtab	30e04508ced3		in	understood	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP27/unix	kernel	n64	.text	0xc0000000000487b0	1648	rtodc	symtab	00a04ad4c6cb		out:5	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP27/unix	kernel	n64	.text	0xc0000000000487b0	1648	rtodc	symtab	00a04ad4c6cb		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc000000000048e20	1308	wtodc	symtab	d6227dc0fcb6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004933c	36	timestamp_init	symtab	a25283f7d3c2		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000049360	252	prof_intr	symtab	25d5c126175c		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -5720,7 +5720,7 @@ IP27/unix	kernel	n64	.text	0xc000000000074dd0	144	pcibr_pcix_rbars_calc	symtab	2
 IP27/unix	kernel	n64	.text	0xc000000000074e60	44	pcibr_dma_enabled	symtab	bfd529f4b4f3		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000074e8c	608	pcibr_debug	symtab	44860bc6c8df		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc0000000000750ec	64	pcibr_businfo_get	symtab	0fc06b556f9a		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000007512c	172	pcibr_bridge_ptr_get	symtab	cba8e60bafe9		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP27/unix	kernel	n64	.text	0xc00000000007512c	172	pcibr_bridge_ptr_get	symtab	cba8e60bafe9		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc0000000000751d8	108	pcibr_pio_flush_read	symtab	a9205764f767		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000075244	8	pcibr_pio_flush_del	symtab	78aa5094d5ec		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000007524c	8	pcibr_pio_flush_init	symtab	87506497337c		in	undocumented		
@@ -9092,10 +9092,10 @@ IP27/unix	kernel	n64	.text	0xc0000000001e561c	268	nested_cpuaction	symtab	4bcf18
 IP27/unix	kernel	n64	.text	0xc0000000001e5728	312	cpuaction	symtab	22aaa58c0178		out:5	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/unix	kernel	n64	.text	0xc0000000001e5860	48	doacvec_splhi	symtab	960e1c3473cc		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e5890	96	doacvec	symtab	911d6561f108		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP27/unix	kernel	n64	.text	0xc0000000001e58f0	116	panic_lock	symtab	41b54369d7b5		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001e58f0	116	panic_lock	symtab	41b54369d7b5		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000001e5964	68	panic_unlock	symtab	4b70466b9e2b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e59a8	12	set_node_panic_flag	symtab	f54d1af48be8		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001e59b4	192	enter_panic_mode	symtab	65081fa86766		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
+IP27/unix	kernel	n64	.text	0xc0000000001e59b4	192	enter_panic_mode	symtab	65081fa86766		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000001e5a74	32	exit_panic_mode	symtab	fdb517e881f1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e5a94	8	in_panic_mode	symtab	8bffb2b7e0e4		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e5a9c	12	enter_promlog_mode	symtab	393f671f2027		out:5	undocumented		
@@ -10000,7 +10000,7 @@ IP27/unix	kernel	n64	.text	0xc000000000241928	148	pproc_poll_wakeup_thread	symta
 IP27/unix	kernel	n64	.text	0xc0000000002419bc	24	ktimer_init	symtab	e4e6b06dbe0a		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000002419d4	56	ktimer_switch	symtab	ed07df1f1906		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000241a0c	100	ktimer_readticks	symtab	dfa07846f648		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000241a70	156	ktimer_read	symtab	9438dfa49e84		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000241a70	156	ktimer_read	symtab	9438dfa49e84		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc000000000241b0c	72	ktimer_slptime	symtab	4c059ec897f8		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000241ba0	4068	schedctl	symtab	7c2cb56ecc8f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000242d54	840	elf64exec	symtab	6908e586d55e		out:5	undocumented		
@@ -19063,7 +19063,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2086c	264	protec
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20974	80	chkdebug	dwarf+symtab	14553b0d82ec		out:6	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x209c4	104	install_gfxintr	dwarf+symtab	b46b8249de5a		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20a2c	108	hub_migrintr_init	dwarf+symtab	b2d92f247684		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20a98	236	debug_stop_all_cpus	dwarf+symtab	91f1209595c3		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20a98	236	debug_stop_all_cpus	dwarf+symtab	91f1209595c3		out:6	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20b84	292	intr_reserve_hardwired	dwarf+symtab	061649ecc96e		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20ca8	120	intr_clear_bits	dwarf	b1ded536c68c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20d20	120	intr_clear_all	dwarf+symtab	796b1ca978c7		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -19321,7 +19321,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dki_dcac
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dummy_func	dwarf+symtab	78aa5094d5ec	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b8	208	bootstrap	dwarf+symtab	81eb9fafe9d5		out:6	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a688	168	mapped_kernel_setup_tlb	dwarf+symtab	30b324c402ed		out:6	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a730	316	nmi_dump	dwarf+symtab	3204e2b32974		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a730	316	nmi_dump	dwarf+symtab	3204e2b32974		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a86c	140	dumptlb	dwarf+symtab	cc677e0565cc		out:6	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a8f8	156	checkAllTlbsDumped	dwarf+symtab	b4fc8d66e031		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a9a0	52	VEC_trap	dwarf+symtab	59c2a9b8739a	shared-address	out:6	undocumented		
@@ -19360,7 +19360,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2c9a0	96	stopaud
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ca00	96	startprfclk	dwarf+symtab	3beb61b1cdde		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ca60	128	stopprfclk	dwarf+symtab	1f873e250e4c		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2cae0	8	ackrtclock	dwarf+symtab	78aa5094d5ec		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2cae8	216	init_timebase	dwarf+symtab	126d7bacfa17		out:6	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2cae8	216	init_timebase	dwarf+symtab	126d7bacfa17		out:6	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2cbc0	244	inittodr	dwarf+symtab	6402e2f20f9d		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ccb4	36	query_cyclecntr	dwarf+symtab	664d0bed5d97		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ccd8	8	query_fasttimer	dwarf+symtab	ada9e383a381		out:6	undocumented		
@@ -19392,7 +19392,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e3d0	376	nanoti
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e548	252	nanotime	dwarf+symtab	b553eca73eb5		out:6	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e644	68	irix5_microtime	dwarf+symtab	f42d82ff91d7		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e688	68	microtime	dwarf+symtab	a54c9d44e7ff		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e6cc	216	local_settime	dwarf+symtab	3494c295c02c		out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e6cc	216	local_settime	dwarf+symtab	3494c295c02c		out:6	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e7a4	68	settime	dwarf+symtab	6062ae0a7b4e		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e7e8	28	clkset	dwarf+symtab	a86de4a9d7a4		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e804	8	enable_fastclock	dwarf+symtab	78aa5094d5ec		out:6	undocumented		
@@ -19462,7 +19462,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f3d0	56	acktmoc
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f408	56	ackkgclock	dwarf+symtab	42d0bbae780e		out:6	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f440	280	startkgclock	dwarf+symtab	d9b553c9b233		out:6	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f558	216	slowkgclock	dwarf+symtab	1b45d275d444		out:6	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f630	1648	rtodc	dwarf+symtab	8d40f8df70b2		out:6	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f630	1648	rtodc	dwarf+symtab	8d40f8df70b2		out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2fca0	1308	wtodc	dwarf+symtab	2f263af566b9		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x301bc	36	timestamp_init	dwarf+symtab	2eb0920b324f		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x301e0	252	prof_intr	dwarf+symtab	867e8c16345f		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -24418,10 +24418,10 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x192c	268	nest
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1a38	312	cpuaction	dwarf+symtab	5a0f026963d6		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1b70	48	doacvec_splhi	dwarf+symtab	8d06261219d9		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1ba0	96	doacvec	dwarf+symtab	14f27ce655ea		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1c00	116	panic_lock	dwarf+symtab	181fc64609d4		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1c00	116	panic_lock	dwarf+symtab	181fc64609d4		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1c74	68	panic_unlock	dwarf+symtab	09f11a8e433c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1cb8	12	set_node_panic_flag	dwarf+symtab	f54d1af48be8		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1cc4	192	enter_panic_mode	dwarf+symtab	4139477b95c7		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
+IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1cc4	192	enter_panic_mode	dwarf+symtab	4139477b95c7		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1d84	32	exit_panic_mode	dwarf+symtab	94deafadd1df		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1da4	8	in_panic_mode	dwarf+symtab	8bffb2b7e0e4		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1dac	12	enter_promlog_mode	dwarf+symtab	393f671f2027		out:3	undocumented		
@@ -24864,7 +24864,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(time.o)	kernel-object	n64	.text	0x149c	112	tim
 IP27/usr/cpu/sysgen/IP27boot/os.a(timers.o)	kernel-object	n64		0x0		ktimer_init	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(timers.o)	kernel-object	n64	.text	0x18	56	ktimer_switch	dwarf+symtab	d966071e93d0		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(timers.o)	kernel-object	n64	.text	0x50	100	ktimer_readticks	dwarf+symtab	d26d73ba44f1		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(timers.o)	kernel-object	n64	.text	0xb4	156	ktimer_read	dwarf+symtab	afdaa19be8e3		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(timers.o)	kernel-object	n64	.text	0xb4	156	ktimer_read	dwarf+symtab	afdaa19be8e3		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/os.a(timers.o)	kernel-object	n64	.text	0x150	72	ktimer_slptime	dwarf+symtab	9482f085f80b		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(tlbmgr.o)	kernel-object	n64		0x0		tlb_onesec_actions	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(tlbmgr.o)	kernel-object	n64	.text	0xf0	140	tlb_tick_actions	dwarf+symtab	131b7a8fcc45		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -25508,7 +25508,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x3f90	144	pcibr_pc
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4020	44	pcibr_dma_enabled	dwarf+symtab	e13b8b19b8fb		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x404c	608	pcibr_debug	dwarf+symtab	d9a9119ae64a		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x42ac	64	pcibr_businfo_get	dwarf+symtab	dae4fd30f9a9		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x42ec	172	pcibr_bridge_ptr_get	dwarf+symtab	e0bb75f0fe8a		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x42ec	172	pcibr_bridge_ptr_get	dwarf+symtab	e0bb75f0fe8a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4398	108	pcibr_pio_flush_read	dwarf+symtab	a9205764f767		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4404	8	pcibr_pio_flush_del	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x440c	8	pcibr_pio_flush_init	dwarf+symtab	87506497337c		in	undocumented		
@@ -36474,7 +36474,7 @@ IP30/unix	kernel	n64	.text	0xa800000020011320	8	is_vme_space	symtab	87506497337c
 IP30/unix	kernel	n64	.text	0xa800000020011320	8	vme_adapter	symtab	87506497337c	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011328	12	_get_timestamp	symtab	d603fc5cc21b		in	named-only	chips/heart/README.md#register-inventory	Register inventory
 IP30/unix	kernel	n64	.text	0xa800000020011334	12	getcpuid	symtab	07676ff112e0		in	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP30/unix	kernel	n64	.text	0xa800000020011340	212	nmi_dump	symtab	55bae0b7dcb9		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/unix	kernel	n64	.text	0xa800000020011340	212	nmi_dump	symtab	55bae0b7dcb9		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa800000020011414	32	getcachesz	symtab	8d2d001b2026		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011434	220	bootstrap	symtab	5774c289a46b		out:7	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa800000020011580	112	ffintr64	symtab	f87ab3823796		out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -36523,7 +36523,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001336c	444	dprintf	symtab	b1a5a48d99c9		o
 IP30/unix	kernel	n64	.text	0xa800000020013528	56	cpu_isvalid	symtab	6c546974cfe7		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020013808	548	init_all_devices	symtab	fb41b14df377		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020013a2c	28	sendintr	symtab	0aa68a818cd4		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP30/unix	kernel	n64	.text	0xa800000020013a48	140	debug_stop_all_cpus	symtab	4f653de98bb8		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP30/unix	kernel	n64	.text	0xa800000020013a48	140	debug_stop_all_cpus	symtab	4f653de98bb8		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa800000020013b4c	28	pokesoftclk	symtab	eb8a783994aa		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020013b68	48	ip30_intr_maint	symtab	9a51d44f99c0		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020013b98	696	intr	symtab	e84e92452245		out:7	named-only	chips/crime/README.md#graded-register-table	Graded register table
@@ -36542,7 +36542,7 @@ IP30/unix	kernel	n64	.text	0xa800000020014bf8	96	stopaudioclock	symtab	ab5a9c45e
 IP30/unix	kernel	n64	.text	0xa800000020014c58	96	startprfclk	symtab	9fd61e2ae84a		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020014cb8	128	stopprfclk	symtab	101611f86bb5		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020014d38	8	ackrtclock	symtab	78aa5094d5ec		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020014d40	188	init_timebase	symtab	fabba4cfd661		in	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP30/unix	kernel	n64	.text	0xa800000020014d40	188	init_timebase	symtab	fabba4cfd661		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa800000020014dfc	364	inittodr	symtab	ab03c3c17617		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020014f68	36	query_cyclecntr	symtab	fc85a5c8126d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020014f8c	32	query_fasttimer	symtab	9af5625fa8fb		out:7	undocumented		
@@ -36570,7 +36570,7 @@ IP30/unix	kernel	n64	.text	0xa800000020016254	368	nanotime_syscall	symtab	e5757c
 IP30/unix	kernel	n64	.text	0xa8000000200163c4	228	nanotime	symtab	9c58401fce79		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000200164a8	68	irix5_microtime	symtab	2a045e79c0ea		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200164ec	68	microtime	symtab	de8ed42701fd		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020016530	216	local_settime	symtab	db4ccaf59bda		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020016530	216	local_settime	symtab	db4ccaf59bda		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa800000020016608	68	settime	symtab	86203361510f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001664c	28	clkset	symtab	48429b336771		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016668	8	enable_fastclock	symtab	78aa5094d5ec		out:7	undocumented		
@@ -36701,7 +36701,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200184e4	92	powerfail_ql_thread	symtab	cf4a
 IP30/unix	kernel	n64	.text	0xa800000020018540	132	powerfail	symtab	4c0d61d32055		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020018660	152	powerintr	symtab	e490474ef1bc		out:7	named-only	chips/mace/README.md#other-rows	Other rows
 IP30/unix	kernel	n64	.text	0xa800000020018800	48	cpu_waitforreset	symtab	785bad6c66af		out:7	named-only	chips/mace/README.md#other-rows	Other rows
-IP30/unix	kernel	n64	.text	0xa800000020018830	452	rtodc	symtab	92a577858888		out:7	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP30/unix	kernel	n64	.text	0xa800000020018830	452	rtodc	symtab	92a577858888		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000200189f4	112	wtodc	symtab	2e479b426bd8		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020018c70	412	set_autopoweron	symtab	2c2e85e182d8		out:7	named-only	chips/mace/README.md#other-rows	Other rows
 IP30/unix	kernel	n64	.text	0xa800000020018ff0	112	cpu_clearpower	symtab	d3278a9d5ff9		out:7	undocumented		
@@ -37353,7 +37353,7 @@ IP30/unix	kernel	n64	.text	0xa80000002003ea74	84	heart_intr_swlevel_to_hwlevel	s
 IP30/unix	kernel	n64	.text	0xa80000002003ec1c	72	heart_stray_intr	symtab	7fdd265cf4b1		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003ecd4	68	chkdebug	symtab	277ea8b46ee8		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa80000002003ed18	24	clear_cpu_intr	symtab	a57a6ae0a4df		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP30/unix	kernel	n64	.text	0xa80000002003ed30	164	heart_mlreset	symtab	270fa496485d		in	named-only	chips/heart/README.md#register-inventory	Register inventory
+IP30/unix	kernel	n64	.text	0xa80000002003ed30	164	heart_mlreset	symtab	270fa496485d		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002003edd4	68	heart_mp_intr_init	symtab	3d38a8984a36		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002003ee18	44	heart_init	symtab	9e84ca9d013c		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003ee44	488	heart_startup	symtab	c5630c1ded35		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -37485,7 +37485,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200468d4	144	pcibr_pcix_rbars_calc	symtab	5
 IP30/unix	kernel	n64	.text	0xa800000020046964	44	pcibr_dma_enabled	symtab	482737e094ab		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020046990	560	pcibr_debug	symtab	cbb79309dd03		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/unix	kernel	n64	.text	0xa800000020046bc0	64	pcibr_businfo_get	symtab	0d76fac154e5		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020046c00	172	pcibr_bridge_ptr_get	symtab	2293aef42850		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP30/unix	kernel	n64	.text	0xa800000020046c00	172	pcibr_bridge_ptr_get	symtab	2293aef42850		in	understood	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa800000020046cac	108	pcibr_pio_flush_read	symtab	a9205764f767		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020046d18	8	pcibr_pio_flush_del	symtab	78aa5094d5ec		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020046d20	8	pcibr_pio_flush_init	symtab	87506497337c		in	undocumented		
@@ -41182,10 +41182,10 @@ IP30/unix	kernel	n64	.text	0xa8000000201d3750	268	nested_cpuaction	symtab	721228
 IP30/unix	kernel	n64	.text	0xa8000000201d385c	312	cpuaction	symtab	17298fbff464		out:7	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP30/unix	kernel	n64	.text	0xa8000000201d3994	48	doacvec_splhi	symtab	7c1387943e9f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d39c4	96	doacvec	symtab	defbb2a99c9f		out:7	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP30/unix	kernel	n64	.text	0xa8000000201d3a24	116	panic_lock	symtab	4840f32c4764		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201d3a24	116	panic_lock	symtab	4840f32c4764		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000201d3a98	68	panic_unlock	symtab	12d12b0a54eb		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3adc	12	set_node_panic_flag	symtab	6c6eedc337eb		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201d3ae8	192	enter_panic_mode	symtab	12c8ba92c190		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
+IP30/unix	kernel	n64	.text	0xa8000000201d3ae8	192	enter_panic_mode	symtab	12c8ba92c190		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000201d3ba8	32	exit_panic_mode	symtab	7cd10cdd3ca4		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3bc8	8	in_panic_mode	symtab	d0c72c97d0a6		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3bd0	12	enter_promlog_mode	symtab	35eecd1df509		out:7	undocumented		
@@ -41628,7 +41628,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201fc424	148	pproc_poll_wakeup_thread	symta
 IP30/unix	kernel	n64	.text	0xa8000000201fc4b8	24	ktimer_init	symtab	882bc4fb4e66		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201fc4d0	56	ktimer_switch	symtab	2d3bcbf27059		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201fc508	100	ktimer_readticks	symtab	7b7ae1269f98		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201fc56c	156	ktimer_read	symtab	0d510be4315e		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201fc56c	156	ktimer_read	symtab	0d510be4315e		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000201fc608	72	ktimer_slptime	symtab	41ff945a5be5		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201fc650	824	elf64exec	symtab	33bcab215fcd		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201fd8cc	1120	elf64map	symtab	f40867d8d6b8		out:7	undocumented		
@@ -48351,7 +48351,7 @@ IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x3fc	56	heart_cpu_
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x434	56	heart_debug_intr	dwarf+symtab	173b437e6cd2		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x46c	68	chkdebug	dwarf+symtab	e69d0b185fbb		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x4b0	24	clear_cpu_intr	dwarf+symtab	a57a6ae0a4df		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x4c8	164	heart_mlreset	dwarf+symtab	f3f22489a508		in	named-only	chips/heart/README.md#register-inventory	Register inventory
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x4c8	164	heart_mlreset	dwarf+symtab	f3f22489a508		in	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x56c	68	heart_mp_intr_init	dwarf+symtab	3d38a8984a36		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x5b0	44	heart_init	dwarf+symtab	3fceb0504198		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x5dc	488	heart_startup	dwarf+symtab	7abc3c7a4338		in	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -49998,7 +49998,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	is_vme_sp
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	vme_adapter	symtab	87506497337c	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a8	12	_get_timestamp	dwarf+symtab	d603fc5cc21b		out:8	named-only	chips/heart/README.md#register-inventory	Register inventory
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11b4	12	getcpuid	dwarf+symtab	07676ff112e0		out:8	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11c0	212	nmi_dump	dwarf+symtab	18cdc4d29921		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11c0	212	nmi_dump	dwarf+symtab	18cdc4d29921		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1294	32	getcachesz	dwarf+symtab	8d2d001b2026		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x12b4	220	bootstrap	dwarf+symtab	9a994094fcc8		out:8	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1400	112	ffintr64	dwarf+symtab	f87ab3823796		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -50056,7 +50056,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x33e0	340	ip30_ch
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3534	340	ip30_early_piotrans_addr	dwarf	cdebabf88b45		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3688	548	init_all_devices	dwarf+symtab	bc27230d4631		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x38ac	28	sendintr	dwarf+symtab	0aa68a818cd4		out:8	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x38c8	140	debug_stop_all_cpus	dwarf+symtab	09b9c330cac9		out:8	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x38c8	140	debug_stop_all_cpus	dwarf+symtab	09b9c330cac9		out:8	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3954	120	tsfastick_maint	dwarf	0b9156534829		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x39cc	28	pokesoftclk	dwarf+symtab	7c97d765735d		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x39e8	48	ip30_intr_maint	dwarf+symtab	c78cb27a3af0		out:8	undocumented		
@@ -50077,7 +50077,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x4a78	96	stopaudi
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x4ad8	96	startprfclk	dwarf+symtab	4c5d7e925fd1		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x4b38	128	stopprfclk	dwarf+symtab	6f4902aaf6b0		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x4bb8	8	ackrtclock	dwarf+symtab	78aa5094d5ec		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x4bc0	188	init_timebase	dwarf+symtab	30d1c4470441		out:8	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x4bc0	188	init_timebase	dwarf+symtab	30d1c4470441		out:8	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x4c7c	364	inittodr	dwarf+symtab	2be0d4d4f76e		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x4de8	36	query_cyclecntr	dwarf+symtab	b676b9a72e1d		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x4e0c	32	query_fasttimer	dwarf+symtab	7c744a25babc		out:8	undocumented		
@@ -50109,7 +50109,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x60d4	368	nanotim
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6244	228	nanotime	dwarf+symtab	786eb02ab1ba		out:8	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6328	68	irix5_microtime	dwarf+symtab	f42d82ff91d7		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x636c	68	microtime	dwarf+symtab	a54c9d44e7ff		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x63b0	216	local_settime	dwarf+symtab	a18c8647305f		out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x63b0	216	local_settime	dwarf+symtab	a18c8647305f		out:8	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6488	68	settime	dwarf+symtab	6062ae0a7b4e		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x64cc	28	clkset	dwarf+symtab	a86de4a9d7a4		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x64e8	8	enable_fastclock	dwarf+symtab	78aa5094d5ec		out:8	undocumented		
@@ -50249,7 +50249,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x84e0	152	powerin
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8578	208	powerintr_back	dwarf	e5febad34d2e		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8648	56	flash_led	dwarf	35e1bfa85890		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8680	48	cpu_waitforreset	dwarf+symtab	f4d18822d894		out:8	named-only	chips/mace/README.md#other-rows	Other rows
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x86b0	452	rtodc	dwarf+symtab	f39ae75b511e		out:8	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x86b0	452	rtodc	dwarf+symtab	f39ae75b511e		out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8874	112	wtodc	dwarf+symtab	7d93fcea7304		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x88e4	524	_clock_func	dwarf	c24baab75067		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8af0	412	set_autopoweron	dwarf+symtab	f2a7180a692d		out:8	named-only	chips/mace/README.md#other-rows	Other rows
@@ -54635,10 +54635,10 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x159c	268	nest
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x16a8	312	cpuaction	dwarf+symtab	637eda8b4d0d		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x17e0	48	doacvec_splhi	dwarf+symtab	8d06261219d9		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1810	96	doacvec	dwarf+symtab	14f27ce655ea		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1870	116	panic_lock	dwarf+symtab	181fc64609d4		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1870	116	panic_lock	dwarf+symtab	181fc64609d4		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x18e4	68	panic_unlock	dwarf+symtab	09f11a8e433c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1928	12	set_node_panic_flag	dwarf+symtab	6c6eedc337eb		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1934	192	enter_panic_mode	dwarf+symtab	f366fc3db86c		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
+IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1934	192	enter_panic_mode	dwarf+symtab	f366fc3db86c		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x19f4	32	exit_panic_mode	dwarf+symtab	b19b273831fd		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a14	8	in_panic_mode	dwarf+symtab	d0c72c97d0a6		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a1c	12	enter_promlog_mode	dwarf+symtab	35eecd1df509		out:3	undocumented		
@@ -55069,7 +55069,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(time.o)	kernel-object	n64	.text	0x149c	112	tim
 IP30/usr/cpu/sysgen/IP30boot/os.a(timers.o)	kernel-object	n64		0x0		ktimer_init	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(timers.o)	kernel-object	n64	.text	0x18	56	ktimer_switch	dwarf+symtab	2d3bcbf27059		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(timers.o)	kernel-object	n64	.text	0x50	100	ktimer_readticks	dwarf+symtab	7b7ae1269f98		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(timers.o)	kernel-object	n64	.text	0xb4	156	ktimer_read	dwarf+symtab	34cc394b1567		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(timers.o)	kernel-object	n64	.text	0xb4	156	ktimer_read	dwarf+symtab	34cc394b1567		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/os.a(timers.o)	kernel-object	n64	.text	0x150	72	ktimer_slptime	dwarf+symtab	41ff945a5be5		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(tlbmgr.o)	kernel-object	n64		0x0		tlb_onesec_actions	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(tlbmgr.o)	kernel-object	n64	.text	0xf0	140	tlb_tick_actions	dwarf+symtab	5b1307c09a89		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -55627,7 +55627,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x3d94	144	pcibr_pc
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x3e24	44	pcibr_dma_enabled	dwarf+symtab	e13b8b19b8fb		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x3e50	560	pcibr_debug	dwarf+symtab	ffe374bfb4e2		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x4080	64	pcibr_businfo_get	dwarf+symtab	dae4fd30f9a9		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x40c0	172	pcibr_bridge_ptr_get	dwarf+symtab	e0bb75f0fe8a		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x40c0	172	pcibr_bridge_ptr_get	dwarf+symtab	e0bb75f0fe8a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x416c	108	pcibr_pio_flush_read	dwarf+symtab	a9205764f767		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x41d8	8	pcibr_pio_flush_del	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x41e0	8	pcibr_pio_flush_init	dwarf+symtab	87506497337c		in	undocumented		
@@ -66539,7 +66539,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10e40	108	bump_l
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10eac	52	set_leds	symtab	1cb005a19113		in	named-only	chips/mace/README.md#other-rows	Other rows
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10ee0	12	get_except_norm	symtab	75b443875f64		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10eec	68	cpu_isvalid	symtab	46708260f754		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10f30	8	debug_stop_all_cpus	symtab	78aa5094d5ec		out:9	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10f30	8	debug_stop_all_cpus	symtab	78aa5094d5ec		out:9	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10f38	8	pmem_getfirstclick	symtab	87506497337c		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10f40	8	node_getfirstfree	symtab	87506497337c		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10f48	44	node_getmaxclick	symtab	17acff0d5a03		out:9	undocumented		
@@ -66595,7 +66595,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12094	272	kmissn
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x121a4	272	kvmiss_hit	symtab	13e22bd6ee8f		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x122b4	504	inittodr	symtab	5c4f629b92f2		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x124ac	28	resettodr	symtab	34d7a2e33b85		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x124c8	532	rtodc	symtab	5d67821cb229		out:9	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x124c8	532	rtodc	symtab	5d67821cb229		out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x126dc	780	wtodc	symtab	781ecac648a2		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12c28	216	read_dallas_nvram	symtab	6e5f2e897e6b		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12d00	216	write_dallas_nvram	symtab	b21651d9ba34		in	named-only	chips/mace/README.md#other-rows	Other rows
@@ -71207,10 +71207,10 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x1458	40	neste
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x1480	332	cpuaction	dwarf+symtab	41c37ccac4dd		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x15cc	48	doacvec_splhi	dwarf+symtab	4a9dc171663c		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x15fc	96	doacvec	dwarf+symtab	f65a0adc7321		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x165c	92	panic_lock	dwarf+symtab	fb40bed77a66		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x165c	92	panic_lock	dwarf+symtab	fb40bed77a66		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16b8	48	panic_unlock	dwarf+symtab	4a18a5aa1f73		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16e8	12	set_node_panic_flag	dwarf+symtab	d41f813c0b8b		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16f4	200	enter_panic_mode	dwarf+symtab	952615e036d8		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
+IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16f4	200	enter_panic_mode	dwarf+symtab	952615e036d8		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17bc	32	exit_panic_mode	dwarf+symtab	a0ba509be171		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17dc	8	in_panic_mode	dwarf+symtab	d7f907bf0613		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17e4	12	enter_promlog_mode	dwarf+symtab	3281419519de		out:3	undocumented		
@@ -71649,7 +71649,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(timers.o)	kernel-object	n32		0x0		ktimer_init	
 IP32/usr/cpu/sysgen/IP32boot/os.a(timers.o)	kernel-object	n32	.text	0x38	164	ktimer_switch	dwarf+symtab	671f921c6d16		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(timers.o)	kernel-object	n32	.text	0xdc	204	_ktimer_readticks	dwarf+funcnames+symtab	27817c9757e6		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(timers.o)	kernel-object	n32	.text	0x1a8	28	ktimer_readticks	dwarf+symtab	34d7a2e33b85		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(timers.o)	kernel-object	n32	.text	0x1c4	92	ktimer_read	dwarf+symtab	2d7b31a4a12d		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(timers.o)	kernel-object	n32	.text	0x1c4	92	ktimer_read	dwarf+symtab	2d7b31a4a12d		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/os.a(timers.o)	kernel-object	n32	.text	0x220	76	ktimer_slptime	dwarf+symtab	4fbb6108ead7		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(tlbmgr.o)	kernel-object	n32		0x0		tlb_onesec_actions	dwarf+symtab			out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(tlbmgr.o)	kernel-object	n32	.text	0xe8	144	tlb_tick_actions	dwarf+symtab	0097a7bf8e24		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -83937,7 +83937,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x209d0	180	instal
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20a84	304	protected_broadcast	dwarf+symtab	d378b42f237a		out:11	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20bb4	84	chkdebug	dwarf+symtab	cb70855fb2fa		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20c08	108	install_gfxintr	dwarf+symtab	b364e8960641		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20c74	272	debug_stop_all_cpus	dwarf+symtab	22143b3ce548		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20c74	272	debug_stop_all_cpus	dwarf+symtab	22143b3ce548		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20d84	348	intr_reserve_hardwired	dwarf+symtab	575f20e6ecf8		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20ee0	120	intr_clear_bits	dwarf	10af38853fbc		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20f58	316	intr_clear_all	dwarf+symtab	ec815101f401		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -84105,7 +84105,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dki_dcac
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dummy_func	dwarf+symtab	78aa5094d5ec	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e8	208	bootstrap	dwarf+symtab	824615eebe43		out:11	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x253b8	168	mapped_kernel_setup_tlb	dwarf+symtab	d97a23f621a0		out:11	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x25460	324	nmi_dump	dwarf+symtab	a2c45acf925d		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x25460	324	nmi_dump	dwarf+symtab	a2c45acf925d		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x255a4	140	dumptlb	dwarf+symtab	cc677e0565cc		out:11	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x25630	156	checkAllTlbsDumped	dwarf+symtab	8ed0449b38d8		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x256d0	52	VEC_trap	dwarf+symtab	59c2a9b8739a	shared-address	out:11	undocumented		
@@ -84144,7 +84144,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2771c	96	stopaud
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2777c	96	startprfclk	dwarf+symtab	08d257a7797a		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x277dc	128	stopprfclk	dwarf+symtab	7cc2d6661ea2		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2785c	8	ackrtclock	dwarf+symtab	78aa5094d5ec		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x27864	332	init_timebase	dwarf+symtab	7b12928c9655		in	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x27864	332	init_timebase	dwarf+symtab	7b12928c9655		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x279b0	244	inittodr	dwarf+symtab	8816bc7fccc1		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x27aa4	36	query_cyclecntr	dwarf+symtab	4b7a4a9623db		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x27ac8	36	query_fasttimer	dwarf+symtab	fdb3e256d7d1		in	undocumented		
@@ -84175,7 +84175,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x290d4	536	nanoti
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x292ec	304	nanotime	dwarf+symtab	3f8c5c63de18		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2941c	68	irix5_microtime	dwarf+symtab	f42d82ff91d7		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29460	68	microtime	dwarf+symtab	a54c9d44e7ff		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x294a4	216	local_settime	dwarf+symtab	38740dbef749		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x294a4	216	local_settime	dwarf+symtab	38740dbef749		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2957c	68	settime	dwarf+symtab	6062ae0a7b4e		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x295c0	28	clkset	dwarf+symtab	a86de4a9d7a4		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x295dc	8	enable_fastclock	dwarf+symtab	78aa5094d5ec		out:11	undocumented		
@@ -84245,7 +84245,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29f84	60	acktmoc
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29fc0	60	ackkgclock	dwarf+symtab	aef2fa77667d		in	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29ffc	480	startkgclock	dwarf+symtab	a41b5f64df3b		in	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2a1dc	220	slowkgclock	dwarf+symtab	4dcee877bc2d		in	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2a2b8	1324	rtodc	dwarf+symtab	63348f752d9f		out:11	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2a2b8	1324	rtodc	dwarf+symtab	63348f752d9f		out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2a7e4	1060	wtodc	dwarf+symtab	71d1c6cf48c0		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2ac08	120	timestamp_init	dwarf+symtab	732cf1742922		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2ac80	464	prof_intr	dwarf+symtab	9ca147a99c33		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -89210,10 +89210,10 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x198c	268	nest
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1a98	312	cpuaction	dwarf+symtab	4ab541d78c3c		out:13	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1bd0	48	doacvec_splhi	dwarf+symtab	8d06261219d9		out:13	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1c00	116	doacvec	dwarf+symtab	4c13b56e8dd0		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1c74	116	panic_lock	dwarf+symtab	181fc64609d4		out:13	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1c74	116	panic_lock	dwarf+symtab	181fc64609d4		out:13	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1ce8	68	panic_unlock	dwarf+symtab	09f11a8e433c		out:13	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1d2c	12	set_node_panic_flag	dwarf+symtab	230c83f00493		out:13	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1d38	192	enter_panic_mode	dwarf+symtab	d46eea6c8546		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
+IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1d38	192	enter_panic_mode	dwarf+symtab	d46eea6c8546		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1df8	32	exit_panic_mode	dwarf+symtab	7b04eb86f86d		out:13	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e18	8	in_panic_mode	dwarf+symtab	1df2ef79d3d9		out:13	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e20	12	enter_promlog_mode	dwarf+symtab	3ebbd034647f		out:13	undocumented		
@@ -89648,7 +89648,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(time.o)	kernel-object	n64	.text	0x14bc	112	tim
 IP35/usr/cpu/sysgen/IP35boot/os.a(timers.o)	kernel-object	n64		0x0		ktimer_init	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(timers.o)	kernel-object	n64	.text	0x18	56	ktimer_switch	dwarf+symtab	e6425641b86d		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(timers.o)	kernel-object	n64	.text	0x50	100	ktimer_readticks	dwarf+symtab	32eaa5919663		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(timers.o)	kernel-object	n64	.text	0xb4	156	ktimer_read	dwarf+symtab	54a86b08cd5e		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(timers.o)	kernel-object	n64	.text	0xb4	156	ktimer_read	dwarf+symtab	54a86b08cd5e		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/os.a(timers.o)	kernel-object	n64	.text	0x150	72	ktimer_slptime	dwarf+symtab	430443e51312		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(tlbmgr.o)	kernel-object	n64		0x0		tlb_onesec_actions	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(tlbmgr.o)	kernel-object	n64	.text	0xf0	140	tlb_tick_actions	dwarf+symtab	3d1884cbaffa		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -90290,7 +90290,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x41fc	144	pcibr_pc
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x428c	44	pcibr_dma_enabled	dwarf+symtab	e13b8b19b8fb		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x42b8	564	pcibr_debug	dwarf+symtab	633b5870eda7		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x44ec	232	pcibr_businfo_get	dwarf+symtab	bd501d6a3a4f		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x45d4	172	pcibr_bridge_ptr_get	dwarf+symtab	e0bb75f0fe8a		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x45d4	172	pcibr_bridge_ptr_get	dwarf+symtab	e0bb75f0fe8a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x4680	392	idbg_pss_func	dwarf+symtab	f4d89308a196		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x4808	476	idbg_pss_info	dwarf+symtab	64b5cd81e7c2		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x49e4	180	idbg_pss	dwarf+symtab	f2d10bc836e0		in	undocumented		

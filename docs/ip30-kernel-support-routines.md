@@ -229,3 +229,55 @@ running the code and the doubleword at -15744 holds that processor's flag bits.
   +0x40, and the timeout it arms is given the record, the routine itself as callback and a processor: the halfword at +0x48
   when that is the running processor and its record passes the same two tests above, and otherwise
   `clock_processor` (stored back at +0x48). Established.
+- `local_settime` (`IP30/unix` `0xa800000020016530`, 216 bytes, frame 32 bytes)
+  sets the kernel's time to seconds in `a0` and microseconds in `a1`. It takes `mutex_spinlock_spl` on `timelock`
+  (0xa8000000204ae3d4) with `spl65` (the pool word at 0xa8000000204a9238) as the level routine, and normalises the
+  microseconds: while they are 1000000 or more it subtracts 1000000 and adds 1 to the seconds (the loop is written
+  out twice). Under the lock it adds 1 to the word at 0xa8000000204ae3e4, executes `sync`, then stores in this order: the
+  free-running counter at 0xffffffffaff20000 as the base tick count (doubleword at 0xa8000000204ae3e8), the seconds as a word
+  at `time` (0xa8000000204af188), the seconds again as the word at +0 of the structure at 0xa8000000204b03a0, the
+  microseconds times 1000 (built as shifts and adds of 125 times 8) as the doubleword at +8 of that structure, and zero
+  doublewords at `adjtime_RTC` (0xa8000000204ae400), `adjtime_delta` (0xa8000000204ae3f8) and `adjtime_nanos`
+  (0xa8000000204ae3f0), in that order. After a second `sync` it copies the sequence word from 0xa8000000204ae3e4 to
+  0xa8000000204ae3e0, in the delay slot of `mutex_spinunlock` (called with the level `mutex_spinlock_spl` returned),
+  the two words that `nanotime` compares when it reads. It returns what the unlock left in v0. Established.
+- `init_timebase` (`IP30/unix` `0xa800000020014d40`, 188 bytes, frame 32 bytes)
+  starts the kernel clock from the battery clock and then waits for that clock to tick. It calls `rtodc` once and stores the
+  result as a word at `time` (0xa8000000204af188) and as the word at +0 of the structure at 0xa8000000204b03a0, stores the
+  free-running counter at 0xffffffffaff20000 as the base tick count (doubleword at 0xa8000000204ae3e8), zeroes the two
+  sequence words at 0xa8000000204ae3e4 and 0xa8000000204ae3e0, the doubleword at +8 of the structure, `adjtime_RTC`
+  and `adjtime_delta`, in that order and leaving `adjtime_nanos` as it was. It then polls: it calls `rtodc` again and returns
+  its result as soon as it differs from the word at `time`, which is not updated. When the counter passes the first
+  reading plus 0x17d7840 (25000000) without a change, the poll ends in `cmn_err` at level 4 with the text "System
+  time-of-day chip is not advancing." and the line "CHECK AND RESET THE DATE!", and the routine returns what `cmn_err`
+  left in v0. The `ld` at `0xa800000020014de4` is never reached. Established.
+- `ktimer_read` (`IP30/unix` `0xa8000000201fc56c`, 156 bytes, frame 16 bytes)
+  reads the elapsed time of one kernel timer into a seconds word and a nanoseconds doubleword. `a0` points at the owner
+  record, `a1` is the timer number and `a2` the output buffer. The timer's accumulated count is the doubleword at `a0` + 640 +
+  8 times the timer number. When the word at `a0` + 736 equals the timer number the timer is running, and the routine adds the
+  counter at 0xffffffffaff20000 minus the doubleword at `a0` + 728 to the count, retrying until the doubleword at
+  +728 equals the word at +740 joined with the high half of the doubleword at +728 (the counter read is stored at
+  0(sp) and unused). For a stopped timer the count is used as it is. It divides the count by `timer_freq` (the word at
+  0xa8000000204ae40c, unsigned 64-bit), stores the quotient as a word at +0 of the buffer, and stores the remainder times the
+  word at 0xa8000000204ae410 as the doubleword at +8; a zero divisor raises trap code 7 after the divide is issued. The
+  routine returns no value. Established.
+- `enter_panic_mode` (`IP30/unix` `0xa8000000201d3ae8`, 192 bytes, frame 16 bytes)
+  puts the running processor into the panic state, calling `panic_lock` first. It then stores a byte 1 at -15447 of the process
+  page (in the delay slot of the test that follows) and tests the doubleword at -15744, the processor's flag bits. When it is
+  nonzero it calls `log_tstamp_event` with 0xf618 as first argument, the flag doubleword, 0, the constant
+  0x50414e49436d6465 (the ASCII text "PANICmde") and 0 for the others. It then walks the processor table `pdaindr`
+  (0xa8000000204b0380, 16 bytes per entry) for the first `maxcpus` (word at 0xa8000000204a6814) entries, skips those whose
+  word at +0 is -1 and, for the others whose pointer in +8 is nonzero, stores a zero doubleword at that pointer plus 640. Last it reads the
+  free-running counter at 0xffffffffaff20000 and stores it in `panic_snap` (0xa8000000204af908) in the delay slot of the
+  return. Nothing is returned. Established.
+- `nmi_dump` (`IP30/unix` `0xa800000020011340`, 212 bytes, no frame)
+  is the code that runs on a non-maskable interrupt. Its first act is to write 0x80 to Status. It reads the processor
+  number from the doubleword at 0xffffffffaff50000 and compares it with the word at 0xa800000000000410. When they are equal it
+  saves ErrorEPC (`dmfc0` register 30), EPC (register 14), `sp` and `ra` as doublewords at +0, +8, +16 and +24 of
+  `nmi_saveregs` (0xa800000020420528), loads `sp` with `dumpstack` (0xa8000000204fe9b0) plus 16368 and `gp` with
+  0xa8000000204ae7f0, and jumps to `cont_nmi_dump` with `j`. Any other processor saves the same four values at
+  `nmi_saveregs` plus 32 times its processor number and then spins on a branch to itself. Established.
+- `debug_stop_all_cpus` (`IP30/unix` `0xa800000020013a48`, 140 bytes, no frame)
+  interrupts every other processor. For each index below `maxcpus` (the word at 0xa8000000204a6814, reread after each store it makes)
+  except the running processor (the halfword at -15456) it stores 1 shifted left by 42 plus the index as a doubleword to
+  0xffffffffaff10020, in ascending index order. The loop is written out twice. It returns nothing. Established.
