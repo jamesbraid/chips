@@ -6188,17 +6188,17 @@ IP27/unix	kernel	n64	.text	0xc000000000098a2c	128	elsc_msg_callback	symtab	c8234
 IP27/unix	kernel	n64	.text	0xc000000000098aac	188	elsc_errmsg	symtab	8e155ebff81f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000098b68	252	elsc_nvram_write	symtab	d2cdf15c39fd		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc000000000098c64	236	elsc_nvram_read	symtab	6018713f5462		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/unix	kernel	n64	.text	0xc000000000098d50	400	elsc_command	symtab	4ecba9797ac6		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/unix	kernel	n64	.text	0xc000000000098ee0	740	elsc_parse	symtab	6d0623b4f84a		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000098d50	400	elsc_command	symtab	4ecba9797ac6		out:5	located	chips/l1/README.md#ip27-elsc-command-packets-over-the-i2c-master-elsco	IP27 ELSC: command packets over the I2C master (`elsc.o`)
+IP27/unix	kernel	n64	.text	0xc000000000098ee0	740	elsc_parse	symtab	6d0623b4f84a		out:5	named-only	chips/l1/README.md#ip27-elsc-command-packets-over-the-i2c-master-elsco	IP27 ELSC: command packets over the I2C master (`elsc.o`)
 IP27/unix	kernel	n64	.text	0xc0000000000991c4	468	elsc_process	symtab	812ec7e54571		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc000000000099398	108	elsc_version	symtab	4a9b504b3306		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000099404	68	elsc_nvram_magic	symtab	30645699303f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000099448	120	elsc_debug_set	symtab	c27dd53e30bf		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000994c0	120	elsc_debug_get	symtab	5e05d4d5d5e9		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000994c0	120	elsc_debug_get	symtab	5e05d4d5d5e9		out:5	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP27/unix	kernel	n64	.text	0xc000000000099538	76	elsc_module_set	symtab	5f00e7887f55		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000099584	72	elsc_module_get	symtab	eded25329433		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000995cc	76	elsc_partition_set	symtab	3f87bd3d6d93		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000099618	72	elsc_partition_get	symtab	9847794fa611		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000995cc	76	elsc_partition_set	symtab	3f87bd3d6d93		out:5	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP27/unix	kernel	n64	.text	0xc000000000099618	72	elsc_partition_get	symtab	9847794fa611		out:5	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP27/unix	kernel	n64	.text	0xc000000000099660	76	elsc_domain_set	symtab	2d06b216451f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000996ac	72	elsc_domain_get	symtab	d61a4efa2865		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000996f4	76	elsc_cluster_set	symtab	671ead8c95fb		out:5	undocumented		
@@ -6230,7 +6230,7 @@ IP27/unix	kernel	n64	.text	0xc00000000009a268	140	_elscuart_getc	symtab	02137227
 IP27/unix	kernel	n64	.text	0xc00000000009a2f4	112	_elscuart_puts	symtab	b2e950ca958d		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009a364	792	_elscuart_putc	symtab	7720fc8db0eb		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009a67c	164	_elscuart_gets	symtab	20e1e862e8ef		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000009a720	460	_elscuart_flush	symtab	fb00a6712a8b		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000009a720	460	_elscuart_flush	symtab	fb00a6712a8b		out:5	named-only	chips/l1/README.md#ip27-elsc-command-packets-over-the-i2c-master-elsco	IP27 ELSC: command packets over the I2C master (`elsc.o`)
 IP27/unix	kernel	n64	.text	0xc00000000009a8ec	36	elscuart_probe	symtab	3bf290cbd0a7		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009a910	48	elscuart_init	symtab	fba9a5f56e30		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009a940	36	elscuart_poll	symtab	464adf557d5c		out:5	undocumented		
@@ -9222,7 +9222,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001f47ec	608	copen	symtab	c1acee1870da		out
 IP27/unix	kernel	n64	.text	0xc0000000001f4a4c	100	close	symtab	f3399c991bc1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f4fec	28	read	symtab	d34d5a23242c		out:5	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/unix	kernel	n64	.text	0xc0000000001f5008	28	pread	symtab	001f3bec7c4b		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001f54ec	28	write	symtab	01a427135297		out:5	named-only	chips/mace/README.md#other-rows	Other rows
+IP27/unix	kernel	n64	.text	0xc0000000001f54ec	28	write	symtab	01a427135297		out:5	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP27/unix	kernel	n64	.text	0xc0000000001f5508	28	pwrite	symtab	5a9fbe54bffc		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f5524	124	syssgi_rdwrb	symtab	8e0f98096504		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f55a0	88	readv	symtab	83b67ca784b2		out:5	undocumented		
@@ -15806,17 +15806,17 @@ IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x140	128	elsc_msg_c
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1c0	188	elsc_errmsg	dwarf+symtab	cf8c677b1220		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x27c	252	elsc_nvram_write	dwarf+symtab	60ada34bcfb3		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x378	236	elsc_nvram_read	dwarf+symtab	c0687850db18		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x464	400	elsc_command	dwarf+symtab	f5a11e43793d		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x5f4	740	elsc_parse	dwarf+symtab	497e2abef63f		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x464	400	elsc_command	dwarf+symtab	f5a11e43793d		out:3	understood	chips/l1/README.md#ip27-elsc-command-packets-over-the-i2c-master-elsco	IP27 ELSC: command packets over the I2C master (`elsc.o`)
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x5f4	740	elsc_parse	dwarf+symtab	497e2abef63f		out:3	named-only	chips/l1/README.md#ip27-elsc-command-packets-over-the-i2c-master-elsco	IP27 ELSC: command packets over the I2C master (`elsc.o`)
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x8d8	468	elsc_process	dwarf+symtab	c2edeb0a84ed		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xaac	108	elsc_version	dwarf+symtab	776417f340bf		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xb18	68	elsc_nvram_magic	dwarf+symtab	9f09a186efe8		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xb5c	120	elsc_debug_set	dwarf+symtab	14b9c9996b2c		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xbd4	120	elsc_debug_get	dwarf+symtab	ba0ec8c971a5		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xbd4	120	elsc_debug_get	dwarf+symtab	ba0ec8c971a5		out:3	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xc4c	76	elsc_module_set	dwarf+symtab	7beb7b2e57ba		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xc98	72	elsc_module_get	dwarf+symtab	af319d5029a2		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xce0	76	elsc_partition_set	dwarf+symtab	65e2004b34c2		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xd2c	72	elsc_partition_get	dwarf+symtab	e0f2e81926e2		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xce0	76	elsc_partition_set	dwarf+symtab	65e2004b34c2		out:3	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xd2c	72	elsc_partition_get	dwarf+symtab	e0f2e81926e2		out:3	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xd74	76	elsc_domain_set	dwarf+symtab	4c4a3d2438f3		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xdc0	72	elsc_domain_get	dwarf+symtab	8d02edf3062a		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xe08	76	elsc_cluster_set	dwarf+symtab	4f68ef6b8e9a		out:3	undocumented		
@@ -15849,7 +15849,7 @@ IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x197c	140	_elscuart
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1a08	112	_elscuart_puts	dwarf+symtab	8b08b3f70524		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1a78	792	_elscuart_putc	dwarf+symtab	2ba064c05e75		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1d90	164	_elscuart_gets	dwarf+symtab	f17f14ae9276		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1e34	460	_elscuart_flush	dwarf+symtab	879fd206cf1d		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1e34	460	_elscuart_flush	dwarf+symtab	879fd206cf1d		out:3	named-only	chips/l1/README.md#ip27-elsc-command-packets-over-the-i2c-master-elsco	IP27 ELSC: command packets over the I2C master (`elsc.o`)
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x2000	36	elscuart_probe	dwarf+symtab	23784e861696		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x2024	48	elscuart_init	dwarf+symtab	eed8a30f5024		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x2054	36	elscuart_poll	dwarf+symtab	23784e861696		out:3	undocumented		
@@ -25138,7 +25138,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	657db5992417		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/mace/README.md#other-rows	Other rows
+IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfd4	28	pwrite	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xff0	124	syssgi_rdwrb	dwarf+symtab	b5e11e677f74		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x106c	88	readv	dwarf+symtab	9df20f098501		out:3	undocumented		
@@ -40894,7 +40894,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201b5af0	608	copen	symtab	965dafb25d17		out
 IP30/unix	kernel	n64	.text	0xa8000000201b5d50	100	close	symtab	4420c397d7ba		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b62f0	28	read	symtab	dcf0d42ffa47		out:7	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa8000000201b630c	28	pread	symtab	b470a6fb64fa		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201b67f0	28	write	symtab	a30dea0a2ea3		out:7	named-only	chips/mace/README.md#other-rows	Other rows
+IP30/unix	kernel	n64	.text	0xa8000000201b67f0	28	write	symtab	a30dea0a2ea3		out:7	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP30/unix	kernel	n64	.text	0xa8000000201b680c	28	pwrite	symtab	b82ce096fbe8		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b6828	124	syssgi_rdwrb	symtab	2bb6cd63c511		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b68a4	88	readv	symtab	46e29526503f		out:7	undocumented		
@@ -55327,7 +55327,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	63714ef59212		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/mace/README.md#other-rows	Other rows
+IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfd4	28	pwrite	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xff0	124	syssgi_rdwrb	dwarf+symtab	b5e11e677f74		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x106c	88	readv	dwarf+symtab	9df20f098501		out:3	undocumented		
@@ -71881,7 +71881,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x5ac	1104	
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x9fc	28	read	dwarf+symtab	295c861fb3cd		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xa18	28	pread	dwarf+symtab	2f5516b0c7d3		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xa34	1140	_write	dwarf+funcnames+symtab	f70651bf104f		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xea8	28	write	dwarf+symtab	295c861fb3cd		out:3	named-only	chips/mace/README.md#other-rows	Other rows
+IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xea8	28	write	dwarf+symtab	295c861fb3cd		out:3	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xec4	28	pwrite	dwarf+symtab	2f5516b0c7d3		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xee0	124	syssgi_rdwrb	dwarf+symtab	2c76f0f643e6		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xf5c	88	readv	dwarf+symtab	5f994680d26c		out:3	undocumented		
@@ -83014,7 +83014,7 @@ IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x644
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x750	68	job_limit_check	dwarf+symtab	9fafc138c2e7		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x794	492	proc_job_accum	dwarf+symtab	5cd972fe4c3c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x980	160	proc_job_accumcpufin	dwarf+symtab	76828ec1c500		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64		0x0		read_rr_reg	dwarf+symtab			out:3	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64		0x0		read_rr_reg	dwarf+symtab			out:3	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64	.text	0x16c	208	extract_mux_data	dwarf+symtab	3422c05ec4fa		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64		0x0		scancmd_create	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0x84	80	scancmd_init	dwarf+symtab	4cafa8cb36f6		out:3	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
@@ -85625,34 +85625,34 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mrlock.o)	kernel-object	n64	.tex
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mrlock.o)	kernel-object	n64	.text	0x94	92	mr_unlock_noinherit	dwarf+symtab	d0499b5c98d3	shared-address	out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mrlock.o)	kernel-object	n64	.text	0x94	92	mrunlock_noinherit	symtab	d0499b5c98d3	shared-address	out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mrlock.o)	kernel-object	n64	.text	0xf0	28	mrlock	dwarf+symtab	e44a3b99f917		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64		0x0		get_L1_baud	dwarf+symtab			in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x8	28	uart_delay	dwarf+symtab	fa4cc7c25084		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x24	40	uart_putc	dwarf+symtab	9a15cde5757c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4c	92	uart_getc	dwarf+symtab	bd45193b37b1		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xa8	716	uart_init	dwarf+symtab	bb46407f0013		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x374	352	uart_intr_enable	dwarf+symtab	0442beff76db		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4d4	352	uart_intr_disable	dwarf+symtab	5fbb1fc70d01		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x634	336	rtr_uart_putc	dwarf+symtab	6ed6ce9b03e3		in	named-only	chips/router/README.md#global-registers-ip35-build-names-are-the-public-headers	Global registers (IP35 build; names are the public header's)
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x784	148	rtr_uart_getc	dwarf+symtab	49f3bc0cbb66		in	named-only	chips/router/README.md#global-registers-ip35-build-names-are-the-public-headers	Global registers (IP35 build; names are the public header's)
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x818	704	rtr_uart_init	dwarf+symtab	41537967f092		in	named-only	chips/router/README.md#global-registers-ip35-build-names-are-the-public-headers	Global registers (IP35 build; names are the public header's)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64		0x0		get_L1_baud	dwarf+symtab			in	understood	chips/l1/README.md#baud-rate-and-programming-sequence-established	Baud rate and programming sequence (established)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x8	28	uart_delay	dwarf+symtab	fa4cc7c25084		in	named-only	chips/l1/README.md#baud-rate-and-programming-sequence-established	Baud rate and programming sequence (established)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x24	40	uart_putc	dwarf+symtab	9a15cde5757c		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4c	92	uart_getc	dwarf+symtab	bd45193b37b1		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xa8	716	uart_init	dwarf+symtab	bb46407f0013		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x374	352	uart_intr_enable	dwarf+symtab	0442beff76db		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4d4	352	uart_intr_disable	dwarf+symtab	5fbb1fc70d01		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x634	336	rtr_uart_putc	dwarf+symtab	6ed6ce9b03e3		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x784	148	rtr_uart_getc	dwarf+symtab	49f3bc0cbb66		in	named-only	chips/l1/README.md#router-side-uart-ip35-rtr_uart_-in-l1o	Router-side UART (IP35, `rtr_uart_*` in `l1.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x818	704	rtr_uart_init	dwarf+symtab	41537967f092		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xad8	164	subch_set_tx_notify	dwarf+symtab	2ba8224ccf2d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xb7c	88	subch_set_rx_notify	dwarf+symtab	47949f3994a6		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xbd4	104	subch_set_rx_notify_conditional	dwarf+symtab	3b2143af3cb2		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xc3c	16	get_myid	dwarf+symtab	384f4c8a80b6		in	named-only	chips/bedrock/README.md#groups-by-routine-names-inferred	Groups by routine names (inferred)
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xc4c	40	crc16_calc	dwarf+symtab	5999c5a81ed1		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xc4c	40	crc16_calc	dwarf+symtab	5999c5a81ed1		in	named-only	chips/l1/README.md#packet-framing-established-brl1_send-0xf0c-and-crc16_calc-0xc4c-read-in-full	Packet framing (established, `brl1_send` `0xf0c` and `crc16_calc` `0xc4c`, read in full)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xc74	116	brl1_discard_packet	dwarf+symtab	d16dca22e129		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xce8	548	brl1_send_chars	dwarf+symtab	2d7557c0ea90		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xf0c	696	brl1_send	dwarf+symtab	5fc4dfad1a8b		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x11c4	276	brl1_send_cont	dwarf+symtab	de6a8f0521c0		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xce8	548	brl1_send_chars	dwarf+symtab	2d7557c0ea90		in	understood	chips/l1/README.md#packet-framing-established-brl1_send-0xf0c-and-crc16_calc-0xc4c-read-in-full	Packet framing (established, `brl1_send` `0xf0c` and `crc16_calc` `0xc4c`, read in full)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xf0c	696	brl1_send	dwarf+symtab	5fc4dfad1a8b		in	named-only	chips/l1/README.md#packet-framing-established-brl1_send-0xf0c-and-crc16_calc-0xc4c-read-in-full	Packet framing (established, `brl1_send` `0xf0c` and `crc16_calc` `0xc4c`, read in full)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x11c4	276	brl1_send_cont	dwarf+symtab	de6a8f0521c0		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x12d8	112	read_uart	dwarf+symtab	591311d5183a		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x1348	2120	brl1_receive	dwarf+symtab	3068f949f071		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x1b90	596	brl1_init	dwarf+symtab	5c9e2531a329		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x1348	2120	brl1_receive	dwarf+symtab	3068f949f071		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x1b90	596	brl1_init	dwarf+symtab	5c9e2531a329		in	named-only	chips/l1/README.md#packet-framing-established-brl1_send-0xf0c-and-crc16_calc-0xc4c-read-in-full	Packet framing (established, `brl1_send` `0xf0c` and `crc16_calc` `0xc4c`, read in full)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x1de4	292	brl1_intr_poll	dwarf+symtab	03eb6078283f		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x1f08	320	brl1_intrd	dwarf+symtab	6f716959a922		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x1f08	320	brl1_intrd	dwarf+symtab	6f716959a922		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2048	40	brl1_intr	dwarf+symtab	7b2d85e72519		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2070	108	brl1_connect_intr	dwarf+symtab	ab3ca2e318db		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2070	108	brl1_connect_intr	dwarf+symtab	ab3ca2e318db		in	understood	chips/l1/README.md#packet-framing-established-brl1_send-0xf0c-and-crc16_calc-0xc4c-read-in-full	Packet framing (established, `brl1_send` `0xf0c` and `crc16_calc` `0xc4c`, read in full)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x20dc	28	brl1_enable_uart_intr	dwarf+symtab	12a18864d05c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x20f8	1288	brl1_send_console_packet	dwarf+symtab	78eea183a003		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x20f8	1288	brl1_send_console_packet	dwarf+symtab	78eea183a003		in	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2600	92	l1_cons_poll	dwarf+symtab	44e98f76ff44		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x265c	172	l1_cons_getc	dwarf+symtab	70235f1d7483		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2708	80	l1_cons_init	dwarf+symtab	a7b009564403		in	undocumented		
@@ -85661,16 +85661,16 @@ IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2778	320	l1_cons_rea
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x28b8	32	l1_cons_tx_notif	dwarf+symtab	45cd5bbdea27		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x28d8	32	l1_cons_rx_notif	dwarf+symtab	45cd5bbdea27		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x28f8	44	sc_data_ready	dwarf+symtab	cf0f20e3352b		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2924	320	sc_open	dwarf+symtab	e70cddf91d18		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2924	320	sc_open	dwarf+symtab	e70cddf91d18		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2a64	200	sc_close	dwarf+symtab	719b4ebe5d0f		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2b2c	648	sc_construct_msg	dwarf+symtab	e5b9748bd92f		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2b2c	648	sc_construct_msg	dwarf+symtab	e5b9748bd92f		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2db4	508	sc_interpret_resp	dwarf+symtab	f85b0b392dd5		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x2fb0	156	sc_send	dwarf+symtab	003118ceee10		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x304c	252	subch_pull_msg	dwarf+symtab	005790769314		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x3148	348	sc_recv_poll	dwarf+symtab	47c949bd3e27		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x32a4	332	sc_recv_intr	dwarf+symtab	986fcffdb1b0		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x33f0	288	sc_command	dwarf+symtab	a5b4856cce36		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x3510	92	sc_command_kern	dwarf+symtab	a5fb3385d856		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x3510	92	sc_command_kern	dwarf+symtab	a5fb3385d856		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x356c	88	sc_poll	dwarf+symtab	4c1a72276b40		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x35c4	28	sc_init	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x35e0	88	l1autopwrd_timeout	dwarf+symtab	5c5d093b58fe		in	undocumented		
@@ -85682,7 +85682,7 @@ IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x3dc8	744	_elscuart_p
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x40b0	92	_elscuart_getc	dwarf+symtab	75cb2304dd22		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x410c	88	_elscuart_poll	dwarf+symtab	9ae7894aa129		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4164	284	_elscuart_readc	dwarf+symtab	c67f13849cdf		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4280	392	_elscuart_flush	dwarf+symtab	e414c5d7f751		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4280	392	_elscuart_flush	dwarf+symtab	e414c5d7f751		in	named-only	chips/l1/README.md#ip27-elsc-command-packets-over-the-i2c-master-elsco	IP27 ELSC: command packets over the I2C master (`elsc.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4408	36	_elscuart_probe	dwarf+symtab	6cce3dbadb6c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x442c	156	_elscuart_init	dwarf+symtab	d0fd966fd5a0		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x44c8	88	elscuart_syscon_listen	dwarf+symtab	475048a48143		in	undocumented		
@@ -85692,32 +85692,32 @@ IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xc4	8	elsc_nv
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xcc	32	elsc_nvram_copy	dwarf+symtab	316833f0b332		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xec	20	elsc_nvram_write	dwarf+symtab	60ab3acf875f		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x100	8	elsc_nvram_read	dwarf+symtab	6319e0118090		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x108	272	sc_version	dwarf+symtab	e2c327083db9		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x108	272	sc_version	dwarf+symtab	e2c327083db9		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x218	104	sc_version_comp	dwarf+symtab	db96256e2435		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x280	92	elsc_version	dwarf+symtab	e28f88901abb		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2dc	8	elsc_debug_set	dwarf+symtab	87506497337c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2e4	280	elsc_debug_get	dwarf+symtab	ebe176b7e37c		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2e4	280	elsc_debug_get	dwarf+symtab	ebe176b7e37c		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x3fc	32	elsc_rack_bay_get	dwarf+symtab	a6fe2f721c2a		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x41c	536	_elsc_rack_bay_type_get	dwarf+symtab	df766695dbdd		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x634	264	elsc_cbrick_type_get	dwarf+symtab	dd670deb93e5		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x41c	536	_elsc_rack_bay_type_get	dwarf+symtab	df766695dbdd		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x634	264	elsc_cbrick_type_get	dwarf+symtab	dd670deb93e5		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x73c	28	elsc_rack_bay_type_get	dwarf+symtab	03ea030deb18		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x758	248	elsc_slab_get	dwarf+symtab	12552b1a4e55		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x758	248	elsc_slab_get	dwarf+symtab	12552b1a4e55		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x850	108	elsc_module_slab_get	dwarf+symtab	75017aaeb355		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x8bc	96	elsc_module_get	dwarf+symtab	752feb2a63fb		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x91c	224	elsc_module_get_nasid	dwarf+symtab	98a5d1e0869f		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x9fc	256	elsc_partition_set	dwarf+symtab	d766196536de		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xafc	240	elsc_evt_unreg	dwarf+symtab	988f7e769637		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xbec	240	elsc_pwr_off	dwarf+symtab	18a361be4b54		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xcdc	240	elsc_pwr_cycle	dwarf+symtab	e083e4739b2a		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xdcc	276	elsc_led_set	dwarf+symtab	70a3de1c830f		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xee0	248	elsc_partition_get	dwarf+symtab	a96d9e4b48f6		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xfd8	256	elsc_cons_subch	dwarf+symtab	2e8ca57007b7		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x10d8	240	elsc_cons_node	dwarf+symtab	0905b423643d		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x11c8	304	elsc_display_line	dwarf+symtab	28ca5c5c82d4		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x9fc	256	elsc_partition_set	dwarf+symtab	d766196536de		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xafc	240	elsc_evt_unreg	dwarf+symtab	988f7e769637		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xbec	240	elsc_pwr_off	dwarf+symtab	18a361be4b54		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xcdc	240	elsc_pwr_cycle	dwarf+symtab	e083e4739b2a		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xdcc	276	elsc_led_set	dwarf+symtab	70a3de1c830f		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xee0	248	elsc_partition_get	dwarf+symtab	a96d9e4b48f6		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0xfd8	256	elsc_cons_subch	dwarf+symtab	2e8ca57007b7		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x10d8	240	elsc_cons_node	dwarf+symtab	0905b423643d		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x11c8	304	elsc_display_line	dwarf+symtab	28ca5c5c82d4		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x12f8	196	elsc_display_mesg	dwarf+symtab	fc56b1d8849c		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x13bc	8	elsc_password_set	dwarf+symtab	87506497337c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x13c4	8	elsc_password_get	dwarf+symtab	87506497337c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x13cc	264	sc_portspeed_get	dwarf+symtab	e95dbe8bdebe		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x13cc	264	sc_portspeed_get	dwarf+symtab	e95dbe8bdebe		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x14d4	8	elsc_power_query	dwarf+symtab	a7e7ca11a6b8		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x14dc	8	elsc_rpwr_query	dwarf+symtab	6319e0118090		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x14e4	8	elsc_power_down	dwarf+symtab	87506497337c		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
@@ -85725,13 +85725,13 @@ IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x14ec	264	els
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x15f4	8	elsc_power_cycle	dwarf+symtab	87506497337c		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x15fc	28	elsc_nic_get	dwarf+symtab	ca63ea14f3dd		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1618	8	_elsc_hbt	dwarf+symtab	87506497337c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1620	588	sc_command_interp	dwarf+symtab	e50dbfcab787		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1620	588	sc_command_interp	dwarf+symtab	e50dbfcab787		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x186c	76	sc_power_down	dwarf+symtab	57b2953807d1		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x18b8	136	sc_power_down_all	dwarf+symtab	a9432029750f		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1940	268	sc_set_system_state	dwarf+symtab	548c627bb380		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1940	268	sc_set_system_state	dwarf+symtab	548c627bb380		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1a4c	532	sc_rbt_to_moduleid	dwarf+symtab	1a47c218b6ab		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1c60	112	router_module_get	dwarf+symtab	86676b5a2e80		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1cd0	552	iobrick_rack_bay_type_get	dwarf+symtab	319db4676521		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1cd0	552	iobrick_rack_bay_type_get	dwarf+symtab	319db4676521		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1ef8	124	iobrick_module_get	dwarf+symtab	9f7fa9d5e86d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x1f74	204	iobrick_module_get_nasid	dwarf+symtab	1569d604d6b9		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2040	328	iobrick_real_l1type_get_nasid	dwarf+symtab	5e6bd0f340bf		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
@@ -85739,28 +85739,28 @@ IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2188	216	iob
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2260	168	iobrick_l1type_get_nasid	dwarf+symtab	07f056a93c66		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2308	100	iobrick_convert_l1type_generic	dwarf+symtab	fa6257e2b000		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x236c	188	iobrick_portspeed_get_nasid	dwarf+symtab	374646995818		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2428	504	iobrick_attached_bricks	dwarf+symtab	087fad267334		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2428	504	iobrick_attached_bricks	dwarf+symtab	087fad267334		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2620	240	iobrick_attached_modids_all	dwarf+symtab	b49d2d50231a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2710	32	iobrick_attached_modids	dwarf+symtab	abbf6a3f34ca		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2730	324	iobrick_get_sys_snum	dwarf+symtab	9be508dba44f		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2874	264	iobrick_pci_pwr	dwarf+symtab	53c5507b2167		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2874	264	iobrick_pci_pwr	dwarf+symtab	53c5507b2167		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x297c	28	iobrick_pci_slot_pwr	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2998	48	iobrick_pci_bus_pwr	dwarf+symtab	fab3f666f827		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2998	48	iobrick_pci_bus_pwr	dwarf+symtab	fab3f666f827		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x29c8	40	iobrick_pci_slot_rst	dwarf+symtab	8b702070e929		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x29f0	40	iobrick_pci_bus_rst	dwarf+symtab	5b7762b65585		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2a18	524	iobrick_sc_version	dwarf+symtab	7647cd705392		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x29f0	40	iobrick_pci_bus_rst	dwarf+symtab	5b7762b65585		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2a18	524	iobrick_sc_version	dwarf+symtab	7647cd705392		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2c24	152	iobrick_L1bricktype_to_name	dwarf+symtab	9a6bbc08c79a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2cbc	48	peer_iobrick_rack_bay_get	dwarf+symtab	b5c135cc56ac		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2cec	344	peer_iobrick_type_get	dwarf+symtab	be6e2ff331f5		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2cec	344	peer_iobrick_type_get	dwarf+symtab	be6e2ff331f5		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2e44	68	peer_iobrick_module_get	dwarf+symtab	fe3bb6152aef		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2e88	284	peer_iobrick_portspeed_get	dwarf+symtab	e18a293c8d92		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2e88	284	peer_iobrick_portspeed_get	dwarf+symtab	e18a293c8d92		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x2fa4	272	peer_iobrick_pci_pwr	dwarf+symtab	53d360afa8a8		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x30b4	28	peer_iobrick_pci_slot_pwr	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x30d0	40	peer_iobrick_pci_bus_pwr	dwarf+symtab	fd7031342449		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x30f8	32	peer_iobrick_pci_slot_rst	dwarf+symtab	28801b47b545		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x3118	36	peer_iobrick_pci_bus_rst	dwarf+symtab	38d49c8bffdd		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x313c	276	peer_iobrick_partition_set	dwarf+symtab	dada9231c9df		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x3250	268	peer_iobrick_partition_get	dwarf+symtab	0cc20e585cc3		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x313c	276	peer_iobrick_partition_set	dwarf+symtab	dada9231c9df		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x3250	268	peer_iobrick_partition_get	dwarf+symtab	0cc20e585cc3		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x335c	112	_elscuart_puts	dwarf+symtab	d0b25242e3a7		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x33cc	36	elscuart_probe	dwarf+symtab	23784e861696		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x33f0	36	elscuart_init	dwarf+symtab	23784e861696		in	undocumented		
@@ -85770,8 +85770,8 @@ IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x345c	36	elsc
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x3480	48	elscuart_puts	dwarf+symtab	eed8a30f5024		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x34b0	48	elscuart_putc	dwarf+symtab	eed8a30f5024		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x34e0	36	elscuart_flush	dwarf+symtab	23784e861696		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x3504	328	elsc_ody_expander_set	dwarf+symtab	c132430c749f		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x364c	308	elsc_ody_expander_get	dwarf+symtab	676da01cc117		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x3504	328	elsc_ody_expander_set	dwarf+symtab	c132430c749f		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-object	n64	.text	0x364c	308	elsc_ody_expander_get	dwarf+symtab	676da01cc117		in	named-only	chips/l1/README.md#request-codes-sent-to-the-brick-controller-ip35-l1_commando	Request codes sent to the brick controller (IP35, `l1_command.o`)
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2.o)	kernel-object	n64		0x0		llc2_hexdump	dwarf+symtab			out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2.o)	kernel-object	n64	.text	0xd4	744	llc2open	dwarf+symtab	a63f0b6bd5ab		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2.o)	kernel-object	n64	.text	0x3bc	116	llc2close	dwarf+symtab	728fb54b3e36		out:2	undocumented		
@@ -89917,7 +89917,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	33ceab58b0bf		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/mace/README.md#other-rows	Other rows
+IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfd4	28	pwrite	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xff0	124	syssgi_rdwrb	dwarf+symtab	b5e11e677f74		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x106c	88	readv	dwarf+symtab	9df20f098501		out:3	undocumented		
