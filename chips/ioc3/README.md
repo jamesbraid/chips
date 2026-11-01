@@ -21,7 +21,7 @@ later chip of the same family, is in [../ioc4/README.md](../ioc4/README.md).
 
 - The drivers reach the chip through pointers kept in per-device records, not through accessor routines. The scan seeds
   each record as a base (the record's own fields are not registers; `record_skip_above` in the config drops them) and
-  follows the pointer fields the attach routines store: `ioc3_attach` keeps the window pointer at record +24 and the
+  follows the pointer fields the attach routines store: `ioc3_attach` (returns 0 or -1) keeps the window pointer at record +24 and the
   configuration-space pointer at +16, and the serial, Ethernet and keyboard objects keep their own copies. The census
   reaches **56 register rows from 637 access sites** (the three builds summed). Configuration-space rows appear at
   `0x200000` plus the configuration offset.
@@ -43,10 +43,11 @@ later chip of the same family, is in [../ioc4/README.md](../ioc4/README.md).
   spaces the numbers 7 and 8 name is inferred from what the code stores through each pointer (the standard PCI command
   and latency words through the first).
 - Revision: `if_efattach` (`if_ef.o` `0x2fc`) reads the configuration word at `0x8` and keeps its low byte. No routine
-  compares it with a constant.
+  compares it with a constant. `if_efattach` returns 0, -1 or 12 in all three builds; the 12 is loaded just before a return
+  on the path that follows its `ef_detach` call.
 - The driver keeps a per-slot software mask of enabled subdevices, default `0xff` (`ioc3_subdev_enabled`, `ioc3.o`
   `0x12e4`). Bit 3 is tested by `pckm_attach`, bits 4 and 5 by `ioc3_serial_attach` (ports A and B) and bit 6 by
-  `plpattach` (`ecpplp.o`). `ioc3_attach` sets the mask to `0x91` when the PCI path name contains a string it compares
+  `plpattach` (`ecpplp.o`). `ioc3_attach` (returns 0 or -1) sets the mask to `0x91` when the PCI path name contains a string it compares
   against (the string is not extracted). `ioc3_intb_needed` (`0x13e4`) is true when `mask & 0xfa` is zero. Which board each
   mask belongs to is unknown.
 
@@ -107,20 +108,20 @@ inferred, 4 unknown.** The unknowns are `0x3c`, the parallel-port DMA family, `0
     **unknown**; no routine or string says. Open question.
 - `ioc3_pending_intrs` (`0x24c`) returns register `0x1c` ANDed with the shadow. `ioc3_poll` (`0x28`) calls `ioc3_handle_intr`
   and re-arms itself while flag bit 1 is set.
-- `ioc3_attach` writes the control and GPIO registers, clears the enables with `ioc3_write_ireg(record, 0xffffffff, 1)`,
+- `ioc3_attach` (returns 0 or -1) writes the control and GPIO registers, clears the enables with `ioc3_write_ireg(record, 0xffffffff, 1)`,
   then writes all ones to `0x1c`. That a written 1 clears a status bit is inferred from the acknowledge pattern in
   `ioc3_serial_intr` (read `0x1c`, store the handled bits back).
 
 ### Control register `0x28`, GPIO (`0x34` to `0x54`)
 
-- `ioc3_attach` writes `0x7ae5e` to `0x28` (`lui 7`, `ori 0xae5e`) in all three builds (established).
+- `ioc3_attach` (returns 0 or -1) writes `0x7ae5e` to `0x28` (`lui 7`, `ori 0xae5e`) in all three builds (established).
 - `hardware_init` reads `0x28` in a loop and leaves it when bit 22 (`0x400000`) is set or when bits 21:19 hold a value of 4
   or more; it loops while they hold 0 to 3. Established. Inferred: a requester field and an idle bit, the loop waiting for
   the serial DMA engine to drop off the bus after the port reset described below.
 - `ef_phyunreset` (`if_ef.o` `0xeb0`, read in full) writes 0 to pin 5 (`0x54`), writes `0x20` to `0x34`, waits 10
   microseconds, writes 1 to pin 5 and waits 500 microseconds (established). That this is a PHY reset line is inferred from
   the routine's name.
-- `eiattach` (`ioc3ei.o` `0x4a8`) writes 2 to `0x38`, `0x10000` to `0x34` and 0 to `0x2c`, then connects an interrupt handler
+- `eiattach` (`ioc3ei.o` `0x4a8`, returns 0 or -1) writes 2 to `0x38`, `0x10000` to `0x34` and 0 to `0x2c`, then connects an interrupt handler
   with mask `0x18000000` (established). Inferred: an input on pin 1, edge sensitive, with the output held low.
 
 ### Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
@@ -145,16 +146,16 @@ each) and builds port B's pointers from port A's: the register block moves from 
   stores `0x20000000` (alone or with the record's control word) to the control register and polls bit 30 of it, up to 1,000,000
   tries with `us_delay`. `ioc3_read` also sets bit 27 and polls it clear before it reads the RX producer. Inferred: bit 29
   pauses DMA, bit 30 reports the pause took effect, bit 27 drains the receive packer.
-- **TX and RX**: `ioc3_enable_tx` stores the producer index (mask `0xff8`) to `0xbc`; the consumer is read from `0xc0`.
-  The RX producer is read from `0xc4`; `ioc3_read` stores `consumer | 0x80000000` to `0xc8`. `ioc3_rx_timeout` stores the smaller
+- **TX and RX**: `ioc3_enable_tx` (returns 0 or -1) stores the producer index (mask `0xff8`) to `0xbc`; the consumer is read from `0xc0`.
+  The RX producer is read from `0xc4`; `ioc3_read` stores `consumer | 0x80000000` to `0xc8`. `ioc3_rx_timeout` (returns 0 or 1) stores the smaller
   of the requested count and 4095 to `0xcc`.
-- **Shadow**: `ioc3_query_DCD` and `ioc3_query_CTS` read `0xd0`; `set_DTRRTS` ORs bits into it and writes UART register 4. The
+- **Shadow**: `ioc3_query_DCD` and `ioc3_query_CTS` read `0xd0`; `set_DTRRTS` (returns 0 or -1) ORs bits into it and writes UART register 4. The
   bit positions are inferred from the routine names.
-- **Mode select**: `ioc3_set_proto` (`0x2f00`) writes 0 or 1 to `0x40 + 4 * pin`, the pin number being a byte of a static
+- **Mode select**: `ioc3_set_proto` (`0x2f00`, returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin number being a byte of a static
   per-port table (not read). Inferred: transceiver select.
 - **UART registers**: the code uses the 16550 register index as the byte offset from the UART base, so register 3 (line
   control, DLAB in bit 7) is at `0x2017b`, 0 and 1 (divisor low and high when DLAB is set) at `0x20178` and `0x20179`, 2 at
-  `0x2017a`, 4 (modem control) at `0x2017c` and 5 (line status) at `0x2017d`. `set_baud_ti` (`0x6cc`) also stores a value it
+  `0x2017a`, 4 (modem control) at `0x2017c` and 5 (line status) at `0x2017d`. `set_baud_ti` (`0x6cc`, returns 0 or 1) also stores a value it
   searches from 6 to 63 for the closest baud rate to register 7 (`0x2017f`); inferred: a clock prescaler.
 
 ### Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
@@ -174,7 +175,7 @@ The driver holds the register block base `0xf0` (record +816) and the chip windo
   `(phy << 5) | register | 0x400` to `0x148`, waits for bit 11 clear and returns the low 16 bits of `0x14c`. A write stores the
   data to `0x150`, then `(phy << 5) | register` to `0x148`, and waits for bit 11 clear.
 - **Run time**: `ef_intr` (`0x1e14`) reads `0xf4` and stores the same value back; `ef_fill` (`0x1964`) stores `index << 3` to `0x110`;
-  `ef_transmit` (`0x2868`) stores `index << 7` to `0x134`; `ef_reclaim` (`0x904`) reads `0x130` and shifts it right 7; `ef_getcdc`
+  `ef_transmit` (`0x2868`, returns 0, 7, 127 or 132) stores `index << 7` to `0x134`; `ef_reclaim` (`0x904`) reads `0x130` and shifts it right 7; `ef_getcdc`
   (`0x1de8`) splits `0x120` into its low and high 16 bits.
 - **Buffer RAM** (`ssram_discovery` `0x790`): ORs `0x1200` into `0xf0`, writes the patterns `0x5555` and `0xaaaa` to two words
   of the buffer-RAM window (offset `0x40000`, mapped 128 KB), reads them back and records the result. Established for the
