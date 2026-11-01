@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
-binaries	3092	0	365	0	365	0	0	145	2582	0	11.8	11.8	16.5	11.8							0			
-functions	6301	91992	488	6	353	9	523	1701	3589	0	7.7	16.0	43.0	7.7							0	0	16	
-functions (distinct names)	2481	21770	344	6	341	9	13	630	1494	0	13.9	14.4	39.8	13.9							0			
+binaries	3092	0	386	0	386	1	1	145	2560	0	12.5	12.5	17.2	12.5							0			
+functions	6301	91992	488	6	353	9	523	1703	3587	0	7.7	16.0	43.1	7.7							0	0	16	
+functions (distinct names)	2481	21770	344	6	341	9	13	631	1493	0	13.9	14.4	39.8	13.9							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -574,7 +574,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/os.a(vn_passthru.o)	0	66	0	0	0	0	0	0	0
 functions in IP27/usr/cpu/sysgen/IP27boot/os.a(watchpoints.o)	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	0	15	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP27/usr/cpu/sysgen/IP27boot/partition.o	70	0	0	0	0	0	0	14	56	0	0.0	0.0	20.0	0.0							0	0	0	
+functions in IP27/usr/cpu/sysgen/IP27boot/partition.o	70	0	0	0	0	0	0	15	55	0	0.0	0.0	21.4	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciba.o	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/pcibr.o	259	0	0	0	0	0	22	92	145	0	0.0	8.5	44.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciio.o	108	0	0	0	0	0	0	25	83	0	0.0	0.0	23.1	0.0							0	0	0	
@@ -2761,7 +2761,7 @@ functions in IP35/usr/cpu/sysgen/IP35boot/os.a(vn_passthru.o)	0	66	0	0	0	0	0	0	0
 functions in IP35/usr/cpu/sysgen/IP35boot/os.a(watchpoints.o)	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	0	15	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP35/usr/cpu/sysgen/IP35boot/partition.o	72	0	0	0	0	0	0	16	56	0	0.0	0.0	22.2	0.0							0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/partition.o	72	0	0	0	0	0	0	17	55	0	0.0	0.0	23.6	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pciba.o	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/pcibr.o	265	0	0	0	0	0	22	92	151	0	0.0	8.3	43.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pciio.o	108	0	0	0	0	0	0	25	83	0	0.0	0.0	23.1	0.0							0	0	0	
