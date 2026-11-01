@@ -365,6 +365,52 @@ issued, including delay slots, which run before the branch or call they belong t
   << (halfword at 0xffffffffffffc3a0 + 42)` with the doubleword at `0xffffffffaff10030`. If the result is zero the
   `beq` at `0x48c` returns with `v0` unchanged. Otherwise the bit is stored to `0xffffffffaff10028` at `0x498`, and
   `debug` is called at `0x49c` with the `.rodata` pointer plus 88. The routine returns `debug`'s result.
+- `heart_stray_intr` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x3b4`, 72 bytes, read in full, established): keeps
+  the entry `a0` in `s8`, calls `heart_imr_bits_rmw` at `0x3d0` with `a0` the halfword at `0xffffffffffffc3a0`, `a1`
+  equal to `1` shifted left by the entry `a0` (the `dsllv` in the delay slot), and `a2` 0. It then calls `cmn_err` at
+  `0x3e4` with `a0` 6, `a1` the `.rodata` pointer from `gp-30712` plus 48, and `a2` the low word of the entry `a0`. It
+  returns `cmn_err`'s result.
+- `heart_ithread_setup` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1854`, 108 bytes, read in full, established):
+  takes the 64-byte record at `heart_ivec` plus `a1 << 6` (the pointer at `gp-30720` plus `v1` in `v0`). `s8` is set
+  to the entry `a2` unless bit 0 of the word at record offset 24 is set. In that case `s8` keeps the word loaded from
+  `gp+0`. `sprintf` is called at `0x1890` to format the entry `a1` into the bottom of the frame with the `.rodata`
+  pointer plus 168 as its format. `xthread_setup` is called at `0x18a8` with the buffer, `s8`, record plus 24, and
+  `heart_intrd_start` (the pointer at `gp-30672`) as `a3`. It returns that call's result.
+- `heart_flow_control_enable` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1a8c`, 60 bytes, read in full,
+  established): forms `s8 = 1 << ((entry a0 + 1) & 31)` with `sllv`. It calls `heart_imr_bits_rmw` at `0x1aac` with
+  `a0` the halfword at `0xffffffffffffc3a0`, `a1` the bit, and `a2` the bit. It returns the bit ANDed with the
+  callee's result.
+- `heart_flow_control_disable` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1ac8`, 60 bytes, read in full,
+  established): the same bit, `1 << ((entry a0 + 1) & 31)`, and the same halfword at `0xffffffffffffc3a0` as
+  `heart_flow_control_enable`. The call at `0x1ae8` passes `a2` 0, so the bit is passed as `a1` only. The result is
+  the bit ANDed with `heart_imr_bits_rmw`'s return value.
+- `heart_flow_control_disconnect` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1a24`, 104 bytes, read in full,
+  established): builds the same bit from `(entry a0 + 1) & 31` in `s0`. It calls `heart_imr_bits_rmw` four times, at
+  `0x1a44`, `0x1a54`, `0x1a64` and `0x1a74`, with `a0` 0, 1, 2 and 3 in turn, `a1` the bit and `a2` 0. It returns the
+  fourth call's result.
+- `heart_flow_control_connect` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x19a0`, 132 bytes, read in full,
+  established): calls `heart_intr_preconn` at `0x19c0` with `a0` 0, `a1` equal to `(entry a0 + 1) & 255`, `a2` the
+  entry `a1`, and `a3` the entry `a0`. It then calls `heart_imr_bits_rmw` at `0x19d8`, `0x19ec`, `0x19fc` and `0x1a0c`
+  with `a0` 0, 1, 2 and 3, `a1` the bit `1 << ((entry a0 + 1) & 31)` and `a2` 0. It returns the last call's result.
+- `heart_intr_preconn` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xf64`, 104 bytes, read in full, established):
+  saves the entry `a2` and `a3` in its 48-byte frame and calls `heart_intr_bits_take` at `0xf84` with `1 << a1`. It
+  stores the entry `a2` at offset 0 and the entry `a3` at offset 8 of the `heart_ivec` record for `a1` (`heart_ivec`
+  plus `a1 << 6`), the first in the delay slot of `jal getcpuid` at `0xfa4`. Then it calls `heart_imr_bits_rmw` at
+  `0xfb8` with `a0` the value `getcpuid` returned, `a1` 0, and `a2` the bit saved at `16(sp)`, and returns that
+  result.
+- `heart_piotrans_addr` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xb58`, 92 bytes, read in full, established):
+  calls `heart_widget_num` at `0xb6c` with `a0` unchanged, then `heart_addr_xio_to_kva` at `0xb7c` with `a0` the
+  widget number, `a1` the entry `a2` and `a2` the entry `a3`. If the entry `a4` has bit 3 set (the `andi` 8 at
+  `0xb88`), the result is ORed with `0x3800000000000000` (`7` shifted left by 59). Otherwise the result is returned as
+  the callee gave it.
+- `heart_dmamap_alloc` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xbb4`, 92 bytes, read in full, established): calls
+  `kmem_zalloc` at `0xbd0` with a size of 12 and `a1` set to 1 when bit 1 of the entry `a3` is set, else 0. If the
+  allocation returns zero the routine returns zero. Otherwise it stores the entry `a0` at offset 0 of the block, calls
+  `heart_widget_num` at `0xbf8`, stores the low byte of that result at offset 4 (the `sb` at `0xc00`), stores the
+  entry `a3` word at offset 8, and returns the block.
+- `heart_dmatrans_addr` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xdc0`, 32 bytes, read in full, established):
+  moves the entry `a2` into `a0` and the entry `a3` into `a1`, then calls `heart_addr_phys_to_xio` at `0xdcc` with
+  those two values. It returns the callee's result.
 
 ## Open
 
