@@ -462,6 +462,59 @@ binary confirms them. NIC and the input-buffer flush: no shipped software touche
 tried: the census of three kernel objects and four PROM images, and the PROM's large diagnostic routines (not read in
 full). The PROM writes link control 0x80000 and zeroes both arbitration registers on every link it brings up.
 
+## Routines in the IP27 `xswitch.o` build
+
+Read in full from the IRIX 6.5.30 IP27 `xswitch.o` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o`, relocatable; addresses are offsets
+in `.text`). The object keeps a 152-byte record on a Crosstalk switch vertex, found with `hwgraph_fastinfo_get`. Record layout as
+the routines use it: +0 a doubleword fingerprint that holds the address of the object's `.data` string `xswitch_info`, +8 a word
+with one bit per port that is marked ok, +12 to +75 sixteen words of vertex handles by port number, +76 to +139 sixteen words
+of master assignments by port number, and +144 a doubleword that holds the provider pointer. A port number is valid below 16.
+The object touches no register. The `.rodata` strings are "%v xswitch_info_get bad fingerprint" (+0), "xswitch_info_vhdl_get: null
+xswitch_info" (+40) and "_xswitch_id" (+88).
+
+- `xswitch_info_get` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x0, 84 bytes)
+  takes a switch vertex in `a0`, calls `hwgraph_fastinfo_get` and returns 0 when that is 0. Otherwise it compares the
+  doubleword at +0 of the record with the fingerprint address; on a mismatch it calls `cmn_err` (level 0, the bad-fingerprint
+  string, the vertex) and still returns the record. Established.
+- `xswitch_info_vhdl_set` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x54, 28 bytes)
+  takes a record in `a0`, a port in `a1` and a handle in `a2`. When the port is below 16 (a signed compare) it stores `a2` as a word
+  at +12 + 4 x port, and otherwise stores nothing. It does not test the record for 0. Established.
+- `xswitch_info_vhdl_get` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x70, 96 bytes)
+  takes a record in `a0` and a port in `a1`. A zero record calls `cmn_err` (level 0, the null-record string) and the routine goes on
+  with the zero record. A port of 16 or more returns -1; otherwise it returns the word at +12 + 4 x port. So a zero record with a
+  small port is read from address 12 + 4 x port. Established.
+- `xswitch_info_master_assignment_set` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0xd0, 28 bytes)
+  takes a record, a port and a value in `a0` to `a2` and, when the port is below 16, stores the value as a word at +76 + 4 x port.
+  Established.
+- `xswitch_info_master_assignment_get` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0xec, 32 bytes)
+  takes a record and a port and returns the word at +76 + 4 x port, or -1 when the port is 16 or more. Established.
+- `xswitch_info_set` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x10c, 32 bytes)
+  takes a vertex in `a0` and a record in `a1`. It stores the fingerprint address as the doubleword at +0 of the record (the store
+  is in the delay slot of the call) and returns what `hwgraph_fastinfo_set` returns for the vertex and record. Established.
+- `xswitch_info_new` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x12c, 152 bytes)
+  takes a vertex in `a0` and returns the record `xswitch_info_get` already finds for it. When there is none it allocates 152
+  bytes with `kmem_alloc` (flags 0), stores 0 at +8, sets all 16 vertex-handle words and all 16 master-assignment words to -1
+  with `xswitch_info_vhdl_set` and `xswitch_info_master_assignment_set`, port by port, calls `xswitch_info_set` and returns the
+  new record. The provider doubleword at +144 is not written. Established.
+- `xswitch_provider_register` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x1c4, 40 bytes)
+  takes a vertex in `a0` and a provider pointer in `a1`. It calls `xswitch_info_get` on the vertex and stores `a1` as the
+  doubleword at +144 of the result, without testing the result for 0. Established.
+- `xswitch_info_link_is_ok` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x1ec, 24 bytes)
+  takes a record in `a0` and a port in `a1` and ORs `1 << port` into the word at +8. It does not check the port against 16 and
+  returns nothing. Despite the question in its name it sets the bit. Established.
+- `xswitch_info_link_ok` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x204, 36 bytes)
+  takes a record and a port and returns 0 for a port of 16 or more; otherwise it returns the word at +8 ANDed with `1 << port`, so
+  the result is that bit's value, not 1. Established.
+- `xswitch_reset_link` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x228, 28 bytes)
+  calls `xbow_reset_link` with its own arguments unchanged and returns that result. Established.
+- `xswitch_id_get` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x244, 40 bytes)
+  takes a vertex in `a0`, calls `hwgraph_info_get_LBL` with the label `_xswitch_id` and the address of a stack doubleword, and
+  returns the low word of that doubleword. It does not test the status, so a vertex with no such label returns whatever the stack
+  slot held. Established.
+- `xswitch_id_set` (`IP27/usr/cpu/sysgen/IP27boot/xswitch.o` at 0x26c, 36 bytes)
+  takes a vertex in `a0` and an identifier in `a1`, passes the identifier as the information word of `hwgraph_info_add_LBL` under the
+  label `_xswitch_id` and returns its result. Established.
+
 ## Open
 
 See docs/open-questions.md: the PROMs' large crossbar routines (initialisation, credits, arbitration, diagnostics) that
