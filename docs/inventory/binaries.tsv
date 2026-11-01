@@ -938,14 +938,14 @@ IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_singlewrc.o)	kernel-IP30	kernel-o
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_strict.o)	kernel-IP30	kernel-object	object	n64	13156	ebef7b0319aa6e9d		5	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-IP30	kernel-object	object	n64	75380	5cf610c3b964f3e9		54	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-IP30	kernel-object	object	n64	13076	44fd7c345afcbaae		9	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_vfsops.o)	kernel-IP30	kernel-object	object	n64	32036	cb18a934b91ad236		19	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_module.o)	kernel-IP30	kernel-object	object	n64	10916	0e039d567c538e45		3	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_vnops.o)	kernel-IP30	kernel-object	object	n64	79748	84822966cab4df36		45	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_noopc.o)	kernel-IP30	kernel-object	object	n64	10916	5b381b1d9f37b456		5	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_backops.o)	kernel-IP30	kernel-object	object	n64	118916	ee57dc1a5edff705		24	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_frontops.o)	kernel-IP30	kernel-object	object	n64	13700	bc89cc8f356a1ffd		13	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_icrash.o)	kernel-IP30	kernel-object	object	n64	24628	ae187c51355d1085		1	none	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefsidbg.o	kernel-IP30	kernel-object	object	n64	44176	ce81f009e8ea8a74		30	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_vfsops.o)	kernel-IP30	kernel-object	object	n64	32036	cb18a934b91ad236		19	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_module.o)	kernel-IP30	kernel-object	object	n64	10916	0e039d567c538e45		3	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_vnops.o)	kernel-IP30	kernel-object	object	n64	79748	84822966cab4df36		45	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_noopc.o)	kernel-IP30	kernel-object	object	n64	10916	5b381b1d9f37b456		5	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_backops.o)	kernel-IP30	kernel-object	object	n64	118916	ee57dc1a5edff705		24	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_frontops.o)	kernel-IP30	kernel-object	object	n64	13700	bc89cc8f356a1ffd		13	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_icrash.o)	kernel-IP30	kernel-object	object	n64	24628	ae187c51355d1085		1	none	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefsidbg.o	kernel-IP30	kernel-object	object	n64	44176	ce81f009e8ea8a74		30	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/calcomp.o	kernel-IP30	kernel-object	object	n64	26232	7d3a3bb03f3cece1		8	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/capability.a(capability.o)	kernel-IP30	kernel-object	object	n64	14340	451f6123f511fb98		11	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/capability.a(cap_able.o)	kernel-IP30	kernel-object	object	n64	6148	8f4c56803a6e9b36		3	symtab	0	0	undocumented		
@@ -954,8 +954,8 @@ IP30/usr/cpu/sysgen/IP30boot/clone.o	kernel-IP30	kernel-object	object	n64	7776	c
 IP30/usr/cpu/sysgen/IP30boot/cn.o	kernel-IP30	kernel-object	object	n64	25128	f2e6a4daba733d51		29	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/compression.a(compression.o)	kernel-IP30	kernel-object	object	n64	6964	abacd480e8c0ef21		5	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/connld.o	kernel-IP30	kernel-object	object	n64	12864	f75b199926da3605		4	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_procfs.o)	kernel-IP30	kernel-object	object	n64	53700	376fee889bf47e0b		50	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_sys.o)	kernel-IP30	kernel-object	object	n64	21924	283308d56e0ec49b		22	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_procfs.o)	kernel-IP30	kernel-object	object	n64	53700	376fee889bf47e0b		50	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_sys.o)	kernel-IP30	kernel-object	object	n64	21924	283308d56e0ec49b		22	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-IP30	kernel-object	object	n64	10932	f1e0c0bbaad87aa0		9	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cserialio.o	kernel-IP30	kernel-object	object	n64	21752	ed14f73400e10b1b		22	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/devpoll.o	kernel-IP30	kernel-object	object	n64	31912	a9ce981b3bfa2984		27	symtab	0	0	undocumented		
