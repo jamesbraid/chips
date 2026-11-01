@@ -744,6 +744,55 @@ The members below are the IP35 device drivers that rule 4 removes. Labels are in
   `kdsp_fetch_external`. The `emu_` and `kdsp_` names point to an E-mu family chip; the object does not name it. It drives
   a PCI card, not a system ASIC, so rule 4 removes it.
 
+## IP30 build: network, STREAMS and cluster objects (scope rule 2)
+
+The IP30 kernel builds the same network members as the IP27 build above into its own `bsd.a` archive. Each member
+listed here is byte-identical to the `socket.a` member of the same name, and the row is written under `bsd.a`, the path
+the table uses. Routine names and sizes come from the IP30 symbol table. Labels are inferred, from the symbol table and
+the undefined imports. No routine body was read in full.
+
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(if.o)` (inferred): the generic network interface layer, 47 routines in a 49332-byte
+  member. `ifioctl` (2672 bytes) is the largest, and `if_create_linkaddr`, `if_detach` and `ifunit` keep the interface
+  list and the link-level addresses. It imports the hardware-graph calls `hwgraph_path_add`, `hwgraph_edge_add`,
+  `hwgraph_edge_remove` and `hwgraph_traverse`, and the route calls `rtrequest` and `rt_ifmsg`. No chip driver is
+  imported. Scope rule 2 removes the 47 routines.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_loop.o)` (inferred): the software loopback interface, three routines in an
+  8708-byte member. `looutput` (756 bytes) passes a packet back into the receive path through `network_input`, and
+  `loioctl` (136 bytes) is the control entry. The member imports `if_attach` and `rawif_attach` to register the interface,
+  and `m_datacopy` and `snoop_input` to copy and tap packets. It drives no hardware.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(netisr.o)` (inferred): the network software interrupt threads, 15 routines in an
+  18164-byte member. `network_input` (340 bytes) queues an inbound packet, `netisr_init` (336 bytes) starts the threads,
+  and `netproc` (268 bytes) and `sockd` (220 bytes) are the thread bodies. It creates them with `sthread_create` and
+  `xthread_setup`, and its imports `pffasttimo`, `pfslowtimo` and `if_slowtimo` are the protocol timer entries it runs.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(raw.o)` (inferred): the raw link-level socket, 21 routines in a 24900-byte member.
+  `rawioctl` (2164 bytes) is the largest, `snoop_input2` (1208 bytes) feeds the snoop tap, and `rawopen` (552 bytes) and
+  `rawclose` (448 bytes) open and close the socket. It imports `raw_input`, `log_snoop_or_drain` and `ifa_ifwithlink_ifp`,
+  and no chip driver.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(raw_cb.o)` (inferred): the control-block list for raw sockets, eight routines in an
+  11012-byte member. `raw_pcbpurgeif` (292 bytes) drops blocks that belong to a removed interface, `raw_bind` (260 bytes)
+  binds one, `rawcb_free` (244 bytes) releases one, and `rawcb_rele` (80 bytes) drops a reference. It takes the list lock
+  `rawcblist_lock` through `mrupdatef` and `mrunlock`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(raw_usrreq.o)` (inferred): the request dispatch for raw sockets, five routines in a
+  13156-byte member. `raw_usrreq` (916 bytes) switches on the request type, `raw_protocol_input` (792 bytes) takes inbound
+  packets and `raw_input` (224 bytes) queues them, and `raw_ctlinput` (8 bytes) is the control-message hook. It imports the
+  socket wake-ups `sowakeup` and `soisconnected` and the raw attach and bind routines `raw_attach` and `raw_bind`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)` (inferred): the radix tree that holds routes and netmasks, 19 routines in
+  a 23796-byte member. `rn_delete` (1316 bytes) and `rn_addroute` (1068 bytes) insert and remove leaves, `rn_match` (808
+  bytes) does the longest-prefix lookup, and `rn_addmask` (916 bytes) keeps the netmask tree. It allocates with `kmem_alloc`
+  and `kmem_free` and calls `m_rtinc` and `m_rtdec`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(route.o)` (inferred): the routing table code, 22 routines in a 26276-byte member.
+  `rtrequest1` (1052 bytes) adds, changes and deletes routes, `rtioctl` (1028 bytes) is the control entry, `rtalloc1`
+  (776 bytes) finds one, and `rtinit` (796 bytes) and `rtredirect` (680 bytes) handle interface and redirect updates. It
+  reports changes with `rt_missmsg` and `rt_newaddrmsg`, and copies control data with `bsd_copyin` and `bsd_copyout`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(rtsock.o)` (inferred): the routing socket, which sends route changes to user
+  programs. Sixteen routines in a 27956-byte member: `route_output` (2368 bytes) takes route requests, `sysctl_iflist`
+  (1160 bytes) reports the interface list, and `rt_msg2` (664 bytes) and `rt_msg1` (496 bytes) build the replies. It
+  imports `raw_attach`, `raw_input` and `raw_usrreq` from the raw socket layer and reads the route tables `rt_tables`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(rsvp.o)` (inferred): RSVP resource reservation, 39 routines in a 33972-byte member.
+  `ps_init` (848 bytes) and `ps_output` (720 bytes) run the packet scheduler, `ps_tick_maint` (616 bytes) maintains its
+  timers, and `rsvp_addflow` (488 bytes) adds a reserved flow. It calls the packet queues `psqo_init`, `psqo_enq_pkt` and
+  `psqo_get_next_pkt`, which the member `bsd.a(rsvp_qo.o)` defines.
+
 ## Scope questions
 
 Each object below is listed under the rule shown, but its imports or routine names match a class the scope text keeps.
