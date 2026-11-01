@@ -200,3 +200,33 @@ the processor running the code.
   0xffffffffb8000000, executes `sync` and tests Cause bit 14 and bit 16 of the doubleword at 0xffffffffaff10040. Failure
   branches to `earlybaerror` at `0xa80000002001c964`, which repeats the clear sequence, restores Status, stores 0 to
   `nofault` and leaves 1 in v0; success stores 0 to `nofault`, restores Status and returns 0. Established.
+- `wbadmemaddr` (`IP30/unix` `0xa80000002001c880`, 136 bytes, frame 16 bytes)
+  tests whether memory at `a0` accepts a word write and a read, a lighter probe than the others. It saves Status in t0,
+  writes 0xa0 to it, stores the word 9 into the global `nofault` (0xa8000000204af10c), stores a zero word to `a0` and
+  loads the word back into v0. It does none of the clearing the other probes do, makes no width choice, and tests only
+  bit 16 of the doubleword at 0xffffffffaff10040; Cause bit 14 is not looked at. A set bit branches to `baerror`
+  (`0xa80000002001c908`), which leaves 1 in v0 and clears the thread's no-fault mark, not `nofault`, so the 9 stays in the
+  global on that path. Otherwise it stores a zero word to `nofault`, restores Status and returns 0 from the delay slot.
+  Established.
+- `_ecc_end` (`IP30/unix` `0xa80000002001dd98`, 292 bytes, no frame) is a symbol that follows the ECC exception vector
+  and, by its size, covers four routines that have no symbols of their own. The first, at the symbol address, takes the
+  bank number in `a0` and returns the word at 0xffffffffaff00020 plus 4 times the bank, which is a HEART MEMCFG word. The
+  second (`sub_a80000002001ddb0`) calls the first and returns its low nine bits shifted left by 25, the bank's base
+  address in 32 MB units. The third (`sub_a80000002001ddd4`) calls the first and returns 0 when bit 31 of the word
+  is clear and otherwise bits 21:16 plus 1 shifted left by 25 (a 32-bit `sll`), the bank size. The fourth
+  (`sub_a80000002001de18`) maps the address in `a0` to a bank number: an address of 0x20000000 or more has 0x20000000
+  taken off (a 64-bit add of 0xffffffffe0000000), then banks 0 to 3 are tried in turn, skipping banks of size 0, and the first bank
+  whose base is at or below the address and whose base plus size (the size taken as an unsigned 32-bit value) is above
+  it is returned; -1 comes back when none matches. Nothing is stored except stack saves. Established.
+- `heart_imr_bits_rmw` (`IP30/unix` `0xa80000002003e868`, 288 bytes, frame 64 bytes)
+  changes bits of one HEART interrupt mask register and returns the value it held before. `a0` (masked with 3) picks the
+  register, at 0xffffffffaff10000 plus 8 times the index, `a1` is the mask of bits to clear and `a2` the bits to set;
+  the new value is `a2` ORed with the old value ANDed with the complement of `a1`. Updates are serialised by a
+  per-register owner word in a table of doublewords at 0xa80000002043e018 (the pool word at 0xa80000002043cfd8 plus 4160),
+  8 bytes per register, holding -1 when free. The routine reads the processor number (halfword at -15456). When the owner
+  word already equals that number it skips locking and does the read-modify-write directly, leaving the word as
+  it was. Otherwise it calls `spl7`, then `compare_and_swap_int64` (word, -1, processor); when that fails it calls
+  `splx` with the saved level and repeats `spl7` and the swap until it succeeds. The store of the new value is in the
+  delay slot of the `flushbus` call that follows the read. On the locking path the owner word is then set back to -1
+  with a doubleword store and `splx` restores the level (the old value is saved at 40(sp) in that call's delay slot),
+  which is also the value returned; the already-held path returns it too. Established.
