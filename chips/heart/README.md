@@ -17,8 +17,10 @@ Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, 
   (`0x9000...` ORed with the table address, in the register test at `0xa800000020892300` of `ide.IP30`).
 - HEART also answers as XIO widget 8. Its widget block is at physical `0x18000000` (kernel pointers
   `0x9000000018000004`, `0x9000000018000014` and so on in the small-data area; `0xb8000000` in the probe routines
-  `badaddr` and `wbadaddr`). The kernel reaches widget n at `0x10000000 + n * 0x1000000` (`heart_startup` probes
-  widget 15 down to 0 that way, reading each identification word at offset 4).
+  `badaddr` and `wbadaddr`). The kernel reaches widget n at `0x10000000 + n * 0x1000000` (`heart_startup`,
+  `0xa80000002003ee44`, read in full, loops from widget 15 down to 0 and reads the identification word at offset 4
+  of each widget for which `xswitch_info_link_ok` returns nonzero; it first registers widget 0 from the word at
+  `0x9000000010000004`, with HEART's own widget number, STATUS bits 3:0, as the master).
 - Register slots are 8 bytes. A widget-block register holds its 32-bit value in the low word, so the code reads it
   with a word load at slot + 4 (kernel) or at the slot (PROM dump): both widths are recorded in the census.
 - In the census the widget block is reported 0x100000 above its widget offset (`0x100004` is widget offset 4), so
@@ -68,7 +70,7 @@ CLR_ISR, ISR, IMSR, COUNT, TRIGGER, PRID and SYNC are printed by no held file an
 | `0x10008` | IMR1 | 8 | rw | established | As IMR0, processor 1. |
 | `0x10010` | IMR2 | 8 | rw | established | As IMR0, processor 2. |
 | `0x10018` | IMR3 | 8 | rw | established | As IMR0, processor 3. |
-| `0x10020` | SET_ISR | 8 | w | inferred | The kernel writes 1 << n here to raise vector n on a processor (`heart_set_cpu_intr`, the inter-processor send path). Name from the public driver. |
+| `0x10020` | SET_ISR | 8 | w | established | Doubleword stores of one bit, from three routines read in full. `sendintr` (`0xa800000020013a2c`) stores `1 << (n + 46)`, a 64-bit shift, to interrupt processor n. `debug_stop_all_cpus` (`0xa800000020013a48`) stores `1 << (42 + i)` for every processor i except the caller. `heart_set_cpu_intr` (`0xa800000020013f10`) stores `1 << a0` with a 32-bit variable shift (`sllv`), so it can reach vectors 0 to 31 only; its one direct call (`0xa800000020049d98`, inside `pcibr_force_interrupt`) passes the sign-extended low halfword of what `xtalk_intr_vector_get` returned. Name from the public driver. |
 | `0x10028` | CLR_ISR | 8 | w | established | `heart_intr` writes 1 << vector to acknowledge a vector, before the handler for vectors 3 and above, after it for vectors 0 to 2. |
 | `0x10030` | ISR | 8 | r | inferred | Interrupt status. Read in the error-lock wait loop of `dobuserr_common` to see whether this processor's bit 46+n is pending. Name from the public driver. |
 | `0x10038` | IMSR | 8 | r | inferred | Read by `heart_intr` and ANDed with the argument it was given, then dispatched by highest set bit: used as the pending-and-enabled word (inferred). Name from the public driver. |
@@ -77,13 +79,13 @@ CLR_ISR, ISR, IMSR, COUNT, TRIGGER, PRID and SYNC are printed by no held file an
 | `0x30000` | COMPARE | 8 | - | unknown | Listed by the diagnostic as read-write tested with mask 0xffffff; no kernel, PROM or monitor code touches it. |
 | `0x40000` | TRIGGER | 8 | w | unknown | Written twice by the PROM (two routines); the value and purpose are not read. |
 | `0x50000` | PRID | 8 | r | established | Number of the processor doing the read: `getcpuid` and `VEC_dbe` use it as an index 0 to 3 into the per-processor interrupt mask. |
-| `0x60000` | SYNC | 8 | r | unknown | Read once, in `dobuserr_common`; purpose not read. |
+| `0x60000` | SYNC | 8 | r | inferred | Read six times in `dobuserr_common` (`0xa800000020025090`, `0xa8000000200250a4`, `0xa8000000200250cc`, `0xa8000000200250f0`, `0xa800000020025114`, `0xa800000020025128`), all in the correctable-memory-error path between the steps of the scrub described under the error handler. The loaded value is not used by the instructions that follow at any of the six sites, so the reads look like ordering flushes. Inferred; the role is not settled. |
 | `0x100000` | WID_ID | 8, 4 | r | established | Widget identification word, in the low word at widget offset 4: bits 31:28 revision (`heart_rev`), bits 27:12 part number and bits 11:1 manufacturer number (`heart_startup`, same layout for every widget it probes). |
 | `0x100008` | WID_STAT | 8 | - | unknown | Listed by the diagnostic (mask 0xffff001f); no held code touches it. |
 | `0x100010` | WID_ERR_UPPER | 4 | r | inferred | Failing-request address, upper part: the kernel reads the low word (offset 0x14), the PROM the word at 0x10; low 16 bits joined with WID_ERR_LOWER form a 48-bit address in `dobuserr_common`. |
 | `0x100018` | WID_ERR_LOWER | 4 | r | inferred | Failing-request address, lower 32 bits (kernel reads offset 0x1c). |
 | `0x100020` | WID_CONTROL | 8 | - | unknown | Listed by the diagnostic (mask 0xffffffff); no held code touches it. |
-| `0x100028` | WID_REQ_TIMEOUT | 4 | rw | inferred | Request timeout: `heart_startup` stores 40000, or 0x80 when the kernel debugger is configured; `giobr_attach` stores 0x80. Unit unknown. |
+| `0x100028` | WID_REQ_TIMEOUT | 4 | rw | inferred | Request timeout: `heart_startup` stores the word 40000 (`0x9c40`) when the halfword `kdebug` is zero and 128 (`0x80`) otherwise, before it registers any widget; `giobr_attach` stores 0x80. Unit unknown. |
 | `0x100040` | WID_ERR_CMDWORD | 8, 4 | rw | inferred | Command word of the failing request. Cleared before every probed access; the kernel reads it as a word at offset 0x44 and takes a read/write flag from bit 7, a command code from bits 7:0 and a source widget from bits 27:24. |
 | `0x100048` | WID_LLP | 8 | - | unknown | Listed by the diagnostic (mask 0x3ffffff); no held code touches it. |
 | `0x100050` | WID_TARG_FLUSH | 8 | - | unknown | Listed by the diagnostic (mask 0xffffffff); no held code touches it. |
@@ -162,26 +164,52 @@ arms IMR[n] with bits 42+n (DBG), 46+n (IPI), 59+n (BERR) and 63 (HEART_EXC). Pr
   then stores zero doublewords over a 128-byte-aligned block (a memory initialisation: role of bit 21 inferred).
 - **Probe an address that may not answer** (`badaddr`, `badaddr_val`, `wbadaddr`, `wbadaddr_val`, and the early
   forms, all in `unix`, `wbadaddr` and `badaddr` read in full). With interrupts off (coprocessor 0 Status 0xa0):
-  read WID_ERR_TYPE, store zero to WID_ERR_CMDWORD, read WID_ID as a flush, store the saved WID_ERR_TYPE value
-  back, read CAUSE and store the same value back, read PRID as a flush; mark the thread no-fault; do the access
+  read WID_ERR_TYPE (the doubleword at widget `+0x60`), store a doubleword zero at `+0x40` (the reset routine
+  stores only the word at `+0x44`), read the doubleword at `+0x0` into `$zero` as a flush, store the saved
+  WID_ERR_TYPE value back, read CAUSE and store the same value back, read PRID as a flush; mark the thread no-fault; do the access
   (a load of 1, 2, 4 or 8 bytes for `badaddr`, a store of zero of that width for `wbadaddr`); flush with PRID and
   WID_ID reads and a sync (twice for `wbadaddr`, which then reads the word at uncached physical address 0). Then the
   failure test: coprocessor 0 Cause bit 14 (the IP6 line) pending, or CAUSE bit 16 (WIDGET_ERR) set. Either sends
   the routine to `baerror`, which repeats the clear sequence and reports failure. The probe never tests CAUSE
   bits 40, 41 or 42.
-- **Interrupt dispatch** (`heart_intr`). Reads IMSR, ANDs it with the pending mask passed in, takes the highest
-  set bit. Vectors below 59 call the handler registered in `heart_ivec` (64 bytes per vector); for vector 3 and
-  above CLR_ISR is written with that bit first, for vectors 0 to 2 after the handler. Vectors 59 and above go to
-  `buserror_intr` (the bus-error and HEART_EXC path).
-- **Reset of the controller state** (`heart_mlreset`, read in full). Stores zero to WID_ERR_MASK, stores
-  WID_ERR_TYPE back unchanged, stores zero to WID_ERR_CMDWORD, stores `0x3ff62c07` to WID_ERR_MASK, zeroes IMR0 to
-  IMR3, then arms the calling processor's mask as above.
+- **Interrupt dispatch** (`heart_intr`, `0xa80000002003fe98`, read in full). Reads IMSR (`+0x10038`), ANDs it with
+  the mask passed as the second argument and returns when the result is zero. Otherwise it hands the result to
+  `ffintr64` (not read; the name suggests the number of the highest set bit) and dispatches that vector.
+  Vectors below 59 use the 64-byte `heart_ivec` entry: the handler pointer at `+0` and its argument at `+8`,
+  called with `jalr` at `0xa80000002003ff98`. When the word at entry `+24` has bit `0x1000` set, the routine
+  instead takes the semaphore at entry `+32`: `valusema`, then `vsema` when the value is below 28673, `cvsema`
+  otherwise, and it does not call the handler itself. CLR_ISR (`+0x10028`) is written with the vector's bit
+  before the handler or semaphore step for vector 3 and above (the test at `0xa80000002003ff34`), and after it
+  for vectors 0 to 2 (`0xa80000002003ff00`). Vectors 59 and above go to `buserror_intr` with the routine's first
+  argument. After each vector it re-reads IMSR and loops until the masked value is zero. On exit it adds a count to a word at
+  `+208` of the record whose pointer is at `0xffffffffffffc488`, with `ll`/`sc`: the number of vectors served (the
+  loop's delay slot counts one extra pass and `addiu -1` at `0xa80000002003ffb0` removes it), or -1 when nothing
+  was pending on entry.
+- **Reset of the controller state** (`heart_mlreset`, `0xa80000002003ed30`, 164 bytes, read in full). It first calls
+  `getcpuid`. The stores in the order issued: a doubleword zero to WID_ERR_MASK (widget `+0x68`); WID_ERR_TYPE
+  (`+0x60`) read and stored back; a word zero (`sw`) at `+0x44`, the command-word slot; CAUSE (`+0x10040`) read
+  and stored back; `0x3ff62c07` to WID_ERR_MASK; doubleword zeros to IMR0 to IMR3; and last the calling
+  processor's mask, `(1 << (n+46)) | (1 << (n+59)) | (1 << (n+42)) | (1 << 63)`. The CAUSE write-back was
+  missing from the earlier description. `heart_mp_intr_init` (`0xa80000002003edd4`, read in full) stores that
+  same mask for the processor in its argument and touches nothing else.
+- **Interrupt-mask read-modify-write** (`heart_imr_bits_rmw`, `0xa80000002003e868`, read to its final return and the
+  retry path). Arguments: the processor (`a0 & 3`), a clear mask (`a1`) and a set mask (`a2`). It computes
+  `(old & ~a1) | a2` for IMR[n] at `+0x10000 + 8n`, issues the store in the delay slot of the call to `flushbus`,
+  and returns the old value. A per-processor lock doubleword at `heart_ivec + 4160 + 8n` (free is -1) is skipped
+  when it already holds the caller's processor id (the halfword at `0xffffffffffffc3a0`). Otherwise the routine
+  raises the priority level with `spl7`, swaps the lock from -1 to that id with `compare_and_swap_int64`, writes
+  the mask, stores -1 to release the lock and calls `splx`. A failed swap restores the level and retries.
 - **Data bus error** (`VEC_dbe`, read in full). Reads PRID, removes bits 59+n and 63 from IMR[n] before it
   continues to the generic trap path, so the per-processor error vector and HEART_EXC do not fire again while the
   exception is handled.
-- **Vector allocation for widget errors** (`do_heart_intr_alloc`). When the request carries the widget-error flag
-  the vector is `51 + ((widget + 7) & 7)`: widgets 9 to 15 get 51 to 57, widget 0 gets 58. Widget 8 (HEART itself)
-  also computes 58.
+- **Vector allocation for widget errors** (`do_heart_intr_alloc`, `0xa80000002003f890`, read in full). When bit 0 of
+  the descriptor's flags is set, the vector is `51 + ((widget + 7) & 7)`, with the widget number from
+  `xwidget_info_id_get` (`0xa80000002003f9a8` to `0xa80000002003f9b4`): widgets 9 to 15 get 51 to 57 and widget 0
+  gets 58. Widget 8 (HEART itself) also computes 58. Only the low three bits of the sum count, so widgets 1 to 7
+  compute 51 to 57 as well and would share a vector with widgets 9 to 15. The routine takes that vector out of the
+  free-vector word `heart_ivec_free` with an `lld`/`scd` AND-NOT (the unlabelled routine called at
+  `0xa80000002003f9bc`, at `0xa80000002003e9a8`, with `1 << vector`) and stores the vector at byte `+5` of the 48-byte record it returns. Without the flag it takes the
+  software level from the device descriptor and does not use this formula.
 
 ## Error handling in the kernel (`dobuserr_common`, read for the cause paths below)
 
