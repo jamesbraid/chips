@@ -119,7 +119,7 @@ CRIME 1.5	7-15	183	RE	0x3030	MTE.dst0	1	0	32	W	0	undocumented
 CRIME 1.5	7-15	183	RE	0x3038	MTE.dst1	1	0	32	W	0	undocumented		
 CRIME 1.5	7-15	184	RE	0x3040	MTE.srcYStep	1	0	32	R/W	0	undocumented		
 CRIME 1.5	7-15	184	RE	0x3048	MTE.dstYStep	1	0	32	R/W	0	undocumented		
-CRIME 1.5	7-15	184	RE	0x3070	MTE.null	1	0	32	W	0	undocumented		
+CRIME 1.5	7-15	184	RE	0x3070	MTE.null	1	0	32	W	0	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 CRIME 1.5	7-15	184	RE	0x3078	MTE.ﬂush	1	0	32	W	0	undocumented		
 GBE rev 1.1	3.2	36	GBE	0x0	CTRLSTAT	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
 GBE rev 1.1	3.2	36	GBE	0x4	DOTCLK	1	0	32	R/W	1	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
