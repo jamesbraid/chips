@@ -1,14 +1,14 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3092	0	452	0	452	3	4	144	2492	0	14.6	14.7	19.4	14.6							0			
-functions	6301	91992	568	17	433	9	673	1638	3422	0	9.0	19.7	45.7	9.0							0	0	16	
-functions (distinct names)	2481	21770	410	17	407	9	13	621	1437	0	16.5	17.0	42.1	16.5							0			
+functions	6301	91992	582	31	447	9	659	1638	3422	0	9.2	19.7	45.7	9.2							0	0	16	
+functions (distinct names)	2481	21770	410	31	407	9	13	621	1437	0	16.5	17.0	42.1	16.5							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ucode	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0						0	0			
 spec-registers	174	0	159	10	158	0	0	4	11	0	91.4	91.4	93.7	91.4							0			
 input root manifest	928																							500055fe4acccbc9256d61eb7716475b355bdd721167f32bf1c18b9c15f2372d
-functions in IP27/unix	995	12489	189	11	189	0	97	289	420	0	19.0	28.7	57.8	19.0							0	0	0	
+functions in IP27/unix	995	12489	203	25	203	0	83	289	420	0	20.4	28.7	57.8	20.4							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/acl_hwg.o	0	3	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/acl_nfs3.o	0	2	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
