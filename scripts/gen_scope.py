@@ -27,7 +27,7 @@ CFG = os.path.join(REPO, 'scripts', 'inventory-config.json')
 
 KEEP_OBJECTS = '''pcibr.o pciio.o pciio_ppb.o pciiox.o pic.o xbridge.o xbow.o xswitch.o xtalk.o xconn.o xbmon.o hubspc.o
 ioc3.o ioc3ei.o ioc3_pckm.o ioc4.o ioc4_ei.o ioc4_pckm.o if_ef.o l1.o l1_command.o nic.o eeprom.o partition.o
-io6.o heart.o mace.o a3_dd.o rad_dd.o ecplp.o if_ecf.o if_me.o mhpckm.o mvp.o pcimh.o
+io6.o sn0drv.o heart.o mace.o a3_dd.o rad_dd.o ecplp.o if_ecf.o if_me.o mhpckm.o mvp.o pcimh.o
 sduart.a(sio_ioc3.o) sduart.a(sio_ioc4.o) sduart.a(sio_l1.o)'''.split()
 
 NAME_PREFIX = (r'(?:early_|hub|huberror|md_|mdir_|ni_|router_|xbow|xbwidget|xswitch|xtalk|xwidget|xconn|pcibr|pciio|bridge|'
@@ -36,23 +36,24 @@ NAME_PREFIX = (r'(?:early_|hub|huberror|md_|mdir_|ni_|router_|xbow|xbwidget|xswi
 
 # (reason, regex over the object's base name without the .o; archives use the archive name for members)
 CLASSES = [
-    ('file-system, volume-manager and disk-quota objects: block and file code with no chip register access',
+    ('file-system, volume-manager and disk-quota objects: block and file code, excluded by role from object names and imports, not by a scan',
      r'^(efs|xfs|xlv|xvm|nfs|snfs|nfs3|cachefs|lofs|udf|umfs|dmi|dms|namefs|pipefs|fifofs|specfs|hwgfs|proc|autofs|'
      r'acl|ds|quotas|fsctl|sgi|dksc|xfsrt|xfsdmapi|xfsquotas|cpr|fd|pgrpidbg|procidbg|spec_idbg)'),
     ('network protocol, RPC and STREAMS objects, and network-interface drivers other than the IOC3 and IOC4 '
-     'Ethernet objects: no chip register access',
+     'Ethernet objects, excluded by role from object names and imports, not by a scan',
      r'^(bsd|ipv6|stp|llc2|fddi|snif|oncrpc|oncrpcidbg|rpcsec|sockmod|tpi|ti|uds|if_|ip_|ppp|stream|sad|log|clone|'
      r'connld|pipemod|ptem|stty|timod|tirdwr|ticlts|ticots|ticotsord|ipfilter|irouter|tpisocket|tpitcp|tpiudp|'
      r'tpirawip|tpiicmp|imon|sat|cl|cn|ptc|msg|sem|shmiq|stridbg|spi|tsv|lockd|imp)'),
-    ('process, memory, scheduler, synchronisation, timer and debugger core: machine-independent kernel code with '
-     'no chip register access',
+    ('process, memory, scheduler, synchronisation, timer and debugger core: machine-independent kernel code, '
+     'excluded by role from object names and imports, not by a scan',
      r'^(os|disp|disp_idbg|ksync|kmem|numa|numa_idbg|noncell|hardlocks|nolocks|dhardlocks|jlimits|xtimer|capability|'
      r'suser|rand|crypto|compression|eag|kitchen_sync|klog|klidbg|mem|mem_alloc|sharena|usema|usync|psema|oplock|'
      r'prf|prio_alloc|ipc|zero|ude|asidbg|sessionidbg|cdl|devpoll|qcntl|uncintf|kdsp|io|graph|graphidbg|failover|'
      r'mloadidbg|idbg|clshm|xpmem|xpc|uli|smfd|ts|tsd|ls|lsidbg|idev|dial|dialbox|dmiidbg|grio|grio2|grio2idbg|'
-     r'grioidbg|fru|jtagio|vmeuli|sn0drv|elsc|i2c|sio_i2c)'),
+     r'grioidbg|fru|jtagio|vmeuli|elsc|i2c|sio_i2c)'),
     ('device drivers (SCSI, Fibre Channel, USB, VGA, audio, tape, serial lines, input devices, VME, graphics, '
-     'IEEE 1394) and the standalone loader that do not drive a system ASIC',
+     'IEEE 1394) and the standalone loader that do not drive a system ASIC, excluded by role from object names and '
+     'imports, not by a scan',
      r'^(scsi|scsiha|adp78|adphim|adpidbg|fcadp|fcidbg|qlfc|qlfc_idbg|ql|qlidbg|usb|usb_comp|usb_pckm|usb_tablet|'
      r'usbaudio_dd|usbidbg|vga|sbp2|sbp2idbg|sndrv|nsmidi|tpsc|tpu|tpuidbg|tpusim|tpscutil|tsutil|universe|vme|'
      r'vmeio|vmidbg|vme_idbg|xiovme|usrvme|usrbus|usrdma|usrpci|sball|fire|fireidbg|rad1pci|emu_dd|mad_dd|fglrx|'

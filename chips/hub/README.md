@@ -722,10 +722,10 @@ use the local alias of the table above (`0x9200000001000000 + offset`).
   register. Inferred: it ages out four saved memory-error records, because it applies the same age test as
   `clear_hub_pi_error` to words that `check_md_errors` (the memory-error checker) sits beside.
 - `clear_hub_pi_error` (`IP27/unix` at 0xc00000000002f634,
-  88 bytes) takes a record in a0 and, for slice 0 and then slice 1, tests the word at +40 + 8 * slice. When it is
-  nonzero and the counter at 0x9200000001030100 is more than `0x55d4a80` (90,000,000 ticks) past the timestamp at +24 +
-  8 * slice, it stores 0 to +56 + 8 * slice and then to +40 + 8 * slice. No register is written. Inferred: the two
-  words are a processor-interface error summary and detail saved earlier.
+  88 bytes) takes a record in a0 and, for slice 0 and then slice 1, tests the doubleword at +40 + 8 * slice. When it is
+  nonzero and the counter at 0x9200000001030100 is more than `0x55d4a80` (90,000,000 ticks) past the doubleword timestamp at
+  +24 + 8 * slice, it stores a zero doubleword to +56 + 8 * slice and then to +40 + 8 * slice. No register is written.
+  Inferred: the two doublewords are a processor-interface error summary and detail saved earlier.
 - `check_dir_access` (`IP27/unix` at 0xc00000000002a184,
   128 bytes) takes a physical address in a0. It reads `MD_MEMORY_CONFIG` (offset `0x200018`) through the node alias
   `0x9200000001a00000 + (bits 39:32 of a0 << 32)`, forms a directory address from `(a0 >> 3) & 0x1f0`,

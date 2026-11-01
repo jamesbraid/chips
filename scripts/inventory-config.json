@@ -2365,7 +2365,7 @@
     "IP35/usr/cpu/sysgen/IP35boot/xvm.a(*)",
     "IP35/usr/cpu/sysgen/IP35boot/xvmidbg.o"
    ],
-   "reason": "file-system, volume-manager and disk-quota objects: block and file code with no chip register access",
+   "reason": "file-system, volume-manager and disk-quota objects: block and file code, excluded by role from object names and imports, not by a scan",
    "patterns": [
     ".+"
    ]
@@ -2573,7 +2573,7 @@
     "IP35/usr/cpu/sysgen/IP35boot/tsv.a(*)",
     "IP35/usr/cpu/sysgen/IP35boot/uds.a(*)"
    ],
-   "reason": "network protocol, RPC and STREAMS objects, and network-interface drivers other than the IOC3 and IOC4 Ethernet objects: no chip register access",
+   "reason": "network protocol, RPC and STREAMS objects, and network-interface drivers other than the IOC3 and IOC4 Ethernet objects, excluded by role from object names and imports, not by a scan",
    "patterns": [
     ".+"
    ]
@@ -2637,7 +2637,6 @@
     "IP27/usr/cpu/sysgen/IP27boot/sharena.o",
     "IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o",
     "IP27/usr/cpu/sysgen/IP27boot/smfd.o",
-    "IP27/usr/cpu/sysgen/IP27boot/sn0drv.o",
     "IP27/usr/cpu/sysgen/IP27boot/suser.a(*)",
     "IP27/usr/cpu/sysgen/IP27boot/ts.o",
     "IP27/usr/cpu/sysgen/IP27boot/tsd.o",
@@ -2993,7 +2992,7 @@
     "IP35/usr/cpu/sysgen/IP35boot/xpmem.o",
     "IP35/usr/cpu/sysgen/IP35boot/xtimer.a(*)"
    ],
-   "reason": "process, memory, scheduler, synchronisation, timer and debugger core: machine-independent kernel code with no chip register access",
+   "reason": "process, memory, scheduler, synchronisation, timer and debugger core: machine-independent kernel code, excluded by role from object names and imports, not by a scan",
    "patterns": [
     ".+"
    ]
@@ -3165,7 +3164,7 @@
     "IP35/usr/cpu/sysgen/IP35boot/xiovme.o",
     "sbin/stand/sash64"
    ],
-   "reason": "device drivers (SCSI, Fibre Channel, USB, VGA, audio, tape, serial lines, input devices, VME, graphics, IEEE 1394) and the standalone loader that do not drive a system ASIC",
+   "reason": "device drivers (SCSI, Fibre Channel, USB, VGA, audio, tape, serial lines, input devices, VME, graphics, IEEE 1394) and the standalone loader that do not drive a system ASIC, excluded by role from object names and imports, not by a scan",
    "patterns": [
     ".+"
    ]

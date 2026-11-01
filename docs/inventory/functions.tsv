@@ -27688,17 +27688,17 @@ IP27/usr/cpu/sysgen/IP27boot/smfd.o	kernel-object	n64	.text	0x407c	260	smfd_driv
 IP27/usr/cpu/sysgen/IP27boot/smfd.o	kernel-object	n64	.text	0x4180	184	smfd_unlk_floptical	dwarf+symtab	dc41eac5b61b		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/smfd.o	kernel-object	n64	.text	0x4238	176	smfd_verify_state	dwarf+symtab	6302bb321b1f		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/smfd.o	kernel-object	n64	.text	0x42e8	124	smfd_removal	dwarf+symtab	a9547da7bf03		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64		0x0		sn0drv_attach	dwarf+symtab			out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x254	28	sndrv_attach	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x270	44	sn0drv_open	dwarf+symtab	f9d1635c8956		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x29c	8	sn0drv_close	dwarf+symtab	87506497337c		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x2a4	2252	sn0drv_ioctl	dwarf+symtab	d6202b2a8681		out:3	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xb70	176	check_router	dwarf+symtab	acc778e136e1		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xc20	196	do_reg_op	dwarf+symtab	ea93e975e918		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xce4	268	do_router_op	dwarf+symtab	391c5971c788		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xdf0	196	rou_fence_op	dwarf+symtab	11b2680ac96c		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xeb4	292	router_port_map_get	dwarf+symtab	52137f17e11d		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xfd8	264	router_port_mfg_info_get	dwarf+symtab	a1efc0139492		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64		0x0		sn0drv_attach	dwarf+symtab			in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x254	28	sndrv_attach	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x270	44	sn0drv_open	dwarf+symtab	f9d1635c8956		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x29c	8	sn0drv_close	dwarf+symtab	87506497337c		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0x2a4	2252	sn0drv_ioctl	dwarf+symtab	d6202b2a8681		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xb70	176	check_router	dwarf+symtab	acc778e136e1		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xc20	196	do_reg_op	dwarf+symtab	ea93e975e918		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xce4	268	do_router_op	dwarf+symtab	391c5971c788		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xdf0	196	rou_fence_op	dwarf+symtab	11b2680ac96c		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xeb4	292	router_port_map_get	dwarf+symtab	52137f17e11d		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	kernel-object	n64	.text	0xfd8	264	router_port_mfg_info_get	dwarf+symtab	a1efc0139492		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/snfs.a(nfs_export.o)	kernel-object	n64		0x0		nfs_exportinit	dwarf+symtab			out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/snfs.a(nfs_export.o)	kernel-object	n64	.text	0x54	156	exi_expunge	dwarf+symtab	6cffd27b5d63		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/snfs.a(nfs_export.o)	kernel-object	n64	.text	0xf0	168	unexportbyname	dwarf+symtab	c4ac1ed8edb8		out:1	undocumented		
