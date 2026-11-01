@@ -63,5 +63,14 @@ class AmbiguousSymbol(unittest.TestCase):
         self.assertEqual(image(syms).find('helper')[1], 0x100)
 
 
+class RenderTable(unittest.TestCase):
+    def test_table_with_a_computed_base_renders(self):
+        # a jump table whose base is itself a symbolic value used to raise a TypeError
+        r = facts.Render(image([]))
+        self.assertEqual(r(('tbl', ('c', 0x1200))), 'table(0x1200)')
+        self.assertEqual(r(('tbl', 0x1200)), 'table(0x1200)')
+        self.assertEqual(r(('tent', ('in', 'a0'), 4)), 'entry(a0)')
+
+
 if __name__ == '__main__':
     unittest.main()
