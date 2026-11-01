@@ -243,3 +243,63 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   argument and store it; types 0 and 1 do the same on the word at +0x24. Each path then loads the register once more,
   a read-back that the delay slot of the exit branch runs and whose value is dropped. There is no bound test. Type -1
   calls `panic` with the bridge-type message and still restores the level; the routine returns no value. Established.
+- `pcireg_intr_dst_addr_set` (`IP30/unix` `0xa800000020052018`, 420 bytes, frame 16 bytes) stores a 48-bit target
+  address, its second argument, into the interrupt destination register. Types 0 and 1 split it over two words: the
+  word at window +0x34 has bits 15:0 cleared (`lui` 0xffff mask), is stored, reloaded and ORed with bits 47:32 of the
+  argument (`dsrl32`, then a 0xffff mask), and stored again, and the low 32 bits of the argument go to the word at
+  +0x3c in the delay slot of the exit branch. Types 2 and 3 clear bits 47:0 of the doubleword at +0x38 (mask `li -1`
+  shifted left 48), store, reload, OR in the argument masked to 48 bits and store. It has no bound test and no `spl1`,
+  and returns no value. Type -1 and a null handle call `panic` and store nothing; other record types return.
+  Established.
+- `pcireg_control_bit_set` (`IP30/unix` `0xa800000020050f88`, 412 bytes, frame 32 bytes) sets bits in the control
+  register under a raised level, the mirror of `pcireg_control_bit_clr`: `spl1` first, `splx` on every path. Types 2
+  and 3 OR the second argument into the doubleword at window +0x20; types 0 and 1 OR it into the word at +0x24, and in
+  each case the register is loaded again straight after the store, in the delay slot of the branch to the exit, so the
+  write is followed by a read. Nothing tests the argument. Type -1 or a null handle calls `panic` with the bridge-type
+  message and restores the level without storing anything. Established.
+- `pcireg_intr_dst_target_id_set` (`IP30/unix` `0xa800000020051cfc`, 412 bytes, frame 16 bytes) replaces the four-bit
+  target id of the interrupt destination register with the low four bits of its second argument. Types 0 and 1 clear
+  bits 19:16 of the word at window +0x34 (`lui` 0xf, `nor`), store, reload, OR in the argument masked with 0xf and
+  shifted left 16, and store. Types 2 and 3 clear bits 51:48 of the doubleword at +0x38 with the literal
+  0xfff0ffffffffffff from the pool word at 0xa8000000204a89e8, then reload and OR in the argument masked with 0xf and
+  shifted left 48. The two-store sequence is unlocked, with no bound test and no `spl1`. Type -1 and a null handle
+  call `panic` with a message whose name and colon have no space between them, and store nothing. Established.
+- `pcireg_dirmap_wid_set` (`IP30/unix` `0xa80000002005331c`, 412 bytes, frame 16 bytes) rewrites the four-bit widget
+  number of the direct-map register, bits 23:20, from the low four bits of its second argument. The register is the
+  word at window +0x84 for types 0 and 1 and the doubleword at +0x80 for types 2 and 3, which is the register whose
+  bits 16:0 `pcireg_dirmap_diroff_set` writes. Each arm clears the field (`lui` 0xf0 and `nor`), stores, reloads, ORs
+  in the masked argument shifted left 20 and stores. There is no bound test, no level change and no read-back. A null
+  handle or type -1 calls `panic` with the bridge-type message and stores nothing, and a record type outside -1 to 3
+  returns. Established.
+- `pcireg_llp_cfg_set` (`IP30/unix` `0xa800000020052498`, 412 bytes, frame 32 bytes) writes the link-layer
+  configuration register from its second argument under a raised level (`spl1` first and `splx` on every path; the
+  argument is parked at 0(sp) across the first call). Types 0 and 1 store the low 32 bits as a word at window +0x4c,
+  type 2 stores the full doubleword at +0x48, and each is followed by a load of the same register in the delay slot of
+  the exit branch, so the write is read back. Type 3 has no such register: it calls `panic` with "undefined register"
+  and stores nothing. Type -1 and a null handle call `panic` with the bridge-type message, also with no store. There
+  is no bound test. Established.
+- `pcireg_rrb_bit_clr` (`IP30/unix` `0xa80000002005911c`, 408 bytes, frame 16 bytes) clears bits of one response
+  buffer register under no lock. The second argument selects the register of the pair (0 or 1) and the third is the
+  mask; types 2 and 3 clear them in the doubleword at window +0x280 plus 8 * index, types 0 and 1 in the word at
+  +0x284 plus 8 * index, each as a load, an AND with the complement (`nor`) and a store. Unlike `pcireg_rrb_get` and
+  `pcireg_rrb_set` it makes no `assfail` check on the index. Type -1 and a null handle call `panic` with the
+  bridge-type message and store nothing, and a record type outside -1 to 3 does nothing. The routine returns no value.
+  Established.
+- `pcireg_tflush_get` (`IP30/unix` `0xa800000020052634`, 400 bytes, frame 16 bytes) reads the target flush register
+  and requires it to be zero: types 2 and 3 load the doubleword at window +0x50 and types 0 and 1 the word at +0x54,
+  zero-extended with `dsll32` and `dsrl32`. A nonzero value calls `assfail` with the text "ret == 0" (line 0x30f, 783)
+  and the value is returned all the same. Type -1 or a null handle calls `panic`, whose message begins with
+  "pcibr_tflush_get()" rather than this routine's own name, and returns 0. The read is the only access; nothing is
+  written. A record type outside -1 to 3 leaves the register unread. Established.
+- `pcireg_rrb_bit_set` (`IP30/unix` `0xa800000020058f8c`, 400 bytes, frame 16 bytes) ORs a mask into one response
+  buffer register: the register is selected by the second argument and the third argument is ORed into the doubleword
+  at window +0x280 plus 8 * index (types 2 and 3) or the word at +0x284 plus 8 * index (types 0 and 1). It does the
+  load, OR and store with no lock, no index check and no read-back, which is also how `pcireg_rrb_bit_clr` differs
+  from `pcireg_rrb_get`. Type -1 and a null handle call `panic` with the bridge-type message and write nothing; a
+  record type outside -1 to 3 does nothing. The routine returns no value. Established.
+- `pcireg_dirmap_add512_clr` (`IP30/unix` `0xa800000020053828`, 392 bytes, frame 16 bytes) clears bit 17 (0x20000,
+  from `lui` 2 and `nor`) of the direct-map register: the word at window +0x84 for types 0 and 1, the doubleword at
+  +0x80 for types 2 and 3, as one load, AND and store. It takes only the handle, so nothing is passed in the second
+  argument; there is no bound test, level change or read-back. Type -1 or a null handle calls `panic` with the
+  bridge-type message and stores nothing, and a record type outside -1 to 3 does nothing. Its counterpart
+  `pcireg_dirmap_add512_set` ORs the same bit in. Established.
