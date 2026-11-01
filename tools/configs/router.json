@@ -1,0 +1,163 @@
+{
+ "asic": "router",
+ "title": "SN0 and SN1 network router (reached by vector packets)",
+ "mode": "no-spec",
+ "status": "census run",
+ "spec": null,
+ "images": [
+  {
+   "label": "ip27-unix",
+   "dis": "work/dis/ip27-unix.s",
+   "path": "root/IP27/unix",
+   "kind": "elf",
+   "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present"
+  },
+  {
+   "label": "ip35-kernel",
+   "dis": "work/dis/ip35-kernel.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 kernel object"
+  }
+ ],
+ "call_census": {
+  "targets": [
+   {
+    "callee": "router_reg_read",
+    "arg": 5,
+    "rw": "r",
+    "path": "router_reg"
+   },
+   {
+    "callee": "router_reg_write",
+    "arg": 5,
+    "rw": "w",
+    "path": "router_reg"
+   },
+   {
+    "callee": "hub_vector_read",
+    "arg": 7,
+    "rw": "r",
+    "path": "hub_vector"
+   },
+   {
+    "callee": "hub_vector_write",
+    "arg": 7,
+    "rw": "w",
+    "path": "hub_vector"
+   },
+   {
+    "callee": "vector_read_node",
+    "arg": 7,
+    "rw": "r",
+    "path": "vector_node"
+   },
+   {
+    "callee": "vector_write_node",
+    "arg": 7,
+    "rw": "w",
+    "path": "vector_node"
+   }
+  ],
+  "variants": {
+   "ip27-unix": "ip27",
+   "ip35-kernel": "ip35"
+  },
+  "names": {
+   "ip35": {
+    "0x0": "STATUS_REV_ID",
+    "0x10": "PROT_CONF",
+    "0x20": "GLOBAL_PARMS0",
+    "0x28": "GLOBAL_PARMS1",
+    "0x200": "JBUS0_0",
+    "0x8@idx": "PORT_STATUS_ERROR",
+    "0x0@idx": "PORT_PARMS",
+    "0x18@idx": "PORT_RESET_MASK",
+    "0x20@idx": "PORT_HISTOGRAM0",
+    "0x28@idx": "PORT_HISTOGRAM1",
+    "0x88@idx": "PORT_ERROR_CLEAR"
+   },
+   "ip27": {
+    "0x0": "STATUS_REV_ID (LED write path)",
+    "0x10": "PROT_CONF",
+    "0x18": "GLOBAL_PORT_DEF",
+    "0x38": "NIC_ACCESS",
+    "0x0@idx": "PORT_PARMS",
+    "0x8@idx": "PORT_STATUS_ERROR",
+    "0x10@idx": "PORT_COUNTER",
+    "0x18@idx": "PORT_RESET_MASK",
+    "0x88@idx": "PORT_ERROR_CLEAR"
+   }
+  },
+  "by_hand": [
+   {
+    "variant": "ip27",
+    "image": "ip27-unix",
+    "offset": "0x0",
+    "idx": 1,
+    "rw": "w",
+    "sites": 1,
+    "functions": [
+     "router_port_init"
+    ],
+    "example": "c00000000001baf0",
+    "note": "write after a branch target, where the straight-line pass drops its state; the register is the port base set at c00000000001ba88"
+   },
+   {
+    "variant": "ip27",
+    "image": "ip27-unix",
+    "offset": "0x10",
+    "idx": 1,
+    "rw": "w",
+    "sites": 1,
+    "functions": [
+     "router_port_init"
+    ],
+    "example": "c00000000001bb04",
+    "note": "zero written (argument 3 is the zero register), register built as the port base or 0x10"
+   },
+   {
+    "variant": "ip27",
+    "image": "ip27-unix",
+    "offset": "0x88",
+    "idx": 1,
+    "rw": "r",
+    "sites": 2,
+    "functions": [
+     "router_port_init",
+     "router_acquire_port_info"
+    ],
+    "example": "c00000000001bb14",
+    "note": "port base or 0x88 at both sites"
+   },
+   {
+    "variant": "ip27",
+    "image": "ip27-unix",
+    "offset": "0x18",
+    "idx": 1,
+    "rw": "w",
+    "sites": 1,
+    "functions": [
+     "router_set_fences"
+    ],
+    "example": "c00000000001bdd4",
+    "note": "write of the register read at c00000000001bd9c"
+   },
+   {
+    "variant": "ip35",
+    "image": "ip35-kernel",
+    "offset": "0x18",
+    "idx": 1,
+    "rw": "w",
+    "sites": 1,
+    "functions": [
+     "router_set_fences"
+    ],
+    "example": "30b8",
+    "note": "write of the register read at 3068"
+   }
+  ]
+ },
+ "name_source": "the register names of the public Linux router header, matched by offset (comparison names: the offsets, widths and roles were read from the shipped routines first)"
+}

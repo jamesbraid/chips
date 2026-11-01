@@ -1,0 +1,91 @@
+{
+ "asic": "l1",
+ "title": "L1 and ELSC system controllers (host-visible UART and I2C paths)",
+ "mode": "no-spec",
+ "status": "census run",
+ "spec": null,
+ "images": [
+  {
+   "label": "ip35-l1",
+   "dis": "work/dis/l1.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/l1.o",
+   "kind": "elf",
+   "reloc": true,
+   "literals": "work/dis/l1.lit8.txt",
+   "lit_sections": [
+    ".lit8"
+   ],
+   "gp": "auto-min",
+   "variant_hint": "bedrock",
+   "const_windows": [
+    {
+     "lo": "0x9000000030000000",
+     "hi": "0x9000000030001000",
+     "name": "l1-uart"
+    },
+    {
+     "lo": "0x9200000001000000",
+     "hi": "0x9200000002000000",
+     "name": "bedrock-local"
+    }
+   ]
+  },
+  {
+   "label": "ip27-elsc",
+   "dis": "work/dis/elsc.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/elsc.o",
+   "kind": "elf",
+   "reloc": true,
+   "literals": "work/dis/elsc.lit8.txt",
+   "lit_sections": [
+    ".lit8"
+   ],
+   "gp": "auto-min",
+   "const_windows": [
+    {
+     "lo": "0x9200000001000000",
+     "hi": "0x9200000002000000",
+     "name": "hub-local"
+    }
+   ],
+   "note": "IRIX 6.5.30 IP27 ELSC system-controller driver object",
+   "variant_hint": "hub"
+  }
+ ],
+ "report_functions": ".*",
+ "seeds": {},
+ "field_rules": [],
+ "discriminators": {},
+ "variants": {},
+ "variant_model": {
+  "default": {
+   "access": "dw64"
+  }
+ },
+ "reference": {
+  "l1": {
+   "datasheets": [],
+   "spec": [],
+   "model": []
+  }
+ },
+ "buckets": [],
+ "or_is_add": true,
+ "register_names": {
+  "0x80": "UART_DATA",
+  "0x88": "UART_IER",
+  "0x90": "UART_FCR_IIR",
+  "0x98": "UART_LCR",
+  "0xa0": "UART_MCR",
+  "0xa8": "UART_LSR",
+  "0x800090": "UART_INTR_CLEAR",
+  "0x800098": "UART_INTR_PENDING"
+ },
+ "name_source": "the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)",
+ "header_skip": [
+  "0x20",
+  "0x30100",
+  "0x604200"
+ ],
+ "collapse_above": 268435456
+}

@@ -1,0 +1,30 @@
+{
+ "asic": "l1-tasks",
+ "title": "task byte of an L1 request (IP35 l1_command.o)",
+ "mode": "no-spec",
+ "status": "census run",
+ "spec": null,
+ "images": [
+  {
+   "label": "ip35-l1_command",
+   "dis": "work/dis/l1_command.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/l1_command.o",
+   "kind": "elf",
+   "reloc": true
+  }
+ ],
+ "call_census": {
+  "targets": [
+   {
+    "callee": "sc_construct_msg",
+    "arg": 8,
+    "rw": "r",
+    "path": "task"
+   }
+  ],
+  "variants": {
+   "ip35-l1_command": "ip35"
+  },
+  "value_name": "task"
+ }
+}
