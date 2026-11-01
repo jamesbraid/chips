@@ -673,7 +673,7 @@ IP27/unix	kernel	n64		0x0		dg_sauna_switch_func	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		dg_sauna_validlun_func	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dinsert	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		diostrat	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/unix	kernel	n64		0x0		dircorrupted	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		dircorrupted	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64		0x0		disable_all_multicast	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		disable_heartbeat	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		disable_intrs	dwarf			out:5	undocumented		
@@ -11876,7 +11876,7 @@ IP27/unix	kernel	n64	.text	0xc000000000346d44	1400	efs_iupdat	symtab	0544b418b33
 IP27/unix	kernel	n64	.text	0xc000000000347468	1716	efs_itrunc	symtab	d2c80f71f7d5		out:5	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/unix	kernel	n64	.text	0xc000000000347b1c	284	efs_iaccess	symtab	196837910593		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000347c38	244	efs_inode_check	symtab	2dc987b62764		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000347d2c	608	efs_whichzone	symtab	62756f25aef1		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000347d2c	608	efs_whichzone	symtab	62756f25aef1		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc000000000347f8c	124	efs_alloc_extent	symtab	38c71bed0b4e		out:5	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/unix	kernel	n64	.text	0xc000000000348008	256	efs_realloc_extent	symtab	c587da33d4a1		out:5	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/unix	kernel	n64	.text	0xc000000000348108	128	efs_free_extent	symtab	292ec6190d67		out:5	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -12080,11 +12080,11 @@ IP27/unix	kernel	n64	.text	0xc0000000003668a8	2580	dsioctl	symtab	6e6507e22d9f		
 IP27/unix	kernel	n64	.text	0xc0000000003672d8	204	ds_copyiov	symtab	615a89697967		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc000000000367450	96	dma_unlock	symtab	8771adb7d9be		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003678dc	192	task_unglue	symtab	54140eeba877		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000367c00	428	glue_reserve	symtab	ac79fd92ce8f		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000367c00	428	glue_reserve	symtab	ac79fd92ce8f		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc000000000367dac	148	glue_release	symtab	2614a18d34c4		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000367e40	444	glue_start	symtab	ac1d9b78dd26		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000367ffc	336	glue_return	symtab	94805039c301		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000036814c	200	glue_getopt	symtab	c42caf10791d		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000367e40	444	glue_start	symtab	ac1d9b78dd26		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/unix	kernel	n64	.text	0xc000000000367ffc	336	glue_return	symtab	94805039c301		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/unix	kernel	n64	.text	0xc00000000036814c	200	glue_getopt	symtab	c42caf10791d		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc000000000368214	20	int16_le	symtab	9bf3aa457782		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000368228	32	int24_le	symtab	2b2c226893c0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000368248	44	int32_le	symtab	786ec92d0944		out:5	undocumented		
@@ -15626,11 +15626,11 @@ IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1440	164	ds
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x14e4	84	irix5_iovecs_to_dsiovecs	dwarf+symtab	6576e828c7d0		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64		0x0		hosterr_to_ds	dwarf+symtab			out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x68	96	glue_callback	dwarf+symtab	94192bec7065		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0xc8	428	glue_reserve	dwarf+symtab	0164bcc28d4b		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0xc8	428	glue_reserve	dwarf+symtab	0164bcc28d4b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x274	148	glue_release	dwarf+symtab	24edf2726b57		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x308	444	glue_start	dwarf+symtab	ecf96a36a317		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x4c4	336	glue_return	dwarf+symtab	0c22d8c4fd69		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x614	200	glue_getopt	dwarf+symtab	872f698abf43		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x308	444	glue_start	dwarf+symtab	ecf96a36a317		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x4c4	336	glue_return	dwarf+symtab	0c22d8c4fd69		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x614	200	glue_getopt	dwarf+symtab	872f698abf43		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/eag.a(eag.o)	kernel-object	n64		0x0		eag_confignote	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/eag.a(eag.o)	kernel-object	n64	.text	0x20	400	eag_parseattr	dwarf+symtab	993b3aa81df9		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/eag.a(eag.o)	kernel-object	n64	.text	0x1b0	144	irix5_to_eag_mount	dwarf+symtab	58545c4d5ab8		out:3	undocumented		
@@ -15685,7 +15685,7 @@ IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0x6a8	7
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0x9c0	592	efs_grow	dwarf+symtab	95ede6a648bc		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0xc10	280	efs_free	dwarf+symtab	5a0a4a9fb8b9		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0xd28	148	efs_btoss	dwarf+symtab	42ddabdc6fc4		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dir.o)	kernel-object	n64		0x0		dircorrupted	dwarf+symtab			out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dir.o)	kernel-object	n64		0x0		dircorrupted	dwarf+symtab			out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dir.o)	kernel-object	n64	.text	0x120	552	getdirblk	dwarf+symtab	ae79ce7b25b4		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dir.o)	kernel-object	n64	.text	0x348	104	putdirblk	dwarf+symtab	9f11e459a8c2		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dir.o)	kernel-object	n64	.text	0x3b0	340	growdir	dwarf+symtab	fa8c00d98dc8		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -15732,7 +15732,7 @@ IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1280	4
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x142c	1716	efs_itrunc	dwarf+symtab	5143890d08ce		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1ae0	284	efs_iaccess	dwarf+symtab	e69ee9b7246b		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1bfc	244	efs_inode_check	dwarf+symtab	d9a4d7984b98		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1cf0	608	efs_whichzone	dwarf+symtab	ad7632accc76		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1cf0	608	efs_whichzone	dwarf+symtab	ad7632accc76		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1f50	124	efs_alloc_extent	dwarf+symtab	0b4ed5f94bbf		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1fcc	256	efs_realloc_extent	dwarf+symtab	7105839af01c		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x20cc	128	efs_free_extent	dwarf+symtab	d00582410bdf		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -32883,7 +32883,7 @@ IP30/unix	kernel	n64		0x0		dg_sauna_switch_func	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		dg_sauna_validlun_func	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dinsert	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		diostrat	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP30/unix	kernel	n64		0x0		dircorrupted	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		dircorrupted	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		disable_all_multicast	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		disable_intrs	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		disconnect	dwarf			out:7	undocumented		
@@ -43691,7 +43691,7 @@ IP30/unix	kernel	n64	.text	0xa80000002031b8f4	1400	efs_iupdat	symtab	4d06570ad17
 IP30/unix	kernel	n64	.text	0xa80000002031c018	1716	efs_itrunc	symtab	d6dc7e9ab71c		out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/unix	kernel	n64	.text	0xa80000002031c6cc	284	efs_iaccess	symtab	68eb043d3489		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002031c7e8	244	efs_inode_check	symtab	9e54abcdc9a4		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002031c8dc	608	efs_whichzone	symtab	7bb3a11f19b7		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002031c8dc	608	efs_whichzone	symtab	7bb3a11f19b7		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa80000002031cb3c	124	efs_alloc_extent	symtab	2512028b16bf		out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/unix	kernel	n64	.text	0xa80000002031cbb8	256	efs_realloc_extent	symtab	a8e7955a140a		out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/unix	kernel	n64	.text	0xa80000002031ccb8	128	efs_free_extent	symtab	2936fa471e86		out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -43895,11 +43895,11 @@ IP30/unix	kernel	n64	.text	0xa80000002033ad6c	2580	dsioctl	symtab	1a22eebb5f7d		
 IP30/unix	kernel	n64	.text	0xa80000002033b79c	204	ds_copyiov	symtab	4db0506f2711		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa80000002033b914	96	dma_unlock	symtab	16a2e4b4474d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002033bda0	192	task_unglue	symtab	022db741267d		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002033c0c4	428	glue_reserve	symtab	25979c4d5679		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002033c0c4	428	glue_reserve	symtab	25979c4d5679		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa80000002033c270	148	glue_release	symtab	aded81b4035d		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002033c304	444	glue_start	symtab	84732866466c		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002033c4c0	336	glue_return	symtab	8e1da50189f7		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002033c610	200	glue_getopt	symtab	44d45a30e506		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002033c304	444	glue_start	symtab	84732866466c		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/unix	kernel	n64	.text	0xa80000002033c4c0	336	glue_return	symtab	8e1da50189f7		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/unix	kernel	n64	.text	0xa80000002033c610	200	glue_getopt	symtab	44d45a30e506		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa80000002033c6d8	20	int16_le	symtab	9bf3aa457782		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002033c6ec	32	int24_le	symtab	2b2c226893c0		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002033c70c	44	int32_le	symtab	786ec92d0944		out:7	undocumented		
@@ -47264,11 +47264,11 @@ IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1440	164	ds
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x14e4	84	irix5_iovecs_to_dsiovecs	dwarf+symtab	6576e828c7d0		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64		0x0		hosterr_to_ds	dwarf+symtab			out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x68	96	glue_callback	dwarf+symtab	94192bec7065		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0xc8	428	glue_reserve	dwarf+symtab	0164bcc28d4b		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0xc8	428	glue_reserve	dwarf+symtab	0164bcc28d4b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x274	148	glue_release	dwarf+symtab	24edf2726b57		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x308	444	glue_start	dwarf+symtab	ecf96a36a317		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x4c4	336	glue_return	dwarf+symtab	0c22d8c4fd69		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x614	200	glue_getopt	dwarf+symtab	872f698abf43		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x308	444	glue_start	dwarf+symtab	ecf96a36a317		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x4c4	336	glue_return	dwarf+symtab	0c22d8c4fd69		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x614	200	glue_getopt	dwarf+symtab	872f698abf43		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/eag.a(eag.o)	kernel-object	n64		0x0		eag_confignote	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/eag.a(eag.o)	kernel-object	n64	.text	0x20	400	eag_parseattr	dwarf+symtab	993b3aa81df9		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/eag.a(eag.o)	kernel-object	n64	.text	0x1b0	144	irix5_to_eag_mount	dwarf+symtab	58545c4d5ab8		out:3	undocumented		
@@ -47323,7 +47323,7 @@ IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0x6a8	7
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0x9c0	592	efs_grow	dwarf+symtab	95ede6a648bc		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0xc10	280	efs_free	dwarf+symtab	5a0a4a9fb8b9		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0xd28	148	efs_btoss	dwarf+symtab	42ddabdc6fc4		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dir.o)	kernel-object	n64		0x0		dircorrupted	dwarf+symtab			out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dir.o)	kernel-object	n64		0x0		dircorrupted	dwarf+symtab			out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dir.o)	kernel-object	n64	.text	0x120	552	getdirblk	dwarf+symtab	738852477477		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dir.o)	kernel-object	n64	.text	0x348	104	putdirblk	dwarf+symtab	c2d902afc9fa		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dir.o)	kernel-object	n64	.text	0x3b0	340	growdir	dwarf+symtab	fa8c00d98dc8		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -47370,7 +47370,7 @@ IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1280	4
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x142c	1716	efs_itrunc	dwarf+symtab	b129d0056a14		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1ae0	284	efs_iaccess	dwarf+symtab	e69ee9b7246b		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1bfc	244	efs_inode_check	dwarf+symtab	d9a4d7984b98		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1cf0	608	efs_whichzone	dwarf+symtab	ad7632accc76		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1cf0	608	efs_whichzone	dwarf+symtab	ad7632accc76		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1f50	124	efs_alloc_extent	dwarf+symtab	0b4ed5f94bbf		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1fcc	256	efs_realloc_extent	dwarf+symtab	7105839af01c		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x20cc	128	efs_free_extent	dwarf+symtab	d00582410bdf		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -63577,11 +63577,11 @@ IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x13c8	548	ta
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x15ec	196	task_unglue	dwarf+symtab	968c7681b984		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32		0x0		hosterr_to_ds	dwarf+funcnames+symtab			out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0x68	96	glue_callback	dwarf+funcnames+symtab	5d2612ac8aa9		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0xc8	448	glue_reserve	dwarf+symtab	8b960259be9d		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0xc8	448	glue_reserve	dwarf+symtab	8b960259be9d		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0x288	148	glue_release	dwarf+symtab	a8841d84f881		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0x31c	444	glue_start	dwarf+symtab	62d799635e71		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0x4d8	324	glue_return	dwarf+symtab	8c1c3d87a258		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0x61c	208	glue_getopt	dwarf+symtab	dfc0a610e16f		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0x31c	444	glue_start	dwarf+symtab	62d799635e71		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0x4d8	324	glue_return	dwarf+symtab	8c1c3d87a258		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0x61c	208	glue_getopt	dwarf+symtab	dfc0a610e16f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/ecplp.o	kernel-object	n32		0x0		plpinit	dwarf+symtab			in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ecplp.o	kernel-object	n32	.text	0x8	764	plpstart	dwarf+symtab	8dc2d0fa1281		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ecplp.o	kernel-object	n32	.text	0x304	1104	plpopen	dwarf+symtab	c1d73fe3153d		in	undocumented		
@@ -63632,7 +63632,7 @@ IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dalloc.o)	kernel-object	n32	.text	0x6cc	7
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dalloc.o)	kernel-object	n32	.text	0x9e0	584	efs_grow	dwarf+symtab	ead18ccb51a8		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dalloc.o)	kernel-object	n32	.text	0xc28	280	efs_free	dwarf+symtab	d02243edb83c		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dalloc.o)	kernel-object	n32	.text	0xd40	152	efs_btoss	dwarf+funcnames+symtab	566a988545db		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dir.o)	kernel-object	n32		0x0		dircorrupted	dwarf+funcnames+symtab			out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dir.o)	kernel-object	n32		0x0		dircorrupted	dwarf+funcnames+symtab			out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dir.o)	kernel-object	n32	.text	0x130	552	getdirblk	dwarf+funcnames+symtab	9079475d4ecc		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dir.o)	kernel-object	n32	.text	0x358	108	putdirblk	dwarf+funcnames+symtab	545fce9f2db3		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dir.o)	kernel-object	n32	.text	0x3c4	348	growdir	dwarf+funcnames+symtab	0c192ef6d29d		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -63679,7 +63679,7 @@ IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_inode.o)	kernel-object	n32	.text	0x1244	4
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_inode.o)	kernel-object	n32	.text	0x13ec	1560	efs_itrunc	dwarf+symtab	64458e3525f1		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_inode.o)	kernel-object	n32	.text	0x1a04	280	efs_iaccess	dwarf+symtab	12addcd42ef0		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_inode.o)	kernel-object	n32	.text	0x1b1c	264	efs_inode_check	dwarf+symtab	078da644661e		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_inode.o)	kernel-object	n32	.text	0x1c24	612	efs_whichzone	dwarf+symtab	b90825df8714		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_inode.o)	kernel-object	n32	.text	0x1c24	612	efs_whichzone	dwarf+symtab	b90825df8714		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_inode.o)	kernel-object	n32	.text	0x1e88	128	efs_alloc_extent	dwarf+symtab	fa6261ed979e		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_inode.o)	kernel-object	n32	.text	0x1f08	252	efs_realloc_extent	dwarf+symtab	44f1c509e766		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_inode.o)	kernel-object	n32	.text	0x2004	132	efs_free_extent	dwarf+symtab	f6f31c620eed		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -79741,11 +79741,11 @@ IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1440	164	ds
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x14e4	84	irix5_iovecs_to_dsiovecs	dwarf+symtab	6576e828c7d0		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64		0x0		hosterr_to_ds	dwarf+symtab			out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x68	96	glue_callback	dwarf+symtab	94192bec7065		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0xc8	428	glue_reserve	dwarf+symtab	0164bcc28d4b		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0xc8	428	glue_reserve	dwarf+symtab	0164bcc28d4b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x274	148	glue_release	dwarf+symtab	24edf2726b57		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x308	444	glue_start	dwarf+symtab	ecf96a36a317		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x4c4	336	glue_return	dwarf+symtab	0c22d8c4fd69		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x614	200	glue_getopt	dwarf+symtab	872f698abf43		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x308	444	glue_start	dwarf+symtab	ecf96a36a317		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x4c4	336	glue_return	dwarf+symtab	0c22d8c4fd69		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-object	n64	.text	0x614	200	glue_getopt	dwarf+symtab	872f698abf43		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/eag.a(eag.o)	kernel-object	n64		0x0		eag_confignote	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/eag.a(eag.o)	kernel-object	n64	.text	0x20	400	eag_parseattr	dwarf+symtab	993b3aa81df9		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/eag.a(eag.o)	kernel-object	n64	.text	0x1b0	144	irix5_to_eag_mount	dwarf+symtab	58545c4d5ab8		out:3	undocumented		
@@ -79842,7 +79842,7 @@ IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0x6a8	7
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0x9c0	592	efs_grow	dwarf+symtab	95ede6a648bc		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0xc10	280	efs_free	dwarf+symtab	5a0a4a9fb8b9		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dalloc.o)	kernel-object	n64	.text	0xd28	148	efs_btoss	dwarf+symtab	42ddabdc6fc4		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dir.o)	kernel-object	n64		0x0		dircorrupted	dwarf+symtab			out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dir.o)	kernel-object	n64		0x0		dircorrupted	dwarf+symtab			out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dir.o)	kernel-object	n64	.text	0x120	552	getdirblk	dwarf+symtab	c49f34c7d3e8		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dir.o)	kernel-object	n64	.text	0x348	104	putdirblk	dwarf+symtab	07192e614270		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dir.o)	kernel-object	n64	.text	0x3b0	340	growdir	dwarf+symtab	fa8c00d98dc8		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -79889,7 +79889,7 @@ IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1280	4
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x142c	1716	efs_itrunc	dwarf+symtab	553665c9f7c4		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1ae0	284	efs_iaccess	dwarf+symtab	e69ee9b7246b		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1bfc	244	efs_inode_check	dwarf+symtab	d9a4d7984b98		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1cf0	608	efs_whichzone	dwarf+symtab	ad7632accc76		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1cf0	608	efs_whichzone	dwarf+symtab	ad7632accc76		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1f50	124	efs_alloc_extent	dwarf+symtab	0b4ed5f94bbf		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x1fcc	256	efs_realloc_extent	dwarf+symtab	7105839af01c		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-object	n64	.text	0x20cc	128	efs_free_extent	dwarf+symtab	d00582410bdf		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
