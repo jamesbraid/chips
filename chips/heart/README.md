@@ -302,6 +302,24 @@ issued, including delay slots, which run before the branch or call they belong t
 - `heart_dmamap_free` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xc10`, 28 bytes, read in full, established): calls `kmem_free` at
   `0xc18` with `a0` unchanged and `a1` 12 (0xc), and returns its result.
 
+- `heart_intr_cpuid_get` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x13c0`, 8 bytes, read in full, established): returns the
+  sign-extended halfword at `a0 + 36`, the field that `heart_intr_cpu_get` above reads as its processor index. It makes no calls.
+- `heart_piomap_addr` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xb3c`, 20 bytes, read in full, established): returns
+  `a1 + [a0+24] - [a0+8]`. It loads the doublewords at `a0 + 24` and `a0 + 8`, adds `a1` to the first, subtracts the second and
+  returns the difference in `v0`. It makes no calls.
+- `heart_dmamap_addr` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xc2c`, 32 bytes, read in full, established): sets `a0` from `a1`
+  and `a1` from `a2` before its call, then calls `heart_addr_phys_to_xio` at `0xc38` with those two values. It returns that call's
+  result in `v0`, and keeps `ra` in a 16-byte frame.
+- `heart_init` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x5b0`, 44 bytes, read in full, established): calls
+  `xwidget_driver_register` at `0x5c8` with `a0` 0xc001, `a1` 54 (0x36), `a3` 0, and `a2` set to the pointer in the small-data pool
+  at `gp-30712` plus 96 (the `daddiu` in the call's delay slot at `0x5cc`). It returns that call's result.
+- `heart_intr_disconnect` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1334`, 112 bytes, read in full, established): reads the
+  doubleword at `a0 + 24`, the byte at `a0 + 5` (the vector) and the halfword at `a0 + 36` (the processor). It calls
+  `heart_imr_bits_rmw` at `0x135c` with the processor, `1 << vector` (the `dsllv` in the delay slot) and `a2` 0. It then writes the
+  vector's table entry, which is `heart_ivec` (from the small-data pool) plus `vector << 6`: `heart_stray_intr` at offset 0 and the
+  vector number at offset 8 (`0x1374` to `0x137c`). If the doubleword read from `a0 + 24` is nonzero it calls that pointer at `0x1394`
+  with the original `a0`, and returns that call's result. Otherwise it returns `heart_imr_bits_rmw`'s result.
+
 ## Open
 
 Graded entries. "Established" lines are read from the files above; "inferred" lines say what they rest on. Each
