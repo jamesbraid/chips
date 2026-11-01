@@ -84,8 +84,8 @@ scanned routine.
   afterwards).
 - `0x30` and `0x38` (`xbow_intr_preset`, `xbow.o`, offset 0x9b0, read in full): `xbow_setwidint` takes a target, a
   vector and a 64-bit address from the interrupt object (`xtalk_intr_target_get`, `xtalk_intr_vector_get`,
-  `xtalk_intr_addr_get`) and calls `xbow_intr_preset`, which writes `(vector & 0xff) << 24 | (target & 0xf) << 16 |
-  (address >> 32) & 0xffff` to `+0x34` and the low 32 bits of the address to `+0x3c` (established). The values come
+  `xtalk_intr_addr_get`) and calls `xbow_intr_preset`.
+  `xbow_intr_preset` writes `(vector << 24) & 0xff000000 | (target << 16) & 0xf0000 | (address >> 32) & 0xffff` to `+0x34` and the low 32 bits of the address to `+0x3c` (established). The values come
   from the interrupt layer at run time, so none is in `xbow.o` (see the vector question below). The handler it is
   connected to is `xbow_errintr_handler`.
 - `0x50` status, read-and-clear (`xbow_errintr_handler`, `xbow.o`, offset 0xd1c, register traffic read in full): on
