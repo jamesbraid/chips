@@ -4714,7 +4714,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	spl6	symtab	d20175b8aee2	shared
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splgio0	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splgio1	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splgio2	symtab	d20175b8aee2	shared-address	out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhi	symtab	d20175b8aee2	shared-address	out:5	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhi	symtab	d20175b8aee2	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhi_relnet	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhintr	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splimp	symtab	d20175b8aee2	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -6857,7 +6857,7 @@ IP27/unix	kernel	n64	.text	0xc00000000010accc	116	psqo_free_queue	symtab	212368f
 IP27/unix	kernel	n64	.text	0xc00000000010ad40	112	rtable_init	symtab	b817514c0510		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000010adb0	36	route_init	symtab	a9634d46a87b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000010add4	88	rtalloc	symtab	a686e8192de3		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000010ae2c	88	rtrequest_promote	symtab	21ddcc68845d		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000010ae2c	88	rtrequest_promote	symtab	21ddcc68845d		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000010ae84	32	rtrequest_demote	symtab	7009aa9532f6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000010aea4	776	rtalloc1	symtab	911682d8f9e7		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000010b1ac	116	rtfree_needlock	symtab	eda00b96ded4		out:5	undocumented		
@@ -8513,7 +8513,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001b3564	116	timeout_nothrd	symtab	f97c5d81
 IP27/unix	kernel	n64	.text	0xc0000000001b35d8	120	prtimeout	symtab	9abe7ed24bd3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001b3650	88	prtimeout_nothrd	symtab	56a2a4130155		out:5	named-only	chips/ioc3/README.md#interrupt-registers-0x1c-0x20-0x24-established	Interrupt registers (`0x1c`, `0x20`, `0x24`): established
 IP27/unix	kernel	n64	.text	0xc0000000001b36a8	148	fast_prtimeout	symtab	2eb3516dac3b		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001b373c	80	dtimeout	symtab	cd50bbd6a774		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001b373c	80	dtimeout	symtab	cd50bbd6a774		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000001b378c	88	itimeout	symtab	01a6f22f357f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001b37e4	80	itimeout_nothrd	symtab	5c2d3354b6c9		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001b3834	116	fast_itimeout	symtab	712fee836be7		out:5	undocumented		
@@ -13727,7 +13727,7 @@ IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1c50	56	rt
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(route.o)	kernel-object	n64		0x0		rtable_init	dwarf+symtab			out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(route.o)	kernel-object	n64	.text	0x70	36	route_init	dwarf+symtab	15626ba4e57e		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(route.o)	kernel-object	n64	.text	0x94	88	rtalloc	dwarf+symtab	d7989fa19244		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(route.o)	kernel-object	n64	.text	0xec	88	rtrequest_promote	dwarf+symtab	6103758fd0a2		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(route.o)	kernel-object	n64	.text	0xec	88	rtrequest_promote	dwarf+symtab	6103758fd0a2		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(route.o)	kernel-object	n64	.text	0x144	32	rtrequest_demote	dwarf+symtab	6dec06f764cb		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(route.o)	kernel-object	n64	.text	0x164	776	rtalloc1	dwarf+symtab	4ec78cade4b9		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(route.o)	kernel-object	n64	.text	0x46c	116	rtfree_needlock	dwarf+symtab	6f2018c586f5		out:2	undocumented		
@@ -19111,7 +19111,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	spl6	sy
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splgio0	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splgio1	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splgio2	symtab	d20175b8aee2	shared-address	out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhi	dwarf+symtab	d20175b8aee2	shared-address	out:6	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhi	dwarf+symtab	d20175b8aee2	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhi_relnet	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhintr	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splimp	symtab	d20175b8aee2	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -23558,7 +23558,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x16f8	116	ti
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x176c	120	prtimeout	dwarf+symtab	28f234a73fd3		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x17e4	88	prtimeout_nothrd	dwarf+symtab	da6bc8b6f59a		out:3	named-only	chips/ioc3/README.md#interrupt-registers-0x1c-0x20-0x24-established	Interrupt registers (`0x1c`, `0x20`, `0x24`): established
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x183c	148	fast_prtimeout	dwarf+symtab	696b066c5bd0		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x18d0	80	dtimeout	dwarf+symtab	d2a2277bba39		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x18d0	80	dtimeout	dwarf+symtab	d2a2277bba39		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x1920	88	itimeout	dwarf+symtab	fff73aec6f01		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x1978	80	itimeout_nothrd	dwarf+symtab	7e15acd5a82f		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x19c8	116	fast_itimeout	dwarf+symtab	afed89b93deb		out:3	undocumented		
@@ -36811,7 +36811,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	spl6	symtab	d1a16d27e908	shared
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splgio0	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splgio1	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splgio2	symtab	d1a16d27e908	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhi	symtab	d1a16d27e908	shared-address	out:7	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhi	symtab	d1a16d27e908	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhi_relnet	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhintr	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splimp	symtab	d1a16d27e908	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -38646,7 +38646,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200e2d88	116	psqo_free_queue	symtab	457b498
 IP30/unix	kernel	n64	.text	0xa8000000200e2dfc	112	rtable_init	symtab	29031320445f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200e2e6c	36	route_init	symtab	feacc720b6cd		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200e2e90	88	rtalloc	symtab	1d6140ca6c69		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200e2ee8	88	rtrequest_promote	symtab	0306a07f50de		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200e2ee8	88	rtrequest_promote	symtab	0306a07f50de		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200e2f40	32	rtrequest_demote	symtab	9d985bac180b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200e2f60	776	rtalloc1	symtab	460a7ecb1837		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200e3268	116	rtfree_needlock	symtab	c4d0778c8bf3		out:7	undocumented		
@@ -40192,7 +40192,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201775e0	84	timeout_pri	symtab	9090fbaaca61
 IP30/unix	kernel	n64	.text	0xa800000020177634	116	timeout_nothrd	symtab	85388b54167e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201776a8	120	prtimeout	symtab	2ad8576e611d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020177720	148	fast_prtimeout	symtab	b1656aef158c		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201777b4	80	dtimeout	symtab	fc10859258cf		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201777b4	80	dtimeout	symtab	fc10859258cf		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa800000020177804	88	itimeout	symtab	e20c74b01e7e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002017785c	80	itimeout_nothrd	symtab	22a8f153e63a		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201778ac	116	fast_itimeout	symtab	47d3bd3aa72c		out:7	undocumented		
@@ -45576,7 +45576,7 @@ IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1c50	56	rt
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(route.o)	kernel-object	n64		0x0		rtable_init	dwarf+symtab			out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(route.o)	kernel-object	n64	.text	0x70	36	route_init	dwarf+symtab	15626ba4e57e		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(route.o)	kernel-object	n64	.text	0x94	88	rtalloc	dwarf+symtab	d7989fa19244		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/bsd.a(route.o)	kernel-object	n64	.text	0xec	88	rtrequest_promote	dwarf+symtab	6103758fd0a2		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/bsd.a(route.o)	kernel-object	n64	.text	0xec	88	rtrequest_promote	dwarf+symtab	6103758fd0a2		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(route.o)	kernel-object	n64	.text	0x144	32	rtrequest_demote	dwarf+symtab	6dec06f764cb		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(route.o)	kernel-object	n64	.text	0x164	776	rtalloc1	dwarf+symtab	4ec78cade4b9		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(route.o)	kernel-object	n64	.text	0x46c	116	rtfree_needlock	dwarf+symtab	6f2018c586f5		out:2	undocumented		
@@ -50367,7 +50367,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	spl6	sym
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splgio0	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splgio1	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splgio2	symtab	d1a16d27e908	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhi	dwarf+symtab	d1a16d27e908	shared-address	out:8	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhi	dwarf+symtab	d1a16d27e908	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhi_relnet	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhintr	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splimp	symtab	d1a16d27e908	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -53849,7 +53849,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x1448	84	tim
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x149c	116	timeout_nothrd	dwarf+symtab	d99d0df0aaf2		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x1510	120	prtimeout	dwarf+symtab	28f234a73fd3		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x1588	148	fast_prtimeout	dwarf+symtab	696b066c5bd0		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x161c	80	dtimeout	dwarf+symtab	d2a2277bba39		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x161c	80	dtimeout	dwarf+symtab	d2a2277bba39		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x166c	88	itimeout	dwarf+symtab	d2a0cb118bce		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x16c4	80	itimeout_nothrd	dwarf+symtab	150c66b06520		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x1714	116	fast_itimeout	dwarf+symtab	286e7af5aa53		out:3	undocumented		
@@ -61715,7 +61715,7 @@ IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0x1c9c	52	rt
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(route.o)	kernel-object	n32		0x0		rtable_init	dwarf+symtab			out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(route.o)	kernel-object	n32	.text	0x70	40	route_init	dwarf+symtab	ccc7213397e9		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(route.o)	kernel-object	n32	.text	0x98	88	rtalloc	dwarf+symtab	9b1fec34ded5		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(route.o)	kernel-object	n32	.text	0xf0	100	rtrequest_promote	dwarf+symtab	af956a0c5331		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(route.o)	kernel-object	n32	.text	0xf0	100	rtrequest_promote	dwarf+symtab	af956a0c5331		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(route.o)	kernel-object	n32	.text	0x154	36	rtrequest_demote	dwarf+symtab	6d76d682e594		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(route.o)	kernel-object	n32	.text	0x178	772	rtalloc1	dwarf+symtab	a118fbf2c3aa		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(route.o)	kernel-object	n32	.text	0x47c	132	rtfree_needlock	dwarf+symtab	18442b026cfc		out:2	undocumented		
@@ -66389,7 +66389,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	spl6	sy
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splgio0	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splgio1	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splgio2	symtab	2204b057e629	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhi	symtab	2204b057e629	shared-address	in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhi	symtab	2204b057e629	shared-address	in	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhi_relnet	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhintr	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splimp	symtab	2204b057e629	shared-address	out:9	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -70361,7 +70361,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x13b0	88	tim
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x1408	120	timeout_nothrd	dwarf+symtab	952b2a2e7054		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x1480	120	prtimeout	dwarf+symtab	2dbe589749cc		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x14f8	148	fast_prtimeout	dwarf+symtab	d692acf5802b		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x158c	80	dtimeout	dwarf+symtab	8892bb31de07		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x158c	80	dtimeout	dwarf+symtab	8892bb31de07		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x15dc	88	itimeout	dwarf+symtab	a1563b293264		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x1634	84	itimeout_nothrd	dwarf+symtab	e4a6b3f52f57		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x1688	116	fast_itimeout	dwarf+symtab	2a0b995386e8		out:3	undocumented		
@@ -77999,7 +77999,7 @@ IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1c50	56	rt
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(route.o)	kernel-object	n64		0x0		rtable_init	dwarf+symtab			out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(route.o)	kernel-object	n64	.text	0x70	36	route_init	dwarf+symtab	15626ba4e57e		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(route.o)	kernel-object	n64	.text	0x94	88	rtalloc	dwarf+symtab	d7989fa19244		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/bsd.a(route.o)	kernel-object	n64	.text	0xec	88	rtrequest_promote	dwarf+symtab	6103758fd0a2		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bsd.a(route.o)	kernel-object	n64	.text	0xec	88	rtrequest_promote	dwarf+symtab	6103758fd0a2		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(route.o)	kernel-object	n64	.text	0x144	32	rtrequest_demote	dwarf+symtab	6dec06f764cb		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(route.o)	kernel-object	n64	.text	0x164	776	rtalloc1	dwarf+symtab	4ec78cade4b9		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(route.o)	kernel-object	n64	.text	0x46c	116	rtfree_needlock	dwarf+symtab	6f2018c586f5		out:2	undocumented		
@@ -83981,7 +83981,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	spl6	sy
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splgio0	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splgio1	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splgio2	symtab	d20175b8aee2	shared-address	out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhi	dwarf+symtab	d20175b8aee2	shared-address	out:11	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhi	dwarf+symtab	d20175b8aee2	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhi_relnet	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhintr	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splimp	symtab	d20175b8aee2	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -88404,7 +88404,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x1734	116	ti
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x17a8	120	prtimeout	dwarf+symtab	94032fe9d93c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x1820	88	prtimeout_nothrd	dwarf+symtab	3c52cfc6c446		out:3	named-only	chips/ioc3/README.md#interrupt-registers-0x1c-0x20-0x24-established	Interrupt registers (`0x1c`, `0x20`, `0x24`): established
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x1878	148	fast_prtimeout	dwarf+symtab	61a687e8f47e		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x190c	80	dtimeout	dwarf+symtab	d2a2277bba39		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x190c	80	dtimeout	dwarf+symtab	d2a2277bba39		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x195c	88	itimeout	dwarf+symtab	7073024615e5		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x19b4	80	itimeout_nothrd	dwarf+symtab	0463761f2c3d		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x1a04	116	fast_itimeout	dwarf+symtab	473e20e652ab		out:3	undocumented		
@@ -97494,7 +97494,7 @@ sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	psema	symtab	78aa5094d5ec	share
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl0	symtab	78aa5094d5ec	shared-address	out:4	named-only	chips/crime/README.md#graded-register-table	Graded register table
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl5	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl7	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splhi	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splhi	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splimp	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splx	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spsema	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
@@ -98269,7 +98269,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	psema	symtab	78aa5094d5
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl0	symtab	78aa5094d5ec	shared-address	out:15	named-only	chips/crime/README.md#graded-register-table	Graded register table
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl5	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl7	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splhi	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splhi	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splimp	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splx	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spsema	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
