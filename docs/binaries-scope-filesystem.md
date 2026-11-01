@@ -279,3 +279,50 @@ table. Labels: a classification from names, sizes and the scan's result is infer
 - `IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_vnodeops.o)` (established): 47 routines in an 18596-byte member, each
   a two-instruction return read in full. 41 set `v0` to 89, `umfs_map` sets it to 19, and five (`umfs_strategy`,
   `umfs_rwlock`, `umfs_rwunlock`, `umfs_link_removed` and `umfs_vnode_change`) return with no value set.
+
+## IP30 boot set
+
+The IP30 kernel build carries the same file-system members as the IP27 build, each compiled separately, so
+each one has its own size and its own routines. Each entry below is read from that build's symbol table and
+the census, and the window scan's access count is zero for every member listed here.
+
+- `IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)` (inferred): 20 routines in a 26532-byte member. `do_mount`
+  (948 bytes), `makeautonode` (484 bytes) and `unmount_hierarchy` (444 bytes) build and tear down the automount
+  tree under the trigger directories, and `send_unmount_request` (624 bytes) sends an unmount request to the
+  automount daemon. The four `xdr_` routines encode the mount and unmount request and reply records. The scan
+  records no window reference in this member.
+- `IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vfsops.o)` (inferred): nine routines in a 15508-byte member, the
+  mount-table entry points of the autofs file system. `auto_mount` (1148 bytes) is the largest, with
+  `auto_unmount` (328 bytes), `auto_statvfs` (196 bytes) and `autofs_init` (164 bytes) beside it. The census
+  lists no register access for this member.
+- `IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)` (inferred): 24 vnode operations in a 32020-byte member.
+  `auto_lookup` (2372 bytes) is the largest, followed by `auto_readdir` (1208 bytes), `auto_rmdir` (884 bytes) and
+  `auto_mkdir` (744 bytes). They answer file requests on autofs directories. Its access count in the scan is zero.
+- `IP30/usr/cpu/sysgen/IP30boot/autofs.a(autofs_icrash.o)` (inferred): one routine, `autofs_icrash`, in a
+  13396-byte member, and the symbol table gives it no size. Its name marks it as a crash-analysis hook for the
+  autofs state. The scan records nothing reaching a chip window here.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)` (inferred): 15 routines in a 24996-byte member, for
+  example `makecachefsnode` (2888 bytes), `cachefs_initcnode` (1760 bytes) and `valid_allocmap` (776 bytes). They
+  keep the hash of cache nodes keyed by file id, find nodes with `cfind` and `cfind_by_fid`, and check the
+  allocation map. Nothing in it reaches a chip window.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)` (inferred): ten routines in a 15764-byte member.
+  `cachefs_replacement` (1264 bytes) chooses which cached files to evict, `replace_front_file` (468 bytes) swaps
+  one out, and `cachefs_allocblocks` (324 bytes) and `cachefs_allocfile` (248 bytes) reserve cache space. No
+  window site was recorded for it.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_singlewrc.o)` (inferred): five routines in a 14692-byte member,
+  all named `c_single_` followed by an operation. `c_single_check_cached_object` (1780 bytes) is the largest,
+  with `c_single_modify_cached_object` (688 bytes) beside it. It is the single-writer consistency policy for
+  cached objects, and its access count is zero.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_strict.o)` (inferred): five routines in a 13156-byte member,
+  named `c_strict_` plus the same five operations. `c_strict_check_cached_object` (1300 bytes) and
+  `c_strict_modify_cached_object` (724 bytes) are the bulk. The strict policy is the sibling of the single-writer
+  member above, and the census has no register access for it.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)` (inferred): 54 routines in a 75380-byte member, the
+  largest cache-file member of this build. `release_fileheader` (2544 bytes) and `cachefs_cache_create` (1756
+  bytes) lead, with `cachefsio_read` and `cachefsio_write` (1376 bytes each) doing the cache-side transfers and
+  `cachefs_async_daemon` (940 bytes) running the background queue. Its allocation-map and directory routines keep
+  block lists on the cache volume, not on any device window.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)` (inferred): nine routines in a 13076-byte member.
+  `fscache_sync` (912 bytes) flushes cache objects, `fscache_destroy` (340 bytes) releases one, and the
+  `fscache_hold` and `fscache_rele` pair (68 bytes each) adjust its reference count. The list helpers
+  `fscache_list_add` and `fscache_list_remove` manage its membership. The scan's access count is zero.
