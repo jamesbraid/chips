@@ -3,39 +3,39 @@
 Each entry: the question, the routes already tried, the next route. When answered, the fact moves into its
 chip page and the entry is deleted.
 
-- **Chip numbering inside the shared Bridge-family accessors.** The accessors choose among four chips by a
+- **Chip numbering inside the shared Bridge-family accessors.** *[route: software now]* The accessors choose among four chips by a
   type field and by the identification word's part number. For Bridge (part `0xc002`), XBridge (`0xd002`) and PIC
   (`0xd102`, `0xd112`) the part numbers and the 32-bit and 64-bit layouts match the public Linux and OpenBSD constants
   (chips/bridge/README.md, "Against the public drivers"), so those three are settled. Still open: the type 3 and part
   `0xe000`/`0xe010` chip (see TIOCP). The part number `0xd100` that `xbow_widget_present` tests is not a Bridge-family part: the routine reads it from the word at +4 of the block it is given and then reads per-link words at +0x13c from a 0x40 stride, so it names the crossbar's own identification (inferred).
   Next: the Crossbow probe routines' callers, and the public Linux `pci-xtalk-bridge.c` history for the later part
   numbers.
-- **Bridge and XBridge: revision 2 attach path.** `xbridge_attach` takes a separate path for identification
+- **Bridge and XBridge: revision 2 attach path.** *[route: software now]* `xbridge_attach` takes a separate path for identification
   `revision | part << 4` equal to `0xc0022` (at `0xc000000000070d98` of the IP27 `unix`) that builds the interrupt-enable
   mask differently. The path ORs a constant into the mask and ANDs a literal; the intent is not decoded. Next: read the
   path with the literal pool resolved and compare with the revision-3 path.
-- **Bridge and XBridge: the interrupt device register at attach.** IRIX writes `0xffffffff`; the public Linux and
+- **Bridge and XBridge: the interrupt device register at attach.** *[route: software now]* IRIX writes `0xffffffff`; the public Linux and
   OpenBSD drivers write 0. Neither says why, and no shipped routine reads the reset value. Next: the pin-to-device
   assignment in `pcibr_intr_alloc` and what the all-ones value does before any pin is assigned.
-- **Bridge and XBridge: response buffer registers.** `0x280` and `0x288` are accessed through `pcireg_rrb_*`; only the
+- **Bridge and XBridge: response buffer registers.** *[route: software now]* `0x280` and `0x288` are accessed through `pcireg_rrb_*`; only the
   enable constant `0x8` and the index-to-offset mapping are read. The field layout (enable, virtual channel, device) is
   the public drivers' and was not derived. Next: `pcibr_rrb_alloc`, `pcibr_alloc_all_rrbs` and `pcibr_rrb_check`.
-- **Bridge and XBridge: registers above 0x298.** Whether the XBridge has registers between `0x2a0` and `0x10000`
+- **Bridge and XBridge: registers above 0x298.** *[route: software now; PROM search; an accepted end state if none is found]* Whether the XBridge has registers between `0x2a0` and `0x10000`
   (the census reaches none and the public headers name none). Valid end state unless a routine that touches them is
   found. Next: the IP27 PROM and I/O-board PROM, which the scan could not resolve.
-- **Bridge and XBridge: the IP27 and I/O-board PROMs.** The window base is built at run time and neither PROM has
+- **Bridge and XBridge: the IP27 and I/O-board PROMs.** *[route: software now]* The window base is built at run time and neither PROM has
   symbols, so the census holds no access from them. Next: constant-fold the PROM's widget-window setup, or read the
   I/O-board PROM's bridge probe by hand.
-- **Bridge and XBridge: device register bits.** Only the pair `0x180000` (`pcibr_endian_set`) and the IP30 PROM's
+- **Bridge and XBridge: device register bits.** *[route: software now]* Only the pair `0x180000` (`pcibr_endian_set`) and the IP30 PROM's
   `0x1004` are read; the other bits the flags routines pass are derived from their callers at run time. Next:
   `pcibr_device_flags_set`'s callers and `pcibr_slot_addr_space_init`.
-- **TIOCP and TIO.** Whether any product in scope carries a TIOCP is not established, and no TIO code is held: the
+- **TIOCP and TIO.** *[route: missing source: Altix-era headers in the uninitialised linux-2.5.40 submodule; the product history needs a published document that is not held]* Whether any product in scope carries a TIOCP is not established, and no TIO code is held: the
   names `tio_init_xswitch_widgets` and `Tio_brick_map_widget` are in the debug name tables of the IP35 `kernel.o` with no
   text symbol, and the software enumeration `pciio_asic_type_e` has a TIOCP value (chips/tiocp/README.md). Tried: the
   census of the shared accessors, a string and symbol search of every IP27 and IP35 object and PROM image. Next: the
   public Altix-era headers in the pinned older Linux tree, and `pci-xtalk-bridge.c` in current Linux, read after the
   binary reading.
-- **Xbow: the PROMs' large crossbar routines.** The census seeds only the small routines it could tie to the
+- **Xbow: the PROMs' large crossbar routines.** *[route: software now]* The census seeds only the small routines it could tie to the
   Crossbow (link-usable tests, link reset, error save, the IP30 interrupt service). Routines that touch the
   link-block displacements and were not read: IP27 PROM `0x1fc444b0`; I/O-board PROM `0x11c1d4ac`, `0x11c21c58`,
   `0x11c3250c`, `0x11c517f4`, `0x11c52f80`, `0x11c5ce08`; IP35 PROM `0x1fc4ca98`; IP30 PROM `0xbfc4528c`,
@@ -45,7 +45,7 @@ chip page and the entry is deleted.
   link credit and arbitration setup, the diagnostics and any write of widget 0 control, packet time-out, LLP control and
   arbitration reload. Next: read each by hand, or constant-fold the record fields; settle the input-buffer flush
   register, the packet time-out and arbitration reload values and the NIC register.
-- **Xbow: interrupt vector assignment.** IRIX writes the vector into interrupt destination upper from the interrupt
+- **Xbow: interrupt vector assignment.** *[route: software now]* IRIX writes the vector into interrupt destination upper from the interrupt
   layer at run time; which number each product uses is not in `xbow.o`. Next: the interrupt allocation code of the node
   controller and HEART, and any PROM routine that programs the register.
 - **Xbow: write-error behaviour.** The graded answers (what sets each error bit, what is latched on a refused register
