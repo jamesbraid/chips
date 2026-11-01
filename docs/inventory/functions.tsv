@@ -4697,7 +4697,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003aa94	12	do_sync_instruction	symtab	0fc5
 IP27/unix	kernel	n64	.text	0xc00000000003aaa0	40	siron	symtab	465f138331e6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003aac8	44	siroff	symtab	b8f75fd62e1e		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003aaf4	16	flushbus	symtab	b6404696c86e		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP27/unix	kernel	n64	.text	0xc00000000003ab04	8	wbflush	symtab	78aa5094d5ec		out:5	named-only	chips/crime/README.md#cpu-interface-control-0x8	CPU interface control (`0x8`)
+IP27/unix	kernel	n64	.text	0xc00000000003ab04	8	wbflush	symtab	78aa5094d5ec		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64	.text	0xc00000000003ab0c	8	ip26_enable_ucmem	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003ab0c	8	ip26_return_ucmem	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003ab0c	8	ip28_enable_ucmem	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
@@ -5258,9 +5258,9 @@ IP27/unix	kernel	n64	.text	0xc0000000000575b4	8	probe_wards	symtab	78aa5094d5ec	
 IP27/unix	kernel	n64	.text	0xc0000000000575bc	8	wards_tick	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000575d0	20	VEC_nofault	symtab	3215516496e7		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000575e4	120	dobuserr	symtab	2ce1031dbd9a		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP27/unix	kernel	n64	.text	0xc00000000005765c	48	badaddr	symtab	93388988e934		out:5	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP27/unix	kernel	n64	.text	0xc00000000005765c	48	badaddr	symtab	93388988e934		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64	.text	0xc00000000005768c	48	badaddr_val	symtab	35a713af9ab9		out:5	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
-IP27/unix	kernel	n64	.text	0xc0000000000576bc	56	wbadaddr	symtab	76b5de5dabe9		out:5	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP27/unix	kernel	n64	.text	0xc0000000000576bc	56	wbadaddr	symtab	76b5de5dabe9		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64	.text	0xc0000000000576f4	48	wbadaddr_val	symtab	3fb41914fa8b		out:5	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
 IP27/unix	kernel	n64	.text	0xc000000000057724	8	is_buserror	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000057810	872	VEC_cpfault	symtab	8d3b55fb4249		out:5	undocumented		
@@ -19094,7 +19094,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21914	12	do_sync
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21920	40	siron	dwarf+symtab	465f138331e6		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21948	44	siroff	dwarf+symtab	b8f75fd62e1e		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21974	16	flushbus	dwarf+symtab	b6404696c86e		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21984	8	wbflush	dwarf+symtab	78aa5094d5ec		out:6	named-only	chips/crime/README.md#cpu-interface-control-0x8	CPU interface control (`0x8`)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21984	8	wbflush	dwarf+symtab	78aa5094d5ec		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2198c	8	ip26_enable_ucmem	dwarf+symtab	78aa5094d5ec	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2198c	8	ip26_return_ucmem	symtab	78aa5094d5ec	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2198c	8	ip28_enable_ucmem	symtab	78aa5094d5ec	shared-address	out:6	undocumented		
@@ -19703,9 +19703,9 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e434	8	probe_wa
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e43c	8	wards_tick	dwarf+symtab	78aa5094d5ec		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e450	20	VEC_nofault	dwarf+symtab	14ce28ea91c9		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e464	120	dobuserr	dwarf+symtab	5221fee2d083		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e4dc	48	badaddr	dwarf+symtab	8639efa5485d		out:6	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e4dc	48	badaddr	dwarf+symtab	8639efa5485d		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e50c	48	badaddr_val	dwarf+symtab	eac9db8f8c92		out:6	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e53c	56	wbadaddr	dwarf+symtab	8613e88e8857		out:6	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e53c	56	wbadaddr	dwarf+symtab	8613e88e8857		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e574	48	wbadaddr_val	dwarf+symtab	54fb2aefa8b2		out:6	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e5a4	8	is_buserror	dwarf+symtab	87506497337c		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3e5ac	228	probe_common	dwarf	a9a4aaf2cf09		out:6	undocumented		
@@ -36853,14 +36853,14 @@ IP30/unix	kernel	n64	.text	0xa80000002001c164	12	do_sync_instruction	symtab	0fc5
 IP30/unix	kernel	n64	.text	0xa80000002001c170	40	siron	symtab	465f138331e6		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c198	44	siroff	symtab	b8f75fd62e1e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c1c4	32	flushbus	symtab	ef6ea10b90dc		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP30/unix	kernel	n64	.text	0xa80000002001c1e4	8	wbflush	symtab	78aa5094d5ec		out:7	named-only	chips/crime/README.md#cpu-interface-control-0x8	CPU interface control (`0x8`)
+IP30/unix	kernel	n64	.text	0xa80000002001c1e4	8	wbflush	symtab	78aa5094d5ec		out:7	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa80000002001c1ec	8	ip26_enable_ucmem	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c1ec	20	ip26_return_ucmem	symtab	4bb71562d901	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c1ec	20	ip28_enable_ucmem	symtab	4bb71562d901	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c1ec	20	ip28_return_ucmem	symtab	4bb71562d901	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001c200	296	badaddr	symtab	db4e7fe72cf3		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP30/unix	kernel	n64	.text	0xa80000002001c200	296	badaddr	symtab	db4e7fe72cf3		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa80000002001c328	364	badaddr_val	symtab	f8a0cda7efd7		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
-IP30/unix	kernel	n64	.text	0xa80000002001c494	332	wbadaddr	symtab	f981998eae7c		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP30/unix	kernel	n64	.text	0xa80000002001c494	332	wbadaddr	symtab	f981998eae7c		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa80000002001c5e0	360	wbadaddr_val	symtab	830caef903d7		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
 IP30/unix	kernel	n64	.text	0xa80000002001c748	312	earlybadaddr	symtab	05df890ca12a		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
 IP30/unix	kernel	n64	.text	0xa80000002001c880	136	wbadmemaddr	symtab	82f9137c0c14		in	undocumented		
@@ -50409,14 +50409,14 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbfe4	12	do_sync_
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbff0	40	siron	dwarf+symtab	465f138331e6		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc018	44	siroff	dwarf+symtab	b8f75fd62e1e		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc044	32	flushbus	dwarf+symtab	ef6ea10b90dc		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc064	8	wbflush	dwarf+symtab	78aa5094d5ec		out:8	named-only	chips/crime/README.md#cpu-interface-control-0x8	CPU interface control (`0x8`)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc064	8	wbflush	dwarf+symtab	78aa5094d5ec		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	8	ip26_enable_ucmem	dwarf+symtab	78aa5094d5ec	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	20	ip26_return_ucmem	symtab	4bb71562d901	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	20	ip28_enable_ucmem	symtab	4bb71562d901	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	20	ip28_return_ucmem	symtab	4bb71562d901	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc080	296	badaddr	dwarf+symtab	2788dda857c8		out:8	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc080	296	badaddr	dwarf+symtab	2788dda857c8		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc1a8	364	badaddr_val	dwarf+symtab	1a90a5d77287		out:8	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc314	332	wbadaddr	dwarf+symtab	a6a1188d0847		out:8	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc314	332	wbadaddr	dwarf+symtab	a6a1188d0847		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc460	360	wbadaddr_val	dwarf+symtab	dfb7c35a1676		out:8	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc5c8	312	earlybadaddr	dwarf+symtab	588b98ff86e8		out:8	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc700	136	wbadmemaddr	dwarf+symtab	9cc7f4ccc2ff		out:8	undocumented		
@@ -66520,7 +66520,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xfb60	60	ecc_same
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xfb9c	576	decode_inst	symtab	9cb250dd414d		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xfddc	200	map_physaddr	symtab	1aa7ca9a289a		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xfea4	100	unmap_physaddr	symtab	7b1df8db27d9		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xff50	160	ecc_error_correction	symtab	e2c015d7e3cf		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xff50	160	ecc_error_correction	symtab	e2c015d7e3cf		in	named-only	chips/crime/README.md#memory-error-status-0x250-address-0x258-ecc-registers	Memory error status (`0x250`), address (`0x258`), ECC registers
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x100a0	460	log_ecc_err	symtab	cfc0a5e93cd7		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1026c	68	dobuserre	symtab	925b18ad042c		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x102b0	60	dobuserr	symtab	1d07a08050ca		out:9	named-only	chips/crime/README.md#graded-register-table	Graded register table
@@ -66581,7 +66581,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11c34	12	do_sync
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11c40	72	siron	symtab	0b0c520c2bd4		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11c88	68	siroff	symtab	23ff907e1676		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11ccc	44	flushbus	symtab	3fbcf98d39eb		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11cf8	16	wbflush	symtab	93593d9a07f4		out:9	named-only	chips/crime/README.md#cpu-interface-control-0x8	CPU interface control (`0x8`)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11cf8	16	wbflush	symtab	93593d9a07f4		out:9	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11d08	8	ip26_enable_ucmem	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11d08	120	ip26_return_ucmem	symtab	d7276fd812c6	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11d08	120	ip28_enable_ucmem	symtab	d7276fd812c6	shared-address	out:9	undocumented		
@@ -66628,9 +66628,9 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x140c0	56	_ticksp
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x140f8	172	_cpuclkper100ticks	symtab	92097777333d		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x141a4	132	delay_calibrate	symtab	291163649fe1		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14240	48	delayloop	symtab	1938f7aab185		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14270	312	badaddr	symtab	307b09f44029		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14270	312	badaddr	symtab	307b09f44029		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x143a8	380	badaddr_val	symtab	1acbf1f49434		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14524	356	wbadaddr	symtab	dad9ed0e3eab		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14524	356	wbadaddr	symtab	dad9ed0e3eab		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14688	384	wbadaddr_val	symtab	15c3f333834b		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14808	296	earlybadaddr	symtab	73366b237b85		in	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14930	120	wbadmemaddr	symtab	1bd3747c10d2		out:9	undocumented		
@@ -83968,7 +83968,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21d44	12	do_sync
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21d50	40	siron	dwarf+symtab	465f138331e6		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21d78	44	siroff	dwarf+symtab	b8f75fd62e1e		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21da4	16	flushbus	dwarf+symtab	b6404696c86e		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21db4	8	wbflush	dwarf+symtab	78aa5094d5ec		out:11	named-only	chips/crime/README.md#cpu-interface-control-0x8	CPU interface control (`0x8`)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21db4	8	wbflush	dwarf+symtab	78aa5094d5ec		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dbc	8	ip26_enable_ucmem	dwarf+symtab	78aa5094d5ec	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dbc	20	ip26_return_ucmem	symtab	4bb71562d901	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dbc	20	ip28_enable_ucmem	symtab	4bb71562d901	shared-address	out:11	undocumented		
@@ -84546,9 +84546,9 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3e9f4	272	bte_po
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3eb04	12	bte_disable	dwarf+symtab	5fe1255fc6ac		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3eb10	20	VEC_nofault	dwarf+symtab	14ce28ea91c9		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3eb24	120	dobuserr	dwarf+symtab	6a7d88f421b8		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3eb9c	48	badaddr	dwarf+symtab	cc1a7e544f7d		out:11	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3eb9c	48	badaddr	dwarf+symtab	cc1a7e544f7d		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3ebcc	48	badaddr_val	dwarf+symtab	c8106c886f1c		out:11	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3ebfc	56	wbadaddr	dwarf+symtab	96608a9f9775		out:11	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3ebfc	56	wbadaddr	dwarf+symtab	96608a9f9775		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3ec34	48	wbadaddr_val	dwarf+symtab	97cd8050c7a5		out:11	named-only	chips/crime/README.md#probe-sequence-how-the-kernel-learns-that-an-uncached-access-failed	Probe sequence (how the kernel learns that an uncached access failed)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3ec64	8	is_buserror	dwarf+symtab	87506497337c		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3ec6c	288	probe_common	dwarf	b55e17bf8f0d		in	undocumented		
@@ -98050,7 +98050,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00284ec	8	businfo	symtab	78aa5094
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00284f4	20	read_reg64	symtab	35318dc3efd5		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028508	24	write_reg64	symtab	be72b96394d8		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	flushbus	symtab	640df3041b0b	shared-address	out:15	named-only	chips/crime/README.md#graded-register-table	Graded register table
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	wbflush	symtab	640df3041b0b	shared-address	in	named-only	chips/crime/README.md#cpu-interface-control-0x8	CPU interface control (`0x8`)
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	wbflush	symtab	640df3041b0b	shared-address	in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028540	20	Read_C0_LLADDR	symtab	0bed81c21644		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028554	12	Read_C0_Config	symtab	65d36b16835c		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028560	12	Write_C0_Config	symtab	702d110d5a68		out:15	undocumented		
