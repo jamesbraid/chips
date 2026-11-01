@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3092	0	36	0	36	0	0	130	2926	0	1.2	1.2	5.4	1.2							0			
-functions	6290	92003	43	0	27	0	49	1284	4914	0	0.7	1.5	21.9	0.7							0	0	16	
-functions (distinct names)	2473	21778	28	0	27	0	4	458	1983	0	1.1	1.3	19.8	1.1							0			
+functions	6290	92003	54	0	38	0	49	1282	4905	0	0.9	1.6	22.0	0.9							0	0	16	
+functions (distinct names)	2473	21778	39	0	38	0	4	456	1974	0	1.6	1.7	20.2	1.6							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -1814,7 +1814,7 @@ functions in IP32/usr/cpu/sysgen/IP32boot/lofs.a(lofs_vfsops.o)	0	6	0	0	0	0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/lofs.a(lofs_vnops.o)	0	42	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/lofs.a(lofs_icrash.o)	0	1	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/log.o	0	12	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP32/usr/cpu/sysgen/IP32boot/mace.o	12	0	0	0	0	0	0	3	9	0	0.0	0.0	25.0	0.0							0	0	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/mace.o	12	0	11	0	11	0	0	1	0	0	91.7	91.7	100.0	91.7							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/magellan.o	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/mem.o	0	12	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/mhpckm.o	24	0	0	0	0	0	1	5	18	0	0.0	4.2	25.0	0.0							0	0	0	
