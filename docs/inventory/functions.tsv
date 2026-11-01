@@ -586,7 +586,7 @@ IP27/unix	kernel	n64		0x0		cpuset_release_cm	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		cpuset_share_node	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		cpuset_vhand	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		cquotasync	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		crc16	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		crc16	dwarf			out:5	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP27/unix	kernel	n64		0x0		cread	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		csa_config_make	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		csa_config_write	dwarf			out:5	undocumented		
@@ -2174,11 +2174,11 @@ IP27/unix	kernel	n64		0x0		nic_access_hub	dwarf			in	named-only	chips/bedrock/RE
 IP27/unix	kernel	n64		0x0		nic_match_rom	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		nic_mfg_next	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		nic_next_scan	dwarf			in	undocumented		
-IP27/unix	kernel	n64		0x0		nic_presence	dwarf			in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP27/unix	kernel	n64		0x0		nic_read	dwarf			in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP27/unix	kernel	n64		0x0		nic_read_byte	dwarf			in	undocumented		
-IP27/unix	kernel	n64		0x0		nic_write	dwarf			in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP27/unix	kernel	n64		0x0		nic_write_byte	dwarf			in	undocumented		
+IP27/unix	kernel	n64		0x0		nic_presence	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP27/unix	kernel	n64		0x0		nic_read	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP27/unix	kernel	n64		0x0		nic_read_byte	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP27/unix	kernel	n64		0x0		nic_write	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP27/unix	kernel	n64		0x0		nic_write_byte	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP27/unix	kernel	n64		0x0		nm_access	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		nm_close	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		nm_create	dwarf			out:5	undocumented		
@@ -21865,13 +21865,13 @@ IP27/usr/cpu/sysgen/IP27boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x160	
 IP27/usr/cpu/sysgen/IP27boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x250	572	idbg_prrnode	dwarf+symtab	5e9d7377f0fa		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x48c	436	idbg_mntinfo	dwarf+symtab	5e40360b32ce		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x640	244	nfsidbginit	dwarf+symtab	2af857823e18		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64		0x0		crc16	dwarf+symtab			in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64		0x0		crc16	dwarf+symtab			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x68	52	nic_get_phase_bits	dwarf+symtab	e964f21e8b77		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x9c	44	nic_presence	dwarf+symtab	6d6833ceca2f		in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0xc8	68	nic_write	dwarf+symtab	a6203f5b06f2		in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x10c	44	nic_read	dwarf+symtab	d48e6d01cac3		in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x138	116	nic_write_byte	dwarf+symtab	a97ac3cdf271		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x1ac	100	nic_read_byte	dwarf+symtab	47b4afd80f80		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x9c	44	nic_presence	dwarf+symtab	6d6833ceca2f		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0xc8	68	nic_write	dwarf+symtab	a6203f5b06f2		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x10c	44	nic_read	dwarf+symtab	d48e6d01cac3		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x138	116	nic_write_byte	dwarf+symtab	a97ac3cdf271		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x1ac	100	nic_read_byte	dwarf+symtab	47b4afd80f80		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x210	484	nic_next_scan	dwarf+symtab	71d15f651f53		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x3f4	40	nic_setup	dwarf+symtab	81a781f1088a		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x41c	400	nic_next	dwarf+symtab	db8237bd1100		in	undocumented		
@@ -32795,7 +32795,7 @@ IP30/unix	kernel	n64		0x0		cpuset_pid_to_proc	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		cpuset_pid_to_vpr	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		cpuset_share_node	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		cquotasync	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		crc16	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		crc16	dwarf			out:7	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP30/unix	kernel	n64		0x0		cread	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		create_ha_dir	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		csa_config_make	dwarf			out:7	undocumented		
@@ -34436,11 +34436,11 @@ IP30/unix	kernel	n64		0x0		nfswrite	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		nic_match_rom	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		nic_mfg_next	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		nic_next_scan	dwarf			in	undocumented		
-IP30/unix	kernel	n64		0x0		nic_presence	dwarf			in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP30/unix	kernel	n64		0x0		nic_read	dwarf			in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP30/unix	kernel	n64		0x0		nic_read_byte	dwarf			in	undocumented		
-IP30/unix	kernel	n64		0x0		nic_write	dwarf			in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP30/unix	kernel	n64		0x0		nic_write_byte	dwarf			in	undocumented		
+IP30/unix	kernel	n64		0x0		nic_presence	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/unix	kernel	n64		0x0		nic_read	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/unix	kernel	n64		0x0		nic_read_byte	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/unix	kernel	n64		0x0		nic_write	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/unix	kernel	n64		0x0		nic_write_byte	dwarf			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP30/unix	kernel	n64		0x0		nlm1_unlock	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		nlm4_granted_res	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		nlm4_stat_res	dwarf			out:7	undocumented		
@@ -52478,12 +52478,12 @@ IP30/usr/cpu/sysgen/IP30boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x160	
 IP30/usr/cpu/sysgen/IP30boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x250	572	idbg_prrnode	dwarf+symtab	5e9d7377f0fa		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x48c	436	idbg_mntinfo	dwarf+symtab	f173516b9daa		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x640	244	nfsidbginit	dwarf+symtab	2af857823e18		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64		0x0		crc16	dwarf+symtab			in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x68	44	nic_presence	dwarf+symtab	6d6833ceca2f		in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x94	68	nic_write	dwarf+symtab	a6203f5b06f2		in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0xd8	44	nic_read	dwarf+symtab	d48e6d01cac3		in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x104	116	nic_write_byte	dwarf+symtab	a97ac3cdf271		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x178	100	nic_read_byte	dwarf+symtab	47b4afd80f80		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64		0x0		crc16	dwarf+symtab			in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x68	44	nic_presence	dwarf+symtab	6d6833ceca2f		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x94	68	nic_write	dwarf+symtab	a6203f5b06f2		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0xd8	44	nic_read	dwarf+symtab	d48e6d01cac3		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x104	116	nic_write_byte	dwarf+symtab	a97ac3cdf271		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x178	100	nic_read_byte	dwarf+symtab	47b4afd80f80		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x1dc	484	nic_next_scan	dwarf+symtab	71d15f651f53		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x3c0	40	nic_setup	dwarf+symtab	81a781f1088a		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x3e8	400	nic_next	dwarf+symtab	db8237bd1100		in	undocumented		
@@ -86812,13 +86812,13 @@ IP35/usr/cpu/sysgen/IP35boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x160	
 IP35/usr/cpu/sysgen/IP35boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x250	572	idbg_prrnode	dwarf+symtab	5e9d7377f0fa		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x48c	436	idbg_mntinfo	dwarf+symtab	f173516b9daa		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nfsidbg.a(nfsidbg.o)	kernel-object	n64	.text	0x640	244	nfsidbginit	dwarf+symtab	2af857823e18		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64		0x0		crc16	dwarf+symtab			in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64		0x0		crc16	dwarf+symtab			in	located	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x68	52	nic_get_phase_bits	dwarf+symtab	e964f21e8b77		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x9c	44	nic_presence	dwarf+symtab	6d6833ceca2f		in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0xc8	68	nic_write	dwarf+symtab	a6203f5b06f2		in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x10c	44	nic_read	dwarf+symtab	d48e6d01cac3		in	named-only	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
-IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x138	116	nic_write_byte	dwarf+symtab	a97ac3cdf271		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x1ac	100	nic_read_byte	dwarf+symtab	47b4afd80f80		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x9c	44	nic_presence	dwarf+symtab	6d6833ceca2f		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0xc8	68	nic_write	dwarf+symtab	a6203f5b06f2		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x10c	44	nic_read	dwarf+symtab	d48e6d01cac3		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x138	116	nic_write_byte	dwarf+symtab	a97ac3cdf271		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x1ac	100	nic_read_byte	dwarf+symtab	47b4afd80f80		in	understood	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x210	484	nic_next_scan	dwarf+symtab	71d15f651f53		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x3f4	40	nic_setup	dwarf+symtab	81a781f1088a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x41c	400	nic_next	dwarf+symtab	db8237bd1100		in	undocumented		

@@ -1146,7 +1146,7 @@ IP30/usr/cpu/sysgen/IP30boot/nfs3.a(nfs3_vfsops.o)	kernel-IP30	kernel-object	obj
 IP30/usr/cpu/sysgen/IP30boot/nfs3.a(xattr_clnt.o)	kernel-IP30	kernel-object	object	n64	15876	9957ad5bcfe7aa45		10	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfs3.a(xattr_subr.o)	kernel-IP30	kernel-object	object	n64	9764	775646f4fa6b4b45		2	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfsidbg.a(nfsidbg.o)	kernel-IP30	kernel-object	object	n64	12676	870c59322f92573a		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-IP30	kernel-object	object	n64	25800	82bdecf4feb8a2c1		29	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-IP30	kernel-object	object	n64	25800	82bdecf4feb8a2c1		29	symtab	0	0	named-only	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(cnolocks.o)	kernel-IP30	kernel-object	object	n64	8372	d45e8116fea6e4df		14	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-IP30	kernel-object	object	n64	5748	0a859dcab71d13c7		16	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/noncell.a(behavior_noncell.o)	kernel-IP30	kernel-object	object	n64	8244	84f51ca9a1b8e397		15	symtab	0	0	undocumented		

@@ -24,7 +24,7 @@ CRIME 1.5	6-12	150	CRIME	0x260	ECC Syndrome Bits	1	0	64		1	undocumented
 CRIME 1.5	6-12	150	CRIME	0x268	ECC Generated Check Bits	1	0	64		1	undocumented		
 CRIME 1.5	6-12	150	CRIME	0x270	ECC Replacement Check Bits	1	0	64		0	undocumented		
 CRIME 1.5	5-7	113	CRIME	0x4048	CPU Error Status	1	0	64		0	undocumented		
-CRIME 1.5	7-1	163	RE	0x0	IntfBuf.data[128]	128	8	64	R/W	0	named-only	chips/mace/README.md#against-the-public-drivers	Against the public drivers
+CRIME 1.5	7-1	163	RE	0x0	IntfBuf.data[128]	128	8	64	R/W	0	named-only	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
 CRIME 1.5	7-1	164	RE	0x200	IntfBuf.addr[128]	128	8	64	R/W	0	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 CRIME 1.5	7-1	164	RE	0x400	IntfBuf.ctl	1	0	32	W	0	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 CRIME 1.5	7-2	164	RE	0x1000	TLB.fbA[64]	64	8	64	R/W	0	undocumented		

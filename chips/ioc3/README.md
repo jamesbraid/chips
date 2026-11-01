@@ -191,6 +191,34 @@ accessor pointer in their first argument, which is how `nic_access_mcr32` is rea
 `(520, 65, 500)`; write a 1 `(6, 110, 0)`; write a 0 `(80, 30, 0)`; read `(6, 13, 100)`. Inferred: `a1` pulse length and `a2`
 sample point in microseconds, bit 1 done, bit 0 the sampled line.
 
+### One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+
+The IP30 `nic.o` lays these routines out differently from the IP27 and IP35 copies cited above; the addresses here are the IP30
+build's.
+
+- `nic_presence` (`IP30/usr/cpu/sysgen/IP30boot/nic.o` at `0x68`, read in full, established): loads the accessor pointer from the
+  doubleword at `a0` and the cookie from the doubleword at `a0 + 8`, calls the accessor through a register with `a1` 520, `a2` 65 and
+  `a3` 500, and returns the accessor's result. Its only control transfers are that call and the return.
+- `nic_write` (`IP30/usr/cpu/sysgen/IP30boot/nic.o` at `0x94`, read in full, established): takes one bit in `a1`. A nonzero bit sets the
+  accessor's `a1` to 6 and `a2` to 110; a zero bit sets them to 80 and 30. The `movn` in the call's delay slot takes the `v0` value 110
+  into `a2` when the bit is set. It sets `a3` to 0, calls the accessor loaded from the doubleword at `a0`, with the cookie from `a0 + 8`,
+  and returns the accessor's result.
+- `nic_read` (`IP30/usr/cpu/sysgen/IP30boot/nic.o` at `0xd8`, read in full, established): calls the accessor loaded from the doubleword at
+  `a0`, with the cookie from `a0 + 8`, `a1` 6, `a2` 13 and `a3` 100 (the delay slot sets `a3`), and returns the accessor's result.
+- `nic_write_byte` (`IP30/usr/cpu/sysgen/IP30boot/nic.o` at `0x104`, read in full, established): writes the eight bits of `a1`, least
+  significant first. Each pass calls `nic_write` (the call at `0x138` is relocated to `nic_write`) with `a0` unchanged and `a1` set to the
+  byte ANDed with `1 << i`, which is nonzero exactly when bit `i` is set. A negative return from `nic_write` stops the loop and is returned
+  as it is. After the eighth pass it returns 0.
+- `nic_read_byte` (`IP30/usr/cpu/sysgen/IP30boot/nic.o` at `0x178`, read in full, established): reads eight bits, least significant first.
+  Each pass calls `nic_read` (the call at `0x198` is relocated to `nic_read`) with `a0` unchanged, shifts the result left by the pass index
+  and ORs it into the byte. A negative result from `nic_read` stops the loop and is returned as it is; otherwise it returns the byte after
+  eight passes.
+- `crc16` (`IP30/usr/cpu/sysgen/IP30boot/nic.o` at `0x0`, read in full, inferred): updates the halfword at `a1` in place from the byte
+  in `a0`. It loads the halfword `h`, forms `x = (a0 ^ (h & 0xff)) & 0xff`, reads two words from one table at `.data` offset 256, indexed
+  by the low nibble and the high nibble of `x`, and stores `h >> 8` at `a1`. When the two words differ it stores `(h >> 8) ^ 0xc001` at
+  `a1` as well. The last store is `a3 ^ (x << 6) ^ (x << 7)`, issued in the delay slot of the return. The table contents are not read,
+  so reading the step as a 16-bit CRC is inferred from the shifts and the polynomial constant.
+
 ### Keyboard and mouse (established: `pckm_attach`, `pckm_sendok`, `pckm_restart`, `pckm_pollcmd`)
 
 `pckm_attach` (`ioc3_pckm.o` `0x5c`) stores `0xc00000` to `0x9c`. `pckm_sendok` (`0x1ba8`) reads `0x9c` up to 250 times at 50
