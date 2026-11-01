@@ -397,3 +397,52 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   no such register: it calls `panic` with "undefined register" and, if that returns, falls straight into a second
   `panic` with the bridge-type message, then returns 0 without reading. Type -1 or a null handle calls only the
   bridge-type panic and returns 0, and a record type outside -1 to 3 returns 0. Established.
+- `pcireg_intr_device_bit_set` (`IP30/unix` `0xa8000000200562bc`, 372 bytes, frame 16 bytes)
+  sets bits in the interrupt device register: it loads the register, ORs in the second argument (`a1`) and stores the
+  result back, as the doubleword at window +0x120 for types 2 and 3 and the word at +0x124 for types 0
+  and 1. There is no level change, bound test or read-back, and it leaves no defined return value. Without a decoded
+  chip type the interrupt device register is not written: type -1, a null handle or an unrecognised raw part calls
+  `panic` with the bridge-type message, and a record type outside -1 to 3 stores nothing and prints nothing.
+  Established.
+- `pcireg_intr_dst_get` (`IP30/unix` `0xa8000000200518b8`, 372 bytes, frame 16 bytes)
+  returns the interrupt destination register whole: types 2 and 3 load the doubleword at window +0x38, and types 0 and
+  1 assemble the value from the word at +0x34 shifted left 32 and the zero-extended word at +0x3c, the same two
+  offsets `pcireg_intr_dst_set` writes in that order. Nothing is stored. A null handle, type -1 or a raw window of
+  unrecognised part leaves the interrupt destination register unread: the bridge-type `panic` runs and 0 is returned
+  from the delay slot after it; other record types return 0 without any message. Established.
+- `pcireg_intr_mode_bit_set` (`IP30/unix` `0xa800000020055d08`, 372 bytes, frame 16 bytes)
+  ORs the second argument into the interrupt mode register with a plain load, OR and store: doubleword at
+  window +0x118 (types 2 and 3) or word at +0x11c (types 0 and
+  1). It is the setting counterpart of the clearing routine that works on the same two offsets, and it touches nothing
+  else. The interrupt mode register is left alone for a null handle or type -1, which reach the bridge-type `panic`,
+  and for record types outside the range, which fall through silently. Established.
+- `pcireg_intr_reset_bit_set` (`IP30/unix` `0xa8000000200558d0`, 372 bytes, frame 16 bytes)
+  turns on bits in the interrupt reset register: the doubleword at window +0x110 for types 2 and 3 and the word
+  at +0x114 for types 0 and 1 each get one load, an OR with `a1` and one store. The two loads and stores are separate
+  instructions with no read-back after the store. A write to the interrupt reset register happens only for a decoded
+  type 0 to 3; anything else either panics with the bridge-type message (type -1, null handle, unrecognised raw part)
+  or does nothing. Established.
+- `pcireg_llp_cfg_get` (`IP30/unix` `0xa800000020052324`, 372 bytes, frame 16 bytes)
+  returns the LLP configuration register named by the routine: the doubleword at window +0x48 for type 2 and the
+  zero-extended word at +0x4c for types 0 and 1. Type 3 has no such register, so it calls `panic` with the "undefined
+  register" message and returns 0; a raw window with part 0xe000 or 0xe010 and manufacturer 36 (also type 3) does the
+  same. When no chip is recognised the link configuration register is never loaded. The routine calls `panic` with the
+  bridge-type message, returns 0 if that comes back, and gives 0 silently for a record type below -1 or above 3.
+  Established.
+- `pcireg_timeout_bit_set` (`IP30/unix` `0xa8000000200547c0`, 372 bytes, frame 16 bytes)
+  ORs the second argument into the bus timeout register, the same one the matching clear routine works on: doubleword
+  at window +0xc0 for types 2 and 3, word at +0xc4 for types 0
+  and 1. Load, OR and store only; no `spl` call, no bound test. No store reaches the bus timeout register on failure:
+  the bridge-type `panic` handles type -1, a null handle or an unmatched raw window, and record types above 3 or
+  below -1 do nothing. Established.
+- `pcireg_bus_err_get` (`IP30/unix` `0xa80000002005097c`, 368 bytes, frame 16 bytes)
+  reads the bus error register whole: the doubleword at window +0x18 for types 2 and 3, and types 0 and
+  1 assemble the value from the word at +0x14 shifted left 32 and the zero-extended word at +0x1c, which makes a
+  64-bit value from two 8-byte slots. No store is made. The bus error register is read only for record types 0 to 3
+  (or a raw window that decodes to one); type -1 and a null handle call `panic` first, and any other type returns 0.
+  Established.
+- `pcireg_pci_bus_addr_get` (`IP30/unix` `0xa800000020054d70`, 368 bytes, frame 16 bytes)
+  returns the PCI bus address register: types 2 and 3 load the doubleword at window +0xd8, while types 0 and
+  1 assemble the value from the word at +0xd4 shifted left 32 and the zero-extended word at +0xdc. Only loads are
+  made. Failures: bridge-type `panic` then 0 for a null handle, type -1 or an unrecognised raw part; plain 0 for a
+  record type outside -1 to 3, with the PCI bus address register untouched. Established.

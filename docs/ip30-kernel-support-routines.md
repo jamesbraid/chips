@@ -120,3 +120,42 @@ running the code and the doubleword at -15744 holds that processor's flag bits.
   divided, multiplied) and stored to -15016 and then again to -15032. Last it calls `initcounter` with
   `cpufreq_cycles` times (that value minus the count rounded down to a multiple of `count_min_delta`), divided by 125,
   as a 32-bit argument. Divisors of 0 raise trap code 7. Established.
+- `nanotime_syscall` (`IP30/unix` `0xa800000020016254`, 368 bytes, frame 32 bytes)
+  stores the current time into the buffer at `a0` as a 32-bit seconds word at +0 and a 64-bit nanoseconds doubleword
+  at +8, and returns the value of its final `splx`. It saves `a0` in s0, calls `spl65` (a second name for
+  `splprof` at the same address) and keeps the returned level at 0(sp). It then reads a consistent set of values and
+  repeats until the word at 0xa8000000204ae3e4 equals the word at 0xa8000000204ae3e0 read first: the doubleword at
+  0xa8000000204ae3e8 (a base tick count), the word at +0 and the doubleword at +8 of the structure at
+  0xa8000000204b03a0, the free-running counter at 0xffffffffaff20000, and `adjtime_nanos`, `adjtime_delta` and
+  `adjtime_RTC` (0xa8000000204ae3f0, 0xa8000000204ae3f8,
+  0xa8000000204ae400). With e = counter minus the base tick count, the adjustment is `adjtime_nanos`, except that
+  while the counter is below `adjtime_RTC` plus `adjtime_delta` and `adjtime_delta` is not 0 it is `adjtime_nanos`
+  times e divided by `adjtime_delta` (a signed 64-bit divide; a zero divisor would raise trap code 7). The nanoseconds
+  are the low 32 bits of the structure's doubleword (taken as unsigned), plus 80 times e (e*4+e, shifted left 4), plus
+  the adjustment, plus `timetrim` (the word at 0xa8000000204a735c) times e divided by 12500000. Whenever the sum
+  reaches 1000000000 the code subtracts 1000000000 (adds 0xffffffffc4653600) once per loop pass (the loop body is
+  written out twice) until it is below, counting the subtractions, and adds the count to the seconds word. The result
+  is stored nanoseconds first at +8, then seconds at +0. If the word `time` (0xa8000000204af188) is below those
+  seconds it takes `timelock` (`mutex_spinlock_spl`, second argument the address of `spl65`), reloads the seconds from
+  the output, stores them to `time` when `time` is still lower, and releases the lock with `mutex_spinunlock`. Last it
+  calls `splx` with the saved level. Established.
+- `du_conpoll` (`IP30/unix` `0xa80000002014813c`, 368 bytes, frame 32 bytes)
+  polls the console port for an input byte and calls the debugger when that byte is 1; it takes no argument. It
+  returns at once when the halfword `kdebug` (0xa8000000204a80da) is 0, when the word `console_is_tport`
+  (0xa8000000204ae580) is nonzero, or when the doubleword at -16352 of the process page is 0. It also returns when
+  `spinlock_islocked` reports `strhead_monp_lock`, `str_intr_lock` or the lock at
+  `streams_mon`+16 held. When the word `console_device_attached` (0xa8000000204ae584) is 0, or the doubleword
+  `the_console_port` (0xa8000000204aeda8) is 0, it calls `console_debug_poll` and returns that result. Otherwise it
+  needs the byte at -16305 of the process page to equal 1, then calls `sio_lock_port` with the port, 1 and that byte;
+  a zero result returns. With the port locked it subtracts the word at 0xa8000000204aedbc from the low 32 bits of the
+  counter at 0xffffffffaff20000; when that difference is not above `timer_freq` (the word at 0xa8000000204ae40c) it
+  calls `sio_unlock_port` and returns, and otherwise it stores the new low word to 0xa8000000204aedbc. If the
+  doubleword at port +16 is nonzero and its halfwords at +12 and +14 do not differ by exactly 0x100, it calls the
+  unlabelled routine at `0xa800000020144ac8` and then unlocks and returns: the compare after that call reads a stack
+  word that is 0 on this path, so its branch to the unlock is always taken. In every other case it calls the function
+  at +72 of the doubleword at port +0 with the port, the address of 0(sp) and 1; a result of 0 or less unlocks and
+  returns. A positive result is added to the word `du_chars_lost` (0xa8000000204aedb8). A byte at 0(sp) equal to 1
+  then unlocks and calls `debug` with the string "ring"; any other byte unlocks and returns. The value left in v0 is
+  whatever the last call returned, apart from the early returns: v0 is the nonzero `console_is_tport` word, or
+  0xffffffffaff20000 when `sio_lock_port` returned 0 (the delay slot of that branch builds it), or the nonzero
+  `spinlock_islocked` result. Established.
