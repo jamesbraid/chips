@@ -79,3 +79,19 @@ running the code and the doubleword at -15744 holds that processor's flag bits.
   no substitute credential exists, the credential's word at +0x8 is zero and its word at +0x10 is not, it substitutes
   a copy from `crdup` with +0x10 copied to +0x8 and retries; `crfree` releases the copy. Inferred: read from
   decompiler output and the call list, not traced by instruction.
+- `migrate_timeouts` (`IP30/unix` `0xa800000020015c10`, 424 bytes, frame 160 bytes) moves every pending callout from
+  one processor's list to another's, re-registering each in the destination. Its first argument (a0) is the source
+  processor number and the second (a1) the destination; when they are equal it returns at once. It looks the source
+  structure up in the table at 0xa8000000204b0380 (16 bytes a processor, pointer in the second doubleword) and works
+  on the lock at structure +0x590 and the list head at +0x5a0. Each pass of the loop calls `allocate_migrate_timeout`,
+  raises the level with `spl1`, takes the lock with `mutex_spinlock_spl` (passing the address of `splprof`) and pops
+  the head record. When the list is empty it unlocks, restores the level with `splx` and releases the spare with
+  `free_migrate_timeout`, and that call's result is what the routine returns. Otherwise it unlinks the record (head
+  becomes the doubleword at record +0x8), copies its first nine doublewords to the stack, unlocks and frees the record
+  with `callout_free`. It then reads the free-running counter, the doubleword at 0xffffffffaff20000, divides the
+  record's first doubleword minus that count by 12500000 and passes the quotient, the word at record +0x10 and the
+  spare to `add_migrated_timeout`. When bit 1 of the halfword at record +0x46 is set it calls `clock_prtimeout_nothrd`
+  with the destination, the doublewords at +0x18 and +0x20, the original first doubleword, then +0x28, +0x30 and
+  +0x38; otherwise `clock_prtimeout` with the destination, +0x18, +0x20, the first doubleword, the halfword at +0x42
+  and the doublewords at +0x28 and +0x30. The result is stored as a word at the start of the record that
+  `add_migrated_timeout` returned, the level is restored with `splx` and the loop repeats. Established.
