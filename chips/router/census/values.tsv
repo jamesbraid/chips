@@ -1,0 +1,8 @@
+register	rw	sites	functions	images	paths
+0x0	r,w	10	router_init;router_port_map_get;router_port_mfg_info_get;router_print_state_specific;router_set_leds;save_router_err;sub_399c;sub_c00000000001c63c	ip27-unix;ip35-kernel	hub_vector;router_reg;vector_node
+0x10	r,w	4	router_set_fences	ip27-unix;ip35-kernel	router_reg
+0x18	r,w	4	router_acquire_info;router_init	ip27-unix	router_reg
+0x20	r,w	2	router_init	ip35-kernel	router_reg
+0x28	r,w	2	router_init	ip35-kernel	router_reg
+0x38	r,w	3	sub_c00000000001b3a4	ip27-unix	router_reg
+0x200	w	1	router_set_leds	ip35-kernel	router_reg

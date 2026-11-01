@@ -34,6 +34,8 @@ CHIPS = {
  'mace': ('mace', None, 0, 'MACE (O2 I/O ASIC)', 'mace'),
  'gbe':  ('gbe', None, 0, 'GBE (O2 display back end)', None),
  'vice': ('vice', None, 0, 'VICE (O2 video engine, presence only)', None),
+ 'router_ip27': ('router', 'ip27', 0, 'network router as the IP27 kernel reaches it (register numbers of a vector access)', None),
+ 'router_ip35': ('router', 'ip35', 0, 'network router as the IP35 kernel reaches it (register numbers of a vector access)', None),
 }
 MACE_BLOCKS = [  # the specification's block map (table 91 and 92); offsets are from physical 0x1f000000
  (0x080000, 'PCI host bridge'),

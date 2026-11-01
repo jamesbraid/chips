@@ -2526,7 +2526,7 @@ IP35/usr/cpu/sysgen/IP35boot/is1.o	kernel-IP35	kernel-object	object	n64	88232	0a
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jlimits.o)	kernel-IP35	kernel-object	object	n64	28484	6305d710567aa936		17	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jid.o)	kernel-IP35	kernel-object	object	n64	15412	19a9b2e5e40c69e3		8	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-IP35	kernel-object	object	n64	13716	84e2e62d4d69c4a3		11	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-IP35	kernel-object	object	n64	6148	2f9c278e3e4ee908		2	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-IP35	kernel-object	object	n64	6148	2f9c278e3e4ee908		2	symtab	0	0	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-IP35	kernel-object	object	n64	4676	6e2bfb6695896655		4	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-IP35	kernel-object	object	n64	14244	3ef9b4924885ded8		8	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kbd.o	kernel-IP35	kernel-object	object	n64	65344	affd3a10e79df033		42	symtab	0	0	undocumented		
