@@ -15,6 +15,21 @@
 # on an entry the push changes. A repository's scripts/check-leaks.sh, when
 # present, runs first and its failure also refuses the push.
 #
+# Copy check: a second stage compares the documentation, tables, listings and
+# Python the push changes with a reference source tree, for prose or code
+# copied from it and for lone names that only the reference holds. It needs a
+# tool and prebuilt indexes that live outside this repository, so it is
+# optional: COPY_CHECK names the tool (an executable taking the options of
+# the fingerprint tool), or the first line of
+# ${XDG_CONFIG_HOME:-$HOME/.config}/re-copy-check does. A name judged benign
+# goes in scripts/copy-check-allow.txt, one per line; only names a push adds
+# are checked. COPY_CHECK_ARGS adds options, for example --reference DIR or
+# --cpus N (the tool looks for the reference tree in its own checkout unless
+# told). With no tool, or a tool that reports it is not ready (no index, no container image), the stage
+# prints a notice and the push goes on. A lead above the tool's threshold
+# refuses the push; read it, then rewrite the passage in your own words.
+# COPY_CHECK=off skips the stage.
+#
 # Emergency opt-out: CHECK_CLAIMS=off skips the claim check (the leak check
 # still runs). Use it only when the check cannot run and the push cannot wait.
 top=$(git rev-parse --show-toplevel) || exit 1
@@ -23,18 +38,64 @@ status=0
 if [ -x scripts/check-leaks.sh ]; then
     scripts/check-leaks.sh >&2 || status=1
 fi
+refs=$(cat)
+z=0000000000000000000000000000000000000000
+# push_base REMOTE_SHA LOCAL_SHA: the commit the push is measured from.
+push_base() {
+    if [ "$1" = "$z" ]; then
+        git merge-base "$2" origin/main 2>/dev/null || git rev-list --max-parents=0 "$2" | tail -1
+    else
+        echo "$1"
+    fi
+}
+copy_cfg=${XDG_CONFIG_HOME:-$HOME/.config}/re-copy-check
+copy_tool=${COPY_CHECK:-}
+if [ -z "$copy_tool" ] && [ -r "$copy_cfg" ]; then
+    copy_tool=$(sed -n 1p "$copy_cfg")
+fi
+if [ "$copy_tool" = off ]; then
+    echo "pre-push: COPY_CHECK=off: copy check skipped" >&2
+elif [ -z "$copy_tool" ] || [ ! -x "$copy_tool" ]; then
+    echo "pre-push: copy check skipped: no tool (set COPY_CHECK to it, or put its path in $copy_cfg)" >&2
+else
+    while read -r lref lsha rref rsha; do
+        [ "$lsha" = "$z" ] && continue
+        base=$(push_base "$rsha" "$lsha")
+        # One pass for copied spans (code and prose), one for lone names. Both
+        # read what the shipped binaries carry from root/ and the inventory
+        # tables, so a message or a name the binaries show is not a lead.
+        for pass in spans names; do
+            if [ $pass = spans ]; then
+                set -- --docs --symbols-baseline "$top"
+            else
+                set -- --docs --identifiers --symbols-baseline "$top" --ids-max-df 5
+                [ -r scripts/copy-check-allow.txt ] && set -- "$@" --allow "$top/scripts/copy-check-allow.txt"
+            fi
+            # COPY_CHECK_ARGS is split on purpose.
+            # shellcheck disable=SC2086
+            "$copy_tool" --ours "$top" --changed-only --base "$base" --head "$lsha" \
+                --if-ready --fail-on-lead --quiet "$@" $COPY_CHECK_ARGS </dev/null >&2
+            rc=$?
+            case $rc in
+                0) ;;
+                3) echo "pre-push: copy check skipped: the tool is not ready (message above)" >&2; break ;;
+                4) echo "pre-push: copy check ($pass) found leads (above); read each and rewrite what was copied, or push with COPY_CHECK=off once a lead is judged benign" >&2
+                   status=1 ;;
+                *) echo "pre-push: copy check ($pass) did not run (exit $rc); the push is refused. Push with COPY_CHECK=off in an emergency" >&2
+                   status=1 ;;
+            esac
+        done
+    done <<REFS
+$refs
+REFS
+fi
 if [ "${CHECK_CLAIMS:-on}" = off ]; then
     echo "pre-push: CHECK_CLAIMS=off: claims not checked" >&2
     exit $status
 fi
-z=0000000000000000000000000000000000000000
 while read -r lref lsha rref rsha; do
     [ "$lsha" = "$z" ] && continue
-    if [ "$rsha" = "$z" ]; then
-        base=$(git merge-base "$lsha" origin/main 2>/dev/null) || base=$(git rev-list --max-parents=0 "$lsha" | tail -1)
-    else
-        base=$rsha
-    fi
+    base=$(push_base "$rsha" "$lsha")
     git diff --quiet "$base" "$lsha" -- docs chips 2>/dev/null && continue
     if [ ! -d root ]; then
         echo "pre-push: root/ is missing, so the claims cannot be checked; populate it (IRIX_FILES.md) or push with CHECK_CLAIMS=off" >&2
@@ -61,5 +122,7 @@ while read -r lref lsha rref rsha; do
         echo "pre-push: the claim checker did not run (exit $rc); the push is refused. Push with CHECK_CLAIMS=off in an emergency" >&2
         status=1
     fi
-done
+done <<REFS
+$refs
+REFS
 exit $status
