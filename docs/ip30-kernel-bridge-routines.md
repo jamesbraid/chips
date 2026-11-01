@@ -111,3 +111,80 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   `even_odd`: one 64-bit store at window +0x280 plus 8 * index for types 2 and 3, one 32-bit store of the low half at
   +0x284 plus 8 * index for types 0 and 1. The bound (line 0xa07) precedes the type test, and type -1 calls `panic`.
   Established.
+
+- `xbridge_attach` (`IP30/unix` `0xa800000020042104`, 2496 bytes) is the attach routine the Octane kernel runs for a
+  Bridge or XBridge widget; it returns 0 after a full attach and -1 on its two refusals. It calls
+  `pcibr_bridge_ptr_get` for the window and, for part `0xc002` with manufacturer 54 only, calls `pcireg_stat_get` and
+  returns -1 unless status bit 5 (0x20) is set. It makes the "pci" vertex with `hwgraph_path_add`, calls
+  `pciio_provider_register` and `pciio_provider_startup`, adds the "controller" character device named "pcibr_", and
+  reads the NIC string with `pcireg_nic_addr` and `nic_bridge_vertex_info`. It then calls `pcibr_hints_get`; when that
+  returns a record whose word at +0xc is nonzero it returns -1 (second refusal), so a hint record with that word set
+  stops the attach before anything is allocated. Otherwise it reads the identification word with `pcireg_id_get`,
+  forms `revision | part << 4`, stores it as the label "_pcibr_asic_rev" with `hwgraph_info_add_LBL`, and allocates
+  and zeroes a 2744-byte (0xab8) record with `kmem_zalloc` and `memset`, attaching it to the vertex with
+  `hwgraph_fastinfo_set`. Into that record it stores, in this order: a name copy (`kmem_alloc` of the string length
+  plus one, `strcpy`) at +0x10, the argument handle at +0x0, 0 at +0x48,
+  7 as a byte at +0x39, 0 as a byte at +0x38, the window at +0x8, the address of `pcibr_intr_bits` at +0x500, the
+  revision and part word at +0x78 and the vertex at +0x4. The chip type halfword at +0x72 is 1 for part `0xd002` with
+  manufacturer 36 and 0 otherwise; type 1 stores 0x400 as the halfword at +0x70 (the translation entry count) and type
+  0 stores 0x80, each with a short name string from `.rodata` stored at +0x18. It stores mode OR speed shifted left
+  one (`pcireg_mode_get`, `pcireg_speed_get`) at +0x74, zeroes the doubleword at +0x828, and for a revision word below
+  0xc0024 stores 0x2000 into the words at +0xa98 and +0xa9c. It records the widget id, master and master id from
+  `xwidget_info_get` and its accessors and calls `spinlock_init` with the name "pcibr_loc". With a hint record it
+  copies hint fields into the per-slot entries; without one it uses slots +0x38 to +0x39 as the slot range. It
+  registers `pcibr_error_handler` with `xwidget_error_register`; for a revision word below 0xc0024 it clears bits 9:0
+  of the timeout register (`pcireg_timeout_bit_clr` with 0x3ff). It writes 0x7f to the interrupt reset register
+  (`pcireg_intr_reset_set`), 0xffffffff to the interrupt device register (`pcireg_intr_device_set`), calls
+  `pcibr_directmap_init`, sets bit 21 (0x200000) of the control register with `pcireg_control_bit_set`, and zeroes
+  every internal translation entry with `pcireg_int_ate_set` (index 0 up to the count at +0x70). On type 0 it calls
+  `pcibr_init_ext_ate_ram`. It builds the allocation maps with `rmallocmap` and `pcibr_ate_free`, allocates the error
+  interrupt with `xtalk_intr_alloc` on a duplicated device descriptor (flags OR 1, name "Bridge error") and connects
+  it with `xtalk_intr_connect` using `pcibr_error_intr_handler` and `pcibr_setwidint`, then reads the destination with
+  `pcireg_intr_dst_target_id_get` and `pcireg_intr_dst_addr_get`. It reads the interrupt enable register and writes it
+  back ORed with 0x3eff7ffffe00 (`pcireg_intr_enable_get` and `pcireg_intr_enable_set`), sets the interrupt mode to 0,
+  and reads the target flush register. The word at +0x7c is set by revision: 0x80000 below 0xc0022, 0x800 below a
+  limit derived from `pcibr_prefetch_enable_rev`, and bit 17 (0x20000) ORed in below a limit derived from
+  `pcibr_wg_enable_rev`. Three window maps at record +0x848, +0x858 and +0x868 are created with
+  `pciio_device_win_map_new` (arguments 0x10000000 and 0x100000, then 0x100000 and
+  0x4000, then 0x40000000 and 0x100000) and each is filled with `pciio_device_win_populate` (arguments 0x200000 and
+  0xff00000, then 0x4000 and 0xfc000, then 0x200000 and
+  0x3ff00000). It then registers a placeholder device with `pcibr_device_info_new` (0xff, 0xff) and
+  `pciio_device_info_register`, runs `pcibr_slot_info_init`, `pcibr_slot_addr_space_init`,
+  `pcibr_slot_device_init` and `pcibr_slot_guest_info_init` over the slot range in four separate passes. It then calls
+  `pcibr_initial_rrb`; when the NIC string contains "030-1275-" it also calls `pcibr_rrb_alloc_init` with one, zero
+  and eight. A last pass calls `pcibr_slot_call_device_attach` on each slot, and `pciio_device_attach` finishes. The
+  IP27 build's `xbridge_attach` is 96 bytes longer. The store order and the callees come from the disassembly; the
+  branches over the hint record and the revision tests were read from decompiler output checked against it. It stores
+  the handle returned by `xtalk_intr_alloc` at +0x828 after the allocation. Inferred.
+- `pcibr_alloc_all_rrbs` (`IP30/unix` `0xa800000020048b48`, 980 bytes) divides one bank of response buffers among up
+  to four devices. The first argument is the widget vertex and the second selects the bank, using only its bit 0 (0
+  for the even bank, 1 for the odd bank). Arguments three to ten are four pairs, one per device in order: a count of
+  buffers and, after it, how many of those are virtual. It finds the window by calling `hwgraph_traverse` with "pci"
+  and, when that yields a record, reading the doubleword at record +0x8 after `hwgraph_fastinfo_get`, then
+  `hwgraph_vertex_unref`; with no usable window it calls `xtalk_piotrans_addr` (0, 0,
+  8, 0). It returns -1 in three cases. The first is an id word that matches neither Bridge (part `0xc002`,
+  manufacturer 54) nor XBridge (part `0xd002`, manufacturer 36) while the count or the virtual count of device 2 or 3
+  (seventh to tenth arguments) is nonzero. The second is a sum of the four counts (third, fifth, seventh and ninth
+  arguments) above 8. The third is any of those four counts being negative. Otherwise it packs eight 4-bit entries
+  from the top of a 32-bit word downward, device by device: one entry of (device | 8) per buffer that is not virtual
+  and, for each virtual buffer, (device | 8 | 4) on Bridge and XBridge or (device | 8 | 2) on the other chips, the
+  virtual entries placed before the plain ones. With a soft-state record it takes `mutex_spinlock` on record +0x80,
+  writes the word to the bank with `pcireg_rrb_set`, ORs `0x55 << bank` into the word at +0x51c, stores 0 at +0x540,
+  +0x538, +0x530 and +0x528 plus 4 * bank, stores 8 minus the buffer sum at +0x520 plus 4 * bank, and records the
+  virtual counts and the differences (count minus virtual) of the four devices at the 16-byte-stride words +0x568 to
+  +0x5cc, then releases with `mutex_io_spinunlock`; without a record it only writes the register. It returns 0 on
+  success. The packing loops and the soft-state words were read from decompiler output and not traced instruction by
+  instruction. Inferred.
+- `giobr_attach` (`IP30/unix` `0xa800000020040ae0`, 740 bytes) attaches a Bridge widget that is running in GIO mode,
+  the case that `xbridge_attach` refuses. It first raises the word at 0x900000001800002c to 0x80 when it is below
+  0x80; the heart page lists that word as the widget request timeout. It calls `xtalk_piotrans_addr` for a window of
+  0x1000000 bytes and returns -1 when bit 5 (0x20) of the status word at window +0xc is set. Otherwise it makes the
+  "gio" vertex with `hwgraph_path_add`, reads the NIC string at window +0xb4 with `nic_bridge_vertex_info`, and adds
+  the "controller" device named "giobr_". It zeroes a 0x108-byte record from `kmem_alloc` and `blkclr`, stores the
+  vertex at +0x0, the window at +0x8, the argument at +0x14 and the widget id, master and master id
+  (`xwidget_info_get` and its accessors) at +0x10, +0x18 and +0x1c, 0xff as a byte at +0x4c, and clears the eight
+  16-byte pairs from +0x50. It sizes a DMA window from `physmem` shifted left 14 (capped at 0x80000000) with
+  `xtalk_dmatrans_addr`, and probes four device slots from a table with `xtalk_piotrans_addr`, recording each slot
+  that answers in the word at +0x44 and a byte at +0x40 plus the index. When no slot answers it prints "unknown device
+  on gio bridge" with `cmn_err` (level 7). It then calls `gioio_provider_register`, `gioio_provider_startup`,
+  `gioio_device_register` and `gioio_device_attach`, and returns 0. Inferred.
