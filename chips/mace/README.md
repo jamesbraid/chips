@@ -181,9 +181,10 @@ specification states for the external ISA space. The routines call the chip a "d
 - `cpu_rtcinit` (`symmon`, read in full): register A (`0xa`) `&= ~0x40`, `|= 0x30`; register `0x4b` `&= ~2`, then
   `|= 0x81`; register `0x4a` `&= ~3`; register A `&= ~0x10`. Bit 4 of A selects the register bank, so the routine
   selects bank 1, changes bits in two extended control registers and returns to bank 0.
-- `powerintr`: tests ISA status bit 8, then register `0xc` bit 7; sets bit 4 of A, reads `0x4a`, clears bits 2:0 of
-  it, clears bit 4 of A. `cpu_waitforreset` loops on ISA status bit 8 and register `0xc` bit 7, sets bit 4 of A, and
-  calls `cpu_powerdown` when register `0x4a` bit 0 is set.
+- `powerintr`: tests ISA status bit 8, then bit 7 of the byte at `0xc07` (register 12, byte lane 7); sets bit 4 of A,
+  reads the byte at `0x4a07` (register 74), clears bits 2:0 of it, clears bit 4 of A. `cpu_waitforreset` loops on
+  ISA status bit 8 and bit 7 of the byte at `0xc07`, sets bit 4 of A, and calls `cpu_powerdown` when bit 0 of the byte
+  at `0x4a07` is set.
 - `set_autopoweron` writes registers 1, 3, 5 (alarm seconds, minutes, hours by position) and `0x49`.
 - `read_dallas_nvram` accepts offset plus length below 114 and an offset above 0 (it returns 1 for anything else and
   0 after a read) and reads bytes at `0xbf3a0e08 + offset + index`, **one byte apart**. Every other register of this block is 256 bytes apart. The two spacings cannot both describe one
