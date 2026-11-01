@@ -64,3 +64,50 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   `int_n` (second argument): the doubleword at window +0x130 plus 8 * pin for types 2 and 3, or the zero-extended word
   at +0x134 plus 8 * pin for types 0 and 1. The pin bound 0 to 7 (line 0x7ec) is tested before the type is looked at,
   so a null handle trips `assfail` first and `panic` second. Established.
+- `pcireg_intr_addr_set` (`IP30/unix` `0xa800000020056a80`, 524 bytes) writes the third argument to the interrupt
+  address register of pin `int_n`: a 64-bit store at window +0x130 plus 8 * pin for types 2 and 3, or a 32-bit store
+  of the low half at +0x134 plus 8 * pin for types 0 and 1. The bound (line 0x807) comes before the type test, and
+  only type -1 reaches `panic`; a record type outside -1 to 3 does nothing. Established.
+- `pcireg_intr_addr_addr` (`IP30/unix` `0xa800000020056c8c`, 524 bytes) returns the address of the pin's interrupt
+  register instead of its contents: window +0x130 plus 8 * pin for types 2 and 3, window +0x134 plus 8 * pin for types
+  0 and 1. It makes no access to the chip. The bound is line 0x822. Type -1 calls `panic` and returns 0 if that comes
+  back, as does a record type outside the range. Established.
+- `pcireg_intr_addr_addr_get` (`IP30/unix` `0xa8000000200572d8`, 560 bytes) builds the interrupt target address of pin
+  `int_n`. For types 2 and 3 it loads the doubleword at window +0x130 plus 8 * pin and keeps its low 48 bits. For
+  types 0 and 1 the low 32 bits of the result are the word at window +0x3c; the high 32 bits are the word at +0x34
+  masked to bits 5:0, ORed with bits 17:8 of the pin's word at +0x134 plus 8 * pin shifted right by two. The bound is
+  line 0x87b and type -1 calls `panic`. Established.
+- `pcireg_intr_addr_addr_set` (`IP30/unix` `0xa800000020057508`, 588 bytes) writes the address part of the pin's
+  interrupt register. Types 2 and 3 first store the doubleword at window +0x130 plus 8 * pin with its low 48 bits
+  cleared (mask `0xffff000000000000`), then load it again and store it with the third argument, masked to 48 bits,
+  ORed in. Types 0 and 1 clear bits 17:8 of the word at +0x134 plus 8 * pin (mask `0xfffffffffffc00ff`, from the
+  literal at 0xa8000000204a89f8), store, then reload and store with the argument shifted right 30 and masked with
+  `0x3ff00` ORed in. They never write the window words at +0x34 or +0x3c that the matching getter reads. The bound is
+  line 0x89a. Type -1 calls `panic` with the message of `pcireg_intr_addr_addr_get`, not its own. Established.
+- `pcireg_intr_addr_vect_set` (`IP30/unix` `0xa80000002005709c`, 572 bytes) replaces the vector field of the pin's
+  interrupt register, in two separate load and store pairs each time. Types 2 and 3 clear bits 55:48 of the doubleword
+  at window +0x130 plus 8 * pin (mask `0xff00ffffffffffff`, from the literal at 0xa8000000204a89f0), then OR in the
+  low byte of the third argument shifted left 48. Types 0 and 1 clear bits 7:0 of the word at +0x134 plus 8 * pin,
+  then OR in the low byte of the argument. The bound is line 0x85b; type -1 calls `panic` with the message of
+  `pcireg_intr_addr_vect_get`. Established.
+- `pcireg_force_always_set` (`IP30/unix` `0xa800000020057a20`, 552 bytes) writes the constant 1 to the force-always
+  register of pin `int_n`: a doubleword at window +0x180 plus 8 * pin for types 2 and 3, a word at +0x184 plus 8 * pin
+  for type 1. Type 0 has no such register and calls `panic` with a message that says so ("undefined register"), as
+  type -1 does with its bridge-type message. The pin bound (0 to 7, line 0x8f9) is tested before the type.
+  Established.
+- `pcireg_force_always_addr_get` (`IP30/unix` `0xa800000020057c48`, 524 bytes) returns the address of the same
+  force-always register without touching it: window +0x180 plus 8 * pin for types 2 and 3, +0x184 plus 8 * pin for
+  type 1. Types 0 and -1 call `panic` (the first with the "undefined register" message) and fall through to a return
+  of 0. The bound is line 0x915. Established.
+- `pcireg_force_intr_set` (`IP30/unix` `0xa800000020057e54`, 544 bytes) writes the constant 1 to the register that
+  forces pin `int_n` to interrupt: a doubleword at window +0x1c0 plus 8 * pin for types 2 and 3, a word at +0x1c4 plus
+  8 * pin for type 1. Type 0 and type -1 call `panic` as in `pcireg_force_always_set`, and the bound is line 0x936.
+  Established.
+- `pcireg_rrb_get` (`IP30/unix` `0xa800000020058b74`, 528 bytes) returns response buffer register
+  `even_odd` (0 or 1): the doubleword at window +0x280 plus 8 * index for types 2 and
+  3, the zero-extended word at +0x284 plus 8 * index for types 0 and 1. The bound (line 0x9ec) comes before the type
+  test, and type -1 calls `panic`. Established.
+- `pcireg_rrb_set` (`IP30/unix` `0xa800000020058d84`, 520 bytes) writes the third argument to response buffer register
+  `even_odd`: one 64-bit store at window +0x280 plus 8 * index for types 2 and 3, one 32-bit store of the low half at
+  +0x284 plus 8 * index for types 0 and 1. The bound (line 0xa07) precedes the type test, and type -1 calls `panic`.
+  Established.
