@@ -471,6 +471,45 @@ are offsets inside that object.
   `crmFrameBuffer` and walks a list along the word at byte 0 of each node while the key at byte 8 is below `a0`. It
   returns the node whose key equals `a0`, or 0 when the list ends or the first key at or above `a0` is not equal to it.
   Established.
+- `crmunpinscratch` (`crime.a(crime.o)`, address `0x1010`, 44 bytes): calls `fast_undma` with the words at bytes 0, 4 and
+  8 of `a0` as arguments 1 to 3 and 0 as argument 4, and returns its result. Established.
+- `crimeInvalTLB` (`crime.a(crime.o)`, address `0x29a0`, 40 bytes): calls `ddv_invaltlb` with the word at byte 28 of
+  `a0`, 0 and -1, and returns 0. Established.
+- `crimeSuspend` (`crime.a(crime.o)`, address `0x36d8`, 36 bytes): when `a0` is nonzero and the word at byte 60 of `a0` is
+  zero, it clears the word at byte 72 of `a0`. It returns 0 on every path. Established.
+- `crimeResume` (`crime.a(crime.o)`, address `0x36fc`, 48 bytes): when `a0` is nonzero and the word at byte 72 of `a0` is
+  nonzero, it clears that word and calls `force_resched`. It returns 0 on every path. Established.
+- `crimeLoadTimingTable` (`crime.a(crime.o)`, address `0x372c`, 36 bytes): calls `crime_setvideotiming` with its first
+  argument unchanged, the word at byte 124 of `a0` as the second and its own second argument as the third. It returns
+  the callee's result. Established.
+- `crimeInterrupt` (`crime.a(crime.o)`, address `0x4af8`, 68 bytes):
+  for `a1` equal to 18 or 19 it calls `crime_hli_handler` with the word at byte 24 of `crimeBoards` as the first argument, `a1` minus 16 as the second,
+  19 as the third and the original `a1` as the fourth. For any other `a1` it returns with `v0` unchanged. Established.
+- `crime_present` (`crime.a(crime.o)`, address `0x58f4`, 40 bytes): returns -1 when `a0` is nonzero. Otherwise it returns
+  0 when the word at byte 16 of `crimeBoards` is zero and 1 when it is nonzero. Established.
+- `crime_resync_sched` (`crime.a(crime.o)`, address `0x59c0`, 32 bytes): stores `a2` at byte 28 and `a1` at byte 24 of the
+  64-byte entry of `crimeBoards` indexed by `a0` (`crimeBoards` plus `a0` times 64), and returns 0. Established.
+- `crimeFifoWaitTimeout` (`crime.a(crime.o)`, address `0x2b34`, 96 bytes): reports through `cmn_err` at level 4, calls
+  `crime_intr_disable` with 25, and writes 1 to the word at byte 548 of `a0` before it raises the level with `splhi`. It
+  then calls `sv_signal` on the address of byte 556 of `a0` and restores the level with `splx`, returning the `splx`
+  result. Established.
+- `crm_makecurrentpbuf` (`crime.a(crime.o)`, address `0x38fc`, 76 bytes): calls `crmAllocPbufTiles` with the word at byte
+  24 of `a1` as the first argument and the word at byte 36 ANDed with 8 as the second. A nonzero result makes it return 12.
+  Otherwise it sets bit 2 of the word at byte 36 of `a1` and returns 0. Established.
+- `crime_regmatch` (`crime.a(crime.o)`, address `0x5848`, 84 bytes): when `a0` is nonzero it calls `crimeUnMapGfx`
+  and clears the word at byte 40 of `a0`. If the word at byte 28 of `a0` is nonzero it destroys that handle with
+  `ddv_destroy_handle` and clears byte 28. It then stores `a1` at byte 28 of `a2` in the return delay slot and returns
+  `a2`. The store happens on every path. Established.
+- `crimeClosePbuf` (`crime.a(crime.o)`, address `0x385c`, 160 bytes): calls `mutex_lock` on `crm_drawlock` with 25 as the
+  second argument, finds the record for the word at byte 0 of `a1` with `crm_mapcliptodraw`, and unlocks. A null record
+  returns 22. When the word at byte 40 of the record is zero it calls `crm_destroydrawable` on the record, unlocks and
+  returns 0. Otherwise it sets bit 5 of the word at byte 36 of the record, unlocks, calls `RRM_CheckValidFault` on the
+  word at byte 0 of `a0`, and returns 4 on a nonzero result or 0 on zero. Established.
+- `crmIdleWait` (`crime.a(crime.o)`, address `0x2dbc`, 152 bytes): polls the word at offset 16384 of `a0` for up to `a1`
+  passes. A pass ends the loop when bit 28 is set and the seven bits 24 to 18 are zero. Otherwise it calls `us_delay` with
+  1 and counts down. It returns 0 when a pass saw the condition. When the count runs out it reports through `cmn_err`
+  at level 4 with the original `a1` as the third argument, and returns 1. Established.
+
 ### Interrupt and bus routines (`kernel.o`)
 
 - `crime_intr_enable` (`kernel.o`, address `0xa248`, 64 bytes): sets bit `a0` of the 64-bit word at address
