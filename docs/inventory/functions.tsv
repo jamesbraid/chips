@@ -9220,7 +9220,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001f456c	596	vn_remove_audit_extended	symta
 IP27/unix	kernel	n64	.text	0xc0000000001f47c0	44	creat	symtab	76a77878bc02		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f47ec	608	copen	symtab	c1acee1870da		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f4a4c	100	close	symtab	f3399c991bc1		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001f4fec	28	read	symtab	d34d5a23242c		out:5	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP27/unix	kernel	n64	.text	0xc0000000001f4fec	28	read	symtab	d34d5a23242c		out:5	named-only	chips/heart/README.md#access-sequences-established-unless-marked	Access sequences (established unless marked)
 IP27/unix	kernel	n64	.text	0xc0000000001f5008	28	pread	symtab	001f3bec7c4b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f54ec	28	write	symtab	01a427135297		out:5	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP27/unix	kernel	n64	.text	0xc0000000001f5508	28	pwrite	symtab	5a9fbe54bffc		out:5	undocumented		
@@ -25135,7 +25135,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	c
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x518	100	close	dwarf+symtab	4cd8456121a7		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x57c	148	set_ioflags	dwarf+symtab	9893a22bb9e8		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	_read	dwarf+symtab	2b0269ab5378		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#access-sequences-established-unless-marked	Access sequences (established unless marked)
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	657db5992417		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
@@ -40892,7 +40892,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201b5870	596	vn_remove_audit_extended	symta
 IP30/unix	kernel	n64	.text	0xa8000000201b5ac4	44	creat	symtab	5adde406a17d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5af0	608	copen	symtab	965dafb25d17		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5d50	100	close	symtab	4420c397d7ba		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201b62f0	28	read	symtab	dcf0d42ffa47		out:7	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/unix	kernel	n64	.text	0xa8000000201b62f0	28	read	symtab	dcf0d42ffa47		out:7	named-only	chips/heart/README.md#access-sequences-established-unless-marked	Access sequences (established unless marked)
 IP30/unix	kernel	n64	.text	0xa8000000201b630c	28	pread	symtab	b470a6fb64fa		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b67f0	28	write	symtab	a30dea0a2ea3		out:7	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
 IP30/unix	kernel	n64	.text	0xa8000000201b680c	28	pwrite	symtab	b82ce096fbe8		out:7	undocumented		
@@ -55324,7 +55324,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	c
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x518	100	close	dwarf+symtab	4cd8456121a7		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x57c	148	set_ioflags	dwarf+symtab	9893a22bb9e8		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	_read	dwarf+symtab	5ccac8e0090e		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#access-sequences-established-unless-marked	Access sequences (established unless marked)
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	63714ef59212		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
@@ -71878,7 +71878,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x248	604	c
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x4a4	100	close	dwarf+symtab	77be312f8200		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x508	164	set_ioflags	dwarf+funcnames+symtab	b99109792617		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x5ac	1104	_read	dwarf+funcnames+symtab	6842c4b25eda		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x9fc	28	read	dwarf+symtab	295c861fb3cd		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x9fc	28	read	dwarf+symtab	295c861fb3cd		out:3	named-only	chips/heart/README.md#access-sequences-established-unless-marked	Access sequences (established unless marked)
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xa18	28	pread	dwarf+symtab	2f5516b0c7d3		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xa34	1140	_write	dwarf+funcnames+symtab	f70651bf104f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xea8	28	write	dwarf+symtab	295c861fb3cd		out:3	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
@@ -89914,7 +89914,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	c
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x518	100	close	dwarf+symtab	4cd8456121a7		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x57c	148	set_ioflags	dwarf+symtab	9893a22bb9e8		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	_read	dwarf+symtab	d74b738e95fc		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#access-sequences-established-unless-marked	Access sequences (established unless marked)
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	33ceab58b0bf		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/l1/README.md#node-local-uart-ip35-l1o	Node-local UART (IP35, `l1.o`)
