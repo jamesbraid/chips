@@ -528,6 +528,33 @@ header names used in the tables above.
 - `hub_intr_cpu_get` (`IP27/unix` `0xc00000000003c158`, 28 bytes) takes the halfword at +36 of its argument as a
   processor number, finds that processor's record through the 16-byte table at `0xc0000000014d5020` (pointer at entry
   +8) and returns the word at +0x734 (1844) of it. Established.
+- `hub_provider_shutdown` (`IP27/unix` `0xc00000000003c1b0`, 28 bytes) calls `xtalk_provider_unregister` and returns
+  its result. Established.
+- `early_counter_intr` (`IP27/unix` `0xc000000000047bb4`, 28 bytes) calls `resetcounter` with the argument formed by
+  `lui 0xf000` and returns its result. Established.
+- `router_reg_read` (`IP27/unix` `0xc00000000001b344`, 48 bytes) calls `hub_vector_read` with the halfword at +2, the
+  doubleword at +24 and the word at +32 of its first argument (a router record) followed by its own second and third
+  arguments. Established.
+- `router_reg_write` (`IP27/unix` `0xc00000000001b374`, 48 bytes) makes the same call as `router_reg_read` but to
+  `hub_vector_write`, with the halfword at +2, the doubleword at +24 and the word at +32 of the router record and its
+  own second and third arguments. Established.
+- `hubni_eint_handler` (`IP27/unix` `0xc000000000033324`, 36 bytes) calls `hubni_error_handler` with the string "NI
+  interrupt" and 1. Established.
+- `hubni_rmteint_handler` (`IP27/unix` `0xc000000000033348`, 36 bytes) calls `hubni_error_handler` with the string
+  "Remote NI interrupt" and 0 where `hubni_eint_handler` passes 1. Established.
+- `bte_avail` (`IP27/unix` `0xc00000000002c11c`, 12 bytes) returns 1 when the word at address 0xc0000000014cae78
+  (gp-29432) is zero and 0 otherwise. Established; inferred that the word is a software flag, since no register is
+  touched.
+- `bte_disable` (`IP27/unix` `0xc00000000002d9d8`, 12 bytes) stores 1 to the word at address 0xc0000000014cae78
+  (gp-29432) that `bte_avail` tests, which makes `bte_avail` return 0 from then on. Established.
+- `callout_time_to_hz` (`IP27/unix` `0xc000000000046bf0`, 48 bytes) converts an absolute counter value to a tick
+  count: the unsigned quotient of (argument minus `PI_RT_COUNT`) and the doubleword at address 0xc0000000014d2b90
+  (gp+2592), truncated to 32 bits and raised to 1 when it is below 1. Established.
+- `clear_hub_pi_error` (`IP27/unix` `0xc00000000002f634`, 88 bytes) walks two 8-byte slots of the error record in its
+  argument. For each slot whose doubleword at +0x28 is nonzero it subtracts the doubleword at +0x18 from
+  `PI_RT_COUNT`; when the difference exceeds
+  90,000,000 (`0x55d4a80`) it stores zero doublewords at +0x38 and +0x28. Established; inferred that +0x18 holds the
+  time of the last error and the threshold is 72 seconds at the tick rate under `us_delay`.
 
 ## Against the public headers (reported after the reading above)
 
