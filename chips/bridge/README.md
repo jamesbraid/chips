@@ -141,7 +141,7 @@ Totals over the **41 rows** below (families count once each; a row graded for so
   `0xffffffff`; `pcibr_directmap_init`; `xbridge_attach` sets control bit `0x200000` through `pcireg_control_bit_set`; every internal translation entry zeroed; on type 0
   `pcibr_init_ext_ate_ram`; interrupt enable read, ORed with the literal and written back whole (the `revision | part << 4` tests
   near it, against `0xc0023` and `0xc0022`, set record fields and never touch the enable); interrupt mode 0; target flush read. The Bridge revision 2 path (at `0xc000000000070d98`)
-  builds the enable mask differently and was not decoded. `xbridge_attach` returns -1 on two exit paths (from `0x15c` and `0x918`) and 0 on the third (from `0x85c`).
+  builds the enable mask differently and was not decoded. `xbridge_attach` returns -1 on two exit paths and 0 on the third. The returning instructions in each build's `xbridge.o` are: IP27 `0x15c` and `0x918` (-1), `0x85c` (0); IP30 `0x150` and `0x8d8` (-1), `0x820` (0); IP35 `0x19c` and `0xb14` (-1), `0xa3c` (0).
 - **External translation RAM probe (established, `pcibr_init_ext_ate_ram` at `0xc00000000007566c`, read in full).** For
   sizes 1, 2 and 3 it writes `0x0123456789abcdef` to the last entry of the candidate size from a table of 8192, 16384
   and 65536 entries (the table is in the `unix` data section), writes zero to the last entries of the smaller
