@@ -164,29 +164,29 @@ chip page and the entry is deleted.
   refused read of a Crosstalk widget produces, and what the processor sees (data bus error or a zero return). No
   shipped code distinguishes these. Next: read `handle_io_buserr` and `hub_ioerror_handler` in full, and the PROM
   error dump.
-- **Bedrock error status clear semantics.** Established: the kernel writes all ones to PI `0x438` and `0x458` and zero
+- **Bedrock error status clear semantics.** *[route: missing source: the public Hub headers the entry cites and a published erratum, neither held; the entry's no-software-route claim is not established]* Established: the kernel writes all ones to PI `0x438` and `0x458` and zero
   to `0x448` and `0x468`, and writes the handled bit back to the pending register. Unknown: whether those four
   are clear-on-read as in the public Hub headers, whether the pending register is write-one-to-clear, and what a
   second error does to a status whose valid bit is still set beyond setting overrun (bit 62). Route: none from
   software; a measurement or a published erratum.
-- **Bedrock error spool entry layout.** Established: entries are 8 bytes and `get_matching_spool_addr` matches the
+- **Bedrock error spool entry layout.** *[route: software now]* Established: entries are 8 bytes and `get_matching_spool_addr` matches the
   address (status 0 bits 61:25 `<< 3`) and size; the status 0 field names are shared. Unknown: the entry's own
   layout (the Hub error stack packs the fields differently), what writes an entry, and the units of the size
   register (`4096 << (n - 1)`). Next: read `process_error_spool`, `huberror_process_stack_entry` and
   `hubpi_spool_get_next` in full.
-- **Bedrock pending bits 25 to 34 and fatal selection.** Established: names from the kernel's table and the fatal
+- **Bedrock pending bits 25 to 34 and fatal selection.** *[route: software now; hardware residue: what physically sets bits 29 to 34; proposed: the mask code that ORs bit 24]* Established: names from the kernel's table and the fatal
   and miscellaneous masks. Unknown: what sets bits 29 to 34 beyond their names (crossbar data cycle count, intervention
   state, state-pending timeout), and why bit 24 is ORed into one interrupt mask only (the first one written).
-- **Bedrock protected-region replies.** Unknown: which status 0 type or CRB error code a protection violation
+- **Bedrock protected-region replies.** *[route: software now]* Unknown: which status 0 type or CRB error code a protection violation
   produces, and what the strings "Protection error response" and "Vector response timeout" index. Next: find
   their table's users in `kernel.o` and read the memory/directory error decode.
-- **Bedrock interrupt numbers.** Established: PI error handler on cause line 6, network interface error on vector
+- **Bedrock interrupt numbers.** *[route: software now]* Established: PI error handler on cause line 6, network interface error on vector
   126. Unknown: the II error level (chosen at run time by `intr_heuristic`), and whether cause line 6 is the Cause
   IP6 bit. Next: the interrupt allocator and the CPU exception vector in the PROM.
-- **Harness limits.** `scripts/run_routine.py` replaces calls with `v0 = 0` and has no global data, so a routine
+- **Harness limits.** *[route: software now; tool work; proposed: map the object's data by gp in the harness]* `scripts/run_routine.py` replaces calls with `v0 = 0` and has no global data, so a routine
   that reads a table by gp (`pcireg_int_ate_set`, `pcireg_force_always_set`, `pcireg_intr_addr_vect_set`) ends in
   an unmapped read; the routines that touch only the chip record run to completion.
-- **Scanner fixes after the first audit.** Since that audit the scan reads gp from each object's options record
+- **Scanner fixes after the first audit.** *[route: software now; tool work; a status note with one open item (large no-return code spans), so it belongs in the tool notes]* Since that audit the scan reads gp from each object's options record
   (the auto-min rule is a flagged fallback and no object needed it), alternatives chosen by a conditional move
   are kept as separate conditional sites, loop counters are widened to an indexed site instead of one site per
   pass, and routines are cut by control flow (after a return that nothing branches to, and at call targets)
@@ -194,14 +194,14 @@ chip page and the entry is deleted.
   labelled `pic`, and routines following an unconditional branch or reached only as a delay-slot duplicate are
   cut or merged by control flow. Remaining: large code spans with no return
   (PROM data disassembled as code) stay single routines.
-- **IOC3: why interrupts are polled while the top interrupt bits are enabled.** `ioc3_write_ireg` keeps interrupt bits 22:0 out
+- **IOC3: why interrupts are polled while the top interrupt bits are enabled.** *[route: missing source: a published IOC3 hardware note, not held]* `ioc3_write_ireg` keeps interrupt bits 22:0 out
   of the hardware enable register and polls them every tick while bit 27 or 28 is enabled; the mechanism is read in full
   (chips/ioc3/README.md), the reason is in no string the objects carry. Next: a hardware note for the part; Linux and OpenBSD
   have no equivalent.
-- **IOC3: UART byte lane.** IRIX addresses the line-control register at UART+3 (the 16550 index as the byte offset); Linux's 8250
+- **IOC3: UART byte lane.** *[route: software now; hardware residue: which physical byte lane the part presents; the Linux bridge half needs the uninitialised linux submodule]* IRIX addresses the line-control register at UART+3 (the 16550 index as the byte offset); Linux's 8250
   glue uses `offset ^ 3` and so reads it at UART+0. Which lane the hardware presents, and whether a bridge byte-swap setting
   explains the difference, is not settled. Next: the PIO mapping flags the IRIX drivers pass and the Linux bridge setup.
-- **IOC3: Ethernet inter-frame gap table, parallel-port registers, error address words.** The three table words `ef_ioc3init`
+- **IOC3: Ethernet inter-frame gap table, parallel-port registers, error address words.** *[route: software now]* The three table words `ef_ioc3init`
   stores to the transmit control register sit in the object's data and are not extracted; the parallel-port DMA words
   (`0x84` to `0x98`) and super-I/O registers (`0x20151` to `0x2015a`) are touched but their routines are not read; the
   configuration words `0x40` and `0x44` are read and written by `ioc3_error_handler`, read for accesses only. Next: resolve the
