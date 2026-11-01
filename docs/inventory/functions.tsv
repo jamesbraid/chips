@@ -13550,7 +13550,7 @@ IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x478
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x82c	144	autodir_lookup	dwarf+symtab	58f4154b6ef7		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x8bc	176	auto_dirdrop	dwarf+symtab	4039cb83a5df		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x96c	320	auto_direnter	dwarf+symtab	820d37c7305b		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xaac	624	send_unmount_request	dwarf+symtab	5b94f26b0c16		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xaac	624	send_unmount_request	dwarf+symtab	5b94f26b0c16		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xd1c	188	autofs_busy	dwarf+symtab	d437bad282a1		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xdd8	276	rm_hierarchy	dwarf+symtab	726d68f6d54c		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xeec	444	unmount_hierarchy	dwarf+symtab	660edf04a0f6		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -13581,7 +13581,7 @@ IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x25
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xba0	316	auto_create	dwarf+symtab	62ab597261e0		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xcdc	248	auto_remove	dwarf+symtab	734e7e0c067e		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xdd4	396	auto_rename	dwarf+symtab	55942f16737e		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xf60	744	auto_mkdir	dwarf+symtab	521341375d09		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xf60	744	auto_mkdir	dwarf+symtab	521341375d09		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x1248	884	auto_rmdir	dwarf+symtab	4ef2920e7981		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x15bc	76	autofs_fmtdirent	dwarf+symtab	f81f597ca78a		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x1608	76	irix5_autofs_fmtdirent	dwarf+symtab	67d576231355		out:1	undocumented		
@@ -14373,34 +14373,34 @@ IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xe0	112	cachefs_addhash	dwarf+symtab	da73358a34db		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x150	148	cachefs_remhash	dwarf+symtab	12e9dea6ac07		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x1e4	176	cfind	dwarf+symtab	6f6730be40e9		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x294	176	cfind_by_fid	dwarf+symtab	d6b5e1e5a359		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x294	176	cfind_by_fid	dwarf+symtab	d6b5e1e5a359		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x344	300	cachefs_cnode_free	dwarf+symtab	82d2ccba5baf		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x470	284	cachefs_get_fids	dwarf+symtab	6db2fb88b79f		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x58c	776	valid_allocmap	dwarf+symtab	85554e4a3558		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x58c	776	valid_allocmap	dwarf+symtab	85554e4a3558		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x894	56	all_zero	dwarf+symtab	a23a2803e5c3		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x8cc	344	valid_file_header	dwarf+symtab	37f8d3e78a66		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xa24	260	cachefs_init_frontvp	dwarf+symtab	bbc3b5f7bb6e		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xb28	1760	cachefs_initcnode	dwarf+symtab	ddb9feaf8c2e		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xb28	1760	cachefs_initcnode	dwarf+symtab	ddb9feaf8c2e		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x1208	2888	makecachefsnode	dwarf+symtab	1a39ebd9c924		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x1d50	68	cachefs_cnode_cnt	dwarf+symtab	1e8a59faa0cb		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64		0x0		cachefs_checkfid	dwarf+symtab			out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x118	72	cachefs_reconnect	dwarf+symtab	35d224a8584c		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x160	128	irix5_to_cachefsrepl_arg	dwarf+symtab	3010104a3251		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x1e0	112	irix5_to_cachefs_replace	dwarf+symtab	84e49d4073dc		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x250	468	replace_front_file	dwarf+symtab	e5a0803fe841		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x250	468	replace_front_file	dwarf+symtab	e5a0803fe841		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x424	1264	cachefs_replacement	dwarf+symtab	50afb30df1fb		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x914	152	cachefs_replacement_halt	dwarf+symtab	5cea1e4ebf86		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x9ac	96	cachefs_garbage_collect	dwarf+symtab	d2c8da8ebb29		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0xa0c	248	cachefs_allocfile	dwarf+symtab	bd3d25bb6ef9		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0xa0c	248	cachefs_allocfile	dwarf+symtab	bd3d25bb6ef9		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0xb04	324	cachefs_allocblocks	dwarf+symtab	99095e376685		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64		0x0		c_single_init_cached_object	dwarf+symtab			out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0x5dc	1780	c_single_check_cached_object	dwarf+symtab	bb864f91b390		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0xcd0	688	c_single_modify_cached_object	dwarf+symtab	4e8998cafcb4		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0x5dc	1780	c_single_check_cached_object	dwarf+symtab	bb864f91b390		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0xcd0	688	c_single_modify_cached_object	dwarf+symtab	4e8998cafcb4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0xf80	160	c_single_invalidate_cached_object	dwarf+symtab	29e7f6099ae5		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0x1020	140	c_single_expire_cached_object	dwarf+symtab	ff60be60bc6d		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_strict.o)	kernel-object	n64		0x0		c_strict_init_cached_object	dwarf+symtab			out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0x594	1300	c_strict_check_cached_object	dwarf+symtab	1f7aec5efb68		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xaa8	724	c_strict_modify_cached_object	dwarf+symtab	18cb0500bd3e		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0x594	1300	c_strict_check_cached_object	dwarf+symtab	1f7aec5efb68		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xaa8	724	c_strict_modify_cached_object	dwarf+symtab	18cb0500bd3e		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xd7c	156	c_strict_invalidate_cached_object	dwarf+symtab	8b3fc9602a33		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xe18	8	c_strict_expire_cached_object	dwarf+symtab	78aa5094d5ec		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64		0x0		cachefscache_list_find	dwarf+symtab			out:1	undocumented		
@@ -14418,12 +14418,12 @@ IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x13e4	164	cachefs_allocmap_region	dwarf+symtab	56c0437ca692		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1488	628	cachefs_update_allocmap	dwarf+symtab	65cb09b6a5d3		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x16fc	40	cachefs_iodone	dwarf+symtab	9a43157a1655		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1724	1376	cachefsio_write	dwarf+symtab	07b40eedfb19		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1c84	1376	cachefsio_read	dwarf+symtab	67c6c418ce7f		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1724	1376	cachefsio_write	dwarf+symtab	07b40eedfb19		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1c84	1376	cachefsio_read	dwarf+symtab	67c6c418ce7f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x21e4	148	cachefs_workq_init	dwarf+symtab	8c30fd95bc58		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2278	160	cachefs_workq_destroy	dwarf+symtab	af92f14f4009		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2318	248	cachefs_async_start	dwarf+symtab	1451094d646f		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2410	940	cachefs_async_daemon	dwarf+symtab	ec4ba5fa98da		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2410	940	cachefs_async_daemon	dwarf+symtab	ec4ba5fa98da		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x27bc	236	cachefs_async_halt	dwarf+symtab	12cefec07c6d		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x28a8	216	cachefs_addqueue	dwarf+symtab	38892b661a71		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2980	132	cachefs_async_read	dwarf+symtab	d2e23358e3b0		out:1	undocumented		
@@ -14439,7 +14439,7 @@ IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x36a0	488	fileheader_cache_remove	dwarf+symtab	23a4b94c8fbf		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3888	120	alloc_fileheader	dwarf+symtab	a72ce8cf435b		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3900	84	locate_header	dwarf+symtab	99fc05cb2623		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3954	2544	release_fileheader	dwarf+symtab	1df51e3c98c2		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3954	2544	release_fileheader	dwarf+symtab	1df51e3c98c2		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x4344	892	cachefs_mem_check	dwarf+symtab	789134c9d645		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x46c0	660	cksum	dwarf+symtab	d8a99060a460		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x4954	760	cachefs_write_file_header	dwarf+symtab	4d36484f1b63		out:1	undocumented		
@@ -14461,11 +14461,11 @@ IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64		0x0
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x15c	340	fscache_destroy	dwarf+symtab	842ce98ab0b9		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x2b0	68	fscache_hold	dwarf+symtab	e02ec7fa0015		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x2f4	68	fscache_rele	dwarf+symtab	108833641e9e		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x338	912	fscache_sync	dwarf+symtab	fd67b9dfa503		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x338	912	fscache_sync	dwarf+symtab	fd67b9dfa503		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x6c8	180	fscache_free_cnodes	dwarf+symtab	f842c96937a2		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x77c	84	fscache_list_find	dwarf+symtab	c52068ba8a52		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7d0	28	fscache_list_add	dwarf+symtab	79fcd1a47648		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7ec	72	fscache_list_remove	dwarf+symtab	4d48e382cb6c		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7d0	28	fscache_list_add	dwarf+symtab	79fcd1a47648		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7ec	72	fscache_list_remove	dwarf+symtab	4d48e382cb6c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n64		0x0		get_minor_number	dwarf+symtab			out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n64	.text	0x94	64	release_minor_number	dwarf+symtab	816170fd3530		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n64	.text	0xd4	108	cachefs_mkmntdev	dwarf+symtab	4d5f1f0b87a6		out:1	undocumented		
@@ -32506,7 +32506,7 @@ IP30/unix	kernel	n64		0x0		auto_fsync	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		auto_getattr	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		auto_inactive	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		auto_lookup	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP30/unix	kernel	n64		0x0		auto_mkdir	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		auto_mkdir	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		auto_mntupdate	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		auto_mount	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/unix	kernel	n64		0x0		auto_open	dwarf			out:7	undocumented		
@@ -35140,7 +35140,7 @@ IP30/unix	kernel	n64		0x0		send_down_reg	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		send_fatal	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		send_msg_orig	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		send_sigtopid	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		send_unmount_request	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		send_unmount_request	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		sendcont	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		sendsig	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ser_eeprom_chk_ack	dwarf			out:7	undocumented		
@@ -45408,7 +45408,7 @@ IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x478
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x82c	144	autodir_lookup	dwarf+symtab	58f4154b6ef7		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x8bc	176	auto_dirdrop	dwarf+symtab	4039cb83a5df		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x96c	320	auto_direnter	dwarf+symtab	820d37c7305b		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xaac	624	send_unmount_request	dwarf+symtab	5b94f26b0c16		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xaac	624	send_unmount_request	dwarf+symtab	5b94f26b0c16		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xd1c	188	autofs_busy	dwarf+symtab	d437bad282a1		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xdd8	276	rm_hierarchy	dwarf+symtab	726d68f6d54c		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xeec	444	unmount_hierarchy	dwarf+symtab	660edf04a0f6		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -45439,7 +45439,7 @@ IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x25
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xba0	316	auto_create	dwarf+symtab	62ab597261e0		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xcdc	248	auto_remove	dwarf+symtab	734e7e0c067e		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xdd4	396	auto_rename	dwarf+symtab	55942f16737e		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xf60	744	auto_mkdir	dwarf+symtab	521341375d09		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xf60	744	auto_mkdir	dwarf+symtab	521341375d09		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x1248	884	auto_rmdir	dwarf+symtab	4ef2920e7981		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x15bc	76	autofs_fmtdirent	dwarf+symtab	f81f597ca78a		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x1608	76	irix5_autofs_fmtdirent	dwarf+symtab	67d576231355		out:1	undocumented		
@@ -46183,34 +46183,34 @@ IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xe0	112	cachefs_addhash	dwarf+symtab	da73358a34db		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x150	148	cachefs_remhash	dwarf+symtab	12e9dea6ac07		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x1e4	176	cfind	dwarf+symtab	6f6730be40e9		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x294	176	cfind_by_fid	dwarf+symtab	d6b5e1e5a359		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x294	176	cfind_by_fid	dwarf+symtab	d6b5e1e5a359		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x344	300	cachefs_cnode_free	dwarf+symtab	82d2ccba5baf		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x470	284	cachefs_get_fids	dwarf+symtab	cdd86799aa8a		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x58c	776	valid_allocmap	dwarf+symtab	074db699c3cc		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x58c	776	valid_allocmap	dwarf+symtab	074db699c3cc		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x894	56	all_zero	dwarf+symtab	a23a2803e5c3		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x8cc	344	valid_file_header	dwarf+symtab	37f8d3e78a66		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xa24	260	cachefs_init_frontvp	dwarf+symtab	bbc3b5f7bb6e		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xb28	1760	cachefs_initcnode	dwarf+symtab	010a3d70f05c		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xb28	1760	cachefs_initcnode	dwarf+symtab	010a3d70f05c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x1208	2888	makecachefsnode	dwarf+symtab	7d92287a23e2		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x1d50	68	cachefs_cnode_cnt	dwarf+symtab	1e8a59faa0cb		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64		0x0		cachefs_checkfid	dwarf+symtab			out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x118	72	cachefs_reconnect	dwarf+symtab	35d224a8584c		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x160	128	irix5_to_cachefsrepl_arg	dwarf+symtab	3010104a3251		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x1e0	112	irix5_to_cachefs_replace	dwarf+symtab	84e49d4073dc		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x250	468	replace_front_file	dwarf+symtab	e5a0803fe841		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x250	468	replace_front_file	dwarf+symtab	e5a0803fe841		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x424	1264	cachefs_replacement	dwarf+symtab	50afb30df1fb		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x914	152	cachefs_replacement_halt	dwarf+symtab	5cea1e4ebf86		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x9ac	96	cachefs_garbage_collect	dwarf+symtab	bef1755d4d72		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0xa0c	248	cachefs_allocfile	dwarf+symtab	bd3d25bb6ef9		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0xa0c	248	cachefs_allocfile	dwarf+symtab	bd3d25bb6ef9		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0xb04	324	cachefs_allocblocks	dwarf+symtab	ef7a5ba6de3b		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64		0x0		c_single_init_cached_object	dwarf+symtab			out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0x5dc	1780	c_single_check_cached_object	dwarf+symtab	a15847197f7e		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0xcd0	688	c_single_modify_cached_object	dwarf+symtab	eb1f3cbb59e7		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0x5dc	1780	c_single_check_cached_object	dwarf+symtab	a15847197f7e		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0xcd0	688	c_single_modify_cached_object	dwarf+symtab	eb1f3cbb59e7		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0xf80	160	c_single_invalidate_cached_object	dwarf+symtab	de7291fa21b9		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0x1020	140	c_single_expire_cached_object	dwarf+symtab	ff60be60bc6d		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_strict.o)	kernel-object	n64		0x0		c_strict_init_cached_object	dwarf+symtab			out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0x594	1300	c_strict_check_cached_object	dwarf+symtab	aa6f9bacfbeb		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xaa8	724	c_strict_modify_cached_object	dwarf+symtab	5d94fb135b7f		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0x594	1300	c_strict_check_cached_object	dwarf+symtab	aa6f9bacfbeb		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xaa8	724	c_strict_modify_cached_object	dwarf+symtab	5d94fb135b7f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xd7c	156	c_strict_invalidate_cached_object	dwarf+symtab	36ea96a70de0		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xe18	8	c_strict_expire_cached_object	dwarf+symtab	78aa5094d5ec		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64		0x0		cachefscache_list_find	dwarf+symtab			out:1	undocumented		
@@ -46228,12 +46228,12 @@ IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x13e4	164	cachefs_allocmap_region	dwarf+symtab	56c0437ca692		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1488	628	cachefs_update_allocmap	dwarf+symtab	65cb09b6a5d3		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x16fc	40	cachefs_iodone	dwarf+symtab	9a43157a1655		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1724	1376	cachefsio_write	dwarf+symtab	91d27d5cc28a		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1c84	1376	cachefsio_read	dwarf+symtab	d9d845c1dac6		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1724	1376	cachefsio_write	dwarf+symtab	91d27d5cc28a		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1c84	1376	cachefsio_read	dwarf+symtab	d9d845c1dac6		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x21e4	148	cachefs_workq_init	dwarf+symtab	8c30fd95bc58		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2278	160	cachefs_workq_destroy	dwarf+symtab	af92f14f4009		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2318	248	cachefs_async_start	dwarf+symtab	1451094d646f		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2410	940	cachefs_async_daemon	dwarf+symtab	92181adc0df3		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2410	940	cachefs_async_daemon	dwarf+symtab	92181adc0df3		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x27bc	236	cachefs_async_halt	dwarf+symtab	12cefec07c6d		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x28a8	216	cachefs_addqueue	dwarf+symtab	8cc1c2aa9e86		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2980	132	cachefs_async_read	dwarf+symtab	d2e23358e3b0		out:1	undocumented		
@@ -46249,7 +46249,7 @@ IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x36a0	488	fileheader_cache_remove	dwarf+symtab	e847691a7d5d		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3888	120	alloc_fileheader	dwarf+symtab	a72ce8cf435b		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3900	84	locate_header	dwarf+symtab	99fc05cb2623		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3954	2544	release_fileheader	dwarf+symtab	be797b72785e		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3954	2544	release_fileheader	dwarf+symtab	be797b72785e		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x4344	892	cachefs_mem_check	dwarf+symtab	acab65520693		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x46c0	660	cksum	dwarf+symtab	d8a99060a460		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x4954	760	cachefs_write_file_header	dwarf+symtab	bd4d2b9b443e		out:1	undocumented		
@@ -46271,11 +46271,11 @@ IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64		0x0
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x15c	340	fscache_destroy	dwarf+symtab	842ce98ab0b9		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x2b0	68	fscache_hold	dwarf+symtab	e02ec7fa0015		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x2f4	68	fscache_rele	dwarf+symtab	108833641e9e		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x338	912	fscache_sync	dwarf+symtab	fd67b9dfa503		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x338	912	fscache_sync	dwarf+symtab	fd67b9dfa503		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x6c8	180	fscache_free_cnodes	dwarf+symtab	f842c96937a2		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x77c	84	fscache_list_find	dwarf+symtab	c52068ba8a52		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7d0	28	fscache_list_add	dwarf+symtab	79fcd1a47648		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7ec	72	fscache_list_remove	dwarf+symtab	4d48e382cb6c		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7d0	28	fscache_list_add	dwarf+symtab	79fcd1a47648		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7ec	72	fscache_list_remove	dwarf+symtab	4d48e382cb6c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n64		0x0		get_minor_number	dwarf+symtab			out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n64	.text	0x94	64	release_minor_number	dwarf+symtab	816170fd3530		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n64	.text	0xd4	108	cachefs_mkmntdev	dwarf+symtab	4d5f1f0b87a6		out:1	undocumented		
@@ -61541,7 +61541,7 @@ IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_subr.o)	kernel-object	n32	.text	0x47c
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_subr.o)	kernel-object	n32	.text	0x834	144	autodir_lookup	dwarf+symtab	14ecf1c4c49f		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_subr.o)	kernel-object	n32	.text	0x8c4	176	auto_dirdrop	dwarf+symtab	c3bacf301e23		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_subr.o)	kernel-object	n32	.text	0x974	328	auto_direnter	dwarf+symtab	f66d8370d965		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_subr.o)	kernel-object	n32	.text	0xabc	624	send_unmount_request	dwarf+funcnames+symtab	5a233719eeed		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_subr.o)	kernel-object	n32	.text	0xabc	624	send_unmount_request	dwarf+funcnames+symtab	5a233719eeed		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_subr.o)	kernel-object	n32	.text	0xd2c	188	autofs_busy	dwarf+funcnames+symtab	96d76129f11a		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_subr.o)	kernel-object	n32	.text	0xde8	276	rm_hierarchy	dwarf+funcnames+symtab	84da07037652		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_subr.o)	kernel-object	n32	.text	0xefc	444	unmount_hierarchy	dwarf+funcnames+symtab	b7c66ccc5685		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -61571,7 +61571,7 @@ IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_vnops.o)	kernel-object	n32	.text	0x26
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_vnops.o)	kernel-object	n32	.text	0xad8	200	auto_create	dwarf+funcnames+symtab	5b5e88831514		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_vnops.o)	kernel-object	n32	.text	0xba0	136	auto_remove	dwarf+funcnames+symtab	797150168813		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_vnops.o)	kernel-object	n32	.text	0xc28	220	auto_rename	dwarf+funcnames+symtab	cc5ddafd119f		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_vnops.o)	kernel-object	n32	.text	0xd04	572	auto_mkdir	dwarf+funcnames+symtab	c0396bca97f4		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_vnops.o)	kernel-object	n32	.text	0xd04	572	auto_mkdir	dwarf+funcnames+symtab	c0396bca97f4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_vnops.o)	kernel-object	n32	.text	0xf40	704	auto_rmdir	dwarf+funcnames+symtab	a0a4b0625869		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_vnops.o)	kernel-object	n32	.text	0x1200	76	autofs_fmtdirent	dwarf+funcnames+symtab	71103f600c12		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/autofs.a(auto_vnops.o)	kernel-object	n32	.text	0x124c	76	irix5_autofs_fmtdirent	dwarf+funcnames+symtab	f5282ef17a32		out:1	undocumented		
@@ -62349,32 +62349,32 @@ IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0xd8	108	cachefs_addhash	dwarf+symtab	a1a617bca363		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x144	144	cachefs_remhash	dwarf+symtab	26532ca7f688		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x1d4	172	cfind	dwarf+symtab	474ed97e6805		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x280	172	cfind_by_fid	dwarf+symtab	a12c7e6569b1		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x280	172	cfind_by_fid	dwarf+symtab	a12c7e6569b1		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x32c	300	cachefs_cnode_free	dwarf+symtab	31a88712d67c		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x458	148	cachefs_get_fids	dwarf+funcnames+symtab	f06e553cc83b		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x4ec	812	valid_allocmap	dwarf+symtab	5fc2fad098eb		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x4ec	812	valid_allocmap	dwarf+symtab	5fc2fad098eb		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x818	56	all_zero	dwarf+funcnames+symtab	2308e906de4a		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x850	344	valid_file_header	dwarf+symtab	184204530b13		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x9a8	260	cachefs_init_frontvp	dwarf+funcnames+symtab	8ed81e2f0551		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0xaac	1704	cachefs_initcnode	dwarf+funcnames+symtab	2cb50538eaf8		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0xaac	1704	cachefs_initcnode	dwarf+funcnames+symtab	2cb50538eaf8		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x1154	2644	makecachefsnode	dwarf+symtab	603e5db92005		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_cnode.o)	kernel-object	n32	.text	0x1ba8	60	cachefs_cnode_cnt	dwarf+symtab	e1d5ad4501d9		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32		0x0		cachefs_checkfid	dwarf+symtab			out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32	.text	0xd8	72	cachefs_reconnect	dwarf+symtab	0f9aa1d65c8c		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32	.text	0x120	308	replace_front_file	dwarf+symtab	31add9b80776		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32	.text	0x120	308	replace_front_file	dwarf+symtab	31add9b80776		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32	.text	0x254	1088	cachefs_replacement	dwarf+symtab	f5d44cca38b8		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32	.text	0x694	132	cachefs_replacement_halt	dwarf+symtab	5fa62cc8aa05		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32	.text	0x718	84	cachefs_garbage_collect	dwarf+symtab	abe1914ed875		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32	.text	0x76c	176	cachefs_allocfile	dwarf+symtab	1f7dbdeb7b60		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32	.text	0x76c	176	cachefs_allocfile	dwarf+symtab	1f7dbdeb7b60		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_resource.o)	kernel-object	n32	.text	0x81c	244	cachefs_allocblocks	dwarf+symtab	2a1335f0da6d		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n32		0x0		c_single_init_cached_object	dwarf+funcnames+symtab			out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n32	.text	0x55c	1672	c_single_check_cached_object	dwarf+funcnames+symtab	3862b0aa9ccf		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n32	.text	0xbe4	612	c_single_modify_cached_object	dwarf+funcnames+symtab	66ccd1605d61		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n32	.text	0x55c	1672	c_single_check_cached_object	dwarf+funcnames+symtab	3862b0aa9ccf		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n32	.text	0xbe4	612	c_single_modify_cached_object	dwarf+funcnames+symtab	66ccd1605d61		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n32	.text	0xe48	148	c_single_invalidate_cached_object	dwarf+funcnames+symtab	abc89c9c3462		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n32	.text	0xedc	132	c_single_expire_cached_object	dwarf+funcnames+symtab	05e546e52560		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_strict.o)	kernel-object	n32		0x0		c_strict_init_cached_object	dwarf+funcnames+symtab			out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_strict.o)	kernel-object	n32	.text	0x514	1204	c_strict_check_cached_object	dwarf+funcnames+symtab	4667cad36310		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_strict.o)	kernel-object	n32	.text	0x9c8	644	c_strict_modify_cached_object	dwarf+funcnames+symtab	eb2d1ec74fda		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_strict.o)	kernel-object	n32	.text	0x514	1204	c_strict_check_cached_object	dwarf+funcnames+symtab	4667cad36310		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_strict.o)	kernel-object	n32	.text	0x9c8	644	c_strict_modify_cached_object	dwarf+funcnames+symtab	eb2d1ec74fda		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_strict.o)	kernel-object	n32	.text	0xc4c	144	c_strict_invalidate_cached_object	dwarf+funcnames+symtab	df9b410589e6		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_strict.o)	kernel-object	n32	.text	0xcdc	8	c_strict_expire_cached_object	dwarf+funcnames+symtab	78aa5094d5ec		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32		0x0		cachefscache_list_find	dwarf+symtab			out:1	undocumented		
@@ -62392,12 +62392,12 @@ IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x11f0	184	cachefs_allocmap_region	dwarf+funcnames+symtab	5f4624c9fed9		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x12a8	600	cachefs_update_allocmap	dwarf+symtab	a212c7558156		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x1500	40	cachefs_iodone	dwarf+symtab	2478d230b3de		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x1528	1348	cachefsio_write	dwarf+symtab	0feb726dcba7		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x1a6c	1552	cachefsio_read	dwarf+symtab	2a9311e78ed5		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x1528	1348	cachefsio_write	dwarf+symtab	0feb726dcba7		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x1a6c	1552	cachefsio_read	dwarf+symtab	2a9311e78ed5		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x207c	152	cachefs_workq_init	dwarf+symtab	6be0879de568		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x2114	168	cachefs_workq_destroy	dwarf+symtab	ab306196f8ad		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x21bc	224	cachefs_async_start	dwarf+symtab	62f24763be8c		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x229c	916	cachefs_async_daemon	dwarf+symtab	194889a29289		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x229c	916	cachefs_async_daemon	dwarf+symtab	194889a29289		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x2630	216	cachefs_async_halt	dwarf+symtab	64005f8c2bd9		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x2708	196	cachefs_addqueue	dwarf+symtab	0ea628adbb80		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x27cc	116	cachefs_async_read	dwarf+funcnames+symtab	7c75b94c66b2		out:1	undocumented		
@@ -62413,7 +62413,7 @@ IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x3348	428	fileheader_cache_remove	dwarf+symtab	f1c36d4a9453		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x34f4	120	alloc_fileheader	dwarf+symtab	1c27cb718bb0		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x356c	108	locate_header	dwarf+funcnames+symtab	75ea3c9b72b4		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x35d8	2524	release_fileheader	dwarf+symtab	6627056dbf37		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x35d8	2524	release_fileheader	dwarf+symtab	6627056dbf37		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x3fb4	880	cachefs_mem_check	dwarf+symtab	10215a54ea76		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x4324	660	cksum	dwarf+funcnames+symtab	11c4896804b7		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_subr.o)	kernel-object	n32	.text	0x45b8	804	cachefs_write_file_header	dwarf+symtab	de5aeb43e4d5		out:1	undocumented		
@@ -62435,11 +62435,11 @@ IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32		0x0
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x170	320	fscache_destroy	dwarf+symtab	8a1ebeb61a42		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x2b0	56	fscache_hold	dwarf+symtab	2457749aeeba		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x2e8	56	fscache_rele	dwarf+symtab	df397fe376a8		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x320	856	fscache_sync	dwarf+symtab	3aebe07b732a		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x320	856	fscache_sync	dwarf+symtab	3aebe07b732a		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x678	152	fscache_free_cnodes	dwarf+symtab	0877f2104d5c		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x710	84	fscache_list_find	dwarf+symtab	aa8925c8e81e		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x764	28	fscache_list_add	dwarf+symtab	e0b4ed1a5987		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x780	72	fscache_list_remove	dwarf+symtab	2320a525603b		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x764	28	fscache_list_add	dwarf+symtab	e0b4ed1a5987		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_fscache.o)	kernel-object	n32	.text	0x780	72	fscache_list_remove	dwarf+symtab	2320a525603b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n32		0x0		get_minor_number	dwarf+funcnames+symtab			out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n32	.text	0x94	68	release_minor_number	dwarf+symtab	4726fc9d0787		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n32	.text	0xd8	108	cachefs_mkmntdev	dwarf+funcnames+symtab	547cc1000b9e		out:1	undocumented		
@@ -77826,7 +77826,7 @@ IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x478
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x82c	144	autodir_lookup	dwarf+symtab	58f4154b6ef7		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x8bc	176	auto_dirdrop	dwarf+symtab	4039cb83a5df		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0x96c	320	auto_direnter	dwarf+symtab	820d37c7305b		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xaac	624	send_unmount_request	dwarf+symtab	5b94f26b0c16		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xaac	624	send_unmount_request	dwarf+symtab	5b94f26b0c16		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xd1c	188	autofs_busy	dwarf+symtab	d437bad282a1		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xdd8	276	rm_hierarchy	dwarf+symtab	726d68f6d54c		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-object	n64	.text	0xeec	444	unmount_hierarchy	dwarf+symtab	660edf04a0f6		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -77857,7 +77857,7 @@ IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x25
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xba0	316	auto_create	dwarf+symtab	62ab597261e0		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xcdc	248	auto_remove	dwarf+symtab	734e7e0c067e		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xdd4	396	auto_rename	dwarf+symtab	55942f16737e		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xf60	744	auto_mkdir	dwarf+symtab	521341375d09		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0xf60	744	auto_mkdir	dwarf+symtab	521341375d09		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x1248	884	auto_rmdir	dwarf+symtab	4ef2920e7981		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x15bc	76	autofs_fmtdirent	dwarf+symtab	f81f597ca78a		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-object	n64	.text	0x1608	76	irix5_autofs_fmtdirent	dwarf+symtab	67d576231355		out:1	undocumented		
@@ -78606,34 +78606,34 @@ IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xe0	112	cachefs_addhash	dwarf+symtab	da73358a34db		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x150	148	cachefs_remhash	dwarf+symtab	12e9dea6ac07		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x1e4	176	cfind	dwarf+symtab	6f6730be40e9		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x294	176	cfind_by_fid	dwarf+symtab	d6b5e1e5a359		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x294	176	cfind_by_fid	dwarf+symtab	d6b5e1e5a359		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x344	300	cachefs_cnode_free	dwarf+symtab	82d2ccba5baf		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x470	284	cachefs_get_fids	dwarf+symtab	33666d3e4b46		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x58c	776	valid_allocmap	dwarf+symtab	62ba585748f4		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x58c	776	valid_allocmap	dwarf+symtab	62ba585748f4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x894	56	all_zero	dwarf+symtab	a23a2803e5c3		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x8cc	344	valid_file_header	dwarf+symtab	37f8d3e78a66		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xa24	260	cachefs_init_frontvp	dwarf+symtab	bbc3b5f7bb6e		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xb28	1760	cachefs_initcnode	dwarf+symtab	f99e991dc7a3		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0xb28	1760	cachefs_initcnode	dwarf+symtab	f99e991dc7a3		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x1208	2888	makecachefsnode	dwarf+symtab	0bdebe39f237		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)	kernel-object	n64	.text	0x1d50	68	cachefs_cnode_cnt	dwarf+symtab	1e8a59faa0cb		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64		0x0		cachefs_checkfid	dwarf+symtab			out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x118	72	cachefs_reconnect	dwarf+symtab	35d224a8584c		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x160	128	irix5_to_cachefsrepl_arg	dwarf+symtab	3010104a3251		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x1e0	112	irix5_to_cachefs_replace	dwarf+symtab	84e49d4073dc		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x250	468	replace_front_file	dwarf+symtab	e5a0803fe841		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x250	468	replace_front_file	dwarf+symtab	e5a0803fe841		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x424	1264	cachefs_replacement	dwarf+symtab	50afb30df1fb		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x914	152	cachefs_replacement_halt	dwarf+symtab	5cea1e4ebf86		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0x9ac	96	cachefs_garbage_collect	dwarf+symtab	0b244fe06932		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0xa0c	248	cachefs_allocfile	dwarf+symtab	bd3d25bb6ef9		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0xa0c	248	cachefs_allocfile	dwarf+symtab	bd3d25bb6ef9		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)	kernel-object	n64	.text	0xb04	324	cachefs_allocblocks	dwarf+symtab	fd35d3255c65		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64		0x0		c_single_init_cached_object	dwarf+symtab			out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0x5dc	1780	c_single_check_cached_object	dwarf+symtab	c253afc252e9		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0xcd0	688	c_single_modify_cached_object	dwarf+symtab	0a08c9a9fed5		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0x5dc	1780	c_single_check_cached_object	dwarf+symtab	c253afc252e9		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0xcd0	688	c_single_modify_cached_object	dwarf+symtab	0a08c9a9fed5		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0xf80	160	c_single_invalidate_cached_object	dwarf+symtab	46dc29f846bb		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_singlewrc.o)	kernel-object	n64	.text	0x1020	140	c_single_expire_cached_object	dwarf+symtab	ff60be60bc6d		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_strict.o)	kernel-object	n64		0x0		c_strict_init_cached_object	dwarf+symtab			out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0x594	1300	c_strict_check_cached_object	dwarf+symtab	d85c022d43f0		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xaa8	724	c_strict_modify_cached_object	dwarf+symtab	ffe0e66b0a16		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0x594	1300	c_strict_check_cached_object	dwarf+symtab	d85c022d43f0		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xaa8	724	c_strict_modify_cached_object	dwarf+symtab	ffe0e66b0a16		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xd7c	156	c_strict_invalidate_cached_object	dwarf+symtab	b0058ee14418		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_strict.o)	kernel-object	n64	.text	0xe18	8	c_strict_expire_cached_object	dwarf+symtab	78aa5094d5ec		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64		0x0		cachefscache_list_find	dwarf+symtab			out:1	undocumented		
@@ -78651,12 +78651,12 @@ IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x13e4	164	cachefs_allocmap_region	dwarf+symtab	56c0437ca692		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1488	628	cachefs_update_allocmap	dwarf+symtab	65cb09b6a5d3		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x16fc	40	cachefs_iodone	dwarf+symtab	9a43157a1655		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1724	1376	cachefsio_write	dwarf+symtab	51323d657615		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1c84	1376	cachefsio_read	dwarf+symtab	4b94d77805a4		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1724	1376	cachefsio_write	dwarf+symtab	51323d657615		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x1c84	1376	cachefsio_read	dwarf+symtab	4b94d77805a4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x21e4	148	cachefs_workq_init	dwarf+symtab	8c30fd95bc58		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2278	160	cachefs_workq_destroy	dwarf+symtab	af92f14f4009		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2318	248	cachefs_async_start	dwarf+symtab	1451094d646f		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2410	940	cachefs_async_daemon	dwarf+symtab	885fb12e8820		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2410	940	cachefs_async_daemon	dwarf+symtab	885fb12e8820		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x27bc	236	cachefs_async_halt	dwarf+symtab	12cefec07c6d		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x28a8	216	cachefs_addqueue	dwarf+symtab	17db8cccdc21		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x2980	132	cachefs_async_read	dwarf+symtab	d2e23358e3b0		out:1	undocumented		
@@ -78672,7 +78672,7 @@ IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x36a0	488	fileheader_cache_remove	dwarf+symtab	543777554b98		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3888	120	alloc_fileheader	dwarf+symtab	a72ce8cf435b		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3900	84	locate_header	dwarf+symtab	99fc05cb2623		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3954	2544	release_fileheader	dwarf+symtab	29be9d3e6294		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x3954	2544	release_fileheader	dwarf+symtab	29be9d3e6294		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x4344	892	cachefs_mem_check	dwarf+symtab	d7e55afa62b7		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x46c0	660	cksum	dwarf+symtab	d8a99060a460		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)	kernel-object	n64	.text	0x4954	760	cachefs_write_file_header	dwarf+symtab	e396167548e9		out:1	undocumented		
@@ -78694,11 +78694,11 @@ IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64		0x0
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x15c	340	fscache_destroy	dwarf+symtab	842ce98ab0b9		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x2b0	68	fscache_hold	dwarf+symtab	e02ec7fa0015		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x2f4	68	fscache_rele	dwarf+symtab	108833641e9e		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x338	912	fscache_sync	dwarf+symtab	fd67b9dfa503		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x338	912	fscache_sync	dwarf+symtab	fd67b9dfa503		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x6c8	180	fscache_free_cnodes	dwarf+symtab	f842c96937a2		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x77c	84	fscache_list_find	dwarf+symtab	c52068ba8a52		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7d0	28	fscache_list_add	dwarf+symtab	79fcd1a47648		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7ec	72	fscache_list_remove	dwarf+symtab	4d48e382cb6c		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7d0	28	fscache_list_add	dwarf+symtab	79fcd1a47648		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)	kernel-object	n64	.text	0x7ec	72	fscache_list_remove	dwarf+symtab	4d48e382cb6c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n64		0x0		get_minor_number	dwarf+symtab			out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n64	.text	0x94	64	release_minor_number	dwarf+symtab	816170fd3530		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_vfsops.o)	kernel-object	n64	.text	0xd4	108	cachefs_mkmntdev	dwarf+symtab	4d5f1f0b87a6		out:1	undocumented		
