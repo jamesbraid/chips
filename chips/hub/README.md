@@ -500,6 +500,34 @@ header names used in the tables above.
 - `hub_slot_to_crossbow` (`IP27/unix` `0xc00000000003cbc0`, 36 bytes) maps a slot byte to a crossbow number: the
   branch at address 0xc00000000003cbd0 returns 0 when the high nibble (mask `0xf0`) equals 80 (`0x50`), otherwise it
   returns `(slot - 1) & 1`. Established.
+- `hub_slot_get` (`IP27/unix` `0xc00000000003cee0`, 36 bytes) calls `get_my_slotid` and returns the low four bits of
+  the result. Established.
+- `hub_xtalk_link_up` (`IP27/unix` `0xc000000000042fa0`, 40 bytes) returns 1 when bit 13 (`0x2000`) of the doubleword
+  at offset 296 from address 0x9200000001c00000 plus its first argument (a node number) shifted left 32 is set, which
+  is `IIO_ILCSR` (`0x400128`) through the node alias, and 0 otherwise. Established.
+### Small wrappers and one-register routines
+
+- `ni_reset_port` (`IP27/unix` `0xc00000000001d760`, 16 bytes) stores 129 (`0x81`) as a doubleword to address
+  0x9200000001600008 (`NI_PORT_RESET`, local alias). Established.
+- `md_perf_stop_count` (`IP27/unix` `0xc00000000005b9d8`, 24 bytes) stores a zero doubleword to address
+  0x9200000001a10000 plus the node number shifted left 32, which is `MD_PERF_SEL` (`0x210000`) through the node alias;
+  the node number is the halfword at +26 of its argument. Established.
+- `sn0_skip_dump` (`IP27/unix` `0xc00000000003590c`, 24 bytes) calls `dumptlb` with the processor number from address
+  0xffffffffffffc420 and then branches to itself, so it never returns. Established.
+- `intr_block_bit` (`IP27/unix` `0xc0000000000389a0`, 28 bytes) calls `do_intr_block_bit` with its two arguments and a
+  third argument of 1, which selects blocking, and returns. Established; inferred that 1 means block, from the partner
+  routine passing 0.
+- `intr_unblock_bit` (`IP27/unix` `0xc0000000000389bc`, 28 bytes) calls `do_intr_block_bit` with its two arguments and
+  a third argument of 0 and returns, the unblocking counterpart of `intr_block_bit`. Established.
+- `hub_intr_alloc` (`IP27/unix` `0xc00000000003bfbc`, 28 bytes) calls the symbol-less routine at `0xc00000000003bd0c`
+  with a fourth argument of 0 and returns its result. The listing labels that address `hub_dmalist_drain`+0x64, which
+  is a neighbouring symbol with no claim to it. Established.
+- `hub_intr_alloc_nothd` (`IP27/unix` `0xc00000000003bfd8`, 28 bytes) calls the symbol-less routine at address
+  0xc00000000003bd0c, as `hub_intr_alloc` does, with the fourth argument 1 instead of 0, and returns its result.
+  Established.
+- `hub_intr_cpu_get` (`IP27/unix` `0xc00000000003c158`, 28 bytes) takes the halfword at +36 of its argument as a
+  processor number, finds that processor's record through the 16-byte table at `0xc0000000014d5020` (pointer at entry
+  +8) and returns the word at +0x734 (1844) of it. Established.
 
 ## Against the public headers (reported after the reading above)
 

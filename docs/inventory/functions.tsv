@@ -4223,7 +4223,7 @@ IP27/unix	kernel	n64	.text	0xc00000000001d680	16	get_slice	symtab	80b63e23999a		
 IP27/unix	kernel	n64	.text	0xc00000000001d690	20	is_fine_dirmode	symtab	f195050af221		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000001d6a4	28	get_hub_chiprev	symtab	f46876ea24ce		in	understood	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/unix	kernel	n64	.text	0xc00000000001d6c0	160	verify_snchip_rev	symtab	69ecdfd7ad86		out:5	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc00000000001d760	16	ni_reset_port	symtab	1f72ef929824		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc00000000001d760	16	ni_reset_port	symtab	1f72ef929824		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc00000000001d770	84	is_sgi2100_PIMM	symtab	a4ea5cfae863		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001d7c4	92	sgi2100_alert	symtab	897a3b39f694		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001d820	196	cpu_confchk	symtab	0415a20d6bfb		out:5	undocumented		
@@ -4616,7 +4616,7 @@ IP27/unix	kernel	n64	.text	0xc000000000035648	76	err_int_unblock_mask	symtab	919
 IP27/unix	kernel	n64	.text	0xc000000000035694	108	recover_error_init	symtab	68588a2a53b1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000035700	108	klerror_global_check	symtab	950d2793f31c		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003576c	416	klerror_check_recoverable	symtab	5f709983ab8a		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003590c	24	sn0_skip_dump	symtab	82f770bec25c		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003590c	24	sn0_skip_dump	symtab	82f770bec25c		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc000000000035924	448	sn0_error_dump	symtab	a492dae0b8be		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000035ae4	44	sn0_error_state	symtab	773fedc6e283		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000035b10	1360	dobuserre	symtab	0875a7c6867c		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
@@ -4651,8 +4651,8 @@ IP27/unix	kernel	n64	.text	0xc000000000038368	40	intr_unreserve_level	symtab	f7a
 IP27/unix	kernel	n64	.text	0xc0000000000383ec	668	intr_connect_level	symtab	dd836e80345f		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000038688	428	intr_disconnect_level	symtab	2f7c12d5711c		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP27/unix	kernel	n64	.text	0xc000000000038834	364	do_intr_block_bit	symtab	9c8bd6e24d45		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc0000000000389a0	28	intr_block_bit	symtab	c18f5276146d		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000389bc	28	intr_unblock_bit	symtab	e209215d8e60		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000389a0	28	intr_block_bit	symtab	c18f5276146d		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
+IP27/unix	kernel	n64	.text	0xc0000000000389bc	28	intr_unblock_bit	symtab	e209215d8e60		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc000000000038b94	132	mark_subnodevertex_as_subnode	symtab	b3868d750ddc		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000038c18	184	intr_target_from_desc	symtab	f97091a33afb		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000038db8	572	intr_heuristic	symtab	b1fcb4739336		in	named-only	docs/open-questions.md#open-questions	Open questions
@@ -4749,13 +4749,13 @@ IP27/unix	kernel	n64	.text	0xc00000000003bc88	8	hub_dmatrans_addr	symtab	0e2e267
 IP27/unix	kernel	n64	.text	0xc00000000003bc90	8	hub_dmatrans_list	symtab	0e2e26765928		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003bc98	8	hub_dmamap_drain	symtab	78aa5094d5ec		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003bca0	8	hub_dmaaddr_drain	symtab	78aa5094d5ec		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003bca8	8	hub_dmalist_drain	symtab	78aa5094d5ec		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003bfbc	28	hub_intr_alloc	symtab	cd70549d8603		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003bfd8	28	hub_intr_alloc_nothd	symtab	115e36ddbd35		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003bca8	8	hub_dmalist_drain	symtab	78aa5094d5ec		in	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
+IP27/unix	kernel	n64	.text	0xc00000000003bfbc	28	hub_intr_alloc	symtab	cd70549d8603		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
+IP27/unix	kernel	n64	.text	0xc00000000003bfd8	28	hub_intr_alloc_nothd	symtab	115e36ddbd35		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc00000000003bff4	120	hub_intr_free	symtab	868c0dae7c3b		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003c06c	136	hub_intr_connect	symtab	532948231686		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003c0f4	100	hub_intr_disconnect	symtab	83f7a9bb22c9		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003c158	28	hub_intr_cpu_get	symtab	fd7c65ff3571		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003c158	28	hub_intr_cpu_get	symtab	fd7c65ff3571		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc00000000003c174	8	hub_intr_cpuid_get	symtab	acb766709b99		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003c17c	52	hub_provider_startup	symtab	7ef28dd250b4		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003c1b0	28	hub_provider_shutdown	symtab	74efe257d880		in	undocumented		
@@ -4795,7 +4795,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003cddc	28	get_widget_slotnum	symtab	1573f
 IP27/unix	kernel	n64	.text	0xc00000000003cdf8	48	get_widget_slotname	symtab	0432c54222e3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003ce28	52	router_slotbits_to_slotname	symtab	0061c0963a1b		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003ce5c	132	slot_to_widget	symtab	0b41bef39b75		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003cee0	36	hub_slot_get	symtab	85c5d96425e7		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003cee0	36	hub_slot_get	symtab	85c5d96425e7		in	understood	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP27/unix	kernel	n64	.text	0xc00000000003cf04	64	node_can_talk_to_elsc	symtab	a3c9a1fa07c1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003cf44	64	is_xbox_config	symtab	c244bab0a369		out:5	named-only	chips/xbow/README.md#what-identifies-the-chip-established-xbow_attach-in-xbowo-read-in-full	What identifies the chip (established, `xbow_attach` in `xbow.o`, read in full)
 IP27/unix	kernel	n64	.text	0xc00000000003cf84	36	ip27log_xbox_nasid_clear	symtab	65d3102a924b		out:5	undocumented		
@@ -4883,7 +4883,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000429e8	460	klhwg_dimm_flavor_info_print	s
 IP27/unix	kernel	n64	.text	0xc000000000042bb4	528	klhwg_premium_std_dimm_mix_check	symtab	a85971f8d0d5		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000042dc4	260	klhwg_add_all_modules	symtab	75acb3a6c6c3		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000042ec8	216	klhwg_add_all_nodes	symtab	679430397172		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000042fa0	40	hub_xtalk_link_up	symtab	458468238cf9		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc000000000042fa0	40	hub_xtalk_link_up	symtab	458468238cf9		in	understood	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP27/unix	kernel	n64	.text	0xc000000000043038	192	print_hub_error	symtab	113d09141bcf		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000430f8	164	check_hub_error_rates	symtab	3ba2599bd368		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004319c	420	capture_hub_stats	symtab	41cfae65993d		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -4901,7 +4901,7 @@ IP27/unix	kernel	n64	.text	0xc000000000043730	8	dummy_func	symtab	78aa5094d5ec	s
 IP27/unix	kernel	n64	.text	0xc000000000043738	208	bootstrap	symtab	4a9e2b428ea6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000043808	168	mapped_kernel_setup_tlb	symtab	a4decd02e59c		out:5	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000000438b0	316	nmi_dump	symtab	f9fbc8ca1379		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000439ec	140	dumptlb	symtab	fadcdd973278		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000439ec	140	dumptlb	symtab	fadcdd973278		out:5	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc000000000043a78	156	checkAllTlbsDumped	symtab	7aa8e426d6a8		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000043b20	52	VEC_trap	symtab	f1baeb0a8ad0	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000043b20	64	soft_trap	symtab	6b9cfef36281	shared-address	out:5	undocumented		
@@ -5333,7 +5333,7 @@ IP27/unix	kernel	n64	.text	0xc00000000005b728	220	md_perf_get_node_count	symtab	
 IP27/unix	kernel	n64	.text	0xc00000000005b804	124	md_perf_get_ctrl	symtab	2f2d7a9712c3		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000005b880	256	md_perf_get_node_ctrl	symtab	06470b007d14		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000005b980	88	md_perf_start_count	symtab	07991d88cead		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc00000000005b9d8	24	md_perf_stop_count	symtab	bbedb9b4281b		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc00000000005b9d8	24	md_perf_stop_count	symtab	bbedb9b4281b		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc00000000005b9f0	212	md_perf_update_count	symtab	a6f064931c1f		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000005bac4	208	md_perf_multiplex	symtab	3e40c46412ac		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000005bba0	36	VEC_ibe	symtab	090ae59a18d3		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
@@ -18537,7 +18537,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x4500	16	get_slic
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x4510	20	is_fine_dirmode	dwarf+symtab	e2a7911f4512		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x4524	28	get_hub_chiprev	dwarf+symtab	466ab1715a6f		out:6	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x4540	160	verify_snchip_rev	dwarf+symtab	b4159ffa76d1		out:6	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x45e0	16	ni_reset_port	dwarf+symtab	50fffee4fa7c		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x45e0	16	ni_reset_port	dwarf+symtab	50fffee4fa7c		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x45f0	84	is_sgi2100_PIMM	dwarf+symtab	7b96508feb38		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x4644	92	sgi2100_alert	dwarf+symtab	7e435a44c698		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x46a0	196	cpu_confchk	dwarf+symtab	b142d3011425		out:6	undocumented		
@@ -18992,7 +18992,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c4c8	76	err_int
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c514	108	recover_error_init	dwarf+symtab	0dd34a5330f3		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c580	108	klerror_global_check	dwarf+symtab	13972b29b371		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c5ec	416	klerror_check_recoverable	dwarf+symtab	5c5db296d55d		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c78c	24	sn0_skip_dump	dwarf+symtab	afb930e68e83		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c78c	24	sn0_skip_dump	dwarf+symtab	afb930e68e83		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c7a4	448	sn0_error_dump	dwarf+symtab	680e06abe951		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c964	44	sn0_error_state	dwarf+symtab	df62e8cbd278		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1c990	1360	dobuserre	dwarf+symtab	370653aac9ff		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
@@ -19032,8 +19032,8 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f210	92	intr_ge
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f26c	668	intr_connect_level	dwarf+symtab	7cf148d5a60f		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f508	428	intr_disconnect_level	dwarf+symtab	ebaaadc64de6		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f6b4	364	do_intr_block_bit	dwarf+symtab	d31b67b878d1		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f820	28	intr_block_bit	dwarf+symtab	9b5b52955f37		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f83c	28	intr_unblock_bit	dwarf+symtab	4e0b7c85ec68		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f820	28	intr_block_bit	dwarf+symtab	9b5b52955f37		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f83c	28	intr_unblock_bit	dwarf+symtab	4e0b7c85ec68		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f858	296	do_intr_cpu_choose	dwarf	3daaf3094b0b		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f980	28	intr_cpu_choose_from_node	dwarf	8d6c67e351c6		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f99c	120	subnodevertex_to_subnode	dwarf	53d897079f1c		out:6	undocumented		
@@ -19148,16 +19148,16 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22b08	8	hub_dmat
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22b10	8	hub_dmatrans_list	dwarf+symtab	0e2e26765928		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22b18	8	hub_dmamap_drain	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22b20	8	hub_dmaaddr_drain	dwarf+symtab	78aa5094d5ec		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22b28	8	hub_dmalist_drain	dwarf+symtab	78aa5094d5ec		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22b28	8	hub_dmalist_drain	dwarf+symtab	78aa5094d5ec		in	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22b30	8	hub_intr_init	dwarf	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22b38	84	hub_device_desc_update	dwarf	161e1bd39aeb		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22b8c	688	do_hub_intr_alloc	dwarf	0f0023fc6dd2		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22e3c	28	hub_intr_alloc	dwarf+symtab	bcfa1429c2a4		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22e58	28	hub_intr_alloc_nothd	dwarf+symtab	10a04bb9db41		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22e3c	28	hub_intr_alloc	dwarf+symtab	bcfa1429c2a4		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22e58	28	hub_intr_alloc_nothd	dwarf+symtab	10a04bb9db41		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22e74	120	hub_intr_free	dwarf+symtab	9e17ed08705b		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22eec	136	hub_intr_connect	dwarf+symtab	e86305b03f13		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22f74	100	hub_intr_disconnect	dwarf+symtab	fbb587b4ad7a		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22fd8	28	hub_intr_cpu_get	dwarf+symtab	d7dda9c46218		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22fd8	28	hub_intr_cpu_get	dwarf+symtab	d7dda9c46218		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22ff4	8	hub_intr_cpuid_get	dwarf+symtab	acb766709b99		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22ffc	52	hub_provider_startup	dwarf+symtab	18e9e1da7a7d		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23030	28	hub_provider_shutdown	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -19198,7 +19198,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23c5c	28	get_wid
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23c78	48	get_widget_slotname	dwarf+symtab	120b834513da		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23ca8	52	router_slotbits_to_slotname	dwarf+symtab	471c1daafef4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23cdc	132	slot_to_widget	dwarf+symtab	079a6baa0e8f		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23d60	36	hub_slot_get	dwarf+symtab	0bc7ef5e18aa		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23d60	36	hub_slot_get	dwarf+symtab	0bc7ef5e18aa		in	located	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23d84	64	node_can_talk_to_elsc	dwarf+symtab	d07c60613c40		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23dc4	64	is_xbox_config	dwarf+symtab	4aac32c67ada		in	named-only	chips/xbow/README.md#what-identifies-the-chip-established-xbow_attach-in-xbowo-read-in-full	What identifies the chip (established, `xbow_attach` in `xbow.o`, read in full)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23e04	36	ip27log_xbox_nasid_clear	dwarf+symtab	171766094241		out:6	undocumented		
@@ -19304,7 +19304,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29868	460	klhwg_
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29a34	528	klhwg_premium_std_dimm_mix_check	dwarf+symtab	cd6ad8f7548e		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29c44	260	klhwg_add_all_modules	dwarf+symtab	3c195e93973d		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29d48	216	klhwg_add_all_nodes	dwarf+symtab	1862988010c7		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29e20	40	hub_xtalk_link_up	dwarf+symtab	25c7d00c845b		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29e20	40	hub_xtalk_link_up	dwarf+symtab	25c7d00c845b		in	located	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29eb8	192	print_hub_error	dwarf+symtab	014db51ed80c		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29f78	164	check_hub_error_rates	dwarf+symtab	29c54968bc80		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a01c	420	capture_hub_stats	dwarf+symtab	cd959cf7a690		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -19322,7 +19322,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dummy_fu
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b8	208	bootstrap	dwarf+symtab	81eb9fafe9d5		out:6	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a688	168	mapped_kernel_setup_tlb	dwarf+symtab	30b324c402ed		out:6	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a730	316	nmi_dump	dwarf+symtab	3204e2b32974		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a86c	140	dumptlb	dwarf+symtab	cc677e0565cc		out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a86c	140	dumptlb	dwarf+symtab	cc677e0565cc		out:6	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a8f8	156	checkAllTlbsDumped	dwarf+symtab	b4fc8d66e031		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a9a0	52	VEC_trap	dwarf+symtab	59c2a9b8739a	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a9a0	64	soft_trap	symtab	8ee421078d24	shared-address	out:6	undocumented		
@@ -19782,7 +19782,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x425a8	220	md_per
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42684	124	md_perf_get_ctrl	dwarf+symtab	f235f8295a04		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42700	256	md_perf_get_node_ctrl	dwarf+symtab	376148ba24b0		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42800	88	md_perf_start_count	dwarf+symtab	5a038d56f5e6		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42858	24	md_perf_stop_count	dwarf+symtab	dd6780d501f5		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42858	24	md_perf_stop_count	dwarf+symtab	dd6780d501f5		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42870	212	md_perf_update_count	dwarf+symtab	66eae6280dc8		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42944	208	md_perf_multiplex	dwarf+symtab	104f36d3fab9		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42a20	36	VEC_ibe	dwarf+symtab	a192c023ce80		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
@@ -37021,7 +37021,7 @@ IP30/unix	kernel	n64	.text	0xa800000020028ae8	44	ecc_bitcount	symtab	17820dfa0c3
 IP30/unix	kernel	n64	.text	0xa800000020028b14	84	ecc_scache_bits_in_error	symtab	2a16242566bd		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020028b68	76	warn	symtab	f1457f40f431		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020028bb4	64	engr_dvt_thread	symtab	3a38e21adcef		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020028bf4	140	dumptlb	symtab	3d683dfdad39		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020028bf4	140	dumptlb	symtab	3d683dfdad39		out:7	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP30/unix	kernel	n64	.text	0xa800000020028c80	156	checkAllTlbsDumped	symtab	99b586c9fc72		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020028d20	20	VEC_nofault	symtab	3c5dce5d60f2		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020028d40	872	VEC_cpfault	symtab	6e4f732b02d3		out:7	undocumented		
@@ -50592,7 +50592,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x18968	44	ecc_bit
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x18994	84	ecc_scache_bits_in_error	dwarf+symtab	593dc7613290		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x189e8	76	warn	dwarf+symtab	8d966da40cd6		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x18a34	64	engr_dvt_thread	dwarf+symtab	623505c04acf		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x18a74	140	dumptlb	dwarf+symtab	cc677e0565cc		out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x18a74	140	dumptlb	dwarf+symtab	cc677e0565cc		out:8	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x18b00	156	checkAllTlbsDumped	dwarf+symtab	0dcd9790fdce		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x18ba0	20	VEC_nofault	dwarf+symtab	14ce28ea91c9		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x18bc0	872	VEC_cpfault	dwarf+symtab	7381ceaca52f		out:8	undocumented		
@@ -66761,7 +66761,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1c948	996	_mul_s
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1cd2c	164	_abs_sd	symtab	52e04cf7dda0		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1cdd0	160	_neg_sd	symtab	c063f7c55288		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1ce70	1184	_div_sd	symtab	89df2e39c273		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1d310	368	dumptlb	symtab	195055af0d39		out:9	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1d310	368	dumptlb	symtab	195055af0d39		out:9	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1d480	148	checkAllTlbsDumped	symtab	896d0a78c5a7		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1d514	56	flash_getenv	symtab	25a6b637c068		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1d54c	8	flash_nvram_tab	funcnames+symtab	78aa5094d5ec		out:9	undocumented		
@@ -83370,7 +83370,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x12d0	16	get_slic
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x12e0	24	is_fine_dirmode	dwarf+symtab	90234e694ec7		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x12f8	28	get_hub_chiprev	dwarf+symtab	915bad9d0150		in	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1314	160	verify_snchip_rev	dwarf+symtab	fd7015c6c56d		out:11	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13b4	28	ni_reset_port	dwarf+symtab	b4c7e14a1552		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13b4	28	ni_reset_port	dwarf+symtab	b4c7e14a1552		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13d0	300	set_sn12_type	dwarf+symtab	0b86ccadce81		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x14fc	100	get_chimera_type	dwarf+symtab	e83cd0860867		out:11	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1560	1072	in_cksum_sub	dwarf+symtab	345c882c1b77		out:11	undocumented		
@@ -83866,7 +83866,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ba18	72	md_int_
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ba60	108	recover_error_init	dwarf+symtab	adc2e0dad53a		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1bacc	108	klerror_global_check	dwarf+symtab	692fded6df1d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1bb38	416	klerror_check_recoverable	dwarf+symtab	a4a3fa4c2047		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1bcd8	24	sn0_skip_dump	dwarf+symtab	d8a8f504dc63		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1bcd8	24	sn0_skip_dump	dwarf+symtab	d8a8f504dc63		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1bcf0	572	stop_all_cpus	dwarf	f9f32bbbb4eb		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1bf2c	456	sn0_error_dump	dwarf+symtab	90e90e26d7c0		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1c0f4	44	sn0_error_state	dwarf+symtab	658a88db3dd8		in	undocumented		
@@ -83907,8 +83907,8 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f12c	92	intr_ge
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f188	792	intr_connect_level	dwarf+symtab	a9fec1e15331		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f4a0	468	intr_disconnect_level	dwarf+symtab	24e58cc3589a		in	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f674	448	do_intr_block_bit	dwarf+symtab	5408de21eb92		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f834	28	intr_block_bit	dwarf+symtab	9b5b52955f37		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f850	28	intr_unblock_bit	dwarf+symtab	4e0b7c85ec68		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f834	28	intr_block_bit	dwarf+symtab	9b5b52955f37		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f850	28	intr_unblock_bit	dwarf+symtab	4e0b7c85ec68		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f86c	352	do_intr_cpu_choose	dwarf	b3b5b50a5e43		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f9cc	28	intr_cpu_choose_from_node	dwarf	295349a1af92		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f9e8	120	subnodevertex_to_subnode	dwarf	41f361bb9c9f		out:11	undocumented		
@@ -84018,16 +84018,16 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2277c	8	hub_dmat
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22784	8	hub_dmatrans_list	dwarf+symtab	0e2e26765928		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2278c	8	hub_dmamap_drain	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22794	8	hub_dmaaddr_drain	dwarf+symtab	78aa5094d5ec		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2279c	8	hub_dmalist_drain	dwarf+symtab	78aa5094d5ec		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2279c	8	hub_dmalist_drain	dwarf+symtab	78aa5094d5ec		in	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x227a4	8	hub_intr_init	dwarf	78aa5094d5ec		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x227ac	84	hub_device_desc_update	dwarf	f6628cc385e2		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22800	520	do_hub_intr_alloc	dwarf	1480836470f1		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22a08	28	hub_intr_alloc	dwarf+symtab	97bd00796017		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22a24	28	hub_intr_alloc_nothd	dwarf+symtab	466f294539fd		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22a08	28	hub_intr_alloc	dwarf+symtab	97bd00796017		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22a24	28	hub_intr_alloc_nothd	dwarf+symtab	466f294539fd		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22a40	120	hub_intr_free	dwarf+symtab	9e17ed08705b		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22ab8	136	hub_intr_connect	dwarf+symtab	e86305b03f13		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22b40	100	hub_intr_disconnect	dwarf+symtab	fbb587b4ad7a		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22ba4	28	hub_intr_cpu_get	dwarf+symtab	61c74e6169ed		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22ba4	28	hub_intr_cpu_get	dwarf+symtab	61c74e6169ed		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22bc0	8	hub_intr_cpuid_get	dwarf+symtab	acb766709b99		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22bc8	52	hub_provider_startup	dwarf+symtab	7986267a335f		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22bfc	28	hub_provider_shutdown	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -84106,7 +84106,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dummy_fu
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e8	208	bootstrap	dwarf+symtab	824615eebe43		out:11	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x253b8	168	mapped_kernel_setup_tlb	dwarf+symtab	d97a23f621a0		out:11	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x25460	324	nmi_dump	dwarf+symtab	a2c45acf925d		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x255a4	140	dumptlb	dwarf+symtab	cc677e0565cc		out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x255a4	140	dumptlb	dwarf+symtab	cc677e0565cc		out:11	named-only	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x25630	156	checkAllTlbsDumped	dwarf+symtab	8ed0449b38d8		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x256d0	52	VEC_trap	dwarf+symtab	59c2a9b8739a	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x256d0	64	soft_trap	symtab	8ee421078d24	shared-address	out:11	undocumented		
@@ -84249,7 +84249,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2a2b8	1324	rtodc
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2a7e4	1060	wtodc	dwarf+symtab	71d1c6cf48c0		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2ac08	120	timestamp_init	dwarf+symtab	732cf1742922		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2ac80	464	prof_intr	dwarf+symtab	9ca147a99c33		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2ae50	40	hub_xtalk_link_up	dwarf+symtab	d3204340941d		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2ae50	40	hub_xtalk_link_up	dwarf+symtab	d3204340941d		in	located	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2aee8	192	print_hub_error	dwarf+symtab	4837e7c3c4c8		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2afa8	164	check_hub_error_rates	dwarf+symtab	29c54968bc80		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b04c	448	capture_hub_stats	dwarf+symtab	8e413ee6edf8		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -84628,7 +84628,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x43534	224	md_per
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x43614	124	md_perf_get_ctrl	dwarf+symtab	9e1d14bccc29		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x43690	260	md_perf_get_node_ctrl	dwarf+symtab	b777211d9103		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x43794	88	md_perf_start_count	dwarf+symtab	7236c05a7764		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x437ec	24	md_perf_stop_count	dwarf+symtab	226f1f0c158d		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x437ec	24	md_perf_stop_count	dwarf+symtab	226f1f0c158d		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x43804	212	md_perf_update_count	dwarf+symtab	cbbca55c8d60		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x438d8	212	md_perf_multiplex	dwarf+symtab	5dad28f42670		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x439b0	36	VEC_ibe	dwarf+symtab	c31ec3874640		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
