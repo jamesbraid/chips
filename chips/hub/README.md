@@ -427,6 +427,199 @@ Conflicts and gaps:
 Public-header names with no census row, by block (not graded: untouched or reached by a computed index): PI: PI_PROT_OVERRD 0x8, PI_IO_PROTECT 0x10, PI_REPLY_LEVEL 0x60, PI_NMI_B 0x78, PI_SOFTRESET 0x80, PI_CC_PEND_SET_A 0xc8, PI_CC_PEND_SET_B 0xd0, PI_CC_PEND_CLR_A 0xd8, PI_CC_PEND_CLR_B 0xe0, PI_CC_MASK 0xe8, PI_RT_FILTER_CTRL 0x168, PI_BIST_WRITE_DATA 0x200, PI_BIST_READ_DATA 0x208, PI_BIST_COUNT_TARG 0x210, PI_BIST_READY 0x218, PI_BIST_SHIFT_LOAD 0x220, PI_BIST_SHIFT_UNLOAD 0x228, PI_BIST_ENTER_RUN 0x230, PI_GFX_PAGE_A 0x300, PI_GFX_CREDIT_CNTR_A 0x308, PI_GFX_BIAS_A 0x310, PI_GFX_INT_CNTR_A 0x318, PI_GFX_PAGE_B 0x328, PI_GFX_CREDIT_CNTR_B 0x330, PI_GFX_BIAS_B 0x338, PI_GFX_INT_CNTR_B 0x340, PI_ERR_STATUS0_A_RCLR 0x438, PI_ERR_STATUS0_B_RCLR 0x458, PI_SPOOL_CMP_A 0x470, PI_SPOOL_CMP_B 0x478, PI_CRB_TIMEOUT_A 0x480, PI_CRB_TIMEOUT_B 0x488, PI_SYSAD_ERRCHK_EN 0x490, PI_BAD_CHECK_BIT_A 0x498, PI_BAD_CHECK_BIT_B 0x4a0, PI_NACK_CNT_A 0x4a8, PI_NACK_CNT_B 0x4b0, PI_NACK_CMP 0x4b8, PI_NACK_CNT_EN_MASK 0x100000; MD: MD_IO_PROTECT 0x200000, MD_IO_PROT_OVRRD 0x200008, MD_HSPEC_PROTECT 0x200010, MD_MIG_CANDIDATE 0x200040, MD_MEM_DIMM_INIT 0x200090, MD_DIR_DIMM_INIT 0x200098, MD_PERF_CNT1 0x210018, MD_PERF_CNT2 0x210020, MD_PERF_CNT3 0x210028, MD_PERF_CNT4 0x210030, MD_PERF_CNT5 0x210038, MD_UREG0_2 0x220010, MD_UREG0_3 0x220018, MD_UREG0_4 0x220020, MD_UREG0_5 0x220028, MD_UREG0_6 0x220030, MD_UREG0_7 0x220038, MD_LED1 0x220058, MD_UREG1_1 0x220088, MD_UREG1_2 0x220090, MD_UREG1_3 0x220098, MD_UREG1_4 0x2200a0, MD_UREG1_5 0x2200a8, MD_UREG1_6 0x2200b0, MD_UREG1_7 0x2200b8, MD_UREG1_8 0x2200c0, MD_UREG1_9 0x2200c8, MD_UREG1_10 0x2200d0, MD_UREG1_11 0x2200d8, MD_UREG1_12 0x2200e0, MD_UREG1_13 0x2200e8, MD_UREG1_14 0x2200f0, MD_UREG1_15 0x2200f8; II: IIO_WID 0x400000, IIO_ILAPR 0x400100, IIO_ILAPO 0x400108, IIO_IGFX_1 0x400148, IIO_SCRATCH_REG0 0x400150, IIO_SCRATCH_REG1 0x400158, IIO_IOPRB_8 0x4001a0, IIO_IOPRB_9 0x4001a8, IIO_IOPRB_A 0x4001b0, IIO_IOPRB_B 0x4001b8, IIO_IOPRB_C 0x4001c0, IIO_IOPRB_D 0x4001c8, IIO_IOPRB_E 0x4001d0, IIO_IOPRB_F 0x4001d8, IIO_IXCC 0x4001e0, IIO_IXTT 0x4001f0, IIO_IPCA 0x400300, IIO_IIAP 0x4003a0, IIO_IBNA_0 0x410020, IIO_IBIA_0 0x410028, IIO_IBIA_1 0x420028; NI: NI_RETURN_VECTOR 0x600308, NI_IO_PROTECT 0x600400, NI_IO_PROT_OVRRD 0x600408, NI_AGE_CPU0_PIO 0x600508, NI_AGE_CPU1_PIO 0x600518, NI_AGE_GBR_MEMORY 0x600520, NI_AGE_GBR_PIO 0x600528, NI_AGE_IO_MEMORY 0x600530, NI_AGE_IO_PIO 0x600538, NI_PORT_PARMS 0x608000, NI_BASE_TABLES 0x630000, IIO_IIBUSERR 0x1400208.
 
 
+## Routines of the IP27 kernel (`IP27/unix`)
+
+One entry per routine, read in full from the linked IRIX 6.5.30 IP27 kernel. Addresses are the kernel's own. Register offsets
+use the local alias of the table above (`0x9200000001000000 + offset`).
+
+- `ackkgclock` (`IP27/unix` at 0xc000000000048588,
+  56 bytes) acknowledges the profiling-clock interrupt of the calling processor. It indexes the table at
+  0xc0000000014d5020 (`pdaindr`) with the halfword at 0xffffffffffffc420 times 16, loads the doubleword at +0x8 of
+  that entry and tests the byte at +0x520 of the record it points to. A zero byte stores 0 to `0x9200000001000130`
+  (`PI_PROF_PEND_A`); a nonzero byte stores 0 to `0x9200000001000138` (`PI_PROF_PEND_B`). No other register is
+  touched. Inferred: the byte at +0x520 is the slice number, because it alone chooses between the two registers.
+- `acktmoclock` (`IP27/unix` at 0xc000000000048550,
+  56 bytes) is the same body for the real-time interrupt: the same table walk (halfword `0xffffffffffffc420`,
+  `pdaindr`, +0x8, byte +0x520), then a store of 0 to `0x9200000001000120` (`PI_RT_PEND_A`) when the byte is zero and
+  to `0x9200000001000128` (`PI_RT_PEND_B`) when it is not. The delay slot of the final return holds the store for the
+  zero case. Inferred: slice 0 and slice 1, as for the profiling-clock routine.
+- `bootstrap` (`IP27/unix` at 0xc000000000043738,
+  208 bytes) is the first code the kernel runs. It writes `0x400080` to coprocessor-0 register 12, builds
+  `0xa8000000000021d0` and ORs in the node number, which it reads from the doubleword at 0x9200000001600000 (bits
+  16:8, the same network-status field that `get_nasid` decodes), and loads a pointer from that address. Two halfwords
+  at +0x4 and +0x6 of the record it points to are the arguments of its call to `mapped_kernel_setup_tlb`. It then
+  jumps to bootstrap+124 through its linked address `0xc0000000000437b4`, so the rest runs at the mapped kernel
+  address. There it sets `gp` to `0xc0000000014d2170`, writes 0 to registers 18 and 19, `0x6000` to 5,
+  7 to 6, `63 << 40` to 20, `0xc000` to 21 and 0 to 10, and jumps to
+  `cboot` at 0xc000000000044860. Established: the sequence and constants. Inferred: the register meanings (page mask
+  16 KiB, wired count 7) from the architecture's register numbers.
+- `bte_avail` (`IP27/unix` at 0xc00000000002c11c,
+  12 bytes) loads the word `disable_bte` at 0xc0000000014cae78 and returns 1 when it is zero, 0 otherwise
+  (`sltiu v0,v0,1` in the delay slot of the return). It touches no register. Established.
+- `bte_disable` (`IP27/unix` at 0xc00000000002d9d8,
+  12 bytes) stores 1 to the word `disable_bte` at 0xc0000000014cae78 and returns; the store sits in the return's delay
+  slot. Established. The copy routines compare this word with `maxcpus`, so the stored value acts as a processor-count
+  threshold, and 1 is below every real count.
+- `bte_free_interfaces` (`IP27/unix` at 0xc00000000002c68c,
+  120 bytes) takes a node record in a0 and an interface number in a1. For interface 0 and then interface 1 it skips
+  the one equal to a1; for the other it loads the interface record at `*(a0 + 104) + 21448 + 8 * i` and calls
+  `nested_spinunlock` on the lock at +68 of that record. It returns no value. Inferred: it releases what
+  `bte_get_all_interfaces` took, because the same table, offset +68 and lock call pair appear there.
+- `bte_get_all_interfaces` (`IP27/unix` at 0xc00000000002c704,
+  464 bytes) takes an interface record in a0 and the address of a saved interrupt-level word in a1. It takes the lock
+  at +0x44 of both interface records (the records at `*(a0 + 104) + 21448 + 8 * i`, i = 0 then 1) with a call to
+  `nested_spintrylock`; when a try fails it runs `splx` on the saved level, `us_delay(1)` and
+  `splhi`, stores the new level and tries the same lock again. It then walks both interfaces and skips an interface
+  that is missing, is the caller's own (the word at +0x54 equals i) or has its bit clear in the byte at a0 + 66. For
+  any other it reads the doubleword that `*(*record)` addresses and, while bit 20 (`0x100000`) is set and bit 12
+  (`0x1000`) is clear and the doubleword that the pointer at +40 addresses is not `0x1000`, drops to the saved level,
+  delays 1 and retakes it, until the counter at 0x9200000001030100 passes the word at +0x70 plus the counter value
+  read on entry to that step. It returns 0 with both locks held. Inferred: bits 20 and 12 describe a busy engine,
+  because the loop waits on them; their definition is not read here.
+- `bte_init_buffers` (`IP27/unix` at 0xc00000000002c044,
+  216 bytes) runs for each node below the word `maxnodes` (`0xc0000000014d3e24`) and, for each of two buffers per
+  node, calls `kmem_zalloc_node(16384, 2305, node)` and stores the pointer in the table whose base is the pool
+  doubleword at 0xc0000000014cd1f0 (slot `2 * node + k`, 8 bytes each). A failed allocation calls `cmn_err` with level
+  4 and the text "bte_init_buffers:buffer %d on node %d not allocated". Every slot, failed or not, also gets a zero
+  byte at table + 1024 + slot, and each node ends with `spinlock_init` on the word at table + 1152 + 4 * node. After
+  the last node it stores a zero byte at 0xc0000000014ca244. Established.
+- `bte_lateinit` (`IP27/unix` at 0xc00000000002c128,
+  716 bytes) builds the two block-transfer interface records of the calling node, i = 0 and 1, under the node record
+  at the doubleword `0xffffffffffffc400`. An existing record at `+21448 + 8 * i` is kept and, when the doubleword at
+  0xffffffffffffc718 is empty and i equals the low bit of the halfword at 0xffffffffffffc420, copied there. A missing
+  one starts as `kmem_zalloc_node(120, 1, node)` (its pointer also goes to that doubleword under the same parity
+  test), then a 1024-byte buffer from `kmem_zalloc_node(1024, 2305, node)`, and the routine at 0xc00000000002bf5c (no
+  symbol) is called with the block, the buffer and i. What it returns becomes the record stored at `+21448 + 8 * i`
+  and gets the node record at +104; interface 0 gets a 4-byte lock initialised as "bte_recover" at +96 and interface 1
+  copies that pointer. Each record then gets a zeroed 16384-byte page and an unzeroed one; both must lie in
+  `0xa800000000000000` to `0xa800010000000000` (an `IS_KSEG0(zpage)` assertion in the binary), and their low 40 bits are stored at +8 and +16. A second loop ORs bits 0 and 1 into the
+
+  byte at +66 of both records. Established: the sequence. Inferred: +8 holds the zero page and +16 the poison page,
+  from the allocation failure texts ("BTE zero page", "BTE poison transfers").
+- `bte_pbcopy` (`IP27/unix` at 0xc00000000002c3f4,
+  192 bytes) copies a0 to a1 for a2 bytes. When the word
+  `disable_bte_pbcopy` (`0xc0000000014cae74`) is nonzero and `maxcpus` is not below it, or the same holds for
+  `disable_bte`, it calls `bcopy` with both addresses ORed with `0xa800000000000000`. Otherwise it calls
+  `bte_copy(a0, a1, a2, 16)` and falls back to the same `bcopy` only when that returns nonzero. It returns 0 on every
+  path. Established.
+- `bte_pbzero` (`IP27/unix` at 0xc00000000002c4b4,
+  472 bytes) zeroes a1 bytes at a0. If a1 is 0 it returns 0. A nonzero `disable_bte_pbzero` (`0xc0000000014cae70`) or
+  `disable_bte` that `maxcpus` has reached sends it to `bzero` (destination ORed with `0xa800000000000000`); if
+  a2 is set it first saves the halfword at +0xf6 of the record at 0xffffffffffffc020, stores 5 there, and puts the
+  saved value back after `bzero`. Otherwise it calls `get_hub_chiprev` for the node's Hub revision, picks mode 16
+  below revision 5 and 17 from revision 5 up, and issues `bte_copy(0, dest, n, mode)` in pieces of at most 16384
+  bytes. A status of 0 from the last piece returns 0, a status other than 1 is returned as it is, and a status of 1
+  falls back to the `bzero` path for the whole range. Established.
+- `bte_poison_copy` (`IP27/unix` at 0xc00000000002d874,
+  84 bytes) calls `bte_copy(a0, a1, a2, 272)` unless a2 is 0, in which case it returns 0. A nonzero status is logged
+  through `cmn_err` at level 12 with the text "bte_poison_copy: Returning error status %d" and returned; a zero status
+  returns 0. Established: mode 272 is `0x110`, which sets bit 8, the bit `bte_copy` tests at 0x2cdc8 before calling
+  `poison_state_clear`.
+- `bte_poison_range` (`IP27/unix` at 0xc00000000002d8c8,
+  272 bytes) works on the range a0 for a1 bytes and returns 0 when a1 is 0. It compares `maxcpus` with
+  `disable_bte_poison_range` (`0xc0000000014cae6c`) and `disable_bte` the way `bte_pbcopy` does. When block transfer
+  is disabled it calls `poison_state_alter_range(a0 | 0xa800000000000000, a1, 1)` and returns 0. Otherwise it calls
+  `bte_copy(addr, 0, n, 272)` in pieces of at most 16384 bytes and returns 0 after the last. A status of 1 makes it
+  call `poison_state_alter_range` on the remaining range with the same third argument and return 0; any other nonzero
+  status is returned. Established.
+- `bte_wait_for_xfer_completion` (`IP27/unix` at 0xc00000000002d9e4,
+  116 bytes) takes an interface record in a0, reads the doubleword at 0x9200000001030100 and the status doubleword
+  that `*a0` addresses, and returns at once when its low 16 bits are 0. Otherwise it polls both until the low 16 bits
+  clear or the counter passes the first reading plus 500. On timeout with bits left it calls `cmn_err` at level 20
+  with "II_IFDR_WAR: BTE running after %d usecs wait. Remaining Length 0x%x", 500 and the remaining count times 128.
+  It returns no value. Established; it matches the Hub status layout (bits 15:0 length in cache lines) already
+  recorded for the block transfer engines.
+- `bte_bpush_war` (`IP27/unix` at 0xc00000000003b1cc,
+  292 bytes) takes a node number in a0 and a record pointer in a1 and always returns 0. It does nothing unless the
+  word `bpush_war_enable` (`0xc0000000014caf48`) is nonzero and a1 is not null, and nothing when `get_hub_chiprev` of
+  that node's number (a halfword table at 0xc0000000014d4e80, 2 bytes a node) is 5 or more or when the node's bit is
+  already set in the doubleword `bte_stall_node_mask` (`0xc0000000014d2b10`). Otherwise it pins the thread with
+  `rt_pin_thread` and compares the byte at a1 + 5 with the low byte of `bpush_source1` (`0xc0000000014caf44`),
+  `bpush_source2` (`0xc0000000014caf40`), `bpush_source3` (`0xc0000000014caf3c`) and `bpush_source4`
+  (`0xc0000000014caf38`) in that order. A match calls `bte_stall_node` on the node; the routine ends with
+  `rt_unpin_thread`. Inferred: it stops the block-transfer engines of a Hub older than revision 5 when a push from a
+  listed source is seen, from the callee and the variable `bpush_war_enable`.
+- `callout_time_to_hz` (`IP27/unix` at 0xc000000000046bf0,
+  48 bytes) subtracts the real-time counter at 0x9200000001030100 from a0, divides the difference by the doubleword at
+  0xc0000000014d2b90 with `ddivu` (a zero divisor traps with code 7) and returns the low 32 bits of the quotient, or 1
+  when that is below 1. Inferred: it converts a counter deadline to a tick count, because the quotient is a counter
+  span divided by a period.
+- `chkdebug` (`IP27/unix` at 0xc000000000039af4,
+  80 bytes) walks `pdaindr` with the halfword at 0xffffffffffffc420 times 16, loads the byte at +1312 behind the
+  entry's +8 pointer, reads the doubleword at 0x92000000010000a0 (`PI_INT_PEND1`) and, when bit `54 + byte` of it is
+  set, calls the routine at 0xc0000000000397fc (no symbol) with 0. It returns no value. Inferred: the byte is the
+  slice number, so the bit is level 118 for slice 0 or 119 for slice 1, since the register holds levels 64 to 127.
+- `clear_hub_md_error` (`IP27/unix` at 0xc00000000002f68c,
+  200 bytes) takes a pointer to a record in a0 holding four pairs of a timestamp and a saved error word, at +16 and
+  +24, +0 and +8, +32 and +40, +48 and +56. For each, in that order, a nonzero word is cleared to 0 when the counter
+  at 0x9200000001030100 has advanced more than `0x55d4a80` (90,000,000 ticks) beyond its timestamp. It writes no
+  register. Inferred: it ages out four saved memory-error records, because it applies the same age test as
+  `clear_hub_pi_error` to words that `check_md_errors` (the memory-error checker) sits beside.
+- `clear_hub_pi_error` (`IP27/unix` at 0xc00000000002f634,
+  88 bytes) takes a record in a0 and, for slice 0 and then slice 1, tests the word at +40 + 8 * slice. When it is
+  nonzero and the counter at 0x9200000001030100 is more than `0x55d4a80` (90,000,000 ticks) past the timestamp at +24 +
+  8 * slice, it stores 0 to +56 + 8 * slice and then to +40 + 8 * slice. No register is written. Inferred: the two
+  words are a processor-interface error summary and detail saved earlier.
+- `check_dir_access` (`IP27/unix` at 0xc00000000002a184,
+  128 bytes) takes a physical address in a0. It reads `MD_MEMORY_CONFIG` (offset `0x200018`) through the node alias
+  `0x9200000001a00000 + (bits 39:32 of a0 << 32)`, forms a directory address from `(a0 >> 3) & 0x1f0`,
+  `a0 & 0xff00000000` and `(a0 >> 2) & 0x3ffffc00`, ORs in `0x90000000c0000200` and reads the doubleword there. If bit
+  28 of the configuration is set it returns bit 7 of that word; otherwise bit 5 of its low 16 bits. Established: the
+  decode. Inferred: the bit is the access-permission flag of the entry, from the routine's name and the two entry
+  layouts it selects between.
+- `cpuprom_map` (`IP27/unix` at 0xc00000000006ba98,
+  204 bytes) calls `prominfo_nodeget` with a0 and returns 5 when that gives 0. Otherwise it calls
+  `hubdev_prombase_get` and `hubdev_cnodeid_get` on the result, then `v_mapphys(a1, prombase, min(a3, 0x10000000))`,
+  and returns that status when it is nonzero. On success it takes the node's number from the halfword table at
+  0xc0000000014d4e80 (2 bytes a node), reads `MD_MEMORY_CONFIG` (offset 0x200018) through the node alias
+  `0x9200000001a00000 + (node << 32)`, clears bits 53:44 with the mask `0xffc00fffffffffff` and ORs in `257 << 44`
+  when the byte at `0xffffffffffffc523` is zero, or `121 << 46` when it is not. It writes the result back and returns 0.
+  Established: the sequence and constants. Inferred: it maps the node's PROM window and then sets a 10-bit field of
+  the memory configuration register, because the field and both values come straight from the constants and nothing
+  else reads that field here.
+- `bte_unaligned_copy` (`IP27/unix` at 0xc00000000002d620,
+  596 bytes) takes source a0, destination a1, length a2 and flags
+  a3. It returns 1 without copying when the word `disable_bte` is nonzero and `maxcpus` has reached it, and 0 for a
+  zero length. If the low seven bits of a0 and a1 differ it copies the whole range in one step and returns that step's
+  status: `bcopy` when a3 bit 13 (`0x2000`) is clear, otherwise the routine at 0xc00000000002d398 (no symbol) with bit
+  12 (`0x1000`) of a3 cleared. If they are equal it copies in this order: the head, of length
+  `min(a2, 128 - (a0 & 0x7f))` and absent when a0 is aligned and a2 is 128 or more, then the tail, the last
+  `(a2 - head) & 0x7f` bytes, each by the same `bcopy` or 0xc00000000002d398 choice, and last the 128-byte multiple in
+  the middle by `bte_copy` with a3 & ~0x1000, in pieces of at most 0x7fff80 bytes. A nonzero status ends the routine
+  with that status; the normal result is 0. Established: the paths and constants. Inferred: bit 13 requests the engine
+  and bit 12 is private to the helper, from which of them each call clears or tests.
+- `check_md_errors` (`IP27/unix` at 0xc000000000033798,
+  588 bytes) takes a physical address in a0, an output pointer in a1, an age limit in a2 and a pointer to a record
+  pointer in a3. It takes the node number from bits 39:32 of a0, maps it with `nasid_to_compact_node` and indexes the
+  pointer table `kl_error_log` at 0xc0000000014dd768 with it, returning 0 when there is none. It starts at
+  `md_err_log_last` of that log, or at `md_err_log_prev` of the record already at a3, and walks back through
+  `md_err_log_prev`. A record older than the limit (the counter at `0x9200000001030100` minus the stamp at +0x8 is not
+  below a2, which is skipped when a2 is -1) stores 0 at a3 and returns 0; any other record is stored at a3 first. For
+  a record whose kind word at +0x10 is 1, 2 or 3 it compares the saved address at +0x0 with
+  a0, shifted and masked as `check_dir_access` forms a directory address (kind 1) or against `scache_linemask` (kinds
+  2 and 3); a match stores the saved address through a1 and returns the kind. Kind 4 is skipped and any other kind
+  calls `kl_panic`. Established: the walk and the compares. Inferred: the walk finds the saved memory error that
+  covers a0, because it returns the kind and the saved address only on a match.
+- `bte_stall_node` (`IP27/unix` at 0xc00000000003ae1c,
+  944 bytes) takes a node number in a0. It returns at once when `verify_snchip_rev` gives 5 or more or when the word
+  at +0x5138 of the node record is 0. It sets the node's bit in `bte_stall_node_mask` with a `lld`/`scd` retry loop
+  (`beqzl` at 0xc00000000003ae60) and returns if the bit was already set. It then calls
+  `kmem_alloc_node(512, 2305, node)` and clears bit 24 (the interrupt enable) of the doubleword at +0x138 of the
+  node's II block, reached through `0x9200000001c00000`, keeping the old value. It then drives the two block-transfer
+  engines at `0x9200000001c10000` and `0x9200000001c20000`, the one at `0x9200000001c20000` first when the byte at
+  +0x520 of the processor record is 0. The first engine gets source 0xff00000000 at +0x8, the buffer's low 40 bits at
+  +0x10, `0x10001` at +0x0, the buffer plus 256 at +0x20 and 16 at +0x18, and is polled with `us_delay(1)` until the
+  low 16 bits of +0x0 are 0. After `us_delay(10)` the other engine gets the same words with source and destination
+  swapped and is polled up to 100000 times for bit 16 of +0x0. It then walks 15 CRB entries of 32 bytes at +0x400 of
+  the II block and, for each whose word A has bit 50 set and bits 39:2 shifted left 3 equal to 0xff00000000 and whose
+  word C has bit 48 set, stores word A with bit 1 set under the mask `0xff0bffffffffffff` and word B ANDed with
+  `0xfffffe01ffffffff`. It writes 0 to both +0x0 words, restores +0x138, calls `bte_error_handler` for each `pdaindr`
+  entry in the node's processor range (first index the halfword at +0x4956 of the node record, count the halfword at
+  +0x4958) whose first word is not -1, with the record at +0x718 behind its +0x8 pointer plus 0x28, after clearing the
+  byte at +0x42 of that record, and ends with `kmem_free(buffer, 512)`. Established: the register sequence and
+  constants. Inferred: a recovery step for a stuck engine, because it quiesces the error interrupt, drives both
+  engines with one-line transfers, edits the matching CRB entries and then runs the engine error handler.
+
 ## Open
 
 Graded entries; each ends with the route that would settle it. Collected in [docs/open-questions.md](../../docs/open-questions.md).
