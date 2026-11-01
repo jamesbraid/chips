@@ -1,11 +1,11 @@
 window	inner_offset	rw	width	sites	functions	images	example
-PCI type 0 configuration (per 4 KB device slot)	0x0	a	0	2	1	ip27-unix,ip30-unix	pcireg_type0_cfg_addr@088504
+PCI type 0 configuration (per 4 KB device slot)	0x0	a	0	3	1	ip27-unix,ip30-unix,ip35-pcibr	pcireg_type0_cfg_addr@088504
 PCI type 0 configuration (per 4 KB device slot)	0x2004	r	4	4	4	ip30-prom	prom_ffffffffbfc16300@c16318
 PCI type 0 configuration (per 4 KB device slot)	0x2004	w	4	2	2	ip30-prom	prom_ffffffffbfc16300@c16320
 PCI type 0 configuration (per 4 KB device slot)	0x2010	w	4	2	2	ip30-prom	prom_ffffffffbfc16300@c16328
 PCI type 0 configuration (per 4 KB device slot)	0x2040	r	4	2	2	ip30-prom	prom_ffffffffbfc16680@c16e3c
 PCI type 0 configuration (per 4 KB device slot)	0x2044	r	4	2	2	ip30-prom	prom_ffffffffbfc16680@c16e10
-PCI type 1 configuration	0x0	a	0	2	1	ip27-unix,ip30-unix	pcireg_type1_cfg_addr@08878c
+PCI type 1 configuration	0x0	a	0	3	1	ip27-unix,ip30-unix,ip35-pcibr	pcireg_type1_cfg_addr@08878c
 device window 2	0x28	r	4	32	8	ip30-prom	prom_ffffffffbfc02388@c023cc
 device window 2	0x28	w	4	16	10	ip30-prom	prom_ffffffffbfc02388@c023f4
 device window 2	0x34	w	4	7	4	ip30-prom	prom_ffffffffbfc00634@c00984
