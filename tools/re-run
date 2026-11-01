@@ -3,6 +3,8 @@
 #
 #   tools/re-run [--ghidra] [--workspace DIR] [--] [COMMAND...]
 #   tools/re-run [--workspace DIR] --ghidra-export OBJECT [OPTIONS...]
+#   tools/re-run --syscalls KERNEL... [OPTIONS...]
+#   tools/re-run --syssgi KERNEL... [OPTIONS...]
 #
 #   tools/re-run python3 scripts/inventory.py
 #   tools/re-run mips64-linux-gnuabi64-objdump -h root/unix
@@ -24,10 +26,15 @@
 # writes decompiled C per function as JSON under .cache/ghidra-export/, naming
 # the file on stdout. OPTIONS: --decompile-symbol NAME|GLOB|@0xADDR (repeat),
 # --decompile-list FILE, --decompile-all, --decompile-timeout S, --types
-# SPEC.json, --bsim-db NAME --bsim-label LABEL (similarity database under
+# SPEC.json, --mdebug (import the object's .mdebug table), --bsim-db NAME --bsim-label LABEL (similarity database under
 # .cache/ghidra-bsim), --timeout S, --cpus N. It builds both images and needs
 # the repository itself as the workspace. Decompiler and BSim output is
 # navigation, not evidence. tools/ghidra-export.py has the full list.
+#
+# --syscalls KERNEL... runs scripts/syscall_table.py: the system call table of each linked
+# kernel as TSV on stdout. --syssgi KERNEL... runs scripts/syssgi_selectors.py: the syssgi()
+# selector dispatch. Both take --out FILE, --cross-check DIR (a directory of public lists) and
+# --report FILE; see the top of each script. Kernel paths are inside the repository (root/ works).
 #
 # The repository is mounted read-write at /work, as your own user id, so
 # generated files are yours. root/ (the IRIX files you copied in, see
@@ -48,11 +55,14 @@ engine=${RE_ENGINE:-podman}
 workspace=$repo
 ghidra=
 export=
+tool=
 while [ $# -gt 0 ]; do
     case $1 in
         --workspace) workspace=$2; shift 2 ;;
         --ghidra) ghidra=1; shift ;;
         --ghidra-export) export=${2:?--ghidra-export needs an object}; shift 2; break ;;
+        --syscalls) tool=scripts/syscall_table.py; shift; break ;;
+        --syssgi) tool=scripts/syssgi_selectors.py; shift; break ;;
         --) shift; break ;;
         -h|--help) sed -n '2,/^set -eu/{/^set -eu/!p;}' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
         *) break ;;
@@ -110,6 +120,7 @@ if [ -L "$workspace/root" ]; then
     esac
 fi
 
+[ -z "$tool" ] || set -- python3 "$tool" "$@"
 [ $# -gt 0 ] || set -- bash
 tty=
 if [ -z "${RE_NOTTY:-}" ] && [ -t 0 ] && [ -t 1 ]; then tty=-it; fi

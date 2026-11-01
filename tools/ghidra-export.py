@@ -14,6 +14,9 @@ Options (after OBJECT, a path inside the repository):
   --decompile-timeout SECONDS             per function (default 60)
   --types SPEC.json                       structure types to apply first (see
                                           ghidra/README.md)
+  --mdebug                                import the object's .mdebug symbol table
+                                          (names, line numbers, types, procedure
+                                          signatures); a 32-bit MIPSpro object only
   --bsim-db NAME --bsim-label LABEL       match the object against BSim database
                                           NAME, then add it under LABEL
   --bsim-dir DIR  --bsim-min SIMILARITY   database directory (default
@@ -180,6 +183,7 @@ def parser():
     p.add_argument('--decompile-all', action='store_true')
     p.add_argument('--decompile-timeout', type=int, default=60)
     p.add_argument('--types', metavar='SPEC.json')
+    p.add_argument('--mdebug', action='store_true')
     p.add_argument('--bsim-db', metavar='NAME')
     p.add_argument('--bsim-label', metavar='LABEL')
     p.add_argument('--bsim-dir', default='.cache/ghidra-bsim')
@@ -210,6 +214,8 @@ def prepare(argv):
         die('--bsim-label needs --bsim-db')
     if args.types and not exporting:
         die('--types applies to an export')
+    if args.mdebug and args.flat:
+        die('--mdebug reads an ELF object')
     flat = None
     if args.flat:
         if args.load is None:
@@ -258,7 +264,7 @@ def prepare(argv):
                'types': types_spec(args.types, relocatable) if args.types else None}
     (job / 'export.json').write_text(json.dumps(request, indent=1) + '\n')
 
-    seeds = [] if relocatable or flat else mdebug_seeds(obj)
+    seeds = [] if relocatable or flat or args.mdebug else mdebug_seeds(obj)
     (job / 'seeds.tsv').write_text(''.join('0x%016x\t0\t%s\n' % (a, n) for a, n in seeds))
 
     sha = hashlib.sha256(obj.read_bytes()).hexdigest()
@@ -300,6 +306,9 @@ def prepare(argv):
         argv += ['-scriptPath', SCRIPTS, '-preScript', 'ReMipsGp.java', 'loader', '-']
     if seeds:
         argv += ['-preScript', 'ReObjectSymbols.java', str(job / 'seeds.tsv')]
+    if args.mdebug:
+        argv += ['-preScript', 'ReMdebugImport.java', 'names', str(image),
+                 '-postScript', 'ReMdebugImport.java', 'types', str(image)]
     if exporting:
         argv += ['-postScript', 'ReDecompileExport.java', str(job)]
     if args.bsim_db:
