@@ -209,3 +209,8 @@ chip page and the entry is deleted.
   high word is at `0x4`. Next: read `xide_pktDMA_start`, `xide_dma_init` and `xide_intr_clear` in full.
 - **IOC3 and IOC4: reset values and the per-port tables.** No routine reads a reset value; the mode-select pin numbers and
   serial configuration records are static data not extracted. Next: extract the data sections through their relocations.
+- **CRIME rendering engine: field layouts the specification does not print.** The pixel pipeline's depth function, stencil
+  mode and stencil mask, the blend constant colour and the antialias coverage word have no field table in the 1.5 specification
+  pages, and the antialias slope is given as 2.12 in one place and 2.14 in another. The loaders copy these words unchanged, so
+  the shipped kernel does not decide them. Routes tried: the specification's register map and chapter text, the shadow loaders'
+  copy order. Next: a shipped renderer or X server module that builds the words, and the public CRIME frame-buffer driver sources.

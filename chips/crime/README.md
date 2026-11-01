@@ -392,7 +392,7 @@ not known.
 The CRIME 1.5 Specification, revision 0.3, puts the rendering engine at physical `0x15000000` and splits it into five
 4 KB pages: interface buffer, TLB, pixel pipeline, memory transfer engine and status (p. 7-6 and Figure 7-3, p. 7-7). This section
 grades the pixel pipeline registers at `+0x2000` that the IP32 kernel's two shadow-loading routines copy to the chip;
-the specification pages are cited per register. The remaining pixel pipeline registers, the memory transfer engine and the TLB pages are
+the specification pages are cited per register. The texture registers, the memory transfer engine and the TLB pages are
 not graded here yet.
 
 How the kernel reaches them, read in full from `crime.a(crime.o)` and `crime.a(crime_debug.o)` (established):
@@ -564,6 +564,153 @@ How the kernel reaches them, read in full from `crime.a(crime.o)` and `crime.a(c
   1.5 Specification rev 0.3, Table 7-3 p. 7-13). Established.
   A global 32-bit register, readable and writable.
   Shadow +0x1b8 is read at 0x3498 and stored at 0x34a0, directly after `LogicOp`. Table byte 1.
+
+### X-primitive vertices
+
+The non-global loader tests the flag word's 0x80 bit at 0x32bc after the memory-transfer and stipple groups. With the bit
+set it falls through into the three X vertex copies below and returns at 0x32dc; the GL vertices, fog, depth, shade and
+texture groups are then not loaded. With the bit clear it branches to the GL vertex copies at 0x32e4 (established).
+
+- `0x15002070` (`0x2070`): `Vertex.X[0]`, the packed (x0,y0) first vertex of an X-window primitive (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-9). Established.
+  The spec's map lists it as a 32-bit non-global write-only register and gives no field split for the packed pair.
+  The `lw` at 0x32c4 reads shadow +0x70 and the `sw` at 0x32c8 stores it, the first copy of the flag-0x80 path. Table
+  byte 0, as for every vertex register.
+- `0x15002074` (`0x2074`): `Vertex.X[1]`, the packed (x1,y1) second vertex (CRIME 1.5 Specification rev 0.3, Table 7-3
+  p. 7-9). Established.
+  Same 32-bit non-global write-only class as the first vertex word. Loaded from shadow +0x74 at 0x32cc and stored at
+  0x32d0, directly behind `Vertex.X[0]`. Table byte 0.
+- `0x15002078` (`0x2078`): `Vertex.X[2]`, the packed (x2,y2) third vertex, the one that matters for triangles (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  The loader reads shadow +0x78 at 0x32d4 and stores it at 0x32d8, the last copy before the `jr ra` at 0x32dc, so a
+  flag-0x80 pass ends with this word. Table byte 0; the byte for the next word, 0x207c, is 2 (an empty position).
+
+### Shade interpolation registers
+
+All twelve are 32-bit non-global write-only registers holding 9.12 two's complement values (spec Table 7-3 pp. 7-10 and
+7-11; section 7.3.7.1, pp. 7-44 to 7-45, adds that the hardware iterates them in 21-bit steppers and keeps the
+integer part clamped to 8 bits). Their table byte is 0. The non-global loader stores them in address order, shadow
+offset equal to register offset minus 0x2000, one `lw` and `sw` pair each, only when flag bit 0x10 is set: the test at
+0x3370 branches to 0x33d8 over the whole run, and the run is reached only on the flag-0x80-clear path.
+
+- `0x150020e0` (`0x20e0`): `Shade.Rs`, the starting red value of a smooth-shaded primitive (CRIME 1.5 Specification
+  rev 0.3, Table 7-3 p. 7-10). Established.
+  First of the twelve: `lw` at 0x3378 from shadow +0xe0, `sw` at 0x337c. Per the specification adding 0.5 to the
+  initial value makes the truncating hardware round.
+- `0x150020e4` (`0x20e4`): `Shade.Gs`, the starting green value (Table 7-3 p. 7-11). Established.
+  `lw` at 0x3380, `sw` at 0x3384, second in the run.
+- `0x150020e8` (`0x20e8`): `Shade.Bs`, the starting blue value (Table 7-3 p. 7-11). Established.
+  Third of the run: `lw` at 0x3388, `sw` at 0x338c.
+- `0x150020ec` (`0x20ec`): `Shade.As`, the starting alpha value (Table 7-3 p. 7-11). Established.
+  The fourth copy, `lw` at 0x3390 and `sw` at 0x3394. The specification also uses this stepper for colour-index
+  smooth shading, loaded with 12.8 values for 12-bit indices and 8.12 values for 8-bit ones (p. 7-45).
+- `0x150020f0` (`0x20f0`): `Shade.drdx`, the red slope per step in x (Table 7-3 p. 7-11). Established.
+  Fifth in the run, `lw` at 0x3398 and `sw` at 0x339c.
+- `0x150020f4` (`0x20f4`): `Shade.dgdx`, the green slope per step in x (Table 7-3 p. 7-11). Established.
+  Sixth: `lw` at 0x33a0, `sw` at 0x33a4. The x slopes are not contiguous: red, green here, blue and alpha after the y
+  slopes of red and green.
+- `0x150020f8` (`0x20f8`): `Shade.drdy`, the red slope per step in y (Table 7-3 p. 7-11). Established.
+  Seventh: `lw` at 0x33a8, `sw` at 0x33ac.
+- `0x150020fc` (`0x20fc`): `Shade.dgdy`, the green slope per step in y (Table 7-3 p. 7-11). Established.
+  Eighth: `lw` at 0x33b0, `sw` at 0x33b4.
+- `0x15002100` (`0x2100`): `Shade.dbdx`, the blue slope per step in x (Table 7-3 p. 7-11). Established.
+  Ninth: `lw` at 0x33b8, `sw` at 0x33bc.
+- `0x15002104` (`0x2104`): `Shade.dadx`, the alpha slope per step in x (Table 7-3 p. 7-11). Established.
+  Tenth: `lw` at 0x33c0, `sw` at 0x33c4.
+- `0x15002108` (`0x2108`): `Shade.dbdy`, the blue slope per step in y (Table 7-3 p. 7-11). Established.
+  Eleventh: `lw` at 0x33c8, `sw` at 0x33cc.
+- `0x1500210c` (`0x210c`): `Shade.dady`, the alpha slope per step in y (Table 7-3 p. 7-11). Established.
+  Last of the run: `lw` at 0x33d0 and `sw` at 0x33d4, after which the loader tests flag 0x08 at 0x33d8. The table byte
+  for the following word, 0x2110, is 1 (the first global register of the texture group).
+
+### Fog and antialias
+
+The non-global loader copies five registers when flag bit 0x40 is set. The test at 0x3320 sits ahead of the group, and
+the delay slot of its `beq` is the `sw` of `Vertex.GL[2].y` at 0x3324, which runs whichever way the branch goes. The five
+copies come in the order 0x2178, 0x2180, 0x2188, 0x2190, 0x2194, and on the flag-clear path the loader jumps to the
+depth test at 0x3350 instead. One global register of the group, `Fog.color`, is in the global loader below.
+
+- `0x15002170` (`0x2170`): `Fog.color`, the RGB colour that fogged fragments blend toward (CRIME 1.5 Specification rev
+  0.3, Table 7-3 p. 7-12; section 7.3.7.9 p. 7-49 gives the blend as f*(Cr-Fc)+Fc, alpha untouched). Established.
+  A global register, readable and writable, table byte 1. The global loader copies it first in its flag-0x40 group: `lw`
+  of shadow +0x170 at 0x3510, `sw` at 0x3514. The group is reached only when the flag word's 0x80 bit tested clear at
+  0x34ec; the 0x40 test is the `beq` at 0x3508, whose delay slot is the `Scissor` store.
+- `0x15002178` (`0x2178`): `Fog.Fs`, the fog blend factor at the primitive's reference point, the start of the linear
+  interpolation (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-13). Established.
+  Non-global and write-only. The specification table calls it a 9.12 value and section 7.3.7.9 (p. 7-50, Table 7-18)
+  calls the stepper 1.20; the loader moves the raw word, so the code settles neither. It is the first copy of the
+  flag-0x40 group: `lw` at 0x3328, `sw` at 0x332c.
+- `0x15002180` (`0x2180`): `Fog.dfdx`, the change of the fog factor per pixel step in x (Table 7-3 p. 7-13). Established.
+  Second copy of the group, `lw` at 0x3330 and `sw` at 0x3334. Table byte 0. The 9.12 against 1.20 disagreement
+  noted for `Fog.Fs` applies here too.
+- `0x15002188` (`0x2188`): `Fog.dfdy`, the change of the fog factor per pixel step in y (Table 7-3 p. 7-13).
+  Established.
+  Third copy: `lw` at 0x3338, `sw` at 0x333c. The spec's description of this register repeats "df/dx", which reads as a
+  typing slip. Table byte 0.
+- `0x15002190` (`0x2190`): `Antialias.line`, the line slope and the ideal line's starting minor coordinate packed in one
+  word (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-13). Established.
+  The loader stores it fourth in the group: `lw` at 0x3340, `sw` at 0x3344. The specification gives its field table
+  (slope [31:16], ideal start [15:0], p. 7-24) as 2.14 two's complement, the register map as 2.12, and section
+  7.3.7.10 (p. 7-51) asks the host for a 2.12 slope in [-1, 1]. Which of 2.12 and 2.14 the hardware uses is unknown from the
+  code, which copies the word unchanged. Table byte 0.
+- `0x15002194` (`0x2194`): `Antialias.cov`, the start and end endpoint coverage values of an antialiased line (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-13). Established.
+  The map describes two 7-bit coverage values and gives no bit positions; the extracted pages do not either, so the field
+  split is unknown. Last of the group: `lw` at 0x3348, `sw` at 0x334c. Table byte 0; the byte at 0x2198 is 1.
+
+### Alpha test and blend
+
+All three are global registers (table byte 1) copied by the global loader in the flag-0x40 group: after `Fog.color` at
+0x3510 come `Blend.constColor`, `Blend.func` and `AlphaTest`, in that order, not in address order.
+
+- `0x15002198` (`0x2198`): `AlphaTest`, the comparison function and 8-bit reference that fragment alpha is tested against
+  once `DrawMode` bit 11 enables the test (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-13 and section 7.3.1.15 p.
+  7-24). Established.
+  `func` is bits 11:8 (0 NEVER, 1 LESS, 2 EQUAL, 3 LEQUAL, 4 GREATER, 5 NOTEQUAL, 6 GEQUAL, 7 ALWAYS, Table 7-19), `ref`
+  is bits 7:0, bits 31:12 are reserved. The map prints its name with a trailing dot. It is the last copy of the group:
+  `lw` at 0x3528, `sw` at 0x352c.
+- `0x150021a0` (`0x21a0`): `Blend.constColor`, the RGBA constant that the CONSTANT_COLOR and CONSTANT_ALPHA blend factors
+  use (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-13; blend factors on p. 7-25). Established.
+  The spec's map says only "blend RGBA constant color"; which byte is which channel is not given in the extracted pages
+  and is unknown. The loader reads shadow +0x1a0 at 0x3518 and stores it at 0x351c, second in the group.
+- `0x150021a8` (`0x21a8`): `Blend.func`, the blend operation and the two blend factors (CRIME 1.5 Specification rev 0.3,
+  Table 7-3 p. 7-13 and section 7.3.1.16 pp. 7-24 to 7-25). Established.
+  Fields: `op` [11:8] (0 ADD, 1 MIN, 2 MAX, 3 SUBTRACT, 4 REVERSE_SUBTRACT), `src` [7:4] (0 to 12, ZERO through
+  SRC_ALPHA_SATURATE) and `dst` [3:0] (0 to 11, ZERO through ONE_MINUS_CONSTANT_ALPHA; the destination list has no
+  saturate and lists SRC_COLOR where the source list has DST_COLOR). Third in the group: `lw` at 0x3520, `sw` at 0x3524.
+
+### Depth and stencil
+
+- `0x150021c0` (`0x21c0`): `Depth.func`, the comparison between the fragment's depth and the stored depth, enabled by
+  `DrawMode` bit 2 (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-13 and section 7.3.7.17 p. 7-57). Established.
+  The function values are the eight of Table 7-25 (NEVER, LESS, EQUAL, LEQUAL, GREATER, NOTEQUAL, GEQUAL, ALWAYS); the
+  specification's register layout table has no body in the extracted pages, so the bit position of the value is
+  unknown. A global register (table byte 1): in the global loader's flag-0x20 group, whose test is at 0x3530 and whose
+  first copy is `lw` at 0x3538 and `sw` at 0x353c, shadow +0x1c0.
+- `0x150021c8` (`0x21c8`): `Depth.Zs`, the starting depth of the primitive's depth plane (CRIME 1.5 Specification rev
+  0.3, Table 7-3 p. 7-13 and Table 7-24 p. 7-57). Established.
+  A 64-bit non-global write-only register holding a 25.12 two's complement value. The non-global loader moves it as a
+  doubleword (`ld` at 0x3358, `sd` at 0x335c) as the first of three in its flag-0x20 group, the test being the `beq` at
+  0x3350. Table byte 0.
+- `0x150021d0` (`0x21d0`): `Depth.dzdx`, the depth slope per pixel step in x, 25.12 (CRIME 1.5 Specification rev 0.3,
+  Table 7-3 p. 7-13). Established.
+  Doubleword copy, `ld` at 0x3360 and `sd` at 0x3364, the second of the depth trio. Table byte 0.
+- `0x150021d8` (`0x21d8`): `Depth.dzdy`, the depth slope per pixel step in y, 25.12 (CRIME 1.5 Specification rev 0.3,
+  Table 7-3 p. 7-13). Established.
+  The closing doubleword of the trio: `ld` at 0x3368, `sd` at 0x336c, followed by the flag-0x10 test for the shade run
+  at 0x3370. Table byte 0.
+- `0x150021e0` (`0x21e0`): `Stencil.mode`, the stencil test parameters: comparison function, reference and the three
+  stencil operations (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-13; Tables 7-26 and 7-27 p. 7-58). Established.
+  The function values are the eight of Table 7-26 and the operations ZERO, KEEP, REPLACE, INCR, DECR and INVERT. The
+  specification's stencil test text says "TBD" and its register layout table has no body in the extracted pages.
+  Unknown: the bit positions of its fields; the route is the unpublished field table of the 1.5 specification or a
+  shipped renderer that builds the word. Global (table byte 1): the second copy of the
+  global loader's flag-0x20 group, `lw` at 0x3540 and `sw` at 0x3544 from shadow +0x1e0.
+- `0x150021e8` (`0x21e8`): `Stencil.mask`, the stencil buffer bit mask (CRIME 1.5 Specification rev 0.3, Table 7-3
+  p. 7-14). Established.
+  The map gives its type as global read/write and its description as one line; no layout is printed. It is the last
+  register of the global loader's flag-0x20 group, `lw` at 0x3548 and `sw` at 0x354c, after which the loader tests flag
+  0x08 at 0x3550. Table byte 1.
 
 ## Routines in the IP32 build
 
