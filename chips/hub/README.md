@@ -977,6 +977,81 @@ use the local alias of the table above (`0x9200000001000000 + offset`).
   entry of `pdaindr`, byte +0x520) and stores 0 to `0x9200000001000000` plus 40 times the slice plus 792, that is
   0x318 (`PI_GFX_INT_CNTR_A`) or 0x340 (`PI_GFX_INT_CNTR_B`), followed by `sync`. Established.
 
+## Routines in the IP27 `hubspc.o` build
+
+One entry per routine, read in full from the IRIX 6.5.30 IP27 `hubspc.o` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o`, a relocatable
+object). Addresses are offsets in its `.text`. The object registers two special-file drivers on the node controller vertex and
+keeps a list that ties each device node it creates back to its controller. The list head is the doubleword at the start of
+`.sbss` and the spinlock `cpuprom_spinlock` is the word at `.sbss` +8. A list record is 16 bytes: +0 holds the device vertex,
++4 the controller vertex and +8 the next record. The `.srdata` literal pool has four doubleword slots: the `.rodata` base,
+`compact_to_nasid_node`, `mem_refcnt_attach` and `cpuprom_attach`, in that order. The `.rodata` strings are `_detail_invent`
+(+0), `prom` (+16), `hubspc_` (+24) and `promlist` (+32). `.lit8` holds `0x90000000100000a4`, `0x90000000100000a0`,
+`0x9200000001a00000` and the mask `0xffc00fffffffffff`. A device vertex carries a small integer set with `device_info_set` and
+read back with `device_info_get`: 1 marks the `prom` node `cpuprom_attach` makes; every routine below that dispatches on it
+treats 0 as the other driver (`mem_refcnt_*`, from another object) and anything else as an error.
+
+- `prominfo_add` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x0, 100 bytes)
+  takes the controller vertex in `a0` and the device vertex in `a1`. It allocates a 16-byte record with `kmem_alloc` (flags 0),
+  stores `a0` at +4 and `a1` at +0 (that store sits in the delay slot of the `mutex_spinlock` call on `cpuprom_spinlock`), links
+  the old list head at +8 and makes the new record the head, then releases the lock with `mutex_spinunlock` (the head store is in
+  its delay slot). New records go on the front. It returns nothing of its own. Established.
+- `prominfo_del` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x64, 120 bytes)
+  takes a device vertex in `a0`. Under `cpuprom_spinlock` it walks the list from the head comparing the word at +0 of each
+  record, and on a match stores that record's +8 into the link that pointed at it (the head or the previous record's +8). It
+  makes no call to free the record. With no match it changes nothing. No routine of this object calls it. Established.
+- `prominfo_nodeget` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0xdc, 112 bytes)
+  takes a device vertex in `a0` and returns the word at +4 of the first record whose +0 equals it, or 0 when none does. It
+  releases the spinlock before the match's +4 is loaded: the load is in the delay slot of the branch that follows the
+  `mutex_spinunlock` call. Established. Inferred: the result is the controller vertex that `cpuprom_attach` paired with the
+  device, because `prominfo_add` stores its first argument at +4 and `cpuprom_map` passes the result to `hubdev_prombase_get`.
+- `cpuprom_detailed_inventory_info_add` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x14c, 128 bytes)
+  takes the device vertex in `a0` and the controller vertex in `a1`. It gets the compact node number with `hubdev_cnodeid_get`
+  on `a1` (cut to 16 bits), allocates a 32-byte inventory record with `klhwg_invent_alloc` (class argument 21), stores 1 at +20
+  and 1 at +4 (a byte), the word read from `0x90000000100000a4` at +12 and the word read from `0x90000000100000a0` at +16,
+  attaches the record to the device vertex under the label `_detail_invent` with `hwgraph_info_add_LBL`, and exports that label
+  with `hwgraph_info_export_LBL` (length 32). Established. Inferred: the two words are firmware-supplied identification of the
+  node's PROM, because they are copied unchanged into an inventory record that is labelled `_detail_invent`. Unknown: what lies at
+  physical `0x100000a0` and `0x100000a4`. Route: the Bedrock census lists the same physical offsets for several routines, and the PROM's own
+  readers of them are the next place to look.
+- `cpuprom_attach` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x1cc, 128 bytes)
+  takes the controller vertex in `a0`. It calls `hwgraph_char_device_add` with that vertex, the name `prom`, the prefix `hubspc_`
+  and a stack slot that receives the new device vertex, then `device_inventory_add` (that vertex, class 21, 1, three zeros),
+  `cpuprom_detailed_inventory_info_add` (device, controller), `device_info_set` (device, 1) and `prominfo_add` (controller,
+  device). It always returns 0 and ignores the status of every call; the first `hubdev_cnodeid_get` result is unused. Established.
+- `cpuprom_map` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x24c, 204 bytes)
+  takes the device vertex in `a0`, a map handle in `a1` and a length in `a3`. It calls `prominfo_nodeget` and returns 5 when
+  nothing is found. Otherwise it maps the controller's PROM base with `v_mapphys` (handle `a1`, the base from
+  `hubdev_prombase_get`, length the smaller of `a3` and `0x10000000`) and returns a nonzero status unchanged. On success it takes
+  the nasid from the halfword table `compact_to_nasid_node` indexed by the compact node number, reads the doubleword at
+  `0x9200000001a00000 + (nasid << 32) + 24`, clears bits 53:44 with `0xffc00fffffffffff` and ORs in `257 << 44` when the byte at
+  `0xffffffffffffc523` is zero or `121 << 46` when it is not, stores it back and returns 0. Established. It is the same
+  sequence as the `IP27/unix` copy described under "Routines of the IP27 kernel" for `cpuprom_map`, which names the doubleword
+  `MD_MEMORY_CONFIG`; the third argument is ignored here.
+- `cpuprom_unmap` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x318, 8 bytes)
+  returns 0 at once and touches no register or memory, so mapping the PROM window leaves nothing to undo. Established.
+- `hubspc_init` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x320, 52 bytes)
+  registers the two drivers with `hubdev_register`, `mem_refcnt_attach` first and `cpuprom_attach` second, then calls
+  `spinlock_init` on `cpuprom_spinlock` with the name `promlist`. Established.
+- `hubspc_open` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x354, 116 bytes)
+  takes a pointer to the device number in `a0` and three more arguments. It reads the word at that pointer, passes it to
+  `device_info_get`, and on 0 returns `mem_refcnt_open` called with the four original arguments. On 1 it calls `cap_able` with
+  `1 << 37` and returns 0 when that grants the capability and 1 when it does not (`sltiu` on the result sits in the delay slot of
+  the jump back). Any other value returns 19. Established.
+- `hubspc_close` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x3c8, 108 bytes)
+  takes the device number in `a0`. `device_info_get` of it selects: 0 returns what `mem_refcnt_close` returns for the four
+  original arguments, 1 returns 0 without calling anything, any other value returns 19. Established.
+- `hubspc_map` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x434, 156 bytes)
+  returns 6 without further work when the fourth argument `a3` is 0. Otherwise it calls `device_info_get` on `a0` (twice with the
+  same argument; the first result is overwritten), then on 0 returns `mem_refcnt_mmap` called with all five arguments, on 1
+  returns `cpuprom_map` called with `a0` to `a3` (the fifth argument is dropped), and on any other value returns 19. Established.
+- `hubspc_unmap` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x4d0, 96 bytes)
+  takes the device number in `a0` and a second argument. `device_info_get` of `a0` selects: 0 returns `mem_refcnt_unmap` of both
+  arguments, 1 returns `cpuprom_unmap` of both (so 0), any other value returns 19. Established.
+- `hubspc_ioctl` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x530, 124 bytes)
+  takes six arguments with the device number in `a0`. `device_info_get` of it selects: 0 returns `mem_refcnt_ioctl` called with
+  all six, 1 returns 0 without examining the request, any other value returns 19. Established. So the `prom` node accepts every
+  ioctl request and does nothing for it.
+
 ## Open
 
 Graded entries; each ends with the route that would settle it. Collected in [docs/open-questions.md](../../docs/open-questions.md).
