@@ -340,6 +340,49 @@ The specification gives reset values bit by bit (compared only). No binary reads
 from the binaries. The kernel writes the PCI error flags to 0 and the control register as a full word at start-up and
 reads the control register again only for bit 11.
 
+## Routines in the IP32 build
+
+One entry per routine of `mace.o`, read from its disassembly with the relocations (the calls are the relocated
+targets). Each mask routine reads or writes the 64-bit ISA interrupt mask at physical `0x1f310018` through the
+`pciio_pio_*64` accessors, at interrupt level 7.
+
+- `mace_mask_disable` (`mace.o`, address `0x0`, 80 bytes): clears the bits of `a0` in the ISA interrupt mask at
+  `0xbf310018`. It raises the level with `spl7`, reads the mask with `pciio_pio_read64`, ANDs the old value with the
+  complement of `a0`, writes the result with `pciio_pio_write64` (value first, address second), and restores the
+  level with `splx`. Established.
+- `mace_mask_enable` (`mace.o`, address `0x50`, 76 bytes): the same sequence as `mace_mask_disable`, with `a0` ORed
+  into the mask. It keeps `a0` in a saved register across the calls and sets no return value, so v0 leaves `splx`
+  with whatever that call returned. Established.
+- `mace_mask_update` (`mace.o`, address `0x9c`, 92 bytes): one read-modify-write of the mask. It calls `spl7`, reads
+  the mask, and stores the old value with the first argument's bits cleared and the second argument's bits set. It
+  ends with `splx`. Established.
+- `mace_mask_read` (`mace.o`, address `0xf8`, 64 bytes): reads the mask under `spl7`, keeps the value in its frame
+  across `splx`, and returns it in v0. Established.
+- `mace_mask_write` (`mace.o`, address `0x138`, 64 bytes): stores `a0` as the whole 64-bit mask, under `spl7` and
+  `splx`. It writes no return value of its own. Established.
+- `mace_stray` (`mace.o`, address `0x178`, 44 bytes): calls `cmn_err` with level 4, a format string from `.rodata` and
+  the address of `intr` as the third argument. Established for the call. Inferred: it is the handler
+  `mace_tbl_init` installs in every unused table entry, so a stray MACE interrupt is reported through `cmn_err`.
+- `mace_tbl_init` (`mace.o`, address `0x1a4`, 72 bytes): fills the ten 56-byte entries of `mace_tbl`. Each entry gets
+  `mace_stray` at byte 8, the word 4 at byte 12, and zeros at bytes 16 (word), 24 and 32 (doublewords). Entry 0 also
+  gets a zero word at byte 0. Established.
+- `mace_is_thd` (`mace.o`, address `0x1ec`, 64 bytes): takes a 64-bit mask in `a1` and returns 1 if it has any of bits
+  19 to 16, bits 31 to 20, or either of bits 11 and 9 set; otherwise 0. Established from the three mask tests.
+- `macevec_intrd` (`mace.o`, address `0x560`, 56 bytes): the body of an interrupt thread. It calls the function pointer
+  stored at byte 0 of its argument with `a0` 0 and the word at byte 20 as `a1`, then calls `ipsema` on the argument
+  plus 36. Established.
+- `macevec_intrd_setup` (`mace.o`, address `0x4e8`, 120 bytes): starts the thread for one block. It hands
+  `macevec_intrd` and the block to `xthread_set_func`, passes the word at byte 0 of the block to `fetch_kname`, and
+  copies up to 16 bytes of the result with `strncpy` to offset 532 of the record the global at `-24552(zero)` points
+  to. It ORs `0x400` into the word at byte 32 with `ll` and `sc`, then calls `ipsema` on the block plus 36.
+  Established.
+- `mace_intr` (`mace.o`, address `0x40c`, 220 bytes): the MACE interrupt dispatcher. It reads the 64-bit ISA interrupt
+  status at `0xbf310010` with `pciio_pio_read64` and walks the ten `mace_tbl` entries. An entry takes the pending bits
+  its mask at byte 32 covers. If the flags word at byte 40 has bit 12 (`0x1000`), the entry is a thread: the dispatcher
+  clears the mask in the enable register with `mace_mask_disable`, stores the status at byte 24, and calls `vsema` on
+  the entry plus 44. Otherwise it calls the handler at byte 8 with `a0` 0 and the argument at byte 16. Either way the
+  entry's mask bits leave the pending set, and the walk stops when none are left or after ten entries. Established.
+
 ## Open
 
 See docs/open-questions.md: the compressed IP32 PROM, the Ethernet, serial and video blocks reached by pointer, the

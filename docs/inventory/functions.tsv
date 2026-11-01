@@ -7343,7 +7343,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001422c8	232	pollwakeup	symtab	de090b4fbea5
 IP27/unix	kernel	n64	.text	0xc0000000001423b0	112	pollwakeup_thread	symtab	cd4b2baada16		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000142420	72	strcmp	symtab	92ef65fa378b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000142468	84	strncmp	symtab	7b3921051c1e		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001424bc	136	strncpy	symtab	1ee05fa5dab1		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001424bc	136	strncpy	symtab	1ee05fa5dab1		out:5	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/unix	kernel	n64	.text	0xc000000000142544	84	strcpy	symtab	de0d909fb422		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000142598	36	strchr	symtab	55dabc5243f9		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001425bc	124	strrchr	symtab	be136f59c45e		out:5	undocumented		
@@ -8005,8 +8005,8 @@ IP27/unix	kernel	n64	.text	0xc000000000187338	132	icvsema	symtab	c789f54ec36c		o
 IP27/unix	kernel	n64	.text	0xc0000000001873bc	108	wsema	symtab	b8037d7a8603		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000187428	160	_wsema	symtab	6d66515b251a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001874c8	124	psema	symtab	58a868034d30		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000187544	212	ipsema	symtab	88c44a365a92		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000187618	108	vsema	symtab	81d9cc6b8e65		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000187544	212	ipsema	symtab	88c44a365a92		out:5	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP27/unix	kernel	n64	.text	0xc000000000187618	108	vsema	symtab	81d9cc6b8e65		out:5	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/unix	kernel	n64	.text	0xc000000000187684	100	cpsema	symtab	4d9ffb19deb1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001876e8	164	unsema	symtab	5ffde7a2f993		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000187848	8	valusema	symtab	0a51dcb165f9		out:5	undocumented		
@@ -8785,7 +8785,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001ccfd4	76	xthread_init	symtab	7467b07cc03
 IP27/unix	kernel	n64	.text	0xc0000000001cd020	436	xthread_create	symtab	9de17a9507d8		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001cd1d4	208	xthread_setup	symtab	8bb45b037c0e		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001cd2a4	132	xthread_exit	symtab	e715da31e663		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001cd328	128	xthread_set_func	symtab	ed6c4aa2d5a2		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001cd328	128	xthread_set_func	symtab	ed6c4aa2d5a2		out:5	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/unix	kernel	n64	.text	0xc0000000001cd3a8	48	xtdestroy	symtab	12b9c9dacfd6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001cd3d8	452	xthread_boot_bind	symtab	56a2c774f34b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001cd700	228	xthread_periodic_timeout	symtab	58ea847dab3a		in	undocumented		
@@ -13430,7 +13430,7 @@ IP27/unix	kernel	n64	.text	0xc0000000003c399c	8	frs_cpu_frsobjp_print	symtab	78a
 IP27/unix	kernel	n64	.text	0xc0000000003c39a4	8	frs_thread_init	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c39ac	8	frs_thread_destroy	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c3a34	8	_idbg_late_setup	symtab	78aa5094d5ec		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003c3a74	8	fetch_kname	symtab	2676f4f7ae83		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003c3a74	8	fetch_kname	symtab	2676f4f7ae83		out:5	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/unix	kernel	n64	.text	0xc0000000003c3a7c	28	efs_quotactl	symtab	f8573739a075		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c3a98	8	qt_closedq	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c3aa0	8	qt_getinoquota	symtab	87506497337c		out:5	undocumented		
@@ -17024,7 +17024,7 @@ IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64	.text	0x2717c	128	convsp	d
 IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64	.text	0x271fc	304	idbg_get_stack_bytes	dwarf+symtab	ad35d3391b4b		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64	.text	0x2732c	472	fetch_kaddr	dwarf+symtab	11c8f135c128		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64	.text	0x27504	416	lookup_kname	dwarf+symtab	3a6e422043c3		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64	.text	0x276a4	140	fetch_kname	dwarf+symtab	150d668e29a6		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64	.text	0x276a4	140	fetch_kname	dwarf+symtab	150d668e29a6		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64	.text	0x27730	468	_prsymoff	dwarf+symtab	c5f567629ce4		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64	.text	0x27904	148	idbg_btrace	dwarf+symtab	b837ec6ee3ff		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-object	n64	.text	0x27998	9364	btrace	dwarf	f548fe210e35		out:3	undocumented		
@@ -20175,8 +20175,8 @@ IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x5ec	132	i
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x670	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x6dc	160	_wsema	dwarf+symtab	a69871db16ec		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x77c	124	psema	dwarf+symtab	4fd919720a4c		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x7f8	212	ipsema	dwarf+symtab	09f2f69316b6		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x8cc	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x7f8	212	ipsema	dwarf+symtab	09f2f69316b6		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x8cc	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x938	100	cpsema	dwarf+symtab	c5de17a1c1db		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x99c	164	unsema	dwarf+symtab	94ae9f426026		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0xa40	52	semaaddproc	dwarf+symtab	267c259c27de		out:3	undocumented		
@@ -20347,8 +20347,8 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xc
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xd80	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xdec	328	_wsema	dwarf+symtab	aaf53da1a33b		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xf34	284	psema	dwarf+symtab	ce850c3d9df9		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1050	412	ipsema	dwarf+symtab	93c9c6d91ee3		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x11ec	348	vsema	dwarf+symtab	d822977b611d		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1050	412	ipsema	dwarf+symtab	93c9c6d91ee3		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x11ec	348	vsema	dwarf+symtab	d822977b611d		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1348	300	cpsema	dwarf+symtab	a9f66dcecbdc		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1474	240	unsema	dwarf+symtab	1531b8511d38		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1564	108	semaaddproc	dwarf+symtab	c085624614c5		out:3	undocumented		
@@ -20523,8 +20523,8 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xa50
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xad4	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xb40	160	_wsema	dwarf+symtab	a69871db16ec		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xbe0	124	psema	dwarf+symtab	4fd919720a4c		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xc5c	212	ipsema	dwarf+symtab	09f2f69316b6		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xd30	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xc5c	212	ipsema	dwarf+symtab	09f2f69316b6		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xd30	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xd9c	100	cpsema	dwarf+symtab	c5de17a1c1db		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xe00	164	unsema	dwarf+symtab	94ae9f426026		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xea4	52	semaaddproc	dwarf+symtab	267c259c27de		out:3	undocumented		
@@ -20687,8 +20687,8 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x670	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x6dc	160	_wsema	dwarf+symtab	a69871db16ec		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x77c	192	psema	dwarf+symtab	e440540d2cd4		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x83c	268	ipsema	dwarf+symtab	d8d28bffdb36		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x948	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x83c	268	ipsema	dwarf+symtab	d8d28bffdb36		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x948	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x9b4	156	cpsema	dwarf+symtab	d1ebb4ac3938		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0xa50	160	unsema	dwarf+symtab	ca1ff7a77fc4		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0xaf0	52	semaaddproc	dwarf+symtab	267c259c27de		out:3	undocumented		
@@ -25341,7 +25341,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64		0x0		xthread_ini
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x4c	436	xthread_create	dwarf+symtab	d1839b09a836		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x200	208	xthread_setup	dwarf+symtab	c98cd342fcbc		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x2d0	132	xthread_exit	dwarf+symtab	463f08e93f43		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x354	128	xthread_set_func	dwarf+symtab	fabd5bdc8c84		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x354	128	xthread_set_func	dwarf+symtab	fabd5bdc8c84		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x3d4	48	xtdestroy	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x404	452	xthread_boot_bind	dwarf+symtab	26cf0f505fe8		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x5c8	8	xthread_get_name	dwarf+symtab	5687073dc68c		out:3	undocumented		
@@ -27571,7 +27571,7 @@ IP27/usr/cpu/sysgen/IP27boot/sgi.a(fs_bio.o)	kernel-object	n64	.text	0x5d80	148	
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(fs_bio.o)	kernel-object	n64	.text	0x5e14	8	__global_pragmas_pu	symtab	78aa5094d5ec		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64		0x0		strcmp	dwarf+symtab			out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x48	84	strncmp	dwarf+symtab	7b3921051c1e		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x9c	136	strncpy	dwarf+symtab	1ee05fa5dab1		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x9c	136	strncpy	dwarf+symtab	1ee05fa5dab1		out:1	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x124	84	strcpy	dwarf+symtab	de0d909fb422		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x178	36	strchr	dwarf+symtab	55dabc5243f9		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x19c	124	strrchr	dwarf+symtab	be136f59c45e		out:1	undocumented		
@@ -39247,7 +39247,7 @@ IP30/unix	kernel	n64	.text	0xa800000020128370	860	chunkcommit	symtab	08b72080b0f
 IP30/unix	kernel	n64	.text	0xa8000000201286cc	356	chunkfree	symtab	0c59e93f6805		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020128838	72	strcmp	symtab	92ef65fa378b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020128880	84	strncmp	symtab	7b3921051c1e		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201288d4	136	strncpy	symtab	1ee05fa5dab1		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201288d4	136	strncpy	symtab	1ee05fa5dab1		out:7	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/unix	kernel	n64	.text	0xa80000002012895c	84	strcpy	symtab	de0d909fb422		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201289b0	36	strchr	symtab	55dabc5243f9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201289d4	124	strrchr	symtab	be136f59c45e		out:7	undocumented		
@@ -39712,8 +39712,8 @@ IP30/unix	kernel	n64	.text	0xa8000000201501f8	132	icvsema	symtab	71c7f51d5f9f		o
 IP30/unix	kernel	n64	.text	0xa80000002015027c	108	wsema	symtab	7d3cfe7304ee		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201502e8	160	_wsema	symtab	2fe75239488d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020150388	124	psema	symtab	e893797e94c9		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020150404	212	ipsema	symtab	db6c45cce109		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201504d8	108	vsema	symtab	cdd0bd515aa8		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020150404	212	ipsema	symtab	db6c45cce109		out:7	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP30/unix	kernel	n64	.text	0xa8000000201504d8	108	vsema	symtab	cdd0bd515aa8		out:7	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/unix	kernel	n64	.text	0xa800000020150544	100	cpsema	symtab	74ac1c12f72d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201505a8	164	unsema	symtab	a96c2b36e145		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020150708	8	valusema	symtab	0a51dcb165f9		out:7	undocumented		
@@ -40497,7 +40497,7 @@ IP30/unix	kernel	n64	.text	0xa800000020191230	76	xthread_init	symtab	774894d5d0a
 IP30/unix	kernel	n64	.text	0xa80000002019127c	436	xthread_create	symtab	acfb1a68d35e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020191430	208	xthread_setup	symtab	3a076899e92f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020191500	132	xthread_exit	symtab	c7cfbfcbdb0e		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020191584	128	xthread_set_func	symtab	48f4fcf49f21		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020191584	128	xthread_set_func	symtab	48f4fcf49f21		out:7	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/unix	kernel	n64	.text	0xa800000020191604	48	xtdestroy	symtab	5ea929834419		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020191634	452	xthread_boot_bind	symtab	4f54c743efa1		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002019195c	228	xthread_periodic_timeout	symtab	304789878553		in	undocumented		
@@ -45294,7 +45294,7 @@ IP30/unix	kernel	n64	.text	0xa8000000203aa6ec	8	frs_cpu_frsobjp_print	symtab	78a
 IP30/unix	kernel	n64	.text	0xa8000000203aa6f4	8	frs_thread_init	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa6fc	8	frs_thread_destroy	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa784	8	_idbg_late_setup	symtab	78aa5094d5ec		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000203aa7c4	8	fetch_kname	symtab	d7466021b48c		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000203aa7c4	8	fetch_kname	symtab	d7466021b48c		out:7	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/unix	kernel	n64	.text	0xa8000000203aa7cc	28	efs_quotactl	symtab	79cdda880e1f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa7e8	8	qt_closedq	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa7f0	8	qt_getinoquota	symtab	87506497337c		out:7	undocumented		
@@ -48663,7 +48663,7 @@ IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-object	n64	.text	0x263bc	128	convsp	d
 IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-object	n64	.text	0x2643c	304	idbg_get_stack_bytes	dwarf+symtab	b4c609c104b9		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-object	n64	.text	0x2656c	472	fetch_kaddr	dwarf+symtab	11c8f135c128		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-object	n64	.text	0x26744	416	lookup_kname	dwarf+symtab	3a6e422043c3		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-object	n64	.text	0x268e4	140	fetch_kname	dwarf+symtab	2aaa036dc626		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-object	n64	.text	0x268e4	140	fetch_kname	dwarf+symtab	2aaa036dc626		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-object	n64	.text	0x26970	468	_prsymoff	dwarf+symtab	9cc56ca10f3c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-object	n64	.text	0x26b44	148	idbg_btrace	dwarf+symtab	ea23a535c878		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-object	n64	.text	0x26bd8	9332	btrace	dwarf	5575b46e45ae		out:3	undocumented		
@@ -51004,8 +51004,8 @@ IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x5ec	132	i
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x670	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x6dc	160	_wsema	dwarf+symtab	a69871db16ec		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x77c	124	psema	dwarf+symtab	4fd919720a4c		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x7f8	212	ipsema	dwarf+symtab	09f2f69316b6		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x8cc	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x7f8	212	ipsema	dwarf+symtab	09f2f69316b6		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x8cc	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x938	100	cpsema	dwarf+symtab	c5de17a1c1db		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x99c	164	unsema	dwarf+symtab	94ae9f426026		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0xa40	52	semaaddproc	dwarf+symtab	267c259c27de		out:3	undocumented		
@@ -51176,8 +51176,8 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xc
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xd80	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xdec	328	_wsema	dwarf+symtab	aaf53da1a33b		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xf34	284	psema	dwarf+symtab	ce850c3d9df9		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1050	412	ipsema	dwarf+symtab	93c9c6d91ee3		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x11ec	348	vsema	dwarf+symtab	d822977b611d		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1050	412	ipsema	dwarf+symtab	93c9c6d91ee3		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x11ec	348	vsema	dwarf+symtab	d822977b611d		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1348	300	cpsema	dwarf+symtab	a9f66dcecbdc		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1474	240	unsema	dwarf+symtab	1531b8511d38		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1564	108	semaaddproc	dwarf+symtab	c085624614c5		out:3	undocumented		
@@ -51352,8 +51352,8 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xa50
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xad4	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xb40	160	_wsema	dwarf+symtab	a69871db16ec		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xbe0	124	psema	dwarf+symtab	4fd919720a4c		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xc5c	212	ipsema	dwarf+symtab	09f2f69316b6		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xd30	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xc5c	212	ipsema	dwarf+symtab	09f2f69316b6		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xd30	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xd9c	100	cpsema	dwarf+symtab	c5de17a1c1db		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xe00	164	unsema	dwarf+symtab	94ae9f426026		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xea4	52	semaaddproc	dwarf+symtab	267c259c27de		out:3	undocumented		
@@ -51516,8 +51516,8 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x670	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x6dc	160	_wsema	dwarf+symtab	a69871db16ec		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x77c	192	psema	dwarf+symtab	e440540d2cd4		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x83c	268	ipsema	dwarf+symtab	d8d28bffdb36		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x948	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x83c	268	ipsema	dwarf+symtab	d8d28bffdb36		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x948	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x9b4	156	cpsema	dwarf+symtab	d1ebb4ac3938		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0xa50	160	unsema	dwarf+symtab	ca1ff7a77fc4		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0xaf0	52	semaaddproc	dwarf+symtab	267c259c27de		out:3	undocumented		
@@ -55530,7 +55530,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64		0x0		xthread_ini
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x4c	436	xthread_create	dwarf+symtab	d1839b09a836		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x200	208	xthread_setup	dwarf+symtab	c98cd342fcbc		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x2d0	132	xthread_exit	dwarf+symtab	463f08e93f43		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x354	128	xthread_set_func	dwarf+symtab	fabd5bdc8c84		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x354	128	xthread_set_func	dwarf+symtab	fabd5bdc8c84		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x3d4	48	xtdestroy	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x404	452	xthread_boot_bind	dwarf+symtab	26cf0f505fe8		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x5c8	8	xthread_get_name	dwarf+symtab	5687073dc68c		out:3	undocumented		
@@ -64759,7 +64759,7 @@ IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-object	n32	.text	0x18378	196	convsp	d
 IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-object	n32	.text	0x1843c	220	idbg_get_stack_bytes	dwarf+symtab	8c7ba82753fc		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-object	n32	.text	0x18518	368	fetch_kaddr	dwarf+symtab	15128e482a82		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-object	n32	.text	0x18688	276	lookup_kname	dwarf+symtab	cd5021284edb		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-object	n32	.text	0x1879c	104	fetch_kname	dwarf+symtab	403d7fcfec9e		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-object	n32	.text	0x1879c	104	fetch_kname	dwarf+symtab	403d7fcfec9e		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-object	n32	.text	0x18804	272	_prsymoff	dwarf+symtab	9ba06d16d518		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-object	n32	.text	0x18914	96	idbg_btrace	dwarf+symtab	e30d27f70cda		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-object	n32	.text	0x18974	6236	btrace	dwarf+funcnames	498375f09b66		out:3	undocumented		
@@ -67174,8 +67174,8 @@ IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x514	120	i
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x58c	60	wsema	dwarf+symtab	2e339256c18a		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x5c8	88	_wsema	dwarf+symtab	5df7c542cb27		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x620	108	psema	dwarf+symtab	41d222730316		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x68c	176	ipsema	dwarf+symtab	38585703a063		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x73c	96	vsema	dwarf+symtab	3bf3eeb6d3dc		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x68c	176	ipsema	dwarf+symtab	38585703a063		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x73c	96	vsema	dwarf+symtab	3bf3eeb6d3dc		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x79c	80	cpsema	dwarf+symtab	d8c862bad6fe		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x7ec	56	unsema	dwarf+symtab	702f7bc5a530		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0x824	52	semaaddproc	dwarf+funcnames+symtab	625aa159dccb		out:3	undocumented		
@@ -67343,8 +67343,8 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0xb
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0xc88	60	wsema	dwarf+symtab	2e339256c18a		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0xcc4	280	_wsema	dwarf+symtab	ee6ea0f2462f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0xddc	272	psema	dwarf+symtab	158d5f7586ac		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0xeec	360	ipsema	dwarf+symtab	7742e678827a		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0x1054	328	vsema	dwarf+symtab	6b1155e2b759		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0xeec	360	ipsema	dwarf+symtab	7742e678827a		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0x1054	328	vsema	dwarf+symtab	6b1155e2b759		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0x119c	268	cpsema	dwarf+symtab	a7d820685532		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0x12a8	148	unsema	dwarf+symtab	d6ade7aa6dc2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0x133c	108	semaaddproc	dwarf+funcnames+symtab	eb0c103d1bf6		out:3	undocumented		
@@ -67516,8 +67516,8 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0x964
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0x9dc	60	wsema	dwarf+symtab	2e339256c18a		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0xa18	88	_wsema	dwarf+symtab	5df7c542cb27		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0xa70	108	psema	dwarf+symtab	41d222730316		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0xadc	176	ipsema	dwarf+symtab	38585703a063		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0xb8c	96	vsema	dwarf+symtab	3bf3eeb6d3dc		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0xadc	176	ipsema	dwarf+symtab	38585703a063		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0xb8c	96	vsema	dwarf+symtab	3bf3eeb6d3dc		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0xbec	80	cpsema	dwarf+symtab	d8c862bad6fe		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0xc3c	56	unsema	dwarf+symtab	702f7bc5a530		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0xc74	52	semaaddproc	dwarf+funcnames+symtab	625aa159dccb		out:3	undocumented		
@@ -67677,8 +67677,8 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x58c	60	wsema	dwarf+symtab	2e339256c18a		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x5c8	88	_wsema	dwarf+symtab	5df7c542cb27		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x620	180	psema	dwarf+symtab	b15014cbfea6		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x6d4	232	ipsema	dwarf+symtab	8871b3efe055		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x7bc	96	vsema	dwarf+symtab	3bf3eeb6d3dc		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x6d4	232	ipsema	dwarf+symtab	8871b3efe055		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x7bc	96	vsema	dwarf+symtab	3bf3eeb6d3dc		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x81c	136	cpsema	dwarf+symtab	ee12e2d59c61		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x8a4	56	unsema	dwarf+symtab	702f7bc5a530		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0x8dc	52	semaaddproc	dwarf+funcnames+symtab	625aa159dccb		out:3	undocumented		
@@ -68130,18 +68130,18 @@ IP32/usr/cpu/sysgen/IP32boot/log.o	kernel-object	n32	.text	0xdc4	168	sendmsg	dwa
 IP32/usr/cpu/sysgen/IP32boot/log.o	kernel-object	n32	.text	0xe6c	192	logtrc	dwarf+funcnames+symtab	533ec01e4529		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/log.o	kernel-object	n32	.text	0xf2c	192	logerr	dwarf+funcnames+symtab	f0fbf4f8195e		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/log.o	kernel-object	n32	.text	0xfec	212	logcons	dwarf+funcnames+symtab	01c68701aae2		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32		0x0		mace_mask_disable	dwarf+symtab			in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x50	76	mace_mask_enable	dwarf+symtab	71568779a361		in	named-only	chips/mace/README.md#other-rows	Other rows
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x9c	92	mace_mask_update	dwarf+symtab	cc4c3cb8abb0		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0xf8	64	mace_mask_read	dwarf+symtab	952a3bce225d		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x138	64	mace_mask_write	dwarf+symtab	b9ef9396b382		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x178	44	mace_stray	dwarf+funcnames+symtab	55bba3953b0d		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x1a4	72	mace_tbl_init	dwarf+symtab	1ba343d10869		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x1ec	64	mace_is_thd	dwarf+funcnames+symtab	82348d05268f		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32		0x0		mace_mask_disable	dwarf+symtab			in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x50	76	mace_mask_enable	dwarf+symtab	71568779a361		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x9c	92	mace_mask_update	dwarf+symtab	cc4c3cb8abb0		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0xf8	64	mace_mask_read	dwarf+symtab	952a3bce225d		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x138	64	mace_mask_write	dwarf+symtab	b9ef9396b382		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x178	44	mace_stray	dwarf+funcnames+symtab	55bba3953b0d		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x1a4	72	mace_tbl_init	dwarf+symtab	1ba343d10869		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x1ec	64	mace_is_thd	dwarf+funcnames+symtab	82348d05268f		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x22c	480	setmaceisavector	dwarf+symtab	9840cd46ee33		in	named-only	chips/mace/README.md#interrupts-established-mace_intr-setmaceisavector-mace_mask_	Interrupts (established: `mace_intr`, `setmaceisavector`, `mace_mask_*`)
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x40c	220	mace_intr	dwarf+symtab	0522300af2d1		in	named-only	chips/mace/README.md#other-rows	Other rows
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x4e8	120	macevec_intrd_setup	dwarf+funcnames+symtab	68b7f559486e		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x560	56	macevec_intrd	dwarf+funcnames+symtab	f517c4af7a14		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x40c	220	mace_intr	dwarf+symtab	0522300af2d1		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x4e8	120	macevec_intrd_setup	dwarf+funcnames+symtab	68b7f559486e		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-object	n32	.text	0x560	56	macevec_intrd	dwarf+funcnames+symtab	f517c4af7a14		in	understood	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP32/usr/cpu/sysgen/IP32boot/magellan.o	kernel-object	n32		0x0		smLowNibble	dwarf+funcnames+symtab			out:4	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/magellan.o	kernel-object	n32	.text	0x60	136	smParseWord	dwarf+funcnames+symtab	34666ec23f23		out:4	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/magellan.o	kernel-object	n32	.text	0xe8	208	sm_ParseBinaryWords	dwarf+funcnames+symtab	f26004bb86a8		out:4	undocumented		
@@ -72073,7 +72073,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(xthread.o)	kernel-object	n32		0x0		xthread_ini
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread.o)	kernel-object	n32	.text	0x54	416	xthread_create	dwarf+symtab	3085e2b07371		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread.o)	kernel-object	n32	.text	0x1f4	188	xthread_setup	dwarf+symtab	796b79faa3b2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread.o)	kernel-object	n32	.text	0x2b0	104	xthread_exit	dwarf+symtab	615ec5508ad6		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(xthread.o)	kernel-object	n32	.text	0x318	108	xthread_set_func	dwarf+symtab	8f038a7bdf2c		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(xthread.o)	kernel-object	n32	.text	0x318	108	xthread_set_func	dwarf+symtab	8f038a7bdf2c		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread.o)	kernel-object	n32	.text	0x384	48	xtdestroy	dwarf+symtab	1a297ac0613a		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread.o)	kernel-object	n32	.text	0x3b4	428	xthread_boot_bind	dwarf+symtab	ddf4ca346fd6		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread.o)	kernel-object	n32	.text	0x560	8	xthread_get_name	dwarf+funcnames+symtab	6c59f1b14977		out:3	undocumented		
@@ -73988,7 +73988,7 @@ IP32/usr/cpu/sysgen/IP32boot/sgi.a(fs_bio.o)	kernel-object	n32	.text	0x5c70	144	
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(fs_bio.o)	kernel-object	n32	.text	0x5d00	136	buf_avoid_search	dwarf+symtab	5192df3c2b00		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32		0x0		strcmp	dwarf+symtab			out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x48	84	strncmp	dwarf+symtab	8289031da5f9		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x9c	132	strncpy	dwarf+symtab	7cfa5fbce052		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x9c	132	strncpy	dwarf+symtab	7cfa5fbce052		out:1	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x120	84	strcpy	dwarf+symtab	f7e6e8b86831		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x174	36	strchr	dwarf+symtab	f33858367dfc		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x198	124	strrchr	dwarf+symtab	111f68a65f0b		out:1	undocumented		
@@ -81592,7 +81592,7 @@ IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-object	n64	.text	0x26ff8	128	convsp	d
 IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-object	n64	.text	0x27078	304	idbg_get_stack_bytes	dwarf+symtab	2782cd1a0871		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-object	n64	.text	0x271a8	472	fetch_kaddr	dwarf+symtab	11c8f135c128		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-object	n64	.text	0x27380	416	lookup_kname	dwarf+symtab	3a6e422043c3		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-object	n64	.text	0x27520	140	fetch_kname	dwarf+symtab	150d668e29a6		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-object	n64	.text	0x27520	140	fetch_kname	dwarf+symtab	150d668e29a6		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-object	n64	.text	0x275ac	468	_prsymoff	dwarf+symtab	c1ab80a38b27		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-object	n64	.text	0x27780	148	idbg_btrace	dwarf+symtab	cbc3c1dac254		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-object	n64	.text	0x27814	9356	btrace	dwarf	685cd5143119		out:3	undocumented		
@@ -85021,8 +85021,8 @@ IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x5ec	132	i
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x670	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x6dc	160	_wsema	dwarf+symtab	a69871db16ec		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x77c	124	psema	dwarf+symtab	4fd919720a4c		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x7f8	212	ipsema	dwarf+symtab	055cffcf92ff		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x8cc	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x7f8	212	ipsema	dwarf+symtab	055cffcf92ff		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x8cc	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x938	100	cpsema	dwarf+symtab	c5de17a1c1db		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x99c	164	unsema	dwarf+symtab	94ae9f426026		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0xa40	52	semaaddproc	dwarf+symtab	267c259c27de		out:3	undocumented		
@@ -85193,8 +85193,8 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xc
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xd80	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xdec	328	_wsema	dwarf+symtab	aaf53da1a33b		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0xf34	284	psema	dwarf+symtab	ce850c3d9df9		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1050	412	ipsema	dwarf+symtab	93838a0236d1		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x11ec	348	vsema	dwarf+symtab	d822977b611d		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1050	412	ipsema	dwarf+symtab	93838a0236d1		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x11ec	348	vsema	dwarf+symtab	d822977b611d		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1348	300	cpsema	dwarf+symtab	a9f66dcecbdc		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1474	240	unsema	dwarf+symtab	1531b8511d38		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x1564	108	semaaddproc	dwarf+symtab	c085624614c5		out:3	undocumented		
@@ -85369,8 +85369,8 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xa50
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xad4	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xb40	160	_wsema	dwarf+symtab	a69871db16ec		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xbe0	124	psema	dwarf+symtab	4fd919720a4c		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xc5c	212	ipsema	dwarf+symtab	055cffcf92ff		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xd30	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xc5c	212	ipsema	dwarf+symtab	055cffcf92ff		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xd30	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xd9c	100	cpsema	dwarf+symtab	c5de17a1c1db		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xe00	164	unsema	dwarf+symtab	94ae9f426026		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0xea4	52	semaaddproc	dwarf+symtab	267c259c27de		out:3	undocumented		
@@ -85533,8 +85533,8 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x670	108	wsema	dwarf+symtab	2d6bc759cbee		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x6dc	160	_wsema	dwarf+symtab	a69871db16ec		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x77c	192	psema	dwarf+symtab	e440540d2cd4		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x83c	268	ipsema	dwarf+symtab	a3e68d54489d		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x948	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x83c	268	ipsema	dwarf+symtab	a3e68d54489d		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
+IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x948	108	vsema	dwarf+symtab	1f9833e7fc6f		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x9b4	156	cpsema	dwarf+symtab	d1ebb4ac3938		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0xa50	160	unsema	dwarf+symtab	ca1ff7a77fc4		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0xaf0	52	semaaddproc	dwarf+symtab	267c259c27de		out:3	undocumented		
@@ -90120,7 +90120,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64		0x0		xthread_ini
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x4c	436	xthread_create	dwarf+symtab	c3dc18712046		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x200	208	xthread_setup	dwarf+symtab	c98cd342fcbc		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x2d0	132	xthread_exit	dwarf+symtab	6bf6c529d950		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x354	128	xthread_set_func	dwarf+symtab	9751dfb008a2		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x354	128	xthread_set_func	dwarf+symtab	9751dfb008a2		out:3	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x3d4	48	xtdestroy	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x404	452	xthread_boot_bind	dwarf+symtab	84b9831ba895		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x5c8	8	xthread_get_name	dwarf+symtab	79a1c34461e0		out:3	undocumented		
@@ -97456,7 +97456,7 @@ sbin/stand/sash64	diagnostic	n64	.text	0x121f4	172	_init_libsc_private	symtab	63
 sbin/stand/sash64	diagnostic	n64	.text	0x122a0	448	sa_get_response	symtab	05ba9631d6dd		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x12460	228	token	symtab	7cc39142fe65		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x12544	72	strncmp	symtab	02235298ef94		out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x1258c	112	strncpy	symtab	034e0cc383c4		out:4	undocumented		
+sbin/stand/sash64	diagnostic	n64	.text	0x1258c	112	strncpy	symtab	034e0cc383c4		out:4	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 sbin/stand/sash64	diagnostic	n64	.text	0x125fc	116	strncat	symtab	4d3e4618d058		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x12670	36	index	symtab	77db9593233b		out:4	named-only	chips/bedrock/README.md#window-and-how-it-is-reached	Window and how it is reached
 sbin/stand/sash64	diagnostic	n64	.text	0x12694	36	rindex	symtab	7f0328ecde88		out:4	undocumented		
@@ -97502,7 +97502,7 @@ sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	svpsema	symtab	78aa5094d5ec	sha
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	svsema	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	timeout	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	untimeout	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	vsema	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	vsema	symtab	78aa5094d5ec	shared-address	out:4	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 sbin/stand/sash64	diagnostic	n64	.text	0x14eec	8	suser	symtab	a7e7ca11a6b8		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ef4	8	cvsema	symtab	87506497337c		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14efc	772	ls	symtab	a4ee8e5596da		out:4	undocumented		
@@ -97824,7 +97824,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa001bf84	8	nullsetup	symtab	875064
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa001bf8c	8	_mem_strat	symtab	87506497337c		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa001bf94	8	memsetup	symtab	87506497337c		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa001bf9c	240	fetch_kaddr	symtab	cca164b15a20		out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa001c08c	420	fetch_kname	symtab	8e2570846681		out:15	undocumented		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa001c08c	420	fetch_kname	symtab	8e2570846681		out:15	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa001c298	156	nmtohx	symtab	03fa0d5823f1		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa001c334	244	hxtonm	symtab	edb7d3fee8d3		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa001c428	768	parse_sym_range	symtab	95ee86f85b2b		out:15	undocumented		
@@ -98244,7 +98244,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030ad0	48	strchr	symtab	cc7b44f7
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030b00	420	sa_get_response	symtab	bf34ac395516		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030ca4	188	token	symtab	dd6c53a8c043		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030d60	80	strncmp	symtab	3fec96eeb2ec		out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030db0	96	strncpy	symtab	4a439ff1f0b5		out:15	undocumented		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030db0	96	strncpy	symtab	4a439ff1f0b5		out:15	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030e10	96	strncat	symtab	587b5177e7f0		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030e70	36	index	symtab	f33858367dfc		out:15	named-only	chips/bedrock/README.md#window-and-how-it-is-reached	Window and how it is reached
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030e94	36	rindex	symtab	574ccb33b9d9		out:15	undocumented		
@@ -98277,7 +98277,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	svpsema	symtab	78aa5094
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	svsema	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	timeout	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	untimeout	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	vsema	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	vsema	symtab	78aa5094d5ec	shared-address	out:15	named-only	chips/mace/README.md#routines-in-the-ip32-build	Routines in the IP32 build
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a8	8	suser	symtab	a7e7ca11a6b8		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311b0	8	cvsema	symtab	87506497337c		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311b8	164	init_rb	symtab	73b8f2f3310d		out:15	undocumented		
