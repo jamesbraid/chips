@@ -177,3 +177,134 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   (292 bytes), `xtalk_pio_addr` (248 bytes) and `xtalk_error_handler` (172 bytes) match the IP27 copy. Its 28 `heart_*`
   imports, such as `heart_dmamap_alloc`, `heart_intr_connect` and `heart_piomap_alloc`, make HEART the provider it
   calls, where the IP27 copy calls the Hub. The widgets it serves are the Bridge and the Xbow. All 71 rows stay in.
+
+## IP32 build
+
+- `IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_zbuf.o)` (inferred): the Z-buffer pair of the CRIME graphics memory
+  layer, `crmAddZ` (772 bytes) and `crmSubtractZ` (376 bytes). Its imports `crmAllocTiles`, `crmFreeTiles` and
+  `crmNextIncarnation` are tile routines of the same layer, and the two `kern_*` imports are kernel services. The
+  chip is the CRIME, and both rows stay in.
+- `IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)` (inferred): the tile allocator for the CRIME graphics
+  memory. `crmDefineTex` (1112 bytes), `crmResizeFb` (892 bytes), `crmAllocTex` (520 bytes), `crmLoadTlbABC` (432
+  bytes) and `crmAllocZbuffer` (264 bytes) allocate texture, frame, overlay, Z and CID tiles. The imports
+  `crimeBoards`, `gfxdd_mmap_mem` and five `dms` routines tie it to the CRIME boards and the tile pool. The chip is the
+  CRIME, and 33 rows are in the table.
+- `IP32/usr/cpu/sysgen/IP32boot/kernel.o` (inferred): the machine-dependent kernel object of the IP32 build, 811 rows
+  in 504132 bytes. The scope pass keeps 61 rows, and the linked-kernel rule (rule 9) removes the other 750. The kept
+  rows carry chip words: the CRIME interrupt entries `crime_intr` (the `crime_intr_enable` and `crime_intr_disable`
+  pair, 64 and 68 bytes), `crimegang` (108 bytes) and `crimevec_thread_setup` (88 bytes), `crimestray`, the MACE
+  vertex lookup `mace_hwgraph_lookup` (88 bytes), and `early_gbe_stop` (564 bytes), which stops the GBE chip. It also
+  keeps `mlreset` (672 bytes), `early_ecc_init` and `ecc_enable` and `ecc_disable`. Its imports include the
+  `pciio_pio_read*` and `pciio_pio_write*` accessors, so the PCI side reaches the chips through the PCI layer.
+- `IP32/usr/cpu/sysgen/IP32boot/pciio.o` (inferred): the PCI I/O layer on the IP32 build. It calls 42 `pcimh_*`
+  routines where the IP27 copy calls `pcibr_*`, so the bus under it is the one the MACE page covers through `pcimh.o`.
+  Its entries are `pciio_pio_addr` (300 bytes), `pciio_error_handler` (292 bytes) and `pciio_dma_addr` (284 bytes).
+  The MACE is the chip it drives, and its 108 rows stay in.
+- `IP32/usr/cpu/sysgen/IP32boot/rad_dd.o` (inferred): the RAD board driver for the IP32 kernel. `rad_start_subsys`
+  (2272 bytes), `rad_start_dma` (1404 bytes) and `rad_update_dev` (1304 bytes) are its largest routines. The `kdsp_*`
+  imports select clock generators and interfaces, and nine `pciio_*` imports reach the board through the PCI layer.
+  The MACE page lists this object among the IP32 files it read. All 84 rows stay in the table.
+
+## IP35 build
+
+- `IP35/usr/cpu/sysgen/IP35boot/hubspc.o` (inferred): the node PROM and inventory device for the IP35 build. Its
+  routines map the PROM, `cpuprom_map` (188 bytes) and `hubspc_map` (156 bytes), and record inventory,
+  `prominfo_add` (100 bytes) and `cpuprom_detailed_inventory_info_add` (132 bytes). It registers with the node
+  device layer through `hubdev_register` and reads the PROM base and node number through `hubdev_prombase_get` and
+  `hubdev_cnodeid_get`. The Bedrock page lists it among the IP35 objects it covers. Its 13 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/if_ef.o` (inferred): the Ethernet driver on the IP35 build, with the same routines as
+  the IP27 copy. Its extra import `iobrick_get_sys_snum` reads the system serial number from the I/O brick. It claims
+  the IOC3 part through `ioc3_subdev_enabled`, and it reaches the Bridge through `pcibr_rrb_alloc`. The chips are the
+  IOC3 and the Bridge, and 47 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/io6.o` (inferred): the init routine of the IO6 board, `io6_init` (64 bytes). Its eight
+  imports include three Bridge hint routines (`pcibr_hints_dualslot`, `pcibr_hints_fix_rrbs` and
+  `pcibr_hints_subdevs`), the NIC vertex calls `nic_vertex_info_match` and `nic_vmc_add`, and `xtalk_piotrans_addr`.
+  The Bridge is the chip it configures, and both rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/ioc3.o` (inferred): the IOC3 core driver for the IP35 build. `ioc3_attach` (1340
+  bytes) attaches the chip, `ioc3_intr_connect` (632 bytes) connects its interrupt, `ioc3_handle_intr` (468 bytes) is
+  the handler, `ioc3_write_ireg` (408 bytes) writes an interrupt register, and `ioc3_mlreset` (116 bytes) runs at
+  reset. It also imports `hub_check_pci_equiv`, the node-side PCI check. The chip is the IOC3, and its 27 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/ioc3_pckm.o` (inferred): the IOC3 keyboard and mouse driver for the IP35 build.
+  `pckm_attach` (1444 bytes) is the attach routine, with `ioc_pckm_add_hwgraph_alias` (276 bytes) and
+  `ioc3_pckm_rmalias` (196 bytes) for the hardware-graph names. It also imports `ioc4_pckm_rmalias`, so the IOC4
+  keyboard path shares this object's naming. The chips are the IOC3 and the IOC4, and 36 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/ioc3ei.o` (inferred): the IOC3 external interrupt driver, the same object as the IP27
+  copy. `eiattach` (420 bytes) writes the external interrupt output the IOC3 page lists at offset 0x2c, `eiioctl`
+  (1236 bytes) is the control entry, and `ioc3_ei_intr` (308 bytes) is the handler. The chip is the IOC3, and 19 rows
+  stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/kernel.o` (inferred): the machine-dependent kernel object of the IP35 build, 1318 rows in
+  1288752 bytes. The scope pass keeps 367 of them under the rule for linked kernels (rule 11), which removes 951. The
+  kept rows are the router routines (`router_reg_read` and `router_reg_write` at 48 bytes each, `router_acquire_port_info`
+  at 608 bytes, `router_decode_port_errors` at 176 bytes, `capture_router_stats` at 196 bytes), the node identity
+  helpers `hub_widget_id`, `get_hub_chiprev` and `ni_reset_port`, and the I/O brick, serial-controller and console
+  calls its imports show: `elsc_*` system controller routines, `iobrick_*` lookups, `ioc3_console_vhdl_get`,
+  `ioc4_console_vhdl_get` and `pcibr_alloc_all_rrbs`. The node chip is the one the Bedrock page covers.
+- `IP35/usr/cpu/sysgen/IP35boot/nic.o` (inferred): the board identity reader on the IP35 build, the same routines as
+  the IP27 copy. `nic_read_mfg` (788 bytes) reads the manufacturing record, `nic_access_mcr32` drives the IOC3 one-wire
+  control register at offset 0x30, and the `nic_*_vertex_info` routines publish a record for each vertex type. The
+  chips are the IOC3 one-wire port and the node and Bridge vertices. All 32 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/numa.a(numa_hw.o)` (inferred): a two-routine member of the NUMA support library. One
+  routine stays in: `migr_effthreshold_diff_set` is named as an exception in the rule for objects that are not chip
+  drivers, and `migr_pageref_disable` (132 bytes) is removed by rule 12. The census records no register access in the
+  member, and it imports one symbol from outside.
+- `IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)` (inferred): the per-processor data member of the IP35 kernel library.
+  Of its 42 rows, two stay in: `doacvec` (116 bytes) and `enter_panic_mode` (192 bytes), both kept by the exception
+  list of rule 13. The other 40 are removed by that rule. Among chip-named symbols, the member imports only
+  `kmem_zalloc_node`, and the census holds no register access site in it.
+- `IP35/usr/cpu/sysgen/IP35boot/os.a(vmdump.o)` (inferred): the crash dump writer. Of 25 rows, four stay: `real_dumpsys`
+  (1056 bytes), `dump_hub_registers` (944 bytes), `write_hub_dir_mem` (404 bytes) and `move_buffer` (1884 bytes). The
+  first three read and write the node's directory memory and registers, which the Bedrock page covers. Rule 14 removes
+  the other 21 rows.
+- `IP35/usr/cpu/sysgen/IP35boot/partition.o` (inferred): the partition support object on the IP35 build. `part_init`
+  (1648 bytes) and `part_init_node` (1076 bytes) start the subsystem, `part_export_page_perms` (600 bytes) sets page
+  permissions, and `part_add_regions` and `part_rm_regions` (212 and 236 bytes) change the memory regions it owns. It
+  calls `bte_poison_range`, which is the node's block-transfer engine. None of its 72 rows is removed.
+- `IP35/usr/cpu/sysgen/IP35boot/pcibr.o` (inferred): the Bridge PCI provider on the IP35 build, the largest of the
+  Bridge copies at 300848 bytes. `pcibr_error_dump` (4268 bytes), `pcibr_pioerror` (3408 bytes) and
+  `pcibr_slot_info_init` (2868 bytes) are its largest routines. Its imports `iobrick_pci_slot_pwr` and
+  `iobrick_pci_slot_rst` power and reset a PCI slot through the I/O brick, and `hubii_check_widget_disabled` checks a
+  widget on the node side. The chip is the Bridge, and its 265 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/pciio.o` (inferred): the PCI I/O layer over the Bridge on the IP35 build. Its entries are
+  `pciio_pio_addr` (300 bytes), `pciio_error_handler` (296 bytes) and `pciio_dma_addr` (284 bytes), and it forwards to
+  the `pcibr_*` provider routines. The Bridge is the chip under it, and 108 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o` (inferred): the PCI-to-PCI bridge driver on the IP35 build. Its routines
+  match the IP27 copy: `pciio_ppb_attach` (228 bytes) and `pciio_ppb_intr_map` (224 bytes). It names no chip of its
+  own, and reaches the bridge through the `pciio_*` attach and PIO calls. The scope pass keeps its 18 rows.
+- `IP35/usr/cpu/sysgen/IP35boot/pciiox.o` (inferred): the one-routine init of the extended PCI layer on the IP35 build,
+  `pciiox_init` (32 bytes). Its imports are `pcibr_hints_fix_rrbs`, `nic_vmc_add` and `xtalk_piotrans_addr`, the same
+  three as the IP30 copy. The Bridge is the chip it configures, and both rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/rad_dd.o` (inferred): the RAD board driver on the IP35 build. Its largest routines are
+  `rad_start_subsys` (2048 bytes), `rad_ioctl` (1688 bytes) and `rad_update_dev` (1556 bytes). Its `kdsp_*` imports
+  select clock generators and interfaces, and `iobrick_real_l1type_get_nasid` reads the board type through the I/O
+  brick. It reaches the board through the PCI layer. All 84 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_l1.o)` (inferred): the serial port driver for the L1 controller, the
+  module's system controller. `l1_attach` (560 bytes) attaches it, `early_brl1_port_init` (148 bytes) sets up the port
+  before the kernel is running, and `l1_mlreset` (124 bytes) resets it. It uses the same `sio_*` console calls as the
+  IOC3 serial ports, and no chip of its own appears in its imports. All 19 rows stay in the table.
+- `IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)` (inferred): the IOC3 serial driver on the IP35 build. Its two
+  large routines are `ioc3_serial_attach` (1300 bytes) and `ioc3_serial_kill` (280 bytes). `ring_dmatrans` (76 bytes)
+  and `ioc3_sio_mlreset` (44 bytes) complete the set. It uses `ioc3_write_ireg`, `ioc3_intr_connect` and the
+  `pciio_*` DMA and PIO translation calls. The chip is the IOC3, and 35 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/xbmon.o` (inferred): the crossbar monitor device on the IP35 build. `xbmon_ioctl`
+  (1264 bytes) is its largest routine. It attaches to the Xbow with `xwidget_driver_register`, and it reads the
+  switch through `xswitch_id_get` and `xtalk_piotrans_addr`. The chip is the Xbow, and 18 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/xbow.o` (inferred): the Xbow crossbar driver on the IP35 build. `xbow_attach` (776 bytes)
+  attaches the crossbar, `xbow_enable_perf_counter` (460 bytes) enables a counter, `xbow_prio_bw_alloc` (372 bytes)
+  allocates bandwidth priority, and `xbow_widget_num_get` (196 bytes) reports the widget count. It uses the
+  `xswitch_info_*` vertex calls and `xtalk_intr_*` interrupt calls. The chip is the Xbow, and 30 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/xbridge.o` (inferred): the XBridge driver on the IP35 build. `xbridge_attach` (3484
+  bytes) is the large routine, with `xbridge_init` (84 bytes). It reads and writes the node's interrupt translation
+  table through `hubii_ixtt_get` and `hubii_ixtt_set`, and it reuses the `pcibr_*` routines for the bridge work. The chip
+  is the XBridge, and both rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/xconn.o` (inferred): the crossbar connection device on the IP35 build. Its routines are
+  the open, close, poll and ioctl entries, with `xconn_ioctl` (764 bytes) the largest. The [IP27 note on this object](ip27-xconn.md)
+  finds that its copy reaches no hardware register. This copy has the same routine names, and its only chip-named
+  import is `kmem_alloc`, so it is classified by its imports alone. The census holds no site in it. All 9 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/xswitch.o` (inferred): the crossbar switch vertex layer on the IP35 build. Its routines
+  `xswitch_info_new` (152 bytes), `xswitch_info_vhdl_get` (96 bytes), `xswitch_info_get` (84 bytes) and
+  `xswitch_provider_register` (40 bytes) keep the switch records, and `xswitch_reset_link` calls `xbow_reset_link` in
+  the Xbow driver. The chip under it is the Xbow, and 13 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/xtalk.o` (inferred): the Crosstalk widget layer on the IP35 build. `xwidget_register`
+  (292 bytes), `xtalk_pio_addr` (248 bytes) and `xtalk_device_powerup` (64 bytes) are among its 70 routines, and its
+  30 `hub_*` imports are the provider calls the IP27 copy also makes. The widgets it serves are the Bridge and the
+  Xbow. All 71 rows stay in.
