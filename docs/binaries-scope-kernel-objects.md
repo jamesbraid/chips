@@ -247,6 +247,55 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
   `icmp6_filter_set` and `icmp6_filter_get` keep the socket filter. It calls `ip6_output` and `in6_multi_match`, and
   imports the neighbour message handlers `ndsol6_input`, `ndadv6_input` and `redirect6_input`.
 
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)` (inferred): the IPv6 receive path, 23 routines in a 28388-byte
+  member. `ip6_input` (1528 bytes) takes a packet from the queue, `ip6_forward` (1080 bytes) forwards one,
+  `ip6_process_hopopts` (692 bytes) parses the hop-by-hop options, `ip6_savecontrol` (824 bytes) builds the ancillary
+  data for a socket, and `ip6_init` starts the module. It calls `frag6_init` and `ip6_output`, and imports
+  `network_input` and `ip6_mforward`. It also holds the authentication and encapsulating-security header inputs
+  `ah6_input` and `esp6_input`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)` (inferred): the IPv6 multicast routing interface, 20 routines in a
+  22292-byte member. `ip6_mrouter_set` and `ip6_mrouter_get` take the routing daemon's socket options, `mfc6_create`
+  and `mfc6_delete` maintain forwarding cache entries, `ip6_mforward` (568 bytes) forwards a multicast packet, and
+  `user_add_mfc6` and `user_add_dsif` (468 bytes) are the daemon's add calls. It calls `ip6_output` and `sbappendaddr`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)` (inferred): the IPv6 output path and the socket option code, 28
+  routines in a 48420-byte member. `ip6_output` (3676 bytes) builds and sends a packet, `ip6_setpktoption` (1724 bytes),
+  `ip6_setmoptions` (1580 bytes) and `ip6_ctloutput` (1308 bytes) set and read options, and `ip6_splithdr` and
+  `ip6_insertfraghdr` split and fragment. It calls `ah6_build`, `esp6_build`, `ipsec_lookup` and `in6_selectroute`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(raw_ip6.o)` (inferred): the raw IPv6 socket protocol, six routines in a 19348-byte
+  member. `rip6_input` (1508 bytes) delivers a packet to raw sockets, `rip6_usrreq` (1492 bytes) handles socket
+  requests, `rip6_ctloutput` (1044 bytes) and `rip6_ctlinput` (800 bytes) carry options and control messages, and
+  `rip6_init` sets it up. It calls `icmp6_error`, `ip6_output` and `in6_control`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(route6.o)` (inferred): the IPv6 routing header handler, two routines in a
+  7668-byte member. `route6_input` (480 bytes) processes a routing header, and `ipv6_rthdr0` (624 bytes) handles the
+  type 0 form. It calls `ip6_forward` and `icmp6_error`, and imports the forwarding flag `ip6forwsrcrt`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(tcp6_input.o)` (inferred): the TCP receive path for IPv6, three routines in a
+  24468-byte member. `tcp6_input` (8120 bytes) processes an arriving segment, `tcp6_reass` (832 bytes) reassembles
+  out-of-order data, and `tcp6_mssopt` (84 bytes) reads the maximum segment size. It calls `tcp6_output`, `tcp_respond`
+  and `tcp_close`, and imports the IPv4 TCP state and counters `tcp_reass_numseg` and `tcp_reass_overflows`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(tcp6_output.o)` (inferred): the TCP send path for IPv6, one routine, `tcp6_output`
+  (3220 bytes), in an 11140-byte member. It calls `ip6_output` and `ip6_getpmtu`, and imports `tcp_quench` and
+  `tcp_setpersist` from the IPv4 TCP code.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(tcp6_subr.o)` (inferred): two routines in a 7140-byte member, `tcp6_ctlinput`
+  (260 bytes) handles ICMP errors for TCP over IPv6, and `tcp6_rtlookup` (200 bytes) finds a route. It imports
+  `in6_pcbnotify` and `tcp_notify`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(tcp6_usrreq.o)` (inferred): three routines in a 12340-byte member. `tcp6_usrreq`
+  (1596 bytes) handles socket requests, `tcp6_ctloutput` (448 bytes) sets options, and `tcp6_connect` (444 bytes)
+  starts a connection. It calls `in6_pcbbind`, `in6_pcbconnect` and `tcp_attach`, and imports `tcp_output` and
+  `tcp_timers`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(udp6_usrreq.o)` (inferred): the UDP protocol for IPv6, three routines in a
+  15396-byte member. `udp6_input` (2868 bytes) receives datagrams, `udp6_output` (1580 bytes) sends them, and
+  `udp6_ctlinput` (148 bytes) handles errors. It calls `ip6_output` and `in6_pcbnotify`. It imports `nfs_input` and
+  `nfs_port`, so the receive path hands some datagrams to the NFS input routine.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip_encap.o)` (inferred): the encapsulation dispatch table, eight routines in a
+  12596-byte member. `encap_attach` (1020 bytes) and `encap_attach_func` add a tunnel, `encap_detach` removes one,
+  `encap4_input` (528 bytes) and `encap6_input` (468 bytes) pass packets to the tunnels, and `mask_match` (808 bytes)
+  matches the address masks. It calls `sit_input`, `rip6_input` and `rip_input`. It defines the 8-byte table `encaptab`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ipsec.o)` (inferred): eleven entry points for IPsec, in a 7412-byte member. Each
+  is 8 bytes long and reads as `jr ra` with `move v0,zero`, so it returns 0 and does nothing. The entries are
+  `ipsec_lookup`, `ipsec_create`, `ipsec_change`, `ipsec_delete`, `ipsec_attach`, `ipsec_detach`, `ipsec_match`,
+  `ah6_build`, `esp6_build`, `ipsec_duplist` and `ipsec_init`. `ip6_output.o` imports `ah6_build`, `esp6_build` and
+  `ipsec_lookup`, so these stand in for the IPsec code at the call sites.
+
 ## Process, memory, scheduler, lock and debugger objects (scope rule 3)
 
 - `IP27/usr/cpu/sysgen/IP27boot/capability.a(capability.o)` (inferred): the capability set for processes, 11 routines in a
