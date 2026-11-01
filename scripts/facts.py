@@ -605,9 +605,9 @@ class Render:
         if k == 'ret':
             return 'ret(%s)' % v[1]
         if k == 'tbl':
-            return 'table(%s)' % hexs(v[1])
+            return 'table(%s)' % (self(v[1]) if isinstance(v[1], tuple) else hexs(v[1]))
         if k == 'tent':
-            return 'entry(%s)' % hexs(v[1])
+            return 'entry(%s)' % (self(v[1]) if isinstance(v[1], tuple) else hexs(v[1]))
         if k == 'op':
             return '(%s %s %s)' % (self(v[2]), v[1], self(v[3]))
         return repr(v)
