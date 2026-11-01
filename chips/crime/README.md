@@ -52,33 +52,95 @@ reaches 19 register kinds; with the two the code never reaches (`0x248`, `0x4048
 
 ### Graded register table
 
-Width and access are what the instructions do. The grade is of the role: **E** established (the routine read in full,
-a symbol or string the binary carries, or code arithmetic), **I** inferred, **U** unknown. Names are the
-specification's except `0x50` and `0x58`.
+Width and access are what the instructions do. Each entry starts with the physical address, the form the register
+map and the inventory use; the offset from `0x14000000` is in brackets. The grade says whether the role is
+established (the routine read in full, a symbol or string the binary carries, or code arithmetic), inferred (a reading
+from a store pattern or from a name the binary carries, with the reasoning given) or unknown. Names are the
+specification's, with the table in brackets, except `0x50` and `0x58`.
 
-| offset | register | width | access seen | who touches it | what the code does | grade |
-|---|---|---:|---|---|---|---|
-| `0x0` | ID / revision | 8, 4 at +4 | r | `get_crimerev`, `__sysad_wbflush`, PROM, diagnostic | revision classification above; `__sysad_wbflush` reads it after a `sync` to drain posted stores | E |
-| `0x8` | CPU interface control | 8 | rw | `mlreset`, `flushbus`, the probes, `crm_softreset`, `crm_hardreset`, PROM, diagnostic | see "CPU interface control" | E |
-| `0x10` | interrupt status | 8 | r, w (0) | `intr`, the vector dispatcher at `0xa2cc`, `add_ioboard`, diagnostic, graphics object | read and ANDed with the saved enable mask; `mlreset` stores 0 to it | E |
-| `0x18` | interrupt enable | 8 | rw | `splx`, `spl0`, `splhi`, `spl7`, `splprof`, `splint`, `VEC_int`, `kpreemption`, `mlreset`, PROM | written with a per-level mask taken from a kernel table (8 bytes per level) | E |
-| `0x20` | software interrupt | 8 | rw | `intr`, `synthclock`, `synthackkgclock`, PROM | bits 28 and 29 only | E |
-| `0x28` | hardware interrupt | 8 | rw | the probes, the graphics object's `crime_init`, PROM | probes read it and test mask `0x300080`; `crime_init` clears bits 19:16; the PROM stores 0 | E |
-| `0x30` | watchdog | 8 | w (0) | `mlreset` | stores 0; nothing scanned reads or sets it | I |
-| `0x38` | timer | 8 | rw | `delay_calibrate`, `_ticksper1024inst`, `_cpuclkper100ticks`, `absolute_rtc_current_time`, monitor, diagnostic, PROM | free-running counter, see "Timer" | E |
-| `0x40` | CPU error address | 8 | r | `VEC_dbe`, `VEC_ibe`, `ecc_handler`, the save routine at `0xff08`, monitor | saved raw (not shifted) to `crm_cpu_error_addr` and printed as read | E |
-| `0x48` | CPU error status | 8 | rw | `VEC_dbe`, `VEC_ibe`, the `dobuserr` path, the probes, `ecc_handler`, `mlreset`, monitor | read and saved; cleared by storing 0; two bit layouts, see below | E |
-| `0x50` | CPU error enable (name from NetBSD) | 8 | w | `mlreset`, PROM | `mlreset` stores 0x3ff only when `get_crimerev` is 0; the PROM stores 0 at reset | I |
-| `0x58` | VICE error address | 8 | r | `VEC_dbe`, `VEC_ibe`, the save routine at `0xff08`, monitor | saved to `crm_vice_error_addr` and passed to `vice_err`; contents not decoded | E |
-| `0x200` | memory controller control | 8 | rw | `ecc_enable`, `ecc_disable`, PROM, monitor, diagnostic | stores 1 (ECC on) or 0; also read as a write-buffer drain | E |
-| `0x208`..`0x240` | bank 0 to 7 control | 8, 4 | r (monitor, diagnostic, PROM), w (PROM, indexed) | `cpu_get_memsize`, the diagnostic's sizing routine, PROM sizing | bit 8 selects the bank size; low 5 bits hold address bits 29:25 | E |
-| `0x248` | refresh counter | - | none | none | not reached | U |
-| `0x250` | memory error status | 8 | rw | `VEC_dbe`, `VEC_ibe`, `dobuserre`, the probes, `ecc_handler`, `ecc_error_correction`, `mlreset`, monitor | read, decoded, cleared by storing 0 | E |
-| `0x258` | memory error address | 8 | r | the same routines | saved raw to `crm_mem_error_addr` | E |
-| `0x260` | ECC syndrome | 8 | r | `dobuserre`, the save routine, monitor | saved to `crm_mem_error_ecc_syn` | E |
-| `0x268` | ECC generated check bits | 8 | r | `dobuserre`, the save routine, monitor | saved to `crm_mem_error_ecc_chk` | E |
-| `0x270` | ECC replacement check bits | 8 | w, r | PROM, monitor | PROM stores a register value; the monitor saves and prints it as "MEM Ecc Repl" | I |
-| `0x4048` | CPU error status, 1.5 location | - | none | none | not reached by any image | U |
+- `0x14000000` (`0x0`): ID / revision (spec Table 5-8, p. 5-26). Established.
+  Eight bytes wide, with a four-byte read at +4. Read only.
+  `get_crimerev` reads the doubleword at 0x1184c and keeps the low nibble as the revision and bits 63:32 as a second value.
+  `__sysad_wbflush` reads it at 0x13ec after a `sync` to drain posted stores. The PROM and the diagnostic read it too.
+- `0x14000008` (`0x8`): CPU interface control (spec Table 5-9, pp. 5-26 to 5-27). Established.
+  Read and written at eight bytes. Touched by `mlreset`, `flushbus`, the probes, `crm_softreset`, `crm_hardreset`, the PROM and the diagnostic.
+  `mlreset` reads it at 0x8754 and writes the value it builds at 0x87ac. For a processor whose implementation field (PRId bits 15:8) is below 0x23 it clears bits 13, 12 and 9; otherwise it clears bit 9 and sets bits 13:12.
+  `crm_softreset` stores 0x400 and `crm_hardreset` stores 0x800, each followed by a loop that never returns. `flushbus` reads it at 0x11cd4 to drain the bus.
+- `0x14000010` (`0x10`): Interrupt Status (spec Table 5-10, p. 5-28). Established.
+  Read, and written with 0 by `mlreset`. Touched by `intr`, the routine at 0xa2cc, the routine at 0x8168 (the body after `add_ioboard`), the diagnostic and the graphics object.
+  `intr` reads it at 0xa5d4, ANDs it with the enable mask its interrupted context saved, and returns 0 or 1. The routine at 0xa2cc reads it at 0xa304 and 0xa32c.
+  `mlreset` stores 0 to it at 0x87bc.
+- `0x14000018` (`0x18`): Interrupt Enable (spec Table 5-11, p. 5-29). Established.
+  Read and written at eight bytes. Touched by `splx`, `spl0`, `splhi`, `spl7`, `splprof`, `splint`, `VEC_int`, `kpreemption`, `mlreset` and the PROM.
+  The `spl*` routines write a per-level mask taken from a kernel table, 8 bytes a level.
+  `VEC_int` reads it at 0xc and writes it at 0x2c and 0x64. `kpreemption` writes it at 0x1d8, and `mlreset` stores 0 at 0x87b4.
+- `0x14000020` (`0x20`): Software Interrupt (spec Table 5-12, p. 5-29). Established.
+  Read and written at eight bytes. Touched by `intr`, `synthclock`, `synthackkgclock` and the PROM. `intr` returns 0 or 1.
+  `synthclock` clears bit 28 (AND with 0xefffffff) before its store at 0xa02c. `synthackkgclock` clears bit 29 (AND with 0xdfffffff).
+  `intr` reads it at 0xa6bc and stores it back at 0xa700 with bit 28 or 29 set from the pending counters `cause_ip5_count` and `cause_ip6_count`. Only bits 28 and 29 are touched.
+- `0x14000028` (`0x28`): Hardware Interrupt (spec Table 5-13, pp. 5-29 to 5-30). Established.
+  Read and written at eight bytes. Touched by `badaddr`, `wbadaddr`, the other probes, the graphics object's `crime_init` and the PROM.
+  `badaddr` reads it at 0x14364 and tests mask 0x300080 (bits 21, 20 and 7) to see whether the probe failed. `crime_init` clears bits 19:16, and the PROM stores 0.
+- `0x14000030` (`0x30`): Watchdog Timer (spec Table 5-14, p. 5-30). Inferred.
+  Written only. `mlreset` stores 0 to it at 0x887c. Nothing scanned reads or sets it, so the watchdog stays off in these images.
+- `0x14000038` (`0x38`): Crime Timer (spec Table 5-15, p. 5-31). Established.
+  Read and written at eight bytes. Touched by `delay_calibrate`, `_ticksper1024inst`, `_cpuclkper100ticks`, `absolute_rtc_current_time`, the monitor, the diagnostic and the PROM.
+  A free-running counter. `absolute_rtc_current_time` reads it at 0x11828 and returns the low 32 bits.
+  `_cpuclkper100ticks` stores 0 at 0x14130 and waits for 23496 ticks. The PROM's microsecond delay polls the low 32 bits against 66 ticks a microsecond.
+- `0x14000040` (`0x40`): CPU Error Address (spec Table 5-16, p. 5-32). Established.
+  Read only, at eight bytes. Touched by `VEC_dbe`, `VEC_ibe`, `ecc_handler`, the save routine at 0xff08 and the monitor.
+  `ecc_handler` reads it at 0xda1c and saves it raw to `crm_cpu_error_addr`. `VEC_dbe` reads it at 0x1c2e8 and `VEC_ibe` at 0x20dec. The address is printed as read, not shifted.
+- `0x14000048` (`0x48`): CPU/VICE error status at the CRIME 1.1 location (spec Table 5-17, p. 5-32). Established.
+  Read and written at eight bytes. Touched by `VEC_dbe`, `VEC_ibe`, the `dobuserr` path, the probes, `ecc_handler`, `mlreset` and the monitor.
+  `mlreset` stores 0 to it at 0x8760. `badaddr` stores 0 at 0x142a4 and reads it back at 0x142b0. `ecc_handler` reads it at 0xd9ec and clears it with a store of 0 at 0xda64.
+  `get_crimerev` picks the layout: a non-zero result selects the three-bit layout, zero the ten-bit one.
+- `0x14000050` (`0x50`): CPU error enable, the name the public NetBSD driver gives it (not in the CRIME 1.5 map). Inferred.
+  Written only, at eight bytes. `mlreset` stores 0x3ff at 0x89a0 when `get_crimerev` returned 0. The PROM stores 0 at 0xbfc083bc during cold start.
+- `0x14000058` (`0x58`): VICE error address (not in the CRIME 1.5 map). Established.
+  Read only. Touched by `VEC_dbe`, `VEC_ibe`, the save routine at 0xff08 and the monitor.
+  `VEC_dbe` reads it at 0x1c318 and `VEC_ibe` at 0x20e1c. The save routine reads it at 0xff2c and saves it to `crm_vice_error_addr`, which is passed to `vice_err`. No routine read tests its bits.
+- `0x14000200` (`0x200`): MC Status/Control (spec Table 6-13, p. 6-30). Established.
+  Read and written at eight bytes. Touched by `ecc_enable`, `ecc_disable`, the PROM, the monitor and the diagnostic.
+  `ecc_enable` stores 1 at 0x9254 only once memory is initialised and checking is enabled. `ecc_disable` stores 0 at 0x9268.
+  The monitor's `wbflush` reads it at 0xa002852c as a write-buffer drain.
+- `0x14000208` (`0x208`): Bank 0 control (spec Table 6-14, p. 6-32). Established.
+  The monitor reads it as a doubleword and the diagnostic as a word. The PROM's indexed sizing writes it.
+  The monitor's `cpu_get_memsize` reads it at 0xa0027e44 and counts 128 MB when bit 8 is set, 32 MB otherwise.
+  The diagnostic reads its low word at 0xa00f0230. The PROM's sizing stores the candidate address's bits 29:25 in the low 5 bits, with bit 8 set.
+- `0x14000210` (`0x210`): Bank 1 control (spec Table 6-14, p. 6-32). Established.
+  The monitor's indexed loop and the diagnostic read it, and the PROM's indexed sizing writes it.
+  The monitor's loop reads it at 0xa0027e78. It skips the bank when its value equals bank 0's; otherwise bit 8 picks 128 MB or 32 MB.
+  The diagnostic's word read is at 0xa00f0260.
+- `0x14000218` (`0x218`): Bank 2 control (spec Table 6-14, p. 6-32). Established.
+  The same monitor loop reaches it at 0xa0027e78 as it does bank 1. The diagnostic reads its low word at 0xa00f02a8 and applies the same size rule.
+- `0x14000220` (`0x220`): Bank 3 control (spec Table 6-14, p. 6-32). Established.
+  The diagnostic's sizing routine reads its low word at 0xa00f02f0. Bit 8 of that word picks 128 MB or 32 MB.
+- `0x14000228` (`0x228`): Bank 4 control (spec Table 6-14, p. 6-32). Established.
+  A word read at 0xa00f0338 in the diagnostic's sizing routine. The value's bit 8 selects the size.
+- `0x14000230` (`0x230`): Bank 5 control (spec Table 6-14, p. 6-32). Established.
+  The diagnostic loads its low word at 0xa00f0380, and the bank's size follows from that word's bit 8.
+- `0x14000238` (`0x238`): Bank 6 control (spec Table 6-14, p. 6-32). Established.
+  The low word is read at 0xa00f03c8. Bit 8 gives 128 MB or 32 MB.
+- `0x14000240` (`0x240`): Bank 7 control (spec Table 6-14, p. 6-32). Established.
+  The diagnostic's sizing routine reads the word at 0xa00f0410, and the bank's own bit 8 sets its size.
+- `0x248`: refresh counter, not reached by any scanned image. Unknown.
+- `0x14000250` (`0x250`): Memory Error Status (spec Table 6-16, pp. 6-32 to 6-33). Established.
+  Read and written at eight bytes. Touched by `VEC_dbe`, `VEC_ibe`, `dobuserre`, the probes, `ecc_handler`, the scrub routine at 0xff50, `mlreset` and the monitor.
+  `ecc_handler` reads it at 0xda04 and tests the hard-error CPU-access bit (0x240000). `mlreset` stores 0 to it at 0x8768.
+  The scrub routine at 0xff50 stores 0 after it scrubs the faulting line. The decode routine at 0x105c4 prints the status bits.
+- `0x14000258` (`0x258`): Memory Error Address (spec Table 6-17, p. 6-34). Established.
+  Read only. Touched by `VEC_dbe`, `VEC_ibe`, `ecc_handler`, the save routine at 0xff08 and the monitor.
+  `ecc_handler` reads it at 0xda24, `VEC_dbe` at 0x1c308 and `VEC_ibe` at 0x20e0c. The value is saved raw to `crm_mem_error_addr` and printed as read.
+- `0x14000260` (`0x260`): ECC Syndrome Bits (spec Table 6-18, p. 6-34). Established.
+  Read only. Touched by `dobuserre`, the save routine at 0xff08 and the monitor.
+  `dobuserre` reads it at 0x10290 and the save routine reads it at 0xff3c. The value is saved to `crm_mem_error_ecc_syn`.
+- `0x14000268` (`0x268`): ECC Generated Check Bits (spec Table 6-19, p. 6-34). Established.
+  Read by `dobuserre` at 0x10288 and by the save routine at 0xff34. The copy goes to `crm_mem_error_ecc_chk`.
+  The monitor prints it as well.
+- `0x14000270` (`0x270`): ECC Replacement Check Bits (spec Table 6-20, p. 6-35). Inferred.
+  Written and read. Touched by the PROM and the monitor.
+  The PROM's sloader stores an argument register to it at 0xbfc00208. A monitor routine at 0xa0010538 reads it and prints it as "MEM Ecc Repl". The pairing of the register with that label rests on the monitor's print order.
+- `0x4048`: CPU error status at the CRIME 1.5 location. Not reached by any image. Unknown.
 
 `crm_cpu_error_stat`, `crm_cpu_error_addr`, `crm_vice_error_addr`, `crm_mem_error_stat`, `crm_mem_error_addr`,
 `crm_mem_error_ecc_syn` and `crm_mem_error_ecc_chk` are the kernel's own global symbols; they tie `0x48`, `0x40`,
