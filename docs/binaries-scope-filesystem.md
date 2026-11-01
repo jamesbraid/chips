@@ -366,3 +366,47 @@ the census, and the window scan's access count is zero for every member listed h
   side of the same checkpoint and restart code. `ckpt_sys` (648 bytes) is the dispatcher, with `ckpt_setexec`
   (520 bytes), `ckpt_restartreturn` (560 bytes) and `ckpt_getchildpids` (272 bytes) beside it. It is process
   state, not file-system code, and the census has no register access for it.
+- `IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)` (inferred): nine routines in a 10932-byte member, the file-handle
+  helpers the checkpoint code shares. `ckpt_fid` (284 bytes) and `ckpt_vp_open` (280 bytes) turn a vnode into a file
+  identifier and reopen it, `ckpt_lookup_add` (304 bytes) and `ckpt_lookup` (100 bytes) keep the table of those
+  identifiers, and `ckpt_setfd` (60 bytes) installs a descriptor. The member holds no register access in the scan.
+- `IP30/usr/cpu/sysgen/IP30boot/dksc.o` (inferred): 60 routines in a 75280-byte object, a SCSI disk class driver
+  rather than file-system code, although the scope list files it under the file-system rule. `dkscioctl` (2364
+  bytes), `dkscopen` (1828 bytes), `dk_chkcond` (1672 bytes) and `dk_intr` (800 bytes) carry the disk requests,
+  sense data and interrupts up through callback routines (`dk_callback_backend`, 756 bytes). Its adapter is reached
+  through those callbacks, and the scan records zero window sites in the object.
+- `IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_mountinfo.o)` (inferred): four routines in a 10660-byte member. The
+  data-management interface's mount query, `dm_query_fsys_for_vector` (1104 bytes), reads the vector of entry points
+  that `dm_fsys_vector` (256 bytes) returns. `dm_enosys` (8 bytes) is the stub that reports an unsupported call.
+  Nothing here touches a window.
+- `IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)` (inferred): 26 routines in a 28996-byte member, the
+  registration side of the data-management interface. `dm_getall_disp` (704 bytes), `dm_handle_to_vp` (676 bytes)
+  and `dm_set_disp` (656 bytes) are the largest, and `dm_add_fsys_entry` and `dm_remove_fsys_entry` (380 and 420
+  bytes) add and drop a file system from the registry. The census shows no register access in this member.
+- `IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)` (inferred): 32 routines in a 34132-byte member that keep the
+  open sessions and their event queues. `dm_enqueue` (1208 bytes) and `dm_get_events` (1032 bytes) are the queue
+  entry points, `dm_respond_event` (404 bytes) answers one, and `dm_release_threads` (472 bytes) wakes the waiting
+  threads. Its access count in the scan is zero.
+- `IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o` (inferred): 13 routines in an 18968-byte object, the kernel debugger
+  commands for the data-management state. `idbg_dmi_event` (592 bytes) and `print_one_reglist` (520 bytes) print
+  events and registrations, `idbg_dmi_sessions` (260 bytes) lists sessions, and `state_to_name` (176 bytes) and
+  `right_to_name` (140 bytes) decode state and right values. The object reads and prints kernel memory only.
+- `IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)` (inferred): seven routines in a 15092-byte member, the device-style
+  entry points: `dmsioctl` (2460 bytes), `dmsopen` (172 bytes), `dmsmap` (84 bytes), `dmspoll` (108 bytes) and
+  `dmsclose` (92 bytes). The scope list files the member under the file-system rule, which does not name this kind
+  of object. The scan records no window reference, so the routines stay out of the function table.
+- `IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)` (inferred): 81 routines in an 85492-byte member, the kernel side of
+  the same service. Its pools of blocks and FIFOs run through `dms_pool_create` (4172 bytes), `dms_block_split` (968
+  bytes), `dms_block_alloc` (660 bytes) and `dms_fifo_deq` (464 bytes). Routines such as `dms_block_start_dma` and
+  `dms_block_end_dma` (8 bytes each) bracket transfers, and the notify and admin FIFOs carry the events. The
+  members have no register access in the scan.
+- `IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)` (inferred): 24 routines in a 16932-byte member, a compatibility
+  layer over the same service that presents a ring of frames. `dmrb_attach` (716 bytes) binds a ring, and
+  `dmrb_putvalid` (264 bytes), `dmrb_getnextvalid` (220 bytes) and `dmrb_getnextfree` (192 bytes) move frames
+  between the valid and free lists. `dmrb_getpagelist` (100 bytes) returns the page list of a frame. The scan's
+  access count is zero.
+- `IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)` (inferred): 18 routines in a 22196-byte member, the request side of
+  the device-side service. `dsioctl` (2580 bytes) is the largest, with `task_glue` (648 bytes), `task_find` (220
+  bytes), `ds_copyiov` (204 bytes) and `dma_lock` (172 bytes) beside it. The `irix5_` routines convert request
+  records between the 32-bit and current layouts. The scope list places it with the file-system objects, but the
+  routines are request and task plumbing, and no register access is recorded.

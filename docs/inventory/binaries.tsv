@@ -956,7 +956,7 @@ IP30/usr/cpu/sysgen/IP30boot/compression.a(compression.o)	kernel-IP30	kernel-obj
 IP30/usr/cpu/sysgen/IP30boot/connld.o	kernel-IP30	kernel-object	object	n64	12864	f75b199926da3605		4	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_procfs.o)	kernel-IP30	kernel-object	object	n64	53700	376fee889bf47e0b		50	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_sys.o)	kernel-IP30	kernel-object	object	n64	21924	283308d56e0ec49b		22	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
-IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-IP30	kernel-object	object	n64	10932	f1e0c0bbaad87aa0		9	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-IP30	kernel-object	object	n64	10932	f1e0c0bbaad87aa0		9	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cserialio.o	kernel-IP30	kernel-object	object	n64	21752	ed14f73400e10b1b		22	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/devpoll.o	kernel-IP30	kernel-object	object	n64	31912	a9ce981b3bfa2984		27	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-IP30	kernel-object	object	n64	41556	27d70c5e9cd55c9e		63	symtab	0	0	undocumented		
@@ -975,15 +975,15 @@ IP30/usr/cpu/sysgen/IP30boot/disp.a(miser.o)	kernel-IP30	kernel-object	object	n6
 IP30/usr/cpu/sysgen/IP30boot/disp.a(rt.o)	kernel-IP30	kernel-object	object	n64	25540	504934ca33bdf612		21	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/disp.a(cpuset.o)	kernel-IP30	kernel-object	object	n64	82356	ae3c102d9a2b28c0		69	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/disp_idbg.a(disp_idbg.o)	kernel-IP30	kernel-object	object	n64	25012	a4cbd6a3b7ddb8d5		12	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
-IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-IP30	kernel-object	object	n64	75280	6b5632e3f1cd6497		60	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_mountinfo.o)	kernel-IP30	kernel-object	object	n64	10660	ca034d1002f6ab70		4	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-IP30	kernel-object	object	n64	28996	085d46af159e64cc		26	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-IP30	kernel-object	object	n64	34132	acca9356b18086d8		32	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-IP30	kernel-object	object	n64	18968	4d1f18cf4ae60084		13	symtab+dwarf	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-IP30	kernel-object	object	n64	15092	c0d2a06f1cefd2d5		7	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-IP30	kernel-object	object	n64	85492	d58b8d8ea4c07913		81	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-IP30	kernel-object	object	n64	16932	5751f19ef7ad061f		24	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-IP30	kernel-object	object	n64	22196	a98ae218b4ffbc03		18	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-IP30	kernel-object	object	n64	75280	6b5632e3f1cd6497		60	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_mountinfo.o)	kernel-IP30	kernel-object	object	n64	10660	ca034d1002f6ab70		4	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-IP30	kernel-object	object	n64	28996	085d46af159e64cc		26	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-IP30	kernel-object	object	n64	34132	acca9356b18086d8		32	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-IP30	kernel-object	object	n64	18968	4d1f18cf4ae60084		13	symtab+dwarf	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-IP30	kernel-object	object	n64	15092	c0d2a06f1cefd2d5		7	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-IP30	kernel-object	object	n64	85492	d58b8d8ea4c07913		81	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-IP30	kernel-object	object	n64	16932	5751f19ef7ad061f		24	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-IP30	kernel-object	object	n64	22196	a98ae218b4ffbc03		18	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-IP30	kernel-object	object	n64	10452	f73047f528d82914		7	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/eag.a(eag.o)	kernel-IP30	kernel-object	object	n64	10564	0ac73257e0c938f2		6	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/ecpplp.o	kernel-IP30	kernel-object	object	n64	57160	85ee4a9b5d52dd9f		33	symtab	0	0	undocumented		
