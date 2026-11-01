@@ -363,8 +363,10 @@ spurious read response. **Error header 1**: 6:0 command, 18:8 supplemental, 30:2
    CRB entry (bit 55) with a code in bits 54:52; the kernel's table names the eight codes: 0 directory error,
    1 poison error, 2 write error, 3 access error, 4 partial write error, 5 partial read error, 6 timeout error, 7
    Crosstalk error packet. `hubiio_crb_error_handler` treats 0, 5, 6 and 7 as fatal (error dump and a "Fatal ... on hub" message) and
-   1 to 4 as recoverable (it calls `hub_ioerror_handler` and frees the entry; message "PIO Write error from widget
-   %d, cleaning up and continuing" for the write case). Established from the jump table and both message paths.
+   1 to 4 as recoverable (the recoverable arm frees the entry with `hubiio_crb_free`; message "PIO Write error from
+   widget %d, cleaning up and continuing" for the write case). Established from the jump table and both message
+   paths. Its continuation into `hub_ioerror_handler` is inferred: the table targets are not dumped, and the routine
+   has no direct call to that name.
    Which CRB error code a refused write to a nonexistent widget, to a protected region or to a full request buffer
    produces: unknown.
 5. **Protected-region replies.** The kernel carries the strings "Protection error response" and "Vector response
