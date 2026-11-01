@@ -302,6 +302,7 @@ class Config:
         d = c.get('discriminators', {})
         self.type_disc = d.get('type')
         self.part_disc = d.get('part')
+        self.or_is_add = bool(c.get('or_is_add'))
         v = c.get('variants', {})
         self.type_variants = {int(k): n for k, n in v.get('type', {}).items()}
         self.part_variants = {to_int(k): n for k, n in v.get('part', {}).items()}
@@ -360,6 +361,7 @@ class Analyser:
     # ---- transfer function ----------------------------------------------
     def step(self, fn, ins, st, record):
         cfg = self.cfg
+        cfg_or_add = bool(getattr(cfg, 'or_is_add', False))
         mn, ops = ins.mn, ins.ops
         if mn in LOADS or mn in STORES:
             m = MEM_RE.match(ops[1]) if len(ops) == 2 else None
@@ -499,7 +501,16 @@ class Analyser:
             self.wr(st, reg(ops[0]), v)
         elif mn == 'ori' and len(ops) == 3:
             s = rdv(st, reg(ops[1]))
-            self.wr(st, reg(ops[0]), ('K', s[1] | to_int(ops[2])) if s and s[0] == 'K' else None)
+            imm = to_int(ops[2])
+            if s and s[0] == 'K':
+                v = ('K', s[1] | imm)
+            elif cfg_or_add and s and s[0] in ('B', 'KI'):
+                # config "or_is_add": the pointer's offset has these low bits clear (a register-block base plus a
+                # register index), so or-ing a small constant adds it. Off by default.
+                v = (s[0], s[1] | imm) + tuple(s[2:])
+            else:
+                v = None
+            self.wr(st, reg(ops[0]), v)
         elif mn == 'andi' and len(ops) == 3:
             s = rdv(st, reg(ops[1]))
             c = self.cfg.part_disc

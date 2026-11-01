@@ -1,0 +1,36 @@
+{
+ "asic": "l1-commands",
+ "title": "L1 command requests (IP35 l1_command.o)",
+ "mode": "no-spec",
+ "status": "census run",
+ "spec": null,
+ "images": [
+  {
+   "label": "ip35-l1_command",
+   "dis": "work/dis/l1_command.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/l1_command.o",
+   "kind": "elf",
+   "reloc": true
+  }
+ ],
+ "call_census": {
+  "targets": [
+   {
+    "callee": "sc_construct_msg",
+    "arg": 9,
+    "rw": "r",
+    "path": "request"
+   },
+   {
+    "callee": "sc_open",
+    "arg": 5,
+    "rw": "r",
+    "path": "address"
+   }
+  ],
+  "variants": {
+   "ip35-l1_command": "ip35"
+  },
+  "value_name": "request"
+ }
+}

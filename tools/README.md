@@ -34,5 +34,13 @@ and set `record_skip_above` to that offset so the record's own fields are not re
 entry may carry `arg` (a register number) and `equals`, so a mapping call returns a window pointer only for one space
 selector (configuration space and a base-address window share one callee).
 
+A chip with no memory window (the network router, reached by vector packets) has no sites for the scan to follow.
+`callargs.py CONFIG --base . --out DIR` reads the constants a driver passes to the chip's accessor routines instead (the
+config's `call_census` section: callee, argument register, direction, optional names and hand-read rows) and writes the
+same `census.tsv` and `census-sites.tsv` shape as the scan, plus `call-sites.tsv`, `values.tsv`, `census-symbolic.tsv` and
+`unresolved.tsv`. `configs/router.json`, `configs/l1-commands.json` and `configs/l1-tasks.json` use it. A config key
+`or_is_add` (scan.py) makes an `ori` on a window pointer add the constant; it is for a register block reached as a window
+constant plus an or-ed offset (`configs/l1.json`) and is off by default.
+
 `scripts/mips_shim.py` is a unicorn harness for running a shipped routine over chosen inputs (see
 `scripts/test_mips_shim.py` for the pattern); `scripts/check-leaks.sh` is the pre-push check.
