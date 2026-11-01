@@ -387,6 +387,184 @@ not known.
    drivers rely on it; none checks the result). Unknown: whether a store of 1 does anything, and what a new error between
    the read and the clear does.
 
+## Rendering engine registers (pixel pipeline, first group)
+
+The CRIME 1.5 Specification, revision 0.3, puts the rendering engine at physical `0x15000000` and splits it into five
+4 KB pages: interface buffer, TLB, pixel pipeline, memory transfer engine and status (p. 7-6 and Figure 7-3, p. 7-7). This section
+grades the pixel pipeline registers at `+0x2000` that the IP32 kernel's two shadow-loading routines copy to the chip;
+the specification pages are cited per register. The remaining pixel pipeline registers, the memory transfer engine and the TLB pages are
+not graded here yet.
+
+How the kernel reaches them, read in full from `crime.a(crime.o)` and `crime.a(crime_debug.o)` (established):
+
+- The first word of the `crimeBoards` array (`crime.o` `.data` bytes 0 to 3) is `0xb5000000`, the uncached address of
+  physical `0x15000000`; the second word is `0xb6000000`, the uncached address of the GBE window at `0x16000000`.
+  `crime_init` stores the first word at byte 120 of a 560-byte record it allocates (the `lw` at 0x53d4, the `sw` at
+  0x53d8). `crimePcxSwap` (address `0x2e54`) loads the word at byte 120 of its first argument into `s0` and passes it as
+  the first argument of `crmLoadGlobalsFromShadow` (address `0x3434`, 328 bytes) at 0x2f30 and of
+  `crmLoadNonglobalsFromShadow` (address `0x3240`, 500 bytes) at 0x2f3c. The second argument of both is the word at byte
+  8 of `crimePcxSwap`'s third argument, the shadow record. Each loader first reads a flag word at shadow +496.
+- Each loader copies one shadow word to the register at the same number plus `0x2000`, so shadow +0x20 holds the value
+  for offset `0x2020`. A word copy is `lw` and `sw`, a doubleword copy is `ld` and `sd`.
+- `crmIsGlobalRegWrite` (`crime_debug.o`, address `0x0`) answers for offsets `0x2000` to `0x21ff` with a byte of a
+  128-byte table in `.data` indexed by `(offset >> 2) & 0x3ff`. The byte is 0 for a word of a non-global register and 1
+  for a word of a global one. It is 2 for every four-byte position the specification's map leaves empty, except
+  `0x2098` and `0x2134`, which hold 0.
+
+### Buffer, clip and draw mode
+
+- `0x15002000` (`0x2000`): `BufMode.src`, the colour buffer and pixel format that pixel transfers read from (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-4 p. 7-15). Established.
+  Fields `bufType` [12:10], `bufDepth` [9:8], `pixType` [7:4], `pixDepth` [3:2], `doublePix` [1] and `doublePixSel` [0];
+  `bufType` picks one of three framebuffer TLBs or two linear TLBs, and `pixType` 15 is YCrCb, which only the source
+  register allows. Bits 31:13 are reserved.
+  `crmLoadGlobalsFromShadow` stores to it first of all: an `lw` of shadow +0 at 0x3438 and the `sw` at 0x343c, before any
+  flag test. Its table byte is 1.
+- `0x15002008` (`0x2008`): `BufMode.dst`, the colour buffer and pixel format that drawing and transfers write to (CRIME
+  1.5 Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-5 p. 7-16). Established.
+  It has the `BufMode.src` fields except that `pixType` 15 is not allowed.
+  The global loader's second store is the `sw` at 0x3444 of shadow +8, unconditional like the first. Its table byte is 1.
+- `0x15002010` (`0x2010`): `ClipMode`, which of the clip ID test and five screen mask tests are on and whether each
+  mask passes the pixels inside or outside it (CRIME 1.5 Specification rev 0.3, Table 7-6 p. 7-17). Established.
+  Bit 11 `enCid`, bit 10 `cidMapSel`, bits 9 to 5 `enScrMask0` to `enScrMask4`, bits 4 to 0 `scrMaskMode0` to
+  `scrMaskMode4` (1 passes inside the mask).
+  Third in the global loader, shadow +0x10 stored at 0x344c. Table byte 1.
+- `0x15002018` (`0x2018`): `DrawMode`, the per-stage enable bits of the pixel pipeline: GL against X mode, pixel
+  transfer, scissor, stipples, shading, texture, fog, antialiasing, alpha test, blend, dither, logic op, masks, depth
+  and stencil (CRIME 1.5 Specification rev 0.3, Table 7-7 p. 7-18). Established.
+  Bit 23 `enNoConflict`, bit 22 `enGL`, bit 21 `enPixelXfer`, bit 20 `enScissorTest`, bit 16 `enShade`, bit 15
+  `enTexture`, bit 8 `enLogicOp`, bit 7 `enColorMask`, bit 2 `enDepthTest` and bit 0 `enStencilTest` are among the
+  bits it defines; bits 31:24 are reserved.
+  The fourth store of the global loader, shadow +0x18 at 0x3454. Table byte 1.
+
+### Screen masks, scissor and window offsets
+
+- `0x15002020` (`0x2020`): `ScrMask[0]`, the first framebuffer-space rectangle that `ClipMode` can test pixels against
+  (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-11 p. 7-20). Established.
+  A 64-bit register: `min.x` [63:48], `min.y` [47:32] (both inclusive), `max.x` [31:16], `max.y` [15:0] (both exclusive).
+  The global loader moves it as a doubleword, `ld` of shadow +0x20 at 0x3458 and `sd` at 0x345c. Both table bytes (for
+  0x2020 and 0x2024) are 1.
+- `0x15002028` (`0x2028`): `ScrMask[1]`, the second screen mask, tested when `ClipMode` bit 8 is set (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-6 p. 7-17). Established.
+  Same 64-bit rectangle layout as `ScrMask[0]`. The map's description repeats "screen mask 0" for every element of the
+  array, and the enable bits in `ClipMode` give the numbering.
+  Doubleword `ld` at 0x3460, `sd` at 0x3464. Table bytes 1 and 1.
+- `0x15002030` (`0x2030`): `ScrMask[2]`, the third screen mask, tested when `ClipMode` bit 7 is set (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-6 p. 7-17). Established.
+  The rectangle layout is the same as for `ScrMask[0]`; `ClipMode` bit 2 chooses inside or outside.
+  The loader's `ld` is at 0x3468 and its `sd` at 0x346c, shadow +0x30. Table bytes 1 and 1.
+- `0x15002038` (`0x2038`): `ScrMask[3]`, the fourth screen mask, tested when `ClipMode` bit 6 is set (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-6 p. 7-17). Established.
+  The same rectangle layout; `ClipMode` bit 1 chooses inside or outside.
+  Loaded by the `ld` at 0x3470 from shadow +0x38 and stored by the `sd` at 0x3474. Table bytes 1 and 1.
+- `0x15002040` (`0x2040`): `ScrMask[4]`, the fifth and last screen mask, tested when `ClipMode` bit 5 is set (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-6 p. 7-17). Established.
+  The same rectangle layout; `ClipMode` bit 0 chooses inside or outside.
+  The last doubleword pair of that run: `ld` at 0x3478 of shadow +0x40, `sd` at 0x347c. Table bytes 1 and 1.
+- `0x15002048` (`0x2048`): `Scissor`, the GL scissor rectangle in window coordinates, applied when `DrawMode` bit 20 is
+  set (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-10 p. 7-20). Established.
+  A 64-bit register with the same layout as a screen mask, `min.x` [63:48] to `max.y` [15:0], but the coordinates are
+  window-relative rather than framebuffer-relative.
+  Unlike the masks, the global loader reaches it only after the flag word's 0x80 bit has been tested clear: the `ld` is
+  at 0x3500 and the `sd` at 0x350c, shadow +0x48. Table bytes 1 and 1.
+- `0x15002050` (`0x2050`): `WinOffset.src`, the x and y offset that turns window coordinates into framebuffer
+  coordinates for the source side of a transfer (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-9
+  p. 7-19). Established.
+  Bits 31:16 hold `x` and bits 15:0 hold `y`; the description of the `y` field in the specification's table repeats
+  "x-coordinate offset", which reads as a typing slip.
+  The global loader's `lw` at 0x3480 reads shadow +0x50 and the `sw` is at 0x3484. Table byte 1.
+- `0x15002058` (`0x2058`): `WinOffset.dst`, the same window-to-framebuffer offset for the destination side (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-9 p. 7-19). Established.
+  It holds `x` in bits 31:16 and `y` in bits 15:0.
+  Shadow +0x58 is read at 0x3488 and stored at 0x348c, right after the source offset. Table byte 1.
+
+### Primitive and vertices
+
+- `0x15002060` (`0x2060`): `Primitive`, the op-code word that names the geometric primitive the pixel pipeline renders
+  next, a non-global write-only register (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-9 and Table 7-8 p. 7-19).
+  Established.
+  Bits 31:24 `opCode` (0 point, 1 line, 2 triangle, 3 rectangle), bit 18 `lineSkipLastEP`, bits 17:16 `edgeType` (four
+  traversal directions), bits 15:0 `lineWidth`, which is half the width in subpixels.
+  The first store of `crmLoadNonglobalsFromShadow`, with no condition: `lw` of shadow +0x60 at 0x3244, `sw` at 0x3248.
+  Table byte 0.
+- `0x15002080` (`0x2080`): `Vertex.GL[0].x`, the x coordinate of the first vertex of a GL primitive, a 13.6 fixed
+  point value (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  The non-global loader writes the six GL vertex words only when the flag word's 0x80 bit is clear: the `beqz` at 0x32bc
+  jumps to them then, and with the bit set the loader copies three X vertex words instead and returns. This is the first
+  GL word, the `sw` at 0x32e8 of shadow +0x80. Table byte 0.
+- `0x15002084` (`0x2084`): `Vertex.GL[0].y`, the y coordinate of the first GL vertex in the same 13.6 fixed point
+  format (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  Stored by the `sw` at 0x32f0 from shadow +0x84, directly after the x word, on the same path as the other GL vertex
+  words. Table byte 0.
+- `0x15002088` (`0x2088`): `Vertex.GL[1].x`, the x coordinate of the second GL vertex, the end of a line or the
+  second corner of a triangle or rectangle (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  It is a 13.6 fixed point value. The loader's `sw` is at 0x32f8 and its source is shadow +0x88. Table byte 0.
+- `0x1500208c` (`0x208c`): `Vertex.GL[1].y`, the matching y coordinate of the second GL vertex (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  The 13.6 fixed point format again; shadow +0x8c is stored at 0x3300 in the same run. Table byte 0.
+- `0x15002090` (`0x2090`): `Vertex.GL[2].x`, the x coordinate of the third vertex, used by triangles (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  Format 13.6 fixed point. The loader stores shadow +0x90 at 0x330c, just before the flag bits 0x10, 0x08 and 0x20 are
+  isolated for the later groups. Table byte 0.
+- `0x15002094` (`0x2094`): `Vertex.GL[2].y`, the y coordinate of the third vertex (CRIME 1.5 Specification rev 0.3,
+  Table 7-3 p. 7-10). Established.
+  13.6 fixed point. It is the last word of the GL vertex run: its `sw` at 0x3324 sits in the delay slot of the `beqz` at
+  0x3320, so it executes whether or not that branch is taken, from shadow +0x94. Table byte 0.
+
+### Pixel transfer, stipple and colour
+
+- `0x150020a0` (`0x20a0`): `PixelXfer.src.addr`, the start address of the framebuffer or linear buffer that a pixel
+  transfer reads (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  It is a 32-bit write-only register.
+  In `crmLoadNonglobalsFromShadow` it follows `Primitive` unconditionally: `lw` of shadow +0xa0 at 0x324c, `sw` at
+  0x3250. Table byte 0.
+- `0x150020a8` (`0x20a8`): `PixelXfer.src.xStep`, the step in the source buffer for each pixel along x (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  The loader reads shadow +0xa8 at 0x3254 and stores it at 0x3258; no flag guards it. Table byte 0.
+- `0x150020ac` (`0x20ac`): `PixelXfer.src.yStep`, the step in the source buffer for each row along y (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  Its `sw` is at 0x3260, from shadow +0xac, on the unconditional part of the loader. Table byte 0.
+- `0x150020b0` (`0x20b0`): `PixelXfer.dst.linAddr`, the start address of a linear destination buffer for a pixel
+  transfer (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  Stored at 0x3268 from shadow +0xb0, between the source steps and the stride. Table byte 0.
+- `0x150020b4` (`0x20b4`): `PixelXfer.dst.linStride`, the row stride of that linear destination buffer (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  The last transfer register of the run: shadow +0xb4 is loaded at 0x326c and stored at 0x3274. Table byte 0.
+- `0x150020c0` (`0x20c0`): `Stipple.mode`, which pattern word the stipple unit starts at and how long each is held
+  (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-10 and Table 7-12 p. 7-21). Established.
+  Fields `index` [28:24] (start word, 0 to 31), `maxIndex` [20:16], `repeatCnt` [15:8] and `maxRepeat` [7:0]; the
+  specification also reserves bits 23:20, which overlaps `maxIndex`.
+  The non-global loader copies it, with the pattern word after it, only when flag bit 0x01 is set: the `beqz` at 0x3284
+  skips the pair, whose `lw` is at 0x328c and `sw` at 0x3290 from shadow +0xc0. Table byte 0.
+- `0x150020c4` (`0x20c4`): `Stipple.pattern`, the 32-bit pattern word that line and polygon stippling take bits from
+  (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  It is a full word with no field split.
+  The same flag-0x01 pair as `Stipple.mode`: the `lw` at 0x3294 reads shadow +0xc4 and the `sw` at 0x3298 stores it.
+  Table byte 0.
+- `0x150020d0` (`0x20d0`): `Shade.fgColor`, the flat shade colour or foreground colour of a primitive (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-10). Established.
+  Write-only and non-global in the specification's map.
+  Its store at 0x3288 sits in the delay slot of the `beqz` at 0x3284, so it runs whichever way that flag test goes; the
+  value is shadow +0xd0, read at 0x327c. Table byte 0.
+- `0x150020d8` (`0x20d8`): `Shade.bgColor`, the background colour for opaque stippling (CRIME 1.5 Specification rev
+  0.3, Table 7-3 p. 7-10). Established.
+  The only global register of the colour group, readable and writable.
+  `crmLoadGlobalsFromShadow` restores it with the `lw` at 0x34a4 from shadow +0xd8 and a store at 0x34b0 in the delay
+  slot of the `beqz` at 0x34ac, so it is unconditional even though it is written after the flag test of bit 0x04.
+  Table byte 1.
+
+### Logic op and colour mask
+
+- `0x150021b0` (`0x21b0`): `LogicOp`, the logic operation applied when `DrawMode` bit 8 enables it (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-13). Established.
+  A global 32-bit register, readable and writable.
+  It is the twelfth store of the global loader, after the eleven buffer, mask and offset registers: `lw` at 0x3490, `sw`
+  at 0x3494. Table byte 1.
+- `0x150021b8` (`0x21b8`): `ColorMask`, the colour buffer plane mask applied when `DrawMode` bit 7 enables it (CRIME
+  1.5 Specification rev 0.3, Table 7-3 p. 7-13). Established.
+  A global 32-bit register, readable and writable.
+  Shadow +0x1b8 is read at 0x3498 and stored at 0x34a0, directly after `LogicOp`. Table byte 1.
+
 ## Routines in the IP32 build
 
 One entry per routine, read from the object or member named in its entry, with the relocations for the calls. Addresses

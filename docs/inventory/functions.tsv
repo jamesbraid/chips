@@ -4170,7 +4170,7 @@ IP27/unix	kernel	n64	.text	0xc00000000001a228	52	restore_rsa_fp	symtab	56a3d8ce7
 IP27/unix	kernel	n64	.text	0xc00000000001a25c	184	syscall_save_rsa	symtab	ebe3e2b91ac7		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001a320	1072	in_cksum_sub	symtab	345c882c1b77		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001a434	796	in_cksum_pref	symtab	ad10fda21bca		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000001a750	544	start	symtab	a77ee005009a		in	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
+IP27/unix	kernel	n64	.text	0xc00000000001a750	544	start	symtab	a77ee005009a		in	named-only	chips/crime/README.md#pixel-transfer-stipple-and-colour	Pixel transfer, stipple and colour
 IP27/unix	kernel	n64	.text	0xc00000000001a958	24	proc1	symtab	69302c1728cf		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001a970	168	mlclosure	symtab	13e78c22ee16		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001aa18	8	silence_all_audio	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
@@ -18475,7 +18475,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x10a8	52	restore_
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x10dc	184	syscall_save_rsa	dwarf+symtab	ebe3e2b91ac7		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x11a0	1072	in_cksum_sub	dwarf+symtab	345c882c1b77		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x12b4	796	in_cksum_pref	symtab	ad10fda21bca		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x15d0	544	start	dwarf+symtab	e656b3ce291c		out:6	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x15d0	544	start	dwarf+symtab	e656b3ce291c		out:6	named-only	chips/crime/README.md#pixel-transfer-stipple-and-colour	Pixel transfer, stipple and colour
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x17d8	24	proc1	symtab	69302c1728cf		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x17f0	168	mlclosure	dwarf+symtab	a1f795dec70c		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1898	8	silence_all_audio	dwarf+symtab	78aa5094d5ec	shared-address	out:6	undocumented		
@@ -36491,7 +36491,7 @@ IP30/unix	kernel	n64	.text	0xa800000020011980	128	resetcounter_val	symtab	75f17e
 IP30/unix	kernel	n64	.text	0xa800000020011a00	96	trimcompare	symtab	60ae07e06eed		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011a80	28	initcounter	symtab	6e26752754ef		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011a9c	32	resetlatency	symtab	287e0e70123b		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020011ac0	436	start	symtab	8e1897da98c8		out:7	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
+IP30/unix	kernel	n64	.text	0xa800000020011ac0	436	start	symtab	8e1897da98c8		out:7	named-only	chips/crime/README.md#pixel-transfer-stipple-and-colour	Pixel transfer, stipple and colour
 IP30/unix	kernel	n64	.text	0xa800000020011c5c	24	proc1	symtab	69302c1728cf		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011c74	168	mlclosure	symtab	c2126e783ed7		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011d1c	80	silence_all_audio	symtab	befd6f409210	shared-address	out:7	undocumented		
@@ -50015,7 +50015,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1800	128	resetco
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1880	96	trimcompare	dwarf+symtab	60ae07e06eed		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1900	28	initcounter	dwarf+symtab	6e26752754ef		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x191c	32	resetlatency	dwarf+symtab	287e0e70123b		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1940	436	start	dwarf+symtab	26627aa32e40		out:8	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1940	436	start	dwarf+symtab	26627aa32e40		out:8	named-only	chips/crime/README.md#pixel-transfer-stipple-and-colour	Pixel transfer, stipple and colour
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1adc	24	proc1	symtab	69302c1728cf		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1af4	168	mlclosure	dwarf+symtab	a1f795dec70c		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1b9c	80	silence_all_audio	dwarf+symtab	6c90e9c71373	shared-address	out:8	undocumented		
@@ -62738,11 +62738,11 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x2a84	176
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x2b34	96	crimeFifoWaitTimeout	dwarf+symtab	1e30a47ffcea		in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x2b94	552	crmFifoWait	dwarf+symtab	2dabf3bb592b		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x2dbc	152	crmIdleWait	dwarf+symtab	fe2757caf69b		in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x2e54	420	crimePcxSwap	dwarf+funcnames+symtab	e305272db21e		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x2e54	420	crimePcxSwap	dwarf+funcnames+symtab	e305272db21e		in	named-only	chips/crime/README.md#rendering-engine-registers-pixel-pipeline-first-group	Rendering engine registers (pixel pipeline, first group)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x2ff8	288	crmSavePP	dwarf+symtab	55a03069ebc3		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x3118	296	crmRestorePP	dwarf+symtab	0c299a70e22c		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x3240	500	crmLoadNonglobalsFromShadow	dwarf+funcnames+symtab	5870aebae80c		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x3434	328	crmLoadGlobalsFromShadow	dwarf+funcnames+symtab	5ccf62d90b61		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x3240	500	crmLoadNonglobalsFromShadow	dwarf+funcnames+symtab	5870aebae80c		in	named-only	chips/crime/README.md#rendering-engine-registers-pixel-pipeline-first-group	Rendering engine registers (pixel pipeline, first group)
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x3434	328	crmLoadGlobalsFromShadow	dwarf+funcnames+symtab	5ccf62d90b61		in	named-only	chips/crime/README.md#rendering-engine-registers-pixel-pipeline-first-group	Rendering engine registers (pixel pipeline, first group)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x357c	104	restore_linear	dwarf+funcnames+symtab	3756a8604836		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x35e4	228	crimeRestore	dwarf+symtab	50892616df14		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x36c8	8	crimeLockOut	dwarf+symtab	a7e7ca11a6b8		in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
@@ -66178,7 +66178,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1534	160	wait_fo
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15ac	40	wait_for_interrupt_fix_loc	symtab	7c7a779ebf10		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15d4	1072	in_cksum_sub	symtab	345c882c1b77		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x16e8	808	in_cksum_pref	symtab	1c188c509085		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1a10	400	start	symtab	d835e00ba776		out:9	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1a10	400	start	symtab	d835e00ba776		out:9	named-only	chips/crime/README.md#pixel-transfer-stipple-and-colour	Pixel transfer, stipple and colour
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1b54	76	proc1	symtab	eee0406b0ed6		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1ba0	72	mlclosure	symtab	a294fea60df5		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1be8	8	silence_all_audio	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
@@ -83375,7 +83375,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13d0	300	set_sn1
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x14fc	100	get_chimera_type	dwarf+symtab	e83cd0860867		out:11	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1560	1072	in_cksum_sub	dwarf+symtab	345c882c1b77		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1674	796	in_cksum_pref	symtab	ad10fda21bca		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1990	544	start	dwarf+symtab	141340c889b5		out:11	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1990	544	start	dwarf+symtab	141340c889b5		out:11	named-only	chips/crime/README.md#pixel-transfer-stipple-and-colour	Pixel transfer, stipple and colour
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1b98	24	proc1	symtab	69302c1728cf		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1bb0	168	mlclosure	dwarf+symtab	a1f795dec70c		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1c58	8	silence_all_audio	dwarf+symtab	78aa5094d5ec	shared-address	out:11	undocumented		
@@ -97678,7 +97678,7 @@ sbin/stand/symmon.IP32	diagnostic	n32		0x0		txtsrch	dwarf+funcnames			out:15	und
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		vprf	dwarf+funcnames			out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		walk	dwarf+funcnames			out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		walk_path	dwarf+funcnames			out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010200	320	start	symtab	5c941b5fa6f4		out:15	named-only	chips/hub/README.md#ni-network-interface	NI: network interface
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010200	320	start	symtab	5c941b5fa6f4		out:15	named-only	chips/crime/README.md#pixel-transfer-stipple-and-colour	Pixel transfer, stipple and colour
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010340	8	_quit	symtab	e6e69c7e1b9c		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010348	8	db_printf	symtab	9edc8e153884		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0010350	1608	symmon_brkhandler	symtab	9c11d17faac2		out:15	undocumented		
