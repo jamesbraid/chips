@@ -62771,15 +62771,15 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-object	n32		0x0		crm_cu
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-object	n32	.text	0x80	888	crmpixdma	dwarf+symtab	d64f76273fdb		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-object	n32	.text	0x3f8	700	crimePixelDma	dwarf+symtab	c62cc1e0baf0		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-object	n32	.text	0x6b4	264	loadLinearTlb	dwarf+funcnames+symtab	abe981116ea3		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-object	n32	.text	0x7bc	896	crime_load_linear_tlb	dwarf+symtab	5a34f6ac57ee		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-object	n32	.text	0xb3c	1028	crime_clear_buffer	dwarf+symtab	33ee251f9838		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-object	n32	.text	0x7bc	896	crime_load_linear_tlb	dwarf+symtab	5a34f6ac57ee		in	named-only	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-object	n32	.text	0xb3c	1028	crime_clear_buffer	dwarf+symtab	33ee251f9838		in	named-only	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32		0x0		gbeProbe	dwarf+symtab			in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0x44	68	crimeProbe	dwarf+symtab	048d0487d69e		in	understood	chips/crime/README.md#serial-and-edid-routines-crime_i2co-crime_inito	Serial and EDID routines (`crime_i2c.o`, `crime_init.o`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0x88	100	getNvramTiming	dwarf+funcnames+symtab	7bfb3fb85d03		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0xec	940	crimeInitInfo	dwarf+symtab	aa2b107fdea6		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0x498	1244	gbeSetTimingRegs	dwarf+funcnames+symtab	bc9598ad6aa8		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0x974	540	gbeStartVideoTiming	dwarf+funcnames+symtab	678b6a340e86		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0xb90	596	crimeInitHW	dwarf+symtab	044de58b96f9		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0xb90	596	crimeInitHW	dwarf+symtab	044de58b96f9		in	named-only	chips/crime/README.md#tlb-pages	TLB pages
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0xde4	864	crmInitTp	dwarf+symtab	935b2275ac5c		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0x1144	88	crmInvalidVideoTiming	dwarf+symtab	bfa94366c01a		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-object	n32	.text	0x119c	732	crime_setvideotiming	dwarf+symtab	267ca0b3f3d2		in	named-only	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
@@ -62797,8 +62797,8 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0xfe0	184	crime_i2cFpGbeRetrace	dwarf+funcnames+symtab	e428ac64d755		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x1098	60	crime_FpSchedForRetrace	dwarf+symtab	8a46ba6d3aec		in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x10d4	2320	crimePreblankHandler	dwarf+symtab	82fe0f1bc944		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x19e4	760	crm_copy_swap_boxes	dwarf+funcnames+symtab	56776134d7ab		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x1cdc	1044	crmSwapBufd	dwarf+symtab	25a8d840b36f		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x19e4	760	crm_copy_swap_boxes	dwarf+funcnames+symtab	56776134d7ab		in	named-only	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x1cdc	1044	crmSwapBufd	dwarf+symtab	25a8d840b36f		in	named-only	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x20f0	504	crimeSchedSwapBuf	dwarf+symtab	599033fa5739		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x22e8	412	crimeUnSchedSwapBuf	dwarf+symtab	bea92e8b1d78		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-object	n32	.text	0x2484	304	crimeSchedMgrSwapBuf	dwarf+symtab	7d47caa1a712		in	undocumented		
@@ -62820,10 +62820,10 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_zbuf.o)	kernel-object	n32		0x0		crmAd
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_zbuf.o)	kernel-object	n32	.text	0x304	376	crmSubtractZ	dwarf+symtab	5141cc82c9e8		in	named-only	docs/binaries-scope-chip-drivers.md#ip32-build	IP32 build
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32		0x0		crime_color	dwarf+funcnames+symtab			in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0x2c	164	crime_mapcolor	dwarf+funcnames+symtab	55fcf109c5b6		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0xd0	296	crime_sboxfi	dwarf+funcnames+symtab	a613c327da96		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0x1f8	184	crime_pnt2i	dwarf+funcnames+symtab	7e2357e7e2e1		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0xd0	296	crime_sboxfi	dwarf+funcnames+symtab	a613c327da96		in	named-only	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0x1f8	184	crime_pnt2i	dwarf+funcnames+symtab	7e2357e7e2e1		in	named-only	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0x2b0	20	crime_cmov2i	dwarf+funcnames+symtab	942de99898db		in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0x2c4	1664	crime_drawbitmap	dwarf+funcnames+symtab	1a7a77f64ed4		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0x2c4	1664	crime_drawbitmap	dwarf+funcnames+symtab	1a7a77f64ed4		in	named-only	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0x944	52	crime_unblank	dwarf+funcnames+symtab	4660a33d277e		in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0x978	24	crime_getdesc	dwarf+funcnames+symtab	bf6e6d8d8a67		in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0x990	44	crime_positioncursor	dwarf+funcnames+symtab	a724df5fcafb		in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
@@ -62851,7 +62851,7 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x13
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x15ec	428	crmFreeTex	dwarf+symtab	1620acd1c58f		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x1798	312	crmDeallocTex	dwarf+symtab	7731875b03f6		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x18d0	1112	crmDefineTex	dwarf+symtab	1ffc1e761ad2		in	named-only	docs/binaries-scope-chip-drivers.md#ip32-build	IP32 build
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x1d28	100	crmLoadTexTlb	dwarf+symtab	6b9774bdfc15		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x1d28	100	crmLoadTexTlb	dwarf+symtab	6b9774bdfc15		in	named-only	chips/crime/README.md#tlb-pages	TLB pages
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x1d8c	152	crmMapPages	dwarf+symtab	1d3c986b554e		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x1e24	40	crmUnmapPages	dwarf+symtab	3ec6d97ab450		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x1e4c	408	crmMapChunk	dwarf+symtab	337a893cc6ed		in	undocumented		
@@ -62861,7 +62861,7 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x20
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x213c	40	crmUnmapChunk	dwarf+symtab	91dc37de15d8		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x2164	336	crmValidateDrawable	dwarf+symtab	6e746607fe26		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x22b4	432	crmLoadTlbABC	dwarf+symtab	8712e9d1fc4d		in	named-only	docs/binaries-scope-chip-drivers.md#ip32-build	IP32 build
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x2464	156	crmLoadCidTlb	dwarf+symtab	500dae6460d6		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x2464	156	crmLoadCidTlb	dwarf+symtab	500dae6460d6		in	named-only	chips/crime/README.md#tlb-pages	TLB pages
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-object	n32		0x0		crime_i2cSetMonitor	dwarf+funcnames+symtab			in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-object	n32	.text	0x24	496	crime_i2cReset	dwarf+funcnames+symtab	59d13950cdcd		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-object	n32	.text	0x214	92	crime_i2cFixupAfterErr	dwarf+funcnames+symtab	7feb3038ba34		in	undocumented		

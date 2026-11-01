@@ -218,3 +218,8 @@ chip page and the entry is deleted.
   pages, and the antialias slope is given as 2.12 in one place and 2.14 in another. The loaders copy these words unchanged, so
   the shipped kernel does not decide them. Routes tried: the specification's register map and chapter text, the shadow loaders'
   copy order. Next: a shipped renderer or X server module that builds the words, and the public CRIME frame-buffer driver sources.
+- **CRIME memory transfer engine: the null register and the tile table formats.** No routine in the IP32 member objects
+  writes `MTE.null` (`0x3070`), and no routine read builds a texture-TLB or clip-ID-TLB entry, so the entry bit layouts and
+  the register's effect are open. The specification prints no entry layout. Routes tried: the shadow loaders, the clear,
+  swap and copy routines, and a displacement scan of all 702 member objects. Next: the PROM, diagnostic and monitor
+  images, an X server module, and the public CRIME frame-buffer drivers.

@@ -392,8 +392,8 @@ not known.
 The CRIME 1.5 Specification, revision 0.3, puts the rendering engine at physical `0x15000000` and splits it into five
 4 KB pages: interface buffer, TLB, pixel pipeline, memory transfer engine and status (p. 7-6 and Figure 7-3, p. 7-7). This section
 grades the pixel pipeline registers at `+0x2000` that the IP32 kernel's two shadow-loading routines copy to the chip;
-the specification pages are cited per register. The texture registers, the memory transfer engine and the TLB pages are
-not graded here yet.
+the specification pages are cited per register. The texture, memory transfer engine and TLB registers
+are graded in later sections; the TLB sections cover two of the seven tables.
 
 How the kernel reaches them, read in full from `crime.a(crime.o)` and `crime.a(crime_debug.o)` (established):
 
@@ -711,6 +711,216 @@ All three are global registers (table byte 1) copied by the global loader in the
   The map gives its type as global read/write and its description as one line; no layout is printed. It is the last
   register of the global loader's flag-0x20 group, `lw` at 0x3548 and `sw` at 0x354c, after which the loader tests flag
   0x08 at 0x3550. Table byte 1.
+
+### Texture registers
+
+All thirteen rows are loaded by the two shadow loaders under flag bit 0x08 of the shadow record's flag word
+(the word at shadow +496). The global loader ends with this group: it skips it when flag 0x80 is set (the return at
+0x34f4) and otherwise tests 0x08 at 0x3550. The non-global loader reaches its texture group at 0x33d8, after the shade
+run, so only on the flag-0x80-clear path. A scan of all 702 IP32 member objects for these displacements as load and store immediates
+finds only the two loaders; no other member object touches a texture register by displacement (established for the
+member objects, not for the PROM, diagnostic or monitor images).
+
+- `0x15002110` (`0x2110`): `Texture.mode`, the texturing mode word (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-11
+  and Table 7-13 pp. 7-22 to 7-23). Established.
+  The specification's field table, in order from the top: bit 24 marks a subtiled map; bits 23:20 pick the texel
+  format (RGB is 1, RGBA 2, RGBA4 4, alpha-only 5, intensity 6, luminance 7, luminance-alpha 8); bits 19:18 give the
+  texel size (1 for 16 bits, 2 for 32 bits); bits 17:14 hold the base mipmap level and bits 13:10 the last one; bits 9:7
+  choose the minifying filter (six values from NEAREST to LINEAR_MIPMAP_LINEAR) and bit 6 the magnifying filter; bits
+  5:4 and 3:2 give the wrap mode of the two coordinates (CLAMP, REPEAT, CLAMP_TO_EDGE, CLAMP_TO_BORDER); bits 1:0 pick
+  the application function (MODULATE, DECAL, BLEND, REPLACE). The global
+  loader copies it first of its flag-0x08 group: `lw` of shadow +0x110 at 0x3558, `sw` at 0x355c. Table byte 1, and the
+  next word (0x2114) is 2, so the register occupies one word.
+- `0x15002118` (`0x2118`): `Texture.format`, the coordinate-format word for a texture map: shift counts and index masks
+  (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-11 and Table 7-14 p. 7-23). Established.
+  The specification's field table: bits 47:44 and 43:40 are the shift counts for the two coordinates, bits 39:36 and
+  35:32 the shift counts used when wrapping, bits 31:16 the index mask for the first coordinate and bits 15:0 the mask
+  for the second, with 63:48 reserved. The loader moves it as a doubleword, `ld` at
+  0x3560 and `sd` at 0x3564 from shadow +0x118, second of the global group. Table bytes 1 and 1 for its two words. The
+  specification does not say how the shifts relate to the map size; the loaders copy the value unchanged.
+- `0x15002120` (`0x2120`): `Texture.SQs`, the starting s/w value of a perspective-correct texture coordinate (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-11). Established.
+  A 64-bit non-global write-only register. First of the non-global texture group: `ld` of shadow +0x120 at 0x33e0, `sd`
+  at 0x33e4. Table byte 0 for both words. The specification prints no number format for it.
+- `0x15002128` (`0x2128`): `Texture.TQs`, the starting t/w value, the partner of `Texture.SQs` (CRIME 1.5 Specification
+  rev 0.3, Table 7-3 p. 7-12). Established.
+  Doubleword copy, `ld` at 0x33e8 and `sd` at 0x33ec, directly after `Texture.SQs`. Table byte 0.
+- `0x15002130` (`0x2130`): `Texture.Qs`, the starting 1/w value (CRIME 1.5 Specification rev 0.3, Table 7-3 p. 7-12).
+  Established.
+  The map gives it 32 bits. The loader's `lw` at 0x33f0 and `sw` at 0x33f4 copy shadow +0x130, and a second word copy
+  follows at 0x33f8 and 0x33fc from shadow +0x134 to `0x2134`, an address the specification's map leaves empty. The
+  shipped table gives byte 0 for `0x2134`, so the debug check treats it as a non-global register word. Inferred: it is
+  the unused second half of a doubleword slot, not a second register. Unknown: whether the chip decodes it.
+- `0x15002138` (`0x2138`): `Texture.dsqdx`, the per-pixel step of s/w in x (CRIME 1.5 Specification rev 0.3, Table 7-3
+  p. 7-12). Established.
+  Doubleword, `ld` at 0x3400 and `sd` at 0x3404 from shadow +0x138. The specification prints "d(s/w)/dx" for both this
+  register and `Texture.dsqdy`; the order of the stores (this one before `0x2140`) is the only thing that separates
+  them in the code. Table byte 0.
+- `0x15002140` (`0x2140`): `Texture.dsqdy`, the per-pixel step of s/w in y (CRIME 1.5 Specification rev 0.3, Table 7-3
+  p. 7-12). Established for the copy, inferred for the direction.
+  The specification's description repeats `d(s/w)/dx`, so the y direction rests on the register name and its position
+  after the x slope. `ld` at 0x3408, `sd` at 0x340c from
+  shadow +0x140. Table byte 0.
+- `0x15002148` (`0x2148`): `Texture.dtqdx`, the per-pixel step of t/w in x (CRIME 1.5 Specification rev 0.3, Table 7-3
+  p. 7-12). Established.
+  Third doubleword of the slope run: `ld` at 0x3410, `sd` at 0x3414, shadow +0x148. Table byte 0.
+- `0x15002150` (`0x2150`): `Texture.dtqdy`, the per-pixel step of t/w in y (CRIME 1.5 Specification rev 0.3, Table 7-3
+  p. 7-12). Established for the copy, inferred for the direction.
+  Last doubleword of the run: `ld` at 0x3418, `sd` at 0x341c, shadow +0x150. As with `Texture.dsqdy`, the printed
+  description says `/dx`; the name decides the direction. Table byte 0.
+- `0x15002158` (`0x2158`): `Texture.dqdx`, the per-pixel step of 1/w in x (CRIME 1.5 Specification rev 0.3, Table 7-3
+  p. 7-12). Established.
+  The step registers switch to 32-bit words here: `lw` at 0x3420, `sw` at 0x3424, shadow +0x158. Table byte 0.
+- `0x1500215c` (`0x215c`): `Texture.dqdy`, the per-pixel step of 1/w in y (CRIME 1.5 Specification rev 0.3, Table 7-3
+  p. 7-12). Established.
+  The final copy of the loader: `lw` at 0x3428, and the `sw` at 0x3430 sits in the delay slot of the `jr ra` at 0x342c,
+  so it completes before the return. Table byte 0.
+- `0x15002160` (`0x2160`): `Texture.borderColor`, the colour used for CLAMP_TO_BORDER sampling (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-12). Established for the copy, inferred for the role.
+  The two wrap fields of `Texture.mode` include the value CLAMP_TO_BORDER, which needs a colour to clamp to; no code
+  touches the word other than the copy. It is a global register (table byte 1) loaded by the global loader third in its flag-0x08 group:
+  `lw` of shadow +0x160 at 0x3568, `sw` at 0x356c. The pixel layout of the colour is not printed.
+- `0x15002168` (`0x2168`): `Texture.envColor`, the constant colour of the BLEND texture function (CRIME 1.5
+  Specification rev 0.3, Table 7-3 p. 7-12). Established for the copy, inferred for the role.
+  The role is the name together with the `func` value BLEND in `Texture.mode`. The last store of the global loader: the
+  `lw` at 0x3570 reads shadow +0x168 and the `sw` at 0x3578 sits in the delay slot of the `jr ra` at 0x3574. Table
+  byte 1.
+
+### Pixel pipeline null and flush
+
+- `0x150021f0` (`0x21f0`): `PixPipeNull`, a register that takes a write and loads no state (CRIME 1.5 Specification
+  rev 0.3, Table 7-3 p. 7-14). Established for how software writes it, inferred for its effect.
+  The shadow loaders never write it. Four routines form its address with `0x800` ORed in, `0x29f0`, and store zero
+  there: `crime_sboxfi` (`crime.a(crime_tp.o)`; address formed at 0x1a8 and 0x1b4, store at 0x1c4, after the vertex
+  pair goes to `0x2070` at 0x1b8), `crime_pnt2i` (formed at 0x274 and 0x280, store at 0x290), `crime_drawbitmap` (formed
+  at 0x5b4 and 0x5bc, store at 0x604 in the delay slot of the loop branch) and `crime_load_linear_tlb`
+  (`crime.a(crime_dma.o)`; formed at 0xaec and 0xaf4, store at 0xb00 in the delay slot of the `jal` to `crmIdleWait`).
+  The specification says the host starts a primitive by offsetting its last register write by START_OFFSET bytes but
+  the extracted pages give no value; the shipped use of `0x800` here and for the MTE destination end below is the
+  evidence that the offset is 0x800. Inferred: a zero write to the offset alias of this register starts the queued primitive without
+  loading any parameter. The specification calls the register non-global (`NG`) while the shipped global-register table
+  has byte 1 (global) for `0x21f0`; the two disagree and the table is the shipped fact. Unknown: which is right for the
+  chip.
+- `0x150021f8` (`0x21f8`): `PixPipeFlush`, the command that drains the pixel pipeline to memory (CRIME 1.5 Specification
+  rev 0.3, Table 7-3 p. 7-14). Established for how software writes it, inferred for its effect.
+  Software writes zero to it after starting a primitive and before waiting for the engine to idle: in `crime_sboxfi` the
+  `sw` at 0x1d0 is the delay slot of the `jal` to `crmIdleWait` at 0x1cc, so the flush is issued before the wait
+  begins; `crime_pnt2i` does the same at 0x29c, `crime_drawbitmap` stores it at 0x4a0 just ahead of its `crmIdleWait`
+  call at 0x4a4, and `crm_copy_swap_boxes` (`crime.a(crime_retrace.o)`) stores it at 0x1c9c in the delay slot of the
+  branch at 0x1c98 to its common exit. Table byte 1 (global, as the specification says).
+
+### Memory transfer engine registers
+
+Twelve registers at `0x15003000`. Seven are reloaded by the global shadow loader and three by the non-global loader,
+both under flag bit 0x04, which is tested ahead of the flag-0x80 test in each loader, so the group loads even when 0x80
+is set (global loader: `andi` at 0x349c and `beqz` at 0x34ac; non-global loader: `andi` at 0x3280 and `beqz` at 0x329c). Software also drives the engine directly in `crime_clear_buffer` (`crime.a(crime_dma.o)`,
+0xb3c) and `crmSwapBufd` (`crime.a(crime_retrace.o)`, 0x1cdc), and `crm_copy_swap_boxes` (0x19e4) fills the address
+registers for a copy. The engine's last register write is made at `0x3838`, the destination end address with `0x800`
+ORed in: `crime_clear_buffer` forms it at 0xbe8 and 0xbf0 (`0x3038`, then the OR), and `crm_copy_swap_boxes` forms it
+at 0x1a44 and 0x1a4c.
+
+- `0x15003000` (`0x3000`): `MTE.mode`, the transfer mode: clear or copy, stipple enable, pixel depth, source and
+  destination buffer types and the two ECC bits (CRIME 1.5 Specification rev 0.3, Table 7-15 p. 7-27 and section
+  7.3.2.1 pp. 7-28 to 7-29). Established.
+  The specification's field table: bit 11 selects clear (0) or copy (1); bit 10 enables the stipple mask during a clear;
+  bits 9:8 give the pixel size (0 for 8 bits, 1 for 16, 2 for 32); bits 7:5 name the table that maps the source buffer
+  and bits 4:2 the one that maps the destination (0 to 2 framebuffer tables A to C, 3 texture, 4 and 5 linear tables A
+  and B, 6 clip ID); bit 1 turns on ECC for source reads and bit 0 for destination writes. `crime_clear_buffer` builds the value as the pixel size code
+  (the pixel size byte 1, 2 or 4 halved) shifted left 8 ORed with the buffer type byte shifted left 2, bit 11 clear, so
+  it selects clear mode with ECC off and stipple off; a pixel size other than 1, 2 or 4 returns 22. `crmSwapBufd` stores
+  the constant 0x820 with the `sw` at 0x1de4 (`li` at 0x1de0): copy, 8-bit, source TLB B, destination TLB A. The global
+  loader copies shadow +0x200 first, `lw` at 0x34b4 and `sw` at 0x34b8. The register is outside the pixel pipeline
+  page, so the global-register table has no byte for it.
+- `0x15003008` (`0x3008`): `MTE.byteMask`, the 32-bit byte-lane mask applied to destination writes (CRIME 1.5
+  Specification rev 0.3, Table 7-15 p. 7-27). Established for the writes, inferred for the lane meaning.
+  `crmSwapBufd` stores -1 at 0x1ddc, all lanes enabled, for a plain copy. `crime_clear_buffer` stores the second word of
+  its parameter record to shadow +0x208 (0xe8c) and then to the register (0xe94). The global loader copies shadow
+  +0x208 at 0x34bc and 0x34c0.
+- `0x15003010` (`0x3010`): `MTE.stippleMask`, the 32-bit stipple used when `MTE.mode` bit 10 enables stipple during a
+  clear (CRIME 1.5 Specification rev 0.3, Table 7-15 p. 7-27). Established for the loader copy.
+  Non-global and write-only per the map. Only the non-global loader writes it: `lw` of shadow +0x210 at 0x32a4, `sw` at
+  0x32a8, first of its flag-0x04 group. No routine in the member objects stores it directly, and the clear routine
+  always builds a mode word with bit 10 clear, so no shipped path in those objects makes the engine apply it. Unknown:
+  the mapping of mask bits to pixels, which the specification does not print.
+- `0x15003018` (`0x3018`): `MTE.fgValue`, the value a clear writes into every destination pixel (CRIME 1.5
+  Specification rev 0.3, Table 7-15 p. 7-27). Established.
+  `crime_clear_buffer` stores the first word of its parameter record to shadow +0x218 (0xe7c) and to the register (0xe84),
+  ahead of the mask. The global loader copies shadow +0x218, `lw` at 0x34c4 and `sw` at 0x34c8, third of its flag-0x04 group.
+- `0x15003020` (`0x3020`): `MTE.src0`, the source buffer's start address, a framebuffer coordinate pair or a linear
+  address depending on the source type (CRIME 1.5 Specification rev 0.3, Table 7-15 p. 7-27). Established.
+  `crm_copy_swap_boxes` stores one packed value to it and to `MTE.dst0`: the `sw` at 0x1bac writes `src0` and the `sw`
+  at 0x1bbc writes `dst0` from the same register, so the copy moves a rectangle between two buffers at the same
+  coordinates. A second pair of stores at 0x1c2c and 0x1c3c repeats the pattern for the remainder of a split copy. The
+  global loader copies shadow +0x220, `lw` at 0x34cc and `sw` at 0x34d0.
+- `0x15003028` (`0x3028`): `MTE.src1`, the source buffer's end address (CRIME 1.5 Specification rev 0.3, Table 7-15
+  p. 7-27). Established for the writes, inferred for the role.
+  The map describes it as a start address, like `MTE.src0`. The shipped copy routine stores to it the same value it
+  stores to `MTE.dst1`, which the map calls the end address, so it reads as the end. Stored with that value: `crm_copy_swap_boxes` writes one computed end value at 0x1bb4 here and the
+  same register contents to the destination end through the `0x3838` alias at 0x1bc0. The global loader copies shadow
+  +0x228 with the `lw` at 0x34d4 and the `sw` at 0x34d8.
+- `0x15003030` (`0x3030`): `MTE.dst0`, the destination buffer's start address (CRIME 1.5 Specification rev 0.3, Table
+  7-15 p. 7-27). Established.
+  `crime_clear_buffer` stores the rectangle start per loop pass, shadow +0x230 first (the `sw` at 0xe00) then the
+  register (0xe08), as the first of the two address stores. The non-global loader copies shadow +0x230 at 0x32ac and 0x32b0, second of its three. Write-only
+  and non-global per the map.
+- `0x15003038` (`0x3038`): `MTE.dst1`, the destination buffer's end address (CRIME 1.5 Specification rev 0.3, Table 7-15
+  p. 7-27). Established.
+  The per-rectangle store in `crime_clear_buffer` goes to the alias `0x3838` (the `sw` at 0xe20 through the pointer
+  formed at 0xbe8 and 0xbf0), with a shadow copy at +0x238 (0xe14). The non-global loader's own copy writes the
+  unaliased `0x3038` (`lw` at 0x32b4, `sw` at 0x32b8), so a state reload loads the value without starting a transfer.
+  Inferred: the aliased write starts the transfer.
+- `0x15003040` (`0x3040`): `MTE.srcYStep`, the source framebuffer y stride value, the step between source rows (CRIME
+  1.5 Specification rev 0.3, Table 7-15 p. 7-28). Established for the writes.
+  `crmSwapBufd` stores 1 at 0x1dec (`li` at 0x1de8; the same register is stored to `MTE.dstYStep` at 0x1df0). The global loader copies
+  shadow +0x240 at 0x34dc and 0x34e0, sixth of seven. Unknown: the unit of the stride, which the specification does not
+  give.
+- `0x15003048` (`0x3048`): `MTE.dstYStep`, the destination framebuffer row stride (CRIME 1.5 Specification rev 0.3, Table
+  7-15 p. 7-28). Established for the writes.
+  `crime_clear_buffer` stores 1 to shadow +0x248 (0xe9c) and then to the register (0xea0); `crmSwapBufd` stores 1 at
+  0x1df0. Last of the global group: shadow +0x248 loaded at 0x34e4 and stored at 0x34e8. Its unit is open, as for the source step.
+- `0x15003070` (`0x3070`): `MTE.null`, the engine's null register (CRIME 1.5 Specification rev 0.3, Table 7-15 p. 7-28).
+  Unknown.
+  No routine read in the IP32 member objects stores or loads it: the two shadow loaders, `crime_clear_buffer`,
+  `crmSwapBufd` and `crm_copy_swap_boxes` use the flush register instead, and a scan of all 702 member objects for the
+  displacement 12400 finds nothing. Whether the PROM, diagnostic, monitor or an X server module writes it is not
+  settled; docs/open-questions.md lists the routes.
+- `0x15003078` (`0x3078`): `MTE.flush`, the command that drains the engine (CRIME 1.5 Specification rev 0.3, Table 7-15
+  p. 7-28). Established for how software writes it, inferred for its effect.
+  Software stores zero and then waits for the engine to go idle: `crime_clear_buffer` stores at 0xec4 and calls
+  `crmIdleWait` at 0xec8 with 500000 (`lui` at 0xec0, `ori` in the delay slot at 0xecc), `crmSwapBufd` stores at 0x1e18
+  and calls it at 0x1e1c with 999999, and `crm_copy_swap_boxes` stores at 0x1c78 before it writes the pixel-pipeline
+  vertex pair at 0x1c90. `crime_clear_buffer` skips the store when its loop drew no rectangle (the `beqz` at 0xeb0
+  on the register that the first-rectangle path sets to 1 at 0xe98).
+
+
+### TLB pages
+
+The second page of the rendering engine (`+0x1000`) holds seven translation tables (CRIME 1.5 Specification rev 0.3,
+Table 7-2 p. 7-8). This section grades the two that the code loads with a doubleword store per entry and that this
+reading covered in full; the framebuffer and linear tables are not graded here yet. A store of zero to `+0x4008`
+follows each of these loads (the `sw` at 0x225c for the texture table, the one at 0x24e8 for the clip-ID table); that
+word is in the status page and is not graded here.
+
+- `0x15001600` (`0x1600`): `TLB.tex[28]`, 28 doublewords holding texture-map tile translations (Table 7-2 p. 7-8).
+  Established for the load, inferred for the entry layout.
+  `crmLoadTexTlb` (`crime.a(crime_tiles.o)`, 0x1d28) walks a table of 16-byte records, two per pass of a loop bounded at
+  28 (`sltiu` at 0x1d4c and 0x1d6c). It reads a destination from the word at +4 of the record and a 64-bit entry from
+  +8, and stores the entry (`sd` at 0x1d58 and 0x1d80) at that destination ORed with `0xa0000000`.
+  `crmDefineTex` fills the destinations when it allocates a record: the loop at 0x1ce4 stores, for entry `i`, the
+  register base from word +120 of its board argument plus `0x1600` plus 8 `i`, truncated to 32 bits (`dsll32` and
+  `dsrl32` at 0x1ce8 and 0x1cf4), as a doubleword at record +16 `i` (the `sd` at 0x1d00); the bound is 28. The count
+  agrees with the specification's 28. `crimeInitHW` (`crime.a(crime_init.o)`) clears the table with `sd` of zero at
+  0xcb4, 0xcc4 and 0xcdc, three entries per pass. Unknown: the layout of an entry, which no routine read builds and
+  the specification does not print.
+- `0x150016e0` (`0x16e0`): `TLB.cid[4]`, four doublewords of clip-ID tile translations (Table 7-2 p. 7-8). Established
+  for the load, inferred for the entry layout.
+  `crmLoadCidTlb` (`crime.a(crime_tiles.o)`, 0x2464) runs index 0 to 15 regardless of the count it was given. For each
+  index below the count in the word at +4 of its second argument it reads a halfword (`lhu` at 0x24b4) and puts it into
+  halfword `i & 3` of an 8-byte stack buffer (`sh` at 0x24b8, big-endian, so the first of each group is bits 63:48);
+  indices at or above the count leave their halfword zero. On the fourth of each group it stores the doubleword at
+  `+0x16e0` plus 8 for the group number (`sd` at 0x24e4) and clears the buffer. Sixteen halfwords make the four
+  doublewords, so every entry is written. The only call is the `jal` at 0x97c in `crime.a(crime.o)`, during start-up. Inferred: each
+  doubleword holds four 16-bit tile numbers.
 
 ## Routines in the IP32 build
 

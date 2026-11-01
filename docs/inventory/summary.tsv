@@ -1,12 +1,12 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3092	0	410	0	410	1	2	145	2535	0	13.3	13.3	18.0	13.3							0			
-functions	6301	91992	518	11	383	9	535	1731	3517	0	8.2	16.7	44.2	8.2							0	0	16	
-functions (distinct names)	2481	21770	366	11	363	9	13	632	1470	0	14.8	15.3	40.7	14.8							0			
+functions	6301	91992	518	11	383	9	535	1741	3507	0	8.2	16.7	44.3	8.2							0	0	16	
+functions (distinct names)	2481	21770	366	11	363	9	13	642	1460	0	14.8	15.3	41.2	14.8							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ucode	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0						0	0			
-spec-registers	174	0	131	5	130	0	0	6	37	0	75.3	75.3	78.7	75.3							0			
+spec-registers	174	0	159	10	158	0	0	4	11	0	91.4	91.4	93.7	91.4							0			
 input root manifest	928																							500055fe4acccbc9256d61eb7716475b355bdd721167f32bf1c18b9c15f2372d
 functions in IP27/unix	995	12489	179	5	179	0	67	311	438	0	18.0	24.7	56.0	18.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -1623,12 +1623,12 @@ functions in IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_procfs.o)	0	49	0	0	0	0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_sys.o)	0	22	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	0	9	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	65	0	26	0	25	0	0	8	31	0	40.0	40.0	52.3	40.0							0	0	0	
-functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	6	0	1	0	1	0	0	0	5	0	16.7	16.7	16.7	16.7							0	0	0	
-functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	14	0	1	0	1	0	0	2	11	0	7.1	7.1	21.4	7.1							0	0	0	
-functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	29	0	3	0	3	0	0	2	24	0	10.3	10.3	17.2	10.3							0	0	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	6	0	1	0	1	0	0	2	3	0	16.7	16.7	50.0	16.7							0	0	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	14	0	1	0	1	0	0	3	10	0	7.1	7.1	28.6	7.1							0	0	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	29	0	3	0	3	0	0	4	22	0	10.3	10.3	24.1	10.3							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_zbuf.o)	2	0	0	0	0	0	0	2	0	0	0.0	0.0	100.0	0.0							0	0	0	
-functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	11	0	5	0	5	0	0	0	6	0	45.5	45.5	45.5	45.5							0	0	0	
-functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	33	0	0	0	0	0	0	8	25	0	0.0	0.0	24.2	0.0							0	0	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	11	0	5	0	5	0	0	3	3	0	45.5	45.5	72.7	45.5							0	0	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	33	0	0	0	0	0	0	10	23	0	0.0	0.0	30.3	0.0							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	52	0	4	0	4	0	0	3	45	0	7.7	7.7	13.5	7.7							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_db.o)	2	0	2	0	2	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_debug.o)	2	0	1	0	1	0	0	0	1	0	50.0	50.0	50.0	50.0							0	0	0	
