@@ -792,6 +792,48 @@ the undefined imports. No routine body was read in full.
   `ps_init` (848 bytes) and `ps_output` (720 bytes) run the packet scheduler, `ps_tick_maint` (616 bytes) maintains its
   timers, and `rsvp_addflow` (488 bytes) adds a reserved flow. It calls the packet queues `psqo_init`, `psqo_enq_pkt` and
   `psqo_get_next_pkt`, which the member `bsd.a(rsvp_qo.o)` defines.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(rsvp_qo.o)` (inferred): the packet queues under RSVP, five routines in a 7252-byte
+  member. `psqo_get_next_pkt` (368 bytes) and `psqo_enq_pkt` (352 bytes) take and add packets, and `psqo_alloc_queue`
+  (128 bytes) and `psqo_free_queue` (116 bytes) create and release a queue. It allocates with `kmem_zalloc` and `kmem_free`
+  and locks with `mutex_spinlock` and `mutex_spinunlock`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)` (inferred): an interface-striping driver, 41 routines in a 47268-byte
+  member. `is_output` (1576 bytes), `is_reorder_drain` (1352 bytes), `is_output_bottom` (1164 bytes) and
+  `is_input_reorder_entry` (792 bytes) spread output over several links and put input back in order with the stripe vector
+  `ip_to_stripe_vec`. It attaches with `if_attach`, detaches with `if_detach`, starts its threads with `xthread_setup` and
+  `xthread_set_func`, and registers debugger hooks with `idbg_addfunc`. It drives no chip.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(igmp.o)` (inferred): IGMP group membership, 14 routines in an 18484-byte member.
+  `igmp_input` (1256 bytes) handles membership reports, `igmp_sendpkt` (392 bytes) sends them, and `igmp_fasttimo` (172
+  bytes) runs on the fast timer. The `igmp_update_host_*` routines (212 and 176 bytes) keep the host's group state, and
+  they search the table with `hash_lookup` and `hashinfo_inaddr`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_ether.o)` (inferred): ARP, 27 routines in a 35828-byte member. `in_arpinput`
+  (1596 bytes) and `arpresolve` (1560 bytes) answer and resolve address requests, `arptimer` (836 bytes) ages entries, and
+  `arpioctl` (1008 bytes) is the control entry. It reaches the routing layer through `rtalloc1`, `rtrequest` and
+  `rt_setgate`, and it finds the interface with `ifa_ifwithnet`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(in.o)` (inferred): IPv4 interface addressing, 73 routines in a 52388-byte member.
+  `in_control` (3452 bytes) is the address ioctl, `in_ifinit` (964 bytes) sets an interface address, and `inet_ntop` (888
+  bytes) and `inet_addr` (712 bytes) convert text. It imports the IPv6 start-up `in6_init`, the tunnel attach `gifattach`
+  and the group calls `igmp_joingroup` and `igmp_leavegroup`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)` (inferred): the protocol control blocks for IPv4 sockets, 38 routines in a
+  46692-byte member. `in_pcblookupx` (3580 bytes) finds the block for an arriving packet, `in_pcbnotify` (1388 bytes) passes
+  errors to the owner, and `udp_full_assign` (1264 bytes) and `tcp_full_assign` (1068 bytes) set the full endpoint. Its
+  imports include the connection tables `tcb` and `udb` and the port randomiser `inpcb_randomize_ports`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(ip_icmp.o)` (inferred): ICMP, nine routines in a 17140-byte member. `icmp_input`
+  (1472 bytes) handles inbound messages, `icmp_reflect` (944 bytes) builds replies, `icmp_send` (232 bytes) sends errors,
+  and `iptime` (104 bytes) stamps times. Replies go out through `ip_output`, redirects go to `rtredirect`, and raw copies
+  go to `rip_input`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(ip_input.o)` (inferred): the IPv4 input path, 21 routines in a 34468-byte member.
+  `ip_input` (2740 bytes) is the entry for arriving packets, `ip_dooptions` (1320 bytes) handles IP options, `ip_forward`
+  (1316 bytes) forwards packets, and `ip_reass` (1176 bytes) and `ip_reass_strict` (1452 bytes) reassemble fragments. It
+  reports errors through `icmp_error` and sends forwarded packets with `ip_output`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(ip_output.o)` (inferred): IPv4 output and multicast options, nine routines in a
+  32260-byte member. `ip_setmoptions` (1524 bytes) and `ip_getmoptions` (460 bytes) set and read multicast options,
+  `ip_ctloutput` (1244 bytes) is the socket option entry, `ip_pcbopts` (448 bytes) and `ip_insertoptions` (428 bytes)
+  build option lists, and `ip_optcopy` (296 bytes) copies them. It joins and leaves groups with `in_addmulti2` and
+  `in_delmulti`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(raw_ip.o)` (inferred): the raw IP protocol, three routines in an 11188-byte member.
+  `rip_output` (516 bytes) sends a raw packet and `rip_ctloutput` (736 bytes) handles its options. The member imports the
+  multicast routing entries `ip_mrouter_set` and `ip_mrouter_get`, the RSVP virtual interface hooks `ip_rsvp_vif_init` and
+  `ip_rsvp_vif_done`, and it hands inbound packets to `raw_input`.
 
 ## Scope questions
 
