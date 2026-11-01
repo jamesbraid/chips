@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3092	0	117	0	117	0	0	144	2831	0	3.8	3.8	8.4	3.8							0			
-functions	6290	92003	435	4	300	9	418	1264	4173	0	6.9	13.6	33.7	6.9							0	0	16	
-functions (distinct names)	2473	21778	294	4	291	9	13	447	1719	0	11.9	12.4	30.5	11.9							0			
+functions	6301	91992	435	4	300	9	418	1265	4183	0	6.9	13.5	33.6	6.9							0	0	16	
+functions (distinct names)	2481	21770	294	4	291	9	13	447	1727	0	11.9	12.4	30.4	11.9							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -636,7 +636,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/sharena.o	0	8	0	0	0	0	0	0	0	0	0.0	0.0	
 functions in IP27/usr/cpu/sysgen/IP27boot/shmiq.o	0	17	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	0	13	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/smfd.o	0	44	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	0	11	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
+functions in IP27/usr/cpu/sysgen/IP27boot/sn0drv.o	11	0	0	0	0	0	0	1	10	0	0.0	0.0	9.1	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/snfs.a(nfs_export.o)	0	20	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/snfs.a(nfs_server.o)	0	70	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/snfs.a(nfs_common.o)	0	4	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			

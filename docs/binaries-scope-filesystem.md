@@ -174,8 +174,8 @@ table. Labels: a classification from names, sizes and the scan's result is infer
   attached names and hand out their identifiers.
 - `IP27/usr/cpu/sysgen/IP27boot/namefs.a(namevno.o)` (inferred): 21 routines in a 21476-byte member, the vnode
   operations of an attached name node. Among them are `nm_open`, `nm_close` (212 bytes), `nm_getattr` (288 bytes),
-  `nm_setattr` (656 bytes), `nm_access` (332 bytes) and `nm_poll` (168 bytes). `nm_link` is 8 bytes long, the size
-  of a bare return.
+  `nm_setattr` (656 bytes), `nm_access` (332 bytes) and `nm_poll` (168 bytes). `nm_link` is 8 bytes long: a return with
+  the constant 18 set in its delay slot and no other work.
 - `IP27/usr/cpu/sysgen/IP27boot/fifofs.a(fifosubr.o)` (inferred): 17 routines in a 19812-byte member. `makepipe`
   (184 bytes) and `fifovp` (552 bytes) create the node for a pipe or a named FIFO, `fifo_initlocks` and
   `fifo_cr_lock` set up the lock records that serialize readers and writers, and `fifogetid` (192 bytes) and
