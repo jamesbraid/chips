@@ -75,3 +75,43 @@ which choose among Bridge, XBridge, PIC and TIOCP at run time as described in [c
   range calls `assfail` with the source lines 0xbfd (type 3), 0xc01 (type 2), 0xc05 (type 1) or 0xc09 (type 0). The check is `index <= limit`,
   so the index equal to the limit passes. It is one doubleword load, `ld`, from the entry, with no other register access. Established.
   Inferred: that the four parts are Bridge, XBridge, PIC and TIOCP, as `pcireg_type0_cfg_addr` assumes.
+- `pcireg_wrb_flush_get` (`IP27/unix` at 0xc000000000086e94,
+  596 bytes) reads the write-buffer flush register of one device slot of a Bridge-family chip and returns what it read. It takes the chip's register-block pointer or the
+  driver's per-chip record in `a0` and the device number in `a1`. A null `a0` and a record type of -1 call `panic` ("pcireg_wrb_flush_get(): unknown bridgetype") and
+  return 0; a record type other than -1 to 3 returns 0. A record of type 3 or 2 checks `device <= 3` (`assfail`, source lines 2506 and 2510) and loads the doubleword at
+  +576 + 8 * device (0x240 + 8n) of the base at record +0x8; types 0 and 1 check `device <= 7` (line 2515) and load the word at +580 + 8 * device (0x244 + 8n),
+  zero-extended. After the load it calls `assfail` (line 2523, text "ret == 0") when the value is not zero, and returns the value in either case.
+  A raw window pointer (upper bits `0x92...`) is typed from the identification word at +4: parts 0xe000 and 0xe010 with manufacturer field 36
+  take the type 3 path, 0xd102 and 0xd112 with 36 the type 2 path, and 0xd002 with 36 and 0xc002 with 54 the word path; any other part
+  panics. Established. Inferred: that the register is the chip's write-buffer flush, from the routine's name and the `ret == 0` check on the value.
+- `pcireg_int_ate_addr` (`IP27/unix` at 0xc000000000089340,
+  596 bytes) returns the address of one internal address-translation entry of a Bridge-family chip instead of reading it. It takes the chip's register-block pointer or the
+  per-chip record in `a0` and the entry index in `a1`, and returns the base plus `index * 8 + 0x10000`, where the base is the raw pointer or the doubleword at record +0x8. A
+  record of type 3, 2 or 1 accepts indexes up to and including 1024 (`assfail` with source lines 3131, 3135 and 3139) and type 0 up to and including 128 (line 3143);
+  the same limits follow from the raw dispatch: parts 0xe000, 0xe010, 0xd102, 0xd112 and 0xd002 (manufacturer 36) allow 1024 and 0xc002 (manufacturer 54) allows 128.
+  A null `a0`, a type of -1 or an unknown raw part calls `panic` ("pcireg_int_ate_addr(): unknown bridgetype") and returns 0; any other record type returns 0 without a
+  message. It touches no register. Established. Inferred: that the entries are the chip's address-translation table, from the 0x10000 base shared with the get and set accessors.
+- `pcireg_intr_addr_addr_set` (`IP27/unix` at 0xc000000000085a7c,
+  588 bytes) replaces the address part of one interrupt-address register of a Bridge-family chip. It takes the chip's register-block pointer or record in `a0`, the interrupt
+  number 0 to 7 in `a1` (`assfail`, source line 2202) and the address in `a2`, and returns nothing. For types 2 and 3 (doubleword layout) it works on the doubleword at +0x130 + 8n:
+  it stores the value with bits 47:0 cleared (mask 0xffff000000000000), reloads it and stores it again with `a2 & 0xffffffffffff` ORed in. For types 0 and 1 it works on the word at
+  +0x134 + 8n: it clears bits 17:8 (mask 0xfffffffffffc00ff, read from the pool at `gp - 23336`), stores, reloads and stores again with `(a2 >> 30) & 0x3ff00` ORed in, so
+  address bits 47:38 land in bits 17:8. A null `a0` or a type of -1 calls `panic` with the text "pcireg_intr_addr_addr_get(): unknown bridgetype", the name of the getter
+  rather than this routine, and a type outside -1 to 3 returns. Established. Inferred: that the field is the address of the interrupt target, from the routine's name and the way the getter shifts it.
+- `pcireg_intr_addr_vect_set` (`IP27/unix` at 0xc000000000085610,
+  572 bytes) stores the vector byte of one interrupt-address register of a Bridge-family chip. It takes the register-block pointer or record in `a0`, the interrupt number 0 to 7 in `a1`
+  (`assfail`, source line 2139) and the vector in `a2`, and returns nothing. For types 2 and 3 it clears bits 55:48 of the doubleword at +0x130 + 8n (mask 0xff00ffffffffffff, from
+  the pool at `gp - 24280`), stores it, reloads it and stores it again with `(a2 & 0xff) << 48` ORed in. For types 0 and 1 it clears the low byte of the word at +0x134 + 8n (mask -256),
+  stores, reloads and stores with `a2 & 0xff` ORed in. A null `a0` or a type of -1 calls `panic` with "pcireg_intr_addr_vect_get(): unknown bridgetype", the getter's name, and
+  a type outside -1 to 3 returns. Established. Inferred: that the byte is the interrupt vector, from the routine's name and the matching getter.
+- `pcireg_device_bit_clr` (`IP27/unix` at 0xc000000000086c58,
+  572 bytes) clears bits in the device register of one slot of a Bridge-family chip. It takes the register-block pointer or record in `a0`, the device number in `a1` and the bits to clear in `a2`,
+  and returns nothing. Types 0 and 1 check `device <= 7` (`assfail`, source line 2483) and AND the complement of `a2` into the word at +0x204 + 8 * device with one load and one 32-bit store;
+  types 3 and 2 check `device <= 3` (lines 2474 and 2478) and do the same on the doubleword at +0x200 + 8 * device with `ld` and `sd`. A null `a0` or a type of -1 calls
+  `panic` ("pcireg_device_bit_clr(): unknown bridgetype"); another type returns. Raw pointers are typed from the identification word by the same six parts (0xe000, 0xe010, 0xd102, 0xd112, 0xd002, 0xc002)
+  as the other accessors. Established. Inferred: that the register is the per-device configuration register, from its slot stride and the 0x200 base shared with `pcireg_device_get`.
+- `pcireg_device_bit_set` (`IP27/unix` at 0xc000000000086a24,
+  564 bytes) sets bits in the device register of one slot of a Bridge-family chip. It takes the register-block pointer or record in `a0`, the device number in `a1` and the bits to set in `a2`, and returns nothing.
+  Types 0 and 1 check `device <= 7` (`assfail`, source line 2456) and OR `a2` into the word at +0x204 + 8 * device (`lw`, `sw`); types 3 and 2 check `device <= 3` (lines 2447 and 2451) and OR it into the
+  doubleword at +0x200 + 8 * device (`ld`, `sd`). A null `a0` or a type of -1 calls `panic` ("pcireg_device_bit_set(): unknown bridgetype"); a type outside -1 to 3 returns. The raw-pointer dispatch accepts parts 0xe000
+  and 0xe010 into the type 3 path, 0xd102 and 0xd112 into the type 2 path, and 0xd002 and 0xc002 into the word path. Established. Inferred: that the register is the per-device configuration register, from the 0x200 base and slot stride.

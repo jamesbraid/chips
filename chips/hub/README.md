@@ -1525,6 +1525,64 @@ Hub's registers, or the Hub's real-time counter, through the aliases described a
   "module %M MSC: Error %s heartbeat: %s" with the word "enabling", "disabling" or "sending" and `elsc_errmsg`; the result -112 (-0x70)
   also calls `cmn_err` (level 0x804) "Keyswitch must be in diagnostic position for heartbeats". After a failed enable the want word is
   cleared. Established: the state machine and arguments. Inferred: the role of `_elsc_hbt`'s arguments, which are named nowhere in the routine.
+- `intr_dumpvec` (`IP27/unix` at 0xc00000000003a0d8,
+  608 bytes) prints the interrupt state of one node: the two interrupt-pending words of the node's Hub, the interrupt-table record behind each,
+  and every level that is reserved or pending. It takes the node number in `a0` and a print function in `a1`, called through `jalr` for
+  every line, and returns nothing. A node number below zero, or not below the word at `gp` + 7340 (the node count), prints
+  "intr_dumpvec: cnodeid out of range: %d"; a node whose entry in the halfword table at 0xc0000000014d4e80 (indexed by twice the node
+  number) is -1 prints "intr_dumpvec: Bad cnodeid: %d". Both return after the message. Otherwise that halfword shifted left 32 is the node's
+  alias offset, and the node's record pointer is the doubleword at `[[0xffffffffffffc400] + 8 * node]`. Two passes follow, numbered 0 and 1.
+  Pass 0 uses the interrupt-table record at +0xcd8 of the node record and pass 1 the one at +0x2b00. Each pass forms three addresses
+  on `0x9200000001800000` plus the alias offset: the pending doubleword at +0x98 (pass 0) or +0xa0 (pass 1), the first processor's mask
+  at +0xa8 or +0xb0 and the second processor's at +0xb8 or +0xc0, and loads the doubleword at each. It then prints "Node %d PI %d INT_PEND%d (0x%x):"
+  with the node, 0, the pass number and, as the fifth argument, the address of the pending register (a4 is not changed between its
+  formation and the call). The word at +0x1e20 of the record chooses " Ithreads enabled" (nonzero) or " Ithreads disabled", and the lines
+  " vector_count = %d, vector_state = %d" (words +0x1e14 and +0x1e10), " CPU A count %d, CPU B count %d" (words +0x1e18 and +0x1e1c)
+  and " &vector_lock = 0x%x" (the address record + 0x1e00) follow. It then walks levels 0 to 63: when bit 0 of the word at +0x122c + 0x30 * level
+  is set, or the level's bit is set in the pending value, it calls the static routine at 0xc000000000039f18 (reached by the `jal` at 0xc00000000003a250,
+  which the listing labels as part of `intr_clear_all`) with the 0x30-byte entry at +0x1200 + 0x30 * level in `a0`, the 0x48-byte handler entry at
+  0x48 * level in `a1`, the level in `a2`, the pending value in `a3`, the two mask values in `a4` and `a5` and the print function in `a6`. Each pass ends
+  with a bare newline. Established: the control flow, the offsets and the address arithmetic. Inferred: that the 0x30-byte and 0x48-byte
+  entries are the level's flag and handler records, from `intr_connect_level` storing handler words at 0x48 * level and the flag word at +0x122c;
+  what the static routine prints beyond its "  Bit %02d: %s: func 0x%x arg 0x%x prefunc 0x%x" line was read only in outline.
+- `check_ni_errors` (`IP27/unix` at 0xc000000000032f40,
+  604 bytes) looks for a network (NI) error that needs the system to act and returns 1 when it found and reported one, 0 otherwise; it takes no
+  arguments. It reads `NI_PORT_ERROR` (`0x9200000001608008`) and keeps the value, and reads the network status word (`0x9200000001600000`). With
+  none of the flag bits 24 to 31 and 33 to 37 of the port error set (mask 0x3eff000000), it tests the status word against 0x30000000; when that
+  is clear it reads `NI_PROTECTION` (`0x9200000001600010`) and returns 1 after `cmn_err` level 20 "NI Link went down (0x%x)" (the value
+  printed is the zero left in `a2`) when the register is nonzero, or, when it is zero, calls `cmn_err` level 21 "Detected a link reset due to other
+  partition reset", reads the clear alias at `0x9200000001608088` and returns 0. When the status word has bits set, it reads `PI_INT_PEND1`
+  (`0x92000000010000a0`) and, when bit 39 or bit 40 of it is set (levels 103 and 104), calls `cmn_err` level 20 "Hub Widget 0 has been Shutdown"
+  and returns 1; with neither set it returns 0. With any of the listed port-error flags set it first looks at bit 37 (link reset): when that bit
+  is set and `NI_PROTECTION` is zero it takes the same "other partition reset" path (message, clear alias read, return 0); in every other case
+  it calls `cmn_err` level 20 "Fatal NI error interrupt" and "    NI PORT_ERROR 0x%x" with the port error, then one more `cmn_err` per set flag in this order: bit 36
+  "Internal NI error", bit 35 "Bad message", bit 34 "Bad destination", bit 33 "Receiver had a FIFO overflow" (each printing the bit mask), bits
+  31:28 "Credit timeout (0x%x)" with the four-bit field (`(value >> 28) & 0xf`) and bits 27:24 "Tail timeout (0x%x)" with `(value >> 24) & 0xf`. It ends with two
+  calls to `protected_broadcast` (arguments 103, then 104) and returns 1. Established. Inferred: that bits 29:28 of the status word are a link
+  state, and that protected-broadcast levels 103 and 104 are the NI-error and widget-shutdown signals, from the messages and the matching pending bits.
+- `i2c_master_xmit` (`IP27/unix` at 0xc00000000009ae74,
+  600 bytes) writes bytes to an I2C slave through a node's I2C master and is the write twin of `i2c_master_recv`. It takes the node number in `a0`, the slave address
+  in `a1`, the buffer in `a2` and the length in `a3`, a pointer to the sent count in `a4`, a time allowance in `a5` and a flag in `a6`. It zeroes the count, calls
+  `i2c_arb` (node, `a5`, 0) and returns a negative result unchanged; when `a6` is nonzero and the result is 0 it returns -10. The registers are the
+  data register at +0x0 and the status register at +0x8 of `0x9200000001a20000 + (node << 32)`. A status with any of bits 1, 2 or 4 (mask 0x16) set before the
+  start returns -2 with no store. The routine stores `address << 1` to the data register (bit 0 clear, write), then 0xc5 to the status register and
+  waits for status bit 7 (0x80) to clear, the deadline being `a5` plus the Hub real-time counter (`0x9200000001030100`) times 800 divided by 1000
+  read at entry; an error bit during any wait, a timeout (-6 after the address, -7 after a data byte) and bit 3 set after the address (-3) all end
+  the call. Each data byte is stored to the data register, awaited the same way and counted in `*a4` before bit 3 of the status is tested; bit 3 set
+  stops the loop without an error. The end is status 0x45, data 0xfe and a last wait (timeout -6), returning 0. Every return after the address
+  store, including the success one, first stores 0xc2 to the status register. Established. Inferred: the bit meanings (busy as bit 7, not-acknowledged as
+  bit 3), from the way the loop uses them.
+- `check_dir_state` (`IP27/unix` at 0xc00000000002ab2c,
+  600 bytes) prints the memory directory state of every populated bank of one node. It takes the node number in `a0` and a print function in `a2`, and returns the
+  first nonzero result of the per-bank walkers, else 0. It reads the doubleword at +0x18 of `0x9200000001a00000 + (node << 32)` (`MD_MEMORY_CONFIG`), prints the header
+  "Node   ___Off___    __Owner__      __State__   (DirLo)" and loops over eight banks with three bits each: the field `(config >> (3 * bank)) & 7` gives a size of
+  `4 << field` units of 1 MiB (zero field: size 0). Bit 28 of the configuration (0x10000000) chooses the walker for all banks: with it set the routine calls the
+  static routine at 0xc00000000002a8b4 (`mdir_pstate`), with it clear the one at 0xc00000000002a9ec (`mdir_sstate`); each is called with -1, the bank's base
+  (`(node << 32) | (bank << 29)`), the size in bytes (`size << 20`) and the print function. A size of 256 units is split into four calls of a quarter of the size
+  (signed divide by four) at the base and at base + 0x8000000, + 0x10000000 and + 0x18000000, each call stopping the whole routine on a nonzero result. The
+  walker `mdir_pstate` loops over 4096-byte pages and, within a page, over 128-byte steps, calling a static routine at 0xc00000000002afa0 for each entry. Established
+  for the routine's own body; the walkers' work was read only as far as their loop structure. Inferred: that bit 28 of the configuration selects the
+  premium directory format, from the walker names.
 
 ## Routines in the IP27 `hubspc.o` build
 
