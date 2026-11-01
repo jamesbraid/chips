@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3092	0	526	0	526	3	4	144	2418	0	17.0	17.1	21.8	17.0							0			
-functions	6301	91992	723	79	584	9	891	1440	3247	0	11.5	25.6	48.5	11.5							0	0	16	
-functions (distinct names)	2481	21770	514	79	511	9	12	565	1390	0	20.7	21.2	44.0	20.7							0			
+functions	6301	91992	769	79	615	9	907	1426	3199	0	12.2	26.6	49.2	12.2							0	0	16	
+functions (distinct names)	2481	21770	545	79	541	9	12	558	1366	0	22.0	22.5	44.9	22.0							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -869,7 +869,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_snapshot.o)	0	58	0	0	0	0	0	0
 functions in IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_irix_snapshot.o)	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/xvmidbg.o	0	40	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/zero.o	0	8	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP30/unix	718	12369	173	24	173	0	95	165	285	0	24.1	37.3	60.3	24.1							0	0	5	
+functions in IP30/unix	718	12369	187	24	186	0	112	158	261	0	26.0	41.6	63.6	26.0							0	0	5	
 functions in IP30/usr/cpu/sysgen/IP30boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/asidbg.a(asidbg.o)	0	38	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	0	20	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -1014,7 +1014,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(chardlocks.o)	0	19	0	0	0	0
 functions in IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	0	22	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(chardlocks.o)	0	19	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	0	22	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP30/usr/cpu/sysgen/IP30boot/heart.o	67	0	20	0	19	0	5	14	28	0	29.9	37.3	58.2	29.9							0	0	0	
+functions in IP30/usr/cpu/sysgen/IP30boot/heart.o	67	0	52	0	50	0	4	7	4	0	77.6	83.6	94.0	77.6							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/hitachi.o	0	9	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgvnops.o)	0	21	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/idbg.o	0	298	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
