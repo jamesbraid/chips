@@ -92,28 +92,28 @@ chip page and the entry is deleted.
   reset register, which the specification calls reserved; the PS/2 code treats status bit 6 differently when the flag
   is 0. Tried: the specification's PS/2 and ISA chapters, Linux and NetBSD (neither reads it). Next: the specification
   revision history pages (host bridge revision 0 versus 1 notes) and the NetBSD PS/2 driver for the same quirk.
-- **MACE: video output `0x200058` bits 35:32.** `mvpprobe` returns bits 35:32 of the 64-bit read; the specification
+- **MACE: video output `0x200058` bits 35:32.** *[route: software now; the held MACE specification text covers the video chapter]* `mvpprobe` returns bits 35:32 of the 64-bit read; the specification
   defines bits 18:0 of the hardware configuration register. Next: the specification's video chapter text.
-- **MACE: `0x304018`.** The Ethernet driver writes and reads this address as a flush target. It is not in the
+- **MACE: `0x304018`.** *[route: software now]* The Ethernet driver writes and reads this address as a flush target. It is not in the
   specification's register list. Next: confirm the block repeat on the peripheral controller's audio block.
-- **MACE: calendar-clock user RAM spacing.** `read_dallas_nvram` reads one byte apart from `0x3a0e08` while every
+- **MACE: calendar-clock user RAM spacing.** *[route: software now]* `read_dallas_nvram` reads one byte apart from `0x3a0e08` while every
   other register of the block is 256 bytes apart. Next: read the writer and its callers.
-- **MACE: Linux I2C offsets.** `struct mace_i2c` in the Linux header puts control and data at 8 and 0x10; IRIX and the
+- **MACE: Linux I2C offsets.** *[route: missing source: the Linux header and driver are in the uninitialised linux submodule]* `struct mace_i2c` in the Linux header puts control and data at 8 and 0x10; IRIX and the
   specification use `0x10` and `0x18`. Next: the Linux I2C driver that uses the structure, to see which offsets it
   reaches in practice.
-- **Hub, Bedrock, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
+- **Hub, Bedrock, IOC3, IOC4 inventories.** *[route: software now; stale in part: duplicates the Bedrock, IOC3, IOC4 entry]* Censuses not run (stub configs). Next: write each config's
   seeds (see HAIKU-BRIEF.md) and run `tools/run.sh`.
-- **Model of a PROM's window base.** A PROM builds its window pointer at run time; the census recovers a
+- **Model of a PROM's window base.** *[route: software now; overlaps the IP27 and I/O-board PROM entry]* A PROM builds its window pointer at run time; the census recovers a
   pointer only where an identity-register probe shows it. Next: constant-fold the PROM's address setup.
-- **IP35 reset window.** The routing rule that returns boot-PROM bytes for uncached memory-space fetches of physical
+- **IP35 reset window.** *[route: software now; hardware residue: item 1, the routing rule, which the linked question says only a hardware observation settles]* The routing rule that returns boot-PROM bytes for uncached memory-space fetches of physical
   0x1fc0xxxx after bank 0 is enabled, and whether any write ends it, are not visible in the PROM. Tried: full read of
   the reset, memory and jump-to-RAM path. Next: see [docs/questions/ip35-reset-window.md](questions/ip35-reset-window.md).
-- **Literal-pool bases (PIC and Bedrock objects): settled by audit.** Every object's options record carries its
+- **Literal-pool bases (PIC and Bedrock objects): settled by audit.** *[route: closed: the one remaining item, reading gp from the options record, is done per the scanner-fix entry; move the fact to its chip page and delete]* Every object's options record carries its
   gp (0x7ff0 for `kernel.o`, 0x7800 for the eleven others checked, including `pic.o`), and in each of them the
   lowest `.lit8` displacement equals minus gp and the pool is exactly covered by the displacements used, so
   `gp: auto-min` gives the stated base. The constants read this way can be labelled established where the function
   is read in full. Remaining: the census tool could read the gp from the options record instead of inferring it.
-- **Census scanner faults found by the audit.** (1) A load or store whose displacement is added at run time through
+- **Census scanner faults found by the audit.** *[route: software now; tool work; partly covered by the scanner-fix entry, so rerun to check]* (1) A load or store whose displacement is added at run time through
   a `movz`-selected constant or a loop counter is recorded at the window base or at one iteration's slot
   (`dump_error_spool`, `hub_error_clear`, `part_discovery`); the families they build need their bounds read from the
   code. (2) A site in a routine with no symbol is credited to the preceding named routine (the three `+0x1000090`
@@ -121,7 +121,7 @@ chip page and the entry is deleted.
   same routine (the PIC branch of the interrupt-register clear at 0xc00000001fc41f38) is missed while the other
   branch is labelled PIC. Next: do not split a PROM pseudo-function at an address a branch from the previous one
   reaches, and fold `movz` of two constants into two sites.
-- **Hub PI write-buffer errors: which fault sets which.** PI error pending bits 4 to 7 (write response block timeout and write
+- **Hub PI write-buffer errors: which fault sets which.** *[route: software now]* PI error pending bits 4 to 7 (write response block timeout and write
   error) and 18 and 19 (error during spool), the status 0 and 1 latches (address, command, type 0 write error, 1 partial write error,
   3 timeout), the clear sequence and the interrupt (cause level 6) are read from the kernel (graded entries in
   [chips/hub/README.md](../chips/hub/README.md#error-reporting-for-a-refused-or-timed-out-uncached-write-and-read)). Unknown: the
