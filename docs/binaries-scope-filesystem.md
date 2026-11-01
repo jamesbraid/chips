@@ -233,3 +233,49 @@ table. Labels: a classification from names, sizes and the scan's result is infer
   `spec_write` (728 bytes), `spec_ioctl` (124 bytes), `spec_getattr` (576 bytes), `spec_setattr` (428 bytes) and
   `spec_fcntl` (400 bytes). `spec_read_rsync` (1080 bytes) is a second read path whose name suggests a sync step, and
   `spec_fsync` (1136 bytes) has the largest listed size in this member.
+- `IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_attr.o)` (inferred): nine routines in a 14228-byte member. `udf_attr_get`
+  (188 bytes), `udf_attr_set` (980 bytes), `udf_attr_list` (936 bytes), `udf_attr_remove` (500 bytes) and
+  `udf_attr_remove_all` (444 bytes) read, write, list and remove a UDF file's extended attributes. The attributes
+  live in a stream directory, which `udf_get_streamdir` and `udf_iattr_get` reach, and `udf_attr_fetch` (40 bytes)
+  is the shared fetch step.
+- `IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_bitmap.o)` (inferred): four routines in a 9396-byte member: `udf_findfree`
+  (696 bytes), `udf_bmread` (68 bytes), `udf_bmrelse` (32 bytes) and `udf_bitfunc`. They search a UDF partition's
+  space bitmap for free blocks and read and release the bitmap block that holds the result, the same split as the
+  EFS bitmap member.
+- `IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_dev_read.o)` (inferred): 26 routines in a 31604-byte member, the
+  mount-time reader of UDF volume structures. `udf_read_descriptor` (972 bytes) reads descriptors from the device,
+  `udf_read_mnt` (1176 bytes) reads the volume set, `udf_get_fentry` (1176 bytes) reads a file entry, and
+  `udf_bmap_read` (1280 bytes) and `udf_apply_sparing` (408 bytes) map logical blocks to physical ones through the
+  sparing table. Each `udf_get_` routine has a `udf_destroy_` partner that frees its record.
+- `IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_read.o)` (inferred): eight routines in a 17732-byte member: `udf_read`
+  (152 bytes), `udf_readbuf` (164 bytes), `udf_readdir` (1044 bytes), `udf_lookup` (348 bytes), `udf_dirlookup`
+  (1484 bytes), `udf_stream_dirlookup` (528 bytes) and `udf_dirisempty` (192 bytes). They form the read path, the
+  directory read and lookup, and the lookup inside a stream directory of extended attributes.
+- `IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_util.o)` (inferred): 34 routines in a 28004-byte member, the helpers the
+  other UDF objects share. `udf_checktag` checks a descriptor tag, `udf_checksum` and `udf_crc` (80 bytes) compute
+  the checksums, and `udf_set_crc` and `udf_check_crc` (68 bytes each) store and verify CRCs. `udf_transname` (360
+  bytes) converts file names, `udf_timetotimespec` (764 bytes) converts times, and `udf_permtomode` and
+  `udf_modetoperm` (248 bytes each) convert permissions. The `udf_debug_` family prints state for the kernel
+  debugger.
+- `IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_vfsops.o)` (inferred): 12 routines in a 23204-byte member: `udf_mount`
+  (412 bytes), `udf_mountfs` (1412 bytes), `udf_unmount` (608 bytes), `udf_statvfs` (396 bytes), `udf_statdevvp`
+  (644 bytes), `udf_vget` (172 bytes) and `udf_sync` (2340 bytes), with the small `udf_init`, `udf_root` and
+  `udf_mntupdate` entry points. `udf_sync` has the largest listed size of the member.
+- `IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_vnops.o)` (inferred): 30 routines in a 44900-byte member, the vnode
+  operations of UDF files and directories. `udf_rename` (2784 bytes) is the largest, followed by `udf_setattr` (1736
+  bytes), `udf_create` (1416 bytes) and `udf_mkdir` (752 bytes). `udf_direnter` (692 bytes) and `udf_dirrewrite`
+  (168 bytes) write directory entries back to the disk.
+- `IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_xlate.o)` (inferred): 38 routines in a 34660-byte member. `udf_swap`
+  is the shared byte-order helper, and each `udf_xlate_` routine converts one on-disk UDF structure between its disk
+  layout and its in-memory form. Examples are `udf_xlate_desc_tag` (436 bytes), `udf_xlate_file_entry` (800 bytes),
+  `udf_xlate_fileset_desc` (1084 bytes), `udf_xlate_pri_vol_desc` (1040 bytes) and `udf_xlate_part_map_spare` (692
+  bytes).
+- `IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_entry.o)` (established): one routine, `umfscall`, in a 3876-byte member.
+  Read in full, it saves `ra`, makes one `jal` whose relocation names `nopkg`, restores `ra` and returns. It sets
+  no return value of its own.
+- `IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_vfsops.o)` (established): twelve routines in an 8132-byte member, each
+  a two-instruction return. `umfs_init` sets `v0` to zero in its delay slot. The other eleven, from `umfs_mount`
+  to `umfs_quotactl`, set `v0` to 89 and return. Read in full.
+- `IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_vnodeops.o)` (established): 47 routines in an 18596-byte member, each
+  a two-instruction return read in full. 41 set `v0` to 89, `umfs_map` sets it to 19, and five (`umfs_strategy`,
+  `umfs_rwlock`, `umfs_rwunlock`, `umfs_link_removed` and `umfs_vnode_change`) return with no value set.

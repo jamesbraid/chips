@@ -726,14 +726,14 @@ IP27/usr/cpu/sysgen/IP27boot/tserialio.o	kernel-IP27	kernel-object	object	n64	30
 IP27/usr/cpu/sysgen/IP27boot/tsutil.o	kernel-IP27	kernel-object	object	n64	5656	a67c7eabea598cc9	IP30/usr/cpu/sysgen/IP30boot/tsutil.o;IP35/usr/cpu/sysgen/IP35boot/tsutil.o	1	none	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/tsv.a(tsv.o)	kernel-IP27	kernel-object	object	n64	19092	848759d8e5080fea		15	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/ude.o	kernel-IP27	kernel-object	object	n64	12256	8a7f9b27035d4459		14	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_vfsops.o)	kernel-IP27	kernel-object	object	n64	23204	9610dbb11f9d417f		12	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_vnops.o)	kernel-IP27	kernel-object	object	n64	44900	f185edec05321529		30	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_xlate.o)	kernel-IP27	kernel-object	object	n64	34660	192b44c8f445cd46	IP30/usr/cpu/sysgen/IP30boot/udf.a(udf_xlate.o);IP35/usr/cpu/sysgen/IP35boot/udf.a(udf_xlate.o)	38	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_read.o)	kernel-IP27	kernel-object	object	n64	17732	2ac5ef224e1fc434		8	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_dev_read.o)	kernel-IP27	kernel-object	object	n64	31604	0279392ed367a5ee		26	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_util.o)	kernel-IP27	kernel-object	object	n64	28004	f131905a232e85ec		34	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_attr.o)	kernel-IP27	kernel-object	object	n64	14228	386832bb64ee7861	IP30/usr/cpu/sysgen/IP30boot/udf.a(udf_attr.o);IP35/usr/cpu/sysgen/IP35boot/udf.a(udf_attr.o)	9	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_bitmap.o)	kernel-IP27	kernel-object	object	n64	9396	d1b1fe01e8b853aa		4	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_vfsops.o)	kernel-IP27	kernel-object	object	n64	23204	9610dbb11f9d417f		12	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_vnops.o)	kernel-IP27	kernel-object	object	n64	44900	f185edec05321529		30	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_xlate.o)	kernel-IP27	kernel-object	object	n64	34660	192b44c8f445cd46	IP30/usr/cpu/sysgen/IP30boot/udf.a(udf_xlate.o);IP35/usr/cpu/sysgen/IP35boot/udf.a(udf_xlate.o)	38	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_read.o)	kernel-IP27	kernel-object	object	n64	17732	2ac5ef224e1fc434		8	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_dev_read.o)	kernel-IP27	kernel-object	object	n64	31604	0279392ed367a5ee		26	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_util.o)	kernel-IP27	kernel-object	object	n64	28004	f131905a232e85ec		34	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_attr.o)	kernel-IP27	kernel-object	object	n64	14228	386832bb64ee7861	IP30/usr/cpu/sysgen/IP30boot/udf.a(udf_attr.o);IP35/usr/cpu/sysgen/IP35boot/udf.a(udf_attr.o)	9	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_bitmap.o)	kernel-IP27	kernel-object	object	n64	9396	d1b1fe01e8b853aa		4	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_write.o)	kernel-IP27	kernel-object	object	n64	9796	7a7a7e3d9c2efe2e		3	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_alloc.o)	kernel-IP27	kernel-object	object	n64	14468	064db2e2ecb753c9	IP30/usr/cpu/sysgen/IP30boot/udf.a(udf_alloc.o);IP35/usr/cpu/sysgen/IP35boot/udf.a(udf_alloc.o)	11	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_inode.o)	kernel-IP27	kernel-object	object	n64	24084	e1705f18ee4141a6		19	symtab	0	0	undocumented		
@@ -744,9 +744,9 @@ IP27/usr/cpu/sysgen/IP27boot/udf.a(udf_acl.o)	kernel-IP27	kernel-object	object	n
 IP27/usr/cpu/sysgen/IP27boot/uds.a(uds.o)	kernel-IP27	kernel-object	object	n64	8068	e1ff5d78267c4b93		2	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/uds.a(uipc_proto.o)	kernel-IP27	kernel-object	object	n64	3012	736fd70c894b54e6	IP30/usr/cpu/sysgen/IP30boot/uds.a(uipc_proto.o);IP35/usr/cpu/sysgen/IP35boot/uds.a(uipc_proto.o)	0	none	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/uds.a(uipc_usrreq.o)	kernel-IP27	kernel-object	object	n64	28148	39d70270b1f20f75		20	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_entry.o)	kernel-IP27	kernel-object	object	n64	3876	9eba1b746202d32a	IP30/usr/cpu/sysgen/IP30boot/umfs.a(umfs_entry.o);IP35/usr/cpu/sysgen/IP35boot/umfs.a(umfs_entry.o)	1	none	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_vfsops.o)	kernel-IP27	kernel-object	object	n64	8132	325015660d5fcb79		12	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_vnodeops.o)	kernel-IP27	kernel-object	object	n64	18596	bf0543c739d02c28		47	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_entry.o)	kernel-IP27	kernel-object	object	n64	3876	9eba1b746202d32a	IP30/usr/cpu/sysgen/IP30boot/umfs.a(umfs_entry.o);IP35/usr/cpu/sysgen/IP35boot/umfs.a(umfs_entry.o)	1	none	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_vfsops.o)	kernel-IP27	kernel-object	object	n64	8132	325015660d5fcb79		12	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/umfs.a(umfs_vnodeops.o)	kernel-IP27	kernel-object	object	n64	18596	bf0543c739d02c28		47	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/uncintf.o	kernel-IP27	kernel-object	object	n64	13520	b8199200a7043cd7		13	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/universe.o	kernel-IP27	kernel-object	object	n64	60512	b8744a2fd406b768		67	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/usema.o	kernel-IP27	kernel-object	object	n64	25816	805a5c6908c81294		18	symtab	0	0	undocumented		
