@@ -235,7 +235,7 @@ IP27/usr/cpu/sysgen/IP27boot/io.a(idbgactlog.o)	kernel-IP27	kernel-object	object
 IP27/usr/cpu/sysgen/IP27boot/io.a(ioerror_handling.o)	kernel-IP27	kernel-object	object	n64	17172	8070ea5f495ffa7f		18	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(hwcopy.o)	kernel-IP27	kernel-object	object	n64	4404	6d703d9439b816af		2	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io6.o	kernel-IP27	kernel-object	object	n64	7016	1593cd3e6572ed28		2	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ioc3.o	kernel-IP27	kernel-object	object	n64	27232	c5505138ceec0c6d		27	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ioc3.o	kernel-IP27	kernel-object	object	n64	27232	c5505138ceec0c6d		27	symtab	0	0	named-only	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP27/usr/cpu/sysgen/IP27boot/ioc3_pckm.o	kernel-IP27	kernel-object	object	n64	35840	159a1304d5d86fd0		34	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ioc3ei.o	kernel-IP27	kernel-object	object	n64	21248	4441b50f9c67412e		19	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-IP27	kernel-object	object	n64	41232	4b687e356cc9e76d		34	symtab	0	0	undocumented		
