@@ -8,9 +8,9 @@ Cited by file and version, never copied. Labels in the entries say which source 
   `drivers/ioc3/` and `drivers/net/ethernet/sgi/ioc3-eth.c` (IOC3), `arch/mips/sgi-ip32/` (CRIME, MACE),
   `drivers/video/fbdev/gbefb.c` (GBE). Read from the current tree and from the history for deleted files.
   A header is a driver author's naming, not a hardware measurement.
-- **OpenBSD** (the SGI port, last commit before its removal from the tree): `sys/arch/sgi/xbow/`
-  (`xbridgereg.h`, `xbow.c`, `xbridge.c`, `widget.h`), `sys/arch/sgi/xbow/` Hub and IOC code, and the
-  man pages `xbow(4)` and `xbridge(4)`.
+- **OpenBSD** (the SGI port, `sys/arch/sgi`, still in the tree): `sys/arch/sgi/xbow/`
+  (`xbridgereg.h`, `xbow.c`, `xbridge.c`, `xheart.c`, `xheartreg.h`, `hub.h`, `widget.h`), `sys/arch/sgi/localbus/`
+  (CRIME and MACE) and the man pages `xbow(4)` and `xbridge(4)`.
 - **NetBSD** `sgimips` port for CRIME, MACE and GBE.
 - **Patents** (published): the Bedrock family US 6,751,698, US 6,487,685, US 6,532,501, US 6,546,451,
   US 6,564,277, and the Bridge patents US 5,915,104 and US 6,604,161. A patent states a designer's intent,
@@ -18,5 +18,9 @@ Cited by file and version, never copied. Labels in the entries say which source 
 - **Usenet and mailing lists**: by message-id only, added to the entry that uses them.
 - **Published captures** (`hinv` output, PROM console transcripts, `ide` diagnostics): described by what they
   show and how many were read, in the entry that uses them.
+
+The Linux, OpenBSD, NetBSD, GXemul and MAME trees, older Linux trees (2.4, 2.5.40, 5.3 for the ia64 SN code, an
+out-of-tree Octane port) and the boot loader are submodules at the repository root; the pins, public URLs and what
+each covers are in [sources/INDEX.md](sources/INDEX.md), which also lists the sources held by URL only.
 
 Nothing here is a path into any local store.

@@ -19,6 +19,8 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
 - [IRIX_FILES.md](IRIX_FILES.md): the shipped files the repository reads (not committed).
 - [docs/specs.md](docs/specs.md): the published specifications held here, with coverage.
 - [docs/published-sources.md](docs/published-sources.md): public drivers and other sources.
+- [docs/sources/INDEX.md](docs/sources/INDEX.md): every public source with its pin and URL: the Linux, OpenBSD, NetBSD, GXemul and MAME
+  submodules, older Linux trees for SN1, SN2 and IP27, the IP30 port and the sources recorded by URL only.
 - [docs/coverage.md](docs/coverage.md) and [docs/inventory/](docs/inventory/): measured coverage.
 - [docs/open-questions.md](docs/open-questions.md): what is not settled and the next route.
 - [chips/*/census/](chips/*/census/): register-access censuses per chip, produced by [tools/](tools/).
@@ -39,7 +41,8 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
                        run_routine.py, check-leaks.sh, inventory-config.json
     tools/             the census scanner (scan, ref, join, fields, entries, gen_headers) and configs/
     ghidra/            headless scripts for IRIX code (shared with the graphics workspaces)
-    m2c spimdisasm linux netbsd openbsd   public submodules (pinned; init only what you need)
+    m2c spimdisasm linux linux-ia64 linux-2.5.40 linux-2.4.37 linux-ip30 netbsd openbsd gxemul mame arcboot
+                       public submodules, pinned and shallow (init only what you need; docs/sources/INDEX.md)
     root/              the filled IRIX tree and spec text; ignored, never committed
 
 Graphics inputs (libGLcore, X modules, OpenGL sources) and graphics-only tables are not part of this
