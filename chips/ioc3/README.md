@@ -47,7 +47,7 @@ later chip of the same family, is in [../ioc4/README.md](../ioc4/README.md).
 - The driver keeps a per-slot software mask of enabled subdevices, default `0xff` (`ioc3_subdev_enabled`, `ioc3.o`
   `0x12e4`). Bit 3 is tested by `pckm_attach`, bits 4 and 5 by `ioc3_serial_attach` (ports A and B) and bit 6 by
   `plpattach` (`ecpplp.o`). `ioc3_attach` (returns 0 or -1) sets the mask to `0x91` when the PCI path name contains a string it compares
-  against (the string is not extracted). `ioc3_intb_needed` (`0x13e4`) is true when `mask & 0xfa` is zero. Which board each
+  against (the string is not extracted). `ioc3_intb_needed` (`0x13e4`) returns 0 when `mask & 0xfa` is zero and 1 otherwise (and 1 when no mask exists). Which board each
   mask belongs to is unknown.
 
 ## Register inventory
@@ -226,6 +226,173 @@ microseconds and returns when bit 0 (port 0) or bit 1 (port 1) is clear. `pckm_r
 (port 1) into `0x9c`, stores it back, reads it and stores it back again (inferred: the second pair clears sticky bits).
 `pckm_pollcmd` (`0x1810`) writes the command byte to `0xa8` (port 0) or `0xac` (port 1), then reads `0xa0` or `0xa4` up to 250
 times at 50 microseconds until any of bits 31:29 is set. Port 0 is the keyboard by the routine names; inferred.
+
+## Routines in the IP27 `ioc3.o` build
+
+One entry per routine, read in full from the IRIX 6.5.30 IP27 `ioc3.o` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o`). Addresses are
+offsets in the object's `.text`. The per-slot record is the 2888-byte block `ioc3_attach` allocates. Its fields, as the routines
+below use them: +0, +4 and +8 hold the three vertex handles (the `ioc3` child, the host and the guest), +16 the
+configuration-space pointer, +24 the window-0 pointer, +32 the interrupt handle, +40 and +42 two halfword processor numbers,
++48 the first of 32 connection entries of 88 bytes each (48 + 32 x 88 is +2864), +2864 the number of entries handed out, +2868 the bits claimed by
+connections, +2872 a bitmap of released entries, +2876 a spinlock, +2880 the shadow of the enabled interrupt bits and +2884
+and +2885 two flag bytes. Within a connection entry, +0 is the interrupt-bit mask, +8 the handler, +16 its argument, +24 the
+owner vertex, +32 the record, +40 a flags word, +48 a semaphore and +80 an optional pre-handler. The string and function-pointer
+slots of `.srdata` are `spl7`, `ioc3_poll`, the `.rodata` base, `pci_ioc3_enet_vmc`, `pci_ioc3_sio_vmc`, `ioc3_error_handler`,
+`ioc3_intr`, `ioc3_intrd_setup` and `ioc3_intrd`, in that order.
+
+- `ioc3_intr_cpu_get` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x0, 8 bytes)
+  returns the halfword at +40 of the record in `a0`, the processor number `ioc3_attach` stored there after it connected the
+  interrupt. It touches no register. Established.
+- `ioc3_mlreset` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x8, 32 bytes)
+  stores `a0` to the global `console_cfg` and `a1` to the global `console_mem` (the second store sits in the delay slot of
+  the call), then calls `ioc3_sio_mlreset` with both arguments unchanged. It touches no register itself. Established.
+  Inferred: the two arguments are the configuration and window pointers of the console chip, because `ioc3_attach` later
+  compares its own pointers with these two globals.
+- `ioc3_poll` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x28, 140 bytes)
+  takes the record in `a0`. It calls `ioc3_handle_intr` with the record and a1 0, takes the spinlock at +2876 with
+  `mutex_spinlock_spl` and the `spl7` function, and tests bit 1 of the flag byte at +2884. With the bit set it releases the
+  lock and re-arms itself with `prtimeout_nothrd` (the processor in the global `master_procid`, the routine `ioc3_poll`, the
+  record, one tick). With the bit clear it releases the lock and clears bit 2 of the flag byte in the delay slot of the
+  unlock. Established. This is the polling path of the interrupt bits that `ioc3_write_ireg` keeps out of the hardware
+  enable register.
+- `ioc3_write_ireg` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0xb4, 408 bytes)
+  takes the record, a bit mask and an operation in `a0` to `a2`. Under the lock at +2876 it updates the shadow at +2880
+  (operation 0 ORs the mask in, operation 1 removes it), then writes the enable-set register `0x20` and enable-clear
+  register `0x24` through the window pointer at +24 as described in "Interrupt registers". Any other operation value leaves
+  the shadow alone and only releases the lock. The shadow and flag rules are the ones listed under that heading; this entry
+  adds that in operation 0 only bits 31:23 of the mask reach `0x20` while bit 0 of the flag byte is set, and that the store
+  of `0x7fffff` to `0x24` happens each time bit 0 of the flag byte goes from clear to set. Established.
+- `ioc3_pending_intrs` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x24c, 92 bytes)
+  takes the lock at +2876, loads the word at +28 of the window pointer (register `0x1c`, interrupt status) and the shadow at
+  +2880, releases the lock and returns the two ANDed. Established.
+- `ioc3_init` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x2a8, 88 bytes)
+  registers the PCI driver with `pciio_driver_register` for vendor 4265 and device 3, with the name string `ioc3_` at
+  `.rodata` +0x30, and makes three `nic_vmc_add` calls: the string `030-1155-` with `pci_ioc3_enet_vmc`, then `030-1657-`
+  and `030-1664-` each with `pci_ioc3_sio_vmc`. It touches no register. Established.
+- `pci_ioc3_enet_vmc` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x300, 28 bytes)
+  calls `ioc3_subdev_enables` with the vertex in `a0` and the mask 9 (bits 0 and 3) and returns. Established. Bit 3 is the
+  keyboard bit that `pckm_attach` tests; no routine of the build tests bit 0, which `ioc3_intb_needed` leaves out of its
+  `0xfa` mask. Inferred: bit 0 is the Ethernet function, from this routine's name alone.
+- `pci_ioc3_sio_vmc` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x31c, 28 bytes)
+  is the same body with the mask `0x30` (bits 4 and 5, the two serial ports that `ioc3_serial_attach` tests). Established.
+- `ioc3_attach` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x338, 1208 bytes)
+  is read in full; it returns 0, or -1 after the two mapping failures below. It maps configuration space with
+  `pciio_pio_addr` (space 7, length 72) and window 0 (space 8, length `0x20180`); a failed first map prints a message naming
+  the configuration space with `cmn_err` level 1, and a failed second map frees the first piomap and prints the message for
+  the memory space. It looks up the `.host` edge of its vertex (the vertex itself when there is none), then the `.guest`
+  edge of that (the host when there is none), adds an `ioc3` child with `hwgraph_path_add` and an edge named `ioc3` to it
+  from host and guest, allocates the 2888-byte record with `kmem_zalloc`, initialises the spinlock at +2876 with the name
+  `is_ir_lock`, fills +0 to +24, attaches the record to the `ioc3` child with `hwgraph_fastinfo_set`, and registers
+  `ioc3_error_handler` with `pciio_error_register` on host and guest. When `hub_check_pci_equiv` reports the configuration
+  pointer equivalent to `console_cfg` and the window pointer equivalent to `console_mem`, the record becomes the console
+  record (the global it stores to is the one `ioc3_is_console` and `ioc3_console_vhdl_get` read). The stores to the chip
+  are, in order: configuration word `0x4` ORed with `0x8146`, window `0x28` set to `0x7ae5e`, configuration word `0xc` set
+  to `0xff00`, window `0x34` set to `0xc0`, `ioc3_write_ireg` with all ones and operation 1, and window `0x1c` set to all
+  ones. The path name from `vertex_to_name` then selects the subdevice mask: a path containing `Ibrick/xtalk/15/pci/4` sets
+  the mask `0x91` with `ioc3_subdev_enables` and byte +2885 to 1; `baseio` and `menet` keep the default; any other path
+  calls `nic_ioc3_vertex_info` with the window addresses `0x30` and `0x34`. If `ioc3_intb_needed` is false it clears +32,
+  stores the processor number from the process page into +40 and returns 0. Otherwise it duplicates the guest's device
+  descriptor (flag 4 added, software level 0, name `IOC3 UART`) and makes it the guest's default. The interrupt line is 2
+  when host and guest are the same vertex and function bit 0 is enabled; otherwise it is 2 when the identity string from
+  `nic_vertex_info_get` contains `030-1657-` or `030-1664-`, and 1 when the string is absent or holds neither. It then calls
+  `pciio_intr_alloc`; a null result prints the `unable to allocate interrupt` message at level 0 and the routine goes on
+  with the null handle. It connects `ioc3_intr` with the record as argument using `pciio_intr_connect`, stores the connected
+  processor at +40 and the processor the descriptor requested (or the connected one, when none or an invalid one is
+  requested) at +42, and prints the level 4 message with both numbers when they differ. It ends with `ioc3_serial_attach`
+  and `pckm_attach` on the guest and sets `console_device_attached` to 1 when this record is the console record (otherwise
+  it stores the old value back). Established. Inferred: lines 1 and 2 are the two interrupt pins of the slot, because the
+  `030-1657-` and `030-1664-` boards are the ones given line 2.
+- `ioc3_intr_connect` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x7f0, 632 bytes)
+  takes the lookup vertex, the bit mask, the handler, its argument, the owner vertex, the device vertex and a pre-handler in
+  `a0` to `a6`. It finds the record through the `ioc3` child (a missing child prints the `ioc3_attach not yet called`
+  message at level 1 and returns). It takes the lowest set bit of the released-entry bitmap at +2872 and clears it with a
+  load-linked and store-conditional pair; with an empty bitmap it takes the next number from the counter at +2864 with the
+  same pair. It fills the entry with the mask, handler, argument, owner, record and pre-handler, then ORs the mask into the
+  claimed bits at +2868 and, if any bit was already claimed, prints `trying to share ioc3 intr bits` at level 6 and calls
+  `panic` with `ioc3_intr_connect: no IOC3 interrupt source sharing allowed`. The software priority comes from the device's
+  descriptor (`device_desc_intr_swlevel_get`), else from the global `default_intr_pri`. The thread name is `ioc3[%d]%s` with
+  the entry number and the driver's name from `device_driver_getbydev`, or `ioc3[%d]` with the entry number alone when no
+  driver is found. The routine ORs `0x300` into the thread block at entry +40 and calls `xthread_setup` with the name, the
+  priority, that block, `ioc3_intrd_setup` and the entry. It does not set `v0`. Established.
+- `ioc3_intr_disconnect` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0xa68, 356 bytes)
+  takes the lookup vertex, a bit mask, the handler, its argument and the owner vertex in `a0` to `a4`. It finds the record
+  as `ioc3_intr_connect` does (a missing child prints a level 1 message and returns), then walks the entries up to the count
+  at +2864. For each whose handler, argument and owner equal the three given and whose mask overlaps, it clears the overlap
+  from that entry's mask and from the claimed bits at +2868 with load-linked pairs. An entry whose mask is now zero gets
+  owner -1, handler 0 and argument 0 and its bit is set in the released-entry bitmap at +2872. The walk does not stop at the
+  first match. Established.
+- `ioc3_intr` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0xbcc, 28 bytes)
+  calls `ioc3_handle_intr` with its own first argument and `a1` 1. It is the handler `ioc3_attach` connects with
+  `pciio_intr_connect`. Established.
+- `ioc3_handle_intr` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0xbe8, 468 bytes)
+  takes a record (or, for 0, the console record) in `a0` and a flag in `a1`. It reads the pending bits with
+  `ioc3_pending_intrs`, returns when none are set, and with the flag 0 removes bits 28:27 (`0xe7ffffff`); with the flag 1
+  and bit 0 of the flag byte at +2884 set it keeps only bits 31:23. For each entry up to the count at +2864 whose mask meets
+  the pending bits it calls the handler with the argument and the shared bits, except for an entry with bit `0x1000` set in
+  its flags word: that one first runs the pre-handler if there is one, and when there is none (or it returns nonzero) the
+  routine disables the entry's mask with `ioc3_write_ireg` (operation 1) and wakes the entry's thread with `vsema` on its
+  semaphore. Handled bits leave the pending set. When the loop ends the routine adds the number of entries run, less one, to
+  the word at offset 208 of the block that the pointer at absolute address `0xffffffffffffc508` holds. Bits nobody handled
+  print `unknown IOC3 interrupt 0x%x` at level 1, and the pending bits are read again until none remain. No routine of this
+  object sets bit `0x1000`. Established.
+- `ioc3_is_console` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0xdbc, 88 bytes)
+  returns 0 when no console record exists. Otherwise it looks up the `ioc3` child of the vertex in `a0`, returns 0 when that
+  fails, and returns whether its record is the console record. Established.
+- `ioc3_is_io7` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0xe14, 64 bytes)
+  looks up the `ioc3` child of the vertex in `a0` and returns byte +2885 of its record, or 0 when there is no child. Byte
+  +2885 is set only by the path match in `ioc3_attach`. Established. Inferred: the `Ibrick` path means an I/O brick board,
+  from the path text alone.
+- `ioc3_error_handler` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0xe54, 756 bytes)
+  takes the record in `a0`; the configuration pointer is at +16. It reads the word at configuration `0x4` and selects text
+  by bit: bits 31 and 24 give `parity error`, bit 30 or bit 16 gives `SERR`, bit 27 `signalled target abort`, bit 28
+  `received target abort` and bit 29 `issued master abort`. Each match overwrites the text, so the last one in that order is
+  printed with `cmn_err` level 5 as `IOC3 %s`; the print is unconditional, so with none of those bits set it shows whatever
+  the local buffer held. It then reads configuration word `0x40`; if bit 0 is clear it returns 0. Otherwise bits 4:1 index a
+  13-entry table: 0 `serial port A transmiter`, 1 `serial port A receiver`, 2 `serial port B transmitter`, 3 `serial port B
+  receiver`, 4 `parallel port`, 5 to 7 `unknown address unit`, 8 `enet tx descriptor read`, 9 `enet tx buf1 read`, 10 `enet
+  tx buf2 read`, 11 `enet rx descriptor read` and 12 `enet rx buffer write`; larger values use the default. It prints `IOC3
+  Error ID %s Error Addr 0x%x` at level 5 with the address made of the bits of word `0x40` above bit 5 and the word at
+  `0x44` as the high half, writes 1 to word `0x40` and returns 0. Established. Inferred: the write of 1 clears the error
+  latch, from the read-then-write pattern alone.
+- `ioc3_intrd` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x1148, 72 bytes)
+  is the body of an entry's interrupt thread. Its argument is the entry. It loads the window pointer through the entry's
+  record, reads register `0x1c`, ANDs it with the entry's mask, calls the entry's handler with the entry's argument and that
+  value, then waits on the entry's semaphore with `ipsema`. Established.
+- `ioc3_intrd_setup` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x1190, 128 bytes)
+  runs in a new thread with the entry in `a0`. It calls `setmustrun` with the halfword at +42 of the record (the requested
+  processor), points the thread's function at `ioc3_intrd` with `xthread_set_func` (first argument the pointer at absolute
+  address `0xffffffffffffc020`), copies the name that `fetch_kname` returns for the entry's handler to offset 832 of the
+  block that pointer holds with `strncpy` (16 bytes), ORs `0x400` into the entry's flags word and calls `ipsema` on the
+  entry's semaphore. Established.
+- `ioc3_console_vhdl_get` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x1210, 24 bytes)
+  returns the word at +0 of the console record (its `ioc3` child vertex), or -1 when there is no console record.
+  Established.
+- `ioc3_subdev_ptr` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x1228, 188 bytes)
+  takes a vertex and a create flag. It replaces the vertex with its `.host` edge if there is one, then looks up the label
+  `_subdevs` on it and returns the stored pointer. With the label missing and the flag set it allocates 8 bytes with
+  `kmem_zalloc`, stores 255, adds the label with `hwgraph_info_add_LBL`, reads it back and frees its own block with
+  `kmem_free` if the label now holds a different one. With the flag clear it returns 0 for a missing label. Established.
+- `ioc3_subdev_enabled` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x12e4, 72 bytes)
+  returns the mask word from `ioc3_subdev_ptr` (create 0), or 255 when there is none, ANDed with 1 shifted left by the bit
+  number in `a1`. Established.
+- `ioc3_subdev_enables` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x132c, 44 bytes)
+  stores the doubleword in `a1` into the mask `ioc3_subdev_ptr` returns with create 1. It does nothing when no pointer comes
+  back. Established.
+- `ioc3_subdev_enable` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x1358, 68 bytes)
+  sets bit `a1` of that mask with a load-linked and store-conditional doubleword pair; the bit is formed with a 32-bit
+  `sllv`, so numbers from 32 up wrap. Established.
+- `ioc3_subdev_disable` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x139c, 72 bytes)
+  clears bit `a1` of the same mask with the same pair and the same 32-bit shift. Established.
+- `ioc3_intb_needed` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x13e4, 60 bytes)
+  returns 1 when `ioc3_subdev_ptr` (create 0) finds no mask, and otherwise 1 when the mask ANDed with `0xfa` is nonzero and
+  0 when it is zero. Only bit 0 and bit 2 of the mask lie outside `0xfa`, and `ioc3_attach` skips the interrupt allocation
+  when this returns 0. Established. Inferred: the `intb` in its symbol means the second interrupt pin, so a board whose
+  enabled functions are only 0 and 2 would not need it.
+- `ioc3_mem_ptr` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x1420, 8 bytes)
+  returns the doubleword at +24 of the record in `a0`, the window-0 pointer. Established.
+- `ioc3_get_mem` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o` at 0x1428, 32 bytes)
+  calls `hwgraph_fastinfo_get` on the vertex in `a0` and returns the doubleword at +24 of the record it returns.
+  Established.
 
 ## Against the public drivers (reported after the reading above)
 
