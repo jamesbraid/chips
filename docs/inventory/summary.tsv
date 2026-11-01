@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3092	0	342	0	342	0	0	145	2605	0	11.1	11.1	15.8	11.1							0			
-functions	6301	91992	475	6	340	9	525	1653	3648	0	7.5	15.9	42.1	7.5							0	0	16	
-functions (distinct names)	2481	21770	333	6	330	9	13	582	1553	0	13.4	13.9	37.4	13.4							0			
+functions	6301	91992	485	6	350	9	523	1655	3638	0	7.7	16.0	42.3	7.7							0	0	16	
+functions (distinct names)	2481	21770	341	6	338	9	13	584	1543	0	13.7	14.3	37.8	13.7							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -869,7 +869,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_snapshot.o)	0	58	0	0	0	0	0	0
 functions in IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_irix_snapshot.o)	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/xvmidbg.o	0	40	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/zero.o	0	8	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP30/unix	718	12369	42	2	42	0	100	219	357	0	5.8	19.8	50.3	5.8							0	0	5	
+functions in IP30/unix	718	12369	52	2	52	0	98	221	347	0	7.2	20.9	51.7	7.2							0	0	5	
 functions in IP30/usr/cpu/sysgen/IP30boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/asidbg.a(asidbg.o)	0	38	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	0	20	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
