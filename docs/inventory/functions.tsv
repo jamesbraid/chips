@@ -3468,7 +3468,7 @@ IP27/unix	kernel	n64		0x0		udf_vfsmount	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		udf_vget	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/unix	kernel	n64		0x0		udf_zerobuf	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		udp_full_assign	dwarf			out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64		0x0		udp_saveopt	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		udp_saveopt	dwarf			out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64		0x0		ufadd	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ul_compress	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		uli_alloc	dwarf			out:5	undocumented		
@@ -4679,7 +4679,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003a338	256	enable_ithreads	symtab	899074c
 IP27/unix	kernel	n64	.text	0xc00000000003a550	56	tfi_save	symtab	23e6f8986331		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003a588	56	tfi_restore	symtab	0a54feea6840		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003a5c0	4	assbuffer	symtab	df3f619804a9		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003a5c4	1084	assfail	symtab	5360476ee7f3		out:5	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP27/unix	kernel	n64	.text	0xc00000000003a5c4	1084	assfail	symtab	5360476ee7f3		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000003aa00	12	getsr	symtab	2ea7fc1f266e		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003aa0c	16	setsr	symtab	d5ed0e1e4ca1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003aa1c	8	getpc	symtab	c343413c267a		out:5	undocumented		
@@ -6816,10 +6816,10 @@ IP27/unix	kernel	n64	.text	0xc000000000104e28	416	ps_reinit	symtab	6f1a646b91fb	
 IP27/unix	kernel	n64	.text	0xc000000000104fc8	848	ps_init	symtab	7fafacd6e27a		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000105918	180	ps_xmit_done	symtab	4b102b798257		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001059cc	168	ps_txq_stat	symtab	0d623494cd81		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000010696c	36	ip_to_frag_vec	symtab	b8917065f8fb		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000010696c	36	ip_to_frag_vec	symtab	b8917065f8fb		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000106990	300	udp_to_frag_vec_cksum	symtab	17625b372ca5		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000106abc	276	tcp_max_tso_len	symtab	91a6467cd5cc		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc000000000106bd0	28	tcp_to_frag_vec	symtab	e5076032ff48		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000106bd0	28	tcp_to_frag_vec	symtab	e5076032ff48		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000106bec	36	ip_to_stripe_vec	symtab	401d12f0c061		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000106c10	212	frgvec_add_linkhdrs	symtab	582314d4aeba		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000106ce4	3664	ip_output	symtab	4204fdb7f7de		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -7105,7 +7105,7 @@ IP27/unix	kernel	n64	.text	0xc00000000011f714	464	xpg5_recvmsg	symtab	5f6e00d86f
 IP27/unix	kernel	n64	.text	0xc00000000011f8e4	1132	recvit	symtab	726a638e127c		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000011fd50	136	shutdown	symtab	a4cb6c836fc5		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000011fdd8	228	setsockopt	symtab	aee01fe7e771		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000011febc	276	getsockopt	symtab	d8c7295bbf23		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000011febc	276	getsockopt	symtab	d8c7295bbf23		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000011ffd0	136	getsockname	symtab	251e0a467340		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000120058	96	getpeername	symtab	889f857a47e3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001200b8	188	sockargs	symtab	7249a2d2751a		out:5	undocumented		
@@ -7201,7 +7201,7 @@ IP27/unix	kernel	n64	.text	0xc000000000128fe8	172	igmp_fasttimo	symtab	d80fe2a5e
 IP27/unix	kernel	n64	.text	0xc000000000129094	160	igmp_slowtimo	symtab	2e2decd82489		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001292bc	212	igmp_update_host_membership	symtab	39232c173c26		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000129390	176	igmp_update_host_new_membership	symtab	274ec9686685		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc00000000012aaf0	372	is_input	symtab	b6f3b8fa772b		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000012aaf0	372	is_input	symtab	b6f3b8fa772b		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000012b760	212	is_reserve_udp_port	symtab	d13ed128bfbd		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000012c70c	392	is_ioctl	symtab	5d2ce0dc9312		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000012c894	288	idbg_is_info	symtab	491b5ac9be9b		out:5	undocumented		
@@ -7247,7 +7247,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001322bc	20	in_pcbunlisten	symtab	cb56580fa
 IP27/unix	kernel	n64	.text	0xc0000000001322d0	232	in_pcbmove	symtab	947f34279955		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001323b8	256	in_pcbrehash	symtab	8be6870f11f5		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001324b8	860	tcp_pcbsetaddrx	symtab	192ba3be5b05		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000132814	100	tcp_pcbconnect	symtab	778e6b8fef61		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000132814	100	tcp_pcbconnect	symtab	778e6b8fef61		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000132878	1064	in_pcbfusermatch	symtab	4d014eb7b65d		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000132ca0	416	in_vsock_from_addr	symtab	84ddc8b4db07		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000132e40	64	copy_if_hints	symtab	b5880089af7c		out:5	undocumented		
@@ -7966,7 +7966,7 @@ IP27/unix	kernel	n64	.text	0xc000000000184a60	44	kmem_zone_private	symtab	3edc77
 IP27/unix	kernel	n64	.text	0xc000000000184a8c	60	kmem_zone_private_mode_noalloc	symtab	04ceef896104		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000184ac8	40	kmem_zone_enable_shake	symtab	059a272efa7a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000184af0	332	kmem_zone_ainit	symtab	f67f797070b4		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000184c3c	88	kmem_zone_zalloc	symtab	8d9a07eca799		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000184c3c	88	kmem_zone_zalloc	symtab	8d9a07eca799		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000184f38	64	kmem_zone_quick_alloc_node	symtab	b159e8abb776		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000184f78	1932	kmem_zone_alloc	symtab	e7d8aa9b9712		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000185704	112	kmem_zone_alloc_node_hint	symtab	02e8d982d38e		out:5	undocumented		
@@ -8109,7 +8109,7 @@ IP27/unix	kernel	n64	.text	0xc00000000018bdac	28	wsyncv_uthread	symtab	d9207392d
 IP27/unix	kernel	n64	.text	0xc00000000018bdc8	128	wsyncv	symtab	3871cc3edefe		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018be48	100	setrun	symtab	239db9f358e2		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018bf30	156	sv_signal	symtab	d8e66f6d11f3		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/unix	kernel	n64	.text	0xc00000000018bfcc	208	sv_broadcast	symtab	4f11d100c62e		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/unix	kernel	n64	.text	0xc00000000018bfcc	208	sv_broadcast	symtab	4f11d100c62e		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000018c09c	328	sv_broadcast_bounded	symtab	d4d3b88d8c7b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018c1e4	244	sv_foreach_wake	symtab	9e0ac96ec401		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018c2d8	72	sv_threshold	symtab	05c599a51d2d		out:5	undocumented		
@@ -8118,7 +8118,7 @@ IP27/unix	kernel	n64	.text	0xc00000000018c650	372	sv_bitlock_timedwait_sig	symta
 IP27/unix	kernel	n64	.text	0xc00000000018c7c4	244	sv_timedwait	symtab	9a232f8e74c0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018c8b8	56	sv_timedwait_notify	symtab	d98a3f22bc0e		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018c8f0	68	sv_timedwait_sig_notify	symtab	ca79f6b790a5		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000018c934	456	sv_timedwait_sig	symtab	bf4b7587e330		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000018c934	456	sv_timedwait_sig	symtab	bf4b7587e330		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000018cafc	280	sv_context_switch	symtab	30e6a434cbe8		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018cc20	144	mrcheckupd	symtab	754a6943a7fc		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018ccb0	152	mr_tryaccess_noinherit	symtab	14c9699fbb33	shared-address	out:5	undocumented		
@@ -13142,7 +13142,7 @@ IP27/unix	kernel	n64	.text	0xc0000000003c2d50	8	sat_fd_read	symtab	78aa5094d5ec	
 IP27/unix	kernel	n64	.text	0xc0000000003c2d58	8	sat_pfd_read2	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c2d60	8	sat_fd_rdwr	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c2d68	8	sat_fork	symtab	78aa5094d5ec		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003c2d70	8	sat_hostid_set	symtab	78aa5094d5ec		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003c2d70	8	sat_hostid_set	symtab	78aa5094d5ec		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c2d78	8	sat_hostname_set	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c2d80	8	sat_object_prep	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c2d88	8	sat_object_process_prep	symtab	78aa5094d5ec		out:5	undocumented		
@@ -13325,7 +13325,7 @@ IP27/unix	kernel	n64	.text	0xc0000000003c33e4	8	xvm_boot_disk	symtab	87506497337
 IP27/unix	kernel	n64	.text	0xc0000000003c33ec	8	xvm_root_to_swap	symtab	a7e7ca11a6b8		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c33f4	8	xvm_sgi	symtab	6fc70b49d907		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c33fc	8	xvm_icrash	symtab	78aa5094d5ec		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003c3404	8	tpisockd_init	symtab	78aa5094d5ec		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003c3404	8	tpisockd_init	symtab	78aa5094d5ec		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c340c	8	tpihold	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c3414	8	xlv_tab_set	symtab	6bc8e674fbf7		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c341c	8	xlv_boot_disk	symtab	87506497337c		out:5	undocumented		
@@ -13825,7 +13825,7 @@ IP27/usr/cpu/sysgen/IP27boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x14bc	84	is
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1510	120	is_outq_thread_start	dwarf+symtab	d9258bfb0cd8		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1588	116	is_outq_thread_stop	dwarf+symtab	da589d22bc81		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x15fc	180	is_send_up	dwarf+symtab	c3f786d1a40a		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x16b0	372	is_input	dwarf+symtab	fbb9dea3752d		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x16b0	372	is_input	dwarf+symtab	fbb9dea3752d		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1824	248	is_input_underflow_entry	dwarf+symtab	0a288f74feb1		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x191c	792	is_input_reorder_entry	dwarf+symtab	ff745057dc56		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1c34	1352	is_reorder_drain	dwarf+symtab	5e7cae57be1a		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -13996,7 +13996,7 @@ IP27/usr/cpu/sysgen/IP27boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3634	20	i
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3648	232	in_pcbmove	dwarf+symtab	2f7fd088fec0		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3730	256	in_pcbrehash	dwarf+symtab	2ca70ca165ee		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3830	860	tcp_pcbsetaddrx	dwarf+symtab	e31f9b741d9b		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3b8c	100	tcp_pcbconnect	dwarf+symtab	df7ac2cc308a		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3b8c	100	tcp_pcbconnect	dwarf+symtab	df7ac2cc308a		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3bf0	1064	in_pcbfusermatch	dwarf+symtab	0a3232ff0b2f		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x4018	416	in_vsock_from_addr	dwarf+symtab	8d6d3110aaa6		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x41b8	64	copy_if_hints	dwarf+symtab	b5880089af7c		out:2	undocumented		
@@ -14108,17 +14108,17 @@ IP27/usr/cpu/sysgen/IP27boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0xb48	2
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0xc34	1296	udp_output	dwarf+symtab	7f2f13c6c128		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x1144	2088	udp_usrreq	dwarf+symtab	150e2acb4242		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x196c	28	udp_detach	dwarf+symtab	a86de4a9d7a4		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x1988	152	udp_saveopt	dwarf+symtab	6ad10ab371bc		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x1988	152	udp_saveopt	dwarf+symtab	6ad10ab371bc		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(rsvp_input.o)	kernel-object	n64		0x0		socket_send	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(rsvp_input.o)	kernel-object	n64	.text	0xb0	620	rsvp_input	dwarf+symtab	5b5d35b4c1c0		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64		0x0		frgvec_header_copy	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0x2e8	236	frgvec_payload_map	dwarf+symtab	13dbec00b326		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0x3d4	344	frag_vec_coalesce_long_chain	dwarf+symtab	5159ba9643b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0x52c	1664	build_frag_vec	dwarf+symtab	7be343ed3a05		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0xbac	36	ip_to_frag_vec	dwarf+symtab	3f50b2d42063		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0xbac	36	ip_to_frag_vec	dwarf+symtab	3f50b2d42063		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0xbd0	300	udp_to_frag_vec_cksum	dwarf+symtab	1e4f961fa59f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0xcfc	276	tcp_max_tso_len	dwarf+symtab	91a6467cd5cc		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe10	28	tcp_to_frag_vec	dwarf+symtab	14c6575b90b8		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe10	28	tcp_to_frag_vec	dwarf+symtab	14c6575b90b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe2c	36	ip_to_stripe_vec	dwarf+symtab	252bf54de0bb		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe50	212	frgvec_add_linkhdrs	dwarf+symtab	4c722f280b5b		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(bsdinit.o)	kernel-object	n64		0x0		bsd_init	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -14208,7 +14208,7 @@ IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0xea
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x107c	1132	recvit	dwarf+symtab	9c5edd2d2e5d		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x14e8	136	shutdown	dwarf+symtab	431ea63a8929		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1570	228	setsockopt	dwarf+symtab	3b34b7e6138a		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1654	276	getsockopt	dwarf+symtab	7732d4224dc5		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1654	276	getsockopt	dwarf+symtab	7732d4224dc5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1768	136	getsockname	dwarf+symtab	a0a097fd7959		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x17f0	96	getpeername	dwarf+symtab	3511b504fbe9		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1850	188	sockargs	dwarf+symtab	2659ec874039		out:2	undocumented		
@@ -19076,7 +19076,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21368	92	intr_th
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x213d0	56	tfi_save	dwarf+symtab	23e6f8986331		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21408	56	tfi_restore	dwarf+symtab	0a54feea6840		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21440	4	assbuffer	dwarf+symtab	df3f619804a9		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21444	1084	assfail	dwarf+symtab	53f0f6032490		out:6	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21444	1084	assfail	dwarf+symtab	53f0f6032490		out:6	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21880	12	getsr	dwarf+symtab	2ea7fc1f266e		out:6	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2188c	16	setsr	dwarf+symtab	d5ed0e1e4ca1		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2189c	8	getpc	dwarf+symtab	c343413c267a		out:6	undocumented		
@@ -19904,7 +19904,7 @@ IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xe40	4
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xe6c	60	kmem_zone_private_mode_noalloc	dwarf+symtab	04ceef896104		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xea8	40	kmem_zone_enable_shake	dwarf+symtab	059a272efa7a		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xed0	332	kmem_zone_ainit	dwarf+symtab	a4a4a9e6f3c9		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x101c	88	kmem_zone_zalloc	dwarf+symtab	79f3b747448f		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x101c	88	kmem_zone_zalloc	dwarf+symtab	79f3b747448f		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x1074	676	kmem_zone_quick_alloc	dwarf+symtab	e0ed0fde05e5		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x1318	64	kmem_zone_quick_alloc_node	dwarf+symtab	ed867088b0e7		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x1358	1932	kmem_zone_alloc	dwarf+symtab	f1ae91a64ecc		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
@@ -20029,7 +20029,7 @@ IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xf50	60	kmem_zone_private_mode_noalloc	dwarf+symtab	e5907eabb295		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xf8c	40	kmem_zone_enable_shake	dwarf+symtab	059a272efa7a		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xfb4	332	kmem_zone_ainit	dwarf+symtab	a4a4a9e6f3c9		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x1100	88	kmem_zone_zalloc	dwarf+symtab	79f3b747448f		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x1100	88	kmem_zone_zalloc	dwarf+symtab	79f3b747448f		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x1158	4388	kmem_zone_quick_alloc	dwarf+symtab	04713414cf7c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x227c	64	kmem_zone_quick_alloc_node	dwarf+symtab	ed867088b0e7		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x22bc	2472	kmem_zone_alloc	dwarf+symtab	5e2cca1841c5		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
@@ -20141,7 +20141,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1ae8	128
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1b68	100	setrun	dwarf+symtab	c3ab8160b9c9		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1bcc	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1c50	156	sv_signal	dwarf+symtab	cd06eba1ee09		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1cec	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1cec	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1dbc	328	sv_broadcast_bounded	dwarf+symtab	586999c5f247		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1f04	244	sv_foreach_wake	dwarf+symtab	5fa74763c762		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1ff8	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -20153,7 +20153,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2370	372
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x24e4	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x25d8	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2610	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2654	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2654	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x281c	280	sv_context_switch	dwarf+symtab	3877e4783458		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64		0x0		wchanname	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-object	n64	.text	0x8	8	wchaninfo	dwarf+symtab	87506497337c		out:3	undocumented		
@@ -20310,7 +20310,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x22d8	104	setrun	dwarf+symtab	099c3e2886b4		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2340	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x23c4	292	sv_signal	dwarf+symtab	a92459ec879b		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x24e8	356	sv_broadcast	dwarf+symtab	6bfbb3fadb8b		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x24e8	356	sv_broadcast	dwarf+symtab	6bfbb3fadb8b		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x264c	480	sv_broadcast_bounded	dwarf+symtab	804450e5176c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x282c	404	sv_foreach_wake	dwarf+symtab	6085024c3428		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x29c0	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -20322,7 +20322,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2ec0	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2fb4	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2fec	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3030	480	sv_timedwait_sig	dwarf+symtab	d48588839ef3		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3030	480	sv_timedwait_sig	dwarf+symtab	d48588839ef3		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3210	284	sv_context_switch	dwarf+symtab	dc2cd1640a4d		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64		0x0		mpkqueue_enter_last	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x58	80	mpkqueue_remove	dwarf+symtab	f478e09129c0		out:3	undocumented		
@@ -20486,7 +20486,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1e
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1ea8	100	setrun	dwarf+symtab	c3ab8160b9c9		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1f0c	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1f90	156	sv_signal	dwarf+symtab	cd06eba1ee09		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x202c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x202c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x20fc	328	sv_broadcast_bounded	dwarf+symtab	586999c5f247		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2244	244	sv_foreach_wake	dwarf+symtab	5fa74763c762		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2338	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -20498,7 +20498,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x26
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2824	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2918	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2950	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2994	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2994	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2b5c	284	sv_context_switch	dwarf+symtab	dc2cd1640a4d		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64		0x0		mpkqueue_enter_last	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0x58	80	mpkqueue_remove	dwarf+symtab	f478e09129c0		out:3	undocumented		
@@ -20653,7 +20653,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1bf8	100	setrun	dwarf+symtab	c3ab8160b9c9		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1c5c	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1ce0	156	sv_signal	dwarf+symtab	cd06eba1ee09		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1d7c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1d7c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1e4c	328	sv_broadcast_bounded	dwarf+symtab	586999c5f247		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1f94	244	sv_foreach_wake	dwarf+symtab	5fa74763c762		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2088	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -20665,7 +20665,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2574	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2668	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x26a0	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x26e4	456	sv_timedwait_sig	dwarf+symtab	fcc963b0ac0c		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x26e4	456	sv_timedwait_sig	dwarf+symtab	fcc963b0ac0c		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x28ac	280	sv_context_switch	dwarf+symtab	3877e4783458		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64		0x0		wchanname	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x8	8	wchaninfo	dwarf+symtab	87506497337c		out:3	undocumented		
@@ -27110,7 +27110,7 @@ IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-object	n64	.text	0x4b30	336	sat
 IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-object	n64	.text	0x4c80	108	sat_clock	dwarf+symtab	bffdaad6a4c4		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-object	n64	.text	0x4cec	116	sat_hostname_set	dwarf+symtab	23261e6e8da2		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-object	n64	.text	0x4d60	116	sat_domainname_set	dwarf+symtab	16c8279c9477		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-object	n64	.text	0x4dd4	108	sat_hostid_set	dwarf+symtab	7586d9bab3aa		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-object	n64	.text	0x4dd4	108	sat_hostid_set	dwarf+symtab	7586d9bab3aa		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-object	n64	.text	0x4e40	104	sat_tty_setlabel	dwarf+symtab	6e9e84cb5caa		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-object	n64	.text	0x4ea8	104	sat_check_priv	dwarf+symtab	3c53986c97a9		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-object	n64	.text	0x4f10	152	sat_control	dwarf+symtab	89ff88f27bd7		out:2	undocumented		
@@ -28781,7 +28781,7 @@ IP27/usr/cpu/sysgen/IP27boot/tpiicmp.o	kernel-object	n64	.text	0x450	112	tpiicmp
 IP27/usr/cpu/sysgen/IP27boot/tpirawip.o	kernel-object	n64		0x0		tpirawipinit	dwarf+symtab			out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/tpirawip.o	kernel-object	n64	.text	0x20	32	tpirawip_open	dwarf+symtab	e60cd12aed6c		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/tpisocket.a(tpisocket.o)	kernel-object	n64		0x0		tpisockd_call	dwarf+symtab			out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0xd8	220	tpisockd_init	dwarf+symtab	1845a6b57b62		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0xd8	220	tpisockd_init	dwarf+symtab	1845a6b57b62		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0x1b4	280	tpisockd	dwarf+symtab	d8005175a7e8		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0x2cc	64	tpisocket_init	dwarf+symtab	7fd6c3e12116		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0x30c	60	tpisocket_register	dwarf+symtab	1f002d7e04e9		out:2	undocumented		
@@ -35770,7 +35770,7 @@ IP30/unix	kernel	n64		0x0		udf_vfsmount	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		udf_vget	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/unix	kernel	n64		0x0		udf_zerobuf	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		udp_full_assign	dwarf			out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64		0x0		udp_saveopt	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		udp_saveopt	dwarf			out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64		0x0		ufadd	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ul_compress	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		uli_alloc	dwarf			out:7	undocumented		
@@ -36835,7 +36835,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001bbb0	108	VEC_fpe	symtab	fb59a1f57afc		o
 IP30/unix	kernel	n64	.text	0xa80000002001bc20	56	tfi_save	symtab	23e6f8986331		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001bc58	56	tfi_restore	symtab	0a54feea6840		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001bc90	4	assbuffer	symtab	df3f619804a9		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001bc94	1084	assfail	symtab	2e3fef0ec41e		out:7	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP30/unix	kernel	n64	.text	0xa80000002001bc94	1084	assfail	symtab	2e3fef0ec41e		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002001c0d0	12	getsr	symtab	2ea7fc1f266e		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa80000002001c0dc	16	setsr	symtab	d5ed0e1e4ca1		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c0ec	8	getpc	symtab	c343413c267a		out:7	undocumented		
@@ -38605,10 +38605,10 @@ IP30/unix	kernel	n64	.text	0xa8000000200dcee4	416	ps_reinit	symtab	675b7f0e1cbb	
 IP30/unix	kernel	n64	.text	0xa8000000200dd084	848	ps_init	symtab	b87acc3e8daf		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200dd9d4	180	ps_xmit_done	symtab	181df548a31f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200dda88	168	ps_txq_stat	symtab	cd23040e6f1e		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200dea28	36	ip_to_frag_vec	symtab	a22944f627ac		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200dea28	36	ip_to_frag_vec	symtab	a22944f627ac		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200dea4c	300	udp_to_frag_vec_cksum	symtab	74a5c3692b7b		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200deb78	276	tcp_max_tso_len	symtab	91a6467cd5cc		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa8000000200dec8c	28	tcp_to_frag_vec	symtab	6fcbeec99aea		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200dec8c	28	tcp_to_frag_vec	symtab	6fcbeec99aea		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200deca8	36	ip_to_stripe_vec	symtab	06af9ead94c4		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200deccc	212	frgvec_add_linkhdrs	symtab	8f7c270f6778		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200deda0	3664	ip_output	symtab	1fa72a8b1a3a		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -38894,7 +38894,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200f77c8	464	xpg5_recvmsg	symtab	066c9ae8e1
 IP30/unix	kernel	n64	.text	0xa8000000200f7998	1132	recvit	symtab	ff4eadf4d729		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200f7e04	136	shutdown	symtab	968b4fd46797		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200f7e8c	228	setsockopt	symtab	2f556737a001		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200f7f70	276	getsockopt	symtab	f2d897c608ec		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200f7f70	276	getsockopt	symtab	f2d897c608ec		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200f8084	136	getsockname	symtab	bb2d2a33b4b8		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200f810c	96	getpeername	symtab	d6ca431d61f0		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200f816c	188	sockargs	symtab	b1d9f16a5631		out:7	undocumented		
@@ -38990,7 +38990,7 @@ IP30/unix	kernel	n64	.text	0xa80000002010108c	172	igmp_fasttimo	symtab	77c41cbb3
 IP30/unix	kernel	n64	.text	0xa800000020101138	160	igmp_slowtimo	symtab	86669413c8dc		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020101360	212	igmp_update_host_membership	symtab	0a3637be642f		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa800000020101434	176	igmp_update_host_new_membership	symtab	0c270373d115		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa800000020102b94	372	is_input	symtab	153ad88505cc		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020102b94	372	is_input	symtab	153ad88505cc		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa800000020103804	212	is_reserve_udp_port	symtab	4369624d2cd0		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201047b0	392	is_ioctl	symtab	76f93d010572		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020104938	288	idbg_is_info	symtab	f5dd7bcda16f		out:7	undocumented		
@@ -39036,7 +39036,7 @@ IP30/unix	kernel	n64	.text	0xa80000002010a360	20	in_pcbunlisten	symtab	cb56580fa
 IP30/unix	kernel	n64	.text	0xa80000002010a374	232	in_pcbmove	symtab	4464aafa38b3		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002010a45c	256	in_pcbrehash	symtab	a3f694f9d8ea		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002010a55c	860	tcp_pcbsetaddrx	symtab	68975480c4bd		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002010a8b8	100	tcp_pcbconnect	symtab	f5608c8408bf		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002010a8b8	100	tcp_pcbconnect	symtab	f5608c8408bf		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002010a91c	1064	in_pcbfusermatch	symtab	86103815f2b9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002010ad44	416	in_vsock_from_addr	symtab	bae71be78ddc		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002010aee4	64	copy_if_hints	symtab	b5880089af7c		out:7	undocumented		
@@ -39678,7 +39678,7 @@ IP30/unix	kernel	n64	.text	0xa80000002014dcb4	44	kmem_zone_private	symtab	21bd6f
 IP30/unix	kernel	n64	.text	0xa80000002014dce0	60	kmem_zone_private_mode_noalloc	symtab	e5907eabb295		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002014dd1c	40	kmem_zone_enable_shake	symtab	059a272efa7a		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002014dd44	332	kmem_zone_ainit	symtab	f8e6afdd15c3		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002014de90	72	kmem_zone_zalloc	symtab	8151c5eafdc8		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002014de90	72	kmem_zone_zalloc	symtab	8151c5eafdc8		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002014e078	1624	kmem_zone_alloc	symtab	c650ccfe3a13		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002014e6d0	632	kmem_zone_free	symtab	200feeb6e11b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002014e948	912	kmem_zone_fill	symtab	a5e553f3d757		out:7	undocumented		
@@ -39816,7 +39816,7 @@ IP30/unix	kernel	n64	.text	0xa800000020154c6c	28	wsyncv_uthread	symtab	e31a583de
 IP30/unix	kernel	n64	.text	0xa800000020154c88	128	wsyncv	symtab	4e0bafe67911		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020154d08	100	setrun	symtab	39e3394b2b86		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020154df0	156	sv_signal	symtab	1a71329fedf3		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/unix	kernel	n64	.text	0xa800000020154e8c	208	sv_broadcast	symtab	fdf576df3dd5		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP30/unix	kernel	n64	.text	0xa800000020154e8c	208	sv_broadcast	symtab	fdf576df3dd5		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa800000020154f5c	328	sv_broadcast_bounded	symtab	ccb543c9f851		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201550a4	244	sv_foreach_wake	symtab	171092a54940		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020155198	72	sv_threshold	symtab	a00a26c97e20		out:7	undocumented		
@@ -39825,7 +39825,7 @@ IP30/unix	kernel	n64	.text	0xa800000020155510	372	sv_bitlock_timedwait_sig	symta
 IP30/unix	kernel	n64	.text	0xa800000020155684	244	sv_timedwait	symtab	48cb3ae1a7a4		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020155778	56	sv_timedwait_notify	symtab	b8b330f2a555		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201557b0	68	sv_timedwait_sig_notify	symtab	7e599e2cecfb		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201557f4	456	sv_timedwait_sig	symtab	97fc41ab30df		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201557f4	456	sv_timedwait_sig	symtab	97fc41ab30df		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000201559bc	280	sv_context_switch	symtab	e5f943f60c04		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020155ae0	144	mrcheckupd	symtab	754a6943a7fc		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020155b70	152	mr_tryaccess_noinherit	symtab	14c9699fbb33	shared-address	out:7	undocumented		
@@ -45004,7 +45004,7 @@ IP30/unix	kernel	n64	.text	0xa8000000203a9a90	8	sat_fd_read	symtab	78aa5094d5ec	
 IP30/unix	kernel	n64	.text	0xa8000000203a9a98	8	sat_pfd_read2	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203a9aa0	8	sat_fd_rdwr	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203a9aa8	8	sat_fork	symtab	78aa5094d5ec		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000203a9ab0	8	sat_hostid_set	symtab	78aa5094d5ec		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000203a9ab0	8	sat_hostid_set	symtab	78aa5094d5ec		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a9ab8	8	sat_hostname_set	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203a9ac0	8	sat_object_prep	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203a9ac8	8	sat_object_process_prep	symtab	78aa5094d5ec		out:7	undocumented		
@@ -45189,7 +45189,7 @@ IP30/unix	kernel	n64	.text	0xa8000000203aa134	8	xvm_boot_disk	symtab	87506497337
 IP30/unix	kernel	n64	.text	0xa8000000203aa13c	8	xvm_root_to_swap	symtab	a7e7ca11a6b8		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa144	8	xvm_sgi	symtab	6fc70b49d907		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa14c	8	xvm_icrash	symtab	78aa5094d5ec		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000203aa154	8	tpisockd_init	symtab	78aa5094d5ec		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000203aa154	8	tpisockd_init	symtab	78aa5094d5ec		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203aa15c	8	tpihold	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa164	8	xlv_tab_set	symtab	6bc8e674fbf7		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa16c	8	xlv_boot_disk	symtab	87506497337c		out:7	undocumented		
@@ -45669,7 +45669,7 @@ IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x14bc	84	is
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1510	120	is_outq_thread_start	dwarf+symtab	d9258bfb0cd8		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1588	116	is_outq_thread_stop	dwarf+symtab	da589d22bc81		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x15fc	180	is_send_up	dwarf+symtab	c3f786d1a40a		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x16b0	372	is_input	dwarf+symtab	889ec998fcd5		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x16b0	372	is_input	dwarf+symtab	889ec998fcd5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1824	248	is_input_underflow_entry	dwarf+symtab	2e4236c06663		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x191c	792	is_input_reorder_entry	dwarf+symtab	939a057080d0		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1c34	1352	is_reorder_drain	dwarf+symtab	39ccb7d85d01		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -45840,7 +45840,7 @@ IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3634	20	i
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3648	232	in_pcbmove	dwarf+symtab	2f7fd088fec0		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3730	256	in_pcbrehash	dwarf+symtab	2ca70ca165ee		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3830	860	tcp_pcbsetaddrx	dwarf+symtab	e31f9b741d9b		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3b8c	100	tcp_pcbconnect	dwarf+symtab	df7ac2cc308a		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3b8c	100	tcp_pcbconnect	dwarf+symtab	df7ac2cc308a		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3bf0	1064	in_pcbfusermatch	dwarf+symtab	0a3232ff0b2f		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x4018	416	in_vsock_from_addr	dwarf+symtab	8d6d3110aaa6		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x41b8	64	copy_if_hints	dwarf+symtab	b5880089af7c		out:2	undocumented		
@@ -45952,17 +45952,17 @@ IP30/usr/cpu/sysgen/IP30boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0xb48	2
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0xc34	1296	udp_output	dwarf+symtab	baa58ca34215		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x1144	2088	udp_usrreq	dwarf+symtab	150e2acb4242		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x196c	28	udp_detach	dwarf+symtab	a86de4a9d7a4		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x1988	152	udp_saveopt	dwarf+symtab	6ad10ab371bc		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x1988	152	udp_saveopt	dwarf+symtab	6ad10ab371bc		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(rsvp_input.o)	kernel-object	n64		0x0		socket_send	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(rsvp_input.o)	kernel-object	n64	.text	0xb0	620	rsvp_input	dwarf+symtab	5b5d35b4c1c0		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64		0x0		frgvec_header_copy	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0x2e8	236	frgvec_payload_map	dwarf+symtab	13dbec00b326		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0x3d4	344	frag_vec_coalesce_long_chain	dwarf+symtab	5159ba9643b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0x52c	1664	build_frag_vec	dwarf+symtab	7be343ed3a05		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0xbac	36	ip_to_frag_vec	dwarf+symtab	3f50b2d42063		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0xbac	36	ip_to_frag_vec	dwarf+symtab	3f50b2d42063		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0xbd0	300	udp_to_frag_vec_cksum	dwarf+symtab	1e4f961fa59f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0xcfc	276	tcp_max_tso_len	dwarf+symtab	91a6467cd5cc		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe10	28	tcp_to_frag_vec	dwarf+symtab	14c6575b90b8		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe10	28	tcp_to_frag_vec	dwarf+symtab	14c6575b90b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe2c	36	ip_to_stripe_vec	dwarf+symtab	252bf54de0bb		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe50	212	frgvec_add_linkhdrs	dwarf+symtab	4c722f280b5b		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(bsdinit.o)	kernel-object	n64		0x0		bsd_init	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -46052,7 +46052,7 @@ IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0xea
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x107c	1132	recvit	dwarf+symtab	9c5edd2d2e5d		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x14e8	136	shutdown	dwarf+symtab	431ea63a8929		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1570	228	setsockopt	dwarf+symtab	3b34b7e6138a		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1654	276	getsockopt	dwarf+symtab	7732d4224dc5		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1654	276	getsockopt	dwarf+symtab	7732d4224dc5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1768	136	getsockname	dwarf+symtab	a0a097fd7959		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x17f0	96	getpeername	dwarf+symtab	3511b504fbe9		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1850	188	sockargs	dwarf+symtab	2659ec874039		out:2	undocumented		
@@ -50391,7 +50391,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xba30	108	VEC_fpe
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbaa0	56	tfi_save	dwarf+symtab	23e6f8986331		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbad8	56	tfi_restore	dwarf+symtab	0a54feea6840		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbb10	4	assbuffer	dwarf+symtab	df3f619804a9		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbb14	1084	assfail	dwarf+symtab	75e6bf45b75e		out:8	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbb14	1084	assfail	dwarf+symtab	75e6bf45b75e		out:8	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbf50	12	getsr	dwarf+symtab	2ea7fc1f266e		out:8	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbf5c	16	setsr	dwarf+symtab	d5ed0e1e4ca1		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbf6c	8	getpc	dwarf+symtab	c343413c267a		out:8	undocumented		
@@ -50745,7 +50745,7 @@ IP30/usr/cpu/sysgen/IP30boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x980	4
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x9ac	60	kmem_zone_private_mode_noalloc	dwarf+symtab	e5907eabb295		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x9e8	40	kmem_zone_enable_shake	dwarf+symtab	059a272efa7a		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xa10	332	kmem_zone_ainit	dwarf+symtab	a4a4a9e6f3c9		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xb5c	72	kmem_zone_zalloc	dwarf+symtab	b53ea8b2e29f		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xb5c	72	kmem_zone_zalloc	dwarf+symtab	b53ea8b2e29f		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xba4	416	kmem_zone_quick_alloc	dwarf+symtab	ee9cfac8401a		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xd44	1624	kmem_zone_alloc	dwarf+symtab	3051375f63e9		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x139c	632	kmem_zone_free	dwarf+symtab	4edf1f79f065		out:3	undocumented		
@@ -50863,7 +50863,7 @@ IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xaac	52	kmem_zone_private_mode_noalloc	dwarf+symtab	5893ac698e9f		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xae0	40	kmem_zone_enable_shake	dwarf+symtab	059a272efa7a		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xb08	332	kmem_zone_ainit	dwarf+symtab	a4a4a9e6f3c9		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xc54	72	kmem_zone_zalloc	dwarf+symtab	b53ea8b2e29f		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xc54	72	kmem_zone_zalloc	dwarf+symtab	b53ea8b2e29f		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xc9c	1792	kmem_zone_quick_alloc	dwarf+symtab	fd3bc66a3992		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x139c	1644	kmem_zone_alloc	dwarf+symtab	33cb836db2ae		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x1a08	956	kmem_zone_free	dwarf+symtab	f86ae1222937		out:3	undocumented		
@@ -50970,7 +50970,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1ae8	128
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1b68	100	setrun	dwarf+symtab	c3ab8160b9c9		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1bcc	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1c50	156	sv_signal	dwarf+symtab	cd06eba1ee09		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1cec	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1cec	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1dbc	328	sv_broadcast_bounded	dwarf+symtab	586999c5f247		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1f04	244	sv_foreach_wake	dwarf+symtab	5fa74763c762		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1ff8	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -50982,7 +50982,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2370	372
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x24e4	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x25d8	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2610	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2654	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2654	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x281c	280	sv_context_switch	dwarf+symtab	3877e4783458		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64		0x0		wchanname	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-object	n64	.text	0x8	8	wchaninfo	dwarf+symtab	87506497337c		out:3	undocumented		
@@ -51139,7 +51139,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x22d8	104	setrun	dwarf+symtab	099c3e2886b4		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2340	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x23c4	292	sv_signal	dwarf+symtab	a92459ec879b		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x24e8	356	sv_broadcast	dwarf+symtab	6bfbb3fadb8b		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x24e8	356	sv_broadcast	dwarf+symtab	6bfbb3fadb8b		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x264c	480	sv_broadcast_bounded	dwarf+symtab	804450e5176c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x282c	404	sv_foreach_wake	dwarf+symtab	6085024c3428		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x29c0	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -51151,7 +51151,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2ec0	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2fb4	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2fec	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3030	480	sv_timedwait_sig	dwarf+symtab	d48588839ef3		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3030	480	sv_timedwait_sig	dwarf+symtab	d48588839ef3		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3210	284	sv_context_switch	dwarf+symtab	dc2cd1640a4d		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64		0x0		mpkqueue_enter_last	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x58	80	mpkqueue_remove	dwarf+symtab	f478e09129c0		out:3	undocumented		
@@ -51315,7 +51315,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1e
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1ea8	100	setrun	dwarf+symtab	c3ab8160b9c9		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1f0c	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1f90	156	sv_signal	dwarf+symtab	cd06eba1ee09		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x202c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x202c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x20fc	328	sv_broadcast_bounded	dwarf+symtab	586999c5f247		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2244	244	sv_foreach_wake	dwarf+symtab	5fa74763c762		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2338	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -51327,7 +51327,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x26
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2824	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2918	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2950	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2994	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2994	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2b5c	284	sv_context_switch	dwarf+symtab	dc2cd1640a4d		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64		0x0		mpkqueue_enter_last	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0x58	80	mpkqueue_remove	dwarf+symtab	f478e09129c0		out:3	undocumented		
@@ -51482,7 +51482,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1bf8	100	setrun	dwarf+symtab	c3ab8160b9c9		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1c5c	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1ce0	156	sv_signal	dwarf+symtab	cd06eba1ee09		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1d7c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1d7c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1e4c	328	sv_broadcast_bounded	dwarf+symtab	586999c5f247		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1f94	244	sv_foreach_wake	dwarf+symtab	5fa74763c762		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2088	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -51494,7 +51494,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2574	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2668	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x26a0	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x26e4	456	sv_timedwait_sig	dwarf+symtab	fcc963b0ac0c		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x26e4	456	sv_timedwait_sig	dwarf+symtab	fcc963b0ac0c		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x28ac	280	sv_context_switch	dwarf+symtab	3877e4783458		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64		0x0		wchanname	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x8	8	wchaninfo	dwarf+symtab	87506497337c		out:3	undocumented		
@@ -57160,7 +57160,7 @@ IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-object	n64	.text	0x4b30	336	sat
 IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-object	n64	.text	0x4c80	108	sat_clock	dwarf+symtab	bffdaad6a4c4		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-object	n64	.text	0x4cec	116	sat_hostname_set	dwarf+symtab	23261e6e8da2		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-object	n64	.text	0x4d60	116	sat_domainname_set	dwarf+symtab	16c8279c9477		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-object	n64	.text	0x4dd4	108	sat_hostid_set	dwarf+symtab	7586d9bab3aa		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-object	n64	.text	0x4dd4	108	sat_hostid_set	dwarf+symtab	7586d9bab3aa		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-object	n64	.text	0x4e40	104	sat_tty_setlabel	dwarf+symtab	6e9e84cb5caa		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-object	n64	.text	0x4ea8	104	sat_check_priv	dwarf+symtab	3c53986c97a9		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-object	n64	.text	0x4f10	152	sat_control	dwarf+symtab	89ff88f27bd7		out:2	undocumented		
@@ -58680,7 +58680,7 @@ IP30/usr/cpu/sysgen/IP30boot/tpiicmp.o	kernel-object	n64	.text	0x450	112	tpiicmp
 IP30/usr/cpu/sysgen/IP30boot/tpirawip.o	kernel-object	n64		0x0		tpirawipinit	dwarf+symtab			out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/tpirawip.o	kernel-object	n64	.text	0x20	32	tpirawip_open	dwarf+symtab	e60cd12aed6c		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/tpisocket.a(tpisocket.o)	kernel-object	n64		0x0		tpisockd_call	dwarf+symtab			out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0xd8	220	tpisockd_init	dwarf+symtab	1845a6b57b62		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0xd8	220	tpisockd_init	dwarf+symtab	1845a6b57b62		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0x1b4	280	tpisockd	dwarf+symtab	d8005175a7e8		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0x2cc	64	tpisocket_init	dwarf+symtab	7fd6c3e12116		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0x30c	60	tpisocket_register	dwarf+symtab	1f002d7e04e9		out:2	undocumented		
@@ -61811,7 +61811,7 @@ IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)	kernel-object	n32	.text	0x1488	88	is
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)	kernel-object	n32	.text	0x14e0	124	is_outq_thread_start	dwarf+funcnames+symtab	1ab3467bb4af		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)	kernel-object	n32	.text	0x155c	116	is_outq_thread_stop	dwarf+funcnames+symtab	a413aa9bb909		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)	kernel-object	n32	.text	0x15d0	168	is_send_up	dwarf+funcnames+symtab	28885bda75ae		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)	kernel-object	n32	.text	0x1678	364	is_input	dwarf+symtab	97106fb7e38e		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)	kernel-object	n32	.text	0x1678	364	is_input	dwarf+symtab	97106fb7e38e		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)	kernel-object	n32	.text	0x17e4	232	is_input_underflow_entry	dwarf+funcnames+symtab	cd7b81a2bf70		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)	kernel-object	n32	.text	0x18cc	784	is_input_reorder_entry	dwarf+funcnames+symtab	eaf248aae90f		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)	kernel-object	n32	.text	0x1bdc	1356	is_reorder_drain	dwarf+funcnames+symtab	50651f4c43da		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -61982,7 +61982,7 @@ IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)	kernel-object	n32	.text	0x362c	20	i
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)	kernel-object	n32	.text	0x3640	232	in_pcbmove	dwarf+symtab	80853aa62b04		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)	kernel-object	n32	.text	0x3728	256	in_pcbrehash	dwarf+symtab	d9478224ffe9		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)	kernel-object	n32	.text	0x3828	860	tcp_pcbsetaddrx	dwarf+symtab	56c37dee26b9		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)	kernel-object	n32	.text	0x3b84	100	tcp_pcbconnect	dwarf+symtab	cbc601c6dc11		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)	kernel-object	n32	.text	0x3b84	100	tcp_pcbconnect	dwarf+symtab	cbc601c6dc11		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)	kernel-object	n32	.text	0x3be8	1068	in_pcbfusermatch	dwarf+symtab	c3348d9bc424		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)	kernel-object	n32	.text	0x4014	404	in_vsock_from_addr	dwarf+symtab	be6d46f3fe3f		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)	kernel-object	n32	.text	0x41a8	68	copy_if_hints	dwarf+symtab	897d0e0e103e		out:2	undocumented		
@@ -62093,13 +62093,13 @@ IP32/usr/cpu/sysgen/IP32boot/bsd.a(udp_usrreq.o)	kernel-object	n32	.text	0xbbc	2
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(udp_usrreq.o)	kernel-object	n32	.text	0xcb8	1328	udp_output	dwarf+symtab	87182cf3c0f4		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(udp_usrreq.o)	kernel-object	n32	.text	0x11e8	2092	udp_usrreq	dwarf+symtab	db7113602681		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(udp_usrreq.o)	kernel-object	n32	.text	0x1a14	28	udp_detach	dwarf+symtab	34d7a2e33b85		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(udp_usrreq.o)	kernel-object	n32	.text	0x1a30	148	udp_saveopt	dwarf+funcnames+symtab	3901e350a27d		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(udp_usrreq.o)	kernel-object	n32	.text	0x1a30	148	udp_saveopt	dwarf+funcnames+symtab	3901e350a27d		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(rsvp_input.o)	kernel-object	n32		0x0		socket_send	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(rsvp_input.o)	kernel-object	n32	.text	0xb0	592	rsvp_input	dwarf+symtab	a4a2d82612d4		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)	kernel-object	n32		0x0		ip_to_frag_vec	dwarf+symtab			out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)	kernel-object	n32		0x0		ip_to_frag_vec	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)	kernel-object	n32	.text	0x20	32	udp_to_frag_vec_cksum	dwarf+symtab	5d5acc5da73f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)	kernel-object	n32	.text	0x40	12	tcp_max_tso_len	dwarf+symtab	bf3815336a35		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)	kernel-object	n32	.text	0x4c	32	tcp_to_frag_vec	dwarf+symtab	5d5acc5da73f		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)	kernel-object	n32	.text	0x4c	32	tcp_to_frag_vec	dwarf+symtab	5d5acc5da73f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)	kernel-object	n32	.text	0x6c	32	ip_to_stripe_vec	dwarf+symtab	5d5acc5da73f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)	kernel-object	n32	.text	0x8c	212	frgvec_add_linkhdrs	dwarf+symtab	a9308268b28a		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(bsdinit.o)	kernel-object	n32		0x0		bsd_init	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -62186,7 +62186,7 @@ IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0xbc
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0xcf8	1024	recvit	dwarf+symtab	99514942eaec		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x10f8	136	shutdown	dwarf+symtab	a023c8ef8f1c		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x1180	232	setsockopt	dwarf+symtab	3826173416d2		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x1268	276	getsockopt	dwarf+symtab	26d7c8621cc4		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x1268	276	getsockopt	dwarf+symtab	26d7c8621cc4		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x137c	136	getsockname	dwarf+symtab	0cb2fe65a4de		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x1404	96	getpeername	dwarf+symtab	297eaa061a5c		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)	kernel-object	n32	.text	0x1464	180	sockargs	dwarf+symtab	9d6ea6bcedc6		out:2	undocumented		
@@ -66563,7 +66563,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11898	92	unmaptl
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x118f4	56	tfi_save	symtab	e1201bb656c5		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1192c	56	tfi_restore	symtab	61268ef6fa4e		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11964	4	assbuffer	symtab	df3f619804a9		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11968	500	assfail	symtab	b186e6a728a6		out:9	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11968	500	assfail	symtab	b186e6a728a6		out:9	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11b5c	12	getsr	symtab	2ea7fc1f266e		out:9	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11b68	36	setsr	symtab	9755de041b23		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11b8c	8	getpc	symtab	c343413c267a		out:9	undocumented		
@@ -66915,7 +66915,7 @@ IP32/usr/cpu/sysgen/IP32boot/kmem.a(kmem_zone.o)	kernel-object	n32	.text	0xab8	4
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kmem_zone.o)	kernel-object	n32	.text	0xae4	60	kmem_zone_private_mode_noalloc	dwarf+symtab	66d837d942e7		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kmem_zone.o)	kernel-object	n32	.text	0xb20	40	kmem_zone_enable_shake	dwarf+symtab	eea6bf61a5e0		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kmem_zone.o)	kernel-object	n32	.text	0xb48	304	kmem_zone_ainit	dwarf+symtab	f177ce92c5d9		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kmem.a(kmem_zone.o)	kernel-object	n32	.text	0xc78	72	kmem_zone_zalloc	dwarf+symtab	174122996fe4		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kmem.a(kmem_zone.o)	kernel-object	n32	.text	0xc78	72	kmem_zone_zalloc	dwarf+symtab	174122996fe4		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kmem_zone.o)	kernel-object	n32	.text	0xcc0	492	kmem_zone_quick_alloc	dwarf+funcnames+symtab	1e52e624fd1d		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kmem_zone.o)	kernel-object	n32	.text	0xeac	1640	kmem_zone_alloc	dwarf+symtab	12521d79cc30		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kmem_zone.o)	kernel-object	n32	.text	0x1514	892	kmem_zone_free	dwarf+symtab	3ac7e7c0a73f		out:3	undocumented		
@@ -67034,7 +67034,7 @@ IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kmem_zone.o)	kernel-object	n32	.text	0
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kmem_zone.o)	kernel-object	n32	.text	0xbe4	60	kmem_zone_private_mode_noalloc	dwarf+symtab	39f2342d34a6		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kmem_zone.o)	kernel-object	n32	.text	0xc20	40	kmem_zone_enable_shake	dwarf+symtab	eea6bf61a5e0		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kmem_zone.o)	kernel-object	n32	.text	0xc48	304	kmem_zone_ainit	dwarf+symtab	f177ce92c5d9		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kmem_zone.o)	kernel-object	n32	.text	0xd78	72	kmem_zone_zalloc	dwarf+symtab	174122996fe4		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kmem_zone.o)	kernel-object	n32	.text	0xd78	72	kmem_zone_zalloc	dwarf+symtab	174122996fe4		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kmem_zone.o)	kernel-object	n32	.text	0xdc0	2056	kmem_zone_quick_alloc	dwarf+funcnames+symtab	72e98f82d28f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kmem_zone.o)	kernel-object	n32	.text	0x15c8	1660	kmem_zone_alloc	dwarf+symtab	2feb54482c5a		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kmem_zone.o)	kernel-object	n32	.text	0x1c44	1296	kmem_zone_free	dwarf+symtab	742b9b859d9c		out:3	undocumented		
@@ -67140,7 +67140,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x1778	28	
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x1794	104	wsyncv	dwarf+symtab	8d50df87f4b1		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x17fc	96	setrun	dwarf+symtab	1b15b7621633		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x185c	200	sv_signal	dwarf+symtab	91550afc006c		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x1924	240	sv_broadcast	dwarf+symtab	82703e01758f		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x1924	240	sv_broadcast	dwarf+symtab	82703e01758f		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x1a14	356	sv_broadcast_bounded	dwarf+symtab	2bc22020bb6b		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x1b78	288	sv_foreach_wake	dwarf+symtab	0bff97b157c2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x1c98	72	sv_threshold	dwarf+symtab	59cd4587c864		out:3	undocumented		
@@ -67152,7 +67152,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x1fcc	316
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x2108	244	sv_timedwait	dwarf+symtab	4504bfd5238d		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x21fc	60	sv_timedwait_notify	dwarf+symtab	32f3ba9712e3		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x2238	68	sv_timedwait_sig_notify	dwarf+symtab	04cf7e90026e		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x227c	424	sv_timedwait_sig	dwarf+symtab	4b0ecd1dd9cb		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x227c	424	sv_timedwait_sig	dwarf+symtab	4b0ecd1dd9cb		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x2424	264	sv_context_switch	dwarf+symtab	c487012f1e6f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32		0x0		wchanname	dwarf+symtab			out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-object	n32	.text	0xc	8	wchaninfo	dwarf+symtab	87506497337c		out:3	undocumented		
@@ -67306,7 +67306,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x1f40	108	wsyncv	dwarf+symtab	f49812ffd7fd		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x1fac	100	setrun	dwarf+symtab	8d837e7a5b29		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x2010	332	sv_signal	dwarf+symtab	30001ee3b821		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x215c	392	sv_broadcast	dwarf+symtab	b5040fbcdba3		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x215c	392	sv_broadcast	dwarf+symtab	b5040fbcdba3		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x22e4	508	sv_broadcast_bounded	dwarf+symtab	5a2c488798f2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x24e0	452	sv_foreach_wake	dwarf+symtab	025c7d03a504		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x26a4	72	sv_threshold	dwarf+symtab	59cd4587c864		out:3	undocumented		
@@ -67318,7 +67318,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x2b1c	244	sv_timedwait	dwarf+symtab	fb2e4bb27bf9		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x2c10	60	sv_timedwait_notify	dwarf+symtab	32f3ba9712e3		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x2c4c	68	sv_timedwait_sig_notify	dwarf+symtab	04cf7e90026e		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x2c90	448	sv_timedwait_sig	dwarf+symtab	290118014ab4		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x2c90	448	sv_timedwait_sig	dwarf+symtab	290118014ab4		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x2e50	264	sv_context_switch	dwarf+symtab	d4702fb7561d		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32		0x0		mpkqueue_enter_last	dwarf+funcnames+symtab			out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-object	n32	.text	0x4c	68	mpkqueue_remove	dwarf+funcnames+symtab	3f0257124fce		out:3	undocumented		
@@ -67479,7 +67479,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x1a
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x1ac8	104	wsyncv	dwarf+symtab	8d50df87f4b1		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x1b30	96	setrun	dwarf+symtab	1b15b7621633		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x1b90	200	sv_signal	dwarf+symtab	91550afc006c		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x1c58	240	sv_broadcast	dwarf+symtab	82703e01758f		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x1c58	240	sv_broadcast	dwarf+symtab	82703e01758f		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x1d48	356	sv_broadcast_bounded	dwarf+symtab	2bc22020bb6b		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x1eac	288	sv_foreach_wake	dwarf+symtab	0bff97b157c2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x1fcc	72	sv_threshold	dwarf+symtab	59cd4587c864		out:3	undocumented		
@@ -67491,7 +67491,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x23
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x243c	244	sv_timedwait	dwarf+symtab	fb2e4bb27bf9		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x2530	60	sv_timedwait_notify	dwarf+symtab	32f3ba9712e3		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x256c	68	sv_timedwait_sig_notify	dwarf+symtab	04cf7e90026e		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x25b0	424	sv_timedwait_sig	dwarf+symtab	55be3c9eaa25		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x25b0	424	sv_timedwait_sig	dwarf+symtab	55be3c9eaa25		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x2758	264	sv_context_switch	dwarf+symtab	d4702fb7561d		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32		0x0		mpkqueue_enter_last	dwarf+funcnames+symtab			out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-object	n32	.text	0x4c	68	mpkqueue_remove	dwarf+funcnames+symtab	3f0257124fce		out:3	undocumented		
@@ -67643,7 +67643,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x1824	104	wsyncv	dwarf+symtab	8d50df87f4b1		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x188c	96	setrun	dwarf+symtab	1b15b7621633		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x18ec	200	sv_signal	dwarf+symtab	91550afc006c		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x19b4	240	sv_broadcast	dwarf+symtab	82703e01758f		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x19b4	240	sv_broadcast	dwarf+symtab	82703e01758f		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x1aa4	356	sv_broadcast_bounded	dwarf+symtab	2bc22020bb6b		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x1c08	288	sv_foreach_wake	dwarf+symtab	0bff97b157c2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x1d28	72	sv_threshold	dwarf+symtab	59cd4587c864		out:3	undocumented		
@@ -67655,7 +67655,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x2198	244	sv_timedwait	dwarf+symtab	4504bfd5238d		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x228c	60	sv_timedwait_notify	dwarf+symtab	32f3ba9712e3		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x22c8	68	sv_timedwait_sig_notify	dwarf+symtab	04cf7e90026e		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x230c	424	sv_timedwait_sig	dwarf+symtab	4b0ecd1dd9cb		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x230c	424	sv_timedwait_sig	dwarf+symtab	4b0ecd1dd9cb		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x24b4	264	sv_context_switch	dwarf+symtab	c487012f1e6f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32		0x0		wchanname	dwarf+symtab			out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(sema.o)	kernel-object	n32	.text	0xc	8	wchaninfo	dwarf+symtab	87506497337c		out:3	undocumented		
@@ -73452,7 +73452,7 @@ IP32/usr/cpu/sysgen/IP32boot/sat.a(sat.o)	kernel-object	n32	.text	0x4b14	336	sat
 IP32/usr/cpu/sysgen/IP32boot/sat.a(sat.o)	kernel-object	n32	.text	0x4c64	108	sat_clock	dwarf+symtab	f256b56b23b2		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sat.a(sat.o)	kernel-object	n32	.text	0x4cd0	116	sat_hostname_set	dwarf+symtab	7f8424b4dace		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sat.a(sat.o)	kernel-object	n32	.text	0x4d44	116	sat_domainname_set	dwarf+symtab	82f41ede2f26		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/sat.a(sat.o)	kernel-object	n32	.text	0x4db8	104	sat_hostid_set	dwarf+symtab	8cdec7bcc641		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/sat.a(sat.o)	kernel-object	n32	.text	0x4db8	104	sat_hostid_set	dwarf+symtab	8cdec7bcc641		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/sat.a(sat.o)	kernel-object	n32	.text	0x4e20	104	sat_tty_setlabel	dwarf+symtab	ec7d84c660aa		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sat.a(sat.o)	kernel-object	n32	.text	0x4e88	104	sat_check_priv	dwarf+symtab	c3a064d001f9		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sat.a(sat.o)	kernel-object	n32	.text	0x4ef0	152	sat_control	dwarf+symtab	00e89904cf24		out:2	undocumented		
@@ -74792,7 +74792,7 @@ IP32/usr/cpu/sysgen/IP32boot/ticots.o	kernel-object	n32	.text	0x2fac	1108	tco_dr
 IP32/usr/cpu/sysgen/IP32boot/ticots.o	kernel-object	n32	.text	0x3400	620	tco_unconnect	dwarf+funcnames+symtab	105b277b10b7		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ticots.o	kernel-object	n32	.text	0x366c	720	tco_data	dwarf+funcnames+symtab	332c6abc9e28		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/tpisocket.a(tpisocket.o)	kernel-object	n32		0x0		tpisockd_call	dwarf+funcnames+symtab			out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/tpisocket.a(tpisocket.o)	kernel-object	n32	.text	0xd4	228	tpisockd_init	dwarf+symtab	614c527df3f8		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/tpisocket.a(tpisocket.o)	kernel-object	n32	.text	0xd4	228	tpisockd_init	dwarf+symtab	614c527df3f8		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/tpisocket.a(tpisocket.o)	kernel-object	n32	.text	0x1b8	272	tpisockd	dwarf+funcnames+symtab	004bbc54348a		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/tpisocket.a(tpisocket.o)	kernel-object	n32	.text	0x2c8	64	tpisocket_init	dwarf+symtab	89f43d2d0eab		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/tpisocket.a(tpisocket.o)	kernel-object	n32	.text	0x308	60	tpisocket_register	dwarf+symtab	bfe10d38cfa4		out:2	undocumented		
@@ -78092,7 +78092,7 @@ IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x14bc	84	is
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1510	120	is_outq_thread_start	dwarf+symtab	d9258bfb0cd8		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1588	116	is_outq_thread_stop	dwarf+symtab	da589d22bc81		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x15fc	180	is_send_up	dwarf+symtab	c3f786d1a40a		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x16b0	372	is_input	dwarf+symtab	28ec22a276dc		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x16b0	372	is_input	dwarf+symtab	28ec22a276dc		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1824	248	is_input_underflow_entry	dwarf+symtab	4e9db1e658a9		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x191c	792	is_input_reorder_entry	dwarf+symtab	67a4aca57491		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)	kernel-object	n64	.text	0x1c34	1352	is_reorder_drain	dwarf+symtab	de42687942ec		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -78263,7 +78263,7 @@ IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3634	20	i
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3648	232	in_pcbmove	dwarf+symtab	2f7fd088fec0		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3730	256	in_pcbrehash	dwarf+symtab	2ca70ca165ee		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3830	860	tcp_pcbsetaddrx	dwarf+symtab	e31f9b741d9b		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3b8c	100	tcp_pcbconnect	dwarf+symtab	df7ac2cc308a		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3b8c	100	tcp_pcbconnect	dwarf+symtab	df7ac2cc308a		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x3bf0	1064	in_pcbfusermatch	dwarf+symtab	0a3232ff0b2f		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x4018	416	in_vsock_from_addr	dwarf+symtab	8d6d3110aaa6		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)	kernel-object	n64	.text	0x41b8	64	copy_if_hints	dwarf+symtab	b5880089af7c		out:2	undocumented		
@@ -78375,17 +78375,17 @@ IP35/usr/cpu/sysgen/IP35boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0xb48	2
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0xc34	1296	udp_output	dwarf+symtab	7437e4bfae08		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x1144	2088	udp_usrreq	dwarf+symtab	150e2acb4242		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x196c	28	udp_detach	dwarf+symtab	a86de4a9d7a4		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x1988	152	udp_saveopt	dwarf+symtab	6ad10ab371bc		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bsd.a(udp_usrreq.o)	kernel-object	n64	.text	0x1988	152	udp_saveopt	dwarf+symtab	6ad10ab371bc		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(rsvp_input.o)	kernel-object	n64		0x0		socket_send	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(rsvp_input.o)	kernel-object	n64	.text	0xb0	620	rsvp_input	dwarf+symtab	5b5d35b4c1c0		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64		0x0		frgvec_header_copy	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0x2e8	236	frgvec_payload_map	dwarf+symtab	13dbec00b326		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0x3d4	344	frag_vec_coalesce_long_chain	dwarf+symtab	5159ba9643b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0x52c	1664	build_frag_vec	dwarf+symtab	7be343ed3a05		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0xbac	36	ip_to_frag_vec	dwarf+symtab	3f50b2d42063		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0xbac	36	ip_to_frag_vec	dwarf+symtab	3f50b2d42063		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0xbd0	300	udp_to_frag_vec_cksum	dwarf+symtab	1e4f961fa59f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0xcfc	276	tcp_max_tso_len	dwarf+symtab	91a6467cd5cc		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe10	28	tcp_to_frag_vec	dwarf+symtab	14c6575b90b8		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe10	28	tcp_to_frag_vec	dwarf+symtab	14c6575b90b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe2c	36	ip_to_stripe_vec	dwarf+symtab	252bf54de0bb		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(offload.o)	kernel-object	n64	.text	0xe50	212	frgvec_add_linkhdrs	dwarf+symtab	4c722f280b5b		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(bsdinit.o)	kernel-object	n64		0x0		bsd_init	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -78475,7 +78475,7 @@ IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0xea
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x107c	1132	recvit	dwarf+symtab	9c5edd2d2e5d		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x14e8	136	shutdown	dwarf+symtab	431ea63a8929		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1570	228	setsockopt	dwarf+symtab	3b34b7e6138a		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1654	276	getsockopt	dwarf+symtab	7732d4224dc5		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1654	276	getsockopt	dwarf+symtab	7732d4224dc5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1768	136	getsockname	dwarf+symtab	a0a097fd7959		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x17f0	96	getpeername	dwarf+symtab	3511b504fbe9		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(uipc_syscalls.o)	kernel-object	n64	.text	0x1850	188	sockargs	dwarf+symtab	2659ec874039		out:2	undocumented		
@@ -83950,7 +83950,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2179c	92	intr_th
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21800	56	tfi_save	dwarf+symtab	23e6f8986331		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21838	56	tfi_restore	dwarf+symtab	0a54feea6840		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21870	4	assbuffer	dwarf+symtab	df3f619804a9		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21874	1084	assfail	dwarf+symtab	5ab35cbbb27c		out:11	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21874	1084	assfail	dwarf+symtab	5ab35cbbb27c		out:11	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21cb0	12	getsr	dwarf+symtab	2ea7fc1f266e		out:11	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21cbc	16	setsr	dwarf+symtab	d5ed0e1e4ca1		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21ccc	8	getpc	dwarf+symtab	c343413c267a		out:11	undocumented		
@@ -84750,7 +84750,7 @@ IP35/usr/cpu/sysgen/IP35boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xe40	4
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xe6c	60	kmem_zone_private_mode_noalloc	dwarf+symtab	04ceef896104		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xea8	40	kmem_zone_enable_shake	dwarf+symtab	059a272efa7a		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0xed0	332	kmem_zone_ainit	dwarf+symtab	a4a4a9e6f3c9		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x101c	88	kmem_zone_zalloc	dwarf+symtab	79f3b747448f		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x101c	88	kmem_zone_zalloc	dwarf+symtab	79f3b747448f		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x1074	676	kmem_zone_quick_alloc	dwarf+symtab	0d3b97bf5ebd		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x1318	64	kmem_zone_quick_alloc_node	dwarf+symtab	cc094ec85614		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kmem_zone.o)	kernel-object	n64	.text	0x1358	1932	kmem_zone_alloc	dwarf+symtab	d9102cd43446		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
@@ -84875,7 +84875,7 @@ IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xf50	60	kmem_zone_private_mode_noalloc	dwarf+symtab	e5907eabb295		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xf8c	40	kmem_zone_enable_shake	dwarf+symtab	059a272efa7a		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0xfb4	332	kmem_zone_ainit	dwarf+symtab	a4a4a9e6f3c9		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x1100	88	kmem_zone_zalloc	dwarf+symtab	79f3b747448f		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x1100	88	kmem_zone_zalloc	dwarf+symtab	79f3b747448f		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x1158	4388	kmem_zone_quick_alloc	dwarf+symtab	57e0e09d51d7		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x227c	64	kmem_zone_quick_alloc_node	dwarf+symtab	cc094ec85614		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kmem_zone.o)	kernel-object	n64	.text	0x22bc	2472	kmem_zone_alloc	dwarf+symtab	91325b3244b6		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
@@ -84987,7 +84987,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1ae8	128
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1b68	100	setrun	dwarf+symtab	c3ab8160b9c9		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1bcc	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1c50	156	sv_signal	dwarf+symtab	cd06eba1ee09		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1cec	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1cec	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1dbc	328	sv_broadcast_bounded	dwarf+symtab	586999c5f247		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1f04	244	sv_foreach_wake	dwarf+symtab	5fa74763c762		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1ff8	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -84999,7 +84999,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2370	372
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x24e4	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x25d8	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2610	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2654	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2654	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x281c	280	sv_context_switch	dwarf+symtab	3877e4783458		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64		0x0		wchanname	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-object	n64	.text	0x8	8	wchaninfo	dwarf+symtab	87506497337c		out:3	undocumented		
@@ -85156,7 +85156,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x22d8	104	setrun	dwarf+symtab	099c3e2886b4		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2340	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x23c4	292	sv_signal	dwarf+symtab	a92459ec879b		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x24e8	356	sv_broadcast	dwarf+symtab	6bfbb3fadb8b		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x24e8	356	sv_broadcast	dwarf+symtab	6bfbb3fadb8b		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x264c	480	sv_broadcast_bounded	dwarf+symtab	804450e5176c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x282c	404	sv_foreach_wake	dwarf+symtab	6085024c3428		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x29c0	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -85168,7 +85168,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2ec0	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2fb4	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x2fec	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3030	480	sv_timedwait_sig	dwarf+symtab	d48588839ef3		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3030	480	sv_timedwait_sig	dwarf+symtab	d48588839ef3		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3210	284	sv_context_switch	dwarf+symtab	dc2cd1640a4d		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64		0x0		mpkqueue_enter_last	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x58	80	mpkqueue_remove	dwarf+symtab	f478e09129c0		out:3	undocumented		
@@ -85332,7 +85332,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1e
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1ea8	100	setrun	dwarf+symtab	c3ab8160b9c9		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1f0c	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x1f90	156	sv_signal	dwarf+symtab	cd06eba1ee09		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x202c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x202c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x20fc	328	sv_broadcast_bounded	dwarf+symtab	586999c5f247		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2244	244	sv_foreach_wake	dwarf+symtab	5fa74763c762		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2338	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -85344,7 +85344,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x26
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2824	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2918	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2950	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2994	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2994	456	sv_timedwait_sig	dwarf+symtab	ae2b9667d2bb		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x2b5c	284	sv_context_switch	dwarf+symtab	dc2cd1640a4d		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64		0x0		mpkqueue_enter_last	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-object	n64	.text	0x58	80	mpkqueue_remove	dwarf+symtab	f478e09129c0		out:3	undocumented		
@@ -85499,7 +85499,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1bf8	100	setrun	dwarf+symtab	c3ab8160b9c9		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1c5c	132	sv_get	dwarf+symtab	9dae319806c1		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1ce0	156	sv_signal	dwarf+symtab	cd06eba1ee09		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1d7c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1d7c	208	sv_broadcast	dwarf+symtab	d275c596f4f0		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1e4c	328	sv_broadcast_bounded	dwarf+symtab	586999c5f247		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1f94	244	sv_foreach_wake	dwarf+symtab	5fa74763c762		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2088	72	sv_threshold	dwarf+symtab	3816450e602e		out:3	undocumented		
@@ -85511,7 +85511,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2574	244	sv_timedwait	dwarf+symtab	77d0738e9773		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2668	56	sv_timedwait_notify	dwarf+symtab	d6d3583d2ce3		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x26a0	68	sv_timedwait_sig_notify	dwarf+symtab	d623ed895346		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x26e4	456	sv_timedwait_sig	dwarf+symtab	fcc963b0ac0c		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x26e4	456	sv_timedwait_sig	dwarf+symtab	fcc963b0ac0c		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x28ac	280	sv_context_switch	dwarf+symtab	3877e4783458		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64		0x0		wchanname	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-object	n64	.text	0x8	8	wchaninfo	dwarf+symtab	87506497337c		out:3	undocumented		
@@ -91848,7 +91848,7 @@ IP35/usr/cpu/sysgen/IP35boot/sat.a(sat.o)	kernel-object	n64	.text	0x4b30	336	sat
 IP35/usr/cpu/sysgen/IP35boot/sat.a(sat.o)	kernel-object	n64	.text	0x4c80	108	sat_clock	dwarf+symtab	bffdaad6a4c4		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sat.a(sat.o)	kernel-object	n64	.text	0x4cec	116	sat_hostname_set	dwarf+symtab	23261e6e8da2		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sat.a(sat.o)	kernel-object	n64	.text	0x4d60	116	sat_domainname_set	dwarf+symtab	16c8279c9477		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/sat.a(sat.o)	kernel-object	n64	.text	0x4dd4	108	sat_hostid_set	dwarf+symtab	7586d9bab3aa		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/sat.a(sat.o)	kernel-object	n64	.text	0x4dd4	108	sat_hostid_set	dwarf+symtab	7586d9bab3aa		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/sat.a(sat.o)	kernel-object	n64	.text	0x4e40	104	sat_tty_setlabel	dwarf+symtab	6e9e84cb5caa		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sat.a(sat.o)	kernel-object	n64	.text	0x4ea8	104	sat_check_priv	dwarf+symtab	3c53986c97a9		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sat.a(sat.o)	kernel-object	n64	.text	0x4f10	152	sat_control	dwarf+symtab	89ff88f27bd7		out:2	undocumented		
@@ -93433,7 +93433,7 @@ IP35/usr/cpu/sysgen/IP35boot/tpiicmp.o	kernel-object	n64	.text	0x450	112	tpiicmp
 IP35/usr/cpu/sysgen/IP35boot/tpirawip.o	kernel-object	n64		0x0		tpirawipinit	dwarf+symtab			out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/tpirawip.o	kernel-object	n64	.text	0x20	32	tpirawip_open	dwarf+symtab	e60cd12aed6c		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/tpisocket.a(tpisocket.o)	kernel-object	n64		0x0		tpisockd_call	dwarf+symtab			out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0xd8	220	tpisockd_init	dwarf+symtab	1845a6b57b62		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0xd8	220	tpisockd_init	dwarf+symtab	1845a6b57b62		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0x1b4	280	tpisockd	dwarf+symtab	d8005175a7e8		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0x2cc	64	tpisocket_init	dwarf+symtab	7fd6c3e12116		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/tpisocket.a(tpisocket.o)	kernel-object	n64	.text	0x30c	60	tpisocket_register	dwarf+symtab	1f002d7e04e9		out:2	undocumented		

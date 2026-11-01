@@ -1208,6 +1208,56 @@ tables. Labels are inferred, from the symbol table and the undefined imports. No
   slow clock, `tcp_zaptw` (712 bytes) reaps connection blocks chosen by `tcp_zaptw_secs`, and `tcp_canceltimers` (36
   bytes) clears them. It reads `tcp_keepidle`, `tcp_keepintvl` and `tcp_maxpersistidle`, and calls `tcp_close`, `tcp_drop`
   and `tcp_respond`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_usrreq.o)` (inferred): the user request entry for TCP sockets, five routines in a
+  12436-byte member. `tcp_usrreq` is the request switch, `tcp_ctloutput` (624 bytes) handles socket options,
+  `tcp_usrclosed` (380 bytes) handles a close from the user side, and `tcp_attach` (184 bytes) and `tcp_disconnect`
+  (180 bytes) create and tear down a connection. It creates protocol blocks with `in_pcballoc`, binds and connects them
+  with `in_pcbbind`, `in_pcbconnect` and `tcp_pcbconnect`, and sets the socket buffer sizes from `tcp_sendspace` and
+  `tcp_recvspace`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(udp_usrreq.o)` (inferred): UDP, eight routines in a 19332-byte member. `udp_input`
+  (2824 bytes) receives datagrams, `udp_usrreq` (2092 bytes) is the request switch, `udp_output` (1328 bytes) builds and
+  sends them through `ip_output` and `udp6_output`, `udp_ctlinput` (252 bytes) passes ICMP errors to the sockets, and
+  `udp_saveopt` (148 bytes) keeps the socket options. `udp_input` also hands datagrams to `nfs_input` and `is_input`,
+  which the member imports by name.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(rsvp_input.o)` (inferred): RSVP message input for IPv4, two routines in a 6596-byte
+  member. `rsvp_input` (592 bytes) takes an RSVP message and hands it to the RSVP daemon's socket, through `ip_rsvpd`,
+  `sbappendaddr` and `sowakeup`, and passes a copy to the raw path through `rip_input`. The second routine, `socket_send`,
+  has no size in the symbol table.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)` (inferred): fragment-vector builders for transmit offload, six routines in
+  a 4804-byte member. `frgvec_add_linkhdrs` (212 bytes) is the largest, and `ip_to_frag_vec`, `tcp_to_frag_vec`,
+  `udp_to_frag_vec_cksum` and `ip_to_stripe_vec` build the vectors for the IP, TCP, UDP and stripe paths. `tcp_max_tso_len`
+  (12 bytes) reports the largest TCP segment the offload path takes. The member copies header bytes with `bcopy` and
+  frees mbufs with `m_freem`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(bsdinit.o)` (inferred): network start-up and the host identity, five routines in a
+  6356-byte member. `bsd_init` calls the start-up routines the member imports: `domaininit`, `ifinit`, `arp_init`,
+  `in_init`, `loattach`, `netisr_init`, `sockd_init` and `tpisockd_init`, and `kmem_zone_init` for the socket zone.
+  `sethostid` (116 bytes) and `gethostid` (72 bytes) set and read the host ID, and `phost_sethostid` and
+  `phost_gethostid` (8 and 12 bytes) are its short accessors. The member also imports `sat_hostid_set`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_domain.o)` (inferred): the protocol domain table, 12 routines in a 9844-byte
+  member. `pffindproto` (308 bytes) looks up a protocol, `domain_add` (272 bytes) and `domain_drain` (232 bytes) manage
+  the domain list, and `pfctlinput2` (216 bytes) and `ifdown_pfctlinput` (184 bytes) pass control messages to the
+  protocols. It refers to the domains `inetdomain`, `inet6domain`, `rawdomain`, `routedomain` and `atmarpdomain`, and calls
+  `mbdrain` when `mbuf_reclaim_needed` is set.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_socket.o)` (inferred): the socket layer's send and receive core, 21 routines in a
+  26404-byte member. `soreceive` (2888 bytes) and `sosend` (1780 bytes) move data to and from user buffers with `uiomove`,
+  `soclose` (976 bytes) closes a socket, and `sogetopt` (852 bytes) and `sosetopt` (840 bytes) handle the options. It waits
+  for buffer space with `sv_wait_sig` and `sv_timedwait_sig`, wakes poll waiters with `pollwakeup`, and looks up protocols
+  with `pffindproto` and `pffindtype`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_socket2.o)` (inferred): socket buffers and the connection queue, 27 routines in a
+  22948-byte member. `sbappendaddr` (2052 bytes) queues a datagram with its address, `sbappendrights` (1420 bytes) queues
+  one with access rights, `sbappend` (984 bytes) appends data, and `sbcompress` (504 bytes) merges mbufs. `sonewconn` (900
+  bytes) makes a new socket for a listening one, taking its storage from `socket_zone` through `kmem_zone_zalloc`. It wakes
+  waiters with `sv_broadcast` and `pollwakeup`, and reports a failed assertion through `assfail`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_syscalls.o)` (inferred): the socket system calls, 28 routines in a 17748-byte
+  member. `recvit` (1024 bytes) and `sendit` (636 bytes) do the receive and send calls for the user, `xpg4_recvmsg` and
+  `xpg5_recvmsg` (312 bytes each) are the message-receive variants, and `getsockopt` (276 bytes) reads an option. It copies
+  arguments with `copyin` and `copyout`, takes descriptors with `getf`, and allocates files through `vfile_alloc` and
+  `vfile_ready`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(uipc_socket1.o)` (inferred): socket ioctls, connect and address calls, nine routines in a
+  13572-byte member. `soioctl` (952 bytes) handles socket ioctls, passing interface requests to `ifioctl` and routing
+  requests to `rtioctl`. `uipc_connect` (432 bytes) starts a connection, `sopoll` (380 bytes) reports readiness, and
+  `uipc_getpeername` (368 bytes) and `uipc_getsockname` (252 bytes) return addresses. It imports `check_rtioctl_priv` for
+  the routing requests.
 
 ## Scope questions
 
