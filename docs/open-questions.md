@@ -29,18 +29,12 @@ chip page and the entry is deleted.
 - **Bridge and XBridge: device register bits.** Only the pair `0x180000` (`pcibr_endian_set`) and the IP30 PROM's
   `0x1004` are read; the other bits the flags routines pass are derived from their callers at run time. Next:
   `pcibr_device_flags_set`'s callers and `pcibr_slot_addr_space_init`.
-- **TIOCP.** Whether any product in scope carries it is not established. Tried: its part numbers appear only
-  in the shared accessors. Next: Linux `pci-xtalk-bridge.c` and its history for the platform that uses it.
-- **Router: the IP27 register map and the routing tables.** The census reaches 4 global and 5 per-port registers of the
-  IP27 router and 5 and 6 of the IP35 router (chips/router/README.md), by the register numbers the kernel passes. The IP27
-  stride and port count differ from the public header, which describes the IP35-style chip. The routing tables, the
-  barrier registers and the diagnostic registers are not reached by constant. Tried: every call to the router accessors
-  in both kernels. Next: `do_router_op`'s callers (the user-reachable register read and write), the PROM's router
-  probe, and the IP35 `read_rr_reg` scan-chain path of `read_reg.o`.
-- **L1 and ELSC: PCI power request codes and L2 addressing.** The request codes for the I/O brick's PCI slot and bus
-  power and reset routines of `l1_command.o` come from tables the call-argument pass cannot follow
-  (chips/l1/README.md); no routine addresses an L2. Next: dump the request tables through the object's relocations and read
-  the `peer_iobrick_*` forms.
+- **TIOCP and TIO.** Whether any product in scope carries a TIOCP is not established, and no TIO code is held: the
+  names `tio_init_xswitch_widgets` and `Tio_brick_map_widget` are in the debug name tables of the IP35 `kernel.o` with no
+  text symbol, and the software enumeration `pciio_asic_type_e` has a TIOCP value (chips/tiocp/README.md). Tried: the
+  census of the shared accessors, a string and symbol search of every IP27 and IP35 object and PROM image. Next: the
+  public Altix-era headers in the pinned older Linux tree, and `pci-xtalk-bridge.c` in current Linux, read after the
+  binary reading.
 - **Xbow: the PROMs' large crossbar routines.** The census seeds only the small routines it could tie to the
   Crossbow (link-usable tests, link reset, error save, the IP30 interrupt service). Routines that touch the
   link-block displacements and were not read: IP27 PROM `0x1fc444b0`; I/O-board PROM `0x11c1d4ac`, `0x11c21c58`,

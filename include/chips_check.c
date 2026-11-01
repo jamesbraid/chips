@@ -12,6 +12,7 @@
 #include "mace.h"
 #include "gbe.h"
 #include "vice.h"
+#include "tiocp.h"
 #include "l1.h"
 #include "router_ip27.h"
 #include "router_ip35.h"

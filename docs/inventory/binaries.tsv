@@ -2526,7 +2526,7 @@ IP35/usr/cpu/sysgen/IP35boot/is1.o	kernel-IP35	kernel-object	object	n64	88232	0a
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jlimits.o)	kernel-IP35	kernel-object	object	n64	28484	6305d710567aa936		17	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jid.o)	kernel-IP35	kernel-object	object	n64	15412	19a9b2e5e40c69e3		8	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-IP35	kernel-object	object	n64	13716	84e2e62d4d69c4a3		11	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-IP35	kernel-object	object	n64	6148	2f9c278e3e4ee908		2	symtab	0	0	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-IP35	kernel-object	object	n64	6148	2f9c278e3e4ee908		2	symtab	0	0	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-IP35	kernel-object	object	n64	4676	6e2bfb6695896655		4	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-IP35	kernel-object	object	n64	14244	3ef9b4924885ded8		8	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kbd.o	kernel-IP35	kernel-object	object	n64	65344	affd3a10e79df033		42	symtab	0	0	undocumented		
@@ -2558,7 +2558,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-IP35	kernel-objec
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(klstat.o)	kernel-IP35	kernel-object	object	n64	10676	15bff1086695505c		7	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mrlock.o)	kernel-IP35	kernel-object	object	n64	6260	f074b7566fe5c0a1		8	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-IP35	kernel-object	object	n64	55640	cf461fa67eb3150e		61	symtab	0	0	named-only	chips/bedrock/README.md#window-and-how-it-is-reached	Window and how it is reached
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-IP35	kernel-object	object	n64	60216	ab5c3f4dce4eda0b		86	symtab	0	0	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-IP35	kernel-object	object	n64	60216	ab5c3f4dce4eda0b		86	symtab	0	0	named-only	chips/bedrock/README.md#window-and-how-it-is-reached	Window and how it is reached
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2.o)	kernel-IP35	kernel-object	object	n64	32916	9c0b72fd2dce806b		23	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2dlpi.o)	kernel-IP35	kernel-object	object	n64	41636	e96c1d973dbbc038		40	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/lockd.o	kernel-IP35	kernel-object	object	n64	144336	36bbbaa1b3f33569		128	symtab+dwarf	0	0	undocumented		
