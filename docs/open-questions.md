@@ -7,11 +7,11 @@ chip page and the entry is deleted.
 
 Each entry carries a route tag: `software now` (the next step is in software, and the binaries it needs are in `root/`), `missing source` (the route needs a public source tree or a published document that this clone does not hold), `missing binary` (the route needs a payload that is not held), or `closed` (settled). A `hardware residue` note marks the part of an entry that no software route reaches. Those notes are recorded, not scheduled.
 
-Counts for the 56 entries:
+Counts for the 55 entries:
 
 - **Software now: 48.** Seven of these also carry a hardware residue.
 - **Missing source: 5.** The public trees (`linux`, `linux-2.4.37`, `linux-2.5.40`, `linux-ip30`, `linux-ia64`, `netbsd`, `openbsd`) are uninitialised submodules in this clone, and the published documents for the IOC3 and Bedrock items are not held.
-- **Missing binary: 2.** The CRIME rendering-engine and transfer-engine entries need a renderer, X server module or diagnostic image that is not held.
+- **Missing binary: 1.** The CRIME rendering-engine entry needs a renderer or X server module that is not held. (The diagnostics `ide.IP30` and `ide.IP32` and the monitor `symmon.IP32` are held; they are stripped, so reading them is software work without symbols.)
 - **Closed: 1.** The literal-pool entry. Move its fact to the chip page and delete the entry.
 - **Hardware only as the sole route: 0.** Hardware residues sit inside seven software-now entries: CRIME write-error (the bus-level exception), MACE failure (an ISA device that never answers), IP35 reset window (the routing rule), Bedrock refused read (what the hardware latches), Bedrock pending bits 25 to 34 (what physically sets bits 29 to 34), IOC3 UART byte lane (the physical lane) and IOC3 and IOC4 reset values.
 
@@ -20,15 +20,15 @@ Ordered software-now list. Earlier steps unlock more entries, and each step name
 1. Unpack the IP32 PROM: read the `sloader` decompression routine by hand and unpack `firmware`. Unlocks MACE failure, CRIME registers no image reaches, and CRIME transfer-engine tile formats.
 2. Hub error handlers, read in full: `hub_ioerror_handler`, `handle_uncac_buserr`, `hubni_error_handler`, `log_md_errors`, `show_hub_md_err`, `process_error_spool`, `huberror_process_stack_entry`, `hubpi_spool_get_next`. Settles Hub PI write-buffer errors, Hub directory error labels, Bedrock refused widget read, Bedrock spool entry layout and Bedrock protected-region replies.
 3. Bedrock block indexing and interrupts: `hub_error_init`, `hub_error_clear`, `intr_connect_level`, `intr_heuristic`, plus the mask code that ORs bit 24. Settles Bedrock block boundaries, Bedrock interrupt numbers and the software half of Bedrock pending bits 25 to 34.
-4. Hub registers with no named role: `per_hub_init`, `hub_ifdr_fix_value`, `hub_piomap_alloc`, `mlreset`, `hub_error_devenable`. Settles Hub registers with no named role.
+4. Hub registers with no named role: `per_hub_init`, `hub_ifdr_fix_value`, `hub_piomap_alloc`, `hub_piomap_free`, the unnamed routine at `0xc00000000003b440` (it stores `0x400160`), `mlreset`, `hub_error_devenable`. Settles Hub registers with no named role.
 5. Bridge attach paths in the IP27 kernel: `xbridge_attach` (revision 2 path), `pcibr_intr_alloc`, `pcibr_rrb_alloc`, `pcibr_alloc_all_rrbs`, `pcibr_rrb_check`, the callers of `pcibr_device_flags_set`, `pcibr_slot_addr_space_init`, and the callers of the Crossbow probe routines. Settles chip numbering, the revision 2 attach path, the interrupt device register, response buffer registers and device register bits.
 6. PIC error service and direct map: `pcibr_error_dump`, `pcibr_error_intr_handler`, `pcibr_directmap_init`, and every reader and writer of the +0x18000 banks. Settles PIC error and interrupt service, PIC direct map and PIC +0x18000 banks.
 7. PROM window bases, constant-folded: the IP27 and I/O-board PROMs, the IP35 PROM window setup, the `hubspc.o` and `nic.o` uses of the second window, and a PROM search for registers above 0x298. Settles registers above 0x298, the IP27 and I/O-board PROM window base, the window-base model and the Bedrock second window.
 8. Xbow: the large crossbar routines in the four PROM images, the interrupt allocation in the node controller and HEART, and the link time-out and second-error routines. Settles the Xbow large routines and interrupt vector assignment. The PXBOW registers stay open until a PXBOW object is held.
 9. CRIME: the other IP32 objects that call `get_crimerev`, the graphics driver's error paths and the write-error handlers. Settles CRIME identification, CRIME error status location, CRIME write-error (software half) and CRIME registers no image reaches.
-10. MACE records and registers: the Ethernet, serial and video attach routines, the audio block at `0x304018`, the calendar RAM writer and its callers, and the video chapter of the held MACE specification. Settles MACE run-time pointers, MACE video output bits, `0x304018` and calendar RAM spacing.
+10. MACE records and registers: the Ethernet, serial and video attach routines, the audio block at `0x304018`, and the calendar RAM writer and its callers. Settles MACE run-time pointers, `0x304018` and calendar RAM spacing.
 11. IOC3 and IOC4: resolve the data relocations, read `plp_dma`, `plpintr`, `plp_reset`, `pciio_businfo_bus_speed_get`, `xide_pktDMA_start`, `xide_dma_init`, `xide_intr_clear`, and the IRIX PIO mapping flags. Settles the IOC3 UART lane (software half), the IOC3 tables, the IOC4 word at 0x24, the IOC4 ATA registers and the per-port tables.
-12. HEART: the PROM error dump, and one search of every held image for the eleven registers the diagnostic table names. Settles HEART refused-access errors and HEART registers no held code reaches.
+12. HEART: the PROM error dump, the PIU access and widget error tests of the stripped `ide.IP30`, and one search of every held image for the eleven registers the diagnostic table names. Settles HEART refused-access errors and HEART registers no held code reaches.
 13. Router: the callers of task `0xf` in `l1_command.o`. Settles the router scan-chain entry.
 14. Tools and inventories: write the Bedrock accessor seeds, rerun the scanner to check the scanner-fault items, and give the harness a way to read an object's data by gp. Settles the Bedrock, IOC3 and IOC4 inventory entries (both), the scanner faults, the harness limits and the scanner status note, which belongs in the tool notes.
 15. IP35 reset window, items 2 and 3 of the linked question: simulate the cache-staging routine against the cache-operation semantics, and read the remaining memory-configuration helpers.
@@ -104,7 +104,7 @@ Corrections found while tagging. These are not fixed here.
   "Write-error questions". Open there: which addresses are "invalid", whether a read and a write differ in the
   three-bit layout, whether a failed store also takes a bus error exception, which CRIME bit the MACE PCI error
   handler is attached to, second-error handling, and whether the interrupt asserts with its enable bit clear.
-- **CRIME: registers no scanned image reaches.** *[route: software now; proposed: constant-fold the PROM's bank-sizing addresses once the IP32 PROM is unpacked; the stripped diagnostic is a missing binary]* Refresh counter (0x248), memory control bit 1 (replacement select),
+- **CRIME: registers no scanned image reaches.** *[route: software now; proposed: constant-fold the PROM's bank-sizing addresses once the IP32 PROM is unpacked, and read the CRIME routines of the held stripped `ide.IP32`]* Refresh counter (0x248), memory control bit 1 (replacement select),
   the JUICE field (control bits 7:5), the watchdog's operation (only a store of 0), and the contents of 0x58 and 0x270.
   Valid end state unless a PROM or diagnostic routine that sets them is found. The PROM's bank-sizing loops use
   indexed addresses, so the census records only their bases, and the diagnostic's CRIME routines are stripped.
@@ -130,8 +130,6 @@ Corrections found while tagging. These are not fixed here.
   reset register, which the specification calls reserved; the PS/2 code treats status bit 6 differently when the flag
   is 0. Tried: the specification's PS/2 and ISA chapters, Linux and NetBSD (neither reads it). Next: the specification
   revision history pages (host bridge revision 0 versus 1 notes) and the NetBSD PS/2 driver for the same quirk.
-- **MACE: video output `0x200058` bits 35:32.** *[route: software now; the held MACE specification text covers the video chapter]* `mvpprobe` returns bits 35:32 of the 64-bit read; the specification
-  defines bits 18:0 of the hardware configuration register. Next: the specification's video chapter text.
 - **MACE: `0x304018`.** *[route: software now]* The Ethernet driver writes and reads this address as a flush target. It is not in the
   specification's register list. Next: confirm the block repeat on the peripheral controller's audio block.
 - **MACE: calendar-clock user RAM spacing.** *[route: software now]* `read_dallas_nvram` reads one byte apart from `0x3a0e08` while every
@@ -169,12 +167,12 @@ Corrections found while tagging. These are not fixed here.
   the shipped decode text. Next: `hub_ioerror_handler`, `handle_uncac_buserr` and `hubni_error_handler` in full, the trap dispatcher
   that indexes the cause table, `intr_heuristic`.
 - **Hub registers with no named role.** *[route: software now]* `0x2000c8`, `0x2000d0`, `0x2000d8`, `0x2000e0`, `0x400160`, `0x400190` and `0x4002c8` are
-  touched by `per_hub_init`, `hub_ifdr_fix_value`, `hub_piomap_alloc`, `mlreset` and `hub_error_devenable` and are not in the public
+  touched by `per_hub_init`, `hub_ifdr_fix_value`, `hub_piomap_alloc`, `hub_piomap_free`, an unnamed routine at `0xc00000000003b440`, `hub_ioerror_handler`, `mlreset` and `hub_error_devenable` and are not in the public
   headers. Next: read those routines in full. The I/O-board PROM is not in the Hub census.
 - **Hub directory error labels.** *[route: software now]* The shipped decode text labels directory error bit 61 uncorrectable and bit 63 correctable; the
   single-bit-error handler and the public header have them the other way round. Next: read `log_md_errors` and the decode routine
   `show_hub_md_err` in full.
-- **HEART refused-access errors.** *[route: software now; the stripped diagnostic half is a missing binary]* What sets CAUSE bits 40, 41 and 42 (bad system read, bad system write, PIU
+- **HEART refused-access errors.** *[route: software now; the held `ide.IP30` diagnostic is stripped, so its half is read without symbols]* What sets CAUSE bits 40, 41 and 42 (bad system read, bad system write, PIU
   register access error), what a failed or timed-out processor store latches, and which of the level 4 vectors 51 to
   63 each error raises. Known: the latch registers and decode paths, the widget error type bits (store timeout is
   type bit 2), the vector formula for widget errors. Unknown: the triggers and the cause-to-vector mapping. Tried:
@@ -256,7 +254,7 @@ Corrections found while tagging. These are not fixed here.
   pages, and the antialias slope is given as 2.12 in one place and 2.14 in another. The loaders copy these words unchanged, so
   the shipped kernel does not decide them. Routes tried: the specification's register map and chapter text, the shadow loaders'
   copy order. Next: a shipped renderer or X server module that builds the words, and the public CRIME frame-buffer driver sources.
-- **CRIME memory transfer engine: the null register and the tile table formats.** *[route: missing binary: the diagnostic and monitor images; the IP32 PROM is compressed until the MACE entry's route is done]* No routine in the IP32 member objects
+- **CRIME memory transfer engine: the null register and the tile table formats.** *[route: software now; the held `ide.IP32` diagnostic has rendering-engine TLB tests that are stripped; the IP32 PROM is compressed until the MACE entry's route is done; an X server module and the public CRIME frame-buffer drivers are not held]* No routine in the IP32 member objects
   writes `MTE.null` (`0x3070`), and no routine read builds a texture-TLB or clip-ID-TLB entry, so the entry bit layouts and
   the register's effect are open. The specification prints no entry layout. Routes tried: the shadow loaders, the clear,
   swap and copy routines, and a displacement scan of all 702 member objects. Next: the PROM, diagnostic and monitor

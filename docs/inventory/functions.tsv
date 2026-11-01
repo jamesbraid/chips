@@ -4736,7 +4736,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003b410	32	isspl0	symtab	9bdb1538e91c		out
 IP27/unix	kernel	n64	.text	0xc00000000003b430	8	delay_for_intr	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b438	8	hubio_init	symtab	78aa5094d5ec		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b5a0	792	hub_piomap_alloc	symtab	0fc0a2ee8e00		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc00000000003b8b8	236	hub_piomap_free	symtab	700a3c1012d3		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc00000000003b8b8	236	hub_piomap_free	symtab	700a3c1012d3		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc00000000003b9a4	96	hub_piomap_addr	symtab	1349f9e56ec6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003ba04	8	hub_piomap_done	symtab	78aa5094d5ec		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003ba0c	196	hub_piotrans_addr	symtab	51fcf306f1cf		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -19134,7 +19134,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x222b0	8	delay_fo
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x222b8	8	hubio_init	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x222c0	352	hub_pio_init	dwarf	06c9bbfeff6d		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22420	792	hub_piomap_alloc	dwarf+symtab	b10785d4e897		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22738	236	hub_piomap_free	dwarf+symtab	d8a471b1bd9a		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22738	236	hub_piomap_free	dwarf+symtab	d8a471b1bd9a		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22824	96	hub_piomap_addr	dwarf+symtab	1349f9e56ec6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22884	8	hub_piomap_done	dwarf+symtab	78aa5094d5ec		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2288c	196	hub_piotrans_addr	dwarf+symtab	99dd9f54fb44		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -68314,7 +68314,7 @@ IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x6fc8	36	mvpbuffer_i
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x6fec	296	mvpbuffer_clear	dwarf+symtab	161b5f58d43b		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x7114	328	mvpbuffer_register	dwarf+symtab	2644a86074d0		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x725c	236	mvpbuffer_ioctl	dwarf+symtab	c735ad7a8084		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x7348	48	mvpprobe	dwarf+symtab	0f7219042fe4		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x7348	48	mvpprobe	dwarf+symtab	0f7219042fe4		in	named-only	chips/mace/README.md#other-rows	Other rows
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x7378	120	mvpcontrol_init	dwarf+symtab	bf5a13575dd9		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x73f0	68	mvpcontrol_unload	dwarf+symtab	537e555ad029		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x7434	412	mvpcontrol_setup_output	dwarf+funcnames	46796d1e1a21		in	undocumented		
@@ -84004,7 +84004,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21f10	8	delay_fo
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21f18	28	hubio_init	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21f34	352	hub_pio_init	dwarf	1424ce2f654a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22094	792	hub_piomap_alloc	dwarf+symtab	cfabe0b57dfa		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x223ac	236	hub_piomap_free	dwarf+symtab	764d80c20d32		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x223ac	236	hub_piomap_free	dwarf+symtab	764d80c20d32		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22498	96	hub_piomap_addr	dwarf+symtab	1349f9e56ec6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x224f8	8	hub_piomap_done	dwarf+symtab	78aa5094d5ec		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22500	196	hub_piotrans_addr	dwarf+symtab	c5b8e8842727		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
