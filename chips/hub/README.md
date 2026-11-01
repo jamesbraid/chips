@@ -977,6 +977,152 @@ use the local alias of the table above (`0x9200000001000000 + offset`).
   entry of `pdaindr`, byte +0x520) and stores 0 to `0x9200000001000000` plus 40 times the slice plus 792, that is
   0x318 (`PI_GFX_INT_CNTR_A`) or 0x340 (`PI_GFX_INT_CNTR_B`), followed by `sync`. Established.
 
+### Further routines of the IP27 kernel (`IP27/unix`)
+
+Read in full from the linked IRIX 6.5.30 IP27 kernel, one entry per routine, after the entries above; addresses are the kernel's own. These routines reach the
+Hub's registers, or the Hub's real-time counter, through the aliases described at the top of this page.
+
+- `crbx` (`IP27/unix` at 0xc000000000028054,
+  3312 bytes) dumps the fifteen I/O-interface CRB entries of one node as text. It takes the node number in `a0` and a
+  printf-style output routine in `a1`, kept in `s1`; every line goes out through `jalr s1`. It prints "NASID %d", then seven
+  fixed heading lines naming the columns of the four entry words. It builds the node alias from the literal-pool word
+  `0x9200000001c00000` (the Hub node alias plus the I/O block offset 0x400000) and, for entry `i` = 0 to 14 (stride 0x20,
+  the loop ends when `slti i,15` fails), loads four doublewords at +0x400, +0x408, +0x410 and +0x418 of
+  `base + (node << 32) + 0x20 * i`: words A, B, C and D. From A it prints bits 57, 56, 55, 54:52, 51, 50, 49, 48:45,
+  44:40, bits 39:2 shifted left 3 (a byte address) and bits 1 and 0, with the entry number first. From B it takes the
+  two-bit kind in bits 42:41 and builds an eight-byte mnemonic from the command number in bits 40:33: kind 0 prefixes "XT" and
+  compares `(B >> 33) & 0xaf` against seven values, kind 1 prefixes "BT" and uses a 65-entry table, kind 2 prefixes "LN" and uses a
+  256-entry table, kind 3 prefixes "CR" and knows five values (0, 1, 2, 4, 8). The two tables are `jr` tables whose targets each
+  copy a fixed name (for example "VRD", "VERRPCA", "RDSH", "PRDH", "GFXWS", "UPACK") into a stack buffer; an unlisted value
+  calls `sprintf` with "??0x%02x?". Bits 29:25 of B index an 18-entry `jr` table of operation names ("PRDC", "DEX", "WB",
+  "BLKR", "WRIO", "BSHU", "BEXU", "RDEX", "WINV", "PIOR", "PIOW" among them; values 10 to 15 and 18 or more take the default
+  `sprintf` of "??%d??"). Bits 32:30 of B pick one of five short strings (values 0, 1, 2, 3 and 5; any other takes the "??" text).
+  The rest of B, all of C and the bits of D are printed through the callback with four more formats. Besides the callback the only call
+  is `sprintf` (0xc0000000001fd9d0). It writes no register and returns nothing. Established: the access addresses, loop,
+  table indices and print order. Inferred: that A, B, C and D are the CRB entry words, from the `dump_crb` entry in the
+  hub datasheet that decodes the same offsets.
+- `memerror_sbe_intr` (`IP27/unix` at 0xc000000000049e74,
+  2596 bytes) handles a correctable (single-bit) ECC error report for one node. `a0` is 0 when called from the interrupt (the
+  messages then carry the tag "intr", otherwise "polled") and `a1` is the node number, which `get_nasid` replaces when `a0` is 0.
+  It maps the node with `nasid_to_compact_node`, loads that node's record pointer at +0x4d20 and returns at once when the
+  first word it points to is nonzero. It reads `MD_DIR_ERROR` (+0x50) and `MD_MEM_ERROR` (+0x70) from the alias
+  `0x9200000001a00000 + (node << 32)`; if bit 63 of either is set the error is uncorrectable, so it calls `log_md_errors`
+  and returns. Otherwise it reads the clearing aliases `MD_DIR_ERROR_CLR` (+0x58) and `MD_MEM_ERROR_CLR` (+0x78) and tests
+  one flag in each. With neither flag it prints "Unexpected uncorrectable directory/memory ECC error", "Unexpected protection
+  rights ECC error" or "Spurious correctable ECC error interrupt" (only when `a0` is 0) and returns. A directory error prints
+  the tag, directory word, memory address and decoded syndrome (`mdir_xlate_syndrome`; the width argument is 2 when bit 28 of
+  the doubleword at +0x18 is set, else 1) and the address translation `mdir_xlate_addr_pdir` (bit set) or
+  `mdir_xlate_addr_sdir`, prints the DIMM bank (`get_slotname`), then calls `memory_present` and `page_ispoison`. A present,
+  unpoisoned page is repaired by reading the word at its uncached address (`0xa800...`) and writing it back once (eight times at
+  stride 0x80 when the address is in the 0x30000000 window), each followed by `__cache_wb_inval` (length 8), and "Single-bit error
+  has been repaired." is printed. A memory error uses `mdir_xlate_addr_mem` and one write-back, and when bit 62 of `MD_MEM_ERROR`
+  is 1 it reads a byte through a `0x9000000080000000`-based address and re-reads +0x78: bit 62 still 1 prints "Hard Single-bit
+  error.", else "Single-bit error has been repaired."; bit 62 not 1 prints "Transient read error ignored". A missing page prints
+  "Memory address not present!" and a poisoned one "Ignoring correctable error in poisoned page". `panic_on_sbe` nonzero calls
+  `cmn_err` (level 0). A count at +0x128 of the record (window ending at the `time` held at +0x12c, reset to `time + 60`)
+  reaching 600 calls the static routine at 0xc000000000049d48. Up to 16 records of four words from +0x8 remember page numbers
+  (`addr >> 14`) with a type bit, a count and an expiry; expired ones are compacted out. A repeat count equal to
+  `sbe_max_per_page` prints "Excessive single-bit ECC corrections in pfn %d", the bank line, calls `page_discard` (1, 0) and
+  sets the expiry to `time + 600`; equal to `sbe_maxout` calls 0xc000000000049d48; a full table of 16 does too. It returns nothing.
+  Inferred: the exact flag bits tested, because the decompiled masks were not re-read in the disassembly, and the role of the
+  static at 0xc000000000049d48, which was not read.
+- `sn0drv_ioctl` (`IP27/unix` at 0xc00000000006aa10,
+  2252 bytes) is the ioctl entry point of the node-controller character driver. It takes the device vertex in `a0`, the command in
+  `a1`, the user argument in `a2` and a pointer for the call's return value in `a5`, and keeps its error number in the
+  stack word at 0(sp), which it returns. A command from 8 to 22 goes through a 15-entry `jr` table at 0xc0000000003c52e0
+  (command 14, 20 and 21 and every command outside the range take the default arm and return what `sndrv_ioctl_common` returns).
+  The arms that reach the driver's own code check what kind of node the vertex is with `device_info_get` (kind 1, 2, 3 or 4 by
+  command; a mismatch returns 22) and, for the ones that change state, call `cap_able` with `1 << 37` (a refusal returns 1);
+  a failed `copyin` or `copyout` returns 14. The commands: 8 and 9 enable and disable the memory-directory performance counters
+  (label `_mdperf`, then `md_perf_node_enable` or `md_perf_node_disable`, kind 2, privileged); 10 and 11 copy out the counter values
+  (288 bytes, `md_perf_get_node_count`) and the control word (4 bytes, `md_perf_get_node_ctrl`) of that label; 12 resolves the
+  vertex's node with `nodevertex_to_cnodeid` (22 when it is -1), reads eight words with `memerror_get_stats`, fills the unused
+  ones with -1 and copies out 32 bytes (kind 2, privileged); 13 reads or writes the system controller's NVRAM
+  (`elsc_nvram_read` for flag bit 0, `elsc_nvram_write` for bit 1, otherwise error 5), copying in 12 bytes and out 12 bytes, under
+  the controller's spinlock and `setmustrun` on a processor of that node (kind 3, privileged); 15 copies in 112 bytes, calls
+  `rou_fence_op` on a processor of the node and copies 112 bytes back (label `_rou_fence`, kind 1, privileged);
+  16 copies out the 6-byte port map from `router_port_map_get`, 17 copies in 8 bytes and copies out 8 bytes of
+  `router_port_mfg_info_get` (both after `check_router`); 18 searches the label `_nic` string for "Laser:" and
+  copies out the hexadecimal number after it (`strtoull`, base 16) as 8 bytes; 19 copies in 96 bytes and runs `elsc_command`
+  (kind 4, privileged); 22 writes to the return-value pointer bits 7:4 of the doubleword at +0x48 of
+  `0x9200000001a20000 + (node << 32)` when the string of label `_mon`, taken through `nic_hub_vertex_info`, contains "IP31", else the
+  value 15. Inferred: the command meanings, which come from the callees and label names (`_mdperf`, `_rou_fence`, `_nic`, `_mon`).
+- `handle_cac_buserr` (`IP27/unix` at 0xc000000000036e50,
+  1644 bytes) classifies a bus error taken by a cached access. It takes the exception frame in `a0`, the faulting physical
+  address in `a1` (node number in bits 47:32) and a flag in `a2` (the value 1 suppresses the not-populated message). It first calls
+  `get_matching_spool_addr` for the cache-line-aligned address (mask from the word at `gp + 0x1eec`), and a result of -1 prints "Lost
+  spool info on cached buserr". For results 1 and 2 it takes the saved Hub error word of the PI spool entry: a 3-bit type from bits
+  2:0 and a flag (bit 12 of the first word for result 1, bit 42 of the second for result 2); a set flag calls `kl_panic` and returns 3, a
+  type other than 2 or 3 prints "Cached read access: bad error type" and returns 3. Type 2 (directory error) calls
+  `log_md_errors`, prints "directory error" unless `a2` is 1, and then: a node in another partition (`nasid_to_partid` against
+  `part_id`) returns what `partition_handle_error` gives for kind 4; otherwise `error_page_discard` (1, 1) failing with any result
+  except 0 or 1 prints "Page with memory/directory error could not be discarded" and returns 2, `error_check_part_page` nonzero
+  returns `partition_handle_error` (kind 4), and the normal result is 2. Type 3 (time-out) from another partition returns
+  `partition_handle_error` (kind 1), a partition page returns it too, and a local one prints "time out error" and returns 3.
+  With no spool match it checks that the node's region is populated (`nasid_to_region` against a bitmask at the pool pointer,
+  printing "region not populated" and returning 3), then for a node in this partition looks up the faulting instruction type
+  (`error_lookup_inst_type`; a result of -1 is treated as a store) and asks `error_check_memory_access`,
+  `error_check_poisoned_state`, `memory_iscalias` and `klerror_check_recoverable` (type 3); a recoverable error returns 0 (or 2 when the
+  memory-access check says so); when `verify_snchip_rev` is below 5 and bits 6:2 of the frame's word at +0x118 equal 0x18 it prints
+  "trying to recover from ibus error" and returns 0; an unrecoverable one prints the "Unrecoverable bus error exception" block, reads
+  the directory entry words through `0x90000000c0000200`/`0x90000000c0000208` (the pool words), calls `get_dir_ent` and, for a
+  directory state of 3 or 4 with an I/O-owned bit set, `dump_crb`, and returns 3. A node in another partition returns
+  `partition_handle_error` with kind 5 or 6 when the page check fails. Inferred: the meanings of the type values and return
+  codes, which come from the message text and the partition-handler name.
+- `bte_copy` (`IP27/unix` at 0xc00000000002cbdc,
+  1532 bytes) runs one block transfer on the node's block-transfer engine and waits for it. It takes the source address in `a0`, the
+  destination in `a1` (either 0 means "use the interface record's default", words +0x8 and +0x10 of the record), the byte
+  length in `a2` and the mode flags in `a3`. It returns 1 when `disable_bte` is nonzero and `maxcpus` is not below it, 6 when the
+  length is 0x7fff81 or more, and 0 at once for a zero length. Otherwise it raises the level with `spl1`, picks the interface
+  record of the engine whose number is the processor number's low bit (table at +0x53c8 of the node record), returns 1 when that
+  record's byte at +0x42 (the engine-present mask) is zero, and tries the interface's spinlock (word at +0x44) with
+  `nested_spintrylock` while `bitlock_islocked` says the engine's bit lock is free; it tries the other engine when this one is busy
+  or its lock is taken, and returns 1 when neither is free. With the lock held it loads the register block pointer from the
+  first doubleword of the record, clears the engine's error count (word +0x58) and, after a `__dcache_wb_inval` of a
+  128-byte stack area it uses as the completion word (initialised to -1, then `__prefetch_load`), stores in this order:
+  the notification address into the record's word at +0x28, the source to register +0x8, the destination to +0x10, the length
+  `(len >> 7) | 0x100000` (128-byte units, bit 20 set) to +0x0, then the completion address to +0x20 and the mode `flags & 0x1ff` to
+  +0x18 (that last store sits in the delay slot of `nested_spinunlock`; the lock is released and the level restored with
+  `splx` right after). It then polls the completion word, flushing it with `__dcache_wb_inval` and `__prefetch_load`, until it changes
+  or the real-time counter at `0x9200000001030100` passes a deadline of the record's timeout word (+0x70) beyond its start. A
+  completion word of 0 returns 0; any other word without bit 16 retries (the record's retry word +0x58 counts up and a count
+  above 15 calls `cmn_err` with "BTE(%x): bte_copy failed with bte_status = 0x%x"); a word with bit 16 (0x10000) calls
+  `bte_error_handler` and returns its result (or retries when the retry word is zero). When `a3` has bit 0x100 set it calls
+  `poison_state_clear` after an error. Inferred: that the +0x18 store starts the engine, from its position as the last register write.
+- `hub_dmatimeout_kick` (`IP27/unix` at 0xc000000000029144,
+  1308 bytes) stops every other processor, then repairs the I/O interface's FIFO-depth register for one node. `a0` is the
+  node number and `a1` chooses whether to wait for `global_kick_lock` (`mutex_spinlock`) or only try it (`mutex_spintrylock`, returning 1
+  when it is held). On the first node, while the table word at 0xc0000000014ca218 is nonzero and `graph_done` is clear, it
+  rebuilds the master node's pointer from the CRB of the node's widget 0 (the halfword node ids from `compact_to_nasid_node`).
+  It then sets `kicker` to the calling processor, clears the two doublewords of `entermask`, and for each processor number
+  below `maxcpus` that is not the caller and whose table word is not -1 sets its bit in `entermask`; for each set bit it
+  stores the number in `kicking` and runs `cpuaction` with `kick_action`, flag 1. After `bte_wait_for_xfer_completion` it polls
+  `entermask` (reading the real-time counter at `0x9200000001030100` against a deadline) until the other processors have cleared their
+  bits. When the deadline has not passed it raises the level with `splerr`, for sixteen device entries of the node's list saves two
+  words (+0x10c and +0xa4), zeroes the first and sets bit 6 (0x40) of the second, waits `us_delay(5)`, calls
+  `hub_merge_clean` with the node, waits `us_delay(2)`, reads the doubleword at +0x398 of `0x9200000001c00000 + (node << 32)`
+  (`IIO_IFDR`), calls `hub_ifdr_fix_value`, restores the saved words, sets `release`, stores 0xffff into `kicker`, waits
+  `us_delay(2)`, restores the level and `mutex_spinunlock`. A fix result of 0 returns 0; a positive result calls `cmn_err` (level
+  0x15) with "HUB II_IFDR (0x%x) fixed. Value was 0x%x", a negative one calls `cmn_err` (level 0x10) with "HUB II_IFDR (0x%x)
+  overflowed. Fatal". When the processors did not all arrive it calls `cmn_err` (level 5) naming the first missing one
+  ("CPU %d didn't arrive in kick_action.") and then `cmn_err` (level 0) with "Timeout/IFDR kick failed.  CPUs didn't all arrive."
+  Inferred: the register is the I/O FIFO depth register, from the string and `hub_ifdr_fix_value`; the return convention of the
+  `cmn_err` calls, which the decompiler marked as not returning.
+- `numa_tune` (`IP27/unix` at 0xc0000000002852b0,
+  1216 bytes) reads or sets the page-migration parameters of one node or of all nodes. It takes the command in `a0` (100 reads,
+  101 sets), a path name in `a1` and a user buffer in `a2` of 0x83c bytes. A nonzero `a1` goes through `lookupname`
+  (error 2 when the name is not found), `master_node_get` on the vnode's device and `vn_rele`; a zero `a1` means the calling
+  node's number (the halfword at -0x3bde of the process page) for a read and "all nodes" (-1) for a set. Any other command returns 22.
+  Read (100): a zero buffer returns 14; it copies the node's parameter block (pointer at +0x8 of the node record: two words and twelve
+  more pairs of words) into a stack buffer and calls `copyout` of 0x83c bytes, returning 14 when that fails. Set (101):
+  `cap_able(0x2000000)` refusing returns 1, a zero buffer or a failed `copyin` returns 14; it checks the new values with
+  `migr_parms_check` for each node (an error is returned unchanged), stops each node's counting with `mem_tick_quiesce_node` (on a
+  failure it re-enables the nodes already stopped with `mem_tick_reactivate_node` and returns 16), copies the parameter block
+  into every selected node's record, stores `word_at_+0x10 | 0x8000000000000000` into the doubleword at +0x38 of
+  `0x9200000001a00000 + (node << 32)` (`MD_MIG_VALUE_THRESH`), and restarts with `mem_tick_init_node` and
+  `mem_tick_reactivate_node`. It returns 0 on success. Inferred: that bit 63 enables the threshold, since the routine only sets
+  it together with the value and `migr_refcnt_init` has not been compared.
+
 ## Routines in the IP27 `hubspc.o` build
 
 One entry per routine, read in full from the IRIX 6.5.30 IP27 `hubspc.o` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o`, a relocatable
