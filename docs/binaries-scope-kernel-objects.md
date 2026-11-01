@@ -1096,3 +1096,15 @@ These are questions for the scope list; nothing here changes `scripts/inventory-
   drives the IOC3 parallel port. It is the same candidate for the keep list as the IP27 object above.
 - `bpqueue.o` in the IP35 build is listed under rule 4, but it is a queue with a daemon and drives no device. Its label
   does not match the class; the in or out result does not change.
+- `IP27/usr/cpu/sysgen/IP27boot/imon.o` (inferred) is listed under rule 2, the network rule. Its routines are a
+  file-change monitor layered on the vnode operations: 49 routines in a 43408-byte object (10096 bytes of
+  code). Its vnode operations pass each request on to the file system. It calls `vn_passthru_vop_create`
+  and `vn_passthru_vop_remove` for that. It imports `efs_fstype`, `udf_fstype` and `nfstype` from the
+  file-system type tables, and no network symbol. Rule 1, the file-system rule, fits the object better. Both
+  rules exclude it, so the in or out result does not change.
+- `IP27/usr/cpu/sysgen/IP27boot/imp.o` (inferred) is listed under rule 2 too, but its imports are input-device calls.
+  It calls `idevSetPtr` and `idevGenBtnEvents`, and imports `idevSetPtrBounds`, `idevGenValEvents`,
+  `idev_rput` and `idev_wput`. The event calls belong to the event layer described under `idev.o` in the
+  device-driver section. Its 10 routines, `imp_intr` at 1608 bytes and `imp_wioctl` at 1432 bytes among
+  them, form a STREAMS driver with open, close and ioctl entries, and no network import. Rule 4, the
+  device-driver rule, fits it. Both rules exclude it, so the in or out result does not change.
