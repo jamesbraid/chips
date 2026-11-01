@@ -390,6 +390,77 @@ Graded answers to the write-error questions, from the shipped kernel and PROM on
 5. **What a failed write does to the CPU.** *Unknown from these files.* Whether the kernel's write-timeout case raises a bus-error
    exception or only the error interrupt (an R10000-family CPU posts the store) is not shown by the Hub code.
 
+## Routines of the IP27 kernel that touch the node controller
+
+Each entry below is one routine of `IP27/unix` (the linked IRIX 6.5.30 IP27 kernel), read in full from its disassembly. Addresses are
+the symbol values; `local alias` and `node alias` are the two address forms defined under Addresses. Register names are the public
+header names used in the tables above.
+
+### Clock, timer and processor identity
+
+- `ackkgclock` (`IP27/unix` `0xc000000000048588`, 56 bytes) acknowledges the profiling interrupt of the processor it
+  runs on. It reads the halfword at absolute address `0xffffffffffffc420` (the processor number), indexes a table of
+  16-byte entries with it, follows the pointer at entry +8 and tests the byte at +1312 of that record. A zero byte
+  makes it store a zero doubleword to address 0x9200000001000130 (`PI_PROF_PEND_A`, local alias); any other value
+  makes it store the zero to address 0x9200000001000138 (`PI_PROF_PEND_B`). Established for the stores; inferred that
+  the byte is the processor's slice number.
+- `acktmoclock` (`IP27/unix` `0xc000000000048550`, 56 bytes) is the same code path for the real-time (timeout)
+  interrupt: the byte at +1312 of the processor record chooses between storing zero to address 0x9200000001000120
+  (`PI_RT_PEND_A`, byte zero) and address 0x9200000001000128 (`PI_RT_PEND_B`). Established for the stores; inferred
+  that the byte is the slice number.
+- `startkgclock` (`IP27/unix` `0xc0000000000485c0`, 280 bytes, 32-byte frame) turns on the profiling clock for the
+  calling processor under the lock at gp+2608. It takes that lock with `mutex_spinlock_spl` (second argument
+  `splprof`), and on its first use calls `setkgvector` with the address of `prof_intr` and sets the word at gp-32360.
+  If the word at address 0xffffffffffffc534 already holds 1250 it releases the lock with `mutex_spinunlock` and
+  returns; otherwise it stores 1250 there, adds 1 to the word at +18736 of the record pointed to by the doubleword at
+  address 0xffffffffffffc400, and stores 1 to address 0x9200000001000150 (`PI_PROF_EN_A`) when the byte at +1312 of
+  the processor record is zero or to address 0x9200000001000158 (`PI_PROF_EN_B`) otherwise. When the word at +18736
+  became 1, or when `cnodetocpu` of the halfword at address 0xffffffffffffc422 equals the processor number, it stores
+  `PI_RT_COUNT + 1250` at +18728 of that record and again to address 0x9200000001000118 (`PI_PROFILE_COMPARE`). It
+  ends by incrementing the word at gp-32356 and unlocking. Established.
+- `slowkgclock` (`IP27/unix` `0xc0000000000486d8`, 216 bytes, 16-byte frame) is the opposite of
+  `startkgclock`. The first call runs `spinlock_init` on the lock at gp+2608 with the name string "kgclock" and sets
+  the word at gp-32352. It then takes the lock with `mutex_spinlock_spl`; when the halfword at gp-26608 equals the
+  processor number and the word at gp-32416 is nonzero it unlocks and returns without touching the hardware. Otherwise
+  it stores zero to `PI_PROF_EN_A` (address 0x9200000001000150, slice byte zero) or `PI_PROF_EN_B` (address
+  0x9200000001000158), decrements the counters at gp-32356 and at +18736 of the current record when the word at
+  gp-32360 is set, clears the word at address 0xffffffffffffc534, unlocks with `mutex_spinunlock` and calls
+  `ackkgclock`. Established.
+- `set_timer_intr` (`IP27/unix` `0xc000000000046648`, 248 bytes) arms the real-time compare of the processor numbered
+  in its first argument for the absolute counter value in its second. When that value is zero or not later than
+  `PI_RT_COUNT` (address 0x9200000001030100) it stores nothing, calls `timepoke` directly if the target is the calling
+  processor and otherwise `cpuaction(cpu, timepoke, 1)`, and returns 0. Otherwise it adds the target's node number
+  (the halfword at +1060 of its processor record) shifted left 32 to address 0x9200000001800000 and stores the value
+  at +264 (`PI_RT_COMPARE_A`, slice byte zero) or +272 (`PI_RT_COMPARE_B`), runs `sync`, and reads the counter again.
+  Calling itself, it runs `timepoke` and returns 0 when the counter has reached the value; for another processor it
+  does so when the value is within 2 ticks of the counter. In every other case it returns 1. Established.
+- `hub_rtc_init` (`IP27/unix` `0xc0000000000484f8`, 88 bytes) initialises the real-time and profile interrupt enables
+  of one node, and only when its argument equals the result of `get_compact_nodeid`. It looks the node number up in
+  the halfword table at `0xc0000000014d4e80`, adds it shifted left 32 to address 0x9200000001800000 and stores 1 at
+  +320 (`PI_RT_EN_A`) and +328 (`PI_RT_EN_B`) and 0 at +336 (`PI_PROF_EN_A`) and +344
+  (`PI_PROF_EN_B`). Established.
+- `us_delay` (`IP27/unix` `0xc000000000047c0c`, 164 bytes) busy-waits for the number of microseconds in its first
+  argument (taken as an unsigned 32-bit value). It multiplies by 1,250,000 (`0x1312d0`), divides by
+  1,000,000 (`0xf4240`) and spins reading
+  `PI_RT_COUNT` (address 0x9200000001030100) until the count is no longer below the start value plus that quotient.
+  The constants give 1.25 counter ticks per microsecond, which matches the 1250-tick profile period of `startkgclock`
+  being one millisecond (inferred). Established for the loop, which reads the counter five times per pass of its
+  unrolled body.
+- `get_realtime_ticks` (`IP27/unix` `0xc0000000000479a8`, 40 bytes) returns the signed quotient of
+  `PI_RT_COUNT` minus the doubleword at address 0xc0000000014d2b40 (gp+2512) divided by the doubleword at address
+  0xc0000000014d2b90 (gp+2592), truncated to its low 32 bits. The divisor is checked with a trap on zero. Established;
+  inferred that gp+2512 is the count at boot and gp+2592 the ticks per output unit, because `init_timebase` writes the
+  neighbouring words.
+- `rtc_read` (`IP27/unix` `0xc0000000000465dc`, 12 bytes) returns the doubleword at address 0x9200000001030100
+  (`PI_RT_COUNT`, local alias) and nothing else. Established.
+- `init_timebase` (`IP27/unix` `0xc000000000045c68`, 216 bytes) starts the kernel's time base. It calls `rtodc` to
+  read the time-of-day chip and stores the value at gp+6264 and through the pointer at gp-19488, stores `PI_RT_COUNT`
+  at gp+2528, clears the words at gp+2524 and gp+2520 and the doublewords at gp+2552, gp+2544 and +8 of that pointer,
+  then spins until the counter has advanced by 2,500,000 (`0x2625a0`, two seconds at the tick rate derived under
+  `us_delay`). It calls `rtodc` again and, if the value is unchanged, calls `cmn_err` with level 4 and the message
+  "System time-of-day chip is not advancing." followed by "CHECK AND RESET THE DATE!". Established; the two-second
+  figure follows from the inferred tick rate.
+
 ## Against the public headers (reported after the reading above)
 
 No Hub specification is held, so there is no specification comparison. The Linux SN0 headers (`hubpi.h`, `hubmd.h`, `hubio.h`,
