@@ -306,8 +306,11 @@ p[4:0]: rt (`f[20:16]`, the operations that write rt) or the rd position (`f[15:
   opcodes of the code the PROM runs from the staged lines (by reading the code, not simulated): after the table is loaded, 0x1fc0295c jumps (`jr`) to
   0x980000001fc027f4, which executes table lines 0 to 4 (the `mtc0` sequence at 0x1fc027f4 to 0x1fc02824, the `dsll`
   and `cache` words through 0x1fc02884, the `daddiu`/`dsll` address building, the `jr $31` at 0x1fc028c4).
-  The classes the table also carries but that code does not run (0x18, 0x1a, 0x36, 0x40) are the `or`,
-  `addi/addiu/ori/lui`, `ld` and `jal` words.
+  Class 0x1a does run (established, from the instructions in that loop: `ori` at 0x1fc027fc, 0x1fc02804 and
+  0x1fc02830, `addiu` at 0x1fc0280c, 0x1fc02818 and 0x1fc02824, `lui` at 0x1fc0282c and 0x1fc028ac, `addi` at
+  0x1fc02898; that the staged words carry class 0x1a is the pairing in the class table, inferred). The loop holds
+  no `or`, `ld` or `jal`, so classes 0x18, 0x36 and 0x40 are carried by the table but not run by the loop at
+  0x1fc027f4 to 0x1fc028c8 (established, from the instructions; the loop was read, not simulated).
 - Not instructions: 0x7f, 0x55, 0x2a, and the zero entry. They come from the pattern test (0x1fc02c90), which stores them,
   reads them back and compares, through the 0xa800000000000000 alias on both ways; the self-test is the only reader.
   Inferred: never fetched as code.
