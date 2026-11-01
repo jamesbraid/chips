@@ -529,3 +529,59 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   at +0x294 for types 0 and 1, with one load and no store. A null handle, type -1 or a raw window of unrecognised part
   leaves the response buffer status register unread: the bridge-type `panic` runs and 0 is returned from the delay
   slot after it; other record types return 0 without any message. Established.
+- `pcireg_pcix_bus_err_attr_get` (`IP30/unix` `0xa8000000200596d4`, 356 bytes, frame 16 bytes)
+  returns the PCIX bus error attribute register, the doubleword at window +0x608, for types 2 and 3 only. Types 0 and
+  1 have no such register: they call `panic` with "pcireg_bus_err_attr_get(): undefined register" and, if that
+  returns, a second `panic` with "pcireg_bus_err_attr_get(): unknown bridgetype", then return 0 without reading. Both
+  messages use the shorter name without `pcix`. Type -1, a null handle or a raw window with an unrecognised part calls
+  only the bridge-type `panic` and returns 0; a record type outside -1 to 3 returns 0 without a message. Established.
+- `pcireg_intr_multiple_get` (`IP30/unix` `0xa8000000200578bc`, 356 bytes, frame 16 bytes)
+  returns the multiple-interrupt register: the doubleword at window +0x178 for types 2 and 3 and the zero-extended
+  word at +0x17c for type 1. Type 0 returns 0 with no access and no panic. When no chip is recognised the multiple
+  interrupt register is never loaded. The routine calls `panic` with the bridge-type message, returns 0 if that comes
+  back, and gives 0 silently for a record type below -1 or above 3. Established.
+- `pcireg_stat_get` (`IP30/unix` `0xa800000020050818`, 356 bytes, frame 16 bytes)
+  reads the bridge status register: the doubleword at window +0x8 for types 2 and 3 and the zero-extended word at +0xc
+  for types 0 and 1. Loads only. The status register is read only for record types 0 to 3 (or a raw window that
+  decodes to one); type -1 and a null handle call `panic` first, and any other type returns 0. Established.
+- `pcireg_intr_dst_set` (`IP30/unix` `0xa800000020051a2c`, 356 bytes, frame 16 bytes)
+  writes the interrupt destination register with the value passed in `a1`: types 2 and 3 store the whole value as one
+  doubleword at window +0x38. Types 0 and 1 split it, storing the high half (`dsrl32` of
+  `a1`, so bits 63:32) as the word at +0x34 first and then the low word of `a1` as the word at +0x3c in the branch
+  delay slot. Nothing is read back. Without a decoded chip type the interrupt destination register is not written:
+  type -1, a null handle or an unrecognised raw part calls `panic` with the bridge-type message, and a record type
+  outside -1 to 3 stores nothing and prints nothing. Established.
+- `pcireg_req_timeout_get` (`IP30/unix` `0xa8000000200515f8`, 356 bytes, frame 16 bytes)
+  returns the request timeout register: types 2 and 3 load the doubleword at window +0x28 and types 0 and
+  1 the zero-extended word at +0x2c, with no store. Failures: bridge-type `panic` then 0 for a null handle, type -1 or
+  an unrecognised raw part; plain 0 for a record type outside -1 to 3, with the request timeout register untouched.
+  Established.
+- `pcireg_timeout_get` (`IP30/unix` `0xa800000020054504`, 356 bytes, frame 16 bytes)
+  reads the bus timeout register that `pcireg_timeout_bit_set` and `pcireg_timeout_bit_clr` modify: doubleword at
+  window +0xc0 for types 2 and 3 and zero-extended word at +0xc4 for types 0
+  and 1. Reading the bus timeout register needs a decoded chip type. Without one the routine panics with the
+  bridge-type message and still returns 0, and record types outside the range return 0 quietly. Established.
+- `pcireg_pcix_req_err_addr_get` (`IP30/unix` `0xa800000020059dac`, 352 bytes, frame 16 bytes)
+  returns the PCIX request error address register, the doubleword at window +0x630, for types 2 and 3 only. Types 0
+  and 1 have no PCI-X registers: they call `panic` with "pcireg_req_err_addr_get(): undefined register" and, if it
+  returns, a second `panic` with "pcireg_req_err_addr_get(): unknown bridgetype", then return 0 without a load. The
+  two messages carry the name without `pcix`. Type -1, a null handle or a raw window with an unrecognised part calls
+  only the bridge-type `panic` and returns 0; a record type outside -1 to 3 returns 0 without a message. Established.
+- `pcireg_pcix_bus_err_addr_get` (`IP30/unix` `0xa800000020059574`, 352 bytes, frame 16 bytes)
+  returns the PCIX bus error address register, the doubleword at window +0x600, for types 2 and 3 only. Types 0 and
+  1 have no PCI-X registers: they call `panic` with "pcireg_bus_err_addr_get(): undefined register" and, if it
+  returns, a second `panic` with "pcireg_bus_err_addr_get(): unknown bridgetype", then return 0 without a load. The
+  two messages carry the name without `pcix`. Type -1, a null handle or a raw window with an unrecognised part calls
+  only the bridge-type `panic` and returns 0; a record type outside -1 to 3 returns 0 without a message. Established.
+- `pcireg_pcix_pio_split_addr_get` (`IP30/unix` `0xa800000020059994`, 352 bytes, frame 16 bytes)
+  returns the PCIX PIO split address register, the doubleword at window +0x618, for types 2 and 3 only. Types 0 and
+  1 have no PCI-X registers: they call `panic` with "pcireg_pio_split_addr_get(): undefined register" and, if it
+  returns, a second `panic` with "pcireg_pio_split_addr_get(): unknown bridgetype", then return 0 without a load. The
+  two messages carry the name without `pcix`. Type -1, a null handle or a raw window with an unrecognised part calls
+  only the bridge-type `panic` and returns 0; a record type outside -1 to 3 returns 0 without a message. Established.
+- `pcireg_pcix_pio_split_attr_get` (`IP30/unix` `0xa800000020059af4`, 352 bytes, frame 16 bytes)
+  returns the PCIX PIO split attribute register, the doubleword at window +0x620, for types 2 and 3 only. Types 0 and
+  1 have no PCI-X registers: they call `panic` with "pcireg_pio_split_attr_get(): undefined register" and, if it
+  returns, a second `panic` with "pcireg_pio_split_attr_get(): unknown bridgetype", then return 0 without a load. The
+  two messages carry the name without `pcix`. Type -1, a null handle or a raw window with an unrecognised part calls
+  only the bridge-type `panic` and returns 0; a record type outside -1 to 3 returns 0 without a message. Established.
