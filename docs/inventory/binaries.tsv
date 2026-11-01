@@ -842,7 +842,7 @@ IP27/usr/cpu/sysgen/IP27boot/xlv_plex.a(plex_block_map.o)	kernel-IP27	kernel-obj
 IP27/usr/cpu/sysgen/IP27boot/xlv_plex.a(plex_cpy.o)	kernel-IP27	kernel-object	object	n64	11396	40bcb5f9d1f93101	IP30/usr/cpu/sysgen/IP30boot/xlv_plex.a(plex_cpy.o);IP35/usr/cpu/sysgen/IP35boot/xlv_plex.a(plex_cpy.o)	7	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xlvidbg.o	kernel-IP27	kernel-object	object	n64	33120	d692c76d4f5f08ac		19	symtab+dwarf	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xpc.o	kernel-IP27	kernel-object	object	n64	57576	bce1a13fd7dc3453		44	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/xswitch.o	kernel-IP27	kernel-object	object	n64	10384	5059da03a745674b		13	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/xswitch.o	kernel-IP27	kernel-object	object	n64	10384	5059da03a745674b		13	symtab	0	0	named-only	chips/xbow/README.md#routines-in-the-ip27-xswitcho-build	Routines in the IP27 `xswitch.o` build
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-IP27	kernel-object	object	n64	33712	e70a2565377c3c4f		71	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xtimer.a(xtimer.o)	kernel-IP27	kernel-object	object	n64	9204	6bdcb568eda1556c		8	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm.o)	kernel-IP27	kernel-object	object	n64	56468	70bade6630cbf41f		24	symtab	0	0	undocumented		
