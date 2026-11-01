@@ -36,7 +36,7 @@ Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, 
   `xide_chip_init` (`ide.o` `0x914`) compares the second with `0x10a9` and the first with `0x100a`. Because the mapping is
   big-endian, the halfword at `+0` is the high half of the little-endian identification word: the device id, with the
   vendor id at `+2`. Established.
-- Revision: `ioc4_attach` reads the configuration byte at 8 (`pciio_config_get`) and compares it with 79 (below);
+- Revision: `ioc4_attach` (returns 0 or -1) reads the configuration byte at 8 (`pciio_config_get`) and compares it with 79 (below);
   `device_inventory_add` receives the same byte. Established.
 
 ## Register inventory
@@ -85,25 +85,25 @@ and DMA indices 6 and 8 (no access with a constant index reaches them).
   type)`: type 0 selects the serial pair, type 1 the other pair; op 0 stores `bits` to the enable-set register (`0x10`, `0x14`) and
   op 1 to the enable-clear register (`0x18`, `0x1c`). It holds the record's lock throughout. No shadow, no polling mode: IOC4
   has none of the IOC3 enable logic.
-- `ioc4_attach` clears every enable (`ioc4_write_ireg(record, 0xffffffff, 1, type)` for both types) and then writes all ones to `0x8`
+- `ioc4_attach` (returns 0 or -1) clears every enable (`ioc4_write_ireg(record, 0xffffffff, 1, type)` for both types) and then writes all ones to `0x8`
   and `0xc` (the acknowledge pattern, inferred as for IOC3).
 - `ioc4_pending_intrs` (`0x14c`) reads `0x8`, `0xc`, `0x10` and `0x14`; read for its accesses only.
 - `ioc4_dma_error_intr` (`sio_ioc4.o` `0x734`, read in full) writes the port's mask word to `0xc` first, reads `0x0`, and if bit 0 is set
   prints the port and address (bits 31:6 of the low word with the high word as bits 63:32; the port character is `'1'` plus twice
   the value in bits 4:2, and bit 1 picks the word RX or TX printed after it, inferred from the order of the two strings) and, when bit 5 is
   set, a second message; then it re-enables the port's bit through `ioc4_write_ireg(record, mask, 0, 1)`.
-- `xide_intr_clear` (`ide.o` `0x1634`) reads `0xc` through the ATA accessor, tests bits 1:0, and on bit 1 reads `0x0` and the word at
+- `xide_intr_clear` (`ide.o` `0x1634`, returns 0, 1 or 2) reads `0xc` through the ATA accessor, tests bits 1:0, and on bit 1 reads `0x0` and the word at
   index 4 of the same block, which the accessor's four-byte stride turns into `0x10` (not `0x4`). Whether that is intended is
   unknown; the public driver names `0x4` as the high word.
 
 ### Control, GPIO and the unnamed `0x24`
 
-- `ioc4_attach` stores `0xf` to `0x20` and `0x30` to `0x30` (established). `hardware_init` reads `0x20` repeatedly and leaves the loop
+- `ioc4_attach` (returns 0 or -1) stores `0xf` to `0x20` and `0x30` to `0x30` (established). `hardware_init` reads `0x20` repeatedly and leaves the loop
   when bit 7 is set (established); inferred: no serial channel is the current bus requester.
 - `ioc4_attach` reads the configuration byte at 8; **if it is below 79** it asks for the bus speed (`pciio_businfo_get`, then
   `pciio_businfo_bus_speed_get`) and, when that returns 1, clears bits 3:0 of `0x24` with a read-modify-write (established, read in
   full). What the bits are and what speed 1 means: unknown; the public header calls the word unused.
-- `ioc4_eiattach` (`ioc4_ei.o` `0x4b4`) stores 2 to `0x34`, `0x200` to `0x30`, then `0xff00` to `0x30`, writes `0xff800000` to `0xc`, 0 to
+- `ioc4_eiattach` (`ioc4_ei.o` `0x4b4`, returns 0 or -1) stores 2 to `0x34`, `0x200` to `0x30`, then `0xff00` to `0x30`, writes `0xff800000` to `0xc`, 0 to
   `0x28`, and connects its handler (established). The two stores to `0x30` are on one path in sequence. Inferred: edge select
   bits and the output held low.
 
@@ -122,7 +122,7 @@ and DMA indices 6 and 8 (no access with a constant index reaches them).
   port is the first of its pair, or to `0x30c` and `0x308` for the pair that starts at port 2; the other two ports write nothing
   (the first pair's configuration entry compares with the table start, the second with the start plus 80 bytes). Established.
 - **Pause and indices**: as for IOC3 (`ioc4_enable_tx` `0x22ec` stores `0x20000000` to the control register and polls bit 30).
-- **Mode select**: `ioc4_set_proto` (`0x33c4`) writes 0 or 1 to `0x40 + 4 * pin`, the pin from a static table (not read).
+- **Mode select**: `ioc4_set_proto` (`0x33c4`, returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin from a static table (not read).
 - **UART registers**: line control at UART+3, divisor latch at +0 and +1, FIFO control at +2, modem control at +4, line status at +5
   (established, from `hardware_init` and `set_baud_ti`), register 7 as IOC3.
 
@@ -137,7 +137,7 @@ value as a whole word); for the other vendors they address `base + index` with b
 Established.
 
 - **Interrupt block** (record +504): `xide_chip_init` (`0x914`) and `xide_attach` store 3 to index 5 (`0x14`, interrupt enable set
-  for the other group) and read it back; `xide_intr_clear` and `xide_interrupt_check` (`0x1840`) read index 3 (`0xc`) and test bits 1:0;
+  for the other group) and read it back; `xide_intr_clear` (returns 0, 1 or 2) and `xide_interrupt_check` (`0x1840`) read index 3 (`0xc`) and test bits 1:0;
   `xide_intr_clear` writes index 3 and index 0 back. Roles inferred: bit 0 ATA interrupt, bit 1 ATA memory error.
 - **Command block** (`0x100`, record +480): `xide_piocommand`, `xide_device_reset`, `xide_bus_reset` and `xide_execute_device_diagnostic`
   read and write indices 0 to 7 as byte or word accesses (index 0 as a halfword in `xide_piocommand` and `xide_send_pktbytes`, index 7 read
@@ -188,7 +188,7 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 
 - **`0x24`**: role of bits 3:0, and the meaning of bus-speed value 1 and of the revision-79 boundary. Next: read `pciio_businfo_bus_speed_get`
   and the callers of `ioc4_attach`'s revision test for any comment string.
-- **`xide_intr_clear` second error read**: index 4 where the public driver's high word is index 1. Next: read the whole routine's
+- **`xide_intr_clear` second error read** (it returns 0, 1 or 2): index 4 where the public driver's high word is index 1. Next: read the whole routine's
   use of the two values.
 - **ATA register roles**: the command, control and DMA block roles are inferred from index order and the public driver; the DMA
   register meanings need `xide_pktDMA_start` and `xide_dma_init` read in full.
