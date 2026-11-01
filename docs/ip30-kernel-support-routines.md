@@ -45,3 +45,37 @@ running the code and the doubleword at -15744 holds that processor's flag bits.
   one at 0xa8000000204ae428, with the tick count clamped to 0x7fffffff. It returns the structure's address plus 0x598.
   Inferred: read from decompiler output and the dumped fact sheet; the walk that looks for a free number was not
   traced by instruction.
+- `strread` (`IP30/unix` `0xa80000002012bb88`, 2172 bytes, frame 144 bytes) is the STREAMS read path for a stream
+  head. The first argument is the vnode and the second the user I/O descriptor. It takes a kernel spinlock at gp+0x528
+  with `mutex_spinlock`, reads the stream head from vnode +0x38, and when the head has a monitor at +0xa8 releases the
+  lock with `spinunlock_pmonitor` (otherwise with `nested_spinunlock` and `splx`). If bits 0x440 of the head's flag
+  doubleword at +0x20 are set it returns at once: 0x16 when bit 0x40 is set and otherwise the error word at head
+  +0x4c. Otherwise it loops: it takes a message from the head's read queue with `getq` (through `RD` on the doubleword
+  at head +0x0), and with none queued returns 0 for a hung-up head (bit 4), returns 0x5c when the vnode word at +0x20
+  is 6 (an unreadable stream kind), and else waits with `strwaitq` and tries again, returning its error. A data
+  message (type byte 0, 1 or 0x83 in the data block at +0x1e) is copied to the caller with `streams_uiomove`, whose
+  error is returned after `freemsg`; empty ones are freed or put back with `putbq`; consumed blocks go to `freeb`, a
+  partly read message is put back with `putbq`, and signal messages (type 0x0b) at the head of the queue go to
+  `strsignal`. A file-pass message (type 9) is accepted only when bit 0x200000 of the head flags is set, in which case
+  `vfile_close` is called on its file; otherwise it is put back and 0x4d is returned. Every exit calls `vmonitor`.
+  Inferred: read from decompiler output and the call list; the type classification and the partial-read bookkeeping
+  were not traced instruction by instruction.
+- `rfscall` (`IP30/unix` `0xa8000000202d372c`, 1668 bytes, frame 288 bytes) is the client side of one NFS call. Its
+  arguments are the mount record, the procedure number, the encode and decode routines and their buffers, a status
+  pointer, a credential and a retry flag. It gets a transaction id from `krpc_getxid`. It returns 0x97 when bit 0x4000
+  of the mount flags at record +0x130 is set, and 0x91 when bit 2 of those flags is set and the pointer at -16360 is
+  nonzero and bit 0x2000 of the word at +0x94 of the structure that the doubleword at +0x318 of its target points to
+  is set. It counts the call in the statistics block through the process-page pointer at -15056: the words at +0x15c
+  and +0x164 plus 4 * procedure when the protocol version at record +0x208 is 3, and +0x28 and +0x30 plus 4 *
+  procedure otherwise. A TCP mount (flag 0x2000) is passed to `rfscall_tcp`. Otherwise it takes a handle with `clget`
+  and calls `KCLNT_CALL` in a loop, splitting the timeout at record +0x168 into tenths of a second and a remainder in
+  microseconds. A status below 19 is handed to a function through a table in the data segment. Any other failure sets
+  flag bit 0x20000. If the calling thread has been signalled (the same test as at entry) the routine sets bit 2,
+  prints "NFS server %s not responding" the first time and returns 0x91, and with bit 0x4000 set it returns 0x97. When
+  flag bit 0 is set and the retry argument is zero it doubles the timeout up to 900, sets bit 2 and prints "NFS server
+  %s not responding still trying" the first time, and calls again. A status of 0 clears bits 2 and 8 of the flags when
+  bit 0 is clear, and with bit 0 set and bit 2 set it clears bit 2 and prints "NFS server %s ok". Other statuses
+  except 18 set bit 8 and print "NFS%d %s failed for server %s: %s" with `krpc_sperrno`. When the reply status is 13,
+  no substitute credential exists, the credential's word at +0x8 is zero and its word at +0x10 is not, it substitutes
+  a copy from `crdup` with +0x10 copied to +0x8 and retries; `crfree` releases the copy. Inferred: read from
+  decompiler output and the call list, not traced by instruction.
