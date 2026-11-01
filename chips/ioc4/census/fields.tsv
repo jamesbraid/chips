@@ -1,0 +1,40 @@
+variant	register	source	kind	bits_or_value	sites	functions	example
+?	0x0	load	mask	0	2	2	ioc4_error_handler@d48
+?	0x0	load	mask	3:0	1	1	ioc4_error_handler@d48
+?	0x0	load	mask	1	1	1	ioc4_dma_error_intr@7b4
+?	0x0	load	mask	3:1	1	1	ioc4_dma_error_intr@7e0
+?	0x0	load	mask	5	1	1	ioc4_dma_error_intr@810
+?	0x0	load	shift	shift 1	2	2	ioc4_error_handler@d48
+?	0x0	load	shift	shift 3	1	1	ioc4_error_handler@d48
+?	0x8	store	const	-0x1	1	1	ioc4_attach@3b0
+?	0x8	load	mask	0	3	1	ioc4_wrflush@1f84
+?	0xc	store	const	0x40	1	1	pckm_reinit_lock@fe4
+?	0xc	store	const	0xff800000	1	1	ioc4_eiattach@580
+?	0x20	store	const	0xf	1	1	ioc4_attach@38c
+?	0x20	load	mask	7	5	1	hardware_init@93c
+?	0x30	store	const	0x200	1	1	ioc4_eiattach@564
+?	0x30	store	const	0xff00	1	1	ioc4_eiattach@56c
+?	0x34	store	const	0x2	1	1	ioc4_eiattach@55c
+?	0x300	store	const	0x1	1	1	hardware_init@a74
+?	0x308	store	const	0x1	1	1	hardware_init@a74
+?	0x310	store	const	0x20000000	5	5	ioc4_open@159c
+?	0x310	store	const	0x80000000	1	1	hardware_init@934
+?	0x310	store	const	0x8000000	1	1	ioc4_read@25c8
+?	0x310	load	shift	shift 33	5	5	ioc4_open@15a4
+?	0x318	load	mask	11:3	5	4	hardware_init@998
+?	0x31c	load	mask	11:3	5	3	hardware_init@9ac
+?	0x320	store	const	0x80000000	1	1	ioc4_read@2534
+?	0x324	store	const	0xa0	1	1	hardware_init@a80
+?	0x328	load	shift	shift 24	1	1	set_DTRRTS@307c
+?	0x380	store	const	0x3	2	2	hardware_init@9e0
+?	0x380	store	const	0x80	1	1	set_baud_ti@8c4
+?	0x380	store	const	0x1	1	1	hardware_init@9ec
+?	0x380	store	const	0x7	1	1	hardware_init@9f8
+?	0x380	store	const	0x4	1	1	ioc4_config@1978
+?	0x380	store	const	0x40	1	1	ioc4_break@216c
+?	0x384	load	mask	5	1	1	hardware_init@91c
+?	0x200004	store	const	0x146	1	1	ioc4_attach@380
+?	0x200004	load	mask	15:0	2	1	xide_attach@50c
+?	0x200004	load	mask	0	1	1	xide_attach@50c
+?	0x200004	load	mask	1	1	1	xide_attach@50c
+?	0x200008	load	mask	7:0	1	1	ioc4_attach@2b4

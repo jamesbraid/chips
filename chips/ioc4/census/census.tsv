@@ -1,0 +1,32 @@
+variant	offset	idx	name	access_seen	widths	halves	sites	functions	images	example	datasheet	datasheet_ref	spec	spec_ref	model	model_detail	flags	tasks
+?	0x0	0	pci_err_addr_l	rw	4	0	7	2	ip35-ioc4,ip35-sio_ioc4	ioc4_error_handler@d48	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x4	0	pci_err_addr_h	r	4	0	2	2	ip35-ioc4,ip35-sio_ioc4	ioc4_error_handler@d84	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x8	0	sio_ir	rw	4	0	13	5	ip35-ioc4,ip35-sio_ioc4	ioc4_pending_intrs@1b0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0xc	0	other_ir	rw	4	0	5	5	ip35-ioc4,ip35-ioc4_ei,ip35-ioc4_pckm,ip35-sio_ioc4	ioc4_pending_intrs@1c4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x10	0	sio_ies	rw	4	0	2	2	ip35-ioc4	ioc4_write_ireg@148	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x14	0	other_ies	rw	4	0	2	2	ip35-ioc4	ioc4_write_ireg@140	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x18	0	sio_iec	w	4	0	1	1	ip35-ioc4	ioc4_write_ireg@130	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x1c	0	other_iec	w	4	0	1	1	ip35-ioc4	ioc4_write_ireg@138	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x20	0	sio_cr	rw	4	0	6	2	ip35-ioc4,ip35-sio_ioc4	ioc4_attach@38c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x24	0		rw	4	0	2	1	ip35-ioc4	ioc4_attach@554	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x28	0	int_out	w	4	0	1	1	ip35-ioc4_ei	ioc4_eiattach@584	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x30	0	gpcr_s	w	4	0	3	2	ip35-ioc4,ip35-ioc4_ei	ioc4_attach@398	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x34	0	gpcr_c	w	4	0	1	1	ip35-ioc4_ei	ioc4_eiattach@55c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x40	1	gppr0	w	4	0	2	1	ip35-sio_ioc4	ioc4_set_proto@33f0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x200	0	km_csr	rw	4	0	7	3	ip35-ioc4_pckm	ioc4_pckm_attach@174	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x300	0	sbbr01_l	w	4	0	1	1	ip35-sio_ioc4	hardware_init@a74	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x304	0	sbbr01_h	w	4	0	1	1	ip35-sio_ioc4	hardware_init@a64	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x308	0	sbbr23_l	w	4	0	1	1	ip35-sio_ioc4	hardware_init@a74	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x30c	0	sbbr23_h	w	4	0	1	1	ip35-sio_ioc4	hardware_init@a64	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x310	0	port0_sscr	rw	4	0	37	16	ip35-sio_ioc4	ioc4_serial_intr@66c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x314	0	port0_stpir	w	4	0	5	4	ip35-sio_ioc4	hardware_init@9a4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x318	0	port0_stcir	r	4	0	4	4	ip35-sio_ioc4	hardware_init@998	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x31c	0	port0_srpir	r	4	0	5	3	ip35-sio_ioc4	hardware_init@9ac	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x320	0	port0_srcir	w	4	0	5	3	ip35-sio_ioc4	hardware_init@9b8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x324	0	port0_srtr	w	4	0	3	3	ip35-sio_ioc4	hardware_init@a80	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x328	0	port0_shadow	rw	4	0	6	4	ip35-sio_ioc4	ioc4_serial_intr@208	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x380	0	uart0_reg0	rw	1	0,1,2,3	17	5	ip35-sio_ioc4	set_baud_ti@8bc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x384	0	uart0_reg4	rw	1	0,1,2	4	2	ip35-sio_ioc4	hardware_init@91c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x200000	0	cfg_id	r	2	0,2	2	1	ip35-ide	xide_attach@320	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x200004	0	cfg_command_status	rw	2,4	0,2	6	2	ip35-ide,ip35-ioc4	ioc4_attach@368	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x200008	0	cfg_revision	r	4	0	1	1	ip35-ioc4	ioc4_attach@2b4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries

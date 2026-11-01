@@ -10,7 +10,76 @@
 #ifndef IOC4_H
 #define IOC4_H
 
-/* No census rows yet: nothing is established for this chip by the census.
- * Mode and sources: chips/ioc4/README.md. */
+
+/* ---- registers (8-byte slots) ------------------------------------ */
+
+#define IOC4_PCI_ERR_ADDR_L                0x000000   /* [E] width 4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 7 sites, 2 routine(s) */
+#define   IOC4_PCI_ERR_ADDR_L_B_0          0x1   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   IOC4_PCI_ERR_ADDR_L_B_1          0x2   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   IOC4_PCI_ERR_ADDR_L_B_3_0        0xf   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   IOC4_PCI_ERR_ADDR_L_B_3_1        0xe   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   IOC4_PCI_ERR_ADDR_L_B_5          0x20   /* [I] load mask: the code isolates these bits (1 sites) */
+#define IOC4_PCI_ERR_ADDR_H                0x000004   /* [E] width 4 byte(s), access r; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 2 sites, 2 routine(s) */
+#define IOC4_SIO_IR                        0x000008   /* [E] width 4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 13 sites, 5 routine(s) */
+#define   IOC4_SIO_IR_B_0                  0x1   /* [I] load mask: the code isolates these bits (3 sites) */
+#define IOC4_OTHER_IR                      0x00000c   /* [E] width 4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 5 sites, 5 routine(s) */
+#define   IOC4_OTHER_IR_V_40               0x40   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   IOC4_OTHER_IR_V_FF800000         0xff800000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define IOC4_SIO_IES                       0x000010   /* [E] width 4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 2 sites, 2 routine(s) */
+#define IOC4_OTHER_IES                     0x000014   /* [E] width 4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 2 sites, 2 routine(s) */
+#define IOC4_SIO_IEC                       0x000018   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 1 sites, 1 routine(s) */
+#define IOC4_OTHER_IEC                     0x00001c   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 1 sites, 1 routine(s) */
+#define IOC4_SIO_CR                        0x000020   /* [E] width 4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 6 sites, 2 routine(s) */
+#define   IOC4_SIO_CR_V_F                  0xf   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   IOC4_SIO_CR_B_7                  0x80   /* [I] load mask: the code isolates these bits (5 sites) */
+#define IOC4_24                            0x000024   /* [E] width 4 byte(s), access rw; name [I] from no accessor name; reached in 2 sites, 1 routine(s) */
+#define IOC4_INT_OUT                       0x000028   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 1 sites, 1 routine(s) */
+#define IOC4_GPCR_S                        0x000030   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 3 sites, 2 routine(s) */
+#define   IOC4_GPCR_S_V_200                0x200   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   IOC4_GPCR_S_V_FF00               0xff00   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define IOC4_GPCR_C                        0x000034   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 1 sites, 1 routine(s) */
+#define   IOC4_GPCR_C_V_2                  0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define IOC4_GPPR0                         0x000040   /* [E] width 4 byte(s), access w, indexed (family base); name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 2 sites, 1 routine(s) */
+#define IOC4_KM_CSR                        0x000200   /* [E] width 4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 7 sites, 3 routine(s) */
+#define IOC4_SBBR01_L                      0x000300   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 1 sites, 1 routine(s) */
+#define   IOC4_SBBR01_L_V_1                0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define IOC4_SBBR01_H                      0x000304   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 1 sites, 1 routine(s) */
+#define IOC4_SBBR23_L                      0x000308   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 1 sites, 1 routine(s) */
+#define   IOC4_SBBR23_L_V_1                0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define IOC4_SBBR23_H                      0x00030c   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 1 sites, 1 routine(s) */
+#define IOC4_PORT0_SSCR                    0x000310   /* [E] width 4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 37 sites, 16 routine(s) */
+#define   IOC4_PORT0_SSCR_V_20000000       0x20000000   /* [I] a constant the code writes here (5 sites); meaning unknown [U] */
+#define   IOC4_PORT0_SSCR_V_8000000        0x8000000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   IOC4_PORT0_SSCR_V_80000000       0x80000000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define IOC4_PORT0_STPIR                   0x000314   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 5 sites, 4 routine(s) */
+#define IOC4_PORT0_STCIR                   0x000318   /* [E] width 4 byte(s), access r; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 4 sites, 4 routine(s) */
+#define   IOC4_PORT0_STCIR_B_11_3          0xff8   /* [I] load mask: the code isolates these bits (5 sites) */
+#define IOC4_PORT0_SRPIR                   0x00031c   /* [E] width 4 byte(s), access r; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 5 sites, 3 routine(s) */
+#define   IOC4_PORT0_SRPIR_B_11_3          0xff8   /* [I] load mask: the code isolates these bits (5 sites) */
+#define IOC4_PORT0_SRCIR                   0x000320   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 5 sites, 3 routine(s) */
+#define   IOC4_PORT0_SRCIR_V_80000000      0x80000000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define IOC4_PORT0_SRTR                    0x000324   /* [E] width 4 byte(s), access w; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 3 sites, 3 routine(s) */
+#define   IOC4_PORT0_SRTR_V_A0             0xa0   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define IOC4_PORT0_SHADOW                  0x000328   /* [E] width 4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 6 sites, 4 routine(s) */
+#define IOC4_UART0_REG0                    0x000380   /* [E] width 1 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 17 sites, 5 routine(s) */
+#define   IOC4_UART0_REG0_V_1              0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   IOC4_UART0_REG0_V_3              0x3   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   IOC4_UART0_REG0_V_4              0x4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   IOC4_UART0_REG0_V_40             0x40   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   IOC4_UART0_REG0_V_7              0x7   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   IOC4_UART0_REG0_V_80             0x80   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define IOC4_UART0_REG4                    0x000384   /* [E] width 1 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 4 sites, 2 routine(s) */
+#define   IOC4_UART0_REG4_B_5              0x20   /* [I] load mask: the code isolates these bits (1 sites) */
+
+/* ---- arrays and windows (offset is the array base) --------------- */
+
+#define IOC4_CFG_ID                        0x200000   /* [E] width 2 byte(s), access r; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 2 sites, 1 routine(s) */
+#define IOC4_CFG_COMMAND_STATUS            0x200004   /* [E] width 2/4 byte(s), access rw; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 6 sites, 2 routine(s) */
+#define   IOC4_CFG_COMMAND_STATUS_V_146    0x146   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   IOC4_CFG_COMMAND_STATUS_B_0      0x1   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   IOC4_CFG_COMMAND_STATUS_B_1      0x2   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   IOC4_CFG_COMMAND_STATUS_B_15_0   0xffff   /* [I] load mask: the code isolates these bits (2 sites) */
+#define IOC4_CFG_REVISION                  0x200008   /* [E] width 4 byte(s), access r; name [I] from the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset; reached in 1 sites, 1 routine(s) */
+#define   IOC4_CFG_REVISION_B_7_0          0xff   /* [I] load mask: the code isolates these bits (1 sites) */
 
 #endif /* IOC4_H */
