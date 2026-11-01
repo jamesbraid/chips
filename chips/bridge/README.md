@@ -277,6 +277,11 @@ response-buffer registers at `0x280` and `0x288` (see "Bridge block") if that po
   Established. Those pairs are the XBridge and Bridge identities listed under "What identifies the chip", so one driver
   serves both.
 
+## Routines in the IP30 kernel
+
+The accessors and the attach routines of the Octane kernel, which serve this chip family through the same `pcireg_*`
+dispatch, are described routine by routine in [docs/ip30-kernel-bridge-routines.md](../../docs/ip30-kernel-bridge-routines.md).
+
 ## Open
 
 See docs/open-questions.md: the revision 2 attach path; the interrupt device value at attach; the units and layout of
