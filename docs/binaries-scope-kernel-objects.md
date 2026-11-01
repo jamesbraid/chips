@@ -834,6 +834,52 @@ the undefined imports. No routine body was read in full.
   `rip_output` (516 bytes) sends a raw packet and `rip_ctloutput` (736 bytes) handles its options. The member imports the
   multicast routing entries `ip_mrouter_set` and `ip_mrouter_get`, the RSVP virtual interface hooks `ip_rsvp_vif_init` and
   `ip_rsvp_vif_done`, and it hands inbound packets to `raw_input`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(tcp_debug.o)` (inferred): the TCP trace support, one routine, `tcp_trace`, in an
+  11076-byte member. The member also carries a 48000-byte common block `tcp_debug` (0xbb80 bytes) and the data tables
+  `tcpstates`, `tcptimers` and `tanames`, which hold names for the TCP states, timers and actions. It imports `bzero`,
+  `iptime` and `printf`, and drives no chip.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(tcp_input.o)` (inferred): the inbound TCP segment code, 13 routines in a 43940-byte
+  member. `tcp_input_private` (10032 bytes) is the largest routine, `tcp_input` (1160 bytes) is the segment entry,
+  `tcp_mss` (1556 bytes) sets the segment size, and `tcp_dooptions` (820 bytes) parses the TCP options. The deferral pair
+  `tcp_defer_segment` (504 bytes) and `tcp_process_deferred` (264 bytes) queue segments and drain the queue. It imports
+  the selective-acknowledgement updates `sack_rcvupdate` and `sack_sndacked` and the socket wake-ups `sowakeup` and
+  `soisconnected`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(tcp_output.o)` (inferred): the TCP transmit side, two routines in a 16068-byte
+  member: `tcp_setpersist` (180 bytes) arms the persist timer, and `tcp_output` has no size in the symbol table. It
+  passes segments to `ip_output` and `tcp6_output`, and it reads the segment limit `tcp_max_tso_len` and the default
+  segment size `tcp_mssdflt`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(tcp_subr.o)` (inferred): TCP support routines, 29 routines in a 30324-byte member.
+  `tcp_close` (1168 bytes) tears a connection down, `tcp_respond` (876 bytes) sends a reply segment, `tcp_template`
+  (608 bytes) builds the header template, and `sack_sndupdate` (676 bytes) and `sack_rcvupdate` (508 bytes) keep the
+  selective-acknowledgement state. The member calls the MD5 routines `_BSD_MD5Init`, `_BSD_MD5Update` and
+  `_BSD_MD5Final` with the two words `tcpiss_md5_secret_hi` and `tcpiss_md5_secret_lo`, which points to a keyed hash for
+  the initial sequence numbers.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(tcp_timer.o)` (inferred): TCP timers, five routines in a 16212-byte member.
+  `tcp_timers` (1392 bytes) runs a connection's timers, `tcp_slowtimo` (884 bytes) runs the slow timer over the
+  connection list, `tcp_zaptw` (684 bytes) releases connections in the TIME_WAIT state, and `tcp_canceltimers` (36 bytes)
+  clears them. It reads the keep-alive and persist settings `tcp_keepidle`, `tcp_keepintvl` and `tcp_maxpersistidle`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(tcp_usrreq.o)` (inferred): the TCP request dispatch, five routines in a 15716-byte
+  member. `tcp_ctloutput` (624 bytes) handles socket options, `tcp_usrclosed` (380 bytes) closes the send side, and
+  `tcp_attach` (180 bytes) and `tcp_disconnect` (180 bytes) start and end a connection. The dispatch routine `tcp_usrreq`
+  has no size in the symbol table. It imports the protocol control block calls `in_pcballoc`, `in_pcbbind`,
+  `in_pcbconnect` and `in_pcblisten`, and `tcp_newtcpcb`, which creates the connection state.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(udp_usrreq.o)` (inferred): UDP, eight routines in a 23604-byte member. `udp_input`
+  (2724 bytes) takes inbound datagrams, `udp_usrreq` (2088 bytes) is the request dispatch, `udp_output` (1296 bytes)
+  transmits, and `udp_ctlinput` (236 bytes) handles control messages. It hands NFS datagrams to `nfs_input`, and its
+  imports include the IPv6 output `udp6_output` and the connection calls `in_pcbconnect` and `in_pcbdetach`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(rsvp_input.o)` (inferred): the RSVP receive path, two routines in an 8836-byte
+  member. `rsvp_input` (620 bytes) takes an RSVP packet from the raw IP layer through `rip_input` and queues it with
+  `sbappendaddr` and `sowakeup`. The second routine, `socket_send`, has no size in the symbol table. The member holds a
+  5632-byte table `viftable`, which the virtual interface lookups use.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)` (inferred): fragment vectors for transmit offload, ten routines in a
+  14804-byte member. `build_frag_vec` (1664 bytes) is the largest, `frag_vec_coalesce_long_chain` (344 bytes) merges a long
+  buffer chain, `udp_to_frag_vec_cksum` (300 bytes) builds a UDP vector with its checksum, and `frgvec_payload_map` (236
+  bytes) and `frgvec_add_linkhdrs` (212 bytes) map the payload and add the link headers. Its imports `in_cksum` and
+  `in_cksum_sub` compute the checksums.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(bsdinit.o)` (inferred): network start-up, five routines in an 8692-byte member.
+  It calls the initialisers `arp_init`, `domaininit`, `ifinit`, `in_init`, `loattach`, `netisr_init` and `sockd_init`,
+  and it sets up the socket zone with `kmem_zone_init`. `sethostid` (116 bytes) and `gethostid` (72 bytes) read and set
+  the host identity, and the short `phost_gethostid` (12 bytes) and `phost_sethostid` (8 bytes) sit beside them.
 
 ## Scope questions
 
