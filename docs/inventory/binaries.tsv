@@ -984,18 +984,18 @@ IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-IP30	kernel-object	object	n64	1
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-IP30	kernel-object	object	n64	85492	d58b8d8ea4c07913		81	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-IP30	kernel-object	object	n64	16932	5751f19ef7ad061f		24	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-IP30	kernel-object	object	n64	22196	a98ae218b4ffbc03		18	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-IP30	kernel-object	object	n64	10452	f73047f528d82914		7	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)	kernel-IP30	kernel-object	object	n64	10452	f73047f528d82914		7	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/eag.a(eag.o)	kernel-IP30	kernel-object	object	n64	10564	0ac73257e0c938f2		6	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/ecpplp.o	kernel-IP30	kernel-object	object	n64	57160	85ee4a9b5d52dd9f		33	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_bitmap.o)	kernel-IP30	kernel-object	object	n64	8708	3f32afa013b2992c		4	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_bmap.o)	kernel-IP30	kernel-object	object	n64	15268	bccddbe1e5611d27		6	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dalloc.o)	kernel-IP30	kernel-object	object	n64	13108	c46930146c7f76be		5	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dir.o)	kernel-IP30	kernel-object	object	n64	22772	e6058940f724194f		16	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_ialloc.o)	kernel-IP30	kernel-object	object	n64	10788	007c56dbab9788f2		6	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_iget.o)	kernel-IP30	kernel-object	object	n64	12324	9ba23c9cadfdf09e		9	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-IP30	kernel-object	object	n64	26468	f60dd0d6fbd452ec		20	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_vfsops.o)	kernel-IP30	kernel-object	object	n64	29460	ae1769f0b2d15b95		21	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_vnodeops.o)	kernel-IP30	kernel-object	object	n64	47332	d2783d86cf868fe1		37	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_bitmap.o)	kernel-IP30	kernel-object	object	n64	8708	3f32afa013b2992c		4	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_bmap.o)	kernel-IP30	kernel-object	object	n64	15268	bccddbe1e5611d27		6	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dalloc.o)	kernel-IP30	kernel-object	object	n64	13108	c46930146c7f76be		5	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dir.o)	kernel-IP30	kernel-object	object	n64	22772	e6058940f724194f		16	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_ialloc.o)	kernel-IP30	kernel-object	object	n64	10788	007c56dbab9788f2		6	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_iget.o)	kernel-IP30	kernel-object	object	n64	12324	9ba23c9cadfdf09e		9	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)	kernel-IP30	kernel-object	object	n64	26468	f60dd0d6fbd452ec		20	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_vfsops.o)	kernel-IP30	kernel-object	object	n64	29460	ae1769f0b2d15b95		21	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_vnodeops.o)	kernel-IP30	kernel-object	object	n64	47332	d2783d86cf868fe1		37	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/fcadp.a(fcadp.o)	kernel-IP30	kernel-object	object	n64	98660	730f01cd3f311ead		93	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/fd.a(fdops.o)	kernel-IP30	kernel-object	object	n64	19348	5178a3a881c36766		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/fifofs.a(fifosubr.o)	kernel-IP30	kernel-object	object	n64	19796	2e6452a8b45018c6		17	symtab	0	0	undocumented		

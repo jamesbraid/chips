@@ -410,3 +410,46 @@ the census, and the window scan's access count is zero for every member listed h
   bytes), `ds_copyiov` (204 bytes) and `dma_lock` (172 bytes) beside it. The `irix5_` routines convert request
   records between the 32-bit and current layouts. The scope list places it with the file-system objects, but the
   routines are request and task plumbing, and no register access is recorded.
+- `IP30/usr/cpu/sysgen/IP30boot/ds.a(dsglue.o)` (inferred): seven routines in a 10452-byte member, the glue layer
+  between the request routines of the same service and their backend. `glue_start` (444 bytes),
+  `glue_reserve` (428 bytes) and `glue_return` (336 bytes) move a request into and out of that layer, and
+  `glue_getopt` (200 bytes) reads its options. The census has no register access for this member.
+- `IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_bitmap.o)` (inferred): four routines in an 8708-byte member. `efs_findfree`
+  (632 bytes) searches a cylinder group's free-block bitmap, and `efs_bmread` (76 bytes) and `efs_bmrelse` (32
+  bytes) get and release the buffer that holds one bitmap block. `efs_bitfunc` has no symbol size. The scan's access
+  count is zero.
+- `IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_bmap.o)` (inferred): six routines in a 15268-byte member, among them
+  `efs_bmapLogicalBlock` (2068 bytes), `efs_bmapExtent` (992 bytes), `efs_expand` (876 bytes), `efs_lbmap` (212
+  bytes) and `efs_clrbuf` (268 bytes). They map a logical block of a file to a disk block through the inode's extent
+  records, extend the extent list, and clear newly added buffers. The census records no window access.
+- `IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dalloc.o)` (inferred): five routines in a 13108-byte member: `efs_alloc`,
+  `efs_move` (792 bytes), `efs_grow` (592 bytes), `efs_free` (280 bytes) and `efs_btoss` (148 bytes). They hand out
+  and return data blocks of an EFS file, and `efs_move` relocates a file's blocks when it grows. The scan records no
+  window site for the member.
+- `IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_dir.o)` (inferred): 16 routines in a 22772-byte member. `efs_dirlookup`
+  (1344 bytes), `efs_direnter` (632 bytes), `efs_dirremove` (756 bytes), `efs_dirrewrite` (244 bytes) and
+  `efs_readdir` (748 bytes) are the directory operations, with block helpers `getdirblk` (552 bytes), `putdirblk`,
+  `growdir` (340 bytes) and `dircorrupted`. `irix5_efs_fmtdirent` writes entries in the IRIX 5 layout. The member has
+  no register access in the scan.
+- `IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_ialloc.o)` (inferred): six routines in a 10788-byte member. `efs_pickcg`
+  (412 bytes) chooses a cylinder group for a new inode, `efs_scancg` (276 bytes) and `efs_scanchunk` (996 bytes)
+  search it for a free inode, and `efs_ialloc` (596 bytes) and `efs_ifree` (292 bytes) allocate and release the
+  inode. `efs_goodcg` tests a group's suitability. Its access count is zero.
+- `IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_iget.o)` (inferred): nine routines in a 12324-byte member. `iget` (1168
+  bytes) finds or loads an inode, `iput` (44 bytes) drops a reference, and `ihashinit` sets up the in-core inode hash.
+  `ilock`, `ilock_nowait` and `iunlock` take and release the inode lock, and `iflush` and `ireclaim` write back and
+  free an inode that is no longer referenced. The scan records nothing reaching a window.
+- `IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_inode.o)` (inferred): 20 routines in a 26468-byte member. `efs_iupdat`
+  (1400 bytes) writes an inode back to disk, `efs_iread` (464 bytes) reads one, and `efs_itrunc` (1716 bytes)
+  truncates a file's extents. `efs_readindir` and `efs_writeindir` handle indirect blocks, `efs_whichzone` (608
+  bytes) picks a zone, and `efs_icreate` and `efs_iformat` (592 bytes each) make new inodes. No window site was
+  recorded.
+- `IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_vfsops.o)` (inferred): 21 routines in a 29460-byte member. The mount path is
+  `efs_mount` (436 bytes), `efs_mountroot` (392 bytes) and `efs_mountfs` (1968 bytes), which calls `efs_checksb`
+  (316 bytes) to check the superblock. The rest are `efs_unmount` (512 bytes), `efs_sync` (1584 bytes), `efs_statvfs`
+  (308 bytes) and `efs_sbupdate` (348 bytes), plus `devvptoefs` (720 bytes), which finds the EFS on a device. The
+  scan's access count for this member is zero.
+- `IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_vnodeops.o)` (inferred): 37 routines in a 47332-byte member, the largest EFS
+  object of the build. They are the vnode operations the kernel calls on EFS files: `efs_rename` (2228 bytes),
+  `efs_setattr` (1720 bytes), `efs_writei` (1500 bytes), `efs_readi` (1136 bytes), `efs_create` (868 bytes) and
+  `efs_fcntl` (780 bytes). `diostrat` (1364 bytes) handles direct I/O requests. The member records no window access.
