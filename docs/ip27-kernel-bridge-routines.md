@@ -44,3 +44,34 @@ which choose among Bridge, XBridge, PIC and TIOCP at run time as described in [c
   reserved count at +0x56c, +0x58c, +0x5ac and +0x5cc and the remainder (device count minus reserved) at +0x568, +0x588, +0x5a8 and +0x5c8; it releases the
   lock with `mutex_io_spinunlock` and returns 0. Established. Inferred: that the fields name read-response buffers, from the routine name and the
   `pcireg_rrb_set` callee.
+- `pcireg_type0_cfg_addr` (`IP27/unix` at 0xc000000000088480,
+  688 bytes) forms the address of a PCI type 0 configuration-space word on a Bridge-family chip. It takes either a raw register-block
+  pointer or the driver's per-chip record in `a0`, the slot in `a1`, the function in `a2` and the byte offset in `a3`. A null `a0`
+  panics ("pcireg_type0_cfg_addr(): unknown bridgetype"). A pointer whose top byte pattern matches `0x92...` (a raw alias) is typed from the
+  32-bit identification word at +4: part `0xe000` or `0xe010` with manufacturer field 0x24 (bits 11:1) and `0xd102` or `0xd112` with 0x24 take the
+  "slot 1 to 4" form, `0xd002` with 0x24 and `0xc002` with 0x36 take the "slot 0 to 7" form; any other part falls to the panic. A record
+  pointer reads the type halfword at +0x72 and the base address from +0x8: type 3 and 2 use the slot-1-to-4 form, types 0 and 1 the
+  slot-0-to-7 form, a type of -1 falls to the panic and anything else returns 0. The slot-1-to-4 form uses `(slot + 1) & 0xff`, asserting
+  it is 1 to 4 (`assfail`, source lines 0xb68 and 0xb70 for the two types), the slot-0-to-7 form uses the slot itself, asserting 0 to 7
+  (line 0xb75). Both return `base + slot * 0x1000 + function * 0x100 + (offset / 4) * 4 + 0x20000`, with the offset divided by four
+  rounding toward zero. It touches no register. Established: the dispatch and address formula. Inferred: that the part numbers map to Bridge
+  (0xc002), XBridge (0xd002), PIC (0xd102, 0xd112) and TIOCP (0xe000, 0xe010), as the Bridge-family dispatch elsewhere assumes.
+- `pcireg_int_ate_set` (`IP27/unix` at 0xc0000000000890d4,
+  620 bytes) writes one internal address-translation entry of a Bridge-family chip. It takes the register-block pointer or per-chip
+  record in `a0`, the entry index in `a1` and the value in `a2`, and does one doubleword store, `sd`, of `a2` at `base + index * 8 +
+  0x10000`. The typing, bounds and panic are those of `pcireg_int_ate_get`: a null `a0` panics ("pcireg_int_ate_set(): unknown
+  bridgetype"), parts 0xe000, 0xe010, 0xd102, 0xd112 and 0xd002 allow index 0 to 1024 inclusive and part 0xc002 with manufacturer 0x36 allows
+  0 to 128 inclusive, record type 3, 2 and 1 allow 0 to 1024 and type 0 allows 0 to 128; a type of -1 panics and any other type returns without
+  a store. An index outside the range calls `assfail` with the source lines 0xc1c (type 3), 0xc20 (type 2), 0xc24 (type 1) or 0xc28
+  (type 0); the check is `index <= limit`. It returns nothing. Established. Inferred: that the entries are the internal translation table
+  of the chip, from the routine's identifier and the 0x10000 base.
+- `pcireg_int_ate_get` (`IP27/unix` at 0xc000000000088e68,
+  620 bytes) reads one internal address-translation entry of a Bridge-family chip. It takes the chip's register-block pointer or the
+  driver's per-chip record in `a0` and the entry index in `a1`, and returns the doubleword at `base + index * 8 + 0x10000`. A null `a0`
+  panics ("pcireg_int_ate_get(): unknown bridgetype"). A pointer whose upper bits match `0x92...` is typed by the identification word at
+  +4: part 0xe000 or 0xe010 and part 0xd102 or 0xd112 (manufacturer field 0x24) and part 0xd002 (0x24) allow indexes 0 to 1024
+  inclusive, part 0xc002 with manufacturer 0x36 allows 0 to 128 inclusive. A record pointer is typed by the halfword at +0x72 (types 3,
+  2 and 1 allow 0 to 1024, type 0 allows 0 to 128; -1 panics, any other value returns 0) and its base comes from +0x8. An index outside the
+  range calls `assfail` with the source lines 0xbfd (type 3), 0xc01 (type 2), 0xc05 (type 1) or 0xc09 (type 0). The check is `index <= limit`,
+  so the index equal to the limit passes. It is one doubleword load, `ld`, from the entry, with no other register access. Established.
+  Inferred: that the four parts are Bridge, XBridge, PIC and TIOCP, as `pcireg_type0_cfg_addr` assumes.

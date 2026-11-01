@@ -1426,6 +1426,105 @@ Hub's registers, or the Hub's real-time counter, through the aliases described a
   `MD_MIG_VALUE_THRESH` (offset +0x38 of `0x9200000001a00000 + (nasid << 32)`), first writing the word at +0x10 of that same record ORed with bit 63
   and then ORing bit 63 in again. If a block or table allocation fails it frees the block with `kmem_contig_free` and zeroes the four fields,
   returning 1. Inferred: the field names, from the layout, and that +0x10 is the threshold value the routine writes.
+- `log_tstamp_event` (`IP27/unix` at 0xc000000000238b24,
+  716 bytes) appends one fixed-size time-stamped trace record to the calling processor's event buffer. It takes the event code in `a0` and
+  four data words in `a1` to `a4`. It finds the processor's trace record through `pdaindr` and the halfword at 0xffffffffffffc420 and
+  branches on the word at +0x310: nonzero writes into a plain ring (position at +0x300, ring from +0x2f8 to +0x308, 48-byte slots): the
+  next slot is the current one plus 0x30, or the ring start when the current one is at or beyond the end, and the old position's slot
+  gets the Hub real-time counter (`0x9200000001030100`) at +8, the four words at +0x10, +0x18, +0x20 and +0x28 and the code at +0 (stored last); it
+  returns. Zero uses the shared buffer whose pointer is at +0x288 (nothing happens when it is null; a nonzero first word of that
+  buffer's header is incremented as a lost-event count). It takes a slot with `atomicIncWithWrap` on the header's index (+0x8) and the
+  size at +0x14, loses the event (increments the header's first word) when the slot's first word is already nonzero, and otherwise
+  stores the four words at +0x10 to +0x28 and a timestamp at +0x8: the current counter, or, when the next slot is occupied and
+  carries an earlier stamp, that stamp minus one. It zeroes the halfword at +6, writes the code, adds 1 to the header's fill word
+  (+0x4) and, when the fill is at or above the threshold at +0x18, the enabler at +0x28 is nonzero, the code is not 0xea62 and the byte at
+  -0x3fae of the process page is 0, raises the level (`getsr`, `issplprof`, `spl1`) and, if the counter at +0x28 decrements through
+  `compare_and_dec_int_gt`, wakes the reader with `sv_signal`; it restores the level with `splx`. It returns nothing.
+  Inferred: the buffer's field names and that +0x310 selects between two buffer kinds, from the two code paths.
+- `cont_nmi_dump` (`IP27/unix` at 0xc000000000044d8c,
+  712 bytes) is the continuation of the non-maskable interrupt handler that produces a crash dump; it takes no arguments and does not
+  return. It gets the processor number (`getcpuid`) and pins that processor's per-processor area with `wirepda`. When the tunables
+  `r10k_intervene` and `r10k_progress_nmi` are both nonzero and the flag halfword at -0x3832 is set, it saves the processor's
+  frame with `nmi_cpu_eframe_save` and reports a "Progress intervention" through `cmn_err`: level 6 with the process name, pid, EPC and
+  status when bits 4:3 of the saved status word (+0xf8) equal 2 (user mode), else level 8 with "Progress intervention in kernel mode EPC
+  0x%x (sr 0x%x)" and the EPC at +0x158. Otherwise it calls `enter_panic_mode`, clears the byte at -0x3fad, sets the byte at -0x3fb1
+  to 1 and enters a wait loop of up to 1500 passes (0x5dc) of `us_delay(10000)`, ending as soon as every node's word at +0x5168 is nonzero. On
+  pass 1000 it forces the processors that have not reported: for each node whose word is still zero it sets the bit of each of that node's
+  processors in the mask at 0xc0000000014de4f0 + 0x10 and stores 1 into the node-alias doubleword
+  `0x9200000001800000 + (nasid << 32) + 0x70 + 8 * slice` (the PI NMI register of that slice), starting at the node's first processor and
+  covering its processor count. After the loop it runs `nmi_eframes_save`, `sn0_error_dump` and `cmn_err` level 0 with "User requested
+  vmcore dump (NMI), cpu %d handling" and the processor number, which does not return. Inferred: that offsets 0x70 and 0x78 are the PI
+  non-maskable-interrupt registers, from the public header names and the way the loop uses the slice number as the index.
+- `hubpi_spool_get_next` (`IP27/unix` at 0xc000000000033dac,
+  680 bytes) takes the next entry from the Hub processor interface's error spool (the memory stack the Hub fills with error words), or,
+  when the spool is empty, reads the live error registers. It takes two output pointers in `a0` and `a1`; it returns 0 for nothing, 1 for a
+  spool entry and 2 for registers read directly. It raises the level with `spl7`, finds the node's error log record (`kl_error_log` indexed
+  by the node halfword at -0x3be2 of the process page) and the processor's slice (byte +0x520 of its record); a missing record
+  or a zero read pointer at record +0x1910 + 8 * slice returns 0 after `splx`. With the read pointer (+0x1910 + 8 * slice) equal to the write
+  pointer (+0x1920 + 8 * slice) the spool is empty, so it reads `PI_ERR_STATUS0` (offset 0x430 for slice 0, 0x450 for slice 1) into `*a0`
+  and the second status register (0x440 or 0x460) into `*a1` from `0x9200000001000000`; if bit 1 of the halfword at -0x3adc is clear and
+  bit 63 of `*a0` is clear it returns 0, and if bit 63 is set it stores 0 to the status clear alias (0x448 or 0x468). It then stores the
+  value of the stack address register (offset 0x418 for slice 0, 0x420 for slice 1) into the write pointer; with bit 1 of the halfword clear it
+  calls `klsave_spool_registers` (the two words, 2) and returns 2, and with it set it re-compares the pointers and returns 0 if they are now
+  equal. A nonempty spool reads one doubleword from `0x9600000000000000 | (nasid << 32) | read pointer` into `*a0`, advances the read pointer by
+  8, wraps it by subtracting the stack size at record +0x1930 when the new pointer is aligned to it, and returns 1. The level is restored
+  with `splx` on every path. Inferred: the register names at offsets 0x430 to 0x468, which the hub datasheet gives under those names for this
+  routine's uses; the meaning of bit 1 of the halfword at -0x3adc, which is only tested.
+- `i2c_master_recv` (`IP27/unix` at 0xc00000000009b0cc,
+  680 bytes) reads bytes from an I2C slave through a node's I2C master. It takes the node number in `a0`, the slave address in `a1`, the buffer in
+  `a2` and its length in `a3`, a pointer for the received count in `a4`, a length-prefix adjustment in `a5`, the argument for
+  `i2c_arb` in `a6` and a flag in `a7`. The count starts at 0; `i2c_arb` (node, `a6`, 0) returning negative is passed on, and 0 with the flag nonzero
+  returns -10. The registers are the data register at +0x0 and the status register at +0x8 of `0x9200000001a20000 + (node << 32)`; a status
+  with bit 1, 2 or 4 (mask 0x16) set before the start returns -2 with no write. It writes `(address << 1) | 1` to the data register and 0xc5 to
+  the status register, then waits for status bit 7 (0x80) to clear (timeout -6, error bits -2, bit 3 set afterwards -3), the deadline being the
+  `a6` value plus 800/1000 of the Hub real-time counter (`0x9200000001030100`) read at entry. When exactly one byte is wanted it writes
+  0x40 to the status register first; for each byte (none when the length is zero or less) it waits (timeout -9), writes 0x40 to the status register
+  when the index is the length minus 2, reads the data register into the buffer, counts it, and when `a5` is not negative makes the first byte
+  received plus `a5` the new length. It ends with status 0x45, data 0xfe and a final wait (timeout -6), returning 0. Every error return after
+  the data write first stores 0xc2 to the status register. Inferred: the bit meanings, as in the write-then-read routine.
+- `intr_connect_level` (`IP27/unix` at 0xc0000000000383ec,
+  668 bytes) connects a handler to one Hub interrupt level of a processor and unmasks it. It takes the processor number in `a0`, the
+  level in `a1` (it is passed by address to a static routine, which may change it), and four handler words in `a2` to `a5`. A static
+  routine at 0xc000000000038390 resolves the processor and level to the node's interrupt-table record, the pointer to the processor's
+  mask word and the group (0 for levels below 64, else 1). Under the record's lock at +0x1e00 (`mutex_spinlock_spl`, level word at
+  +0x1e08) it looks at the flags word of the level's 0x30-byte entry (+0x122c): it proceeds only when bit 0 (reserved) is set and bit 1
+  (connected) is clear. Then it stores into the level's 0x48-byte entry (record + level * 0x48): the words from `a4` at +0x0, `a5` at +0x8
+  and `a3` at +0x10 and the halfword from `a2` at +0x38; sets flag bit 1; writes `level + group * 0x40` to
+  `PI_INT_PEND_MOD` (+0x90 of the node alias `0x9200000001800000`, node taken from the processor's record halfword at +0x422); ORs
+  `1 << level` into the processor's mask word; bumps the per-slice count at `record + 0x1e18 + 4 * slice`; when entry flag bit 8 (0x100) is
+  set it sets bit 9, stores the processor number at +0x40 of the entry and, if the word at +0x1e20 is nonzero, calls a static routine at
+  0xc00000000003a4e8 with the entry, the node, the level and the `a2` value; and finally writes the mask word to the node alias
+  doubleword `PI_INT_MASK0_A` (+0xa8) or, for group 1, `PI_INT_MASK1_A` (+0xb0), plus 16 bytes per slice. It releases the lock
+  with `mutex_spinunlock` and returns 0 after a connection; the value it returns when the level is not reserved or already connected was not
+  read. Inferred: the handler field assignment, since the stored words are only consumed by the dispatcher; the group rule, from the
+  literal 64 and the two mask registers.
+- `kf_memory_bank_disable` (`IP27/unix` at 0xc00000000015361c,
+  660 bytes) records in the boot-environment variables that one memory bank of a node is to be disabled at the next start. It takes the
+  bank number in `a0` and the node number in `a1`, and returns 1 when it set the variables and 0 otherwise. It reads the doubleword at +0x18 of
+  `0x9200000001a00000 + (node << 32)` (`MD_MEMORY_CONFIG`) and, when `get_nvreg` (0x3884) returns the character 'y', converts it with
+  `translate_hub_mcreg`. It reads six variables with `ip27log_getenv`: the disabled-size string, the disable-reason string, the disabled
+  bank mask, the memory size, the memory mask and the swap-bank flag; any read that fails (negative or, for the later ones, nonzero)
+  returns 0. For bank 0 it first compares the swap-bank value with the empty string: a difference returns 1 unchanged, and the
+  memory-size string's third character not '2' (or its first character '0') returns 0. It formats the bank number with "%d" and
+  appends it to the disable-mask string when `strstr` does not find it; turns a reason character '0' of that bank into '3'; stores
+  `'0' + ((config >> (3 * bank)) & 7)` into that bank's character of the size string; writes the size, reason and mask variables back with
+  `ip27log_setenv`; and for bank 0 also sets the swap-bank variable to "2". Inferred: the variable meanings, from the variable strings ("DisableMemSz",
+  "MemDisReason", "DisableMemMask", "MemorySize", "SwapBank", "MemMask") and the three-bit size field, which comes from the shift of 3.
+- `sysctlr_keepalive` (`IP27/unix` at 0xc00000000003f9ec,
+  616 bytes) keeps the module system controller's heartbeat alive; it takes no arguments, works on the first module in `modules`
+  and returns nothing. It computes the time in seconds as `real-time counter * 800 / 1000000000` (the doubleword at
+  `0x9200000001030100`; the counter ticks every 800 ns). The module's heartbeat state is the word at +0x2f0 and the time of the
+  last heartbeat is the doubleword at +0x2f8; a global word (`gp - 0x7274`) says whether heartbeats are wanted. State and want
+  decide the action. Not wanted and state 0: return. Not wanted and state nonzero: `cmn_err` level 5 "Disabling heartbeats", then a
+  disable. Wanted and state 0: if the halfword at `gp - 0x6796` is nonzero (a debugger is installed) it prints "Heartbeats not enabled
+  (debugger installed)", clears the want word and returns; otherwise it prints "Enabling heartbeats" and enables. Wanted and state nonzero:
+  it returns when fewer than 10 seconds have passed since the stored time, else sends a keepalive. Each action takes the module's
+  lock at +0x2a8 (`mutex_spinlock_spl` at level `spl7`) and calls `_elsc_hbt` with the controller at +0x30 and the arguments (30, 20)
+  to enable (success stores 1 into the state word), (0, 0) to disable (success stores 0), or (0, 1) to send a keepalive (success stores
+  the current seconds at +0x2f8); it releases the lock with `mutex_spinunlock`. A negative result calls `cmn_err` level 4
+  "module %M MSC: Error %s heartbeat: %s" with the word "enabling", "disabling" or "sending" and `elsc_errmsg`; the result -112 (-0x70)
+  also calls `cmn_err` (level 0x804) "Keyswitch must be in diagnostic position for heartbeats". After a failed enable the want word is
+  cleared. Established: the state machine and arguments. Inferred: the role of `_elsc_hbt`'s arguments, which are named nowhere in the routine.
 
 ## Routines in the IP27 `hubspc.o` build
 
