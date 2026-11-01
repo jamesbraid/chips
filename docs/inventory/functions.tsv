@@ -4696,7 +4696,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003aa88	12	set_lladdr	symtab	9a846dc04775	
 IP27/unix	kernel	n64	.text	0xc00000000003aa94	12	do_sync_instruction	symtab	0fc560405654		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003aaa0	40	siron	symtab	465f138331e6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003aac8	44	siroff	symtab	b8f75fd62e1e		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003aaf4	16	flushbus	symtab	b6404696c86e		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP27/unix	kernel	n64	.text	0xc00000000003aaf4	16	flushbus	symtab	b6404696c86e		out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000003ab04	8	wbflush	symtab	78aa5094d5ec		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64	.text	0xc00000000003ab0c	8	ip26_enable_ucmem	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003ab0c	8	ip26_return_ucmem	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
@@ -4727,7 +4727,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003b34c	40	issplprof	symtab	670bb52d4881		
 IP27/unix	kernel	n64	.text	0xc00000000003b374	48	isspl7	symtab	ee94d618c138		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b3a4	24	spl65	symtab	dafe8229ec55	shared-address	out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc00000000003b3a4	24	splprof	symtab	dafe8229ec55	shared-address	out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/unix	kernel	n64	.text	0xc00000000003b3bc	24	spl7	symtab	16c7bb5d00be	shared-address	out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP27/unix	kernel	n64	.text	0xc00000000003b3bc	24	spl7	symtab	16c7bb5d00be	shared-address	out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000003b3bc	24	splerr	symtab	16c7bb5d00be	shared-address	out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003b3d4	32	splecc	symtab	8a6f9bd0170c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b3f4	28	splx	symtab	50d1a155518b	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -4962,7 +4962,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000470a4	124	settimetrim	symtab	938ef694f83
 IP27/unix	kernel	n64	.text	0xc000000000047120	8	gettimetrim	symtab	29229546eddb		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047128	492	doadjtime	symtab	95237790b1c2		out:5	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000047550	376	nanotime_syscall	symtab	f9fa7d0c0298		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/unix	kernel	n64	.text	0xc0000000000476c8	252	nanotime	symtab	5d679ab43b94		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc0000000000476c8	252	nanotime	symtab	5d679ab43b94		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000000477c4	68	irix5_microtime	symtab	03c72d6aa4b6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047808	68	microtime	symtab	e549a3447e55		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004784c	216	local_settime	symtab	c517e0062678		in	undocumented		
@@ -5022,7 +5022,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000482c4	156	compare_and_dec_int_gt_hot2	sy
 IP27/unix	kernel	n64	.text	0xc000000000048360	28	swap_int64	symtab	1be725d32eca	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000048360	28	swap_long	symtab	1be725d32eca	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000048360	28	swap_ptr	symtab	1be725d32eca	shared-address	out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_int64	symtab	e993d0870d2c	shared-address	out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_int64	symtab	e993d0870d2c	shared-address	out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_kt	symtab	e993d0870d2c	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_long	symtab	e993d0870d2c	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_ptr	symtab	e993d0870d2c	shared-address	out:5	undocumented		
@@ -5139,7 +5139,7 @@ IP27/unix	kernel	n64	.text	0xc00000000004d484	4	utlbmiss_prolog_patch	symtab	154
 IP27/unix	kernel	n64	.text	0xc00000000004d488	32	utlbmissj	symtab	8e6a3cc2e11b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004d4a8	8	eutlbmissj	symtab	af5570f5a181		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004d4b0	88	_ecc_errorvec	symtab	d389ddcbd794		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000004d508	8	_ecc_end	symtab	af5570f5a181		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000004d508	8	_ecc_end	symtab	af5570f5a181		out:5	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000004d510	8	VEC_addrerr	symtab	94ad74e6003f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004d520	68	VEC_tlbmiss	symtab	a4a0776e0b54		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004d564	560	dprintf	symtab	4fdb8a77a66a		out:5	undocumented		
@@ -5188,7 +5188,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000511dc	428	_cvtd_s	symtab	daefc2db7782		o
 IP27/unix	kernel	n64	.text	0xc000000000051390	276	_badaddr_val	symtab	faf30936cc8b		out:5	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000000514a4	296	_wbadaddr_val	symtab	7b0c07c494ff		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000515cc	224	earlybadaddr	symtab	05164cda8cdd		out:5	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP27/unix	kernel	n64	.text	0xc0000000000516ac	108	wbadmemaddr	symtab	74d607e11327		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000516ac	108	wbadmemaddr	symtab	74d607e11327		out:5	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc000000000051718	48	baerror	symtab	ddcf8620e97b		out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc000000000051748	52	earlybaerror	symtab	7a094952704e		out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000005177c	356	round_w	symtab	649c9d9402cc		out:5	undocumented		
@@ -5641,7 +5641,7 @@ IP27/unix	kernel	n64	.text	0xc00000000006d0b8	68	xbow_map	symtab	5f09bef4ab81		i
 IP27/unix	kernel	n64	.text	0xc00000000006d0fc	8	xbow_unmap	symtab	87506497337c		in	understood	chips/xbow/README.md#routines-of-the-ip27-kernel-that-keep-the-widget-and-switch-records-ip27unix	Routines of the IP27 kernel that keep the widget and switch records (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000006d104	252	xbow_widget_num_get	symtab	f5d890b11001		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP27/unix	kernel	n64	.text	0xc00000000006d200	876	xbow_ioctl	symtab	8a2ca059cfe3		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000006d56c	100	xbow_widget_present	symtab	26d2fae0aee3		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP27/unix	kernel	n64	.text	0xc00000000006d56c	100	xbow_widget_present	symtab	26d2fae0aee3		in	understood	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000006d5e8	100	xbow_widget_lookup	symtab	138772f2f18e		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006d6b8	52	xbow_intr_preset	symtab	e034de02bbfe		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64	.text	0xc00000000006d920	260	xbow_xmit_retry_error	symtab	f3ea6974319c		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
@@ -5655,7 +5655,7 @@ IP27/unix	kernel	n64	.text	0xc00000000006eb38	76	xbow_enable_llp_monitor	symtab	
 IP27/unix	kernel	n64	.text	0xc00000000006eb84	628	xbow_get_bridge_pointers	symtab	66ac4713ec2a		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc00000000006edf8	136	xbow_disable	symtab	6d1c3e442f93		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006ee80	124	xbow_enable	symtab	7589a1903ca8		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000006eefc	260	xbow_reset_link	symtab	82047c77f262		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/unix	kernel	n64	.text	0xc00000000006eefc	260	xbow_reset_link	symtab	82047c77f262		in	located	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000006f000	228	idbg_xbowregs	symtab	734354f80d71		out:5	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64	.text	0xc00000000006f0e4	100	xbow_bytes_to_gbr	symtab	8cee067198e7		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64	.text	0xc00000000006f148	24	xbow_gbr_to_bytes	symtab	8ddba1bcb386		in	undocumented		
@@ -6622,7 +6622,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000d8aac	1484	if_tgattach	symtab	43fc8069be
 IP27/unix	kernel	n64	.text	0xc0000000000d9078	360	if_tgopen	symtab	ffaf69d1e145		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000de76c	1124	if_tgdetach	symtab	5fde7680aa25		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000def14	188	ftrc_attach	symtab	e4b01635904b		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000defd0	324	ftrc_event	symtab	5c621e0269bf		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000defd0	324	ftrc_event	symtab	5c621e0269bf		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000000df114	660	ftrc_copyout	symtab	32b9eeb19a37		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000df3a8	1140	ftrc_dump	symtab	849465941c54		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000df81c	88	ftrc_clear	symtab	e4d475da72dc		out:5	undocumented		
@@ -7177,7 +7177,7 @@ IP27/unix	kernel	n64	.text	0xc000000000126c74	20	ether_reattach	symtab	dd3c04fdc
 IP27/unix	kernel	n64	.text	0xc000000000126c88	1136	ether_input	symtab	c696b461834b		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000012756c	264	ether_selfsnoop	symtab	cfd184c7b5a1		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000127ca8	64	ether_stop	symtab	d8f8c118b9a2		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000127ce8	184	get_eaddr	symtab	def2157b4427		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000127ce8	184	get_eaddr	symtab	def2157b4427		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc000000000127da0	120	dlsap_insert	symtab	369a9e177976		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000127e18	112	dlsap_find	symtab	a89dbc117edd		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000127e88	84	register_dlsap	symtab	b3c431e833d5		out:5	undocumented		
@@ -8535,7 +8535,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001b4588	84	thread_timein_start	symtab	dcc3
 IP27/unix	kernel	n64	.text	0xc0000000001b4794	120	thread_timein_init	symtab	82f9bdd5853c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001b480c	48	delay	symtab	cfd86cf9e811		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001b483c	116	nano_delay	symtab	ebd33843be94		out:5	named-only	chips/bridge/README.md#established-sequences	Established sequences
-IP27/unix	kernel	n64	.text	0xc0000000001b48b0	448	adjtime	symtab	fe01a6bf9e8e		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001b48b0	448	adjtime	symtab	fe01a6bf9e8e		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000001b4a70	104	gettimeofday	symtab	832587d95558		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001b4ad8	220	settimeofday	symtab	914c57bae481		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001b4bb4	116	irix5_to_timeval_xlate	symtab	d9b352eae83d		out:5	undocumented		
@@ -8788,7 +8788,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001cd2a4	132	xthread_exit	symtab	e715da31e6
 IP27/unix	kernel	n64	.text	0xc0000000001cd328	128	xthread_set_func	symtab	ed6c4aa2d5a2		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000001cd3a8	48	xtdestroy	symtab	12b9c9dacfd6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001cd3d8	452	xthread_boot_bind	symtab	56a2c774f34b		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001cd700	228	xthread_periodic_timeout	symtab	58ea847dab3a		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001cd700	228	xthread_periodic_timeout	symtab	58ea847dab3a		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000001cd7e4	28	xpt_stop	symtab	e3c041895e36		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001cd800	68	xthread_periodic_timeout_stop	symtab	cc69dba863a7		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001cd844	76	pshare_init	symtab	602de804b57f		out:5	undocumented		
@@ -9156,7 +9156,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001ee830	304	vrecalcrss	symtab	6139713afac5
 IP27/unix	kernel	n64	.text	0xc0000000001ee960	248	getmpages	symtab	671c1ff6e9ac		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001ef50c	188	xthread_table_init	symtab	4e82b460bdb4		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001ef6b0	44	xthread_table_xthread_init	symtab	e6c0cdf97b43		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001ef890	80	xthread_table_name_get_property	symtab	e4d65144b5e3		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001ef890	80	xthread_table_name_get_property	symtab	e4d65144b5e3		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000001ef8e0	148	xthread_table_thread_get_property	symtab	6b7fe524d14b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001ef974	348	xthread_table_capable	symtab	0da1f3e71b04		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001efad0	8	v_getaddr	symtab	371417cf96a1		out:5	undocumented		
@@ -10094,7 +10094,7 @@ IP27/unix	kernel	n64	.text	0xc00000000025addc	120	fasthzto	symtab	81ffced0270c		
 IP27/unix	kernel	n64	.text	0xc00000000025ae54	96	tick_to_timeval	symtab	c6de54f011d3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000025b2ac	820	intpexec	symtab	505f4e6dff50		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000025b5e0	40	uuid_init	symtab	6a137da55de0		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000025b608	320	uuid_create	symtab	4cba3d0c4341		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000025b608	320	uuid_create	symtab	4cba3d0c4341		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc00000000025b748	32	uuid_getnodeuniq	symtab	07b183a5ea08		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000025b768	260	uuid_to_buf	symtab	333c05815ec1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000025b86c	32	uuid_create_nil	symtab	64ad409725ee		out:5	undocumented		
@@ -12350,16 +12350,16 @@ IP27/unix	kernel	n64	.text	0xc000000000395af0	892	MgrasInitCCR	symtab	69e1869a58
 IP27/unix	kernel	n64	.text	0xc000000000395e6c	144	gfx_flow_delayed_hiwater_intr_prehandler	symtab	af34397f149e		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000003960a8	916	gfx_flow_alloc	symtab	6ad5b1631c2f		out:5	located	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000039643c	12	gfx_flow_reset	symtab	edc75ebbd907		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000396448	72	gfx_flow_dealloc	symtab	b5c0332bc345		out:5	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP27/unix	kernel	n64	.text	0xc000000000396448	72	gfx_flow_dealloc	symtab	b5c0332bc345		out:5	located	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc000000000396490	36	gfx_flow_wg_info_get	symtab	781c4da5064b		out:5	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc0000000003964b4	8	gfx_flow_credit_tnum_get	symtab	32025f51793a		out:5	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc0000000003964bc	12	gfx_flow_credit_total_get	symtab	925a41cf4339		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003964c8	12	gfx_flow_credit_bias_get	symtab	6c27d0b6a88e		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003964d4	72	gfx_flow_credit_count_get	symtab	abc82ab97587		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039651c	8	gfx_flow_detach_requires_credit_flow_disable	symtab	a7e7ca11a6b8		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000396524	344	gfx_flow_attach_me	symtab	ac8d7a099970		in	named-only	chips/hub/README.md#addresses-established	Addresses (established)
+IP27/unix	kernel	n64	.text	0xc000000000396524	344	gfx_flow_attach_me	symtab	ac8d7a099970		in	located	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000039667c	76	gfx_flow_attach_me_finish	symtab	288ddc906735		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003966c8	308	gfx_flow_detach_me	symtab	3046e9a7c9c1		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP27/unix	kernel	n64	.text	0xc0000000003966c8	308	gfx_flow_detach_me	symtab	3046e9a7c9c1		in	located	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc0000000003967fc	68	gfx_flow_am_i_attached	symtab	69360de397b3		out:5	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc000000000396840	24	gfx_flow_flush_my_wg	symtab	a73e98930128		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000396858	24	gfx_flow_set_cpu_attachment	symtab	e8cbd9918b0d		out:5	undocumented		
@@ -14240,7 +14240,7 @@ IP27/usr/cpu/sysgen/IP27boot/bsd.a(ether.o)	kernel-object	n64	.text	0x1070	184	e
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(ether.o)	kernel-object	n64	.text	0x1128	152	ether_delmulti	dwarf+symtab	0ecf2206acfb		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(ether.o)	kernel-object	n64	.text	0x11c0	224	ether_start	dwarf+symtab	26823be48ef3		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(ether.o)	kernel-object	n64	.text	0x12a0	64	ether_stop	dwarf+symtab	55042f60e419		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(ether.o)	kernel-object	n64	.text	0x12e0	184	get_eaddr	dwarf+symtab	fa1aebc44a03		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(ether.o)	kernel-object	n64	.text	0x12e0	184	get_eaddr	dwarf+symtab	fa1aebc44a03		out:2	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(ether.o)	kernel-object	n64	.text	0x1398	120	dlsap_insert	dwarf+symtab	dd6e3ed03f63		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(ether.o)	kernel-object	n64	.text	0x1410	112	dlsap_find	dwarf+symtab	2889f1d33a01		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(ether.o)	kernel-object	n64	.text	0x1480	84	register_dlsap	dwarf+symtab	87ed835a4853		out:2	undocumented		
@@ -17521,7 +17521,7 @@ IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xf278	292	ftrc_all
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xf39c	152	ftrc_find_bfr	dwarf+symtab	68a2c4fd6fc9		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xf434	320	ftrc_create_sess	dwarf+symtab	2425b4969a1a		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xf574	188	ftrc_attach	dwarf+symtab	911d2ea7822d		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xf630	324	ftrc_event	dwarf+symtab	fcc0639409fa		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xf630	324	ftrc_event	dwarf+symtab	fcc0639409fa		out:2	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xf774	660	ftrc_copyout	dwarf+symtab	e5992912ad41		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xfa08	1140	ftrc_dump	dwarf+symtab	eb52854fb5ad		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xfe7c	88	ftrc_clear	dwarf+symtab	6bbd94a0bce4		out:2	undocumented		
@@ -19093,7 +19093,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21908	12	set_lla
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21914	12	do_sync_instruction	dwarf+symtab	0fc560405654		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21920	40	siron	dwarf+symtab	465f138331e6		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21948	44	siroff	dwarf+symtab	b8f75fd62e1e		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21974	16	flushbus	dwarf+symtab	b6404696c86e		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21974	16	flushbus	dwarf+symtab	b6404696c86e		out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21984	8	wbflush	dwarf+symtab	78aa5094d5ec		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2198c	8	ip26_enable_ucmem	dwarf+symtab	78aa5094d5ec	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2198c	8	ip26_return_ucmem	symtab	78aa5094d5ec	shared-address	out:6	undocumented		
@@ -19124,7 +19124,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x221cc	40	issplpr
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x221f4	48	isspl7	dwarf+symtab	ee94d618c138		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22224	24	spl65	symtab	dafe8229ec55	shared-address	out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22224	24	splprof	dwarf+symtab	dafe8229ec55	shared-address	out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2223c	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2223c	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2223c	24	splerr	symtab	16c7bb5d00be	shared-address	out:6	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22254	32	splecc	dwarf+symtab	8a6f9bd0170c		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22274	28	splx	dwarf+symtab	50d1a155518b	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -19389,7 +19389,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2dfa0	8	gettimet
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2dfa8	492	doadjtime	dwarf+symtab	2d7bd30ce475		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e194	572	__nanotime	dwarf	a3e8b5e94b77		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e3d0	376	nanotime_syscall	dwarf+symtab	085fdae0e132		out:6	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e548	252	nanotime	dwarf+symtab	b553eca73eb5		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e548	252	nanotime	dwarf+symtab	b553eca73eb5		out:6	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e644	68	irix5_microtime	dwarf+symtab	f42d82ff91d7		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e688	68	microtime	dwarf+symtab	a54c9d44e7ff		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e6cc	216	local_settime	dwarf+symtab	3494c295c02c		out:6	undocumented		
@@ -19450,7 +19450,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f144	156	compar
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1e0	28	swap_int64	dwarf+symtab	1be725d32eca	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1e0	28	swap_long	symtab	1be725d32eca	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1e0	28	swap_ptr	symtab	1be725d32eca	shared-address	out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_int64	dwarf+symtab	e993d0870d2c	shared-address	out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_int64	dwarf+symtab	e993d0870d2c	shared-address	out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_kt	symtab	e993d0870d2c	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_long	symtab	e993d0870d2c	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_ptr	symtab	e993d0870d2c	shared-address	out:6	undocumented		
@@ -19575,7 +19575,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34304	4	utlbmiss
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34308	32	utlbmissj	dwarf+symtab	59e7addb5e06		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34328	8	eutlbmissj	symtab	af5570f5a181		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34330	88	_ecc_errorvec	dwarf+symtab	7f1e39a15b5d		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34388	8	_ecc_end	symtab	af5570f5a181		out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34388	8	_ecc_end	symtab	af5570f5a181		out:6	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34390	8	VEC_addrerr	dwarf+symtab	6cc16abd70ee		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x343a0	68	VEC_tlbmiss	dwarf+symtab	1503c13cfd26		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x343e4	560	dprintf	dwarf+symtab	399172d54927		out:6	undocumented		
@@ -19630,7 +19630,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3805c	428	_cvtd_
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x38210	276	_badaddr_val	dwarf+symtab	96ca51d457d1		out:6	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x38324	296	_wbadaddr_val	dwarf+symtab	9253b498acd0		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3844c	224	earlybadaddr	dwarf+symtab	b1febfb633f0		out:6	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3852c	108	wbadmemaddr	dwarf+symtab	0f88c1093bf0		out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3852c	108	wbadmemaddr	dwarf+symtab	0f88c1093bf0		out:6	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x38598	48	baerror	dwarf+symtab	ddcf8620e97b		out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x385c8	52	earlybaerror	dwarf+symtab	8d9aa1f63e31		out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x385fc	356	round_w	dwarf+symtab	04519453a353		out:6	undocumented		
@@ -23583,7 +23583,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x2870	184	ca
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x2928	120	thread_timein_init	dwarf+symtab	01cffbb0e48d		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x29a0	48	delay	dwarf+symtab	f96902127aa9		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x29d0	116	nano_delay	dwarf+symtab	70e7c0de2419		out:3	named-only	chips/bridge/README.md#established-sequences	Established sequences
-IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x2a44	448	adjtime	dwarf+symtab	e862110c2fc2		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x2a44	448	adjtime	dwarf+symtab	e862110c2fc2		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x2c04	104	gettimeofday	dwarf+symtab	752839743d94		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x2c6c	220	settimeofday	dwarf+symtab	8092898393c1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(clock.o)	kernel-object	n64	.text	0x2d48	116	irix5_to_timeval_xlate	dwarf+symtab	b82a1f29940c		out:3	undocumented		
@@ -25039,7 +25039,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(utssys.o)	kernel-object	n64	.text	0x1320	28	us
 IP27/usr/cpu/sysgen/IP27boot/os.a(utssys.o)	kernel-object	n64	.text	0x133c	216	ustat_to_irix5_o32	dwarf+symtab	fb23f9928088		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(utssys.o)	kernel-object	n64	.text	0x1414	136	irix5_to_f_anonid	dwarf+symtab	7d11cf58978d		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(uuid.o)	kernel-object	n64		0x0		uuid_init	dwarf+symtab			out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(uuid.o)	kernel-object	n64	.text	0x28	320	uuid_create	dwarf+symtab	225cda5eeff7		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(uuid.o)	kernel-object	n64	.text	0x28	320	uuid_create	dwarf+symtab	225cda5eeff7		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/os.a(uuid.o)	kernel-object	n64	.text	0x168	32	uuid_getnodeuniq	dwarf+symtab	07b183a5ea08		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(uuid.o)	kernel-object	n64	.text	0x188	260	uuid_to_buf	dwarf+symtab	45fa7acd4d05		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(uuid.o)	kernel-object	n64	.text	0x28c	32	uuid_create_nil	dwarf+symtab	ede8ccc9c75f		out:3	undocumented		
@@ -25349,7 +25349,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x5d0	8	xth
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x5d8	52	xpt_func	dwarf+symtab	df81659cd824		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x60c	108	xpt_init	dwarf+symtab	a9b05b82dda5		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x678	180	xpt_timeout	dwarf+symtab	34e3ee6210ac		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x72c	228	xthread_periodic_timeout	dwarf+symtab	41c6092fa0ce		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x72c	228	xthread_periodic_timeout	dwarf+symtab	41c6092fa0ce		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x810	28	xpt_stop	dwarf+symtab	4eff95fd5644		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-object	n64	.text	0x82c	68	xthread_periodic_timeout_stop	dwarf+symtab	3929753d007c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-object	n64		0x0		xthread_table_import_threadcfg	dwarf+symtab			out:3	undocumented		
@@ -25359,7 +25359,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x4b0
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x56c	232	xthread_table_name_search	dwarf+symtab	48fdb760f955		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x654	44	xthread_table_xthread_init	dwarf+symtab	29a696d25afa		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x680	436	xthread_table_get_property	dwarf+symtab	b4be53ac2b0e		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x834	80	xthread_table_name_get_property	dwarf+symtab	972900e50e07		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x834	80	xthread_table_name_get_property	dwarf+symtab	972900e50e07		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x884	148	xthread_table_thread_get_property	dwarf+symtab	1163dcf3f769		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x918	348	xthread_table_capable	dwarf+symtab	a25efe5ac2d4		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-object	n64		0x0		nasid_to_partid	dwarf+symtab			in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -29939,7 +29939,7 @@ IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x3b0	68	xbow_map	dw
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x3f4	8	xbow_unmap	dwarf+symtab	87506497337c		in	understood	chips/xbow/README.md#routines-of-the-ip27-kernel-that-keep-the-widget-and-switch-records-ip27unix	Routines of the IP27 kernel that keep the widget and switch records (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x3fc	252	xbow_widget_num_get	dwarf+symtab	f0fd49e0439c		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x4f8	876	xbow_ioctl	dwarf+symtab	58cb04a96dc0		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x864	100	xbow_widget_present	dwarf+symtab	26d2fae0aee3		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x864	100	xbow_widget_present	dwarf+symtab	26d2fae0aee3		in	understood	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x8c8	24	xbow_link_alive	dwarf+symtab	dc32f0d27732		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x8e0	100	xbow_widget_lookup	dwarf+symtab	713a1835b9a9		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x944	108	xbow_setwidint	dwarf+symtab	5069940adf65		in	named-only	chips/xbow/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
@@ -29958,7 +29958,7 @@ IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x1e30	76	xbow_enabl
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x1e7c	628	xbow_get_bridge_pointers	dwarf+symtab	9aa20f0c40f9		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x20f0	136	xbow_disable	dwarf+symtab	2d4184796423		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x2178	124	xbow_enable	dwarf+symtab	4054410e0ea6		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x21f4	260	xbow_reset_link	dwarf+symtab	ebd33019f868		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x21f4	260	xbow_reset_link	dwarf+symtab	ebd33019f868		in	located	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x22f8	228	idbg_xbowregs	dwarf+symtab	6b7cf630b6c7		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x23dc	100	xbow_bytes_to_gbr	dwarf+symtab	8cee067198e7		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-object	n64	.text	0x2440	24	xbow_gbr_to_bytes	dwarf+symtab	8ddba1bcb386		in	undocumented		
@@ -36567,7 +36567,7 @@ IP30/unix	kernel	n64	.text	0xa800000020015db8	124	settimetrim	symtab	9270eb432bd
 IP30/unix	kernel	n64	.text	0xa800000020015e34	8	gettimetrim	symtab	ae7c0be102df		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020015e3c	500	doadjtime	symtab	b5c5ccafe950		out:7	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP30/unix	kernel	n64	.text	0xa800000020016254	368	nanotime_syscall	symtab	e5757c1c3740		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/unix	kernel	n64	.text	0xa8000000200163c4	228	nanotime	symtab	9c58401fce79		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP30/unix	kernel	n64	.text	0xa8000000200163c4	228	nanotime	symtab	9c58401fce79		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000200164a8	68	irix5_microtime	symtab	2a045e79c0ea		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200164ec	68	microtime	symtab	de8ed42701fd		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016530	216	local_settime	symtab	db4ccaf59bda		in	undocumented		
@@ -36622,7 +36622,7 @@ IP30/unix	kernel	n64	.text	0xa800000020016dd4	156	compare_and_dec_int_gt_hot2	sy
 IP30/unix	kernel	n64	.text	0xa800000020016e70	28	swap_int64	symtab	1be725d32eca	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016e70	28	swap_long	symtab	1be725d32eca	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016e70	28	swap_ptr	symtab	1be725d32eca	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_int64	symtab	e993d0870d2c	shared-address	out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_int64	symtab	e993d0870d2c	shared-address	out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_kt	symtab	e993d0870d2c	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_long	symtab	e993d0870d2c	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_ptr	symtab	e993d0870d2c	shared-address	out:7	undocumented		
@@ -36824,7 +36824,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001babc	40	issplprof	symtab	1f1947887a0d		
 IP30/unix	kernel	n64	.text	0xa80000002001bae4	48	isspl7	symtab	ee94d618c138		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001bb14	24	spl65	symtab	10237783c926	shared-address	out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa80000002001bb14	24	splprof	symtab	10237783c926	shared-address	out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/unix	kernel	n64	.text	0xa80000002001bb2c	24	spl7	symtab	16c7bb5d00be	shared-address	out:7	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP30/unix	kernel	n64	.text	0xa80000002001bb2c	24	spl7	symtab	16c7bb5d00be	shared-address	out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001bb2c	24	splerr	symtab	16c7bb5d00be	shared-address	out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa80000002001bb44	32	splecc	symtab	8a6f9bd0170c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001bb64	28	splx	symtab	50d1a155518b	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -36852,7 +36852,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001c158	12	set_lladdr	symtab	9a846dc04775	
 IP30/unix	kernel	n64	.text	0xa80000002001c164	12	do_sync_instruction	symtab	0fc560405654		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c170	40	siron	symtab	465f138331e6		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c198	44	siroff	symtab	b8f75fd62e1e		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001c1c4	32	flushbus	symtab	ef6ea10b90dc		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP30/unix	kernel	n64	.text	0xa80000002001c1c4	32	flushbus	symtab	ef6ea10b90dc		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001c1e4	8	wbflush	symtab	78aa5094d5ec		out:7	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa80000002001c1ec	8	ip26_enable_ucmem	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c1ec	20	ip26_return_ucmem	symtab	4bb71562d901	shared-address	out:7	undocumented		
@@ -36863,7 +36863,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001c328	364	badaddr_val	symtab	f8a0cda7efd
 IP30/unix	kernel	n64	.text	0xa80000002001c494	332	wbadaddr	symtab	f981998eae7c		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001c5e0	360	wbadaddr_val	symtab	830caef903d7		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001c748	312	earlybadaddr	symtab	05df890ca12a		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP30/unix	kernel	n64	.text	0xa80000002001c880	136	wbadmemaddr	symtab	82f9137c0c14		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002001c880	136	wbadmemaddr	symtab	82f9137c0c14		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001c908	92	baerror	symtab	66e4e51225b1		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001c964	96	earlybaerror	symtab	c66268cf7682		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001c9d0	12	VEC_breakpoint	symtab	1c3f5b008867		out:7	undocumented		
@@ -36919,7 +36919,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001dd04	4	utlbmiss_prolog_patch	symtab	fc2
 IP30/unix	kernel	n64	.text	0xa80000002001dd08	32	utlbmissj	symtab	5b8dffb3fddb		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001dd28	8	eutlbmissj	symtab	af5570f5a181		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001dd30	104	_ecc_errorvec	symtab	4cfe2be934e6		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001dd98	292	_ecc_end	symtab	ad7a39a166da		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002001dd98	292	_ecc_end	symtab	ad7a39a166da		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001debc	160	szmem	symtab	0c7a9d15e87d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001df5c	56	is_in_main_memory	symtab	c3d61e315dbe		out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001df94	76	block_is_in_main_memory	symtab	4dbd67d2fedc		out:7	undocumented		
@@ -37321,7 +37321,7 @@ IP30/unix	kernel	n64	.text	0xa80000002003b9a4	68	xbow_map	symtab	4933ef2e184c		i
 IP30/unix	kernel	n64	.text	0xa80000002003b9e8	8	xbow_unmap	symtab	87506497337c		in	understood	chips/xbow/README.md#routines-of-the-ip27-kernel-that-keep-the-widget-and-switch-records-ip27unix	Routines of the IP27 kernel that keep the widget and switch records (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa80000002003b9f0	236	xbow_widget_num_get	symtab	b9358d3efb60		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP30/unix	kernel	n64	.text	0xa80000002003badc	876	xbow_ioctl	symtab	877da16b3dfd		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003be48	100	xbow_widget_present	symtab	26d2fae0aee3		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/unix	kernel	n64	.text	0xa80000002003be48	100	xbow_widget_present	symtab	26d2fae0aee3		in	understood	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002003bec4	48	xbow_widget_lookup	symtab	13fc094d573b		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003bf60	52	xbow_intr_preset	symtab	e034de02bbfe		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa80000002003c1c8	260	xbow_xmit_retry_error	symtab	ca4abbf79ae3		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
@@ -37332,7 +37332,7 @@ IP30/unix	kernel	n64	.text	0xa80000002003d268	32	xbow_get_llp_status	symtab	196c
 IP30/unix	kernel	n64	.text	0xa80000002003d288	276	xbow_update_llp_status	symtab	b5ff542f7c83		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa80000002003d39c	72	xbow_disable_llp_monitor	symtab	85900716e9b7		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003d3e4	76	xbow_enable_llp_monitor	symtab	0f3f9c9b61ca		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/unix	kernel	n64	.text	0xa80000002003d430	236	xbow_reset_link	symtab	b905840efdc5		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP30/unix	kernel	n64	.text	0xa80000002003d430	236	xbow_reset_link	symtab	b905840efdc5		in	understood	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002003d51c	228	idbg_xbowregs	symtab	f498c83ab325		out:7	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa80000002003d600	100	xbow_bytes_to_gbr	symtab	8cee067198e7		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa80000002003d664	24	xbow_gbr_to_bytes	symtab	8ddba1bcb386		in	undocumented		
@@ -37348,7 +37348,7 @@ IP30/unix	kernel	n64	.text	0xa80000002003df1c	84	xbtrace	symtab	1860d0118acf		ou
 IP30/unix	kernel	n64	.text	0xa80000002003df70	1164	xbmon_ioctl	symtab	c799dce8f6e3		out:7	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa80000002003e3fc	80	xbmon_map	symtab	1d62613b313b		out:7	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa80000002003e44c	8	xbmon_unmap	symtab	87506497337c		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003e868	288	heart_imr_bits_rmw	symtab	85a99efa30b4		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa80000002003e868	288	heart_imr_bits_rmw	symtab	85a99efa30b4		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002003ea74	84	heart_intr_swlevel_to_hwlevel	symtab	23dcf5aa342e		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003ec1c	72	heart_stray_intr	symtab	7fdd265cf4b1		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003ecd4	68	chkdebug	symtab	277ea8b46ee8		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -37398,9 +37398,9 @@ IP30/unix	kernel	n64	.text	0xa8000000200400bc	108	heart_ithread_setup	symtab	188
 IP30/unix	kernel	n64	.text	0xa800000020040128	184	enable_ithreads	symtab	cabd2bbe060c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200401e0	40	heart_rev	symtab	2075ed563f01		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa800000020040208	132	heart_flow_control_connect	symtab	2d384c11d575		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
-IP30/unix	kernel	n64	.text	0xa80000002004028c	104	heart_flow_control_disconnect	symtab	04e9dec7bd11		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200402f4	60	heart_flow_control_enable	symtab	ecc761ec229a		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020040330	60	heart_flow_control_disable	symtab	4ae93410363d		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002004028c	104	heart_flow_control_disconnect	symtab	04e9dec7bd11		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa8000000200402f4	60	heart_flow_control_enable	symtab	ecc761ec229a		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa800000020040330	60	heart_flow_control_disable	symtab	4ae93410363d		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002004036c	8	heart_widgetdev_enable	symtab	78aa5094d5ec		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020040374	8	heart_widgetdev_shutdown	symtab	78aa5094d5ec		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002004037c	8	heart_dma_enabled	symtab	a7e7ca11a6b8		in	undocumented		
@@ -38411,7 +38411,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200b0ec8	1460	if_tgattach	symtab	aa90bf90fc
 IP30/unix	kernel	n64	.text	0xa8000000200b147c	360	if_tgopen	symtab	e4056e83b1dd		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b6a48	1124	if_tgdetach	symtab	b856c4f8dba7		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b71f0	188	ftrc_attach	symtab	3665743332b1		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200b72ac	324	ftrc_event	symtab	e529654e937f		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200b72ac	324	ftrc_event	symtab	e529654e937f		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000200b73f0	664	ftrc_copyout	symtab	c6a7a618b5f9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b7688	1144	ftrc_dump	symtab	6b2b07773345		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b7b00	88	ftrc_clear	symtab	1d86a36fbf65		out:7	undocumented		
@@ -38966,7 +38966,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200fed18	20	ether_reattach	symtab	dd3c04fdc
 IP30/unix	kernel	n64	.text	0xa8000000200fed2c	1136	ether_input	symtab	ce0b46b2de6e		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200ff610	264	ether_selfsnoop	symtab	ee82162757af		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200ffd4c	64	ether_stop	symtab	1b11f0a425d0		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200ffd8c	184	get_eaddr	symtab	8b3f0fa1721c		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200ffd8c	184	get_eaddr	symtab	8b3f0fa1721c		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000200ffe44	120	dlsap_insert	symtab	9fbf63df06c9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200ffebc	112	dlsap_find	symtab	8e73c98d9a70		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200fff2c	84	register_dlsap	symtab	a8b25048fd54		out:7	undocumented		
@@ -40214,7 +40214,7 @@ IP30/unix	kernel	n64	.text	0xa800000020178604	84	thread_timein_start	symtab	cb3b
 IP30/unix	kernel	n64	.text	0xa800000020178810	120	thread_timein_init	symtab	8cdbcd0bde18		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020178888	48	delay	symtab	4df0bd9c2379		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201788b8	116	nano_delay	symtab	8a3cbc1dc2b4		out:7	named-only	chips/bridge/README.md#established-sequences	Established sequences
-IP30/unix	kernel	n64	.text	0xa80000002017892c	448	adjtime	symtab	86e0629fe016		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002017892c	448	adjtime	symtab	86e0629fe016		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa800000020178aec	104	gettimeofday	symtab	c9a62d45449e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020178b54	220	settimeofday	symtab	d32e73b7d2a9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020178c30	116	irix5_to_timeval_xlate	symtab	bcc893dfe1c8		out:7	undocumented		
@@ -40500,7 +40500,7 @@ IP30/unix	kernel	n64	.text	0xa800000020191500	132	xthread_exit	symtab	c7cfbfcbdb
 IP30/unix	kernel	n64	.text	0xa800000020191584	128	xthread_set_func	symtab	48f4fcf49f21		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa800000020191604	48	xtdestroy	symtab	5ea929834419		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020191634	452	xthread_boot_bind	symtab	4f54c743efa1		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002019195c	228	xthread_periodic_timeout	symtab	304789878553		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002019195c	228	xthread_periodic_timeout	symtab	304789878553		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa800000020191a40	28	xpt_stop	symtab	5af8cc92e243		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020191a5c	68	xthread_periodic_timeout_stop	symtab	9f772f1d57a2		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020191aa0	76	pshare_init	symtab	15235a27cc64		out:7	undocumented		
@@ -40778,7 +40778,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201a7508	192	setshdsync	symtab	3e7628e80bb0
 IP30/unix	kernel	n64	.text	0xa8000000201a77c4	256	dosync	symtab	c06502aa28b3		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201a7d74	188	xthread_table_init	symtab	836d65f0b602		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201a7f18	44	xthread_table_xthread_init	symtab	0a5d44a553e5		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201a80f8	80	xthread_table_name_get_property	symtab	ca2a3a733372		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201a80f8	80	xthread_table_name_get_property	symtab	ca2a3a733372		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000201a8148	148	xthread_table_thread_get_property	symtab	4f66f89abc9d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201a81dc	348	xthread_table_capable	symtab	834cf9011ee9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201a8338	8	v_getaddr	symtab	371417cf96a1		out:7	undocumented		
@@ -41746,7 +41746,7 @@ IP30/unix	kernel	n64	.text	0xa800000020213adc	120	fasthzto	symtab	d7846259f2f5		
 IP30/unix	kernel	n64	.text	0xa800000020213b54	96	tick_to_timeval	symtab	c6de54f011d3		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020213fac	820	intpexec	symtab	6b697415535a		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000202142e0	40	uuid_init	symtab	ee42615a4b9a		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020214308	320	uuid_create	symtab	1ef7ecd89f59		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020214308	320	uuid_create	symtab	1ef7ecd89f59		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa800000020214448	32	uuid_getnodeuniq	symtab	07b183a5ea08		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020214468	260	uuid_to_buf	symtab	4d71dcde7493		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002021456c	32	uuid_create_nil	symtab	e2d4fb81dff5		out:7	undocumented		
@@ -44398,11 +44398,11 @@ IP30/unix	kernel	n64	.text	0xa80000002038e7d0	132	odsyDMAIrptWakeup	symtab	a8c98
 IP30/unix	kernel	n64	.text	0xa80000002038e854	388	odsyDMAFinish	symtab	ee72a22ed306		out:7	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038e9d8	220	gfP_OdsyMMwaitXfr	symtab	326c8797c5d8		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f124	124	odsy_ProbeDenali	symtab	39cf2ff12397		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002038f1a0	136	gfx_flow_delayed_hiwater_intr_prehandler	symtab	5652ea304a63		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP30/unix	kernel	n64	.text	0xa80000002038f1a0	136	gfx_flow_delayed_hiwater_intr_prehandler	symtab	5652ea304a63		in	understood	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f228	8	gfx_flow_pipe_head	symtab	ee203e2bd9f8		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f318	512	gfx_flow_alloc	symtab	2827fd0cc2f3		in	understood	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f518	12	gfx_flow_reset	symtab	0f2f165b22fa		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002038f524	284	gfx_flow_dealloc	symtab	316de108bdfe		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa80000002038f524	284	gfx_flow_dealloc	symtab	316de108bdfe		in	understood	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f640	36	gfx_flow_wg_info_get	symtab	0d9afb200893		out:7	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f664	12	gfx_flow_credit_tnum_get	symtab	f7143c1efa6c		out:7	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f670	12	gfx_flow_credit_total_get	symtab	6c27d0b6a88e		out:7	undocumented		
@@ -44410,9 +44410,9 @@ IP30/unix	kernel	n64	.text	0xa80000002038f67c	8	gfx_flow_credit_bias_get	symtab	
 IP30/unix	kernel	n64	.text	0xa80000002038f684	36	gfx_flow_credit_count_get	symtab	95a6633c531e		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f6a8	44	gfx_flow_credit_count_set	symtab	6a4079d34702		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f6d4	8	gfx_flow_detach_requires_credit_flow_disable	symtab	a7e7ca11a6b8		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002038f6dc	220	gfx_flow_attach_me	symtab	8ff6289b1106		in	named-only	chips/hub/README.md#addresses-established	Addresses (established)
+IP30/unix	kernel	n64	.text	0xa80000002038f6dc	220	gfx_flow_attach_me	symtab	8ff6289b1106		in	understood	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f7b8	8	gfx_flow_attach_me_finish	symtab	78aa5094d5ec		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002038f7c0	180	gfx_flow_detach_me	symtab	8ba2c936b1a3		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa80000002038f7c0	180	gfx_flow_detach_me	symtab	8ba2c936b1a3		in	understood	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f874	20	gfx_flow_am_i_attached	symtab	921a653eec05		out:7	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f888	12	gfx_flow_flush_my_wg	symtab	7fe8cb51a490		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa80000002038f894	8	gfx_flow_disable_heart_fc	symtab	78aa5094d5ec		out:7	undocumented		
@@ -48340,7 +48340,7 @@ IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x550	92	mutex_bittrylock	dwarf+symtab	0fca01996205		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x5ac	172	nested_bittrylock	dwarf+symtab	925390d5ed5c		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x658	172	nested_64bittrylock	dwarf+symtab	ed5ed385554b		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64		0x0		heart_imr_bits_rmw	dwarf+symtab			in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64		0x0		heart_imr_bits_rmw	dwarf+symtab			in	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x120	32	heart_intr_bits_free	dwarf+symtab	660cfda8b099		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x140	36	heart_intr_bits_take	dwarf+symtab	9effdb1a586e		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x164	168	heart_intr_bit_alloc	dwarf+symtab	40b9c92f221d		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
@@ -48398,9 +48398,9 @@ IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1854	108	heart_it
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x18c0	184	enable_ithreads	dwarf+symtab	52b29d591dca		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1978	40	heart_rev	dwarf+symtab	82798c4bc88c		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x19a0	132	heart_flow_control_connect	dwarf+symtab	29e86cf9a8e3		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1a24	104	heart_flow_control_disconnect	dwarf+symtab	278fd23fda90		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1a8c	60	heart_flow_control_enable	dwarf+symtab	cfdd9b54f298		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1ac8	60	heart_flow_control_disable	dwarf+symtab	308fbb8ffdeb		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1a24	104	heart_flow_control_disconnect	dwarf+symtab	278fd23fda90		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1a8c	60	heart_flow_control_enable	dwarf+symtab	cfdd9b54f298		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1ac8	60	heart_flow_control_disable	dwarf+symtab	308fbb8ffdeb		in	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1b04	8	heart_widgetdev_enable	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1b0c	8	heart_widgetdev_shutdown	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1b14	8	heart_dma_enabled	dwarf+symtab	a7e7ca11a6b8		in	undocumented		
@@ -49119,7 +49119,7 @@ IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xf13c	292	ftrc_all
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xf260	152	ftrc_find_bfr	dwarf+symtab	8d5943127dc7		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xf2f8	320	ftrc_create_sess	dwarf+symtab	89f79fa20992		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xf438	188	ftrc_attach	dwarf+symtab	4eff56cdfd64		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xf4f4	324	ftrc_event	dwarf+symtab	161ea698374d		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xf4f4	324	ftrc_event	dwarf+symtab	161ea698374d		out:2	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xf638	664	ftrc_copyout	dwarf+symtab	b6762f2c2d7d		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xf8d0	1144	ftrc_dump	dwarf+symtab	5b531391d649		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xfd48	88	ftrc_clear	dwarf+symtab	6bbd94a0bce4		out:2	undocumented		
@@ -50106,7 +50106,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x5cb4	8	gettimetr
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x5cbc	500	doadjtime	dwarf+symtab	abb01f51e93d		out:8	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x5eb0	548	__nanotime	dwarf	65f02178caa2		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x60d4	368	nanotime_syscall	dwarf+symtab	ba9db8da72a6		out:8	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6244	228	nanotime	dwarf+symtab	786eb02ab1ba		out:8	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6244	228	nanotime	dwarf+symtab	786eb02ab1ba		out:8	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6328	68	irix5_microtime	dwarf+symtab	f42d82ff91d7		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x636c	68	microtime	dwarf+symtab	a54c9d44e7ff		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x63b0	216	local_settime	dwarf+symtab	a18c8647305f		out:8	undocumented		
@@ -50163,7 +50163,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6c54	156	compare
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6cf0	28	swap_int64	dwarf+symtab	1be725d32eca	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6cf0	28	swap_long	symtab	1be725d32eca	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6cf0	28	swap_ptr	symtab	1be725d32eca	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_int64	dwarf+symtab	e993d0870d2c	shared-address	out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_int64	dwarf+symtab	e993d0870d2c	shared-address	out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_kt	symtab	e993d0870d2c	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_long	symtab	e993d0870d2c	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_ptr	symtab	e993d0870d2c	shared-address	out:8	undocumented		
@@ -50380,7 +50380,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb93c	40	issplpro
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb964	48	isspl7	dwarf+symtab	ee94d618c138		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb994	24	spl65	symtab	10237783c926	shared-address	out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb994	24	splprof	dwarf+symtab	10237783c926	shared-address	out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9ac	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9ac	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9ac	24	splerr	symtab	16c7bb5d00be	shared-address	out:8	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9c4	32	splecc	dwarf+symtab	8a6f9bd0170c		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9e4	28	splx	dwarf+symtab	50d1a155518b	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -50408,7 +50408,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbfd8	12	set_llad
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbfe4	12	do_sync_instruction	dwarf+symtab	0fc560405654		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbff0	40	siron	dwarf+symtab	465f138331e6		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc018	44	siroff	dwarf+symtab	b8f75fd62e1e		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc044	32	flushbus	dwarf+symtab	ef6ea10b90dc		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc044	32	flushbus	dwarf+symtab	ef6ea10b90dc		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc064	8	wbflush	dwarf+symtab	78aa5094d5ec		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	8	ip26_enable_ucmem	dwarf+symtab	78aa5094d5ec	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	20	ip26_return_ucmem	symtab	4bb71562d901	shared-address	out:8	undocumented		
@@ -50419,7 +50419,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc1a8	364	badaddr
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc314	332	wbadaddr	dwarf+symtab	a6a1188d0847		out:8	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc460	360	wbadaddr_val	dwarf+symtab	dfb7c35a1676		out:8	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc5c8	312	earlybadaddr	dwarf+symtab	588b98ff86e8		out:8	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc700	136	wbadmemaddr	dwarf+symtab	9cc7f4ccc2ff		out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc700	136	wbadmemaddr	dwarf+symtab	9cc7f4ccc2ff		out:8	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc788	92	baerror	dwarf+symtab	66e4e51225b1		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc7e4	96	earlybaerror	dwarf+symtab	6379e44e03ee		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc850	12	VEC_breakpoint	dwarf+symtab	3614e4802762		out:8	undocumented		
@@ -50475,7 +50475,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdb84	4	utlbmiss_
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdb88	32	utlbmissj	dwarf+symtab	59e7addb5e06		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdba8	8	eutlbmissj	symtab	af5570f5a181		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdbb0	104	_ecc_errorvec	dwarf+symtab	cd7fffd4cb81		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc18	24	_ecc_end	symtab	3d30d72cf42a	shared-address	out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc18	24	_ecc_end	symtab	3d30d72cf42a	shared-address	out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc18	24	get_mem_conf	dwarf	3d30d72cf42a	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc30	36	bank_addrlo	dwarf	3c3721cae68b		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc54	68	banksz	dwarf	8c88bea536d7		out:8	undocumented		
@@ -53874,7 +53874,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x25c0	184	ca
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x2678	120	thread_timein_init	dwarf+symtab	7a4d319046d0		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x26f0	48	delay	dwarf+symtab	f96902127aa9		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x2720	116	nano_delay	dwarf+symtab	70e7c0de2419		out:3	named-only	chips/bridge/README.md#established-sequences	Established sequences
-IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x2794	448	adjtime	dwarf+symtab	a1b2d9a99f3f		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x2794	448	adjtime	dwarf+symtab	a1b2d9a99f3f		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x2954	104	gettimeofday	dwarf+symtab	4e9aeabc6997		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x29bc	220	settimeofday	dwarf+symtab	df6ee68845af		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(clock.o)	kernel-object	n64	.text	0x2a98	116	irix5_to_timeval_xlate	dwarf+symtab	b82a1f29940c		out:3	undocumented		
@@ -55238,7 +55238,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(utssys.o)	kernel-object	n64	.text	0x1320	28	us
 IP30/usr/cpu/sysgen/IP30boot/os.a(utssys.o)	kernel-object	n64	.text	0x133c	216	ustat_to_irix5_o32	dwarf+symtab	fb23f9928088		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(utssys.o)	kernel-object	n64	.text	0x1414	136	irix5_to_f_anonid	dwarf+symtab	7d11cf58978d		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(uuid.o)	kernel-object	n64		0x0		uuid_init	dwarf+symtab			out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(uuid.o)	kernel-object	n64	.text	0x28	320	uuid_create	dwarf+symtab	e4535931c658		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(uuid.o)	kernel-object	n64	.text	0x28	320	uuid_create	dwarf+symtab	e4535931c658		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/os.a(uuid.o)	kernel-object	n64	.text	0x168	32	uuid_getnodeuniq	dwarf+symtab	07b183a5ea08		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(uuid.o)	kernel-object	n64	.text	0x188	260	uuid_to_buf	dwarf+symtab	45fa7acd4d05		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(uuid.o)	kernel-object	n64	.text	0x28c	32	uuid_create_nil	dwarf+symtab	ede8ccc9c75f		out:3	undocumented		
@@ -55538,7 +55538,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x5d0	8	xth
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x5d8	52	xpt_func	dwarf+symtab	df81659cd824		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x60c	108	xpt_init	dwarf+symtab	a9b05b82dda5		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x678	180	xpt_timeout	dwarf+symtab	84bc0b00e465		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x72c	228	xthread_periodic_timeout	dwarf+symtab	63cdc4b048b6		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x72c	228	xthread_periodic_timeout	dwarf+symtab	63cdc4b048b6		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x810	28	xpt_stop	dwarf+symtab	4eff95fd5644		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-object	n64	.text	0x82c	68	xthread_periodic_timeout_stop	dwarf+symtab	3929753d007c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-object	n64		0x0		xthread_table_import_threadcfg	dwarf+symtab			out:3	undocumented		
@@ -55548,7 +55548,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x4b0
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x56c	232	xthread_table_name_search	dwarf+symtab	48fdb760f955		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x654	44	xthread_table_xthread_init	dwarf+symtab	29a696d25afa		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x680	436	xthread_table_get_property	dwarf+symtab	764b68a2f6a8		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x834	80	xthread_table_name_get_property	dwarf+symtab	972900e50e07		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x834	80	xthread_table_name_get_property	dwarf+symtab	972900e50e07		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x884	148	xthread_table_thread_get_property	dwarf+symtab	1163dcf3f769		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x918	348	xthread_table_capable	dwarf+symtab	817ca340d88e		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciba.o	kernel-object	n64		0x0		pciba_init	dwarf+symtab			out:4	undocumented		
@@ -59611,7 +59611,7 @@ IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x3b0	68	xbow_map	dw
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x3f4	8	xbow_unmap	dwarf+symtab	87506497337c		in	understood	chips/xbow/README.md#routines-of-the-ip27-kernel-that-keep-the-widget-and-switch-records-ip27unix	Routines of the IP27 kernel that keep the widget and switch records (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x3fc	236	xbow_widget_num_get	dwarf+symtab	a8b3cf17c274		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x4e8	876	xbow_ioctl	dwarf+symtab	629d4102df65		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x854	100	xbow_widget_present	dwarf+symtab	26d2fae0aee3		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x854	100	xbow_widget_present	dwarf+symtab	26d2fae0aee3		in	understood	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x8b8	24	xbow_link_alive	dwarf+symtab	dc32f0d27732		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x8d0	48	xbow_widget_lookup	dwarf+symtab	fdcb67796bae		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x900	108	xbow_setwidint	dwarf+symtab	5069940adf65		in	named-only	chips/xbow/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
@@ -59627,7 +59627,7 @@ IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x1c74	32	xbow_get_l
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x1c94	276	xbow_update_llp_status	dwarf+symtab	429a42b83f62		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x1da8	72	xbow_disable_llp_monitor	dwarf+symtab	e15db30ae701		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x1df0	76	xbow_enable_llp_monitor	dwarf+symtab	eca34028fc46		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x1e3c	236	xbow_reset_link	dwarf+symtab	00a0f64b908e		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x1e3c	236	xbow_reset_link	dwarf+symtab	00a0f64b908e		in	located	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x1f28	228	idbg_xbowregs	dwarf+symtab	8582606b0f03		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x200c	100	xbow_bytes_to_gbr	dwarf+symtab	8cee067198e7		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-object	n64	.text	0x2070	24	xbow_gbr_to_bytes	dwarf+symtab	8ddba1bcb386		in	undocumented		
@@ -62216,7 +62216,7 @@ IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)	kernel-object	n32	.text	0xfc4	184	et
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)	kernel-object	n32	.text	0x107c	152	ether_delmulti	dwarf+funcnames+symtab	9c3d5ee4f5bd		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)	kernel-object	n32	.text	0x1114	224	ether_start	dwarf+funcnames+symtab	7b9c03fbcb74		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)	kernel-object	n32	.text	0x11f4	64	ether_stop	dwarf+symtab	eda43c9005bc		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)	kernel-object	n32	.text	0x1234	188	get_eaddr	dwarf+symtab	ee5a78cf8fc9		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)	kernel-object	n32	.text	0x1234	188	get_eaddr	dwarf+symtab	ee5a78cf8fc9		out:2	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)	kernel-object	n32	.text	0x12f0	124	dlsap_insert	dwarf+symtab	e68fb9eb9d09		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)	kernel-object	n32	.text	0x136c	116	dlsap_find	dwarf+symtab	b8bc1fa9daef		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)	kernel-object	n32	.text	0x13e0	84	register_dlsap	dwarf+symtab	ff3925d8445c		out:2	undocumented		
@@ -66401,7 +66401,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb2a0	52	issplhi	
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb2d4	52	issplprof	symtab	db61764e0b92		out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb308	132	spl65	symtab	f2798e5c5417	shared-address	out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb308	132	splprof	symtab	f2798e5c5417	shared-address	in	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb38c	132	spl7	symtab	eb4efc90de15		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb38c	132	spl7	symtab	eb4efc90de15		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb410	64	splecc	symtab	9d41a659e3ee		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb450	100	splx	symtab	36bfc546d0e2	shared-address	in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb450	100	splxecc	symtab	36bfc546d0e2	shared-address	out:9	undocumented		
@@ -66432,7 +66432,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc0d0	136	settime
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc158	8	gettimetrim	symtab	7451bb35e09d		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc160	380	doadjtime	symtab	674bf60842e1		out:9	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc2dc	404	nanotime_syscall	symtab	d2000ccb53a5		out:9	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc470	104	nanotime	symtab	eecefe519756		out:9	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc470	104	nanotime	symtab	eecefe519756		out:9	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc4d8	68	microtime	symtab	888c0f95a48b		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc51c	148	settime	symtab	cf8b6a2ff43c		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc5b0	28	clkset	symtab	34d7a2e33b85		out:9	undocumented		
@@ -66487,7 +66487,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcad8	40	compare_
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcb00	40	compare_and_inc_int_gt_zero	symtab	9585f9cf6174		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcb28	48	compare_and_dec_int_gt	symtab	0676ea1bbca6		out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcb58	28	swap_int64	symtab	a621ea59a77e		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcb74	40	compare_and_swap_int64	symtab	efbdd7ce0ed7		out:9	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcb74	40	compare_and_swap_int64	symtab	efbdd7ce0ed7		out:9	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcb9c	44	comparegt_and_swap_int	symtab	52b58cc7baaa		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcbc8	24	store_atomic	symtab	401a9d934b21		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcbe0	44	atomicIncPort	symtab	a57667c04a6d		out:9	undocumented		
@@ -66580,7 +66580,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11c28	12	set_lla
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11c34	12	do_sync_instruction	symtab	0fc560405654		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11c40	72	siron	symtab	0b0c520c2bd4		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11c88	68	siroff	symtab	23ff907e1676		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11ccc	44	flushbus	symtab	3fbcf98d39eb		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11ccc	44	flushbus	symtab	3fbcf98d39eb		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11cf8	16	wbflush	symtab	93593d9a07f4		out:9	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11d08	8	ip26_enable_ucmem	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11d08	120	ip26_return_ucmem	symtab	d7276fd812c6	shared-address	out:9	undocumented		
@@ -66633,7 +66633,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x143a8	380	badadd
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14524	356	wbadaddr	symtab	dad9ed0e3eab		in	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14688	384	wbadaddr_val	symtab	15c3f333834b		in	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14808	296	earlybadaddr	symtab	73366b237b85		in	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14930	120	wbadmemaddr	symtab	1bd3747c10d2		out:9	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14930	120	wbadmemaddr	symtab	1bd3747c10d2		out:9	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x149a8	100	baerror	symtab	e8eac1f73224		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14a0c	88	earlybaerror	symtab	f697dc69ced7		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14a64	12	VEC_breakpoint	symtab	3614e4802762		out:9	undocumented		
@@ -66688,7 +66688,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15924	16	_j_ende
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15924	16	_j_endexceptnorm_nosymmon	symtab	374708fff771	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15934	48	_ecc_errorvec	symtab	029756763faa	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15934	24	_endexceptnorm_prolog	symtab	ba1c3ba6bd47	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1594c	24	_ecc_end	symtab	ba1c3ba6bd47	shared-address	out:9	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1594c	24	_ecc_end	symtab	ba1c3ba6bd47	shared-address	out:9	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1594c	24	_r10k_ecc_errorvec	symtab	ba1c3ba6bd47	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15964	892	_r10k_ecc_end	symtab	17330d2fd81a	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15964	96	is_in_pfdat	symtab	9914d4307cfb	shared-address	out:9	undocumented		
@@ -70384,7 +70384,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x2398	184	ca
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x2450	116	thread_timein_init	dwarf+symtab	ab1f28f9bd3d		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x24c4	48	delay	dwarf+symtab	82a8c34070b4		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x24f4	104	nano_delay	dwarf+symtab	03b8c1e0877e		out:3	named-only	chips/bridge/README.md#established-sequences	Established sequences
-IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x255c	376	adjtime	dwarf+symtab	ae0794f56619		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x255c	376	adjtime	dwarf+symtab	ae0794f56619		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x26d4	76	gettimeofday	dwarf+symtab	d0ecb29cfe2a		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x2720	152	settimeofday	dwarf+symtab	0862798a3207		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(clock.o)	kernel-object	n32	.text	0x27b8	32	allocate_migrate_timeout	dwarf+symtab	28c2106e72f4		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
@@ -71793,7 +71793,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(utssys.o)	kernel-object	n32	.text	0x1038	576	u
 IP32/usr/cpu/sysgen/IP32boot/os.a(utssys.o)	kernel-object	n32	.text	0x1278	28	ustat_to_irix5	dwarf+funcnames+symtab	34d7a2e33b85		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(utssys.o)	kernel-object	n32	.text	0x1294	216	ustat_to_irix5_o32	dwarf+funcnames+symtab	cfad83cdca14		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(uuid.o)	kernel-object	n32		0x0		uuid_init	dwarf+symtab			out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(uuid.o)	kernel-object	n32	.text	0x2c	320	uuid_create	dwarf+symtab	5f1e4b2fabdf		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(uuid.o)	kernel-object	n32	.text	0x2c	320	uuid_create	dwarf+symtab	5f1e4b2fabdf		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/os.a(uuid.o)	kernel-object	n32	.text	0x16c	32	uuid_getnodeuniq	dwarf+symtab	07b183a5ea08		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(uuid.o)	kernel-object	n32	.text	0x18c	264	uuid_to_buf	dwarf+symtab	4d6c7ebb4b9d		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(uuid.o)	kernel-object	n32	.text	0x294	32	uuid_create_nil	dwarf+symtab	c7feeefd117b		out:3	undocumented		
@@ -72085,7 +72085,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(xthread_table.o)	kernel-object	n32	.text	0x4c4
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread_table.o)	kernel-object	n32	.text	0x57c	232	xthread_table_name_search	dwarf+funcnames+symtab	f1cba0c3a69d		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread_table.o)	kernel-object	n32	.text	0x664	44	xthread_table_xthread_init	dwarf+symtab	151ddd0f2c69		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread_table.o)	kernel-object	n32	.text	0x690	436	xthread_table_get_property	dwarf+funcnames+symtab	50b1f19cd06c		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(xthread_table.o)	kernel-object	n32	.text	0x844	80	xthread_table_name_get_property	dwarf+symtab	ebb34c8bc61b		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(xthread_table.o)	kernel-object	n32	.text	0x844	80	xthread_table_name_get_property	dwarf+symtab	ebb34c8bc61b		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread_table.o)	kernel-object	n32	.text	0x894	148	xthread_table_thread_get_property	dwarf+symtab	1eaa896f5e9f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(xthread_table.o)	kernel-object	n32	.text	0x928	352	xthread_table_capable	dwarf+symtab	b43d30a0a50c		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(mtext.o)	kernel-object	n32		0x0		mtext_init	dwarf+symtab			out:3	undocumented		
@@ -82173,7 +82173,7 @@ IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xf27c	292	ftrc_all
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xf3a0	152	ftrc_find_bfr	dwarf+symtab	68a2c4fd6fc9		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xf438	320	ftrc_create_sess	dwarf+symtab	2425b4969a1a		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xf578	188	ftrc_attach	dwarf+symtab	911d2ea7822d		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xf634	324	ftrc_event	dwarf+symtab	0593de0ba715		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xf634	324	ftrc_event	dwarf+symtab	0593de0ba715		out:2	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xf778	660	ftrc_copyout	dwarf+symtab	e5992912ad41		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xfa0c	1140	ftrc_dump	dwarf+symtab	eb52854fb5ad		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xfe80	88	ftrc_clear	dwarf+symtab	6bbd94a0bce4		out:2	undocumented		
@@ -83967,7 +83967,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21d38	12	set_lla
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21d44	12	do_sync_instruction	dwarf+symtab	0fc560405654		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21d50	40	siron	dwarf+symtab	465f138331e6		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21d78	44	siroff	dwarf+symtab	b8f75fd62e1e		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21da4	16	flushbus	dwarf+symtab	b6404696c86e		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21da4	16	flushbus	dwarf+symtab	b6404696c86e		out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21db4	8	wbflush	dwarf+symtab	78aa5094d5ec		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dbc	8	ip26_enable_ucmem	dwarf+symtab	78aa5094d5ec	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dbc	20	ip26_return_ucmem	symtab	4bb71562d901	shared-address	out:11	undocumented		
@@ -83994,7 +83994,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e2c	40	issplpr
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e54	48	isspl7	dwarf+symtab	ee94d618c138		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e84	24	spl65	symtab	dafe8229ec55	shared-address	out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e84	24	splprof	dwarf+symtab	dafe8229ec55	shared-address	out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e9c	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e9c	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e9c	24	splerr	symtab	16c7bb5d00be	shared-address	out:11	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21eb4	32	splecc	dwarf+symtab	8a6f9bd0170c		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21ed4	28	splx	dwarf+symtab	50d1a155518b	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -84172,7 +84172,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x28b84	8	gettimet
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x28b8c	688	doadjtime	dwarf+symtab	ce0719cfc1ab		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x28e3c	664	__nanotime	dwarf	3226c0b2bcde		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x290d4	536	nanotime_syscall	dwarf+symtab	1d5e2ca4eac4		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x292ec	304	nanotime	dwarf+symtab	3f8c5c63de18		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x292ec	304	nanotime	dwarf+symtab	3f8c5c63de18		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2941c	68	irix5_microtime	dwarf+symtab	f42d82ff91d7		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29460	68	microtime	dwarf+symtab	a54c9d44e7ff		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x294a4	216	local_settime	dwarf+symtab	38740dbef749		in	undocumented		
@@ -84233,7 +84233,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29dd8	48	compare
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e08	28	swap_int64	dwarf+symtab	a621ea59a77e	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e08	28	swap_long	symtab	a621ea59a77e	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e08	28	swap_ptr	symtab	a621ea59a77e	shared-address	out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_int64	dwarf+symtab	efbdd7ce0ed7	shared-address	out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_int64	dwarf+symtab	efbdd7ce0ed7	shared-address	out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_kt	symtab	efbdd7ce0ed7	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_long	symtab	efbdd7ce0ed7	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_ptr	symtab	efbdd7ce0ed7	shared-address	out:11	undocumented		
@@ -84342,7 +84342,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e290	4	utlbmiss
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e294	32	utlbmissj	dwarf+symtab	59e7addb5e06		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e2b4	12	eutlbmissj	symtab	15ec7bf0b507		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e2c0	88	_ecc_errorvec	dwarf+symtab	05262da04530		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e318	36	_ecc_end	symtab	cd988059adf8	shared-address	out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e318	36	_ecc_end	symtab	cd988059adf8	shared-address	out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e318	36	get_nvreg	dwarf+symtab	cd988059adf8	shared-address	out:11	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e33c	128	set_nvreg	dwarf+symtab	e524051e91bd		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e3bc	164	get_nvram_buf	dwarf+symtab	589876a18339		out:11	undocumented		
@@ -84465,7 +84465,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x374d8	36	delayco
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37500	276	_badaddr_val	dwarf+symtab	e4975ae6e345		out:11	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37614	296	_wbadaddr_val	dwarf+symtab	5bea1c849408		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3773c	224	earlybadaddr	dwarf+symtab	a3bafeae4557		out:11	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3781c	108	wbadmemaddr	dwarf+symtab	0f88c1093bf0		out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3781c	108	wbadmemaddr	dwarf+symtab	0f88c1093bf0		out:11	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37888	48	baerror	dwarf+symtab	2b5539a824b6		out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x378b8	52	earlybaerror	dwarf+symtab	8d9aa1f63e31		out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x378f0	8	_dummy_proc	dwarf+symtab	78aa5094d5ec	shared-address	out:11	undocumented		
@@ -88429,7 +88429,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x28ac	184	ca
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x2964	188	thread_timein_init	dwarf+symtab	d07495d28815		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x2a20	48	delay	dwarf+symtab	f96902127aa9		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x2a50	116	nano_delay	dwarf+symtab	70e7c0de2419		out:3	named-only	chips/bridge/README.md#established-sequences	Established sequences
-IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x2ac4	448	adjtime	dwarf+symtab	15edc1ebdb2b		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x2ac4	448	adjtime	dwarf+symtab	15edc1ebdb2b		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x2c84	104	gettimeofday	dwarf+symtab	752839743d94		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x2cec	220	settimeofday	dwarf+symtab	8092898393c1		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(clock.o)	kernel-object	n64	.text	0x2dc8	116	irix5_to_timeval_xlate	dwarf+symtab	b82a1f29940c		out:3	undocumented		
@@ -89818,7 +89818,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(utssys.o)	kernel-object	n64	.text	0x1320	28	us
 IP35/usr/cpu/sysgen/IP35boot/os.a(utssys.o)	kernel-object	n64	.text	0x133c	216	ustat_to_irix5_o32	dwarf+symtab	fb23f9928088		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(utssys.o)	kernel-object	n64	.text	0x1414	136	irix5_to_f_anonid	dwarf+symtab	7d11cf58978d		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(uuid.o)	kernel-object	n64		0x0		uuid_init	dwarf+symtab			out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(uuid.o)	kernel-object	n64	.text	0x28	320	uuid_create	dwarf+symtab	225cda5eeff7		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(uuid.o)	kernel-object	n64	.text	0x28	320	uuid_create	dwarf+symtab	225cda5eeff7		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/os.a(uuid.o)	kernel-object	n64	.text	0x168	32	uuid_getnodeuniq	dwarf+symtab	07b183a5ea08		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(uuid.o)	kernel-object	n64	.text	0x188	260	uuid_to_buf	dwarf+symtab	45fa7acd4d05		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(uuid.o)	kernel-object	n64	.text	0x28c	32	uuid_create_nil	dwarf+symtab	ede8ccc9c75f		out:3	undocumented		
@@ -90128,7 +90128,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x5d0	8	xth
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x5d8	52	xpt_func	dwarf+symtab	df81659cd824		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x60c	108	xpt_init	dwarf+symtab	f68cb68d9f05		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x678	180	xpt_timeout	dwarf+symtab	153d63de52c4		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x72c	228	xthread_periodic_timeout	dwarf+symtab	19c2c0346d89		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x72c	228	xthread_periodic_timeout	dwarf+symtab	19c2c0346d89		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x810	28	xpt_stop	dwarf+symtab	4eff95fd5644		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread.o)	kernel-object	n64	.text	0x82c	68	xthread_periodic_timeout_stop	dwarf+symtab	3929753d007c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	kernel-object	n64		0x0		xthread_table_import_threadcfg	dwarf+symtab			out:3	undocumented		
@@ -90138,7 +90138,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x4b0
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x56c	232	xthread_table_name_search	dwarf+symtab	48fdb760f955		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x654	44	xthread_table_xthread_init	dwarf+symtab	021f9b4af483		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x680	436	xthread_table_get_property	dwarf+symtab	b4be53ac2b0e		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x834	80	xthread_table_name_get_property	dwarf+symtab	972900e50e07		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x834	80	xthread_table_name_get_property	dwarf+symtab	972900e50e07		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x884	148	xthread_table_thread_get_property	dwarf+symtab	e4db9ea366b0		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(xthread_table.o)	kernel-object	n64	.text	0x918	348	xthread_table_capable	dwarf+symtab	999e4f5fb440		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/partition.o	kernel-object	n64		0x0		nasid_to_partid	dwarf+symtab			in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -95391,7 +95391,7 @@ IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x39c	68	xbow_map	dw
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x3e0	8	xbow_unmap	dwarf+symtab	87506497337c		in	understood	chips/xbow/README.md#routines-of-the-ip27-kernel-that-keep-the-widget-and-switch-records-ip27unix	Routines of the IP27 kernel that keep the widget and switch records (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x3e8	196	xbow_widget_num_get	dwarf+symtab	5671c1ba3407		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x4ac	876	xbow_ioctl	dwarf+symtab	f2239f874faa		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x818	100	xbow_widget_present	dwarf+symtab	26d2fae0aee3		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x818	100	xbow_widget_present	dwarf+symtab	26d2fae0aee3		in	understood	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x87c	24	xbow_link_alive	dwarf+symtab	dc32f0d27732		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x894	48	xbow_widget_lookup	dwarf+symtab	fdcb67796bae		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x8c4	108	xbow_setwidint	dwarf+symtab	5069940adf65		in	named-only	chips/xbow/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
@@ -95407,7 +95407,7 @@ IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x1c34	32	xbow_get_l
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x1c54	276	xbow_update_llp_status	dwarf+symtab	576bcb74dc85		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x1d68	72	xbow_disable_llp_monitor	dwarf+symtab	e15db30ae701		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x1db0	76	xbow_enable_llp_monitor	dwarf+symtab	eca34028fc46		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x1dfc	260	xbow_reset_link	dwarf+symtab	ff03fa20c4d0		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x1dfc	260	xbow_reset_link	dwarf+symtab	ff03fa20c4d0		in	located	docs/ip30-kernel-xbow-routines.md#xbow-routines-of-the-ip30-kernel	Xbow routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x1f00	228	idbg_xbowregs	dwarf+symtab	ff370f55949d		in	named-only	chips/xbow/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x1fe4	100	xbow_bytes_to_gbr	dwarf+symtab	8cee067198e7		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP35/usr/cpu/sysgen/IP35boot/xbow.o	kernel-object	n64	.text	0x2048	24	xbow_gbr_to_bytes	dwarf+symtab	8ddba1bcb386		in	undocumented		
@@ -97493,7 +97493,7 @@ sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	preemptchk	symtab	78aa5094d5ec	
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	psema	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl0	symtab	78aa5094d5ec	shared-address	out:4	named-only	chips/crime/README.md#graded-register-table	Graded register table
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl5	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl7	symtab	78aa5094d5ec	shared-address	out:4	named-only	chips/crime/README.md#graded-register-table	Graded register table
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl7	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splhi	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splimp	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splx	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -98049,7 +98049,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00284c4	40	_circ_nread	symtab	caf
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00284ec	8	businfo	symtab	78aa5094d5ec		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00284f4	20	read_reg64	symtab	35318dc3efd5		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028508	24	write_reg64	symtab	be72b96394d8		out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	flushbus	symtab	640df3041b0b	shared-address	out:15	named-only	chips/crime/README.md#graded-register-table	Graded register table
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	flushbus	symtab	640df3041b0b	shared-address	out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	wbflush	symtab	640df3041b0b	shared-address	in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028540	20	Read_C0_LLADDR	symtab	0bed81c21644		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028554	12	Read_C0_Config	symtab	65d36b16835c		out:15	undocumented		
@@ -98268,7 +98268,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	preemptchk	symtab	78aa5
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	psema	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl0	symtab	78aa5094d5ec	shared-address	out:15	named-only	chips/crime/README.md#graded-register-table	Graded register table
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl5	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl7	symtab	78aa5094d5ec	shared-address	out:15	named-only	chips/crime/README.md#graded-register-table	Graded register table
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl7	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splhi	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splimp	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splx	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)

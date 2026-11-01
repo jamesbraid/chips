@@ -163,3 +163,47 @@ called a FIFO write below.
   success it raises the level with `spl1`, stores the flag word ORed with 1 (in the delay slot of the next call),
   calls `gf_OdsyUnMapGfx`, restores the level with `splx`, reads the HEART doubleword at 0xffffffffaff00080 again and
   returns 0. Established.
+- `gfx_flow_dealloc` (`IP30/unix` `0xa80000002038f524`, 284 bytes, frame 48 bytes) frees one flow-control record made by
+  `gfx_flow_alloc`; the argument (`a0`) is the record. If the halfword at record +0x5c is not 0xffff (the value alloc
+  and detach leave there) it calls `cmn_err` with level 4 and the text "gfx_flow still attached at dealloc time" and
+  carries on. It takes `mutex_spinlock` on `gfx_flow_heart_lock` (0xa8000000204b0024), reads the doubleword at
+  0xffffffffaff00040 (the HEART flow-control mode register), clears the bit numbered by the word at record +0x58 plus 8
+  with a 32-bit mask (no check that the index is small) and stores it back in the delay slot of `mutex_spinunlock`. It then
+  takes `mutex_spinlock` on `gfx_flow_init_lock` (0xa8000000204a8628), subtracts 1 from the record count at
+  0xa8000000204b0020 and stores it, also on the path where the result is not zero. If the count reached zero it
+  runs the unhook for indexes 0 and 1: `heart_flow_control_disable` with the index, then a doubleword store of 1 shifted
+  left by the index plus 1 (2, then 4) to 0xffffffffaff10028, and `heart_flow_control_disconnect` with the index, in that
+  order. The init lock is released with `mutex_spinunlock` either way. Last, the doubleword at 0xa8000000204a8620
+  (`gfx_flow_owners`) is a pointer to a table of doublewords, and the entry at 8 times the word at record +0x58 is
+  zeroed (in the delay slot of the closing call) and the record is released with `kmem_free` (record, 104). The return
+  value is the one left by `kmem_free`. Established.
+- `gfx_flow_attach_me` (`IP30/unix` `0xa80000002038f6dc`, 220 bytes, frame 32 bytes)
+  binds the flow-control record in `a0`
+  to the processor it runs on and arms that processor's flow-control unit; `a1` is stored in the record. With the processor
+  number `c` (halfword at -15456) it stores the record address in the owner table at entry 8 times `c` (the table that the
+  doubleword `gfx_flow_owners` points to), the value `a1` as a doubleword at record +0x60, `c` as a halfword at +0x5c
+  and `c` as a word at +0x58. It then writes the HEART flow-control address register for unit `c`, the doubleword at
+  0xffffffffaff00050 + 8c, with the record's window (doubleword at +0x8) masked by 0xffffffff80 ORed with the
+  doubleword at +0x10 masked by 0xffffe0 and shifted left by 35, and the count register at 0xffffffffaff00060 + 8c with
+  the word at record +0x1c zero-extended. That store pair is made before the lock is taken: the second is in the delay slot of
+  the `mutex_spinlock` call on `gfx_flow_heart_lock`. Under the lock it reads the mode register at 0xffffffffaff00040,
+  clears the two bits at position 2c+10, ORs in `c` shifted left by 2c+10 and sets bit c+8, and stores the result in the delay slot
+  of `mutex_spinunlock`. It ends by calling `heart_flow_control_enable` with the word at record +0x58 and returns
+  that call's value. Established.
+- `gfx_flow_detach_me` (`IP30/unix` `0xa80000002038f7c0`, 180 bytes, frame 16 bytes)
+  is the undo of `gfx_flow_attach_me`
+  for the record in `a0`, whose word at +0x58 holds the processor number `c`. Under `mutex_spinlock` on
+  `gfx_flow_heart_lock` it reads the mode register at 0xffffffffaff00040, ORs in 3 shifted left by 2c+10, clears bit
+  c+8 and writes it back in the delay slot of the unlock, so both bits of the two-bit field are set and the enable bit
+  cleared. It then calls `heart_flow_control_disable` with `c` and stores, in this order, -1 as a doubleword at record
+  +0x60, 0xffff as a halfword at +0x5c, the low 32 bits of the count register at 0xffffffffaff00060 + 8c as a word at +0x1c,
+  zero into the owner-table entry at 8c (the table behind `gfx_flow_owners`) and 2 as a word at +0x58. It returns the value of
+  `heart_flow_control_disable`. Established.
+- `gfx_flow_delayed_hiwater_intr_prehandler` (`IP30/unix` `0xa80000002038f1a0`, 136 bytes, frame 16 bytes) is the function
+  registered with `heart_flow_control_connect` for one flow-control interrupt; `a0` is the unit index, 0 or 1. It looks the
+  index up in the owner table behind `gfx_flow_owners` (8 bytes per entry). With an owner it calls the function at
+  record +0x28 through `jalr`, with the doubleword at record +0x30 as first argument and 0 as second, and returns its
+  value. With no owner it calls `cmn_err` at level 4 with the text "gfx_flow_delayed_hiwater_intr_prehandler: unexpected
+  intr on cpu %d" and the processor number, then `cmn_err` at level 4 with "disabling flow control". It then takes
+  `mutex_spinlock` on `gfx_flow_heart_lock`, clears bits 9:8 of the doubleword at 0xffffffffaff00040 (AND with -769) and
+  stores it in the delay slot of `mutex_spinunlock`, whose value it returns. Established.

@@ -172,3 +172,60 @@ running the code and the doubleword at -15744 holds that processor's flag bits.
   record +88, the lock is released, `timein_entry` is called with the entry, and `test_and_set_int64` (an atomic swap)
   stores 0 at record +88. When the value it returns, the old word, is 2 the code locks again, calls `sv_broadcast` on record +112 and unlocks;
   either way it loops. Established.
+- `nanotime` (`IP30/unix` `0xa8000000200163c4`, 228 bytes, no frame)
+  reads the current time into the buffer at `a0`, a seconds
+  word at +0 and a nanoseconds doubleword at +8, without raising the interrupt level or taking a lock. When the
+  doubleword at 0xa8000000204ae3e8 (the base tick count) is zero it stores a zero word at +0 and a zero doubleword at +8
+  and returns. Otherwise it reads a consistent set, retrying while the word at 0xa8000000204ae3e4 differs from the word at
+  0xa8000000204ae3e0 read first, with a `sync` before and after: the base tick count, and the word at +0 and the doubleword
+  at +8 of the structure at 0xa8000000204b03a0. It forms the nanoseconds as the low 32 bits of that doubleword taken as
+  unsigned plus 80 times the number of counter ticks since the base (the counter is the doubleword at 0xffffffffaff20000; the
+  factor 80 is built as e*4+e shifted left 4). That sum is compared with 1000000000 using a first reading of the counter, but the sum that is stored
+  uses a second reading taken after the compare. When the first sum was below 1000000000 the second sum is stored as
+  it is. Otherwise 1000000000 is taken off at least once (an add of 0xffffffffc4653600) and again while the result is
+  still not below it, and the seconds word is raised by one for each subtraction. The nanoseconds go to +8 first and the
+  seconds to +0 afterwards. Unlike `nanotime_syscall` it applies no `adjtime` term and no `timetrim` term, does not touch the
+  `time` variable and takes no lock. Nothing is returned. Established.
+- `ftrc_event` (`IP30/unix` `0xa8000000200b72ac`, 324 bytes, frame 176 bytes) appends one 64-byte event record to a trace ring.
+  The arguments are the trace handle (`a0`), a byte value (`a1`), a doubleword that must be nonzero (`a2`) and five more
+  doublewords (`a3` to `a7`) plus a ninth that is read from the caller's stack at 176(sp). When the word at 0xa8000000204a79f8 is zero it first
+  calls the unnamed routine at 0xa8000000200b6eac, which sets that word to 1 and runs `spinlock_init` twice. A null handle or
+  a zero `a2` returns -1, as does a handle whose doubleword at +0x10 (the ring) is zero. Otherwise it takes `mutex_spinlock` on
+  the ring's lock at ring +0x40, reads the free-running counter at 0xffffffffaff20000 and stores it at ring +0x8, takes the
+  slot from the write pointer at ring +0x30 and moves the pointer on by 64. When the new pointer is not below the limit at
+  ring +0x28 it sets the word at +0x3c to 1 and resets the pointer from ring +0x20. It releases the lock with
+  `mutex_spinunlock`, clearing the first byte of the claimed slot in that call's delay slot, and then fills the slot
+  outside the lock in this order: the counter's low 32 bits as a word at +4, the ninth argument at +0x38, `a7` at +0x30, `a6` at
+  +0x28, `a5` at +0x20, `a4` at +0x18, `a3` at +0x10 and `a2` at +0x8 (each a doubleword), `a1` as a byte at +1, the
+  processor number (halfword at -15456) at +2, and last the low byte of the handle's word at +0x8 at +0 in the delay slot of the
+  branch to the exit. It returns 0 on that path. Established.
+- `uuid_create` (`IP30/unix` `0xa800000020214308`, 320 bytes, frame 48 bytes) builds a version 1 time-based identifier of 16
+  bytes in the buffer at `a0` and stores a status word through `a1`. It takes `mutex_lock` on the lock whose address is the pool
+  word at 0xa8000000204ac630, with 25 as second argument. State lives in `.sbss`: a started byte at 0xa8000000204afb40, a
+  have-address byte at 0xa8000000204afb41, six node bytes at 0xa8000000204afb42, the last time as a doubleword at
+  0xa8000000204afb48 and a clock sequence halfword at 0xa8000000204afb50. On the first call it calls `nanotime` into a stack buffer and computes seconds times 10000000 plus nanoseconds
+  divided by 100 plus 122192928000000000 (the doubleword at 0xa8000000204a8e80), keeps that as the starting time, sets the
+  started byte and builds the clock sequence from the low 12 bits of the counter at 0xffffffffaff20000 ORed with 0x8000.
+  Every call then adds 1 to the time, and stores in order the clock sequence halfword at out+8, the low 32 bits of the
+  time as a word at out+0, the time back into state, bits 47:32 as a halfword at out+4 and bits 59:48 ORed with 0x1000 as a
+  halfword at out+6 (in the delay slot of the test that follows). When the have-address byte is zero it calls `get_eaddr`
+  with the node bytes' address and stores the low byte of the result in that byte; a zero result calls `mutex_unlock`
+  and stores 0x16c9a08b through `a1` (in the delay slot) and returns that call's result without writing the node field.
+  Otherwise it unlocks, copies the three halfwords of the node to the output at offsets 10, 12 and 14 and stores a zero word through `a1`.
+  The return value is whatever `mutex_unlock` left. Established.
+- `xthread_periodic_timeout` (`IP30/unix` `0xa80000002019195c`, 228 bytes, frame 32 bytes) starts a periodic kernel thread
+  whose record is the structure in `a4`. If bit 0x800 of the word at record +0x0 is already set it returns at
+  once and stores nothing. Otherwise it stores the word 0x200 at +0x0, then `a5` at +0x28, `a6` at +0x30 and `a2` at
+  +0x38, and calls `xthread_table_name_get_property` with `a0` unchanged, 2 as second argument and `a3` as third. The result
+  is stored as a halfword at +0x4a; its low 16 bits sign-extended give a processor number, and -1 is replaced by the
+  running processor (halfword at -15456). That number is stored as a halfword at +0x48. The routine then looks up that
+  processor's record in the table `pdaindr` (0xa8000000204b0380, 16 bytes per processor, the pointer at +8) and, when bit 0x800
+  of its word at +0x48 is set, or when that is clear and its word at +0x658 is nonzero, replaces the halfword at +0x48
+  with `clock_processor` (0xa8000000204af8e8). It calls `xthread_setup` with the first two arguments as received, the
+  record twice (third and fifth arguments) and 0xa80000002019183c as fourth. Last it stores the free-running counter at
+  0xffffffffaff20000 at +0x40, in the delay slot of the call to the unnamed routine at 0xa8000000201918a8, and returns that
+  routine's result. That routine does nothing unless bit 0x800 of the record's first word is set. Its own callees are, in order, `valusema` on the semaphore at +0x8,
+  `vsema` (only when that count is not above 0) and `clock_prtimeout_nothrd`. Between them it adds the doubleword at +0x38 to the one at
+  +0x40, and the timeout it arms is given the record, the routine itself as callback and a processor: the halfword at +0x48
+  when that is the running processor and its record passes the same two tests above, and otherwise
+  `clock_processor` (stored back at +0x48). Established.
