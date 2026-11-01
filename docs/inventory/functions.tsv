@@ -435,7 +435,7 @@ IP27/unix	kernel	n64		0x0		ckpt_cursig	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		ckpt_diropen	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ckpt_dup	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ckpt_execmap	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		ckpt_fid	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		ckpt_fid	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64		0x0		ckpt_fpaddr	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ckpt_fsettimes	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ckpt_get_shmcnt	dwarf			out:5	undocumented		
@@ -680,17 +680,17 @@ IP27/unix	kernel	n64		0x0		disable_intrs	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		disconnect	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		disconnect_ind	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dispatch_q	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		dk_callback_backend	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		dk_callback_backend	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64		0x0		dk_callback_intr	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dk_checkqueue	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		dk_chkcond	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		dk_chkcond	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64		0x0		dk_chkptsize	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dk_cmd	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dk_disk_stat_info_add	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dk_disk_stat_info_remove	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dk_do_retry	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dk_getblksz	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		dk_intr	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		dk_intr	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64		0x0		dk_pmsg	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dk_print_sense	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dk_readcap	dwarf			out:5	undocumented		
@@ -707,7 +707,7 @@ IP27/unix	kernel	n64		0x0		dl_mnt_other	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		dl_mnt_root	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dl_strdup	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dm_pfault_event	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		dma_lock	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		dma_lock	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64		0x0		dmrb_lookup_handle	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dmscall_expand	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		dmslt_expand	dwarf			out:5	undocumented		
@@ -3230,9 +3230,9 @@ IP27/unix	kernel	n64		0x0		syssgi_rusage	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		syssgi_tstamp	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		syssgi_tune	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		t0init	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		task_find	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		task_find	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64		0x0		task_free_desc	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		task_glue	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		task_glue	dwarf			out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64		0x0		task_init_desc	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		tcp_defer_segment	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		tcp_full_assign	dwarf			out:5	undocumented		
@@ -6487,9 +6487,9 @@ IP27/unix	kernel	n64	.text	0xc0000000000bcbf8	156	dk_unalloc_softc	symtab	7fc4f5
 IP27/unix	kernel	n64	.text	0xc0000000000bcc94	152	subchaninit	symtab	7a71e3c03938		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000bcd2c	184	dksc_disk_part_hwg_update	symtab	309f6d6a4e02		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000bcde4	256	dksc_disk_part_hwg_check	symtab	2e2a63edb583		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000bcee4	1828	dkscopen	symtab	f5e6f9cf6969		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000bcee4	1828	dkscopen	symtab	f5e6f9cf6969		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000000bd608	356	dkscclose	symtab	e583426dddcc		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000bd76c	2364	dkscioctl	symtab	ba2cb4b0362e		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000bd76c	2364	dkscioctl	symtab	ba2cb4b0362e		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000000be0a8	28	dkscdone	symtab	5a26d350bb30		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000be0c4	564	dkscread	symtab	f1e0677db320		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000be2f8	564	dkscwrite	symtab	64ce5630d496		out:5	undocumented		
@@ -12060,13 +12060,13 @@ IP27/unix	kernel	n64	.text	0xc00000000036131c	52	pipe_attr_set	symtab	d845dcb752
 IP27/unix	kernel	n64	.text	0xc000000000361350	36	pipe_rwlock	symtab	75c007c4937f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000361374	32	pipe_rwunlock	symtab	fd4713727e33		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003616a4	36	ckpt_init	symtab	292e5b59b8e4		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003616c8	280	ckpt_vp_open	symtab	0dcaaff28cbd		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003618fc	100	ckpt_lookup	symtab	41b45b0d65d6		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003616c8	280	ckpt_vp_open	symtab	0dcaaff28cbd		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/unix	kernel	n64	.text	0xc0000000003618fc	100	ckpt_lookup	symtab	41b45b0d65d6		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc000000000361960	32	ckpt_lookup_free	symtab	af9edd8e725c		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000361980	304	ckpt_lookup_add	symtab	73945c2d863a		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000361980	304	ckpt_lookup_add	symtab	73945c2d863a		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc000000000361ab0	76	ckpt_lookup_get	symtab	c45792b70eb0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000361afc	72	ckpt_vnode_free	symtab	240c41fcd0c9		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000361b44	60	ckpt_setfd	symtab	e156b1e969b7		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000361b44	60	ckpt_setfd	symtab	e156b1e969b7		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc000000000361b80	96	ckpt_prioctl_attr	symtab	f349db350521		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000364ff0	560	ckpt_prioctl	symtab	8012cc9e7e24		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000365220	728	ckpt_prioctl_thread	symtab	8eab79e7e7f1		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
@@ -12076,8 +12076,8 @@ IP27/unix	kernel	n64	.text	0xc000000000366568	152	ckpt_wstat_decode	symtab	d2148
 IP27/unix	kernel	n64	.text	0xc000000000366708	8	dsinit	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000366710	296	dsopen	symtab	9d1f82450e91		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000366838	112	dsclose	symtab	fb58a22f38ce		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003668a8	2580	dsioctl	symtab	6e6507e22d9f		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003672d8	204	ds_copyiov	symtab	615a89697967		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003668a8	2580	dsioctl	symtab	6e6507e22d9f		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/unix	kernel	n64	.text	0xc0000000003672d8	204	ds_copyiov	symtab	615a89697967		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc000000000367450	96	dma_unlock	symtab	8771adb7d9be		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003678dc	192	task_unglue	symtab	54140eeba877		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000367c00	428	glue_reserve	symtab	ac79fd92ce8f		out:5	undocumented		
@@ -12506,12 +12506,12 @@ IP27/unix	kernel	n64	.text	0xc0000000003a933c	92	pckbd_wput	symtab	8e143ce75418	
 IP27/unix	kernel	n64	.text	0xc0000000003a9398	108	pckbd_rput	symtab	4ead0ee70962		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003aa044	216	pcmouse_rput	symtab	fd727740a2b0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003aa140	236	dmsinit	symtab	ad79af40b6f1		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003aa22c	172	dmsopen	symtab	63007cd81d99		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003aa2d8	92	dmsclose	symtab	ca9eea01cd93		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003aa334	2496	dmsioctl	symtab	12e07bb175ff		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003aacf4	84	dmsmap	symtab	a30d0cdec692		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003aa22c	172	dmsopen	symtab	63007cd81d99		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/unix	kernel	n64	.text	0xc0000000003aa2d8	92	dmsclose	symtab	ca9eea01cd93		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/unix	kernel	n64	.text	0xc0000000003aa334	2496	dmsioctl	symtab	12e07bb175ff		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/unix	kernel	n64	.text	0xc0000000003aacf4	84	dmsmap	symtab	a30d0cdec692		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003aad48	8	dmsunmap	symtab	87506497337c		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003aad50	108	dmspoll	symtab	80ac4af3f625		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003aad50	108	dmspoll	symtab	80ac4af3f625		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003ab088	584	dms_pollgrp_add	symtab	2197cffc359e		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003ab2d0	544	dms_pollgrp_del	symtab	756bdfa0f323		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003ab4f0	196	dms_poll_event	symtab	71dd319b27a3		out:5	undocumented		
@@ -12521,7 +12521,7 @@ IP27/unix	kernel	n64	.text	0xc0000000003ab714	172	dms_open	symtab	2f65d538a3c6		
 IP27/unix	kernel	n64	.text	0xc0000000003ab7c0	324	dms_close	symtab	6f93c0be1c25		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003abc38	372	_dms_block_init_fix	symtab	22e25a85548b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003abdac	236	_dms_block_init_var	symtab	afc648da66f1		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003ac600	3344	dms_pool_create	symtab	c2214ef6a067		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003ac600	3344	dms_pool_create	symtab	c2214ef6a067		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003ad310	200	dms_pool_set_block_size	symtab	a3f10a8b3f25		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003ad3d8	32	dms_pool_get_block_size	symtab	0e8490a6ea98		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003ad3f8	420	dms_pool_attach	symtab	3e7b67c74715		out:5	undocumented		
@@ -12531,12 +12531,12 @@ IP27/unix	kernel	n64	.text	0xc0000000003ad700	152	dms_pool_map	symtab	3a634fad17
 IP27/unix	kernel	n64	.text	0xc0000000003ad798	160	dms_pool_state	symtab	c57c7b7ba4af		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003adb08	76	dms_map	symtab	1b886956d1ff		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003adb54	536	dms_poll	symtab	b9188fc97a80		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003add6c	664	dms_block_alloc	symtab	f100752b1afa		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003add6c	664	dms_block_alloc	symtab	f100752b1afa		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003ae004	176	dms_block_info	symtab	c26ba4f2d99c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003ae378	172	dms_block_attach	symtab	9efbee019bff		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003ae424	120	dms_block_detach	symtab	41f33b646b95		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003ae49c	644	dms_block_join	symtab	b1cd98cf21a7		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003ae720	968	dms_block_split	symtab	ba0c7b29a7e6		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003ae720	968	dms_block_split	symtab	ba0c7b29a7e6		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003aeae8	588	dms_block_resize	symtab	641a22ac10fe		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003aed34	144	dms_block_map	symtab	06651353b05f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003aedc4	636	dms_fifo_create	symtab	bb1e68ad4eab		out:5	undocumented		
@@ -12544,7 +12544,7 @@ IP27/unix	kernel	n64	.text	0xc0000000003af040	8	dms_fifo_resize	symtab	4dc995428
 IP27/unix	kernel	n64	.text	0xc0000000003af048	328	dms_fifo_attach	symtab	cd07d43cb2ed		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003af254	152	dms_fifo_detach	symtab	a2d1a1412548		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003af2ec	340	dms_fifo_enq	symtab	8eb43903298c		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003af440	472	dms_fifo_deq	symtab	2ac413353801		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003af440	472	dms_fifo_deq	symtab	2ac413353801		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003af618	212	dms_pool_get_user	symtab	c13b53eeded0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003af6ec	188	dms_pool_set_user	symtab	c2ec65f7df72		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003af7a8	212	dms_fifo_get_user	symtab	95af0a1d5c85		out:5	undocumented		
@@ -12570,8 +12570,8 @@ IP27/unix	kernel	n64	.text	0xc0000000003b06f4	112	dms_fifo_set_fillpoint	symtab	
 IP27/unix	kernel	n64	.text	0xc0000000003b0764	60	dms_ust_stamp	symtab	1377b9d75592		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b07a0	424	dms_block_get_tile_list	symtab	607d6f71e6ed		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b0948	68	dms_timestamp	symtab	cdabd5887b5b		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003b098c	8	dms_block_start_dma	symtab	87506497337c		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003b0994	8	dms_block_end_dma	symtab	87506497337c		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003b098c	8	dms_block_start_dma	symtab	87506497337c		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/unix	kernel	n64	.text	0xc0000000003b0994	8	dms_block_end_dma	symtab	87506497337c		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003b099c	176	dms_pool_cache_policy	symtab	5ac4f8532338		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b0a4c	176	dms_fifo_cache_policy	symtab	70c4c78e0962		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b0afc	756	dms_block_switch_pages	symtab	2662e41b87c5		out:5	undocumented		
@@ -12593,22 +12593,22 @@ IP27/unix	kernel	n64	.text	0xc0000000003b1cb0	40	dmrb_compat_init	symtab	d121450
 IP27/unix	kernel	n64	.text	0xc0000000003b1cd8	28	dmrb_compat_final	symtab	5be7597a255b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b1cf4	144	dmrb_open	symtab	8a83de033211		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b1d84	144	dmrb_close	symtab	9b4cfa2be272		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003b1e14	716	dmrb_attach	symtab	960856bdfda3		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003b1e14	716	dmrb_attach	symtab	960856bdfda3		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003b20e0	72	dmrb_callback	symtab	e00519d8239a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b2128	60	dmrb_getdone	symtab	6913874992f3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b2164	32	dmrb_getframesize	symtab	b7cedca89925		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b2184	164	dmrb_putfree	symtab	e5efb9557ed3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b2228	32	dmrb_getinfocount	symtab	e661106a2147		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b2248	8	dmrb_getinfolength	symtab	9e01693ae8ec		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003b2250	192	dmrb_getnextfree	symtab	830501dff9e3		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003b2310	220	dmrb_getnextvalid	symtab	18fa2bcfbfb1		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003b2250	192	dmrb_getnextfree	symtab	830501dff9e3		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/unix	kernel	n64	.text	0xc0000000003b2310	220	dmrb_getnextvalid	symtab	18fa2bcfbfb1		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003b23ec	8	dmrb_getvalid	symtab	6319e0118090		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003b23f4	264	dmrb_putvalid	symtab	984503a466d9		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003b23f4	264	dmrb_putvalid	symtab	984503a466d9		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003b24fc	116	dmrb_getaddress	symtab	7553a3f31e63		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b2570	64	dmrb_getinfoaddress	symtab	c58cdb7db2b6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b25b0	28	dmrb_timestamp	symtab	1fd0d2180e02		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b25cc	28	dmrb_ust_stamp	symtab	b9167879db92		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003b25e8	100	dmrb_getpagelist	symtab	7ae27a91e1fd		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003b25e8	100	dmrb_getpagelist	symtab	7ae27a91e1fd		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003b264c	56	dmrb_getnewvalid	symtab	364a7d5a6151		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b2684	60	dmrb_getincount	symtab	63fc73540a31		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003b26c0	60	dmrb_getoutcount	symtab	b10bc0dcfc5e		out:5	undocumented		
@@ -13305,7 +13305,7 @@ IP27/unix	kernel	n64	.text	0xc0000000003c32f4	28	dm_send_mount_event	symtab	f857
 IP27/unix	kernel	n64	.text	0xc0000000003c3310	28	dm_send_namesp_event	symtab	f8573739a075		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c332c	8	dm_send_unmount_event	symtab	78aa5094d5ec		out:5	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/unix	kernel	n64	.text	0xc0000000003c3334	28	dm_vp_to_handle	symtab	f8573739a075		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000003c3350	28	dm_release_threads	symtab	f8573739a075		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003c3350	28	dm_release_threads	symtab	f8573739a075		out:5	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/unix	kernel	n64	.text	0xc0000000003c336c	8	xvm_cell_icrash	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c3374	8	xvm_cellinit_start	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c337c	8	xvm_prt_bcobj	symtab	78aa5094d5ec		out:5	undocumented		
@@ -14820,14 +14820,14 @@ IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_sys.o)	kernel-object	n64	.text	0xbb8	648
 IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_sys.o)	kernel-object	n64	.text	0xe40	560	ckpt_restartreturn	dwarf+symtab	225a15a00a74		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_sys.o)	kernel-object	n64	.text	0x1070	152	ckpt_wstat_decode	dwarf+symtab	d214805f4569		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64		0x0		ckpt_init	dwarf+symtab			out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x24	280	ckpt_vp_open	dwarf+symtab	25d5b51b8aaf		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x13c	284	ckpt_fid	dwarf+symtab	0314398ebdf5		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x258	100	ckpt_lookup	dwarf+symtab	e1b8475a5280		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x24	280	ckpt_vp_open	dwarf+symtab	25d5b51b8aaf		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x13c	284	ckpt_fid	dwarf+symtab	0314398ebdf5		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x258	100	ckpt_lookup	dwarf+symtab	e1b8475a5280		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x2bc	32	ckpt_lookup_free	dwarf+symtab	c0d220d7659b		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x2dc	304	ckpt_lookup_add	dwarf+symtab	168955af1a20		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x2dc	304	ckpt_lookup_add	dwarf+symtab	168955af1a20		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x40c	76	ckpt_lookup_get	dwarf+symtab	c45792b70eb0		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x458	72	ckpt_vnode_free	dwarf+symtab	6aab30aaa8f5		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x4a0	60	ckpt_setfd	dwarf+symtab	0eeedd1f76bc		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x4a0	60	ckpt_setfd	dwarf+symtab	0eeedd1f76bc		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/crypto.a(sha2.o)	kernel-object	n64		0x0		SHA256_Init	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/crypto.a(sha2.o)	kernel-object	n64	.text	0x4c	824	SHA256_Transform	dwarf+symtab	2785770c3a4f		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/crypto.a(sha2.o)	kernel-object	n64	.text	0x384	316	SHA256_Update	dwarf+symtab	9ee879c6bb59		out:3	undocumented		
@@ -15292,9 +15292,9 @@ IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x16c	156	dk_unalloc
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x208	152	subchaninit	dwarf+symtab	8c5d59f30fcb		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x2a0	184	dksc_disk_part_hwg_update	dwarf+symtab	bc9b08e1a435		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x358	256	dksc_disk_part_hwg_check	dwarf+symtab	f075400c7bb4		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x458	1828	dkscopen	dwarf+symtab	d8acf3e35f6c		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x458	1828	dkscopen	dwarf+symtab	d8acf3e35f6c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0xb7c	356	dkscclose	dwarf+symtab	c28e01ea3257		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0xce0	2364	dkscioctl	dwarf+symtab	10ff91c86910		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0xce0	2364	dkscioctl	dwarf+symtab	10ff91c86910		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x161c	28	dkscdone	dwarf+symtab	b7e9e5a7afaf		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x1638	564	dkscread	dwarf+symtab	d6b2126301dc		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x186c	564	dkscwrite	dwarf+symtab	826267373c74		out:1	undocumented		
@@ -15304,9 +15304,9 @@ IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x1c0c	476	dksccomma
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x1de8	724	dkscstrategy	dwarf+symtab	95d338ed0b05		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x20bc	484	dkscstart	dwarf+symtab	01d67776f9e1		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x22a0	196	dk_queue_retry	dwarf+symtab	abded0c4e9f2		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x2364	800	dk_intr	dwarf+symtab	f7a9fc197f33		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x2364	800	dk_intr	dwarf+symtab	f7a9fc197f33		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x2684	156	dk_busy_retry	dwarf+symtab	63e04d71cf5c		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x2720	1672	dk_chkcond	dwarf+symtab	9cfe43a2987c		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x2720	1672	dk_chkcond	dwarf+symtab	9cfe43a2987c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x2da8	128	dkscprint	dwarf+symtab	5bc27c83f80c		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x2e28	308	getsize	dwarf+symtab	662804a14dd8		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x2f5c	32	dkscsize	dwarf+symtab	8066a1f9382a		out:1	undocumented		
@@ -15334,7 +15334,7 @@ IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x47c8	172	dk_clr_fl
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x4874	168	dk_set_flags	dwarf+symtab	221b2e5b021c		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x491c	448	dk_alloc_ioreq	dwarf+symtab	d858bb8e6289		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x4adc	144	dk_callback_frontend	dwarf+symtab	2e30f855b619		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x4b6c	756	dk_callback_backend	dwarf+symtab	a1f34accd97f		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x4b6c	756	dk_callback_backend	dwarf+symtab	a1f34accd97f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x4e60	360	dk_callback_intr	dwarf+symtab	382ff7be442b		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x4fc8	376	dksc_partition_to_canonical_special	dwarf+symtab	92da876513cc		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dksc.o	kernel-object	n64	.text	0x5140	540	get_hw_scsi_info	dwarf+symtab	f906e9ab1a83		out:1	undocumented		
@@ -15392,7 +15392,7 @@ IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x5c	
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xf8	380	dm_add_fsys_entry	dwarf+symtab	05834ee5113e		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x274	364	dm_change_fsys_entry	dwarf+symtab	dd28a50499ed		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x3e0	420	dm_remove_fsys_entry	dwarf+symtab	057aeee42540		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x584	676	dm_handle_to_vp	dwarf+symtab	68bab9296591		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x584	676	dm_handle_to_vp	dwarf+symtab	68bab9296591		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x828	228	dm_vp_to_handle	dwarf+symtab	fb76850106e2		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x90c	88	dm_check_dmapi_vp	dwarf+symtab	24da589abd88		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x964	116	dm_find_mount_tevp_and_lock	dwarf+symtab	66d1cc3388fc		out:1	undocumented		
@@ -15405,10 +15405,10 @@ IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xe64
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xf24	200	dm_fd_to_hdl	dwarf+symtab	a37f77ded9be		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xfec	212	dm_set_eventlist	dwarf+symtab	a3613584052a		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x10c0	212	dm_get_eventlist	dwarf+symtab	1691f9eb90c4		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1194	656	dm_set_disp	dwarf+symtab	5f9e4b724465		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1194	656	dm_set_disp	dwarf+symtab	5f9e4b724465		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1424	348	dm_set_return_on_destroy	dwarf+symtab	01a09ac5d9ba		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1580	232	dm_get_mountinfo	dwarf+symtab	3d4485a8239e		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1668	704	dm_getall_disp	dwarf+symtab	c1c4057f904c		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1668	704	dm_getall_disp	dwarf+symtab	c1c4057f904c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1928	188	dm_execute_clrmount	dwarf+symtab	3486133221cb		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x19e4	520	dm_clrmount_callback	dwarf+symtab	5f2cf5a0de7e		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1bec	272	dm_release_disp_threads	dwarf+symtab	8ab1e7953ca3		out:1	undocumented		
@@ -15455,37 +15455,37 @@ IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0xc7c	
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0xe14	324	dm_find_eventmsg	dwarf+symtab	4ca4f3cea14f		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0xf58	292	dm_move_event	dwarf+symtab	94b09d9a721f		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x107c	100	dm_pending	dwarf+symtab	8683bb864c9f		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x10e0	1032	dm_get_events	dwarf+symtab	173e028d52d7		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x14e8	404	dm_respond_event	dwarf+symtab	637553c88a44		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x10e0	1032	dm_get_events	dwarf+symtab	173e028d52d7		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x14e8	404	dm_respond_event	dwarf+symtab	637553c88a44		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x167c	260	__find_match_event_no_waiters_locked	dwarf+symtab	bba8b40c56e5		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1780	148	find_match_event_no_waiters_locked	dwarf+symtab	0d7eb07c1254		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1814	1208	dm_enqueue	dwarf+symtab	464807f8e93b		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1814	1208	dm_enqueue	dwarf+symtab	464807f8e93b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1ccc	160	dm_enqueue_normal_event	dwarf+symtab	e70e86c2572e		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1d6c	268	dm_enqueue_mount_event	dwarf+symtab	3b6e95974bc3		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1e78	88	dm_enqueue_sendmsg_event	dwarf+symtab	f3e66d5e938f		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1ed0	188	dm_enqueue_user_event	dwarf+symtab	faf0136334ee		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1f8c	472	dm_release_threads	dwarf+symtab	bc6b49916326		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1f8c	472	dm_release_threads	dwarf+symtab	bc6b49916326		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dmi.a(dmi_sysent.o)	kernel-object	n64		0x0		dmi	dwarf+symtab			out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64		0x0		dmiidbginit	dwarf+symtab			out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x74	116	dmiidbgunload	dwarf+symtab	cf574f314ed8		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0xe8	92	ev_value_to_name	dwarf	deceb3025e9e		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x144	140	right_to_name	dwarf	9cbba33d2760		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x1d0	176	state_to_name	dwarf	9eeefff93e6a		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x144	140	right_to_name	dwarf	9cbba33d2760		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x1d0	176	state_to_name	dwarf	9eeefff93e6a		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x280	104	hex_to_ascii	dwarf	7d6e67b3f253		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x2e8	208	idbg_dmi_equeue	dwarf	842eefd8c691		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x3b8	592	idbg_dmi_event	dwarf	32e8da96be8b		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x3b8	592	idbg_dmi_event	dwarf	32e8da96be8b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x608	196	idbg_dmi_help	dwarf	98a65fd2f1f2		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x6cc	236	print_one_session	dwarf	dea8092ab000		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x7b8	260	idbg_dmi_sessions	dwarf	f739d01a7c94		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x8bc	520	print_one_reglist	dwarf	c7808e193069		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0x8bc	520	print_one_reglist	dwarf	c7808e193069		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o	kernel-object	n64	.text	0xac4	156	idbg_dmi_regs	dwarf	79afdf177379		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64		0x0		dmsinit	dwarf+symtab			out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0xec	172	dmsopen	dwarf+symtab	7f2396e47461		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0x198	92	dmsclose	dwarf+symtab	ffbac260f19f		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0x1f4	2496	dmsioctl	dwarf+symtab	6edab8e865f2		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0xbb4	84	dmsmap	dwarf+symtab	214f3e84ac05		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0xec	172	dmsopen	dwarf+symtab	7f2396e47461		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0x198	92	dmsclose	dwarf+symtab	ffbac260f19f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0x1f4	2496	dmsioctl	dwarf+symtab	6edab8e865f2		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0xbb4	84	dmsmap	dwarf+symtab	214f3e84ac05		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0xc08	8	dmsunmap	dwarf+symtab	87506497337c		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0xc10	108	dmspoll	dwarf+symtab	5a9e1535d97f		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)	kernel-object	n64	.text	0xc10	108	dmspoll	dwarf+symtab	5a9e1535d97f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmscall.o)	kernel-object	n64		0x0		dmscall_create	dwarf+symtab			out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmscall.o)	kernel-object	n64	.text	0x70	88	dmscall_destroy	dwarf+symtab	c1710546b123		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmscall.o)	kernel-object	n64	.text	0xc8	316	dmscall_expand	dwarf+symtab	a10dda3598c2		out:1	undocumented		
@@ -15512,7 +15512,7 @@ IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x10dc	516
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x12e0	396	_dms_output_notify_fifo	dwarf+symtab	f75b4920fbfa		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x146c	368	_dms_admin_fifo	dwarf+symtab	5754215f7a6c		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x15dc	616	_dms_notify_pool	dwarf+symtab	b12abd708dbb		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x1844	3344	dms_pool_create	dwarf+symtab	df6d726dfd2f		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x1844	3344	dms_pool_create	dwarf+symtab	df6d726dfd2f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2554	200	dms_pool_set_block_size	dwarf+symtab	e7c42383e9b0		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x261c	32	dms_pool_get_block_size	dwarf+symtab	0e8490a6ea98		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x263c	420	dms_pool_attach	dwarf+symtab	1fd6b778007a		out:1	undocumented		
@@ -15525,14 +15525,14 @@ IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2a7c	620
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2ce8	100	_dms_pool_map	dwarf+symtab	589739742c40		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2d4c	76	dms_map	dwarf+symtab	607eb3cc5784		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2d98	536	dms_poll	dwarf+symtab	dee605800c4f		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2fb0	664	dms_block_alloc	dwarf+symtab	18b655d79842		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2fb0	664	dms_block_alloc	dwarf+symtab	18b655d79842		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3248	176	dms_block_info	dwarf+symtab	c9c547fa2cd3		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x32f8	252	_dms_block_incref	dwarf+symtab	1eaaddecfb89		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x33f4	456	_dms_block_decref	dwarf+symtab	aef54f3aebec		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x35bc	172	dms_block_attach	dwarf+symtab	1c9d80a0e070		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3668	120	dms_block_detach	dwarf+symtab	5271c1b63431		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x36e0	644	dms_block_join	dwarf+symtab	b38ee42030b5		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3964	968	dms_block_split	dwarf+symtab	b1032296210c		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3964	968	dms_block_split	dwarf+symtab	b1032296210c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3d2c	588	dms_block_resize	dwarf+symtab	f104cb1aa65b		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3f78	144	dms_block_map	dwarf+symtab	ab8332020eb6		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4008	636	dms_fifo_create	dwarf+symtab	98fd657acd27		out:1	undocumented		
@@ -15541,7 +15541,7 @@ IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x428c	328
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x43d4	196	_dms_fifo_decref	dwarf+symtab	637368ad0337		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4498	152	dms_fifo_detach	dwarf+symtab	88deeccc1981		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4530	340	dms_fifo_enq	dwarf+symtab	0462b177d7de		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4684	472	dms_fifo_deq	dwarf+symtab	c79e3e1179b4		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4684	472	dms_fifo_deq	dwarf+symtab	c79e3e1179b4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x485c	212	dms_pool_get_user	dwarf+symtab	b92d3b5a9be0		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4930	188	dms_pool_set_user	dwarf+symtab	246c44f67043		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x49ec	212	dms_fifo_get_user	dwarf+symtab	b8343b4731ed		out:1	undocumented		
@@ -15567,8 +15567,8 @@ IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5938	112
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x59a8	60	dms_ust_stamp	dwarf+symtab	2a1edc350715		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x59e4	424	dms_block_get_tile_list	dwarf+symtab	016716014325		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5b8c	68	dms_timestamp	dwarf+symtab	a54c9d44e7ff		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5bd0	8	dms_block_start_dma	dwarf+symtab	87506497337c		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5bd8	8	dms_block_end_dma	dwarf+symtab	87506497337c		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5bd0	8	dms_block_start_dma	dwarf+symtab	87506497337c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5bd8	8	dms_block_end_dma	dwarf+symtab	87506497337c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5be0	176	dms_pool_cache_policy	dwarf+symtab	dd4819e5e698		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5c90	176	dms_fifo_cache_policy	dwarf+symtab	92df888747b0		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5d40	756	dms_block_switch_pages	dwarf+symtab	67d168da0c97		out:1	undocumented		
@@ -15587,22 +15587,22 @@ IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x24	40
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x4c	28	dmrb_compat_final	dwarf+symtab	554dd3b5deec		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x68	144	dmrb_open	dwarf+symtab	ff75a2bb37f3		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0xf8	144	dmrb_close	dwarf+symtab	3ecbfe53bf6b		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x188	716	dmrb_attach	dwarf+symtab	5375785cb8d5		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x188	716	dmrb_attach	dwarf+symtab	5375785cb8d5		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x454	72	dmrb_callback	dwarf+symtab	6d3dcaa92f5f		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x49c	60	dmrb_getdone	dwarf+symtab	88098075055e		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x4d8	32	dmrb_getframesize	dwarf+symtab	6ecdab6e9a6b		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x4f8	164	dmrb_putfree	dwarf+symtab	37993851b990		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x59c	32	dmrb_getinfocount	dwarf+symtab	663219e2f24d		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x5bc	8	dmrb_getinfolength	dwarf+symtab	9e01693ae8ec		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x5c4	192	dmrb_getnextfree	dwarf+symtab	9fa4549b82d4		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x684	220	dmrb_getnextvalid	dwarf+symtab	5aa413a455e0		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x5c4	192	dmrb_getnextfree	dwarf+symtab	9fa4549b82d4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x684	220	dmrb_getnextvalid	dwarf+symtab	5aa413a455e0		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x760	8	dmrb_getvalid	dwarf+symtab	6319e0118090		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x768	264	dmrb_putvalid	dwarf+symtab	cb03be7b9c6f		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x768	264	dmrb_putvalid	dwarf+symtab	cb03be7b9c6f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x870	116	dmrb_getaddress	dwarf+symtab	da16be7d4039		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x8e4	64	dmrb_getinfoaddress	dwarf+symtab	1597d71bf027		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x924	28	dmrb_timestamp	dwarf+symtab	a86de4a9d7a4		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x940	28	dmrb_ust_stamp	dwarf+symtab	a86de4a9d7a4		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x95c	100	dmrb_getpagelist	dwarf+symtab	f4f2ae456149		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x95c	100	dmrb_getpagelist	dwarf+symtab	f4f2ae456149		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x9c0	56	dmrb_getnewvalid	dwarf+symtab	04f593d5b214		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x9f8	60	dmrb_getincount	dwarf+symtab	b5d77df97f96		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0xa34	60	dmrb_getoutcount	dwarf+symtab	7b108cf2750c		out:1	undocumented		
@@ -15611,15 +15611,15 @@ IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x8c	124	cpou
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x108	8	dsinit	dwarf+symtab	87506497337c		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x110	296	dsopen	dwarf+symtab	982b0330cc64		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x238	112	dsclose	dwarf+symtab	88b8c2416042		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x2a8	2580	dsioctl	dwarf+symtab	703f79ec0872		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x2a8	2580	dsioctl	dwarf+symtab	703f79ec0872		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xcbc	28	ds_calloc	dwarf+symtab	12a18864d05c		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xcd8	204	ds_copyiov	dwarf+symtab	2d5e255ca1e4		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xda4	172	dma_lock	dwarf+symtab	541aac1fffc2		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xcd8	204	ds_copyiov	dwarf+symtab	2d5e255ca1e4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xda4	172	dma_lock	dwarf+symtab	541aac1fffc2		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xe50	96	dma_unlock	dwarf+symtab	3c512ec2a2d9		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xeb0	220	task_find	dwarf+symtab	f9f455980e6f		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xeb0	220	task_find	dwarf+symtab	f9f455980e6f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xf8c	48	task_init_desc	dwarf+symtab	a5af3eec397a		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xfbc	152	task_free_desc	dwarf+symtab	98cb1fc4e2d0		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1054	648	task_glue	dwarf+symtab	a6d7887910ce		out:1	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1054	648	task_glue	dwarf+symtab	a6d7887910ce		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x12dc	192	task_unglue	dwarf+symtab	9f2903748bb1		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x139c	164	irix5_dsreq_to_dsreq	dwarf+symtab	cf269cb27d6b		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1440	164	dsreq_to_irix5_dsreq	dwarf+symtab	3fa2eeaa9924		out:1	undocumented		
@@ -32655,7 +32655,7 @@ IP30/unix	kernel	n64		0x0		ckpt_cursig	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		ckpt_diropen	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ckpt_dup	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ckpt_execmap	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		ckpt_fid	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		ckpt_fid	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		ckpt_fpaddr	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ckpt_fsettimes	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ckpt_get_shmcnt	dwarf			out:7	undocumented		
@@ -32890,17 +32890,17 @@ IP30/unix	kernel	n64		0x0		disconnect	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		disconnect_ind	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dispatch_async_nfs3_bio	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dispatch_q	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		dk_callback_backend	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		dk_callback_backend	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		dk_callback_intr	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dk_checkqueue	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		dk_chkcond	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		dk_chkcond	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		dk_chkptsize	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dk_cmd	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dk_disk_stat_info_add	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dk_disk_stat_info_remove	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dk_do_retry	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dk_getblksz	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		dk_intr	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		dk_intr	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		dk_pmsg	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dk_print_sense	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dk_readcap	dwarf			out:7	undocumented		
@@ -32917,7 +32917,7 @@ IP30/unix	kernel	n64		0x0		dl_mnt_other	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		dl_mnt_root	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dl_strdup	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dm_pfault_event	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		dma_lock	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		dma_lock	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		dmrb_lookup_handle	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dmscall_expand	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		dmslt_expand	dwarf			out:7	undocumented		
@@ -35538,9 +35538,9 @@ IP30/unix	kernel	n64		0x0		syssgi_rusage	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		syssgi_tstamp	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		syssgi_tune	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		t0init	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		task_find	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		task_find	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		task_free_desc	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		task_glue	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		task_glue	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64		0x0		task_init_desc	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		tcp_defer_segment	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		tcp_full_assign	dwarf			out:7	undocumented		
@@ -38191,9 +38191,9 @@ IP30/unix	kernel	n64	.text	0xa80000002008e120	156	dk_unalloc_softc	symtab	488c83
 IP30/unix	kernel	n64	.text	0xa80000002008e1bc	152	subchaninit	symtab	6ebe17e718d5		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002008e254	184	dksc_disk_part_hwg_update	symtab	f493f56d1de3		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002008e30c	256	dksc_disk_part_hwg_check	symtab	f6a2c5e88aac		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002008e40c	1828	dkscopen	symtab	cf956d64533d		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002008e40c	1828	dkscopen	symtab	cf956d64533d		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa80000002008eb30	356	dkscclose	symtab	c9fe19f9ce90		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002008ec94	2364	dkscioctl	symtab	570e06673c49		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002008ec94	2364	dkscioctl	symtab	570e06673c49		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa80000002008f5d0	28	dkscdone	symtab	368f9cb415fb		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002008f5ec	564	dkscread	symtab	0973ea24d793		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002008f820	564	dkscwrite	symtab	fd30934d6c4a		out:7	undocumented		
@@ -43875,13 +43875,13 @@ IP30/unix	kernel	n64	.text	0xa8000000203357e0	52	pipe_attr_set	symtab	9c3f892893
 IP30/unix	kernel	n64	.text	0xa800000020335814	36	pipe_rwlock	symtab	4fa7e31055da		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020335838	32	pipe_rwunlock	symtab	ff91e92b0670		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020335b68	36	ckpt_init	symtab	5f1f331c3422		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020335b8c	280	ckpt_vp_open	symtab	c3f19b087e2a		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020335dc0	100	ckpt_lookup	symtab	5564e8108d40		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020335b8c	280	ckpt_vp_open	symtab	c3f19b087e2a		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/unix	kernel	n64	.text	0xa800000020335dc0	100	ckpt_lookup	symtab	5564e8108d40		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020335e24	32	ckpt_lookup_free	symtab	3f353050929c		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020335e44	304	ckpt_lookup_add	symtab	c321ad9c913e		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020335e44	304	ckpt_lookup_add	symtab	c321ad9c913e		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020335f74	76	ckpt_lookup_get	symtab	c45792b70eb0		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020335fc0	72	ckpt_vnode_free	symtab	5b8033e06b2e		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020336008	60	ckpt_setfd	symtab	783ff874c4e1		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020336008	60	ckpt_setfd	symtab	783ff874c4e1		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020336044	96	ckpt_prioctl_attr	symtab	35ce51bb6e17		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203394b4	560	ckpt_prioctl	symtab	680feb425892		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203396e4	728	ckpt_prioctl_thread	symtab	141201a379d2		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
@@ -43891,8 +43891,8 @@ IP30/unix	kernel	n64	.text	0xa80000002033aa2c	152	ckpt_wstat_decode	symtab	d2148
 IP30/unix	kernel	n64	.text	0xa80000002033abcc	8	dsinit	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002033abd4	296	dsopen	symtab	f8598d3525f3		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002033acfc	112	dsclose	symtab	9bfafd84fb3e		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002033ad6c	2580	dsioctl	symtab	1a22eebb5f7d		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002033b79c	204	ds_copyiov	symtab	4db0506f2711		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002033ad6c	2580	dsioctl	symtab	1a22eebb5f7d		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/unix	kernel	n64	.text	0xa80000002033b79c	204	ds_copyiov	symtab	4db0506f2711		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa80000002033b914	96	dma_unlock	symtab	16a2e4b4474d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002033bda0	192	task_unglue	symtab	022db741267d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002033c0c4	428	glue_reserve	symtab	25979c4d5679		out:7	undocumented		
@@ -44422,12 +44422,12 @@ IP30/unix	kernel	n64	.text	0xa80000002039056c	92	pckbd_wput	symtab	c486cfbad71e	
 IP30/unix	kernel	n64	.text	0xa8000000203905c8	108	pckbd_rput	symtab	e0453939f59d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020391274	216	pcmouse_rput	symtab	1770d24a6c00		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020391370	236	dmsinit	symtab	dbf41484dec9		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002039145c	172	dmsopen	symtab	ad707c31c301		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020391508	92	dmsclose	symtab	ed233e62ef6a		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020391564	2460	dmsioctl	symtab	71d2b70b7fb9		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020391f00	84	dmsmap	symtab	05dde2baf662		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002039145c	172	dmsopen	symtab	ad707c31c301		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/unix	kernel	n64	.text	0xa800000020391508	92	dmsclose	symtab	ed233e62ef6a		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/unix	kernel	n64	.text	0xa800000020391564	2460	dmsioctl	symtab	71d2b70b7fb9		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/unix	kernel	n64	.text	0xa800000020391f00	84	dmsmap	symtab	05dde2baf662		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020391f54	8	dmsunmap	symtab	87506497337c		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020391f5c	108	dmspoll	symtab	a47e26021b6e		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020391f5c	108	dmspoll	symtab	a47e26021b6e		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020392294	568	dms_pollgrp_add	symtab	fb22c518de1e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203924cc	528	dms_pollgrp_del	symtab	73525ecdf1ed		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203926dc	196	dms_poll_event	symtab	2b737052687c		out:7	undocumented		
@@ -44437,7 +44437,7 @@ IP30/unix	kernel	n64	.text	0xa800000020392900	172	dms_open	symtab	9cda1727994c		
 IP30/unix	kernel	n64	.text	0xa8000000203929ac	324	dms_close	symtab	4e4a35cddbe9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020392df4	372	_dms_block_init_fix	symtab	a84ad2ebe248		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020392f68	236	_dms_block_init_var	symtab	70547b12ee58		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020393604	4172	dms_pool_create	symtab	b183595944a2		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020393604	4172	dms_pool_create	symtab	b183595944a2		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020394650	200	dms_pool_set_block_size	symtab	bcb08362f328		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020394718	32	dms_pool_get_block_size	symtab	0e8490a6ea98		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020394738	420	dms_pool_attach	symtab	1abc14cf0f70		out:7	undocumented		
@@ -44447,12 +44447,12 @@ IP30/unix	kernel	n64	.text	0xa800000020394a40	152	dms_pool_map	symtab	516dc52686
 IP30/unix	kernel	n64	.text	0xa800000020394ad8	160	dms_pool_state	symtab	4e7be03fd97b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020394e48	76	dms_map	symtab	5fc3e19b911e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020394e94	504	dms_poll	symtab	57e3f73d1df4		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002039508c	660	dms_block_alloc	symtab	18f096d2e652		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002039508c	660	dms_block_alloc	symtab	18f096d2e652		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020395320	176	dms_block_info	symtab	4c4a0b4a3bd4		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020395694	172	dms_block_attach	symtab	f86f09e71012		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020395740	120	dms_block_detach	symtab	72c774c842d8		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203957b8	644	dms_block_join	symtab	4e894b53916e		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020395a3c	968	dms_block_split	symtab	34dc368cf044		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020395a3c	968	dms_block_split	symtab	34dc368cf044		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020395e04	588	dms_block_resize	symtab	dc4403defa27		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020396050	144	dms_block_map	symtab	540188aaa0a2		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203960e0	600	dms_fifo_create	symtab	130bbea5b019		out:7	undocumented		
@@ -44460,7 +44460,7 @@ IP30/unix	kernel	n64	.text	0xa800000020396338	8	dms_fifo_resize	symtab	4dc995428
 IP30/unix	kernel	n64	.text	0xa800000020396340	328	dms_fifo_attach	symtab	0a25d5f2ee0c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020396544	152	dms_fifo_detach	symtab	a483d1deb5f1		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203965dc	340	dms_fifo_enq	symtab	53158525560d		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020396730	464	dms_fifo_deq	symtab	08706849a21e		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020396730	464	dms_fifo_deq	symtab	08706849a21e		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020396900	212	dms_pool_get_user	symtab	380deabd17f1		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203969d4	188	dms_pool_set_user	symtab	c7cb57b4e39e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020396a90	212	dms_fifo_get_user	symtab	218e647c3f9b		out:7	undocumented		
@@ -44485,8 +44485,8 @@ IP30/unix	kernel	n64	.text	0xa800000020397904	132	dms_get_itemcount	symtab	8a679
 IP30/unix	kernel	n64	.text	0xa800000020397988	60	dms_ust_stamp	symtab	f202ded9c34d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203979c4	424	dms_block_get_tile_list	symtab	ffc66d114506		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020397b6c	68	dms_timestamp	symtab	0ef65f721792		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020397bb0	8	dms_block_start_dma	symtab	87506497337c		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020397bb8	8	dms_block_end_dma	symtab	87506497337c		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020397bb0	8	dms_block_start_dma	symtab	87506497337c		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/unix	kernel	n64	.text	0xa800000020397bb8	8	dms_block_end_dma	symtab	87506497337c		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020397bc0	176	dms_pool_cache_policy	symtab	6a62a8ecc1dd		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020397c70	176	dms_fifo_cache_policy	symtab	eb084af12ea2		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020397d20	616	dms_block_switch_pages	symtab	ee3cfdbb9ac3		out:7	undocumented		
@@ -44508,22 +44508,22 @@ IP30/unix	kernel	n64	.text	0xa800000020398e48	40	dmrb_compat_init	symtab	3de4ae6
 IP30/unix	kernel	n64	.text	0xa800000020398e70	28	dmrb_compat_final	symtab	6ec019d5f6d9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020398e8c	144	dmrb_open	symtab	253f2c964bfc		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020398f1c	144	dmrb_close	symtab	040e2965098a		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020398fac	716	dmrb_attach	symtab	c9d5fda63325		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020398fac	716	dmrb_attach	symtab	c9d5fda63325		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020399278	72	dmrb_callback	symtab	5f94855aa9ab		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203992c0	60	dmrb_getdone	symtab	77843b4edcd5		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203992fc	32	dmrb_getframesize	symtab	cdc607c4e89e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002039931c	164	dmrb_putfree	symtab	baa339f73799		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203993c0	32	dmrb_getinfocount	symtab	3fc391623e43		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203993e0	8	dmrb_getinfolength	symtab	9e01693ae8ec		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000203993e8	192	dmrb_getnextfree	symtab	66342ad93be5		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000203994a8	220	dmrb_getnextvalid	symtab	31a7e6ac2584		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000203993e8	192	dmrb_getnextfree	symtab	66342ad93be5		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/unix	kernel	n64	.text	0xa8000000203994a8	220	dmrb_getnextvalid	symtab	31a7e6ac2584		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020399584	8	dmrb_getvalid	symtab	6319e0118090		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002039958c	264	dmrb_putvalid	symtab	5e12ad9c1546		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002039958c	264	dmrb_putvalid	symtab	5e12ad9c1546		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa800000020399694	116	dmrb_getaddress	symtab	7f2816af2586		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020399708	64	dmrb_getinfoaddress	symtab	136433d47609		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020399748	28	dmrb_timestamp	symtab	32df6e6bccd7		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020399764	28	dmrb_ust_stamp	symtab	f4925c08348b		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020399780	100	dmrb_getpagelist	symtab	e775a706688c		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020399780	100	dmrb_getpagelist	symtab	e775a706688c		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa8000000203997e4	56	dmrb_getnewvalid	symtab	5d68c7bb3a06		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002039981c	60	dmrb_getincount	symtab	29de5f7bd39c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020399858	60	dmrb_getoutcount	symtab	19dd395826f5		out:7	undocumented		
@@ -45169,7 +45169,7 @@ IP30/unix	kernel	n64	.text	0xa8000000203aa044	28	dm_send_mount_event	symtab	79cd
 IP30/unix	kernel	n64	.text	0xa8000000203aa060	28	dm_send_namesp_event	symtab	79cdda880e1f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa07c	8	dm_send_unmount_event	symtab	78aa5094d5ec		out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/unix	kernel	n64	.text	0xa8000000203aa084	28	dm_vp_to_handle	symtab	79cdda880e1f		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000203aa0a0	28	dm_release_threads	symtab	79cdda880e1f		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000203aa0a0	28	dm_release_threads	symtab	79cdda880e1f		out:7	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/unix	kernel	n64	.text	0xa8000000203aa0bc	8	xvm_cell_icrash	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa0c4	8	xvm_cellinit_start	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203aa0cc	8	xvm_prt_bcobj	symtab	78aa5094d5ec		out:7	undocumented		
@@ -46574,14 +46574,14 @@ IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_sys.o)	kernel-object	n64	.text	0xbb8	648
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_sys.o)	kernel-object	n64	.text	0xe40	560	ckpt_restartreturn	dwarf+symtab	225a15a00a74		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_sys.o)	kernel-object	n64	.text	0x1070	152	ckpt_wstat_decode	dwarf+symtab	d214805f4569		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64		0x0		ckpt_init	dwarf+symtab			out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x24	280	ckpt_vp_open	dwarf+symtab	25d5b51b8aaf		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x13c	284	ckpt_fid	dwarf+symtab	0314398ebdf5		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x258	100	ckpt_lookup	dwarf+symtab	e1b8475a5280		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x24	280	ckpt_vp_open	dwarf+symtab	25d5b51b8aaf		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x13c	284	ckpt_fid	dwarf+symtab	0314398ebdf5		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x258	100	ckpt_lookup	dwarf+symtab	e1b8475a5280		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x2bc	32	ckpt_lookup_free	dwarf+symtab	c0d220d7659b		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x2dc	304	ckpt_lookup_add	dwarf+symtab	168955af1a20		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x2dc	304	ckpt_lookup_add	dwarf+symtab	168955af1a20		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x40c	76	ckpt_lookup_get	dwarf+symtab	c45792b70eb0		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x458	72	ckpt_vnode_free	dwarf+symtab	6aab30aaa8f5		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x4a0	60	ckpt_setfd	dwarf+symtab	0eeedd1f76bc		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x4a0	60	ckpt_setfd	dwarf+symtab	0eeedd1f76bc		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cserialio.o	kernel-object	n64		0x0		csio_pull_cbuf	dwarf+symtab			out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cserialio.o	kernel-object	n64	.text	0x9c	112	itimer_timeout	dwarf+symtab	d0b2cb8c0c69		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/cserialio.o	kernel-object	n64	.text	0x10c	180	csio_data_ready	dwarf+symtab	8aff96ec0831		out:4	undocumented		
@@ -47003,9 +47003,9 @@ IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x16c	156	dk_unalloc
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x208	152	subchaninit	dwarf+symtab	8c5d59f30fcb		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x2a0	184	dksc_disk_part_hwg_update	dwarf+symtab	bc9b08e1a435		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x358	256	dksc_disk_part_hwg_check	dwarf+symtab	f075400c7bb4		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x458	1828	dkscopen	dwarf+symtab	d8acf3e35f6c		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x458	1828	dkscopen	dwarf+symtab	d8acf3e35f6c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0xb7c	356	dkscclose	dwarf+symtab	c28e01ea3257		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0xce0	2364	dkscioctl	dwarf+symtab	10ff91c86910		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0xce0	2364	dkscioctl	dwarf+symtab	10ff91c86910		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x161c	28	dkscdone	dwarf+symtab	b7e9e5a7afaf		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x1638	564	dkscread	dwarf+symtab	d6b2126301dc		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x186c	564	dkscwrite	dwarf+symtab	826267373c74		out:1	undocumented		
@@ -47015,9 +47015,9 @@ IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x1c0c	476	dksccomma
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x1de8	724	dkscstrategy	dwarf+symtab	95d338ed0b05		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x20bc	484	dkscstart	dwarf+symtab	01d67776f9e1		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x22a0	196	dk_queue_retry	dwarf+symtab	abded0c4e9f2		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x2364	800	dk_intr	dwarf+symtab	f7a9fc197f33		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x2364	800	dk_intr	dwarf+symtab	f7a9fc197f33		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x2684	156	dk_busy_retry	dwarf+symtab	63e04d71cf5c		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x2720	1672	dk_chkcond	dwarf+symtab	9cfe43a2987c		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x2720	1672	dk_chkcond	dwarf+symtab	9cfe43a2987c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x2da8	128	dkscprint	dwarf+symtab	5bc27c83f80c		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x2e28	308	getsize	dwarf+symtab	662804a14dd8		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x2f5c	32	dkscsize	dwarf+symtab	8066a1f9382a		out:1	undocumented		
@@ -47045,7 +47045,7 @@ IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x47c8	172	dk_clr_fl
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x4874	168	dk_set_flags	dwarf+symtab	221b2e5b021c		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x491c	448	dk_alloc_ioreq	dwarf+symtab	d858bb8e6289		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x4adc	144	dk_callback_frontend	dwarf+symtab	2e30f855b619		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x4b6c	756	dk_callback_backend	dwarf+symtab	a1f34accd97f		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x4b6c	756	dk_callback_backend	dwarf+symtab	a1f34accd97f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x4e60	360	dk_callback_intr	dwarf+symtab	382ff7be442b		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x4fc8	376	dksc_partition_to_canonical_special	dwarf+symtab	92da876513cc		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dksc.o	kernel-object	n64	.text	0x5140	540	get_hw_scsi_info	dwarf+symtab	f906e9ab1a83		out:1	undocumented		
@@ -47066,7 +47066,7 @@ IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x5c	
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xf8	380	dm_add_fsys_entry	dwarf+symtab	05834ee5113e		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x274	364	dm_change_fsys_entry	dwarf+symtab	dd28a50499ed		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x3e0	420	dm_remove_fsys_entry	dwarf+symtab	057aeee42540		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x584	676	dm_handle_to_vp	dwarf+symtab	68bab9296591		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x584	676	dm_handle_to_vp	dwarf+symtab	68bab9296591		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x828	228	dm_vp_to_handle	dwarf+symtab	fb76850106e2		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x90c	88	dm_check_dmapi_vp	dwarf+symtab	24da589abd88		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x964	116	dm_find_mount_tevp_and_lock	dwarf+symtab	66d1cc3388fc		out:1	undocumented		
@@ -47079,10 +47079,10 @@ IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xe64
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xf24	200	dm_fd_to_hdl	dwarf+symtab	a37f77ded9be		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xfec	212	dm_set_eventlist	dwarf+symtab	a3613584052a		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x10c0	212	dm_get_eventlist	dwarf+symtab	1691f9eb90c4		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1194	656	dm_set_disp	dwarf+symtab	5f9e4b724465		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1194	656	dm_set_disp	dwarf+symtab	5f9e4b724465		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1424	348	dm_set_return_on_destroy	dwarf+symtab	01a09ac5d9ba		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1580	232	dm_get_mountinfo	dwarf+symtab	3d4485a8239e		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1668	704	dm_getall_disp	dwarf+symtab	c1c4057f904c		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1668	704	dm_getall_disp	dwarf+symtab	c1c4057f904c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1928	188	dm_execute_clrmount	dwarf+symtab	3486133221cb		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x19e4	520	dm_clrmount_callback	dwarf+symtab	5f2cf5a0de7e		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1bec	272	dm_release_disp_threads	dwarf+symtab	8ab1e7953ca3		out:1	undocumented		
@@ -47109,36 +47109,36 @@ IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0xc7c	
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0xe14	324	dm_find_eventmsg	dwarf+symtab	4ca4f3cea14f		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0xf58	292	dm_move_event	dwarf+symtab	94b09d9a721f		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x107c	100	dm_pending	dwarf+symtab	8683bb864c9f		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x10e0	1032	dm_get_events	dwarf+symtab	173e028d52d7		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x14e8	404	dm_respond_event	dwarf+symtab	637553c88a44		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x10e0	1032	dm_get_events	dwarf+symtab	173e028d52d7		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x14e8	404	dm_respond_event	dwarf+symtab	637553c88a44		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x167c	260	__find_match_event_no_waiters_locked	dwarf+symtab	bba8b40c56e5		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1780	148	find_match_event_no_waiters_locked	dwarf+symtab	0d7eb07c1254		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1814	1208	dm_enqueue	dwarf+symtab	464807f8e93b		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1814	1208	dm_enqueue	dwarf+symtab	464807f8e93b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1ccc	160	dm_enqueue_normal_event	dwarf+symtab	e70e86c2572e		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1d6c	268	dm_enqueue_mount_event	dwarf+symtab	3b6e95974bc3		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1e78	88	dm_enqueue_sendmsg_event	dwarf+symtab	f3e66d5e938f		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1ed0	188	dm_enqueue_user_event	dwarf+symtab	faf0136334ee		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1f8c	472	dm_release_threads	dwarf+symtab	bc6b49916326		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1f8c	472	dm_release_threads	dwarf+symtab	bc6b49916326		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64		0x0		dmiidbginit	dwarf+symtab			out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x74	116	dmiidbgunload	dwarf+symtab	cf574f314ed8		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0xe8	92	ev_value_to_name	dwarf	deceb3025e9e		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x144	140	right_to_name	dwarf	9cbba33d2760		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x1d0	176	state_to_name	dwarf	9eeefff93e6a		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x144	140	right_to_name	dwarf	9cbba33d2760		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x1d0	176	state_to_name	dwarf	9eeefff93e6a		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x280	104	hex_to_ascii	dwarf	7d6e67b3f253		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x2e8	208	idbg_dmi_equeue	dwarf	842eefd8c691		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x3b8	592	idbg_dmi_event	dwarf	32e8da96be8b		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x3b8	592	idbg_dmi_event	dwarf	32e8da96be8b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x608	196	idbg_dmi_help	dwarf	98a65fd2f1f2		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x6cc	236	print_one_session	dwarf	dea8092ab000		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x7b8	260	idbg_dmi_sessions	dwarf	f739d01a7c94		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x8bc	520	print_one_reglist	dwarf	c7808e193069		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0x8bc	520	print_one_reglist	dwarf	c7808e193069		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dmiidbg.o	kernel-object	n64	.text	0xac4	156	idbg_dmi_regs	dwarf	79afdf177379		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64		0x0		dmsinit	dwarf+symtab			out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0xec	172	dmsopen	dwarf+symtab	7f2396e47461		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0x198	92	dmsclose	dwarf+symtab	ffbac260f19f		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0x1f4	2460	dmsioctl	dwarf+symtab	1f46c1a6f9b8		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0xb90	84	dmsmap	dwarf+symtab	214f3e84ac05		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0xec	172	dmsopen	dwarf+symtab	7f2396e47461		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0x198	92	dmsclose	dwarf+symtab	ffbac260f19f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0x1f4	2460	dmsioctl	dwarf+symtab	1f46c1a6f9b8		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0xb90	84	dmsmap	dwarf+symtab	214f3e84ac05		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0xbe4	8	dmsunmap	dwarf+symtab	87506497337c		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0xbec	108	dmspoll	dwarf+symtab	5a9e1535d97f		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dms.o)	kernel-object	n64	.text	0xbec	108	dmspoll	dwarf+symtab	5a9e1535d97f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64		0x0		_dms_bbag_alloc	dwarf+symtab			out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x68	124	_dms_bbag_reserve	dwarf+symtab	e6437b69c461		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0xe4	72	_dms_bbag_unreserve	dwarf+symtab	2396f21baaa0		out:1	undocumented		
@@ -47158,7 +47158,7 @@ IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0xfa0	236	
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x108c	508	_dms_notify_fifo	dwarf+symtab	966ec8c996a0		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x1288	332	_dms_admin_fifo	dwarf+symtab	153735df3d33		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x13d4	616	_dms_notify_pool	dwarf+symtab	b12abd708dbb		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x163c	4172	dms_pool_create	dwarf+symtab	4face9f00ac2		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x163c	4172	dms_pool_create	dwarf+symtab	4face9f00ac2		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2688	200	dms_pool_set_block_size	dwarf+symtab	e7c42383e9b0		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2750	32	dms_pool_get_block_size	dwarf+symtab	0e8490a6ea98		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2770	420	dms_pool_attach	dwarf+symtab	b8f4ecdd9415		out:1	undocumented		
@@ -47171,14 +47171,14 @@ IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2bb0	620
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2e1c	100	_dms_pool_map	dwarf+symtab	589739742c40		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2e80	76	dms_map	dwarf+symtab	607eb3cc5784		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2ecc	504	dms_poll	dwarf+symtab	7a1a7d1974c6		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x30c4	660	dms_block_alloc	dwarf+symtab	4e253ccdbae2		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x30c4	660	dms_block_alloc	dwarf+symtab	4e253ccdbae2		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3358	176	dms_block_info	dwarf+symtab	c9c547fa2cd3		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3408	252	_dms_block_incref	dwarf+symtab	1eaaddecfb89		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3504	456	_dms_block_decref	dwarf+symtab	aef54f3aebec		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x36cc	172	dms_block_attach	dwarf+symtab	5c5ca64d0931		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3778	120	dms_block_detach	dwarf+symtab	77ad6bc800e3		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x37f0	644	dms_block_join	dwarf+symtab	6252a6be13ed		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3a74	968	dms_block_split	dwarf+symtab	61550b593a01		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3a74	968	dms_block_split	dwarf+symtab	61550b593a01		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3e3c	588	dms_block_resize	dwarf+symtab	f104cb1aa65b		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4088	144	dms_block_map	dwarf+symtab	ab8332020eb6		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4118	600	dms_fifo_create	dwarf+symtab	5e503fe207f6		out:1	undocumented		
@@ -47187,7 +47187,7 @@ IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4378	328
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x44c0	188	_dms_fifo_decref	dwarf+symtab	d76c35751f7a		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x457c	152	dms_fifo_detach	dwarf+symtab	de244b002518		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4614	340	dms_fifo_enq	dwarf+symtab	38dfb911b899		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4768	464	dms_fifo_deq	dwarf+symtab	8d9a70b33cd6		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4768	464	dms_fifo_deq	dwarf+symtab	8d9a70b33cd6		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4938	212	dms_pool_get_user	dwarf+symtab	64928e0209df		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4a0c	188	dms_pool_set_user	dwarf+symtab	246c44f67043		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4ac8	212	dms_fifo_get_user	dwarf+symtab	1ffa21219bbb		out:1	undocumented		
@@ -47212,8 +47212,8 @@ IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x593c	132
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x59c0	60	dms_ust_stamp	dwarf+symtab	2a1edc350715		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x59fc	424	dms_block_get_tile_list	dwarf+symtab	016716014325		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5ba4	68	dms_timestamp	dwarf+symtab	a54c9d44e7ff		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5be8	8	dms_block_start_dma	dwarf+symtab	87506497337c		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5bf0	8	dms_block_end_dma	dwarf+symtab	87506497337c		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5be8	8	dms_block_start_dma	dwarf+symtab	87506497337c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5bf0	8	dms_block_end_dma	dwarf+symtab	87506497337c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5bf8	176	dms_pool_cache_policy	dwarf+symtab	dd4819e5e698		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5ca8	176	dms_fifo_cache_policy	dwarf+symtab	e1fbf0ae03c0		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5d58	616	dms_block_switch_pages	dwarf+symtab	b86d777a8fac		out:1	undocumented		
@@ -47225,22 +47225,22 @@ IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x24	40
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x4c	28	dmrb_compat_final	dwarf+symtab	554dd3b5deec		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x68	144	dmrb_open	dwarf+symtab	ff75a2bb37f3		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0xf8	144	dmrb_close	dwarf+symtab	3ecbfe53bf6b		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x188	716	dmrb_attach	dwarf+symtab	5375785cb8d5		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x188	716	dmrb_attach	dwarf+symtab	5375785cb8d5		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x454	72	dmrb_callback	dwarf+symtab	6d3dcaa92f5f		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x49c	60	dmrb_getdone	dwarf+symtab	88098075055e		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x4d8	32	dmrb_getframesize	dwarf+symtab	6ecdab6e9a6b		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x4f8	164	dmrb_putfree	dwarf+symtab	37993851b990		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x59c	32	dmrb_getinfocount	dwarf+symtab	663219e2f24d		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x5bc	8	dmrb_getinfolength	dwarf+symtab	9e01693ae8ec		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x5c4	192	dmrb_getnextfree	dwarf+symtab	9fa4549b82d4		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x684	220	dmrb_getnextvalid	dwarf+symtab	5aa413a455e0		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x5c4	192	dmrb_getnextfree	dwarf+symtab	9fa4549b82d4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x684	220	dmrb_getnextvalid	dwarf+symtab	5aa413a455e0		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x760	8	dmrb_getvalid	dwarf+symtab	6319e0118090		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x768	264	dmrb_putvalid	dwarf+symtab	cb03be7b9c6f		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x768	264	dmrb_putvalid	dwarf+symtab	cb03be7b9c6f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x870	116	dmrb_getaddress	dwarf+symtab	da16be7d4039		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x8e4	64	dmrb_getinfoaddress	dwarf+symtab	1597d71bf027		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x924	28	dmrb_timestamp	dwarf+symtab	a86de4a9d7a4		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x940	28	dmrb_ust_stamp	dwarf+symtab	a86de4a9d7a4		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x95c	100	dmrb_getpagelist	dwarf+symtab	f4f2ae456149		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x95c	100	dmrb_getpagelist	dwarf+symtab	f4f2ae456149		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x9c0	56	dmrb_getnewvalid	dwarf+symtab	04f593d5b214		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x9f8	60	dmrb_getincount	dwarf+symtab	b5d77df97f96		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0xa34	60	dmrb_getoutcount	dwarf+symtab	7b108cf2750c		out:1	undocumented		
@@ -47249,15 +47249,15 @@ IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x8c	124	cpou
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x108	8	dsinit	dwarf+symtab	87506497337c		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x110	296	dsopen	dwarf+symtab	982b0330cc64		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x238	112	dsclose	dwarf+symtab	88b8c2416042		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x2a8	2580	dsioctl	dwarf+symtab	dbdccf2e60fe		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x2a8	2580	dsioctl	dwarf+symtab	dbdccf2e60fe		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xcbc	28	ds_calloc	dwarf+symtab	12a18864d05c		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xcd8	204	ds_copyiov	dwarf+symtab	2d5e255ca1e4		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xda4	172	dma_lock	dwarf+symtab	541aac1fffc2		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xcd8	204	ds_copyiov	dwarf+symtab	2d5e255ca1e4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xda4	172	dma_lock	dwarf+symtab	541aac1fffc2		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xe50	96	dma_unlock	dwarf+symtab	3c512ec2a2d9		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xeb0	220	task_find	dwarf+symtab	f9f455980e6f		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xeb0	220	task_find	dwarf+symtab	f9f455980e6f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xf8c	48	task_init_desc	dwarf+symtab	a5af3eec397a		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xfbc	152	task_free_desc	dwarf+symtab	98cb1fc4e2d0		out:1	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1054	648	task_glue	dwarf+symtab	a6d7887910ce		out:1	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1054	648	task_glue	dwarf+symtab	a6d7887910ce		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x12dc	192	task_unglue	dwarf+symtab	9f2903748bb1		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x139c	164	irix5_dsreq_to_dsreq	dwarf+symtab	cf269cb27d6b		out:1	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1440	164	dsreq_to_irix5_dsreq	dwarf+symtab	3fa2eeaa9924		out:1	undocumented		
@@ -62694,14 +62694,14 @@ IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_sys.o)	kernel-object	n32	.text	0xb6c	592
 IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_sys.o)	kernel-object	n32	.text	0xdbc	520	ckpt_restartreturn	dwarf+symtab	f9e0bbe0a5a2		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_sys.o)	kernel-object	n32	.text	0xfc4	160	ckpt_wstat_decode	dwarf+symtab	0827920c7162		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32		0x0		ckpt_init	dwarf+symtab			out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x28	280	ckpt_vp_open	dwarf+symtab	f44091c75853		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x140	152	ckpt_fid	dwarf+funcnames+symtab	4dc8b0443109		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x1d8	100	ckpt_lookup	dwarf+symtab	7fa9d29b21d7		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x28	280	ckpt_vp_open	dwarf+symtab	f44091c75853		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x140	152	ckpt_fid	dwarf+funcnames+symtab	4dc8b0443109		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x1d8	100	ckpt_lookup	dwarf+symtab	7fa9d29b21d7		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x23c	32	ckpt_lookup_free	dwarf+symtab	b3dffc0bd06b		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x25c	312	ckpt_lookup_add	dwarf+symtab	f9008217ee2a		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x25c	312	ckpt_lookup_add	dwarf+symtab	f9008217ee2a		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x394	76	ckpt_lookup_get	dwarf+symtab	b05f4cc8dbc2		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x3e0	72	ckpt_vnode_free	dwarf+symtab	8cb802f426b5		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x428	60	ckpt_setfd	dwarf+symtab	c276d3e444e6		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-object	n32	.text	0x428	60	ckpt_setfd	dwarf+symtab	c276d3e444e6		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32		0x0		crimeFifoEmptyHandler	dwarf+symtab			in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x120	136	crimeEmptyWaitTimeout	dwarf+symtab	4a7208f5ffb4		in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x1a8	476	crimeFifoFullHandler	dwarf+symtab	4a4dd54765f5		in	named-only	chips/crime/README.md#interrupt-registers-0x10-to-0x28	Interrupt registers (`0x10` to `0x28`)
@@ -63271,9 +63271,9 @@ IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x170	156	dk_unalloc
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x20c	152	subchaninit	dwarf+symtab	605520b7c163		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x2a4	184	dksc_disk_part_hwg_update	dwarf+symtab	53eae7554ee4		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x35c	256	dksc_disk_part_hwg_check	dwarf+symtab	3dcf22f72b50		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x45c	1844	dkscopen	dwarf+symtab	be451f601ad0		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x45c	1844	dkscopen	dwarf+symtab	be451f601ad0		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0xb90	356	dkscclose	dwarf+symtab	345ccb16c326		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0xcf4	2164	dkscioctl	dwarf+symtab	0917073a7927		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0xcf4	2164	dkscioctl	dwarf+symtab	0917073a7927		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x1568	28	dkscdone	dwarf+symtab	c4aa809fce85		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x1584	524	dkscread	dwarf+symtab	1dcf27760848		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x1790	524	dkscwrite	dwarf+symtab	61c338ec1721		out:1	undocumented		
@@ -63283,9 +63283,9 @@ IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x1af4	460	dksccomma
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x1cc0	652	dkscstrategy	dwarf+symtab	5574c6eeef76		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x1f4c	444	dkscstart	dwarf+funcnames+symtab	32aafea25b0d		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x2108	184	dk_queue_retry	dwarf+symtab	75faa697d4cf		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x21c0	784	dk_intr	dwarf+funcnames+symtab	ab68f947ea72		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x21c0	784	dk_intr	dwarf+funcnames+symtab	ab68f947ea72		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x24d0	160	dk_busy_retry	dwarf+symtab	646a35d5c44e		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x2570	1820	dk_chkcond	dwarf+funcnames+symtab	c69de1241d8a		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x2570	1820	dk_chkcond	dwarf+funcnames+symtab	c69de1241d8a		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x2c8c	128	dkscprint	dwarf+symtab	6639e2ce0b03		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x2d0c	308	getsize	dwarf+funcnames+symtab	05b3158385f4		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x2e40	32	dkscsize	dwarf+symtab	5d5acc5da73f		out:1	undocumented		
@@ -63312,7 +63312,7 @@ IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x4674	164	dk_clr_fl
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x4718	160	dk_set_flags	dwarf+symtab	d8c653a82d07		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x47b8	428	dk_alloc_ioreq	dwarf+symtab	a389b783875b		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x4964	136	dk_callback_frontend	dwarf+symtab	67fb41de0252		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x49ec	740	dk_callback_backend	dwarf+funcnames+symtab	9fbd242d72ed		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x49ec	740	dk_callback_backend	dwarf+funcnames+symtab	9fbd242d72ed		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x4cd0	352	dk_callback_intr	dwarf+funcnames+symtab	86004391033b		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x4e30	376	dksc_partition_to_canonical_special	dwarf+symtab	564b126d35e9		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dksc.o	kernel-object	n32	.text	0x4fa8	540	get_hw_scsi_info	dwarf+funcnames+symtab	274872c8ebc8		out:1	undocumented		
@@ -63370,7 +63370,7 @@ IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x5c	
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0xe8	368	dm_add_fsys_entry	dwarf+symtab	59cf46e6904c		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x258	344	dm_change_fsys_entry	dwarf+symtab	dbc29e73fcb6		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x3b0	432	dm_remove_fsys_entry	dwarf+symtab	f090d6b9ead7		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x560	544	dm_handle_to_vp	dwarf+symtab	22b255c58d6e		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x560	544	dm_handle_to_vp	dwarf+symtab	22b255c58d6e		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x780	164	dm_vp_to_handle	dwarf+symtab	a8abb8da0550		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x824	76	dm_check_dmapi_vp	dwarf+symtab	daf7126d1f28		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x870	112	dm_find_mount_tevp_and_lock	dwarf+symtab	10abd2f2c6c4		out:1	undocumented		
@@ -63383,10 +63383,10 @@ IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0xd08
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0xdc8	196	dm_fd_to_hdl	dwarf+symtab	c36d126a08d3		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0xe8c	212	dm_set_eventlist	dwarf+symtab	c281c834d901		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0xf60	212	dm_get_eventlist	dwarf+symtab	5607150b9aa5		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x1034	728	dm_set_disp	dwarf+symtab	bd06048275fc		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x1034	728	dm_set_disp	dwarf+symtab	bd06048275fc		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x130c	336	dm_set_return_on_destroy	dwarf+symtab	5d15876e37eb		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x145c	236	dm_get_mountinfo	dwarf+symtab	131f4edb7519		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x1548	652	dm_getall_disp	dwarf+symtab	ecbc61bbd38a		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x1548	652	dm_getall_disp	dwarf+symtab	ecbc61bbd38a		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x17d4	172	dm_execute_clrmount	dwarf+funcnames+symtab	b4e994f5c29a		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_register.o)	kernel-object	n32	.text	0x1880	508	dm_clrmount_callback	dwarf+symtab	d32039ab9e00		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_right.o)	kernel-object	n32		0x0		dm_copyin_handle	dwarf+funcnames+symtab			out:1	undocumented		
@@ -63430,11 +63430,11 @@ IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0xa3c	
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0xbd0	316	dm_find_eventmsg	dwarf+symtab	a58249f64212		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0xd0c	276	dm_move_event	dwarf+symtab	9726696c6b6d		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0xe20	92	dm_pending	dwarf+symtab	5a706c6b0879		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0xe7c	920	dm_get_events	dwarf+symtab	4e8824218457		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0x1214	380	dm_respond_event	dwarf+symtab	f7f82e6a8ac7		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0xe7c	920	dm_get_events	dwarf+symtab	4e8824218457		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0x1214	380	dm_respond_event	dwarf+symtab	f7f82e6a8ac7		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0x1390	260	__find_match_event_no_waiters_locked	dwarf+funcnames+symtab	22372107939a		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0x1494	148	find_match_event_no_waiters_locked	dwarf+funcnames+symtab	e17ada17ee36		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0x1528	1008	dm_enqueue	dwarf+funcnames+symtab	74baf856d443		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0x1528	1008	dm_enqueue	dwarf+funcnames+symtab	74baf856d443		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0x1918	160	dm_enqueue_normal_event	dwarf+symtab	6cebfbe7ab0c		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0x19b8	260	dm_enqueue_mount_event	dwarf+symtab	c21fd7382105		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_session.o)	kernel-object	n32	.text	0x1abc	88	dm_enqueue_sendmsg_event	dwarf+symtab	735148e50ce6		out:1	undocumented		
@@ -63443,23 +63443,23 @@ IP32/usr/cpu/sysgen/IP32boot/dmi.a(dmi_sysent.o)	kernel-object	n32		0x0		dmi	dwa
 IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32		0x0		dmiidbginit	dwarf+symtab			out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x58	88	dmiidbgunload	dwarf+symtab	5a1eeb600da0		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0xb0	68	ev_value_to_name	dwarf+funcnames	d13f3e6f5f62		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0xf4	76	right_to_name	dwarf+funcnames	fdf4ccb2a305		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x140	96	state_to_name	dwarf+funcnames	832776b16193		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0xf4	76	right_to_name	dwarf+funcnames	fdf4ccb2a305		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x140	96	state_to_name	dwarf+funcnames	832776b16193		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x1a0	84	hex_to_ascii	dwarf+funcnames	ba8d9093f870		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x1f4	156	idbg_dmi_equeue	dwarf+funcnames	41975706bcdc		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x290	516	idbg_dmi_event	dwarf+funcnames	81ef15e38e1d		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x290	516	idbg_dmi_event	dwarf+funcnames	81ef15e38e1d		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x494	136	idbg_dmi_help	dwarf+funcnames	1e91ac121444		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x51c	212	print_one_session	dwarf+funcnames	a33efc7b2916		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x5f0	168	idbg_dmi_sessions	dwarf+funcnames	625e8fa0c304		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x698	436	print_one_reglist	dwarf+funcnames	ce408b4a5e65		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x698	436	print_one_reglist	dwarf+funcnames	ce408b4a5e65		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dmiidbg.o	kernel-object	n32	.text	0x84c	108	idbg_dmi_regs	dwarf+funcnames	9039413b1e19		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32		0x0		dmsinit	dwarf+symtab			out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0xec	172	dmsopen	dwarf+symtab	e9a8a8fd00fd		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0x198	92	dmsclose	dwarf+symtab	b86160bf6496		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0x1f4	2436	dmsioctl	dwarf+symtab	b149330d7109		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0xb78	84	dmsmap	dwarf+symtab	54609ce11922		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0xec	172	dmsopen	dwarf+symtab	e9a8a8fd00fd		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0x198	92	dmsclose	dwarf+symtab	b86160bf6496		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0x1f4	2436	dmsioctl	dwarf+symtab	b149330d7109		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0xb78	84	dmsmap	dwarf+symtab	54609ce11922		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0xbcc	76	dmsunmap	dwarf+symtab	71c6bc6d46ac		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0xc18	108	dmspoll	dwarf+symtab	48ef59aa60a5		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dms.o)	kernel-object	n32	.text	0xc18	108	dmspoll	dwarf+symtab	48ef59aa60a5		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmscall.o)	kernel-object	n32		0x0		dmscall_create	dwarf+symtab			out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmscall.o)	kernel-object	n32	.text	0x74	92	dmscall_destroy	dwarf+symtab	a7344011d606		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmscall.o)	kernel-object	n32	.text	0xd0	284	dmscall_expand	dwarf+funcnames+symtab	cd09b1376840		out:1	undocumented		
@@ -63490,7 +63490,7 @@ IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x1318	228
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x13fc	476	_dms_notify_fifo	dwarf+funcnames+symtab	85ba04c59116		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x15d8	304	_dms_admin_fifo	dwarf+funcnames+symtab	9af6894c2b78		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x1708	596	_dms_notify_pool	dwarf+funcnames+symtab	342c47618499		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x195c	4476	dms_pool_create	dwarf+symtab	b8ad2b240b04		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x195c	4476	dms_pool_create	dwarf+symtab	b8ad2b240b04		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x2ad8	188	dms_pool_set_block_size	dwarf+symtab	03db460dd417		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x2b94	32	dms_pool_get_block_size	dwarf+symtab	ac9855de0912		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x2bb4	396	dms_pool_attach	dwarf+symtab	63ebb8edc16d		out:1	undocumented		
@@ -63504,14 +63504,14 @@ IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x327c	208
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x334c	76	dms_map	dwarf+symtab	1da56abc62b8		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x3398	204	dms_unmap	dwarf+symtab	15c6ee64811d		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x3464	488	dms_poll	dwarf+symtab	dafbf2a917ea		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x364c	656	dms_block_alloc	dwarf+symtab	24e8df9ab6ac		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x364c	656	dms_block_alloc	dwarf+symtab	24e8df9ab6ac		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x38dc	168	dms_block_info	dwarf+symtab	c07c21395242		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x3984	232	_dms_block_incref	dwarf+funcnames+symtab	c023d15cb93d		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x3a6c	432	_dms_block_decref	dwarf+funcnames+symtab	6e42a33d648d		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x3c1c	176	dms_block_attach	dwarf+symtab	81f6f6489630		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x3ccc	124	dms_block_detach	dwarf+symtab	e17960fe69a7		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x3d48	608	dms_block_join	dwarf+symtab	ad3b9253eda2		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x3fa8	924	dms_block_split	dwarf+symtab	632c25ca495b		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x3fa8	924	dms_block_split	dwarf+symtab	632c25ca495b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4344	572	dms_block_resize	dwarf+symtab	8f917717de23		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4580	128	dms_block_map	dwarf+symtab	713756b6e899		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4600	596	dms_fifo_create	dwarf+symtab	9ae823698052		out:1	undocumented		
@@ -63520,7 +63520,7 @@ IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x485c	300
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4988	188	_dms_fifo_decref	dwarf+funcnames+symtab	b1cc10f61319		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4a44	132	dms_fifo_detach	dwarf+symtab	c5d3b518db6b		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4ac8	304	dms_fifo_enq	dwarf+symtab	78f3657997a0		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4bf8	428	dms_fifo_deq	dwarf+symtab	9b8f8adbbe29		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4bf8	428	dms_fifo_deq	dwarf+symtab	9b8f8adbbe29		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4da4	180	dms_pool_get_user	dwarf+symtab	2458e706e91d		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4e58	164	dms_pool_set_user	dwarf+symtab	44ba003b0bc9		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x4efc	180	dms_fifo_get_user	dwarf+symtab	b13d9034e183		out:1	undocumented		
@@ -63545,8 +63545,8 @@ IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x5d34	120
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x5dac	60	dms_ust_stamp	dwarf+symtab	0ff2c817dc8c		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x5de8	392	dms_block_get_tile_list	dwarf+symtab	3a426f264619		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x5f70	68	dms_timestamp	dwarf+symtab	888c0f95a48b		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x5fb4	380	dms_block_start_dma	dwarf+symtab	1b3007822d6d		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x6130	8	dms_block_end_dma	dwarf+symtab	87506497337c		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x5fb4	380	dms_block_start_dma	dwarf+symtab	1b3007822d6d		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x6130	8	dms_block_end_dma	dwarf+symtab	87506497337c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x6138	164	dms_pool_cache_policy	dwarf+symtab	7bd77675064c		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x61dc	164	dms_fifo_cache_policy	dwarf+symtab	a47c46b08d67		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmskern.o)	kernel-object	n32	.text	0x6280	696	dms_block_switch_pages	dwarf+symtab	e59249f03ed2		out:1	undocumented		
@@ -63565,15 +63565,15 @@ IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x2c	56	cpout
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x64	8	dsinit	dwarf+symtab	87506497337c		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x6c	300	dsopen	dwarf+symtab	09099cfbd4d5		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x198	112	dsclose	dwarf+symtab	74677475d400		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x208	3624	dsioctl	dwarf+symtab	c423e9f2178e		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x208	3624	dsioctl	dwarf+symtab	c423e9f2178e		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x1030	28	ds_calloc	dwarf+funcnames+symtab	168ef11418d0		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x104c	204	ds_copyiov	dwarf+symtab	3a6faeed9cb2		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x1118	172	dma_lock	dwarf+funcnames+symtab	843764a6850b		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x104c	204	ds_copyiov	dwarf+symtab	3a6faeed9cb2		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x1118	172	dma_lock	dwarf+funcnames+symtab	843764a6850b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x11c4	96	dma_unlock	dwarf+symtab	5513b9d2d581		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x1224	220	task_find	dwarf+funcnames+symtab	6f227b520dae		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x1224	220	task_find	dwarf+funcnames+symtab	6f227b520dae		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x1300	48	task_init_desc	dwarf+funcnames+symtab	eeba489c734e		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x1330	152	task_free_desc	dwarf+funcnames+symtab	08410e7ef6c6		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x13c8	548	task_glue	dwarf+funcnames+symtab	b8f7d5d43694		out:1	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x13c8	548	task_glue	dwarf+funcnames+symtab	b8f7d5d43694		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-object	n32	.text	0x15ec	196	task_unglue	dwarf+symtab	968c7681b984		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32		0x0		hosterr_to_ds	dwarf+funcnames+symtab			out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-object	n32	.text	0x68	96	glue_callback	dwarf+funcnames+symtab	5d2612ac8aa9		out:1	undocumented		
@@ -79042,14 +79042,14 @@ IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_sys.o)	kernel-object	n64	.text	0xbb8	648
 IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_sys.o)	kernel-object	n64	.text	0xe40	560	ckpt_restartreturn	dwarf+symtab	3ccd14ce6398		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_sys.o)	kernel-object	n64	.text	0x1070	152	ckpt_wstat_decode	dwarf+symtab	d214805f4569		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64		0x0		ckpt_init	dwarf+symtab			out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x24	280	ckpt_vp_open	dwarf+symtab	6eb527176637		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x13c	284	ckpt_fid	dwarf+symtab	0314398ebdf5		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x258	100	ckpt_lookup	dwarf+symtab	e1b8475a5280		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x24	280	ckpt_vp_open	dwarf+symtab	6eb527176637		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x13c	284	ckpt_fid	dwarf+symtab	0314398ebdf5		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x258	100	ckpt_lookup	dwarf+symtab	e1b8475a5280		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x2bc	32	ckpt_lookup_free	dwarf+symtab	c0d220d7659b		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x2dc	304	ckpt_lookup_add	dwarf+symtab	168955af1a20		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x2dc	304	ckpt_lookup_add	dwarf+symtab	168955af1a20		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x40c	76	ckpt_lookup_get	dwarf+symtab	c45792b70eb0		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x458	72	ckpt_vnode_free	dwarf+symtab	6aab30aaa8f5		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x4a0	60	ckpt_setfd	dwarf+symtab	0eeedd1f76bc		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-object	n64	.text	0x4a0	60	ckpt_setfd	dwarf+symtab	0eeedd1f76bc		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/cserialio.o	kernel-object	n64		0x0		csio_pull_cbuf	dwarf+symtab			out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cserialio.o	kernel-object	n64	.text	0x9c	112	itimer_timeout	dwarf+symtab	d0b2cb8c0c69		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cserialio.o	kernel-object	n64	.text	0x10c	180	csio_data_ready	dwarf+symtab	8aff96ec0831		out:4	undocumented		
@@ -79480,9 +79480,9 @@ IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x16c	156	dk_unalloc
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x208	152	subchaninit	dwarf+symtab	8c5d59f30fcb		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x2a0	184	dksc_disk_part_hwg_update	dwarf+symtab	bc9b08e1a435		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x358	256	dksc_disk_part_hwg_check	dwarf+symtab	f075400c7bb4		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x458	1828	dkscopen	dwarf+symtab	d8acf3e35f6c		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x458	1828	dkscopen	dwarf+symtab	d8acf3e35f6c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0xb7c	356	dkscclose	dwarf+symtab	c28e01ea3257		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0xce0	2364	dkscioctl	dwarf+symtab	10ff91c86910		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0xce0	2364	dkscioctl	dwarf+symtab	10ff91c86910		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x161c	28	dkscdone	dwarf+symtab	b7e9e5a7afaf		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x1638	564	dkscread	dwarf+symtab	d6b2126301dc		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x186c	564	dkscwrite	dwarf+symtab	826267373c74		out:1	undocumented		
@@ -79492,9 +79492,9 @@ IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x1c0c	476	dksccomma
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x1de8	724	dkscstrategy	dwarf+symtab	95d338ed0b05		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x20bc	484	dkscstart	dwarf+symtab	01d67776f9e1		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x22a0	196	dk_queue_retry	dwarf+symtab	abded0c4e9f2		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x2364	800	dk_intr	dwarf+symtab	f7a9fc197f33		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x2364	800	dk_intr	dwarf+symtab	f7a9fc197f33		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x2684	156	dk_busy_retry	dwarf+symtab	63e04d71cf5c		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x2720	1672	dk_chkcond	dwarf+symtab	9cfe43a2987c		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x2720	1672	dk_chkcond	dwarf+symtab	9cfe43a2987c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x2da8	128	dkscprint	dwarf+symtab	5bc27c83f80c		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x2e28	308	getsize	dwarf+symtab	662804a14dd8		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x2f5c	32	dkscsize	dwarf+symtab	8066a1f9382a		out:1	undocumented		
@@ -79522,7 +79522,7 @@ IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x47c8	172	dk_clr_fl
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x4874	168	dk_set_flags	dwarf+symtab	221b2e5b021c		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x491c	448	dk_alloc_ioreq	dwarf+symtab	d858bb8e6289		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x4adc	144	dk_callback_frontend	dwarf+symtab	2e30f855b619		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x4b6c	756	dk_callback_backend	dwarf+symtab	a1f34accd97f		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x4b6c	756	dk_callback_backend	dwarf+symtab	a1f34accd97f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x4e60	360	dk_callback_intr	dwarf+symtab	382ff7be442b		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x4fc8	376	dksc_partition_to_canonical_special	dwarf+symtab	92da876513cc		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dksc.o	kernel-object	n64	.text	0x5140	540	get_hw_scsi_info	dwarf+symtab	f906e9ab1a83		out:1	undocumented		
@@ -79543,7 +79543,7 @@ IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x5c	
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xf8	380	dm_add_fsys_entry	dwarf+symtab	05834ee5113e		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x274	364	dm_change_fsys_entry	dwarf+symtab	dd28a50499ed		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x3e0	420	dm_remove_fsys_entry	dwarf+symtab	057aeee42540		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x584	676	dm_handle_to_vp	dwarf+symtab	68bab9296591		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x584	676	dm_handle_to_vp	dwarf+symtab	68bab9296591		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x828	228	dm_vp_to_handle	dwarf+symtab	fb76850106e2		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x90c	88	dm_check_dmapi_vp	dwarf+symtab	24da589abd88		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x964	116	dm_find_mount_tevp_and_lock	dwarf+symtab	66d1cc3388fc		out:1	undocumented		
@@ -79556,10 +79556,10 @@ IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xe64
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xf24	200	dm_fd_to_hdl	dwarf+symtab	a37f77ded9be		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0xfec	212	dm_set_eventlist	dwarf+symtab	a3613584052a		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x10c0	212	dm_get_eventlist	dwarf+symtab	1691f9eb90c4		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1194	656	dm_set_disp	dwarf+symtab	5f9e4b724465		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1194	656	dm_set_disp	dwarf+symtab	5f9e4b724465		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1424	348	dm_set_return_on_destroy	dwarf+symtab	01a09ac5d9ba		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1580	232	dm_get_mountinfo	dwarf+symtab	3d4485a8239e		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1668	704	dm_getall_disp	dwarf+symtab	c1c4057f904c		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1668	704	dm_getall_disp	dwarf+symtab	c1c4057f904c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1928	188	dm_execute_clrmount	dwarf+symtab	3486133221cb		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x19e4	520	dm_clrmount_callback	dwarf+symtab	0885a53ecf6b		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)	kernel-object	n64	.text	0x1bec	272	dm_release_disp_threads	dwarf+symtab	8ab1e7953ca3		out:1	undocumented		
@@ -79586,36 +79586,36 @@ IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0xc7c	
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0xe14	324	dm_find_eventmsg	dwarf+symtab	4ca4f3cea14f		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0xf58	292	dm_move_event	dwarf+symtab	94b09d9a721f		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x107c	100	dm_pending	dwarf+symtab	8683bb864c9f		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x10e0	1032	dm_get_events	dwarf+symtab	173e028d52d7		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x14e8	404	dm_respond_event	dwarf+symtab	637553c88a44		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x10e0	1032	dm_get_events	dwarf+symtab	173e028d52d7		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x14e8	404	dm_respond_event	dwarf+symtab	637553c88a44		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x167c	260	__find_match_event_no_waiters_locked	dwarf+symtab	bba8b40c56e5		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1780	148	find_match_event_no_waiters_locked	dwarf+symtab	0d7eb07c1254		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1814	1208	dm_enqueue	dwarf+symtab	464807f8e93b		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1814	1208	dm_enqueue	dwarf+symtab	464807f8e93b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1ccc	160	dm_enqueue_normal_event	dwarf+symtab	e70e86c2572e		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1d6c	268	dm_enqueue_mount_event	dwarf+symtab	3b6e95974bc3		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1e78	88	dm_enqueue_sendmsg_event	dwarf+symtab	f3e66d5e938f		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1ed0	188	dm_enqueue_user_event	dwarf+symtab	faf0136334ee		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1f8c	472	dm_release_threads	dwarf+symtab	bc6b49916326		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)	kernel-object	n64	.text	0x1f8c	472	dm_release_threads	dwarf+symtab	bc6b49916326		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64		0x0		dmiidbginit	dwarf+symtab			out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x74	116	dmiidbgunload	dwarf+symtab	cf574f314ed8		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0xe8	92	ev_value_to_name	dwarf	deceb3025e9e		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x144	140	right_to_name	dwarf	9cbba33d2760		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x1d0	176	state_to_name	dwarf	9eeefff93e6a		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x144	140	right_to_name	dwarf	9cbba33d2760		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x1d0	176	state_to_name	dwarf	9eeefff93e6a		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x280	104	hex_to_ascii	dwarf	7d6e67b3f253		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x2e8	208	idbg_dmi_equeue	dwarf	842eefd8c691		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x3b8	592	idbg_dmi_event	dwarf	32e8da96be8b		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x3b8	592	idbg_dmi_event	dwarf	32e8da96be8b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x608	196	idbg_dmi_help	dwarf	98a65fd2f1f2		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x6cc	236	print_one_session	dwarf	dea8092ab000		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x7b8	260	idbg_dmi_sessions	dwarf	f739d01a7c94		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x8bc	520	print_one_reglist	dwarf	c7808e193069		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0x8bc	520	print_one_reglist	dwarf	c7808e193069		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o	kernel-object	n64	.text	0xac4	156	idbg_dmi_regs	dwarf	79afdf177379		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64		0x0		dmsinit	dwarf+symtab			out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0xec	172	dmsopen	dwarf+symtab	7f2396e47461		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0x198	92	dmsclose	dwarf+symtab	ffbac260f19f		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0x1f4	2460	dmsioctl	dwarf+symtab	63ea7ad5df8b		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0xb90	84	dmsmap	dwarf+symtab	214f3e84ac05		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0xec	172	dmsopen	dwarf+symtab	7f2396e47461		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0x198	92	dmsclose	dwarf+symtab	ffbac260f19f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0x1f4	2460	dmsioctl	dwarf+symtab	63ea7ad5df8b		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0xb90	84	dmsmap	dwarf+symtab	214f3e84ac05		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0xbe4	8	dmsunmap	dwarf+symtab	87506497337c		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0xbec	108	dmspoll	dwarf+symtab	5a9e1535d97f		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)	kernel-object	n64	.text	0xbec	108	dmspoll	dwarf+symtab	5a9e1535d97f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64		0x0		_dms_bbag_alloc	dwarf+symtab			out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x68	124	_dms_bbag_reserve	dwarf+symtab	e6437b69c461		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0xe4	72	_dms_bbag_unreserve	dwarf+symtab	2396f21baaa0		out:1	undocumented		
@@ -79635,7 +79635,7 @@ IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0xfd0	236	
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x10bc	508	_dms_notify_fifo	dwarf+symtab	966ec8c996a0		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x12b8	332	_dms_admin_fifo	dwarf+symtab	153735df3d33		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x1404	616	_dms_notify_pool	dwarf+symtab	b12abd708dbb		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x166c	3368	dms_pool_create	dwarf+symtab	f14c22d51141		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x166c	3368	dms_pool_create	dwarf+symtab	f14c22d51141		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2394	200	dms_pool_set_block_size	dwarf+symtab	e7c42383e9b0		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x245c	32	dms_pool_get_block_size	dwarf+symtab	0e8490a6ea98		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x247c	420	dms_pool_attach	dwarf+symtab	1fd6b778007a		out:1	undocumented		
@@ -79648,14 +79648,14 @@ IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x28bc	620
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2b28	100	_dms_pool_map	dwarf+symtab	589739742c40		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2b8c	76	dms_map	dwarf+symtab	607eb3cc5784		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2bd8	504	dms_poll	dwarf+symtab	7a1a7d1974c6		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2dd0	664	dms_block_alloc	dwarf+symtab	328662f1ae14		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x2dd0	664	dms_block_alloc	dwarf+symtab	328662f1ae14		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3068	176	dms_block_info	dwarf+symtab	c9c547fa2cd3		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3118	252	_dms_block_incref	dwarf+symtab	1eaaddecfb89		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3214	456	_dms_block_decref	dwarf+symtab	aef54f3aebec		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x33dc	172	dms_block_attach	dwarf+symtab	1654746bf599		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3488	120	dms_block_detach	dwarf+symtab	5271c1b63431		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3500	644	dms_block_join	dwarf+symtab	b38ee42030b5		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3784	968	dms_block_split	dwarf+symtab	5d11e4760f47		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3784	968	dms_block_split	dwarf+symtab	5d11e4760f47		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3b4c	588	dms_block_resize	dwarf+symtab	f104cb1aa65b		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3d98	144	dms_block_map	dwarf+symtab	ab8332020eb6		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x3e28	604	dms_fifo_create	dwarf+symtab	3322926cdd61		out:1	undocumented		
@@ -79664,7 +79664,7 @@ IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x408c	328
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x41d4	188	_dms_fifo_decref	dwarf+symtab	d76c35751f7a		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4290	152	dms_fifo_detach	dwarf+symtab	88deeccc1981		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4328	340	dms_fifo_enq	dwarf+symtab	c8963baa0fe0		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x447c	464	dms_fifo_deq	dwarf+symtab	b030914da7c8		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x447c	464	dms_fifo_deq	dwarf+symtab	b030914da7c8		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x464c	212	dms_pool_get_user	dwarf+symtab	97c71cf68eef		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x4720	188	dms_pool_set_user	dwarf+symtab	cd1bb2c453f9		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x47dc	212	dms_fifo_get_user	dwarf+symtab	e1cd6eaad41b		out:1	undocumented		
@@ -79689,8 +79689,8 @@ IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x56a4	132
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5728	60	dms_ust_stamp	dwarf+symtab	2a1edc350715		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5764	424	dms_block_get_tile_list	dwarf+symtab	016716014325		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x590c	68	dms_timestamp	dwarf+symtab	a54c9d44e7ff		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5950	8	dms_block_start_dma	dwarf+symtab	87506497337c		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5958	8	dms_block_end_dma	dwarf+symtab	87506497337c		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5950	8	dms_block_start_dma	dwarf+symtab	87506497337c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5958	8	dms_block_end_dma	dwarf+symtab	87506497337c		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5960	176	dms_pool_cache_policy	dwarf+symtab	dd4819e5e698		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5a10	176	dms_fifo_cache_policy	dwarf+symtab	e1fbf0ae03c0		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)	kernel-object	n64	.text	0x5ac0	756	dms_block_switch_pages	dwarf+symtab	5accfd8927d7		out:1	undocumented		
@@ -79702,22 +79702,22 @@ IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x24	40
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x4c	28	dmrb_compat_final	dwarf+symtab	554dd3b5deec		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x68	144	dmrb_open	dwarf+symtab	ff75a2bb37f3		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0xf8	144	dmrb_close	dwarf+symtab	3ecbfe53bf6b		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x188	716	dmrb_attach	dwarf+symtab	5375785cb8d5		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x188	716	dmrb_attach	dwarf+symtab	5375785cb8d5		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x454	72	dmrb_callback	dwarf+symtab	6d3dcaa92f5f		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x49c	60	dmrb_getdone	dwarf+symtab	88098075055e		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x4d8	32	dmrb_getframesize	dwarf+symtab	6ecdab6e9a6b		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x4f8	164	dmrb_putfree	dwarf+symtab	37993851b990		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x59c	32	dmrb_getinfocount	dwarf+symtab	663219e2f24d		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x5bc	8	dmrb_getinfolength	dwarf+symtab	9e01693ae8ec		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x5c4	192	dmrb_getnextfree	dwarf+symtab	9fa4549b82d4		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x684	220	dmrb_getnextvalid	dwarf+symtab	5aa413a455e0		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x5c4	192	dmrb_getnextfree	dwarf+symtab	9fa4549b82d4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x684	220	dmrb_getnextvalid	dwarf+symtab	5aa413a455e0		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x760	8	dmrb_getvalid	dwarf+symtab	6319e0118090		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x768	264	dmrb_putvalid	dwarf+symtab	cb03be7b9c6f		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x768	264	dmrb_putvalid	dwarf+symtab	cb03be7b9c6f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x870	116	dmrb_getaddress	dwarf+symtab	da16be7d4039		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x8e4	64	dmrb_getinfoaddress	dwarf+symtab	1597d71bf027		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x924	28	dmrb_timestamp	dwarf+symtab	a86de4a9d7a4		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x940	28	dmrb_ust_stamp	dwarf+symtab	a86de4a9d7a4		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x95c	100	dmrb_getpagelist	dwarf+symtab	f4f2ae456149		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x95c	100	dmrb_getpagelist	dwarf+symtab	f4f2ae456149		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x9c0	56	dmrb_getnewvalid	dwarf+symtab	04f593d5b214		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0x9f8	60	dmrb_getincount	dwarf+symtab	b5d77df97f96		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-object	n64	.text	0xa34	60	dmrb_getoutcount	dwarf+symtab	7b108cf2750c		out:1	undocumented		
@@ -79726,15 +79726,15 @@ IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x8c	124	cpou
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x108	8	dsinit	dwarf+symtab	87506497337c		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x110	296	dsopen	dwarf+symtab	982b0330cc64		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x238	112	dsclose	dwarf+symtab	88b8c2416042		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x2a8	2580	dsioctl	dwarf+symtab	44f01b7d59a1		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x2a8	2580	dsioctl	dwarf+symtab	44f01b7d59a1		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xcbc	28	ds_calloc	dwarf+symtab	12a18864d05c		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xcd8	204	ds_copyiov	dwarf+symtab	2d5e255ca1e4		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xda4	172	dma_lock	dwarf+symtab	541aac1fffc2		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xcd8	204	ds_copyiov	dwarf+symtab	2d5e255ca1e4		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
+IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xda4	172	dma_lock	dwarf+symtab	541aac1fffc2		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xe50	96	dma_unlock	dwarf+symtab	3c512ec2a2d9		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xeb0	220	task_find	dwarf+symtab	f9f455980e6f		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xeb0	220	task_find	dwarf+symtab	f9f455980e6f		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xf8c	48	task_init_desc	dwarf+symtab	a5af3eec397a		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0xfbc	152	task_free_desc	dwarf+symtab	98cb1fc4e2d0		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1054	648	task_glue	dwarf+symtab	a6d7887910ce		out:1	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1054	648	task_glue	dwarf+symtab	a6d7887910ce		out:1	named-only	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x12dc	192	task_unglue	dwarf+symtab	9f2903748bb1		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x139c	164	irix5_dsreq_to_dsreq	dwarf+symtab	cf269cb27d6b		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-object	n64	.text	0x1440	164	dsreq_to_irix5_dsreq	dwarf+symtab	3fa2eeaa9924		out:1	undocumented		
