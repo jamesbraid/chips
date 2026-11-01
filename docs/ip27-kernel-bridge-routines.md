@@ -28,3 +28,19 @@ which choose among Bridge, XBridge, PIC and TIOCP at run time as described in [c
   `_addr_space_init`, `_device_init`, `_guest_info_init`), `pcibr_initial_rrb` (and `pcibr_rrb_alloc_init` for a card with the "030-1275-"
   prefix), the per-slot device attach and `pciio_device_attach`. Established for the order and constants above. Inferred: the role of
   the record fields, from their later users and the debug strings.
+- `pcibr_alloc_all_rrbs` (`IP27/unix` at 0xc000000000077074,
+  980 bytes) sets the read-response-buffer assignment of one PCI bus controller from per-device counts. It takes the controller vertex in `a0`
+  and the bus number in `a1`; the device counts for the four device groups are `a2`, `a4`, `a6` and the first stack argument, and the counts reserved
+  for the second kind of buffer are `a3`, `a5`, `a7` and the second stack argument. The result is 0, or -1 for a bad request. It finds the
+  register block through `hwgraph_traverse` on the vertex's "pci" child and `hwgraph_fastinfo_get` (the pointer at +0x8 of the record),
+  falling back to `xtalk_piotrans_addr` (offset 0, length 8) when the child is missing. Where the identification word at +4 shows part 0xc002
+  with manufacturer 0x36 or part 0xd002 with 0x24 the shift selector is 2, any other chip uses 1 and returns -1 when the third and fourth
+  device counts or either of their reserved counts is nonzero. The four device counts must be nonnegative and sum to 8 or less, else -1.
+  It builds a 32-bit word of eight 4-bit fields from bits 31:28 downward: for each device i = 0 to 3, first one field `i | (1 << selector) | 8`
+  for each reserved buffer (reducing that device's remaining count by one each time), then one field `i | 8` for each remaining buffer
+  (bit 3 enables the field). With the record present it takes the lock at +0x80 (`mutex_spinlock`), writes the word with
+  `pcireg_rrb_set` (register block, bus number AND 1, word), sets the bits `0x55 << (bus & 1)` in the record word at +0x51c, zeroes the four
+  words at +0x528 to +0x540 (stride 4 per bus), stores `8 - total` at +0x520 + 4 * bus, and for each device (stride 0x10 per bus) stores the
+  reserved count at +0x56c, +0x58c, +0x5ac and +0x5cc and the remainder (device count minus reserved) at +0x568, +0x588, +0x5a8 and +0x5c8; it releases the
+  lock with `mutex_io_spinunlock` and returns 0. Established. Inferred: that the fields name read-response buffers, from the routine name and the
+  `pcireg_rrb_set` callee.

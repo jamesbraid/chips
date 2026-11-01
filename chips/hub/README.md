@@ -1122,6 +1122,167 @@ Hub's registers, or the Hub's real-time counter, through the aliases described a
   `0x9200000001a00000 + (node << 32)` (`MD_MIG_VALUE_THRESH`), and restarts with `mem_tick_init_node` and
   `mem_tick_reactivate_node`. It returns 0 on success. Inferred: that bit 63 enables the threshold, since the routine only sets
   it together with the value and `migr_refcnt_init` has not been compared.
+- `handle_uncac_buserr` (`IP27/unix` at 0xc000000000036998,
+  1208 bytes) classifies a bus error taken by an uncached access. It takes the exception frame in `a0`, the faulting physical address
+  in `a1` (node in bits 47:32) and a flag in `a2` (1 suppresses the messages). It calls `get_matching_spool_addr` for the
+  doubleword-aligned address and branches on the result. 0 (no spool entry): it builds a mask, 0x200000 for processor slice
+  A (the byte at +0x520 of the processor record is zero) or 0x100000 for slice B, and tests it against `PI_ERR_INT_PEND`
+  (the doubleword at `0x9200000001000400`); with the bit clear and an address that is neither physical 0x2400208 (the
+  deliberate bus-error read) nor the node's own expected address, and a node in another partition (`nasid_to_partid` against
+  `part_id`) it prints "Uncached memory access error ... cause unknown" unless `a2` is 1 and returns 2; with the bit set it prints
+  "Uncached remote partition Partial Read Error" (other partition) or the local text, stores the mask back to `PI_ERR_INT_PEND`
+  to clear it, calls `error_page_discard` (1, 1) (0 or 1 returns 0; 2 stays quiet; other values print "Page with memory/directory error
+  could not be discarded") and `error_check_part_page` (nonzero prints the page message and returns what `partition_handle_error` gives
+  for kind 9), or for another partition returns `partition_handle_error` (kind 9). A result of -1 prints "Lost spool info on
+  uncached buserr" and returns 3. Results 1 and 2 take the 3-bit type from the spool word (bits 2:0), the other the stored
+  field; type 3 (time-out) prints "Uncached read access timed out" and returns 2 for a local page that passes
+  `error_check_part_page`, else `partition_handle_error` (kind 1); type 1 (memory error) in this partition runs
+  `error_check_memory_access` and `error_check_poisoned_state` (nonzero results go through `partition_handle_error`, kinds 5 and 6 when
+  the page check fails) and prints "Uncorrectable error on uncached memory access" and returns 3 when nothing explains it, while
+  a remote one returns `partition_handle_error` (kind 10); any other type prints "bad error type" and returns 3. Inferred: the
+  meaning of the return values 0, 2 and 3 (handled, retry, fatal), from the messages and the partition handler name.
+- `router_init` (`IP27/unix` at 0xc00000000001c084,
+  1196 bytes) sets up the per-router software record and the router's global register when a router vertex is attached. It takes the
+  compact node number in `a0`, a value it stores at +0x20 of the record in `a1` and a three-field attach record in `a2`
+  (vertex at +0x20 of it, a halfword result at +0x8, two bytes and a word it copies). It allocates a zeroed 0x1b8-byte record
+  with `kmem_zalloc_node`, attaches it to the vertex under the label `_router` with `hwgraph_info_add_LBL`, initialises the lock at
+  +0x650 (`spinlock_init`, name "routerinfolock"), stores the node number (+0x8), the node's NASID from `compact_to_nasid_node`
+  (+0x10), a timeout constant 75000000 (+0x178) and the node's board pointer (+0x184), then reads router register 0 into
+  +0x40 and register 0x18 into +0x580 with `router_reg_read` (a nonzero error calls `cmn_err` level 1 with "Router init read failed"
+  and `net_errmsg`). It rewrites register 0x18's image: if bits 35:28 are not 0x20 they become 0x20 (mask `0xfffffff00fffffff`
+  and `0x200000000`); bit 0 is set when `craylnk_bypass_disable` and `hasmetarouter` are both zero, else cleared; the result
+  is masked with `0xffff000fffffffff` and ORed with `0xafe000000000`, then written back with `router_reg_write`. Bits 48:46 of register 0
+  go to the halfword in the attach record, and a register-0 low nibble other than 1 calls `cmn_err` level 4 "Not a router". It
+  allocates a pointer array of `numnodes` entries and a 0x50-byte name buffer (`kern_malloc_node`; an allocation failure calls
+  `assfail` with the source line 0x46b or 0x470), fills the name with the stored prefix and `board_to_path`, and uses
+  `vertex_to_router_board`; no board prints "Couldn't locate board structure" through `cmn_err`. For a board whose type nibble
+  (byte +0x56a, mask 0xf0) is 0x10 it zeroes the six words in the board's node page, then for ports 1 to 6 records in the port-mask
+  byte (+0x20) a bit for each port whose bit in register 0 (starting at bit 29, then every third bit) is set, and calls
+  `router_port_init` (an error calls `cmn_err` level 4 "Router port init failed"). Afterwards it calls `router_set_fences`,
+  `nic_vertex_info_set`, `router_acquire_info`, stores 6 at +0 of the record, calls `build_router_invent_info` and `sndrv_attach`,
+  sets `p_routertick` from `router_poll_ticks` and returns the write's result. Other board types call `cmn_err` level 4
+  "Incorrectly jumpered router board". Inferred: register 0 and 0x18 meanings, from the masks and the check on register 0's low nibble.
+- `log_tstamp_vevent` (`IP27/unix` at 0xc000000000238df0,
+  1168 bytes) appends a time-stamped trace record to the calling processor's event buffer. It takes the event code in `a0`, the
+  data pointer in `a1` and the data length in `a2`. It finds the processor's record through `pdaindr` and the halfword at
+  0xffffffffffffc420, and branches on the word at +0x310 of that record: zero selects the shared-buffer path (which does nothing when the pointer at +0x288 is
+  null), nonzero the plain ring described last. The shared-buffer path reserves ceil((len + 15) / 48) + 1 48-byte slots with `atomicAddWithWrap` on the shared
+  index, and gives up (counting a lost event) when the slots exceed the buffer's size at +0x14 or when a slot in the way is still in use
+  (first word nonzero). It copies the data into the slots with `ovbcopy` (splitting at the buffer end), and sets the record's
+  timestamp at +8 to the doubleword at `0x9200000001030100` (the Hub real-time counter): when the slot after the new run is
+  occupied and has an earlier stamp than the counter it uses that stamp minus one so records stay in order. It stores the
+  slot count minus one in the halfword at +6 and the code in word 0, adds the slot count to the buffer's fill counter at +4 and, when
+  the fill reaches the threshold at +0x18, an enabler at +0x28 is nonzero, the code is not 0xea62, the processor is not in an
+  interrupt (byte at -0x3fae of the process page) and the level is not profiling (`getsr`, `issplprof`), it raises the level with
+  `spl1`, decrements the counter with `compare_and_dec_int_gt` and wakes a reader with `sv_signal`. The plain path stores 40-byte
+  records: the first holds code, stamp and the first 32 data bytes, each continuation holds code 0xf619 and 20 bytes. It returns nothing.
+  Inferred: the buffer field names and what the +0x310 mode word stands for, from the two paths' structure.
+- `mlreset` (`IP27/unix` at 0xc0000000000260e0,
+  1056 bytes) is the machine-level start-up routine each processor runs before the rest of the kernel; `a0` is nonzero on a
+  processor other than the boot one, which skips the node and memory set-up. Every processor first clears the four
+  performance-counter pairs of its core with `r1nkperf_control_register_set` and `r1nkperf_data_register_set` (counters 0 and
+  1; counters 2 and 3 as well when the processor revision register read by `get_cpu_irr` shows a part whose bits 15:8 are 0xe
+  or 0xf), and at the end sets the branch-prediction mode from the tunable at `gp - 0x7714` (0 `branch_prediction_on`,
+  1 `branch_prediction_fwd_not_taken`, 2 `branch_prediction_off`, 3 `branch_prediction_taken`; any other value on the boot processor
+  prints "WARNING: Illegal value for r10k_bpmode"), bumps a counter when the revision's bits 15:8 equal 9, and calls `flush_tlb`
+  (2) and `flush_cache`. On the boot processor it records the node number from `get_nasid`, calls `set_master_bridge_base`,
+  reads the first widget's identification through the `0x9600000000000000` window to find the console I/O chip and calls
+  `ioc3_mlreset`, then `nvram_baseinit`, `is_fine_dirmode`, `cpu_node_probe` (asserting a positive node count, source line 0x119, and a
+  positive count again at 0x11c; it stores them with a processor mask built as `0xffffffffffffffff >> (64 - count)`),
+  `getcpuid`, `get_cpu_cnode`, `setup_replication_mask` and checks that the master node equals `get_nasid` (assertion, line
+  0x12e). For each node it stores into the node alias `0x9200000001800000 + (nasid << 32)` the doubleword `PI_REGION_PRESENT` (+0x18)
+  = the region mask word ORed with 1 and `PI_CALIAS_SIZE` (+0x28) = 2, and zeroes the doubleword at +0x190 of the I/O block alias
+  `0x9200000001c00000`. It then initialises `hub_mask_lock`, moves the boot processor's mask when it is not processor 0,
+  and calls `iograph_early_init`, `mem_init`, `hubdev_init`, two static routines (0xc000000000027510 and 0xc00000000002741c), clears two
+  flag bits (0x5000) in two kernel flag words, `verify_snchip_rev`, `he_arcs_set_vectors` and `intrgroup_init`. It returns nothing.
+  Inferred: the names of the registers at +0x18, +0x28 and +0x190, which `hub_dmatimeout_kick` and `memory_iscalias` use under those names.
+- `mgras_attach` (`IP27/unix` at 0xc000000000376fdc,
+  1048 bytes) attaches one MGRAS graphics board found on a Crosstalk widget. It takes the widget's vertex in `a0` and returns
+  nothing. It reads the widget identification (`xwidget_info_get`, `xwidget_info_id_get`, `xwidget_info_master_get`) and the
+  master node (`master_node_get`, then the NASID from `compact_to_nasid_node`), reads the doubleword at offset 0 of
+  `0x9200000001e00000 + (node << 32)` (`NI_STATUS_REV_ID`) and calls `cmn_err` (level 4) with the string "INCOMPATIBLE HARDWARE"
+  if its bits 7:4, the chip revision, are below 4. It takes `GfxBoardInitSema` (`psema`, 0x19), makes the character device `mgras`
+  (`hwgraph_char_device_add`) and maps the board's first 0xc00000 bytes with `xtalk_piotrans_addr` (offsets 0 and 0, length
+  0xc00000). It searches the three 0x58-byte slots of `MgrasBoards` for one with that mapping, else for a slot whose widget number
+  (word +0x24) matches and whose node is in the same module and on the same crossbow (`get_module_id`, `get_node_crossbow`);
+  without a match `cmn_err` is called, and with one it stores the node (+0x50) and mapping (+0x0) in the slot. It records the master
+  id in the byte at +0x7d4 and the vertex in +0x7d0 of the board record, calls `nic_hq4_vertex_info` and a static lookup, and releases the
+  semaphore (`vsema`). It then allocates four interrupts on the widget with `xtalk_intr_alloc`, using a duplicated device
+  descriptor: the first one in its default form (record +0x7e0), the second with the target CPU copied from the first (+0x7e8), the
+  third with flag bit 0 set (+0x7f8) and the fourth with the descriptor's software level set (+0x7f0), saves their vectors as
+  halfwords at +0x800, +0x802, +0x804 and +0x806 (`xtalk_intr_vector_get`) and connects them with `xtalk_intr_connect` to
+  `MgrasGeneralInterrupt` (+0x7e0), `mgras_hq4_lowater_intr` (+0x7e8), `MgrasRetraceHandler` (+0x7f0) and `MgrasHQ4ErrInterrupt`
+  (+0x7f8). A last static routine finishes the board record. Inferred: the slot-matching rule's purpose, since the
+  `get_module_id` and `get_node_crossbow` comparison was read in the decompiled form only.
+- `hub_ioerror_handler` (`IP27/unix` at 0xc000000000027c50,
+  1028 bytes) is the Hub's entry point for a PIO error reported against a widget. It takes the node vertex in `a0`, the error kind in `a1`,
+  a caller-supplied word in `a2` and the error record in `a3`. It fetches the node record from the vertex label `_node`
+  (`hwgraph_info_get_LBL`) and its NASID from the halfword at +0xa. Kind 9 returns 9, kind 10 goes to `hub_xp_error_handler` with kind 10,
+  and any other kind but 5 and 6 returns 4. Kind 6 takes the widget number from the halfword at +0x6 of the record: widget 1 (the Hub's own
+  port) goes to `hub_ioerror_local`; another widget goes to `hub_xp_error_handler` when `is_widget_pio_enabled` is true, otherwise
+  it prints the "No outbound widget access - " dump with `ioerror_dump` when `error_state_get` is 3 and returns 0. Kind 5 first works
+  out which widget the failed address belongs to: an address (the doubleword at +0x30 of the record, masked with
+  `0xf9ffffffffffffff`) outside the `0x9000000000000000` to `0x9000010000000000` range uses the address in +0x10, where bits 31:29 select a
+  small window; window 0 gives the widget from bits 27:24 and an offset of the low 24 bits, and window 1 to 7 reads the doubleword at
+  `0x160 + 8 * (window - 1)` of the I/O block alias `0x9200000001c00000 + (node << 32)` and takes the widget from its bits 11:8 and the base
+  from its low five bits times 0x20000000; a physical address in the Hub node-alias ranges (`0x92000000e0000000`,
+  `0x920000000a000000`, `0x9200000020000000`, `0x9200000100000000`, each plus the node shifted by 32) is mapped to a widget through the
+  six-entry table of the node record (`xtalk_pio_target_get`, `xtalk_pio_xtalk_addr_get`), and the flags are set to
+  0x41000000. A kind-5 record whose flag bit 25 is clear returns 5. Then widget 1 goes to `hub_ioerror_local` and others as for kind 6. A
+  result of 8 from any handler prints "Unable to handle IO error: hardware graph not setup" with `printf`. Inferred: the kind numbers
+  5, 6, 9 and 10 as read and write errors, from the shared dump text, and the decoded windows from the register layout the code assumes.
+- `per_hub_init` (`IP27/unix` at 0xc000000000026acc,
+  1000 bytes) initialises one node's Hub once, when the first processor of the node starts; `a0` is the compact node number. It sets the
+  node's bit in a started mask (word at `gp + 0x938`, under `hub_mask_lock` at `gp + 0x948`); a later processor of the same
+  node waits until the node's bit in the done mask (`gp + 0x940`) is set and returns. The first one stores the chip revision from
+  `get_hub_chiprev` into +0x49b8 of the node record and, for each of the two slices whose processor `cpu_enabled` reports as absent,
+  stores 0xf into the junk-bus word at `0x9200000001a20050 + 8 * slice` or, when the byte at -0x3add of the process page is nonzero,
+  `0x9200000001a20080 + 32 * slice`. When the word at `gp + 0x914` is nonzero it sets 0xffff00000000 in the NI alias doubleword at +0x18 and
+  clears bit 18 of +0x110 (`0x9200000001e00000` alias), and writes `0x900` (after clearing bits 11:8) into the NI age registers at
+  offsets 0x600500 through 0x600538 of the node alias `0x9200000001800000`; with the word zero it clears bits 11:8 of each. It writes the
+  doubleword `0xfe00000000` (the kernel variable at `gp - 0x75b0`) to offset +0xc8 of the memory block alias `0x9200000001a00000`, and for revision
+  below 5 (or 5 with the tunable at `gp - 0x7718`) sets bits 12:8 of +0xe0 to 1. For revision below 6 it stores 2 to I/O block offset
+  +0x200 and ORs 0x40 into +0x3a8 under the mask `0xffefffffffffff00`; for revision 6 it stores the variable at `gp - 0x75bc` to +0x200 and
+  the variable at `gp - 0x75b8` ORed with the one at `gp - 0x75b4` shifted left 4 into +0x3a8. It then stores 0x1000 to +0x3c0 and
+  0xff to +0x3b8, and calls `intr_reserve_hardwired`, `hub_error_init`, `install_eccintr`, `protect_hub_calias`, `hub_rtc_init`,
+  `hub_migrintr_init`, `hub_setup_kick` and `hub_init_ifdr_war`. It stores 0xd0 to node-alias +0x30 and 0xd400 to +0x38 when the word at
+  `gp + 0x914` is nonzero, 0xfe and 0xc000 when the word read through `0x9000000010000090` is nonzero, and 0x3012 to memory-block +0xa0. The
+  last step sets the node's bit in the done mask under the lock. It returns nothing. Inferred: the register meanings
+  (CRB timeout, scale factor, queue size, FIFO counts), which come from the hub table and the variable names; the unnamed +0xc8 and +0xe0.
+- `tick_actions` (`IP27/unix` at 0xc0000000000461e0,
+  976 bytes) is the per-tick housekeeping each processor runs from the clock interrupt; it takes no arguments and returns nothing. In
+  order: it calls `ecc_log` when the byte at -0x38d0 of the process page is nonzero, always `tlb_tick_actions`, then tests the
+  halfword at -0x3adc: bit 0 calls `kick_the_hub` and bit 4 (0x10) calls `hub_error_status_war`. When the processor number equals the one
+  `cnodetocpu` gives for the node (one processor a node), it decrements the counter at +0x4d18 of the node record and calls
+  `capture_hub_stats` when it reaches 0; unless the tunable at `gp - 0x727c` is set it also decrements the counter at +0x4d1c and calls
+  `probe_md_errors` with the NASID from `get_nasid` when that reaches 0, then calls `memerror_sbe_intr` (1, NASID), and finally
+  `sysctlr_check_reenable`. Separately, when the progress check is enabled (word at `gp - 0x7288`) and the countdown at -0x3850 reaches
+  0 it reloads it from `gp - 0x7290` and scans the other processors (table entries of 16 bytes, skipping the caller and entries
+  of -1): a processor whose timestamp at +0x5b8 of its record is nonzero and not later than the Hub real-time counter at
+  `0x9200000001030100`, whose gap is not below the limit at `gp - 0x7298`, that is not flagged (byte +0x4f zero in the mode 1 case, and
+  flag bits 0x50 of +0x48 clear), has its stall count at +0x7c8 incremented. On the first stall it looks for another processor whose
+  byte +0x429 is set; if none does, it compares the gap with the limit at `gp - 0x7e70` and calls `cmn_err` (level 0xc) with
+  "Process on cpu %d not making progress" and the processor number. When the progress word at -0x3848 of the caller's own page is set
+  and the other check is off it calls `cmn_err` (level 0xd) with "!cpu now making progress". The strings and the counter at
+  `gp - 0x7288` are read; nothing is written to a device register. Inferred: the role of each counter, from the called routines and
+  the two messages; the exact stall conditions, which were read through the decompiler.
+- `i2c_master_xmit_recv` (`IP27/unix` at 0xc00000000009b374,
+  964 bytes) performs one combined write-then-read transaction on a node's I2C master. It takes the node number in `a0`, the 7-bit slave
+  address in `a1`, the bytes to send in `a2` with their count in `a3`, a pointer for the sent count in `a4`, the receive buffer in `a5` with
+  its length in `a6`, a pointer for the received count in `a7`, and on the stack a length-prefix adjustment (the word at 164(sp)), the
+  argument handed on to `i2c_arb` (168(sp)) and a flag (the word after it). Both counts start at 0. It calls `i2c_arb`
+  (node, that argument, 0); a negative result is returned unchanged and a result of 0 with the flag nonzero returns -10. It then works
+  on two doublewords of `0x9200000001a20000 + (node << 32)`: the data register at +0x0 and the status register at +0x8. If any of status
+  bits 1, 2 and 4 (mask 0x16) is set before it starts it returns -2 without writing. Every wait polls until status bit 7 (0x80) is clear
+  and ends with -2 when a bit of 0x16 is set; the deadline is the stack argument plus 800/1000 of the Hub real-time counter read
+  at entry (`0x9200000001030100`), compared with the same scaled counter on each pass. Once the address byte is written, every error
+  return (-2, -3, -6, -7, -9) first stores 0xc2 to the status register. Order of writes: data `address << 1`, status 0xc5, wait (timeout
+  -6; bit 3 of the status afterwards returns -3); for each byte to send, data = byte, wait (timeout -7), sent count + 1, stop sending
+  early when status bit 3 is set; status 0x45, data `(address << 1) | 1`, wait (timeout -6; bit 3 set returns -3). Receive: status 0x40
+  first when exactly one byte is wanted; for each byte, wait (timeout -9), status 0x40 when the index is the length minus 2, read the data
+  register into the buffer, count it, and when the adjustment is not negative the first byte received plus it becomes the new length. Finally
+  status 0x45, data 0xfe, wait (timeout -6) and return 0. Inferred: the status bit meanings (bit 7 busy, bit 3 no-acknowledge, bits
+  1, 2 and 4 error), from how the code tests them; the scaled deadline's unit.
 
 ## Routines in the IP27 `hubspc.o` build
 
