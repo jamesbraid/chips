@@ -206,24 +206,24 @@ chip page and the entry is deleted.
   (`0x84` to `0x98`) and super-I/O registers (`0x20151` to `0x2015a`) are touched but their routines are not read; the
   configuration words `0x40` and `0x44` are read and written by `ioc3_error_handler`, read for accesses only. Next: resolve the
   data relocations; read `plp_dma`, `plpintr`, `plp_reset` and the error handler.
-- **IOC4: the word at `0x24`.** `ioc4_attach` clears bits 3:0 of it when the revision byte is below 79 and the bus-speed query
+- **IOC4: the word at `0x24`.** *[route: software now]* `ioc4_attach` clears bits 3:0 of it when the revision byte is below 79 and the bus-speed query
   returns 1; the public header calls it unused. Next: `pciio_businfo_bus_speed_get` and any string the attach carries.
-- **IOC4: the ATA registers.** The command, control and DMA block roles are inferred from index order and the public driver.
+- **IOC4: the ATA registers.** *[route: software now]* The command, control and DMA block roles are inferred from index order and the public driver.
   `xide_intr_clear` reads index 4 of the interrupt block (offset `0x10`) after index 0 where the public driver's error address
   high word is at `0x4`. Next: read `xide_pktDMA_start`, `xide_dma_init` and `xide_intr_clear` in full.
-- **IOC3 and IOC4: reset values and the per-port tables.** No routine reads a reset value; the mode-select pin numbers and
+- **IOC3 and IOC4: reset values and the per-port tables.** *[route: software now; hardware residue: reset values of registers that no routine reads; the per-port tables are software now]* No routine reads a reset value; the mode-select pin numbers and
   serial configuration records are static data not extracted. Next: extract the data sections through their relocations.
-- **CRIME rendering engine: field layouts the specification does not print.** The pixel pipeline's depth function, stencil
+- **CRIME rendering engine: field layouts the specification does not print.** *[route: missing binary: a shipped renderer or X server module that builds the words; the public CRIME frame-buffer driver is in an uninitialised submodule]* The pixel pipeline's depth function, stencil
   mode and stencil mask, the blend constant colour and the antialias coverage word have no field table in the 1.5 specification
   pages, and the antialias slope is given as 2.12 in one place and 2.14 in another. The loaders copy these words unchanged, so
   the shipped kernel does not decide them. Routes tried: the specification's register map and chapter text, the shadow loaders'
   copy order. Next: a shipped renderer or X server module that builds the words, and the public CRIME frame-buffer driver sources.
-- **CRIME memory transfer engine: the null register and the tile table formats.** No routine in the IP32 member objects
+- **CRIME memory transfer engine: the null register and the tile table formats.** *[route: missing binary: the diagnostic and monitor images; the IP32 PROM is compressed until the MACE entry's route is done]* No routine in the IP32 member objects
   writes `MTE.null` (`0x3070`), and no routine read builds a texture-TLB or clip-ID-TLB entry, so the entry bit layouts and
   the register's effect are open. The specification prints no entry layout. Routes tried: the shadow loaders, the clear,
   swap and copy routines, and a displacement scan of all 702 member objects. Next: the PROM, diagnostic and monitor
   images, an X server module, and the public CRIME frame-buffer drivers.
-- **Router scan-chain tunnel (IP35).** `read_rr_reg` asks the L1 to shift 197 bits through the router chain and keeps 128 of
+- **Router scan-chain tunnel (IP35).** *[route: software now]* `read_rr_reg` asks the L1 to shift 197 bits through the router chain and keeps 128 of
   them; established: the command layout, the bit reversal, the iRouter framing and the address arithmetic
   (chips/scan/README.md). Unknown: which router state the selector `2*(port-1)` and `2*(port-1)+1` names, what the 128 bits
   hold, the L1 task value `0xf` that the scan command is addressed to (the public header names tasks 1 to 6), what the `state`
