@@ -709,6 +709,41 @@ inferred, from each member's symbol table and undefined imports. No routine body
   address-space migration calls `as_migrate` and `as_migrate_close`, and the access-control checks `acl_vtoacl` and
   `cap_able_cred`.
 
+## IP35 build: device drivers and input objects (scope rule 4)
+
+The members below are the IP35 device drivers that rule 4 removes. Labels are inferred, from each object's symbol table and undefined imports. No routine body was read in full.
+
+- `IP35/usr/cpu/sysgen/IP35boot/alp.o` (inferred): a STREAMS driver named `alp`, which the object does not expand. Ten routines
+  in a 9656-byte object: `alpioc` (464 bytes) is the ioctl entry, `alpopen` (100 bytes) and `alp_con` and `alp_discon`
+  (128 and 120 bytes) handle connections, `alpwput` (80 bytes) is the write-side put routine, and `alp_query` (96 bytes)
+  answers queries. It imports `qreply`, `kmem_zalloc`, `kmem_free` and `printf`. It names no chip. Rule 4 removes it as a
+  driver that drives no system ASIC.
+- `IP35/usr/cpu/sysgen/IP35boot/bpqueue.o` (inferred): a queue with its own daemon, five routines in a 6968-byte object.
+  `bp_enqueue` (184 bytes), `bp_dequeue` (64 bytes) and `bp_dequeue_wait` (228 bytes) add and take entries, and
+  `bpqueuedaemon` (192 bytes) runs the queue. It imports only the bit-lock and sync-variable calls. It drives no device,
+  so the rule 4 label (a driver) does not fit it; the in or out result is unchanged.
+- `IP35/usr/cpu/sysgen/IP35boot/calcomp.o` (inferred): an input driver for a digitizer tablet, eight routines in a 26168-byte
+  object. `cal_other_control` (2216 bytes) and `cal_wioctl` (1452 bytes) are the control entries, `cal_open` (948 bytes)
+  opens the device, and `cal_pressure_intr` (872 bytes) handles pen pressure. The `cal_` prefix and the pressure routine
+  suggest a CalComp tablet; that is read from the name only. It imports the input-device layer (`idevSetPtr`,
+  `idevGetValDesc` and related calls) and names no chip.
+- `IP35/usr/cpu/sysgen/IP35boot/cserialio.o` (inferred): a serial-port driver, 22 routines in a 21688-byte object. `csio_ioctl`
+  (992 bytes) is the control entry, `csio_open` (864 bytes) opens a port, and `csio_read` and `csio_write` (548 and 552
+  bytes) move data. It works through the common port layer `sio_lock_port`, `sio_unlock_port` and `sio_sleep`, and it sets
+  the line discipline with `def_stty_ld`. The object names no chip.
+- `IP35/usr/cpu/sysgen/IP35boot/ecpplp.o` (inferred): the parallel-port driver, 33 routines in a 57232-byte object. `plpintr`
+  (1708 bytes) handles the port interrupt, `plpio` (1452 bytes) runs transfers, `plpattach` (1300 bytes) attaches the port,
+  and `plp_dma` (780 bytes) moves data by DMA. It imports `ioc3_intr_connect`, `ioc3_intr_disconnect`,
+  `ioc3_subdev_enabled` and `ioc3_write_ireg`, so it drives the parallel port of the IOC3 chip, and it reaches the bus
+  through `pciio_dmatrans_addr`, `pciio_piotrans_addr` and `pciio_driver_register`. Rule 4 removes it; the scope questions
+  below flag it as a candidate to keep.
+- `IP35/usr/cpu/sysgen/IP35boot/emu_dd.o` (inferred): a PCI sound-card driver with an on-card DSP, 59 routines in a 65616-byte
+  object. `emu_init_device` (1808 bytes), `emu_create_device` (688 bytes), `emu_init_efx` (864 bytes) and `emu_voice_write`
+  (788 bytes) set up the card and its voices. It imports the PCI calls `pciio_config_get`, `pciio_config_set`,
+  `pciio_dmamap_alloc` and `pciio_error_register`, and the DSP calls `kdsp_create_device`, `kdsp_add_device` and
+  `kdsp_fetch_external`. The `emu_` and `kdsp_` names point to an E-mu family chip; the object does not name it. It drives
+  a PCI card, not a system ASIC, so rule 4 removes it.
+
 ## Scope questions
 
 Each object below is listed under the rule shown, but its imports or routine names match a class the scope text keeps.
@@ -730,3 +765,7 @@ These are questions for the scope list; nothing here changes `scripts/inventory-
 - Rule labels that do not match the class of the object (the in/out result does not change): `fddi.a` is listed under
   rule 1 but is a network interface; `dksc.o` and `ds.a` are device drivers under rule 1; `dial.o` and `dialbox.o` are
   input devices under rule 3; `compression.a` and `crypto.a` are under rule 3, which names no coder or cipher class.
+- The IP35 parallel-port driver (`ecpplp.o`, listed under rule 4) imports the same IOC3 routines as the IP27 object and
+  drives the IOC3 parallel port. It is the same candidate for the keep list as the IP27 object above.
+- `bpqueue.o` in the IP35 build is listed under rule 4, but it is a queue with a daemon and drives no device. Its label
+  does not match the class; the in or out result does not change.
