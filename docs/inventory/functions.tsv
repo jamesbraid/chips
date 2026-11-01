@@ -6120,7 +6120,7 @@ IP27/unix	kernel	n64	.text	0xc000000000093654	8	pciio_businfo_multi_master_get	s
 IP27/unix	kernel	n64	.text	0xc00000000009365c	8	pciio_businfo_asic_type_get	symtab	f300cc2a20ca		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000093664	8	pciio_businfo_bus_type_get	symtab	2d3084abca7d		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009366c	8	pciio_businfo_bus_speed_get	symtab	55470fa05862		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP27/unix	kernel	n64	.text	0xc000000000093674	88	pciio_init	symtab	dbe9093a6a0c		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000093674	88	pciio_init	symtab	dbe9093a6a0c		in	named-only	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP27/unix	kernel	n64	.text	0xc0000000000936cc	8	pciio_attach	symtab	87506497337c		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000936d4	36	pciio_provider_register	symtab	2cb7e75510e8		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000936f8	36	pciio_provider_unregister	symtab	125db09ae0c0		in	undocumented		
@@ -7898,10 +7898,10 @@ IP27/unix	kernel	n64	.text	0xc00000000017e220	108	kmem_alloc	symtab	4e4775252a92
 IP27/unix	kernel	n64	.text	0xc00000000017e28c	184	kmem_realloc	symtab	680fb3ad7fe5		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017e344	108	kmem_zalloc	symtab	074dd33dcd2c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017e3b0	88	kmem_free	symtab	d9d5b6d7c5b1		out:5	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP27/unix	kernel	n64	.text	0xc00000000017e408	112	kern_malloc	symtab	6ecfca01f1d3		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000017e408	112	kern_malloc	symtab	6ecfca01f1d3		out:5	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP27/unix	kernel	n64	.text	0xc00000000017e478	104	kern_calloc	symtab	f9681631a73f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017e4e0	176	kern_realloc	symtab	1ec67e1a36d3		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000017e590	88	kern_free	symtab	dc86d4d819dc		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000017e590	88	kern_free	symtab	dc86d4d819dc		out:5	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP27/unix	kernel	n64	.text	0xc00000000017e5e8	76	kmem_arena_create	symtab	910182cc1f17		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017e634	28	kmem_arena_destroy	symtab	7f9fb9b8be74		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017e650	88	kmem_arena_alloc	symtab	22cf525e7372		out:5	undocumented		
@@ -19849,10 +19849,10 @@ IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64		0x0		kmem_al
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x6c	184	kmem_realloc	dwarf+symtab	9b2c840764ea		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x124	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x190	88	kmem_free	dwarf+symtab	9ee1a323d8db		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x1e8	112	kern_malloc	dwarf+symtab	2b5ffb1c8830		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x1e8	112	kern_malloc	dwarf+symtab	2b5ffb1c8830		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x258	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x2c0	176	kern_realloc	dwarf+symtab	bbef1660ad55		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x370	88	kern_free	dwarf+symtab	c645c1574bc9		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x370	88	kern_free	dwarf+symtab	c645c1574bc9		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x3c8	76	kmem_arena_create	dwarf+symtab	d36d048e5412		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x414	28	kmem_arena_destroy	dwarf+symtab	610109b348ab		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x430	88	kmem_arena_alloc	dwarf+symtab	800a10bde9f3		out:3	undocumented		
@@ -19974,10 +19974,10 @@ IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64		0x0		k
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x90	184	kmem_realloc	dwarf+symtab	83c20ba4a5a7		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x148	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x1b4	104	kmem_free	dwarf+symtab	2fc16fb82b27		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x21c	148	kern_malloc	dwarf+symtab	930b19d83114		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x21c	148	kern_malloc	dwarf+symtab	930b19d83114		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x2b0	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x318	176	kern_realloc	dwarf+symtab	58d92553ee58		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x3c8	620	kern_free	dwarf+symtab	19c9ac23c8b4		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x3c8	620	kern_free	dwarf+symtab	19c9ac23c8b4		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x634	76	kmem_arena_create	dwarf+symtab	d36d048e5412		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x680	28	kmem_arena_destroy	dwarf+symtab	610109b348ab		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x69c	88	kmem_arena_alloc	dwarf+symtab	f23b23fcf633		out:3	undocumented		
@@ -25793,7 +25793,7 @@ IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xd38	8	pciio_busin
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xd40	8	pciio_businfo_asic_type_get	dwarf+symtab	f300cc2a20ca		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xd48	8	pciio_businfo_bus_type_get	dwarf+symtab	2d3084abca7d		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xd50	8	pciio_businfo_bus_speed_get	dwarf+symtab	55470fa05862		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xd58	88	pciio_init	dwarf+symtab	f7ee1a9c80de		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xd58	88	pciio_init	dwarf+symtab	f7ee1a9c80de		in	named-only	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xdb0	8	pciio_attach	dwarf+symtab	87506497337c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xdb8	36	pciio_provider_register	dwarf+symtab	ceb020f2e2be		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-object	n64	.text	0xddc	36	pciio_provider_unregister	dwarf+symtab	9c25561a034e		in	undocumented		
@@ -37838,7 +37838,7 @@ IP30/unix	kernel	n64	.text	0xa80000002005fedc	8	pciio_businfo_multi_master_get	s
 IP30/unix	kernel	n64	.text	0xa80000002005fee4	8	pciio_businfo_asic_type_get	symtab	f300cc2a20ca		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005feec	8	pciio_businfo_bus_type_get	symtab	2d3084abca7d		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005fef4	8	pciio_businfo_bus_speed_get	symtab	55470fa05862		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP30/unix	kernel	n64	.text	0xa80000002005fefc	88	pciio_init	symtab	2c2256f54075		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002005fefc	88	pciio_init	symtab	2c2256f54075		in	named-only	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP30/unix	kernel	n64	.text	0xa80000002005ff54	8	pciio_attach	symtab	87506497337c		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005ff5c	36	pciio_provider_register	symtab	7bd544fb25da		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005ff80	36	pciio_provider_unregister	symtab	c336bf901a22		in	undocumented		
@@ -39610,10 +39610,10 @@ IP30/unix	kernel	n64	.text	0xa800000020148580	108	kmem_alloc	symtab	833c4e62e5db
 IP30/unix	kernel	n64	.text	0xa8000000201485ec	184	kmem_realloc	symtab	03178a194126		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201486a4	108	kmem_zalloc	symtab	19d1d7d40a13		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020148710	88	kmem_free	symtab	cddc1d7c9122		out:7	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP30/unix	kernel	n64	.text	0xa800000020148768	112	kern_malloc	symtab	726417fdc0e1		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020148768	112	kern_malloc	symtab	726417fdc0e1		out:7	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP30/unix	kernel	n64	.text	0xa8000000201487d8	104	kern_calloc	symtab	b52f48de04c3		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020148840	176	kern_realloc	symtab	f56bdf6d152d		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201488f0	88	kern_free	symtab	d12e344c40e4		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201488f0	88	kern_free	symtab	d12e344c40e4		out:7	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP30/unix	kernel	n64	.text	0xa800000020148948	76	kmem_arena_create	symtab	69422079ea69		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020148994	28	kmem_arena_destroy	symtab	ed7e7c59727b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201489b0	88	kmem_arena_alloc	symtab	c4477dc15ea6		out:7	undocumented		
@@ -50692,10 +50692,10 @@ IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64		0x0		kmem_al
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x6c	184	kmem_realloc	dwarf+symtab	9b2c840764ea		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x124	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x190	88	kmem_free	dwarf+symtab	9ee1a323d8db		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x1e8	112	kern_malloc	dwarf+symtab	2b5ffb1c8830		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x1e8	112	kern_malloc	dwarf+symtab	2b5ffb1c8830		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x258	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x2c0	176	kern_realloc	dwarf+symtab	bbef1660ad55		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x370	88	kern_free	dwarf+symtab	c645c1574bc9		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x370	88	kern_free	dwarf+symtab	c645c1574bc9		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x3c8	76	kmem_arena_create	dwarf+symtab	d36d048e5412		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x414	28	kmem_arena_destroy	dwarf+symtab	610109b348ab		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x430	88	kmem_arena_alloc	dwarf+symtab	800a10bde9f3		out:3	undocumented		
@@ -50810,10 +50810,10 @@ IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64		0x0		k
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x90	184	kmem_realloc	dwarf+symtab	83c20ba4a5a7		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x148	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x1b4	104	kmem_free	dwarf+symtab	2fc16fb82b27		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x21c	148	kern_malloc	dwarf+symtab	930b19d83114		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x21c	148	kern_malloc	dwarf+symtab	930b19d83114		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x2b0	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x318	176	kern_realloc	dwarf+symtab	58d92553ee58		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x3c8	360	kern_free	dwarf+symtab	ed19f4c023ec		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x3c8	360	kern_free	dwarf+symtab	ed19f4c023ec		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x530	76	kmem_arena_create	dwarf+symtab	d36d048e5412		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x57c	28	kmem_arena_destroy	dwarf+symtab	610109b348ab		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x598	88	kmem_arena_alloc	dwarf+symtab	f23b23fcf633		out:3	undocumented		
@@ -55912,7 +55912,7 @@ IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xd38	8	pciio_busin
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xd40	8	pciio_businfo_asic_type_get	dwarf+symtab	f300cc2a20ca		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xd48	8	pciio_businfo_bus_type_get	dwarf+symtab	2d3084abca7d		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xd50	8	pciio_businfo_bus_speed_get	dwarf+symtab	55470fa05862		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xd58	88	pciio_init	dwarf+symtab	f7ee1a9c80de		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xd58	88	pciio_init	dwarf+symtab	f7ee1a9c80de		in	named-only	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xdb0	8	pciio_attach	dwarf+symtab	87506497337c		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xdb8	36	pciio_provider_register	dwarf+symtab	ceb020f2e2be		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciio.o	kernel-object	n64	.text	0xddc	36	pciio_provider_unregister	dwarf+symtab	9c25561a034e		in	undocumented		
@@ -62706,7 +62706,7 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32		0x0		crimeFifoE
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x120	136	crimeEmptyWaitTimeout	dwarf+symtab	4a7208f5ffb4		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x1a8	476	crimeFifoFullHandler	dwarf+symtab	4a4dd54765f5		in	named-only	chips/crime/README.md#interrupt-registers-0x10-to-0x28	Interrupt registers (`0x10` to `0x28`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x384	88	crimeInfo	dwarf+funcnames+symtab	0a6fa520383e		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x3dc	56	crmNextIncarnation	dwarf+symtab	e3891ad111bc		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x3dc	56	crmNextIncarnation	dwarf+symtab	e3891ad111bc		in	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x414	256	crimeAttach	dwarf+funcnames+symtab	aaa1aeb184a6		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x514	64	crimeDetach	dwarf+funcnames+symtab	fb1e1ba9958c		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-object	n32	.text	0x554	76	crimeInitialize	dwarf+funcnames+symtab	b95ae9850a40		in	undocumented		
@@ -62832,8 +62832,8 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-object	n32	.text	0xad8	2
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32		0x0		crime_tileaddr_for_vice	dwarf+symtab			in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x104	520	crm_get_dms_tiles	dwarf+symtab	b5e423d342a2		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x30c	180	crm_tileclassinit	dwarf+symtab	b5633b2529ca		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x3c0	244	crmAllocTiles	dwarf+symtab	5db40c1531e7		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x4b4	300	crmFreeTiles	dwarf+symtab	5565df7bdd68		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x3c0	244	crmAllocTiles	dwarf+symtab	5db40c1531e7		in	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x4b4	300	crmFreeTiles	dwarf+symtab	5565df7bdd68		in	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x5e0	272	crmFreeChunk	dwarf+symtab	19211198a45d		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x6f0	172	crmAllocChunk	dwarf+symtab	53131aa75521		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-object	n32	.text	0x79c	416	resizechunk	dwarf+funcnames+symtab	9b81d1ed6d8e		in	undocumented		
@@ -62914,8 +62914,8 @@ IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-object	n32	.text	0x3fb8
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-object	n32	.text	0x4058	180	i2cfp_AudioSwitch	dwarf+funcnames+symtab	326dbd80b3b0		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-object	n32	.text	0x410c	76	i2cfp_SetBit	dwarf+funcnames+symtab	6ed25ba892c8		in	understood	chips/crime/README.md#serial-and-edid-routines-crime_i2co-crime_inito	Serial and EDID routines (`crime_i2c.o`, `crime_init.o`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-object	n32	.text	0x4158	580	crime_i2cfp_command	dwarf+symtab	fdd32437a8e7		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_db.o)	kernel-object	n32		0x0		crmAddBackTiles	dwarf+symtab			in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_db.o)	kernel-object	n32	.text	0xfc	220	crmSubtractBackTiles	dwarf+symtab	68c95571b852		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_db.o)	kernel-object	n32		0x0		crmAddBackTiles	dwarf+symtab			in	understood	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_db.o)	kernel-object	n32	.text	0xfc	220	crmSubtractBackTiles	dwarf+symtab	68c95571b852		in	understood	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_debug.o)	kernel-object	n32		0x0		crmIsGlobalRegWrite	dwarf+symtab			in	understood	chips/crime/README.md#graphics-member-routines-crimea	Graphics member routines (`crime.a`)
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_debug.o)	kernel-object	n32	.text	0x38	296	crmFindPP	dwarf+symtab	fdb88bf51129		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crypto.a(sha2.o)	kernel-object	n32		0x0		SHA256_Init	dwarf+symtab			out:3	undocumented		
@@ -66861,10 +66861,10 @@ IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32		0x0		kmem_al
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x74	208	kmem_realloc	dwarf+symtab	876cc3c72ab2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x144	116	kmem_zalloc	dwarf+symtab	13eebbd3cd67		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x1b8	96	kmem_free	dwarf+symtab	ba41c2997574		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x218	120	kern_malloc	dwarf+symtab	868bffc98101		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x218	120	kern_malloc	dwarf+symtab	868bffc98101		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x290	116	kern_calloc	dwarf+symtab	e944db3f1e48		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x304	200	kern_realloc	dwarf+symtab	5a85d2f59d56		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x3cc	88	kern_free	dwarf+symtab	25617193182d		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x3cc	88	kern_free	dwarf+symtab	25617193182d		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x424	76	kmem_arena_create	dwarf+symtab	d4984ccc997f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x470	28	kmem_arena_destroy	dwarf+symtab	5957077049f4		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x48c	100	kmem_arena_alloc	dwarf+symtab	4d0efe95bd78		out:3	undocumented		
@@ -66980,10 +66980,10 @@ IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32		0x0		k
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x98	208	kmem_realloc	dwarf+symtab	4581884f2243		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x168	116	kmem_zalloc	dwarf+symtab	13eebbd3cd67		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x1dc	120	kmem_free	dwarf+symtab	12e77e0e188e		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x254	156	kern_malloc	dwarf+symtab	010eb67653b3		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x254	156	kern_malloc	dwarf+symtab	010eb67653b3		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x2f0	116	kern_calloc	dwarf+symtab	e944db3f1e48		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x364	200	kern_realloc	dwarf+symtab	e87b52b9f999		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x42c	404	kern_free	dwarf+symtab	d8bd901d9a66		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x42c	404	kern_free	dwarf+symtab	d8bd901d9a66		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x5c0	76	kmem_arena_create	dwarf+symtab	d4984ccc997f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x60c	28	kmem_arena_destroy	dwarf+symtab	5957077049f4		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x628	100	kmem_arena_alloc	dwarf+symtab	4d0efe95bd78		out:3	undocumented		
@@ -72234,7 +72234,7 @@ IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xd04	8	pciio_busin
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xd0c	8	pciio_businfo_asic_type_get	dwarf+symtab	f300cc2a20ca		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xd14	8	pciio_businfo_bus_type_get	dwarf+symtab	2d3084abca7d		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xd1c	8	pciio_businfo_bus_speed_get	dwarf+symtab	55470fa05862		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xd24	96	pciio_init	dwarf+symtab	98b15517f413		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xd24	96	pciio_init	dwarf+symtab	98b15517f413		in	named-only	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xd84	8	pciio_attach	dwarf+symtab	87506497337c		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xd8c	36	pciio_provider_register	dwarf+symtab	da0de21ff4b0		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pciio.o	kernel-object	n32	.text	0xdb0	36	pciio_provider_unregister	dwarf+symtab	f81ba5d688c1		in	undocumented		
@@ -72270,49 +72270,49 @@ IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0xfc	1584	pcimh_sca
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x72c	1164	pcimh_scan_subbus	dwarf+funcnames+symtab	5388812552f8		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0xbb8	400	do_bist_for	dwarf+funcnames+symtab	205178dddb66		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0xd48	100	pcimh_piomap_alloc	dwarf+symtab	516e8872ccfa		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0xdac	28	pcimh_piomap_free	dwarf+symtab	1a5705f039e8		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0xdac	28	pcimh_piomap_free	dwarf+symtab	1a5705f039e8		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0xdc8	60	pcimh_piomap_addr	dwarf+symtab	2d5d76bb383f		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0xe04	8	pcimh_piomap_done	dwarf+symtab	78aa5094d5ec		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0xe04	8	pcimh_piomap_done	dwarf+symtab	78aa5094d5ec		in	located	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0xe0c	932	pcimh_piotrans_addr	dwarf+symtab	b9ad3ed49b50		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x11b0	460	pcimh_piospace_alloc	dwarf+symtab	ea1b278e4494		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x137c	188	pcimh_piospace_free	dwarf+symtab	85ce0198231d		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1438	120	pcimh_pio_flush_read	dwarf+symtab	d54688059959		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x14b0	8	pcimh_pio_flush_del	dwarf+symtab	78aa5094d5ec		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x14b8	8	pcimh_pio_flush_init	dwarf+symtab	87506497337c		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x14c0	8	pcimh_intr_setmustrun	dwarf+symtab	78aa5094d5ec		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1438	120	pcimh_pio_flush_read	dwarf+symtab	d54688059959		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x14b0	8	pcimh_pio_flush_del	dwarf+symtab	78aa5094d5ec		in	located	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x14b8	8	pcimh_pio_flush_init	dwarf+symtab	87506497337c		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x14c0	8	pcimh_intr_setmustrun	dwarf+symtab	78aa5094d5ec		in	located	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x14c8	112	pcimh_dmamap_alloc	dwarf+symtab	74288c91c35c		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1538	28	pcimh_dmamap_free	dwarf+symtab	bae385ca6061		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1538	28	pcimh_dmamap_free	dwarf+symtab	bae385ca6061		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1554	40	pcimh_dmamap_addr	dwarf+symtab	8cff56b218c8		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x157c	360	pcimh_dmamap_list	dwarf+symtab	c5a4bd49ed29		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x16e4	8	pcimh_dmamap_done	dwarf+symtab	78aa5094d5ec		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x16e4	8	pcimh_dmamap_done	dwarf+symtab	78aa5094d5ec		in	located	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x16ec	36	pcimh_dmatrans_addr	dwarf+symtab	cb4dec23f0d8		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1710	356	pcimh_dmatrans_list	dwarf+symtab	82a5f25a9253		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1874	8	pcimh_dmamap_drain	dwarf+symtab	78aa5094d5ec		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x187c	8	pcimh_dmaaddr_drain	dwarf+symtab	78aa5094d5ec		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1884	8	pcimh_dmalist_drain	dwarf+symtab	78aa5094d5ec		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1874	8	pcimh_dmamap_drain	dwarf+symtab	78aa5094d5ec		in	located	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x187c	8	pcimh_dmaaddr_drain	dwarf+symtab	78aa5094d5ec		in	located	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1884	8	pcimh_dmalist_drain	dwarf+symtab	78aa5094d5ec		in	located	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x188c	56	pcimh_flush_buffers	dwarf+symtab	4c5b88240801		in	named-only	chips/mace/README.md#pci-host-bridge-6-rows-word-accesses-only-in-every-routine	PCI host bridge (6 rows; word accesses only in every routine)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x18c4	136	pcimh_endian_apply	dwarf+funcnames+symtab	815e9b491e9e		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x194c	164	pcimh_intr_alloc	dwarf+symtab	6845191b5df5		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x19f0	28	pcimh_intr_free	dwarf+symtab	b11af65f8b22		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x19f0	28	pcimh_intr_free	dwarf+symtab	b11af65f8b22		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1a0c	272	pcimh_intr_connect	dwarf+symtab	992a701c8918		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1b1c	180	pcimh_intr_disconnect	dwarf+symtab	fdcef7ff36f4		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1bd0	8	pcimh_intr_cpu_get	dwarf+symtab	6319e0118090		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1bd0	8	pcimh_intr_cpu_get	dwarf+symtab	6319e0118090		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1bd8	184	mace_ivecs	dwarf+funcnames+symtab	8fc514510d72		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1c90	224	mace_level	dwarf+funcnames+symtab	7363a58f8d79		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1d70	28	pcimh_provider_startup	dwarf+symtab	34d7a2e33b85		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1d8c	8	pcimh_provider_shutdown	dwarf+symtab	78aa5094d5ec		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1d94	8	pcimh_write_gather_flush	dwarf+symtab	87506497337c		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1d9c	8	pcimh_reset	dwarf+symtab	6319e0118090		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1d70	28	pcimh_provider_startup	dwarf+symtab	34d7a2e33b85		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1d8c	8	pcimh_provider_shutdown	dwarf+symtab	78aa5094d5ec		in	located	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1d94	8	pcimh_write_gather_flush	dwarf+symtab	87506497337c		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1d9c	8	pcimh_reset	dwarf+symtab	6319e0118090		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1da4	44	pcimh_endian_set	dwarf+symtab	6acd8f6b037b		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1dd0	8	pcimh_priority_set	dwarf+symtab	5ac87f4df361		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1dd8	56	pcimh_config_get	dwarf+symtab	425033cc0d6d		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1e10	28	pcimh_config_get_safe	dwarf+symtab	34d7a2e33b85		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1dd0	8	pcimh_priority_set	dwarf+symtab	5ac87f4df361		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1dd8	56	pcimh_config_get	dwarf+symtab	425033cc0d6d		in	named-only	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1e10	28	pcimh_config_get_safe	dwarf+symtab	34d7a2e33b85		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1e2c	176	pcimh_config_ptr_get	dwarf+funcnames+symtab	8d426cfe6926		in	named-only	chips/mace/README.md#pci-host-bridge-6-rows-word-accesses-only-in-every-routine	PCI host bridge (6 rows; word accesses only in every routine)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1edc	64	pcimh_config_set	dwarf+symtab	6265bf39799b		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x1f1c	268	pcimh_config_ptr_set	dwarf+funcnames+symtab	e491fac30d03		in	named-only	chips/mace/README.md#configuration-cycles-established-pcimh_config_ptr_get-pcimh_config_ptr_set	Configuration cycles (established: `pcimh_config_ptr_get`, `pcimh_config_ptr_set`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2028	72	pcimh_config_ptr_setget	dwarf+funcnames+symtab	77a308f1edee		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2070	8	pcimh_error_devenable	dwarf+symtab	87506497337c		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2078	8	pcimh_error_extract	dwarf+symtab	a543eb621933		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2070	8	pcimh_error_devenable	dwarf+symtab	87506497337c		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2078	8	pcimh_error_extract	dwarf+symtab	a543eb621933		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2080	80	pciio_pio_read8	dwarf+symtab	199ba2cb71b8		in	named-only	chips/mace/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x20d0	80	pciio_pio_read16	dwarf+symtab	a63710ac7361		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2120	80	pciio_pio_read32	dwarf+symtab	0058fa68511d		in	undocumented		
@@ -72323,11 +72323,11 @@ IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x21d0	8	pciio_pio_
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x21d8	8	pciio_pio_write64	dwarf+symtab	db9dd611c94c		in	named-only	chips/mace/README.md#other-rows	Other rows
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x21e0	1084	mace_pci_error	dwarf+funcnames+symtab	bfd5965cc9aa		in	named-only	chips/mace/README.md#pci-host-bridge-6-rows-word-accesses-only-in-every-routine	PCI host bridge (6 rows; word accesses only in every routine)
 IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x261c	56	IP32_hinv_location	dwarf+symtab	72a3d3916397		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2654	8	pcimh_device_unregister	dwarf+symtab	78aa5094d5ec		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x265c	8	pcimh_dma_enabled	dwarf+symtab	a7e7ca11a6b8		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2664	8	pcimh_driver_reg_callback	dwarf+symtab	78aa5094d5ec		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x266c	8	pcimh_driver_unreg_callback	dwarf+symtab	78aa5094d5ec		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2674	32	pcimh_businfo_get	dwarf+symtab	da1ff69f4db6		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2654	8	pcimh_device_unregister	dwarf+symtab	78aa5094d5ec		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x265c	8	pcimh_dma_enabled	dwarf+symtab	a7e7ca11a6b8		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2664	8	pcimh_driver_reg_callback	dwarf+symtab	78aa5094d5ec		in	located	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x266c	8	pcimh_driver_unreg_callback	dwarf+symtab	78aa5094d5ec		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
+IP32/usr/cpu/sysgen/IP32boot/pcimh.o	kernel-object	n32	.text	0x2674	32	pcimh_businfo_get	dwarf+symtab	da1ff69f4db6		in	understood	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP32/usr/cpu/sysgen/IP32boot/pgrpidbg.a(pgrpidbg.o)	kernel-object	n32		0x0		pgrpidbg_init	dwarf+symtab			out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pgrpidbg.a(pgrpidbg.o)	kernel-object	n32	.text	0x30	108	idbg_vpgrp_lookup	dwarf+funcnames+symtab	b46860a52905		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/pgrpidbg.a(pgrpidbg.o)	kernel-object	n32	.text	0x9c	144	vpgrpprint	dwarf+funcnames+symtab	863d3242a91e		out:1	undocumented		
@@ -84695,10 +84695,10 @@ IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64		0x0		kmem_al
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x6c	184	kmem_realloc	dwarf+symtab	9b2c840764ea		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x124	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x190	88	kmem_free	dwarf+symtab	9ee1a323d8db		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x1e8	112	kern_malloc	dwarf+symtab	2b5ffb1c8830		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x1e8	112	kern_malloc	dwarf+symtab	2b5ffb1c8830		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x258	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x2c0	176	kern_realloc	dwarf+symtab	bbef1660ad55		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x370	88	kern_free	dwarf+symtab	c645c1574bc9		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x370	88	kern_free	dwarf+symtab	c645c1574bc9		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x3c8	76	kmem_arena_create	dwarf+symtab	d36d048e5412		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x414	28	kmem_arena_destroy	dwarf+symtab	610109b348ab		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x430	88	kmem_arena_alloc	dwarf+symtab	800a10bde9f3		out:3	undocumented		
@@ -84820,10 +84820,10 @@ IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64		0x0		k
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x90	184	kmem_realloc	dwarf+symtab	83c20ba4a5a7		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x148	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x1b4	104	kmem_free	dwarf+symtab	2fc16fb82b27		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x21c	148	kern_malloc	dwarf+symtab	930b19d83114		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x21c	148	kern_malloc	dwarf+symtab	930b19d83114		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x2b0	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x318	176	kern_realloc	dwarf+symtab	58d92553ee58		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x3c8	620	kern_free	dwarf+symtab	3592b35d2f68		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x3c8	620	kern_free	dwarf+symtab	3592b35d2f68		out:3	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x634	76	kmem_arena_create	dwarf+symtab	d36d048e5412		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x680	28	kmem_arena_destroy	dwarf+symtab	610109b348ab		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x69c	88	kmem_arena_alloc	dwarf+symtab	f23b23fcf633		out:3	undocumented		
@@ -90580,7 +90580,7 @@ IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xce0	8	pciio_busin
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xce8	8	pciio_businfo_asic_type_get	dwarf+symtab	f300cc2a20ca		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xcf0	8	pciio_businfo_bus_type_get	dwarf+symtab	2d3084abca7d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xcf8	8	pciio_businfo_bus_speed_get	dwarf+symtab	55470fa05862		in	named-only	docs/open-questions.md#open-questions	Open questions
-IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xd00	88	pciio_init	dwarf+symtab	48bc6c663c02		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xd00	88	pciio_init	dwarf+symtab	48bc6c663c02		in	named-only	chips/mace/README.md#pci-host-layer-pcimho	PCI host layer (`pcimh.o`)
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xd58	8	pciio_attach	dwarf+symtab	87506497337c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xd60	36	pciio_provider_register	dwarf+symtab	9b84317ece1b		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-object	n64	.text	0xd84	36	pciio_provider_unregister	dwarf+symtab	ce5f7189bb97		in	undocumented		
