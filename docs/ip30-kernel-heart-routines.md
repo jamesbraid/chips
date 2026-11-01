@@ -109,3 +109,17 @@ the processor running the code.
   `is_octane_lx` to 1 when the word at 0x900000001f600048 is zero, in which case it stores 0x100000 to the word at
   0x900000001f600038 and 0x7001a to the word at 0x900000001f60002c. Last it sets `_prom_cleared` to 1. Inferred: from
   decompiler output checked against the fact sheet's callees, literal-pool words and absolute addresses.
+- `heart_startup` (`IP30/unix` `0xa80000002003ee44`, 488 bytes, frame 96 bytes) builds the HEART part of the hardware
+  graph and registers every crosstalk widget that answers; it returns nothing and takes the parent vertex in a0. It
+  first stores 40000 (0x9c40) to the word at 0x900000001800002c, the widget request timeout, or 0x80 when the halfword
+  `kdebug` is nonzero, and loads the doubleword at 0xffffffffaff00080, of which the low four bits (the widget number
+  HEART answers to) are kept in s5. It then adds the vertices "node" under the argument, registers `heart_provider` on
+  it with `xtalk_provider_register` and `xtalk_provider_startup`, adds "xtalk" under it, sets its switch id to 0 with
+  `xswitch_id_set`, adds "0" under that and keeps the vertex in `the_error_vhdl`, adds the edge "io" from the node
+  vertex to the xtalk vertex with `hwgraph_edge_add` and makes the node the master of "0" with `device_master_set`.
+  For widget 0 it reads the identification word at 0x9000000010000004 and calls `xwidget_register` with part (bits
+  27:12), manufacturer (bits 11:1), the "0" vertex, widget number 0, the node vertex and s5. It then walks widgets 15
+  down to 0 over the switch information from `xswitch_info_get` (nothing is done when that is zero): each widget that
+  `xswitch_info_link_ok` accepts gets a vertex named with `sprintf` "%d", recorded with `xswitch_info_vhdl_set`, and
+  is registered from the identification word at 0x9000000010000004 plus the widget number shifted left 24 in the same
+  way. Established.

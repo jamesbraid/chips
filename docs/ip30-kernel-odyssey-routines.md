@@ -131,3 +131,22 @@ called a FIFO write below.
   ends with the saved vertex-buffer data from shadow +0xb4 to +0xbc, the command 0x34008000 ORed with a recomposed
   word from +0x26ac, and a loop copying the remaining saved words. Inferred: read from decompiler output; the variant
   table and the loops at the end were not traced instruction by instruction.
+- `gfx_flow_alloc` (`IP30/unix` `0xa80000002038f318`, 512 bytes, frame 96 bytes) allocates and fills one 104-byte
+  flow-control record for a graphics widget and returns its address, or 0 when `kmem_alloc` (size 104, flags 0)
+  returns 0. The first argument (a0) is the widget handle and the second (a1) the widget's physical window. It takes
+  `mutex_spinlock` on `gfx_flow_init_lock` and, when the doubleword `gfx_flow_owners` is zero, first calls the unnamed
+  routine at 0xa80000002038f230. It then adds 1 to the word at 0xa8000000204b0020 and stores it back; when the new
+  count is 1 it runs the HEART hookup for the first record: for index 0 and 1 in turn it stores 2 and then 4 (1
+  shifted left by index plus 1) to 0xffffffffaff10028, the HEART acknowledge register, and calls
+  `heart_flow_control_connect` with the index and the prehandler `gfx_flow_delayed_hiwater_intr_prehandler`. The lock
+  is released with `mutex_spinunlock` before the allocation. Into the record it stores, in this order: the handle as a
+  word at +0x0 (in the delay slot of `xwidget_info_id_get`), the window at +0x8, the widget id from `xwidget_info_get`
+  and `xwidget_info_id_get` as a word at +0x4, the third argument (a2) as a doubleword at +0x10, the low 32 bits of
+  the fourth (a3) divided by 8 at +0x1c and then +0x18, the fifth (a4) times 100 divided by 1000 (unsigned, replaced
+  by 1 when it comes out zero) at +0x20, the value 1 at +0x38, +0x3c and +0x40, the value 56 at +0x44, the sixth
+  argument (a5) at +0x28 and the seventh (a6) at +0x30 as doublewords, and the eighth (a7) as a word at +0x48. It then
+  calls `kvalloc` (1, 0, 0), stores the result at +0x50 and writes a page-table entry: the entry address is the table
+  whose pointer is the doubleword `kptbl`, plus 8 times ((result plus 0x4000000000000000) >> 14), and the entry is the
+  window shifted right 14 and left 8, ORed with the doubleword at 0xa8000000204a9140 (0x10000003f). It calls the
+  unnamed routine at 0xa80000002038f270 with the record, stores 0xffff as a halfword at +0x5c and -1 as a doubleword
+  at +0x60, and returns the record. Established.

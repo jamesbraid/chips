@@ -188,3 +188,58 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   that answers in the word at +0x44 and a byte at +0x40 plus the index. When no slot answers it prints "unknown device
   on gio bridge" with `cmn_err` (level 7). It then calls `gioio_provider_register`, `gioio_provider_startup`,
   `gioio_device_register` and `gioio_device_attach`, and returns 0. Inferred.
+- `pcireg_intr_addr_vect_get` (`IP30/unix` `0xa800000020056e98`, 516 bytes, frame 32 bytes) returns the interrupt
+  vector number programmed for pin `int_n`, the second argument. Types 2 and 3 take bits 55:48 of the doubleword at
+  window +0x130 plus 8 * pin (a `dsrl32` by 16, then a mask of 0xff). Types 0 and 1 take the low byte of the word at
+  +0x134 plus 8 * pin. The pin test, 0 to 7, is tested before the type and is `assfail` line 0x841; the read is made
+  whether or not it fires. Type -1 calls `panic` with a message that carries this routine's own name and returns 0,
+  and a record type outside -1 to 3 returns 0 without a message. Established.
+- `pcireg_dirmap_diroff_set` (`IP30/unix` `0xa8000000200534b8`, 496 bytes, frame 16 bytes) writes bits 16:0 of a
+  direct-map register from its second argument (the register whose bits 23:20 `pcireg_dirmap_wid_set` rewrites). Types
+  0 and 1 work on the word at window +0x84: clear bits 16:0 (`lui` 0xfffe, sign-extended, ANDed), store, reload, OR in
+  the argument masked to 0x1ffff, store. Type 2 does the same two stores on the doubleword at +0x80. Type 3 first does
+  two stores of its own on that doubleword: clear bits 25:20 (mask 0x3f00000), reload, OR in the argument shifted left
+  3 and masked to 0x3f00000, so argument bits 22:17 become register bits 25:20, and only then the bits 16:0 pair. The
+  routine has no bound test and no interrupt-level change and returns no value. Type -1 calls `panic` and stores
+  nothing, and so does a record type outside -1 to 3. Established.
+- `pcireg_ssram_size_set` (`IP30/unix` `0xa800000020051124`, 496 bytes, frame 48 bytes) stores its second argument,
+  which must be 0 to 3, into bits 18:17 of the word at window +0x24, the word that `pcireg_control_set` writes for
+  types 0 and 1; only type 0 is accepted without a message. It raises the interrupt level with `spl1` before it looks
+  at the handle and restores it with `splx` on every path, including the panic ones. Types 1, 2 and 3 call `panic`
+  with "undefined register" and then carry on into the same bound test and stores as type 0, so the register is still
+  written. The size argument is tested for 0 to 3 (`assfail` line 0x158, 344) and a failure does not stop the stores.
+  The stores are a load, a clear of bits 18:17 (`lui` 6 and `nor`), a store, a reload, an OR of the argument shifted
+  left 17 with no mask, a store and a read-back of the word. Type -1 calls `panic` with the bridge-type message,
+  writes nothing and still restores the level, and a record type outside -1 to 3 does nothing but restore it.
+  Established.
+- `pcireg_type1_cfg_addr` (`IP30/unix` `0xa80000002005a1bc`, 468 bytes, frame 16 bytes) returns the address of one
+  32-bit word of PCI type 1 configuration space without touching the chip. The second argument is shifted left 8
+  (`dsll`), the third is a signed register offset divided by 4 with rounding toward zero (`addiu` 3 conditionally
+  added when negative, `sra` 2) and multiplied back by 4, and the result is window plus those two plus 0x28000. The
+  arithmetic is present three times: one copy serves types 0 and 1, and types 3 and 2 each jump to a copy of their
+  own; there is no bound test and no `assfail`. Type -1 or a null handle calls `panic` with the bridge-type message
+  and returns 0, and a record type outside -1 to 3 also returns 0. Established.
+- `pcireg_ext_ate_set` (`IP30/unix` `0xa80000002005a55c`, 460 bytes, frame 32 bytes) writes one external
+  address-translation entry, the third argument, as a 64-bit store to window +0x80000 plus 8 * index (second
+  argument), with no earlier read. The index is bounded inclusive, 0 to 0x10000 (`assfail` line 0xbcd), by two tests,
+  one against zero and one with `slt` against 0x10000; a failure does not stop the store. Only type 0 is a Bridge:
+  types 1, 2 and 3 call `panic` with "not a BRIDGE ASIC" and still go on to the bound test and the store. Type -1
+  calls `panic` with the bridge-type message and stores nothing, and so does a record type outside -1 to 3. There is
+  no interrupt-level change. Established.
+- `pcireg_ext_ate_addr` (`IP30/unix` `0xa80000002005a728`, 460 bytes, frame 32 bytes) returns the address of the
+  external translation entry that `pcireg_ext_ate_get` loads and `pcireg_ext_ate_set` stores: window plus 0x80000 plus
+  8 * index, with no access to the chip. The inclusive bound 0 to 0x10000 is `assfail` line 0xbe5 and the address is
+  returned afterwards whether or not it fires. Types 1, 2 and 3 call `panic` with "not a BRIDGE ASIC" first and then
+  build the same address; type -1 calls `panic` with the bridge-type message and returns 0, as does a record type
+  outside -1 to 3. Established.
+- `pcireg_ext_ate_get` (`IP30/unix` `0xa80000002005a390`, 460 bytes, frame 32 bytes) reads one external
+  address-translation entry: the doubleword at window +0x80000 plus 8 * index, a single `ld` made in the delay slot of
+  the jump to the epilogue. The bound is inclusive, 0 to 0x10000 (`assfail` line 0xbb5) and the load follows a
+  failure. Types 1, 2 and 3 first call `panic` with "not a BRIDGE ASIC" and still do the load; type -1 calls `panic`
+  with the bridge-type message and returns 0, and a record type outside -1 to 3 returns 0 too. Established.
+- `pcireg_control_bit_clr` (`IP30/unix` `0xa800000020050ddc`, 428 bytes, frame 32 bytes) clears bits of the control
+  register under a raised interrupt level: `spl1` is the first call, before the handle is looked at, and `splx` closes
+  every path. Types 2 and 3 load the doubleword at window +0x20, AND it with the complement (`nor`) of the second
+  argument and store it; types 0 and 1 do the same on the word at +0x24. Each path then loads the register once more,
+  a read-back that the delay slot of the exit branch runs and whose value is dropped. There is no bound test. Type -1
+  calls `panic` with the bridge-type message and still restores the level; the routine returns no value. Established.
