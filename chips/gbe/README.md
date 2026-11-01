@@ -118,3 +118,46 @@ routine reads them, and is otherwise not part of this page.
 - `0x16010014` (`0x10014`): VT_5, horizontal blank window (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 38). Established.
   Bits 11:0 hold vt_hblank_off and bits 23:12 hold vt_hblank_on, both reset to zero. Horizontal blanking ends when vt_x
   equals vt_hblank_off and begins when vt_x equals vt_hblank_on.
+
+- `0x16010018` (`0x10018`): VT_6, sync polarity and forced sync levels (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 39). Established.
+  All seven bits reset to zero. Bit 0 (vt_vdrv_invert) inverts vsync, and bit 1 (vt_vdrv_low) holds vsync at 0, or at 1
+  when the invert bit is set; the spec says this is the DPMS power-saving path. Bits 2 and 3 do the same for hsync.
+  Bits 4 and 5 (vt_sync_high, vt_sync_low) force sync_n to 1 or 0 to disable sync on green. Bit 6 (vt_f2rf_high) forces
+  f2rf to 1, which the spec describes as the left and right synchronisation signal.
+
+- `0x1601001c` (`0x1001c`): VT_7, field toggle point and frame lock preset (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 39). Established.
+  Bits 11:0 hold vt_f2rf, which toggles f2rf when vt_y equals it, and bits 23:12 hold vt_frmlock, the value vt_y takes
+  on the rising edge of frmlock. Both reset to zero. The spec adds that vt_y must not be reset until vt_x equals vt_maxx.
+
+- `0x16010020` (`0x10020`): VT_8, interrupt lines 0 and 1 (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 39). Established.
+  Bits 11:0 hold vt_intr1 and bits 23:12 hold vt_intr0, both reset to zero. GBE raises interrupt 1 when vt_y equals
+  vt_intr1 and interrupt 0 when vt_y equals vt_intr0.
+
+- `0x16010024` (`0x10024`): VT_9, interrupt lines 2 and 3 (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 39). Established.
+  Bits 11:0 hold vt_intr3 and bits 23:12 hold vt_intr2, both reset to zero. GBE raises interrupt 3 when vt_y equals
+  vt_intr3 and interrupt 2 when vt_y equals vt_intr2.
+
+- `0x16010028` (`0x10028`): VT_10, flat panel horizontal drive edges (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 39). Established.
+  Bits 11:0 hold fp_hdrv_off and bits 23:12 hold fp_hdrv_on, both reset to zero. The flat panel horizontal drive clears
+  when vt_x equals fp_hdrv_off and sets when vt_x equals fp_hdrv_on.
+
+- `0x1601002c` (`0x1002c`): VT_11, flat panel vertical drive edges (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 39). Established.
+  Bits 11:0 hold fp_vdrv_off and bits 23:12 hold fp_vdrv_on, both reset to zero. The flat panel vertical drive clears
+  when vt_y equals fp_vdrv_off and sets when vt_y equals fp_vdrv_on.
+
+- `0x16010030` (`0x10030`): VT_12, flat panel data enable edges (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 40). Established.
+  Bits 11:0 hold fp_de_off and bits 23:12 hold fp_de_on, both reset to zero. fp_de clears when vt_x equals fp_de_off
+  and sets when vt_x equals fp_de_on.
+
+- `0x16010034` (`0x10034`): VT_13, horizontal internal pixel enable (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 40). Established.
+  Bits 11:0 hold vt_hpixen_off and bits 23:12 hold vt_hpixen_on, both reset to zero. The internal pixel enable clears
+  when vt_x equals vt_hpixen_off and sets when vt_x equals vt_hpixen_on.
+
+- `0x16010038` (`0x10038`): VT_14, vertical internal pixel enable (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 40). Established.
+  Bits 11:0 hold vt_vpixen_off and bits 23:12 hold vt_vpixen_on, both reset to zero. The internal pixel enable clears
+  when vt_y equals vt_vpixen_off and sets when vt_y equals vt_vpixen_on.
+
+- `0x1601003c` (`0x1003c`): VT_15, colour map write enable on the x counter (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 40). Established.
+  Bits 11:0 hold vt_hcmap_off, which clears the colour map write enable when vt_x equals it. Bits 23:12 are named
+  vt_vcmap_on, but the spec compares them with vt_x, the horizontal counter, and sets the write enable on that compare.
+  This entry takes the compare as written. Both fields reset to zero.
