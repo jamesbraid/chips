@@ -7,14 +7,28 @@
    "dis": "work/dis/ip27-unix.s",
    "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
    "path": "root/IP27/unix",
-   "kind": "elf"
+   "kind": "elf",
+   "literals": "work/dis/ip27-unix.sdata.txt",
+   "lit_sections": [
+    ".sdata",
+    ".lit8",
+    ".srdata"
+   ],
+   "linked_literals": true
   },
   {
    "label": "ip30-unix",
    "dis": "work/dis/ip30-unix.s",
    "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
    "path": "root/IP30/unix",
-   "kind": "elf"
+   "kind": "elf",
+   "literals": "work/dis/ip30-unix.sdata.txt",
+   "lit_sections": [
+    ".sdata",
+    ".lit8",
+    ".srdata"
+   ],
+   "linked_literals": true
   },
   {
    "label": "ip30-prom",
@@ -40,12 +54,21 @@
    "arch": "mips:isa64"
   },
   {
-   "label": "ip35-kernel-o",
-   "dis": "work/dis/ip35-kernel-o.s",
-   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
+   "label": "ip35-pcibr",
+   "dis": "work/dis/ip35-pcibr.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/pcibr.o",
    "kind": "elf",
    "reloc": true,
-   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
+   "note": "IRIX 6.5.30 IP35 Bridge-family driver object (pcireg accessors and pcibr_*)"
+  },
+  {
+   "label": "ip35-xbridge",
+   "dis": "work/dis/ip35-xbridge.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/xbridge.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 XBridge attach object",
+   "variant_hint": "xbridge"
   },
   {
    "label": "ip35-prom",
@@ -56,6 +79,16 @@
    "vma": "0xc00000001fc00000",
    "split": "jr31",
    "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time"
+  },
+  {
+   "label": "io6-prom",
+   "dis": "work/dis/io6-prom.s",
+   "path": "root/firmware/io6prom.img",
+   "kind": "promgen64",
+   "segment": "io6prom",
+   "vma": "0xc000000011c00000",
+   "split": "jr31",
+   "note": "I/O board PROM (the IP27 PROM main program), promgen64 segment unpacked (checksum ok); no symbols"
   }
  ],
  "type_const_in": "^pcireg_",
@@ -161,234 +194,19 @@
  },
  "reference": {
   "bridge": {
-   "datasheets": [
-    {
-     "file": "docs/datasheets/bridge.md",
-     "label": "bridge.md",
-     "headings": [
-      "^Common widget registers",
-      "^Bridge-specific registers",
-      "^Interrupt registers",
-      "^Device registers",
-      "^Widget address space"
-     ]
-    }
-   ],
-   "spec": [
-    {
-     "file": "sgi-bridge-asic-spec-rev4.0.registers.md",
-     "label": "bridge-spec-rev4.0",
-     "headings": [
-      "^Widget configuration",
-      "^PMU and map",
-      "^PCI/GIO",
-      "^Interrupt",
-      "^Device"
-     ]
-    }
-   ],
-   "model": [
-    {
-     "file": "sgi-bridge.c",
-     "adapter": "table",
-     "row_slot": "SGI_BRIDGE_SLOT",
-     "extra_consts": {
-      "SGI_BRIDGE_REG_SLOT": 8
-     },
-     "extra_handled": [
-      "BRIDGE_RESERVED_DATA_HALF"
-     ],
-     "regions": [
-      {
-       "name": "address translation entries",
-       "lo": "BRIDGE_ATE_BASE",
-       "size": 1024,
-       "guessed": false
-      },
-      {
-       "name": "address translation low view",
-       "lo": "BRIDGE_ATE_LOW_BASE",
-       "size": 512
-      },
-      {
-       "name": "external SSRAM",
-       "lo": "BRIDGE_SSRAM_BASE",
-       "size": 524288,
-       "guessed": true,
-       "note": "unpopulated on this board"
-      },
-      {
-       "name": "PCI type 0 configuration",
-       "lo": 131072,
-       "size": 32768
-      },
-      {
-       "name": "PCI type 1 configuration",
-       "lo": 163840,
-       "size": 4096
-      },
-      {
-       "name": "device windows",
-       "lo": 2097152,
-       "size": 10485760
-      },
-      {
-       "name": "external flash",
-       "lo": "BRIDGE_FLASH_BASE",
-       "size": 4194304
-      }
-     ]
-    }
-   ]
+   "datasheets": [],
+   "spec": [],
+   "model": []
   },
   "xbridge": {
-   "datasheets": [
-    {
-     "file": "docs/datasheets/xbridge.md",
-     "label": "xbridge.md",
-     "headings": [
-      "^Bridge half: registers that change"
-     ]
-    },
-    {
-     "file": "docs/datasheets/bridge.md",
-     "label": "bridge.md (XBridge inherits unchanged registers)",
-     "headings": [
-      "^Common widget registers",
-      "^Bridge-specific registers",
-      "^Interrupt registers",
-      "^Device registers",
-      "^Widget address space"
-     ]
-    }
-   ],
-   "datasheet_supplement": [
-    {
-     "lo": 384,
-     "hi": 440,
-     "stride": 8,
-     "name": "force-always interrupt 0-7 (xbridge.md Bridge half table, 0x180 to 0x1b8)",
-     "access": "write only",
-     "kind": "register",
-     "section": "Bridge half",
-     "line": 244
-    },
-    {
-     "lo": 448,
-     "hi": 504,
-     "stride": 8,
-     "name": "force-with-pin interrupt 0-7 (xbridge.md, 0x1c0 to 0x1f8)",
-     "access": "write only",
-     "kind": "register",
-     "section": "Bridge half",
-     "line": 245
-    },
-    {
-     "lo": 768,
-     "hi": 1016,
-     "stride": 8,
-     "name": "buffer 0-15 address match (xbridge.md, 0x300 to 0x3f8)",
-     "access": "read only",
-     "kind": "register",
-     "section": "Bridge half",
-     "line": 261
-    },
-    {
-     "lo": 1024,
-     "hi": 1528,
-     "stride": 8,
-     "name": "performance counters, even buffers (xbridge.md, 0x400 to 0x5f8)",
-     "access": "read/write",
-     "kind": "register",
-     "section": "Bridge half",
-     "line": 262
-    }
-   ],
-   "spec": [
-    {
-     "file": "sgi-xbridge-asic-spec-rev0.5.registers.md",
-     "label": "xbridge-spec-rev0.5",
-     "headings": [
-      "^Widget configuration, PMU",
-      "^Interrupt$",
-      "^Device$"
-     ],
-     "prose": true
-    }
-   ],
-   "spec_supplement": [
-    {
-     "lo": 768,
-     "hi": 1016,
-     "stride": 8,
-     "name": "buffer address match upper/lower, 16 buffers",
-     "access": "read only",
-     "kind": "register",
-     "section": "Buffer address match registers",
-     "line": 205,
-     "source": "xbridge-spec-rev0.5"
-    },
-    {
-     "lo": 1024,
-     "hi": 1528,
-     "stride": 8,
-     "name": "buffer performance registers, even buffers",
-     "access": "read/write",
-     "kind": "register",
-     "section": "Buffer performance registers",
-     "line": 212,
-     "source": "xbridge-spec-rev0.5"
-    }
-   ],
-   "model": [
-    {
-     "file": "sgi-xbridge.c",
-     "adapter": "case-function",
-     "defined": [
-      "xbridge_register_defined"
-     ],
-     "unimp": [
-      "xbridge_deferred"
-     ],
-     "regions": [
-      {
-       "name": "translation table RAM (size from the datasheet; the model's entry count is a header constant)",
-       "lo": 65536,
-       "size": 4096
-      },
-      {
-       "name": "PCI configuration (xbridge_read, 0x20000 to 0x28fff)",
-       "lo": 131072,
-       "size": 36864
-      },
-      {
-       "name": "PCI device windows (xbridge_pio)",
-       "lo": 2097152,
-       "size": 10485760
-      }
-     ]
-    }
-   ]
+   "datasheets": [],
+   "spec": [],
+   "model": []
   },
   "pic": {
-   "datasheets": [
-    {
-     "file": "docs/datasheets/pic.md",
-     "label": "pic.md",
-     "headings": [
-      "^Address and access contract"
-     ]
-    }
-   ],
-   "model": [
-    {
-     "file": "sgi-pic.c",
-     "adapter": "case-function",
-     "defined": [
-      "pic_defined"
-     ]
-    }
-   ]
+   "datasheets": [],
+   "spec": [],
+   "model": []
   }
  },
  "buckets": [
@@ -453,8 +271,8 @@
    "name": "PCI interrupt acknowledge"
   }
  ],
- "mode": "spec-backed",
+ "mode": "no-spec",
  "accessor_calls": "^pcireg_",
- "status": "census run (Bridge, XBridge; PIC and TIOCP rows come from the shared accessors)",
- "spec": "Bridge ASIC Specification, revision 4.0; XBridge ASIC Specification, revision 0.5"
+ "status": "census run over the IP27 and IP30 kernels, the IP35 driver objects and the PROMs (Bridge, XBridge; PIC and TIOCP rows come from the shared accessors)",
+ "spec": "none used as evidence: the held Bridge and XBridge specifications have suspended clearance (see docs/specs.md)"
 }
