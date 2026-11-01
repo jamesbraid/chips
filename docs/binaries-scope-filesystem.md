@@ -512,3 +512,156 @@ body was read in full.
 - `IP27/usr/cpu/sysgen/IP27boot/fddi.a(mpcm.o)` (inferred): a second physical connection routine set, two routines
   `moto_pcm` (1188 bytes) and `motopcm_code` in a 10596-byte member. It shares the station calls of `smt.o` and imports
   no chip routine.
+
+## IP35 build: file-system, volume and checkpoint objects (scope rule 1)
+
+The members below are the file-system, disk and checkpoint objects of the IP35 build that rule 1 removes. Each entry says what
+the member is and which rule removes it. The scan was not run on these members, so the exclusion comes from the object's
+role, as the rule text says. Labels: inferred, from the symbol table and undefined imports. No routine body was read in full.
+
+- `IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)` (inferred): the automount support routines, 20 routines in a 26468-byte
+  member. `do_mount` (948 bytes) and `do_unmount` (416 bytes) mount and unmount a tree, `send_unmount_request` (624 bytes) talks
+  to the automount daemon through an RPC client (`kclnt_create`, `kxdr_string`), and `makeautonode` (484 bytes) creates a
+  node and attaches its behaviour with `bhv_insert_initial`. It drives no chip.
+- `IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vfsops.o)` (inferred): the automount file-system operations, nine routines in a
+  15444-byte member. `auto_mount` (1148 bytes) and `auto_unmount` (328 bytes) are the mount and unmount entries, `auto_statvfs`
+  (196 bytes) reports space, and `irix5_to_autofs_args` (144 bytes) converts the mount arguments from the IRIX 5 layout. It
+  imports `vfs_insertbhv` and `vfssw`.
+- `IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)` (inferred): the automount vnode operations, 24 routines in a 31956-byte
+  member. `auto_lookup` (2372 bytes) resolves a name and may mount beneath it, `auto_readdir` (1208 bytes) lists a directory,
+  and `auto_rmdir`, `auto_mkdir` and `auto_symlink` (884, 744 and 600 bytes) change it. It calls `do_mount` in `auto_subr.o`.
+- `IP35/usr/cpu/sysgen/IP35boot/autofs.a(autofs_icrash.o)` (inferred): a crash-analysis hook with one 8-byte routine,
+  `autofs_icrash`, in a 13508-byte member. The member's data symbol `autofs_icrash_struct` is the record the crash tools read.
+  It imports nothing.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_cnode.o)` (inferred): the cache file-system nodes, 15 routines in a 24932-byte
+  member. `makecachefsnode` (2888 bytes) builds a node, `cachefs_initcnode` (1760 bytes) initialises it, and `valid_allocmap`
+  and `valid_file_header` (776 and 344 bytes) check the cache's allocation map and file header. It imports the front-directory
+  calls `cachefs_create_frontdir` and `cachefs_lookup_frontdir`.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_resource.o)` (inferred): the cache space manager, ten routines in a 15700-byte
+  member. `cachefs_replacement` (1264 bytes) chooses files to replace, `replace_front_file` (468 bytes) removes one,
+  `cachefs_allocblocks` and `cachefs_allocfile` (324 and 248 bytes) reserve space, and `cachefs_checkfid` (280 bytes) checks an
+  identifier. It imports the cache lock `cachefs_cachelock`.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_singlewrc.o)` (inferred): the single-writer caching policy, five routines in a
+  14628-byte member. `c_single_check_cached_object` (1780 bytes), `c_single_init_cached_object` (1500 bytes) and
+  `c_single_modify_cached_object` (688 bytes) check, set up and update a cached file, and `c_single_invalidate_cached_object` and
+  `c_single_expire_cached_object` (160 and 140 bytes) drop one. Its operations table is `singlecfsops`.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_strict.o)` (inferred): the strict-consistency caching policy, five routines in a
+  13092-byte member. `c_strict_init_cached_object` (1428 bytes), `c_strict_check_cached_object` (1300 bytes) and
+  `c_strict_modify_cached_object` (724 bytes) follow the policy's rules, and `c_strict_invalidate_cached_object` (156 bytes)
+  drops an entry. It asks the back end for attributes with `cachefs_backop_getattr`.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_subr.o)` (inferred): cache support routines, 54 routines in a 75316-byte member.
+  `release_fileheader` (2544 bytes) releases a file header, `cachefs_cache_create` (1756 bytes) makes a cache, `cachefsio_read`
+  and `cachefsio_write` (1376 bytes each) move cached data, and `fileheader_cache_find` (1144 bytes) searches the header cache.
+  It calls the back-end operations `cachefs_backop_readdir`, `cachefs_backop_readvp` and `cachefs_backop_writevp`.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_fscache.o)` (inferred): the cache-file-system instance table, nine routines in a
+  13012-byte member. `fscache_sync` (912 bytes) flushes a cache, `fscache_create` and `fscache_destroy` (348 and 340 bytes) make
+  and remove one, `fscache_free_cnodes` (180 bytes) frees its nodes, and `fscache_list_find` (84 bytes) searches the list.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_vfsops.o)` (inferred): the cache file-system mount and unmount code, 19 routines
+  in a 31972-byte member. `cachefs_mount` (4952 bytes) mounts a cache over a back-end file system, `cachefs_unmount` (628 bytes)
+  takes it down, `cachefs_vget` (888 bytes) returns a vnode, and `cachefs_complete_mount` (552 bytes) finishes the mount. It
+  It keeps its cache list and minor-number map in the data symbols `cachefs_cachelist` and `cachefs_minormap`.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_module.o)` (inferred): the cache file-system module start-up, three routines in
+  a 10852-byte member. `cachefs_init` (420 bytes) sets up the zones and the lock state and calls `getudev`, `cachefs_clearstat` (244 bytes)
+  resets the counters, and `cachefs_getstat` (24 bytes) reads them.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_vnops.o)` (inferred): the cache file vnode operations, 45 routines in a 79684-byte
+  member. `cachefs_symlink` (2920 bytes), `cachefs_readdir` (2036 bytes), `cachefs_lookup_locked` (2016 bytes), `cachehit_lookup`
+  (1996 bytes) and `cachefs_create` (1892 bytes) are the largest. It imports 125 names, including the back-end calls
+  `cachefs_backop_*`.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_noopc.o)` (inferred): the no-cache caching policy, five routines in a 10852-byte
+  member. `c_nop_init_cached_object` (1084 bytes), `c_nop_modify_cached_object` (612 bytes) and `c_nop_check_cached_object`
+  (404 bytes) handle their objects with no cache store, and `c_nop_invalidate_cached_object` (20 bytes) is the shortest of them. Its operations
+  table is `nopcfsops`.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_backops.o)` (inferred): the back-end operations, 24 routines in a 118852-byte
+  member. `cachefs_backop_writevp`, `cachefs_backop_readvp`, `cachefs_backop_getattr` and `cachefs_backop_rename` (800, 764, 764
+  and 756 bytes) call the real file system underneath the cache. It imports the version locks, `dnlc_purge_vp`, `vn_rele`, the spin-lock
+  calls and `sv_wait_sig`.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_frontops.o)` (inferred): the front-end operations, 13 routines in a 13636-byte
+  member. `cachefs_frontop_writevp` and `cachefs_frontop_readvp` (340 and 316 bytes) read and write the cached copy, and
+  `cachefs_getfrontvp` (260 bytes) returns its vnode. It imports seven names, none of them a device.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_icrash.o)` (inferred): a crash-analysis hook with one 8-byte routine
+  `cachefs_icrash`, in a 24660-byte member. Its data symbol `cachefs_icrash_struct` is the record the crash tools read.
+  It imports nothing.
+- `IP35/usr/cpu/sysgen/IP35boot/cachefsidbg.o` (inferred): the debugger commands for the cache file system, 30 routines in a
+  44112-byte object. `prtcnode` (748 bytes), `idbg_fileheader` (460 bytes) and `prcfsreq` (448 bytes) print cache nodes, file
+  headers and requests, and `cflags_to_str` (524 bytes) names the flags. It registers them with `idbg_addfunc` and reads the
+  cache list `cachefs_cachelist` and the vnode-type table `tab_vtypes`.
+- `IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_procfs.o)` (inferred): the checkpoint interface through `/proc`, 50 routines in a
+  53636-byte member. `ckpt_getpsinfo` (1088 bytes), `ckpt_getsiginfo` (868 bytes) and `ckpt_memfork` (732 bytes) read and
+  change process state for a checkpoint, and `ckpt_abort` (864 bytes) cancels one. It imports the address-space calls
+  `as_lookup` and `as_rele` and the timer state `ckptitimer`, and it drives no chip.
+- `IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_sys.o)` (inferred): the checkpoint and restart system calls, 22 routines in a
+  21860-byte member. `ckpt_sys` (648 bytes) is the entry point, `ckpt_restartreturn` (560 bytes) returns a restored process to
+  user mode, `ckpt_setexec` (520 bytes) restores the exec image and `ckpt_diropen` (300 bytes) reopens a directory. It imports
+  `execmap`, `exit` and the file-descriptor calls `fdaccess` and `fdsetattr`. No chip is driven.
+- `IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)` (inferred): the checkpoint helpers, nine routines in a 10868-byte member.
+  `ckpt_lookup_add` (304 bytes) and `ckpt_lookup` (100 bytes) keep a table of saved objects, `ckpt_fid` (284 bytes) builds a
+  file identifier, and `ckpt_vp_open` (280 bytes) reopens a saved vnode. It imports `vfile_alloc` and `vfile_ready`.
+- `IP35/usr/cpu/sysgen/IP35boot/dksc.o` (inferred): the SCSI disk driver, 60 routines in a 75248-byte object. `dkscioctl`
+  (2364 bytes) is the control entry, `dkscopen` (1828 bytes) opens a disk, `dk_chkcond` (1672 bytes) and `dk_print_sense`
+  (1120 bytes) handle SCSI check conditions, and it imports `biodone` for completion. It calls the multipath routine
+  `fo_max_paths` and reaches its controller through the device graph, with no chip routine named. Rule 1 lists it, though its
+  routines are a device driver's; the scope questions note this label.
+- `IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_mountinfo.o)` (inferred): the data-management mount table, four routines in a
+  10596-byte member. `dm_query_fsys_for_vector` (1104 bytes) finds the file-system vector for a mount, `dm_fsys_vector`
+  (256 bytes) is the vector table, and `dm_enosys` and `dm_code_level` (8 bytes each) return fixed values. It walks the
+  file-system switch `vfssw`.
+- `IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_register.o)` (inferred): the data-management event registration, 26 routines in a
+  28932-byte member. `dm_getall_disp` (704 bytes), `dm_set_disp` (656 bytes) and `dm_handle_to_vp` (676 bytes) read and set
+  the event dispositions and convert handles to vnodes, and `dm_clrmount_callback` (520 bytes) clears a mount's registrations.
+  It links and unlinks events with `dm_link_event` and `dm_unlink_event`. It drives no chip.
+- `IP35/usr/cpu/sysgen/IP35boot/dmi.a(dmi_session.o)` (inferred): data-management sessions and their event queues, 32 routines in
+  a 34068-byte member. `dm_enqueue` (1208 bytes) queues an event, `dm_get_events` (1032 bytes) returns queued events,
+  `dm_release_threads` (472 bytes) and `dm_flush_events` (448 bytes) drain the queues, and `dm_add_fsys_entry` and
+  `dm_remove_fsys_entry` change the file-system table. It keeps its sessions in `dm_sessions`.
+- `IP35/usr/cpu/sysgen/IP35boot/dmiidbg.o` (inferred): the data-management debugger, two routines in an 18968-byte object,
+  `dmiidbginit` and `dmiidbgunload` (116 bytes each). Its symbol table defines only those two, while the function table
+  names 13 routines from the debug information (`idbg_dmi_event`, 592 bytes, is the largest). It imports `dm_registers`,
+  `dm_sessions` and `idbg_addfunc` and `idbg_delfunc`.
+- `IP35/usr/cpu/sysgen/IP35boot/dms.a(dms.o)` (inferred): the data-migration device, seven routines in a 15092-byte member.
+  `dmsioctl` (2460 bytes) is the control entry, and `dmsopen`, `dmspoll` and `dmsinit` (172, 108 and 236 bytes) complete the
+  device entry points. It imports the block calls `dms_block_alloc` and `dms_block_attach` and the admin event call
+  `dms_admin_event`. No chip is driven.
+- `IP35/usr/cpu/sysgen/IP35boot/dms.a(dmskern.o)` (inferred): the data-migration kernel core, 81 routines in an 83396-byte member.
+  `dms_pool_create` (3368 bytes) makes a pool, `dms_block_split` (968 bytes) splits a block, `dms_print_block` (824 bytes)
+  prints one, and `_dms_pool_destroy` (820 bytes) removes a pool. It reads the cache geometry it allocates against
+  (`cachecolormask`, `cachecolorsize`, `boot_sidcache_size`) and flushes with `dki_dcache_wbinval`.
+- `IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)` (inferred): the compatibility layer for the migration ring buffers, 24
+  routines in a 16932-byte member. `dmrb_attach` (716 bytes) attaches a buffer, `dmrb_putvalid` (264 bytes) and
+  `dmrb_getnextvalid` and `dmrb_getnextfree` (220 and 192 bytes) move entries through the ring. It imports the block and
+  FIFO calls, `dms_fifo_enq` and `dms_fifo_deq` among them.
+- `IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)` (inferred): the SCSI request interface, 18 routines in a 22196-byte member.
+  `dsioctl` (2580 bytes) is the control entry, `dsopen` (296 bytes) opens a device, and `task_glue` (648 bytes) and `task_find`
+  (220 bytes) build and locate a request. It reserves and starts host-adapter work through the `glue_*` routines, and it
+  reports command-length errors with `ds_report_cmdlen_err`.
+- `IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)` (inferred): the adapter glue for SCSI requests, seven routines in a 10388-byte
+  member. `glue_start` (444 bytes) starts a request, `glue_reserve` (428 bytes) and `glue_return` (336 bytes) take and give back
+  an adapter, and `glue_getopt` (200 bytes) reads an option. It imports `iomap`, `iounmap` and `dma_unlock`, and it defines
+  the default glue table `glue_default`.
+- `IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_bitmap.o)` (inferred): the EFS free-block bitmap, four routines in an 8644-byte member.
+  `efs_findfree` (632 bytes) searches the bitmap, `efs_bitfunc` (572 bytes) sets and clears bits through the bit-field calls
+  `bbfset` and `bbfclr`, and `efs_bmread` and `efs_bmrelse` (76 and 32 bytes) read and release a bitmap block.
+- `IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_bmap.o)` (inferred): the EFS block mapping, six routines in a 15204-byte member.
+  `efs_bmapLogicalBlock` (2068 bytes) maps a file block to a disk block, `efs_bmapExtent` (992 bytes) maps an extent, and
+  `efs_expand` (876 bytes) grows a file. It imports `efs_alloc`, `efs_free` and `efs_readindir`.
+- `IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dalloc.o)` (inferred): the EFS block allocator, five routines in a 13044-byte member.
+  `efs_alloc` (1704 bytes) allocates blocks, `efs_move` (792 bytes) relocates data, `efs_grow` (592 bytes) extends a file and
+  `efs_free` (280 bytes) releases blocks. It searches with `efs_findfree` and `efs_bitfunc`.
+- `IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dir.o)` (inferred): EFS directories, 16 routines in a 22708-byte member.
+  `efs_dirlookup` (1344 bytes) finds a name, `efs_dirremove` (756 bytes) removes one, `efs_readdir` (748 bytes) lists entries and
+  `efs_direnter` (632 bytes) adds one. It uses the directory name cache through `dnlc_lookup_fast` and `dnlc_enter_fast`.
+- `IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_ialloc.o)` (inferred): EFS inode allocation, six routines in a 10724-byte member.
+  `efs_scanchunk` (996 bytes) scans a chunk for a free inode, `efs_ialloc` (596 bytes) allocates one, `efs_pickcg` (412 bytes)
+  picks the cylinder group, and `efs_ifree` (292 bytes) frees one. It calls `efs_icreate` for a new inode.
+- `IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_iget.o)` (inferred): EFS inode lookup and release, nine routines in a 12260-byte member.
+  `iget` (1168 bytes) returns an inode for a vnode, `ireclaim` and `iflush` (256 bytes each) reclaim and flush one,
+  `iinactive` (148 bytes) handles the last reference, and `efs_idestroy` releases it. It imports `efs_iread` and `efs_itrunc`.
+- `IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)` (inferred): EFS inode I/O, 20 routines in a 26404-byte member.
+  `efs_itrunc` (1716 bytes) truncates a file, `efs_iupdat` (1400 bytes) writes the inode to disk, `efs_readindir` (628 bytes)
+  reads indirect blocks and `efs_whichzone` (608 bytes) finds a block's zone.
+- `IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_vfsops.o)` (inferred): the EFS mount and sync operations, 21 routines in a 29812-byte
+  member. `efs_mountfs` (1968 bytes) mounts a volume, `efs_sync` (1584 bytes) flushes it, `efs_unmount` (512 bytes) unmounts it,
+  and `devvptoefs` (720 bytes) finds the volume for a device vnode. It defines the file-system switch entry `efs_vfsops`.
+- `IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_vnodeops.o)` (inferred): the EFS vnode operations, 37 routines in a 47316-byte member.
+  `efs_rename` (2228 bytes), `efs_setattr` (1720 bytes), `efs_writei` (1500 bytes) and `diostrat` (1364 bytes) are the largest.
+  It defines the vnode-operation table `efs_vnodeops` and imports the buffer-cache calls `bread`, `bwrite` and `biomove`.
+
