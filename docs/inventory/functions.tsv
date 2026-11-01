@@ -4412,17 +4412,17 @@ IP27/unix	kernel	n64	.text	0xc0000000000275d4	44	get_region	symtab	ec1ba5c9d2b8	
 IP27/unix	kernel	n64	.text	0xc000000000027600	24	nasid_to_region	symtab	5bea195aac3f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000027670	252	hub_ioerror_local	symtab	d2982d7331c6		in	named-only	chips/hub/README.md#error-and-interrupt-handling-established-unless-marked	Error and interrupt handling (established unless marked)
 IP27/unix	kernel	n64	.text	0xc00000000002776c	124	hub_xp_error_handler	symtab	1badca063856		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc0000000000277e8	196	hub_dma_enabled	symtab	425bc5bf53aa		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc0000000000277e8	196	hub_dma_enabled	symtab	425bc5bf53aa		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000000278ac	472	hub_widgetdev_shutdown	symtab	723309ed28d5		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000027a84	160	hub_widgetdev_enable	symtab	9b0bddcac80e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc000000000027b24	196	hub_error_devenable	symtab	ef8f7e2680ad		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/unix	kernel	n64	.text	0xc000000000027b24	196	hub_error_devenable	symtab	ef8f7e2680ad		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000027be8	104	is_widget_pio_enabled	symtab	9f7cef361f5c		in	understood	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP27/unix	kernel	n64	.text	0xc000000000027c50	1028	hub_ioerror_handler	symtab	55654bb2b005		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc000000000028054	3312	crbx	symtab	b253c6579be3		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000028d44	140	hub_merge_clean	symtab	c6c1c5d88188		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
-IP27/unix	kernel	n64	.text	0xc000000000028dd0	252	hub_init_ifdr_war	symtab	14d2ee80bf46		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
-IP27/unix	kernel	n64	.text	0xc000000000028ecc	112	hub_ifdr_check_value	symtab	f92092e12197		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000028f3c	236	hub_ifdr_fix_value	symtab	7118bc70d6b6		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/unix	kernel	n64	.text	0xc000000000028dd0	252	hub_init_ifdr_war	symtab	14d2ee80bf46		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP27/unix	kernel	n64	.text	0xc000000000028ecc	112	hub_ifdr_check_value	symtab	f92092e12197		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP27/unix	kernel	n64	.text	0xc000000000028f3c	236	hub_ifdr_fix_value	symtab	7118bc70d6b6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000029028	156	hub_setup_kick	symtab	149dd5e34a5b		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000290c4	128	kick_action	symtab	c8d27f7cb941		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000029144	1308	hub_dmatimeout_kick	symtab	3dc3f7fbecba		in	named-only	chips/hub/README.md#lb-pi-space-registers-outside-the-contiguous-map	LB: PI-space registers outside the contiguous map
@@ -4670,7 +4670,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003993c	176	install_tlbintr	symtab	4701504
 IP27/unix	kernel	n64	.text	0xc0000000000399ec	264	protected_broadcast	symtab	6763796cd7a0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000039af4	80	chkdebug	symtab	9f18032e378f		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000039b44	104	install_gfxintr	symtab	94ea8b0968c6		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000039bac	108	hub_migrintr_init	symtab	1346c16ff288		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000039bac	108	hub_migrintr_init	symtab	1346c16ff288		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000039c18	236	debug_stop_all_cpus	symtab	f4e7fd059e3e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000039d04	292	intr_reserve_hardwired	symtab	5576d27a22e4		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000039ea0	120	intr_clear_all	symtab	402f37b4a64c		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -4739,7 +4739,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003b5a0	792	hub_piomap_alloc	symtab	0fc0a2
 IP27/unix	kernel	n64	.text	0xc00000000003b8b8	236	hub_piomap_free	symtab	700a3c1012d3		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000003b9a4	96	hub_piomap_addr	symtab	1349f9e56ec6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003ba04	8	hub_piomap_done	symtab	78aa5094d5ec		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc00000000003ba0c	196	hub_piotrans_addr	symtab	51fcf306f1cf		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003ba0c	196	hub_piotrans_addr	symtab	51fcf306f1cf		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003bad8	128	hub_dmamap_alloc	symtab	c719eec0357e		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003bb58	40	hub_dmamap_free	symtab	434f22da187e		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003bb80	92	hub_dmamap_addr	symtab	c06570007999		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -4757,15 +4757,15 @@ IP27/unix	kernel	n64	.text	0xc00000000003c06c	136	hub_intr_connect	symtab	532948
 IP27/unix	kernel	n64	.text	0xc00000000003c0f4	100	hub_intr_disconnect	symtab	83f7a9bb22c9		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003c158	28	hub_intr_cpu_get	symtab	fd7c65ff3571		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc00000000003c174	8	hub_intr_cpuid_get	symtab	acb766709b99		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc00000000003c17c	52	hub_provider_startup	symtab	7ef28dd250b4		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003c17c	52	hub_provider_startup	symtab	7ef28dd250b4		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003c1b0	28	hub_provider_shutdown	symtab	74efe257d880		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc00000000003c1cc	124	hub_check_is_widget0	symtab	2e538517b53c		in	understood	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP27/unix	kernel	n64	.text	0xc00000000003c248	104	hub_check_window_equiv	symtab	fd1ecd42dac9		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003c2b0	136	hub_check_pci_equiv	symtab	71e3feef694d		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003c338	148	hub_setup_prb	symtab	42dd766bcf7d		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000003c3cc	240	hub_set_piomode	symtab	5f50e5695b80		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc00000000003c4bc	76	hub_widget_flags_set	symtab	0eca0032ebcf		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003c508	148	hub_device_flags_set	symtab	d87d4e182b96		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003c4bc	76	hub_widget_flags_set	symtab	0eca0032ebcf		in	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP27/unix	kernel	n64	.text	0xc00000000003c508	148	hub_device_flags_set	symtab	d87d4e182b96		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003c59c	436	hub_device_inquiry	symtab	a91b05b08bf5		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000003c750	12	read_branch_diag	symtab	173e4e133975		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003c75c	12	write_branch_diag	symtab	ad5749af13dd		out:5	undocumented		
@@ -10310,8 +10310,8 @@ IP27/unix	kernel	n64	.text	0xc00000000026bd54	892	rle1_comp	symtab	0233d7a8245e	
 IP27/unix	kernel	n64	.text	0xc00000000026c0d0	208	rle1_uncomp	symtab	bb9a2c0a73d4		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000026c1a0	840	lzf_comp	symtab	e04d95e0757b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000026c4e8	332	lzf_uncomp	symtab	22857a1e3b31		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000026c634	140	migr_intr_prologue_handler	symtab	00d648c341c4		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000026c6c0	564	migr_intr_handler	symtab	bc2ac0c5b686		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000026c634	140	migr_intr_prologue_handler	symtab	00d648c341c4		in	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP27/unix	kernel	n64	.text	0xc00000000026c6c0	564	migr_intr_handler	symtab	bc2ac0c5b686		in	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000026c940	724	migr_refcnt_init	symtab	0cf929774046		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 IP27/unix	kernel	n64	.text	0xc00000000026cc14	176	migr_refcnt_dealloc	symtab	17b3a3c69216		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000026ccc4	296	migr_refcnt_get_offsets	symtab	73e42dc57d29		out:5	undocumented		
@@ -10570,7 +10570,7 @@ IP27/unix	kernel	n64	.text	0xc0000000002862c4	52	mutex_io_spinunlock	symtab	65b2
 IP27/unix	kernel	n64	.text	0xc0000000002862f8	8	lockmeter_find	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000286300	96	mutex_bitlock_spl	symtab	5d6ba2582acc		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000286360	84	mutex_spinlock_spl	symtab	80ef14422f5a		out:5	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP27/unix	kernel	n64	.text	0xc0000000002863b4	76	mutex_spinlock	symtab	f4aa0cc963a4		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000002863b4	76	mutex_spinlock	symtab	f4aa0cc963a4		out:5	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000286400	32	mutex_spinunlock	symtab	78c78bbb8c36		out:5	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/unix	kernel	n64	.text	0xc000000000286420	36	nested_spinlock	symtab	a081d42199ee		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000286444	20	nested_spinunlock	symtab	27640f5faf50		out:5	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -12347,7 +12347,7 @@ IP27/unix	kernel	n64	.text	0xc0000000003943f4	80	MgrasFrsInstall	symtab	7fb68570
 IP27/unix	kernel	n64	.text	0xc000000000394444	68	MgrasFrsUninstall	symtab	06f09914580a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000394488	20	MgrasCalcScreenSize	symtab	f13b954ef7e6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000395af0	892	MgrasInitCCR	symtab	69e1869a5872		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000395e6c	144	gfx_flow_delayed_hiwater_intr_prehandler	symtab	af34397f149e		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000395e6c	144	gfx_flow_delayed_hiwater_intr_prehandler	symtab	af34397f149e		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000003960a8	916	gfx_flow_alloc	symtab	6ad5b1631c2f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039643c	12	gfx_flow_reset	symtab	edc75ebbd907		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000396448	72	gfx_flow_dealloc	symtab	b5c0332bc345		out:5	undocumented		
@@ -14925,7 +14925,7 @@ IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x798	12	spinlock_islocked	dwarf+symtab	ed151b91759f		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x7a4	108	internal_mutex_spinlock	dwarf+symtab	908e1f24ea17		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x810	44	internal_mutex_spinunlock	dwarf+symtab	a4c3b784ce14		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x83c	204	mutex_spinlock	dwarf+symtab	50d0694c1c9a		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x83c	204	mutex_spinlock	dwarf+symtab	50d0694c1c9a		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x908	216	mutex_spinlock_spl	dwarf+symtab	03c4a49bcf06		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x9e0	140	_nested_spintrylock	dwarf+symtab	0f3f44d96d48		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0xa6c	32	nested_spintrylock	dwarf+symtab	580df943ff4b		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -16633,7 +16633,7 @@ IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(chardlocks.o)	kernel-object	n64	.text	0
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(chardlocks.o)	kernel-object	n64	.text	0x188	8	lockmeter_find	dwarf+symtab	87506497337c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64		0x0		mutex_bitlock_spl	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x60	84	mutex_spinlock_spl	dwarf+symtab	2f3604f2d625		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0xb4	76	mutex_spinlock	dwarf+symtab	f4aa0cc963a4		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0xb4	76	mutex_spinlock	dwarf+symtab	f4aa0cc963a4		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x100	32	mutex_spinunlock	dwarf+symtab	78c78bbb8c36		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x120	36	nested_spinlock	dwarf+symtab	a081d42199ee		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x144	20	nested_spinunlock	dwarf+symtab	27640f5faf50		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -16674,7 +16674,7 @@ IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(chardlocks.o)	kernel-object	
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(chardlocks.o)	kernel-object	n64	.text	0x188	8	lockmeter_find	dwarf+symtab	87506497337c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64		0x0		mutex_bitlock_spl	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x84	120	mutex_spinlock_spl	dwarf+symtab	ca3b1d24ceac		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0xfc	84	mutex_spinlock	dwarf+symtab	54686db1bb4c		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0xfc	84	mutex_spinlock	dwarf+symtab	54686db1bb4c		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x150	32	mutex_spinunlock	dwarf+symtab	78c78bbb8c36		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x170	48	nested_spinlock	dwarf+symtab	6684d1867039		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x1a0	20	nested_spinunlock	dwarf+symtab	27640f5faf50		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -18759,17 +18759,17 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe480	24	nasid_to
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe498	88	redo_nodes	dwarf	b61ee64bdd3b		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe4f0	252	hub_ioerror_local	dwarf+symtab	27a6321ee773		in	named-only	chips/hub/README.md#error-and-interrupt-handling-established-unless-marked	Error and interrupt handling (established unless marked)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe5ec	124	hub_xp_error_handler	dwarf+symtab	1e1d5dde9d60		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe668	196	hub_dma_enabled	dwarf+symtab	c94e65d763ce		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe668	196	hub_dma_enabled	dwarf+symtab	c94e65d763ce		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe72c	472	hub_widgetdev_shutdown	dwarf+symtab	9b92ce5e4087		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe904	160	hub_widgetdev_enable	dwarf+symtab	1d59b65a901e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe9a4	196	hub_error_devenable	dwarf+symtab	e41553c53de8		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xe9a4	196	hub_error_devenable	dwarf+symtab	e41553c53de8		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xea68	104	is_widget_pio_enabled	dwarf+symtab	22e0f0219005		out:6	located	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xead0	1028	hub_ioerror_handler	dwarf+symtab	c8788759a583		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xeed4	3312	crbx	dwarf+symtab	bf6b7ceb6840		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfbc4	140	hub_merge_clean	dwarf+symtab	24254022d50a		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfc50	252	hub_init_ifdr_war	dwarf+symtab	c33f7a691317		in	named-only	chips/hub/README.md#ii-io-interface	II: I/O interface
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfd4c	112	hub_ifdr_check_value	dwarf+symtab	b067b0dc3f96		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfdbc	236	hub_ifdr_fix_value	dwarf+symtab	60505ff9f70d		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfc50	252	hub_init_ifdr_war	dwarf+symtab	c33f7a691317		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfd4c	112	hub_ifdr_check_value	dwarf+symtab	b067b0dc3f96		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfdbc	236	hub_ifdr_fix_value	dwarf+symtab	60505ff9f70d		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xfea8	156	hub_setup_kick	dwarf+symtab	e93f3a9c37f7		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xff44	128	kick_action	dwarf+symtab	7edfe0b0273a		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xffc4	1308	hub_dmatimeout_kick	dwarf+symtab	8b7a2ea6a63f		in	named-only	chips/hub/README.md#lb-pi-space-registers-outside-the-contiguous-map	LB: PI-space registers outside the contiguous map
@@ -19062,7 +19062,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x207bc	176	instal
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2086c	264	protected_broadcast	dwarf+symtab	91641c4471bb		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20974	80	chkdebug	dwarf+symtab	14553b0d82ec		out:6	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x209c4	104	install_gfxintr	dwarf+symtab	b46b8249de5a		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20a2c	108	hub_migrintr_init	dwarf+symtab	b2d92f247684		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20a2c	108	hub_migrintr_init	dwarf+symtab	b2d92f247684		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20a98	236	debug_stop_all_cpus	dwarf+symtab	91f1209595c3		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20b84	292	intr_reserve_hardwired	dwarf+symtab	061649ecc96e		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20ca8	120	intr_clear_bits	dwarf	b1ded536c68c		in	undocumented		
@@ -19137,7 +19137,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22420	792	hub_pi
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22738	236	hub_piomap_free	dwarf+symtab	d8a471b1bd9a		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22824	96	hub_piomap_addr	dwarf+symtab	1349f9e56ec6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22884	8	hub_piomap_done	dwarf+symtab	78aa5094d5ec		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2288c	196	hub_piotrans_addr	dwarf+symtab	99dd9f54fb44		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2288c	196	hub_piotrans_addr	dwarf+symtab	99dd9f54fb44		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22950	8	hub_dma_init	dwarf	78aa5094d5ec		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22958	128	hub_dmamap_alloc	dwarf+symtab	838d9b28dbee		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x229d8	40	hub_dmamap_free	dwarf+symtab	1ac027619b46		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -19159,15 +19159,15 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22eec	136	hub_in
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22f74	100	hub_intr_disconnect	dwarf+symtab	fbb587b4ad7a		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22fd8	28	hub_intr_cpu_get	dwarf+symtab	d7dda9c46218		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22ff4	8	hub_intr_cpuid_get	dwarf+symtab	acb766709b99		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22ffc	52	hub_provider_startup	dwarf+symtab	18e9e1da7a7d		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22ffc	52	hub_provider_startup	dwarf+symtab	18e9e1da7a7d		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23030	28	hub_provider_shutdown	dwarf+symtab	a86de4a9d7a4		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2304c	124	hub_check_is_widget0	dwarf+symtab	5b67a76bf13e		in	located	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x230c8	104	hub_check_window_equiv	dwarf+symtab	eb8868462602		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23130	136	hub_check_pci_equiv	dwarf+symtab	42a844fd964a		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x231b8	148	hub_setup_prb	dwarf+symtab	13c65a7919cd		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2324c	240	hub_set_piomode	dwarf+symtab	6551cd77a6c6		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2333c	76	hub_widget_flags_set	dwarf+symtab	b5b1396183a4		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23388	148	hub_device_flags_set	dwarf+symtab	154a7a5c9a29		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2333c	76	hub_widget_flags_set	dwarf+symtab	b5b1396183a4		in	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x23388	148	hub_device_flags_set	dwarf+symtab	154a7a5c9a29		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2341c	436	hub_device_inquiry	dwarf+symtab	4e220980a8dd		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x235d0	12	read_branch_diag	dwarf+symtab	173e4e133975		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x235dc	12	write_branch_diag	dwarf+symtab	ad5749af13dd		out:6	undocumented		
@@ -21920,7 +21920,7 @@ IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_64bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x20	8	mutex_bitlock_spl	dwarf+symtab	0cccebfff1c4		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_tryspinlock_spl	symtab	90248ee03ac0	shared-address	out:3	undocumented		
@@ -22119,8 +22119,8 @@ IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_coald.o)	kernel-object	n64	.text	0x2b0	
 IP27/usr/cpu/sysgen/IP27boot/numa.a(debug_levels.o)	kernel-object	n64		0x0		mc_msg	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(numa_init.o)	kernel-object	n64		0x0		numa_init	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(numa_init.o)	kernel-object	n64	.text	0x60	52	nodepda_numa_init	dwarf+symtab	1aca3b6f93bc		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_interrupt.o)	kernel-object	n64		0x0		migr_intr_prologue_handler	dwarf+symtab			out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_interrupt.o)	kernel-object	n64	.text	0x8c	564	migr_intr_handler	dwarf+symtab	1da93b875f6d		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_interrupt.o)	kernel-object	n64		0x0		migr_intr_prologue_handler	dwarf+symtab			out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_interrupt.o)	kernel-object	n64	.text	0x8c	564	migr_intr_handler	dwarf+symtab	1da93b875f6d		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_tick.o)	kernel-object	n64		0x0		mem_tick_init_node	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_tick.o)	kernel-object	n64	.text	0x41c	124	mem_tick_init	dwarf+symtab	4c3f62974d7e		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_tick.o)	kernel-object	n64	.text	0x498	556	mem_tick	dwarf+symtab	a741ddd7bc03		out:3	undocumented		
@@ -42087,7 +42087,7 @@ IP30/unix	kernel	n64	.text	0xa80000002022d860	52	mutex_io_spinunlock	symtab	e7b6
 IP30/unix	kernel	n64	.text	0xa80000002022d894	8	lockmeter_find	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002022d8a0	96	mutex_bitlock_spl	symtab	ba40e86b8544		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002022d900	84	mutex_spinlock_spl	symtab	d83cf0b90c2d		out:7	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP30/unix	kernel	n64	.text	0xa80000002022d954	76	mutex_spinlock	symtab	37e36425d96e		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002022d954	76	mutex_spinlock	symtab	37e36425d96e		out:7	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa80000002022d9a0	32	mutex_spinunlock	symtab	78c78bbb8c36		out:7	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP30/unix	kernel	n64	.text	0xa80000002022d9c0	36	nested_spinlock	symtab	a081d42199ee		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002022d9e4	20	nested_spinunlock	symtab	27640f5faf50		out:7	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -44398,7 +44398,7 @@ IP30/unix	kernel	n64	.text	0xa80000002038e7d0	132	odsyDMAIrptWakeup	symtab	a8c98
 IP30/unix	kernel	n64	.text	0xa80000002038e854	388	odsyDMAFinish	symtab	ee72a22ed306		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038e9d8	220	gfP_OdsyMMwaitXfr	symtab	326c8797c5d8		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f124	124	odsy_ProbeDenali	symtab	39cf2ff12397		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002038f1a0	136	gfx_flow_delayed_hiwater_intr_prehandler	symtab	5652ea304a63		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002038f1a0	136	gfx_flow_delayed_hiwater_intr_prehandler	symtab	5652ea304a63		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa80000002038f228	8	gfx_flow_pipe_head	symtab	ee203e2bd9f8		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f318	512	gfx_flow_alloc	symtab	2827fd0cc2f3		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f518	12	gfx_flow_reset	symtab	0f2f165b22fa		out:7	undocumented		
@@ -46651,7 +46651,7 @@ IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x798	12	spinlock_islocked	dwarf+symtab	ed151b91759f		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x7a4	108	internal_mutex_spinlock	dwarf+symtab	908e1f24ea17		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x810	44	internal_mutex_spinunlock	dwarf+symtab	a4c3b784ce14		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x83c	204	mutex_spinlock	dwarf+symtab	c9e5cb1d5b99		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x83c	204	mutex_spinlock	dwarf+symtab	c9e5cb1d5b99		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x908	216	mutex_spinlock_spl	dwarf+symtab	28953dfe4f74		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x9e0	140	_nested_spintrylock	dwarf+symtab	9ff1b25f5669		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0xa6c	32	nested_spintrylock	dwarf+symtab	580df943ff4b		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -48279,7 +48279,7 @@ IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(chardlocks.o)	kernel-object	n64	.text	0
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(chardlocks.o)	kernel-object	n64	.text	0x188	8	lockmeter_find	dwarf+symtab	87506497337c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64		0x0		mutex_bitlock_spl	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x60	84	mutex_spinlock_spl	dwarf+symtab	2f3604f2d625		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0xb4	76	mutex_spinlock	dwarf+symtab	37e36425d96e		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0xb4	76	mutex_spinlock	dwarf+symtab	37e36425d96e		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x100	32	mutex_spinunlock	dwarf+symtab	78c78bbb8c36		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x120	36	nested_spinlock	dwarf+symtab	a081d42199ee		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x144	20	nested_spinunlock	dwarf+symtab	27640f5faf50		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -48320,7 +48320,7 @@ IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(chardlocks.o)	kernel-object	
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(chardlocks.o)	kernel-object	n64	.text	0x188	8	lockmeter_find	dwarf+symtab	87506497337c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64		0x0		mutex_bitlock_spl	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x84	120	mutex_spinlock_spl	dwarf+symtab	ca3b1d24ceac		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0xfc	84	mutex_spinlock	dwarf+symtab	e2235011d7fb		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0xfc	84	mutex_spinlock	dwarf+symtab	e2235011d7fb		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x150	32	mutex_spinunlock	dwarf+symtab	78c78bbb8c36		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x170	48	nested_spinlock	dwarf+symtab	6684d1867039		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x1a0	20	nested_spinunlock	dwarf+symtab	27640f5faf50		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -52530,7 +52530,7 @@ IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_64bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x20	8	mutex_bitlock_spl	dwarf+symtab	0cccebfff1c4		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_tryspinlock_spl	symtab	90248ee03ac0	shared-address	out:3	undocumented		
@@ -68985,7 +68985,7 @@ IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x18	8	mutex_64bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x18	8	mutex_bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x20	8	mutex_bitlock_spl	dwarf+symtab	0cccebfff1c4		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x28	8	mutex_tryspinlock_spl	symtab	90248ee03ac0	shared-address	out:3	undocumented		
@@ -79119,7 +79119,7 @@ IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x798	12	spinlock_islocked	dwarf+symtab	ed151b91759f		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x7a4	108	internal_mutex_spinlock	dwarf+symtab	908e1f24ea17		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x810	44	internal_mutex_spinunlock	dwarf+symtab	a4c3b784ce14		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x83c	204	mutex_spinlock	dwarf+symtab	b221f70dbf07		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x83c	204	mutex_spinlock	dwarf+symtab	b221f70dbf07		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x908	216	mutex_spinlock_spl	dwarf+symtab	4023a2663779		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x9e0	140	_nested_spintrylock	dwarf+symtab	a428ec45f775		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0xa6c	32	nested_spintrylock	dwarf+symtab	580df943ff4b		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -81262,7 +81262,7 @@ IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(chardlocks.o)	kernel-object	n64	.text	0
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(chardlocks.o)	kernel-object	n64	.text	0x188	8	lockmeter_find	dwarf+symtab	87506497337c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64		0x0		mutex_bitlock_spl	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x5c	80	mutex_spinlock_spl	dwarf+symtab	0eb7004e7f97		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0xac	76	mutex_spinlock	dwarf+symtab	75ff2d8d972e		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0xac	76	mutex_spinlock	dwarf+symtab	75ff2d8d972e		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0xf8	32	mutex_spinunlock	dwarf+symtab	78c78bbb8c36		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x118	36	nested_spinlock	dwarf+symtab	4c5890769acb		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x13c	20	nested_spinunlock	dwarf+symtab	27640f5faf50		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -81303,7 +81303,7 @@ IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(chardlocks.o)	kernel-object	
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(chardlocks.o)	kernel-object	n64	.text	0x188	8	lockmeter_find	dwarf+symtab	87506497337c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64		0x0		mutex_bitlock_spl	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x80	116	mutex_spinlock_spl	dwarf+symtab	f7a6fbdfd476		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0xf4	84	mutex_spinlock	dwarf+symtab	389b6878ece7		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0xf4	84	mutex_spinlock	dwarf+symtab	389b6878ece7		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x148	32	mutex_spinunlock	dwarf+symtab	78c78bbb8c36		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x168	48	nested_spinlock	dwarf+symtab	eed1d6648e7d		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x198	20	nested_spinunlock	dwarf+symtab	27640f5faf50		out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -84007,7 +84007,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22094	792	hub_pi
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x223ac	236	hub_piomap_free	dwarf+symtab	764d80c20d32		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22498	96	hub_piomap_addr	dwarf+symtab	1349f9e56ec6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x224f8	8	hub_piomap_done	dwarf+symtab	78aa5094d5ec		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22500	196	hub_piotrans_addr	dwarf+symtab	c5b8e8842727		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22500	196	hub_piotrans_addr	dwarf+symtab	c5b8e8842727		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x225c4	8	hub_dma_init	dwarf	78aa5094d5ec		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x225cc	128	hub_dmamap_alloc	dwarf+symtab	838d9b28dbee		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2264c	40	hub_dmamap_free	dwarf+symtab	1ac027619b46		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -84029,15 +84029,15 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22ab8	136	hub_in
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22b40	100	hub_intr_disconnect	dwarf+symtab	fbb587b4ad7a		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22ba4	28	hub_intr_cpu_get	dwarf+symtab	61c74e6169ed		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22bc0	8	hub_intr_cpuid_get	dwarf+symtab	acb766709b99		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22bc8	52	hub_provider_startup	dwarf+symtab	7986267a335f		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22bc8	52	hub_provider_startup	dwarf+symtab	7986267a335f		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22bfc	28	hub_provider_shutdown	dwarf+symtab	a86de4a9d7a4		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22c18	84	hub_check_is_widget0	dwarf+symtab	ffdb7db106eb		in	located	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22c6c	104	hub_check_window_equiv	dwarf+symtab	eb8868462602		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22cd4	136	hub_check_pci_equiv	dwarf+symtab	6fc4d97c40fe		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22d5c	148	hub_setup_prb	dwarf+symtab	197f376d2a71		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22df0	240	hub_set_piomode	dwarf+symtab	91aa14bf7032		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22ee0	72	hub_widget_flags_set	dwarf+symtab	38634e74f701		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22f28	148	hub_device_flags_set	dwarf+symtab	ce36a865dd48		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22ee0	72	hub_widget_flags_set	dwarf+symtab	38634e74f701		in	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22f28	148	hub_device_flags_set	dwarf+symtab	ce36a865dd48		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x22fbc	124	hubii_ixtt_set	dwarf+symtab	23a0d2fcf76b		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x23038	124	hubii_ixtt_get	dwarf+symtab	9c473d6fa668		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x230b4	436	hub_device_inquiry	dwarf+symtab	08c731c5a883		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -84476,10 +84476,10 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x379fc	232	hub_xp
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37ae4	104	is_widget_pio_enabled	dwarf+symtab	584d520e1dc4		in	located	chips/hub/README.md#widget-slot-and-device-lookups	Widget, slot and device lookups
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37b4c	1028	hub_ioerror_handler	dwarf+symtab	39de90e9f21c		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37f50	3196	crbx	dwarf+symtab	53ced12a3a27		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38bcc	192	hub_error_devenable	dwarf+symtab	a31d64059b53		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38bcc	192	hub_error_devenable	dwarf+symtab	a31d64059b53		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38c8c	160	hub_widgetdev_enable	dwarf+symtab	9b3b2b205150		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38d2c	528	hub_widgetdev_shutdown	dwarf+symtab	6ca727cf21d7		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38f3c	196	hub_dma_enabled	dwarf+symtab	8b48768f380e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x38f3c	196	hub_dma_enabled	dwarf+symtab	8b48768f380e		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x39000	328	hub_widget_reset	dwarf+symtab	f98f0dc6012b		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x39150	812	fpunit_fpload_s	dwarf+symtab	58eaeb70a64b		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3947c	280	renorm_d	dwarf+symtab	0b2e0fa7ff1d		out:11	undocumented		
@@ -86867,7 +86867,7 @@ IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_64bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x20	8	mutex_bitlock_spl	dwarf+symtab	0cccebfff1c4		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_tryspinlock_spl	symtab	90248ee03ac0	shared-address	out:3	undocumented		

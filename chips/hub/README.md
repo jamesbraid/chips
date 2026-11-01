@@ -920,6 +920,62 @@ use the local alias of the table above (`0x9200000001000000 + offset`).
   `hub_error_count_enable` starts. It finds the record for its index and calls `ii_llp_error_monitor` on record +8
   and `ni_llp_error_monitor` on record +32. While the first word of the record is nonzero it calls `timeout`
   for itself again with the index and 100 ticks. Established.
+- `hub_ifdr_check_value` (`IP27/unix` `0xc000000000028ecc`, 112 bytes) reports whether the I/O FIFO depth field
+  needs lowering on a node. It returns 0 at once when the word `hubio_ifdr_skip` (0xc0000000014ca210) is nonzero.
+  Otherwise it takes bits 14:8 (`dsrl 8`, mask 0x7f) of the doubleword at +0x398 (`IIO_IFDR`) of the node's II
+  window and returns 1 when the halfword at +0x4c84 of the node's record is below it, and 0 otherwise. The window
+  is `0x9200000001c00000` plus the halfword that the table at 0xc0000000014d4e80 holds for the node, shifted left 32;
+  `hub_ifdr_fix_value` and `hub_init_ifdr_war` reach it the same way. Established.
+- `hub_ifdr_fix_value` (`IP27/unix` `0xc000000000028f3c`, 236 bytes) rewrites the I/O FIFO depth field of one node.
+  It returns -1 when bits 14:8 of the doubleword at +0x398 of the node's II window (`IIO_IFDR`; the
+  window is found as in `hub_ifdr_check_value`) are above 64. Otherwise it adds 1 to the halfword at +0x4c82 of the
+  node's record and polls the doublewords at +0xd0 and +0xd8 of the window at `0x9200000001a00000`
+  up to 99 times, waiting until bits 23:17 of both are zero (the second test is a branch-likely, so the count
+  drops in its delay slot only when it is taken). If the poll runs out it stores the +0xd0 value to
+  `last_reqqd_val` and the +0xd8 value to `last_repqd_val` and adds 1 to `wait_exceeded`. In either case it ends by
+  replacing bits 14:8 of `IIO_IFDR` with the low seven bits of the halfword at +0x4c84 of the record and returns 1.
+  Established; the two polled registers (0x2000d0 and 0x2000d8) have no public name.
+- `hub_init_ifdr_war` (`IP27/unix` `0xc000000000028dd0`, 252 bytes) takes a node number. It sets the halfword at
+  +0x4c82 of the node's record to 0, the halfword at +0x4c84 to 40 (0x28) and the word at +0x4c7c to the word
+  `hub_ifdr_war_freq` (0xc0000000014ca214). It then reads `IIO_IFDR` at +0x398 of the node's II window, and when 40
+  is below its bits 14:8 it replaces those bits with 40 (the same mask as `hub_ifdr_fix_value`); for node 0 only it
+  first prints "HUB IFDR value not correctly set. Please upgrade your prom" with `cmn_err(5, ...)`. It returns
+  no value. Established.
+- `hub_migrintr_init` (`IP27/unix` `0xc000000000039bac`, 108 bytes) calls `cnodetocpu` with its own argument and,
+  unless the word `numnodes` (0xc0000000014d3e1c) is 1 or the processor number is -1, calls `intr_connect_level`.
+  The arguments are that processor, level 3, 0, `migr_intr_handler`, 0 and `migr_intr_prologue_handler`.
+  A nonzero result prints "hub_migrintr_init: Can't connect interrupt." with `cmn_err(0, ...)`. It returns
+  no value. Established.
+- `hub_dma_enabled` (`IP27/unix` `0xc0000000000277e8`, 196 bytes) takes a device vertex. It gets the widget id and
+  master vertex with `xwidget_info_id_get` and `xwidget_info_master_get`, then looks up the label `_node` on the
+  master with `hwgraph_info_get_LBL`. It returns 0 for a missing label or a node number of -1 (the halfword at +0xa
+  of the label's record). Otherwise it reads the doubleword at +0x118 (`IIO_IIWA`) of that node's II window and
+  tests the bit numbered by the widget id (low byte): set returns 1; clear prints "No Inbound access" with the
+  widget and node numbers through `cmn_err(6, ...)` and returns 0. Established.
+- `hub_error_devenable` (`IP27/unix` `0xc000000000027b24`, 196 bytes) takes a device vertex and a code in its third
+  argument. It finds the node as `hub_dma_enabled` does. For code 5 it reads the doubleword at +0x2c8 plus 8 times the
+  widget id (low byte) of the node's II window; when bit 56 of it is set it stores the widget id ORed with
+  0x10 to +0x388 (`IIO_IPDR`). Code 6 and every other code do nothing. It returns 0 on every path and does not
+  test for a missing label. Established.
+- `hub_device_flags_set` (`IP27/unix` `0xc00000000003c508`, 148 bytes) takes a device vertex and a flag word. It
+  gets the widget id and master vertex, looks up the `_node` label for the node record, takes the lock at +0x318 of
+  that record with `mutex_spinlock`, calls `hub_widget_flags_set` with the halfword at +0xa of the record, the widget
+  id (low byte) and the flags, releases the lock with `mutex_spinunlock` and returns the result of
+  `hub_widget_flags_set`. Established.
+- `hub_piotrans_addr` (`IP27/unix` `0xc00000000003ba0c`, 196 bytes) takes a device vertex in its first argument, the
+  address and length in its third and fourth and flags in its fifth. It finds the node record as
+  `hub_device_flags_set` does and returns 0 when address plus length is above 0x1000000 (`lui 0x100`). Otherwise it
+  calls `hub_piomap_addr` on the 48-byte widget record at +0x10 plus 48 times the widget id, with the address and
+  length, and returns its result; when bit 3 (0x8) of the flags is set it ORs in `7 << 59` first. Established.
+- `hub_provider_startup` (`IP27/unix` `0xc00000000003c17c`, 52 bytes) takes one argument and passes it to three
+  routines in turn, the ones at 0xc00000000003b440, 0xc00000000003bad0 and 0xc00000000003bcb0, none of which has a
+  symbol of its own. It returns the last one's result. Established.
+- `gfx_flow_delayed_hiwater_intr_prehandler` (`IP27/unix` `0xc000000000395e6c`, 144 bytes) indexes
+  `gfx_flow_cpu_attachments` with the processor number (halfword at address 0xffffffffffffc420). When the entry is
+  not zero it calls the function at +0x20 of the entry with the argument at +0x28, and a flag that is 1 when bits 4:3
+  of the doubleword at +0xf8 of its second argument equal 2. It then finds the processor's slice (+8 of the 16-byte
+  entry of `pdaindr`, byte +0x520) and stores 0 to `0x9200000001000000` plus 40 times the slice plus 792, that is
+  0x318 (`PI_GFX_INT_CNTR_A`) or 0x340 (`PI_GFX_INT_CNTR_B`), followed by `sync`. Established.
 
 ## Open
 
