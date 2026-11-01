@@ -303,3 +303,51 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   argument; there is no bound test, level change or read-back. Type -1 or a null handle calls `panic` with the
   bridge-type message and stores nothing, and a record type outside -1 to 3 does nothing. Its counterpart
   `pcireg_dirmap_add512_set` ORs the same bit in. Established.
+- `pcireg_control_set` (`IP30/unix` `0xa800000020050c54`, 392 bytes, frame 32 bytes) overwrites the whole control
+  register with its second argument, with no earlier read: types 2 and 3 store a doubleword at window +0x20 and types
+  0 and 1 a word at +0x24, and each store is followed by a reload of the same register in the delay slot of the exit
+  branch. The level is raised first with `spl1`, whose old value is parked at 0(sp), and every path ends in `splx`,
+  including the panic path. Type -1 and a null handle call `panic` with the bridge-type message and store nothing, and
+  a record type outside -1 to 3 stores nothing either. It takes no bound test; `pcireg_control_bit_set` and
+  `pcireg_control_bit_clr` are the load-modify-store neighbours of it. Established.
+- `pcireg_intr_enable_bit_clr` (`IP30/unix` `0xa800000020055484`, 384 bytes, frame 16 bytes) clears bits in the
+  interrupt enable register: the second argument's complement (`nor`) is ANDed into the doubleword at window +0x108
+  for types 2 and 3 and into the word at +0x10c for types 0 and 1, as one load and one store with nothing after it.
+  There is no `spl1`, no bound test and no read-back; the load and the store are separate instructions. Type -1 and a
+  null handle call `panic` with the bridge-type message, and a record type outside -1 to 3 stores nothing. The routine
+  returns no value. Established.
+- `pcireg_pci_bus_addr_addr_get` (`IP30/unix` `0xa800000020054ee0`, 384 bytes, frame 16 bytes) returns the 48-bit
+  address part of the PCI bus address register. Types 2 and 3 load the doubleword at window +0xd8 and mask it to its
+  low 48 bits (`li -1` shifted right 16). Types 0 and 1 assemble it from two words: bits 15:0 of the word at +0xd4
+  become bits 47:32, and the word at +0xdc, zero-extended, supplies bits 31:0. Only loads are made. Type -1 or a null
+  handle calls `panic` with the bridge-type message and returns 0, and a record type outside -1 to 3 returns 0 without
+  a load. It has the same shape as `pcireg_intr_dst_addr_get` over different offsets. Established.
+- `pcireg_dirmap_add512_set` (`IP30/unix` `0xa8000000200536a8`, 384 bytes, frame 16 bytes) sets bit 17 (0x20000) of
+  the direct-map register, the word at window +0x84 for types 0 and 1 and the doubleword at +0x80 for types 2 and 3,
+  by a load, an OR with the constant and a store. The only argument is the handle, so it has no way to choose a value.
+  Nothing guards it: no bound test, no level change, no read-back. A null handle or type -1 calls `panic` with the
+  bridge-type message and stores nothing, and a record type outside -1 to 3 stores nothing. `pcireg_dirmap_add512_clr`
+  is its inverse. Established.
+- `pcireg_intr_dst_addr_get` (`IP30/unix` `0xa800000020051e98`, 384 bytes, frame 16 bytes) returns the 48-bit
+  interrupt destination address. Types 2 and 3 load the doubleword at window +0x38 and keep its low 48 bits (`li -1`
+  and `dsrl` 16). Types 0 and 1 take bits 15:0 of the word at +0x34, shift them left 32 (`dsll32`) and OR them with
+  the word at +0x3c zero-extended by a `dsll32` and `dsrl32` pair, the same two words that `pcireg_intr_dst_addr_set`
+  stores. It makes no other access. Type -1 or a null handle calls `panic` with the bridge-type message and returns 0,
+  and a record type outside -1 to 3 returns 0 without any load. Established.
+- `pcireg_ssram_parity_get` (`IP30/unix` `0xa8000000200539b0`, 380 bytes, frame 16 bytes) returns the SSRAM parity
+  register, which only the first two chip types have: it loads the word at window +0x94 and zero-extends it with
+  `dsll32` and `dsrl32`. Types 2 and 3 call `panic` with "undefined register" and then read the same word anyway, so
+  on those types the value comes back after the message. Type -1 or a null handle calls `panic` with the bridge-type
+  message and returns 0 without reading, and a record type outside -1 to 3 returns 0 too. The read is the only access
+  and nothing is checked. Established.
+- `pcireg_intr_device_bit_clr` (`IP30/unix` `0xa800000020056430`, 380 bytes, frame 16 bytes) removes bits from the
+  interrupt device register: the doubleword at window +0x120 for types 2 and 3, the word at +0x124 for types 0 and 1,
+  each loaded, ANDed with the complement of the second argument and stored with no read-back. It does not raise the
+  level and has no bound test, so it is a plain unlocked read-modify-write. Type -1 and a null handle call `panic`
+  with the bridge-type message and store nothing. The routine returns no value. Established.
+- `pcireg_resp_err_addr_get` (`IP30/unix` `0xa800000020052a9c`, 380 bytes, frame 16 bytes) returns the address
+  recorded for the last response error, 48 bits. Types 2 and 3 take the low 48 bits of the doubleword at window +0x68.
+  Types 0 and 1 combine the word at +0x64 masked to bits 15:0, shifted left 32, with the word at +0x6c zero-extended;
+  the word at +0x64 is the one that `pcireg_resp_err_buf_get` and `pcireg_resp_err_dev_get` read for types 0 and 1.
+  Nothing is written. Type -1 or a null handle calls `panic` with the bridge-type message and returns 0, as does a
+  record type outside -1 to 3. Established.
