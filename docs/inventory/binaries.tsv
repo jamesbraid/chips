@@ -1030,7 +1030,7 @@ IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(chardlocks.o)	kernel-IP30	kernel-object
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-IP30	kernel-object	object	n64	10404	5e997695259bd62e		22	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(chardlocks.o)	kernel-IP30	kernel-object	object	n64	10036	39843280e9cc8380		19	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-IP30	kernel-object	object	n64	11828	5169c015298ef8c5		22	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-IP30	kernel-object	object	n64	47064	50c0bf96e614be14		67	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-IP30	kernel-object	object	n64	47064	50c0bf96e614be14		67	symtab	0	0	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/hitachi.o	kernel-IP30	kernel-object	object	n64	26272	52a62e6d07e3fe7f		9	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgvnops.o)	kernel-IP30	kernel-object	object	n64	25812	b028bacb55fe271f		21	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-IP30	kernel-object	object	n64	961880	daccfdbb78270fc5		298	symtab+dwarf	0	0	undocumented		

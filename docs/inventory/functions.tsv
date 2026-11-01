@@ -5098,7 +5098,7 @@ IP27/unix	kernel	n64	.text	0xc00000000004c8f0	180	ecommon	symtab	407aef08fecc		o
 IP27/unix	kernel	n64	.text	0xc00000000004c940	100	ecommon_allsaved	symtab	aa01bacbb212		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004c9a4	36	softfp_adderr	symtab	04c2a2255478		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004c9c8	40	softfp_insterr	symtab	17c3ed934fb5		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000004c9f0	724	ioerror_dump	symtab	4870d067c95d		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000004c9f0	724	ioerror_dump	symtab	4870d067c95d		out:5	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/unix	kernel	n64	.text	0xc00000000004ccc4	28	error_mark_page	symtab	40c89225114a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004cce0	28	error_reclaim_page	symtab	788734587101		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004ccfc	852	_hook_exceptions	symtab	9e0776d9859c		out:5	undocumented		
@@ -5594,10 +5594,10 @@ IP27/unix	kernel	n64	.text	0xc00000000006c324	8	xtalk_pio_kvaddr_get	symtab	402d
 IP27/unix	kernel	n64	.text	0xc00000000006c32c	8	xtalk_dma_dev_get	symtab	b893f60251e4		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006c334	8	xtalk_dma_target_get	symtab	ee36d96101ba		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006c33c	44	xwidget_info_chk	symtab	a53e70b0344c		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000006c368	88	xwidget_info_get	symtab	d4d92916cbdd		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000006c368	88	xwidget_info_get	symtab	d4d92916cbdd		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/unix	kernel	n64	.text	0xc00000000006c3c0	88	xwidget_info_set	symtab	2e09b9ef44b8		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006c418	52	xwidget_info_dev_get	symtab	17e1d3b8a311		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000006c44c	52	xwidget_info_id_get	symtab	19f068cf78c0		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000006c44c	52	xwidget_info_id_get	symtab	19f068cf78c0		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/unix	kernel	n64	.text	0xc00000000006c480	52	xwidget_info_master_get	symtab	aba6e589e49c		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006c4b4	52	xwidget_info_masterid_get	symtab	1ebec7957abd		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006c4e8	52	xwidget_info_part_num_get	symtab	6463fcc492a1		in	undocumented		
@@ -7897,7 +7897,7 @@ IP27/unix	kernel	n64	.text	0xc00000000017e218	8	sio_set_sscr_stub	symtab	8750649
 IP27/unix	kernel	n64	.text	0xc00000000017e220	108	kmem_alloc	symtab	4e4775252a92		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017e28c	184	kmem_realloc	symtab	680fb3ad7fe5		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017e344	108	kmem_zalloc	symtab	074dd33dcd2c		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000017e3b0	88	kmem_free	symtab	d9d5b6d7c5b1		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000017e3b0	88	kmem_free	symtab	d9d5b6d7c5b1		out:5	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/unix	kernel	n64	.text	0xc00000000017e408	112	kern_malloc	symtab	6ecfca01f1d3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017e478	104	kern_calloc	symtab	f9681631a73f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017e4e0	176	kern_realloc	symtab	1ec67e1a36d3		out:5	undocumented		
@@ -9220,7 +9220,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001f456c	596	vn_remove_audit_extended	symta
 IP27/unix	kernel	n64	.text	0xc0000000001f47c0	44	creat	symtab	76a77878bc02		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f47ec	608	copen	symtab	c1acee1870da		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f4a4c	100	close	symtab	f3399c991bc1		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001f4fec	28	read	symtab	d34d5a23242c		out:5	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
+IP27/unix	kernel	n64	.text	0xc0000000001f4fec	28	read	symtab	d34d5a23242c		out:5	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/unix	kernel	n64	.text	0xc0000000001f5008	28	pread	symtab	001f3bec7c4b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f54ec	28	write	symtab	01a427135297		out:5	named-only	chips/mace/README.md#other-rows	Other rows
 IP27/unix	kernel	n64	.text	0xc0000000001f5508	28	pwrite	symtab	5a9fbe54bffc		out:5	undocumented		
@@ -9296,7 +9296,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001fbb5c	1616	cattr_multi	symtab	54225a5e63
 IP27/unix	kernel	n64	.text	0xc0000000001fc1ac	180	irix5_n32_to_attr_multiop	symtab	8ca86c47c34d		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001fc260	196	attr_multiop_to_irix5_n32	symtab	948889222309		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001fc610	1476	_sendfile	symtab	4b4518f2f10b		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001fcbd4	76	cmn_err	symtab	94ada531ef56		out:5	named-only	chips/xbow/README.md#access-sequences	Access sequences
+IP27/unix	kernel	n64	.text	0xc0000000001fcbd4	76	cmn_err	symtab	94ada531ef56		out:5	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/unix	kernel	n64	.text	0xc0000000001fcc20	52	cmn_err_tag	symtab	830bb4e423ef		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001fcc54	336	availmon_action	symtab	ffcb65ab3962		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001fcda4	3020	icmn_err_tag	symtab	fbeabef76420		out:5	undocumented		
@@ -19534,7 +19534,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33770	180	ecommo
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x337c0	100	ecommon_allsaved	symtab	be095e440a96		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33824	36	softfp_adderr	dwarf+symtab	ac8ce555ef35		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33848	40	softfp_insterr	dwarf+symtab	ea2300d9f8c3		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33870	724	ioerror_dump	dwarf+symtab	639d6d297437		out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33870	724	ioerror_dump	dwarf+symtab	639d6d297437		out:6	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33b44	28	error_mark_page	dwarf+symtab	a86de4a9d7a4		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33b60	28	error_reclaim_page	dwarf+symtab	a86de4a9d7a4		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33b7c	852	_hook_exceptions	dwarf+symtab	39a388879cf2		out:6	undocumented		
@@ -19848,7 +19848,7 @@ IP27/usr/cpu/sysgen/IP27boot/klog.o	kernel-object	n64	.text	0x3d4	364	klogioctl	
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64		0x0		kmem_alloc	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x6c	184	kmem_realloc	dwarf+symtab	9b2c840764ea		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x124	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x190	88	kmem_free	dwarf+symtab	9ee1a323d8db		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x190	88	kmem_free	dwarf+symtab	9ee1a323d8db		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x1e8	112	kern_malloc	dwarf+symtab	2b5ffb1c8830		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x258	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x2c0	176	kern_realloc	dwarf+symtab	bbef1660ad55		out:3	undocumented		
@@ -19973,7 +19973,7 @@ IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_mbuf.o)	kernel-object	n64	.text	0x2b40	
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64		0x0		kmem_alloc	dwarf+symtab			out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x90	184	kmem_realloc	dwarf+symtab	83c20ba4a5a7		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x148	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x1b4	104	kmem_free	dwarf+symtab	2fc16fb82b27		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x1b4	104	kmem_free	dwarf+symtab	2fc16fb82b27		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x21c	148	kern_malloc	dwarf+symtab	930b19d83114		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x2b0	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x318	176	kern_realloc	dwarf+symtab	58d92553ee58		out:3	undocumented		
@@ -24435,7 +24435,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(physio.o)	kernel-object	n64	.text	0x24	1692	bi
 IP27/usr/cpu/sysgen/IP27boot/os.a(physio.o)	kernel-object	n64	.text	0x6c0	136	biophysio_undo_userdma	dwarf+symtab	c72a6a7a62c3		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(physio.o)	kernel-object	n64	.text	0x748	768	buf_to_alenlist	dwarf+symtab	ec652e4c0a63		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pipe.o)	kernel-object	n64		0x0		pipe	dwarf+symtab			out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64		0x0		cmn_err	dwarf+symtab			out:3	named-only	chips/xbow/README.md#access-sequences	Access sequences
+IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64		0x0		cmn_err	dwarf+symtab			out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x4c	52	cmn_err_tag	dwarf+symtab	60be6fc18b2f		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x80	336	availmon_action	dwarf+symtab	fcd3f1b9de9a		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x1d0	3020	icmn_err_tag	dwarf+symtab	e1b4c0aa4783		out:3	undocumented		
@@ -25135,7 +25135,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	c
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x518	100	close	dwarf+symtab	4cd8456121a7		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x57c	148	set_ioflags	dwarf+symtab	9893a22bb9e8		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	_read	dwarf+symtab	2b0269ab5378		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
+IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	657db5992417		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/mace/README.md#other-rows	Other rows
@@ -31575,10 +31575,10 @@ IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x52c	8	xtalk_pio_k
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x534	8	xtalk_dma_dev_get	dwarf+symtab	b893f60251e4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x53c	8	xtalk_dma_target_get	dwarf+symtab	ee36d96101ba		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x544	44	xwidget_info_chk	dwarf+symtab	8c6627f03438		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x570	88	xwidget_info_get	dwarf+symtab	8a8109795078		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x570	88	xwidget_info_get	dwarf+symtab	8a8109795078		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x5c8	88	xwidget_info_set	dwarf+symtab	bcb335ef950e		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x620	52	xwidget_info_dev_get	dwarf+symtab	f7cb8ce786ae		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x654	52	xwidget_info_id_get	dwarf+symtab	c123f3f7a4af		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x654	52	xwidget_info_id_get	dwarf+symtab	c123f3f7a4af		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x688	52	xwidget_info_master_get	dwarf+symtab	7b7fcfa8a12e		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x6bc	52	xwidget_info_masterid_get	dwarf+symtab	9d94b7ec3e9d		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x6f0	52	xwidget_info_part_num_get	dwarf+symtab	29f7829e778d		in	undocumented		
@@ -33564,12 +33564,12 @@ IP30/unix	kernel	n64		0x0		heapzone_realloc	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		heapzone_zalloc	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		heart_cpu_intr	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		heart_debug_intr	dwarf			in	undocumented		
-IP30/unix	kernel	n64		0x0		heart_error_handler	dwarf			in	undocumented		
-IP30/unix	kernel	n64		0x0		heart_intr_bit_alloc	dwarf			in	undocumented		
-IP30/unix	kernel	n64		0x0		heart_intr_bits_free	dwarf			in	undocumented		
-IP30/unix	kernel	n64		0x0		heart_intr_bits_take	dwarf			in	undocumented		
+IP30/unix	kernel	n64		0x0		heart_error_handler	dwarf			in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/unix	kernel	n64		0x0		heart_intr_bit_alloc	dwarf			in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/unix	kernel	n64		0x0		heart_intr_bits_free	dwarf			in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/unix	kernel	n64		0x0		heart_intr_bits_take	dwarf			in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64		0x0		heart_intr_level_alloc	dwarf			in	undocumented		
-IP30/unix	kernel	n64		0x0		heart_widget_num	dwarf			in	undocumented		
+IP30/unix	kernel	n64		0x0		heart_widget_num	dwarf			in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64		0x0		hem_add_dimm	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		hem_add_ioe	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		hem_add_sync	dwarf			out:7	undocumented		
@@ -36878,7 +36878,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001d1f0	180	ecommon	symtab	fad7ba60c452		o
 IP30/unix	kernel	n64	.text	0xa80000002001d240	100	ecommon_allsaved	symtab	ce7bc4b4c355		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001d2a4	36	softfp_adderr	symtab	2e3478dc2055		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001d2c8	40	softfp_insterr	symtab	cbc30a041d70		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001d2f0	724	ioerror_dump	symtab	ac63bdc9f410		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002001d2f0	724	ioerror_dump	symtab	ac63bdc9f410		out:7	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002001d5c4	36	error_mark_page	symtab	6f5db9f71049		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001d5e8	40	error_reclaim_page	symtab	1d78eb0084c3		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001d610	648	_hook_exceptions	symtab	8f46875ef470		out:7	undocumented		
@@ -37274,10 +37274,10 @@ IP30/unix	kernel	n64	.text	0xa80000002003ac8c	8	xtalk_pio_kvaddr_get	symtab	402d
 IP30/unix	kernel	n64	.text	0xa80000002003ac94	8	xtalk_dma_dev_get	symtab	b893f60251e4		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003ac9c	8	xtalk_dma_target_get	symtab	ee36d96101ba		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003aca4	44	xwidget_info_chk	symtab	493b438fd68f		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003acd0	88	xwidget_info_get	symtab	9562f9b15f99		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003acd0	88	xwidget_info_get	symtab	9562f9b15f99		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003ad28	88	xwidget_info_set	symtab	20ce52326bc3		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003ad80	52	xwidget_info_dev_get	symtab	e4424b820d00		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003adb4	52	xwidget_info_id_get	symtab	91ac382569ae		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003adb4	52	xwidget_info_id_get	symtab	91ac382569ae		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003ade8	52	xwidget_info_master_get	symtab	8652fde53a37		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003ae1c	52	xwidget_info_masterid_get	symtab	38ce2ae38c0f		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003ae50	52	xwidget_info_part_num_get	symtab	a6f3c60be42c		in	undocumented		
@@ -37349,25 +37349,25 @@ IP30/unix	kernel	n64	.text	0xa80000002003df70	1164	xbmon_ioctl	symtab	c799dce8f6
 IP30/unix	kernel	n64	.text	0xa80000002003e3fc	80	xbmon_map	symtab	1d62613b313b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003e44c	8	xbmon_unmap	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003e868	288	heart_imr_bits_rmw	symtab	85a99efa30b4		in	named-only	chips/heart/README.md#register-inventory	Register inventory
-IP30/unix	kernel	n64	.text	0xa80000002003ea74	84	heart_intr_swlevel_to_hwlevel	symtab	23dcf5aa342e		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003ea74	84	heart_intr_swlevel_to_hwlevel	symtab	23dcf5aa342e		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003ec1c	72	heart_stray_intr	symtab	7fdd265cf4b1		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003ecd4	68	chkdebug	symtab	277ea8b46ee8		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP30/unix	kernel	n64	.text	0xa80000002003ed18	24	clear_cpu_intr	symtab	a57a6ae0a4df		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003ed18	24	clear_cpu_intr	symtab	a57a6ae0a4df		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003ed30	164	heart_mlreset	symtab	270fa496485d		in	named-only	chips/heart/README.md#register-inventory	Register inventory
 IP30/unix	kernel	n64	.text	0xa80000002003edd4	68	heart_mp_intr_init	symtab	3d38a8984a36		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003ee18	44	heart_init	symtab	9e84ca9d013c		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003ee44	488	heart_startup	symtab	c5630c1ded35		in	named-only	chips/heart/README.md#addresses-established	Addresses (established)
 IP30/unix	kernel	n64	.text	0xa80000002003f02c	120	heart_attach	symtab	4dcd3bb1d6d7		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003f0cc	288	heart_addr_phys_to_xio	symtab	f70aa1489f9f		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003f1ec	164	heart_addr_xio_to_phys	symtab	b190aaed481d		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003f290	56	heart_addr_xio_to_kva	symtab	c213c5439057		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003f1ec	164	heart_addr_xio_to_phys	symtab	b190aaed481d		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/unix	kernel	n64	.text	0xa80000002003f290	56	heart_addr_xio_to_kva	symtab	c213c5439057		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003f2c8	192	heart_piomap_alloc	symtab	c7abf5ef49ad		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003f388	28	heart_piomap_free	symtab	2f86b3654a1a		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003f388	28	heart_piomap_free	symtab	2f86b3654a1a		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003f3a4	20	heart_piomap_addr	symtab	b7d163907c9a		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003f3b8	8	heart_piomap_done	symtab	78aa5094d5ec		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003f3c0	92	heart_piotrans_addr	symtab	07965bbda04d		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003f41c	92	heart_dmamap_alloc	symtab	db85d0831b29		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003f478	28	heart_dmamap_free	symtab	0627224bd49f		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003f478	28	heart_dmamap_free	symtab	0627224bd49f		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003f494	32	heart_dmamap_addr	symtab	91cb79b2b819		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003f4b4	364	heart_dmamap_list	symtab	56e091263cb0		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003f620	8	heart_dmamap_done	symtab	78aa5094d5ec		in	undocumented		
@@ -37379,12 +37379,12 @@ IP30/unix	kernel	n64	.text	0xa80000002003f7c4	8	heart_dmalist_drain	symtab	78aa5
 IP30/unix	kernel	n64	.text	0xa80000002003f7cc	104	heart_intr_preconn	symtab	6b35db89fda5		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003f834	92	heart_intr_prealloc	symtab	923d17a5a2cd		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003f890	452	do_heart_intr_alloc	symtab	df8daa0970ed		out:7	named-only	chips/heart/README.md#access-sequences-established-unless-marked	Access sequences (established unless marked)
-IP30/unix	kernel	n64	.text	0xa80000002003fa54	28	heart_intr_alloc	symtab	7d484707d1b1		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003fa70	28	heart_intr_alloc_nothd	symtab	986e73dc4cac		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003fa8c	60	heart_intr_free	symtab	70260dee8179		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003fa54	28	heart_intr_alloc	symtab	7d484707d1b1		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/unix	kernel	n64	.text	0xa80000002003fa70	28	heart_intr_alloc_nothd	symtab	986e73dc4cac		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/unix	kernel	n64	.text	0xa80000002003fa8c	60	heart_intr_free	symtab	70260dee8179		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003fac8	212	heart_intr_connect	symtab	bb35f0af4ea7		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003fb9c	112	heart_intr_disconnect	symtab	f765e8c818ee		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002003fc0c	28	heart_intr_cpu_get	symtab	2ab503f98cd9		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003fc0c	28	heart_intr_cpu_get	symtab	2ab503f98cd9		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa80000002003fc28	8	heart_intr_cpuid_get	symtab	acb766709b99		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003fc30	8	heart_provider_startup	symtab	78aa5094d5ec		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003fc38	28	heart_provider_shutdown	symtab	2b73c7c7be28		in	undocumented		
@@ -37396,7 +37396,7 @@ IP30/unix	kernel	n64	.text	0xa80000002004000c	52	heart_intrd	symtab	13bdaa607bac
 IP30/unix	kernel	n64	.text	0xa800000020040040	124	heart_intrd_start	symtab	ad5f3781f850		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200400bc	108	heart_ithread_setup	symtab	18820e97539b		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020040128	184	enable_ithreads	symtab	cabd2bbe060c		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200401e0	40	heart_rev	symtab	2075ed563f01		in	named-only	chips/heart/README.md#register-inventory	Register inventory
+IP30/unix	kernel	n64	.text	0xa8000000200401e0	40	heart_rev	symtab	2075ed563f01		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa800000020040208	132	heart_flow_control_connect	symtab	2d384c11d575		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002004028c	104	heart_flow_control_disconnect	symtab	04e9dec7bd11		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200402f4	60	heart_flow_control_enable	symtab	ecc761ec229a		in	undocumented		
@@ -39609,7 +39609,7 @@ IP30/unix	kernel	n64	.text	0xa800000020148578	8	sio_set_sscr_stub	symtab	8750649
 IP30/unix	kernel	n64	.text	0xa800000020148580	108	kmem_alloc	symtab	833c4e62e5db		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201485ec	184	kmem_realloc	symtab	03178a194126		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201486a4	108	kmem_zalloc	symtab	19d1d7d40a13		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020148710	88	kmem_free	symtab	cddc1d7c9122		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020148710	88	kmem_free	symtab	cddc1d7c9122		out:7	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa800000020148768	112	kern_malloc	symtab	726417fdc0e1		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201487d8	104	kern_calloc	symtab	b52f48de04c3		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020148840	176	kern_realloc	symtab	f56bdf6d152d		out:7	undocumented		
@@ -40892,7 +40892,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201b5870	596	vn_remove_audit_extended	symta
 IP30/unix	kernel	n64	.text	0xa8000000201b5ac4	44	creat	symtab	5adde406a17d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5af0	608	copen	symtab	965dafb25d17		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5d50	100	close	symtab	4420c397d7ba		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201b62f0	28	read	symtab	dcf0d42ffa47		out:7	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
+IP30/unix	kernel	n64	.text	0xa8000000201b62f0	28	read	symtab	dcf0d42ffa47		out:7	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa8000000201b630c	28	pread	symtab	b470a6fb64fa		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b67f0	28	write	symtab	a30dea0a2ea3		out:7	named-only	chips/mace/README.md#other-rows	Other rows
 IP30/unix	kernel	n64	.text	0xa8000000201b680c	28	pwrite	symtab	b82ce096fbe8		out:7	undocumented		
@@ -41053,7 +41053,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201c5f7c	816	exit	symtab	faeadf6c2d19		out:
 IP30/unix	kernel	n64	.text	0xa8000000201c6328	480	waitsys_wrapper	symtab	83f0a2ad385e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c6508	1336	waitsys	symtab	def6aff4a05e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c6a40	192	vrelvm	symtab	e3e3ec6e18ce		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201c6b00	76	cmn_err	symtab	c37ae0be2b13		out:7	named-only	chips/xbow/README.md#access-sequences	Access sequences
+IP30/unix	kernel	n64	.text	0xa8000000201c6b00	76	cmn_err	symtab	c37ae0be2b13		out:7	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/unix	kernel	n64	.text	0xa8000000201c6b4c	52	cmn_err_tag	symtab	bad273c4640e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c6b80	336	availmon_action	symtab	866c51ef9f31		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c6cd0	2844	icmn_err_tag	symtab	39fd55a556cf		out:7	undocumented		
@@ -48341,32 +48341,32 @@ IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x5ac	172	nested_bittrylock	dwarf+symtab	925390d5ed5c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x658	172	nested_64bittrylock	dwarf+symtab	ed5ed385554b		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64		0x0		heart_imr_bits_rmw	dwarf+symtab			in	named-only	chips/heart/README.md#register-inventory	Register inventory
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x120	32	heart_intr_bits_free	dwarf+symtab	660cfda8b099		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x140	36	heart_intr_bits_take	dwarf+symtab	9effdb1a586e		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x164	168	heart_intr_bit_alloc	dwarf+symtab	40b9c92f221d		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x20c	84	heart_intr_swlevel_to_hwlevel	dwarf+symtab	df6a2b877e2a		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x120	32	heart_intr_bits_free	dwarf+symtab	660cfda8b099		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x140	36	heart_intr_bits_take	dwarf+symtab	9effdb1a586e		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x164	168	heart_intr_bit_alloc	dwarf+symtab	40b9c92f221d		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x20c	84	heart_intr_swlevel_to_hwlevel	dwarf+symtab	df6a2b877e2a		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x260	340	heart_intr_level_alloc	dwarf+symtab	f5c1cf76e138		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x3b4	72	heart_stray_intr	dwarf+symtab	075311215dc8		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x3fc	56	heart_cpu_intr	dwarf+symtab	e7bb475b6b0f		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x434	56	heart_debug_intr	dwarf+symtab	173b437e6cd2		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x46c	68	chkdebug	dwarf+symtab	e69d0b185fbb		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x4b0	24	clear_cpu_intr	dwarf+symtab	a57a6ae0a4df		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x4b0	24	clear_cpu_intr	dwarf+symtab	a57a6ae0a4df		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x4c8	164	heart_mlreset	dwarf+symtab	f3f22489a508		in	named-only	chips/heart/README.md#register-inventory	Register inventory
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x56c	68	heart_mp_intr_init	dwarf+symtab	3d38a8984a36		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x5b0	44	heart_init	dwarf+symtab	3fceb0504198		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x5dc	488	heart_startup	dwarf+symtab	7abc3c7a4338		in	named-only	chips/heart/README.md#addresses-established	Addresses (established)
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x7c4	120	heart_attach	dwarf+symtab	c6b439821b20		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x83c	40	heart_widget_num	dwarf+symtab	cd7896e63386		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x83c	40	heart_widget_num	dwarf+symtab	cd7896e63386		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x864	288	heart_addr_phys_to_xio	dwarf+symtab	f70aa1489f9f		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x984	164	heart_addr_xio_to_phys	dwarf+symtab	b190aaed481d		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xa28	56	heart_addr_xio_to_kva	dwarf+symtab	4cedc148b523		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x984	164	heart_addr_xio_to_phys	dwarf+symtab	b190aaed481d		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xa28	56	heart_addr_xio_to_kva	dwarf+symtab	4cedc148b523		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xa60	192	heart_piomap_alloc	dwarf+symtab	0809ba990440		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xb20	28	heart_piomap_free	dwarf+symtab	5e13c517fd02		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xb20	28	heart_piomap_free	dwarf+symtab	5e13c517fd02		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xb3c	20	heart_piomap_addr	dwarf+symtab	b7d163907c9a		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xb50	8	heart_piomap_done	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xb58	92	heart_piotrans_addr	dwarf+symtab	b437d63e05f7		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xbb4	92	heart_dmamap_alloc	dwarf+symtab	416b3e3dbf15		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xc10	28	heart_dmamap_free	dwarf+symtab	8032d8e12c29		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xc10	28	heart_dmamap_free	dwarf+symtab	8032d8e12c29		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xc2c	32	heart_dmamap_addr	dwarf+symtab	13f485f16453		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xc4c	364	heart_dmamap_list	dwarf+symtab	cbcf7eae976c		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xdb8	8	heart_dmamap_done	dwarf+symtab	78aa5094d5ec		in	undocumented		
@@ -48378,25 +48378,25 @@ IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xf5c	8	heart_dmali
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xf64	104	heart_intr_preconn	dwarf+symtab	f9003ff2cad9		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0xfcc	92	heart_intr_prealloc	dwarf+symtab	0ad63076009b		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1028	452	do_heart_intr_alloc	dwarf+symtab	8af7555bfae4		in	named-only	chips/heart/README.md#access-sequences-established-unless-marked	Access sequences (established unless marked)
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x11ec	28	heart_intr_alloc	dwarf+symtab	1c3c43e5854e		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1208	28	heart_intr_alloc_nothd	dwarf+symtab	f79b5991cbaf		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1224	60	heart_intr_free	dwarf+symtab	c1539abddd74		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x11ec	28	heart_intr_alloc	dwarf+symtab	1c3c43e5854e		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1208	28	heart_intr_alloc_nothd	dwarf+symtab	f79b5991cbaf		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1224	60	heart_intr_free	dwarf+symtab	c1539abddd74		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1260	212	heart_intr_connect	dwarf+symtab	e429b2648b31		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1334	112	heart_intr_disconnect	dwarf+symtab	81ca5f60280a		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x13a4	28	heart_intr_cpu_get	dwarf+symtab	a4cc6d2d340d		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x13a4	28	heart_intr_cpu_get	dwarf+symtab	a4cc6d2d340d		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x13c0	8	heart_intr_cpuid_get	dwarf+symtab	acb766709b99		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x13c8	8	heart_provider_startup	dwarf+symtab	78aa5094d5ec		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x13d0	28	heart_provider_shutdown	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x13ec	284	heart_paddr_to_port	dwarf+symtab	985d51392a50		in	named-only	chips/heart/README.md#error-handling-in-the-kernel-dobuserr_common-read-for-the-cause-paths-below	Error handling in the kernel (`dobuserr_common`, read for the cause paths below)
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1508	244	heart_error_refine	dwarf+symtab	dabeeb825f82		in	named-only	chips/heart/README.md#error-handling-in-the-kernel-dobuserr_common-read-for-the-cause-paths-below	Error handling in the kernel (`dobuserr_common`, read for the cause paths below)
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x15fc	52	heart_error_handler	dwarf+symtab	85b4624c57bc		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x15fc	52	heart_error_handler	dwarf+symtab	85b4624c57bc		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1630	364	heart_intr	dwarf+symtab	45785f15be8c		in	named-only	chips/heart/README.md#register-inventory	Register inventory
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x179c	8	heart_error_devenable	dwarf+symtab	87506497337c		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x17a4	52	heart_intrd	dwarf+symtab	6f516433413a		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x17d8	124	heart_intrd_start	dwarf+symtab	ccf492317136		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1854	108	heart_ithread_setup	dwarf+symtab	5af0f12411fb		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x18c0	184	enable_ithreads	dwarf+symtab	52b29d591dca		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1978	40	heart_rev	dwarf+symtab	82798c4bc88c		in	named-only	chips/heart/README.md#register-inventory	Register inventory
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1978	40	heart_rev	dwarf+symtab	82798c4bc88c		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x19a0	132	heart_flow_control_connect	dwarf+symtab	29e86cf9a8e3		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1a24	104	heart_flow_control_disconnect	dwarf+symtab	278fd23fda90		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1a8c	60	heart_flow_control_enable	dwarf+symtab	cfdd9b54f298		in	undocumented		
@@ -50434,7 +50434,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xd070	180	ecommon
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xd0c0	100	ecommon_allsaved	symtab	be095e440a96		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xd124	36	softfp_adderr	dwarf+symtab	f9c8931d2488		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xd148	40	softfp_insterr	dwarf+symtab	8dc8d9ae28b0		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xd170	724	ioerror_dump	dwarf+symtab	3c9cd38e5160		out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xd170	724	ioerror_dump	dwarf+symtab	3c9cd38e5160		out:8	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xd444	36	error_mark_page	dwarf+symtab	bf19c74dca03		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xd468	40	error_reclaim_page	dwarf+symtab	9bd234bb9f59		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xd490	648	_hook_exceptions	dwarf+symtab	9ddcb3b574fd		out:8	undocumented		
@@ -50691,7 +50691,7 @@ IP30/usr/cpu/sysgen/IP30boot/klog.o	kernel-object	n64	.text	0x3d4	364	klogioctl	
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64		0x0		kmem_alloc	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x6c	184	kmem_realloc	dwarf+symtab	9b2c840764ea		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x124	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x190	88	kmem_free	dwarf+symtab	9ee1a323d8db		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x190	88	kmem_free	dwarf+symtab	9ee1a323d8db		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x1e8	112	kern_malloc	dwarf+symtab	2b5ffb1c8830		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x258	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x2c0	176	kern_realloc	dwarf+symtab	bbef1660ad55		out:3	undocumented		
@@ -50809,7 +50809,7 @@ IP30/usr/cpu/sysgen/IP30boot/kmem.a(kern_mbuf.o)	kernel-object	n64	.text	0x2780	
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64		0x0		kmem_alloc	dwarf+symtab			out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x90	184	kmem_realloc	dwarf+symtab	83c20ba4a5a7		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x148	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x1b4	104	kmem_free	dwarf+symtab	2fc16fb82b27		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x1b4	104	kmem_free	dwarf+symtab	2fc16fb82b27		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x21c	148	kern_malloc	dwarf+symtab	930b19d83114		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x2b0	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x318	176	kern_realloc	dwarf+symtab	58d92553ee58		out:3	undocumented		
@@ -54652,7 +54652,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(physio.o)	kernel-object	n64	.text	0x24	1684	bi
 IP30/usr/cpu/sysgen/IP30boot/os.a(physio.o)	kernel-object	n64	.text	0x6b8	136	biophysio_undo_userdma	dwarf+symtab	c72a6a7a62c3		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(physio.o)	kernel-object	n64	.text	0x740	676	buf_to_alenlist	dwarf+symtab	5cea1c0b0646		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pipe.o)	kernel-object	n64		0x0		pipe	dwarf+symtab			out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64		0x0		cmn_err	dwarf+symtab			out:3	named-only	chips/xbow/README.md#access-sequences	Access sequences
+IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64		0x0		cmn_err	dwarf+symtab			out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x4c	52	cmn_err_tag	dwarf+symtab	60be6fc18b2f		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x80	336	availmon_action	dwarf+symtab	fcd3f1b9de9a		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1d0	2844	icmn_err_tag	dwarf+symtab	e1c7fde689d7		out:3	undocumented		
@@ -55324,7 +55324,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	c
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x518	100	close	dwarf+symtab	4cd8456121a7		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x57c	148	set_ioflags	dwarf+symtab	9893a22bb9e8		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	_read	dwarf+symtab	5ccac8e0090e		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
+IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	63714ef59212		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/mace/README.md#other-rows	Other rows
@@ -60613,10 +60613,10 @@ IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x52c	8	xtalk_pio_k
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x534	8	xtalk_dma_dev_get	dwarf+symtab	b893f60251e4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x53c	8	xtalk_dma_target_get	dwarf+symtab	ee36d96101ba		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x544	44	xwidget_info_chk	dwarf+symtab	8c6627f03438		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x570	88	xwidget_info_get	dwarf+symtab	8a8109795078		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x570	88	xwidget_info_get	dwarf+symtab	8a8109795078		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x5c8	88	xwidget_info_set	dwarf+symtab	bcb335ef950e		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x620	52	xwidget_info_dev_get	dwarf+symtab	f7cb8ce786ae		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x654	52	xwidget_info_id_get	dwarf+symtab	c123f3f7a4af		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x654	52	xwidget_info_id_get	dwarf+symtab	c123f3f7a4af		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x688	52	xwidget_info_master_get	dwarf+symtab	7b7fcfa8a12e		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x6bc	52	xwidget_info_masterid_get	dwarf+symtab	9d94b7ec3e9d		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x6f0	52	xwidget_info_part_num_get	dwarf+symtab	29f7829e778d		in	undocumented		
@@ -66511,7 +66511,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xee38	1252	print_
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xf31c	128	idbg_ecc_info	symtab	c64a9bd3d6fd		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xf5f8	40	softfp_adderr	symtab	c4b77d81c1b2		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xf620	40	softfp_insterr	symtab	5c722cc4be09		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xf648	732	ioerror_dump	symtab	b7266570923d		out:9	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xf648	732	ioerror_dump	symtab	b7266570923d		out:9	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xf924	36	error_mark_page	symtab	a5bc0e65bddc		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xf948	40	error_reclaim_page	symtab	163ddd14da27		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xf970	252	tlb_to_phys	symtab	9a441062e6e0		out:9	undocumented		
@@ -66860,7 +66860,7 @@ IP32/usr/cpu/sysgen/IP32boot/klog.o	kernel-object	n32	.text	0x3e4	368	klogioctl	
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32		0x0		kmem_alloc	dwarf+symtab			out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x74	208	kmem_realloc	dwarf+symtab	876cc3c72ab2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x144	116	kmem_zalloc	dwarf+symtab	13eebbd3cd67		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x1b8	96	kmem_free	dwarf+symtab	ba41c2997574		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x1b8	96	kmem_free	dwarf+symtab	ba41c2997574		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x218	120	kern_malloc	dwarf+symtab	868bffc98101		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x290	116	kern_calloc	dwarf+symtab	e944db3f1e48		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-object	n32	.text	0x304	200	kern_realloc	dwarf+symtab	5a85d2f59d56		out:3	undocumented		
@@ -66979,7 +66979,7 @@ IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_mbuf.o)	kernel-object	n32	.text	0x27a0	
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32		0x0		kmem_alloc	dwarf+symtab			out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x98	208	kmem_realloc	dwarf+symtab	4581884f2243		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x168	116	kmem_zalloc	dwarf+symtab	13eebbd3cd67		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x1dc	120	kmem_free	dwarf+symtab	12e77e0e188e		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x1dc	120	kmem_free	dwarf+symtab	12e77e0e188e		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x254	156	kern_malloc	dwarf+symtab	010eb67653b3		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x2f0	116	kern_calloc	dwarf+symtab	e944db3f1e48		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem_debug.a(kern_heap.o)	kernel-object	n32	.text	0x364	200	kern_realloc	dwarf+symtab	e87b52b9f999		out:3	undocumented		
@@ -71226,7 +71226,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(physio.o)	kernel-object	n32	.text	0xbc	4128	bi
 IP32/usr/cpu/sysgen/IP32boot/os.a(physio.o)	kernel-object	n32	.text	0x10dc	124	biophysio_undo_userdma	dwarf+funcnames+symtab	2591f8cb40ce		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(physio.o)	kernel-object	n32	.text	0x1158	852	buf_to_alenlist	dwarf+symtab	f3e602822f51		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pipe.o)	kernel-object	n32		0x0		pipe	dwarf+symtab			out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32		0x0		cmn_err	dwarf+symtab			out:3	named-only	chips/xbow/README.md#access-sequences	Access sequences
+IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32		0x0		cmn_err	dwarf+symtab			out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x4c	52	cmn_err_tag	dwarf+symtab	1e4724cfa572		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x80	344	availmon_action	dwarf+symtab	a9cd54a2c334		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1d8	2816	icmn_err_tag	dwarf+symtab	21ecbea42d26		out:3	undocumented		
@@ -71878,7 +71878,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x248	604	c
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x4a4	100	close	dwarf+symtab	77be312f8200		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x508	164	set_ioflags	dwarf+funcnames+symtab	b99109792617		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x5ac	1104	_read	dwarf+funcnames+symtab	6842c4b25eda		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x9fc	28	read	dwarf+symtab	295c861fb3cd		out:3	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
+IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x9fc	28	read	dwarf+symtab	295c861fb3cd		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xa18	28	pread	dwarf+symtab	2f5516b0c7d3		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xa34	1140	_write	dwarf+funcnames+symtab	f70651bf104f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0xea8	28	write	dwarf+symtab	295c861fb3cd		out:3	named-only	chips/mace/README.md#other-rows	Other rows
@@ -84302,7 +84302,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d770	180	ecommo
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d7c0	100	ecommon_allsaved	symtab	fa224cc4e77e		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d824	36	softfp_adderr	dwarf+symtab	6375e63df4d1		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d848	40	softfp_insterr	dwarf+symtab	a86e5ba501ae		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d870	724	ioerror_dump	dwarf+symtab	d3d2dd1e0d01		out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d870	724	ioerror_dump	dwarf+symtab	d3d2dd1e0d01		out:11	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2db44	28	error_mark_page	dwarf+symtab	a86de4a9d7a4		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2db60	28	error_reclaim_page	dwarf+symtab	a86de4a9d7a4		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2db7c	836	_hook_exceptions	dwarf+symtab	532221e53347		out:11	undocumented		
@@ -84694,7 +84694,7 @@ IP35/usr/cpu/sysgen/IP35boot/klog.o	kernel-object	n64	.text	0x3d4	364	klogioctl	
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64		0x0		kmem_alloc	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x6c	184	kmem_realloc	dwarf+symtab	9b2c840764ea		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x124	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x190	88	kmem_free	dwarf+symtab	9ee1a323d8db		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x190	88	kmem_free	dwarf+symtab	9ee1a323d8db		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x1e8	112	kern_malloc	dwarf+symtab	2b5ffb1c8830		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x258	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_heap.o)	kernel-object	n64	.text	0x2c0	176	kern_realloc	dwarf+symtab	bbef1660ad55		out:3	undocumented		
@@ -84819,7 +84819,7 @@ IP35/usr/cpu/sysgen/IP35boot/kmem.a(kern_mbuf.o)	kernel-object	n64	.text	0x2be4	
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64		0x0		kmem_alloc	dwarf+symtab			out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x90	184	kmem_realloc	dwarf+symtab	83c20ba4a5a7		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x148	108	kmem_zalloc	dwarf+symtab	bbd118277749		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x1b4	104	kmem_free	dwarf+symtab	2fc16fb82b27		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x1b4	104	kmem_free	dwarf+symtab	2fc16fb82b27		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x21c	148	kern_malloc	dwarf+symtab	930b19d83114		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x2b0	104	kern_calloc	dwarf+symtab	2dff0924d3b6		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_heap.o)	kernel-object	n64	.text	0x318	176	kern_realloc	dwarf+symtab	58d92553ee58		out:3	undocumented		
@@ -89227,7 +89227,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(physio.o)	kernel-object	n64	.text	0x24	1684	bi
 IP35/usr/cpu/sysgen/IP35boot/os.a(physio.o)	kernel-object	n64	.text	0x6b8	136	biophysio_undo_userdma	dwarf+symtab	c72a6a7a62c3		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(physio.o)	kernel-object	n64	.text	0x740	768	buf_to_alenlist	dwarf+symtab	c70a0118a206		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pipe.o)	kernel-object	n64		0x0		pipe	dwarf+symtab			out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64		0x0		cmn_err	dwarf+symtab			out:3	named-only	chips/xbow/README.md#access-sequences	Access sequences
+IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64		0x0		cmn_err	dwarf+symtab			out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x4c	52	cmn_err_tag	dwarf+symtab	60be6fc18b2f		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x80	336	availmon_action	dwarf+symtab	fcd3f1b9de9a		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x1d0	3028	icmn_err_tag	dwarf+symtab	d3d7bf1c0b1b		out:3	undocumented		
@@ -89914,7 +89914,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	c
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x518	100	close	dwarf+symtab	4cd8456121a7		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x57c	148	set_ioflags	dwarf+symtab	9893a22bb9e8		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x610	1192	_read	dwarf+symtab	d74b738e95fc		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/hub/README.md#pi-processor-interface	PI: processor interface
+IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xab8	28	read	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xad4	28	pread	dwarf+symtab	9b5b52955f37		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xaf0	1224	_write	dwarf+symtab	33ceab58b0bf		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0xfb8	28	write	dwarf+symtab	4e0b7c85ec68		out:3	named-only	chips/mace/README.md#other-rows	Other rows
@@ -96515,10 +96515,10 @@ IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x52c	8	xtalk_pio_k
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x534	8	xtalk_dma_dev_get	dwarf+symtab	b893f60251e4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x53c	8	xtalk_dma_target_get	dwarf+symtab	ee36d96101ba		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x544	44	xwidget_info_chk	dwarf+symtab	8c6627f03438		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x570	88	xwidget_info_get	dwarf+symtab	8a8109795078		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x570	88	xwidget_info_get	dwarf+symtab	8a8109795078		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x5c8	88	xwidget_info_set	dwarf+symtab	bcb335ef950e		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x620	52	xwidget_info_dev_get	dwarf+symtab	f7cb8ce786ae		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x654	52	xwidget_info_id_get	dwarf+symtab	c123f3f7a4af		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x654	52	xwidget_info_id_get	dwarf+symtab	c123f3f7a4af		in	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x688	52	xwidget_info_master_get	dwarf+symtab	7b7fcfa8a12e		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x6bc	52	xwidget_info_masterid_get	dwarf+symtab	9d94b7ec3e9d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x6f0	52	xwidget_info_part_num_get	dwarf+symtab	29f7829e778d		in	undocumented		
