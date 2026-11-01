@@ -1,10 +1,9 @@
 # IOC3
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no specification is held). PCI I/O controller of the
-Origin 200/2000 BaseIO, Octane (IP30) and Origin 300-class (IP35) base I/O boards: two serial ports with ring-buffer
-DMA, a 10/100 Ethernet MAC with an MII, a keyboard and mouse port, a parallel port, a one-wire port, general purpose I/O
-pins and an external interrupt input and output. Builds read: IP27, IP30 and IP35. The three carry byte-different copies of
-the same driver objects; the IP27 offsets are cited and the other two agree unless a difference is stated.
+Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no specification is held). Builds read: IP27 (the primary build: the offsets cited below are its), IP30 and IP35. PCI I/O controller of the Origin
+200/2000 BaseIO, Octane (IP30) and Origin 300-class (IP35) base I/O boards: two serial ports with ring-buffer DMA, a 10/100 Ethernet MAC with an MII, a keyboard and mouse port, a parallel port, a
+one-wire port, general purpose I/O pins and an external interrupt input and output. The three carry byte-different copies of
+the same driver objects; the IP27 offsets are cited (from the `IP27boot` objects) and the other two agree unless a difference is stated.
 
 Every fact below was read from the IRIX 6.5.30 driver objects `ioc3.o` (attach, interrupt enable, subdevice mask),
 `sio_ioc3.o` (serial, a member of `sduart.a`), `if_ef.o` (Ethernet), `ioc3_pckm.o` (keyboard and mouse), `ioc3ei.o`
@@ -140,23 +139,23 @@ each) and builds port B's pointers from port A's: the register block moves from 
   control word `0x10180` to the control register. Before the first control write it waits for UART register 5 bit 5 to be set,
   3 microseconds a try (established).
 - **Ring base** (`hardware_init`, only for port A's configuration record): `ring_dmatrans` returns the bus address of the 4 KB
-  ring buffer; the high word goes to `0xb0` and the low word ORed with 1 to `0xb4`. Inferred: bit 0 selects 4 KB rings (a
+  ring buffer. `hardware_init` stores the high word at window offset +0xb0 and the low word ORed with 1 at +0xb4. Inferred: bit 0 selects 4 KB rings (a
   4096 stride and a 16384-byte clear in `ioc3_serial_attach` agree).
 - **Pause**: before it touches the indices, each of `ioc3_enable_tx`, `ioc3_read`, `ioc3_config`, `ioc3_break` and `set_DTRRTS`
   stores `0x20000000` (alone or with the record's control word) to the control register and polls bit 30 of it, up to 1,000,000
   tries with `us_delay`. `ioc3_read` also sets bit 27 and polls it clear before it reads the RX producer. Inferred: bit 29
   pauses DMA, bit 30 reports the pause took effect, bit 27 drains the receive packer.
-- **TX and RX**: `ioc3_enable_tx` (returns 0 or -1) stores the producer index (mask `0xff8`) to `0xbc`; the consumer is read from `0xc0`.
-  The RX producer is read from `0xc4`; `ioc3_read` stores `consumer | 0x80000000` to `0xc8`. `ioc3_rx_timeout` (returns 0 or 1) stores the smaller
-  of the requested count and 4095 to `0xcc`.
-- **Shadow**: `ioc3_query_DCD` and `ioc3_query_CTS` read `0xd0`; `set_DTRRTS` (returns 0 or -1) ORs bits into it and writes UART register 4. The
+- **TX and RX**: `ioc3_enable_tx` (returns 0 or -1) stores the producer index (mask `0xff8`) at block +0x4; the consumer is read from block +0x8.
+  The RX producer is read from block +0xc. `ioc3_read` stores `consumer | 0x80000000` at block +0x10. `ioc3_rx_timeout` (returns 0 or 1) stores the smaller
+  of the requested count and 4095 at block +0x14.
+- **Shadow**: `ioc3_query_DCD` and `ioc3_query_CTS` read block +0x18 (the shadow); `set_DTRRTS` (returns 0 or -1) ORs bits into it and writes UART register 4. The
   bit positions are inferred from the routine names.
 - **Mode select**: `ioc3_set_proto` (`0x2f00`, returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin number being a byte of a static
   per-port table (not read). Inferred: transceiver select.
 - **UART registers**: the code uses the 16550 register index as the byte offset from the UART base, so register 3 (line
   control, DLAB in bit 7) is at `0x2017b`, 0 and 1 (divisor low and high when DLAB is set) at `0x20178` and `0x20179`, 2 at
   `0x2017a`, 4 (modem control) at `0x2017c` and 5 (line status) at `0x2017d`. `set_baud_ti` (`0x6cc`, returns 0 or 1) also stores a value it
-  searches from 6 to 63 for the closest baud rate to register 7 (`0x2017f`); inferred: a clock prescaler.
+  searches from 6 to 63 for the closest baud rate to UART register 7 (UART offset +0x7); inferred: a clock prescaler.
 
 ### Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
 
@@ -174,9 +173,9 @@ The driver holds the register block base `0xf0` (record +816) and the chip windo
 - **MII** (`ef_phyget` `0x16fc`, `ef_phyput` `0x1794`, read in full): wait while bit 11 of `0x148` is set. A read stores
   `(phy << 5) | register | 0x400` to `0x148`, waits for bit 11 clear and returns the low 16 bits of `0x14c`. A write stores the
   data to `0x150`, then `(phy << 5) | register` to `0x148`, and waits for bit 11 clear.
-- **Run time**: `ef_intr` (`0x1e14`) reads `0xf4` and stores the same value back; `ef_fill` (`0x1964`) stores `index << 3` to `0x110`;
-  `ef_transmit` (`0x2868`, returns 0, 7, 127 or 132) stores `index << 7` to `0x134`; `ef_reclaim` (`0x904`) reads `0x130` and shifts it right 7; `ef_getcdc`
-  (`0x1de8`) splits `0x120` into its low and high 16 bits.
+- **Run time** (offsets are from the register block, `0xf0`): `ef_intr` (`0x1e14`) reads block +0x4 and stores the same value back; `ef_fill` (`0x1964`) stores `index << 3` to block +0x20;
+  `ef_transmit` (`0x2868`, returns 0, 7, 127 or 132) stores `index << 7` to block +0x44; `ef_reclaim` (`0x904`) reads block +0x40 and shifts it right 7; `ef_getcdc`
+  (`0x1de8`) splits block +0x30 into its low and high 16 bits.
 - **Buffer RAM** (`ssram_discovery` `0x790`): ORs `0x1200` into `0xf0`, writes the patterns `0x5555` and `0xaaaa` to two words
   of the buffer-RAM window (offset `0x40000`, mapped 128 KB), reads them back and records the result. Established for the
   accesses; the meaning of bits 12 and 9 is inferred.
