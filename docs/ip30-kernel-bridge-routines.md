@@ -644,3 +644,42 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   types 2 and 3, the low word at +0x2c for types 0 and 1, with no earlier read and no return value set. A null handle,
   type -1 or an unmatched raw window calls `panic` with "pcireg_req_timeout_set(): unknown bridgetype" and does not
   store; a record type outside -1 to 3 returns without a store or a message. Established.
+- `pcireg_pcix_req_err_attr_get` (`IP30/unix` `0xa800000020059c54`, 344 bytes, frame 16 bytes)
+  returns the PCI-X request error attribute register, the doubleword at window +0x628, and only for types 2 and 3.
+  Types 0 and 1 run two `panic` calls back to back, "pcireg_req_err_attr_get(): undefined register" and then
+  "pcireg_req_err_attr_get(): unknown bridgetype" (neither message carries `pcix`), and return 0 with no load. A null
+  handle, type -1 or an unmatched raw window gets only the second message; a record type outside -1 to 3 gives 0 with
+  no message. Established.
+- `pcireg_intr_reset_set` (`IP30/unix` `0xa800000020055778`, 344 bytes, frame 16 bytes)
+  writes `a1` to the interrupt reset register with one store: a doubleword at window +0x110 for types 2 and 3, the
+  low 32 bits as a word at +0x114 for types 0 and 1. It never loads the register and leaves the return register alone.
+  Failure handling is the usual: `panic` ("pcireg_intr_reset_set(): unknown bridgetype") for a null handle, type -1
+  or an unmatched raw window, silence and no store for a record type outside -1 to 3. Established.
+- `pcireg_intr_enable_set` (`IP30/unix` `0xa80000002005532c`, 344 bytes, frame 16 bytes)
+  stores `a1` into the interrupt enable register that `pcireg_intr_enable_get` reads and that
+  `pcireg_intr_enable_bit_set` modifies: a doubleword at window +0x108 for types 2 and 3, the low word of `a1` at +0x10c
+  for types 0 and 1. Nothing is loaded first and the routine sets no return value. A null handle, type -1 or an
+  unmatched raw window calls `panic` ("pcireg_intr_enable_set(): unknown bridgetype") without storing; other record
+  types store nothing and say nothing. Established.
+- `pcireg_nic_addr` (`IP30/unix` `0xa800000020054250`, 344 bytes, frame 16 bytes)
+  returns the address of the register the name calls NIC and touches no chip register: window +0xb4 (`daddiu v0,a3,180`),
+  the same for every type from 0 to 3. The window is the doubleword at record +0x8, or the raw handle itself, for
+  which the identification word at +0x4 is read only to decode the type. A null handle, type -1 or an unmatched raw
+  window calls `panic` ("pcireg_nic_addr(): unknown bridgetype") and the delay-slot `move` then returns 0, as does a
+  record type outside -1 to 3 with no message. Established.
+- `pcireg_type1_cntr_set` (`IP30/unix` `0xa800000020054c18`, 344 bytes, frame 16 bytes)
+  writes the register `pcireg_type1_cntr_get` reads: a doubleword of `a1` at window +0xc8 for types 2 and 3, the low
+  word at +0xcc for types 0 and 1, with no earlier load and no return value set. Its panic message borrows a
+  neighbour's name: a null handle, type -1 or an unmatched raw window calls `panic` with "pcireg_type1_cfg_set():
+  unknown bridgetype" and stores nothing. A record type outside -1 to 3 stores nothing quietly. Established.
+- `pcireg_dirmap_set` (`IP30/unix` `0xa8000000200531c4`, 344 bytes, frame 16 bytes)
+  stores `a1` into the direct-map register: a doubleword at window +0x80 for types 2 and 3 and the low word at +0x84
+  for types 0 and 1, one store and no read, no return value set. Type -1, a null handle or an unmatched raw window
+  calls `panic` with "pcireg_dirmap_set(): unknown bridgetype" and stores nothing; a record type outside -1 to 3 does
+  neither. Established.
+- `pcireg_timeout_set` (`IP30/unix` `0xa800000020054668`, 344 bytes, frame 16 bytes)
+  replaces the bus timeout register that `pcireg_timeout_get` reads and `pcireg_timeout_bit_set` modifies: a
+  doubleword of `a1` at window +0xc0 for types 2 and 3, the low word at +0xc4 for types 0 and 1. It does not read the
+  old value and sets no return value. A null handle, type -1 or an unmatched raw window calls `panic` ("pcireg_timeout_set():
+  unknown bridgetype") and stores nothing; a record type outside -1 to 3 stores nothing and prints nothing.
+  Established.
