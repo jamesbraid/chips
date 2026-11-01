@@ -120,15 +120,15 @@ bits. So the counter is writable and 32 bits of it are used; the PROM's 66 ticks
   level 1 (`synthclock`), bit 29 level 2 (`synthackkgclock`), bits 21 and 20 level 3, both with `buserror_intr`.
   Inferred: the level argument is the R10000 interrupt number minus 3. All four registrations agree with the
   specification's Table 5-5 under that rule (bit 28 to IP4, 29 to IP5, 20 and 21 to IP6); `setcrimevector` accepts 0 to 5.
-- Software interrupt (`0x20`): `synthclock` clears bit 28 (AND `0xefffffff`) and `synthackkgclock` clears bit 29 (AND
-  `0xdfffffff`); `intr` reads the register and stores it back with bit 28 or 29 set from the pending-clock counters
-  `cause_ip5_count` and `cause_ip6_count`. Established. `intr` returns 0 or 1.
+- Software interrupt (`0x20`): `synthclock` clears bit 28 (AND `0xefffffff`). `synthackkgclock` clears bit 29 (AND `0xdfffffff`); `intr` reads the register and stores it back with bit 28 or 29 set
+  from the pending-clock counters `cause_ip5_count` and `cause_ip6_count`. Established. `intr` returns 0 or 1.
 - Hardware interrupt (`0x28`): the graphics object's `crime_init` reads it, ANDs `0xfff0ffff` and stores it back,
   clearing the four GBE interrupt bits 19:16 (the specification says a GBE interrupt is cleared by writing 0 to its bit).
   The probes test bits 21, 20 and 7 (below).
 - Cross-references to the graphics side: `crimeFifoFullHandler` reads `0x10` and tests bit 26 (rendering engine FIFO full,
-  level sensitive); `add_ioboard` writes two registers in the VICE window (`0xb700e014`, `0xb70001bc`), then tests bit 31
-  (VICE interrupt).
+  level sensitive). `0x8168` is the body that follows the 8-byte `add_ioboard` symbol in IP32's `kernel.o` (the symbol at `0x8160`
+  is a bare return; objdump labels the body `add_ioboard+0x8`, past the recorded size). It writes two registers in the VICE window
+  (`0xb700e014`, `0xb70001bc`), then tests bit 31 (VICE interrupt).
 
 ## Error registers (established decode)
 
@@ -207,8 +207,8 @@ the `crm_*` globals; store 0 to `0x250` then `0x48`; read `0x48` and `0x250` bac
 
 - Cold start (PROM): store 0 to `0x200`, `0x18`, `0x20`, `0x28` and `0x50` in turn (`0xbfc08390` to `0xbfc083bc`). The
   sloader's first routine stores an argument register to `0x270` and 0 to `0x200`.
-- `mlreset`: read `0x8`; store 0 to `0x48` and `0x250`; `get_crimerev`; if it is 0 store `0x3ff` to `0x50`; write `0x8` as
-  above; store 0 to `0x18` then `0x10`; `flushbus`; register the vectors; store 0 to `0x30`; clear the MACE PCI error flags.
+- `mlreset`: read `0x8`; store 0 to `0x48` and `0x250`; call `get_crimerev`; if it is 0 store `0x3ff` to `0x50`; write `0x8` as
+  above; store 0 to `0x18` then `0x10`; call `flushbus`; register the vectors; store 0 to `0x30`; clear the MACE PCI error flags.
 - ECC: `ecc_enable` stores 1 to `0x200` only when the memory has been initialised and checking is enabled
   (`ecc_meminited`, `ecc_checking_enabled`); `ecc_disable` stores 0. Bit 1 (replacement select) is not written by any
   scanned image.
