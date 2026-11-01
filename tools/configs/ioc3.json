@@ -2,77 +2,400 @@
  "asic": "ioc3",
  "title": "IOC3 (PCI I/O controller)",
  "mode": "no-spec",
- "status": "stub: census not run",
+ "status": "census run",
  "spec": null,
  "images": [
   {
-   "label": "ip27-unix",
-   "dis": "work/dis/ip27-unix.s",
-   "note": "IRIX 6.5.30 IP27 kernel, linked, symbols present",
-   "path": "root/IP27/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-unix",
-   "dis": "work/dis/ip30-unix.s",
-   "note": "IRIX 6.5.30 IP30 kernel, linked, symbols present",
-   "path": "root/IP30/unix",
-   "kind": "elf"
-  },
-  {
-   "label": "ip30-prom",
-   "dis": "work/dis/ip30-prom.s",
-   "note": "IP30 PROM flat image at 0xbfc00000 (usr/cpu/firmware/IP30prom.bin); const windows only",
-   "path": "root/firmware/IP30prom.bin",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
-   "arch": "mips:isa64",
-   "split": "jr31"
-  },
-  {
-   "label": "ip35-kernel-o",
-   "dis": "work/dis/ip35-kernel-o.s",
-   "path": "root/IP35/usr/cpu/sysgen/IP35boot/kernel.o",
+   "label": "ip27-ioc3",
+   "dis": "work/dis/ip27-ioc3.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/ioc3.o",
    "kind": "elf",
    "reloc": true,
-   "note": "IRIX 6.5.30 IP35 kernel object (relocatable; the pcibr/pcireg objects are not in the scaffold: only U references)"
+   "note": "IRIX 6.5.30 IP27 IOC3 attach, interrupt and subdevice driver object"
   },
   {
-   "label": "ip35-prom",
-   "dis": "work/dis/ip35-prom.s",
-   "path": "root/firmware/ip35prom.img",
-   "kind": "promgen64",
-   "segment": "ip35prom",
-   "vma": "0xc00000001fc00000",
-   "note": "IP35 CPU PROM, promgen64 segment unpacked (checksum ok); no symbols, window base is built at run time",
-   "split": "jr31"
-  },
-  {
-   "label": "ip32-kernel-o",
-   "dis": "work/dis/ip32-kernel-o.s",
-   "path": "root/IP32/usr/cpu/sysgen/IP32boot/kernel.o",
+   "label": "ip27-ioc3_pckm",
+   "dis": "work/dis/ip27-ioc3_pckm.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/ioc3_pckm.o",
    "kind": "elf",
    "reloc": true,
-   "note": "IRIX 6.5.30 IP32 kernel object"
+   "note": "IRIX 6.5.30 IP27 IOC3 keyboard and mouse driver object"
   },
   {
-   "label": "ip32-prom",
-   "dis": "work/dis/ip32-prom.s",
-   "path": "root/firmware/ip32prom.image",
-   "kind": "raw",
-   "vma": "0xffffffffbfc00000",
-   "split": "jr31",
-   "note": "IP32 PROM flat image; load address assumed from the reset vector, not yet read from the image"
+   "label": "ip27-sio_ioc3",
+   "dis": "work/dis/ip27-sio_ioc3.s",
+   "path": "root/IP27/members/sio_ioc3.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP27 IOC3 serial driver (member of sduart.a)"
+  },
+  {
+   "label": "ip27-if_ef",
+   "dis": "work/dis/ip27-if_ef.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/if_ef.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP27 IOC3 Ethernet driver object"
+  },
+  {
+   "label": "ip27-ecpplp",
+   "dis": "work/dis/ip27-ecpplp.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/ecpplp.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP27 parallel-port driver object"
+  },
+  {
+   "label": "ip27-nic",
+   "dis": "work/dis/ip27-nic.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/nic.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP27 number-in-a-can (NIC) object"
+  },
+  {
+   "label": "ip30-ioc3",
+   "dis": "work/dis/ip30-ioc3.s",
+   "path": "root/IP30/usr/cpu/sysgen/IP30boot/ioc3.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP30 IOC3 attach, interrupt and subdevice driver object"
+  },
+  {
+   "label": "ip30-ioc3_pckm",
+   "dis": "work/dis/ip30-ioc3_pckm.s",
+   "path": "root/IP30/usr/cpu/sysgen/IP30boot/ioc3_pckm.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP30 IOC3 keyboard and mouse driver object"
+  },
+  {
+   "label": "ip30-sio_ioc3",
+   "dis": "work/dis/ip30-sio_ioc3.s",
+   "path": "root/IP30/members/sio_ioc3.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP30 IOC3 serial driver (member of sduart.a)"
+  },
+  {
+   "label": "ip30-if_ef",
+   "dis": "work/dis/ip30-if_ef.s",
+   "path": "root/IP30/usr/cpu/sysgen/IP30boot/if_ef.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP30 IOC3 Ethernet driver object"
+  },
+  {
+   "label": "ip30-ecpplp",
+   "dis": "work/dis/ip30-ecpplp.s",
+   "path": "root/IP30/usr/cpu/sysgen/IP30boot/ecpplp.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP30 parallel-port driver object"
+  },
+  {
+   "label": "ip30-nic",
+   "dis": "work/dis/ip30-nic.s",
+   "path": "root/IP30/usr/cpu/sysgen/IP30boot/nic.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP30 number-in-a-can (NIC) object"
+  },
+  {
+   "label": "ip35-ioc3",
+   "dis": "work/dis/ip35-ioc3.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/ioc3.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 IOC3 attach, interrupt and subdevice driver object"
+  },
+  {
+   "label": "ip35-ioc3_pckm",
+   "dis": "work/dis/ip35-ioc3_pckm.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/ioc3_pckm.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 IOC3 keyboard and mouse driver object"
+  },
+  {
+   "label": "ip35-sio_ioc3",
+   "dis": "work/dis/ip35-sio_ioc3.s",
+   "path": "root/IP35/members/sio_ioc3.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 IOC3 serial driver (member of sduart.a)"
+  },
+  {
+   "label": "ip35-if_ef",
+   "dis": "work/dis/ip35-if_ef.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/if_ef.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 IOC3 Ethernet driver object"
+  },
+  {
+   "label": "ip35-ecpplp",
+   "dis": "work/dis/ip35-ecpplp.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/ecpplp.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 parallel-port driver object"
+  },
+  {
+   "label": "ip35-nic",
+   "dis": "work/dis/ip35-nic.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/nic.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 number-in-a-can (NIC) object"
+  },
+  {
+   "label": "ip27-ioc3ei",
+   "dis": "work/dis/ip27-ioc3ei.s",
+   "path": "root/IP27/usr/cpu/sysgen/IP27boot/ioc3ei.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP27 IOC3 external-interrupt driver object"
+  },
+  {
+   "label": "ip35-ioc3ei",
+   "dis": "work/dis/ip35-ioc3ei.s",
+   "path": "root/IP35/usr/cpu/sysgen/IP35boot/ioc3ei.o",
+   "kind": "elf",
+   "reloc": true,
+   "note": "IRIX 6.5.30 IP35 IOC3 external-interrupt driver object"
   }
  ],
  "report_functions": ".*",
- "seeds": {},
- "field_rules": [],
+ "seeds": {
+  "args": [
+   {
+    "functions": "^(ioc3_attach|ioc3_console_vhdl_get|ioc3_error_handler|ioc3_get_mem|ioc3_handle_intr|ioc3_init|ioc3_intb_needed|ioc3_intr|ioc3_intr_connect|ioc3_intr_cpu_get|ioc3_intr_disconnect|ioc3_intrd|ioc3_intrd_setup|ioc3_is_console|ioc3_is_io7|ioc3_mem_ptr|ioc3_mlreset|ioc3_pending_intrs|ioc3_poll|ioc3_subdev_disable|ioc3_subdev_enable|ioc3_subdev_enabled|ioc3_subdev_enables|ioc3_subdev_ptr|ioc3_write_ireg|pci_ioc3_enet_vmc|pci_ioc3_sio_vmc)$",
+    "reg": 4,
+    "off": 268435456
+   },
+   {
+    "functions": "^(check_port|data_check|default_kbd_setting|default_ms_setting|ioc3_du_keyboard_port|ioc3_early_pckminit|ioc3_gl_setporthandler|ioc3_lcl_pckm_setleds|ioc3_lcl_pckm_setleds_lock|ioc3_pckm_bell|ioc3_pckm_kbdexists|ioc3_pckm_mlreset|ioc3_pckm_setleds|pckm_attach|pckm_close|pckm_flushinp|pckm_getbp|pckm_intr|pckm_intr_lock|pckm_open|pckm_pollcmd|pckm_reinit|pckm_reinit_core|pckm_reinit_lock|pckm_restart|pckm_rsrv|pckm_rsrv_timer|pckm_rsrv_timer_lock|pckm_rx|pckm_sendok|pckm_wput|pckminit|set_ports|valid_data)$",
+    "reg": 4,
+    "off": 268435456
+   },
+   {
+    "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+    "reg": 4,
+    "off": 268435456
+   },
+   {
+    "functions": "^(ef_allocef|ef_deallocef|ef_detach|ef_dump|ef_dumpei|ef_dumpif|ef_dumpphy|ef_dumpregs|ef_fill|ef_getcdc|ef_hexdump|ef_ifattach|ef_init|ef_intr|ef_ioc3eaddr|ef_ioc3init|ef_ioc3reset|ef_ioctl|ef_lafhash|ef_phyerr|ef_phyerrat|ef_phyget|ef_phyinit|ef_phymode|ef_phyprobe|ef_phyput|ef_phyreset|ef_phyrmw|ef_phystr|ef_phyunreset|ef_phyupdate|ef_ps_register|ef_reclaim|ef_recv|ef_reset|ef_selfsnoop|ef_setstate|ef_transmit|ef_txfree_len|ef_watchdog|ef_xinit|ef_xreset|if_efattach|if_efinit|if_efopen|mactoh|ssram_discovery)$",
+    "reg": 4,
+    "off": 268435456
+   },
+   {
+    "functions": "^(ioc3_attach|ioc3_error_handler|ioc3_get_mem|ioc3_init|ioc3_intb_needed|ioc3_intr|ioc3_intr_connect|ioc3_intr_cpu_get|ioc3_intr_disconnect|ioc3_intrd|ioc3_intrd_setup|ioc3_is_console|ioc3_is_io7|ioc3_mem_ptr|ioc3_mlreset|ioc3_pending_intrs|ioc3_subdev_disable|ioc3_subdev_enable|ioc3_subdev_enabled|ioc3_subdev_enables|ioc3_subdev_ptr|ioc3_write_ireg|pci_ioc3_enet_vmc|pci_ioc3_sio_vmc)$",
+    "reg": 4,
+    "off": 268435456
+   },
+   {
+    "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|get_cons_dev|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+    "reg": 4,
+    "off": 268435456
+   },
+   {
+    "functions": "^(check_port|data_check|default_kbd_setting|default_ms_setting|ioc3_du_keyboard_port|ioc3_early_pckminit|ioc3_gl_setporthandler|ioc3_lcl_pckm_setleds|ioc3_lcl_pckm_setleds_lock|ioc3_pckm_bell|ioc3_pckm_kbdexists|ioc3_pckm_mlreset|ioc3_pckm_rmalias|ioc3_pckm_setleds|ioc_pckm_add_hwgraph_alias|pckm_attach|pckm_close|pckm_flushinp|pckm_getbp|pckm_intr|pckm_intr_lock|pckm_open|pckm_pollcmd|pckm_reinit|pckm_reinit_core|pckm_reinit_lock|pckm_restart|pckm_rsrv|pckm_rsrv_timer|pckm_rsrv_timer_lock|pckm_rx|pckm_sendok|pckm_wput|pckminit|set_ports|valid_data)$",
+    "reg": 4,
+    "off": 268435456
+   }
+  ],
+  "calls": [],
+  "returns": [
+   {
+    "callee": "pciio_pio_addr",
+    "arg": 6,
+    "equals": 7,
+    "off": 2097152
+   },
+   {
+    "callee": "pciio_piotrans_addr",
+    "arg": 6,
+    "equals": 7,
+    "off": 2097152
+   },
+   {
+    "callee": "pciio_pio_addr",
+    "off": 0
+   },
+   {
+    "callee": "pciio_piotrans_addr",
+    "off": 0
+   },
+   {
+    "callee": "ioc3_get_mem",
+    "off": 0
+   },
+   {
+    "callee": "ioc3_mem_ptr",
+    "off": 0
+   }
+  ]
+ },
+ "field_rules": [
+  {
+   "functions": "^(ioc3_attach|ioc3_console_vhdl_get|ioc3_error_handler|ioc3_get_mem|ioc3_handle_intr|ioc3_init|ioc3_intb_needed|ioc3_intr|ioc3_intr_connect|ioc3_intr_cpu_get|ioc3_intr_disconnect|ioc3_intrd|ioc3_intrd_setup|ioc3_is_console|ioc3_is_io7|ioc3_mem_ptr|ioc3_mlreset|ioc3_pending_intrs|ioc3_poll|ioc3_subdev_disable|ioc3_subdev_enable|ioc3_subdev_enabled|ioc3_subdev_enables|ioc3_subdev_ptr|ioc3_write_ireg|pci_ioc3_enet_vmc|pci_ioc3_sio_vmc)$",
+   "load": "ld",
+   "disp": 24,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 0
+  },
+  {
+   "functions": "^(ioc3_attach|ioc3_console_vhdl_get|ioc3_error_handler|ioc3_get_mem|ioc3_handle_intr|ioc3_init|ioc3_intb_needed|ioc3_intr|ioc3_intr_connect|ioc3_intr_cpu_get|ioc3_intr_disconnect|ioc3_intrd|ioc3_intrd_setup|ioc3_is_console|ioc3_is_io7|ioc3_mem_ptr|ioc3_mlreset|ioc3_pending_intrs|ioc3_poll|ioc3_subdev_disable|ioc3_subdev_enable|ioc3_subdev_enabled|ioc3_subdev_enables|ioc3_subdev_ptr|ioc3_write_ireg|pci_ioc3_enet_vmc|pci_ioc3_sio_vmc)$",
+   "load": "ld",
+   "disp": 16,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 2097152
+  },
+  {
+   "functions": "^(check_port|data_check|default_kbd_setting|default_ms_setting|ioc3_du_keyboard_port|ioc3_early_pckminit|ioc3_gl_setporthandler|ioc3_lcl_pckm_setleds|ioc3_lcl_pckm_setleds_lock|ioc3_pckm_bell|ioc3_pckm_kbdexists|ioc3_pckm_mlreset|ioc3_pckm_setleds|pckm_attach|pckm_close|pckm_flushinp|pckm_getbp|pckm_intr|pckm_intr_lock|pckm_open|pckm_pollcmd|pckm_reinit|pckm_reinit_core|pckm_reinit_lock|pckm_restart|pckm_rsrv|pckm_rsrv_timer|pckm_rsrv_timer_lock|pckm_rx|pckm_sendok|pckm_wput|pckminit|set_ports|valid_data)$",
+   "load": "ld",
+   "disp": 72,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 536870912
+  },
+  {
+   "functions": "^(check_port|data_check|default_kbd_setting|default_ms_setting|ioc3_du_keyboard_port|ioc3_early_pckminit|ioc3_gl_setporthandler|ioc3_lcl_pckm_setleds|ioc3_lcl_pckm_setleds_lock|ioc3_pckm_bell|ioc3_pckm_kbdexists|ioc3_pckm_mlreset|ioc3_pckm_setleds|pckm_attach|pckm_close|pckm_flushinp|pckm_getbp|pckm_intr|pckm_intr_lock|pckm_open|pckm_pollcmd|pckm_reinit|pckm_reinit_core|pckm_reinit_lock|pckm_restart|pckm_rsrv|pckm_rsrv_timer|pckm_rsrv_timer_lock|pckm_rx|pckm_sendok|pckm_wput|pckminit|set_ports|valid_data)$",
+   "load": "ld",
+   "disp": 16,
+   "base_off": 536870912,
+   "kind": "pointer",
+   "off": 0
+  },
+  {
+   "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+   "load": "ld",
+   "disp": 56,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 0
+  },
+  {
+   "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+   "load": "ld",
+   "disp": 64,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 184
+  },
+  {
+   "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+   "load": "ld",
+   "disp": 72,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 131448
+  },
+  {
+   "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+   "load": "ld",
+   "disp": 80,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 131072
+  },
+  {
+   "functions": "^(ef_allocef|ef_deallocef|ef_detach|ef_dump|ef_dumpei|ef_dumpif|ef_dumpphy|ef_dumpregs|ef_fill|ef_getcdc|ef_hexdump|ef_ifattach|ef_init|ef_intr|ef_ioc3eaddr|ef_ioc3init|ef_ioc3reset|ef_ioctl|ef_lafhash|ef_phyerr|ef_phyerrat|ef_phyget|ef_phyinit|ef_phymode|ef_phyprobe|ef_phyput|ef_phyreset|ef_phyrmw|ef_phystr|ef_phyunreset|ef_phyupdate|ef_ps_register|ef_reclaim|ef_recv|ef_reset|ef_selfsnoop|ef_setstate|ef_transmit|ef_txfree_len|ef_watchdog|ef_xinit|ef_xreset|if_efattach|if_efinit|if_efopen|mactoh|ssram_discovery)$",
+   "load": "ld",
+   "disp": 816,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 240
+  },
+  {
+   "functions": "^(ef_allocef|ef_deallocef|ef_detach|ef_dump|ef_dumpei|ef_dumpif|ef_dumpphy|ef_dumpregs|ef_fill|ef_getcdc|ef_hexdump|ef_ifattach|ef_init|ef_intr|ef_ioc3eaddr|ef_ioc3init|ef_ioc3reset|ef_ioctl|ef_lafhash|ef_phyerr|ef_phyerrat|ef_phyget|ef_phyinit|ef_phymode|ef_phyprobe|ef_phyput|ef_phyreset|ef_phyrmw|ef_phystr|ef_phyunreset|ef_phyupdate|ef_ps_register|ef_reclaim|ef_recv|ef_reset|ef_selfsnoop|ef_setstate|ef_transmit|ef_txfree_len|ef_watchdog|ef_xinit|ef_xreset|if_efattach|if_efinit|if_efopen|mactoh|ssram_discovery)$",
+   "load": "ld",
+   "disp": 920,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 0
+  },
+  {
+   "functions": "^(ef_allocef|ef_deallocef|ef_detach|ef_dump|ef_dumpei|ef_dumpif|ef_dumpphy|ef_dumpregs|ef_fill|ef_getcdc|ef_hexdump|ef_ifattach|ef_init|ef_intr|ef_ioc3eaddr|ef_ioc3init|ef_ioc3reset|ef_ioctl|ef_lafhash|ef_phyerr|ef_phyerrat|ef_phyget|ef_phyinit|ef_phymode|ef_phyprobe|ef_phyput|ef_phyreset|ef_phyrmw|ef_phystr|ef_phyunreset|ef_phyupdate|ef_ps_register|ef_reclaim|ef_recv|ef_reset|ef_selfsnoop|ef_setstate|ef_transmit|ef_txfree_len|ef_watchdog|ef_xinit|ef_xreset|if_efattach|if_efinit|if_efopen|mactoh|ssram_discovery)$",
+   "load": "ld",
+   "disp": 272,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 268435456
+  },
+  {
+   "functions": "^(ioc3_attach|ioc3_error_handler|ioc3_get_mem|ioc3_init|ioc3_intb_needed|ioc3_intr|ioc3_intr_connect|ioc3_intr_cpu_get|ioc3_intr_disconnect|ioc3_intrd|ioc3_intrd_setup|ioc3_is_console|ioc3_is_io7|ioc3_mem_ptr|ioc3_mlreset|ioc3_pending_intrs|ioc3_subdev_disable|ioc3_subdev_enable|ioc3_subdev_enabled|ioc3_subdev_enables|ioc3_subdev_ptr|ioc3_write_ireg|pci_ioc3_enet_vmc|pci_ioc3_sio_vmc)$",
+   "load": "ld",
+   "disp": 24,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 0
+  },
+  {
+   "functions": "^(ioc3_attach|ioc3_error_handler|ioc3_get_mem|ioc3_init|ioc3_intb_needed|ioc3_intr|ioc3_intr_connect|ioc3_intr_cpu_get|ioc3_intr_disconnect|ioc3_intrd|ioc3_intrd_setup|ioc3_is_console|ioc3_is_io7|ioc3_mem_ptr|ioc3_mlreset|ioc3_pending_intrs|ioc3_subdev_disable|ioc3_subdev_enable|ioc3_subdev_enabled|ioc3_subdev_enables|ioc3_subdev_ptr|ioc3_write_ireg|pci_ioc3_enet_vmc|pci_ioc3_sio_vmc)$",
+   "load": "ld",
+   "disp": 16,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 2097152
+  },
+  {
+   "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|get_cons_dev|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+   "load": "ld",
+   "disp": 56,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 0
+  },
+  {
+   "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|get_cons_dev|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+   "load": "ld",
+   "disp": 64,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 184
+  },
+  {
+   "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|get_cons_dev|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+   "load": "ld",
+   "disp": 72,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 131448
+  },
+  {
+   "functions": "^(console_debug_poll|disable_intrs|do_ioc3_write|enable_intrs|get_cons_dev|hardware_init|ioc3_break|ioc3_config|ioc3_console_write|ioc3_enable_hfc|ioc3_enable_tx|ioc3_get_mapid|ioc3_map|ioc3_notification|ioc3_open|ioc3_query_CTS|ioc3_query_DCD|ioc3_read|ioc3_rx_timeout|ioc3_serial_attach|ioc3_serial_intr|ioc3_serial_kill|ioc3_set_DTR|ioc3_set_RTS|ioc3_set_extclk|ioc3_set_proto|ioc3_set_sscr|ioc3_sio_mlreset|ioc3_sync_write|ioc3_unmap|ioc3_wrflush|ioc3_write|mask_disable_intrs|ring_dmatrans|set_DTRRTS|set_baud_ti)$",
+   "load": "ld",
+   "disp": 80,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 131072
+  },
+  {
+   "functions": "^(check_port|data_check|default_kbd_setting|default_ms_setting|ioc3_du_keyboard_port|ioc3_early_pckminit|ioc3_gl_setporthandler|ioc3_lcl_pckm_setleds|ioc3_lcl_pckm_setleds_lock|ioc3_pckm_bell|ioc3_pckm_kbdexists|ioc3_pckm_mlreset|ioc3_pckm_rmalias|ioc3_pckm_setleds|ioc_pckm_add_hwgraph_alias|pckm_attach|pckm_close|pckm_flushinp|pckm_getbp|pckm_intr|pckm_intr_lock|pckm_open|pckm_pollcmd|pckm_reinit|pckm_reinit_core|pckm_reinit_lock|pckm_restart|pckm_rsrv|pckm_rsrv_timer|pckm_rsrv_timer_lock|pckm_rx|pckm_sendok|pckm_wput|pckminit|set_ports|valid_data)$",
+   "load": "ld",
+   "disp": 72,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 536870912
+  },
+  {
+   "functions": "^(check_port|data_check|default_kbd_setting|default_ms_setting|ioc3_du_keyboard_port|ioc3_early_pckminit|ioc3_gl_setporthandler|ioc3_lcl_pckm_setleds|ioc3_lcl_pckm_setleds_lock|ioc3_pckm_bell|ioc3_pckm_kbdexists|ioc3_pckm_mlreset|ioc3_pckm_rmalias|ioc3_pckm_setleds|ioc_pckm_add_hwgraph_alias|pckm_attach|pckm_close|pckm_flushinp|pckm_getbp|pckm_intr|pckm_intr_lock|pckm_open|pckm_pollcmd|pckm_reinit|pckm_reinit_core|pckm_reinit_lock|pckm_restart|pckm_rsrv|pckm_rsrv_timer|pckm_rsrv_timer_lock|pckm_rx|pckm_sendok|pckm_wput|pckminit|set_ports|valid_data)$",
+   "load": "ld",
+   "disp": 16,
+   "base_off": 536870912,
+   "kind": "pointer",
+   "off": 0
+  }
+ ],
  "discriminators": {},
  "variants": {},
  "variant_model": {
   "default": {
-   "access": "dw64"
+   "access": "mixed"
   }
  },
  "reference": {
@@ -81,5 +404,117 @@
    "model": []
   }
  },
- "buckets": []
+ "buckets": [],
+ "suspect_range": [
+  "0x1c",
+  "0x20200"
+ ],
+ "collapse_above": 536870912,
+ "record_skip_above": 268435456,
+ "slot_rules": [
+  {
+   "lo": 0,
+   "hi": "0x20000",
+   "bytes": 4
+  },
+  {
+   "lo": "0x20000",
+   "hi": "0x40000",
+   "bytes": 1
+  },
+  {
+   "lo": "0x40000",
+   "hi": "0x100000",
+   "bytes": 4
+  },
+  {
+   "lo": "0x200000",
+   "hi": "0x300000",
+   "bytes": 4
+  }
+ ],
+ "note_windows": "offsets are from the start of base-address window 0; configuration space (PIO space 7) is reported at 0x200000 plus the configuration offset",
+ "register_names": {
+  "0x4": "cfg_command",
+  "0x8": "cfg_revision",
+  "0xc": "cfg_latency",
+  "0x1c": "sio_ir",
+  "0x20": "sio_ies",
+  "0x24": "sio_iec",
+  "0x28": "sio_cr",
+  "0x2c": "int_out",
+  "0x30": "mcr",
+  "0x34": "gpcr_s",
+  "0x38": "gpcr_c",
+  "0x3c": "gpdr",
+  "0x40": "gppr0",
+  "0x44": "gppr1",
+  "0x48": "gppr2",
+  "0x4c": "gppr3",
+  "0x50": "gppr4",
+  "0x54": "gppr5",
+  "0x58": "gppr6",
+  "0x5c": "gppr7",
+  "0x60": "gppr8",
+  "0x64": "gppr9",
+  "0x68": "gppr10",
+  "0x6c": "gppr11",
+  "0x70": "gppr12",
+  "0x74": "gppr13",
+  "0x78": "gppr14",
+  "0x7c": "gppr15",
+  "0x9c": "km_csr",
+  "0xa0": "k_rd",
+  "0xa4": "m_rd",
+  "0xa8": "k_wd",
+  "0xac": "m_wd",
+  "0xb0": "sbbr_h",
+  "0xb4": "sbbr_l",
+  "0xb8": "port_a_sscr",
+  "0xbc": "port_a_stpir",
+  "0xc0": "port_a_stcir",
+  "0xc4": "port_a_srpir",
+  "0xc8": "port_a_srcir",
+  "0xcc": "port_a_srtr",
+  "0xd0": "port_a_shadow",
+  "0xf0": "emcr",
+  "0xf4": "eisr",
+  "0xf8": "eier",
+  "0xfc": "ercsr",
+  "0x100": "erbr_h",
+  "0x104": "erbr_l",
+  "0x108": "erbar",
+  "0x10c": "ercir",
+  "0x110": "erpir",
+  "0x114": "ertr",
+  "0x118": "etcsr",
+  "0x11c": "ersr",
+  "0x120": "etcdc",
+  "0x124": "ebir",
+  "0x128": "etbr_h",
+  "0x12c": "etbr_l",
+  "0x130": "etcir",
+  "0x134": "etpir",
+  "0x138": "emar_h",
+  "0x13c": "emar_l",
+  "0x140": "ehar_h",
+  "0x144": "ehar_l",
+  "0x148": "micr",
+  "0x14c": "midr_r",
+  "0x150": "midr_w",
+  "0x20178": "uarta_reg0",
+  "0x20179": "uarta_reg1",
+  "0x2017a": "uarta_reg2",
+  "0x2017b": "uarta_reg3",
+  "0x2017c": "uarta_reg4",
+  "0x2017d": "uarta_reg5",
+  "0x2017e": "uarta_reg6",
+  "0x2017f": "uarta_reg7",
+  "0x200004": "cfg_command",
+  "0x200008": "cfg_revision",
+  "0x20000c": "cfg_latency",
+  "0x200040": "cfg_error_addr_lo",
+  "0x200044": "cfg_error_addr_hi"
+ },
+ "name_source": "the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are at 0x200000 plus the configuration offset"
 }
