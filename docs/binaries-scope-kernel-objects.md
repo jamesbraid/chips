@@ -532,6 +532,12 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
   `idevGenValEvents` (748 bytes) build events, `idevSetValDesc` (560 bytes) sets a valuator, and `idev_ioctl_name` names
   the requests. It drives no chip itself.
 
+- `IP27/usr/cpu/sysgen/IP27boot/ipc.o` (inferred): the System V IPC permission checks, five routines in a 6680-byte
+  object. `ipcget` (660 bytes) finds or creates an IPC key, `ipcaccess` (228 bytes) tests a request against the owner
+  and mode bits, and `ipc_init` starts the table. `irix5_to_ipc_perm` and `ipc_perm_to_irix5` (60 bytes each) convert
+  the permission structure for IRIX 5 callers. It calls `mutex_lock` and `mutex_unlock`, and imports the access checks
+  `cap_able_cred`, `groupmember` and `sat_svipc_access`. No device is driven. Rule 3 excludes the five routines.
+
 ## Device drivers and input objects (scope rule 4)
 
 - `IP27/usr/cpu/sysgen/IP27boot/calcomp.o` (inferred): a driver for a Calcomp digitizer, judging by its `cal_` routines and input-event imports, eight routines in a 26256-byte
