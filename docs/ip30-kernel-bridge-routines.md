@@ -446,3 +446,36 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   1 assemble the value from the word at +0xd4 shifted left 32 and the zero-extended word at +0xdc. Only loads are
   made. Failures: bridge-type `panic` then 0 for a null handle, type -1 or an unrecognised raw part; plain 0 for a
   record type outside -1 to 3, with the PCI bus address register untouched. Established.
+- `pcireg_arbitration_bit_set` (`IP30/unix` `0xa800000020053f64`, 368 bytes, frame 16 bytes)
+  sets arbitration register bits by OR with the second argument, using doubleword accesses at window +0xa0 for types 2
+  and 3 and word accesses at +0xa4 for types 0 and 1. The sequence is a load, an OR and a store with no read-back and
+  no interrupt-level change. For a record type outside -1 to 3 the register is untouched. When the chip is not
+  recognised the arbitration register stays as it was, with a bridge-type `panic` for type -1 or a null handle and a
+  quiet return otherwise. Established.
+- `pcireg_intr_dst_target_id_get` (`IP30/unix` `0xa800000020051b90`, 364 bytes, frame 16 bytes)
+  extracts the four-bit target identifier of the interrupt destination register. Types 2 and 3 load the doubleword at
+  window +0x38 and take bits 51:48 (`dsrl32` 16, then AND 0xf); types 0 and 1 take bits 19:16 of the word at +0x34
+  (`srl` 16, AND 0xf), the high half of the pair `pcireg_intr_dst_get` assembles. Its panic message has no space after
+  the colon. Reading the interrupt destination target field needs a decoded chip type. Without one the routine panics
+  with the bridge-type message and still returns 0, and record types outside the range return 0 quietly. Established.
+- `pcireg_mode_get` (`IP30/unix` `0xa80000002005148c`, 364 bytes, frame 16 bytes)
+  returns bit 33 of the doubleword at window +0x8 for types 2 and 3 (`dsrl32` 1, AND 1). Types 0 and
+  1 carry no such bit: they return 0 without touching the chip, and no panic is raised for them. Unrecognised chips
+  never reach the mode bit: the bridge-type `panic` is called and 0 returned, while record types of 4 or more and
+  below -1 simply return 0. Established.
+- `pcireg_cmdword_err_get` (`IP30/unix` `0xa8000000200521bc`, 360 bytes, frame 16 bytes)
+  reads the command word of the last erroring request: the doubleword at window +0x40 for types 2 and 3 and the
+  zero-extended word at +0x44 for types 0 and 1. Each path makes one load and no store. A null handle, type -1 or a
+  raw window of unrecognised part leaves the error command word unread: the bridge-type `panic` runs and 0 is returned
+  from the delay slot after it; other record types return 0 without any message. Established.
+- `pcireg_intr_status_get` (`IP30/unix` `0xa800000020055060`, 360 bytes, frame 16 bytes)
+  returns the interrupt status register: types 2 and 3 load the doubleword at window +0x100 and types 0 and
+  1 the zero-extended word at +0x104. The panic message it raises names `pcibr_intr_status_get`, not its own name.
+  When no chip is recognised the interrupt status register is never loaded. The routine calls `panic` with the
+  bridge-type message, returns 0 if that comes back, and gives 0 silently for a record type below -1 or above 3.
+  Established.
+- `pcireg_arbitration_get` (`IP30/unix` `0xa800000020053ca0`, 360 bytes, frame 16 bytes)
+  reads the arbitration register that `pcireg_arbitration_bit_set` ORs into: doubleword at window +0xa0 (types 2 and
+  3) or zero-extended word at +0xa4 (types 0 and 1), with one load and no store. The arbitration register is read only
+  for record types 0 to 3 (or a raw window that decodes to one); type -1 and a null handle call `panic` first, and any
+  other type returns 0. Established.
