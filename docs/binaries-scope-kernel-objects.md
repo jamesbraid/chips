@@ -880,6 +880,49 @@ the undefined imports. No routine body was read in full.
   It calls the initialisers `arp_init`, `domaininit`, `ifinit`, `in_init`, `loattach`, `netisr_init` and `sockd_init`,
   and it sets up the socket zone with `kmem_zone_init`. `sethostid` (116 bytes) and `gethostid` (72 bytes) read and set
   the host identity, and the short `phost_gethostid` (12 bytes) and `phost_sethostid` (8 bytes) sit beside them.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_domain.o)` (inferred): the protocol domain table, 12 routines in a 13300-byte
+  member. `pffindproto` (304 bytes) searches a domain's protocol switch, `domain_add` (264 bytes) registers a domain, and
+  `domain_drain` (232 bytes) drains the domains through `mbdrain` and `mbuf_reclaim_needed`. `pfctlinput` (172 bytes),
+  `pfctlinput2` (216 bytes) and `ifdown_pfctlinput` (184 bytes) send control notifications to the protocols. The member
+  names the domains `inetdomain`, `inet6domain`, `rawdomain`, `routedomain`, `atmarpdomain` and `stpdomain`, and it calls
+  `uds_add` to add the local domain.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_socket.o)` (inferred): the generic socket layer, 21 routines in a 31732-byte
+  member. `soreceive` (3040 bytes) and `sosend` (1808 bytes) move data, `soclose` (976 bytes) closes, `socreate` (768
+  bytes) creates a socket, and `sogetopt` (852 bytes) and `sosetopt` (840 bytes) read and set options. Data moves through
+  `uiomove`, the STREAMS variants `st_soreceive` and `st_sosend` are imported beside them, and waiters sleep on `sv_wait_sig`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_socket2.o)` (inferred): socket buffers, 27 routines in a 28660-byte member.
+  `sbappendaddr` (2100 bytes) queues an address-tagged record, `sbappendrights` (1460 bytes) queues one that carries access
+  rights, `sbappend` (1008 bytes) appends data, `sbcompress` (504 bytes) packs small buffers, and `sbdrop` (344 bytes)
+  removes data. `sonewconn` (908 bytes) creates the connection socket for a listener. The member sleeps and wakes with
+  the `sv_` routines and reports readiness through `pollwakeup`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_syscalls.o)` (inferred): the socket system calls, 33 routines in a 26804-byte
+  member. `recvit` (1132 bytes) and `sendit` (636 bytes) carry the receive and send calls, and `xpg4_recvmsg` and
+  `xpg5_recvmsg` (464 bytes each) are the receive variants for the XPG4 and XPG5 levels. `irix5_to_cmsghdr` and
+  `cmsghdr_to_irix5` (352 bytes each) convert control headers to and from the IRIX 5 layout, and `irix5_to_iovec` converts
+  the I/O vector. Descriptors come from `getf`, and user data moves with `copyin` and `copyout`. The member imports the
+  audit calls `sat_bsdipc_create` and `sat_bsdipc_addr` and the audit switch `sat_enabled`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(uipc_socket1.o)` (inferred): the socket file operations, nine routines in a
+  17220-byte member. `soioctl` (952 bytes) passes interface and routing requests to `ifioctl` and `rtioctl`,
+  `uipc_connect` (432 bytes) and `sopoll` (428 bytes) connect and poll, and `uipc_getpeername`, `uipc_getsockname` and
+  `uipc_setfl1` (368, 252 and 192 bytes) read addresses and set file flags. The member imports the label checks
+  `sesmgr_connect` and `sesmgr_accept`, and the routing privilege test `check_rtioctl_priv`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(hashing.o)` (inferred): a generic hash table, 14 routines in a 14740-byte member.
+  `hash_enum` (304 bytes), `hash_enum_getnext` (332 bytes) and `hash_enum_bestmatch` (340 bytes) walk the table, and
+  `hash_lookup_refcnt` and `hash_remove_refcnt` (308 bytes each) take and drop references on entries. The table is guarded
+  by the multi-reader lock, through `mrupdatef`, `mrunlock`, `mraccessf` and `mraccunlock`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(bsd_icrash.o)` (inferred): the network part of the crash-dump support, one routine,
+  `bsd_icrash`, in a 76868-byte member. Its imports are all data symbols: the network tables `rawcb`, `tcb`, `udb`, `unixsw`,
+  `rtstat`, `rt_tables`, `ifnet` and `stpcb_head`, and the memory constants `kernel_magic`, `_physmem_start` and
+  `str_page_max`. The object calls no routine.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(vsocket.o)` (inferred): socket objects behind a file, six routines in a 9284-byte
+  member. `vsocreate_internal` (208 bytes) and `vsocket_alloc` (128 bytes) create one, `vsocket_hold` (68 bytes) and
+  `vsocket_release` (148 bytes) count references, and `vsocket_free` (64 bytes) frees it. It builds the behaviour chain
+  with `bhv_head_init` and `bhv_insert_initial`, and it allocates from the zone `kmem_zone_alloc`.
+- `IP30/usr/cpu/sysgen/IP30boot/bsd.a(lsock.o)` (inferred): the local (UNIX-domain) socket file operations, two routines in
+  an 8548-byte member: `lclose` (272 bytes) closes the file. The member's imports are the `uipc_` file operations
+  (`uipc_accept`, `uipc_connect`, `uipc_fcntl1`, `uipc_getattr1`, `uipc_getpeername`, `uipc_getsockname`, `uipc_setfl1`)
+  and the socket calls they reach, `sobind`, `soconnect2`, `solisten`, `soreceive`, `sosend` and `soshutdown`. It also
+  imports `fs_pathconf`, the path-configuration query, and `vsocket_release`.
 
 ## Scope questions
 
