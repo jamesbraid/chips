@@ -138,10 +138,10 @@ Totals over the **41 rows** below (families count once each; a row graded for so
 - **Attach order (established, `xbridge_attach`, read in full).** In order, with the chip-type branches: status test
   (Bridge part only); identification; the mode and speed accessors, whose result goes to record +116; for
   `revision | part << 4` below `0xc0024`, `pcireg_timeout_bit_clr(0x3ff)`; interrupt reset `0x7f`; interrupt device
-  `0xffffffff`; `pcibr_directmap_init`; control `|= 0x200000`; every internal translation entry zeroed; on type 0
+  `0xffffffff`; `pcibr_directmap_init`; `xbridge_attach` sets control bit `0x200000` through `pcireg_control_bit_set`; every internal translation entry zeroed; on type 0
   `pcibr_init_ext_ate_ram`; interrupt enable read, ORed with the literal and written back whole (the `revision | part << 4` tests
   near it, against `0xc0023` and `0xc0022`, set record fields and never touch the enable); interrupt mode 0; target flush read. The Bridge revision 2 path (at `0xc000000000070d98`)
-  builds the enable mask differently and was not decoded.
+  builds the enable mask differently and was not decoded. `xbridge_attach` returns -1 on two exit paths (from `0x15c` and `0x918`) and 0 on the third (from `0x85c`).
 - **External translation RAM probe (established, `pcibr_init_ext_ate_ram` at `0xc00000000007566c`, read in full).** For
   sizes 1, 2 and 3 it writes `0x0123456789abcdef` to the last entry of the candidate size from a table of 8192, 16384
   and 65536 entries (the table is in the `unix` data section), writes zero to the last entries of the smaller
