@@ -387,6 +387,82 @@ not known.
    drivers rely on it; none checks the result). Unknown: whether a store of 1 does anything, and what a new error between
    the read and the clear does.
 
+## Routines in the IP32 build
+
+One entry per routine, read from the object or member named in its entry, with the relocations for the calls. Addresses
+are offsets inside that object.
+
+### Graphics member routines (`crime.a`)
+
+- `crime_cmov2i` (`crime.a(crime_tp.o)`, address `0x2b0`, 20 bytes): stores `a1` at byte 0 and `a2` at byte 4 of a
+  two-word static record in `.bss`, then returns with v0 untouched. Established.
+- `crime_color` (`crime.a(crime_tp.o)`, address `0x0`, 44 bytes): stores one word to `.bss` and leaves it in v0. For
+  `a1` below 255 the word is `a1 + 1`; for 255 or more it is 255. The 8-bit value is repeated in all four bytes of the
+  word. Established.
+- `crime_getdesc` (`crime.a(crime_tp.o)`, address `0x978`, 24 bytes): returns 1 when the second argument is 1 and 0
+  otherwise. The compare at +0x4 and the return at +0x10 are the whole body, so it reads no memory and writes no
+  device. Established.
+- `crime_positioncursor` (`crime.a(crime_tp.o)`, address `0x990`, 44 bytes): writes one word at the GBE window's
+  `0x70000` offset that packs `a1` into bits 11:0 and `a2` into bits 27:16, each masked to 12 bits. It returns 0 and
+  does not use `a0`. The window base is the pointer at byte 4 of `crimeBoards`. Established for the store. Inferred:
+  that pointer is the display back end (GBE) window base, since `0x70000` lies inside that window's 16 MB.
+- `crime_unblank` (`crime.a(crime_tp.o)`, address `0x944`, 52 bytes): calls `gbeBlankScreen`. The first, fourth
+  and fifth arguments are zero. The second is the word at byte 8 of `crimeBoards`, and the third is the word at
+  byte 4 of it. It returns what the callee returns. Established.
+- `crime_FpSchedForRetrace` (`crime.a(crime_retrace.o)`, address `0x1098`, 60 bytes): reads the byte at offset 40 of
+  the record that the word at byte 124 of `a0` points to. It clears the word at byte 836 of the record that the word at
+  byte 140 points to. If the byte is zero it stores 1 when `a1` is zero and 2 when `a1` is nonzero. Established.
+- `crime_retrace_callback` (`crime.a(crime_retrace.o)`, address `0xb70`, 16 bytes): stores `a1` and `a2` in two words
+  of the small-data area at gp offsets -30696 and -30692, and returns 0. Established.
+- `crime_getustmsc` (`crime.a(crime_retrace.o)`, address `0x3274`, 68 bytes): picks the 64-byte record of `crimeBoards`
+  indexed by `a0`, follows its word at byte 12, and calls `crm_getustmsc` with the word at byte 128 as the first
+  argument, the word at byte 140 as the second and the word at byte 48 of the record at byte 124 as the third. It
+  drops its own `a1` and returns 0. Established.
+- `crimeDownload` (`crime.o`, address `0xa6c`, 8 bytes): returns 0. The return at +0x0 and its delay slot at +0x4,
+  which clears v0, are the whole body, so it touches no memory and no device. Established.
+- `crimeLockOut` (`crime.o`, address `0x36c8`, 8 bytes): returns 1. The return at +0x0 and its delay slot at +0x4,
+  which sets v0 to 1, are the whole body, so it touches no memory and no device. Established.
+- `crimePcxSwitch` (`crime.o`, address `0x36d0`, 8 bytes): returns 0. The return at +0x0 and its delay slot at +0x4,
+  which clears v0, are the whole body, so it touches no memory and no device. Established.
+- `crmIsGlobalRegWrite` (`crime.a(crime_debug.o)`, address `0x0`, 56 bytes): takes a register offset in `a0`. It
+  returns 1 below `0x2000` and from `0x2200` up. For offsets `0x2000` to `0x21ff` it returns the byte at index
+  `(a0 >> 2) & 0x3ff` of a table in `.data`, which covers 128 words. Established.
+- `crm_curproc_vtop` (`crime.a(crime_dma.o)`, address `0x0`, 128 bytes): calls `curproc_vtop` with its first three
+  arguments and 4 as the fourth. If that returns 0 it returns 14. Otherwise it counts the pages from `a1` plus the page
+  offset of `a0`, rounded up, and reads that many words from the third argument. It returns 14 if any word is zero and
+  0 if none is. Established.
+
+### Interrupt and bus routines (`kernel.o`)
+
+- `crime_intr_enable` (`kernel.o`, address `0xa248`, 64 bytes): sets bit `a0` of the 64-bit word at address
+  `-23880(zero)` under `spl7`, then restores the level with `splx`. The word is written before the `splx` call.
+  Established. The routine touches only that one doubleword and no other level's entry.
+- `crime_intr_disable` (`kernel.o`, address `0xa288`, 68 bytes): clears bit `a0` of the same word under `spl7`, with the
+  same write before `splx`. Established.
+- `__sysad_wbflush` (`kernel.o`, address `0x13e0`, 16 bytes): executes `sync`, then loads the 64-bit word at
+  `0xb4000000`, the CRIME identification register, and returns it in v0. Established for the instructions. Inferred:
+  the load is the read that completes outstanding uncached writes.
+- `ecc_disable` (`kernel.o`, address `0x9260`, 12 bytes): stores a 64-bit zero to address 0xb4000200, which is the
+  CRIME register at offset 0x200. Established.
+
+### Serial and EDID routines (`crime_i2c.o`, `crime_init.o`)
+
+- `i2_start_addr` (`crime.a(crime_i2c.o)`, address `0x1bec`, 76 bytes): calls `i2_start` and then `i2_sendbyte`, each
+  with the caller's `a0`, `a1` and `a2`. Its return values are 0 and 1: it returns 1 when `i2_sendbyte` returns any
+  nonzero value, and 0 when it returns 0. Established.
+- `i2cfp_SetBit` (`crime.a(crime_i2c.o)`, address `0x410c`, 76 bytes): calls `i2cfp_PortWrite` with the caller's `a0`,
+  port `0x70` and the value `0xef` when `a1` is nonzero or `0xe7` when it is zero. The two values differ only in bit 3,
+  so bit 3 is set or cleared. It stores 1 or 0 to the small-data word at gp offset -30708 before the call, and returns
+  what `i2cfp_PortWrite` returns. Established.
+- `crime_EdidCksum` (`crime.a(crime_i2c.o)`, address `0x70c`, 76 bytes): sums the 128 bytes at `a0` with 8-bit
+  wraparound and returns the low byte of the sum. Established.
+- `sgiEdid` (`crime.a(crime_i2c.o)`, address `0x7e8`, 56 bytes): returns 1 when byte 8 of the block at `a0` is `0x4c` and
+  byte 9 is `0xf8` or `0xe9`, otherwise 0. Established for the tests. Inferred: bytes 8 and 9 are the manufacturer
+  identifier of the public EDID layout.
+- `crimeProbe` (`crime.a(crime_init.o)`, address `0x44`, 68 bytes): reads the 64-bit word at address 0xb4000000 and
+  keeps its low byte. It returns 0 for `0xa0` and for any byte whose high nibble is not `0xa`, and 1 for the other bytes whose high
+  nibble is `0xa`, which are `0xa1` to `0xaf`. Established.
+
 ## Open
 
 See [docs/open-questions.md](../../docs/open-questions.md): the identification upper word, the status register location on
