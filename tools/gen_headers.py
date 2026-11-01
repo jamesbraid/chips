@@ -34,6 +34,7 @@ CHIPS = {
  'mace': ('mace', None, 0, 'MACE (O2 I/O ASIC)', 'mace'),
  'gbe':  ('gbe', None, 0, 'GBE (O2 display back end)', None),
  'vice': ('vice', None, 0, 'VICE (O2 video engine, presence only)', None),
+ 'l1': ('l1', 'bedrock', 0, 'L1 system controller UART path (node-local window), IP35', None),
  'router_ip27': ('router', 'ip27', 0, 'network router as the IP27 kernel reaches it (register numbers of a vector access)', None),
  'router_ip35': ('router', 'ip35', 0, 'network router as the IP35 kernel reaches it (register numbers of a vector access)', None),
 }

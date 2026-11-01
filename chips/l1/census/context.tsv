@@ -1,0 +1,122 @@
+image	function	addr	variant	offset	rw	width	instructions_around_site
+ip35-l1	uart_putc	40	bedrock	0x80	w	8	daddu $1,$1,$4 / dsll32 $2,$2,0x1 / daddu $2,$2,$3 / lbu $1,58($1) / sd $1,128($2) / jr $31 / or $2,$0,$0
+ip35-l1	uart_getc	60	bedrock	0xa8	r	8	ld $11,-30712($28) / dsll32 $10,$10,0x1 / daddu $11,$10,$11 / ori $11,$11,0x28 / ld $11,0($11) / ld $9,-30720($28) / andi $11,$11,0xff / andi $1,$11,0xd / daddu $7,$10,$9
+ip35-l1	uart_getc	88	bedrock	0x80	r	8	beq $1,$0,a0 / andi $8,$11,0xc / beq $2,$0,98 / sll $0,$0,0x0 / ld $2,128($7) / andi $2,$2,0xff / jr $31 / sll $0,$0,0x0 / bne $8,$0,90
+ip35-l1	uart_init	b0	bedrock	0x30100	r	8	ld $10,-30704($28) / ld $9,-30696($28) / ld $25,0($10) / ld $2,0($9) / dsrl $2,$2,0x4 / andi $2,$2,0x3ff / sll $1,$2,0x2
+ip35-l1	uart_init	b4	bedrock	0x604200	r	8	ld $10,-30704($28) / ld $9,-30696($28) / ld $25,0($10) / ld $2,0($9) / dsrl $2,$2,0x4 / andi $2,$2,0x3ff / sll $1,$2,0x2 / addu $1,$1,$2
+ip35-l1	uart_init	110	bedrock	0xa8	r	8	sd $16,16($29) / daddu $16,$16,$24 / sd $17,40($29) / ori $8,$16,0x28 / ld $1,0($8) / or $17,$4,$0 / sd $31,48($29) / sd $19,56($29) / lui $3,0x1
+ip35-l1	uart_init	168	bedrock	0x98	w	8	addiu $4,$0,10 / ori $19,$16,0x18 / addiu $6,$0,128 / jal 0 / sd $6,0($19) / ld $8,24($29) / lui $9,0xb7 / ori $9,$9,0x1b00 / sll $8,$8,0x4
+ip35-l1	uart_init	19c	bedrock	0x88	w	8	ori $21,$16,0x8 / sra $7,$18,0x8 / andi $7,$7,0xff / jal 0 / sd $7,0($21) / ld $12,-30720($28) / ld $11,16($29) / addiu $4,$0,10 / daddu $11,$11,$12
+ip35-l1	uart_init	1b8	bedrock	0x80	w	8	addiu $4,$0,10 / daddu $11,$11,$12 / andi $10,$18,0xff / jal 0 / sd $10,128($11) / addiu $4,$0,10 / addiu $13,$0,3 / jal 0 / sd $13,0($19)
+ip35-l1	uart_init	1c8	bedrock	0x98	w	8	sd $10,128($11) / addiu $4,$0,10 / addiu $13,$0,3 / jal 0 / sd $13,0($19) / addiu $4,$0,10 / ori $15,$16,0x20 / addiu $14,$0,34 / jal 0
+ip35-l1	uart_init	1dc	bedrock	0xa0	w	8	addiu $4,$0,10 / ori $15,$16,0x20 / addiu $14,$0,34 / jal 0 / sd $14,0($15) / addiu $4,$0,10 / addiu $19,$0,1 / jal 0 / sd $19,0($21)
+ip35-l1	uart_init	1ec	bedrock	0x88	w	8	sd $14,0($15) / addiu $4,$0,10 / addiu $19,$0,1 / jal 0 / sd $19,0($21) / ori $18,$16,0x10 / addiu $4,$0,10 / jal 0 / sd $19,0($18)
+ip35-l1	uart_init	1fc	bedrock	0x90	w	8	sd $19,0($21) / ori $18,$16,0x10 / addiu $4,$0,10 / jal 0 / sd $19,0($18) / addiu $25,$0,7 / sd $25,0($18) / lbu $24,5($17) / andi $24,$24,0x1
+ip35-l1	uart_init	204	bedrock	0x90	w	8	addiu $4,$0,10 / jal 0 / sd $19,0($18) / addiu $25,$0,7 / sd $25,0($18) / lbu $24,5($17) / andi $24,$24,0x1 / beq $24,$0,274 / addiu $1,$0,15
+ip35-l1	uart_init	2a0	bedrock	0xa8	r	8	daddiu $29,$29,80 / sd $8,8($29) / beq $0,$0,2ac / sd $2,0($29) / ld $6,0($6) / andi $6,$6,0x40 / bne $6,$0,308 / ld $21,-30696($28) / addiu $18,$0,1000
+ip35-l1	uart_init	2c0	bedrock	0x30100	r	8	addiu $18,$0,1000 / ld $19,-30704($28) / jal 0 / addiu $4,$0,10 / ld $10,0($19) / ld $12,0($21) / dsrl $12,$12,0x4 / andi $12,$12,0x3ff / sll $11,$12,0x2
+ip35-l1	uart_init	2c4	bedrock	0x604200	r	8	ld $19,-30704($28) / jal 0 / addiu $4,$0,10 / ld $10,0($19) / ld $12,0($21) / dsrl $12,$12,0x4 / andi $12,$12,0x3ff / sll $11,$12,0x2 / addu $11,$11,$12
+ip35-l1	uart_intr_enable	3b0	bedrock	0x98	r	8	ld $9,-30712($28) / dsll32 $7,$8,0x1 / daddu $7,$7,$9 / ori $10,$7,0x18 / ld $9,0($10) / addiu $11,$0,-129 / andi $9,$9,0xff / ori $7,$7,0x8 / and $9,$9,$11
+ip35-l1	uart_intr_enable	3c4	bedrock	0x98	w	8	addiu $11,$0,-129 / andi $9,$9,0xff / ori $7,$7,0x8 / and $9,$9,$11 / sd $9,0($10) / ld $6,0($7) / andi $6,$6,0xff / or $6,$5,$6 / andi $6,$6,0xff
+ip35-l1	uart_intr_enable	3c8	bedrock	0x88	r	8	andi $9,$9,0xff / ori $7,$7,0x8 / and $9,$9,$11 / sd $9,0($10) / ld $6,0($7) / andi $6,$6,0xff / or $6,$5,$6 / andi $6,$6,0xff / sd $6,0($7)
+ip35-l1	uart_intr_enable	3d8	bedrock	0x88	w	8	ld $6,0($7) / andi $6,$6,0xff / or $6,$5,$6 / andi $6,$6,0xff / sd $6,0($7) / lbu $4,5($16) / andi $4,$4,0x1 / beq $4,$0,44c / addiu $11,$0,15
+ip35-l1	uart_intr_disable	50c	bedrock	0x98	r	8	ld $9,-30712($28) / dsll32 $7,$8,0x1 / daddu $7,$7,$9 / ori $10,$7,0x18 / ld $9,0($10) / addiu $11,$0,-129 / andi $9,$9,0xff / ori $7,$7,0x8 / and $9,$9,$11
+ip35-l1	uart_intr_disable	520	bedrock	0x98	w	8	addiu $11,$0,-129 / andi $9,$9,0xff / ori $7,$7,0x8 / and $9,$9,$11 / sd $9,0($10) / ld $6,0($7) / andi $6,$6,0xff / and $6,$5,$6 / andi $6,$6,0xff
+ip35-l1	uart_intr_disable	524	bedrock	0x88	r	8	andi $9,$9,0xff / ori $7,$7,0x8 / and $9,$9,$11 / sd $9,0($10) / ld $6,0($7) / andi $6,$6,0xff / and $6,$5,$6 / andi $6,$6,0xff / sd $6,0($7)
+ip35-l1	uart_intr_disable	534	bedrock	0x88	w	8	ld $6,0($7) / andi $6,$6,0xff / and $6,$5,$6 / andi $6,$6,0xff / sd $6,0($7) / lbu $4,5($16) / andi $4,$4,0x1 / beq $4,$0,5a8 / addiu $11,$0,15
+ip35-l1	rtr_uart_putc	63c	bedrock	0x30100	r	8	ld $5,-30704($28) / ld $7,-30696($28) / ld $5,0($5) / ld $7,0($7) / dsrl $7,$7,0x4 / andi $7,$7,0x3ff / sll $6,$7,0x2
+ip35-l1	rtr_uart_putc	640	bedrock	0x604200	r	8	ld $5,-30704($28) / ld $7,-30696($28) / ld $5,0($5) / ld $7,0($7) / dsrl $7,$7,0x4 / andi $7,$7,0x3ff / sll $6,$7,0x2 / addu $6,$6,$7
+ip35-l1	rtr_uart_putc	704	bedrock	0x30100	r	8	or $4,$17,$0 / ld $8,16($29) / ld $11,-30704($28) / ld $13,-30696($28) / ld $11,0($11) / ld $13,0($13) / dsrl $13,$13,0x4 / andi $13,$13,0x3ff / sll $12,$13,0x2
+ip35-l1	rtr_uart_putc	708	bedrock	0x604200	r	8	ld $8,16($29) / ld $11,-30704($28) / ld $13,-30696($28) / ld $11,0($11) / ld $13,0($13) / dsrl $13,$13,0x4 / andi $13,$13,0x3ff / sll $12,$13,0x2 / addu $12,$12,$13
+ip35-l1	rtr_uart_init	820	bedrock	0x30100	r	8	ld $6,-30704($28) / ld $8,-30696($28) / ld $6,0($6) / ld $8,0($8) / dsrl $8,$8,0x4 / andi $8,$8,0x3ff / sll $7,$8,0x2
+ip35-l1	rtr_uart_init	824	bedrock	0x604200	r	8	ld $6,-30704($28) / ld $8,-30696($28) / ld $6,0($6) / ld $8,0($8) / dsrl $8,$8,0x4 / andi $8,$8,0x3ff / sll $7,$8,0x2 / addu $7,$7,$8
+ip35-l1	rtr_uart_init	8d8	bedrock	0x30100	r	8	or $4,$16,$0 / ld $8,24($29) / ld $12,-30704($28) / ld $14,-30696($28) / ld $12,0($12) / ld $14,0($14) / dsrl $14,$14,0x4 / andi $14,$14,0x3ff / sll $13,$14,0x2
+ip35-l1	rtr_uart_init	8dc	bedrock	0x604200	r	8	ld $8,24($29) / ld $12,-30704($28) / ld $14,-30696($28) / ld $12,0($12) / ld $14,0($14) / dsrl $14,$14,0x4 / andi $14,$14,0x3ff / sll $13,$14,0x2 / addu $13,$13,$14
+ip35-l1	get_myid	c40	bedrock	0x20	r	8	ld $2,-30664($28) / ld $2,0($2) / jr $31 / sll $2,$2,0x0
+ip35-l1	brl1_send_chars	ec4	bedrock	0xa8	r	8	ld $15,-30712($28) / dsll32 $14,$14,0x1 / daddu $14,$14,$15 / ori $14,$14,0x28 / ld $14,0($14) / andi $14,$14,0x20 / beq $14,$0,e80 / addiu $2,$0,16 / sb $2,55($16)
+ip35-l1	brl1_intr_poll	1e00	bedrock	0x800098	r	8	sd $18,0($29) / dsll32 $8,$4,0x1 / ld $18,-30712($28) / daddu $6,$8,$6 / ld $1,152($6) / sd $17,8($29) / sd $31,24($29) / andi $1,$1,0x10 / addiu $9,$0,4
+ip35-l1	brl1_intr_poll	1e28	bedrock	0x800090	w	8	daddu $7,$4,$4 / beq $1,$0,1ee4 / sd $19,32($29) / dli $16,0x8620 / sd $9,144($6) / ld $24,-15360($0) / daddu $25,$10,$7 / lh $25,0($25) / daddu $19,$18,$8
+ip35-l1	brl1_intr_poll	1e40	bedrock	0x800098	r	8	daddu $25,$10,$7 / lh $25,0($25) / daddu $19,$18,$8 / ld $24,0($24) / ld $31,152($6) / ori $19,$19,0x10 / dsll $25,$25,0x3 / ld $17,0($19) / daddu $24,$24,$25
+ip35-l1	brl1_intr_poll	1e4c	bedrock	0x90	r	8	ld $24,0($24) / ld $31,152($6) / ori $19,$19,0x10 / dsll $25,$25,0x3 / ld $17,0($19) / daddu $24,$24,$25 / ld $24,0($24) / andi $17,$17,0xff / daddu $16,$16,$24
+ip35-l1	brl1_intr_poll	1e80	bedrock	0x90	r	8	beq $0,$0,1f00 / andi $24,$17,0x4 / jal 0 / or $4,$16,$0 / ld $17,0($19) / andi $17,$17,0xff / andi $31,$17,0x6 / beq $31,$0,1ee4 / andi $24,$17,0x4
+ip35-l1	brl1_intr_poll	1ecc	bedrock	0xa8	r	8	lh $1,0($16) / dsll32 $1,$1,0x1 / daddu $1,$18,$1 / ori $1,$1,0x28 / ld $1,0($1) / andi $1,$1,0x20 / bne $1,$0,1e78 / sll $0,$0,0x0 / beq $0,$0,1e80
+ip35-l1	brl1_intrd	1f38	bedrock	0x90	r	8	ld $18,-30712($28) / dsll32 $16,$16,0x1 / daddu $16,$18,$16 / ori $16,$16,0x10 / ld $16,0($16) / andi $16,$16,0xff / andi $1,$16,0x6 / or $17,$2,$0 / addiu $19,$0,-1
+ip35-l1	brl1_intrd	1f74	bedrock	0x90	r	8	lh $2,0($17) / dsll32 $2,$2,0x1 / daddu $2,$18,$2 / ori $16,$2,0x10 / ld $16,0($16) / andi $16,$16,0xff / andi $3,$16,0x6 / beq $3,$0,1fdc / andi $24,$16,0x4
+ip35-l1	brl1_intrd	1fc4	bedrock	0xa8	r	8	dsll32 $2,$2,0x1 / beq $3,$0,1f70 / daddu $2,$18,$2 / ori $3,$2,0x28 / ld $3,0($3) / andi $3,$3,0x20 / bne $3,$0,1f5c / sll $0,$0,0x0 / beq $0,$0,1f74
+ip35-l1	brl1_send_console_packet	2128	bedrock	0xa8	r	8	sd $21,16($29) / daddu $16,$7,$16 / sd $31,48($29) / ori $16,$16,0x28 / ld $1,0($16) / sd $22,24($29) / sd $17,8($29) / andi $1,$1,0x20 / or $17,$4,$0
+ip35-l1	brl1_send_console_packet	2150	bedrock	0xa8	r	8	sd $19,32($29) / or $19,$5,$0 / bne $1,$0,21a0 / sd $20,56($29) / ld $8,0($16) / andi $8,$8,0x20 / bne $8,$0,21a0 / sll $0,$0,0x0 / ld $9,0($16)
+ip35-l1	brl1_send_console_packet	2160	bedrock	0xa8	r	8	ld $8,0($16) / andi $8,$8,0x20 / bne $8,$0,21a0 / sll $0,$0,0x0 / ld $9,0($16) / andi $9,$9,0x20 / bne $9,$0,21a0 / sll $0,$0,0x0 / ld $10,0($16)
+ip35-l1	brl1_send_console_packet	2170	bedrock	0xa8	r	8	ld $9,0($16) / andi $9,$9,0x20 / bne $9,$0,21a0 / sll $0,$0,0x0 / ld $10,0($16) / andi $10,$10,0x20 / bne $10,$0,21a0 / sll $0,$0,0x0 / ld $11,0($16)
+ip35-l1	brl1_send_console_packet	2180	bedrock	0xa8	r	8	ld $10,0($16) / andi $10,$10,0x20 / bne $10,$0,21a0 / sll $0,$0,0x0 / ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,21a0 / sll $0,$0,0x0 / ld $12,0($16)
+ip35-l1	brl1_send_console_packet	2190	bedrock	0xa8	r	8	ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,21a0 / sll $0,$0,0x0 / ld $12,0($16) / andi $12,$12,0x20 / beq $12,$0,2150 / sll $0,$0,0x0 / ld $18,-30720($28)
+ip35-l1	brl1_send_console_packet	21ac	bedrock	0x80	w	8	sll $0,$0,0x0 / ld $18,-30720($28) / daddu $18,$7,$18 / addiu $21,$0,126 / sd $21,128($18) / ld $13,0($16) / andi $13,$13,0x20 / bne $13,$0,2214 / addiu $5,$0,68
+ip35-l1	brl1_send_console_packet	21b0	bedrock	0xa8	r	8	ld $18,-30720($28) / daddu $18,$7,$18 / addiu $21,$0,126 / sd $21,128($18) / ld $13,0($16) / andi $13,$13,0x20 / bne $13,$0,2214 / addiu $5,$0,68 / ld $24,0($16)
+ip35-l1	brl1_send_console_packet	21c0	bedrock	0xa8	r	8	ld $13,0($16) / andi $13,$13,0x20 / bne $13,$0,2214 / addiu $5,$0,68 / ld $24,0($16) / andi $24,$24,0x20 / bne $24,$0,2210 / sll $0,$0,0x0 / ld $25,0($16)
+ip35-l1	brl1_send_console_packet	21d0	bedrock	0xa8	r	8	ld $24,0($16) / andi $24,$24,0x20 / bne $24,$0,2210 / sll $0,$0,0x0 / ld $25,0($16) / andi $25,$25,0x20 / bne $25,$0,2210 / sll $0,$0,0x0 / ld $31,0($16)
+ip35-l1	brl1_send_console_packet	21e0	bedrock	0xa8	r	8	ld $25,0($16) / andi $25,$25,0x20 / bne $25,$0,2210 / sll $0,$0,0x0 / ld $31,0($16) / andi $31,$31,0x20 / bne $31,$0,2210 / sll $0,$0,0x0 / ld $1,0($16)
+ip35-l1	brl1_send_console_packet	21f0	bedrock	0xa8	r	8	ld $31,0($16) / andi $31,$31,0x20 / bne $31,$0,2210 / sll $0,$0,0x0 / ld $1,0($16) / andi $1,$1,0x20 / bne $1,$0,2210 / sll $0,$0,0x0 / ld $2,0($16)
+ip35-l1	brl1_send_console_packet	2200	bedrock	0xa8	r	8	ld $1,0($16) / andi $1,$1,0x20 / bne $1,$0,2210 / sll $0,$0,0x0 / ld $2,0($16) / andi $2,$2,0x20 / beq $2,$0,21c0 / sll $0,$0,0x0 / addiu $5,$0,68
+ip35-l1	brl1_send_console_packet	2214	bedrock	0x80	w	8	andi $2,$2,0x20 / beq $2,$0,21c0 / sll $0,$0,0x0 / addiu $5,$0,68 / sd $5,128($18) / jal 0 / dli $4,0xffff / beq $22,$0,239c / andi $4,$2,0xffff
+ip35-l1	brl1_send_console_packet	2234	bedrock	0x80	w	8	andi $4,$2,0xffff / addiu $20,$0,125 / beq $0,$0,2254 / lbu $7,0($17) / sd $7,128($18) / jal 0 / lbu $5,0($17) / addiu $19,$19,-1 / daddiu $17,$17,1
+ip35-l1	brl1_send_console_packet	2264	bedrock	0xa8	r	8	beq $21,$7,22cc / sll $0,$0,0x0 / beq $20,$7,22cc / sll $0,$0,0x0 / ld $3,0($16) / andi $3,$3,0x20 / bne $3,$0,2234 / sll $0,$0,0x0 / ld $5,0($16)
+ip35-l1	brl1_send_console_packet	2274	bedrock	0xa8	r	8	ld $3,0($16) / andi $3,$3,0x20 / bne $3,$0,2234 / sll $0,$0,0x0 / ld $5,0($16) / andi $5,$5,0x20 / bne $5,$0,2234 / sll $0,$0,0x0 / ld $6,0($16)
+ip35-l1	brl1_send_console_packet	2284	bedrock	0xa8	r	8	ld $5,0($16) / andi $5,$5,0x20 / bne $5,$0,2234 / sll $0,$0,0x0 / ld $6,0($16) / andi $6,$6,0x20 / bne $6,$0,2234 / sll $0,$0,0x0 / ld $8,0($16)
+ip35-l1	brl1_send_console_packet	2294	bedrock	0xa8	r	8	ld $6,0($16) / andi $6,$6,0x20 / bne $6,$0,2234 / sll $0,$0,0x0 / ld $8,0($16) / andi $8,$8,0x20 / bne $8,$0,2234 / sll $0,$0,0x0 / ld $9,0($16)
+ip35-l1	brl1_send_console_packet	22a4	bedrock	0xa8	r	8	ld $8,0($16) / andi $8,$8,0x20 / bne $8,$0,2234 / sll $0,$0,0x0 / ld $9,0($16) / andi $9,$9,0x20 / bne $9,$0,2234 / sll $0,$0,0x0 / ld $10,0($16)
+ip35-l1	brl1_send_console_packet	22b4	bedrock	0xa8	r	8	ld $9,0($16) / andi $9,$9,0x20 / bne $9,$0,2234 / sll $0,$0,0x0 / ld $10,0($16) / andi $10,$10,0x20 / beq $10,$0,2274 / sll $0,$0,0x0 / beq $0,$0,2234
+ip35-l1	brl1_send_console_packet	22cc	bedrock	0xa8	r	8	beq $10,$0,2274 / sll $0,$0,0x0 / beq $0,$0,2234 / sll $0,$0,0x0 / ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,232c / sll $0,$0,0x0 / ld $12,0($16)
+ip35-l1	brl1_send_console_packet	22dc	bedrock	0xa8	r	8	ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,232c / sll $0,$0,0x0 / ld $12,0($16) / andi $12,$12,0x20 / bne $12,$0,232c / sll $0,$0,0x0 / ld $13,0($16)
+ip35-l1	brl1_send_console_packet	22ec	bedrock	0xa8	r	8	ld $12,0($16) / andi $12,$12,0x20 / bne $12,$0,232c / sll $0,$0,0x0 / ld $13,0($16) / andi $13,$13,0x20 / bne $13,$0,232c / sll $0,$0,0x0 / ld $14,0($16)
+ip35-l1	brl1_send_console_packet	22fc	bedrock	0xa8	r	8	ld $13,0($16) / andi $13,$13,0x20 / bne $13,$0,232c / sll $0,$0,0x0 / ld $14,0($16) / andi $14,$14,0x20 / bne $14,$0,232c / sll $0,$0,0x0 / ld $15,0($16)
+ip35-l1	brl1_send_console_packet	230c	bedrock	0xa8	r	8	ld $14,0($16) / andi $14,$14,0x20 / bne $14,$0,232c / sll $0,$0,0x0 / ld $15,0($16) / andi $15,$15,0x20 / bne $15,$0,232c / sll $0,$0,0x0 / ld $24,0($16)
+ip35-l1	brl1_send_console_packet	231c	bedrock	0xa8	r	8	ld $15,0($16) / andi $15,$15,0x20 / bne $15,$0,232c / sll $0,$0,0x0 / ld $24,0($16) / andi $24,$24,0x20 / beq $24,$0,22dc / sll $0,$0,0x0 / sd $20,128($18)
+ip35-l1	brl1_send_console_packet	232c	bedrock	0x80	w	8	ld $24,0($16) / andi $24,$24,0x20 / beq $24,$0,22dc / sll $0,$0,0x0 / sd $20,128($18) / ld $25,0($16) / lbu $5,0($17) / andi $25,$25,0x20 / bne $25,$0,2394
+ip35-l1	brl1_send_console_packet	2330	bedrock	0xa8	r	8	andi $24,$24,0x20 / beq $24,$0,22dc / sll $0,$0,0x0 / sd $20,128($18) / ld $25,0($16) / lbu $5,0($17) / andi $25,$25,0x20 / bne $25,$0,2394 / xori $7,$5,0x20
+ip35-l1	brl1_send_console_packet	2344	bedrock	0xa8	r	8	lbu $5,0($17) / andi $25,$25,0x20 / bne $25,$0,2394 / xori $7,$5,0x20 / ld $31,0($16) / andi $31,$31,0x20 / bne $31,$0,2394 / sll $0,$0,0x0 / ld $1,0($16)
+ip35-l1	brl1_send_console_packet	2354	bedrock	0xa8	r	8	ld $31,0($16) / andi $31,$31,0x20 / bne $31,$0,2394 / sll $0,$0,0x0 / ld $1,0($16) / andi $1,$1,0x20 / bne $1,$0,2394 / sll $0,$0,0x0 / ld $2,0($16)
+ip35-l1	brl1_send_console_packet	2364	bedrock	0xa8	r	8	ld $1,0($16) / andi $1,$1,0x20 / bne $1,$0,2394 / sll $0,$0,0x0 / ld $2,0($16) / andi $2,$2,0x20 / bne $2,$0,2394 / sll $0,$0,0x0 / ld $3,0($16)
+ip35-l1	brl1_send_console_packet	2374	bedrock	0xa8	r	8	ld $2,0($16) / andi $2,$2,0x20 / bne $2,$0,2394 / sll $0,$0,0x0 / ld $3,0($16) / andi $3,$3,0x20 / bne $3,$0,2394 / sll $0,$0,0x0 / ld $6,0($16)
+ip35-l1	brl1_send_console_packet	2384	bedrock	0xa8	r	8	ld $3,0($16) / andi $3,$3,0x20 / bne $3,$0,2394 / sll $0,$0,0x0 / ld $6,0($16) / andi $6,$6,0x20 / beq $6,$0,2344 / sll $0,$0,0x0 / beq $0,$0,2238
+ip35-l1	brl1_send_console_packet	2398	bedrock	0x80	w	8	andi $6,$6,0x20 / beq $6,$0,2344 / sll $0,$0,0x0 / beq $0,$0,2238 / sd $7,128($18) / addiu $20,$0,125 / xori $5,$4,0xffff / andi $7,$5,0xff / beq $20,$7,2528
+ip35-l1	brl1_send_console_packet	23b8	bedrock	0xa8	r	8	beq $20,$7,2528 / or $8,$7,$0 / beq $21,$7,2528 / sll $0,$0,0x0 / ld $8,0($16) / andi $8,$8,0x20 / bne $8,$0,241c / andi $14,$5,0xffff / ld $9,0($16)
+ip35-l1	brl1_send_console_packet	23c8	bedrock	0xa8	r	8	ld $8,0($16) / andi $8,$8,0x20 / bne $8,$0,241c / andi $14,$5,0xffff / ld $9,0($16) / andi $9,$9,0x20 / bne $9,$0,2418 / sll $0,$0,0x0 / ld $10,0($16)
+ip35-l1	brl1_send_console_packet	23d8	bedrock	0xa8	r	8	ld $9,0($16) / andi $9,$9,0x20 / bne $9,$0,2418 / sll $0,$0,0x0 / ld $10,0($16) / andi $10,$10,0x20 / bne $10,$0,2418 / sll $0,$0,0x0 / ld $11,0($16)
+ip35-l1	brl1_send_console_packet	23e8	bedrock	0xa8	r	8	ld $10,0($16) / andi $10,$10,0x20 / bne $10,$0,2418 / sll $0,$0,0x0 / ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,2418 / sll $0,$0,0x0 / ld $12,0($16)
+ip35-l1	brl1_send_console_packet	23f8	bedrock	0xa8	r	8	ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,2418 / sll $0,$0,0x0 / ld $12,0($16) / andi $12,$12,0x20 / bne $12,$0,2418 / sll $0,$0,0x0 / ld $13,0($16)
+ip35-l1	brl1_send_console_packet	2408	bedrock	0xa8	r	8	ld $12,0($16) / andi $12,$12,0x20 / bne $12,$0,2418 / sll $0,$0,0x0 / ld $13,0($16) / andi $13,$13,0x20 / beq $13,$0,23c8 / sll $0,$0,0x0 / andi $14,$5,0xffff
+ip35-l1	brl1_send_console_packet	2420	bedrock	0x80	w	8	beq $13,$0,23c8 / sll $0,$0,0x0 / andi $14,$5,0xffff / sra $14,$14,0x8 / sd $7,128($18) / andi $7,$14,0xff / beq $20,$7,2594 / or $4,$7,$0 / beq $21,$7,2594
+ip35-l1	brl1_send_console_packet	2438	bedrock	0xa8	r	8	beq $20,$7,2594 / or $4,$7,$0 / beq $21,$7,2594 / sll $0,$0,0x0 / ld $15,0($16) / andi $15,$15,0x20 / bne $15,$0,2498 / ld $20,56($29) / ld $24,0($16)
+ip35-l1	brl1_send_console_packet	2448	bedrock	0xa8	r	8	ld $15,0($16) / andi $15,$15,0x20 / bne $15,$0,2498 / ld $20,56($29) / ld $24,0($16) / andi $24,$24,0x20 / bne $24,$0,2498 / sll $0,$0,0x0 / ld $25,0($16)
+ip35-l1	brl1_send_console_packet	2458	bedrock	0xa8	r	8	ld $24,0($16) / andi $24,$24,0x20 / bne $24,$0,2498 / sll $0,$0,0x0 / ld $25,0($16) / andi $25,$25,0x20 / bne $25,$0,2498 / sll $0,$0,0x0 / ld $31,0($16)
+ip35-l1	brl1_send_console_packet	2468	bedrock	0xa8	r	8	ld $25,0($16) / andi $25,$25,0x20 / bne $25,$0,2498 / sll $0,$0,0x0 / ld $31,0($16) / andi $31,$31,0x20 / bne $31,$0,2498 / sll $0,$0,0x0 / ld $1,0($16)
+ip35-l1	brl1_send_console_packet	2478	bedrock	0xa8	r	8	ld $31,0($16) / andi $31,$31,0x20 / bne $31,$0,2498 / sll $0,$0,0x0 / ld $1,0($16) / andi $1,$1,0x20 / bne $1,$0,2498 / sll $0,$0,0x0 / ld $2,0($16)
+ip35-l1	brl1_send_console_packet	2488	bedrock	0xa8	r	8	ld $1,0($16) / andi $1,$1,0x20 / bne $1,$0,2498 / sll $0,$0,0x0 / ld $2,0($16) / andi $2,$2,0x20 / beq $2,$0,2448 / sll $0,$0,0x0 / sd $7,128($18)
+ip35-l1	brl1_send_console_packet	2498	bedrock	0x80	w	8	ld $2,0($16) / andi $2,$2,0x20 / beq $2,$0,2448 / sll $0,$0,0x0 / sd $7,128($18) / ld $3,0($16) / andi $3,$3,0x20 / bne $3,$0,24fc / sll $0,$0,0x0
+ip35-l1	brl1_send_console_packet	249c	bedrock	0xa8	r	8	andi $2,$2,0x20 / beq $2,$0,2448 / sll $0,$0,0x0 / sd $7,128($18) / ld $3,0($16) / andi $3,$3,0x20 / bne $3,$0,24fc / sll $0,$0,0x0 / ld $4,0($16)
+ip35-l1	brl1_send_console_packet	24ac	bedrock	0xa8	r	8	ld $3,0($16) / andi $3,$3,0x20 / bne $3,$0,24fc / sll $0,$0,0x0 / ld $4,0($16) / andi $4,$4,0x20 / bne $4,$0,24fc / sll $0,$0,0x0 / ld $5,0($16)
+ip35-l1	brl1_send_console_packet	24bc	bedrock	0xa8	r	8	ld $4,0($16) / andi $4,$4,0x20 / bne $4,$0,24fc / sll $0,$0,0x0 / ld $5,0($16) / andi $5,$5,0x20 / bne $5,$0,24fc / sll $0,$0,0x0 / ld $6,0($16)
+ip35-l1	brl1_send_console_packet	24cc	bedrock	0xa8	r	8	ld $5,0($16) / andi $5,$5,0x20 / bne $5,$0,24fc / sll $0,$0,0x0 / ld $6,0($16) / andi $6,$6,0x20 / bne $6,$0,24fc / sll $0,$0,0x0 / ld $7,0($16)
+ip35-l1	brl1_send_console_packet	24dc	bedrock	0xa8	r	8	ld $6,0($16) / andi $6,$6,0x20 / bne $6,$0,24fc / sll $0,$0,0x0 / ld $7,0($16) / andi $7,$7,0x20 / bne $7,$0,24fc / sll $0,$0,0x0 / ld $8,0($16)
+ip35-l1	brl1_send_console_packet	24ec	bedrock	0xa8	r	8	ld $7,0($16) / andi $7,$7,0x20 / bne $7,$0,24fc / sll $0,$0,0x0 / ld $8,0($16) / andi $8,$8,0x20 / beq $8,$0,24ac / sll $0,$0,0x0 / ld $16,0($29)
+ip35-l1	brl1_send_console_packet	2504	bedrock	0x80	w	8	beq $8,$0,24ac / sll $0,$0,0x0 / ld $16,0($29) / ld $17,8($29) / sd $21,128($18) / ld $18,40($29) / ld $31,48($29) / subu $2,$22,$19 / ld $19,32($29)
+ip35-l1	brl1_send_console_packet	2528	bedrock	0xa8	r	8	ld $21,16($29) / ld $22,24($29) / jr $31 / daddiu $29,$29,64 / ld $9,0($16) / andi $9,$9,0x20 / xori $7,$8,0x20 / bne $9,$0,258c / andi $7,$7,0xff
+ip35-l1	brl1_send_console_packet	253c	bedrock	0xa8	r	8	andi $9,$9,0x20 / xori $7,$8,0x20 / bne $9,$0,258c / andi $7,$7,0xff / ld $10,0($16) / andi $10,$10,0x20 / bne $10,$0,258c / sll $0,$0,0x0 / ld $11,0($16)
+ip35-l1	brl1_send_console_packet	254c	bedrock	0xa8	r	8	ld $10,0($16) / andi $10,$10,0x20 / bne $10,$0,258c / sll $0,$0,0x0 / ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,258c / sll $0,$0,0x0 / ld $12,0($16)
+ip35-l1	brl1_send_console_packet	255c	bedrock	0xa8	r	8	ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,258c / sll $0,$0,0x0 / ld $12,0($16) / andi $12,$12,0x20 / bne $12,$0,258c / sll $0,$0,0x0 / ld $13,0($16)
+ip35-l1	brl1_send_console_packet	256c	bedrock	0xa8	r	8	ld $12,0($16) / andi $12,$12,0x20 / bne $12,$0,258c / sll $0,$0,0x0 / ld $13,0($16) / andi $13,$13,0x20 / bne $13,$0,258c / sll $0,$0,0x0 / ld $14,0($16)
+ip35-l1	brl1_send_console_packet	257c	bedrock	0xa8	r	8	ld $13,0($16) / andi $13,$13,0x20 / bne $13,$0,258c / sll $0,$0,0x0 / ld $14,0($16) / andi $14,$14,0x20 / beq $14,$0,253c / sll $0,$0,0x0 / beq $0,$0,23b8
+ip35-l1	brl1_send_console_packet	2590	bedrock	0x80	w	8	andi $14,$14,0x20 / beq $14,$0,253c / sll $0,$0,0x0 / beq $0,$0,23b8 / sd $20,128($18) / ld $8,0($16) / andi $8,$8,0x20 / xori $7,$4,0x20 / bne $8,$0,25f8
+ip35-l1	brl1_send_console_packet	2594	bedrock	0xa8	r	8	beq $14,$0,253c / sll $0,$0,0x0 / beq $0,$0,23b8 / sd $20,128($18) / ld $8,0($16) / andi $8,$8,0x20 / xori $7,$4,0x20 / bne $8,$0,25f8 / andi $7,$7,0xff
+ip35-l1	brl1_send_console_packet	25a8	bedrock	0xa8	r	8	andi $8,$8,0x20 / xori $7,$4,0x20 / bne $8,$0,25f8 / andi $7,$7,0xff / ld $9,0($16) / andi $9,$9,0x20 / bne $9,$0,25f8 / sll $0,$0,0x0 / ld $10,0($16)
+ip35-l1	brl1_send_console_packet	25b8	bedrock	0xa8	r	8	ld $9,0($16) / andi $9,$9,0x20 / bne $9,$0,25f8 / sll $0,$0,0x0 / ld $10,0($16) / andi $10,$10,0x20 / bne $10,$0,25f8 / sll $0,$0,0x0 / ld $11,0($16)
+ip35-l1	brl1_send_console_packet	25c8	bedrock	0xa8	r	8	ld $10,0($16) / andi $10,$10,0x20 / bne $10,$0,25f8 / sll $0,$0,0x0 / ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,25f8 / sll $0,$0,0x0 / ld $12,0($16)
+ip35-l1	brl1_send_console_packet	25d8	bedrock	0xa8	r	8	ld $11,0($16) / andi $11,$11,0x20 / bne $11,$0,25f8 / sll $0,$0,0x0 / ld $12,0($16) / andi $12,$12,0x20 / bne $12,$0,25f8 / sll $0,$0,0x0 / ld $13,0($16)
+ip35-l1	brl1_send_console_packet	25e8	bedrock	0xa8	r	8	ld $12,0($16) / andi $12,$12,0x20 / bne $12,$0,25f8 / sll $0,$0,0x0 / ld $13,0($16) / andi $13,$13,0x20 / beq $13,$0,25a8 / sll $0,$0,0x0 / beq $0,$0,2438
+ip35-l1	brl1_send_console_packet	25fc	bedrock	0x80	w	8	andi $13,$13,0x20 / beq $13,$0,25a8 / sll $0,$0,0x0 / beq $0,$0,2438 / sd $20,128($18)
+ip35-l1	sc_recv_poll	315c	bedrock	0x30100	r	8	sd $20,32($29) / ld $20,-30704($28) / sd $19,24($29) / ld $19,-30696($28) / ld $25,0($20) / ld $2,0($19) / dsrl $2,$2,0x4 / andi $2,$2,0x3ff / sll $1,$2,0x2
+ip35-l1	sc_recv_poll	3160	bedrock	0x604200	r	8	ld $20,-30704($28) / sd $19,24($29) / ld $19,-30696($28) / ld $25,0($20) / ld $2,0($19) / dsrl $2,$2,0x4 / andi $2,$2,0x3ff / sll $1,$2,0x2 / addu $1,$1,$2
+ip35-l1	sc_recv_poll	31fc	bedrock	0x30100	r	8	beq $17,$0,3248 / lw $2,344($16) / bne $2,$0,324c / sll $0,$0,0x0 / ld $6,0($20) / ld $8,0($19) / dsrl $8,$8,0x4 / andi $8,$8,0x3ff / sll $7,$8,0x2
+ip35-l1	sc_recv_poll	3200	bedrock	0x604200	r	8	lw $2,344($16) / bne $2,$0,324c / sll $0,$0,0x0 / ld $6,0($20) / ld $8,0($19) / dsrl $8,$8,0x4 / andi $8,$8,0x3ff / sll $7,$8,0x2 / addu $7,$7,$8
+ip27-elsc	get_myid	4	hub	0x20	r	8	ld $2,-30720($28) / ld $2,0($2) / jr $31 / sll $2,$2,0x0
+ip27-elsc	elsc_lock	fdc	hub	0x30100	r	8	daddiu $29,$29,-144 / sd $20,120($29) / ld $20,-30712($28) / ld $8,0($20) / sd $17,96($29) / or $17,$7,$0 / dsll $7,$8,0x2 / dsubu $7,$7,$8
+ip27-elsc	elsc_lock	1048	hub	0x30100	r	8	beq $0,$0,1078 / or $4,$16,$0 / jal 0 / or $4,$18,$0 / ld $10,0($20) / dsll $9,$10,0x2 / dsubu $9,$9,$10 / dsll $9,$9,0x3 / daddu $9,$9,$10

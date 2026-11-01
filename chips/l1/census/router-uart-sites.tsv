@@ -1,0 +1,14 @@
+image	function	addr	callee	path	rw	register
+ip35-l1	rtr_uart_putc	6c0	vector_read_node	vector_node	r	0x268
+ip35-l1	rtr_uart_putc	768	vector_write_node	vector_node	w	0x240
+ip35-l1	rtr_uart_getc	7a4	vector_read_node	vector_node	r	0x268
+ip35-l1	rtr_uart_getc	7f0	vector_read_node	vector_node	r	0x240
+ip35-l1	rtr_uart_init	898	vector_read_node	vector_node	r	0x268
+ip35-l1	rtr_uart_init	940	vector_write_node	vector_node	w	0x258
+ip35-l1	rtr_uart_init	994	vector_write_node	vector_node	w	0x248
+ip35-l1	rtr_uart_init	9c8	vector_write_node	vector_node	w	0x240
+ip35-l1	rtr_uart_init	9f8	vector_write_node	vector_node	w	0x258
+ip35-l1	rtr_uart_init	a28	vector_write_node	vector_node	w	0x260
+ip35-l1	rtr_uart_init	a58	vector_write_node	vector_node	w	0x248
+ip35-l1	rtr_uart_init	a88	vector_write_node	vector_node	w	0x250
+ip35-l1	rtr_uart_init	ab8	vector_write_node	vector_node	w	0x250

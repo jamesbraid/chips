@@ -1,0 +1,14 @@
+variant	offset	idx	name	access_seen	widths	halves	sites	functions	images	example	datasheet	datasheet_ref	spec	spec_ref	model	model_detail	flags	tasks
+bedrock	0x20	0		r	8	0	1	1	ip35-l1	get_myid@c40	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0x80	1	UART_DATA	rw	8	0	13	4	ip35-l1	uart_putc@40	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0x88	1	UART_IER	rw	8	0	6	3	ip35-l1	uart_init@19c	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0x90	1	UART_FCR_IIR	rw	8	0	6	3	ip35-l1	uart_init@1fc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0x98	1	UART_LCR	rw	8	0	6	3	ip35-l1	uart_init@168	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0xa0	1	UART_MCR	w	8	0	1	1	ip35-l1	uart_init@1dc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0xa8	1	UART_LSR	r	8	0	66	6	ip35-l1	uart_getc@60	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0x30100	0		r	8	0	8	4	ip35-l1	uart_init@b0	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0x604200	0		r	8	0	8	4	ip35-l1	uart_init@b4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0x800090	1	UART_INTR_CLEAR	w	8	0	1	1	ip35-l1	brl1_intr_poll@1e28	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+bedrock	0x800098	1	UART_INTR_PENDING	r	8	0	2	1	ip35-l1	brl1_intr_poll@1e00	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+hub	0x20	0		r	8	0	1	1	ip27-elsc	get_myid@4	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
+hub	0x30100	0		r	8	0	2	1	ip27-elsc	elsc_lock@fdc	no-datasheet		n/a		out-of-scope	variant has no emulator datasheet or model here (hand off to its own census)		variant out of scope
