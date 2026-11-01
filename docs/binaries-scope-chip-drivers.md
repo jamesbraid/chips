@@ -12,6 +12,16 @@ routines. The rule texts are in the [function scope section](inventory/README.md
 
 ## IP27 build
 
+- `IP27/usr/cpu/sysgen/IP27boot/elsc.o` (inferred): the driver for the system controller (ELSC) on the IP27 build.
+  `elsc_init` (68 bytes) starts it, `elsc_command` (400 bytes) and `elsc_process` (468 bytes) carry requests and
+  replies, and `elsc_nvram_read` (236 bytes) and `elsc_nvram_write` (252 bytes) reach its NVRAM. The power and reset
+  entries are `elsc_power_down`, `elsc_power_cycle` and `elsc_system_reset`, and the display entries are
+  `elsc_display_char` (116 bytes) and `elsc_display_mesg` (184 bytes). The object talks to the controller over the I2C
+  master routines `i2c_master_xmit`, `i2c_master_recv` and `i2c_master_xmit_recv`, and it reads board records through
+  `nic_info_get`, `nic_next` and `nic_setup`. No chip page in this repository covers the controller, so no chip is
+  recorded for it. The scope list puts all 64 rows under rule 3, the process and memory core rule, which does not
+  describe a controller driver. The function-scope section keeps the controller objects on the same buses, so this row
+  is flagged for the scope list.
 - `IP27/usr/cpu/sysgen/IP27boot/if_ef.o` (inferred): the Ethernet driver for the IOC3 Ethernet port. `if_efattach`
   (792 bytes) and `ef_ifattach` (236 bytes) attach the interface, and `if_efinit` and `ef_detach` handle setup and
   teardown. It claims its IOC3 part with `ioc3_subdev_enabled`, reserves Bridge read-response buffers through
@@ -48,6 +58,14 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   `part_permit_page` (200 bytes) sets page permissions across partitions. It uses the Hub block-transfer engine
   through `bte_poison_range`. No exclusion rule names the object, so all 70 rows stay in, and the census holds no
   register access site in it.
+- `IP27/usr/cpu/sysgen/IP27boot/pciba.o` (inferred): a driver that gives user programs PCI access through the
+  user-level interface (ULI) calls, with 25 routines. `pciba_attach` (2116 bytes) and `pciba_sub_attach2` (560 bytes)
+  bring an adapter up, and `pciba_detach` (1148 bytes) takes it down. `pciba_ioctl` (3548 bytes) is the largest
+  routine and the control entry, and `pciba_map` (824 bytes) and `pciba_unmap` (420 bytes) map device space.
+  `pciba_intr` (112 bytes) is the interrupt handler. The object imports `new_uli`, `uli_callup` and `free_uli`, and
+  the argument conversions `uliargs_to_uliargs32` and `uliargs32_to_uliargs`. Its PCI access goes through the PCI I/O
+  layer (`pciio_config_get`, `pciio_piomap_free`, `pciio_intr_connect` and `pciio_dmamap_alloc`), so the Bridge is the
+  chip beneath it. Its 25 rows fall to rule 4 and stay out of the function table.
 - `IP27/usr/cpu/sysgen/IP27boot/pcibr.o` (inferred): the PCI provider for the Bridge, the Crosstalk device driver that
   owns the Bridge's PCI side. `pcibr_error_dump` (4268 bytes) and `pcibr_pioerror` (3404 bytes) decode Bridge errors.
   `pcibr_rrb_alloc` (1028 bytes) and `pcibr_alloc_all_rrbs` (980 bytes) assign read-response buffers to slots, and
@@ -82,6 +100,27 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   `router_reg_read` and `router_reg_write`. `router_port_map_get` (292 bytes) and `check_router` (176 bytes) look up
   ports. Its `elsc_nvram_read` and `elsc_nvram_write` imports reach the system controller's NVRAM, and
   `hub_vector_read` reads the Hub vector. It drives the router, the Hub and the system controller, and keeps 11 rows.
+- `IP27/usr/cpu/sysgen/IP27boot/universe.o` (inferred): the driver for the Universe VME bridge part, with 67 routines.
+  Its largest are `universe_pci_addr` (1340 bytes), `universe_intr_setup` (1308 bytes), `universe_pio_setup` (924
+  bytes) and `universe_attach` (780 bytes). `universe_intr_handler` (512 bytes) and `universe_vmebus_intr_handler`
+  (312 bytes) take its interrupts, `universe_dma_engine_setup` (396 bytes) sets up its DMA engine, and
+  `universe_pio_bcopyin` and `universe_pio_bcopyout` (328 bytes each) move PIO data. Its imports reach both sides:
+  `pciio_driver_register` and `pciio_pio_addr` on the PCI side, and `vmeio_provider_register` and
+  `vmeio_error_handler` on the VME side. Rule 4 excludes its 67 routines, and the rule names VME outright.
+- `IP27/usr/cpu/sysgen/IP27boot/usrpci.o` (inferred): a user-level PCI access driver with 16 routines. `usrpci_open`
+  (208 bytes) and `usrpci_close` (32 bytes) open and close the device, and `usrpci_ioctl` (388 bytes) is the control
+  entry. `usrpci_map` (1428 bytes) and `usrpci_unmap` (348 bytes) map PCI space into a process, `usrpci_hwgraph_add`
+  (636 bytes) adds the device to the hardware graph, and `pciuli_intr` (48 bytes) is its interrupt entry. The PCI I/O
+  layer carries the accesses: the object imports `pciio_piomap_alloc`, `pciio_piomap_addr`, `pciio_intr_connect` and
+  `pciio_error_devenable` from it. Its only chip path runs through that layer to the Bridge. The 16 routines are
+  excluded under rule 4.
+- `IP27/usr/cpu/sysgen/IP27boot/vmeio.o` (inferred): the VME I/O layer, with 55 routines. `vmeio_init` (88 bytes)
+  starts it, `vmeio_probe` (72 bytes) and `vmeio_edtscan` (424 bytes) look for VME devices, and `vmeio_piomap_addr`
+  (152 bytes) builds a VME address for a PIO map. `vmeio_driver_register` (248 bytes) and `vmeio_device_register` (56
+  bytes) register drivers and devices. The provider beneath it is the Universe: its imports `universe_piomap_addr`,
+  `universe_intr_connect`, `universe_dmamap_alloc` and `universe_provider_startup` are the Universe entries it uses.
+  `iospace_to_vmeioam` maps an I/O space address to a VME address modifier. Its 55 rows fall under the VME clause of
+  rule 4.
 - `IP27/usr/cpu/sysgen/IP27boot/xbmon.o` (inferred): the crossbar monitor device. It gives tools a view of the Xbow
   registers and a trace buffer. `xbmon_ioctl` (1176 bytes) is the control entry, `xbtrace` (84 bytes) records trace
   entries, and `xbmon_map` (80 bytes) and `xbmon_read` (52 bytes) reach the register window. It attaches to the Xbow
@@ -92,6 +131,14 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   `xbow_prio_bw_alloc` (372 bytes) allocates bandwidth priority, and `xbow_reset_link` (260 bytes) resets one link.
   `xbow_xmit_retry_error` (260 bytes) and `xbow_update_llp_status` (276 bytes) handle link errors, and
   `xbow_enable_perf_counter` (460 bytes) turns a counter on. The chip is the Xbow, and 33 rows stay in.
+- `IP27/usr/cpu/sysgen/IP27boot/xioba.o` (inferred): a character-device driver for a Crosstalk bus adapter, with 13
+  routines. `xioba_attach` (188 bytes) and `xioba_detach` (256 bytes) bind it to a widget, and `xioba_reg` (92 bytes)
+  and `xioba_unreg` (120 bytes) add and remove its registration. `xioba_map` (188 bytes) and `xioba_unmap` (8 bytes)
+  handle the mapping, and `xioba_open`, `xioba_close`, `xioba_read`, `xioba_write` and `xioba_ioctl` (12 bytes) are
+  the device entries. Its imports are the widget calls `xtalk_pio_addr`, `xwidget_driver_register` and
+  `xwidget_driver_unregister`, plus `v_mapphys` for the mapping and `hwgraph_char_device_add` for the device node. The
+  object names no chip of its own, and the widget it attaches to is the chip it reaches. Rule 4 removes all 13 rows,
+  and nothing in the object reaches a chip except through the widget layer.
 - `IP27/usr/cpu/sysgen/IP27boot/xtalk.o` (inferred): the Crosstalk widget layer that every widget on the Crosstalk bus
   uses. `xwidget_register` (292 bytes) and `xwidget_driver_register` (116 bytes) record widgets and their drivers,
   `xtalk_pio_addr` (248 bytes) builds a PIO address, and `xtalk_error_handler` (172 bytes) routes bus errors. It calls
@@ -101,6 +148,25 @@ routines. The rule texts are in the [function scope section](inventory/README.md
 
 ## IP30 build
 
+- `IP30/usr/cpu/sysgen/IP30boot/giobr.o` (inferred): the Bridge provider for the GIO side of the Bridge on the IP30
+  build, with 55 routines. `giobr_attach` (740 bytes) is the attach routine, `do_giobr_hw_init` (392 bytes) and
+  `giobr_setup_SSRAM` (296 bytes) set the hardware up, and `giobr_error_dump` (444 bytes) and `giobr_pioerror` (248
+  bytes) decode its errors. The read-response buffers and translation entries are handled by `giobr_rrb_alloc` (184
+  bytes) and `giobr_ate_free` (40 bytes). `giobr_setgioint` (100 bytes) and `giobr_setwidint` (148 bytes) set its
+  interrupt routing. The Bridge page gives the MODE bit the values GIO and PCI, so this object serves the GIO value of
+  that field (inferred from the page's field table). Its entries register with the GIO layer through
+  `gioio_provider_register`, and it imports `nic_bridge_vertex_info` and the Crosstalk provider calls. The scope list
+  puts all 55 rows under rule 4, but the first criterion of the function-scope section keeps Bridge driver objects, so
+  the rule 4 exclusion conflicts with it. This row is flagged for the scope list.
+- `IP30/usr/cpu/sysgen/IP30boot/gioio.o` (inferred): the GIO I/O layer on the IP30 build, with 53 routines. Its PIO,
+  DMA and interrupt entries, such as `gioio_piomap_alloc`, `gioio_dmamap_alloc` and `gioio_intr_connect`, are 28-byte
+  routines (`gioio_piomap_alloc` is 28 bytes in the symbol table). The object imports the matching `giobr_` routine
+  for each of them, such as `giobr_piomap_alloc`, `giobr_dmamap_alloc` and `giobr_intr_connect`.
+  `gioio_device_register` (220 bytes) and `gioio_error_handler` (216 bytes) are the largest of the rest, with
+  `gioio_cardinfo_get` (108 bytes) and `gioio_driver_register` (116 bytes) beside them. The device layer is the
+  `cdl_*` set (`cdl_add_connpt`, `cdl_add_driver` and `cdl_iterate`), and the hardware graph calls are
+  `hwgraph_info_add_LBL` and `hwgraph_traverse`. The chip beneath it is the Bridge, reached through `giobr`. Its 53
+  rows are excluded by rule 4 as well, although the Bridge behind it is a system chip.
 - `IP30/usr/cpu/sysgen/IP30boot/if_ef.o` (inferred): the same Ethernet driver as the IP27 copy, built for the IP30
   kernel. `if_efattach` (788 bytes) and `ef_ifattach` (236 bytes) attach the interface, and it claims its IOC3 part
   through `ioc3_subdev_enabled`. Its imports add `heart_invalidate_war`, a HEART workaround, to the IOC3 and Bridge
@@ -127,6 +193,12 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   `intr_spray_heuristic` (192 bytes) and `heartclock_intr` (20 bytes). The other 711 rows fall under the
   linked-kernel rule (rule 8). The imports also reach the IOC3 (`ioc3_mlreset`), the Bridge (`pcibr_error_init`) and
   the Xbow (`xbow_mlreset`). The chip is the HEART, and the other chips are reached through it.
+- `IP30/usr/cpu/sysgen/IP30boot/pciba.o` (inferred): the IP30 copy of the PCI bus-adapter driver that gives user
+  programs PCI access. Its 25 routine names and sizes and its imports are those of the IP27 copy. `pciba_ioctl` (3548
+  bytes) is the control entry, `pciba_attach` (2116 bytes) and `pciba_detach` (1148 bytes) attach and release
+  adapters, and `pciba_map` (824 bytes) maps device space. The user-level interface calls `new_uli`, `uli_callup` and
+  `free_uli` are imported, and the PCI layer under it is `pciio`. Its 25 rows are out under rule 4, as in the IP27
+  copy.
 - `IP30/usr/cpu/sysgen/IP30boot/pcibr.o` (inferred): the Bridge PCI provider for the IP30 kernel, the same Crosstalk
   driver as the IP27 copy at a different size, 286600 bytes. `pcibr_error_dump` (4188 bytes) and `pcibr_pioerror`
   (3400 bytes) decode errors, `pcibr_intr_alloc` (1580 bytes) allocates interrupts, `pcibr_dmamap_alloc` (1148 bytes)
@@ -152,6 +224,10 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   `ioc3_serial_attach` (1212 bytes), `ioc3_serial_kill` (64 bytes), `ring_dmatrans` (76 bytes), `ioc3_sio_mlreset`
   (44 bytes) and `get_cons_dev` (20 bytes). `get_cons_dev` reads the console option through `kopt` and `atoi`, which
   picks the port used as console. The chip is the IOC3, and 36 rows stay in.
+- `IP30/usr/cpu/sysgen/IP30boot/usrpci.o` (inferred): the IP30 copy of the user-level PCI access driver. Its 16
+  routine names and sizes and its imports match the IP27 copy. `usrpci_map` (1428 bytes) is its largest routine,
+  `usrpci_ioctl` (388 bytes) the control entry, and `usrpci_open` (208 bytes) opens the device. Its PCI accesses go
+  through the PCI I/O layer. Rule 4 keeps its 16 rows out of the table.
 - `IP30/usr/cpu/sysgen/IP30boot/xbmon.o` (inferred): the crossbar monitor device, IP30 copy. `xbmon_ioctl` (1164 bytes)
   is the control entry and `xbmon_open` (464 bytes) opens the device. It attaches to the Xbow with
   `xwidget_driver_register` and reads through `xtalk_piotrans_addr`. The chip is the Xbow, and 18 rows stay in.
@@ -259,6 +335,10 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   (1648 bytes) and `part_init_node` (1076 bytes) start the subsystem, `part_export_page_perms` (600 bytes) sets page
   permissions, and `part_add_regions` and `part_rm_regions` (212 and 236 bytes) change the memory regions it owns. It
   calls `bte_poison_range`, which is the node's block-transfer engine. None of its 72 rows is removed.
+- `IP35/usr/cpu/sysgen/IP35boot/pciba.o` (inferred): the IP35 copy of the PCI bus-adapter driver. It has the 25
+  routine names, sizes and imports of the IP27 copy, so `pciba_ioctl` (3548 bytes) is again the largest routine and
+  the control entry, and `pciba_attach` (2116 bytes) is the attach routine. Its PCI access runs through the PCI I/O
+  layer over the Bridge. The 25 rows are out of the function table under rule 4.
 - `IP35/usr/cpu/sysgen/IP35boot/pcibr.o` (inferred): the Bridge PCI provider on the IP35 build, the largest of the
   Bridge copies at 300848 bytes. `pcibr_error_dump` (4268 bytes), `pcibr_pioerror` (3408 bytes) and
   `pcibr_slot_info_init` (2868 bytes) are its largest routines. Its imports `iobrick_pci_slot_pwr` and
@@ -285,6 +365,13 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   large routines are `ioc3_serial_attach` (1300 bytes) and `ioc3_serial_kill` (280 bytes). `ring_dmatrans` (76 bytes)
   and `ioc3_sio_mlreset` (44 bytes) complete the set. It uses `ioc3_write_ireg`, `ioc3_intr_connect` and the
   `pciio_*` DMA and PIO translation calls. The chip is the IOC3, and 35 rows stay in.
+- `IP35/usr/cpu/sysgen/IP35boot/universe.o` (inferred): the Universe VME bridge driver on the IP35 build. Its 67
+  routine names, sizes and imports are those of the IP27 copy, and `universe_pci_addr` (1340 bytes),
+  `universe_intr_setup` (1308 bytes) and `universe_attach` (780 bytes) are its largest routines. The PCI and VME sides
+  meet in it as on the IP27 build. Rule 4 excludes the 67 rows of the object.
+- `IP35/usr/cpu/sysgen/IP35boot/vmeio.o` (inferred): the VME I/O layer on the IP35 build, with the same 55 routines,
+  sizes and imports as the IP27 copy. Its provider is the Universe, and `vmeio_edtscan` (424 bytes) is the device scan
+  routine. Its 55 rows fall under the VME clause of rule 4.
 - `IP35/usr/cpu/sysgen/IP35boot/xbmon.o` (inferred): the crossbar monitor device on the IP35 build. `xbmon_ioctl`
   (1264 bytes) is its largest routine. It attaches to the Xbow with `xwidget_driver_register`, and it reads the
   switch through `xswitch_id_get` and `xtalk_piotrans_addr`. The chip is the Xbow, and 18 rows stay in.
