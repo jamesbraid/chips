@@ -1,11 +1,23 @@
 variant	offset	idx	name	access_seen	widths	halves	sites	functions	images	example	datasheet	datasheet_ref	spec	spec_ref	model	model_detail	flags	tasks
 ?	0x0	0		r	4	4	108	107	ip35-pcibr	pcibr_bridge_ptr_get@45f4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-?	0x30	0		r	4	4	1	1	ip35-pcibr	pcireg_intr_addr_addr_get@15c38	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-?	0x38	0		r	4	4	1	1	ip35-pcibr	pcireg_intr_addr_addr_get@15c3c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x8	0		r	4	4	1	1	ip35-prom	prom_c00000001fc4ca98@c4cfd0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x20	0		r	4	4	1	1	ip35-prom	prom_c00000001fc4ca98@c4d058	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x28	0		r	4	4	1	1	ip35-prom	prom_c00000001fc4ca98@c4d010	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x30	0		rw	4	4	5	2	ip35-pcibr,ip35-prom	pcireg_intr_addr_addr_get@15c38	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x38	0		rw	4	4	5	2	ip35-pcibr,ip35-prom	pcireg_intr_addr_addr_get@15c3c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x78	0		w	4	4	1	1	ip35-prom	prom_c00000001fc4ca98@c4cda8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?	0xb0	0		a	0	4	1	1	ip35-pcibr	pcireg_nic_addr@12b3c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x100	0		r	4	4	5	1	ip35-prom	prom_c00000001fc4ca98@c4cbe8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x108	0		w	4	4	2	1	ip35-prom	prom_c00000001fc4ca98@c4cd64	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x110	0		w	4	4	1	1	ip35-prom	prom_c00000001fc4ca98@c4ce68	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x128	0		rw	4	4	2	1	ip35-prom	prom_c00000001fc4ca98@c4cd90	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?	0x130	1		rw	4,8	0,4	26	6	ip35-pcibr	pcireg_intr_addr_get@151b0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	64-bit access to a 32-bit register	no-spec: inventory from the binaries
 ?	0x180	1		w	4,8	0,4	3	1	ip35-pcibr	pcireg_force_always_set@163cc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	64-bit access to a 32-bit register	no-spec: inventory from the binaries
 ?	0x1c0	1		w	4,8	0,4	3	1	ip35-pcibr	pcireg_force_intr_set@167fc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	64-bit access to a 32-bit register	no-spec: inventory from the binaries
+?	0x200	0		r	4	4	1	1	ip35-prom	prom_c00000001fc4ca98@c4d0e4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x208	0		r	4	4	1	1	ip35-prom	prom_c00000001fc4ca98@c4d118	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x210	0		r	4	4	1	1	ip35-prom	prom_c00000001fc4ca98@c4d170	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?	0x218	0		r	4	4	1	1	ip35-prom	prom_c00000001fc4ca98@c4d170	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?	0x280	1		rw	4,8	0,4	6	2	ip35-pcibr	pcireg_rrb_get@174b4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	64-bit access to a 32-bit register	no-spec: inventory from the binaries
 ?	0x10000	1		a	0	0	1	1	ip35-pcibr	pcireg_int_ate_addr@196c8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?	0x80000	1		a	0	0	1	1	ip35-pcibr	pcireg_ext_ate_addr@1902c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries

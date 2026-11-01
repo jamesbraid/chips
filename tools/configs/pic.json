@@ -45,6 +45,11 @@
     "functions": "^pic_attach2$",
     "reg": 5,
     "off": 0
+   },
+   {
+    "functions": "^prom_c00000001fc4ca98$",
+    "reg": 5,
+    "off": 0
    }
   ],
   "calls": [

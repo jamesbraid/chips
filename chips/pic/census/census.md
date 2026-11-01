@@ -14,11 +14,11 @@ Datasheet checkout `` (datasheets, spec transcriptions); model at `70ec32fdbd00`
 
 ## Summary
 
-- **636 access sites** resolved to a window offset, folded into **178 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
+- **662 access sites** resolved to a window offset, folded into **190 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
 
 | variant | rows | sites | model: handled+specified | model: handled, guessed or LOG_UNIMP | model: unhandled / out of scope | not in datasheet | not in spec | spec conflict |
 |---|---|---|---|---|---|---|---|---|
-| ? | 10 | 151 | 0 | 0 | 0 | 0 | 0 | 0 |
+| ? | 22 | 177 | 0 | 0 | 0 | 0 | 0 | 0 |
 | bridge | 35 | 168 | 0 | 0 | 35 | 35 | 0 | 0 |
 | pic | 47 | 170 | 0 | 0 | 0 | 0 | 0 | 0 |
 | probe? | 4 | 5 | 0 | 0 | 4 | 4 | 0 | 0 |
@@ -27,11 +27,11 @@ Datasheet checkout `` (datasheets, spec transcriptions); model at `70ec32fdbd00`
 
 `?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). `tiocp` has no emulator datasheet or model, so its rows are listed but not judged.
 
-Site basis: 462 refined, 148 direct, 12 image-hint, 9 probe-seed, 5 returned-pointer.
+Site basis: 462 refined, 174 direct, 12 image-hint, 9 probe-seed, 5 returned-pointer.
 
 ### Scan coverage and what is unresolved
 
-- Accessor functions seeded (`seeds.args`): ip35-pcibr 105, 105 with at least one resolved access; ip35-pic 1, 1 with at least one resolved access.
+- Accessor functions seeded (`seeds.args`): ip35-pcibr 105, 105 with at least one resolved access; ip35-pic 1, 1 with at least one resolved access; ip35-prom 1, 1 with at least one resolved access.
 - Window pointers passed to a callee the config does not seed (**unresolved**, site in `work/pic/unresolved.tsv`): 0 distinct sites.
 - Loads and stores in the seeded scope whose base register the scan could not resolve and whose displacement falls where registers live (0x100..0x2ff): 104, almost all `xbridge_attach` writing its own state record (**unresolved, inspected only by listing; `suspects.tsv`**).
 - Index registers are not followed: a family reached through an array index is recorded at its base with `idx=1` (device 0..7, interrupt 0..7, ATE). The family extent comes from the datasheet, not the code.
