@@ -4199,7 +4199,7 @@ IP27/unix	kernel	n64	.text	0xc00000000001c084	1196	router_init	symtab	12a2ebfc74
 IP27/unix	kernel	n64	.text	0xc00000000001c530	132	router_get_info	symtab	fd10b7610bcb		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001c5b4	136	timeout_poll	symtab	32552d6e3f25		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc00000000001c75c	476	router_print_state_specific	symtab	35cd3d21738a		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
-IP27/unix	kernel	n64	.text	0xc00000000001c938	204	router_print_state	symtab	58a75cd4a1ac		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000001c938	204	router_print_state	symtab	58a75cd4a1ac		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000001cabc	84	router_nic_get	symtab	515ff84d7ba3		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001cb10	192	get_routername	symtab	599052be1dba		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc00000000001cbd0	568	vector_write_node	symtab	dd3b5b9b7d78		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -4571,12 +4571,12 @@ IP27/unix	kernel	n64	.text	0xc000000000032128	424	show_rr_status_rev_id	symtab	1
 IP27/unix	kernel	n64	.text	0xc0000000000322d0	452	show_err_router_comp	symtab	0c917caf3bd3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000032494	96	hub_error_clear	symtab	750dfed23943		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc0000000000324f4	928	hub_error_init	symtab	e10403528a8e		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc000000000032894	388	hubii_eint_init	symtab	bddbbd458222		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc000000000032894	388	hubii_eint_init	symtab	bddbbd458222		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000032a18	272	hubni_eint_init	symtab	9743c2c2920a		in	named-only	chips/bedrock/README.md#interrupts	Interrupts
 IP27/unix	kernel	n64	.text	0xc000000000032b28	728	hubpi_eint_handler	symtab	43d008fb5bee		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000032e00	320	hubni_print_state	symtab	f1020444a734		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000032f40	604	check_ni_errors	symtab	02217141341d		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc00000000003319c	392	hubni_error_handler	symtab	fb5ccc13b46d		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/unix	kernel	n64	.text	0xc00000000003319c	392	hubni_error_handler	symtab	fb5ccc13b46d		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000033324	36	hubni_eint_handler	symtab	f54be9f6efa7		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc000000000033348	36	hubni_rmteint_handler	symtab	4ae2f25ae5d7		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc00000000003336c	316	klsave_md_registers	symtab	c0aa69e82f67		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -4646,7 +4646,7 @@ IP27/unix	kernel	n64	.text	0xc000000000037e94	40	errorste_reset	symtab	f61e992f6
 IP27/unix	kernel	n64	.text	0xc000000000037ebc	116	ms1bit	symtab	4f4561327064		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000037f30	40	intr_stray	symtab	eff82ebd4fb0		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000037f58	436	intr_init_vecblk	symtab	24a4aa2abaec		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000038340	40	intr_reserve_level	symtab	035b9963526d		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000038340	40	intr_reserve_level	symtab	035b9963526d		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000038368	40	intr_unreserve_level	symtab	f7a14b197725		in	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000000383ec	668	intr_connect_level	symtab	dd836e80345f		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000038688	428	intr_disconnect_level	symtab	2f7c12d5711c		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -4951,7 +4951,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000465dc	12	rtc_read	symtab	973e14c9993d		i
 IP27/unix	kernel	n64	.text	0xc0000000000465e8	8	rtc_resolution	symtab	ada9e383a381		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000046648	248	set_timer_intr	symtab	7ea0675da056		in	understood	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/unix	kernel	n64	.text	0xc000000000046740	580	timeout_get_queuehead	symtab	15df57a7b551		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc000000000046984	384	chktimeout_tick	symtab	0ed224751b87		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/unix	kernel	n64	.text	0xc000000000046984	384	chktimeout_tick	symtab	0ed224751b87		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000046b04	120	fast_timeout	symtab	dbfcac812318		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000046b7c	116	fast_timeout_nothrd	symtab	c51c01ffffb4		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000046bf0	48	callout_time_to_hz	symtab	e9b5f52962c0		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
@@ -4961,7 +4961,7 @@ IP27/unix	kernel	n64	.text	0xc000000000046ea8	508	migrate_timeouts	symtab	d5c13f
 IP27/unix	kernel	n64	.text	0xc0000000000470a4	124	settimetrim	symtab	938ef694f83a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047120	8	gettimetrim	symtab	29229546eddb		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047128	492	doadjtime	symtab	95237790b1c2		out:5	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc000000000047550	376	nanotime_syscall	symtab	f9fa7d0c0298		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/unix	kernel	n64	.text	0xc000000000047550	376	nanotime_syscall	symtab	f9fa7d0c0298		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000000476c8	252	nanotime	symtab	5d679ab43b94		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000000477c4	68	irix5_microtime	symtab	03c72d6aa4b6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047808	68	microtime	symtab	e549a3447e55		out:5	undocumented		
@@ -5044,7 +5044,7 @@ IP27/unix	kernel	n64	.text	0xc000000000049558	168	kl_compute_parity	symtab	a701e
 IP27/unix	kernel	n64	.text	0xc000000000049600	192	kl_compute_dir_ecc_cb	symtab	ba8afd13135e		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000496c0	116	kl_compute_mem_ecc_cb	symtab	4c86d52fe53a		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000049734	576	mdir_xlate_syndrome	symtab	8ad010249d8b		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc000000000049974	376	mdir_xlate_addr_mem	symtab	cbcedbf967be		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/unix	kernel	n64	.text	0xc000000000049974	376	mdir_xlate_addr_mem	symtab	cbcedbf967be		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000049aec	260	mdir_xlate_addr_pdir	symtab	4f8740ae0e81		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000049bf0	224	mdir_xlate_addr_sdir	symtab	d79ee0f8491f		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/unix	kernel	n64	.text	0xc000000000049e74	2596	memerror_sbe_intr	symtab	f636c6f4789f		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -5840,7 +5840,7 @@ IP27/unix	kernel	n64	.text	0xc000000000080a0c	412	pcireg_llp_cfg_set	symtab	f4ee
 IP27/unix	kernel	n64	.text	0xc000000000080ba8	400	pcireg_tflush_get	symtab	b05d9813e5ac		in	understood	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc000000000080d38	356	pcireg_linkside_err_get	symtab	2f31318ec259		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc000000000080e9c	372	pcireg_resp_err_get	symtab	09c48f7e3ed8		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP27/unix	kernel	n64	.text	0xc000000000081010	380	pcireg_resp_err_addr_get	symtab	88e416bd0fa9		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP27/unix	kernel	n64	.text	0xc000000000081010	380	pcireg_resp_err_addr_get	symtab	88e416bd0fa9		in	understood	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc00000000008118c	372	pcireg_resp_err_buf_get	symtab	4070ca9c4c5a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc000000000081300	372	pcireg_resp_err_dev_get	symtab	138608df2500		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc000000000081474	348	pcireg_linkside_err_addr_get	symtab	468b2068385b		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -5850,7 +5850,7 @@ IP27/unix	kernel	n64	.text	0xc000000000081890	412	pcireg_dirmap_wid_set	symtab	a
 IP27/unix	kernel	n64	.text	0xc000000000081a2c	496	pcireg_dirmap_diroff_set	symtab	1d0c60f80da1		in	understood	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc000000000081c1c	384	pcireg_dirmap_add512_set	symtab	c00cd2eb4d91		in	understood	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc000000000081d9c	392	pcireg_dirmap_add512_clr	symtab	e7da3dac6ccd		in	understood	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP27/unix	kernel	n64	.text	0xc000000000081f24	380	pcireg_ssram_parity_get	symtab	f6a10f5f7f1e		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP27/unix	kernel	n64	.text	0xc000000000081f24	380	pcireg_ssram_parity_get	symtab	f6a10f5f7f1e		in	understood	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc0000000000820a0	372	pcireg_map_fault_get	symtab	e1da4c4f2e31		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc000000000082214	360	pcireg_arbitration_get	symtab	96a59154a24d		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000008237c	348	pcireg_arbitration_set	symtab	4fb77362d9a1		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -5865,7 +5865,7 @@ IP27/unix	kernel	n64	.text	0xc000000000082ea8	380	pcireg_timeout_bit_clr	symtab	
 IP27/unix	kernel	n64	.text	0xc000000000083024	360	pcireg_type1_cntr_get	symtab	c2cf8cd76c4e		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000008318c	344	pcireg_type1_cntr_set	symtab	d50dccc9d5ba		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc0000000000832e4	368	pcireg_pci_bus_addr_get	symtab	a44e11cc5089		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP27/unix	kernel	n64	.text	0xc000000000083454	384	pcireg_pci_bus_addr_addr_get	symtab	00a2a2b92e11		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP27/unix	kernel	n64	.text	0xc000000000083454	384	pcireg_pci_bus_addr_addr_get	symtab	00a2a2b92e11		in	understood	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc0000000000835d4	360	pcireg_intr_status_get	symtab	ecc8a274adbc		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000008373c	356	pcireg_intr_enable_get	symtab	28da74dc7cc1		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc0000000000838a0	344	pcireg_intr_enable_set	symtab	00fcf24ab61c		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -7880,7 +7880,7 @@ IP27/unix	kernel	n64	.text	0xc00000000017b7a4	236	sio_make_hwgraph_nodes	symtab	
 IP27/unix	kernel	n64	.text	0xc00000000017b890	136	printf_acquire_console	symtab	c22602eb09c9		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017b918	132	printf_release_console	symtab	b76e03fd5d54		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017dd54	8	du_init	symtab	78aa5094d5ec		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000017dd5c	376	du_conpoll	symtab	ddb6651c64a3		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/unix	kernel	n64	.text	0xc00000000017dd5c	376	du_conpoll	symtab	ddb6651c64a3		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000017ded4	132	du_down_write	symtab	26bbac7b4f11		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017df58	64	du_down_flush	symtab	528882c0bded		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017dff0	240	ducons_write	symtab	0d7018576cdd		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -9094,11 +9094,11 @@ IP27/unix	kernel	n64	.text	0xc0000000001e5860	48	doacvec_splhi	symtab	960e1c3473
 IP27/unix	kernel	n64	.text	0xc0000000001e5890	96	doacvec	symtab	911d6561f108		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP27/unix	kernel	n64	.text	0xc0000000001e58f0	116	panic_lock	symtab	41b54369d7b5		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000001e5964	68	panic_unlock	symtab	4b70466b9e2b		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001e59a8	12	set_node_panic_flag	symtab	f54d1af48be8		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001e59a8	12	set_node_panic_flag	symtab	f54d1af48be8		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000001e59b4	192	enter_panic_mode	symtab	65081fa86766		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc0000000001e5a74	32	exit_panic_mode	symtab	fdb517e881f1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e5a94	8	in_panic_mode	symtab	8bffb2b7e0e4		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001e5a9c	12	enter_promlog_mode	symtab	393f671f2027		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001e5a9c	12	enter_promlog_mode	symtab	393f671f2027		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000001e5aa8	8	exit_promlog_mode	symtab	3eceab299091		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e5ab0	8	in_promlog_mode	symtab	0b9b21b3f5c2		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e5ab8	32	enter_dump_mode	symtab	f7a50ced2d8a		out:5	undocumented		
@@ -9314,7 +9314,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001fdd6c	76	panic	symtab	4671a26dfb2c		out:
 IP27/unix	kernel	n64	.text	0xc0000000001fe814	700	aptoargs	symtab	9a1a7ff904f9		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001fec08	324	printregs	symtab	ca23ec06c40f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001fed68	220	conbuf_flush	symtab	414b11b9057d		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001feefc	220	panicspin	symtab	f1dd201f93d8		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001feefc	220	panicspin	symtab	f1dd201f93d8		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000001ff034	204	mdboot	symtab	c108502e3373		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001ff46c	216	printputbuf	symtab	fd3fed711ef8		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001ff544	296	_assfail	symtab	d0824791c2bb		out:5	undocumented		
@@ -12415,7 +12415,7 @@ IP27/unix	kernel	n64	.text	0xc000000000399dc0	344	kona_gfifo_spin	symtab	32dc089
 IP27/unix	kernel	n64	.text	0xc000000000399f18	860	KONAmapgfx	symtab	7d218b315c69		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039a274	260	KONAunmapgfx	symtab	01dd69a543d2		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039a378	84	KONAinvaltlb	symtab	c74ca6f9eb97		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000039b314	380	kona_tport_reset_adaptor	symtab	8db74288dc18		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000039b314	380	kona_tport_reset_adaptor	symtab	8db74288dc18		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000039b490	652	kona_earlyinit	symtab	185da9f27311		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039b71c	156	find_konapipe	symtab	728ca24d6eb3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039bbf8	224	KONAcreateddrn	symtab	814f42a86b85		out:5	undocumented		
@@ -18512,7 +18512,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33b0	132	router_
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3434	136	timeout_poll	dwarf+symtab	4cfb395b993f		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34bc	288	router_state_empty	dwarf	e65e79c9e58c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x35dc	476	router_print_state_specific	dwarf+symtab	9fafbf42668b		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x37b8	204	router_print_state	dwarf+symtab	48c086f4c9bf		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x37b8	204	router_print_state	dwarf+symtab	48c086f4c9bf		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3884	184	router_nic_probe	dwarf	4856b842f3b6		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x393c	84	router_nic_get	dwarf+symtab	812a45a1d184		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3990	192	get_routername	dwarf+symtab	5071ded7d04a		out:6	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
@@ -18946,12 +18946,12 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x18fa8	424	show_r
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19150	452	show_err_router_comp	dwarf+symtab	ea0d1b917148		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19314	96	hub_error_clear	dwarf+symtab	be3e2cf0af89		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19374	928	hub_error_init	dwarf+symtab	e7c06672b2d0		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19714	388	hubii_eint_init	dwarf+symtab	6829c9b0e8a4		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19714	388	hubii_eint_init	dwarf+symtab	6829c9b0e8a4		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19898	272	hubni_eint_init	dwarf+symtab	e35ede299d0e		in	named-only	chips/bedrock/README.md#interrupts	Interrupts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x199a8	728	hubpi_eint_handler	dwarf+symtab	9a8ea1309d28		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19c80	320	hubni_print_state	dwarf+symtab	ae700d6d4848		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x19dc0	604	check_ni_errors	dwarf+symtab	413d3ef3beb3		out:6	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a01c	392	hubni_error_handler	dwarf+symtab	34ee230100be		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a01c	392	hubni_error_handler	dwarf+symtab	34ee230100be		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a1a4	36	hubni_eint_handler	dwarf+symtab	c29a69214304		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a1c8	36	hubni_rmteint_handler	dwarf+symtab	737a225fe1e1		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1a1ec	316	klsave_md_registers	dwarf+symtab	0046ee987ae2		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -19026,7 +19026,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1ed3c	116	ms1bit
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1edb0	40	intr_stray	dwarf+symtab	3b95ad1ff2c9		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1edd8	436	intr_init_vecblk	dwarf+symtab	4e9396b33185		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1ef8c	564	do_intr_reserve_level	dwarf	cbf413e27f5a		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f1c0	40	intr_reserve_level	dwarf+symtab	1acdac586b35		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f1c0	40	intr_reserve_level	dwarf+symtab	1acdac586b35		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f1e8	40	intr_unreserve_level	dwarf+symtab	60021a688008		in	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f210	92	intr_get_ptrs	dwarf	b5f12f4f0a46		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x1f26c	668	intr_connect_level	dwarf+symtab	7cf148d5a60f		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -19472,7 +19472,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x303d8	168	kl_com
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x30480	192	kl_compute_dir_ecc_cb	dwarf+symtab	41247c8cf5db		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x30540	116	kl_compute_mem_ecc_cb	dwarf+symtab	e1de3189c17d		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x305b4	576	mdir_xlate_syndrome	dwarf+symtab	4dedcfdedbe7		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x307f4	376	mdir_xlate_addr_mem	dwarf+symtab	81b0adc7bbeb		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x307f4	376	mdir_xlate_addr_mem	dwarf+symtab	81b0adc7bbeb		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3096c	260	mdir_xlate_addr_pdir	dwarf+symtab	87a89ed1660e		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x30a70	224	mdir_xlate_addr_sdir	dwarf+symtab	8b7cfb031c34		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x30b50	120	sbe_printf	dwarf	cfb6b5e4ff94		out:6	undocumented		
@@ -24420,11 +24420,11 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1b70	48	doacv
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1ba0	96	doacvec	dwarf+symtab	14f27ce655ea		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1c00	116	panic_lock	dwarf+symtab	181fc64609d4		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1c74	68	panic_unlock	dwarf+symtab	09f11a8e433c		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1cb8	12	set_node_panic_flag	dwarf+symtab	f54d1af48be8		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1cb8	12	set_node_panic_flag	dwarf+symtab	f54d1af48be8		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1cc4	192	enter_panic_mode	dwarf+symtab	4139477b95c7		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1d84	32	exit_panic_mode	dwarf+symtab	94deafadd1df		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1da4	8	in_panic_mode	dwarf+symtab	8bffb2b7e0e4		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1dac	12	enter_promlog_mode	dwarf+symtab	393f671f2027		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1dac	12	enter_promlog_mode	dwarf+symtab	393f671f2027		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1db8	8	exit_promlog_mode	dwarf+symtab	3eceab299091		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1dc0	8	in_promlog_mode	dwarf+symtab	0b9b21b3f5c2		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-object	n64	.text	0x1dc8	32	enter_dump_mode	dwarf+symtab	f7a50ced2d8a		out:3	undocumented		
@@ -24465,7 +24465,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2178	28	co
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2194	220	conbuf_flush	dwarf+symtab	8b6185c6644e		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2270	48	dopromreset	dwarf+symtab	c3275ac8bf9c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x22a0	136	panic_coproc_select	dwarf+symtab	79c7ef9de1d2		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2328	220	panicspin	dwarf+symtab	48b3f552a248		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2328	220	panicspin	dwarf+symtab	48b3f552a248		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2404	92	syncreboot	dwarf+symtab	a9255e890e3c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2460	204	mdboot	dwarf+symtab	05fea89a0ea1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x252c	400	mprboot	dwarf+symtab	4ba1ecceb70f		out:3	undocumented		
@@ -25635,7 +25635,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xfbcc	412	pcireg_l
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xfd68	400	pcireg_tflush_get	dwarf+symtab	fe33c6799376		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xfef8	356	pcireg_linkside_err_get	dwarf+symtab	7812ed9c736c		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x1005c	372	pcireg_resp_err_get	dwarf+symtab	e19d7ec5ea1b		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x101d0	380	pcireg_resp_err_addr_get	dwarf+symtab	4504c5ad81bf		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x101d0	380	pcireg_resp_err_addr_get	dwarf+symtab	4504c5ad81bf		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x1034c	372	pcireg_resp_err_buf_get	dwarf+symtab	41e8840571b4		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x104c0	372	pcireg_resp_err_dev_get	dwarf+symtab	28c5a32b50a2		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x10634	348	pcireg_linkside_err_addr_get	dwarf+symtab	d05e214fef00		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -25645,7 +25645,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x10a50	412	pcireg_
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x10bec	496	pcireg_dirmap_diroff_set	dwarf+symtab	6e551369b24b		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x10ddc	384	pcireg_dirmap_add512_set	dwarf+symtab	15eda4ce3e7d		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x10f5c	392	pcireg_dirmap_add512_clr	dwarf+symtab	10774bdb0500		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x110e4	380	pcireg_ssram_parity_get	dwarf+symtab	cdebf3e7cae1		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x110e4	380	pcireg_ssram_parity_get	dwarf+symtab	cdebf3e7cae1		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x11260	372	pcireg_map_fault_get	dwarf+symtab	761e0c3cd16a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x113d4	360	pcireg_arbitration_get	dwarf+symtab	8597bb22cd2a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x1153c	348	pcireg_arbitration_set	dwarf+symtab	89022249a681		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -25660,7 +25660,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x12068	380	pcireg_
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x121e4	360	pcireg_type1_cntr_get	dwarf+symtab	e7ded1ba698d		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x1234c	344	pcireg_type1_cntr_set	dwarf+symtab	f5139a946c21		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x124a4	368	pcireg_pci_bus_addr_get	dwarf+symtab	e1c40976b909		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x12614	384	pcireg_pci_bus_addr_addr_get	dwarf+symtab	61abd49639e9		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x12614	384	pcireg_pci_bus_addr_addr_get	dwarf+symtab	61abd49639e9		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x12794	360	pcireg_intr_status_get	dwarf+symtab	3d52f8c8a2b5		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x128fc	356	pcireg_intr_enable_get	dwarf+symtab	88e9706faac2		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x12a60	344	pcireg_intr_enable_set	dwarf+symtab	68d0b0ad2ba8		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -41071,7 +41071,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201c7be8	76	panic	symtab	7366cf5df0a4		out:
 IP30/unix	kernel	n64	.text	0xa8000000201c85bc	700	aptoargs	symtab	39bc1a2a93aa		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c89b0	324	printregs	symtab	1ede3b4443ad		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c8af4	148	conbuf_flush	symtab	b5e07a3c2647		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201c8bb8	212	panicspin	symtab	6a207bbbd533		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201c8bb8	212	panicspin	symtab	6a207bbbd533		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa8000000201c8ce8	204	mdboot	symtab	ae541b6ec18d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c912c	216	printputbuf	symtab	6d2a30e6b892		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c9204	296	_assfail	symtab	9d1877ae37fc		out:7	undocumented		
@@ -41184,11 +41184,11 @@ IP30/unix	kernel	n64	.text	0xa8000000201d3994	48	doacvec_splhi	symtab	7c1387943e
 IP30/unix	kernel	n64	.text	0xa8000000201d39c4	96	doacvec	symtab	defbb2a99c9f		out:7	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP30/unix	kernel	n64	.text	0xa8000000201d3a24	116	panic_lock	symtab	4840f32c4764		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000201d3a98	68	panic_unlock	symtab	12d12b0a54eb		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201d3adc	12	set_node_panic_flag	symtab	6c6eedc337eb		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201d3adc	12	set_node_panic_flag	symtab	6c6eedc337eb		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa8000000201d3ae8	192	enter_panic_mode	symtab	12c8ba92c190		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000201d3ba8	32	exit_panic_mode	symtab	7cd10cdd3ca4		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3bc8	8	in_panic_mode	symtab	d0c72c97d0a6		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201d3bd0	12	enter_promlog_mode	symtab	35eecd1df509		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201d3bd0	12	enter_promlog_mode	symtab	35eecd1df509		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa8000000201d3bdc	8	exit_promlog_mode	symtab	9a0e2aaef71d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3be4	8	in_promlog_mode	symtab	be60487530cf		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201d3bec	32	enter_dump_mode	symtab	43e1fe49c9d2		out:7	undocumented		
@@ -54637,11 +54637,11 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x17e0	48	doacv
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1810	96	doacvec	dwarf+symtab	14f27ce655ea		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1870	116	panic_lock	dwarf+symtab	181fc64609d4		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x18e4	68	panic_unlock	dwarf+symtab	09f11a8e433c		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1928	12	set_node_panic_flag	dwarf+symtab	6c6eedc337eb		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1928	12	set_node_panic_flag	dwarf+symtab	6c6eedc337eb		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1934	192	enter_panic_mode	dwarf+symtab	f366fc3db86c		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x19f4	32	exit_panic_mode	dwarf+symtab	b19b273831fd		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a14	8	in_panic_mode	dwarf+symtab	d0c72c97d0a6		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a1c	12	enter_promlog_mode	dwarf+symtab	35eecd1df509		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a1c	12	enter_promlog_mode	dwarf+symtab	35eecd1df509		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a28	8	exit_promlog_mode	dwarf+symtab	9a0e2aaef71d		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a30	8	in_promlog_mode	dwarf+symtab	be60487530cf		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-object	n64	.text	0x1a38	32	enter_dump_mode	dwarf+symtab	43e1fe49c9d2		out:3	undocumented		
@@ -54679,7 +54679,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1e94	28	pr
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1eb0	324	printregs	dwarf+symtab	17ec0bea82a5		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1ff4	148	conbuf_flush	dwarf+symtab	0238171117de		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x2088	48	dopromreset	dwarf+symtab	002c2bfd791b		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x20b8	212	panicspin	dwarf+symtab	7fec5b0bd6d8		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x20b8	212	panicspin	dwarf+symtab	7fec5b0bd6d8		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x218c	92	syncreboot	dwarf+symtab	359c052a8a5b		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x21e8	204	mdboot	dwarf+symtab	cb84561608ac		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x22b4	400	mprboot	dwarf+symtab	4633141a8baf		out:3	undocumented		
@@ -55754,7 +55754,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xf958	412	pcireg_l
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xfaf4	400	pcireg_tflush_get	dwarf+symtab	6e6a48cb9048		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xfc84	356	pcireg_linkside_err_get	dwarf+symtab	c33a4d30da86		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xfde8	372	pcireg_resp_err_get	dwarf+symtab	41883d2a9cab		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xff5c	380	pcireg_resp_err_addr_get	dwarf+symtab	232edba38db4		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xff5c	380	pcireg_resp_err_addr_get	dwarf+symtab	232edba38db4		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x100d8	372	pcireg_resp_err_buf_get	dwarf+symtab	08efb1ca4202		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x1024c	372	pcireg_resp_err_dev_get	dwarf+symtab	8651f913c2b9		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x103c0	348	pcireg_linkside_err_addr_get	dwarf+symtab	cfae0c418940		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -55764,7 +55764,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x107dc	412	pcireg_
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x10978	496	pcireg_dirmap_diroff_set	dwarf+symtab	98c6cc75d3ec		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x10b68	384	pcireg_dirmap_add512_set	dwarf+symtab	9c02d8c3fe02		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x10ce8	392	pcireg_dirmap_add512_clr	dwarf+symtab	6fc949a1d2a2		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x10e70	380	pcireg_ssram_parity_get	dwarf+symtab	f509098d0f99		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x10e70	380	pcireg_ssram_parity_get	dwarf+symtab	f509098d0f99		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x10fec	372	pcireg_map_fault_get	dwarf+symtab	bee5c19eae39		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x11160	360	pcireg_arbitration_get	dwarf+symtab	afcbab42e0f8		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x112c8	348	pcireg_arbitration_set	dwarf+symtab	91884785fff5		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -55779,7 +55779,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x11df4	380	pcireg_
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x11f70	360	pcireg_type1_cntr_get	dwarf+symtab	30bd27355c57		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x120d8	344	pcireg_type1_cntr_set	dwarf+symtab	0f2f484f5089		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x12230	368	pcireg_pci_bus_addr_get	dwarf+symtab	8cda3e1e950a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x123a0	384	pcireg_pci_bus_addr_addr_get	dwarf+symtab	f03442469650		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x123a0	384	pcireg_pci_bus_addr_addr_get	dwarf+symtab	f03442469650		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x12520	360	pcireg_intr_status_get	dwarf+symtab	edb13d5cbcc9		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x12688	356	pcireg_intr_enable_get	dwarf+symtab	9797bae5c22d		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x127ec	344	pcireg_intr_enable_set	dwarf+symtab	05d5b987e04a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -71209,11 +71209,11 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x15cc	48	doacv
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x15fc	96	doacvec	dwarf+symtab	f65a0adc7321		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x165c	92	panic_lock	dwarf+symtab	fb40bed77a66		out:3	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16b8	48	panic_unlock	dwarf+symtab	4a18a5aa1f73		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16e8	12	set_node_panic_flag	dwarf+symtab	d41f813c0b8b		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16e8	12	set_node_panic_flag	dwarf+symtab	d41f813c0b8b		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x16f4	200	enter_panic_mode	dwarf+symtab	952615e036d8		out:3	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17bc	32	exit_panic_mode	dwarf+symtab	a0ba509be171		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17dc	8	in_panic_mode	dwarf+symtab	d7f907bf0613		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17e4	12	enter_promlog_mode	dwarf+symtab	3281419519de		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17e4	12	enter_promlog_mode	dwarf+symtab	3281419519de		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17f0	8	exit_promlog_mode	dwarf+symtab	d635f59dc73e		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x17f8	8	in_promlog_mode	dwarf+symtab	d521a6ba848d		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(pda.o)	kernel-object	n32	.text	0x1800	32	enter_dump_mode	dwarf+symtab	8fbc1f8bc02a		out:3	undocumented		
@@ -71253,7 +71253,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1e10	196	p
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1ed4	328	printregs	dwarf+symtab	98b0c65fb4d2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x201c	148	conbuf_flush	dwarf+symtab	dd6cada2bdb9		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x20b0	48	dopromreset	dwarf+funcnames+symtab	51b2b902f248		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x20e0	176	panicspin	dwarf+symtab	25c29a0341d0		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x20e0	176	panicspin	dwarf+symtab	25c29a0341d0		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x2190	64	syncreboot	dwarf+funcnames+symtab	64dd5cb7f2c8		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x21d0	220	mdboot	dwarf+symtab	152a7763b96f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x22ac	372	mprboot	dwarf+funcnames+symtab	a7e5464f821f		out:3	undocumented		
@@ -83412,7 +83412,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3890	132	router_
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3914	136	timeout_poll	dwarf+symtab	cff9ecc380ed		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x399c	328	router_state_empty	dwarf	4342a149fc08		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3ae4	504	router_print_state_specific	dwarf+symtab	1aa91fab6c7c		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3cdc	212	router_print_state	dwarf+symtab	8cfd49545e77		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3cdc	212	router_print_state	dwarf+symtab	8cfd49545e77		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3db0	232	get_routername	dwarf+symtab	226cde63aac3		out:11	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3e98	516	try_router	dwarf	dec0784d9b64		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x409c	340	klcfg_discover_route	dwarf+symtab	eee84663f668		out:11	undocumented		
@@ -83814,7 +83814,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x17410	460	show_r
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x175dc	464	show_err_router_comp	dwarf+symtab	cb75885b3bab		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x177ac	420	hub_error_clear	dwarf+symtab	be5713f68dbf		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x17950	1464	hub_error_init	dwarf+symtab	3fdf0db93ddc		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x17f08	452	hubii_eint_init	dwarf+symtab	9c784454cb7b		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x17f08	452	hubii_eint_init	dwarf+symtab	9c784454cb7b		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x180cc	260	hubni_eint_init	dwarf+symtab	850942e82ad4		in	named-only	chips/bedrock/README.md#interrupts	Interrupts
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x181d0	1624	hubpi_eint_handler	dwarf+symtab	258a6a508223		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18828	332	hubni_print_state	dwarf+symtab	decfa78637ee		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -83822,7 +83822,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18974	176	ni_por
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18a24	764	check_ni_errors_nasid	dwarf	9e6e71bde5c2		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18d20	416	hubni_error_handler_nasid	dwarf	82d726d704e5		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18ec0	36	check_ni_errors	dwarf+symtab	655d74afe350		out:11	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18ee4	56	hubni_error_handler	dwarf+symtab	708b7075489f		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18ee4	56	hubni_error_handler	dwarf+symtab	708b7075489f		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18f1c	36	hubni_eint_handler	dwarf+symtab	32da5129a57e		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18f40	36	hubni_rmteint_handler	dwarf+symtab	ba31dac2a79f		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x18f64	368	klsave_md_registers	dwarf+symtab	a753e3238975		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -83901,7 +83901,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ec58	116	ms1bit
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1eccc	40	intr_stray	dwarf+symtab	2b08af592a00		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1ecf4	436	intr_init_vecblk	dwarf+symtab	dfd53670df8d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1eea8	564	do_intr_reserve_level	dwarf	5ad0112f0ee6		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f0dc	40	intr_reserve_level	dwarf+symtab	2278b6422794		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f0dc	40	intr_reserve_level	dwarf+symtab	2278b6422794		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f104	40	intr_unreserve_level	dwarf+symtab	8ebcc900aecb		in	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f12c	92	intr_get_ptrs	dwarf	9031cd7e9ea7		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1f188	792	intr_connect_level	dwarf+symtab	a9fec1e15331		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -84260,7 +84260,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b454	168	kl_com
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b4fc	192	kl_compute_dir_ecc_cb	dwarf+symtab	76cf3397c64b		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b5bc	116	kl_compute_mem_ecc_cb	dwarf+symtab	05b583bb579a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b630	572	mdir_xlate_syndrome	dwarf+symtab	efedca8efb5b		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b86c	164	mdir_xlate_addr_mem	dwarf+symtab	7cba55aa5414		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b86c	164	mdir_xlate_addr_mem	dwarf+symtab	7cba55aa5414		in	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b910	128	mdir_xlate_addr_pdir	dwarf+symtab	48fea8abd505		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b990	80	mdir_xlate_addr_sdir	dwarf+symtab	c58d0432467b		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b9e0	120	sbe_printf	dwarf	cfb6b5e4ff94		out:11	undocumented		
@@ -89212,11 +89212,11 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1bd0	48	doacv
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1c00	116	doacvec	dwarf+symtab	4c13b56e8dd0		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1c74	116	panic_lock	dwarf+symtab	181fc64609d4		out:13	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1ce8	68	panic_unlock	dwarf+symtab	09f11a8e433c		out:13	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1d2c	12	set_node_panic_flag	dwarf+symtab	230c83f00493		out:13	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1d2c	12	set_node_panic_flag	dwarf+symtab	230c83f00493		out:13	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1d38	192	enter_panic_mode	dwarf+symtab	d46eea6c8546		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1df8	32	exit_panic_mode	dwarf+symtab	7b04eb86f86d		out:13	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e18	8	in_panic_mode	dwarf+symtab	1df2ef79d3d9		out:13	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e20	12	enter_promlog_mode	dwarf+symtab	3ebbd034647f		out:13	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e20	12	enter_promlog_mode	dwarf+symtab	3ebbd034647f		out:13	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e2c	8	exit_promlog_mode	dwarf+symtab	3dc61e22cd43		out:13	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e34	8	in_promlog_mode	dwarf+symtab	81c1f7a79ad0		out:13	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(pda.o)	kernel-object	n64	.text	0x1e3c	32	enter_dump_mode	dwarf+symtab	dd272e00576c		out:13	undocumented		
@@ -89256,7 +89256,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x203c	324	p
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2180	148	conbuf_flush	dwarf+symtab	0238171117de		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2214	48	dopromreset	dwarf+symtab	c3275ac8bf9c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2244	136	panic_coproc_select	dwarf+symtab	b9d170e52495		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x22cc	220	panicspin	dwarf+symtab	6c9c56a5e99f		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x22cc	220	panicspin	dwarf+symtab	6c9c56a5e99f		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x23a8	112	syncreboot	dwarf+symtab	1aa2d3275967		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2418	204	mdboot	dwarf+symtab	80cd3fccc474		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x24e4	400	mprboot	dwarf+symtab	6e75ce3013ce		out:3	undocumented		
@@ -90422,7 +90422,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x10d28	412	pcireg_
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x10ec4	400	pcireg_tflush_get	dwarf+symtab	ca874e532265		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x11054	356	pcireg_linkside_err_get	dwarf+symtab	da194e7fac44		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x111b8	372	pcireg_resp_err_get	dwarf+symtab	3cef2416bda5		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x1132c	380	pcireg_resp_err_addr_get	dwarf+symtab	db371106b3f7		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x1132c	380	pcireg_resp_err_addr_get	dwarf+symtab	db371106b3f7		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x114a8	372	pcireg_resp_err_buf_get	dwarf+symtab	4a1a290f7b9f		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x1161c	372	pcireg_resp_err_dev_get	dwarf+symtab	7c8d96a621f4		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x11790	348	pcireg_linkside_err_addr_get	dwarf+symtab	f88d460482cc		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -90432,7 +90432,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x11bac	412	pcireg_
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x11d48	496	pcireg_dirmap_diroff_set	dwarf+symtab	90e5a09d124f		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x11f38	384	pcireg_dirmap_add512_set	dwarf+symtab	08946f7a1622		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x120b8	392	pcireg_dirmap_add512_clr	dwarf+symtab	44f532fbd730		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x12240	380	pcireg_ssram_parity_get	dwarf+symtab	d3ea59756438		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x12240	380	pcireg_ssram_parity_get	dwarf+symtab	d3ea59756438		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x123bc	372	pcireg_map_fault_get	dwarf+symtab	74fc8bcb87c3		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x12530	360	pcireg_arbitration_get	dwarf+symtab	aadbe3ab0082		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x12698	348	pcireg_arbitration_set	dwarf+symtab	ec8919a1d2b1		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
@@ -90447,7 +90447,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x131c4	380	pcireg_
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x13340	360	pcireg_type1_cntr_get	dwarf+symtab	a46757f59339		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x134a8	344	pcireg_type1_cntr_set	dwarf+symtab	c0bb02f49d93		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x13600	368	pcireg_pci_bus_addr_get	dwarf+symtab	2b77216a4e51		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x13770	384	pcireg_pci_bus_addr_addr_get	dwarf+symtab	10619e97c51d		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x13770	384	pcireg_pci_bus_addr_addr_get	dwarf+symtab	10619e97c51d		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x138f0	360	pcireg_intr_status_get	dwarf+symtab	1ae2991b1967		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x13a58	356	pcireg_intr_enable_get	dwarf+symtab	a1c3e594c7ec		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x13bbc	344	pcireg_intr_enable_set	dwarf+symtab	765b0b84a178		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel

@@ -1,14 +1,14 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3092	0	452	0	452	3	4	144	2492	0	14.6	14.7	19.4	14.6							0			
-functions	6301	91992	713	75	574	9	891	1443	3254	0	11.3	25.5	48.4	11.3							0	0	16	
-functions (distinct names)	2481	21770	510	75	507	9	12	566	1393	0	20.6	21.0	43.9	20.6							0			
+functions	6301	91992	723	79	584	9	891	1440	3247	0	11.5	25.6	48.5	11.5							0	0	16	
+functions (distinct names)	2481	21770	514	79	511	9	12	565	1390	0	20.7	21.2	44.0	20.7							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ucode	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0						0	0			
 spec-registers	174	0	159	10	158	0	0	4	11	0	91.4	91.4	93.7	91.4							0			
 input root manifest	928																							500055fe4acccbc9256d61eb7716475b355bdd721167f32bf1c18b9c15f2372d
-functions in IP27/unix	995	12489	250	47	250	0	124	235	386	0	25.1	37.6	61.2	25.1							0	0	0	
+functions in IP27/unix	995	12489	260	51	260	0	118	234	383	0	26.1	38.0	61.5	26.1							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/acl_hwg.o	0	3	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/acl_nfs3.o	0	2	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -273,7 +273,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/kbd.o	0	42	0	0	0	0	0	0	0	0	0.0	0.0	0.0
 functions in IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_di.o)	0	134	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_events.o)	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/kdsp.a(audutil.o)	0	94	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP27/usr/cpu/sysgen/IP27boot/kernel.o	279	1082	9	0	9	0	80	71	119	0	3.2	31.9	57.3	3.2							0	0	0	
+functions in IP27/usr/cpu/sysgen/IP27boot/kernel.o	279	1082	9	0	9	0	83	70	117	0	3.2	33.0	58.1	3.2							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/keyboard.a(pckbd.o)	0	14	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/kitchen_sync.o	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/klidbg.o	0	19	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -2491,7 +2491,7 @@ functions in IP35/usr/cpu/sysgen/IP35boot/kbd.o	0	42	0	0	0	0	0	0	0	0	0.0	0.0	0.0
 functions in IP35/usr/cpu/sysgen/IP35boot/kdsp.a(kdsp_di.o)	0	134	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/kdsp.a(kdsp_events.o)	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/kdsp.a(audutil.o)	0	94	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP35/usr/cpu/sysgen/IP35boot/kernel.o	367	951	8	0	8	0	114	100	145	0	2.2	33.2	60.5	2.2							0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/kernel.o	367	951	8	0	8	0	117	99	143	0	2.2	34.1	61.0	2.2							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/keyboard.a(pckbd.o)	0	14	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/kitchen_sync.o	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/klidbg.o	0	19	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
