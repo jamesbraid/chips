@@ -293,6 +293,166 @@ open.
 6. **PXBOW registers. (unknown.)** Whether the part has the Crossbow's map beyond the identification and link
    registers the code reaches. Route: the IP35 PROM's large crossbar routines (listed in docs/open-questions.md).
 
+## Routines of the IP27 kernel that keep the widget and switch records (`IP27/unix`)
+
+The linked IP27 kernel keeps one record per widget vertex and one per crossbar vertex. A crossbar record is reached with
+`hwgraph_fastinfo_get` on its vertex and carries a fingerprint doubleword at +0. A widget record has a 64-byte layout
+that `xwidget_register` writes (device vertex word +8, widget id byte +12, part and manufacturer words +16 and +24,
+master vertex word +28, master widget id byte +32, error handler and its argument +40 and +48, name pointer +56).
+None of these routines reads or writes a register: they hold the lookup, registration and reset bookkeeping around
+the records. Each entry below was read in full from `IP27/unix`.
+
+- `xswitch_info_get` (`IP27/unix` `0xc00000000006ca78`, 84 bytes) returns the crossbar record of a vertex. It calls
+  `hwgraph_fastinfo_get` on its argument; when the result is nonzero it compares the doubleword at +0 of the record
+  with 0xc000000001437908 (held in the literal-pool slot at 0xc0000000014cdb28) and on a mismatch prints
+  "%v xswitch_info_get bad fingerprint" with `cmn_err(0, ...)`, passing the vertex. It returns the record pointer on
+  every path, mismatch and null included. Established.
+- `xswitch_info_vhdl_set` (`IP27/unix` `0xc00000000006cacc`, 28 bytes) stores its third argument as the word at
+  +0xc plus 4 times the index (second argument) of the record in its first argument. The guard is a signed
+  `slti` against 16, so a negative index also stores; an index of 16 or more stores nothing. It returns no value.
+  Established.
+- `xswitch_info_vhdl_get` (`IP27/unix` `0xc00000000006cae8`, 96 bytes) is the reader for the table that
+  `xswitch_info_vhdl_set` fills. A zero record pointer is tested first and prints
+  "xswitch_info_vhdl_get: null xswitch_info" with `cmn_err(0, ...)`, after which the routine carries on with the
+  zero pointer. For a signed index below 16 it returns the word at +0xc plus 4 times the index; for any other
+  index it returns -1. Established.
+- `xswitch_info_master_assignment_set` (`IP27/unix` `0xc00000000006cb48`, 28 bytes) is the same shape as
+  `xswitch_info_vhdl_set` over a second table of sixteen words: it stores the third argument at +0x4c plus 4 times
+  the index when the signed index is below 16 and does nothing otherwise. Established.
+- `xswitch_info_master_assignment_get` (`IP27/unix` `0xc00000000006cb64`, 32 bytes) returns the word at +0x4c plus
+  4 times the index when the signed index is below 16, else -1. It has no null test of the record pointer, unlike
+  `xswitch_info_vhdl_get`. Established.
+- `xswitch_info_set` (`IP27/unix` `0xc00000000006cb84`, 32 bytes) takes a vertex and a crossbar record. It stores the
+  fingerprint 0xc000000001437908 as a doubleword at +0 of the record (the store sits in the delay slot of the call,
+  so it runs first) and calls `hwgraph_fastinfo_set` with the vertex and the record. It returns that call's
+  result and does not test for a null record. Established.
+- `xswitch_info_new` (`IP27/unix` `0xc00000000006cba4`, 152 bytes) returns the crossbar record of a vertex,
+  creating it when absent. It first calls `xswitch_info_get` and returns a nonzero result at once. Otherwise it calls
+  `kmem_alloc` for 152 (0x98) bytes with flags 0 and stores 0 at +8, then loops sixteen times (counter masked to a
+  byte) calling `xswitch_info_vhdl_set` and `xswitch_info_master_assignment_set` with -1 for each index, and ends with
+  `xswitch_info_set` on the vertex and the new record. It does not test the allocation and never stores the word
+  at +0x8c or the doubleword at +0x90. Established.
+- `xswitch_provider_register` (`IP27/unix` `0xc00000000006cc3c`, 40 bytes) calls `xswitch_info_get` on its first
+  argument and stores its second argument, kept in a callee-saved register across the call, as the doubleword at
+  +0x90 of the record. It returns the record pointer and does not test it for null. Established.
+- `xswitch_info_link_is_ok` (`IP27/unix` `0xc00000000006cc64`, 24 bytes)
+  marks one port usable: it ORs the bit `1 << port`
+  (`sllv`, so the shift count is the low five bits of the second argument and no bound is checked) into the word at
+  +0x8 of the record and stores it back in the delay slot of the return. It sets no return value; `v0` still holds the
+  mask. Established.
+- `xswitch_info_link_ok` (`IP27/unix` `0xc00000000006cc7c`, 36 bytes) is the test for the bit that
+  `xswitch_info_link_is_ok` sets. For a signed port number below 16 it returns the word at +0x8 of the record ANDed
+  with `1 << port`; for any other port it returns 0. Established.
+- `xswitch_reset_link` (`IP27/unix` `0xc00000000006cca0`, 28 bytes) is a forwarding stub: it calls `xbow_reset_link`
+  with the arguments it received, the delay slot being a no-op, and returns that call's result. Established.
+- `xswitch_id_get` (`IP27/unix` `0xc00000000006ccbc`, 40 bytes) reads the crossbar's id label. It calls
+  `hwgraph_info_get_LBL` with the vertex, the label "_xswitch_id" (0xc0000000003c5638) and the stack slot at sp+0,
+  then returns the word at sp+4, the low half of the doubleword the call leaves there. It does not clear the slot
+  and does not look at the call's own result. Established.
+- `xswitch_id_set` (`IP27/unix` `0xc00000000006cce4`, 36 bytes) attaches the id to a vertex: it moves its second
+  argument into the third and calls `hwgraph_info_add_LBL` with the vertex and the label "_xswitch_id"
+  (0xc0000000003c5638), returning that result. Established.
+- `xswitch_vertex_init` (`IP27/unix` `0xc0000000000240c4`, 88 bytes) calls `kmem_zalloc` for 32 bytes with flags 0,
+  runs `init_mutex` on the block with the name "xswvol" (0xc000000001405798) and a last argument of -1, and attaches
+  the block to its vertex argument with `hwgraph_info_add_LBL` under the label "_xswitch_volunteer"
+  (0xc000000001405780). It returns no value and does not test the allocation. Established.
+- `xwidget_info_chk` (`IP27/unix` `0xc00000000006c33c`, 44 bytes) zeroes the doubleword at sp+0, calls
+  `hwgraph_info_get_LBL` with the vertex, the label "_xwidget" (0xc0000000003c5430) and that slot, and returns the
+  doubleword left in the slot: the widget record pointer, or 0 when the label is absent. The call's own result is
+  ignored. Established.
+- `xwidget_info_get` (`IP27/unix` `0xc00000000006c368`, 88 bytes) returns the widget record of a vertex. It calls
+  `hwgraph_fastinfo_get`; a nonzero result has its doubleword at +0 compared with 0xc0000000014378f8 (the address of
+  `widget_info_fingerprint`, from the slot at 0xc0000000014cdb20), and on a mismatch the routine prints
+  "%v bad xwidget_info" (0xc0000000003c5440) with `cmn_err(0, ...)` and still returns the record. A null result
+  returns 0 with no message. Established.
+- `xwidget_info_set` (`IP27/unix` `0xc00000000006c3c0`, 88 bytes) attaches a widget record to a vertex. A nonzero
+  record gets the fingerprint 0xc0000000014378f8 stored at +0x0, then the routine calls `hwgraph_fastinfo_set` with
+  vertex and record and `hwgraph_info_add_LBL` with the label "_xwidget" (string at 0xc0000000003c5430) and the record
+  as value. A null
+  record skips the fingerprint store only; both calls still run. It returns the second call's result. Established.
+- `xwidget_info_dev_get` (`IP27/unix` `0xc00000000006c418`, 52 bytes) returns the word at +8 of a widget record, the
+  device vertex that `xwidget_register` stored there. A zero argument calls `panic` with
+  "xwidget_info_dev_get: null xwidget_info" (0xc0000000003c5458) and the load then follows. Established.
+- `xwidget_info_id_get` (`IP27/unix` `0xc00000000006c44c`, 52 bytes)
+  returns the unsigned byte (`lbu`) at +0xc, the
+  widget number the record was registered under. For a zero argument it first calls `panic` with a message that names
+  this routine (0xc0000000003c5480). Established.
+- `xwidget_info_master_get` (`IP27/unix` `0xc00000000006c480`, 52 bytes) returns the word at +0x1c, the vertex of
+  the master the widget reports to. The message for a zero argument, passed to `panic`, is at 0xc0000000003c54a8.
+  Established.
+- `xwidget_info_masterid_get` (`IP27/unix` `0xc00000000006c4b4`, 52 bytes) loads the unsigned byte at +0x20 of the
+  record: the master's widget number, stored by `xwidget_register` from its fifth argument. A zero argument goes to
+  `panic` with the message at 0xc0000000003c54d8 before the load. Established.
+- `xwidget_info_part_num_get` (`IP27/unix` `0xc00000000006c4e8`, 52 bytes) loads the word at +0x10, the part number
+  copied from the identification record that `xwidget_register` was given. The `panic` message for a zero argument
+  sits at 0xc0000000003c5508. Established.
+- `xwidget_info_mfg_num_get` (`IP27/unix` `0xc00000000006c51c`, 52 bytes) loads the word at +0x18, the manufacturer
+  number copied in by `xwidget_register` from word 8 of its identification record. A zero argument is reported
+  through `panic` with the message at 0xc0000000003c5538 first. Established.
+- `xwidget_info_name_get` (`IP27/unix` `0xc00000000006c550`, 52 bytes) returns the doubleword at +0x38, the pointer
+  to the device name string `xwidget_register` allocated. As in its siblings a zero argument calls `panic`
+  (message at 0xc0000000003c5568) and the load follows. Established.
+- `xwidget_driver_register` (`IP27/unix` `0xc00000000006c630`, 116 bytes) takes a part number, a manufacturer number, a
+  name and a flags word. When the doubleword at 0xc0000000014cb098 (the widget connection table) is still zero it calls
+  `xtalk_init` first, restoring the four arguments from the stack afterwards. It then calls `cdl_add_driver` with
+  the table, the four arguments in order and a final 0, and returns that result. Established.
+- `xwidget_driver_unregister` (`IP27/unix` `0xc00000000006c6a4`, 36 bytes) removes a driver: it calls
+  `cdl_del_driver` with the table pointer read from 0xc0000000014cb098, its one argument and 0, and returns the
+  result. Unlike the register routine it never calls `xtalk_init`. Established.
+- `xwidget_register` (`IP27/unix` `0xc00000000006c6f0`, 292 bytes) builds the widget record. Its arguments are an
+  identification record (three words), the device vertex, the widget number, the master vertex, the master's widget
+  number and an optional attach-info value. It calls `kmem_alloc` for 64 bytes and stores in this order: byte +0x20,
+  word +0x1c, byte +0xc, word +8, words +0x10 and +0x14 from words 0 and 4 of the identification record,
+  doublewords +0x28 and +0x30 as 0, and word +0x18 from word 8 of it (the last in the delay slot of the call to
+  `dev_to_name`). It then calls `dev_to_name` with a 256-byte stack buffer, `strlen`, `kmem_alloc` for length plus 1,
+  `strcpy`, and stores the copy's address at +0x38. It calls `xwidget_info_set`, then `device_master_set` with the
+  master vertex, then, only for a nonzero attach-info value, `async_attach_add_info`, and last `cdl_add_connpt` with the
+  table, words 0 and 8 of the identification record, the device vertex and 0, whose result it returns. Established.
+- `xwidget_unregister` (`IP27/unix` `0xc00000000006c814`, 164 bytes)
+  undoes `xwidget_register`. A null result from
+  `xwidget_info_get` returns 1. Otherwise it calls `hwgraph_inventory_remove` with five -1 arguments, `cdl_del_connpt`
+  with the table, the words at +0x10 and +0x18 of the record, the vertex and 0, `strlen` and `kmem_free` of the name
+  with the `strlen` result as its size (one byte less than `xwidget_register` allocated), `blkclr` of the first 8 bytes of the
+  record, and `kmem_free` of the record at 64 bytes. It returns 0 on that path and leaves the label and the
+  fast-info pointer in place. Established.
+- `xwidget_error_register` (`IP27/unix` `0xc00000000006c8b8`, 52 bytes) calls `xwidget_info_get` and stores its
+  second argument at +0x28 and its third at +0x30 of the record as doublewords, the handler and its argument that the
+  error path reads. It returns the record pointer and does no null test. Established.
+- `xwidget_reset` (`IP27/unix` `0xc00000000006c8ec`, 28 bytes)
+  is a forwarding stub like `xswitch_reset_link`: it
+  calls `xswitch_reset_link` with the arguments it received and returns its result. Established.
+- `xwidget_gfx_reset` (`IP27/unix` `0xc00000000006c908`, 120 bytes) resets a graphics widget. It calls
+  `xswitch_reset_link` with its argument, then `xwidget_info_get` on the vertex. A null record calls `assfail` with
+  "info != NULL" and line 1089 (0x441) and carries on. It then calls
+  `xwidget_info_master_get`, `xwidget_info_id_get` and `hub_widget_reset` with the master vertex and the widget number,
+  returning the last result. Established.
+- `xwidget_name_get` (`IP27/unix` `0xc00000000006c980`, 60 bytes) returns a printable name for a vertex. An argument of
+  -1 returns the string "No Name" (at 0xc0000000003c55d0). Any other argument is passed to `xwidget_info_get` and the
+  record to `xwidget_info_name_get`, whose result is returned. Established.
+- `xbow_mlreset` (`IP27/unix` `0xc00000000006cd08`, 8 bytes)
+  is a bare return: it executes `jr ra` with a no-op in the
+  delay slot at 0xc00000000006cd0c, touches no register and sets no return value. It is 8 bytes of code. Established.
+- `xbow_init` (`IP27/unix` `0xc00000000006cd10`, 80 bytes) calls `xwidget_driver_register` three times, in this order, with
+  part 0xd100, then 0xd000, then 0, each with manufacturer 0, the name "xbow_" (0xc0000000003c5648) and flags 1. The
+  second part number is set in the delay slot of its call. It returns no value. Established.
+- `xbow_open` (`IP27/unix` `0xc00000000006d07c`, 52 bytes) is a privilege check: it calls `cap_able_cred` with the credential
+  in its fourth argument and the capability mask 0x2000000000 (1 shifted left by 37, formed with `dsll32`). It returns 0
+  when the call returns nonzero and 1 when it returns zero. Established.
+- `xbow_close` (`IP27/unix` `0xc00000000006d0b0`, 8 bytes)
+  only returns 0: `jr ra` is followed by `move v0,zero` in the delay slot at 0xc00000000006d0b4, and
+  no call or memory access is made. Established.
+- `xbow_map` (`IP27/unix` `0xc00000000006d0b8`, 68 bytes) maps the crossbar for a user process. It calls
+  `hwgraph_fastinfo_get` on its first argument, then `v_mapphys` with its second argument, the doubleword at +0x10 of
+  that record, its fourth argument rounded up to a multiple of 16384 (`+ 16383`, ANDed with -16384), and -16384 as the
+  last argument. It returns the result of `v_mapphys`. Its third argument is not read. Established.
+- `xbow_unmap` (`IP27/unix` `0xc00000000006d0fc`, 8 bytes)
+  returns 0 and does nothing else: `jr ra` is followed by `move v0,zero` in the delay slot at
+  0xc00000000006d100, with no call or memory access. Established.
+- `xbow_get_perf_counters` (`IP27/unix` `0xc00000000006e7d0`, 32 bytes) calls `hwgraph_fastinfo_get` on its argument and
+  returns that record pointer plus 64 (an address 0x40 into the record, not a loaded value). Established.
+- `xbow_get_llp_status` (`IP27/unix` `0xc00000000006e9bc`, 32 bytes) calls `hwgraph_fastinfo_get` on its argument and
+  returns the record pointer plus 320 (0x140), an address and not a loaded word. Established.
+
 ## Reset expectations
 
 Unknown for every register: no routine in the objects read reads a register before writing it, except link control
