@@ -186,7 +186,7 @@ specification states for the external ISA space. The routines call the chip a "d
   calls `cpu_powerdown` when register `0x4a` bit 0 is set.
 - `set_autopoweron` writes registers 1, 3, 5 (alarm seconds, minutes, hours by position) and `0x49`.
 - `read_dallas_nvram` accepts offset plus length below 114 and an offset above 0 (it returns 1 for anything else and
-  0 after a read) and reads bytes at `0x3a0e08 + offset + index`, **one byte apart**. Every other register of this block is 256 bytes apart. The two spacings cannot both describe one
+  0 after a read) and reads bytes at `0xbf3a0e08 + offset + index`, **one byte apart**. Every other register of this block is 256 bytes apart. The two spacings cannot both describe one
   chip; **unknown** which the hardware decodes (open question).
 
 ## Other established sequences
