@@ -6,7 +6,7 @@ mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ucode	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0						0	0			
-spec-registers	174	0	51	0	50	0	0	9	114	0	29.3	29.3	34.5	29.3							0			
+spec-registers	174	0	61	0	60	0	0	9	104	0	35.1	35.1	40.2	35.1							0			
 input root manifest	928																							500055fe4acccbc9256d61eb7716475b355bdd721167f32bf1c18b9c15f2372d
 functions in IP27/unix	995	12489	24	0	24	0	8	273	690	0	2.4	3.2	30.7	2.4							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
