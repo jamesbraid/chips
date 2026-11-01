@@ -296,6 +296,45 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
   `ah6_build`, `esp6_build`, `ipsec_duplist` and `ipsec_init`. `ip6_output.o` imports `ah6_build`, `esp6_build` and
   `ipsec_lookup`, so these stand in for the IPsec code at the call sites.
 
+- `IP27/usr/cpu/sysgen/IP27boot/if_eg.o` (inferred): a network interface driver, 55 routines in a 77856-byte object.
+  `eg_ioctl` (3124 bytes), `eg_transmit` (2124 bytes), `eg_init` (1532 bytes) and `eg_recv` (1492 bytes) are the
+  driver entry points. The routine names `eg_loadFW` and `eg_startFW` say it loads and starts an on-card firmware
+  image, and `read_serial_eeprom` reads the station address from a serial EEPROM. It calls `ether_attach` and
+  `ether_input`, and `hwgraph_char_device_add` registers the device. Rule 2 excludes the 55 routines.
+- `IP27/usr/cpu/sysgen/IP27boot/if_ppp.o` (inferred): the PPP STREAMS driver, 25 routines in a 53480-byte object.
+  `ppp_wput` (7156 bytes) takes downstream messages, `ppp_oframe` (2640 bytes) frames an outbound packet, `pc_rsrv`
+  (2012 bytes) and `ppp_wsrvs` (1808 bytes) run the queues, and `ppp_ioctl` configures the link. It calls `vj_compress`
+  and `vj_uncompress` for TCP/IP header compression, and imports the compression modules `pf_bsd_comp` and
+  `pf_pred1_comp`. It calls `if_attach`.
+- `IP27/usr/cpu/sysgen/IP27boot/if_ptr.o` (inferred): a token-ring network interface driver, 69 routines in a 129544-byte
+  object. The `mtr_*` routines carry the ring logic, for example `mtr_participant_claim_toke` (claim token), and
+  `mtr_ioctl` (3788 bytes), `mtr_receive` (3464 bytes) and `driver_prepare_adapter` (2648 bytes) are the largest. The
+  `if_mtr*` routines are the interface entry points, `hwi_pci_install_card` and `PCI_setup_cfg` set up the PCI card,
+  and the `at24_serial_*` routines read the EEPROM. It calls `if_attach` and `arpresolve`.
+- `IP27/usr/cpu/sysgen/IP27boot/if_rns.o` (inferred): a network interface driver for an FDDI ring, 61 routines in a
+  71800-byte object. The routine names use the FDDI management terms `rns_pcm_off` (physical connection management),
+  `rns_lem_accum` (link error monitor) and `rns_lct_on` (link confidence test), and `rns_output` (1612 bytes) and
+  `rns_reset` (1452 bytes) are the largest. It calls `if_attach` and `arpresolve`, and imports `pciio_intr_connect`
+  and `pciio_dmamap_alloc` for the PCI adapter. Rule 2 excludes the routines.
+- `IP27/usr/cpu/sysgen/IP27boot/if_sl.o` (inferred): the serial-line IP STREAMS driver, 17 routines in a 33048-byte
+  object. `sl_cout` (2504 bytes) and `sl_output` (1376 bytes) send, `sl_mbin` (1324 bytes) takes received frames,
+  `sl_wsrv` (1904 bytes) runs the write queue, and `sl_set_mtu` sets the MTU. It calls `vj_compress`, `vj_uncompress`
+  and `in_cksum_sub`, and `if_attach`.
+- `IP27/usr/cpu/sysgen/IP27boot/if_tg.o` (inferred): a gigabit Ethernet driver with copper and fibre PHY code, 92
+  routines in a 199984-byte object. `tg_transmit` (5148 bytes), `tg_ioctl` (4932 bytes), `tg_init_card` (3384 bytes) and
+  `tg_recv` (3272 bytes) are the largest. `tg_init_copper_phy` and `tg_init_fiber_phy` set up the two media, and
+  `tg_8023z` is the fibre negotiation. It calls `ether_attach` and `ether_input`, and carries the trace buffer routines
+  `ftrc_dump` and `ftrc_event`.
+- `IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o` (inferred): the IPv4 multicast routing interface, 34 routines in a 41232-byte
+  object. `ip_mrouter_set` and `ip_mrouter_get` take the routing daemon's options, `add_vif` and `add_mfc` (1436 bytes)
+  install interfaces and forwarding entries, `ip_mforward` (1772 bytes) forwards multicast packets, and `tbf_queue` and
+  `tbf_process_q` run a token-bucket rate limiter. It calls `ip_output` and `m_copy`, and imports `viftable` and
+  `numvifs`.
+- `IP27/usr/cpu/sysgen/IP27boot/ipfilter.o` (inferred): the packet filter control device and kernel filter hook, nine
+  routines in an 18880-byte object. `ipfilter_kernel` (1424 bytes) and `ipfilter_kernel_match` run the filter on a
+  packet, `ipfilterioctl` (1244 bytes) takes the control requests, `ipfiltertimer` (312 bytes) ages the cache, and
+  `log_packet` (360 bytes) writes a log line. It calls `in_cksum`, `hash_lookup` and `network_input`.
+
 ## Process, memory, scheduler, lock and debugger objects (scope rule 3)
 
 - `IP27/usr/cpu/sysgen/IP27boot/capability.a(capability.o)` (inferred): the capability set for processes, 11 routines in a
