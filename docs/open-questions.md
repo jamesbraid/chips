@@ -7,7 +7,7 @@ chip page and the entry is deleted.
   type field and by the identification word's part number. For Bridge (part `0xc002`), XBridge (`0xd002`) and PIC
   (`0xd102`, `0xd112`) the part numbers and the 32-bit and 64-bit layouts match the public Linux and OpenBSD constants
   (chips/bridge/README.md, "Against the public drivers"), so those three are settled. Still open: the type 3 and part
-  `0xe000`/`0xe010` chip (see TIOCP) and the part number `0xd100` that `xbow_widget_present` tests, whose chip is inferred from the PIC numbers.
+  `0xe000`/`0xe010` chip (see TIOCP). The part number `0xd100` that `xbow_widget_present` tests is not a Bridge-family part: the routine reads it from the word at +4 of the block it is given and then reads per-link words at +0x13c from a 0x40 stride, so it names the crossbar's own identification (inferred).
   Next: the Crossbow probe routines' callers, and the public Linux `pci-xtalk-bridge.c` history for the later part
   numbers.
 - **Bridge and XBridge: revision 2 attach path.** `xbridge_attach` takes a separate path for identification

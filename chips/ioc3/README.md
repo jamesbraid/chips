@@ -64,7 +64,7 @@ is of the role, with the evidence in the row.
 | cfg `0x4` | command | 4 | rw | `ioc3_attach` reads it and writes it back ORed with `0x8146` | E |
 | cfg `0x8` | revision | 4 | r | `if_efattach` keeps the low byte | E |
 | cfg `0xc` | latency timer word | 4 | w | `ioc3_attach` stores the whole word: `0xff00` on IP27 and IP35, `0x2800` on IP30 | E |
-| cfg `0x40`, `0x44` | error address, low and high | 4 | rw, r | `ioc3_error_handler` reads both and writes `0x40` back; read for its accesses only | I |
+| cfg `0x40`, `0x44` | error address, low and high | 4 | rw, r | `ioc3_error_handler` reads both, tests bit 0 of `0x40` (valid) and selects among 13 cases by bits 4:1 through a jump table, then stores the constant 1 to `0x40`; the cases are not read | I |
 | `0x1c` | interrupt status | 4 | rw | `ioc3_attach` writes all ones; `ioc3_pending_intrs` reads it; `ioc3_serial_intr` reads it and writes handled bits back | E |
 | `0x20` | interrupt enable set | 4 | w | `ioc3_write_ireg` (below) | E |
 | `0x24` | interrupt enable clear | 4 | w | `ioc3_write_ireg` (below) | E |
@@ -235,6 +235,6 @@ control, enables and status); the rest are unknown.
   section's relocations and read the words.
 - **UART byte lane** and the **register 7 prescaler**: see the comparison.
 - **Parallel port**: roles of `0x84` to `0x98` and bit meanings at `0x20151` to `0x2015a`; `plp_dma`, `plpintr` and `plp_reset` are not read.
-- **Error address words** (cfg `0x40`, `0x44`): `ioc3_error_handler` is read only for its accesses.
+- **Error address words** (cfg `0x40`, `0x44`): `ioc3_error_handler` is read only for its accesses and the shape above (valid-bit test, jump table on bits 4:1, constant 1 stored to `0x40`); the table targets are not read. The routine cannot be run through `scripts/facts.py` (it fails on a literal tuple); the objdump listing was used.
 - **Keyboard and mouse bit meanings** in `0x9c` and `0xa0` to `0xac`: from the routines' masks only.
 - **Per-slot subdevice masks**: which board string selects `0x91`.
