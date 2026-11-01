@@ -161,3 +161,47 @@ routine reads them, and is otherwise not part of this page.
   Bits 11:0 hold vt_hcmap_off, which clears the colour map write enable when vt_x equals it. Bits 23:12 are named
   vt_vcmap_on, but the spec compares them with vt_x, the horizontal counter, and sets the write enable on that compare.
   This entry takes the compare as written. Both fields reset to zero.
+
+- `0x16010040` (`0x10040`): VT_16, colour map write enable on the y counter (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 40). Established.
+  Bits 11:0 hold vt_vcmap_off, which clears the colour map write enable when vt_y equals it. Bits 23:12 hold
+  vt_vcmap_on, which sets the enable when vt_y equals it. Both reset to zero.
+
+- `0x16010044` (`0x10044`): VT_17, display ID counter preset (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 40). Established.
+  Bits 11:0 hold did_startx. When vt_x equals it, did_x is preset to zero. Bits 23:12 hold did_starty, which presets
+  did_y when vt_y equals vt_vblank_on. Both reset to zero.
+
+- `0x16010048` (`0x10048`): VT_18, cursor position preset (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 40). Established.
+  Bits 11:0 hold crs_startx. When vt_x equals it, crs_x is preset to binary 111111100000 (0xfe0). Bits 23:12 hold
+  crs_starty, which presets crs_y when vt_x minus crs_x_offset and vt_y both match the blanking points. The spec defines
+  crs_x_offset as vt_hblank_on plus binary 100000 (32). Both fields reset to zero.
+
+- `0x1601004c` (`0x1004c`): VT_19, video capture origin preset (docs/sources/specs/gbe-specification.pdf, section 3.2.2, p. 41). Established.
+  Bits 11:0 hold vc_startx. When vt_x equals it, vc_x is preset to zero. Bits 23:12 hold vc_starty, which presets vc_y
+  when vt_y equals vt_vblank_on. Both reset to zero.
+
+- `0x16020000` (`0x20000`): OVR_0, overlay plane tile geometry (docs/sources/specs/gbe-specification.pdf, section 3.2.3, p. 42). Established.
+  Bits 4:0 hold ovr_rhs, the width of the right-hand tile in 32-byte units. Bits 12:5 hold ovr_width_tile, the overlay
+  width in whole tiles. Bit 13 is a diagnostic FIFO reset that the spec says not to modify. All fields reset to zero.
+
+- `0x16030000` (`0x30000`): FRM_0, normal plane tile geometry and depth (docs/sources/specs/gbe-specification.pdf, section 3.2.4, p. 43). Established.
+  Bits 4:0 hold frm_rhs (right-hand tile width in 32-byte units) and bits 12:5 hold frm_width_tile (width in whole tiles).
+  Bits 14:13 select the pixel depth: 00 for 8 bit, 01 for 16 bit and 10 for 32 bit. Bit 15 is a diagnostic FIFO reset.
+  All fields reset to zero, so the depth resets to 8 bit.
+
+- `0x16030004` (`0x30004`): FRM_1, normal and overlay plane height (docs/sources/specs/gbe-specification.pdf, section 3.2.4, p. 43). Established.
+  Bits 31:16 hold fb_height_pix, the height of the normal and overlay planes in pixels, reset to zero. The table names
+  no field in bits 15:0.
+
+- `0x16048000` (`0x48000`): WID, the window ID table, 32 words (docs/sources/specs/gbe-specification.pdf, section 3.2.5, p. 44). Established.
+  Each word holds buf in bits 1:0 (01 lower half, 10 upper half, 11 both), typ in bits 4:2 (000 I8, 001 I12, 010 RG3B2,
+  011 RGB4, 100 RGB5, 101 RGB8), cm in bits 9:5, gm in bit 10 (0 enables gamma, 1 disables) and aux in bits 12:11,
+  which drive the digital pixel bus. The spec says cm is the upper five bits of the colour map index in I8 mode and the
+  direct visual map value for RGB8 pixels when it is nonzero. The words run from 0x48000 to 0x4807C at a stride of 4.
+
+- `0x16050000` (`0x50000`): CMAP, colour map RAM, 4608 words (docs/sources/specs/gbe-specification.pdf, section 3.2.6, p. 45). Established.
+  Each word holds blue in bits 15:8, green in bits 23:16 and red in bits 31:24. The table names no field in bits 7:0.
+  The words run from 0x50000 to 0x547FC at a stride of 4.
+
+- `0x16058000` (`0x58000`): CMFIFO, colour map FIFO status (docs/sources/specs/gbe-specification.pdf, section 3.2.6, p. 45). Established.
+  Bits 5:0 hold cm_fifo, the number of free entries in the colour map FIFO, reset to zero. The table names no field
+  above bit 5.
