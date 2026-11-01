@@ -320,6 +320,52 @@ issued, including delay slots, which run before the branch or call they belong t
   vector number at offset 8 (`0x1374` to `0x137c`). If the doubleword read from `a0 + 24` is nonzero it calls that pointer at `0x1394`
   with the original `a0`, and returns that call's result. Otherwise it returns `heart_imr_bits_rmw`'s result.
 
+- `heart_provider_startup` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x13c8`, 8 bytes, read in full, established):
+  the whole body is `jr ra` at `0x13c8` with a nop in its delay slot at `0x13cc`. Nothing is stored and no call is
+  made, so the caller's `v0` is what it returns.
+- `heart_provider_shutdown` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x13d0`, 28 bytes, read in full, established):
+  opens a 16-byte frame and saves `ra` at `0(sp)` (`sd` at `0x13d4`). It calls `xtalk_provider_unregister` at `0x13d8`
+  with `a0` unchanged from entry, restores `ra` at `0x13e0`, and returns the callee's result in `v0`. The frame is
+  popped in the delay slot of the `jr` at `0x13e4`.
+- `heart_error_devenable` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x179c`, 8 bytes, read in full, established):
+  the `jr ra` at `0x179c` carries `or v0,zero,zero` in its delay slot at `0x17a0`, so the constant 0 is the return
+  value. The routine makes no call.
+- `heart_intrd` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x17a4`, 52 bytes, read in full, established): saves `ra`
+  and `s8` in a 16-byte frame and keeps the record pointer in `s8`. It loads the doubleword at record offset 0 into
+  `at` and calls through `at` at `0x17b8`, with `a0` set from the doubleword at record offset 8 by the call's delay
+  slot. It then calls `ipsema` at `0x17c0` with `a0` set to record plus 32, and returns `ipsema`'s result.
+- `heart_intrd_start` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x17d8`, 124 bytes, read in full, established):
+  calls `setmustrun` at `0x17e8` with `a0` set from the halfword at record offset 16. It calls `xthread_set_func` at
+  `0x17f8` with `a1` set to `heart_intrd` (the pointer at `gp-30680`) and `a2` set to the record. It calls
+  `fetch_kname` at `0x1804` with the doubleword at record offset 0 as `a0` and the bottom of its frame as `a1`.
+  `strncpy` at `0x1818` copies 16 bytes from the `fetch_kname` result to the pointer at `0xffffffffffffc020` plus 832.
+  An `ll`/`sc` pair at `0x1828` and `0x1830` ORs 0x400 into the word at record offset 24. The branch-likely `beql` at
+  `0x1834` repeats that pair only when `sc` fails. The routine ends with `ipsema` at `0x183c` on record plus 32 and
+  returns its result.
+- `heart_intr_prealloc` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xfcc`, 92 bytes, read in full, established):
+  saves the entry `a2`, `a3` and `a4` in a 48-byte frame, keeps the entry `a1` in `s8`, and calls
+  `heart_intr_bits_take` at `0xfec` with `1` shifted left by the entry `a1` (the `dsllv` in the delay slot). It then
+  calls through `a5`, which holds the entry `a2`, at `0x1010`. That call gets `a0` from the entry `a3`, `a1` from the
+  entry `a4`, `a2` as the low four bits of the doubleword at `0xffffffffaff00080`, `a3` 128, and `a4` from the entry
+  `a1`. The routine returns the indirect call's result.
+- `heart_mp_intr_init` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x56c`, 68 bytes, read in full, established): a
+  leaf routine with no frame and no call. From the entry `a0` it forms three single bits, at `a0+42`, `a0+46` and
+  `a0+59` (each `dsllv` uses the shift count modulo 64), and ORs in bit 63 (`dsll32` by 31 of -1). The doubleword it
+  stores is the OR of those four bits. The store goes to `0xffffffffaff10000` plus `8 * a0` (`dsll` by 3 at `0x578`,
+  `daddu` at `0x5a0`), in the delay slot of the `jr ra` at `0x5a8`.
+- `heart_cpu_intr` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x3fc`, 56 bytes, read in full, established): loads the
+  halfword at `0xffffffffffffc3a0`, adds 46, and shifts `1` left by that value. The `sd` in the delay slot of `jal
+  doacvec` at `0x418` writes the result to `0xffffffffaff10028`, the offset-0x10028 register that `clear_cpu_intr`
+  also writes. It then calls `doactions` at `0x420` and returns its result.
+- `heart_debug_intr` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x434`, 56 bytes, read in full, established): the
+  same halfword at `0xffffffffffffc3a0`, now plus 42, forms the bit `1 << (value+42)`. That bit is stored to
+  `0xffffffffaff10028` in the delay slot of `jal debug` at `0x458`. The call's `a0` is the `.rodata` pointer from
+  `gp-30712` plus 88, and the routine returns `debug`'s result.
+- `chkdebug` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x46c`, 68 bytes, read in full, established): ANDs the bit `1
+  << (halfword at 0xffffffffffffc3a0 + 42)` with the doubleword at `0xffffffffaff10030`. If the result is zero the
+  `beq` at `0x48c` returns with `v0` unchanged. Otherwise the bit is stored to `0xffffffffaff10028` at `0x498`, and
+  `debug` is called at `0x49c` with the `.rodata` pointer plus 88. The routine returns `debug`'s result.
+
 ## Open
 
 Graded entries. "Established" lines are read from the files above; "inferred" lines say what they rest on. Each
