@@ -108,3 +108,15 @@ running the code and the doubleword at -15744 holds that processor's flag bits.
   1 and 4 (a zero divisor raises trap code 7) and leaves other kinds undivided, then replaces a result below 1 with 1.
   When no call returns nonzero it returns the register s0 unconverted: 0 once any call was made, and otherwise the
   doubleword at 0(sp) loaded in the prologue, which the routine never stores. Established.
+- `startrtclock` (`IP30/unix` `0xa800000020014a2c`, 376 bytes, frame 16 bytes) programs the first real-time clock
+  compare for the calling processor and returns nothing. It calls the unnamed routine at 0xa800000020016768, divides
+  its result by 100 (unsigned) and stores the quotient as the word at -15088 of the process page. On the processor
+  whose number (the halfword at -15456) equals `master_procid` it also divides the signed word at -14604 by 100000 and
+  stores that as `cpufreq_cycles`; when `count_min_delta` is still 0 it then sets `count_min_delta` to the smallest
+  count k from 1 upward for which k times `cpufreq_cycles`, summed in 32 bits, is a multiple of 125. For every
+  processor it then stores 0 as the word at -15000 and reads the doubleword at 0xffffffffaff20000. It adds 249999 to
+  that count, divides by 125000 and multiplies back (the multiply is shifts and adds), and stores the rounded value as
+  the doubleword at -15032. That value is rounded up to a multiple of `count_min_delta` (added `count_min_delta` - 1,
+  divided, multiplied) and stored to -15016 and then again to -15032. Last it calls `initcounter` with
+  `cpufreq_cycles` times (that value minus the count rounded down to a multiple of `count_min_delta`), divided by 125,
+  as a 32-bit argument. Divisors of 0 raise trap code 7. Established.
