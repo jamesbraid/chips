@@ -1117,6 +1117,50 @@ tables. Labels are inferred, from the symbol table and the undefined imports. No
   bytes) sets up interface routes, and `rtalloc1` (772 bytes) finds one. `rtredirect` (728 bytes) handles redirects. It
   imports the address lookups `ifa_ifwithaddr`, `ifa_ifwithnet` and `ifaof_ifpforaddr`, and `sysctl_rtable` for the
   sysctl interface. No chip is driven.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(rtsock.o)` (inferred): the routing socket, which sends route changes to user
+  programs. Sixteen routines in a 23316-byte member: `route_output` (2404 bytes) takes route requests and calls
+  `rtrequest1`, `sysctl_iflist` (1192 bytes) reports the interface list, and `rt_msg2` (644 bytes) and `rt_newaddrmsg`
+  (632 bytes) build the replies. It imports `raw_attach`, `raw_init`, `raw_input` and `raw_usrreq` from the raw socket
+  code and `rt_setgate` for gateway addresses.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(slcompress.o)` (inferred): Van Jacobson TCP and IP header compression for serial
+  links, four routines in a 9844-byte member. `vj_compress` (2456 bytes) and `vj_uncompress` (1312 bytes) do the work,
+  `vj_uncomp_init` (264 bytes) sets up the decompressor state, and `vj_comp_init` sets up the compressor. Its state comes
+  from `kern_malloc` and goes back through `kern_free`. It drives no chip.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(compat.o)` (inferred): a one-routine compatibility member, `schednetisr`, in a
+  3476-byte object. It imports `network_input` and `m_freem` and brackets its work with the priority-level calls `splhi`
+  and `splx`, and it drives no chip.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(rsvp.o)` (inferred): RSVP resource reservation, 39 routines in a 27268-byte member.
+  `ps_init` (860 bytes) and `ps_output` (708 bytes) run the packet scheduler, `ps_send_down` (844 bytes) passes packets to
+  the interface, `ps_tick_maint` (604 bytes) maintains its timers, and `rsvp_addflow` (488 bytes) adds a reserved flow. It
+  calls the packet queues in `bsd.a(rsvp_qo.o)` through the `psqo_*` imports, and reads the settings `ps_enabled`,
+  `ps_num_batch_pkts` and `ps_rsvp_bandwidth`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(rsvp_qo.o)` (inferred): the packet queues under RSVP, five routines in a 5460-byte
+  member. `psqo_enq_pkt` (324 bytes) and `psqo_get_next_pkt` (372 bytes) add and take packets, `psqo_alloc_queue` (136
+  bytes) and `psqo_free_queue` (124 bytes) manage the queues, and `psqo_init` sets up the member. Its storage comes from
+  `kmem_zalloc` and `kmem_free`, and it guards the queues with `init_spinlock`, `splhi` and `splx`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_is.o)` (inferred): an interface-striping driver, 41 routines in a 38692-byte
+  member. `is_output` (1556 bytes), `is_reorder_drain` (1356 bytes) and `is_output_bottom` (1172 bytes) send and drain
+  packets, `is_input_reorder_entry` (784 bytes) puts input back in order, and `is_add_link` (668 bytes) adds a link to a
+  stripe. It attaches to the interface list with `if_attach` and `if_detach`, starts its threads with `xthread_setup` and
+  `xthread_set_func`, and reads the thread priorities `is_outq_thread_priority` and `is_reorder_thread_priority`. It
+  calls `ip_to_stripe_vec` and drives no chip directly.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(igmp.o)` (inferred): IGMP group membership, 14 routines in a 14676-byte member.
+  `igmp_input` (1368 bytes) handles membership reports, `igmp_sendpkt` (396 bytes) sends them, and the
+  `igmp_update_host_*` routines keep the host's group state, which the member reaches through `hash_lookup` and
+  `hash_enum`. It starts the multicast router with `ip_mroute_init` and `ip_mroute_slowtimo`, and sends with `ip_output`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_ether.o)` (inferred): ARP, 27 routines in a 28996-byte member. `in_arpinput`
+  (1592 bytes) and `arpresolve` (1564 bytes) answer and resolve address requests, `arp_rtrequest` (1032 bytes) manages
+  the ARP routes, `arpioctl` (1012 bytes) is the control entry, and `arptimer` (872 bytes) ages entries. It calls the
+  routing tree through `rtalloc1`, `rtrequest` and `rtrequest_promote`, and sets its timer with `dtimeout`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(in.o)` (inferred): IPv4 interface addressing, 73 routines in a 42388-byte member.
+  `in_control` (3524 bytes) is the address ioctl, `in_ifinit` (988 bytes) sets an interface address, and `inet_ntop` (876
+  bytes) and `inet_addr` (704 bytes) convert addresses to and from text. It imports the tunnel attach `gifattach`, the
+  tunnel switches `config_tunnel_enable` and `auto_tunnel_enable`, the IPv6 start-up `in6_init`, and the group calls
+  `igmp_joingroup` and `igmp_leavegroup`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_pcb.o)` (inferred): the protocol control blocks for IPv4 sockets, 38 routines in a
+  38980-byte member. `in_pcblookupx` (3560 bytes) finds the block for an arriving packet, `in_pcbnotify` (1376 bytes)
+  passes an error to the blocks it matches, and `udp_full_assign` (1264 bytes) and `tcp_full_assign` (1060 bytes) set the
+  full endpoint. It draws ports with `read_random_real` and `inpcb_randomize_ports`, and works on the `tcb` and `udb` tables.
 
 ## Scope questions
 
