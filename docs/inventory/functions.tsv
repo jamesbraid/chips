@@ -1275,7 +1275,7 @@ IP27/unix	kernel	n64		0x0		growdir	dwarf			in	undocumented
 IP27/unix	kernel	n64		0x0		gstate_to_string	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		guardian_nodepda_update	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		handle_fetchop_fault	dwarf			in	undocumented		
-IP27/unix	kernel	n64		0x0		hardware_init	dwarf			in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP27/unix	kernel	n64		0x0		hardware_init	dwarf			in	located	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP27/unix	kernel	n64		0x0		hashinsert	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		hashremove	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		heapzone_free	dwarf			in	undocumented		
@@ -5822,7 +5822,7 @@ IP27/unix	kernel	n64	.text	0xc00000000007eef0	368	pcireg_bus_err_get	symtab	6dee
 IP27/unix	kernel	n64	.text	0xc00000000007f060	360	pcireg_control_get	symtab	670f4aa11ac1		in	named-only	chips/bridge/README.md#what-identifies-the-chip-and-what-irix-does-with-the-answer	What identifies the chip, and what IRIX does with the answer
 IP27/unix	kernel	n64	.text	0xc00000000007f1c8	392	pcireg_control_set	symtab	4699ce6935da		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
 IP27/unix	kernel	n64	.text	0xc00000000007f350	428	pcireg_control_bit_clr	symtab	df9bd195b4dd		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000007f4fc	412	pcireg_control_bit_set	symtab	ea9b51306628		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000007f4fc	412	pcireg_control_bit_set	symtab	ea9b51306628		in	named-only	chips/bridge/README.md#established-sequences	Established sequences
 IP27/unix	kernel	n64	.text	0xc00000000007f698	496	pcireg_ssram_size_set	symtab	0a2868e3483d		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP27/unix	kernel	n64	.text	0xc00000000007f888	376	pcireg_speed_get	symtab	1c48986698ce		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP27/unix	kernel	n64	.text	0xc00000000007fa00	364	pcireg_mode_get	symtab	12cf189c175c		in	named-only	chips/pic/README.md#access-sequences	Access sequences
@@ -6634,7 +6634,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000e5a58	124	if_efopen	symtab	f5884d959736	
 IP27/unix	kernel	n64	.text	0xc0000000000e5ad4	236	ef_ifattach	symtab	b2a825ea41f8		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000e5bc0	44	if_efinit	symtab	d2a7473518ba		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000e5bec	792	if_efattach	symtab	c02a95057c19		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
-IP27/unix	kernel	n64	.text	0xc0000000000e5f04	120	ef_detach	symtab	f1f60a547091		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000e5f04	120	ef_detach	symtab	f1f60a547091		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
 IP27/unix	kernel	n64	.text	0xc0000000000e5f7c	176	mactoh	symtab	2aad3585424a		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000e6080	116	ssram_discovery	symtab	6628a06666eb		in	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
 IP27/unix	kernel	n64	.text	0xc0000000000e9298	68	gfxtable_readerlock	symtab	b23137e42b7f		in	undocumented		
@@ -17166,7 +17166,7 @@ IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x168	124	if_efopen
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x1e4	236	ef_ifattach	dwarf+symtab	ce430043be42		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x2d0	44	if_efinit	dwarf+symtab	5024efebd0a8		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x2fc	792	if_efattach	dwarf+symtab	974077a04b2c		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
-IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x614	120	ef_detach	dwarf+symtab	df9e8f574e80		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x614	120	ef_detach	dwarf+symtab	df9e8f574e80		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x68c	176	mactoh	dwarf+symtab	2aad3585424a		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x73c	84	ef_ioc3eaddr	dwarf+symtab	17e20e862618		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x790	116	ssram_discovery	dwarf+symtab	6628a06666eb		in	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
@@ -25617,7 +25617,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xe0b0	368	pcireg_b
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xe220	360	pcireg_control_get	dwarf+symtab	286821a98af3		in	named-only	chips/bridge/README.md#what-identifies-the-chip-and-what-irix-does-with-the-answer	What identifies the chip, and what IRIX does with the answer
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xe388	392	pcireg_control_set	dwarf+symtab	3cfbf6c0df33		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xe510	428	pcireg_control_bit_clr	dwarf+symtab	6ede55cc617b		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xe6bc	412	pcireg_control_bit_set	dwarf+symtab	a4271e166335		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xe6bc	412	pcireg_control_bit_set	dwarf+symtab	a4271e166335		in	named-only	chips/bridge/README.md#established-sequences	Established sequences
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xe858	496	pcireg_ssram_size_set	dwarf+symtab	c8db0174bdfa		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xea48	376	pcireg_speed_get	dwarf+symtab	e9f18aef5d9e		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xebc0	364	pcireg_mode_get	dwarf+symtab	c78a7f2b94a7		in	named-only	chips/pic/README.md#access-sequences	Access sequences
@@ -27300,7 +27300,7 @@ IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x8c	8
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xdc	84	disable_intrs	dwarf+symtab	b35c34f00bb6		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x130	1436	ioc3_serial_intr	dwarf+symtab	aad8bfe0b94a		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x6cc	232	set_baud_ti	dwarf+symtab	e864a41a702f		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
-IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x7b4	676	hardware_init	dwarf+symtab	5f9c1105409c		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x7b4	676	hardware_init	dwarf+symtab	5f9c1105409c		in	located	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xa58	1212	ioc3_serial_attach	dwarf+symtab	5950666e8142		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xf14	276	ioc3_serial_kill	dwarf+symtab	73dd24de3212		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1028	676	ioc3_open	dwarf+symtab	bcdb1a4d1a30		in	undocumented		
@@ -33554,7 +33554,7 @@ IP30/unix	kernel	n64		0x0		graph_vhandle_get_vertex	dwarf			in	undocumented
 IP30/unix	kernel	n64		0x0		gregset_to_irix5	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		growdir	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		gstate_to_string	dwarf			in	undocumented		
-IP30/unix	kernel	n64		0x0		hardware_init	dwarf			in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP30/unix	kernel	n64		0x0		hardware_init	dwarf			in	located	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP30/unix	kernel	n64		0x0		hash	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		hashinsert	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		hashremove	dwarf			in	undocumented		
@@ -37587,7 +37587,7 @@ IP30/unix	kernel	n64	.text	0xa80000002005097c	368	pcireg_bus_err_get	symtab	c6d6
 IP30/unix	kernel	n64	.text	0xa800000020050aec	360	pcireg_control_get	symtab	de2296b46923		in	named-only	chips/bridge/README.md#what-identifies-the-chip-and-what-irix-does-with-the-answer	What identifies the chip, and what IRIX does with the answer
 IP30/unix	kernel	n64	.text	0xa800000020050c54	392	pcireg_control_set	symtab	74f39c6b0201		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
 IP30/unix	kernel	n64	.text	0xa800000020050ddc	428	pcireg_control_bit_clr	symtab	69d241d4c440		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020050f88	412	pcireg_control_bit_set	symtab	b958c602c0de		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020050f88	412	pcireg_control_bit_set	symtab	b958c602c0de		in	named-only	chips/bridge/README.md#established-sequences	Established sequences
 IP30/unix	kernel	n64	.text	0xa800000020051124	496	pcireg_ssram_size_set	symtab	3f2401274ee8		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP30/unix	kernel	n64	.text	0xa800000020051314	376	pcireg_speed_get	symtab	026bfbdf3a78		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP30/unix	kernel	n64	.text	0xa80000002005148c	364	pcireg_mode_get	symtab	b94af13000d6		in	named-only	chips/pic/README.md#access-sequences	Access sequences
@@ -38423,7 +38423,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200bdd24	124	if_efopen	symtab	714f39644f8e	
 IP30/unix	kernel	n64	.text	0xa8000000200bdda0	236	ef_ifattach	symtab	cc2ebe5190e3		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200bde8c	44	if_efinit	symtab	a4a1f47e9d0c		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200bdeb8	788	if_efattach	symtab	26c6e4545ea3		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
-IP30/unix	kernel	n64	.text	0xa8000000200be1cc	120	ef_detach	symtab	da3f642ecfc1		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200be1cc	120	ef_detach	symtab	da3f642ecfc1		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
 IP30/unix	kernel	n64	.text	0xa8000000200be244	176	mactoh	symtab	2aad3585424a		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200be348	116	ssram_discovery	symtab	6628a06666eb		in	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
 IP30/unix	kernel	n64	.text	0xa8000000200c155c	68	gfxtable_readerlock	symtab	0187f5aa51d0		in	undocumented		
@@ -48764,7 +48764,7 @@ IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x168	124	if_efopen
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x1e4	236	ef_ifattach	dwarf+symtab	64de8a447e99		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x2d0	44	if_efinit	dwarf+symtab	5024efebd0a8		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x2fc	788	if_efattach	dwarf+symtab	301f6b1af075		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
-IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x610	120	ef_detach	dwarf+symtab	df9e8f574e80		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x610	120	ef_detach	dwarf+symtab	df9e8f574e80		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x688	176	mactoh	dwarf+symtab	2aad3585424a		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x738	84	ef_ioc3eaddr	dwarf+symtab	17e20e862618		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x78c	116	ssram_discovery	dwarf+symtab	6628a06666eb		in	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
@@ -55736,7 +55736,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xde3c	368	pcireg_b
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xdfac	360	pcireg_control_get	dwarf+symtab	947dc22c50c8		in	named-only	chips/bridge/README.md#what-identifies-the-chip-and-what-irix-does-with-the-answer	What identifies the chip, and what IRIX does with the answer
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xe114	392	pcireg_control_set	dwarf+symtab	64794099434c		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xe29c	428	pcireg_control_bit_clr	dwarf+symtab	ceeb0ba1dc4b		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xe448	412	pcireg_control_bit_set	dwarf+symtab	70835830bcf8		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xe448	412	pcireg_control_bit_set	dwarf+symtab	70835830bcf8		in	named-only	chips/bridge/README.md#established-sequences	Established sequences
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xe5e4	496	pcireg_ssram_size_set	dwarf+symtab	845719dedaf7		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xe7d4	376	pcireg_speed_get	dwarf+symtab	3bb5c99a50c6		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xe94c	364	pcireg_mode_get	dwarf+symtab	e41128fd3473		in	named-only	chips/pic/README.md#access-sequences	Access sequences
@@ -57359,7 +57359,7 @@ IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xa0	8
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xf0	84	disable_intrs	dwarf+symtab	b35c34f00bb6		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x144	848	ioc3_serial_intr	dwarf+symtab	b62a3286ddfd		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x494	232	set_baud_ti	dwarf+symtab	e864a41a702f		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
-IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x57c	464	hardware_init	dwarf+symtab	cc02c323618e		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x57c	464	hardware_init	dwarf+symtab	cc02c323618e		in	located	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x74c	1212	ioc3_serial_attach	dwarf+symtab	0d6751210c69		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xc08	64	ioc3_serial_kill	dwarf+symtab	0d7c76339956		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xc48	232	ioc3_open	dwarf+symtab	be18785c4453		in	undocumented		
@@ -81818,7 +81818,7 @@ IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x168	124	if_efopen
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x1e4	236	ef_ifattach	dwarf+symtab	31b35445318a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x2d0	44	if_efinit	dwarf+symtab	5024efebd0a8		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x2fc	788	if_efattach	dwarf+symtab	301f6b1af075		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
-IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x610	120	ef_detach	dwarf+symtab	df9e8f574e80		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x610	120	ef_detach	dwarf+symtab	df9e8f574e80		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x688	176	mactoh	dwarf+symtab	2aad3585424a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x738	532	ef_ioc3eaddr	dwarf+symtab	95472b07bde1		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x94c	116	ssram_discovery	dwarf+symtab	6628a06666eb		in	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
@@ -90404,7 +90404,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xf20c	368	pcireg_b
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xf37c	360	pcireg_control_get	dwarf+symtab	07e2d8c840c2		in	named-only	chips/bridge/README.md#what-identifies-the-chip-and-what-irix-does-with-the-answer	What identifies the chip, and what IRIX does with the answer
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xf4e4	392	pcireg_control_set	dwarf+symtab	506c17cef081		in	named-only	chips/pic/README.md#registers-whose-use-is-established-by-reading-the-code	Registers whose use is established by reading the code
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xf66c	428	pcireg_control_bit_clr	dwarf+symtab	da5f17f08347		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xf818	412	pcireg_control_bit_set	dwarf+symtab	6872cc62cf32		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xf818	412	pcireg_control_bit_set	dwarf+symtab	6872cc62cf32		in	named-only	chips/bridge/README.md#established-sequences	Established sequences
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xf9b4	496	pcireg_ssram_size_set	dwarf+symtab	33b201f292f6		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xfba4	376	pcireg_speed_get	dwarf+symtab	b762a4b689ef		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xfd1c	364	pcireg_mode_get	dwarf+symtab	609f4f9ffcc2		in	named-only	chips/pic/README.md#access-sequences	Access sequences
@@ -92066,7 +92066,7 @@ IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x8c	8
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xdc	84	disable_intrs	dwarf+symtab	b35c34f00bb6		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x130	1436	ioc3_serial_intr	dwarf+symtab	573972befdcc		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x6cc	232	set_baud_ti	dwarf+symtab	e864a41a702f		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x7b4	676	hardware_init	dwarf+symtab	a16b78b07782		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x7b4	676	hardware_init	dwarf+symtab	a16b78b07782		in	located	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xa58	1300	ioc3_serial_attach	dwarf+symtab	3982020c8653		in	named-only	chips/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xf6c	280	ioc3_serial_kill	dwarf+symtab	bd4067aaf612		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1084	676	ioc3_open	dwarf+symtab	1fc06e015ed5		in	undocumented		
@@ -92102,7 +92102,7 @@ IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x110	
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x194	1440	ioc4_serial_intr	dwarf+symtab	ab92400954ae		in	named-only	chips/ioc4/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x734	264	ioc4_dma_error_intr	dwarf+symtab	9d69efdc05e6		in	named-only	chips/ioc4/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x83c	188	set_baud_ti	dwarf+symtab	421c76abedf2		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x8f8	740	hardware_init	dwarf+symtab	84c96cab35fc		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x8f8	740	hardware_init	dwarf+symtab	84c96cab35fc		in	located	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0xbdc	2092	ioc4_serial_attach	dwarf+symtab	882579a2bca9		in	named-only	chips/ioc4/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x1408	280	ioc4_serial_kill	dwarf+symtab	00d712cebac1		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x1520	676	ioc4_open	dwarf+symtab	d0984016e903		in	undocumented		
