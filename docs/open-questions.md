@@ -190,3 +190,22 @@ chip page and the entry is deleted.
   labelled `pic`, and routines following an unconditional branch or reached only as a delay-slot duplicate are
   cut or merged by control flow. Remaining: large code spans with no return
   (PROM data disassembled as code) stay single routines.
+- **IOC3: why interrupts are polled while the top interrupt bits are enabled.** `ioc3_write_ireg` keeps interrupt bits 22:0 out
+  of the hardware enable register and polls them every tick while bit 27 or 28 is enabled; the mechanism is read in full
+  (chips/ioc3/README.md), the reason is in no string the objects carry. Next: a hardware note for the part; Linux and OpenBSD
+  have no equivalent.
+- **IOC3: UART byte lane.** IRIX addresses the line-control register at UART+3 (the 16550 index as the byte offset); Linux's 8250
+  glue uses `offset ^ 3` and so reads it at UART+0. Which lane the hardware presents, and whether a bridge byte-swap setting
+  explains the difference, is not settled. Next: the PIO mapping flags the IRIX drivers pass and the Linux bridge setup.
+- **IOC3: Ethernet inter-frame gap table, parallel-port registers, error address words.** The three table words `ef_ioc3init`
+  stores to the transmit control register sit in the object's data and are not extracted; the parallel-port DMA words
+  (`0x84` to `0x98`) and super-I/O registers (`0x20151` to `0x2015a`) are touched but their routines are not read; the
+  configuration words `0x40` and `0x44` are read and written by `ioc3_error_handler`, read for accesses only. Next: resolve the
+  data relocations; read `plp_dma`, `plpintr`, `plp_reset` and the error handler.
+- **IOC4: the word at `0x24`.** `ioc4_attach` clears bits 3:0 of it when the revision byte is below 79 and the bus-speed query
+  returns 1; the public header calls it unused. Next: `pciio_businfo_bus_speed_get` and any string the attach carries.
+- **IOC4: the ATA registers.** The command, control and DMA block roles are inferred from index order and the public driver.
+  `xide_intr_clear` reads index 4 of the interrupt block (offset `0x10`) after index 0 where the public driver's error address
+  high word is at `0x4`. Next: read `xide_pktDMA_start`, `xide_dma_init` and `xide_intr_clear` in full.
+- **IOC3 and IOC4: reset values and the per-port tables.** No routine reads a reset value; the mode-select pin numbers and
+  serial configuration records are static data not extracted. Next: extract the data sections through their relocations.

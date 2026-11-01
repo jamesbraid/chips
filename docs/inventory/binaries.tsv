@@ -2470,7 +2470,7 @@ IP35/usr/cpu/sysgen/IP35boot/hitachi.o	kernel-IP35	kernel-object	object	n64	2620
 IP35/usr/cpu/sysgen/IP35boot/hubspc.o	kernel-IP35	kernel-object	object	n64	13056	899394978cddc968		13	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hwgfs.a(hwgvnops.o)	kernel-IP35	kernel-object	object	n64	25812	9ca9d559bbede8ee		21	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-IP35	kernel-object	object	n64	987960	8db9e6022bcc473a		304	symtab+dwarf	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-IP35	kernel-object	object	n64	119144	1e61f46697355749		74	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-IP35	kernel-object	object	n64	119144	1e61f46697355749		74	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
 IP35/usr/cpu/sysgen/IP35boot/ide_idbg.o	kernel-IP35	kernel-object	object	n64	20104	525922cbdc84aaae		10	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/idev.o	kernel-IP35	kernel-object	object	n64	25808	95261f60f2333df0		22	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_cl.o	kernel-IP35	kernel-object	object	n64	48944	3b269259a1d9ab75	IP35/usr/cpu/sysgen/IP35boot/if_cl_part.o	35	symtab	0	0	undocumented		
@@ -2495,9 +2495,9 @@ IP35/usr/cpu/sysgen/IP35boot/io6.o	kernel-IP35	kernel-object	object	n64	6776	db2
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-IP35	kernel-object	object	n64	27688	5e69438504a0ae29		27	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ioc3_pckm.o	kernel-IP35	kernel-object	object	n64	37480	307a39f751ae13a4		36	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ioc3ei.o	kernel-IP35	kernel-object	object	n64	21168	bdfefd9773253391		19	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-IP35	kernel-object	object	n64	23976	e15e32c04c326024		21	symtab	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
-IP35/usr/cpu/sysgen/IP35boot/ioc4_ei.o	kernel-IP35	kernel-object	object	n64	21512	d1296012cdbeec0d		19	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ioc4_pckm.o	kernel-IP35	kernel-object	object	n64	36408	c2d08701d772ec62		35	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-IP35	kernel-object	object	n64	23976	e15e32c04c326024		21	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
+IP35/usr/cpu/sysgen/IP35boot/ioc4_ei.o	kernel-IP35	kernel-object	object	n64	21512	d1296012cdbeec0d		19	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
+IP35/usr/cpu/sysgen/IP35boot/ioc4_pckm.o	kernel-IP35	kernel-object	object	n64	36408	c2d08701d772ec62		35	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-IP35	kernel-object	object	n64	41144	86743841a0450c23		34	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipfilter.o	kernel-IP35	kernel-object	object	n64	18800	1eef1c1b78008594		9	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(dest6.o)	kernel-IP35	kernel-object	object	n64	5380	6aeb0b91e82dbd85		1	none	0	0	undocumented		
@@ -2855,7 +2855,7 @@ IP35/usr/cpu/sysgen/IP35boot/sbp2idbg.o	kernel-IP35	kernel-object	object	n64	193
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-IP35	kernel-object	object	n64	57460	c199717209c94a35		60	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_l1.o)	kernel-IP35	kernel-object	object	n64	16612	ffa7a6efbfab3c6f		19	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-IP35	kernel-object	object	n64	41364	1c6370081471b192		35	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-IP35	kernel-object	object	n64	44756	eaf1d7d5d4e6f7db		36	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-IP35	kernel-object	object	n64	44756	eaf1d7d5d4e6f7db		36	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
 IP35/usr/cpu/sysgen/IP35boot/sem.o	kernel-IP35	kernel-object	object	n64	45784	d1fcedb841dd899a		50	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sessionidbg.a(sessionidbg.o)	kernel-IP35	kernel-object	object	n64	13204	702dafb0a6ff0933		7	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP35/usr/cpu/sysgen/IP35boot/sgi.a(chunkio.o)	kernel-IP35	kernel-object	object	n64	99700	e71570ef09a9c2b7		72	symtab	0	0	undocumented		
