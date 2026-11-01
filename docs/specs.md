@@ -16,9 +16,12 @@ unreliable: read register tables from the page image). "Registers transcribed" s
 | MACE | MACE I/O ASIC Specification | none printed | chip revision 2.0 (31 May 1996) | 196 | [mace-specification.pdf](sources/specs/mace-specification.pdf) | `mace.txt` | register tables (PCI, audio, ISA, PS/2, I2C, timers, Ethernet, video, external ISA): [mace-specification.registers.md](sources/specs/mace-specification.registers.md) |
 | VICE | VICE Design Specification | 099-0123-003 | 003 | 307 | [vice-design-specification-099-0123-003.pdf](sources/specs/vice-design-specification-099-0123-003.pdf) | `vice-099-0123-003.txt` | no |
 
-Not held, so these chips are no-spec: Hub, Bedrock, HEART, PIC, TIOCP, IOC3, IOC4. Public drivers and patents
+Not held, so these chips are no-spec: Hub, Bedrock, HEART, PIC, TIOCP, IOC3, IOC4. Bridge and XBridge run no-spec as well while the clearance of their scans is suspended. Public drivers and patents
 that describe parts of them are in [published-sources.md](published-sources.md). Where a chip has a spec the
 census runs spec-backed (diff against the spec); otherwise it runs no-spec (inventory from the binaries).
+
+The Bridge and XBridge scans have suspended clearance as confidential: no page cites them as evidence, and the Bridge and
+XBridge census runs without them (`tools/configs/bridge.json`, mode no-spec). The other rows of the table are unaffected.
 
 A spec revision here is the one that was held; the Bridge, XBridge and Crossbow revisions differ in silicon, so
 a Bridge fact is not an XBridge fact until the XBridge specification or a binary path for XBridge says so.
