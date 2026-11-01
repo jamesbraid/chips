@@ -1283,6 +1283,149 @@ Hub's registers, or the Hub's real-time counter, through the aliases described a
   register into the buffer, count it, and when the adjustment is not negative the first byte received plus it becomes the new length. Finally
   status 0x45, data 0xfe, wait (timeout -6) and return 0. Inferred: the status bit meanings (bit 7 busy, bit 3 no-acknowledge, bits
   1, 2 and 4 error), from how the code tests them; the scaled deadline's unit.
+- `hub_error_init` (`IP27/unix` at 0xc0000000000324f4,
+  928 bytes) sets up the Hub's error reporting for one node; `a0` is the compact node number. It first calls `hub_error_clear`.
+  On node 0 it allocates, for every node, a 0x1938-byte error log record (`kmem_zalloc_node`, flags 1) and a 0x40-byte count record
+  (flags 0x101), with `assfail` on a failure (source line 0x9b). On the node that matches `get_compact_nodeid` it checks both
+  records (lines 0xa4 and 0xa5), zeroes the log's first word, runs `recover_error_init` on the log's +0x1810 and +0x1890, and writes the
+  PI error interrupt masks at `0x9200000001000408` (`PI_ERR_INT_MASK_A`) and `0x9200000001000410` (`PI_ERR_INT_MASK_B`): reading
+  `PI_CPU_ENABLE_B` (+0x58) zero stores 0x1aaaaaa to A, else reading `PI_CPU_ENABLE_A` (+0x50) zero stores 0x1555555 to B, else it
+  stores 0x16555aa to A and 0x9aaa55 to B. It then clears bit 21 of A and bit 20 of B by read-modify-write. When bit 1 of the
+  halfword at -0x3adc of the process page is clear it zeroes the two status clear aliases at +0x448 and +0x468; for each present processor (`PI_CPU_PRESENT_A`
+  at +0x40, `PI_CPU_PRESENT_B` at +0x48) it copies the error stack address from +0x418 or +0x420 into the log record (+0x1920 and +0x1910 for A,
+  +0x1928 and +0x1918 for B), derives the stack size from +0x428 as `0x1000 << (code - 1)` (0 for code 0) into +0x1930, and when the
+  two addresses agree above bit 7 adds that size to the B address and the stored copies. It connects the cause interrupt 6 to
+  `hubpi_eint_handler` with `cause_intr_connect` (a failure calls `cmn_err` level 0x14 "hub_error_init: cause_intr_connect failed on %d").
+  Processors on other nodes only write 0 to the node-alias doublewords at +0x408 and +0x410. For every node it calls
+  `hubii_eint_init` and `hubni_eint_init`; node 0 also initialises the global lock `error_dump_lock` and sets two words. Last it
+  stores 12000 (0x2ee0) at +0x4d1c of the node record. It returns nothing. Inferred: the log field names, from the later users.
+- `hubiio_crb_error_handler` (`IP27/unix` at 0xc000000000034a30,
+  896 bytes) walks a node's fifteen I/O-interface CRB entries after an error interrupt and disposes of the ones that failed. It takes an
+  error-context argument in `a0` and the node record in `a1` (NASID as the halfword at +0xa, entry lock at +0x31c) and returns the number of
+  entries it handled. It takes the lock with `mutex_spinlock_spl` at level `spl7`. For each entry `i` = 0 to 14 it loads word A at
+  `0x9200000001c00000 + (nasid << 32) + 0x20 * i + 0x400` and skips the entry unless bit 50 of A is set. Then it loads B (+0x408) and
+  C (+0x410). When bit 48 of C is set, or when the command in bits 32:30 of B is not 1 or 5, or the type in bits 42:41 is not 1 or
+  2, the entry is a processor-side error: it builds a record (flags 0xc1000000, the address from A bits 39:2 shifted left 2, the number
+  from A bits 48:45, the access class from bits 54:52), requires A bits 44:40 to be in 0x10..0x17 when A bit 0 is set (`assfail`, source
+  line 0x70c) and then, depending on A bit 55 and on the class in bits 54:52 (an 8-entry table at 0xc00000000140aff0 sends classes 0 and 5
+  to 7 to the "Fatal %s on hub : %d" path and 1 to 4 to the "%s on hub cnodeid: %d" path), calls `cmn_err` and `sn0_error_dump`; a class of
+  8 or more dumps and calls `cmn_err` level 0. Bits 49 and 51 of A call `cmn_err` level 0 with "Xtalk Packet with error bit set to hub %d" and
+  "Uncorrectable data error detected on data from Craylink to node %d". Otherwise (a BTE entry) it passes the
+  BTE flag from B or C to `bte_crb_error_handler`, frees the entry with `hubiio_crb_free`, and counts it. After the last entry
+  it releases the lock with `mutex_spinunlock` and returns the count. Inferred: the field names, from the matching `dump_crb`
+  decode, and which message belongs to which class; the table was read as addresses only.
+- `kf_hub_analyze` (`IP27/unix` at 0xc0000000001540cc,
+  876 bytes) is the Hub step of the post-crash fault analysis. It takes an optional pointer to a 21-word fault record in `a0`. With a
+  null pointer it counts the CRB entries of the current node (word A at `0x9200000001c00000 + (current_nasid << 32) + 0x20 * i + 0x408`
+  for i = 0 to 14, twice) whose command field (bits 29:25) is 0xb or 6, and when all 30 reads qualify and the pointer at +0x48 of
+  `kf_conf_tab` is nonzero it stores the larger of 0x55 and the byte it points to (twice, to the same byte). With a record it saves a
+  copy on the stack, clears its word +0x14, sets word +0x8 to 0x109, and when the byte at `kf_conf_tab` +0x48 is 'U' it also
+  logs a second record (0x126, with that byte) with `kf_guess_put` and prints the slot name through `get_slotname` and `ip27log_printf` (level 2); a
+  byte that is not 'U' is stored into the record (byte +0x30) and put; a nonzero pointer at +0x128 puts another record (0x125, the
+  word it points to) and restores the first copy. It then runs `kf_pi_analyze`, `kf_md_analyze`, `kf_ii_analyze` and `kf_ni_analyze` in
+  that order, each only when the previous returned 1, and finally restores the caller's record. It returns nothing. Inferred: the
+  purpose of the byte 'U', since only its comparison and the log text were read.
+- `dump_hub_registers` (`IP27/unix` at 0xc00000000021a300,
+  828 bytes) walks a built-in table of Hub register ranges for every node and hands each 16 KiB page of the node alias to an output
+  routine; it takes no arguments and returns 0, or the nonzero result of that routine. The table (0xc00000000146cc98) holds 27 pairs
+  of first and last offsets ending at -1: `0x0-0x430`, `0x440`, `0x450`, `0x460`, `0x470-0x4b8` (processor interface), `0x200000-0x200040`,
+  single registers at `0x200050`, `0x200060`, `0x200070`, `0x200080`, `0x200090-0x2000a8`, `0x2000b0-0x2000e0`, `0x210000-0x210038`,
+  `0x220000-0x2200f8` (memory), `0x400000-0x400008`, `0x400020`, `0x400100-0x400200`, `0x400300-0x400340`, `0x400388-0x4003c0`,
+  `0x400400-0x4005d8`, `0x410000-0x410028`, `0x420000-0x420028`, `0x430000-0x430008` (I/O), `0x600000-0x600310`, `0x600400-0x600538`,
+  `0x608000-0x608008` and `0x638000-0x638178` (network). It first fills a 16 KiB stack buffer with the pattern
+  `0x5555555555555555` (that fill is repeated whenever the buffer is flushed), calls `get_nasid`, and for each of the `numnodes` nodes
+  loads each doubleword from `0x9200000001800000 + (nasid << 32) + offset` (read through the `compact_to_nasid_node` table) and stores
+  it into the buffer at `offset & 0x3ff8`, so the buffer mirrors one 16 KiB page. When the next offset leaves the current page or
+  block (bits 23:20 or 19:14 change) or the table ends, it calls the static routine at 0xc000000000219c48 with the
+  page's address, the buffer, length 0x4000 and a flag of 0x200, and refills the buffer. A nonzero result is returned at once. Every
+  read is a doubleword load from the node alias; none is written. Inferred: the output routine's purpose (writing a dump), because
+  it was not read; and that the pattern marks registers that were not read.
+- `get_matching_spool_addr` (`IP27/unix` at 0xc000000000034668,
+  808 bytes) searches the Hub's error spool for an entry that matches a faulting address. It takes two output pointers in `a0` and `a1` (the
+  entry's two words), the address in `a2`, the byte length in `a3` and a type filter in `a4` (2 means any). It returns 0 for no match, -1
+  for a spool-read error, 1 for a match on a processor-interface cache error and 2 for a match on a processor error word. It loops on
+  `hubpi_spool_get_next`: result -1 returns -1; 1 matches when the address `(word0 >> 31) * 128` plus either `a3` (a single line when
+  `a3` is 0x80 or more) covers `a2`, and `a4` is 2 or equals bit 12 of word 0; 2 matches when `(word0 >> 25 & 0x1fffffffff) * 8`
+  plus `a3` (or 8 when `a3` is below 8) covers `a2` and `a4` is 2 or equals bit 42 of word 1; any other result calls `cmn_err` level 0x14 with
+  "Unknown spool type %x". A non-match goes through `huberror_process_stack_entry` (a nonzero result outside a dump panics: `in_dump_mode`, `kl_panic_setup`,
+  then `cmn_err` level 0x12 with "%s. PhysAddr 0x%x", the string from `hub_rw_err_info`) and the loop continues. When the spool is empty
+  (`hubpi_spool_get_next` returns 0) and bit 1 of the halfword at -0x3adc of the process page is set it also checks the processor's two live
+  registers, selected by the byte at +0x520 of its record (0 uses `0x9200000001000430` and `0x9200000001000440`, else
+  `0x9200000001000450` and `0x9200000001000460`): when the first has bit 63 set and its field `(w >> 25 & 0x1fffffffff) * 8` covers the
+  address it returns 2 with both words stored through the output pointers. Inferred: the register names at those four offsets, since only
+  the select byte and their use as address and status words were read.
+- `hub_piomap_alloc` (`IP27/unix` at 0xc00000000003b5a0,
+  792 bytes) reserves a window through which a processor can reach a range of a Crosstalk widget's address space. It takes the widget vertex in
+  `a0`, the device number in `a1`, the Crosstalk address in `a2`, the byte count in `a3`, the smallest acceptable count in `a4` and flags in `a5`
+  (bit 0 reserved window, bit 1 may wait together with bit 0, bit 3 changes the access attribute). It reads the widget number
+  (`xwidget_info_id_get`) and master (`xwidget_info_master_get`) of the vertex, finds the master's record from its `_node` label
+  (`hwgraph_info_get_LBL`), and returns 0 when `a3` is below `a4`. A request whose address plus count fits below 0x1000001 (16 MiB)
+  needs no register: it returns the small-window record at +0x10 of the 0x30-byte entry for the widget (index `widget & 0xff`) and, when
+  flag bit 3 is set, ORs 0x3800000000000000 into the entry's word at +0x28. Larger requests must fit within one 512 MiB window
+  (`(a2 & 0x1fffffff) + a3` below 0x20000001) or return 0. Under the node lock at +0x318 (`mutex_spinlock`) it scans the six large-window
+  records (0x30 bytes each from +0x328): a valid one (flag bit 0 of word +0x350) that is reserved (bit 2), has the same upper
+  address bits (`a2 & 0xffffffffe0000000`) and widget is reused; a free one is taken, and with flag bit 0 the reserved-window count at
+  +0x320 may not exceed 5 (else the call fails). To take a free slot it writes `((widget & 0xf) << 8) | (a2 >> 29 & 0x1f)` to the
+  doubleword at `0x160 + 8 * slot` of the I/O block alias `0x9200000001c00000 + (nasid << 32)`, stores the address, widget, the window's
+  Hub address `0x9200000020000000 + slot * 0x20000000 + (nasid << 32)` (ORed with 0x3800000000000000 when flag 3 is set), the
+  slot number (byte +0x34e), bumps the use count (halfword +0x34c) and marks the record valid (and reserved when flag 0 is set).
+  When every slot is in use it fails if flags 1 and 0 are both clear, else waits on the semaphore at +0x310 (`sv_wait`) and rescans. The
+  lock is released on every path (`mutex_spinunlock`). It returns the record's address, or 0. Inferred: the field names; the
+  `0x3800...` bits' role as an access attribute, from their being set only for flag bit 3.
+- `llp_pfail_intr` (`IP27/unix` at 0xc00000000003e424,
+  792 bytes) handles the network-link power-fail interrupt on the processor that owns the node's router link; it takes no arguments and
+  returns nothing. It scans the module table (`modules`) with a static lookup for the entry whose processor equals the calling one (one
+  entry only when the byte at -0x3add of the process page is set); without a match it takes the delay-only path. It reads router
+  vector 0, offset 0 (`vector_read`) and calls `llp_pfail_barrier`. When it found its entry it waits 100 microseconds and then: if the
+  low nibble of the vector word is 0 and the byte at -0x3add is set, it reads `NI_DIAG_PARMS` (+0x600110) by `vector_read`, sets bit 12 (when the
+  kernel's link-speed variable at `gp + 0x9b0` is 8) or clears it, writes it back with `vector_write`, does the same to the local
+  alias doubleword at `0x9200000001600110`, waits 100 microseconds and stores 2 into `NI_PORT_RESET`
+  (`0x9200000001600008`); if the nibble is 1 it also reads the neighbouring router's vector 6 (`vector_read` with port 6), and when that nibble is 1
+  too it sets bits 14:12 (speed 8) or clears them in offset 0x30 of each of the two vectors with `vector_write`, waits, then writes 0xe to offset 8 of
+  both vectors; any other nibble only waits 100 microseconds. Without an entry it waits 300 microseconds. Finally it busy-waits while bit 37
+  (`0x2000000000`) of the doubleword at `0x9200000001608088` (`NI_PORT_ERROR_CLEAR`) stays set, reading it repeatedly. Inferred: the offsets 0x30 and 8 of
+  the router vectors, which are named in the router entries elsewhere, and the meaning of nibble 0 and 1, from the comparisons.
+- `counter_intr` (`IP27/unix` at 0xc0000000000457a0,
+  728 bytes) is the handler for the processor's compare-counter (clock) interrupt; `a0` is the saved exception frame. When bit 5 (0x20) of
+  the trace-flag doubleword at -0x3d80 of the process page is set it logs trace events 0x6c at entry and 0x65 (with 0x6c) at exit through
+  `log_tstamp_event`. If the word at -0x3960 is nonzero it calls `frs_handle_counter_intr` and leaves. Otherwise it asks
+  `hwperf_overflowed_intr` whether a hardware performance counter overflowed; if so it runs `l2_sbe_intr` when `l2_sbe_check` has a
+  nonzero low byte (returning without more work when bit 0 of `l2_sbe_check` is then set) and `hwperf_intr` with the frame, and returns. A
+  clock tick (flag bit 6 of the word at -0x3fb8 clear) measures the interval since the previous one, from the Hub real-time counter at
+  `0x9200000001030100` against the stored stamp at -0x3a48, and once `lbolt` exceeds 1000 it records the counter minus compare lag
+  (`get_r4k_counter` minus `_get_compare`) as a maximum at -0x3a34, a count at -0x3a38 and a sum at -0x3a40. When the interval is at
+  least the warning limit (`counter_intr_warn_cycles`, or `counter_intr_warn_period * 0x1312d0 / 2` when the period is 1 to 255), the
+  interval is a lost-interrupt candidate: unless the compare value at -0x3a9c is `-0x10000000` or the per-processor flag in the table at
+  `0xc0000000014de510` + 0x10 + 4 * processor is already set, it calls `cmn_err` (level 4, or 0 when `counter_intr_panic` is set) with
+  "Probable lost interrupt!" and the interval in 0x1312d0-cycle units, the frame's words at +0x120 and +0xf0 and a
+  string that adds "Probably caused by splhi or spl7 delaying the interrupt" unless the interval is within two units of
+  `0x10c6 / (word at -0x38c0)`. It then stores the new stamp, clears the processor's flag, calls `resetcounter` with the compare value
+  at -0x3a9c and `clock`. A tick with flag bit 6 set only calls `resetcounter`. Inferred: the units of the interval, from the
+  constant 0x1312d0 and the Hub counter, whose frequency this routine does not state.
+- `hubpi_eint_handler` (`IP27/unix` at 0xc000000000032b28,
+  728 bytes) services the Hub's processor-interface error interrupt on the processor that took it; it takes no arguments and returns nothing.
+  It first calls `check_ni_errors` and, when that finds a network error, `hubni_error_handler` with the label "PI interrupt" and 1. It reads
+  `PI_ERR_INT_PEND` (`0x9200000001000400`) and the mask of the processor's slice (the byte at +0x520 of its record: 0 reads
+  `PI_ERR_INT_MASK_A` at `0x9200000001000408`, else `PI_ERR_INT_MASK_B` at `0x9200000001000410`) and ANDs them. If any of the bits 0xcfff00
+  (8 to 19 and 22 to 23) is set it calls `enter_panic_mode` and `cmn_err` level 0x14 with "Fatal PI error interrupt received". Bit 24
+  calls `log_md_errors` with the NASID from `get_nasid`. Then for each of three pairs of spool bits it tests the processor's own bit (A with slice 0, B
+  with slice 1): bits 1 or 0 (spool count), 7 or 6 (write-response write error) and 5 or 4 (write-response timeout): a hit calls
+  `process_error_spool` and stores the bit's mask back to `PI_ERR_INT_PEND` to clear it (2 or 1, 0x80 or 0x40, 0x20 or 0x10). Bit 21 or 20
+  (0x200000, 0x100000) set calls `cmn_err` level 0x14 with "Unexpected UCE error interrupt. int pend 0x%x"; bit 3 or 2 (8, 4) calls
+  `cmn_err` level 0x14 with "Spurious message intr, likely partition reboot". With nothing pending it returns. Established: the order of
+  the checks and each constant. Inferred: that the stores are write-one-to-clear, from their using the handled bit as the value.
+- `migr_refcnt_init` (`IP27/unix` at 0xc00000000026c940,
+  724 bytes) allocates the page-migration reference-count storage of one node; `a0` is the compact node number and the result is 0, or 1
+  when an allocation fails. It runs only when the node's record (+0x4958) shows it has memory and, when it names a master processor
+  (halfword +0x4956, not -1), that processor's record flag 4 of the halfword at +0x524 is clear; otherwise it falls through to
+  return. It sums `slot_getsize` over the 32 memory slots of the node, gets `numnodes * sum * 32` bytes with `kmem_contig_alloc_node`
+  (alignment 0x10000, flag 1), zeroes them with `blkclr` and allocates a 0x100-byte table of 32 pointers with `kmem_alloc_node`
+  (flag 1). Each pointer is zero for an empty slot, else the next piece of the block, advanced by `numnodes * slot_size * 32`
+  bytes, with an `assfail` (source line 0xe5) when the cursor ran past the block's end. It stores the pointer table, the block, the block size
+  and `sum * 4` at +0x28, +0x30, +0x38 and +0x40 of the migration record that the node record's first word points to. It then sets bit 63 of
+  `MD_MIG_VALUE_THRESH` (offset +0x38 of `0x9200000001a00000 + (nasid << 32)`), first writing the word at +0x10 of that same record ORed with bit 63
+  and then ORing bit 63 in again. If a block or table allocation fails it frees the block with `kmem_contig_free` and zeroes the four fields,
+  returning 1. Inferred: the field names, from the layout, and that +0x10 is the threshold value the routine writes.
 
 ## Routines in the IP27 `hubspc.o` build
 
