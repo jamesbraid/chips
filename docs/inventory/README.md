@@ -394,3 +394,17 @@ A load or store through a window base is a site. When its offset is a constant i
 - `spec-registers.tsv` holds the register tables of the CRIME 1.5 specification, revision 0.3 (2 June 1997): tables 5-7, 6-12, 7-1, 7-2, 7-3 and 7-15, and the register map of the GBE specification for revision 1.1 (18 July 1996), transcribed into the config. The CRIME status registers at +0x4000 and the per-field tables are not rows.
 - `ucode.tsv` is empty: O2 graphics has no microcode.
 - Not seen: the X module's rendering-engine pointer, which it reaches through its screen private records, and the video libraries' mappings of MACE. The X module reaches GBE through ioctls only.
+
+## Function scope
+
+The function table lists every symbol of the kernels, objects and standalone programs, which is far more than the chip work covers. The config's `scope` list excludes the rest, one reason per rule, and the headline counts only what stays. Excluded rows are not dropped: `summary.tsv` reports them in `out_of_scope` for every table and every binary, and `functions.tsv` marks each `out:<rule>` in `scope`.
+
+A function is in scope when any of these holds:
+
+- Its object drives a chip or reports on one: the Bridge, XBridge, PIC, Xbow, Hub, IOC3 and IOC4 driver objects and the objects that attach, reset, enumerate, interrupt and report errors for them, the controller and EEPROM objects on the same buses, and the CRIME, MACE, HEART and I/O-board objects.
+- It holds a register access site of the census (`chips/*/census/census-sites.tsv`). A site in an address-named routine counts for the function that contains the address. The inventory script already refuses a rule that excludes a function reaching a configured window.
+- It is a routine of a linked kernel, of `kernel.o` or of a debug monitor whose name carries a chip or its error and interrupt plumbing (hub, xbow, bridge, router, crb, bte, nmi and similar prefixes).
+
+Every other object is excluded under one reason: file-system and volume code, network protocol and STREAMS code, the machine-independent process, memory and synchronisation core, or drivers for devices that are not system ASICs. The PROM images have no function rows (no symbols), so their census routines are tracked in the chip pages and census tables, not here.
+
+`scripts/gen_scope.py` writes the list from the census and the object classes. After a change to the census or the classes, run it, then `scripts/inventory.py`. `scripts/gen_scope.py --check` fails when the list is stale or a census routine is out of scope; run it after the inventory.
