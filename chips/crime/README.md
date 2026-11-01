@@ -431,7 +431,46 @@ are offsets inside that object.
   arguments and 4 as the fourth. If that returns 0 it returns 14. Otherwise it counts the pages from `a1` plus the page
   offset of `a0`, rounded up, and reads that many words from the third argument. It returns 14 if any word is zero and
   0 if none is. Established.
-
+- `crimeEmptyWaitTimeout` (`crime.a(crime.o)`, address `0x120`, 136 bytes): the timeout routine for the FIFO-empty wait.
+  It raises the level with `splhi`. When the word at byte 544 of `a0` is nonzero it calls `crime_intr_disable` with 25,
+  clears the word at byte 316, restores the level with `splx`, and calls `crimeError` with the word at byte 120 of `a0`
+  and a `.rodata` address. It then clears the words at bytes 544 and 60 of `a0` and decrements the word at byte 44 of
+  the record at byte 24 of the record at byte 40 of `a0`. When byte 544 is zero it only restores the level and returns
+  the `splx` result. Established for the paths. Inferred: `crimeFifoFullHandler` arms this routine with `timeout` and a
+  200-unit delay (the constant 0xc8).
+- `crimeInfo` (`crime.a(crime.o)`, address `0x384`, 88 bytes): caps the count in `a2` at 496: a count of 497 or more
+  becomes 496. It calls `copyout` with the word at byte 124 of `a0` as the first argument, `a1` unchanged as the second
+  and the count as the third. A nonzero `copyout` result makes it return 14. Otherwise it stores the count in the word
+  that `a3` points to and returns 0. Established.
+- `crmNextIncarnation` (`crime.a(crime.o)`, address `0x3dc`, 56 bytes): adds 1 to the small-data word at gp offset -30712
+  under `splhi` and `splx`, and returns the new value in v0. Established.
+- `crimeDetach` (`crime.a(crime.o)`, address `0x514`, 64 bytes): clears the word at byte 28 of `a0` and passes its old
+  value to `gfxdd_munmap` as the first argument. It then decrements the word at byte 320 of the record at byte 24 of `a0`
+  and returns 0. Established.
+- `crimeInitialize` (`crime.a(crime.o)`, address `0x554`, 76 bytes): clears the byte at offset 152 of the record at byte
+  24 of `a0`. The delay slot of the call clears the halfword at byte 120 of `crimeBoards`, and the call is
+  `htp_register_board` with four zero arguments. The routine then sets the byte at offset 152 to 1 and returns 0.
+  Established.
+- `crimeSetNullClip` (`crime.a(crime.o)`, address `0xa74`, 56 bytes):
+  stores 0 at `+0x34` and `+0x24` of `a0`, -1 at `+0x20`, 0 at `+0x18`, `+0x14` and `+0x10`, -1 at `+0xc` and `+0x8`,
+  and 1 at `+0x2c` and `+0x28`, then returns 0. The stores go out in that order, `+0x20` third. Established.
+- `crimePositionCursor` (`crime.a(crime.o)`, address `0xaac`, 92 bytes):
+  stores `a1` at `+0x9c` and `a2` at `+0xa0` of `a0`. It reads the word at `+0x38` of the record at `+0x7c` of `a0`.
+  When bit 1 of that word is set and `a2` is 513 or more, `a2` drops by 512 first. The x value is `a1` minus the byte
+  at `+0x9a`, and the y value is `a2` minus the byte at `+0x9b`. Each is masked to 12 bits, and y goes to bits 27:16.
+  The packed word is stored at `+0x94`, the byte at `+0x99` is set to 1, and the routine returns 0. Established.
+- `crm_freedrawable` (`crime.a(crime.o)`, address `0xb08`, 80 bytes): unlinks the record `a0` from a list. The forward
+  link is the word at byte 0 and the back link is the word at byte 4. The back record's byte 0 gets the forward link, and
+  when the forward link is nonzero its byte 4 gets the back link. It then clears 108 bytes at `a0` with `bzero` and
+  returns the result of `kern_free` on `a0`. The back link is not checked for zero. Established for the sequence.
+  Inferred: the record is a 108-byte node of a doubly linked list.
+- `crm_createdrawable` (`crime.a(crime.o)`, address `0xb58`, 72 bytes): allocates 108 bytes with `kern_malloc`, clears
+  them with `bzero`, stores 16 at byte 36 and its first argument at byte 8, and returns the allocated pointer. The
+  allocation result is not checked before `bzero` runs on it. Established.
+- `crm_mapcliptodraw` (`crime.a(crime.o)`, address `0xba0`, 92 bytes): starts from the word at byte 6592 of
+  `crmFrameBuffer` and walks a list along the word at byte 0 of each node while the key at byte 8 is below `a0`. It
+  returns the node whose key equals `a0`, or 0 when the list ends or the first key at or above `a0` is not equal to it.
+  Established.
 ### Interrupt and bus routines (`kernel.o`)
 
 - `crime_intr_enable` (`kernel.o`, address `0xa248`, 64 bytes): sets bit `a0` of the 64-bit word at address
