@@ -243,6 +243,65 @@ Conflicts and gaps:
 - Linux uses vectors 46 and 47 for reschedule and 48 and 49 for call-function interrupts; the monitor names 46
   to 49 IPI0 to IPI3 and the kernel arms 46+n per processor. A software convention, not a hardware difference.
 
+## Routines in the IP30 `heart.o` build
+
+Each routine below was read in full from the shipped `heart.o` at the address given. The entries describe the instructions as
+issued, including delay slots, which run before the branch or call they belong to.
+
+- `heart_intr_alloc` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x11ec`, 28 bytes, read in full, established): saves `ra` in a
+  16-byte frame, calls `do_heart_intr_alloc` at `0x11f4` with `a0` to `a2` unchanged and `a3` set to 0 in the call's delay slot, and
+  returns that call's result in `v0`. The only other instructions restore `ra` and the stack pointer.
+- `heart_intr_alloc_nothd` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1208`, 28 bytes, read in full, established): the same frame
+  and call as `heart_intr_alloc`, calling `do_heart_intr_alloc` at `0x1210` with `a3` set to 1 at `0x1214`. It returns that call's
+  result in `v0`.
+- `heart_intr_bits_free` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x120`, 32 bytes, read in full, established): ORs `a0` into the
+  64-bit word `heart_ivec_free` with an `lld`/`scd` pair at `0x124` and `0x12c`. The `beql` at `0x130` repeats the pair while the `scd`
+  flag left in `v1` is zero. It makes no calls. `v0` holds the address of `heart_ivec_free` on return, not a status.
+- `heart_intr_bits_take` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x140`, 36 bytes, read in full, established): clears the bits set
+  in `a0` from `heart_ivec_free`. It inverts `a0` at `0x144` and ANDs the result into the word with an `lld`/`scd` pair at `0x148` and
+  `0x150`. The `beql` at `0x154` repeats the pair while the `scd` flag left in `a0` is zero. It makes no calls and returns the address
+  of `heart_ivec_free` in `v0`.
+- `heart_intr_free` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1224`, 60 bytes, read in full, established): reads the byte at offset
+  5 of the record in `a0`. It calls `heart_intr_bits_free` at `0x123c` with `1 << byte`, the shift done by the `dsllv` in the call's
+  delay slot. It then restores the record pointer and calls `kmem_free` at `0x1248` with `a1` 48 (0x30). It returns `kmem_free`'s
+  result.
+- `heart_intr_bit_alloc` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x164`, 168 bytes, read in full, established): ANDs the request
+  in `a0` with the word `heart_ivec_free`. If nothing requested is free it returns -1 from `0x204` (the delay slot at `0x208` sets
+  `v0`). Otherwise `a4` becomes the lowest requested free bit, `a3 & -a3`, formed at `0x170` to `0x17c`. An `lld`/`scd` pair at `0x184`
+  to `0x190` clears that bit from the word. If the `lld` value no longer has the bit set, the branch at `0x1a0` reloads the word at
+  `0x1a4` and starts again at `0x16c`. After a claim, two shift loops count the position of the single set bit of `a4` into `v0`: 8-bit
+  steps from `0x1a8` to `0x1d0`, then 1-bit steps from `0x1d4` to `0x1f8`, so the result is the bit number of `a4`.
+- `heart_error_handler` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x15fc`, 52 bytes, read in full, established): returns 0 when `a2`
+  is zero (`v0` is set to 0 at `0x1600` and the `beq` at `0x160c` jumps to the return at `0x1628`). When `a2` is nonzero it loads the
+  pointer at `gp-30712`, adds 160 in the call's delay slot, and calls `ioerror_dump` at `0x1618` with that address as `a0`. After the
+  call it sets `v0` to 10 at `0x1624`, so the routine returns 10 on that path.
+- `heart_rev` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x1978`, 40 bytes, read in full, established): returns the cached word
+  `the_heart_rev` when it is zero or positive (the `bltz` at `0x197c` is not taken). When the cached word is negative it loads the
+  pointer `0x9000000018000004` from the literal pool at `gp-30672`, reads the word at that address, shifts it right by 28, stores the
+  result to `the_heart_rev` in the delay slot of the return at `0x1998`, and returns it. The word read is the widget identification
+  word at widget offset 4.
+- `heart_widget_num` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x83c`, 40 bytes, read in full, established): calls
+  `xwidget_info_get` at `0x844` with its argument unchanged, passes the result as the argument of `xwidget_info_id_get` at `0x84c`
+  (the move at `0x850` sets `a0` from `v0`), and returns that call's result masked to its low byte (`andi` at `0x858`).
+- `clear_cpu_intr` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x4b0`, 24 bytes, read in full, established): builds `1 << (a0 + 46)` in
+  `at` with `dsllv` and stores the doubleword to `0xffffffffaff10028`, the register at HEART offset `0x10028` (the register the table
+  above calls CLR_ISR). It makes no calls and returns with `v0` holding `0xffffffffaff10000`.
+- `heart_intr_swlevel_to_hwlevel` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x20c`, 84 bytes, read in full, established): when
+  `a0` is negative it calls `cmn_err` at `0x24c` and returns -1. Otherwise it returns 2 when `a0` is at or above
+  `swlevel_thread_hi`, 1 when `a0` is at or above `swlevel_thread_med` but below `swlevel_thread_hi`, and 0 when `a0` is below
+  `swlevel_thread_med`.
+- `heart_addr_xio_to_kva` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xa28`, 56 bytes, read in full, established): calls
+  `heart_addr_xio_to_phys` at `0xa30` with its argument unchanged. A zero result is returned as zero (the `beq` at `0xa40` jumps to
+  `0xa58`). A nonzero result is ORed with `0x9000000000000000`, which the code builds as -7 shifted left by 60 (`dsll32` by 28 at
+  `0xa48`), and returned.
+- `heart_intr_cpu_get` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0x13a4`, 28 bytes, read in full, established): loads the halfword at
+  `a0 + 36`, scales it by 16, and adds it to the `pdaindr` array base (the pointer is at `gp-30688`). It loads the doubleword at element
+  offset 8 and returns the word at offset 1764 of that pointer. It makes no calls.
+- `heart_piomap_free` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xb20`, 28 bytes, read in full, established): calls `kmem_free` at
+  `0xb28` with `a0` unchanged and `a1` 40 (0x28), and returns its result.
+- `heart_dmamap_free` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xc10`, 28 bytes, read in full, established): calls `kmem_free` at
+  `0xc18` with `a0` unchanged and `a1` 12 (0xc), and returns its result.
+
 ## Open
 
 Graded entries. "Established" lines are read from the files above; "inferred" lines say what they rest on. Each
