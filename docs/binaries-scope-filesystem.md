@@ -198,3 +198,38 @@ table. Labels: a classification from names, sizes and the scan's result is infer
   `hwgreaddir` (476 bytes) and `hwgcreate` (400 bytes) cover lookup, listing and creation. `hwgattr_get` (1044 bytes),
   `hwgattr_set` (536 bytes), `hwgattr_create`, `hwgattr_replace` and `hwgattr_remove` manage named attributes, and
   `cap_hwg_get` (136 bytes) and `cap_hwg_match` (92 bytes) check capabilities on a node.
+- `IP27/usr/cpu/sysgen/IP27boot/fsctl.o` (inferred): 13 routines in an 18336-byte object. `fscopen` (124 bytes),
+  `fscclose` (152 bytes) and `fscioctl` (1844 bytes) open, close and serve requests on the file-system control
+  node. `fsr_flush` (320 bytes), `fsr_inval_buf` (124 bytes) and `fsr_invalid` (272 bytes) flush and invalidate
+  cached blocks, `invalidblocks` (152 bytes) handles a block list, and `irix5_to_fscarg` (64 bytes),
+  `irix5_o32_to_fscarg` and `irix5_n32_to_fscarg` (160 bytes each) convert the argument record for each ABI.
+- `IP27/usr/cpu/sysgen/IP27boot/specfs.a(specsubr_attr.o)` (inferred): five routines in an 8836-byte member:
+  `spec_at_init`, `spec_at_lock` (76 bytes), `spec_at_unlock` (52 bytes), `spec_at_insert_bhv` (364 bytes) and
+  `spec_at_free` (52 bytes). They set up, lock and free the attribute record of a special node, and
+  `spec_at_insert_bhv` links a behaviour record into that node's chain.
+- `IP27/usr/cpu/sysgen/IP27boot/specfs.a(specsubr_common.o)` (inferred): 20 routines in a 22180-byte member.
+  `spec_cs_get` (580 bytes) and `spec_cs_makesnode` (556 bytes) find or create the common special node for a
+  device, `spec_cs_attach` (132 bytes) and `spec_cs_delete` (240 bytes) attach and remove it, and `spec_cs_clone`
+  (208 bytes) makes a clone. `spec_cs_device_hold` (72 bytes), `spec_cs_device_rele` (64 bytes) and
+  `spec_cs_device_close` (340 bytes) keep the count of holds on the device, and `spec_cs_get_size` (12 bytes)
+  returns its size.
+- `IP27/usr/cpu/sysgen/IP27boot/specfs.a(specsubr_local.o)` (inferred): 21 routines in a 23396-byte member, the
+  per-device table of special vnodes. `spec_get` (1220 bytes), `spec_makesnode` (1112 bytes), `spec_find` (200
+  bytes), `spec_insert` (164 bytes) and `spec_delete` (228 bytes) look up and maintain its entries, and
+  `spec_make_clone` (272 bytes) builds a clone. `spec_dev_is_inuse` (196 bytes), `spec_ismounted` (72 bytes) and
+  `spec_devsize` (72 bytes) answer questions about the device behind a node.
+- `IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvfsops.o)` (inferred): one routine, `spec_sync`, with no symbol size, in
+  a 6948-byte member. It is the sync entry point of the special-file system.
+- `IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvnops_attr.o)` (inferred): 36 routines in a 25220-byte member, the
+  vnode operations of the attribute layer. Many are short. `spec_at_read` (36 bytes) makes one call and then sets
+  the return value to 19, and the larger ones are `spec_at_setattr` (1416 bytes), `spec_at_getattr` (324 bytes),
+  `spec_at_access` (388 bytes) and `spec_at_attr_get` (196 bytes).
+- `IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvnops_common.o)` (inferred): 53 routines in a 41028-byte member, the
+  vnode operations of the common layer. The larger ones are `spec_cs_setattr_vop` (1424 bytes), `spec_cs_open_hndl`
+  (1364 bytes), `spec_cs_read_vop` (832 bytes) and `spec_cs_write_vop` (792 bytes). The `_hndl` and `_vop` suffixes
+  show that each operation has a handle form and a vnode form, and `spec_cs_mac_label_get` (80 bytes) reads a label.
+- `IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvnops_local.o)` (inferred): 58 routines in a 56644-byte member, the
+  largest object of the special-file set. Its operations are `spec_open` (632 bytes), `spec_read` (800 bytes),
+  `spec_write` (728 bytes), `spec_ioctl` (124 bytes), `spec_getattr` (576 bytes), `spec_setattr` (428 bytes) and
+  `spec_fcntl` (400 bytes). `spec_read_rsync` (1080 bytes) is a second read path whose name suggests a sync step, and
+  `spec_fsync` (1136 bytes) has the largest listed size in this member.

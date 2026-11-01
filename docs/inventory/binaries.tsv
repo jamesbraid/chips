@@ -165,13 +165,13 @@ IP27/usr/cpu/sysgen/IP27boot/fd.a(fdops.o)	kernel-IP27	kernel-object	object	n64	
 IP27/usr/cpu/sysgen/IP27boot/fddi.a(smt.o)	kernel-IP27	kernel-object	object	n64	14948	ac7b6b383c82768f	IP30/usr/cpu/sysgen/IP30boot/fddi.a(smt.o);IP35/usr/cpu/sysgen/IP35boot/fddi.a(smt.o)	11	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fddi.a(pcm.o)	kernel-IP27	kernel-object	object	n64	15700	5feb77bd35e07642	IP30/usr/cpu/sysgen/IP30boot/fddi.a(pcm.o);IP35/usr/cpu/sysgen/IP35boot/fddi.a(pcm.o)	3	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fddi.a(mpcm.o)	kernel-IP27	kernel-object	object	n64	10596	2cc5888ae0f8e4fd	IP30/usr/cpu/sysgen/IP30boot/fddi.a(mpcm.o);IP35/usr/cpu/sysgen/IP35boot/fddi.a(mpcm.o)	2	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/fifofs.a(fifosubr.o)	kernel-IP27	kernel-object	object	n64	19812	f1504e25f865446c		17	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/fifofs.a(fifovnops.o)	kernel-IP27	kernel-object	object	n64	29764	030c0d32ccc3df7e		19	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/fifofs.a(fifosubr.o)	kernel-IP27	kernel-object	object	n64	19812	f1504e25f865446c		17	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/fifofs.a(fifovnops.o)	kernel-IP27	kernel-object	object	n64	29764	030c0d32ccc3df7e		19	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_analysis.o)	kernel-IP27	kernel-object	object	n64	37476	0c6ed76044f626f5		34	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_node.o)	kernel-IP27	kernel-object	object	n64	21444	1498c26161fc7205		14	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_io.o)	kernel-IP27	kernel-object	object	n64	12404	6fb6a768455c1d82		4	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fru.a(sn0_fru_tables.o)	kernel-IP27	kernel-object	object	n64	4804	a22d9ee36870cecc		0	none	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/fsctl.o	kernel-IP27	kernel-object	object	n64	18336	626186ffc40e4a58		13	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/fsctl.o	kernel-IP27	kernel-object	object	n64	18336	626186ffc40e4a58		13	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/gentty.o	kernel-IP27	kernel-object	object	n64	11944	139bdc040addfcf1		8	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/graph.a(graph.o)	kernel-IP27	kernel-object	object	n64	32916	7cbdfc509da76d55		26	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-IP27	kernel-object	object	n64	51956	13e7d4da472d8afc		76	symtab	0	0	undocumented		
@@ -202,9 +202,9 @@ IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-IP27	ker
 IP27/usr/cpu/sysgen/IP27boot/hitachi.o	kernel-IP27	kernel-object	object	n64	26296	f81c3fd75342181d		9	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/htport.o	kernel-IP27	kernel-object	object	n64	59440	73d9c79752a4576d	IP30/usr/cpu/sysgen/IP30boot/htport.o;IP35/usr/cpu/sysgen/IP35boot/htport.o	38	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hubspc.o	kernel-IP27	kernel-object	object	n64	12976	3b8fba44b13081b2		13	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgvnops.o)	kernel-IP27	kernel-object	object	n64	25876	15f89ff79270d3d3		21	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgvfsops.o)	kernel-IP27	kernel-object	object	n64	10612	5d1b65ae4a600a1d	IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgvfsops.o);IP35/usr/cpu/sysgen/IP35boot/hwgfs.a(hwgvfsops.o)	5	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgsubr.o)	kernel-IP27	kernel-object	object	n64	15428	74f197762fbc885f	IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgsubr.o);IP35/usr/cpu/sysgen/IP35boot/hwgfs.a(hwgsubr.o)	11	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgvnops.o)	kernel-IP27	kernel-object	object	n64	25876	15f89ff79270d3d3		21	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgvfsops.o)	kernel-IP27	kernel-object	object	n64	10612	5d1b65ae4a600a1d	IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgvfsops.o);IP35/usr/cpu/sysgen/IP35boot/hwgfs.a(hwgvfsops.o)	5	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgsubr.o)	kernel-IP27	kernel-object	object	n64	15428	74f197762fbc885f	IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgsubr.o);IP35/usr/cpu/sysgen/IP35boot/hwgfs.a(hwgsubr.o)	11	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-IP27	kernel-object	object	n64	12224	0eebeaa53cacbc83		7	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-IP27	kernel-object	object	n64	991696	e6c9165004d38eb4		304	symtab+dwarf	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/idev.o	kernel-IP27	kernel-object	object	n64	25896	1f3d93b2c33ae3dd		22	symtab	0	0	undocumented		
@@ -304,10 +304,10 @@ IP27/usr/cpu/sysgen/IP27boot/llc2.a(Space.o)	kernel-IP27	kernel-object	object	n6
 IP27/usr/cpu/sysgen/IP27boot/llc2.a(llc2dlpi.o)	kernel-IP27	kernel-object	object	n64	41732	9279bac61c0aa6e9		40	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/llc2.a(llc2match.o)	kernel-IP27	kernel-object	object	n64	14484	8c330ce9455dc025	IP30/usr/cpu/sysgen/IP30boot/llc2.a(llc2match.o);IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2match.o)	15	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/lockd.o	kernel-IP27	kernel-object	object	n64	144928	d99536c55e62ce32		128	symtab+dwarf	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_subr.o)	kernel-IP27	kernel-object	object	n64	12548	c7536428691440ae	IP30/usr/cpu/sysgen/IP30boot/lofs.a(lofs_subr.o);IP35/usr/cpu/sysgen/IP35boot/lofs.a(lofs_subr.o)	8	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_vfsops.o)	kernel-IP27	kernel-object	object	n64	11668	3537d857162cc86b	IP30/usr/cpu/sysgen/IP30boot/lofs.a(lofs_vfsops.o);IP35/usr/cpu/sysgen/IP35boot/lofs.a(lofs_vfsops.o)	6	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_vnops.o)	kernel-IP27	kernel-object	object	n64	31012	5c2a95728a6dac97		42	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_icrash.o)	kernel-IP27	kernel-object	object	n64	12644	39f6e81b26bc6bd7		1	none	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_subr.o)	kernel-IP27	kernel-object	object	n64	12548	c7536428691440ae	IP30/usr/cpu/sysgen/IP30boot/lofs.a(lofs_subr.o);IP35/usr/cpu/sysgen/IP35boot/lofs.a(lofs_subr.o)	8	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_vfsops.o)	kernel-IP27	kernel-object	object	n64	11668	3537d857162cc86b	IP30/usr/cpu/sysgen/IP30boot/lofs.a(lofs_vfsops.o);IP35/usr/cpu/sysgen/IP35boot/lofs.a(lofs_vfsops.o)	6	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_vnops.o)	kernel-IP27	kernel-object	object	n64	31012	5c2a95728a6dac97		42	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_icrash.o)	kernel-IP27	kernel-object	object	n64	12644	39f6e81b26bc6bd7		1	none	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/log.o	kernel-IP27	kernel-object	object	n64	18912	484ec7bc209a6d08		12	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-IP27	kernel-object	object	n64	61480	d9e547d609cbd60a		61	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/magellan.o	kernel-IP27	kernel-object	object	n64	30720	3b68ee3a8dcb36ed		16	symtab	0	0	undocumented		
@@ -318,8 +318,8 @@ IP27/usr/cpu/sysgen/IP27boot/mio.o	kernel-IP27	kernel-object	object	n64	6296	638
 IP27/usr/cpu/sysgen/IP27boot/mloadidbg.o	kernel-IP27	kernel-object	object	n64	42528	41c06ecc19b8ebc2		10	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mouse.a(pcmouse.o)	kernel-IP27	kernel-object	object	n64	14916	7d5d999592db31ea		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/msg.o	kernel-IP27	kernel-object	object	n64	24152	c15ed6c8934ce7b1		13	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/namefs.a(namevfs.o)	kernel-IP27	kernel-object	object	n64	19492	f64616560c34b228		12	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/namefs.a(namevno.o)	kernel-IP27	kernel-object	object	n64	21476	53d5ac7dea9a01c9		21	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/namefs.a(namevfs.o)	kernel-IP27	kernel-object	object	n64	19492	f64616560c34b228		12	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/namefs.a(namevno.o)	kernel-IP27	kernel-object	object	n64	21476	53d5ac7dea9a01c9		21	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/nfs.a(bootparam_xdr.o)	kernel-IP27	kernel-object	object	n64	7492	655efa34b6194aa6	IP30/usr/cpu/sysgen/IP30boot/nfs.a(bootparam_xdr.o);IP35/usr/cpu/sysgen/IP35boot/nfs.a(bootparam_xdr.o)	9	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfs.a(nfs_vfsops.o)	kernel-IP27	kernel-object	object	n64	33444	ba53a8c7000d0e8f		19	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfs.a(nfs_vnodeops.o)	kernel-IP27	kernel-object	object	n64	70484	1796cfd5b91433fc		49	symtab	0	0	undocumented		
@@ -655,13 +655,13 @@ IP27/usr/cpu/sysgen/IP27boot/snfs.a(nfs_svr_stats.o)	kernel-IP27	kernel-object	o
 IP27/usr/cpu/sysgen/IP27boot/snif.a(snif.o)	kernel-IP27	kernel-object	object	n64	25636	71f2285e2235d6ca		23	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/sockmod.o	kernel-IP27	kernel-object	object	n64	70760	64370412f5da2fd7		38	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/spec_idbg.a(spec_idbg.o)	kernel-IP27	kernel-object	object	n64	14916	5463580233dbef5c	IP30/usr/cpu/sysgen/IP30boot/spec_idbg.a(spec_idbg.o);IP35/usr/cpu/sysgen/IP35boot/spec_idbg.a(spec_idbg.o)	7	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
-IP27/usr/cpu/sysgen/IP27boot/specfs.a(specsubr_attr.o)	kernel-IP27	kernel-object	object	n64	8836	72938ab890a21db2		5	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/specfs.a(specsubr_local.o)	kernel-IP27	kernel-object	object	n64	23396	d41f2ad8626c5892	IP30/usr/cpu/sysgen/IP30boot/specfs.a(specsubr_local.o);IP35/usr/cpu/sysgen/IP35boot/specfs.a(specsubr_local.o)	21	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/specfs.a(specsubr_common.o)	kernel-IP27	kernel-object	object	n64	22180	819ba377ae8ca82f		20	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvfsops.o)	kernel-IP27	kernel-object	object	n64	6948	a4b72f3528c03229		1	none	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvnops_attr.o)	kernel-IP27	kernel-object	object	n64	25220	b2d87331b9551f1b		36	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvnops_local.o)	kernel-IP27	kernel-object	object	n64	56644	fc21f639886900b7		58	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvnops_common.o)	kernel-IP27	kernel-object	object	n64	41028	17da08e5207c258a		53	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/specfs.a(specsubr_attr.o)	kernel-IP27	kernel-object	object	n64	8836	72938ab890a21db2		5	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/specfs.a(specsubr_local.o)	kernel-IP27	kernel-object	object	n64	23396	d41f2ad8626c5892	IP30/usr/cpu/sysgen/IP30boot/specfs.a(specsubr_local.o);IP35/usr/cpu/sysgen/IP35boot/specfs.a(specsubr_local.o)	21	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/specfs.a(specsubr_common.o)	kernel-IP27	kernel-object	object	n64	22180	819ba377ae8ca82f		20	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvfsops.o)	kernel-IP27	kernel-object	object	n64	6948	a4b72f3528c03229		1	none	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvnops_attr.o)	kernel-IP27	kernel-object	object	n64	25220	b2d87331b9551f1b		36	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvnops_local.o)	kernel-IP27	kernel-object	object	n64	56644	fc21f639886900b7		58	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/specfs.a(specvnops_common.o)	kernel-IP27	kernel-object	object	n64	41028	17da08e5207c258a		53	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/stp.a(st_debug.o)	kernel-IP27	kernel-object	object	n64	67316	a8cb239152b54436	IP30/usr/cpu/sysgen/IP30boot/stp.a(st_debug.o);IP35/usr/cpu/sysgen/IP35boot/stp.a(st_debug.o)	20	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stp.a(st_fsm.o)	kernel-IP27	kernel-object	object	n64	14100	96128eed203cce2b		7	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stp.a(st_input.o)	kernel-IP27	kernel-object	object	n64	20244	7259b2fc47f44300		8	symtab	0	0	undocumented		
