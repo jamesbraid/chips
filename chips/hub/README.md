@@ -785,6 +785,141 @@ use the local alias of the table above (`0x9200000001000000 + offset`).
   byte at +0x42 of that record, and ends with `kmem_free(buffer, 512)`. Established: the register sequence and
   constants. Inferred: a recovery step for a stuck engine, because it quiesces the error interrupt, drives both
   engines with one-line transfers, edits the matching CRB entries and then runs the engine error handler.
+- `err_int_block_mask` (`IP27/unix` `0xc000000000035604`, 68 bytes) takes a bit mask as its first argument.
+  It reads the halfword at address `0xffffffffffffc420` (the processor number), indexes the 16-byte table at
+  0xc0000000014d5020 with it, follows the pointer at +0x8 of the entry and loads the byte at +0x520 (1312) of that
+  record (the slice, 0 or 1; inferred, as in `ackkgclock`). It then clears in the
+  doubleword at `0x9200000001000408 + 8 * slice` (`PI_ERR_INT_MASK_A` for slice 0, `PI_ERR_INT_MASK_B` for slice 1,
+  local alias) the bits of `a0 >> slice`, a read-modify-write that ANDs the register with the complement. The store sits
+  in the delay slot of the return. It returns no value and touches no other register. Established.
+- `err_int_unblock_mask` (`IP27/unix` `0xc000000000035648`, 76 bytes) takes a bit mask and a flag.
+  It finds the processor's slice as `err_int_block_mask` does (halfword at address 0xffffffffffffc420, the table at
+  0xc0000000014d5020, +0x8, byte +0x520).
+  It computes `a0 >> slice`; the shift is in the delay slot of the flag test, so it runs whether or not the flag is set.
+  When a1 is nonzero it first stores that shifted mask to `0x9200000001000400` (`PI_ERR_INT_PEND`, local alias), which
+  clears the pending bits it names, per the write-back rule in the error section. It then sets those bits in the
+  doubleword at `0x9200000001000408 + 8 * slice` (the A or B interrupt mask) with an OR and stores it in the delay slot
+  of the return. Established; the pending-clear meaning of the store is inferred from the stores in `hubpi_eint_handler`.
+- `force_system_shutdown` (`IP27/unix` `0xc00000000003fc54`, 100 bytes) logs "Powering off the system." with
+  `cmn_err(4, ...)` (the string at `0xc00000000140d2f0`), waits `us_delay(500000)` (0x7a120) and calls
+  `elsc_system_reset` with the global at `0xc0000000014ddd78`. A result of zero or more returns. A negative result prints
+  "MSC Reset command failed.Doing warm reset" with `printf`, waits `us_delay(1000000)` (0xf4240) and stores 129 (0x81)
+  as a doubleword to `0x9200000001600008` (`NI_PORT_RESET`, local alias; the store is in a delay slot) before it
+  returns. Established. Inferred: the system-controller reset is the first choice and the port reset the fallback,
+  because the port reset runs only after the controller's call fails.
+- `get_my_slotid` (`IP27/unix` `0xc00000000003cd64`, 36 bytes) loads the doubleword at `0x9200000001220048`
+  (`MD_SLOTID_USTAT`, local alias), masks its low byte with `andi 0xff` in the delay slot of the call, and returns
+  what `hub_slotbits_to_slot` makes of it. Established.
+- `get_node_slotid` (`IP27/unix` `0xc00000000003cd38`, 44 bytes) is the same read for another node: it adds the node
+  number in a0, shifted left 32, to `0x9200000001a20000` and loads the doubleword at +0x48 of the sum, which is
+  `MD_SLOTID_USTAT` through the node alias. It passes the low byte of that to `hub_slotbits_to_slot` and returns the
+  result. Established.
+- `early_pckminit` (`IP27/unix` `0xc0000000000a1f44`, 40 bytes) loads the pointer at the literal-pool slot gp-16864
+  (`0xc0000000014cdf90`, which holds `0xc0000000014f70c8`) and from it the doubleword at +1112, which is the global
+  `pckm_cons_funcs` at `0xc0000000014f7520`. A zero value returns at once; otherwise it calls through it with
+  `jalr` and returns the callee's value. Established. The routine touches no register. Inferred: the function
+  pointer is the keyboard driver's early-initialisation entry, because the global holds the keyboard console table.
+- `gfx_flow_flush_my_wg` (`IP27/unix` `0xc000000000396840`, 24 bytes) loads the doubleword at address
+  0x9200000001030100 (`PI_RT_COUNT`, local alias) and stores it to its own stack slot, discarding it, then returns. Established for the
+  read and the discard. Inferred: the load exists to make earlier posted writes complete, because its value is not
+  used and nothing else in the routine has an effect.
+- `hub_check_window_equiv` (`IP27/unix` `0xc00000000003c248`, 104 bytes) takes two addresses.
+  It calls `hub_check_is_widget0` on each; when both answers are nonzero it returns 1 (the `li` is in the delay slot of the
+  branch to the return). When either is zero it compares bits 31:24 of the two addresses (`dsrl 0x18`, `andi 0xff`) and
+  returns 1 when they are equal and 0 otherwise. The instruction at 0xc00000000003c280 is not reached. Established.
+- `hub_check_pci_equiv` (`IP27/unix` `0xc00000000003c2b0`, 136 bytes) takes two addresses and returns 0 when
+  `hub_check_window_equiv` says they differ. Otherwise it compares their low 24 bits (mask 0xffffff from `lui 0xff` and
+  `ori 0xffff`; the compare is at address 0xc00000000003c2e4) and returns 0 on a mismatch. When those match it extracts bits 39:32 of each address, sign-extended
+  from 16 bits, and returns `check_nasid_equiv` of the two with a third argument of 0. Established. Inferred: the
+  bits 39:32 are the node number, because they are the argument of a routine whose callee takes node numbers.
+- `hub_dmamap_alloc` (`IP27/unix` `0xc00000000003bad8`, 128 bytes) builds a 16-byte map record for a device.
+  It calls `xwidget_info_get` with its first argument, then `xwidget_info_id_get` and `xwidget_info_master_get` on
+  the result, and `kern_malloc(16)`. The new record gets the first argument as a word at +0x0, the widget id as a
+  byte at +0x4, the master as a word at +0x8 and a flag word of 1 at +0xc. When bit 0 of the fourth argument is set
+  the flag word is 5 instead. It returns the record without testing the allocation. Established; inferred: flag bit 2
+  marks a map that may be used again, because the routines that take a map complain only when it is clear.
+- `hub_dmamap_free` (`IP27/unix` `0xc00000000003bb58`, 40 bytes) clears bit 0 of the flag word at +0xc of the map
+  record (mask -2, stored in the delay slot of the call) and calls `kern_free` on the record. It returns what
+  `kern_free` returns. Established.
+- `hub_dmamap_addr` (`IP27/unix` `0xc00000000003bb80`, 92 bytes) returns its second argument unchanged, the
+  physical address it was given. It first reads the flag word at +0xc of the map record: with bit 1 clear it sets that
+  bit and stores the word back (the store is in the delay slot of the return); with bits 1 and 2 both set it stores
+  nothing; with bit 1 set and bit 2 clear it first calls `cmn_err(4, ...)` with the text "%v: hub_dmamap_addr re-uses
+  dmamap." and the word at +0x0 of the record. Established; inferred: bit 1 means in use.
+- `hub_dmamap_list` (`IP27/unix` `0xc00000000003bbdc`, 92 bytes) has the same shape as the routine at 0xc00000000003bb80
+  with its own message: it returns its second argument unchanged and sets bit 1 of the flag word at +0xc when that bit
+  was clear.
+  When bit 1 was set and bit 2 clear it calls `cmn_err(4, ...)` with "%v: hub_dmamap_list re-uses dmamap" and the
+  word at +0x0 first. With bit 2 set it skips the message. Established.
+- `hub_dmamap_done` (`IP27/unix` `0xc00000000003bc38`, 80 bytes) reads the flag word at +0xc of the map record. When
+  bit 1 is set it clears that bit (mask -3) and returns. When bit 1 is clear and bit 2 is set it returns with no
+  store. When both are clear it calls `cmn_err(4, ...)` with "%v: hub_dmamap_done already done with dmamap" and the
+  word at +0x0 of the record. It returns no value. Established; inferred: it ends the use that `hub_dmamap_addr` or
+  `hub_dmamap_list` began.
+- `hub_dmatrans_addr` (`IP27/unix` `0xc00000000003bc88`, 8 bytes) returns its third argument unchanged: the only
+  instruction besides the return, `or v0,a2,zero`, is in its delay slot. It touches no memory, and the next routine at
+  0xc00000000003bc90 has the same two instructions. Established.
+- `hub_dmatrans_list` (`IP27/unix` `0xc00000000003bc90`, 8 bytes) is the same two instructions as the routine at
+  0xc00000000003bc88: it returns its third argument and nothing else, so a translated address passes through
+  unchanged. Established.
+- `hub_dmamap_drain` (`IP27/unix` `0xc00000000003bc98`, 8 bytes) is a return with a no-op in its delay slot: it reads
+  no argument and writes nothing, so draining a map does nothing in this kernel. Established for the body; the
+  routine at 0xc00000000003bca0 has the same two instructions.
+- `hub_dmaaddr_drain` (`IP27/unix` `0xc00000000003bca0`, 8 bytes) is also a return and a no-op, the second of three
+  such back-to-back routines (the others are at 0xc00000000003bc98 and 0xc00000000003bca8). It reads no argument
+  and has no effect. Established.
+- `hub_dmalist_drain` (`IP27/unix` `0xc00000000003bca8`, 8 bytes) is the third of those routines: a return with a
+  no-op in the delay slot and no effect. The symbol-less routine at 0xc00000000003bcb0 follows it. Established.
+- `hub_piomap_done` (`IP27/unix` `0xc00000000003ba04`, 8 bytes) is a return with a no-op in the delay slot. It touches
+  no argument and no memory, so finishing a programmed-I/O mapping has no work to do here; the routine at
+  0xc00000000003ba0c follows it. Established for the body.
+- `hub_piomap_addr` (`IP27/unix` `0xc00000000003b9a4`, 96 bytes) takes a map record, an address and a length. It
+  returns 0 when the address is below the doubleword at +0x8 of the record, or when the end of the range (address plus
+  length) is past +0x8 plus the doubleword at +0x10. Otherwise, when bit 0 of the word at +0x28 is set, it returns the
+  doubleword at +0x18 plus the address modulo the one at +0x10 (`ddivu`, `mfhi`; the `teq` at 0xc00000000003b9e4 traps
+  on a zero divisor); with bit 0 clear it returns 0. Established; inferred: +0x8 is the mapped base, +0x10 its size and
+  +0x18 the window address, because the checks and the sum use them so.
+- `hub_intr_cpuid_get` (`IP27/unix` `0xc00000000003c174`, 8 bytes) returns the halfword at +0x24 (36) of its
+  argument, sign-extended (`lh` in the delay slot of the return). Established; inferred: the record is an interrupt
+  handle and the halfword the target processor number, as the routines that connect and free it pass it to
+  `intr_connect_level` and `intr_unreserve_level` first.
+- `hub_intr_connect` (`IP27/unix` `0xc00000000003c06c`, 136 bytes) takes an interrupt handle and four more
+  arguments. It calls `intr_connect_level` with the halfword at +0x24, the words at +0x28 and +0x20 of the handle,
+  the second and third arguments and 0. A negative result is returned as it is. Otherwise it stores the fourth
+  argument at +0x18 and the fifth at +0x10, calls the fourth with the handle when it is nonzero, sets bit 2 of the
+  word at +0x2c and returns 0. Established.
+- `hub_intr_disconnect` (`IP27/unix` `0xc00000000003c0f4`, 100 bytes) calls the function at +0x18 of the handle
+  first when that doubleword is nonzero (the handle and the word at +0x28 are its arguments), then
+  `intr_disconnect_level` with the halfword at +0x24, and clears bit 2 of the word at +0x2c (mask -5). The value left
+  in v0 is that mask, not a result. Established.
+- `hub_intr_free` (`IP27/unix` `0xc00000000003bff4`, 120 bytes) saves the halfword at +0x24 and the word at +0x28
+  of the handle. When bit 2 of the word at +0x2c is set it zeroes the byte at +0x5 and the doubleword at +0x8,
+  stores -1 to the word at +0x0 and calls `hub_intr_disconnect`. When bit 0 of that word is set it calls `kmem_free`
+  with a size of 48 (0x30). It ends with `intr_unreserve_level` on the saved processor and level and returns
+  its result. Established.
+- `hub_error_status_war` (`IP27/unix` `0xc000000000035034`, 96 bytes) reads
+  `PI_CPU_NUM` (`0x9200000001000020`) and, for a nonzero value, `PI_ERR_STATUS0_B` (`0x9200000001000450`),
+  otherwise `PI_ERR_STATUS0_A` (`0x9200000001000430`).
+  If bit 63 of the status read is set it returns at once. If clear, it calls `_badaddr_val` with address
+  0x9200000002400208, size 8 and a stack buffer, the deliberate bus-error read described under Addresses, and returns
+  its result; the early return leaves v0 unset. Established for the sequence; inferred: a workaround that forces an error cycle when the
+  first-error latch is empty.
+- `hub_error_count_enable` (`IP27/unix` `0xc000000000035238`, 172 bytes) takes an index below 256. It maps the index
+  through the halfword table at 0xc0000000014d4c80 to a slot of the pointer table at 0xc0000000014dd768 plus 0x200.
+  A negative or too large index, an index whose halfword is -1, or a record whose first word is already nonzero returns
+  -1. Otherwise it zeroes the record (`blkclr`, 64 bytes), stores 1 to its first word and calls
+  `timeout` for `hub_error_count_update` with the index and 100 ticks, returning 0. Established.
+- `hub_error_count_disable` (`IP27/unix` `0xc0000000000352e4`, 84 bytes) checks the index as
+  `hub_error_count_enable` does and stores 0 to the first word of the record that index selects. It returns 0, or -1
+  for a bad index or a -1 halfword in the table at 0xc0000000014d4c80. It cancels nothing. Established.
+- `hub_error_count_get` (`IP27/unix` `0xc000000000035338`, 88 bytes) takes an index and a pointer. Using the table at
+  0xc0000000014d4c80, for a valid index
+  it stores 64 (the record size) as a word through the pointer and returns the record's address; for a bad index or a
+  -1 halfword it returns 0 and stores nothing. Established.
+- `hub_error_count_update` (`IP27/unix` `0xc0000000000351c0`, 120 bytes) is the periodic job that
+  `hub_error_count_enable` starts. It finds the record for its index and calls `ii_llp_error_monitor` on record +8
+  and `ni_llp_error_monitor` on record +32. While the first word of the record is nonzero it calls `timeout`
+  for itself again with the index and 100 ticks. Established.
 
 ## Open
 
