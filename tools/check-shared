@@ -19,7 +19,12 @@ cd "$(dirname "$0")/.."
 files='tools/Containerfile tools/Containerfile.ghidra tools/re-run tools/setup-clone.sh tools/check-shared
 tools/ghidra-export.py tools/ghidra-scripts/ReBSimAdd.java tools/ghidra-scripts/ReDecompileExport.java
 tools/ghidra-scripts/ReMipsGp.java tools/ghidra-scripts/ReObjectSymbols.java
-scripts/inventory.py scripts/facts.py scripts/check_claims.py scripts/test_facts.py scripts/pre-push scripts/check-leaks.sh'
+scripts/inventory.py scripts/facts.py scripts/check_claims.py scripts/test_facts.py scripts/pre-push scripts/check-leaks.sh
+scripts/mdebug.py scripts/test_mdebug.py
+tools/ghidra-scripts/ReMdebugImport.java
+scripts/syscall_table.py scripts/test_syscall_table.py
+scripts/syssgi_selectors.py scripts/test_syssgi_selectors.py
+tools/README-analysis.md'
 manifest=tools/shared.sha256
 if [ "${1:-}" = --update ]; then
     # shellcheck disable=SC2086

@@ -72,7 +72,8 @@ To reproduce a cited result:
 - `tools/check-shared` verifies that the toolchain files (`tools/`) are byte-identical to the copies in
   the sibling repositories. The optional Ghidra image is built from `tools/Containerfile.ghidra` by
   `tools/re-run --ghidra COMMAND`, and `tools/re-run --ghidra-export OBJECT` writes decompiled C and
-  function-similarity output as JSON (see `ghidra/README.md`); nothing else needs it.
+  function-similarity output as JSON (see `ghidra/README.md`); nothing else needs it. `tools/README-analysis.md`
+  describes the `.mdebug` importer and the kernel table extractors.
 
 ## Clone and query
 
