@@ -48,47 +48,47 @@ chip page and the entry is deleted.
 - **Xbow: interrupt vector assignment.** *[route: software now]* IRIX writes the vector into interrupt destination upper from the interrupt
   layer at run time; which number each product uses is not in `xbow.o`. Next: the interrupt allocation code of the node
   controller and HEART, and any PROM routine that programs the register.
-- **Xbow: write-error behaviour.** The graded answers (what sets each error bit, what is latched on a refused register
+- **Xbow: write-error behaviour.** *[route: software now; proposed: the link time-out and second-error routines in the held images; the PXBOW registers need a PXBOW object, none is held]* The graded answers (what sets each error bit, what is latched on a refused register
   write, how the vector is chosen) are in chips/xbow/README.md, "Error reporting for a refused or timed-out register
   write". Open there: what a link-level time-out latches, how a 4-byte access reaches a double-word-only register
   file, a second error's effect, and the registers of the PXBOW part.
-- **CRIME: identification register upper word.** `get_crimerev` in the IP32 kernel object reads bits 63:32 of the
+- **CRIME: identification register upper word.** *[route: software now]* `get_crimerev` in the IP32 kernel object reads bits 63:32 of the
   identification doubleword and returns 0x13 for 1 and 0x14 for anything larger, while the specification defines only
   bits 7:0 and the PROM and diagnostic compare the low word with 0xa0 and 0xa1 only. Tried: the kernel, PROM,
   diagnostic and monitor censuses; the public Linux and NetBSD revision constants (0x11, 0x13, 0x14) match the kernel's
   return values but not how the kernel derives them. Next: the other IP32 objects that read the register (the
   graphics driver's identification probe and its callers), and the history of the public drivers' revision constants.
-- **CRIME: CPU error status location on CRIME 1.5.** The specification puts it at 0x4048 for 1.5 and 0x48 for 1.1; every
+- **CRIME: CPU error status location on CRIME 1.5.** *[route: software now]* The specification puts it at 0x4048 for 1.5 and 0x48 for 1.1; every
   IP32 routine uses 0x48. Next: the graphics driver's error paths and any public source that
   reads the status register by its 1.5 address.
-- **CRIME: write-error behaviour.** The graded answers (what sets CPU error status bit 2, what a failed or timed-out
+- **CRIME: write-error behaviour.** *[route: software now; hardware residue: the bus-level exception and the failed-store latch on the part]* The graded answers (what sets CPU error status bit 2, what a failed or timed-out
   uncached store latches, which interrupt bits fire, how the kernel detects a failed store) are in chips/crime/README.md,
   "Write-error questions". Open there: which addresses are "invalid", whether a read and a write differ in the
   three-bit layout, whether a failed store also takes a bus error exception, which CRIME bit the MACE PCI error
   handler is attached to, second-error handling, and whether the interrupt asserts with its enable bit clear.
-- **CRIME: registers no scanned image reaches.** Refresh counter (0x248), memory control bit 1 (replacement select),
+- **CRIME: registers no scanned image reaches.** *[route: software now; proposed: constant-fold the PROM's bank-sizing addresses once the IP32 PROM is unpacked; the stripped diagnostic is a missing binary]* Refresh counter (0x248), memory control bit 1 (replacement select),
   the JUICE field (control bits 7:5), the watchdog's operation (only a store of 0), and the contents of 0x58 and 0x270.
   Valid end state unless a PROM or diagnostic routine that sets them is found. The PROM's bank-sizing loops use
   indexed addresses, so the census records only their bases, and the diagnostic's CRIME routines are stripped.
-- **Bedrock, IOC3, IOC4 inventories.** Censuses not run (stub configs). Next: write each config's
-- **MACE: write- and read-failure behaviour.** The graded answers (what sets each PCI error flag, what the error
+- **Bedrock, IOC3, IOC4 inventories.** *[route: software now; stale in part: the IOC3 and IOC4 censuses have run, Hub and Bedrock have census output, and Bedrock has no accessor seeds]* Censuses not run (stub configs). Next: write each config's
+- **MACE: write- and read-failure behaviour.** *[route: software now; hardware residue: an ISA device that never answers, since the specification gives no timeout]* The graded answers (what sets each PCI error flag, what the error
   address register latches, which interrupt fires) are in chips/mace/README.md, "Error reporting for a refused or
   timed-out CPU access". Open there: what sets flags 26, 24 and 23 and what a refused memory or I/O window access
   sets; whether a posted write's failure differs from a read's at the CPU; whether any MACE address returns the read
   response error bit; what a PIO to an ISA device that never answers does (the specification gives the peripheral
   controller no timeout or error flag); a second error's effect on the latched address. Next: CRIME's own error
   registers (the CRIME census), and the compressed IP32 PROM's PCI and ISA probes once it can be read.
-- **MACE: the compressed IP32 PROM.** `ip32prom.image` holds three segments (`sloader`, `post1`, `firmware`) with
+- **MACE: the compressed IP32 PROM.** *[route: software now; unlocks the MACE and CRIME PROM entries]* `ip32prom.image` holds three segments (`sloader`, `post1`, `firmware`) with
   an eight-byte `PROM` header and `SHDR` records at `0x108`, `0x4108`, `0x4508`, `0x9308`; their bodies are not plain
   code. The census therefore holds no PROM access. Tried: the Xbow-era container unpacker (a different layout);
   string search (only the `sloader` and `post1` banner and a few message strings are readable). Next: read the
   decompression routine from the `sloader` body (the one segment small enough to read by hand) and unpack
   `firmware` with it.
-- **MACE: blocks reached through run-time pointers.** The Ethernet driver (`if_me.o`), the 16550 serial driver
+- **MACE: blocks reached through run-time pointers.** *[route: software now]* The Ethernet driver (`if_me.o`), the 16550 serial driver
   (`sio_ti16550.o`, `serialio.o`), the video code (`mvp.o`) and the DP-RAM and parallel context registers take their
   addresses from records. The census has three Ethernet rows (from `ide`) and one video row. Next: constant-fold the
   record fields, or read the attach routines by hand and add the registers to the page.
-- **MACE: revision strap at `0x310000` bit 4.** `pckm_attach` sets a `mace_rev` flag from bit 4 of the ring base and
+- **MACE: revision strap at `0x310000` bit 4.** *[route: missing source: the NetBSD driver is in an uninitialised submodule; the entry also says NetBSD was already read, so drop it if so]* `pckm_attach` sets a `mace_rev` flag from bit 4 of the ring base and
   reset register, which the specification calls reserved; the PS/2 code treats status bit 6 differently when the flag
   is 0. Tried: the specification's PS/2 and ISA chapters, Linux and NetBSD (neither reads it). Next: the specification
   revision history pages (host bridge revision 0 versus 1 notes) and the NetBSD PS/2 driver for the same quirk.
