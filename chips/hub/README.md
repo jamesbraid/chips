@@ -460,6 +460,46 @@ header names used in the tables above.
   `us_delay`). It calls `rtodc` again and, if the value is unchanged, calls `cmn_err` with level 4 and the message
   "System time-of-day chip is not advancing." followed by "CHECK AND RESET THE DATE!". Established; the two-second
   figure follows from the inferred tick rate.
+- `get_nasid` (`IP27/unix` `0xc00000000001d664`, 28 bytes) returns bits 16:8 of the doubleword at address
+  0x9200000001600000 (`NI_STATUS_REV_ID`, local alias): shift right 8, mask `0x1ff`, then sign-extend the low
+  halfword. Established; the field is the node number because `getcpuid` and `get_hub_chiprev`'s callers use it as
+  one.
+- `get_slice` (`IP27/unix` `0xc00000000001d680`, 16 bytes) returns the low 32 bits of the doubleword at address
+  0x9200000001000020 (`PI_CPU_NUM`, local alias). Established.
+- `getcpuid` (`IP27/unix` `0xc000000000027178`, 116 bytes, 32-byte frame) raises the interrupt level with the routine
+  at `0xc00000000003b30c` (the entry shared by `splhi` and the other `spl` names), calls `get_nasid`, reads
+  `PI_CPU_NUM`, passes both to `nasid_slice_to_cpuinfo`, restores the level with `splx` and returns the halfword at
+  +30 of the record found. When no record is found it calls `assfail` with the text "klcpu" and line number 1333.
+  Established.
+- `get_hub_chiprev` (`IP27/unix` `0xc00000000001d6a4`, 28 bytes) returns bits 7:4 of
+  `NI_STATUS_REV_ID` read through the node alias: it adds its first argument (a node number) shifted left 32 to
+  address 0x9200000001e00000, loads the doubleword there, shifts right 4 and masks 15. Established.
+### Widget, slot and device lookups
+
+- `hub_widget_id` (`IP27/unix` `0xc00000000001d64c`, 24 bytes) returns the low four bits of the doubleword at offset
+  32 from address 0x9200000001c00000 plus its first argument (a node number) shifted left 32, which is `IIO_WCR`
+  (`0x400020`) through the node alias. Established.
+- `hub_check_is_widget0` (`IP27/unix` `0xc00000000003c1cc`, 124 bytes) tells whether an uncached address belongs to
+  the node controller's own widget. It takes bits 39:32 of its first argument as the node number, forms
+  `N = node << 32`, and returns 1 when the address lies in `[N + 0x9200000000000000, N + 0x9200000001000000)` or in
+  `[N + 0x92000000e0000000, N + 0x9200000100000000)` and 0 otherwise. Established for the two ranges; inferred that
+  they are widget 0's I/O windows, because the first ends where the register file at address 0x9200000001000000
+  begins.
+- `is_widget_pio_enabled` (`IP27/unix` `0xc000000000027be8`, 104 bytes) tells whether programmed I/O to a widget is
+  allowed. Its argument is a device record: the halfword at +12 is a compact node number (-1 returns 0), looked up in
+  the halfword table at `0xc0000000014d4e80` (-1 returns 0); the byte at +7 is the widget number. It reads the
+  doubleword at offset 272 from address 0x9200000001c00000 plus the node number shifted left 32 (`IIO_IOWA`,
+  `0x400110`, node alias) and returns 1 when the bit with the widget's number is set. Established.
+- `hubdev_cnodeid_get` (`IP27/unix` `0xc00000000004c20c`, 48 bytes) calls `hwgraph_info_get_LBL` with its argument and
+  the label string at `0xc00000000140fa18`, then returns the halfword at +8 of the record the call stored.
+  Established.
+- `hubdev_prombase_get` (`IP27/unix` `0xc00000000004c1d0`, 60 bytes) makes the same
+  `hwgraph_info_get_LBL` call as `hubdev_cnodeid_get` and returns the halfword at +10 of the record shifted left 32
+  and added to address 0x9000000030000000. Established; inferred that the halfword is the node number and the sum the
+  node's PROM window.
+- `hub_slot_to_crossbow` (`IP27/unix` `0xc00000000003cbc0`, 36 bytes) maps a slot byte to a crossbow number: the
+  branch at address 0xc00000000003cbd0 returns 0 when the high nibble (mask `0xf0`) equals 80 (`0x50`), otherwise it
+  returns `(slot - 1) & 1`. Established.
 
 ## Against the public headers (reported after the reading above)
 
