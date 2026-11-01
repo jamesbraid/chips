@@ -292,7 +292,12 @@ class Config:
                           for s in c.get('seeds', {}).get('args', [])]
         self.seed_calls = [(s['callee'], re.compile(s.get('in', '.*')), s.get('off_arg'))
                            for s in c.get('seeds', {}).get('calls', [])]
-        self.seed_returns = {s['callee']: s.get('off', 0) for s in c.get('seeds', {}).get('returns', [])}
+        # callee -> [(argument register, value, offset)]: a returned pointer is a window pointer at `off`; with
+        # `arg` and `equals` only when that argument register holds that constant at the call (the space
+        # selector of a PIO mapping call: configuration space and a base-address window share one callee)
+        self.seed_returns = {}
+        for s in c.get('seeds', {}).get('returns', []):
+            self.seed_returns.setdefault(s['callee'], []).append((s.get('arg'), s.get('equals'), s.get('off', 0)))
         self.field_rules = [dict(r, _fn=re.compile(r['functions'])) for r in c.get('field_rules', [])]
         d = c.get('discriminators', {})
         self.type_disc = d.get('type')
@@ -600,6 +605,11 @@ class Analyser:
                 self.wr(st, d, None)
 
     def record(self, fn, ins, mn, off, idx, st, window):
+        # A driver record seeded as a base only so its pointer fields can be followed (see
+        # field_rules): its own fields sit above `record_skip_above` and are not register accesses.
+        if off >= self.cfg.raw.get('record_skip_above', 1 << 64):
+            self.stats['driver_record_fields_skipped'] += 1
+            return
         w = LOADS.get(mn) or STORES.get(mn)
         variant = self.variant(st)
         basis = 'refined' if variant != '?' else 'direct'
@@ -943,7 +953,8 @@ class Analyser:
                 w = self.window_of(v[1])
                 if w:
                     v = ('B', (v[1] - w[0]) & M64, v[0] == 'KI')
-            if v and v[0] == 'B' and ins.sym not in self.known_callees and ins.sym not in cfg.raw.get('no_pointer_args', []):
+            if v and v[0] == 'B' and v[1] < cfg.raw.get('record_skip_above', 1 << 64) and \
+                    ins.sym not in self.known_callees and ins.sym not in cfg.raw.get('no_pointer_args', []):
                 self.unres.append({'image': self.label, 'function': fn, 'addr': '%x' % ins.addr,
                                    'callee': ins.sym or '(indirect)', 'arg': 'a%d' % (r - 4),
                                    'offset': v[1], 'idx': int(v[2]), 'why': 'window pointer passed to unseeded callee'})
@@ -954,8 +965,11 @@ class Analyser:
         for r in CALLER_SAVED:
             st.pop(r, None)
         st.pop(31, None)
-        if callee in cfg.seed_returns:
-            st[2] = ('B', cfg.seed_returns[callee], False)
+        for arg, eq, off in cfg.seed_returns.get(callee, ()):
+            v = self.argsnap.get(arg) if arg is not None else None
+            if arg is None or (v and v[0] == 'K' and v[1] == eq):
+                st[2] = ('B', off, False)
+                break
         for cal, rx, off_arg in cfg.seed_calls:
             if callee == cal and rx.search(self.cur_fn):
                 off = 0

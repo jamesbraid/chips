@@ -28,6 +28,11 @@ followed; PROM images have no symbols and are split into pseudo-functions after 
 built at run time is found only through an identification-register probe.
 Seeds, field-rule and variant syntax: see `configs/bridge.json` (worked example) and `configs/bedrock.json`
 (literal-pool windows).
+Drivers that keep the window pointer in a per-device record (`configs/ioc3.json`, `configs/ioc4.json`): seed the record
+as a base at an offset above every register, add a `field_rules` entry for each pointer field the attach routine stores,
+and set `record_skip_above` to that offset so the record's own fields are not reported as registers. A `seeds.returns`
+entry may carry `arg` (a register number) and `equals`, so a mapping call returns a window pointer only for one space
+selector (configuration space and a base-address window share one callee).
 
 `scripts/mips_shim.py` is a unicorn harness for running a shipped routine over chosen inputs (see
 `scripts/test_mips_shim.py` for the pattern); `scripts/check-leaks.sh` is the pre-push check.
