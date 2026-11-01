@@ -453,3 +453,62 @@ the census, and the window scan's access count is zero for every member listed h
   object of the build. They are the vnode operations the kernel calls on EFS files: `efs_rename` (2228 bytes),
   `efs_setattr` (1720 bytes), `efs_writei` (1500 bytes), `efs_readi` (1136 bytes), `efs_create` (868 bytes) and
   `efs_fcntl` (780 bytes). `diostrat` (1364 bytes) handles direct I/O requests. The member records no window access.
+
+## Checkpoint, disk-set, disk-driver and FDDI objects (scope rule 1)
+
+Rule 1 also lists the members below. Their routine names place them outside the file-system class: some are checkpoint and
+restart code, some are disk and SCSI drivers, and the FDDI members are network code. Each entry says what the member is;
+the rule that removes it is the one named in the entry. The scan was not run on these members, so the exclusion comes
+from the object's role, as the rule text says. Labels: inferred, from the symbol table and undefined imports. No routine
+body was read in full.
+
+- `IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_procfs.o)` (inferred): the checkpoint interface through `/proc`, 50 routines in a
+  53716-byte member. `ckpt_getpsinfo` (1088 bytes), `ckpt_getsiginfo` (868 bytes) and `ckpt_prioctl_thread` (728 bytes)
+  read and set process state for the checkpoint, and `ckpt_abort` (864 bytes) cancels one. It imports the `/proc` address
+  space calls `as_lookup` and `as_rele`, and it imports no chip routine.
+- `IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_sys.o)` (inferred): the checkpoint and restart system calls, 22 routines in a
+  21940-byte member. `ckpt_sys` (648 bytes) is the entry point, `ckpt_restartreturn` (560 bytes) returns a restored
+  process to user mode, and `ckpt_setexec` (520 bytes) restores the exec image. Its imports include `execmap`, `prctl`
+  and `pidfork`, and it drives no chip.
+- `IP27/usr/cpu/sysgen/IP27boot/cpr.a(ckpt_util.o)` (inferred): the checkpoint helpers, nine routines in a 10948-byte
+  member. `ckpt_lookup_add` (304 bytes) and `ckpt_lookup` (100 bytes) keep a table of saved objects, `ckpt_fid` (284 bytes)
+  builds a file identifier and `ckpt_vp_open` (280 bytes) reopens a saved vnode.
+- `IP27/usr/cpu/sysgen/IP27boot/dksc.o` (inferred): the SCSI disk driver, 60 routines in a 75336-byte object. `dkscioctl`
+  (2364 bytes) is the control entry, `dkscopen` (1828 bytes) opens a disk, `dk_chkcond` (1672 bytes) and
+  `dk_print_sense` (1120 bytes) handle SCSI check conditions, and `dk_intr` (800 bytes) completes requests. It imports the
+  multipath calls `fo_max_paths` and `fo_scsi_device_update_generic`, and it reaches its controller through the device
+  graph, with no chip routine named.
+- `IP27/usr/cpu/sysgen/IP27boot/dms.a(dms.o)` (inferred): the data-migration device, seven routines in a 15236-byte member.
+  `dmsioctl` (2496 bytes) is the control entry, and `dmsopen`, `dmsclose`, `dmspoll` and `dmsmap` complete the device
+  entry points.
+- `IP27/usr/cpu/sysgen/IP27boot/dms.a(dmscall.o)` (inferred): the call table of the migration device, six routines in an
+  8852-byte member: `dmscall_add` (328 bytes), `dmscall_expand` (316 bytes), `dmscall_remove` (216 bytes), `dmscall_scan`
+  (208 bytes) and `dmscall_destroy`. It imports `dms_add_log`, the migration log call.
+- `IP27/usr/cpu/sysgen/IP27boot/dms.a(dmskern.o)` (inferred): the migration block pools in the kernel, 83 routines in an
+  85236-byte member. `dms_pool_create` (3344 bytes) makes a pool, `dms_block_split` (968 bytes) divides a block,
+  `dms_block_switch_pages` (756 bytes) moves pages between blocks, and `_dms_pool_destroy` (820 bytes) frees a pool. It
+  imports `nasid_to_compact_node`, which places memory by node.
+- `IP27/usr/cpu/sysgen/IP27boot/dms.a(dmslt.o)` (inferred): a lookup table for the migration pools, seven routines in an
+  8900-byte member. `dmslt_create` (276 bytes), `dmslt_expand` (452 bytes), `dmslt_lookup` (200 bytes), `dmslt_remove`
+  (176 bytes) and `dmslt_scan` (144 bytes) keep it.
+- `IP27/usr/cpu/sysgen/IP27boot/dms.a(dmrbcompat.o)` (inferred): the compatibility layer of the migration pools, 24
+  routines in a 16932-byte member. `dmrb_attach` (716 bytes) binds a handle, `dmrb_putvalid` (264 bytes) and
+  `dmrb_getnextvalid` (220 bytes) manage the valid list, and `dmrb_getnextfree` and `dmrb_putfree` (192 and 164 bytes)
+  manage the free list.
+- `IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)` (inferred): the SCSI request interface for user programs, 18 routines in a
+  22196-byte member. `dsioctl` (2580 bytes) takes a request, `task_glue` (648 bytes) and `task_find` (220 bytes) match it to
+  a task, and `dsopen` (296 bytes) opens the device. It imports `scsi_hwgraph_lock`, `scsi_dev_info_get` and the glue
+  calls of `ds.a(dsglue.o)`, and it drives no chip itself.
+- `IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)` (inferred): the glue of the SCSI request interface, seven routines in a
+  10468-byte member: `glue_start` (444 bytes), `glue_reserve` (428 bytes), `glue_return` (336 bytes), `glue_getopt`
+  (200 bytes) and `glue_release` (148 bytes). It imports `scsi_dev_info_get` and `iomap`.
+- `IP27/usr/cpu/sysgen/IP27boot/fddi.a(smt.o)` (inferred): the FDDI station management, 11 routines in a 14948-byte
+  member. `smt_ioctl` (1696 bytes) is the control entry, `smt_new_st` (412 bytes) changes the station state, `smt_ler`
+  (224 bytes) reports link errors, and `smt_timo` (196 bytes) is the timer. Its imports name no chip. This is network
+  code, which rule 2 would name; the member is listed under rule 1.
+- `IP27/usr/cpu/sysgen/IP27boot/fddi.a(pcm.o)` (inferred): the FDDI physical connection code, three routines in a
+  15700-byte member. `host_pcm` (3896 bytes) is the largest, `pcm_code` (1500 bytes) runs the connection state machine,
+  and `pcm_pc_signal` signals it. Its imports name no chip.
+- `IP27/usr/cpu/sysgen/IP27boot/fddi.a(mpcm.o)` (inferred): a second physical connection routine set, two routines
+  `moto_pcm` (1188 bytes) and `motopcm_code` in a 10596-byte member. It shares the station calls of `smt.o` and imports
+  no chip routine.
