@@ -4183,13 +4183,13 @@ IP27/unix	kernel	n64	.text	0xc00000000001b1a0	272	get_router_invent_info	symtab	
 IP27/unix	kernel	n64	.text	0xc00000000001b2b0	148	build_router_invent_info	symtab	e7f6cdd8cad7		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001b344	48	router_reg_read	symtab	f4cbd1663ec7		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc00000000001b374	48	router_reg_write	symtab	5e92c40d7b2e		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
-IP27/unix	kernel	n64	.text	0xc00000000001b454	84	router_set_leds	symtab	bbe0a05c5f7b		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000001b454	84	router_set_leds	symtab	bbe0a05c5f7b		in	named-only	chips/router/README.md#global-registers-ip35-build-names-are-the-public-headers	Global registers (IP35 build; names are the public header's)
 IP27/unix	kernel	n64	.text	0xc00000000001b4a8	108	router_decode_port_errors	symtab	80305b65ea87		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP27/unix	kernel	n64	.text	0xc00000000001b514	496	router_acquire_port_info	symtab	3941c2a1fedf		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP27/unix	kernel	n64	.text	0xc00000000001b704	424	router_acquire_info	symtab	b3c2e17a5775		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000001b704	424	router_acquire_info	symtab	b3c2e17a5775		in	named-only	chips/router/README.md#global-registers-ip27-build	Global registers (IP27 build)
 IP27/unix	kernel	n64	.text	0xc00000000001b9cc	76	router_check_port	symtab	a50183f87e52		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000001ba70	196	router_port_init	symtab	289758165090		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000001bb34	224	router_port_hist_reselect	symtab	6053b6bfb904		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000001ba70	196	router_port_init	symtab	289758165090		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
+IP27/unix	kernel	n64	.text	0xc00000000001bb34	224	router_port_hist_reselect	symtab	6053b6bfb904		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
 IP27/unix	kernel	n64	.text	0xc00000000001bc14	264	router_hist_reselect	symtab	151a1fd838eb		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001bd1c	276	router_set_fences	symtab	63401bd9f621		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc00000000001be30	196	capture_router_stats	symtab	55191b73679b		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
@@ -4198,7 +4198,7 @@ IP27/unix	kernel	n64	.text	0xc00000000001c008	124	vertex_to_router_board	symtab	
 IP27/unix	kernel	n64	.text	0xc00000000001c084	1196	router_init	symtab	12a2ebfc74b1		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc00000000001c530	132	router_get_info	symtab	fd10b7610bcb		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001c5b4	136	timeout_poll	symtab	32552d6e3f25		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP27/unix	kernel	n64	.text	0xc00000000001c75c	476	router_print_state_specific	symtab	35cd3d21738a		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000001c75c	476	router_print_state_specific	symtab	35cd3d21738a		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
 IP27/unix	kernel	n64	.text	0xc00000000001c938	204	router_print_state	symtab	58a75cd4a1ac		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001cabc	84	router_nic_get	symtab	515ff84d7ba3		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001cb10	192	get_routername	symtab	599052be1dba		out:5	undocumented		
@@ -18492,16 +18492,16 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2130	148	build_r
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21c4	48	router_reg_read	dwarf+symtab	64760c9e7385		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21f4	48	router_reg_write	dwarf+symtab	64760c9e7385		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2224	176	router_nic_access	dwarf	5a3fefe5d13e		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22d4	84	router_set_leds	dwarf+symtab	1f15ee0f77b4		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22d4	84	router_set_leds	dwarf+symtab	1f15ee0f77b4		in	named-only	chips/router/README.md#global-registers-ip35-build-names-are-the-public-headers	Global registers (IP35 build; names are the public header's)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2328	108	router_decode_port_errors	dwarf+symtab	80305b65ea87		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2394	496	router_acquire_port_info	dwarf+symtab	cd1714189899		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2584	424	router_acquire_info	dwarf+symtab	234d1d5e4770		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2584	424	router_acquire_info	dwarf+symtab	234d1d5e4770		in	named-only	chips/router/README.md#global-registers-ip27-build	Global registers (IP27 build)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x272c	72	error_flag_to_type	dwarf	44a43347b3fa	multi-unit	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2774	216	router_print_error	dwarf	87cd03b34388		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x284c	76	router_check_port	dwarf+symtab	fde572031a0c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2898	88	router_check_errors	dwarf	e91418163898		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x28f0	196	router_port_init	dwarf+symtab	6c7694efbde2		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29b4	224	router_port_hist_reselect	dwarf+symtab	9152e18d2e82		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x28f0	196	router_port_init	dwarf+symtab	6c7694efbde2		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x29b4	224	router_port_hist_reselect	dwarf+symtab	9152e18d2e82		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a94	264	router_hist_reselect	dwarf+symtab	d6f0c627e9c9		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2b9c	276	router_set_fences	dwarf+symtab	3e7d4bd108f9		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2cb0	196	capture_router_stats	dwarf+symtab	2c7a6c78f839		out:6	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
@@ -18511,7 +18511,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f04	1196	router
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x33b0	132	router_get_info	dwarf+symtab	261e172ccc96		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3434	136	timeout_poll	dwarf+symtab	4cfb395b993f		out:6	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34bc	288	router_state_empty	dwarf	e65e79c9e58c		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x35dc	476	router_print_state_specific	dwarf+symtab	9fafbf42668b		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x35dc	476	router_print_state_specific	dwarf+symtab	9fafbf42668b		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x37b8	204	router_print_state	dwarf+symtab	48c086f4c9bf		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3884	184	router_nic_probe	dwarf	4856b842f3b6		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x393c	84	router_nic_get	dwarf+symtab	812a45a1d184		in	undocumented		
@@ -83014,19 +83014,19 @@ IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x644
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x750	68	job_limit_check	dwarf+symtab	9fafc138c2e7		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x794	492	proc_job_accum	dwarf+symtab	5cd972fe4c3c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jlimits.a(jl_pproc.o)	kernel-object	n64	.text	0x980	160	proc_job_accumcpufin	dwarf+symtab	76828ec1c500		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64		0x0		read_rr_reg	dwarf+symtab			out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64		0x0		read_rr_reg	dwarf+symtab			out:3	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(read_reg.o)	kernel-object	n64	.text	0x16c	208	extract_mux_data	dwarf+symtab	3422c05ec4fa		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64		0x0		scancmd_create	dwarf+symtab			out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0x84	80	scancmd_init	dwarf+symtab	4cafa8cb36f6		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0x84	80	scancmd_init	dwarf+symtab	4cafa8cb36f6		out:3	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0xd4	36	scancmd_destroy	dwarf+symtab	168cf05480ad		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(scancmd.o)	kernel-object	n64	.text	0xf8	8	scancmd_dump	dwarf+symtab	78aa5094d5ec		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64		0x0		simp_jtag_open	dwarf+symtab			out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64		0x0		simp_jtag_open	dwarf+symtab			out:3	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x68	32	simp_jtag_close	dwarf+symtab	ce78c29f4135		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x88	208	simp_jtag_reset	dwarf+symtab	e0187d5df2df		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x158	288	simp_jtag_scan_ir	dwarf+symtab	8a2a31dddafd		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x278	284	simp_jtag_scan_dr	dwarf+symtab	3f8b7e04185a		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x394	228	simp_jtag_sel_sic	dwarf+symtab	9702f6d76e72		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x478	1084	simp_process_scancmd	dwarf+symtab	b5fdc0e4ee63		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x478	1084	simp_process_scancmd	dwarf+symtab	b5fdc0e4ee63		out:3	named-only	chips/router/README.md#what-this-census-covers-and-what-it-does-not	What this census covers, and what it does not
 IP35/usr/cpu/sysgen/IP35boot/jtagio.a(smpl_jtagio.o)	kernel-object	n64	.text	0x8b4	496	scancmd_to_irtr	dwarf+symtab	5e7e16c73956		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kbd.o	kernel-object	n64		0x0		kbdopen	dwarf+symtab			out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kbd.o	kernel-object	n64	.text	0x21c	500	kbdclose	dwarf+symtab	5924db6db549		out:4	undocumented		
@@ -83392,16 +83392,16 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x24c8	272	get_rou
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x25d8	148	build_router_invent_info	dwarf+symtab	4d78caa3c9b0		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x266c	48	router_reg_read	dwarf+symtab	64760c9e7385		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x269c	48	router_reg_write	dwarf+symtab	64760c9e7385		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x26cc	64	router_set_leds	dwarf+symtab	c25ef3d8bf80		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x26cc	64	router_set_leds	dwarf+symtab	c25ef3d8bf80		in	named-only	chips/router/README.md#global-registers-ip35-build-names-are-the-public-headers	Global registers (IP35 build; names are the public header's)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x270c	176	router_decode_port_errors	dwarf+symtab	671ce8ec8ec9		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x27bc	608	router_acquire_port_info	dwarf+symtab	cc7fccf6dce5		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2a1c	288	router_acquire_info	dwarf+symtab	f2c5094f8efb		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2a1c	288	router_acquire_info	dwarf+symtab	f2c5094f8efb		in	named-only	chips/router/README.md#global-registers-ip27-build	Global registers (IP27 build)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b3c	72	error_flag_to_type	dwarf	e6a8431162d8	multi-unit	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2b84	216	router_print_error	dwarf	696cf9c1575a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2c5c	168	router_check_port	dwarf+symtab	9288f211d743		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d04	88	router_check_errors	dwarf	702e3832539c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d5c	180	router_port_init	dwarf+symtab	412bb84698aa		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e10	268	router_port_hist_reselect	dwarf+symtab	ff80c5c42d1f		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d5c	180	router_port_init	dwarf+symtab	412bb84698aa		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e10	268	router_port_hist_reselect	dwarf+symtab	ff80c5c42d1f		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2f1c	176	router_hist_reselect	dwarf+symtab	bd1c9da386aa		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2fcc	312	router_set_fences	dwarf+symtab	8ab40d41019d		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3104	196	capture_router_stats	dwarf+symtab	5e25e925d3fc		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
@@ -83411,7 +83411,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3380	1296	router
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3890	132	router_get_info	dwarf+symtab	c4b478ad9ef2		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3914	136	timeout_poll	dwarf+symtab	cff9ecc380ed		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x399c	328	router_state_empty	dwarf	4342a149fc08		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3ae4	504	router_print_state_specific	dwarf+symtab	1aa91fab6c7c		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3ae4	504	router_print_state_specific	dwarf+symtab	1aa91fab6c7c		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3cdc	212	router_print_state	dwarf+symtab	8cfd49545e77		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3db0	232	get_routername	dwarf+symtab	226cde63aac3		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3e98	516	try_router	dwarf	dec0784d9b64		out:11	undocumented		
@@ -83769,7 +83769,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x12f64	200	clear_
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1302c	340	save_err_node_comp	dwarf+symtab	c3d6fbdf28a2		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13180	244	save_err_io_comp	dwarf+symtab	2a99a995d13a		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13274	408	save_err_router_comp	dwarf+symtab	c267eaf3a44b		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1340c	312	save_router_err	dwarf+symtab	885ecf3c5d90		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1340c	312	save_router_err	dwarf+symtab	885ecf3c5d90		in	named-only	chips/router/README.md#port-block-addressing-established-per-build-the-two-builds-differ	Port block addressing (established per build; the two builds differ)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13544	232	save_err_xbow_comp	dwarf+symtab	a65a83fd49a1		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x1362c	216	save_hub_pi_error	dwarf+symtab	2e647f802b9c		in	named-only	chips/bedrock/README.md#error-registers-refused-or-timed-out-writes-and-failed-reads	Error registers: refused or timed-out writes and failed reads
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x13704	236	save_hub_md_error	dwarf+symtab	760f5cd22641		in	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
@@ -85632,9 +85632,9 @@ IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4c	92	uart_getc	dwar
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xa8	716	uart_init	dwarf+symtab	bb46407f0013		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x374	352	uart_intr_enable	dwarf+symtab	0442beff76db		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x4d4	352	uart_intr_disable	dwarf+symtab	5fbb1fc70d01		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x634	336	rtr_uart_putc	dwarf+symtab	6ed6ce9b03e3		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x784	148	rtr_uart_getc	dwarf+symtab	49f3bc0cbb66		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x818	704	rtr_uart_init	dwarf+symtab	41537967f092		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x634	336	rtr_uart_putc	dwarf+symtab	6ed6ce9b03e3		in	named-only	chips/router/README.md#global-registers-ip35-build-names-are-the-public-headers	Global registers (IP35 build; names are the public header's)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x784	148	rtr_uart_getc	dwarf+symtab	49f3bc0cbb66		in	named-only	chips/router/README.md#global-registers-ip35-build-names-are-the-public-headers	Global registers (IP35 build; names are the public header's)
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0x818	704	rtr_uart_init	dwarf+symtab	41537967f092		in	named-only	chips/router/README.md#global-registers-ip35-build-names-are-the-public-headers	Global registers (IP35 build; names are the public header's)
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xad8	164	subch_set_tx_notify	dwarf+symtab	2ba8224ccf2d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xb7c	88	subch_set_rx_notify	dwarf+symtab	47949f3994a6		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-object	n64	.text	0xbd4	104	subch_set_rx_notify_conditional	dwarf+symtab	3b2143af3cb2		in	undocumented		

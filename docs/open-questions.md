@@ -31,6 +31,12 @@ chip page and the entry is deleted.
   `pcibr_device_flags_set`'s callers and `pcibr_slot_addr_space_init`.
 - **TIOCP.** Whether any product in scope carries it is not established. Tried: its part numbers appear only
   in the shared accessors. Next: Linux `pci-xtalk-bridge.c` and its history for the platform that uses it.
+- **Router: the IP27 register map and the routing tables.** The census reaches 4 global and 5 per-port registers of the
+  IP27 router and 5 and 6 of the IP35 router (chips/router/README.md), by the register numbers the kernel passes. The IP27
+  stride and port count differ from the public header, which describes the IP35-style chip. The routing tables, the
+  barrier registers and the diagnostic registers are not reached by constant. Tried: every call to the router accessors
+  in both kernels. Next: `do_router_op`'s callers (the user-reachable register read and write), the PROM's router
+  probe, and the IP35 `read_rr_reg` scan-chain path of `read_reg.o`.
 - **Xbow: the PROMs' large crossbar routines.** The census seeds only the small routines it could tie to the
   Crossbow (link-usable tests, link reset, error save, the IP30 interrupt service). Routines that touch the
   link-block displacements and were not read: IP27 PROM `0x1fc444b0`; I/O-board PROM `0x11c1d4ac`, `0x11c21c58`,

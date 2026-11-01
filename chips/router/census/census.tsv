@@ -1,0 +1,21 @@
+variant	offset	idx	name	access_seen	widths	halves	sites	functions	images	example	datasheet	datasheet_ref	spec	spec_ref	model	model_detail	flags	tasks
+ip27	0x0	0	STATUS_REV_ID (LED write path)	rw	8	0	6	6	ip27-unix	router_set_leds@c00000000001b494	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip27	0x10	0	PROT_CONF	rw	8	0	2	1	ip27-unix	router_set_fences@c00000000001bd3c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip27	0x18	0	GLOBAL_PORT_DEF	rw	8	0	4	2	ip27-unix	router_acquire_info@c00000000001b884	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip27	0x38	0	NIC_ACCESS	rw	8	0	3	1	ip27-unix	sub_c00000000001b3a4@c00000000001b3e4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip27	0x0	1	PORT_PARMS	rw	8	0	4	2	ip27-unix	router_port_init@c00000000001ba90	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	read by hand: write after a branch target, where the straight-line pass drops its state; the register is the port base set at c00000000001ba88	no-spec: inventory from the binaries
+ip27	0x8	1	PORT_STATUS_ERROR	r	8	0	2	2	ip27-unix	sub_c00000000001c63c@c00000000001c710	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip27	0x10	1	PORT_COUNTER	rw	8	0	3	3	ip27-unix	router_acquire_port_info@c00000000001b5ec	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	read by hand: zero written (argument 3 is the zero register), register built as the port base or 0x10	no-spec: inventory from the binaries
+ip27	0x18	1	PORT_RESET_MASK	rw	8	0	2	1	ip27-unix	router_set_fences@c00000000001bd9c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	read by hand: write of the register read at c00000000001bd9c	no-spec: inventory from the binaries
+ip27	0x88	1	PORT_ERROR_CLEAR	r	8	0	2	2	ip27-unix	router_port_init@c00000000001bb14	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	read by hand: port base or 0x88 at both sites	no-spec: inventory from the binaries
+ip35	0x0	0	STATUS_REV_ID	r	8	0	4	4	ip35-kernel	router_init@34ac	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip35	0x10	0	PROT_CONF	rw	8	0	2	1	ip35-kernel	router_set_fences@2ff0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip35	0x20	0	GLOBAL_PARMS0	rw	8	0	2	1	ip35-kernel	router_init@34c4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip35	0x28	0	GLOBAL_PARMS1	rw	8	0	2	1	ip35-kernel	router_init@34d8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip35	0x200	0	JBUS0_0	w	8	0	1	1	ip35-kernel	router_set_leds@26f8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip35	0x0	1	PORT_PARMS	rw	8	0	4	2	ip35-kernel	router_port_init@2d90	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip35	0x8	1	PORT_STATUS_ERROR	r	8	0	3	3	ip35-kernel	sub_399c@3a90	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip35	0x18	1	PORT_RESET_MASK	rw	8	0	2	1	ip35-kernel	router_set_fences@3068	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	read by hand: write of the register read at 3068	no-spec: inventory from the binaries
+ip35	0x20	1	PORT_HISTOGRAM0	w	8	0	2	2	ip35-kernel	router_port_init@2dcc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip35	0x28	1	PORT_HISTOGRAM1	w	8	0	2	2	ip35-kernel	router_port_init@2ddc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+ip35	0x88	1	PORT_ERROR_CLEAR	r	8	0	1	1	ip35-kernel	router_port_init@2dec	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries

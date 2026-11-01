@@ -5,7 +5,8 @@ kernels, drivers, diagnostics and PROM images, checked against the published spe
 Linux and OpenBSD drivers. Software only: no hardware is needed or assumed.
 
 Chips covered (one page each in [chips/](chips/)): Hub (PI, MD, IO, NI), Bedrock, HEART, Xbow,
-Bridge and XBridge, PIC, TIOCP (only if a product carries it), IOC3, IOC4, CRIME, MACE, GBE, VICE (presence).
+Bridge and XBridge, PIC, TIOCP (only if a product carries it), the network router, IOC3, IOC4, CRIME, MACE, GBE,
+VICE (presence).
 Builds are named by board, never by product: IP27, IP30, IP32, IP35.
 
 The layout and working style follow Dominik Behr's
@@ -29,8 +30,9 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
 
     AGENTS.md  HAIKU-BRIEF.md  IRIX_FILES.md  LICENSE  README.md
     chips/<chip>/      one directory per chip: README.md (the page), census/ (machine-made tables),
-                       notes/ (working notes). Chips: hub bedrock heart xbow bridge pic tiocp ioc3 ioc4
-                       crime mace gbe vice. bridge/ also holds the XBridge census.
+                       notes/ (working notes). Chips: hub bedrock heart xbow bridge pic tiocp router ioc3
+                       ioc4 crime mace gbe vice. bridge/ also holds the XBridge census; router/ is a
+                       call-argument census (tools/callargs.py): the router has no memory window.
     include/<chip>.h   generated register headers (tools/gen_headers.py); chips_check.c compiles them together
     ip27/ ip30/ ip32/ ip35/   per board: relative symlinks into root/ (boot objects, members, kernel,
                        PROM, ide, symmon, sash)
