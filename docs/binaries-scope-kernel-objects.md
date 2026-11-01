@@ -1071,6 +1071,53 @@ the undefined imports. No routine body was read in full.
   and the socket calls they reach, `sobind`, `soconnect2`, `solisten`, `soreceive`, `sosend` and `soshutdown`. It also
   imports `fs_pathconf`, the path-configuration query, and `vsocket_release`.
 
+## IP32 build: network, STREAMS and cluster objects (scope rule 2)
+
+The IP32 kernel carries the network members of the IP27 and IP35 builds in its own `bsd.a` archive. Each member is
+byte-identical to the `socket.a` member of the same name, so each row is written once under `bsd.a`, the path the table
+uses. The sizes differ from the other builds: `bsd.a(if.o)` is 38468 bytes here, against 49380 bytes in the IP27 build and
+49300 in the IP35 build. The members are n32 objects, and the routine tables and imports below come from their n32 symbol
+tables. Labels are inferred, from the symbol table and the undefined imports. No routine body was read in full.
+
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(if.o)` (inferred): the generic network interface layer, 45 routines in a 38468-byte
+  member. `ifioctl` (2656 bytes) is the largest, and `if_detach` (772 bytes) and `if_create_linkaddr` (684 bytes) keep the
+  interface list and the link-level addresses. It imports the hardware-graph calls `hwgraph_path_add`, `hwgraph_edge_add`
+  and `hwgraph_traverse`, and the routing calls `rtrequest`, `rt_ifmsg` and `rt_ifannouncemsg`. No chip is driven directly.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(if_loop.o)` (inferred): the software loopback interface, three routines in a 6564-byte
+  member. `looutput` (756 bytes) sends a packet back into `network_input`, `loioctl` (140 bytes) configures the interface,
+  and `loattach` registers it with `if_attach`. It moves mbufs with `m_get` and `m_datacopy` and drives no hardware.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(multi.o)` (inferred): the link-layer multicast address list, nine routines in a 6884-byte
+  member. `mfdel` (588 bytes) and `mfadd` (360 bytes) change the list, `mflookup` (184 bytes) searches it, and the member
+  takes its storage from `kern_malloc` and returns it with `kern_free`. It touches no chip.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(netisr.o)` (inferred): the network software interrupt threads, 15 routines in a
+  13108-byte member. `netisr_init` (344 bytes) starts the threads through `xthread_setup` and `xthread_set_func`,
+  `network_input` (296 bytes) queues an inbound packet, and `netproc` and `sockd` are the thread bodies. It reads the
+  thread settings `netthread_pri` and `netthread_qmax` and calls `maxcpus`, and calls no chip routine.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(raw.o)` (inferred): the raw link-level socket, 21 routines in a 20420-byte member.
+  `rawioctl` (2088 bytes) is the control entry, `snoop_input2` (1228 bytes) feeds the packet-capture path, and `rawopen`
+  (552 bytes), `rawclose` (452 bytes) and `drain_input` (348 bytes) serve the socket. It imports `bitswapcopy` from the
+  bit-order copy routine and `microtime` for timestamps, and drives no chip.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(raw_cb.o)` (inferred): the control-block list for raw sockets, eight routines in an
+  8212-byte member. `raw_pcbpurgeif` (300 bytes) drops the blocks tied to a removed interface, `raw_bind` (276 bytes) binds
+  one, and `rawcb_free` (240 bytes) releases it. It links blocks with `_insque` and `_remque`, and imports the multicast and
+  RSVP teardown calls `ip_mrouter_done`, `ip_rsvp_force_done` and `ip_freemoptions`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(raw_proto.o)` (inferred): the protocol switch entry for the raw domain. The member has
+  no routine rows. Its four imports are the raw protocol entry points: `raw_init`, `raw_usrreq` and `raw_ctlinput` are
+  defined in `bsd.a(raw_usrreq.o)`, and `raw_output` is defined in `bsd.a(raw.o)`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(raw_usrreq.o)` (inferred): the request dispatch for raw sockets, five routines in a
+  10004-byte member. `raw_usrreq` (908 bytes) switches on the request, `raw_protocol_input` (812 bytes) receives packets, and
+  `raw_input` (224 bytes) and `raw_ctlinput` (8 bytes) deliver packets and control messages. It imports the socket buffer
+  calls `sbappendaddr` and `sowakeup` and the raw block calls `raw_attach`, `raw_bind` and `raw_disconnect`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)` (inferred): the radix tree that holds routes and netmasks, 19 routines in a
+  19476-byte member. `rn_delete` (1344 bytes), `rn_addroute` (1068 bytes) and `rn_addmask` (904 bytes) change the tree,
+  `rn_match` (848 bytes) does the longest-prefix lookup, and `rn_insert` (492 bytes) places a leaf. It allocates nodes with
+  `kmem_alloc`, frees them with `kmem_free`, and imports `m_rtinc` and `m_rtdec`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(route.o)` (inferred): the routing table code, 20 routines in a 20276-byte member.
+  `rtrequest1` (1084 bytes) adds, changes and deletes routes, `rtioctl` (952 bytes) is the control entry, `rtinit` (828
+  bytes) sets up interface routes, and `rtalloc1` (772 bytes) finds one. `rtredirect` (728 bytes) handles redirects. It
+  imports the address lookups `ifa_ifwithaddr`, `ifa_ifwithnet` and `ifaof_ifpforaddr`, and `sysctl_rtable` for the
+  sysctl interface. No chip is driven.
+
 ## Scope questions
 
 Each object below is listed under the rule shown, but its imports or routine names match a class the scope text keeps.
