@@ -140,16 +140,16 @@ IP27/usr/cpu/sysgen/IP27boot/ds.a(dsreq.o)	kernel-IP27	kernel-object	object	n64	
 IP27/usr/cpu/sysgen/IP27boot/ds.a(dsglue.o)	kernel-IP27	kernel-object	object	n64	10468	47c93de62ff2b9fb		7	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/eag.a(eag.o)	kernel-IP27	kernel-object	object	n64	10580	112fdbb018f73536		6	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/ecpplp.o	kernel-IP27	kernel-object	object	n64	57304	8461bbc7e54e13d7		33	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_bitmap.o)	kernel-IP27	kernel-object	object	n64	8740	2dd65520fb5070b0		4	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_bmap.o)	kernel-IP27	kernel-object	object	n64	15284	36286820b2a88581		6	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dalloc.o)	kernel-IP27	kernel-object	object	n64	13124	92385caa2bb2b914		5	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dir.o)	kernel-IP27	kernel-object	object	n64	22804	e1046ab6f1fea759		16	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_ialloc.o)	kernel-IP27	kernel-object	object	n64	10804	fd8b047454af5251		6	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_iget.o)	kernel-IP27	kernel-object	object	n64	12340	ccac1a94b5f0916a		9	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-IP27	kernel-object	object	n64	26484	599dd67e249a8078		20	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_subr.o)	kernel-IP27	kernel-object	object	n64	7716	b417bff2357f123c	IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_subr.o);IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_subr.o)	4	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_vfsops.o)	kernel-IP27	kernel-object	object	n64	29588	9a7efe0286671e26		21	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_vnodeops.o)	kernel-IP27	kernel-object	object	n64	47396	f74ff1599dee6455		37	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_bitmap.o)	kernel-IP27	kernel-object	object	n64	8740	2dd65520fb5070b0		4	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_bmap.o)	kernel-IP27	kernel-object	object	n64	15284	36286820b2a88581		6	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dalloc.o)	kernel-IP27	kernel-object	object	n64	13124	92385caa2bb2b914		5	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dir.o)	kernel-IP27	kernel-object	object	n64	22804	e1046ab6f1fea759		16	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_ialloc.o)	kernel-IP27	kernel-object	object	n64	10804	fd8b047454af5251		6	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_iget.o)	kernel-IP27	kernel-object	object	n64	12340	ccac1a94b5f0916a		9	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-IP27	kernel-object	object	n64	26484	599dd67e249a8078		20	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_subr.o)	kernel-IP27	kernel-object	object	n64	7716	b417bff2357f123c	IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_subr.o);IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_subr.o)	4	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_vfsops.o)	kernel-IP27	kernel-object	object	n64	29588	9a7efe0286671e26		21	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
+IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_vnodeops.o)	kernel-IP27	kernel-object	object	n64	47396	f74ff1599dee6455		37	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-IP27	kernel-object	object	n64	38240	e398abc7dce1db1a		64	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/failover.o	kernel-IP27	kernel-object	object	n64	57080	e976c3d59f28afa5	IP30/usr/cpu/sysgen/IP30boot/failover.o;IP35/usr/cpu/sysgen/IP35boot/failover.o	49	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/fcadp.a(hwlip.o)	kernel-IP27	kernel-object	object	n64	8708	b2f699ebfb0a9546	IP30/usr/cpu/sysgen/IP30boot/fcadp.a(hwlip.o);IP35/usr/cpu/sysgen/IP35boot/fcadp.a(hwlip.o)	6	symtab	0	0	undocumented		

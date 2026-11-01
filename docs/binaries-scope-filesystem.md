@@ -111,3 +111,43 @@ table. Labels: a classification from names, sizes and the scan's result is infer
 - `IP27/usr/cpu/sysgen/IP27boot/dmiidbg.o` (inferred): 13 routines in a 18968-byte object, including
   `idbg_dmi_sessions`, `idbg_dmi_regs` and `idbg_dmi_equeue`. They print the session, register and event state of
   the data-management interface for the kernel debugger. No device register is touched.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_bitmap.o)` (inferred): four routines in an 8740-byte member. `efs_findfree`
+  (632 bytes) searches a cylinder group's free-block bitmap, and `efs_bmread` (76 bytes) and `efs_bmrelse` (32 bytes)
+  get and release the buffer that holds one bitmap block. The fourth routine, `efs_bitfunc`, has no symbol size.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_bmap.o)` (inferred): six routines in a 15284-byte member, among them
+  `efs_bmapExtent` (992 bytes), `efs_bmapLogicalBlock` (2068 bytes), `efs_lbmap` (212 bytes), `efs_expand` (876 bytes)
+  and `efs_clrbuf` (268 bytes). They map a file's logical block to a disk block through the extent records of the
+  inode, extend the extent list and clear newly added buffers.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dalloc.o)` (inferred): five routines in a 13124-byte member: `efs_alloc`,
+  `efs_grow` (592 bytes), `efs_move` (792 bytes), `efs_free` (280 bytes) and `efs_btoss` (148 bytes). They hand out
+  and return data blocks for an EFS file, and `efs_move` relocates a file's blocks when it grows. The routine
+  `efs_btoss` converts between byte and sector counts by its name.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_dir.o)` (inferred): 16 routines in a 22804-byte member. The directory
+  operations are `efs_dirlookup` (1344 bytes), `efs_direnter` (632 bytes), `efs_dirremove` (756 bytes),
+  `efs_dirrewrite` (244 bytes) and `efs_readdir` (748 bytes), with block helpers `getdirblk`, `putdirblk` and
+  `growdir`. `irix5_efs_fmtdirent` is the variant that writes directory entries in the IRIX 5 layout.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_ialloc.o)` (inferred): six routines in a 10804-byte member. `efs_pickcg`
+  chooses a cylinder group for a new inode, `efs_scancg` (276 bytes) and `efs_scanchunk` (996 bytes) search it for
+  a free inode, and `efs_ialloc` and `efs_ifree` allocate and release the inode. `efs_goodcg` tests a group's
+  suitability.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_iget.o)` (inferred): nine routines in a 12340-byte member. `ihashinit`
+  sets up the in-core inode hash, `iget` (1168 bytes) finds or loads an inode, and `iput` (44 bytes) drops a
+  reference. `ilock`, `ilock_nowait` and `iunlock` take and release the inode lock, and `iflush` and `ireclaim`
+  write back and free an inode that is no longer referenced.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)` (inferred): 20 routines in a 26484-byte member. `efs_iread`
+  (464 bytes) and `efs_iupdat` (1400 bytes) move an on-disk inode to and from memory, `efs_itrunc` (1716 bytes)
+  truncates a file's extents, and `efs_readindir` and `efs_writeindir` handle indirect blocks. Allocation of new
+  inodes goes through `efs_icreate` (592 bytes) and `efs_iformat` (592 bytes), and the extent helpers
+  `efs_alloc_extent`, `efs_realloc_extent` and `efs_free_extent` sit alongside them.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_subr.o)` (inferred): four routines in a 7716-byte member: `efs_error`
+  (236 bytes) reports a file-system error, `efs_setcorrupt` (20 bytes) marks the file system damaged, `efs_asynchk`
+  (228 bytes) checks an asynchronous request, and `efs_builddsum` builds a superblock checksum by its name.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_vfsops.o)` (inferred): 21 routines in a 29588-byte member. The mount path
+  is `efs_mount` (436 bytes), `efs_mountroot` (392 bytes) and `efs_mountfs` (1968 bytes), which calls
+  `efs_checksb` (316 bytes) to validate the superblock. The rest are `efs_unmount` (512 bytes), `efs_statvfs`,
+  `efs_sync` (1584 bytes) and `efs_sbupdate`, plus `devvptoefs` (720 bytes), which finds the EFS mounted on a device.
+- `IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_vnodeops.o)` (inferred): 37 routines in a 47396-byte member, the largest
+  EFS object. They are the vnode operations the kernel calls on EFS files and directories: `efs_read` and
+  `efs_write` with `efs_readi` (1136 bytes) and `efs_writei` (1500 bytes), `efs_lookup`, `efs_create`, `efs_rename`
+  (2228 bytes), `efs_setattr` (1720 bytes) and `efs_fcntl` (780 bytes). `diostrat` (1364 bytes) and `efs_strategy`
+  pass block I/O down to the device layer.
