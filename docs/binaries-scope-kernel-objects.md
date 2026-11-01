@@ -443,6 +443,57 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
   in a 59440-byte object. `txPaint` (1152 bytes), `txShdOutline` (1188 bytes) and `txCsistuff` (1244 bytes) draw text and
   shapes, `txInitfonts` loads the fonts, and `txDialog` (864 bytes) shows a dialog. It drives a display, not a system chip.
 
+## IP35 build: network, STREAMS and cluster objects (scope rule 2)
+
+The IP35 kernel carries most of the network members of the IP27 build above, built into its own `bsd.a` and `socket.a`
+archives. Where an IP35 member is byte-identical to the `socket.a` member of the same name, the row is written once under
+`bsd.a`, the path the table uses. Routine names and sizes come from the IP35 symbol table, so they can differ from the
+IP27 entries: `bsd.a(if.o)` is 49300 bytes here and 49380 bytes in the IP27 build. Labels are inferred, from the symbol
+table and undefined imports. No routine body was read in full.
+
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(if.o)` (inferred): the generic network interface layer, 47 routines in a 49300-byte
+  member. `ifioctl` (2672 bytes) is the largest; `if_create_linkaddr`, `if_detach` and `ifunit` keep the interface list and
+  the link-level addresses. It imports the hardware-graph calls `hwgraph_path_add`, `hwgraph_edge_add` and
+  `hwgraph_traverse`. No chip is driven directly.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_loop.o)` (inferred): the software loopback interface, three routines in an 8644-byte
+  member. `looutput` (756 bytes) hands a packet back to `network_input`, `loioctl` configures the interface and `loattach`
+  registers it with `if_attach`. It drives no hardware.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(netisr.o)` (inferred): the network software interrupt threads, 15 routines in an
+  18212-byte member. `netisr_init` starts them through `xthread_setup` and `xthread_set_func`, `network_input` queues an
+  inbound packet, and `netproc` and `sockd` are the thread bodies. It reads `maxcpus` and calls no chip routine.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(raw.o)` (inferred): the raw link-level socket, 21 routines in a 24836-byte member.
+  `rawioctl` (2164 bytes) is the control entry, `snoop_input2` (1208 bytes) feeds the packet-capture path, and `rawopen`,
+  `rawclose`, `drain_input` and `rawif_attach` serve the socket and the interface. It imports `bitswapcopy` from the
+  bit-order copy routine and drives no chip.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(raw_cb.o)` (inferred): the control-block list for raw sockets, eight routines in a
+  10948-byte member. `raw_attach` (188 bytes) and `raw_bind` (260 bytes) create and bind a block, `raw_disconnect` and
+  `raw_pcbpurgeif` (292 bytes) drops the blocks tied to a removed interface, and `rawcb_free` and `rawcb_rele` drop
+  references. It links blocks with
+  `_insque` and `_remque`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(raw_usrreq.o)` (inferred): the request dispatch for raw sockets, five routines in a
+  13092-byte member. `raw_usrreq` (916 bytes) is the entry, `raw_protocol_input` (792 bytes) receives packets, and
+  `raw_input`, `raw_init` and `raw_ctlinput` (8 bytes) deliver and initialise. Its imports are the raw routines it
+  dispatches to and the socket buffer calls `sbappendaddr` and `sowakeup`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)` (inferred): the radix tree that holds routes and netmasks, 19 routines in a
+  23732-byte member. `rn_delete` (1316 bytes), `rn_addroute` (1068 bytes) and `rn_addmask` (916 bytes) change the tree,
+  `rn_match` (808 bytes) does the longest-prefix lookup, and `rn_insert` (496 bytes) places a leaf. It takes the route lock
+  through `mrupdatef` and `mrunlock`. No chip is driven.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(route.o)` (inferred): the routing table code, 22 routines in a 26212-byte member.
+  `rtrequest1` (1052 bytes) adds, changes and deletes routes, `rtioctl` (1028 bytes) is the control entry, and `rtalloc1`
+  (776 bytes) finds a route. `rtinit` and `rtredirect` handle interface and redirect updates, and `rt_missmsg` and
+  `rt_newaddrmsg` report changes to the routing socket.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(rtsock.o)` (inferred): the routing socket, which sends route changes to user programs.
+  16 routines in a 27892-byte member. `route_output` (2368 bytes) takes route requests, `sysctl_iflist` (1160 bytes) reports
+  the interface list, and `rt_msg1`, `rt_msg2` and `rt_newaddrmsg` build the replies. It imports the `rt_tables` data symbol that holds the routing tables.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(rsvp.o)` (inferred): RSVP resource reservation and the packet scheduler, 39 routines in
+  a 33908-byte member. `ps_init` (848 bytes) sets up the packet scheduler, `ps_send_down` (844 bytes) and `ps_output`
+  (720 bytes) send packets down to the interface, `ps_tick_maint` maintains its timers and `rsvp_addflow` (488 bytes) adds a reserved flow.
+  It calls the packet queues in `bsd.a(rsvp_qo.o)` through `psqo_enq_pkt` and `psqo_get_next_pkt`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(rsvp_qo.o)` (inferred): the packet queues under RSVP, five routines in a 7188-byte
+  member. `psqo_init` (60 bytes), `psqo_alloc_queue` (128 bytes) and `psqo_free_queue` (116 bytes) manage the queues, and
+  `psqo_enq_pkt` (352 bytes) and `psqo_get_next_pkt` (368 bytes) add and take packets. It imports `kmem_zalloc`,
+  `kmem_free`, `bzero` and the spin-lock calls, and no chip routine.
+
 ## Scope questions
 
 Each object below is listed under the rule shown, but its imports or routine names match a class the scope text keeps.
