@@ -95,3 +95,16 @@ running the code and the doubleword at -15744 holds that processor's flag bits.
   +0x38; otherwise `clock_prtimeout` with the destination, +0x18, +0x20, the first doubleword, the halfword at +0x42
   and the doublewords at +0x28 and +0x30. The result is stored as a word at the start of the record that
   `add_migrated_timeout` returned, the level is restored with `splx` and the loop repeats. Established.
+- `chktimeout_tick` (`IP30/unix` `0xa800000020015758`, 384 bytes, frame 64 bytes) converts the counter value that
+  `do_chktimeout_tick` returns into a tick count relative to the free-running counter. Its first argument (a0) is the
+  kind, 0, 1, 3 or 4; the second (a1) carries the processor number in bits 31:25 (`srl` 25), and a1 together with a2
+  and a3 is passed on unchanged to `do_chktimeout_tick`. It finds that processor's structure from the table at
+  0xa8000000204b0380 (16 bytes a processor, pointer in the second doubleword) and, when bit 0 of the word at structure
+  +0x630 is set, calls `do_chktimeout_tick` on the address structure +0x588; a nonzero result ends the search.
+  Otherwise, or when the first call returns 0, it runs over processors 0 up to the word `maxcpus` and calls
+  `do_chktimeout_tick` on each one that `cpu_enabled` accepts and whose flag bit is set, stopping at the first nonzero
+  result. For a nonzero result the routine subtracts the doubleword at 0xffffffffaff20000, divides the difference as a
+  signed value by the doubleword at 0xa8000000204ae428 for kinds 0 and 3 or by the one at 0xa8000000204ae420 for kinds
+  1 and 4 (a zero divisor raises trap code 7) and leaves other kinds undivided, then replaces a result below 1 with 1.
+  When no call returns nonzero it returns the register s0 unconverted: 0 once any call was made, and otherwise the
+  doubleword at 0(sp) loaded in the prologue, which the routine never stores. Established.

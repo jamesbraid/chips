@@ -150,3 +150,16 @@ called a FIFO write below.
   window shifted right 14 and left 8, ORed with the doubleword at 0xa8000000204a9140 (0x10000003f). It calls the
   unnamed routine at 0xa80000002038f270 with the record, stores 0xffff as a halfword at +0x5c and -1 as a doubleword
   at +0x60, and returns the record. Established.
+- `gf_OdsyAttach` (`IP30/unix` `0xa80000002036f8cc`, 384 bytes, frame 288 bytes) creates the user mapping of an
+  Odyssey board through `gfxdd_mmap` and returns 0, 12 or 22; its first argument (a0) is the board record and its
+  second (a1) the user address to map at. It copies 256 bytes from the table at 0xa800000020419730 (eight 32-byte
+  entries whose first two doublewords are 0 and 0x4000 in the first entry) to the stack, loads the HEART doubleword at
+  0xffffffffaff00080 and discards it, and returns 22 when any of bits 13:0 of a1 is set. Otherwise it calls
+  `gfxdd_recycle` with `odsy_regmatch`, the record and the address, and returns 0 when that returns nonzero. For a
+  record whose flag word at +0x4 has bit 0x20 or 0x04 set it uses all eight entries and a length of 16 shifted left
+  14; otherwise the first two and 2 shifted left 14. It adds a1 to the first two doublewords of each entry it uses,
+  then calls `gfxdd_mmap` with 1, the length, the address, `gfx_fault`, the record, the table, the entry count and
+  record +0x30. A nonzero result prints "odsy: cannot attach (ENOMEM)" with `cmn_err` (level 4) and returns 12. On
+  success it raises the level with `spl1`, stores the flag word ORed with 1 (in the delay slot of the next call),
+  calls `gf_OdsyUnMapGfx`, restores the level with `splx`, reads the HEART doubleword at 0xffffffffaff00080 again and
+  returns 0. Established.
