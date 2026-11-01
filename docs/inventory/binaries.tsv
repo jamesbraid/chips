@@ -2317,13 +2317,13 @@ IP32/usr/cpu/sysgen/IP32boot/xvm.a(xvm_irix_snapshot.o)	kernel-IP32	kernel-objec
 IP32/usr/cpu/sysgen/IP32boot/xvmidbg.o	kernel-IP32	kernel-object	object	n32	68704	77b939c093bb7139		40	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/zero.o	kernel-IP32	kernel-object	object	n32	5104	1e7172d12b6eaa26		8	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/acl.a(acl.o)	kernel-IP35	kernel-object	object	n64	20580	348f77b611c862d1		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
-IP35/usr/cpu/sysgen/IP35boot/alp.o	kernel-IP35	kernel-object	object	n64	9656	0d6b2c6364728802		10	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/alp.o	kernel-IP35	kernel-object	object	n64	9656	0d6b2c6364728802		10	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/asidbg.a(asidbg.o)	kernel-IP35	kernel-object	object	n64	64500	7902a4b6b9743a2e		38	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_subr.o)	kernel-IP35	kernel-object	object	n64	26468	2ec38b22ca6c9180		20	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vfsops.o)	kernel-IP35	kernel-object	object	n64	15444	0b68edb65490d419		9	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(auto_vnops.o)	kernel-IP35	kernel-object	object	n64	31956	5a292a08f7aa0f12		24	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/autofs.a(autofs_icrash.o)	kernel-IP35	kernel-object	object	n64	13508	c93f960838f5ce20		1	none	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/bpqueue.o	kernel-IP35	kernel-object	object	n64	6968	1a5a49df17f8b394		5	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bpqueue.o	kernel-IP35	kernel-object	object	n64	6968	1a5a49df17f8b394		5	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(if.o)	kernel-IP35	kernel-object	object	n64	49300	03720df713130c03	IP35/usr/cpu/sysgen/IP35boot/socket.a(if.o)	47	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_loop.o)	kernel-IP35	kernel-object	object	n64	8644	c7230290d7a2e3f9	IP35/usr/cpu/sysgen/IP35boot/socket.a(if_loop.o)	3	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(netisr.o)	kernel-IP35	kernel-object	object	n64	18212	e90f5f5c4a5b68a8	IP35/usr/cpu/sysgen/IP35boot/socket.a(netisr.o)	15	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -2378,7 +2378,7 @@ IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_backops.o)	kernel-IP35	kernel-obj
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_frontops.o)	kernel-IP35	kernel-object	object	n64	13636	73e1d1ec050da850		13	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefs.a(cachefs_icrash.o)	kernel-IP35	kernel-object	object	n64	24660	26dc77b33176dce7		1	none	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cachefsidbg.o	kernel-IP35	kernel-object	object	n64	44112	0a4174f09aada5ea		30	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/calcomp.o	kernel-IP35	kernel-object	object	n64	26168	5ec49f6b323ca650		8	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/calcomp.o	kernel-IP35	kernel-object	object	n64	26168	5ec49f6b323ca650		8	symtab	0	0	located	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/capability.a(capability.o)	kernel-IP35	kernel-object	object	n64	14276	4a3d8ac3de7cbf95		11	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/capability.a(cap_able.o)	kernel-IP35	kernel-object	object	n64	6084	cbe4baaf9aeed84b		3	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/cdl.o	kernel-IP35	kernel-object	object	n64	24488	41a8d985e10ada7e		23	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
@@ -2390,7 +2390,7 @@ IP35/usr/cpu/sysgen/IP35boot/connld.o	kernel-IP35	kernel-object	object	n64	12800
 IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_procfs.o)	kernel-IP35	kernel-object	object	n64	53636	394625b9522360a6		50	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_sys.o)	kernel-IP35	kernel-object	object	n64	21860	13f942cc21211b9b		22	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/cpr.a(ckpt_util.o)	kernel-IP35	kernel-object	object	n64	10868	9530740c2bd46b13		9	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/cserialio.o	kernel-IP35	kernel-object	object	n64	21688	e687c3fdd86d71d1		22	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/cserialio.o	kernel-IP35	kernel-object	object	n64	21688	e687c3fdd86d71d1		22	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/devpoll.o	kernel-IP35	kernel-object	object	n64	31848	9c4d1dd198dde1c3		27	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-IP35	kernel-object	object	n64	41812	55dfac27c1a06cf4		63	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocksasm.o)	kernel-IP35	kernel-object	object	n64	4836	abe4e10b11f5ecac		3	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
@@ -2419,7 +2419,7 @@ IP35/usr/cpu/sysgen/IP35boot/dms.a(dmrbcompat.o)	kernel-IP35	kernel-object	objec
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-IP35	kernel-object	object	n64	22196	9e56d39d5a1efabf		18	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-IP35	kernel-object	object	n64	10388	ec4f92f302364497		7	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/eag.a(eag.o)	kernel-IP35	kernel-object	object	n64	10500	e426d45372fc7e48		6	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
-IP35/usr/cpu/sysgen/IP35boot/ecpplp.o	kernel-IP35	kernel-object	object	n64	57232	ce5fcac545bae5eb		33	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ecpplp.o	kernel-IP35	kernel-object	object	n64	57232	ce5fcac545bae5eb		33	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/eeprom.o	kernel-IP35	kernel-object	object	n64	44384	968fe5a88d27c279		42	symtab	0	0	named-only	chips/bedrock/README.md#window-and-how-it-is-reached	Window and how it is reached
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_bitmap.o)	kernel-IP35	kernel-object	object	n64	8644	7b1564a782fc1999		4	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_bmap.o)	kernel-IP35	kernel-object	object	n64	15204	16b19f581a5cdce0		6	symtab	0	0	undocumented		
@@ -2430,7 +2430,7 @@ IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_iget.o)	kernel-IP35	kernel-object	object	
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_inode.o)	kernel-IP35	kernel-object	object	n64	26404	76eed6d79746d7eb		20	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_vfsops.o)	kernel-IP35	kernel-object	object	n64	29812	89384d43b629903c		21	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_vnodeops.o)	kernel-IP35	kernel-object	object	n64	47316	691847f75f1c71d9		37	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-IP35	kernel-object	object	n64	65616	621698b1da9928b6		59	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-IP35	kernel-object	object	n64	65616	621698b1da9928b6		59	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/fcadp.a(fcadp.o)	kernel-IP35	kernel-object	object	n64	98740	ad48815990a88c5c		93	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/fcidbg.o	kernel-IP35	kernel-object	object	n64	1200	a34b59e45674b517		0	none	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/fd.a(fdops.o)	kernel-IP35	kernel-object	object	n64	19284	882161a21c46db6d		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
