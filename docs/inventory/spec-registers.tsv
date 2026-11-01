@@ -61,7 +61,7 @@ CRIME 1.5	7-3	166	RE	0x20a8	PixelXfer.src.xStep	1	0	32	W	0	undocumented
 CRIME 1.5	7-3	166	RE	0x20ac	PixelXfer.src.yStep	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	166	RE	0x20b0	PixelXfer.dst.linAddr	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	166	RE	0x20b4	PixelXfer.dst.linStride	1	0	32	W	0	undocumented		
-CRIME 1.5	7-3	166	RE	0x20c0	Stipple.mode	1	0	32	R/W	0	undocumented		
+CRIME 1.5	7-3	166	RE	0x20c0	Stipple.mode	1	0	32	R/W	0	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 CRIME 1.5	7-3	166	RE	0x20c4	Stipple.pattern	1	0	32	R/W	0	undocumented		
 CRIME 1.5	7-3	166	RE	0x20d0	Shade.fgColor	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	166	RE	0x20d8	Shade.bgColor	1	0	32	R/W	0	undocumented		
@@ -77,7 +77,7 @@ CRIME 1.5	7-3	167	RE	0x2100	Shade.dbdx	1	0	32	W	0	undocumented
 CRIME 1.5	7-3	167	RE	0x2104	Shade.dadx	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	167	RE	0x2108	Shade.dbdy	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	167	RE	0x210c	Shade.dady	1	0	32	W	0	undocumented		
-CRIME 1.5	7-3	167	RE	0x2110	Texture.mode	1	0	32	R/W	0	undocumented		
+CRIME 1.5	7-3	167	RE	0x2110	Texture.mode	1	0	32	R/W	0	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 CRIME 1.5	7-3	167	RE	0x2118	Texture.format	1	0	64	R/W	0	undocumented		
 CRIME 1.5	7-3	167	RE	0x2120	Texture.SQs	1	0	64	W	0	undocumented		
 CRIME 1.5	7-3	168	RE	0x2128	Texture.TQs	1	0	64	W	0	undocumented		
@@ -105,11 +105,11 @@ CRIME 1.5	7-3	169	RE	0x21c0	Depth.func	1	0	32	R/W	0	undocumented
 CRIME 1.5	7-3	169	RE	0x21c8	Depth.Zs	1	0	64	W	0	undocumented		
 CRIME 1.5	7-3	169	RE	0x21d0	Depth.dzdx	1	0	64	W	0	undocumented		
 CRIME 1.5	7-3	169	RE	0x21d8	Depth.dzdy	1	0	64	W	0	undocumented		
-CRIME 1.5	7-3	169	RE	0x21e0	Stencil.mode	1	0	32	R/W	0	undocumented		
+CRIME 1.5	7-3	169	RE	0x21e0	Stencil.mode	1	0	32	R/W	0	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 CRIME 1.5	7-3	170	RE	0x21e8	Stencil.mask	1	0	32	R/W	0	named-only	chips/crime/README.md#cpu-interface-control-0x8	CPU interface control (`0x8`)
 CRIME 1.5	7-3	170	RE	0x21f0	PixPipeNull	1	0	32	W	0	undocumented		
 CRIME 1.5	7-3	170	RE	0x21f8	PixPipeFlush	1	0	32	W	0	undocumented		
-CRIME 1.5	7-15	183	RE	0x3000	MTE.mode	1	0	32	R/W	0	undocumented		
+CRIME 1.5	7-15	183	RE	0x3000	MTE.mode	1	0	32	R/W	0	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 CRIME 1.5	7-15	183	RE	0x3008	MTE.byteMask	1	0	32	R/W	0	undocumented		
 CRIME 1.5	7-15	183	RE	0x3010	MTE.stippleMask	1	0	32	W	0	undocumented		
 CRIME 1.5	7-15	183	RE	0x3018	MTE.fgValue	1	0	32	R/W	0	undocumented		
