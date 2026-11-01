@@ -151,3 +151,50 @@ table. Labels: a classification from names, sizes and the scan's result is infer
   `efs_write` with `efs_readi` (1136 bytes) and `efs_writei` (1500 bytes), `efs_lookup`, `efs_create`, `efs_rename`
   (2228 bytes), `efs_setattr` (1720 bytes) and `efs_fcntl` (780 bytes). `diostrat` (1364 bytes) and `efs_strategy`
   pass block I/O down to the device layer.
+- `IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_icrash.o)` (inferred): one routine, `lofs_icrash`, in a 12644-byte member.
+  Its `_icrash` suffix matches the crash-analysis hooks that other file-system members of this set carry. The symbol
+  table gives the routine no size.
+- `IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_subr.o)` (inferred): eight routines in a 12548-byte member. `makelonode`
+  (988 bytes) and `makelfsnode` (412 bytes) create the loopback nodes that stand in front of a directory tree mounted
+  at a second path, `freelonode` (468 bytes) and `freelfsnode` (156 bytes) release them, and `lfsfind` (48 bytes) looks
+  one up. `lnode_flush` (360 bytes) writes a node's state back, and `lofs_realvfs` (72 bytes) returns the file system
+  under a node.
+- `IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_vfsops.o)` (inferred): six routines in an 11668-byte member: `lofs_init`,
+  `lofs_mount` (704 bytes), `lofs_unmount` (328 bytes), `lofs_root` (40 bytes), `lofs_statvfs` (200 bytes) and
+  `lofs_sync` (196 bytes). They are the mount, unmount, root, statistics and sync entry points of the loopback file
+  system.
+- `IP27/usr/cpu/sysgen/IP27boot/lofs.a(lofs_vnops.o)` (inferred): 42 routines in a 31012-byte member, the largest
+  loopback object. They are the vnode operations of loopback nodes, led by `lofs_lookup` (1292 bytes), `lofs_map`
+  (224 bytes), `lofs_rename` (200 bytes), `lofs_attrget` (204 bytes) and `lofs_attrset` (148 bytes). The `realvp`
+  routines, including `lofs_non_lofs_realvp` (76 bytes), hand back the vnode a loopback node stands for.
+- `IP27/usr/cpu/sysgen/IP27boot/namefs.a(namevfs.o)` (inferred): 12 routines in a 19492-byte member. `nm_mount`
+  (1184 bytes), `nm_unmount` (716 bytes), `nm_unmountall` (528 bytes), `nm_root` (60 bytes) and `nm_statvfs`
+  (188 bytes) make up the mount interface of the name file system, which attaches an open stream descriptor at a
+  path. `nameinsert`, `namefind`, `nameremove`, `nmgetid` (212 bytes) and `nmclearid` (116 bytes) keep the table of
+  attached names and hand out their identifiers.
+- `IP27/usr/cpu/sysgen/IP27boot/namefs.a(namevno.o)` (inferred): 21 routines in a 21476-byte member, the vnode
+  operations of an attached name node. Among them are `nm_open`, `nm_close` (212 bytes), `nm_getattr` (288 bytes),
+  `nm_setattr` (656 bytes), `nm_access` (332 bytes) and `nm_poll` (168 bytes). `nm_link` is 8 bytes long, the size
+  of a bare return.
+- `IP27/usr/cpu/sysgen/IP27boot/fifofs.a(fifosubr.o)` (inferred): 17 routines in a 19812-byte member. `makepipe`
+  (184 bytes) and `fifovp` (552 bytes) create the node for a pipe or a named FIFO, `fifo_initlocks` and
+  `fifo_cr_lock` set up the lock records that serialize readers and writers, and `fifogetid` (192 bytes) and
+  `fifoclearid` (128 bytes) manage the identifiers of named FIFOs. `fifofind` and `fifoinsert` keep the table of
+  live FIFOs.
+- `IP27/usr/cpu/sysgen/IP27boot/fifofs.a(fifovnops.o)` (inferred): 19 routines in a 29764-byte member, the vnode
+  operations of a FIFO node. `fifo_read` (680 bytes) and `fifo_write` (904 bytes) are its two data paths, and
+  `fifo_close` (1124 bytes) has the largest listed size. The rest include `fifo_open`, `fifo_ioctl` (616 bytes), `fifo_poll`
+  (104 bytes) and `fifo_pathconf` (204 bytes).
+- `IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgsubr.o)` (inferred): 11 routines in a 15428-byte member. `hwgfs_allocnode`
+  (392 bytes), `hwgfs_getnode` (376 bytes) and `hwgfs_freenode` (380 bytes) manage the nodes of the hardware graph,
+  `hwgfs_get_permissions` and `hwgfs_set_permissions` (352 bytes) read and write their permissions, and
+  `hwgfs_vertex_destroy` (140 bytes) and `hwgfs_vertex_clone` (36 bytes) react when a graph vertex goes away or is
+  copied. `hwginit` and `hwgfs_earlyinit` start the subsystem.
+- `IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgvfsops.o)` (inferred): five routines in a 10612-byte member: `hwgmount`,
+  `hwgunmount` (244 bytes), `hwgroot` (64 bytes), `hwgstatvfs` (240 bytes) and `hwgsync` (180 bytes). They mount the
+  hardware-graph file system and answer its root, statistics and sync requests.
+- `IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgvnops.o)` (inferred): 21 routines in a 25876-byte member, the vnode
+  operations of the graph's directories and nodes. `hwglookup` (208 bytes), `hwg_dirlookup` (360 bytes),
+  `hwgreaddir` (476 bytes) and `hwgcreate` (400 bytes) cover lookup, listing and creation. `hwgattr_get` (1044 bytes),
+  `hwgattr_set` (536 bytes), `hwgattr_create`, `hwgattr_replace` and `hwgattr_remove` manage named attributes, and
+  `cap_hwg_get` (136 bytes) and `cap_hwg_match` (92 bytes) check capabilities on a node.
