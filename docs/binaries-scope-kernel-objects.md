@@ -494,6 +494,54 @@ table and undefined imports. No routine body was read in full.
   `psqo_enq_pkt` (352 bytes) and `psqo_get_next_pkt` (368 bytes) add and take packets. It imports `kmem_zalloc`,
   `kmem_free`, `bzero` and the spin-lock calls, and no chip routine.
 
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_is.o)` (inferred): the interface-striping driver, 41 routines in a 47204-byte member.
+  `is_output` (1576 bytes) spreads output over several links, `is_reorder_drain` (1352 bytes) and `is_input_reorder_entry`
+  (792 bytes) put input back in order, and `is_add_link` (672 bytes) adds a member link. It attaches and detaches with
+  `if_attach` and `if_detach`, starts its threads with `xthread_set_func`, and reaches the raw interface through
+  `rawif_attach` and `rawif_detach`. No chip is driven directly.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(igmp.o)` (inferred): IGMP group membership, 14 routines in an 18420-byte member.
+  `igmp_input` (1256 bytes) handles membership reports, `igmp_sendpkt` (392 bytes) sends them, and
+  `igmp_update_host_membership` and `igmp_update_host_new_membership` keep the host's group state, found through the hash
+  calls `hash_lookup` and `hash_enum`. It calls `ip_mroute_init` and `ip_mroute_slowtimo` for the multicast router.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(if_ether.o)` (inferred): ARP, 27 routines in a 35764-byte member. `in_arpinput`
+  (1596 bytes) answers requests, `arpresolve` (1560 bytes) resolves an address, `arp_rtrequest` (1016 bytes) keeps the
+  route entries, and `arptimer` (836 bytes) ages them. It looks up interfaces with `ifa_ifwithnet`. No chip is driven.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(in.o)` (inferred): IPv4 interface addressing, 73 routines in a 52324-byte member.
+  `in_control` (3452 bytes) is the address ioctl, `in_ifinit` (964 bytes) sets an interface address, and `inet_addr`
+  (712 bytes) and `inet_ntop` (888 bytes) convert text. It starts IPv6 with `in6_init`, joins and leaves groups with
+  `igmp_joingroup` and `igmp_leavegroup`, and imports the tunnel switches `auto_tunnel_enable` and `config_tunnel_enable`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(in_pcb.o)` (inferred): the protocol control blocks for IPv4 sockets, 38 routines in a
+  46628-byte member. `in_pcblookupx` (3580 bytes) finds the block for an arriving packet, `in_pcbnotify` (1388 bytes)
+  reports errors to it, and `udp_full_assign` and `tcp_full_assign` set the full endpoint. It draws ports with
+  `inpcb_randomize_ports` and reads the port limit `ipport_maxport`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(ip_icmp.o)` (inferred): ICMP, nine routines in a 17076-byte member. `icmp_input`
+  (1472 bytes) handles inbound messages, `icmp_reflect` (944 bytes) builds replies, `icmp_error` (956 bytes) reports a
+  failed datagram, and `icmp_send` (232 bytes) sends one. It imports the settings `icmp_respond_to_timestamp` and
+  `icmp_respond_to_address_mask`, which decide whether those requests get replies.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(ip_input.o)` (inferred): the IPv4 input path, 21 routines in a 34436-byte member.
+  `ip_input` (2740 bytes) validates each packet, `ip_reass` (1176 bytes) and `ip_reass_strict` (1452 bytes) reassemble
+  fragments, and `ip_dooptions` (1320 bytes) and `ip_forward` (1316 bytes) process options and forward. It looks up the
+  next protocol through `inetsw`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(ip_output.o)` (inferred): the IPv4 output path, nine routines in a 32196-byte member.
+  `ip_output` (3664 bytes) is the transmit entry, `ip_setmoptions` (1524 bytes) and `ip_getmoptions` (460 bytes) set and
+  read multicast options, `ip_ctloutput` (1244 bytes) is the socket option entry, and `ip_pcbopts` (448 bytes) keeps the
+  option block. It calls `in_addmulti2` and `in_delmulti` for group changes.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(raw_ip.o)` (inferred): raw IP sockets, three routines in an 11124-byte member:
+  `rip_input` (172 bytes), `rip_output` (516 bytes) and `rip_ctloutput` (736 bytes). It imports the multicast router
+  switches `ip_mrouter_set` and `ip_mrouter_get` and the RSVP virtual-interface calls `ip_rsvp_vif_init` and
+  `ip_rsvp_vif_done`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(tcp_debug.o)` (inferred): the TCP trace hook, one routine `tcp_trace` (1128 bytes) in an
+  11012-byte member. It prints state changes with `printf`, reads the time with `iptime`, and carries the state, timer and
+  request name tables `tcpstates`, `tcptimers` and `prurequests`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(tcp_input.o)` (inferred): TCP input processing, 13 routines in a 43876-byte member.
+  `tcp_input_private` (10032 bytes) is the segment handler, `tcp_input` (1160 bytes) is its entry, `tcp_dooptions` (820
+  bytes) parses options, `tcp_mss` (1556 bytes) sets the segment size and `tcp_reass` (1292 bytes) reassembles out-of-order
+  data. It finds the connection with `in_pcblookupx` and picks initial sequence numbers with `iss_hash`.
+- `IP35/usr/cpu/sysgen/IP35boot/bsd.a(tcp_output.o)` (inferred): TCP output, two routines in a 16004-byte member. `tcp_output`
+  (5216 bytes) builds and sends segments, and `tcp_setpersist` (180 bytes) arms the persist timer. It imports the checksum
+  `in_cksum`, the IP output routines `ip_output` and `tcp6_output`, and `tcp_max_tso_len`, the segment-size routine of the
+  offload path.
+
 ## Scope questions
 
 Each object below is listed under the rule shown, but its imports or routine names match a class the scope text keeps.
