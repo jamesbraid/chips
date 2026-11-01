@@ -205,3 +205,45 @@ routine reads them, and is otherwise not part of this page.
 - `0x16058000` (`0x58000`): CMFIFO, colour map FIFO status (docs/sources/specs/gbe-specification.pdf, section 3.2.6, p. 45). Established.
   Bits 5:0 hold cm_fifo, the number of free entries in the colour map FIFO, reset to zero. The table names no field
   above bit 5.
+
+- `0x16060000` (`0x60000`): GMAP, gamma map RAM, 256 words (docs/sources/specs/gbe-specification.pdf, section 3.2.6, p. 45). Established.
+  Each word holds blue in bits 15:8, green in bits 23:16 and red in bits 31:24. The table names no field in bits 7:0.
+  The words run from 0x60000 to 0x603FC at a stride of 4.
+
+- `0x16070000` (`0x70000`): CRS_0, cursor position (docs/sources/specs/gbe-specification.pdf, section 3.2.7, p. 46). Established.
+  Bits 15:0 hold crs_posx, the cursor x position, and bits 31:16 hold crs_posy, the cursor y position. Both reset to zero.
+
+- `0x16070004` (`0x70004`): CRS_1, cursor mode (docs/sources/specs/gbe-specification.pdf, section 3.2.7, p. 46). Established.
+  Bit 0 is crs_enable, where 1 enables the cursor. Bit 1 is crs_crosshair, where 1 selects crosshair mode. Both reset to zero.
+
+- `0x16070008` (`0x70008`): CRS_CM, cursor colour map entries 1 to 3, three words (docs/sources/specs/gbe-specification.pdf, section 3.2.7, p. 46). Established.
+  Each word holds blue in bits 15:8, green in bits 23:16 and red in bits 31:24. The table names no field in bits 7:0.
+  The words run from 0x70008 to 0x70010 at a stride of 4.
+
+- `0x16078000` (`0x78000`): CRS_GLY, cursor glyph RAM, 64 words (docs/sources/specs/gbe-specification.pdf, section 3.2.7, p. 46). Established.
+  Each word holds two-bit pixels: crs_pix0 in bits 31:30 is the leftmost pixel of the glyph row and crs_pix15 in bits 1:0
+  is the rightmost. The memory map gives the range as 0x78000 to 0x780FC at a stride of 4. The register table prints the
+  upper bound with an extra digit, 0x0780FC, which is a typo.
+
+- `0x16080000` (`0x80000`): VC_0, video capture left and right edges (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 47). Established.
+  Bits 11:0 hold vc_left and bits 23:12 hold vc_right. Both edges are inclusive and reset to zero.
+
+- `0x16080004` (`0x80004`): VC_1, video capture top and bottom edges (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 47). Established.
+  Bits 11:0 hold vc_top and bits 23:12 hold vc_bottom. Both edges are inclusive and reset to zero.
+
+- `0x16080008` (`0x80008`): VC_2, video capture mode (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 47). Established.
+  Bit 0 is vc_dmavideo, which enables video capture DMA when 1, reset 0. Bit 1 is vc_flick, the flicker filter enable,
+  reset 1. Bit 2 is vc_autofield, which advances the odd and even field sequence at the end of a field when 1, reset 1.
+  When it is 0 the field type has to be set by programmed I/O. Bit 3 is vc_fullscreen, reset 0. Bit 4 is vc_cscbypass,
+  which enables RGB555 mode without colour space conversion, reset 0 and intended for diagnostics only.
+
+- `0x1608000c` (`0x8000c`): VC_3, video capture field and DMA status (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 47). Established.
+  Bit 0 is vc_field, which selects the field to capture (0 even, 1 odd), reset 0. Bit 1 is vc_discdmaenb, the descriptor
+  list DMA enable, reset 0. The spec says this feature does not work on revision 1.1 and the list must be written by
+  programmed I/O. Bit 2 is vc_fieldcorrupt, set when the current field is corrupt and cleared by software. Bit 3 is vc_eof,
+  set when the last field finished its DMA and cleared by software. Bit 4 is vc_oddeven, read only, the field type
+  being DMAed, reset 1. Bits 31:5 hold vc_descr_ptr, the pointer to a 32-byte descriptor list, reset zero.
+
+- `0x16080010` (`0x80010`): VC_4, first two video capture tile addresses (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 47). Established.
+  Bits 31:16 hold vc_Tileaddr#1, the first tile address in the descriptor list, and bits 15:0 hold vc_Tileaddr#2, the
+  second. Both reset to zero.
