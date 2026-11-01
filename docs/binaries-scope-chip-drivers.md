@@ -70,3 +70,60 @@ routines. The rule texts are in the [function scope section](inventory/README.md
   `rad_attach` (180 bytes) as the attach routine. Its board access runs through PCI configuration and the Bridge,
   so the imports `pciio_config_get` and `pcibr_rrb_alloc` appear. The MACE page reads the IP32 copy of this object for
   its own chip. All 84 rows stay in the table.
+- `IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)` (inferred): the serial driver for the IOC3's two serial lines,
+  which the IOC3 page calls ports A and B. `ioc3_serial_attach` (1212 bytes) attaches a port, `ioc3_serial_kill`
+  (276 bytes) takes one down, `ring_dmatrans` (76 bytes) is its DMA ring translation helper, and `ioc3_sio_mlreset`
+  (44 bytes) runs at reset. It writes the chip through `ioc3_write_ireg` and connects the interrupt with
+  `ioc3_intr_connect`, and `sio_console_register` makes a port the console. The chip is the IOC3. Its 35 rows are
+  all in the table.
+- `IP27/usr/cpu/sysgen/IP27boot/sn0drv.o` (inferred): the ioctl driver for the IP27 router and node board. It exposes
+  router registers and the node's NVRAM to tools. `sn0drv_ioctl` (2252 bytes) dispatches the requests, and
+  `do_router_op`, `do_reg_op` and `rou_fence_op` (268, 196 and 196 bytes) read and write router registers through
+  `router_reg_read` and `router_reg_write`. `router_port_map_get` (292 bytes) and `check_router` (176 bytes) look up
+  ports. Its `elsc_nvram_read` and `elsc_nvram_write` imports reach the system controller's NVRAM, and
+  `hub_vector_read` reads the Hub vector. It drives the router, the Hub and the system controller, and keeps 11 rows.
+- `IP27/usr/cpu/sysgen/IP27boot/xbmon.o` (inferred): the crossbar monitor device. It gives tools a view of the Xbow
+  registers and a trace buffer. `xbmon_ioctl` (1176 bytes) is the control entry, `xbtrace` (84 bytes) records trace
+  entries, and `xbmon_map` (80 bytes) and `xbmon_read` (52 bytes) reach the register window. It attaches to the Xbow
+  widget with `xwidget_driver_register` and reads through `xtalk_piotrans_addr`. The chip is the Xbow crossbar, and
+  the 18 rows are in the table.
+- `IP27/usr/cpu/sysgen/IP27boot/xbow.o` (inferred): the Xbow crossbar driver. `xbow_attach` (796 bytes) attaches each
+  crossbar, and `xbow_get_bridge_pointers` (628 bytes) finds the Bridge pointers behind its ports.
+  `xbow_prio_bw_alloc` (372 bytes) allocates bandwidth priority, and `xbow_reset_link` (260 bytes) resets one link.
+  `xbow_xmit_retry_error` (260 bytes) and `xbow_update_llp_status` (276 bytes) handle link errors, and
+  `xbow_enable_perf_counter` (460 bytes) turns a counter on. The chip is the Xbow, and 33 rows stay in.
+- `IP27/usr/cpu/sysgen/IP27boot/xtalk.o` (inferred): the Crosstalk widget layer that every widget on the Crosstalk bus
+  uses. `xwidget_register` (292 bytes) and `xwidget_driver_register` (116 bytes) record widgets and their drivers,
+  `xtalk_pio_addr` (248 bytes) builds a PIO address, and `xtalk_error_handler` (172 bytes) routes bus errors. It calls
+  the Hub provider through 30 imports beginning `hub_` (`hub_piomap_alloc`, `hub_dmamap_alloc`, `hub_intr_connect`
+  and so on), and it keeps device connection points through the `cdl_*` calls. The widgets it serves are the Bridge
+  and the Xbow, and the object itself is not a chip. It keeps 71 rows.
+
+## IP30 build
+
+- `IP30/usr/cpu/sysgen/IP30boot/if_ef.o` (inferred): the same Ethernet driver as the IP27 copy, built for the IP30
+  kernel. `if_efattach` (788 bytes) and `ef_ifattach` (236 bytes) attach the interface, and it claims its IOC3 part
+  through `ioc3_subdev_enabled`. Its imports add `heart_invalidate_war`, a HEART workaround, to the IOC3 and Bridge
+  calls of the IP27 copy. The chips are the IOC3 and the Bridge behind it, with the HEART workaround. All 47 rows of
+  the object are in the table.
+- `IP30/usr/cpu/sysgen/IP30boot/io6.o` (inferred): the init for the IO6 I/O board, one routine, `io6_init` (64 bytes).
+  It calls the Bridge hint routines `pcibr_hints_dualslot`, `pcibr_hints_fix_rrbs` and `pcibr_hints_subdevs`, adds a
+  NIC vertex record with `nic_vmc_add`, and maps a PIO window through `xtalk_piotrans_addr`. The Bridge page covers
+  the chip it configures. Both rows of the object are in the table.
+- `IP30/usr/cpu/sysgen/IP30boot/ioc3.o` (inferred): the IOC3 core driver for the IP30 kernel. `ioc3_attach` (1196 bytes)
+  attaches the chip, `ioc3_intr_connect` (632 bytes) and `ioc3_intr_disconnect` (356 bytes) manage its interrupt,
+  and `ioc3_intr` (396 bytes) is the handler. `ioc3_subdev_enable`, `ioc3_subdev_disable` and `ioc3_subdev_enables`
+  switch its sub-devices, and `ioc3_is_io7` tests the board variant. It hands the serial, Ethernet and keyboard parts
+  to their own drivers. The chip is the IOC3, and 24 rows stay in.
+- `IP30/usr/cpu/sysgen/IP30boot/ioc3_pckm.o` (inferred): the IP30 copy of the IOC3 keyboard and mouse driver.
+  `pckm_attach` (1332 bytes) is the attach routine, and `ioc3_pckm_mlreset` (76 bytes) and `pckminit` (8 bytes) are
+  the reset and start-up entries. It connects the interrupt with `ioc3_intr_connect` and tests the console with
+  `ioc3_is_console`. The chip is the IOC3, and its 34 rows are in.
+- `IP30/usr/cpu/sysgen/IP30boot/kernel.o` (inferred): the machine-dependent kernel object of the IP30 build, with 726
+  function rows and 577112 bytes. Only 15 rows stay in the table. These are HEART-facing routines: the cache flush
+  helpers `heart_dcache_inval`, `heart_dcache_wb_inval` and `heart_need_flush`, the HEART interrupt entries
+  `heart_intr_low`, `heart_intr_med`, `heart_intr_hi` and `heart_intr_err`, `heart_set_cpu_intr`, and
+  `heart_invalidate_war`, plus `nmi_dump` (212 bytes), `early_nic_access_mcr32` (256 bytes),
+  `intr_spray_heuristic` (192 bytes) and `heartclock_intr` (20 bytes). The other 711 rows fall under the
+  linked-kernel rule (rule 8). The imports also reach the IOC3 (`ioc3_mlreset`), the Bridge (`pcibr_error_init`) and
+  the Xbow (`xbow_mlreset`). The chip is the HEART, and the other chips are reached through it.
