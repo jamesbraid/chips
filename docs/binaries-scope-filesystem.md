@@ -326,3 +326,43 @@ the census, and the window scan's access count is zero for every member listed h
   `fscache_sync` (912 bytes) flushes cache objects, `fscache_destroy` (340 bytes) releases one, and the
   `fscache_hold` and `fscache_rele` pair (68 bytes each) adjust its reference count. The list helpers
   `fscache_list_add` and `fscache_list_remove` manage its membership. The scan's access count is zero.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_vfsops.o)` (inferred): 19 routines in a 32036-byte member, the
+  mount and statistics entry points of the cache file system. `cachefs_mount` (4952 bytes) is the largest, with
+  `cachefs_unmount` (628 bytes), `cachefs_vget` (888 bytes) and `cachefs_complete_mount` (552 bytes) following.
+  `make_cachefs_fsid` (288 bytes) builds the file-system identifier, and the census lists no register access for
+  this member.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_module.o)` (inferred): three routines in a 10916-byte member,
+  `cachefs_init`, `cachefs_getstat` (24 bytes) and `cachefs_clearstat` (244 bytes). They register the module and
+  read or reset its counters, and the scan's access count for it is zero.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_vnops.o)` (inferred): 45 vnode operations in a 79748-byte member,
+  the front-side file operations of the cache. `cachefs_symlink` (2920 bytes) is the largest, then
+  `cachefs_readdir` (2036 bytes), `cachefs_lookup_locked` (2016 bytes), `cachehit_lookup` (1996 bytes) and
+  `cachefs_create` (1892 bytes). Nothing in the member reaches a chip window.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_noopc.o)` (inferred): five routines in a 10916-byte member, all
+  named `c_nop_` plus an operation. `c_nop_modify_cached_object` (612 bytes) and `c_nop_check_cached_object`
+  (404 bytes) are the largest. This is the no-op variant of the consistency policy: its operations take the same
+  names as the strict and single-writer members, and the scan records zero access sites for it.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_backops.o)` (inferred): 24 routines in a 118916-byte member,
+  one per operation sent to the back file system. `cachefs_backop_writevp` (800 bytes) and
+  `cachefs_backop_readvp` (764 bytes) move file data, `cachefs_backop_getattr` (764 bytes) and
+  `cachefs_backop_rename` (756 bytes) handle attributes and names, and `cachefs_getbackvp` finds the back vnode.
+  The member is large only because of its operation count, and it holds no window access.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_frontops.o)` (inferred): 13 routines in a 13700-byte member, the
+  operations that run against the cache's own front files. `cachefs_frontop_writevp` (340 bytes) and
+  `cachefs_frontop_readvp` (316 bytes) are the data paths, `cachefs_frontop_rename` (248 bytes) renames a front
+  file, and `cachefs_getfrontvp` (260 bytes) fetches its vnode. The census lists no register access here.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefs.a(cachefs_icrash.o)` (inferred): one routine, `cachefs_icrash`, in a
+  24628-byte member. The symbol table gives the routine no size. It is the crash-analysis hook for the cache
+  state, the sibling of the autofs hook above, and the scan records no chip window for it.
+- `IP30/usr/cpu/sysgen/IP30boot/cachefsidbg.o` (inferred): 30 routines in a 44176-byte object, the kernel
+  debugger commands for the cache. `prcnode` (748 bytes), `cflags_to_str` (524 bytes), `prcfsreq` (448 bytes)
+  and `prfscache` (436 bytes) print cache nodes, request flags and the front-cache state. The debugger prints
+  these structures and touches no device window.
+- `IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_procfs.o)` (inferred): 50 routines in a 53700-byte member. The scope
+  list files it with the file-system objects, but its routines are process checkpoint and restart calls:
+  `ckpt_getpsinfo` (1088 bytes), `ckpt_memfork` (732 bytes), `ckpt_prioctl_thread` (728 bytes) and `ckpt_abort`
+  (864 bytes) read and set process state through `/proc`. The scan records no window access in the member.
+- `IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_sys.o)` (inferred): 22 routines in a 21924-byte member, the system-call
+  side of the same checkpoint and restart code. `ckpt_sys` (648 bytes) is the dispatcher, with `ckpt_setexec`
+  (520 bytes), `ckpt_restartreturn` (560 bytes) and `ckpt_getchildpids` (272 bytes) beside it. It is process
+  state, not file-system code, and the census has no register access for it.
