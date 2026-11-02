@@ -1307,6 +1307,106 @@ tables. Labels are inferred, from the symbol table and the undefined imports. No
   imports nothing. `bsd.a(vsocket.o)` imports the same name, so the member supplies the routine that the virtual socket code
   calls.
 
+The IPv6 stack of this build is in its own `ipv6.a` archive, with no byte-identical copy in `socket.a`. Its members are n32 objects, and labels are inferred from the symbol table and undefined imports. No routine body was read in full.
+
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_gif.o)` (inferred): the generic tunnel interface for IPv4 and IPv6 encapsulation,
+  five routines in a 10468-byte member. `gif_ioctl` (1736 bytes) is the control entry, `gif_encapcheck` (368 bytes) checks
+  an incoming tunnel packet, `gif_output` (336 bytes) and `gif_input` (304 bytes) carry packets, and `gifattach` attaches
+  the interface. It imports `gif_encapcheck4`, `gif_encapcheck6`, `in_gif_output` and `in6_gif_output`, and registers the
+  interface with `if_attach`. No chip is driven.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(dest6.o)` (inferred): the IPv6 destination options header, one routine, `dest6_input`
+  (no size in the symbol table), in a 4132-byte member. It imports `ip6_unknown_opt` for options it does not know, and
+  `m_pullup` and `m_freem` for the header mbuf.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(frag6.o)` (inferred): IPv6 fragment reassembly, nine routines in a 9860-byte member.
+  `frag6_input` (1940 bytes) takes a fragment, `frag6_freef` (208 bytes) frees a reassembly queue, `frag6_enq` (28 bytes)
+  queues a fragment, and `frag6_slowtimo` (228 bytes) and `frag6_drain` (152 bytes) age and reclaim queues. It reports
+  errors through `icmp6_error` and holds its queues under `init_mutex`, `mutex_lock` and `mutex_unlock`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)` (inferred): IPv6 neighbour discovery, 23 routines in a 37844-byte member.
+  `ndp6_rtrequest` (1588 bytes) manages neighbour routes, `ndsol6_input` (1576 bytes) and `ndadv6_input` (1552 bytes)
+  answer solicitations and advertisements, `redirect6_input` (1248 bytes) handles redirects, and `ndsol6_output` (1220
+  bytes) sends solicitations. It finds neighbour entries with `hash_lookup` and `hash_enum`, resolves routes with
+  `rtalloc1`, and sends replies with `ip6_output`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_sit6.o)` (inferred): the IPv6-in-IPv4 tunnel interface (`sit`), six routines in an
+  11012-byte member. `sit_rtrequest` (1160 bytes) manages its routes, `sitoutput` (648 bytes) encapsulates a packet,
+  `sit_input` (448 bytes) decapsulates one, `sitioctl` (428 bytes) is the control entry, and `sitadd` (304 bytes) adds a
+  tunnel. It sends the encapsulated packet with `ip_output` and passes received packets to `network_input`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)` (inferred): IPv6 interface addressing, 27 routines in an 27508-byte member.
+  `in6_control` (3700 bytes) is the address ioctl, `in6_ifinit` (624 bytes) sets an interface address, `if_assign_linklocal`
+  (504 bytes) assigns a link-local address, and `in6_validaddr` and `in6_addmulti2` (428 bytes each) check and join. It
+  joins the all-nodes group through `icmp6_joingroup` and `icmp6_leavegroup`, runs duplicate address detection with
+  `ndp6_do_dad`, and uses the tunnel attach `sitattach` and the switch `auto_tunnel_enable`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_gif.o)` (inferred): the IPv6 side of the generic tunnel, three routines in a
+  7252-byte member: `in6_gif_output` (no size in the symbol table), `in6_gif_input` (268 bytes) and `gif_encapcheck6` (612
+  bytes). It carries packets to and from `ip6_output` and `gif_input`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)` (inferred): IPv6 protocol control blocks, eight routines in a 15492-byte
+  member. `in6_pcbnotify` (2260 bytes) passes an error to the matching blocks, `in6_pcbconnect` (748 bytes) and
+  `in6_pcbrebind` (668 bytes) set the endpoint, and `in6_rtalloc` (492 bytes) and `in6_rthost` (380 bytes) find routes. It
+  shares the IPv4 block code through `in_pcbbind`, `in_pcbconnect` and `in_pcblookupx`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_proto.o)` (inferred): the IPv6 protocol switch, a member with no routine rows. Its
+  32 imports are the IPv6 protocol entry points: `tcp6_input`, `udp6_input`, `icmp6_input`, `frag6_input`, `route6_input`,
+  `dest6_input`, the IPsec headers `ah6_input` and `esp6_input`, and the raw socket calls `rip6_input` and `rip6_usrreq`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)` (inferred): ICMPv6, 15 routines in a 24276-byte member. `icmp6_input`
+  (3816 bytes) is the receive entry, `icmp6_error` (940 bytes) reports errors, `icmp6_sendgroup` (732 bytes) and
+  `icmp6_reflect` (704 bytes) send group and echo messages, and `icmp6_checktimer_enummatch` (468 bytes) walks the timers.
+  It checks the link-local all-nodes and all-routers groups and passes neighbour messages to `ndadv6_input` and
+  `ndsol6_input`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)` (inferred): IPv6 input, 23 routines in a 23348-byte member. `ip6_input`
+  (1604 bytes) is the receive entry, `ip6_forward` (1100 bytes) forwards packets, `ip6_savecontrol` (844 bytes) keeps
+  ancillary data, `ip6_process_hopopts` (724 bytes) handles hop-by-hop options, and `ip6_saveexthdr` (604 bytes) keeps
+  extension headers. It walks the routing table with `rn_walktree` and passes packets to `network_input`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)` (inferred): the IPv6 multicast router, 20 routines in a 17444-byte
+  member. `ip6_mforward` (576 bytes) forwards multicast packets, `user_add_dsif` (480 bytes) and `user_delete_dsif` (400
+  bytes) add and remove interface entries for the daemon, and `mfc6_create` (372 bytes) builds a forwarding cache entry. It
+  queues to the IPv4 input with `schednetisr` and `ipintrq`, and raises the priority with `splhi`, `splimp` and `splnet`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)` (inferred): IPv6 output and options, 28 routines in a 39236-byte member.
+  `ip6_output` (3724 bytes) is the send entry, `ip6_setpktoption` (1720 bytes) and `ip6_setmoptions` (1576 bytes) set
+  packet and multicast options, `ip6_ctloutput` (1304 bytes) is the socket option entry, and `ip6_copypktopts` (1068 bytes)
+  copies an option list. It imports the IPsec hooks `ipsec_attach`, `ipsec_change`, `ipsec_create`, `ipsec_delete`,
+  `ipsec_detach` and `ipsec_lookup`, the headers `ah6_build` and `esp6_build`, and the group calls `in6_joingroup` and
+  `in6_delmulti`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(raw_ip6.o)` (inferred): raw IPv6 sockets, six routines in a 15620-byte member.
+  `rip6_usrreq` (1536 bytes) is the request switch, `rip6_input` (1508 bytes) delivers packets, `rip6_ctloutput` (1036 bytes)
+  is the option entry, `rip6_ctlinput` (804 bytes) passes errors, and `rip6_output` (492 bytes) sends. It sets filters with
+  `icmp6_filter_set` and `icmp6_filter_get`, uses the IPv4 block code through `in_pcballoc` and `in_pcbdetach`, and
+  passes the multicast router calls `ip6_mrouter_set`, `ip6_mrouter_get` and `ip6_mrouter_done`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(route6.o)` (inferred): the IPv6 routing header handler, two routines in a 5604-byte
+  member. `route6_input` (no size in the symbol table) processes a routing header, and `ipv6_rthdr0` (640 bytes) handles
+  type 0 headers. It forwards with `ip6_forward` and uses `ip6forwsrcrt` for source routes.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(tcp6_input.o)` (inferred): TCP over IPv6 input, three routines in a 20644-byte member.
+  `tcp6_input` (8204 bytes) is the receive path, `tcp6_mssopt` (80 bytes) sets the segment size, and `tcp6_reass` (no size
+  in the symbol table) is the reassembly routine. It shares the TCP state code with the IPv4 path through `tcp_dooptions`,
+  `tcp_close`, `tcp_drop` and `tcp_canceltimers`, and looks up its block with `in_pcblookupx`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(tcp6_output.o)` (inferred): TCP over IPv6 output, one routine, `tcp6_output`, in a
+  9188-byte member; the symbol table gives it no size. It sends segments through `ip6_output`, computes the checksum with
+  `ip6_cksum`, reads the path MTU through `ip6_getpmtu`, and arms its persist timer through `tcp_setpersist`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(tcp6_subr.o)` (inferred): TCP over IPv6 support, two routines in a 5332-byte member.
+  `tcp6_rtlookup` (208 bytes) finds a route for a connection and `tcp6_ctlinput` (no size in the symbol table) passes
+  errors. It notifies blocks through `in6_pcbnotify` and calls `tcp_notify` and `tcp_quench`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(tcp6_usrreq.o)` (inferred): the user request entry for TCP over IPv6, three routines in
+  a 9556-byte member. `tcp6_connect` (448 bytes) and `tcp6_ctloutput` (448 bytes) connect a socket and handle options, and
+  `tcp6_usrreq` (no size in the symbol table) is the request switch. It creates the TCP block through `tcp_attach` and
+  closes it through `tcp_close` and `tcp_disconnect`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(udp6_usrreq.o)` (inferred): UDP over IPv6, three routines in a 12500-byte member.
+  `udp6_output` (1496 bytes) builds and sends datagrams through `ip6_output`, `udp6_ctlinput` (164 bytes) passes errors, and
+  `udp6_input` (no size in the symbol table) receives. It hands datagrams to `nfs_input` for the NFS port `nfs_port`, and it
+  imports `sesmgr_enabled` for the session checks.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip_encap.o)` (inferred): the encapsulation switch that routes tunnelled packets to the
+  right decapsulator, eight routines in a 10244-byte member. `encap_attach` (1028 bytes) and `encap_detach` (160 bytes)
+  register and remove a handler, `mask_match` (836 bytes) matches a packet against the handler's masks, and `encap4_input`
+  (528 bytes) and `encap6_input` (468 bytes) dispatch IPv4 and IPv6 packets. It hands packets to `sit_input`, `rip_input`,
+  `rip6_input` and `ipip_input`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in_gif.o)` (inferred): the IPv4 side of the generic tunnel, three routines in a
+  6676-byte member: `in_gif_output` (no size in the symbol table), `in_gif_input` (240 bytes) and `gif_encapcheck4` (408
+  bytes). It sends with `ip_output` and passes packets to `gif_input`.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ipsec.o)` (inferred): IPsec entry stubs, eleven routines in a 5332-byte member:
+  `ipsec_create`, `ipsec_change`, `ipsec_delete`, `ipsec_attach`, `ipsec_detach` and six more. Each is 8 bytes in the symbol
+  table, the size of a return-only routine, and the member has no imports. The IPv6 output path imports these names
+  (`bsd.a` is not involved), so this member fills them in this build.
+- `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_src.o)` (inferred): IPv6 source address selection, seven routines in a 10804-byte
+  member. `in6_selectroute` (1236 bytes) chooses the outgoing interface and route, `in6_selectsrc` (1152 bytes) picks the
+  source address, and `in6_pcbsetport` (468 bytes) assigns a port. It draws ports with `read_random_real` and
+  `inpcb_randomize_ports`, and reads the port bound `ipport_maxport`.
+
 ## Scope questions
 
 Each object below is listed under the rule shown, but its imports or routine names match a class the scope text keeps.

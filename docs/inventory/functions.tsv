@@ -4718,7 +4718,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhi	symtab	d20175b8aee2	share
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhi_relnet	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhintr	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splimp	symtab	d20175b8aee2	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splnet	symtab	d20175b8aee2	shared-address	out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splnet	symtab	d20175b8aee2	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splretr	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	spltty	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splvme	symtab	d20175b8aee2	shared-address	out:5	undocumented		
@@ -5386,7 +5386,7 @@ IP27/unix	kernel	n64	.text	0xc00000000005be50	28	ip_mrouter_get	symtab	f8573739a
 IP27/unix	kernel	n64	.text	0xc00000000005be6c	28	ip_mrouter_set	symtab	f8573739a075		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000005be88	28	ip_rsvp_vif_init	symtab	f8573739a075		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000005bea4	28	ip_rsvp_vif_done	symtab	f8573739a075		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc00000000005bec0	28	ipip_input	symtab	f8573739a075		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000005bec0	28	ipip_input	symtab	f8573739a075		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000005bedc	28	ip_rsvp_force_done	symtab	f8573739a075		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000005bef8	8	ipfilter_kernel	symtab	87506497337c		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000005bf00	8	svc_gss_init	symtab	78aa5094d5ec		out:5	undocumented		
@@ -7161,7 +7161,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001251ac	496	rn_insert	symtab	6000253b8ca8	
 IP27/unix	kernel	n64	.text	0xc00000000012539c	916	rn_addmask	symtab	daddf77389cf		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000125844	1068	rn_addroute	symtab	eb8ab8e86fb3		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc000000000125c70	1316	rn_delete	symtab	6797940d0a5c		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc000000000126194	292	rn_walktree	symtab	59b16713ba7a		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000126194	292	rn_walktree	symtab	59b16713ba7a		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000001262b8	268	rn_inithead	symtab	32db0835a2df		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000001263c4	348	rn_init	symtab	e35e72f72004		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000126520	104	rt_mem_alloc	symtab	1d0a13ea760c		out:5	undocumented		
@@ -8077,7 +8077,7 @@ IP27/unix	kernel	n64	.text	0xc00000000018a47c	48	thread_unblock	symtab	ac8c7df51
 IP27/unix	kernel	n64	.text	0xc00000000018a4ac	108	kmutei_init	symtab	467eb8da244c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018a518	92	mutex_alloc	symtab	b9ac8d8efc6c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018a574	48	mutex_dealloc	symtab	c930f8047c67		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000018a5a4	12	init_mutex	symtab	6f10273420e2		out:5	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP27/unix	kernel	n64	.text	0xc00000000018a5a4	12	init_mutex	symtab	6f10273420e2		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000018a5b0	52	mutex_destroy	symtab	4044a4ba0a79		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018a5e4	16	mutex_owner	symtab	f7d889ac8674		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018a5f4	28	mutex_mine	symtab	465923041776		out:5	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -12828,14 +12828,14 @@ IP27/unix	kernel	n64	.text	0xc0000000003c1dfc	8	gif_encapcheck6	symtab	875064973
 IP27/unix	kernel	n64	.text	0xc0000000003c1e04	8	gif_encapcheck4	symtab	87506497337c		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c1e0c	8	in6_gif_output	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c1e14	8	in_gif_output	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc0000000003c1e1c	8	in6_rtalloc	symtab	78aa5094d5ec		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003c1e1c	8	in6_rtalloc	symtab	78aa5094d5ec		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c1e24	8	ip6_freesoptions	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c1e2c	8	ip6_freemoptions	symtab	78aa5094d5ec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000003c1e34	8	ip6_output	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c1e3c	8	tcp6_output	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c1e44	8	tcp6_usrreq	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c1e4c	8	in6_control	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc0000000003c1e54	8	if_assign_linklocal	symtab	516528b68f22		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000003c1e54	8	if_assign_linklocal	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c1e5c	8	in6_pcbbind	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c1e64	8	udp6_output	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000003c1e6c	8	in6_pcbconnect	symtab	516528b68f22		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -13719,7 +13719,7 @@ IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0xdf8	104	rn
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0xe60	172	rn_new_radix_mask	dwarf+symtab	a38ea9e66f00		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0xf0c	1068	rn_addroute	dwarf+symtab	5c4fc3cf5661		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1338	1316	rn_delete	dwarf+symtab	127290f3d739		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0x185c	292	rn_walktree	dwarf+symtab	59b16713ba7a		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0x185c	292	rn_walktree	dwarf+symtab	59b16713ba7a		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1980	268	rn_inithead	dwarf+symtab	c0f7c28961b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1a8c	348	rn_init	dwarf+symtab	71cbc11df268		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1be8	104	rt_mem_alloc	dwarf+symtab	1aa99154ea3d		out:2	undocumented		
@@ -17859,7 +17859,7 @@ IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-object	n64	.text	0x1b70	944	ip_m
 IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-object	n64	.text	0x1f20	32	legal_vif_num	dwarf+symtab	855adc26def2		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-object	n64	.text	0x1f40	240	phyint_send	dwarf+symtab	c016f76eb2a6		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-object	n64	.text	0x2030	404	encap_send	dwarf+symtab	586cb9143d50		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-object	n64	.text	0x21c4	568	ipip_input	dwarf+symtab	c685b535b761		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-object	n64	.text	0x21c4	568	ipip_input	dwarf+symtab	c685b535b761		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-object	n64	.text	0x23fc	388	tbf_control	dwarf+symtab	f09fb4b74d89		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-object	n64	.text	0x2580	92	tbf_queue	dwarf+symtab	22c68a5e8695		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ip_mroute.o	kernel-object	n64	.text	0x25dc	140	tbf_process_q	dwarf+symtab	a88bbf27b160		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -17905,7 +17905,7 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64		0x0		in6_nd_ma
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x68	288	ndp6_enterstale	dwarf+symtab	b74da079a4c4		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x188	1572	ndp6_rtrequest	dwarf+symtab	c81a5d4d6ca4		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x7ac	780	ndp6_resolve	dwarf+symtab	cf7d0d9d777e		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0xab8	1184	ndsol6_output	dwarf+symtab	e20cbb853784		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0xab8	1184	ndsol6_output	dwarf+symtab	e20cbb853784		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0xf58	872	ndadv6_output	dwarf+symtab	eec93b9bec54		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x12c0	880	redirect6_output	dwarf+symtab	4b3ff6fbbb98		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x1630	352	ndp6_nextext	dwarf+symtab	0361cd78ae5e		out:2	undocumented		
@@ -17925,7 +17925,7 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x3584	64
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x35c4	520	ndp6_do_dad	dwarf+symtab	44dcf95cfaa9		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x37cc	160	ndp6_output	dwarf+symtab	e58adf79e82b		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_sit6.o)	kernel-object	n64		0x0		sitattach	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x48	276	sitadd	dwarf+symtab	3c7c00080e38		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x48	276	sitadd	dwarf+symtab	3c7c00080e38		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x15c	640	sitoutput	dwarf+symtab	fe2cf4f89efd		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x3dc	424	sitioctl	dwarf+symtab	b4370a79e7db		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x584	448	sit_input	dwarf+symtab	95d1145df343		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -17944,16 +17944,16 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1580	452	in
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1744	252	in6_ifscrub	dwarf+symtab	d8609842d920		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1840	64	in6if_do_dad	dwarf+symtab	a34065027ede		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1880	616	in6_ifinit	dwarf+symtab	d8461bf66341		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1ae8	400	in6_validaddr	dwarf+symtab	e980566ff265		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1ae8	400	in6_validaddr	dwarf+symtab	e980566ff265		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1c78	400	if_assign_address	dwarf+symtab	bb0958051328		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1e08	132	if_create_linklocal	dwarf+symtab	4db19e60c1f3		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1e8c	488	if_assign_linklocal	dwarf+symtab	a5599814dc87		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1e8c	488	if_assign_linklocal	dwarf+symtab	a5599814dc87		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x2074	280	in6_purgeaddr	dwarf+symtab	b4a80a6c4481		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x218c	104	in6_multi_match	dwarf+symtab	781b015c98d7		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x21f4	416	in6_addmulti2	dwarf+symtab	527989a5b058		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x21f4	416	in6_addmulti2	dwarf+symtab	527989a5b058		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x2394	56	in6_addmulti	dwarf+symtab	3250382dba9f		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x23cc	232	in6_delmulti	dwarf+symtab	7865bed22307		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x24b4	168	in6_joingroup	dwarf+symtab	9621f716d191		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x24b4	168	in6_joingroup	dwarf+symtab	9621f716d191		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x255c	164	in_socktrim6	dwarf+symtab	388cd9d57822		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x2600	44	in6_sin6_2_sin	dwarf+symtab	e58903a908d8		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x262c	60	in6_sin6_2_sin_in_sock	dwarf+symtab	6bbbba02a7c4		out:2	undocumented		
@@ -17965,17 +17965,17 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x46c	652
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x6f8	216	in6_pcbladdr	dwarf+symtab	6c9a71fa8894		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x7d0	740	in6_pcbconnect	dwarf+symtab	961684642d63		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0xab4	2236	in6_pcbnotify	dwarf+symtab	042fbd0c4f3c		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x1370	376	in6_rthost	dwarf+symtab	07a2baa89cd5		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x14e8	488	in6_rtalloc	dwarf+symtab	e0876af8b29b		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x1370	376	in6_rthost	dwarf+symtab	07a2baa89cd5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x14e8	488	in6_rtalloc	dwarf+symtab	e0876af8b29b		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x16d0	8	in6_setifa	dwarf+symtab	87506497337c		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64		0x0		icmp6_init	dwarf+symtab			out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x68	196	icmp6_joingroup	dwarf+symtab	751e8c06d98f		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x12c	140	icmp6_leavegroup	dwarf+symtab	88db75ff8732		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x68	196	icmp6_joingroup	dwarf+symtab	751e8c06d98f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x12c	140	icmp6_leavegroup	dwarf+symtab	88db75ff8732		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x1b8	92	icmp6_fasttimer_enummatch	dwarf+symtab	abcd55afd4d6		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x214	148	icmp6_fasttimo	dwarf+symtab	f6f18ef2fa39		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x2a8	712	icmp6_sendgroup	dwarf+symtab	03c8ffe8ff93		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x570	908	icmp6_error	dwarf+symtab	a823df36bdce		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x8fc	472	icmp6_checktimer_enummatch	dwarf+symtab	f8d84aee30d7		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x8fc	472	icmp6_checktimer_enummatch	dwarf+symtab	f8d84aee30d7		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0xad4	3604	icmp6_input	dwarf+symtab	c3b5a2bce719		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x18e8	688	icmp6_reflect	dwarf+symtab	9b5eda9da000		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x1b98	180	get_ll_route	dwarf+symtab	1b538dbc7bbb		out:2	undocumented		
@@ -17990,7 +17990,7 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x220	7
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x268	372	ip6_init	dwarf+symtab	d680c016d7c3		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x3dc	144	ip6_acceptit_match	dwarf+symtab	8b3d5be13ffd		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x46c	1528	ip6_input	dwarf+symtab	eec7329f3b4a		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xa64	604	ip6_saveexthdr	dwarf+symtab	e67fc9f029c4		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xa64	604	ip6_saveexthdr	dwarf+symtab	e67fc9f029c4		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xcc0	176	ip6_dropoption	dwarf+symtab	5af318f00fdf		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xd70	308	ip6_hopopts_input	dwarf+symtab	da7ed3fcf9c6		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xea4	692	ip6_process_hopopts	dwarf+symtab	936762f9a713		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -18008,7 +18008,7 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x1f7c	
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x1ff0	216	ip6_get_prevhdr	dwarf+symtab	93909ff98624		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64		0x0		ip6_mrouter_set	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xf8	136	ip6_mrouter_get	dwarf+symtab	c1b7964c5e24		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x180	92	ip6_mrouter_done	dwarf+symtab	a8be2a2b8f0e		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x180	92	ip6_mrouter_done	dwarf+symtab	a8be2a2b8f0e		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x1dc	568	ip6_mforward	dwarf+symtab	a0942c965670		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x414	152	ip6_mrouter_init	dwarf+symtab	e86dd201aa93		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x4ac	32	get_version	dwarf+symtab	813cb0736509		out:2	undocumented		
@@ -18023,7 +18023,7 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xbb0	
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xce0	132	user_delete_mfc6	dwarf+symtab	14abdd262ef4		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xd64	280	get_info	dwarf+symtab	d090a762e317		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xe7c	468	user_add_dsif	dwarf+symtab	28ee9cbc3911		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x1050	396	user_delete_dsif	dwarf+symtab	6a7fcada166f		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x1050	396	user_delete_dsif	dwarf+symtab	6a7fcada166f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x11dc	336	user_enable_mfc6	dwarf+symtab	d7c0b3637ea9		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x132c	140	user_disable_mfc6	dwarf+symtab	04de7c13fa04		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64		0x0		m_length_u32	dwarf+symtab			out:2	undocumented		
@@ -18032,7 +18032,7 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0xe80	
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0xf10	380	ip6_insert_jumboopt	dwarf+symtab	5075efdb4861		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x108c	268	ip6_insertfraghdr	dwarf+symtab	9ddb9e736d0b		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1198	612	ip6_getpmtu	dwarf+symtab	73e7be3e3423		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x13fc	304	ip6_cksum	dwarf+symtab	2d605bc5c0fc		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x13fc	304	ip6_cksum	dwarf+symtab	2d605bc5c0fc		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x152c	104	m_offloc	dwarf+symtab	2175e4270d2e		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1594	108	dopt6_dontfrag	dwarf+symtab	946e2aa79200		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1600	408	ah6_output	dwarf+symtab	8b56cbe576c0		out:2	undocumented		
@@ -18042,7 +18042,7 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1e78
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1eac	168	ip6_pcbopt	dwarf+symtab	5212bd4c9b17		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1f54	636	ip6_getpcbopt	dwarf+symtab	cfa858330ef3		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x21d0	504	ip6_clearpktopts	dwarf+symtab	e7f31ac8b76b		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x23c8	1068	ip6_copypktopts	dwarf+symtab	b49c2edbf407		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x23c8	1068	ip6_copypktopts	dwarf+symtab	b49c2edbf407		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x27f4	60	ip6_freepcbopts	dwarf+symtab	223b814b2d28		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x2830	492	ip6_setpktoptions	dwarf+symtab	68a69afb882d		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x2a1c	1724	ip6_setpktoption	dwarf+symtab	3e184a10c9d2		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -18056,7 +18056,7 @@ IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x3c6c
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x3d14	168	ip6_splithdr	dwarf+symtab	f96babcd13ae		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(raw_ip6.o)	kernel-object	n64		0x0		rip6_init	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x28	1508	rip6_input	dwarf+symtab	eb73674b83b6		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x60c	488	rip6_output	dwarf+symtab	5fd6d906d5af		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x60c	488	rip6_output	dwarf+symtab	5fd6d906d5af		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x7f4	1044	rip6_ctloutput	dwarf+symtab	9585438bcb54		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0xc08	1492	rip6_usrreq	dwarf+symtab	1b4946334f42		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x11dc	800	rip6_ctlinput	dwarf+symtab	acaaef7888e1		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -19115,7 +19115,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhi	d
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhi_relnet	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhintr	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splimp	symtab	d20175b8aee2	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splnet	symtab	d20175b8aee2	shared-address	out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splnet	symtab	d20175b8aee2	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splretr	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	spltty	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splvme	symtab	d20175b8aee2	shared-address	out:6	undocumented		
@@ -20102,7 +20102,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x19c	48	t
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1cc	108	kmutei_init	dwarf+symtab	eaafb16680b2		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x238	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x294	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2d0	52	mutex_destroy	dwarf+symtab	c784e31e4b28		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x304	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x314	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -20269,7 +20269,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3f4	60	kmutei_init	dwarf+symtab	a5c072aa03da		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x430	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x48c	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	93581a5bc67e		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	93581a5bc67e		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x4f8	160	mutex_destroy	dwarf+symtab	a8bf05079e6f		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x598	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x5a8	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -20447,7 +20447,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x3c
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x3f4	60	kmutei_init	dwarf+symtab	a5c072aa03da		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x430	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x48c	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	0a14575be8df		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	0a14575be8df		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x4f8	160	mutex_destroy	dwarf+symtab	a8bf05079e6f		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x598	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x5a8	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -20614,7 +20614,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1cc	108	kmutei_init	dwarf+symtab	eaafb16680b2		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x238	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x294	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2d0	52	mutex_destroy	dwarf+symtab	c784e31e4b28		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x304	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x314	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -36815,7 +36815,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhi	symtab	d1a16d27e908	share
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhi_relnet	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhintr	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splimp	symtab	d1a16d27e908	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splnet	symtab	d1a16d27e908	shared-address	out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splnet	symtab	d1a16d27e908	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splretr	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	spltty	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splvme	symtab	d1a16d27e908	shared-address	out:7	undocumented		
@@ -37123,7 +37123,7 @@ IP30/unix	kernel	n64	.text	0xa80000002002c254	28	ip_mrouter_get	symtab	79cdda880
 IP30/unix	kernel	n64	.text	0xa80000002002c270	28	ip_mrouter_set	symtab	79cdda880e1f		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002002c28c	28	ip_rsvp_vif_init	symtab	79cdda880e1f		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002002c2a8	28	ip_rsvp_vif_done	symtab	79cdda880e1f		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa80000002002c2c4	28	ipip_input	symtab	79cdda880e1f		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002002c2c4	28	ipip_input	symtab	79cdda880e1f		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002002c2e0	28	ip_rsvp_force_done	symtab	79cdda880e1f		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002002c2fc	8	ipfilter_kernel	symtab	87506497337c		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002002c304	8	svc_gss_init	symtab	78aa5094d5ec		out:7	undocumented		
@@ -38950,7 +38950,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200fd250	496	rn_insert	symtab	e822871ba425	
 IP30/unix	kernel	n64	.text	0xa8000000200fd440	916	rn_addmask	symtab	d7eadcf27721		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200fd8e8	1068	rn_addroute	symtab	f2cc21c4f8ef		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200fdd14	1316	rn_delete	symtab	cd4e357fda5c		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa8000000200fe238	292	rn_walktree	symtab	59b16713ba7a		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200fe238	292	rn_walktree	symtab	59b16713ba7a		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200fe35c	268	rn_inithead	symtab	3a1b7ab4723a		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200fe468	348	rn_init	symtab	923d6daa407c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200fe5c4	104	rt_mem_alloc	symtab	9d42e24dae36		out:7	undocumented		
@@ -39784,7 +39784,7 @@ IP30/unix	kernel	n64	.text	0xa80000002015333c	48	thread_unblock	symtab	7b2e1c970
 IP30/unix	kernel	n64	.text	0xa80000002015336c	108	kmutei_init	symtab	30a6007042a0		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201533d8	92	mutex_alloc	symtab	29443ee7b42d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020153434	48	mutex_dealloc	symtab	86341a6a05d1		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020153464	12	init_mutex	symtab	6f10273420e2		out:7	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP30/unix	kernel	n64	.text	0xa800000020153464	12	init_mutex	symtab	6f10273420e2		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa800000020153470	52	mutex_destroy	symtab	c7889c3896cc		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201534a4	16	mutex_owner	symtab	f7d889ac8674		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201534b4	28	mutex_mine	symtab	465923041776		out:7	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -44743,14 +44743,14 @@ IP30/unix	kernel	n64	.text	0xa8000000203a8f9c	8	gif_encapcheck6	symtab	875064973
 IP30/unix	kernel	n64	.text	0xa8000000203a8fa4	8	gif_encapcheck4	symtab	87506497337c		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a8fac	8	in6_gif_output	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a8fb4	8	in_gif_output	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa8000000203a8fbc	8	in6_rtalloc	symtab	78aa5094d5ec		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000203a8fbc	8	in6_rtalloc	symtab	78aa5094d5ec		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a8fc4	8	ip6_freesoptions	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203a8fcc	8	ip6_freemoptions	symtab	78aa5094d5ec		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203a8fd4	8	ip6_output	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a8fdc	8	tcp6_output	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a8fe4	8	tcp6_usrreq	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a8fec	8	in6_control	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa8000000203a8ff4	8	if_assign_linklocal	symtab	516528b68f22		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000203a8ff4	8	if_assign_linklocal	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a8ffc	8	in6_pcbbind	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a9004	8	udp6_output	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000203a900c	8	in6_pcbconnect	symtab	516528b68f22		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -45568,7 +45568,7 @@ IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0xdf8	104	rn
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0xe60	172	rn_new_radix_mask	dwarf+symtab	a38ea9e66f00		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0xf0c	1068	rn_addroute	dwarf+symtab	5c4fc3cf5661		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1338	1316	rn_delete	dwarf+symtab	127290f3d739		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0x185c	292	rn_walktree	dwarf+symtab	59b16713ba7a		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0x185c	292	rn_walktree	dwarf+symtab	59b16713ba7a		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1980	268	rn_inithead	dwarf+symtab	c0f7c28961b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1a8c	348	rn_init	dwarf+symtab	71cbc11df268		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1be8	104	rt_mem_alloc	dwarf+symtab	1aa99154ea3d		out:2	undocumented		
@@ -49374,7 +49374,7 @@ IP30/usr/cpu/sysgen/IP30boot/ip_mroute.o	kernel-object	n64	.text	0x1b70	944	ip_m
 IP30/usr/cpu/sysgen/IP30boot/ip_mroute.o	kernel-object	n64	.text	0x1f20	32	legal_vif_num	dwarf+symtab	855adc26def2		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ip_mroute.o	kernel-object	n64	.text	0x1f40	240	phyint_send	dwarf+symtab	c016f76eb2a6		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ip_mroute.o	kernel-object	n64	.text	0x2030	404	encap_send	dwarf+symtab	586cb9143d50		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ip_mroute.o	kernel-object	n64	.text	0x21c4	568	ipip_input	dwarf+symtab	8ba146fb5094		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ip_mroute.o	kernel-object	n64	.text	0x21c4	568	ipip_input	dwarf+symtab	8ba146fb5094		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ip_mroute.o	kernel-object	n64	.text	0x23fc	388	tbf_control	dwarf+symtab	cd4c43aa6eed		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ip_mroute.o	kernel-object	n64	.text	0x2580	92	tbf_queue	dwarf+symtab	22c68a5e8695		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ip_mroute.o	kernel-object	n64	.text	0x25dc	140	tbf_process_q	dwarf+symtab	a88bbf27b160		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -49410,7 +49410,7 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64		0x0		in6_nd_ma
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x68	288	ndp6_enterstale	dwarf+symtab	b74da079a4c4		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x188	1572	ndp6_rtrequest	dwarf+symtab	c81a5d4d6ca4		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x7ac	780	ndp6_resolve	dwarf+symtab	cf7d0d9d777e		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0xab8	1184	ndsol6_output	dwarf+symtab	5764263dbb89		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0xab8	1184	ndsol6_output	dwarf+symtab	5764263dbb89		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0xf58	872	ndadv6_output	dwarf+symtab	ce1e9aaa2979		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x12c0	880	redirect6_output	dwarf+symtab	b9fe6751473e		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x1630	352	ndp6_nextext	dwarf+symtab	0361cd78ae5e		out:2	undocumented		
@@ -49430,7 +49430,7 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x3584	64
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x35c4	520	ndp6_do_dad	dwarf+symtab	44dcf95cfaa9		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x37cc	160	ndp6_output	dwarf+symtab	e58adf79e82b		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_sit6.o)	kernel-object	n64		0x0		sitattach	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x48	276	sitadd	dwarf+symtab	3c7c00080e38		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x48	276	sitadd	dwarf+symtab	3c7c00080e38		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x15c	640	sitoutput	dwarf+symtab	fe2cf4f89efd		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x3dc	424	sitioctl	dwarf+symtab	b4370a79e7db		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x584	448	sit_input	dwarf+symtab	95d1145df343		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -49449,16 +49449,16 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1580	452	in
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1744	252	in6_ifscrub	dwarf+symtab	d8609842d920		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1840	64	in6if_do_dad	dwarf+symtab	a34065027ede		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1880	616	in6_ifinit	dwarf+symtab	d8461bf66341		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1ae8	400	in6_validaddr	dwarf+symtab	e980566ff265		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1ae8	400	in6_validaddr	dwarf+symtab	e980566ff265		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1c78	400	if_assign_address	dwarf+symtab	bb0958051328		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1e08	132	if_create_linklocal	dwarf+symtab	4db19e60c1f3		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1e8c	488	if_assign_linklocal	dwarf+symtab	a5599814dc87		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1e8c	488	if_assign_linklocal	dwarf+symtab	a5599814dc87		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x2074	280	in6_purgeaddr	dwarf+symtab	b4a80a6c4481		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x218c	104	in6_multi_match	dwarf+symtab	781b015c98d7		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x21f4	416	in6_addmulti2	dwarf+symtab	527989a5b058		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x21f4	416	in6_addmulti2	dwarf+symtab	527989a5b058		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x2394	56	in6_addmulti	dwarf+symtab	3250382dba9f		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x23cc	232	in6_delmulti	dwarf+symtab	7865bed22307		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x24b4	168	in6_joingroup	dwarf+symtab	9621f716d191		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x24b4	168	in6_joingroup	dwarf+symtab	9621f716d191		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x255c	164	in_socktrim6	dwarf+symtab	388cd9d57822		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x2600	44	in6_sin6_2_sin	dwarf+symtab	e58903a908d8		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x262c	60	in6_sin6_2_sin_in_sock	dwarf+symtab	6bbbba02a7c4		out:2	undocumented		
@@ -49470,17 +49470,17 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x46c	652
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x6f8	216	in6_pcbladdr	dwarf+symtab	6c9a71fa8894		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x7d0	740	in6_pcbconnect	dwarf+symtab	961684642d63		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0xab4	2236	in6_pcbnotify	dwarf+symtab	042fbd0c4f3c		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x1370	376	in6_rthost	dwarf+symtab	07a2baa89cd5		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x14e8	488	in6_rtalloc	dwarf+symtab	e0876af8b29b		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x1370	376	in6_rthost	dwarf+symtab	07a2baa89cd5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x14e8	488	in6_rtalloc	dwarf+symtab	e0876af8b29b		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x16d0	8	in6_setifa	dwarf+symtab	87506497337c		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64		0x0		icmp6_init	dwarf+symtab			out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x68	196	icmp6_joingroup	dwarf+symtab	751e8c06d98f		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x12c	140	icmp6_leavegroup	dwarf+symtab	88db75ff8732		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x68	196	icmp6_joingroup	dwarf+symtab	751e8c06d98f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x12c	140	icmp6_leavegroup	dwarf+symtab	88db75ff8732		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x1b8	92	icmp6_fasttimer_enummatch	dwarf+symtab	abcd55afd4d6		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x214	148	icmp6_fasttimo	dwarf+symtab	f6f18ef2fa39		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x2a8	712	icmp6_sendgroup	dwarf+symtab	63ffb46503be		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x570	908	icmp6_error	dwarf+symtab	9587f9836a35		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x8fc	472	icmp6_checktimer_enummatch	dwarf+symtab	f8d84aee30d7		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x8fc	472	icmp6_checktimer_enummatch	dwarf+symtab	f8d84aee30d7		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0xad4	3604	icmp6_input	dwarf+symtab	31f0a7ca1655		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x18e8	688	icmp6_reflect	dwarf+symtab	9b5eda9da000		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x1b98	180	get_ll_route	dwarf+symtab	1b538dbc7bbb		out:2	undocumented		
@@ -49495,7 +49495,7 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x220	7
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x268	372	ip6_init	dwarf+symtab	d680c016d7c3		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x3dc	144	ip6_acceptit_match	dwarf+symtab	8b3d5be13ffd		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x46c	1528	ip6_input	dwarf+symtab	1535748f53ac		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xa64	604	ip6_saveexthdr	dwarf+symtab	12b93ff14c15		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xa64	604	ip6_saveexthdr	dwarf+symtab	12b93ff14c15		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xcc0	176	ip6_dropoption	dwarf+symtab	5af318f00fdf		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xd70	308	ip6_hopopts_input	dwarf+symtab	5a81c6dd633c		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xea4	692	ip6_process_hopopts	dwarf+symtab	43ad9d6a1a90		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -49513,7 +49513,7 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x1f7c	
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x1ff0	216	ip6_get_prevhdr	dwarf+symtab	93909ff98624		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64		0x0		ip6_mrouter_set	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xf8	136	ip6_mrouter_get	dwarf+symtab	c1b7964c5e24		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x180	92	ip6_mrouter_done	dwarf+symtab	a8be2a2b8f0e		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x180	92	ip6_mrouter_done	dwarf+symtab	a8be2a2b8f0e		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x1dc	568	ip6_mforward	dwarf+symtab	a0942c965670		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x414	152	ip6_mrouter_init	dwarf+symtab	e86dd201aa93		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x4ac	32	get_version	dwarf+symtab	813cb0736509		out:2	undocumented		
@@ -49528,7 +49528,7 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xbb0	
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xce0	132	user_delete_mfc6	dwarf+symtab	14abdd262ef4		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xd64	280	get_info	dwarf+symtab	d090a762e317		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xe7c	468	user_add_dsif	dwarf+symtab	28ee9cbc3911		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x1050	396	user_delete_dsif	dwarf+symtab	6a7fcada166f		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x1050	396	user_delete_dsif	dwarf+symtab	6a7fcada166f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x11dc	336	user_enable_mfc6	dwarf+symtab	d7c0b3637ea9		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x132c	140	user_disable_mfc6	dwarf+symtab	04de7c13fa04		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64		0x0		m_length_u32	dwarf+symtab			out:2	undocumented		
@@ -49537,7 +49537,7 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0xe80	
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0xf10	380	ip6_insert_jumboopt	dwarf+symtab	5075efdb4861		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x108c	268	ip6_insertfraghdr	dwarf+symtab	9ddb9e736d0b		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1198	612	ip6_getpmtu	dwarf+symtab	73e7be3e3423		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x13fc	304	ip6_cksum	dwarf+symtab	2d605bc5c0fc		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x13fc	304	ip6_cksum	dwarf+symtab	2d605bc5c0fc		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x152c	104	m_offloc	dwarf+symtab	2175e4270d2e		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1594	108	dopt6_dontfrag	dwarf+symtab	946e2aa79200		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1600	408	ah6_output	dwarf+symtab	8b56cbe576c0		out:2	undocumented		
@@ -49547,7 +49547,7 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1e78
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1eac	168	ip6_pcbopt	dwarf+symtab	5212bd4c9b17		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1f54	636	ip6_getpcbopt	dwarf+symtab	cfa858330ef3		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x21d0	504	ip6_clearpktopts	dwarf+symtab	e7f31ac8b76b		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x23c8	1068	ip6_copypktopts	dwarf+symtab	b49c2edbf407		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x23c8	1068	ip6_copypktopts	dwarf+symtab	b49c2edbf407		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x27f4	60	ip6_freepcbopts	dwarf+symtab	223b814b2d28		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x2830	492	ip6_setpktoptions	dwarf+symtab	68a69afb882d		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x2a1c	1724	ip6_setpktoption	dwarf+symtab	3e184a10c9d2		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -49561,7 +49561,7 @@ IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x3c6c
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x3d14	168	ip6_splithdr	dwarf+symtab	f96babcd13ae		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(raw_ip6.o)	kernel-object	n64		0x0		rip6_init	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x28	1508	rip6_input	dwarf+symtab	e9aeb6b8b39f		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x60c	488	rip6_output	dwarf+symtab	5fd6d906d5af		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x60c	488	rip6_output	dwarf+symtab	5fd6d906d5af		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x7f4	1044	rip6_ctloutput	dwarf+symtab	9585438bcb54		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0xc08	1492	rip6_usrreq	dwarf+symtab	1b4946334f42		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x11dc	800	rip6_ctlinput	dwarf+symtab	acaaef7888e1		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -50371,7 +50371,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhi	dw
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhi_relnet	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhintr	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splimp	symtab	d1a16d27e908	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splnet	symtab	d1a16d27e908	shared-address	out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splnet	symtab	d1a16d27e908	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splretr	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	spltty	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splvme	symtab	d1a16d27e908	shared-address	out:8	undocumented		
@@ -50931,7 +50931,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x19c	48	t
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1cc	108	kmutei_init	dwarf+symtab	eaafb16680b2		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x238	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x294	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2d0	52	mutex_destroy	dwarf+symtab	c784e31e4b28		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x304	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x314	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -51098,7 +51098,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3f4	60	kmutei_init	dwarf+symtab	a5c072aa03da		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x430	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x48c	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	93581a5bc67e		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	93581a5bc67e		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x4f8	160	mutex_destroy	dwarf+symtab	a8bf05079e6f		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x598	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x5a8	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -51276,7 +51276,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x3c
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x3f4	60	kmutei_init	dwarf+symtab	a5c072aa03da		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x430	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x48c	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	0a14575be8df		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	0a14575be8df		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x4f8	160	mutex_destroy	dwarf+symtab	a8bf05079e6f		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x598	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x5a8	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -51443,7 +51443,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1cc	108	kmutei_init	dwarf+symtab	eaafb16680b2		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x238	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x294	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2d0	52	mutex_destroy	dwarf+symtab	c784e31e4b28		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x304	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x314	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -61707,7 +61707,7 @@ IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0xe18	104	rn
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0xe80	172	rn_new_radix_mask	dwarf+funcnames+symtab	b951ca642833		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0xf2c	1068	rn_addroute	dwarf+symtab	a821f19b0019		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0x1358	1344	rn_delete	dwarf+symtab	c524a1308964		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0x1898	292	rn_walktree	dwarf+symtab	256c959e29e7		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0x1898	292	rn_walktree	dwarf+symtab	256c959e29e7		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0x19bc	288	rn_inithead	dwarf+symtab	0ff4c996c5ff		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0x1adc	364	rn_init	dwarf+symtab	a58cfd3e6efb		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/bsd.a(radix.o)	kernel-object	n32	.text	0x1c48	84	rt_mem_alloc	dwarf+symtab	c78b393aef80		out:2	undocumented		
@@ -65333,7 +65333,7 @@ IP32/usr/cpu/sysgen/IP32boot/ip_mroute.o	kernel-object	n32	.text	0x1c54	936	ip_m
 IP32/usr/cpu/sysgen/IP32boot/ip_mroute.o	kernel-object	n32	.text	0x1ffc	32	legal_vif_num	dwarf+symtab	855adc26def2		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ip_mroute.o	kernel-object	n32	.text	0x201c	240	phyint_send	dwarf+funcnames+symtab	375fac508927		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ip_mroute.o	kernel-object	n32	.text	0x210c	424	encap_send	dwarf+funcnames+symtab	cf3a5217f09d		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ip_mroute.o	kernel-object	n32	.text	0x22b4	572	ipip_input	dwarf+symtab	269cf5ee3730		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ip_mroute.o	kernel-object	n32	.text	0x22b4	572	ipip_input	dwarf+symtab	269cf5ee3730		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ip_mroute.o	kernel-object	n32	.text	0x24f0	400	tbf_control	dwarf+symtab	a45b35f512b3		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ip_mroute.o	kernel-object	n32	.text	0x2680	84	tbf_queue	dwarf+symtab	9880458fcb13		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ip_mroute.o	kernel-object	n32	.text	0x26d4	128	tbf_process_q	dwarf+symtab	6bdf1a30f117		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -65377,7 +65377,7 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32		0x0		in6_nd_ma
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0x68	296	ndp6_enterstale	dwarf+funcnames+symtab	c6c48ec9c134		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0x190	1588	ndp6_rtrequest	dwarf+symtab	6cb10b37b2ac		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0x7c4	788	ndp6_resolve	dwarf+symtab	4dbaa5cb30c5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0xad8	1220	ndsol6_output	dwarf+symtab	ab3513f78f4f		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0xad8	1220	ndsol6_output	dwarf+symtab	ab3513f78f4f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0xf9c	880	ndadv6_output	dwarf+symtab	e713bb824e9d		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0x130c	892	redirect6_output	dwarf+symtab	98e4c4a4baaa		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0x1688	356	ndp6_nextext	dwarf+symtab	c896286ce50f		out:2	undocumented		
@@ -65397,7 +65397,7 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0x36c8	64
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0x3708	544	ndp6_do_dad	dwarf+symtab	9c56a6af0e73		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_ndp6.o)	kernel-object	n32	.text	0x3928	160	ndp6_output	dwarf+funcnames+symtab	10360189c4bf		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_sit6.o)	kernel-object	n32		0x0		sitattach	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_sit6.o)	kernel-object	n32	.text	0x44	304	sitadd	dwarf+symtab	71b0afad7da5		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_sit6.o)	kernel-object	n32	.text	0x44	304	sitadd	dwarf+symtab	71b0afad7da5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_sit6.o)	kernel-object	n32	.text	0x174	648	sitoutput	dwarf+symtab	1cd48cf8cadd		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_sit6.o)	kernel-object	n32	.text	0x3fc	428	sitioctl	dwarf+symtab	ab6945b97de0		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(if_sit6.o)	kernel-object	n32	.text	0x5a8	448	sit_input	dwarf+symtab	b11e496b875b		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -65416,16 +65416,16 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1580	416	in
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1720	260	in6_ifscrub	dwarf+symtab	5d725675f8d0		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1824	64	in6if_do_dad	dwarf+funcnames+symtab	56b4c1dbfaeb		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1864	624	in6_ifinit	dwarf+symtab	5e03554763d3		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1ad4	428	in6_validaddr	dwarf+funcnames+symtab	2073a74b4ec5		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1ad4	428	in6_validaddr	dwarf+funcnames+symtab	2073a74b4ec5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1c80	420	if_assign_address	dwarf+funcnames+symtab	1f474f304405		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1e24	132	if_create_linklocal	dwarf+funcnames+symtab	eab4a51767e2		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1ea8	504	if_assign_linklocal	dwarf+symtab	d83c4980ad56		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x1ea8	504	if_assign_linklocal	dwarf+symtab	d83c4980ad56		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x20a0	304	in6_purgeaddr	dwarf+symtab	b21eac92b63a		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x21d0	104	in6_multi_match	dwarf+symtab	cbad1b35363c		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x2238	428	in6_addmulti2	dwarf+funcnames+symtab	320aefd72913		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x2238	428	in6_addmulti2	dwarf+funcnames+symtab	320aefd72913		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x23e4	56	in6_addmulti	dwarf+symtab	04689e6bc00e		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x241c	236	in6_delmulti	dwarf+symtab	5eb57672d23b		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x2508	168	in6_joingroup	dwarf+symtab	bc7c1e9a210e		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x2508	168	in6_joingroup	dwarf+symtab	bc7c1e9a210e		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x25b0	164	in_socktrim6	dwarf+symtab	3b2dbefa0a0b		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x2654	44	in6_sin6_2_sin	dwarf+symtab	e58903a908d8		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6.o)	kernel-object	n32	.text	0x2680	60	in6_sin6_2_sin_in_sock	dwarf+symtab	8f486d6ebc0a		out:2	undocumented		
@@ -65437,17 +65437,17 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)	kernel-object	n32	.text	0x478	668
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)	kernel-object	n32	.text	0x714	228	in6_pcbladdr	dwarf+symtab	414b8a4c84a0		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)	kernel-object	n32	.text	0x7f8	748	in6_pcbconnect	dwarf+symtab	45c32610b1cf		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)	kernel-object	n32	.text	0xae4	2260	in6_pcbnotify	dwarf+symtab	0cca80980f0e		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)	kernel-object	n32	.text	0x13b8	380	in6_rthost	dwarf+symtab	2bd07442c65a		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)	kernel-object	n32	.text	0x1534	492	in6_rtalloc	dwarf+symtab	f3b32604e3c7		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)	kernel-object	n32	.text	0x13b8	380	in6_rthost	dwarf+symtab	2bd07442c65a		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)	kernel-object	n32	.text	0x1534	492	in6_rtalloc	dwarf+symtab	f3b32604e3c7		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)	kernel-object	n32	.text	0x1720	8	in6_setifa	dwarf+symtab	87506497337c		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32		0x0		icmp6_init	dwarf+symtab			out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x70	196	icmp6_joingroup	dwarf+symtab	1994c8bca561		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x134	148	icmp6_leavegroup	dwarf+symtab	cd66e4090f36		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x70	196	icmp6_joingroup	dwarf+symtab	1994c8bca561		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x134	148	icmp6_leavegroup	dwarf+symtab	cd66e4090f36		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x1c8	92	icmp6_fasttimer_enummatch	dwarf+funcnames+symtab	d768586ddfc7		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x224	160	icmp6_fasttimo	dwarf+symtab	369fedf5b58b		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x2c4	732	icmp6_sendgroup	dwarf+funcnames+symtab	7deb1c8b4fbc		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x5a0	940	icmp6_error	dwarf+symtab	9dcfea4ea4dc		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x94c	468	icmp6_checktimer_enummatch	dwarf+funcnames+symtab	fb4ae6419b01		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x94c	468	icmp6_checktimer_enummatch	dwarf+funcnames+symtab	fb4ae6419b01		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0xb20	3816	icmp6_input	dwarf+symtab	68956fa9a51c		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x1a08	704	icmp6_reflect	dwarf+symtab	3cbf316ef8b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_icmp.o)	kernel-object	n32	.text	0x1cc8	192	get_ll_route	dwarf+symtab	e7e7292399f8		out:2	undocumented		
@@ -65462,7 +65462,7 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0x230	7
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0x27c	440	ip6_init	dwarf+symtab	8e60e6ab8ecb		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0x434	144	ip6_acceptit_match	dwarf+symtab	349f0548cc68		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0x4c4	1604	ip6_input	dwarf+symtab	a4711fc8c703		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0xb08	604	ip6_saveexthdr	dwarf+symtab	452620b2a089		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0xb08	604	ip6_saveexthdr	dwarf+symtab	452620b2a089		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0xd64	176	ip6_dropoption	dwarf+symtab	7209ef6634cb		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0xe14	308	ip6_hopopts_input	dwarf+funcnames+symtab	37dbfabb0060		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0xf48	724	ip6_process_hopopts	dwarf+symtab	c35776c80145		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -65480,7 +65480,7 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0x2058	
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_input.o)	kernel-object	n32	.text	0x20c8	208	ip6_get_prevhdr	dwarf+symtab	ba5c04827354		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32		0x0		ip6_mrouter_set	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0xfc	136	ip6_mrouter_get	dwarf+symtab	20cf41fe10ea		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0x184	96	ip6_mrouter_done	dwarf+symtab	e03657e2e67d		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0x184	96	ip6_mrouter_done	dwarf+symtab	e03657e2e67d		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0x1e4	576	ip6_mforward	dwarf+symtab	12a2907b950d		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0x424	152	ip6_mrouter_init	dwarf+funcnames+symtab	da714e82cb2c		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0x4bc	32	get_version	dwarf+funcnames+symtab	a2e61679b696		out:2	undocumented		
@@ -65495,7 +65495,7 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0xbc8	
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0xd08	136	user_delete_mfc6	dwarf+funcnames+symtab	69074c7d360b		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0xd90	288	get_info	dwarf+funcnames+symtab	c673d2f777c6		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0xeb0	480	user_add_dsif	dwarf+funcnames+symtab	18234b08dd43		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0x1090	400	user_delete_dsif	dwarf+funcnames+symtab	444156a9c157		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0x1090	400	user_delete_dsif	dwarf+funcnames+symtab	444156a9c157		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0x1220	332	user_enable_mfc6	dwarf+funcnames+symtab	911f28dd1924		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_mroute.o)	kernel-object	n32	.text	0x136c	144	user_disable_mfc6	dwarf+funcnames+symtab	f9ae528e204a		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32		0x0		m_length_u32	dwarf+symtab			out:2	undocumented		
@@ -65504,7 +65504,7 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0xeb0	
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0xf44	380	ip6_insert_jumboopt	dwarf+funcnames+symtab	062a0e6d5599		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x10c0	264	ip6_insertfraghdr	dwarf+funcnames+symtab	63f5613cb329		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x11c8	660	ip6_getpmtu	dwarf+symtab	c51c9912d32b		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x145c	300	ip6_cksum	dwarf+symtab	0e0819f0b768		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x145c	300	ip6_cksum	dwarf+symtab	0e0819f0b768		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x1588	108	m_offloc	dwarf+funcnames+symtab	efb8e3bb2a6d		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x15f4	116	dopt6_dontfrag	dwarf+symtab	91f3d94b72ea		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x1668	404	ah6_output	dwarf+symtab	3433cbad2c3b		out:2	undocumented		
@@ -65514,7 +65514,7 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x1ed8
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x1f0c	168	ip6_pcbopt	dwarf+funcnames+symtab	be521f3ad4cc		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x1fb4	640	ip6_getpcbopt	dwarf+funcnames+symtab	75c5ab6940fb		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x2234	520	ip6_clearpktopts	dwarf+symtab	22193dfde3c2		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x243c	1068	ip6_copypktopts	dwarf+symtab	2f1696b33dbf		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x243c	1068	ip6_copypktopts	dwarf+symtab	2f1696b33dbf		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x2868	60	ip6_freepcbopts	dwarf+symtab	30dc1ce913c8		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x28a4	484	ip6_setpktoptions	dwarf+symtab	c5cb54807d22		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x2a88	1720	ip6_setpktoption	dwarf+funcnames+symtab	572958fc854f		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -65528,7 +65528,7 @@ IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x3cd0
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip6_output.o)	kernel-object	n32	.text	0x3d7c	168	ip6_splithdr	dwarf+funcnames+symtab	c27c1f4fac47		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(raw_ip6.o)	kernel-object	n32		0x0		rip6_init	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(raw_ip6.o)	kernel-object	n32	.text	0x2c	1508	rip6_input	dwarf+symtab	355d1bec0a4e		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/ipv6.a(raw_ip6.o)	kernel-object	n32	.text	0x610	492	rip6_output	dwarf+symtab	17cea20612e8		out:2	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ipv6.a(raw_ip6.o)	kernel-object	n32	.text	0x610	492	rip6_output	dwarf+symtab	17cea20612e8		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(raw_ip6.o)	kernel-object	n32	.text	0x7fc	1036	rip6_ctloutput	dwarf+symtab	ab7e7a259e66		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(raw_ip6.o)	kernel-object	n32	.text	0xc08	1536	rip6_usrreq	dwarf+symtab	ec403f68164e		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ipv6.a(raw_ip6.o)	kernel-object	n32	.text	0x1208	804	rip6_ctlinput	dwarf+symtab	27e17369d7a3		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -66393,7 +66393,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhi	s
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhi_relnet	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhintr	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splimp	symtab	2204b057e629	shared-address	out:9	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splnet	symtab	2204b057e629	shared-address	out:9	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splnet	symtab	2204b057e629	shared-address	out:9	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splretr	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	spltty	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splvme	symtab	2204b057e629	shared-address	out:9	undocumented		
@@ -67102,7 +67102,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x138	48	t
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x168	84	kmutei_init	dwarf+symtab	c1af582dc9f2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x1bc	92	mutex_alloc	dwarf+symtab	288c243be670		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x218	48	mutex_dealloc	dwarf+symtab	1a297ac0613a		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x248	12	init_mutex	dwarf+symtab	3b6d5f0eeb3d		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x248	12	init_mutex	dwarf+symtab	3b6d5f0eeb3d		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x254	52	mutex_destroy	dwarf+symtab	0bcf025aeefe		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x288	16	mutex_owner	dwarf+symtab	a5aa956ae6c0		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-object	n32	.text	0x298	28	mutex_mine	dwarf+symtab	1169c7b01ce2		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -67266,7 +67266,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x35c	60	kmutei_init	dwarf+symtab	52d2a63cdf8b		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x398	92	mutex_alloc	dwarf+symtab	288c243be670		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x3f4	48	mutex_dealloc	dwarf+symtab	1a297ac0613a		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x424	64	init_mutex	dwarf+symtab	bd8f102c9595		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x424	64	init_mutex	dwarf+symtab	bd8f102c9595		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x464	160	mutex_destroy	dwarf+symtab	98b19e3de5f7		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x504	16	mutex_owner	dwarf+symtab	a5aa956ae6c0		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-object	n32	.text	0x514	28	mutex_mine	dwarf+symtab	1169c7b01ce2		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -67441,7 +67441,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x32
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x35c	60	kmutei_init	dwarf+symtab	52d2a63cdf8b		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x398	92	mutex_alloc	dwarf+symtab	288c243be670		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x3f4	48	mutex_dealloc	dwarf+symtab	1a297ac0613a		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x424	64	init_mutex	dwarf+symtab	a040797a71e4		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x424	64	init_mutex	dwarf+symtab	a040797a71e4		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x464	160	mutex_destroy	dwarf+symtab	98b19e3de5f7		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x504	16	mutex_owner	dwarf+symtab	a5aa956ae6c0		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-object	n32	.text	0x514	28	mutex_mine	dwarf+symtab	1169c7b01ce2		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -67605,7 +67605,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x168	84	kmutei_init	dwarf+symtab	c1af582dc9f2		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x1bc	92	mutex_alloc	dwarf+symtab	288c243be670		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x218	48	mutex_dealloc	dwarf+symtab	1a297ac0613a		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x248	12	init_mutex	dwarf+symtab	3b6d5f0eeb3d		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x248	12	init_mutex	dwarf+symtab	3b6d5f0eeb3d		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x254	52	mutex_destroy	dwarf+symtab	0bcf025aeefe		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x288	16	mutex_owner	dwarf+symtab	a5aa956ae6c0		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_statistics.a(mutex.o)	kernel-object	n32	.text	0x298	28	mutex_mine	dwarf+symtab	1169c7b01ce2		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -77991,7 +77991,7 @@ IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0xdf8	104	rn
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0xe60	172	rn_new_radix_mask	dwarf+symtab	a38ea9e66f00		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0xf0c	1068	rn_addroute	dwarf+symtab	5c4fc3cf5661		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1338	1316	rn_delete	dwarf+symtab	127290f3d739		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0x185c	292	rn_walktree	dwarf+symtab	59b16713ba7a		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0x185c	292	rn_walktree	dwarf+symtab	59b16713ba7a		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1980	268	rn_inithead	dwarf+symtab	c0f7c28961b8		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1a8c	348	rn_init	dwarf+symtab	71cbc11df268		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/bsd.a(radix.o)	kernel-object	n64	.text	0x1be8	104	rt_mem_alloc	dwarf+symtab	1aa99154ea3d		out:2	undocumented		
@@ -82689,7 +82689,7 @@ IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-object	n64	.text	0x1b70	944	ip_m
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-object	n64	.text	0x1f20	32	legal_vif_num	dwarf+symtab	855adc26def2		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-object	n64	.text	0x1f40	240	phyint_send	dwarf+symtab	c016f76eb2a6		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-object	n64	.text	0x2030	404	encap_send	dwarf+symtab	586cb9143d50		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-object	n64	.text	0x21c4	568	ipip_input	dwarf+symtab	1acfebfff5cb		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-object	n64	.text	0x21c4	568	ipip_input	dwarf+symtab	1acfebfff5cb		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-object	n64	.text	0x23fc	388	tbf_control	dwarf+symtab	5c4343760af5		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-object	n64	.text	0x2580	92	tbf_queue	dwarf+symtab	22c68a5e8695		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-object	n64	.text	0x25dc	140	tbf_process_q	dwarf+symtab	a88bbf27b160		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -82725,7 +82725,7 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64		0x0		in6_nd_ma
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x68	288	ndp6_enterstale	dwarf+symtab	b74da079a4c4		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x188	1572	ndp6_rtrequest	dwarf+symtab	c81a5d4d6ca4		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x7ac	780	ndp6_resolve	dwarf+symtab	cf7d0d9d777e		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0xab8	1184	ndsol6_output	dwarf+symtab	ac2189cc0992		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0xab8	1184	ndsol6_output	dwarf+symtab	ac2189cc0992		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0xf58	872	ndadv6_output	dwarf+symtab	795057378117		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x12c0	880	redirect6_output	dwarf+symtab	06c04e40b30e		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x1630	352	ndp6_nextext	dwarf+symtab	0361cd78ae5e		out:2	undocumented		
@@ -82745,7 +82745,7 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x3584	64
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x35c4	520	ndp6_do_dad	dwarf+symtab	44dcf95cfaa9		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_ndp6.o)	kernel-object	n64	.text	0x37cc	160	ndp6_output	dwarf+symtab	e58adf79e82b		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_sit6.o)	kernel-object	n64		0x0		sitattach	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x48	276	sitadd	dwarf+symtab	3c7c00080e38		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x48	276	sitadd	dwarf+symtab	3c7c00080e38		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x15c	640	sitoutput	dwarf+symtab	fe2cf4f89efd		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x3dc	424	sitioctl	dwarf+symtab	b4370a79e7db		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(if_sit6.o)	kernel-object	n64	.text	0x584	448	sit_input	dwarf+symtab	95d1145df343		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -82764,16 +82764,16 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1580	452	in
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1744	252	in6_ifscrub	dwarf+symtab	d8609842d920		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1840	64	in6if_do_dad	dwarf+symtab	a34065027ede		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1880	616	in6_ifinit	dwarf+symtab	d8461bf66341		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1ae8	400	in6_validaddr	dwarf+symtab	e980566ff265		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1ae8	400	in6_validaddr	dwarf+symtab	e980566ff265		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1c78	400	if_assign_address	dwarf+symtab	bb0958051328		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1e08	132	if_create_linklocal	dwarf+symtab	4db19e60c1f3		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1e8c	488	if_assign_linklocal	dwarf+symtab	a5599814dc87		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x1e8c	488	if_assign_linklocal	dwarf+symtab	a5599814dc87		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x2074	280	in6_purgeaddr	dwarf+symtab	b4a80a6c4481		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x218c	104	in6_multi_match	dwarf+symtab	781b015c98d7		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x21f4	416	in6_addmulti2	dwarf+symtab	527989a5b058		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x21f4	416	in6_addmulti2	dwarf+symtab	527989a5b058		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x2394	56	in6_addmulti	dwarf+symtab	3250382dba9f		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x23cc	232	in6_delmulti	dwarf+symtab	7865bed22307		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x24b4	168	in6_joingroup	dwarf+symtab	9621f716d191		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x24b4	168	in6_joingroup	dwarf+symtab	9621f716d191		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x255c	164	in_socktrim6	dwarf+symtab	388cd9d57822		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x2600	44	in6_sin6_2_sin	dwarf+symtab	e58903a908d8		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6.o)	kernel-object	n64	.text	0x262c	60	in6_sin6_2_sin_in_sock	dwarf+symtab	6bbbba02a7c4		out:2	undocumented		
@@ -82785,17 +82785,17 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x46c	652
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x6f8	216	in6_pcbladdr	dwarf+symtab	6c9a71fa8894		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x7d0	740	in6_pcbconnect	dwarf+symtab	961684642d63		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0xab4	2236	in6_pcbnotify	dwarf+symtab	042fbd0c4f3c		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x1370	376	in6_rthost	dwarf+symtab	07a2baa89cd5		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x14e8	488	in6_rtalloc	dwarf+symtab	e0876af8b29b		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x1370	376	in6_rthost	dwarf+symtab	07a2baa89cd5		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x14e8	488	in6_rtalloc	dwarf+symtab	e0876af8b29b		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(in6_pcb.o)	kernel-object	n64	.text	0x16d0	8	in6_setifa	dwarf+symtab	87506497337c		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64		0x0		icmp6_init	dwarf+symtab			out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x68	196	icmp6_joingroup	dwarf+symtab	751e8c06d98f		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x12c	140	icmp6_leavegroup	dwarf+symtab	88db75ff8732		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x68	196	icmp6_joingroup	dwarf+symtab	751e8c06d98f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x12c	140	icmp6_leavegroup	dwarf+symtab	88db75ff8732		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x1b8	92	icmp6_fasttimer_enummatch	dwarf+symtab	abcd55afd4d6		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x214	148	icmp6_fasttimo	dwarf+symtab	f6f18ef2fa39		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x2a8	712	icmp6_sendgroup	dwarf+symtab	cd919096ac6c		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x570	908	icmp6_error	dwarf+symtab	0712cc432517		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x8fc	472	icmp6_checktimer_enummatch	dwarf+symtab	f8d84aee30d7		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x8fc	472	icmp6_checktimer_enummatch	dwarf+symtab	f8d84aee30d7		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0xad4	3604	icmp6_input	dwarf+symtab	4a002f1a3720		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x18e8	688	icmp6_reflect	dwarf+symtab	9b5eda9da000		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_icmp.o)	kernel-object	n64	.text	0x1b98	180	get_ll_route	dwarf+symtab	1b538dbc7bbb		out:2	undocumented		
@@ -82810,7 +82810,7 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x220	7
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x268	372	ip6_init	dwarf+symtab	d680c016d7c3		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x3dc	144	ip6_acceptit_match	dwarf+symtab	8b3d5be13ffd		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x46c	1528	ip6_input	dwarf+symtab	0f91f36d605f		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xa64	604	ip6_saveexthdr	dwarf+symtab	3f85b98a0079		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xa64	604	ip6_saveexthdr	dwarf+symtab	3f85b98a0079		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xcc0	176	ip6_dropoption	dwarf+symtab	5af318f00fdf		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xd70	308	ip6_hopopts_input	dwarf+symtab	f757aac70c31		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0xea4	692	ip6_process_hopopts	dwarf+symtab	1a27722a9a4b		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -82828,7 +82828,7 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x1f7c	
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_input.o)	kernel-object	n64	.text	0x1ff0	216	ip6_get_prevhdr	dwarf+symtab	93909ff98624		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64		0x0		ip6_mrouter_set	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xf8	136	ip6_mrouter_get	dwarf+symtab	c1b7964c5e24		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x180	92	ip6_mrouter_done	dwarf+symtab	a8be2a2b8f0e		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x180	92	ip6_mrouter_done	dwarf+symtab	a8be2a2b8f0e		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x1dc	568	ip6_mforward	dwarf+symtab	a0942c965670		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x414	152	ip6_mrouter_init	dwarf+symtab	e86dd201aa93		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x4ac	32	get_version	dwarf+symtab	813cb0736509		out:2	undocumented		
@@ -82843,7 +82843,7 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xbb0	
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xce0	132	user_delete_mfc6	dwarf+symtab	14abdd262ef4		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xd64	280	get_info	dwarf+symtab	d090a762e317		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0xe7c	468	user_add_dsif	dwarf+symtab	28ee9cbc3911		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x1050	396	user_delete_dsif	dwarf+symtab	6a7fcada166f		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x1050	396	user_delete_dsif	dwarf+symtab	6a7fcada166f		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x11dc	336	user_enable_mfc6	dwarf+symtab	d7c0b3637ea9		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_mroute.o)	kernel-object	n64	.text	0x132c	140	user_disable_mfc6	dwarf+symtab	04de7c13fa04		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64		0x0		m_length_u32	dwarf+symtab			out:2	undocumented		
@@ -82852,7 +82852,7 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0xe80	
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0xf10	380	ip6_insert_jumboopt	dwarf+symtab	5075efdb4861		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x108c	268	ip6_insertfraghdr	dwarf+symtab	9ddb9e736d0b		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1198	612	ip6_getpmtu	dwarf+symtab	73e7be3e3423		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x13fc	304	ip6_cksum	dwarf+symtab	2d605bc5c0fc		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x13fc	304	ip6_cksum	dwarf+symtab	2d605bc5c0fc		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x152c	104	m_offloc	dwarf+symtab	2175e4270d2e		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1594	108	dopt6_dontfrag	dwarf+symtab	946e2aa79200		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1600	408	ah6_output	dwarf+symtab	8b56cbe576c0		out:2	undocumented		
@@ -82862,7 +82862,7 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1e78
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1eac	168	ip6_pcbopt	dwarf+symtab	5212bd4c9b17		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x1f54	636	ip6_getpcbopt	dwarf+symtab	cfa858330ef3		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x21d0	504	ip6_clearpktopts	dwarf+symtab	e7f31ac8b76b		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x23c8	1068	ip6_copypktopts	dwarf+symtab	b49c2edbf407		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x23c8	1068	ip6_copypktopts	dwarf+symtab	b49c2edbf407		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x27f4	60	ip6_freepcbopts	dwarf+symtab	223b814b2d28		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x2830	492	ip6_setpktoptions	dwarf+symtab	68a69afb882d		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x2a1c	1724	ip6_setpktoption	dwarf+symtab	3e184a10c9d2		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -82876,7 +82876,7 @@ IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x3c6c
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(ip6_output.o)	kernel-object	n64	.text	0x3d14	168	ip6_splithdr	dwarf+symtab	f96babcd13ae		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(raw_ip6.o)	kernel-object	n64		0x0		rip6_init	dwarf+symtab			out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x28	1508	rip6_input	dwarf+symtab	3b494cb40b9a		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x60c	488	rip6_output	dwarf+symtab	5fd6d906d5af		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x60c	488	rip6_output	dwarf+symtab	5fd6d906d5af		out:2	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x7f4	1044	rip6_ctloutput	dwarf+symtab	9585438bcb54		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0xc08	1492	rip6_usrreq	dwarf+symtab	1b4946334f42		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(raw_ip6.o)	kernel-object	n64	.text	0x11dc	800	rip6_ctlinput	dwarf+symtab	acaaef7888e1		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
@@ -83985,7 +83985,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhi	d
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhi_relnet	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhintr	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splimp	symtab	d20175b8aee2	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splnet	symtab	d20175b8aee2	shared-address	out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splnet	symtab	d20175b8aee2	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splretr	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	spltty	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splvme	symtab	d20175b8aee2	shared-address	out:11	undocumented		
@@ -84948,7 +84948,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x19c	48	t
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x1cc	108	kmutei_init	dwarf+symtab	eaafb16680b2		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x238	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x294	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x2d0	52	mutex_destroy	dwarf+symtab	c784e31e4b28		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x304	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-object	n64	.text	0x314	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -85115,7 +85115,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x3f4	60	kmutei_init	dwarf+symtab	a5c072aa03da		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x430	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x48c	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	93581a5bc67e		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	93581a5bc67e		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x4f8	160	mutex_destroy	dwarf+symtab	a8bf05079e6f		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x598	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-object	n64	.text	0x5a8	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -85293,7 +85293,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x3c
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x3f4	60	kmutei_init	dwarf+symtab	a5c072aa03da		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x430	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x48c	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	0a14575be8df		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x4bc	60	init_mutex	dwarf+symtab	0a14575be8df		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x4f8	160	mutex_destroy	dwarf+symtab	a8bf05079e6f		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x598	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-object	n64	.text	0x5a8	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -85460,7 +85460,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x1cc	108	kmutei_init	dwarf+symtab	eaafb16680b2		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x238	92	mutex_alloc	dwarf+symtab	913f4730ba7c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x294	48	mutex_dealloc	dwarf+symtab	c0f2ed2d49b7		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
+IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2c4	12	init_mutex	dwarf+symtab	6f10273420e2		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x2d0	52	mutex_destroy	dwarf+symtab	c784e31e4b28		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x304	16	mutex_owner	dwarf+symtab	f7d889ac8674		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-object	n64	.text	0x314	28	mutex_mine	dwarf+symtab	465923041776		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
