@@ -21,34 +21,28 @@ Datasheet checkout `` (datasheets, spec transcriptions); model at `?` (model sou
 |---|---|---|---|---|---|---|---|---|
 | ? | 41 | 765 | 0 | 0 | 0 | 0 | 0 | 0 |
 
-`?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). `tiocp` has no emulator datasheet or model, so its rows are listed but not judged.
+`?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). This census compares only with the published specification: no emulator datasheet or model is read, so the datasheet and model columns carry no information.
 
 Site basis: 765 direct.
 
 ### Scan coverage and what is unresolved
 
 - Accessor functions seeded (`seeds.args`): .
-- Window pointers passed to a callee the config does not seed (**unresolved**, site in `work/heart/unresolved.tsv`): 0 distinct sites.
-- Loads and stores in the seeded scope whose base register the scan could not resolve and whose displacement falls where registers live (0x100..0x2ff): 10905, almost all `xbridge_attach` writing its own state record (**unresolved, inspected only by listing; `suspects.tsv`**).
+- Window pointers passed to a callee the config does not seed (**unresolved**, site in `work/heart/unresolved.tsv`): 84 distinct sites.
+  - ip30-unix `sub_a800000020013560` @0135d8 calls `heart_intr_prealloc` with the window pointer in a0
+  - ip30-unix `sub_a800000020013560` @0135f8 calls `heart_intr_prealloc` with the window pointer in a0
+  - ip30-unix `sub_a800000020013560` @013610 calls `heart_intr_prealloc` with the window pointer in a0
+  - ip30-unix `sub_a800000020013560` @013624 calls `heart_intr_preconn` with the window pointer in a0
+  - ip30-unix `sub_a800000020013560` @01363c calls `heart_intr_prealloc` with the window pointer in a0
+  - ip30-unix `sub_a800000020013560` @013650 calls `heart_intr_preconn` with the window pointer in a0
+- Loads and stores whose base register the scan could not resolve and whose displacement looks like a register offset (10905 rows in `suspects.tsv`) are driver record fields and stack frames more often than registers: **unresolved, listed only**.
 - Index registers are not followed: a family reached through an array index is recorded at its base with `idx=1` (device 0..7, interrupt 0..7, ATE). The family extent comes from the datasheet, not the code.
 - Returned pointers: a function that hands back a pointer into the window is recorded as a kind-`a` site at the pointer offset (this is how the one-wire register and the configuration windows are reached).
 - Basic blocks never reached by the flow analysis (jump tables) in the seeded scope: ip30-unix 11206, ip30-prom 12576, ip30-ide 10206, ip30-symmon 2419.
 
-## Top unmodelled or guessed registers: bridge
-
-None.
-
-## Top unmodelled or guessed registers: xbridge
-
-None.
-
-## Top unmodelled or guessed registers: pic
-
-None.
-
 ## Touched by IRIX but absent from the datasheet
 
-None for bridge or xbridge; the datasheets list every slot the kernels touch. For pic, see below.
+None.
 
 ## Datasheet and spec disagreements (on registers IRIX touches)
 
@@ -57,7 +51,3 @@ None found among touched registers.
 ## Listed in the datasheet or spec, never touched by the scanned objects
 
 - **heart**: none (index families count as reached when their base is touched; assumed extent 0x40)
-
-## Hand-off: accesses through the Bridge into PCI device windows and configuration space
-
-These are not Bridge registers; they are the register traffic of the chips behind it. `heart-census-windows.tsv` carries 0 rows (0 sites). Feed them to the IOC3, IOC4, SCSI and PCI-configuration censuses as their access list.
