@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
-binaries	3092	0	625	0	625	3	4	145	2318	0	20.2	20.3	25.0	20.2							0			
-functions	6301	91992	832	116	660	9	871	1453	3145	0	13.2	27.0	50.1	13.2			85.0	20	2026-11-02		0	0	16	
-functions (distinct names)	2481	21770	554	115	550	9	15	561	1351	0	22.3	22.9	45.5	22.3							0			
+binaries	3092	0	625	0	625	3	4	146	2317	0	20.2	20.3	25.1	20.2							0			
+functions	6301	91992	832	116	660	9	871	1465	3133	0	13.2	27.0	50.3	13.2			85.0	20	2026-11-02		0	0	16	
+functions (distinct names)	2481	21770	554	115	550	9	15	564	1348	0	22.3	22.9	45.7	22.3							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -608,7 +608,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1drv.o)	0	25	0	0	0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1_init.o)	0	4	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1_tpinit.o)	0	6	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1_tport.o)	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	84	0	0	0	0	0	0	6	78	0	0.0	0.0	7.1	0.0							0	0	0	
+functions in IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	84	0	0	0	0	0	0	9	75	0	0.0	0.0	10.7	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	0	15	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/rand.a(yarrow.o)	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/rand.a(harvest.o)	0	6	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -1334,7 +1334,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/ql.o	0	78	0	0	0	0	0	0	0	0	0.0	0.0	0.0	
 functions in IP30/usr/cpu/sysgen/IP30boot/qlfc.a(qlfc.o)	0	181	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/qlfc_idbg.o	0	13	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/quotas.o	0	19	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	84	0	0	0	0	0	0	6	78	0	0.0	0.0	7.1	0.0							0	0	0	
+functions in IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	84	0	0	0	0	0	0	9	75	0	0.0	0.0	10.7	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	0	15	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/rand.a(yarrow.o)	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/rand.a(harvest.o)	0	6	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -2069,7 +2069,7 @@ functions in IP32/usr/cpu/sysgen/IP32boot/qcntl.o	0	9	0	0	0	0	0	0	0	0	0.0	0.0	0.
 functions in IP32/usr/cpu/sysgen/IP32boot/qlfc.a(qlfc.o)	0	180	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/qlfc_idbg.o	0	13	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/quotas.o	0	19	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	84	0	0	0	0	0	0	6	78	0	0.0	0.0	7.1	0.0							0	0	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	84	0	0	0	0	0	0	9	75	0	0.0	0.0	10.7	0.0							0	0	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/rand.a(rand.o)	0	15	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/rand.a(yarrow.o)	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP32/usr/cpu/sysgen/IP32boot/rand.a(harvest.o)	0	6	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -2791,7 +2791,7 @@ functions in IP35/usr/cpu/sysgen/IP35boot/ql.o	0	77	0	0	0	0	0	0	0	0	0.0	0.0	0.0	
 functions in IP35/usr/cpu/sysgen/IP35boot/qlfc.a(qlfc.o)	0	186	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/qlfc_idbg.o	0	13	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/quotas.o	0	19	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	84	0	0	0	0	0	0	6	78	0	0.0	0.0	7.1	0.0							0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	84	0	0	0	0	0	0	9	75	0	0.0	0.0	10.7	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/rand.a(rand.o)	0	15	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/rand.a(yarrow.o)	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/rand.a(harvest.o)	0	6	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
