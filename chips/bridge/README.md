@@ -105,7 +105,7 @@ Totals over the **41 rows** below (families count once each; a row graded for so
 | `0x108` | interrupt enable | rw | both | `xbridge_attach`, `pcibr_detach`, `pcibr_intr_connect`, `pcibr_intr_disconnect` | attach reads the register and ORs in a 64-bit literal (`0x00003eff7ffffe00`, low word bits 30:9, no bit is cleared afterwards) in one 64-bit store; detach writes 0; connect and disconnect set and clear a pin bit | E |
 | `0x110` | interrupt reset | w | both | `xbridge_attach`, `pcibr_error_cleanup`, `pcibr_dmard_error` | attach writes `0x7f`; the cleanup passes the 64-bit constant `0x3cff00000041`, of which the 32-bit store keeps `0x41`; `pcibr_dmard_error` writes `0x10`; one more routine writes `0x40` | E |
 | `0x118` | interrupt mode | rw | both | `xbridge_attach` | attach writes 0; set and clear accessors exist | I |
-| `0x120` | interrupt device | rw | both | `xbridge_attach`, `pcibr_intr_alloc`, `pcibr_intr_free` | attach writes `0xffffffff`; alloc clears and sets a field per pin and free clears with mask 7: three bits per pin by the mask | I |
+| `0x120` | interrupt device | rw | both | `xbridge_attach`, `pcibr_intr_alloc`, `pcibr_intr_free` | attach writes `0xffffffff`; `pcibr_intr_alloc` clears three bits and sets them to the device number, per pin (pin `p` at bits `3p+2:3p`, p below 4 in the loop it read); free clears with mask 7 | E for the field layout and use (`pcibr_intr_alloc` read in full), U for why attach writes all ones |
 | `0x128` | interrupt host error field | rw | both | `pcireg_intr_host_err_get`, `pcireg_intr_host_err_set` | `pcibr_setwidint` writes the low byte of the interrupt vector here | I |
 | `0x130` + 8n | interrupt address (n = 0 to 7) | rw | both | `pcibr_intr_connect`, `pcibr_setpciint`, `pcireg_intr_addr_*` | bits 7:0 are the vector (`intr_addr_vect_set` clears `0xff` and stores `v & 0xff`); bits 17:8 (mask `0x3ff00`) are address bits that `intr_addr_addr_get` shifts right 2 and merges with the destination register's address | E (vector, mask), I (rest) |
 | `0x170` | interrupt view | r | X | `pcireg_intr_view_get` | read on type 1; none on type 0 (harness) | I |
@@ -242,7 +242,13 @@ Compared after the reading above. **Agree** means the driver's number or name is
 - **Agree: response buffer fields.** OpenBSD `RRB_VALID 0x8`, `RRB_VCHAN 0x4`, `RRB_DEVICE_MASK 0x3`; Linux
   `BRIDGE_RRB_EN 0x8`; the attach path passes `0x8`.
 - **Disagree: interrupt device register at attach.** The Linux probe and OpenBSD both write 0 to the interrupt device
-  register; IRIX writes `0xffffffff`. Neither public driver says why. Open.
+  register; IRIX writes `0xffffffff` (the PIC path writes `0x6db6db`, every field 3). Neither public driver says why. What the register holds is
+  read from `pcibr_intr_alloc` (`IP35boot/pcibr.o` at 0x78cc, 0x610 bytes): for each pin in the caller's pin mask, from pin 0 up, whose
+  interrupt object does not yet exist it allocates one (`xtalk_intr_alloc_nothd`) and, once the object is installed, calls
+  `pcireg_intr_device_bit_clr` with `7 << (3 * pin)` and `pcireg_intr_device_bit_set` with the device's slot number (the byte at +540 of the device record that `pcibr_info_get` returns) shifted by `3 * pin`, so field `p` names the
+  device that pin `p` is attributed to. The attach value is written before any pin has been allocated: all-ones makes every field 7 (and 0x6db6db
+  makes every field 3), a placeholder that the allocation overwrites. That the placeholder is a deliberate "no device" value rather than a leftover is
+  not read, so the reason stays open.
 - **Disagree: control swap bits.** The Linux probe clears the I/O and memory swap bits (23 and 22) in control; the
   IRIX attach does not touch them. The reset value of those bits is unknown.
 - **Not in the public drivers: the SSRAM probe.** Neither public driver sizes the external translation RAM; IRIX does

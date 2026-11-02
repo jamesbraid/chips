@@ -92,9 +92,21 @@ and DMA indices 6 and 8 (no access with a constant index reaches them).
   prints the port and address (bits 31:6 of the low word with the high word as bits 63:32; the port character is `'1'` plus twice
   the value in bits 4:2, and bit 1 picks the word RX or TX printed after it, inferred from the order of the two strings) and, when bit 5 is
   set, a second message; then it re-enables the port's bit through `ioc4_write_ireg(record, mask, 0, 1)`.
-- `xide_intr_clear` (`ide.o` `0x1634`, returns 0, 1 or 2) reads `0xc` through the ATA accessor, tests bits 1:0, and on bit 1 reads `0x0` and the word at
-  index 4 of the same block, which the accessor's four-byte stride turns into `0x10` (not `0x4`). Whether that is intended is
-  unknown; the public driver names `0x4` as the high word.
+- `xide_intr_clear` (`IP35/usr/cpu/sysgen/IP35boot/ide.o` at 0x1634, 524 bytes, read in full) clears and reports an ATA interrupt. It takes the
+  controller record and returns 0, 1 or 2. The first test is the vendor halfword at +286 of the record. For 4245 (0x1095, the CMD649-class
+  controller) it reads the configuration byte at 0x50, prints it ("cmd649 BEFORE intr"), writes the same byte back, reads it again, prints it
+  ("AFTER intr") and returns 0. For any other vendor than 4245 and 4265 it returns 0 at once. For 4265 (0x10a9, this part) it reads index 3 of
+  the interrupt block (`0xc`, a byte access through the accessor, which for this vendor loads the word) and masks bits 1:0. With both clear it
+  prints "interrupt NOT from IDE device...returning" and returns 1. Otherwise it prints "interrupt from IDE device", and when bit 1 is set it
+  also: stores 1 in the byte at +271 of the record, prints "Other IR Reg ... gives ATA_MEMERR", reads index 0 (`0x0`) and index 4 (`0x10`) of
+  the block and the PCI command and status word at configuration offset 4, prints the three values labelled "err_addr_low", "err_addr_high" and
+  "status_cmd_reg", prints "ATA Error (from PCI Regs)" when `(low word & 0x1e) == 8`, writes `0x146` to configuration offset 4 (whatever that test
+  gave) and stores 1 to index 0 of the block. When bit 1 is clear it stores 0 in the byte at +271 instead. Both ways it then stores 3 to index 3,
+  reads index 3 back, prints it and returns 2. Established. The value read from index 4 is only printed, never tested, and index 4 is `0x10`,
+  which the table above gives as the serial interrupt enable set register, not the high half of the error address: the shipped message names it
+  the high word, the public driver puts that word at `0x4`, and the difference changes nothing but a debug line. Inferred: that the
+  `0x146` write is the same command-register restore `ioc4_attach` performs, and that the store of 1 to index 0 acknowledges the error latch
+  (no routine reads it back).
 
 ### Control, GPIO and the unnamed `0x24`
 
@@ -178,7 +190,7 @@ exists. The PIC and Bedrock side of IP35 is in [../pic/README.md](../pic/README.
 | ATA windows | `0x0` (32 bytes), `0x100` (32), `0x120` (4), `0x140` (36) | `IOC4_INTR_OFFSET 0`, `IOC4_CMD_OFFSET 0x100`, `IOC4_CTRL_OFFSET 0x120`, `IOC4_DMA_OFFSET 0x140`, `IOC4_CMD_CTL_BLK_SIZE 0x20` | agree |
 | ATA interrupt indices | block indices 3 (status) and 5 (enable set) | `IOC4_INTR_REG 3`, `IOC4_INTR_SET 5`, `IOC4_INTR_CLEAR 7` | agree; and the four-byte stride |
 | ATA DMA words | 32-bit writes at indices 1, 2, 4; byte accesses at 0, 2, 3, 7 | `IOC4_DMA_PTR_L 1`, `PTR_H 2`, `ADDR_H 4`, `DMA_CTRL 7`, `TIMING 0`, `BC_DEV 5`, `BC_MEM 6` | the touched index set is a subset of the public names; roles were not read in IRIX |
-| DMA error read of index 4 | `xide_intr_clear` reads index 4 after index 0 | high word is at `0x4` (index 1) | **differ** as noted above; unknown whether the shipped code is wrong |
+| DMA error read of index 4 | `xide_intr_clear` reads index 4 after index 0 and only prints it, labelled the high word | high word is at `0x4` (index 1) | **differ**; the read has no effect except a debug line, so the contract is unaffected (the routine is read in full) |
 
 ## Reset expectations
 
@@ -188,8 +200,6 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 
 - **`0x24`**: role of bits 3:0, and the meaning of bus-speed value 1 and of the revision-79 boundary. Next: read `pciio_businfo_bus_speed_get`
   and the callers of `ioc4_attach`'s revision test for any comment string.
-- **`xide_intr_clear` second error read** (it returns 0, 1 or 2): index 4 where the public driver's high word is index 1. Next: read the whole routine's
-  use of the two values.
 - **ATA register roles**: the command, control and DMA block roles are inferred from index order and the public driver; the DMA
   register meanings need `xide_pktDMA_start` and `xide_dma_init` read in full.
 - **Ports 1 to 3 GPIO pins and the per-port tables** are static data not extracted.

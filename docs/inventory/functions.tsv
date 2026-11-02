@@ -5568,7 +5568,7 @@ IP27/unix	kernel	n64	.text	0xc00000000006c070	28	xtalk_dmamap_drain	symtab	4c53f
 IP27/unix	kernel	n64	.text	0xc00000000006c08c	28	xtalk_dmaaddr_drain	symtab	355f40e7a3fd		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006c0a8	28	xtalk_dmalist_drain	symtab	84e07b1e05e4		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006c0c4	28	xtalk_intr_alloc	symtab	a867a6278436		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP27/unix	kernel	n64	.text	0xc00000000006c0e0	28	xtalk_intr_alloc_nothd	symtab	abdb150a9b64		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000006c0e0	28	xtalk_intr_alloc_nothd	symtab	abdb150a9b64		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP27/unix	kernel	n64	.text	0xc00000000006c0fc	28	xtalk_intr_free	symtab	f6e2642893b1		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006c118	28	xtalk_intr_connect	symtab	0133a57eecf0		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000006c134	28	xtalk_intr_disconnect	symtab	f28c28b4d3ab		in	undocumented		
@@ -5681,7 +5681,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000713ec	204	pcibr_map	symtab	59f13e6e7ce9	
 IP27/unix	kernel	n64	.text	0xc0000000000714b8	120	pcibr_unmap	symtab	1d2c5b901ceb		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP27/unix	kernel	n64	.text	0xc000000000071530	136	pcibr_device_slot_get	symtab	d0ce26a8bae2		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000715b8	368	pcibr_ioctl	symtab	5b94b25fc2f7		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000071728	28	pcibr_info_get	symtab	c0280675bd13		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000071728	28	pcibr_info_get	symtab	c0280675bd13		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP27/unix	kernel	n64	.text	0xc000000000071744	280	pcibr_device_info_new	symtab	6a1ecb828f9c		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000007185c	312	pcibr_device_unregister	symtab	7fbe3dbea9a5		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000071994	168	pcibr_driver_reg_callback	symtab	79aed8874f64		in	undocumented		
@@ -25466,7 +25466,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x5ac	204	pcibr_map
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x678	120	pcibr_unmap	dwarf+symtab	37682d43ef18		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x6f0	136	pcibr_device_slot_get	dwarf+symtab	cb3eaae673d8		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x778	368	pcibr_ioctl	dwarf+symtab	632047d88a15		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x8e8	28	pcibr_info_get	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x8e8	28	pcibr_info_get	dwarf+symtab	a86de4a9d7a4		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x904	280	pcibr_device_info_new	dwarf+symtab	c3f3c440fccd		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xa1c	312	pcibr_device_unregister	dwarf+symtab	922027cfcb80		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0xb54	168	pcibr_driver_reg_callback	dwarf+symtab	2ac77f438697		in	undocumented		
@@ -31549,7 +31549,7 @@ IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x278	28	xtalk_dmam
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x294	28	xtalk_dmaaddr_drain	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x2b0	28	xtalk_dmalist_drain	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x2cc	28	xtalk_intr_alloc	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x2e8	28	xtalk_intr_alloc_nothd	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x2e8	28	xtalk_intr_alloc_nothd	dwarf+symtab	a86de4a9d7a4		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x304	28	xtalk_intr_free	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x320	28	xtalk_intr_connect	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/xtalk.o	kernel-object	n64	.text	0x33c	28	xtalk_intr_disconnect	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -37248,7 +37248,7 @@ IP30/unix	kernel	n64	.text	0xa80000002003a9d8	28	xtalk_dmamap_drain	symtab	b3d1e
 IP30/unix	kernel	n64	.text	0xa80000002003a9f4	28	xtalk_dmaaddr_drain	symtab	3c830abe43ad		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003aa10	28	xtalk_dmalist_drain	symtab	80de63512c7b		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003aa2c	28	xtalk_intr_alloc	symtab	e17f4cd6b59c		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP30/unix	kernel	n64	.text	0xa80000002003aa48	28	xtalk_intr_alloc_nothd	symtab	7aa422a62fc4		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002003aa48	28	xtalk_intr_alloc_nothd	symtab	7aa422a62fc4		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP30/unix	kernel	n64	.text	0xa80000002003aa64	28	xtalk_intr_free	symtab	0fbca987c18a		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003aa80	28	xtalk_intr_connect	symtab	6a68ebf73831		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002003aa9c	28	xtalk_intr_disconnect	symtab	8bd2c3cb254e		in	undocumented		
@@ -37446,7 +37446,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200430ec	204	pcibr_map	symtab	df558ebd7bc7	
 IP30/unix	kernel	n64	.text	0xa8000000200431b8	120	pcibr_unmap	symtab	617bdca04d38		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP30/unix	kernel	n64	.text	0xa800000020043230	136	pcibr_device_slot_get	symtab	494c88fdcf84		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200432b8	368	pcibr_ioctl	symtab	ea4230f859eb		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020043428	28	pcibr_info_get	symtab	85e6931f4314		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020043428	28	pcibr_info_get	symtab	85e6931f4314		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP30/unix	kernel	n64	.text	0xa800000020043444	280	pcibr_device_info_new	symtab	ce759d3e7dcd		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002004355c	312	pcibr_device_unregister	symtab	808e1c1ef3fc		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020043694	168	pcibr_driver_reg_callback	symtab	811e13e6c20e		in	undocumented		
@@ -55585,7 +55585,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x5ac	204	pcibr_map
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x678	120	pcibr_unmap	dwarf+symtab	37682d43ef18		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x6f0	136	pcibr_device_slot_get	dwarf+symtab	cb3eaae673d8		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x778	368	pcibr_ioctl	dwarf+symtab	632047d88a15		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x8e8	28	pcibr_info_get	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x8e8	28	pcibr_info_get	dwarf+symtab	a86de4a9d7a4		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x904	280	pcibr_device_info_new	dwarf+symtab	c3f3c440fccd		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xa1c	312	pcibr_device_unregister	dwarf+symtab	922027cfcb80		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0xb54	168	pcibr_driver_reg_callback	dwarf+symtab	2ac77f438697		in	undocumented		
@@ -60587,7 +60587,7 @@ IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x278	28	xtalk_dmam
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x294	28	xtalk_dmaaddr_drain	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x2b0	28	xtalk_dmalist_drain	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x2cc	28	xtalk_intr_alloc	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x2e8	28	xtalk_intr_alloc_nothd	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x2e8	28	xtalk_intr_alloc_nothd	dwarf+symtab	a86de4a9d7a4		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x304	28	xtalk_intr_free	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x320	28	xtalk_intr_connect	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/xtalk.o	kernel-object	n64	.text	0x33c	28	xtalk_intr_disconnect	dwarf+symtab	a86de4a9d7a4		in	undocumented		
@@ -81681,7 +81681,7 @@ IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x9a8	668	xide_probe	
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0xc44	132	xide_execute_device_diagnostic	dwarf+symtab	d99cc3567941		out:10	named-only	chips/ioc4/README.md#ata-controller-established-offsets-inferred-roles	ATA controller (established offsets; inferred roles)
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0xcc8	464	xide_device_reset	dwarf+symtab	c412c6e0486e		out:10	named-only	chips/ioc4/README.md#ata-controller-established-offsets-inferred-roles	ATA controller (established offsets; inferred roles)
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0xe98	1948	xide_bus_reset	dwarf+symtab	bd2040bb2db5		out:10	named-only	chips/ioc4/README.md#ata-controller-established-offsets-inferred-roles	ATA controller (established offsets; inferred roles)
-IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x1634	524	xide_intr_clear	dwarf+symtab	e1ee376edf62		out:10	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x1634	524	xide_intr_clear	dwarf+symtab	e1ee376edf62		out:10	understood	chips/ioc4/README.md#interrupt-registers-0x8-to-0x1c-established	Interrupt registers (`0x8` to `0x1c`): established
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x1840	112	xide_interrupt_check	dwarf+symtab	c26f33ad5d39		out:10	named-only	chips/ioc4/README.md#ata-controller-established-offsets-inferred-roles	ATA controller (established offsets; inferred roles)
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x18b0	1428	xide_intr	dwarf+symtab	5426c31923e3		out:10	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x1e44	1912	xide_scsi_resp_back	dwarf+symtab	d71e97dbd531		out:10	undocumented		
@@ -90247,7 +90247,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x5ac	204	pcibr_map
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x678	120	pcibr_unmap	dwarf+symtab	37682d43ef18		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x6f0	136	pcibr_device_slot_get	dwarf+symtab	cb3eaae673d8		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x778	572	pcibr_ioctl	dwarf+symtab	44d6f4eb7c9c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x9b4	28	pcibr_info_get	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x9b4	28	pcibr_info_get	dwarf+symtab	a86de4a9d7a4		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x9d0	288	pcibr_device_info_new	dwarf+symtab	ecf0e57048bd		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xaf0	312	pcibr_device_unregister	dwarf+symtab	078a280dd515		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0xc28	212	pcibr_driver_reg_callback	dwarf+symtab	336a2478c541		in	undocumented		
@@ -96489,7 +96489,7 @@ IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x278	28	xtalk_dmam
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x294	28	xtalk_dmaaddr_drain	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x2b0	28	xtalk_dmalist_drain	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x2cc	28	xtalk_intr_alloc	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x2e8	28	xtalk_intr_alloc_nothd	dwarf+symtab	a86de4a9d7a4		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x2e8	28	xtalk_intr_alloc_nothd	dwarf+symtab	a86de4a9d7a4		in	named-only	chips/bridge/README.md#against-the-public-drivers	Against the public drivers
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x304	28	xtalk_intr_free	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x320	28	xtalk_intr_connect	dwarf+symtab	a86de4a9d7a4		in	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/xtalk.o	kernel-object	n64	.text	0x33c	28	xtalk_intr_disconnect	dwarf+symtab	a86de4a9d7a4		in	undocumented		

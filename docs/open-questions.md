@@ -52,9 +52,8 @@ Corrections found while tagging. These are not fixed here.
   `revision | part << 4` equal to `0xc0022` (at `0xc000000000070d98` of the IP27 `unix`) that builds the interrupt-enable
   mask differently. The path ORs a constant into the mask and ANDs a literal; the intent is not decoded. Next: read the
   path with the literal pool resolved and compare with the revision-3 path.
-- **Bridge and XBridge: the interrupt device register at attach.** *[route: software now]* IRIX writes `0xffffffff`; the public Linux and
-  OpenBSD drivers write 0. Neither says why, and no shipped routine reads the reset value. Next: the pin-to-device
-  assignment in `pcibr_intr_alloc` and what the all-ones value does before any pin is assigned.
+- **Bridge and XBridge: why the interrupt device register is written with all ones at attach.** *[route: software now]* The field layout and its use are answered
+  (chips/bridge/README.md: three bits per pin, set to the device by `pcibr_intr_alloc`). Open: only the reason for the placeholder value.
 - **Bridge and XBridge: registers above 0x298.** *[route: software now; PROM search; an accepted end state if none is found]* Whether the XBridge has registers between `0x2a0` and `0x10000`
   (the census reaches none and the public headers name none). Valid end state unless a routine that touches them is
   found. Next: the IP27 PROM and I/O-board PROM, which the scan could not resolve.
@@ -231,9 +230,9 @@ Corrections found while tagging. These are not fixed here.
   data relocations; read `plp_dma`, `plpintr`, `plp_reset` and the error handler.
 - **IOC4: the word at `0x24`.** *[route: software now]* `ioc4_attach` clears bits 3:0 of it when the revision byte is below 79 and the bus-speed query
   returns 1; the public header calls it unused. Next: `pciio_businfo_bus_speed_get` and any string the attach carries.
-- **IOC4: the ATA registers.** *[route: software now]* The command, control and DMA block roles are inferred from index order and the public driver.
-  `xide_intr_clear` reads index 4 of the interrupt block (offset `0x10`) after index 0 where the public driver's error address
-  high word is at `0x4`. Next: read `xide_pktDMA_start`, `xide_dma_init` and `xide_intr_clear` in full.
+- **IOC4: the ATA registers.** *[route: software now]* `xide_intr_clear` is read in full (chips/ioc4/README.md): its index 4 read is only printed, so the
+  discrepancy with the public driver affects nothing. Open: the command, control and DMA block roles are inferred from index order and the public driver.
+  Next: read `xide_pktDMA_start` and `xide_dma_init`.
 - **IOC3 and IOC4: reset values and the per-port tables.** *[route: software now; hardware residue: reset values of registers that no routine reads; the per-port tables are software now]* No routine reads a reset value; the mode-select pin numbers and
   serial configuration records are static data not extracted. Next: extract the data sections through their relocations.
 - **CRIME rendering engine: field layouts the specification does not print.** *[route: missing binary: a shipped renderer or X server module that builds the words; the public CRIME frame-buffer driver is in an uninitialised submodule]* The pixel pipeline's depth function, stencil
