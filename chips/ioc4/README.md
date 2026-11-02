@@ -112,9 +112,19 @@ and DMA indices 6 and 8 (no access with a constant index reaches them).
 
 - `ioc4_attach` (returns 0 or -1) stores `0xf` to `0x20` and `0x30` to `0x30` (established). `hardware_init` reads `0x20` repeatedly and leaves the loop
   when bit 7 is set (established); inferred: no serial channel is the current bus requester.
-- `ioc4_attach` reads the configuration byte at 8; **if it is below 79** it asks for the bus speed (`pciio_businfo_get`, then
-  `pciio_businfo_bus_speed_get`) and, when that returns 1, clears bits 3:0 of `0x24` with a read-modify-write (established, read in
-  full). What the bits are and what speed 1 means: unknown; the public header calls the word unused.
+- `ioc4_attach` reads the configuration byte at 8 (`pciio_config_get`, offset 8, width 1: the revision byte) and compares it unsigned with 79 (`sltiu` at `0x35c`).
+  **If it is 79 or more** (the `beqz` at `0x360` on the `sltiu` result jumps to `0x538`; an earlier reading of this page had the sense reversed) it calls `pciio_businfo_get` and `pciio_businfo_bus_speed_get` (both in `pciio.o`: the second returns the word at +12 of the record the first returns) and,
+  when the result is exactly 1, ANDs the 32-bit word at `0x24` with `0xfffffffffffffff0` (`lw` at `0x554`, `sw` at `0x564`), clearing bits 3:0 (established, read in full; no other routine of the IP35
+  objects touches `0x24`). A revision below 79, or any other speed value, skips the clear and the word is never written.
+  **What the speed value is (established, read in full: `pcibr_businfo_get` `pcibr.o` `0x44ec`, 232 bytes, and `pic_attach2` `pic.o` `0x888` to `0x8a8`).** For a PIC the bus-information record is the
+  16 bytes at the bridge record +2728: words for multiple masters (+0), ASIC type (+4), bus type (+8) and bus speed (+12). `pic_attach2` stores a halfword at record +116
+  built as the mode value (`pcireg_mode_get`, 1 for PCI-X) in bit 0 and the speed value (`pcireg_speed_get`, bits 5:4 of the control register) shifted left one in bits 2:1.
+  `pcibr_businfo_get` then, for chip type 2: stores ASIC type 4; bus type 2 and multiple masters 1 when halfword bit 0 is set (PCI-X), bus type 1 and multiple masters 0 otherwise;
+  and stores bus speed 1 for halfword 0 (speed field 0, conventional PCI), 2 for halfwords 2 and 3 (speed field 1, PCI or PCI-X), 3 for halfword 5 (speed field 2, PCI-X) and 4 for halfword 7 (speed field 3, PCI-X);
+  for halfwords 1, 4 and 6 it stores no speed and the word keeps the zero the record was allocated with. So the clear happens on a conventional-PCI bus whose speed field is 0, on an IOC4 of revision 79 or later.
+  For chip type 1 (XBridge) the same routine stores bus speed 1 when the halfword at record +116 is zero and 2 otherwise; how that halfword is set for an XBridge was not read.
+  Inferred: speed field 0 is the 33 MHz setting (the values 1 to 4 line up with 33, 66, 100 and 133 MHz); the code stores only the numbers. Unknown: what bits 3:0 of `0x24` do and why the
+  attach clears them only on later IOC4 revisions on a slow bus; no string in the object or the pciio objects explains it, and a guess at the reason would rest on the two tests alone.
 - `ioc4_eiattach` (`ioc4_ei.o` `0x4b4`, returns 0 or -1) stores 2 to `0x34`, `0x200` to `0x30`, then `0xff00` to `0x30`, writes `0xff800000` to `0xc`, 0 to
   `0x28`, and connects its handler (established). The two stores to `0x30` are on one path in sequence. Inferred: edge select
   bits and the output held low.
@@ -182,7 +192,7 @@ exists. The PIC and Bedrock side of IP35 is in [../pic/README.md](../pic/README.
 | `other_ir` bits 1:0 | ATA interrupt and memory error written as 3 to the enable set | `ioc4_other_int`: `ata_int` bit 0, `ata_memerr` bit 1 | agree |
 | error address low | bit 0 valid, bit 1 RX or TX word, bits 4:2 port number, bit 5 multiple, bits 31:6 address | `ioc4_pci_err_addr_l`: valid, `master_id:4` (bits 4:1), `mul_err`, address 31:6 | agree on valid, multiple and address; IRIX splits bits 4:1 into bit 1 (RX or TX word) and bits 4:2 (port number), Linux calls bits 4:1 one master identifier |
 | control `0x20` | stores `0xf`, waits for bit 7 | `cmd_pulse:4` (bits 3:0) and `sio_diag_idle` at bit 7 | agree on the polled bit; the stored `0xf` is a four-bit field, equal to the public `cmd_pulse` width |
-| `0x24` | read-modify-write below revision 79 on a 33 MHz-class bus (speed value 1) | `unused1` | **differ**: IRIX uses it; role unknown |
+| `0x24` | bits 3:0 cleared at revision 79 or later on a conventional-PCI bus with speed field 0 (bus speed value 1) | `unused1` | **differ**: IRIX uses it; role unknown |
 | serial layout | ring bases `0x300` to `0x30c` (pair order low then high), ports at `0x310` and every `0x1c`, UARTs at `0x380` and every 8 | `struct ioc4_serial`: `sbbr01_l`, `sbbr01_h`, `sbbr23_l`, `sbbr23_h`, then four 7-word ports, then four UARTs | agree |
 | ring base write | high word, then low word ORed with 1 | `IOC4_SBBR_L_SIZE` 1 means 4 KB rings; the driver writes high then low plus the size bit | agree |
 | reset wait | `0x20` bit 7 | `IOC4_SIO_CR_SIO_DIAG_IDLE` | agree |
@@ -198,8 +208,7 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 
 ## Open
 
-- **`0x24`**: role of bits 3:0, and the meaning of bus-speed value 1 and of the revision-79 boundary. Next: read `pciio_businfo_bus_speed_get`
-  and the callers of `ioc4_attach`'s revision test for any comment string.
+- **`0x24`**: what bits 3:0 do. The trigger is read in full (see "Control, GPIO and the unnamed `0x24`"); the register's role is not in any shipped string. No further software route is known; valid end state unless a published IOC4 erratum or a PCI-X IOC4 driver names it.
 - **ATA register roles**: the command, control and DMA block roles are inferred from index order and the public driver; the DMA
   register meanings need `xide_pktDMA_start` and `xide_dma_init` read in full.
 - **Ports 1 to 3 GPIO pins and the per-port tables** are static data not extracted.

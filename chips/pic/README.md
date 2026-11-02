@@ -209,11 +209,61 @@ caller's flush record. `issue_force_interrupt` then zeroes that counter and forc
 `pio_spin_wait` spins until the counter equals 493. Nothing in these routines writes 493: the interrupt service
 routine is not read. Purpose: ordering PIO writes by making an interrupt arrive: inferred from the structure.
 
-**Error handling and interrupt service: unknown** (not read). The accessors for the error registers
-(`+0x18`, `+0x40`, `+0x58`, `+0x60`, `+0x68`, `+0x78`, `+0x90`, `+0xb0`, `+0xd8`, `+0x600` to `+0x630`) are named
-`bus_err_get`, `cmdword_err_get`, `linkside_err_get`, `resp_err_*`, `map_fault_get`, `parity_err_get`,
-`pci_bus_addr_get` and the `pcix_*` family; the routine that calls them is `pcibr_error_dump` and the handler
-`pcibr_error_intr_handler` in `pcibr.o`; reading them is the next entry in docs/open-questions.md.
+**Error interrupt service (established for the paths named: `pcibr_error_intr_handler` at 0x9bb4 and `pcibr_error_dump` at 0x891c of IP35 `pcibr.o`; the rate limiter and the callee at 0x9a4c are not decoded).**
+The handler takes the bridge record in `a0`, finds it in the global list of bridge records (no match: `panic`, "is not a pcibr_soft!"), then:
+
+1. Asks `hubii_check_widget_disabled` about the record's node and widget byte. If it says disabled, the handler schedules itself again one tick later
+   (`timeout`), adds one to the word at record +2104 and returns without touching the chip.
+2. Reads the interrupt status (`+0x100`, `pcireg_intr_status_get`). Only bits 63:8 count as errors; bits 7:0 (the pin interrupts) are not examined, and a status
+   with none of 63:8 set returns at once. Bit 31 is dropped from the set the rest of the routine works on.
+3. If status bit 11, 15, 34 or 38 is set (mask `0x4400008800`) it calls the routine at 0x9a4c (a programmed-I/O error check; not read).
+4. Keeps a 12-byte record per status bit 8 to 63 at record +2276 + 12 * (bit - 8): a count it increments each time the bit is seen, a tick stamp and a count at that
+   stamp. From them it works out an error rate per tick and prints "Excessive error interrupts" or "Error rate" through `cmn_err`; for a bit that
+   keeps firing it collects the bit and later clears it from the enable register (`+0x108`, `pcireg_intr_enable_bit_clr`) under the spin lock at record +140, printing
+   "Disabling error interrupt type". The thresholds and which revisions skip this are not decoded. Inferred purpose: stop an error storm.
+5. Status bit 24 (request with an invalid address for the bridge widget) is cleared from the working set only when the bus-error register (`+0x18`)
+   has bits 63:22 equal to 3 and the command-word error register (`+0x40`) under mask `0xf07f00` equals `0x402000`; the meaning of those values is not read (inferred:
+   one access the handler is meant to ignore).
+6. Dump: a global mask, `bridge_errors_to_dump`, starts as `0x22573fc0e800` (bits 11, 13, 14, 15, 22 to 29, 32, 33, 34, 36, 38, 41, 45). The handler first ORs `0x4400008800` into it
+   when the global `pcibr_pioerr_dump` is nonzero and removes those four bits when it is zero. If any working-set bit is in the mask it prints "BRIDGE ERR_STATUS" and calls `pcibr_error_dump`.
+7. Fatal set: for a PIC (record chip type 2), working-set bits 21:20 (mask `0x300000`) are fatal on revisions 1 and 2 only (the test is `(1 << revision) & 6`). For every chip type, a bit in
+   `0x22133fc06000` (bits 13, 14, 22 to 29, 32, 33, 36, 41, 45) is fatal. Fatal means: print "BRIDGE ERR_STATUS", dump, `machine_error_dump`, then `panic` ("PCI Bridge Error interrupt killed the system").
+   The bits with fatal status are the ones the shipped text names as parity errors, request and response packet errors and framing errors, the unexpected response, PCI-X data and address parity, PCI-X SERR, internal RAM parity and the split completion message parity error.
+8. Clear: for chip types 2 and 3 it writes the status word it read, with bit 6 also set (`status | 0x40`), to the reset register `+0x110`
+   (`pcireg_intr_reset_set`); types 0 and 1 write a group mask from a small routine at 0x99c8 instead. So on a PIC the handler clears by writing back the status it read.
+   For a PIC revision 1 with status bit 40 (arbitration error) set it then sets bits 23:20 of the arbitration register (`+0xa0`, `pcireg_arbitration_bit_set(0xf00000)`). Last it stores zero to the word at record +2120.
+
+`pcibr_error_dump` (0x891c, 4268 bytes) prints one line of text per set bit and then reads and prints the registers listed below. It first calls `test_and_set_long` on the word at record +2120
+with the mask of status bits 63:8 and returns without printing when the callee's return equals that mask (what the callee does with the word is not read: inferred, a guard against repeating
+the same dump). The header is "PCI BRIDGE ERROR: int_status is 0x%lx for %s". The table below was obtained by running the routine in the instruction harness on a PIC record (chip type 2, revision 2, every register getter
+returning zero) with one status bit set at a time, then checking the branch structure in the disassembly; it lists the register getters called for each bit. Each bit's text comes from a table of 8-byte string pointers in the object's data
+(entry for bit n at data +0x10 + 1920 + 8n); the texts are quoted in the shipped object and name the bit as in the table.
+
+| status bit | text | registers read for the dump |
+|---|---|---|
+| 8 | GIO non-contiguous byte enable in crosstalk packet | nothing: bits 8, 16 and 31 are skipped, text included, for every chip type but 0 |
+| 9 | PCI to Crosstalk read request timeout | response error (`+0x68` and its device and buffer fields `+0x60`) |
+| 10 to 15 | PCI retry count exhausted; device select timeout; device and bridge parity; address or command parity; abort | PCI bus address (`+0xd8`), read by the raw getter and by the address getter and printed on two lines |
+| 16 | SSRAM parity error | nothing on a PIC (skipped as above; the SSRAM parity getter is reached only for chip type 0) |
+| 17 to 21 | LLP transmitter retry wrap, transmitter retry, receiver retry wrap, receiver check bit error, receiver sequence error | none (text only); on a PIC, bits 17 to 21 and 23 are skipped entirely when the record word at +72 is nonzero |
+| 22, 23 | request packet overflow; request not supported (23 is skipped as noted for bits 17 to 21) | link-side error (`+0x58`) printed through the command decoder, then link-side error address (`+0x78`) |
+| 24, 25, 27 | invalid address for the bridge widget; request command word error; request framing | command-word error (`+0x40`) through the decoder, then bus error (`+0x18`) read by two getters and printed on two lines |
+| 26 | response command word error | link-side error (`+0x58`) through the decoder, response error (`+0x68`, `+0x60`), then the directory state printer |
+| 28 | response framing | link-side error (`+0x58`), response error with address (`+0x68`) |
+| 29 | unexpected response | link-side error (`+0x58`) through the decoder |
+| 30 | PMU access fault | map fault address (`+0x90`) |
+| 31 | multiple errors | nothing (skipped, see bit 8) |
+| 32 to 38 | PCI-X address or attribute parity; data parity; master timeout; pio retry exhausted; SERR; PERR; target abort | PCI-X bus error address, attribute and data (`+0x600`, `+0x608`, `+0x610`) |
+| 39 | PCI-X read request timeout | PCI-X request error address and attribute (`+0x630`, `+0x628`) |
+| 40 | PCI or PCI-X device requesting arbitration error | arbitration (`+0xa0`) |
+| 41 | internal RAM parity error | parity error (`+0xb0`) |
+| 42 | PCI-X unexpected completion cycle to master | PCI-X bus error address, attribute, data |
+| 43 to 45 | split completion timeout; split completion error message; split completion message parity | PCI-X split address and attribute (`+0x618`, `+0x620`), then bus error address, attribute, data |
+
+When the half-word at record +116 has bit 0 set (the mode value `pic_attach2` stores there: 1 is PCI-X, see chips/ioc4/README.md, "Control, GPIO and the unnamed `0x24`"), bits 26, 28 and 29 also print the PCI-X request error address and attribute (`+0x630`, `+0x628`). After the loop it reads the multiple-interrupt
+register (`+0x178`) and, for any chip type but 0, prints for every set bit 8 to 63 the same text with a "Multiple Interrupt Register" header.
+Which register each getter names is from its name and its `+offset` in `pcireg_*` (see above); which bit of the status each text describes is the shipped text, so for the status register bits 8 to 45 the PIC names are established as the strings the driver prints (as labels, not as a hardware specification).
+Bits 46 to 63 have no text and no dump; bits 7:0 are not errors here.
 
 ## Reset expectations
 
@@ -275,5 +325,4 @@ with its address list.
 
 ## Open
 
-See docs/open-questions.md: the literal-pool base of `pic.o`, the error and interrupt service routines, the
-revision-1-only steps.
+See docs/open-questions.md: the revision-1-only steps, the rate limiter thresholds in the error handler and the programmed-I/O error check it calls.
