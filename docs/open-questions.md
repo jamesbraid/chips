@@ -48,10 +48,6 @@ Corrections found while tagging. These are not fixed here.
   `0xe000`/`0xe010` chip (see TIOCP). The part number `0xd100` that `xbow_widget_present` tests is not a Bridge-family part: the routine reads it from the word at +4 of the block it is given and then reads per-link words at +0x13c from a 0x40 stride, so it names the crossbar's own identification (inferred).
   Next: the Crossbow probe routines' callers, and the public Linux `pci-xtalk-bridge.c` history for the later part
   numbers.
-- **Bridge and XBridge: revision 2 attach path.** *[route: software now]* `xbridge_attach` takes a separate path for identification
-  `revision | part << 4` equal to `0xc0022` (at `0xc000000000070d98` of the IP27 `unix`) that builds the interrupt-enable
-  mask differently. The path ORs a constant into the mask and ANDs a literal; the intent is not decoded. Next: read the
-  path with the literal pool resolved and compare with the revision-3 path.
 - **Bridge and XBridge: why the interrupt device register is written with all ones at attach.** *[route: software now]* The field layout and its use are answered
   (chips/bridge/README.md: three bits per pin, set to the device by `pcibr_intr_alloc`). Open: only the reason for the placeholder value.
 - **Bridge and XBridge: registers above 0x298.** *[route: software now; PROM search; an accepted end state if none is found]* Whether the XBridge has registers between `0x2a0` and `0x10000`
