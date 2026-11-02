@@ -194,7 +194,7 @@ come from `objdump -dr` on the object.
 - `ioc4_console_vhdl_get` (`IP35/usr/cpu/sysgen/IP35boot/ioc4.o` at 0x1014, 24 bytes) loads the pointer in the small-data slot at
   -30720 from `gp` (a relocation against `.sbss`). It returns the word at +0 of that pointer. With a null pointer it returns -1: the
   `li v0,-1` in the delay slot of the `beqz` at 0x1018 runs before the branch, so the -1 stands on that path, and the `lw` at
-  0x101c is skipped. Established: the six words and the `.sbss` relocation match the IP27 `ioc3.o` copy at 0x1210.
+  0x1020 is skipped. Established: the six words and the `.sbss` relocation match the IP27 `ioc3.o` copy at 0x1210.
 - `ioc4_subdev_enables` (`IP35/usr/cpu/sysgen/IP35boot/ioc4.o` at 0x1124, 44 bytes)
   keeps its doubleword argument in its frame and calls `ioc4_subdev_ptr` with `a0` unchanged and the create flag set in
   the delay slot. A non-null pointer gets the saved doubleword at +0; a null return skips the store.
