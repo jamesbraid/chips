@@ -79958,7 +79958,7 @@ IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0xac	260	emu_ioctl
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1b0	8	emu_open	dwarf+symtab	87506497337c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1b8	8	emu_close	dwarf+symtab	87506497337c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1c0	152	emu_error_handler	dwarf+symtab	770133b14a7e		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x258	432	emu_create_subsys	dwarf+symtab	02ce3c3e2b89		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x258	432	emu_create_subsys	dwarf+symtab	02ce3c3e2b89		out:4	named-only	chips/emu10k2/README.md#creative-emu10k2-audio-controller-pci-11020004-ip35-build-driver-emu_ddo	Creative EMU10K2 audio controller, PCI 1102:0004 (IP35 build driver `emu_dd.o`)
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x408	308	emu_start_subsys	dwarf+symtab	d47dea7cba21		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x53c	124	emu_create_mclks	dwarf+symtab	f1092c123a0c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x5b8	412	emu_create_clockgen	dwarf+symtab	a8f019bcd471		out:4	undocumented		
@@ -79981,7 +79981,7 @@ IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x16e8	324	emu_set
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x182c	8	emu_commit_device_params	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1834	176	emu_initial_val	dwarf+symtab	952e134a33e0		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x18e4	8	emu_cg_update_hrb	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x18ec	400	emu_start_dma	dwarf+symtab	7ecad3053bdd		out:4	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x18ec	400	emu_start_dma	dwarf+symtab	7ecad3053bdd		out:4	named-only	chips/emu10k2/README.md#creative-emu10k2-audio-controller-pci-11020004-ip35-build-driver-emu_ddo	Creative EMU10K2 audio controller, PCI 1102:0004 (IP35 build driver `emu_dd.o`)
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1a7c	120	emu_stop_dma	dwarf+symtab	9ec8747e3655		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1af4	588	emu_update_dev	dwarf+symtab	6f36adfd8a3b		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1d40	308	postswap	dwarf+symtab	17f203be2995		out:4	undocumented		
@@ -79995,7 +79995,7 @@ IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x29b0	220	emu_voi
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2a8c	300	emu_voice_start	dwarf+symtab	b0f5c0e472c4		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2bb8	240	emu_voice_stop	dwarf+symtab	4f621d131c3a		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2ca8	788	emu_voice_write	dwarf+symtab	b3f759414343		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2fbc	208	emu_voice_setup	dwarf+symtab	73205e3d9481		out:4	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2fbc	208	emu_voice_setup	dwarf+symtab	73205e3d9481		out:4	named-only	chips/emu10k2/README.md#creative-emu10k2-audio-controller-pci-11020004-ip35-build-driver-emu_ddo	Creative EMU10K2 audio controller, PCI 1102:0004 (IP35 build driver `emu_dd.o`)
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x308c	404	emu_memalloc	dwarf+symtab	e337f1695391		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x3220	68	emu_memstart	dwarf+symtab	51db2a41f17b		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x3264	152	emu_rate_to_pitch	dwarf+symtab	e112a03d0708		out:4	undocumented		

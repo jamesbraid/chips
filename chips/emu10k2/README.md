@@ -14,9 +14,10 @@ Mode: **no-spec**. A stub: the probe and the access shape are read, the rest is 
   `+0x1f`), then waits 25 microseconds. The debug dump strings name a STAC97 codec's GPIO register, an AC'97 register
   link-down message, analog input and output, record select, record gain and record mic gain registers, and "voice"
   routines (`emu_voice_*`, `emu_init_efx`, `emu_wrefx`) that load an effects program.
-- **Inferred.** The part is the EMU10K2 of the Audigy. The driver is the IP35 build's candidate for the Tezro tower's onboard
-  audio (the tower guide places audio jacks on the IO daughtercard); no document read here ties `emu_dd` to a product. The hinv
-  string for it is `Iris Audio Processor: version EMU revision %02X, number %d`.
+- **Inferred.** The part is the EMU10K2 of the Audigy. The hinv string for it is `Iris Audio Processor: version EMU revision %02X, number %d`,
+  with revision the PCI revision byte plus `0xa0` (established: `emu_create_subsys` `0x2f0`). Published hinv captures show it on Fuel, Tezro,
+  Origin 300, Origin 350 and Onyx 350 with the Audigy FireWire and game-port functions beside it: an add-in Creative card, not the Tezro tower's
+  onboard audio, and absent from IRIX 6.5.22. Detail and sources: [docs/audio/drivers.md](../../docs/audio/drivers.md).
 - **Unknown.** Every register meaning, the product that carries it, the DMA programming, the interrupt connection (none is
   imported). Route: read `emu_voice_setup`, `emu_start_dma`, `emu_init_efx` in full against the public Linux `emu10k1`
-  driver; find an IRIX hinv from a Tezro or other IP35 machine with an EMU line.
+  driver; find the SGI product name for the card.
