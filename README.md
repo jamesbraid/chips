@@ -6,7 +6,8 @@ Linux and OpenBSD drivers. Software only: no hardware is needed or assumed.
 
 Chips covered (one page each in [chips/](chips/)): Hub (PI, MD, IO, NI), Bedrock, HEART, Xbow,
 Bridge and XBridge, PIC, TIOCP (only if a product carries it), the network router, the router scan-chain tunnel, the L1 and ELSC system
-controllers (host-visible side), IOC3, IOC4, CRIME, MACE, GBE, VICE (presence).
+controllers (host-visible side), IOC3, IOC4, CRIME, MACE, GBE, VICE (presence), and the audio parts of the DMediaPro DM8
+(ICE1724 and its converters, [docs/audio/dm8.md](docs/audio/dm8.md)).
 Builds are named by board, never by product: IP27, IP30, IP32, IP35.
 
 The layout and working style follow Dominik Behr's

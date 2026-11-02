@@ -2567,7 +2567,7 @@ IP35/usr/cpu/sysgen/IP35boot/lofs.a(lofs_icrash.o)	kernel-IP35	kernel-object	obj
 IP35/usr/cpu/sysgen/IP35boot/log.o	kernel-IP35	kernel-object	object	n64	18824	8991eacf457db2b2		12	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ls.o	kernel-IP35	kernel-object	object	n64	202896	dbd69055f358bdd3		126	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/lsidbg.o	kernel-IP35	kernel-object	object	n64	28720	5deb1c9f0b3d7d4d		21	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-IP35	kernel-object	object	n64	61800	905a72a73b035137		61	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-IP35	kernel-object	object	n64	61800	905a72a73b035137		61	symtab	0	0	named-only	chips/ice1724/README.md#viaic-ensemble-ice1724-envy24ht-pci-audio-controller	VIA/IC Ensemble ICE1724 (Envy24HT) PCI audio controller
 IP35/usr/cpu/sysgen/IP35boot/magellan.o	kernel-IP35	kernel-object	object	n64	30632	4a2fd4a502103fd8		16	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mem.o	kernel-IP35	kernel-object	object	n64	15032	1c82fc37a65a3330		12	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mem_alloc.o	kernel-IP35	kernel-object	object	n64	59800	5b2ec6680e49a59b		23	symtab	0	0	undocumented		

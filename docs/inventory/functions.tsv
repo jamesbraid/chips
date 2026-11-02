@@ -45,7 +45,7 @@ IP27/unix	kernel	n64		0x0		IGN_exp	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		IGN_req	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		LOG_TSTAMP_EVENT	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		MD5Transform	dwarf			out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64		0x0		Mem_to_PCI_DMA	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		Mem_to_PCI_DMA	dwarf			out:5	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP27/unix	kernel	n64		0x0		MgrasAttach	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		MgrasCleanTexStruct	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		MgrasCreateDDRN	dwarf			out:5	undocumented		
@@ -1908,42 +1908,42 @@ IP27/unix	kernel	n64		0x0		m_destruct	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		mac_never	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_ac97_mute	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_ac97_read	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_ac97_write	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		mad_ac97_write	dwarf			out:5	named-only	chips/ice1724/README.md#the-ac97-variant-inferred-to-be-unused-by-the-dm8	The AC'97 variant (inferred to be unused by the DM8)
 IP27/unix	kernel	n64		0x0		mad_commit_clockgen_params	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_create_clockgen	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_create_device	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_create_interfaces	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_create_mclks	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_create_subsys	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		mad_create_subsys	dwarf			out:5	named-only	chips/ice1724/README.md#identification	Identification
 IP27/unix	kernel	n64		0x0		mad_disable_ust	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_enable_ust	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_error_handler	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_get_analog_in_if_params	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_get_analog_out_if_params	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_gpio_assert_cs	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_gpio_deassert_cs	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_gpio_mute	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_gpio_read	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_gpio_write	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_gpio_write_bit	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		mad_gpio_assert_cs	dwarf			out:5	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP27/unix	kernel	n64		0x0		mad_gpio_deassert_cs	dwarf			out:5	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP27/unix	kernel	n64		0x0		mad_gpio_mute	dwarf			out:5	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP27/unix	kernel	n64		0x0		mad_gpio_read	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/unix	kernel	n64		0x0		mad_gpio_write	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/unix	kernel	n64		0x0		mad_gpio_write_bit	dwarf			out:5	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP27/unix	kernel	n64		0x0		mad_gpio_write_spi_address	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_gpio_write_spi_register	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		mad_gpio_write_spi_register	dwarf			out:5	named-only	chips/ak4381/README.md#akm-ak4381-stereo-dac-dmediapro-dm8-inferred	AKM AK4381 stereo DAC (DMediaPro DM8, inferred)
 IP27/unix	kernel	n64		0x0		mad_halt_intr_ops	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_i2c_read	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		mad_i2c_read	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP27/unix	kernel	n64		0x0		mad_i2s_mute	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_init_revolution	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		mad_init_revolution	dwarf			out:5	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
 IP27/unix	kernel	n64		0x0		mad_initial_val	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_read_configuration	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_read_eeprom	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		mad_read_configuration	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/unix	kernel	n64		0x0		mad_read_eeprom	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP27/unix	kernel	n64		0x0		mad_reset_ust	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_set_ac97_analog_gain	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_set_analog_in_if_params	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_set_analog_out_if_params	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_set_clockgen_params	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_set_digital_if_params	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_set_eeprom	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_set_i2s_analog_gain	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_set_rate	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		mad_set_eeprom	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/unix	kernel	n64		0x0		mad_set_i2s_analog_gain	dwarf			out:5	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP27/unix	kernel	n64		0x0		mad_set_rate	dwarf			out:5	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64		0x0		mad_set_ust_offset	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_shutdown	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_start_subsys	dwarf			out:5	undocumented		
@@ -4977,7 +4977,7 @@ IP27/unix	kernel	n64	.text	0xc000000000047a7c	40	timepoke	symtab	1e424fe40bbe		o
 IP27/unix	kernel	n64	.text	0xc000000000047b78	60	findcpufreq	symtab	b5277d43ad7c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047bb4	28	early_counter_intr	symtab	7cb237ab37d1		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc000000000047bd0	8	delay_calibrate	symtab	78aa5094d5ec		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP27/unix	kernel	n64	.text	0xc000000000047bd8	52	us_delaybus	symtab	002e4e3e87c9		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000047bd8	52	us_delaybus	symtab	002e4e3e87c9		out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP27/unix	kernel	n64	.text	0xc000000000047c0c	164	us_delay	symtab	9007a56f27f3		in	understood	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/unix	kernel	n64	.text	0xc000000000047cb0	32	atomicAddInt	symtab	c956b29e4c37	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047cb0	32	atomicAddUint	symtab	c956b29e4c37	shared-address	out:5	undocumented		
@@ -6744,19 +6744,19 @@ IP27/unix	kernel	n64	.text	0xc0000000000f73dc	892	idev_ioctl_name	symtab	be74c14
 IP27/unix	kernel	n64	.text	0xc0000000000f7758	424	idev_wput	symtab	475b4316c0b1		out:5	named-only	docs/binaries-scope-kernel-objects.md#scope-questions	Scope questions
 IP27/unix	kernel	n64	.text	0xc0000000000f7d14	108	shmiqDestroy	symtab	6a56cb87b40a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000f89b0	152	shmiq_sproc	symtab	89f742fcc452		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000f8c30	40	mad_init	symtab	4ed3ca97ab38		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000f8c30	40	mad_init	symtab	4ed3ca97ab38		out:5	named-only	chips/ice1724/README.md#identification	Identification
 IP27/unix	kernel	n64	.text	0xc0000000000f8c58	268	mad_ioctl	symtab	7afbd19f3d6d		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000f8d64	8	mad_open	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000f8d6c	8	mad_close	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000f8d74	8	mad_halt	symtab	78aa5094d5ec		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000f8d7c	152	mad_attach	symtab	cd89aafdaf36		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000f8d7c	152	mad_attach	symtab	cd89aafdaf36		out:5	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
 IP27/unix	kernel	n64	.text	0xc0000000000f90ec	8	mad_detach	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000f9884	36	mad_unload	symtab	3b40e50b457d		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000f993c	296	mad_set_device_params	symtab	41db0e24925e		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000f9a64	8	mad_commit_device_params	symtab	78aa5094d5ec		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000f9a6c	424	mad_start_dma	symtab	b699c131c256		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000f9c14	108	mad_stop_dma	symtab	55f03ee0d4d0		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000f9c80	664	mad_update_dev	symtab	0902de71d3cc		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000f9a6c	424	mad_start_dma	symtab	b699c131c256		out:5	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/unix	kernel	n64	.text	0xc0000000000f9c14	108	mad_stop_dma	symtab	55f03ee0d4d0		out:5	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
+IP27/unix	kernel	n64	.text	0xc0000000000f9c80	664	mad_update_dev	symtab	0902de71d3cc		out:5	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
 IP27/unix	kernel	n64	.text	0xc0000000000f9f18	28	mad_get_hw_mscust	symtab	54f6078bd063		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000f9f34	8	mad_pre_connect	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000fa254	8	mad_cg_update_dev	symtab	78aa5094d5ec		out:5	undocumented		
@@ -19405,7 +19405,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e924	212	findcp
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2e9f8	60	findcpufreq	dwarf+symtab	1077e6a0a3bc		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ea34	28	early_counter_intr	dwarf+symtab	264b54ee7fac		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ea50	8	delay_calibrate	dwarf+symtab	78aa5094d5ec		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ea58	52	us_delaybus	dwarf+symtab	fa8dffc9ef68		out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ea58	52	us_delaybus	dwarf+symtab	fa8dffc9ef68		out:6	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ea8c	164	us_delay	dwarf+symtab	86a5d690a86e		out:6	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2eb30	32	atomicAddInt	dwarf+symtab	c956b29e4c37	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2eb30	32	atomicAddUint	symtab	c956b29e4c37	shared-address	out:6	undocumented		
@@ -21142,14 +21142,14 @@ IP27/usr/cpu/sysgen/IP27boot/log.o	kernel-object	n64	.text	0xdd4	168	sendmsg	dwa
 IP27/usr/cpu/sysgen/IP27boot/log.o	kernel-object	n64	.text	0xe7c	192	logtrc	dwarf+symtab	d42f17dd8369		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/log.o	kernel-object	n64	.text	0xf3c	192	logerr	dwarf+symtab	94878a47ecb1		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/log.o	kernel-object	n64	.text	0xffc	212	logcons	dwarf+symtab	c2c6bc9f07d2		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x0	40	mad_init	dwarf+symtab	0e9b71b354fd		out:4	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x0	40	mad_init	dwarf+symtab	0e9b71b354fd		out:4	named-only	chips/ice1724/README.md#identification	Identification
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x28	268	mad_ioctl	dwarf+symtab	307e4f4ff75f		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x134	8	mad_open	dwarf+symtab	87506497337c		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x13c	8	mad_close	dwarf+symtab	87506497337c		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x144	8	mad_halt	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x14c	152	mad_attach	dwarf+symtab	46247149f81a		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1e4	548	mad_create_subsys	dwarf+symtab	2f229ff96c33		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x408	180	mad_read_configuration	dwarf+symtab	a417db4d228b		out:4	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x14c	152	mad_attach	dwarf+symtab	46247149f81a		out:4	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1e4	548	mad_create_subsys	dwarf+symtab	2f229ff96c33		out:4	named-only	chips/ice1724/README.md#identification	Identification
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x408	180	mad_read_configuration	dwarf+symtab	a417db4d228b		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x4bc	8	mad_detach	dwarf+symtab	87506497337c		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x4c4	152	mad_error_handler	dwarf+symtab	2333b5174767		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x55c	452	mad_start_subsys	dwarf+symtab	eedd5bc8a52c		out:4	undocumented		
@@ -21167,12 +21167,12 @@ IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0xc54	36	mad_unloa
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0xc78	148	mad_initial_val	dwarf+symtab	0118b65f45d0		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0xd0c	296	mad_set_device_params	dwarf+symtab	ca8ca3316835		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0xe34	8	mad_commit_device_params	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0xe3c	424	mad_start_dma	dwarf+symtab	f2813af1df7a		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0xfe4	108	mad_stop_dma	dwarf+symtab	55f03ee0d4d0		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1050	664	mad_update_dev	dwarf+symtab	070669706554		out:4	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0xe3c	424	mad_start_dma	dwarf+symtab	f2813af1df7a		out:4	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0xfe4	108	mad_stop_dma	dwarf+symtab	55f03ee0d4d0		out:4	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1050	664	mad_update_dev	dwarf+symtab	070669706554		out:4	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x12e8	28	mad_get_hw_mscust	dwarf+symtab	54f6078bd063		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1304	8	mad_pre_connect	dwarf+symtab	87506497337c		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x130c	68	Mem_to_PCI_DMA	dwarf+symtab	d40a6bf655ee		out:4	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x130c	68	Mem_to_PCI_DMA	dwarf+symtab	d40a6bf655ee		out:4	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1350	344	shiftby8	dwarf+symtab	5d53d618c468		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x14a8	380	mad_create_device	dwarf+symtab	2242a24fb14e		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1624	8	mad_cg_update_dev	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
@@ -21180,27 +21180,27 @@ IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x162c	204	mad_get
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x16f8	248	mad_get_analog_out_if_params	dwarf+symtab	de79c74b6dd3		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x17f0	660	mad_set_ac97_analog_gain	dwarf+symtab	742256228215		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1a84	168	mad_ac97_mute	dwarf+symtab	407ec76ab50b		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1b2c	564	mad_set_i2s_analog_gain	dwarf+symtab	f8daa261eb23		out:4	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1b2c	564	mad_set_i2s_analog_gain	dwarf+symtab	f8daa261eb23		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1d60	188	mad_set_analog_in_if_params	dwarf+symtab	dd1bb694a8d5		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1e1c	276	mad_set_analog_out_if_params	dwarf+symtab	cc12fae4983c		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1f30	72	mad_set_digital_if_params	dwarf+symtab	fb747df92165		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1f78	264	mad_set_clockgen_params	dwarf+symtab	1b701453b525		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2080	400	mad_commit_clockgen_params	dwarf+symtab	8dce4c475fc0		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2210	1280	mad_set_rate	dwarf+symtab	5702f88d4c30		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2710	40	mad_gpio_read	dwarf+symtab	900775cdb83a		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2738	40	mad_gpio_write	dwarf+symtab	ea2f10e17390		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2760	84	mad_gpio_write_bit	dwarf+symtab	701952ab4385		out:4	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2210	1280	mad_set_rate	dwarf+symtab	5702f88d4c30		out:4	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2710	40	mad_gpio_read	dwarf+symtab	900775cdb83a		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2738	40	mad_gpio_write	dwarf+symtab	ea2f10e17390		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2760	84	mad_gpio_write_bit	dwarf+symtab	701952ab4385		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x27b4	204	mad_gpio_write_spi_address	dwarf+symtab	d4131451a06c		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2880	272	mad_gpio_write_spi_register	dwarf+symtab	a8af641b139a		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2990	76	mad_gpio_assert_cs	dwarf+symtab	43d786fdd33c		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x29dc	48	mad_gpio_deassert_cs	dwarf+symtab	d7c7f3d434cf		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2a0c	36	mad_gpio_mute	dwarf+symtab	cfea07e482b2		out:4	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2880	272	mad_gpio_write_spi_register	dwarf+symtab	a8af641b139a		out:4	named-only	chips/ak4381/README.md#akm-ak4381-stereo-dac-dmediapro-dm8-inferred	AKM AK4381 stereo DAC (DMediaPro DM8, inferred)
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2990	76	mad_gpio_assert_cs	dwarf+symtab	43d786fdd33c		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x29dc	48	mad_gpio_deassert_cs	dwarf+symtab	d7c7f3d434cf		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2a0c	36	mad_gpio_mute	dwarf+symtab	cfea07e482b2		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2a30	164	mad_i2s_mute	dwarf+symtab	b3a52d818ebf		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2ad4	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2c70	136	mad_i2c_read	dwarf+symtab	4ccbe9cdf447		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2cf8	516	mad_read_eeprom	dwarf+symtab	bed0117f2b70		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2efc	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x3014	232	mad_ac97_write	dwarf+symtab	f2495c786478		out:4	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2ad4	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2c70	136	mad_i2c_read	dwarf+symtab	4ccbe9cdf447		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2cf8	516	mad_read_eeprom	dwarf+symtab	bed0117f2b70		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2efc	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x3014	232	mad_ac97_write	dwarf+symtab	f2495c786478		out:4	named-only	chips/ice1724/README.md#the-ac97-variant-inferred-to-be-unused-by-the-dm8	The AC'97 variant (inferred to be unused by the DM8)
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x30fc	240	mad_ac97_read	dwarf+symtab	1775dd8c0f7b		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x31ec	392	mad_create_clockgen	dwarf+symtab	74debe93ac7d		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/magellan.o	kernel-object	n64	.text	0x0	168	smLowNibble	dwarf+symtab	a72c262ffe2c		out:4	undocumented		
@@ -26542,7 +26542,7 @@ IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x4fcc	8	rad_error
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x4fd4	152	rad_error_handler	dwarf+symtab	c16c7a56a178		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x506c	52	rad_init	dwarf+symtab	4aecbe5106ff		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x50a0	220	rad_halt	dwarf+symtab	0c8b3d76317a		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x517c	68	Mem_to_PCI_DMA	dwarf+symtab	65f6bc9f8720		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x517c	68	Mem_to_PCI_DMA	dwarf+symtab	65f6bc9f8720		in	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x51c0	628	rad_initial_val	dwarf+symtab	0b3996fb1019		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x5434	936	rad_set_device_params	dwarf+symtab	93402aebb267		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x57dc	8	rad_commit_device_params	dwarf+symtab	78aa5094d5ec		in	undocumented		
@@ -32311,7 +32311,7 @@ IP30/unix	kernel	n64		0x0		IGN_req	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		LOG_TSTAMP_EVENT	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		MD5Transform	dwarf			out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64		0x0		MapKernelRegionIntoUserSpace	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		Mem_to_PCI_DMA	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		Mem_to_PCI_DMA	dwarf			out:7	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP30/unix	kernel	n64		0x0		NewChunkNode	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		RRM_BindProcToRN	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		RRM_BindRNToClip	dwarf			out:7	undocumented		
@@ -34180,42 +34180,42 @@ IP30/unix	kernel	n64		0x0		m_destruct	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		mac_never	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_ac97_mute	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_ac97_read	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_ac97_write	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		mad_ac97_write	dwarf			out:7	named-only	chips/ice1724/README.md#the-ac97-variant-inferred-to-be-unused-by-the-dm8	The AC'97 variant (inferred to be unused by the DM8)
 IP30/unix	kernel	n64		0x0		mad_commit_clockgen_params	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_create_clockgen	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_create_device	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_create_interfaces	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_create_mclks	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_create_subsys	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		mad_create_subsys	dwarf			out:7	named-only	chips/ice1724/README.md#identification	Identification
 IP30/unix	kernel	n64		0x0		mad_disable_ust	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_enable_ust	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_error_handler	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_get_analog_in_if_params	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_get_analog_out_if_params	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_gpio_assert_cs	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_gpio_deassert_cs	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_gpio_mute	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_gpio_read	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_gpio_write	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_gpio_write_bit	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		mad_gpio_assert_cs	dwarf			out:7	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP30/unix	kernel	n64		0x0		mad_gpio_deassert_cs	dwarf			out:7	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP30/unix	kernel	n64		0x0		mad_gpio_mute	dwarf			out:7	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP30/unix	kernel	n64		0x0		mad_gpio_read	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/unix	kernel	n64		0x0		mad_gpio_write	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/unix	kernel	n64		0x0		mad_gpio_write_bit	dwarf			out:7	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP30/unix	kernel	n64		0x0		mad_gpio_write_spi_address	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_gpio_write_spi_register	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		mad_gpio_write_spi_register	dwarf			out:7	named-only	chips/ak4381/README.md#akm-ak4381-stereo-dac-dmediapro-dm8-inferred	AKM AK4381 stereo DAC (DMediaPro DM8, inferred)
 IP30/unix	kernel	n64		0x0		mad_halt_intr_ops	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_i2c_read	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		mad_i2c_read	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP30/unix	kernel	n64		0x0		mad_i2s_mute	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_init_revolution	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		mad_init_revolution	dwarf			out:7	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
 IP30/unix	kernel	n64		0x0		mad_initial_val	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_read_configuration	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_read_eeprom	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		mad_read_configuration	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/unix	kernel	n64		0x0		mad_read_eeprom	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP30/unix	kernel	n64		0x0		mad_reset_ust	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_set_ac97_analog_gain	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_set_analog_in_if_params	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_set_analog_out_if_params	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_set_clockgen_params	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_set_digital_if_params	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_set_eeprom	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_set_i2s_analog_gain	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_set_rate	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		mad_set_eeprom	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/unix	kernel	n64		0x0		mad_set_i2s_analog_gain	dwarf			out:7	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP30/unix	kernel	n64		0x0		mad_set_rate	dwarf			out:7	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64		0x0		mad_set_ust_offset	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_shutdown	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_start_subsys	dwarf			out:7	undocumented		
@@ -36688,7 +36688,7 @@ IP30/unix	kernel	n64	.text	0xa800000020017f00	56	swbcopy	symtab	ba3fe49622f3	sha
 IP30/unix	kernel	n64	.text	0xa800000020017f38	48	rtlock_ownerstamp	symtab	c632b2ea3f49		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020017f68	80	dumpcopy	symtab	9618a71e8fde		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020017fb8	48	delay_calibrate	symtab	c3dbaa4e60b6		out:7	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP30/unix	kernel	n64	.text	0xa800000020017fe8	44	us_delaybus	symtab	08fe7388a305		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020017fe8	44	us_delaybus	symtab	08fe7388a305		out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP30/unix	kernel	n64	.text	0xa800000020018134	164	findcpufreq_hz	symtab	98bb658c0d78		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200181d8	48	cpu_mhz_rating	symtab	89aaa4819e3e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020018208	52	findcpufreq	symtab	5a1247cdcea9		out:7	undocumented		
@@ -38533,19 +38533,19 @@ IP30/unix	kernel	n64	.text	0xa8000000200cf650	892	idev_ioctl_name	symtab	1c4044e
 IP30/unix	kernel	n64	.text	0xa8000000200cf9cc	424	idev_wput	symtab	2e413665bacd		out:7	named-only	docs/binaries-scope-kernel-objects.md#scope-questions	Scope questions
 IP30/unix	kernel	n64	.text	0xa8000000200cff88	108	shmiqDestroy	symtab	13a580ee513e		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d0c24	152	shmiq_sproc	symtab	e0166aa2ee97		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200d0ea4	40	mad_init	symtab	dccb9f160599		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200d0ea4	40	mad_init	symtab	dccb9f160599		out:7	named-only	chips/ice1724/README.md#identification	Identification
 IP30/unix	kernel	n64	.text	0xa8000000200d0ecc	268	mad_ioctl	symtab	c6b1bfeed7f6		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d0fd8	8	mad_open	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d0fe0	8	mad_close	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d0fe8	8	mad_halt	symtab	78aa5094d5ec		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200d0ff0	152	mad_attach	symtab	b22a0ee9ff1b		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200d0ff0	152	mad_attach	symtab	b22a0ee9ff1b		out:7	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
 IP30/unix	kernel	n64	.text	0xa8000000200d1360	8	mad_detach	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d1af8	36	mad_unload	symtab	8831fa1a6958		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d1bb0	296	mad_set_device_params	symtab	ba0a876455ad		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d1cd8	8	mad_commit_device_params	symtab	78aa5094d5ec		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200d1ce0	424	mad_start_dma	symtab	886538a60f4e		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200d1e88	108	mad_stop_dma	symtab	55f03ee0d4d0		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200d1ef4	664	mad_update_dev	symtab	11b4548929b9		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200d1ce0	424	mad_start_dma	symtab	886538a60f4e		out:7	named-only	docs/open-questions.md#open-questions	Open questions
+IP30/unix	kernel	n64	.text	0xa8000000200d1e88	108	mad_stop_dma	symtab	55f03ee0d4d0		out:7	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
+IP30/unix	kernel	n64	.text	0xa8000000200d1ef4	664	mad_update_dev	symtab	11b4548929b9		out:7	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
 IP30/unix	kernel	n64	.text	0xa8000000200d218c	28	mad_get_hw_mscust	symtab	54f6078bd063		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d21a8	8	mad_pre_connect	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d24c8	8	mad_cg_update_dev	symtab	78aa5094d5ec		out:7	undocumented		
@@ -50229,7 +50229,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7d80	56	swbcopy	
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7db8	48	rtlock_ownerstamp	dwarf+symtab	c632b2ea3f49		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7de8	80	dumpcopy	dwarf+symtab	ca2a208dfba3		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7e38	48	delay_calibrate	dwarf+symtab	420d11b29430		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7e68	44	us_delaybus	dwarf+symtab	3a8a0df22292		out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7e68	44	us_delaybus	dwarf+symtab	3a8a0df22292		out:8	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7e94	288	find_pclk_freq	dwarf	0f6b691ace66		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7fb4	164	findcpufreq_hz	dwarf+symtab	cf976c1674db		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8058	48	cpu_mhz_rating	dwarf+symtab	70a483e4d53c		out:8	undocumented		
@@ -51854,14 +51854,14 @@ IP30/usr/cpu/sysgen/IP30boot/log.o	kernel-object	n64	.text	0xdd4	168	sendmsg	dwa
 IP30/usr/cpu/sysgen/IP30boot/log.o	kernel-object	n64	.text	0xe7c	192	logtrc	dwarf+symtab	d42f17dd8369		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/log.o	kernel-object	n64	.text	0xf3c	192	logerr	dwarf+symtab	94878a47ecb1		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/log.o	kernel-object	n64	.text	0xffc	212	logcons	dwarf+symtab	c2c6bc9f07d2		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x0	40	mad_init	dwarf+symtab	0e9b71b354fd		out:4	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x0	40	mad_init	dwarf+symtab	0e9b71b354fd		out:4	named-only	chips/ice1724/README.md#identification	Identification
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x28	268	mad_ioctl	dwarf+symtab	307e4f4ff75f		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x134	8	mad_open	dwarf+symtab	87506497337c		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x13c	8	mad_close	dwarf+symtab	87506497337c		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x144	8	mad_halt	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x14c	152	mad_attach	dwarf+symtab	46247149f81a		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1e4	548	mad_create_subsys	dwarf+symtab	2f229ff96c33		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x408	180	mad_read_configuration	dwarf+symtab	a417db4d228b		out:4	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x14c	152	mad_attach	dwarf+symtab	46247149f81a		out:4	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1e4	548	mad_create_subsys	dwarf+symtab	2f229ff96c33		out:4	named-only	chips/ice1724/README.md#identification	Identification
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x408	180	mad_read_configuration	dwarf+symtab	a417db4d228b		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x4bc	8	mad_detach	dwarf+symtab	87506497337c		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x4c4	152	mad_error_handler	dwarf+symtab	2333b5174767		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x55c	452	mad_start_subsys	dwarf+symtab	eedd5bc8a52c		out:4	undocumented		
@@ -51879,12 +51879,12 @@ IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0xc54	36	mad_unloa
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0xc78	148	mad_initial_val	dwarf+symtab	0118b65f45d0		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0xd0c	296	mad_set_device_params	dwarf+symtab	ca8ca3316835		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0xe34	8	mad_commit_device_params	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0xe3c	424	mad_start_dma	dwarf+symtab	f2813af1df7a		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0xfe4	108	mad_stop_dma	dwarf+symtab	55f03ee0d4d0		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1050	664	mad_update_dev	dwarf+symtab	070669706554		out:4	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0xe3c	424	mad_start_dma	dwarf+symtab	f2813af1df7a		out:4	named-only	docs/open-questions.md#open-questions	Open questions
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0xfe4	108	mad_stop_dma	dwarf+symtab	55f03ee0d4d0		out:4	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1050	664	mad_update_dev	dwarf+symtab	070669706554		out:4	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x12e8	28	mad_get_hw_mscust	dwarf+symtab	54f6078bd063		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1304	8	mad_pre_connect	dwarf+symtab	87506497337c		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x130c	68	Mem_to_PCI_DMA	dwarf+symtab	d40a6bf655ee		out:4	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x130c	68	Mem_to_PCI_DMA	dwarf+symtab	d40a6bf655ee		out:4	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1350	344	shiftby8	dwarf+symtab	5d53d618c468		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x14a8	380	mad_create_device	dwarf+symtab	2242a24fb14e		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1624	8	mad_cg_update_dev	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
@@ -51892,27 +51892,27 @@ IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x162c	204	mad_get
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x16f8	248	mad_get_analog_out_if_params	dwarf+symtab	de79c74b6dd3		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x17f0	660	mad_set_ac97_analog_gain	dwarf+symtab	742256228215		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1a84	168	mad_ac97_mute	dwarf+symtab	407ec76ab50b		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1b2c	564	mad_set_i2s_analog_gain	dwarf+symtab	f8daa261eb23		out:4	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1b2c	564	mad_set_i2s_analog_gain	dwarf+symtab	f8daa261eb23		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1d60	188	mad_set_analog_in_if_params	dwarf+symtab	dd1bb694a8d5		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1e1c	276	mad_set_analog_out_if_params	dwarf+symtab	cc12fae4983c		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1f30	72	mad_set_digital_if_params	dwarf+symtab	fb747df92165		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1f78	264	mad_set_clockgen_params	dwarf+symtab	1b701453b525		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2080	400	mad_commit_clockgen_params	dwarf+symtab	8dce4c475fc0		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2210	1280	mad_set_rate	dwarf+symtab	5702f88d4c30		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2710	40	mad_gpio_read	dwarf+symtab	900775cdb83a		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2738	40	mad_gpio_write	dwarf+symtab	ea2f10e17390		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2760	84	mad_gpio_write_bit	dwarf+symtab	701952ab4385		out:4	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2210	1280	mad_set_rate	dwarf+symtab	5702f88d4c30		out:4	named-only	docs/open-questions.md#open-questions	Open questions
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2710	40	mad_gpio_read	dwarf+symtab	900775cdb83a		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2738	40	mad_gpio_write	dwarf+symtab	ea2f10e17390		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2760	84	mad_gpio_write_bit	dwarf+symtab	701952ab4385		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x27b4	204	mad_gpio_write_spi_address	dwarf+symtab	d4131451a06c		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2880	272	mad_gpio_write_spi_register	dwarf+symtab	a8af641b139a		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2990	76	mad_gpio_assert_cs	dwarf+symtab	43d786fdd33c		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x29dc	48	mad_gpio_deassert_cs	dwarf+symtab	d7c7f3d434cf		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2a0c	36	mad_gpio_mute	dwarf+symtab	cfea07e482b2		out:4	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2880	272	mad_gpio_write_spi_register	dwarf+symtab	a8af641b139a		out:4	named-only	chips/ak4381/README.md#akm-ak4381-stereo-dac-dmediapro-dm8-inferred	AKM AK4381 stereo DAC (DMediaPro DM8, inferred)
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2990	76	mad_gpio_assert_cs	dwarf+symtab	43d786fdd33c		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x29dc	48	mad_gpio_deassert_cs	dwarf+symtab	d7c7f3d434cf		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2a0c	36	mad_gpio_mute	dwarf+symtab	cfea07e482b2		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2a30	164	mad_i2s_mute	dwarf+symtab	b3a52d818ebf		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2ad4	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2c70	136	mad_i2c_read	dwarf+symtab	4ccbe9cdf447		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2cf8	516	mad_read_eeprom	dwarf+symtab	bed0117f2b70		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2efc	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x3014	232	mad_ac97_write	dwarf+symtab	f2495c786478		out:4	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2ad4	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2c70	136	mad_i2c_read	dwarf+symtab	4ccbe9cdf447		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2cf8	516	mad_read_eeprom	dwarf+symtab	bed0117f2b70		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2efc	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x3014	232	mad_ac97_write	dwarf+symtab	f2495c786478		out:4	named-only	chips/ice1724/README.md#the-ac97-variant-inferred-to-be-unused-by-the-dm8	The AC'97 variant (inferred to be unused by the DM8)
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x30fc	240	mad_ac97_read	dwarf+symtab	1775dd8c0f7b		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x31ec	392	mad_create_clockgen	dwarf+symtab	74debe93ac7d		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/magellan.o	kernel-object	n64	.text	0x0	168	smLowNibble	dwarf+symtab	a72c262ffe2c		out:4	undocumented		
@@ -56597,7 +56597,7 @@ IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4dfc	8	rad_error
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4e04	152	rad_error_handler	dwarf+symtab	8a37a66284eb		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4e9c	56	rad_init	dwarf+symtab	4464d79e7480		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4ed4	220	rad_halt	dwarf+symtab	3770707f023f		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4fb0	68	Mem_to_PCI_DMA	dwarf+symtab	65f6bc9f8720		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4fb0	68	Mem_to_PCI_DMA	dwarf+symtab	65f6bc9f8720		in	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4ff4	628	rad_initial_val	dwarf+symtab	35dd8afd0a01		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x5268	924	rad_set_device_params	dwarf+symtab	1af7ea574497		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x5604	8	rad_commit_device_params	dwarf+symtab	78aa5094d5ec		in	undocumented		
@@ -66619,7 +66619,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x139a4	64	andb_rm
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x139e4	68	andh_rmw	symtab	44a120cf0c61		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13a28	64	andw_rmw	symtab	dc2a06744728		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13a68	192	us_delay	symtab	8c6ff9fa15ec		out:9	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13b28	52	us_delaybus	symtab	02b81e9fe9b2		out:9	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13b28	52	us_delaybus	symtab	02b81e9fe9b2		out:9	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13b5c	28	cache_preempt_limit	symtab	34d7a2e33b85		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13b78	656	findcpufreq_raw	symtab	4d1c1b9e4b1f		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13e08	60	findcpufreq	symtab	0195442af336		out:9	undocumented		
@@ -72884,7 +72884,7 @@ IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x4fc0	8	rad_error
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x4fc8	172	rad_error_handler	dwarf+funcnames+symtab	4aedd3595032		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x5074	52	rad_init	dwarf+symtab	287a528ea7ce		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x50a8	244	rad_halt	dwarf+symtab	c0541647488a		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x519c	68	Mem_to_PCI_DMA	dwarf+funcnames+symtab	5ce1633c7ec5		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x519c	68	Mem_to_PCI_DMA	dwarf+funcnames+symtab	5ce1633c7ec5		in	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x51e0	632	rad_initial_val	dwarf+funcnames+symtab	0c31c3d1d6fd		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x5458	952	rad_set_device_params	dwarf+symtab	8a2ea33751ad		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x5810	8	rad_commit_device_params	dwarf+symtab	78aa5094d5ec		in	undocumented		
@@ -79974,7 +79974,7 @@ IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x10c8	572	emu_set
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1304	104	emu_ac97_mute	dwarf+symtab	07975a30f8c4		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x136c	28	emu_shutdown	dwarf+symtab	a86de4a9d7a4		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1388	8	emu_update_subsys	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1390	68	Mem_to_PCI_DMA	dwarf+symtab	d40a6bf655ee		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1390	68	Mem_to_PCI_DMA	dwarf+symtab	d40a6bf655ee		out:4	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x13d4	100	Mem_to_PCI_DMA_Direct	dwarf+symtab	4e7eb13e0662		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1438	688	emu_create_device	dwarf+symtab	d8c603e11384		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x16e8	324	emu_set_device_params	dwarf+symtab	f443bc4254b1		out:4	undocumented		
@@ -84188,7 +84188,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2973c	252	findcp
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29838	60	findcpufreq	dwarf+symtab	d2a452279285		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29874	28	early_counter_intr	dwarf+symtab	264b54ee7fac		in	located	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29890	8	delay_calibrate	dwarf+symtab	78aa5094d5ec		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29898	52	us_delaybus	dwarf+symtab	fa8dffc9ef68		out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29898	52	us_delaybus	dwarf+symtab	fa8dffc9ef68		out:11	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x298cc	216	us_delay	dwarf+symtab	c50f4e303444		in	located	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x299b0	28	atomicAddInt	dwarf+symtab	fc57e68455bd	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x299b0	28	atomicAddUint	symtab	fc57e68455bd	shared-address	out:11	undocumented		
@@ -86165,14 +86165,14 @@ IP35/usr/cpu/sysgen/IP35boot/lsidbg.o	kernel-object	n64	.text	0xfc0	176	idbg_lsh
 IP35/usr/cpu/sysgen/IP35boot/lsidbg.o	kernel-object	n64	.text	0x1070	368	idbg_lsissued	dwarf+symtab	0a9b78563ccb		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/lsidbg.o	kernel-object	n64	.text	0x11e0	268	idbg_lscmd	dwarf+symtab	177fd6664944		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/lsidbg.o	kernel-object	n64	.text	0x12ec	184	ls_dump_frm	dwarf+symtab	7d15bc43af09		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x0	40	mad_init	dwarf+symtab	0e9b71b354fd		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x0	40	mad_init	dwarf+symtab	0e9b71b354fd		out:4	named-only	chips/ice1724/README.md#identification	Identification
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x28	268	mad_ioctl	dwarf+symtab	15a2f93bdc9d		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x134	8	mad_open	dwarf+symtab	87506497337c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x13c	8	mad_close	dwarf+symtab	87506497337c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x144	8	mad_halt	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x14c	152	mad_attach	dwarf+symtab	46247149f81a		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1e4	560	mad_create_subsys	dwarf+symtab	5fdc2bc3de66		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x414	180	mad_read_configuration	dwarf+symtab	d5cb4b60410b		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x14c	152	mad_attach	dwarf+symtab	46247149f81a		out:4	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1e4	560	mad_create_subsys	dwarf+symtab	5fdc2bc3de66		out:4	named-only	chips/ice1724/README.md#identification	Identification
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x414	180	mad_read_configuration	dwarf+symtab	d5cb4b60410b		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x4c8	8	mad_detach	dwarf+symtab	87506497337c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x4d0	152	mad_error_handler	dwarf+symtab	2333b5174767		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x568	452	mad_start_subsys	dwarf+symtab	dcc45a090a96		out:4	undocumented		
@@ -86190,12 +86190,12 @@ IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0xc60	36	mad_unloa
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0xc84	148	mad_initial_val	dwarf+symtab	0738a8c97d73		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0xd18	296	mad_set_device_params	dwarf+symtab	c31000a2c403		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0xe40	8	mad_commit_device_params	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0xe48	424	mad_start_dma	dwarf+symtab	667e46cbf09e		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0xff0	108	mad_stop_dma	dwarf+symtab	7f856f0351a7		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x105c	740	mad_update_dev	dwarf+symtab	91ade7a6ab8a		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0xe48	424	mad_start_dma	dwarf+symtab	667e46cbf09e		out:4	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0xff0	108	mad_stop_dma	dwarf+symtab	7f856f0351a7		out:4	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x105c	740	mad_update_dev	dwarf+symtab	91ade7a6ab8a		out:4	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1340	28	mad_get_hw_mscust	dwarf+symtab	54f6078bd063		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x135c	8	mad_pre_connect	dwarf+symtab	87506497337c		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1364	68	Mem_to_PCI_DMA	dwarf+symtab	d40a6bf655ee		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1364	68	Mem_to_PCI_DMA	dwarf+symtab	d40a6bf655ee		out:4	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x13a8	344	shiftby8	dwarf+symtab	5d53d618c468		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1500	380	mad_create_device	dwarf+symtab	2242a24fb14e		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x167c	8	mad_cg_update_dev	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
@@ -86203,27 +86203,27 @@ IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1684	204	mad_get
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1750	248	mad_get_analog_out_if_params	dwarf+symtab	2158054747be		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1848	660	mad_set_ac97_analog_gain	dwarf+symtab	925b93c474fc		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1adc	168	mad_ac97_mute	dwarf+symtab	2eef2fa41554		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1b84	564	mad_set_i2s_analog_gain	dwarf+symtab	77fc8fd98b72		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1b84	564	mad_set_i2s_analog_gain	dwarf+symtab	77fc8fd98b72		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1db8	188	mad_set_analog_in_if_params	dwarf+symtab	dd1bb694a8d5		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1e74	276	mad_set_analog_out_if_params	dwarf+symtab	5dab7583490a		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1f88	72	mad_set_digital_if_params	dwarf+symtab	fb747df92165		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1fd0	264	mad_set_clockgen_params	dwarf+symtab	1308dedc94b3		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x20d8	400	mad_commit_clockgen_params	dwarf+symtab	f04b8cd676e1		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2268	1280	mad_set_rate	dwarf+symtab	04597ea600e3		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2768	40	mad_gpio_read	dwarf+symtab	900775cdb83a		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2790	40	mad_gpio_write	dwarf+symtab	ea2f10e17390		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x27b8	84	mad_gpio_write_bit	dwarf+symtab	701952ab4385		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2268	1280	mad_set_rate	dwarf+symtab	04597ea600e3		out:4	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2768	40	mad_gpio_read	dwarf+symtab	900775cdb83a		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2790	40	mad_gpio_write	dwarf+symtab	ea2f10e17390		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x27b8	84	mad_gpio_write_bit	dwarf+symtab	701952ab4385		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x280c	204	mad_gpio_write_spi_address	dwarf+symtab	d4131451a06c		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x28d8	272	mad_gpio_write_spi_register	dwarf+symtab	22ed8896f1ed		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x29e8	76	mad_gpio_assert_cs	dwarf+symtab	43d786fdd33c		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2a34	48	mad_gpio_deassert_cs	dwarf+symtab	d7c7f3d434cf		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2a64	36	mad_gpio_mute	dwarf+symtab	cfea07e482b2		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x28d8	272	mad_gpio_write_spi_register	dwarf+symtab	22ed8896f1ed		out:4	named-only	chips/ak4381/README.md#akm-ak4381-stereo-dac-dmediapro-dm8-inferred	AKM AK4381 stereo DAC (DMediaPro DM8, inferred)
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x29e8	76	mad_gpio_assert_cs	dwarf+symtab	43d786fdd33c		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2a34	48	mad_gpio_deassert_cs	dwarf+symtab	d7c7f3d434cf		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2a64	36	mad_gpio_mute	dwarf+symtab	cfea07e482b2		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2a88	164	mad_i2s_mute	dwarf+symtab	6db938e1021b		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2b2c	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2cc8	136	mad_i2c_read	dwarf+symtab	4ccbe9cdf447		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2d50	516	mad_read_eeprom	dwarf+symtab	bed0117f2b70		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2f54	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x306c	236	mad_ac97_write	dwarf+symtab	bb203b84d46a		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2b2c	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2cc8	136	mad_i2c_read	dwarf+symtab	4ccbe9cdf447		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2d50	516	mad_read_eeprom	dwarf+symtab	bed0117f2b70		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2f54	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x306c	236	mad_ac97_write	dwarf+symtab	bb203b84d46a		out:4	named-only	chips/ice1724/README.md#the-ac97-variant-inferred-to-be-unused-by-the-dm8	The AC'97 variant (inferred to be unused by the DM8)
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x3158	244	mad_ac97_read	dwarf+symtab	b4572a2b8b5c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x324c	392	mad_create_clockgen	dwarf+symtab	ac1a0e01941b		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/magellan.o	kernel-object	n64	.text	0x0	168	smLowNibble	dwarf+symtab	a72c262ffe2c		out:4	undocumented		
@@ -91285,7 +91285,7 @@ IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5070	8	rad_error
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5078	152	rad_error_handler	dwarf+symtab	258b0512bf46		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5110	76	rad_init	dwarf+symtab	1cbed863cebc		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x515c	220	rad_halt	dwarf+symtab	0c8b3d76317a		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5238	68	Mem_to_PCI_DMA	dwarf+symtab	65f6bc9f8720		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5238	68	Mem_to_PCI_DMA	dwarf+symtab	65f6bc9f8720		in	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x527c	628	rad_initial_val	dwarf+symtab	9f1a2a6dce4d		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x54f0	940	rad_set_device_params	dwarf+symtab	295918a0366b		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x589c	8	rad_commit_device_params	dwarf+symtab	78aa5094d5ec		in	undocumented		
@@ -97242,7 +97242,7 @@ sbin/stand/sash64	diagnostic	n64	.text	0x3ce4	148	cpufreq	symtab	406aea718b94		o
 sbin/stand/sash64	diagnostic	n64	.text	0x3d78	68	businfo	symtab	185d826d7773		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x3dbc	40	isatty	symtab	b759225b34db		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x3de4	40	iscloseonexec	symtab	9e17815ac86b		out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x3e0c	384	hinv	symtab	0db6767835f2		out:4	named-only	docs/published-sources.md#public-sources-other-than-the-specifications	Public sources other than the specifications
+sbin/stand/sash64	diagnostic	n64	.text	0x3e0c	384	hinv	symtab	0db6767835f2		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 sbin/stand/sash64	diagnostic	n64	.text	0x5188	44	Open	symtab	65b2b94d4c15		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x51b4	44	Close	symtab	14181ed4c37f		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x51e0	44	Read	symtab	130a77d2f89e		out:4	undocumented		
@@ -97577,7 +97577,7 @@ sbin/stand/symmon.IP32	diagnostic	n32		0x0		cpu_get_membase	dwarf+funcnames			ou
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		create_rb	dwarf+funcnames			out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		csum_getc	dwarf+funcnames			out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		csum_putc	dwarf+funcnames			out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32		0x0		deassert	dwarf+funcnames			out:15	undocumented		
+sbin/stand/symmon.IP32	diagnostic	n32		0x0		deassert	dwarf+funcnames			out:15	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		delay_calibrate	dwarf+funcnames			out:15	named-only	chips/crime/README.md#graded-register-table	Graded register table
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		do_it	dwarf+funcnames			out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32		0x0		doop	dwarf+funcnames			out:15	undocumented		
