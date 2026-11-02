@@ -565,10 +565,12 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
   eight routines in an 8708-byte member. `disksort` (272 bytes) and `macsisort` (760 bytes) order queued requests,
   `fair_disk_dequeue` (648 bytes) takes the next one, and `nosort` (48 bytes) keeps arrival order. `vh_checksum`
   (80 bytes) and `is_vh` (60 bytes) check a volume header. The member imports no other routine.
-- `IP27/usr/cpu/sysgen/IP27boot/io.a(dma.o)` (inferred): the mapping of kernel buffers for DMA, six routines in a
-  9140-byte member. `iomap` (52 bytes) and `iomap_vector` (440 bytes) map a buffer for a device, `mapkvector` (432
-  bytes) maps a vector of kernel pages, and `iounmap` (108 bytes), `unmaputokv` (48 bytes) and `maputokv` (184
-  bytes) undo or build the kernel mapping. It imports `pg_setcachable` and `pte_cachebits` for the cache
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(dma.o)` (inferred): the mapping of a buffer's pages into kernel virtual space, six
+  routines in a 9140-byte member. `iomap` (52 bytes) passes a buffer record to `iomap_vector` (440 bytes), which
+  allocates kernel virtual pages with `kvalloc`, enters the buffer's pages with `maputokptbl` (or returns a direct
+  address for a one-page buffer) and sets a mapped flag in the record. `mapkvector` (432 bytes) copies a vector of
+  page-table entries into the kernel table, and `iounmap` (108 bytes) and `unmaputokv` (48 bytes) free the virtual
+  pages, while `maputokv` (184 bytes) maps a user range. No DMA is programmed and no chip register is touched. It imports `pg_setcachable` and `pte_cachebits` for the cache
   attributes, and `kptbl` for the page table.
 - `IP27/usr/cpu/sysgen/IP27boot/io.a(sgset.o)` (inferred): a single-routine wrapper, `sgset` (104 bytes), in a
   3588-byte member. Its only import is `kvsgset`. It drives no chip.
