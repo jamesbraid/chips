@@ -28,6 +28,16 @@ which choose among Bridge, XBridge, PIC and TIOCP at run time as described in [c
   `_addr_space_init`, `_device_init`, `_guest_info_init`), `pcibr_initial_rrb` (and `pcibr_rrb_alloc_init` for a card with the "030-1275-"
   prefix), the per-slot device attach and `pciio_device_attach`. Established for the order and constants above. Inferred: the role of
   the record fields, from their later users and the debug strings.
+- `pcibr_open` (`IP27/unix` at 0xc0000000000713b0)
+  occupies 52 bytes. It is a capability check with the same 13 words as `xbow_open`, which is described in
+  [chips/xbow](../chips/xbow/README.md).
+  Both call `cap_able_cred` at 0xc000000000287350.
+  It moves its fourth argument into `a0` as the credential.
+  It sets `a1` to the mask 0x2000000000, which is 1 shifted left by 37.
+  The `dsll32` in the call's delay slot builds that mask.
+  It returns 1 when `cap_able_cred` returns zero and 0 otherwise.
+  On that path, the `li` at 0xc0000000000713e0 is the delay slot of the `b` at 0xc0000000000713dc.
+  Established: the whole body was read, and its words were compared with the `xbow_open` body.
 - `pcibr_alloc_all_rrbs` (`IP27/unix` at 0xc000000000077074,
   980 bytes) sets the read-response-buffer assignment of one PCI bus controller from per-device counts. It takes the controller vertex in `a0`
   and the bus number in `a1`; the device counts for the four device groups are `a2`, `a4`, `a6` and the first stack argument, and the counts reserved

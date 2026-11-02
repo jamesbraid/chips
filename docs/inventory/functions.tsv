@@ -5675,7 +5675,7 @@ IP27/unix	kernel	n64	.text	0xc000000000070358	84	xbridge_init	symtab	10cef64243d
 IP27/unix	kernel	n64	.text	0xc0000000000703ac	2592	xbridge_attach	symtab	8a0a9a94c2bf		in	understood	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc000000000070dcc	32	pciiox_init	symtab	d758318c4cf2		in	located	chips/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP27/unix	kernel	n64	.text	0xc0000000000712e4	176	pcibr_release_device	symtab	b69c4c63f9c9		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000713b0	52	pcibr_open	symtab	5562a4a4159c		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000713b0	52	pcibr_open	symtab	5562a4a4159c		in	understood	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc0000000000713e4	8	pcibr_close	symtab	87506497337c		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000713ec	204	pcibr_map	symtab	59f13e6e7ce9		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP27/unix	kernel	n64	.text	0xc0000000000714b8	120	pcibr_unmap	symtab	1d2c5b901ceb		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
@@ -25460,7 +25460,7 @@ IP27/usr/cpu/sysgen/IP27boot/pciba.o	kernel-object	n64	.text	0x2e98	112	pciba_in
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x0	1188	pcibr_try_set_device	dwarf	f19be39b8ded		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4a4	176	pcibr_release_device	dwarf+symtab	73215fb2e87f		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x554	28	pcibr_device_write_gather_flush	dwarf	a86de4a9d7a4		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x570	52	pcibr_open	dwarf+symtab	35d319e54c3b		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x570	52	pcibr_open	dwarf+symtab	35d319e54c3b		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x5a4	8	pcibr_close	dwarf+symtab	87506497337c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x5ac	204	pcibr_map	dwarf+symtab	b9f594672535		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x678	120	pcibr_unmap	dwarf+symtab	37682d43ef18		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
@@ -37440,7 +37440,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200420b0	84	xbridge_init	symtab	659a7539909
 IP30/unix	kernel	n64	.text	0xa800000020042104	2496	xbridge_attach	symtab	2a3e050597b7		in	understood	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa800000020042ac4	32	pciiox_init	symtab	1956994af984		in	located	chips/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP30/unix	kernel	n64	.text	0xa800000020042fe4	176	pcibr_release_device	symtab	f06e3a413842		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200430b0	52	pcibr_open	symtab	f3ba3e562f07		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200430b0	52	pcibr_open	symtab	f3ba3e562f07		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/unix	kernel	n64	.text	0xa8000000200430e4	8	pcibr_close	symtab	87506497337c		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200430ec	204	pcibr_map	symtab	df558ebd7bc7		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP30/unix	kernel	n64	.text	0xa8000000200431b8	120	pcibr_unmap	symtab	617bdca04d38		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
@@ -55579,7 +55579,7 @@ IP30/usr/cpu/sysgen/IP30boot/pciba.o	kernel-object	n64	.text	0x2e98	112	pciba_in
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x0	1188	pcibr_try_set_device	dwarf	f19be39b8ded		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x4a4	176	pcibr_release_device	dwarf+symtab	73215fb2e87f		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x554	28	pcibr_device_write_gather_flush	dwarf	a86de4a9d7a4		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x570	52	pcibr_open	dwarf+symtab	35d319e54c3b		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x570	52	pcibr_open	dwarf+symtab	35d319e54c3b		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x5a4	8	pcibr_close	dwarf+symtab	87506497337c		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x5ac	204	pcibr_map	dwarf+symtab	b9f594672535		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x678	120	pcibr_unmap	dwarf+symtab	37682d43ef18		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
@@ -82606,12 +82606,12 @@ IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0xbe8	88	ioc4_is_con
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0xc40	780	ioc4_error_handler	dwarf+symtab	5cf6a209cfd4		in	named-only	chips/ioc4/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0xf4c	72	ioc4_intrd	dwarf+symtab	31506a4cc6e8		in	named-only	chips/ioc4/README.md#open	Open
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0xf94	128	ioc4_intrd_setup	dwarf+symtab	1ac420bfe4fe		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x1014	24	ioc4_console_vhdl_get	dwarf+symtab	66cfe618a1a5		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x102c	176	ioc4_subdev_ptr	dwarf+symtab	d35d12bec63b		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x1014	24	ioc4_console_vhdl_get	dwarf+symtab	66cfe618a1a5		in	understood	chips/ioc4/README.md#routines-in-the-ip35-ioc4o-build	Routines in the IP35 `ioc4.o` build
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x102c	176	ioc4_subdev_ptr	dwarf+symtab	d35d12bec63b		in	named-only	chips/ioc4/README.md#routines-in-the-ip35-ioc4o-build	Routines in the IP35 `ioc4.o` build
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x10dc	72	ioc4_subdev_enabled	dwarf+symtab	8e8f24c50ce2		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x1124	44	ioc4_subdev_enables	dwarf+symtab	841abe9a6cda		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x1150	68	ioc4_subdev_enable	dwarf+symtab	b0f943f344f1		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x1194	72	ioc4_subdev_disable	dwarf+symtab	d903b08c4e8d		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x1124	44	ioc4_subdev_enables	dwarf+symtab	841abe9a6cda		in	understood	chips/ioc4/README.md#routines-in-the-ip35-ioc4o-build	Routines in the IP35 `ioc4.o` build
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x1150	68	ioc4_subdev_enable	dwarf+symtab	b0f943f344f1		in	understood	chips/ioc4/README.md#routines-in-the-ip35-ioc4o-build	Routines in the IP35 `ioc4.o` build
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x1194	72	ioc4_subdev_disable	dwarf+symtab	d903b08c4e8d		in	understood	chips/ioc4/README.md#routines-in-the-ip35-ioc4o-build	Routines in the IP35 `ioc4.o` build
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x11dc	8	ioc4_mem_ptr	dwarf+symtab	5168f5d3aa16		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x11e4	32	ioc4_get_mem	dwarf+symtab	3065351aaba1		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ioc4_ei.o	kernel-object	n64	.text	0x0	156	ei_make_hwgraph_nodes	dwarf+symtab	9af6cc9ce1f6		in	undocumented		
@@ -90241,7 +90241,7 @@ IP35/usr/cpu/sysgen/IP35boot/pciba.o	kernel-object	n64	.text	0x2e98	112	pciba_in
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x0	1188	pcibr_try_set_device	dwarf	359ecbd2f483		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x4a4	176	pcibr_release_device	dwarf+symtab	b37b0f9951ec		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x554	28	pcibr_device_write_gather_flush	dwarf	a86de4a9d7a4		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x570	52	pcibr_open	dwarf+symtab	35d319e54c3b		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x570	52	pcibr_open	dwarf+symtab	35d319e54c3b		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x5a4	8	pcibr_close	dwarf+symtab	87506497337c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x5ac	204	pcibr_map	dwarf+symtab	b9f594672535		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x678	120	pcibr_unmap	dwarf+symtab	37682d43ef18		in	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
