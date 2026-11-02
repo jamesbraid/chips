@@ -1,2 +1,5 @@
 irix-657m-src	public submodule holding the IRIX 6.5.7 sources
 qemu-irix	public third-party tree whose system call numbers are cross-checked
+/products/storage/	path of a public sgi.com web page in a saved vendor page or in a commit message about it
+/storage/ only matches	message of an already-pushed commit about the leak check itself
+"Generated with Claude"	message of an already-pushed commit quoting the banned banner text
