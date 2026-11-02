@@ -1,5 +1,5 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
-binaries	3092	0	603	0	603	3	4	144	2341	0	19.5	19.6	24.3	19.5							0			
+binaries	3092	0	625	0	625	3	4	144	2319	0	20.2	20.3	25.0	20.2							0			
 functions	6301	91992	827	116	655	9	856	1432	3186	0	13.1	26.7	49.4	13.1			85.0	20	2026-11-02		0	0	16	
 functions (distinct names)	2481	21770	549	115	545	9	12	557	1363	0	22.1	22.6	45.1	22.1							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			

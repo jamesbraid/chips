@@ -537,6 +537,113 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
   and mode bits, and `ipc_init` starts the table. `irix5_to_ipc_perm` and `ipc_perm_to_irix5` (60 bytes each) convert
   the permission structure for IRIX 5 callers. It calls `mutex_lock` and `mutex_unlock`, and imports the access checks
   `cap_able_cred`, `groupmember` and `sat_svipc_access`. No device is driven. Rule 3 excludes the five routines.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(alenlist.o)` (inferred): the address-and-length list library for
+  scatter-gather transfers, 22 routines in a 15540-byte member. `alenlist_create` (104 bytes) and `alenlist_grow`
+  (168 bytes) build and extend a list, `alenlist_append` (352 bytes) and `alenlist_replace` (172 bytes) edit it,
+  `alenlist_get` (428 bytes) reads an entry, and `kvaddr_to_alenlist` (372 bytes) turns a kernel virtual range
+  into a list. `alenlist_cursor_init` (228 bytes) starts a cursor over it. Storage comes from the zone allocator
+  (`kmem_zone_alloc`, `kmem_zone_init`), and `kvtophys` gives the physical addresses. It drives no chip. Rule 3
+  excludes the 22 routines.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(ddi.o)` (inferred): the device-driver support calls, 29 routines in a
+  17972-byte member. `makedevice` (24 bytes), `getmajor` (28 bytes), `getminor` (16 bytes) and
+  `etoimajor` (112 bytes) convert between device numbers, `splstr`, `spltimeout` and
+  `spldisk` (28 bytes each) wrap the priority levels, and `drv_getparm` (404 bytes) and `drv_setparm` (260 bytes)
+  read and write the system parameters a driver needs. `physiock` (356 bytes) is the raw-device transfer entry and
+  `drv_priv` (36 bytes) tests for the superuser. It imports `cap_able_cred` and the switch lookups
+  `hwgraph_cdevsw_get` and `hwgraph_bdevsw_get`. No chip is driven.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)` (inferred): the device descriptors and the driver
+  administration tables, 47 routines in a 32500-byte member. `device_desc_dup` (160 bytes) and
+  `device_desc_default_set` (184 bytes) copy and set a device's descriptor, the `edt_*_get` accessors (8 bytes
+  each) read its fields, and `dev_admin_registry_add` (296 bytes) and `device_admin_info_set` (320 bytes) fill the
+  administration table. `device_driver_getbydev` (356 bytes) looks a driver up, and
+  `device_driver_sysgen_thread_pri_get` (436 bytes) reads a driver's thread priority from the system
+  configuration. Interrupt priorities come from named tables such as `disk_intr_pri` and `serial_intr_pri`. It
+  imports the hardware-graph calls and the string-table routines. No chip is driven.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(disksub.o)` (inferred): the disk request ordering and volume-header checks,
+  eight routines in an 8708-byte member. `disksort` (272 bytes) and `macsisort` (760 bytes) order queued requests,
+  `fair_disk_dequeue` (648 bytes) takes the next one, and `nosort` (48 bytes) keeps arrival order. `vh_checksum`
+  (80 bytes) and `is_vh` (60 bytes) check a volume header. The member imports no other routine.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(dma.o)` (inferred): the mapping of kernel buffers for DMA, six routines in a
+  9140-byte member. `iomap` (52 bytes) and `iomap_vector` (440 bytes) map a buffer for a device, `mapkvector` (432
+  bytes) maps a vector of kernel pages, and `iounmap` (108 bytes), `unmaputokv` (48 bytes) and `maputokv` (184
+  bytes) undo or build the kernel mapping. It imports `pg_setcachable` and `pte_cachebits` for the cache
+  attributes, and `kptbl` for the page table.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(sgset.o)` (inferred): a single-routine wrapper, `sgset` (104 bytes), in a
+  3588-byte member. Its only import is `kvsgset`. It drives no chip.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(lan.o)` (inferred): two interrupt entries, `lan_intr` (36 bytes) and
+  `fram_intr` (40 bytes), in a 4276-byte member. Their only import is `cmn_err`, the kernel's error-message call.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(vme.o)` (inferred): the VME adapter set-up and interrupt-vector allocator, 12
+  routines in a 12004-byte member. `vme_init` (216 bytes) and `vme_adap_setup` (244 bytes) bring up an adapter,
+  `vme_ivec_alloc` (228 bytes) and `vme_ivec_free` (32 bytes) manage vectors, `vme_ivec_set_ext` (184 bytes) sets
+  one, and `vme_handler` (112 bytes) dispatches an interrupt. It imports `intr`, `iointr_at_cpu`,
+  `readadapters` and `add_to_inventory`.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(volume_support.o)` (inferred): the volume lookup that returns the device
+  numbers of a logical volume's subvolumes, one routine, `volume_get_devts` (244 bytes), in a 4180-byte member. It
+  imports `xlv_get_subvolumes`, `xvm_get_subvolumes` and `xvm_dev`, the volume-manager calls it wraps.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(dbg.o)` (inferred): the debug-monitor loader and its string helpers, five
+  routines in a 12676-byte member. `_check_dbg` (1536 bytes) checks the monitor, `chkenv` (184 bytes) reads its
+  environment, `new_str1` (208 bytes) and `fill_dbg` (180 bytes) build its strings, and `init_str` (20 bytes)
+  starts one. It imports `arcs_load`, `get_nasid`, `dbgmon_loadstop` and
+  `dbgmon_nmiprom`. Rule 3 excludes the five routines.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)` (inferred): the table of kernel-debugger command entries, 19
+  routines in an 11572-byte member. `idbg_addfunc` and `idbg_delfunc` register and remove a command, `idbg_dofunc`
+  runs one, `idbg_setup` (56 bytes) builds the table, and `qprintf` (72 bytes) and `prsymoff` format output. Most
+  of the `idbg_*` routines are 36-byte wrappers. The member imports the debugger's own tables, `dbstab` and
+  `idbgdefault`.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(ioerror_handling.o)` (inferred): the I/O error-action records kept per
+  hardware-graph vertex, 18 routines in a 17172-byte member. `error_action_set` (396 bytes), `error_priority_set`
+  (244 bytes) and `error_state_set` (200 bytes) record what to do with a fault, `error_action_perform` (140 bytes)
+  carries it out, and the `error_retry_count_*` routines count retries. `sys_critical_graph_vertex_add` (212
+  bytes) marks vertices that must stay up. It imports `hwgraph_edge_add`, `hwgraph_traverse` and the
+  `hwgraph_info_*` calls.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(hwcopy.o)` (inferred): the copy routines for a hardware buffer, two routines
+  in a 4404-byte member. `hwcpout` (436 bytes) copies out and `hwcpin` (360 bytes) copies in. The member imports
+  no other routine.
+- `IP27/usr/cpu/sysgen/IP27boot/jlimits.a(jlimits.o)` (inferred): the job-limit system calls behind `syssgi`, 17
+  routines in a 28580-byte member. `syssgi_makenewjob` (1632 bytes), `syssgi_setjlimit` (1052 bytes) and
+  `syssgi_waitjob` (904 bytes) are the largest, `syssgi_getjlimit` (656 bytes) reads a limit, `jlimits_init` (68
+  bytes) starts the table, and `set_jl_enforce_flag` (468 bytes) turns enforcement on. It moves its argument
+  blocks with `copyin` and `copyout` and imports the accounting hooks `csa_jstart` and
+  `do_csaacct`.
+- `IP27/usr/cpu/sysgen/IP27boot/jlimits.a(jid.o)` (inferred): the job-ID table, eight routines in a 15508-byte
+  member. `jid_alloc` (808 bytes) hands out a job ID, `jid_job_free` (584 bytes) releases one, `rm_zombiejobs`
+  (608 bytes) removes jobs with no live processes, and `jidtab_init` (300 bytes) builds the table. It allocates
+  its entries from `jobtab_zone` and sleeps on condition variables with `sv_wait` and `sv_broadcast`.
+- `IP27/usr/cpu/sysgen/IP27boot/jlimits.a(jl_pproc.o)` (inferred): the per-process side of job membership, 11
+  routines in a 13812-byte member. `proc_joinjob` (176 bytes) and `proc_as_joinjob` (284 bytes) put a process into
+  a job, `proc_leavejob` (752 bytes) takes it out, `proc_job_accum` (492 bytes) adds its usage to the job, and
+  `job_as_exit` (272 bytes) does the same at exit. It imports the accounting hooks `csa_jexit` and `do_csaacct`
+  and frees job IDs through `jid_job_free`.
+- `IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)` (inferred): the kernel heap entry points and the arenas
+  behind them, 37 routines in a 36436-byte member. `kmem_alloc` (108 bytes), `kern_malloc` (112 bytes) and
+  `kern_free` (88 bytes) are the allocation calls, `kmem_arena_create` (76 bytes) makes an arena, and
+  `arena_malloc` (2376 bytes) and `arena_free` (1484 bytes) do its bookkeeping. `heapzone_malloc` (1032 bytes)
+  serves the heap from zones. It imports `kmem_zone_alloc`, `kmem_zone_free` and the page allocators `kvpalloc`
+  and `kvpffree`.
+- `IP27/usr/cpu/sysgen/IP27boot/kmem.a(kmem_zone.o)` (inferred): the zone allocator, 48 routines in a 42500-byte
+  member. `kmem_zone_alloc` (1932 bytes) and `kmem_zone_free` (1132 bytes) are the main calls,
+  `kmem_zone_quick_alloc` (676 bytes) is the fast path, and `zone_shake` (1332 bytes) returns memory when the
+  system is short of it. `kmem_zoneset_create` (220 bytes) builds a set of zones, and `kmem_zone_init` (104 bytes)
+  starts one. It registers a debugger command with `idbg_addfunc` and places zones by node with `numa_zone_radius`
+  and `physmem_select_neighbor_node`.
+- `IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_mbuf.o)` (inferred): the network buffer (mbuf) allocator, 40 routines
+  in a 37940-byte member. `m_get` (344 bytes), `m_vget` (588 bytes) and `m_free` (704 bytes) hand out and return
+  buffers, `m_copy` (440 bytes), `m_pullup` (472 bytes) and `m_datacopy` (268 bytes) copy and rearrange them, and
+  `mbflush` (608 bytes) and `m_shake` (504 bytes) reclaim memory. It draws its zones from `kmem_zone_alloc` and
+  `kmem_zone_fill` and registers a shake routine with `shake_register`.
+- `IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_heap.o)` (inferred): the checking build of the kernel heap, 37
+  routines in a 38724-byte member. The same 37 routine names as the production heap, with `kern_free` at 620 bytes
+  against 88 bytes there and `arena_malloc` (2376 bytes) the same size. It additionally imports `assfail`, the
+  assertion-failure call, and `nasid_to_compact_node`, which the production member does not import.
+- `IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)` (inferred): the checking build of the zone allocator,
+  48 routines in a 53204-byte member. `kmem_zone_quick_alloc` is 4388 bytes here against 676 bytes in the
+  production member. It imports `kmem_poison`, `kmem_split_zone`, `kmem_make_zones_private_min` and
+  `kmem_make_zones_private_max`, which the production member does not import, and also `cmn_err`. Rule 3 excludes
+  the 48 routines.
+- `IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_mbuf.o)` (inferred): the checking build of the mbuf allocator,
+  42 routines in a 39508-byte member. Its `m_free` (32 bytes) is a wrapper over `_m_free` (936 bytes), where the
+  production member has one `m_free` (704 bytes). It also has `m_poison` (68 bytes), which the production member
+  lacks, and it imports `kmem_poison`.
 
 ## Device drivers and input objects (scope rule 4)
 
