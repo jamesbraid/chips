@@ -284,7 +284,7 @@ tables and routine names; they are not specification names.
 | PI `0x400` | error interrupt pending | rw | `hubpi_eint_handler`, `hub_error_clear`, `handle_uncac_buserr`, `save_hub_pi_error` | bits 0 to 34 named below; handler writes the one bit it handled; `hub_error_clear` writes all ones | E (bits; that a write of one clears is inferred) |
 | PI `0x408`, `0x410` | error interrupt mask A, B | rw | `hubpi_eint_handler`, `hub_error_init` | handler ANDs pending with the mask of its own CPU side (side from bit 0 of a per-CPU slice byte); init stores fatal or miscellaneous masks and clears bit 21 in A and bit 20 in B | E |
 | PI `0x418`, `0x420` | error spool address A, B | r | `hub_error_init`, `show_hub_pi_err` | read per side and kept in the per-node record; `show_hub_pi_err` walks 8-byte entries from it | I |
-| PI `0x428` | error spool size | r | `hub_error_init`, `show_hub_pi_err` | when nonzero the spool size is `4096 << (value - 1)` | E (the unit is not shown) |
+| PI `0x428` | error spool size | r | `hub_error_init`, `show_hub_pi_err` | when nonzero the spool size is `4096 << (value - 1)` bytes | E (the byte unit follows from the pointer wrap in `hubpi_spool_get_next`) |
 | PI `0x430`, `0x450` | error status 0 A, B | r | `save_hub_pi_error`, `show_hub_pi_err` | saved only when bit 63 is set; fields below | E |
 | PI `0x438`, `0x458` | status 0 A, B, second address | w | `hub_error_clear` | all ones written | U (role) |
 | PI `0x440`, `0x460` | error status 1 A, B | r | `save_hub_pi_error`, `show_hub_pi_err` | fields below | E |
@@ -357,8 +357,12 @@ spurious read response. **Error header 1**: 6:0 command, 18:8 supplemental, 30:2
    exception is then the report path is inferred.
 3. **Error spool.** `get_matching_spool_addr` compares the faulting physical address and access size with the
    spooled address (status 0 bits 61:25 `<< 3`) of each 8-byte entry to decide whether the exception is the one it
-   is looking at (established: the routine's compares). What triggers an entry to be written to memory and the
-   entry layout beyond the shared fields: unknown.
+   is looking at (established: the routine's compares). The entry layout is established from the kernel's printer
+   and differs from status 0: type 2:0, supplemental 5:3, T5 request 8:6, CRB number 11:9, write-buffer flag 12, CRB
+   status 22:13, command 30:23, cache line address 63:31 (shifted left 7); see chips/hub/README.md, "Error stack entry
+   layout". The ring size register counts bytes (`4096 << (n - 1)`), the ring is aligned to its size and the read
+   pointer wraps by subtracting the size. That the hardware writes the entries is inferred (no kernel store reaches
+   the ring).
 4. **I/O writes and reads that leave the node (II).** A failed or timed-out PIO request sets the error bit in the
    CRB entry (bit 55) with a code in bits 54:52; the kernel's table names the eight codes: 0 directory error,
    1 poison error, 2 write error, 3 access error, 4 partial write error, 5 partial read error, 6 timeout error, 7
