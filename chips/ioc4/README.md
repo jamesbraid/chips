@@ -185,6 +185,32 @@ bit 1 (port 1) to clear; `pckm_restart` (`0x2298`) ORs bit 18 or 19 into it, sto
 receive words are `0x204` (port 0) and `0x208` (port 1), the transmit words `0x20c` and `0x210`, by the displacements `pckm_pollcmd`
 adds. Same structure and constants as IOC3's `0x9c` to `0xac`, at `0x200` to `0x210`.
 
+## Routines in the IP35 `ioc4.o` build
+
+The four routines below have the same instruction words as copies in the IP27 `ioc3.o` build, which is described on
+[the IOC3 page](../ioc3/README.md#routines-in-the-ip27-ioc3o-build). Each is read here from its own body. Relocations
+come from `objdump -dr` on the object.
+
+- `ioc4_console_vhdl_get` (`IP35/usr/cpu/sysgen/IP35boot/ioc4.o` at 0x1014, 24 bytes) loads the pointer in the small-data slot at
+  -30720 from `gp` (a relocation against `.sbss`). It returns the word at +0 of that pointer. With a null pointer it returns -1: the
+  `li v0,-1` in the delay slot of the `beqz` at 0x1018 runs before the branch, so the -1 stands on that path, and the `lw` at
+  0x101c is skipped. Established: the six words and the `.sbss` relocation match the IP27 `ioc3.o` copy at 0x1210.
+- `ioc4_subdev_enables` (`IP35/usr/cpu/sysgen/IP35boot/ioc4.o` at 0x1124, 44 bytes)
+  keeps its doubleword argument in its frame and calls `ioc4_subdev_ptr` with `a0` unchanged and the create flag set in
+  the delay slot. A non-null pointer gets the saved doubleword at +0; a null return skips the store.
+  The 11 words match the IP27 build, except that the call reloc names
+  `ioc4_subdev_ptr` where the IP27 copy names `ioc3_subdev_ptr`. Established.
+- `ioc4_subdev_enable` (`IP35/usr/cpu/sysgen/IP35boot/ioc4.o` at 0x1150, 68 bytes)
+  calls `ioc4_subdev_ptr` with `a0` and the create flag, as the enables routine does.
+  On a non-null pointer it ORs bit `a1` into the doubleword at +0.
+  The bit is 1 shifted left by the low five bits of `a1` (a 32-bit `sllv`).
+  The update is a load-linked, OR and store-conditional loop, repeated through a branch-likely (`beqzl`) while the store fails.
+  The 17 words match the IP27 build except the call reloc (`ioc4_subdev_ptr` where the IP27 copy names `ioc3_subdev_ptr`). Established.
+- `ioc4_subdev_disable` (`IP35/usr/cpu/sysgen/IP35boot/ioc4.o` at 0x1194, 72 bytes)
+  is the clear-bit form of the enable routine. It calls `ioc4_subdev_ptr` the same way, with `a0` and the create flag.
+  On a non-null pointer it inverts the 32-bit `sllv` mask with `nor` and ANDs it into the doubleword at +0 through the
+  same load-linked and store-conditional loop. The 18 words match the IP27 `ioc3_subdev_disable` copy except the call reloc. Established.
+
 ## Against the public drivers (reported after the reading above)
 
 Sources: Linux v5.3 `include/linux/ioc4.h`, `drivers/misc/ioc4.c`, `drivers/tty/serial/ioc4_serial.c`, `drivers/ide/sgiioc4.c`
