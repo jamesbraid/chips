@@ -40,6 +40,16 @@ chip, not register-accessor names, so the graded table below is written by hand 
 read. It does not reach: the performance counters (reached through stored pointers, read by hand below), the
 input-buffer flush registers and the NIC register.
 
+Read the link rows of `census/census.tsv` by offset, not by the name column. The generator names every link slot
+between `0x108` and `0x1d8` after the first register of the link family (input buffer flush), although the specification
+puts that register at `0x100 + 0x40 * n` only. By the specification's map `0x108` is link control, `0x110` status, `0x118`
+arbitration upper, `0x120` arbitration lower, `0x128` status read-and-clear, `0x130` reset and `0x138` auxiliary status,
+each plus `0x40` per link, so the PROM-only rows `0x198` and `0x1d8` are the arbitration upper word of links 10 and 11
+(`0x118 + 0x40 * 2` and `+ 0x40 * 3`). The input buffer flush register is still not reached. In `census/fields.tsv` the
+`0xb8` row "load shift 0" is the scan following a dummy read into `$0` to the no-operation `sll $0,$0,0` in the delay slot of the routine's return, not a field. The `0x0` rows "mask 2:0" and "shift 6" from `0xc00000001fc44dfc` (IP27 PROM) follow a load in a call's delay slot into the value in `$2` after the call, which the callee at `0xc00000001fc44c94` (not read) may overwrite; whether they isolate fields of the identification word is unknown. The rows at `0x80` to
+`0xb8` are one PROM routine writing `0xff` to each reserved word in turn and reading it back (IP35 PROM, `0xc00000001fc01b44`
+to `0xc00000001fc01b80`, read in full), inside the branch that follows a part-number test of `0xd000`, `0xd100` or 0.
+
 ### Graded register table
 
 Access and width are what the instructions do (established wherever a site exists). The grade is of the role and
