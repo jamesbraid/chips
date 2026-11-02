@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3092	0	625	0	625	3	4	144	2319	0	20.2	20.3	25.0	20.2							0			
-functions	6301	91992	827	116	655	9	867	1446	3161	0	13.1	26.9	49.8	13.1			85.0	20	2026-11-02		0	0	16	
-functions (distinct names)	2481	21770	549	115	545	9	15	559	1358	0	22.1	22.7	45.3	22.1							0			
+functions	6301	91992	827	116	655	9	867	1449	3158	0	13.1	26.9	49.9	13.1			85.0	20	2026-11-02		0	0	16	
+functions (distinct names)	2481	21770	549	115	545	9	15	560	1357	0	22.1	22.7	45.3	22.1							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -214,7 +214,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/i2c.o	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	
 functions in IP27/usr/cpu/sysgen/IP27boot/idbg.o	0	304	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/idev.o	0	22	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/if_cl.o	0	35	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP27/usr/cpu/sysgen/IP27boot/if_ef.o	47	0	0	0	0	0	0	15	32	0	0.0	0.0	31.9	0.0							0	0	0	
+functions in IP27/usr/cpu/sysgen/IP27boot/if_ef.o	47	0	0	0	0	0	0	16	31	0	0.0	0.0	34.0	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/if_eg.o	0	55	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/if_ppp.o	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/if_ptr.o	0	69	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -1019,7 +1019,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/hitachi.o	0	9	0	0	0	0	0	0	0	0	0.0	0.0	
 functions in IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgvnops.o)	0	21	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/idbg.o	0	298	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/idev.o	0	22	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP30/usr/cpu/sysgen/IP30boot/if_ef.o	47	0	0	0	0	0	0	15	32	0	0.0	0.0	31.9	0.0							0	0	0	
+functions in IP30/usr/cpu/sysgen/IP30boot/if_ef.o	47	0	0	0	0	0	0	16	31	0	0.0	0.0	34.0	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/if_eg.o	0	55	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/if_ppp.o	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/if_ptr.o	0	69	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -2432,7 +2432,7 @@ functions in IP35/usr/cpu/sysgen/IP35boot/ide.o	1	73	1	0	1	0	0	0	0	0	100.0	100.0
 functions in IP35/usr/cpu/sysgen/IP35boot/ide_idbg.o	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/idev.o	0	22	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/if_cl.o	0	35	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP35/usr/cpu/sysgen/IP35boot/if_ef.o	47	0	0	0	0	0	0	15	32	0	0.0	0.0	31.9	0.0							0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/if_ef.o	47	0	0	0	0	0	0	16	31	0	0.0	0.0	34.0	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/if_eg.o	0	55	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/if_ppp.o	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/if_ptr.o	0	69	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
