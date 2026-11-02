@@ -1258,6 +1258,54 @@ tables. Labels are inferred, from the symbol table and the undefined imports. No
   requests to `rtioctl`. `uipc_connect` (432 bytes) starts a connection, `sopoll` (380 bytes) reports readiness, and
   `uipc_getpeername` (368 bytes) and `uipc_getsockname` (252 bytes) return addresses. It imports `check_rtioctl_priv` for
   the routing requests.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(bitswap.o)` (inferred): the bit-order copy, one routine, `bitswapcopy`, in a 2804-byte
+  member. It imports nothing. `bsd.a(raw.o)` imports `bitswapcopy` for its raw packet copy.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(bsd_icrash.o)` (inferred): a crash-analysis extension of the network stack, one
+  routine, `bsd_icrash`, in a 62612-byte member. Its name ends in `_icrash`, as do `cachefs_icrash.o` and
+  `autofs_icrash.o` in the same build, and its 23 imports are the tables it reads: the connection lists `tcb` and `udb`, the
+  raw block list `rawcb`, the routing tables `rt_tables`, the interface list `ifnet`, the hash tables
+  `hashtable_inaddr` and `hashtable_in6addr`, and the stream and page counters `str_page_cur`, `str_page_max` and
+  `str_min_pages`. It drives no chip.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(ether.o)` (inferred): the Ethernet interface layer, 16 routines in a 16916-byte
+  member. `ether_input` (1108 bytes) takes a received frame, `ether_output` (1000 bytes) sends one, `ether_ioctl` (1028
+  bytes) is the control entry, and `ether_start` (224 bytes) starts the transmit path. The member imports `arpresolve` and
+  `ndp6_resolve` for destination addresses, keeps the multicast list with `mfadd`, `mfdel` and `mfethermatch`, passes
+  frames to packet capture through `snoop_input` and `snoop_input2`, and registers the interface with `if_attach`. No chip
+  is driven here; the driver below it is a separate object.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(in_cksum.o)` (inferred): the Internet checksum entry, one routine, `in_cksum`, in a
+  3540-byte member. It calls `in_cksum_sub` to compute the sum and reports a fault through `panic`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(lance.o)` (inferred): the glue for the LANCE Ethernet driver, three routines in a
+  4772-byte member: `lance_init`, `lance_ioctl` (452 bytes) and `laf_hash` (128 bytes). The member's only import,
+  `mfhasvalue`, tests the multicast list, and `laf_hash` computes a hash of a multicast address for the driver's filter.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(mclance.o)` (inferred): the multicast address glue for the same driver, three routines
+  in a 3700-byte member. `AddMulti` (196 bytes) and `DeleteMulti` (152 bytes) add and remove a multicast address through
+  `mfadd` and `mfdel`, and `CalcIndex` gives the filter index. The symbol table gives `CalcIndex` no size. The member also
+  imports `mfhasvalue` and `mfmatch`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(remque.o)` (inferred): the queue primitives, two routines, `_insque` and `_remque`, in a
+  2948-byte member. `_remque` (28 bytes) unlinks an entry from a doubly linked list and `_insque` links one in. The member
+  imports nothing, and the protocol control-block members `bsd.a(in_pcb.o)` and `bsd.a(raw_cb.o)` import both names.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(hashing.o)` (inferred): the generic hash table the protocols share, 14 routines in an
+  11268-byte member. `hash_enum_bestmatch` (328 bytes) and `hash_enum_getnext` (320 bytes) walk the table,
+  `hash_remove_refcnt` (304 bytes) and `hash_lookup_refcnt` (292 bytes) find and drop counted entries, and
+  `hash_lookup_remove` (292 bytes) finds and unlinks one. It guards the table with the multi-reader lock calls
+  `mrlock_init`, `mraccessf`, `mrupdatef` and `mrunlock`, and links entries with `_insque` and `_remque`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(md5.o)` (inferred): the MD5 digest, six routines in an 8628-byte member. `_BSD_MD5Init`,
+  `_BSD_MD5Update` (280 bytes) and `_BSD_MD5Final` (156 bytes) are the digest entry points, `MD5Transform` (3340 bytes) is
+  the block transform, and `Encode` and `Decode` (84 bytes each) convert between bytes and words. It imports `bcopy` and
+  `bzero`. `bsd.a(tcp_subr.o)` imports the three digest entry points.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(ppsratecheck.o)` (inferred): the packets-per-second limit check, one routine,
+  `ppsratecheck`, in a 3044-byte member. It reads the clock through `time` to measure the interval it limits over.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(vsocket.o)` (inferred): the virtual socket objects that wrap a socket, six routines in a
+  6884-byte member. `vsocreate_internal` (212 bytes) creates one, `vsocket_alloc` (128 bytes) takes it from its zone,
+  `vsocket_release` (152 bytes) and `vsocket_hold` (68 bytes) count its references, and `vsocket_free` (64 bytes) returns
+  it. It sets up its behaviour head with `bhv_head_init` and `bhv_insert_initial`, and its zone with `kmem_zone_init`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(lsock.o)` (inferred): the local socket file operations, two routines in a 6116-byte
+  member: `lcreate` (the symbol table gives it no size) and `lclose` (272 bytes). Its 28 imports are socket calls, `socreate`,
+  `sosend`, `soreceive`, `soioctl`, `sopoll` and the `uipc_*` entry points, so it forwards file operations to the socket
+  layer. It binds its behaviour through `bhv_insert_initial`.
+- `IP32/usr/cpu/sysgen/IP32boot/bsd.a(vsock_lp.o)` (inferred): one routine, `vsock_hinit`, in a 2164-byte member that
+  imports nothing. `bsd.a(vsocket.o)` imports the same name, so the member supplies the routine that the virtual socket code
+  calls.
 
 ## Scope questions
 
