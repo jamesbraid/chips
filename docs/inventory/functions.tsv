@@ -5012,7 +5012,7 @@ IP27/unix	kernel	n64	.text	0xc000000000047fec	156	bitlock_condacq_32bit	symtab	6
 IP27/unix	kernel	n64	.text	0xc000000000048088	28	mutex_set_always	symtab	1be725d32eca		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000480a4	28	test_and_set_int	symtab	a6100690a0d0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000480c0	28	test_and_set_int64	symtab	71854da0bc74	shared-address	out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/unix	kernel	n64	.text	0xc0000000000480c0	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000480c0	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:5	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64	.text	0xc0000000000480c0	28	test_and_set_ptr	symtab	71854da0bc74	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000480dc	28	swap_int	symtab	646c2554eb36		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000480f8	152	compare_and_swap_int	symtab	fa0b34ecb5ca		out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -5719,7 +5719,7 @@ IP27/unix	kernel	n64	.text	0xc000000000074bd0	512	pcibr_device_flags_set	symtab	
 IP27/unix	kernel	n64	.text	0xc000000000074dd0	144	pcibr_pcix_rbars_calc	symtab	2f6b13e9f455		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000074e60	44	pcibr_dma_enabled	symtab	bfd529f4b4f3		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000074e8c	608	pcibr_debug	symtab	44860bc6c8df		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP27/unix	kernel	n64	.text	0xc0000000000750ec	64	pcibr_businfo_get	symtab	0fc06b556f9a		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000750ec	64	pcibr_businfo_get	symtab	0fc06b556f9a		in	named-only	chips/ioc4/README.md#control-gpio-and-the-unnamed-0x24	Control, GPIO and the unnamed `0x24`
 IP27/unix	kernel	n64	.text	0xc00000000007512c	172	pcibr_bridge_ptr_get	symtab	cba8e60bafe9		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc0000000000751d8	108	pcibr_pio_flush_read	symtab	a9205764f767		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000075244	8	pcibr_pio_flush_del	symtab	78aa5094d5ec		in	undocumented		
@@ -5773,7 +5773,7 @@ IP27/unix	kernel	n64	.text	0xc00000000007916c	132	pcibr_setwidint	symtab	ffc4198
 IP27/unix	kernel	n64	.text	0xc0000000000791f0	592	pcibr_intr_func	symtab	b1d8d32df6f4		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000079440	92	pcibr_show_dir_state	symtab	472385e93cfe		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000007949c	52	print_bridge_errcmd	symtab	b091cb79439d		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000794d0	4268	pcibr_error_dump	symtab	9a560fcd1503		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/unix	kernel	n64	.text	0xc0000000000794d0	4268	pcibr_error_dump	symtab	9a560fcd1503		in	located	chips/pic/README.md#access-sequences	Access sequences
 IP27/unix	kernel	n64	.text	0xc00000000007a57c	132	pcibr_errintr_group	symtab	ecd63d84c398		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000007a768	1408	pcibr_error_intr_handler	symtab	e2c827511e83		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP27/unix	kernel	n64	.text	0xc00000000007ace8	740	pcibr_addr_toslot	symtab	003fe8970d90		in	undocumented		
@@ -9345,7 +9345,7 @@ IP27/unix	kernel	n64	.text	0xc000000000200aa4	32	inst_cache_operation	symtab	b6b
 IP27/unix	kernel	n64	.text	0xc000000000200ac4	32	icache_inval	symtab	75a2a7a10195		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000200ae4	28	dcache_inval	symtab	15907c7106a9		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000200b00	520	bclean_caches	symtab	9a5f8d007c8b		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000200d08	28	machine_error_dump	symtab	7fc69e86bc32		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000200d08	28	machine_error_dump	symtab	7fc69e86bc32		out:5	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP27/unix	kernel	n64	.text	0xc000000000200d24	116	cache_operation_pfnlist	symtab	b6f084acfd26		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000200e3c	28	xdki_dcache_inval_readonly	symtab	15907c7106a9		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000200e58	28	xdki_dcache_wbinval_readonly	symtab	15907c7106a9		out:5	undocumented		
@@ -19440,7 +19440,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ee6c	156	bitloc
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef08	28	mutex_set_always	dwarf+symtab	1be725d32eca		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef24	28	test_and_set_int	dwarf+symtab	a6100690a0d0		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef40	28	test_and_set_int64	dwarf+symtab	71854da0bc74	shared-address	out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef40	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef40	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:6	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef40	28	test_and_set_ptr	symtab	71854da0bc74	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef5c	28	swap_int	dwarf+symtab	646c2554eb36		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef78	152	compare_and_swap_int	dwarf+symtab	fa0b34ecb5ca		out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -24035,7 +24035,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(machdep.o)	kernel-object	n64	.text	0x1090	32	i
 IP27/usr/cpu/sysgen/IP27boot/os.a(machdep.o)	kernel-object	n64	.text	0x10b0	32	icache_inval	dwarf+symtab	bf03997a3bfa		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(machdep.o)	kernel-object	n64	.text	0x10d0	28	dcache_inval	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(machdep.o)	kernel-object	n64	.text	0x10ec	520	bclean_caches	dwarf+symtab	26374e954f01		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(machdep.o)	kernel-object	n64	.text	0x12f4	28	machine_error_dump	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(machdep.o)	kernel-object	n64	.text	0x12f4	28	machine_error_dump	dwarf+symtab	a86de4a9d7a4		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP27/usr/cpu/sysgen/IP27boot/os.a(machdep.o)	kernel-object	n64	.text	0x1310	116	cache_operation_pfnlist	dwarf+symtab	c69a37fa9acc		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(machdep.o)	kernel-object	n64	.text	0x1384	164	do_cache_operation_pfnlist	dwarf+symtab	a125d557f35e		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(machdep.o)	kernel-object	n64	.text	0x1428	28	xdki_dcache_inval_readonly	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
@@ -25507,7 +25507,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x3d90	512	pcibr_de
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x3f90	144	pcibr_pcix_rbars_calc	dwarf+symtab	5bbf405f3481		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4020	44	pcibr_dma_enabled	dwarf+symtab	e13b8b19b8fb		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x404c	608	pcibr_debug	dwarf+symtab	d9a9119ae64a		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x42ac	64	pcibr_businfo_get	dwarf+symtab	dae4fd30f9a9		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x42ac	64	pcibr_businfo_get	dwarf+symtab	dae4fd30f9a9		in	named-only	chips/ioc4/README.md#control-gpio-and-the-unnamed-0x24	Control, GPIO and the unnamed `0x24`
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x42ec	172	pcibr_bridge_ptr_get	dwarf+symtab	e0bb75f0fe8a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4398	108	pcibr_pio_flush_read	dwarf+symtab	a9205764f767		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4404	8	pcibr_pio_flush_del	dwarf+symtab	78aa5094d5ec		in	undocumented		
@@ -25564,7 +25564,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x832c	132	pcibr_se
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x83b0	592	pcibr_intr_func	dwarf+symtab	71c3810eec2a		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x8600	92	pcibr_show_dir_state	dwarf+symtab	8eea44ae4213		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x865c	52	print_bridge_errcmd	dwarf+symtab	7892c86be871		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x8690	4268	pcibr_error_dump	dwarf+symtab	368c9239d493		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x8690	4268	pcibr_error_dump	dwarf+symtab	368c9239d493		in	located	chips/pic/README.md#access-sequences	Access sequences
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x973c	132	pcibr_errintr_group	dwarf+symtab	ecd63d84c398		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x97c0	360	pcibr_pioerr_check	dwarf	50af51a4ef80		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x9928	1408	pcibr_error_intr_handler	dwarf+symtab	de0bb11b8147		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
@@ -36612,7 +36612,7 @@ IP30/unix	kernel	n64	.text	0xa800000020016afc	156	bitlock_condacq_32bit	symtab	6
 IP30/unix	kernel	n64	.text	0xa800000020016b98	28	mutex_set_always	symtab	1be725d32eca		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016bb4	28	test_and_set_int	symtab	a6100690a0d0		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016bd0	28	test_and_set_int64	symtab	71854da0bc74	shared-address	out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/unix	kernel	n64	.text	0xa800000020016bd0	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020016bd0	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:7	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64	.text	0xa800000020016bd0	28	test_and_set_ptr	symtab	71854da0bc74	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016bec	28	swap_int	symtab	646c2554eb36		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016c08	152	compare_and_swap_int	symtab	fa0b34ecb5ca		out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -37484,7 +37484,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200466d4	512	pcibr_device_flags_set	symtab	
 IP30/unix	kernel	n64	.text	0xa8000000200468d4	144	pcibr_pcix_rbars_calc	symtab	5a1b68634d2b		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020046964	44	pcibr_dma_enabled	symtab	482737e094ab		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020046990	560	pcibr_debug	symtab	cbb79309dd03		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP30/unix	kernel	n64	.text	0xa800000020046bc0	64	pcibr_businfo_get	symtab	0d76fac154e5		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020046bc0	64	pcibr_businfo_get	symtab	0d76fac154e5		in	named-only	chips/ioc4/README.md#control-gpio-and-the-unnamed-0x24	Control, GPIO and the unnamed `0x24`
 IP30/unix	kernel	n64	.text	0xa800000020046c00	172	pcibr_bridge_ptr_get	symtab	2293aef42850		in	understood	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa800000020046cac	108	pcibr_pio_flush_read	symtab	a9205764f767		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020046d18	8	pcibr_pio_flush_del	symtab	78aa5094d5ec		in	undocumented		
@@ -37538,7 +37538,7 @@ IP30/unix	kernel	n64	.text	0xa80000002004ac1c	132	pcibr_setwidint	symtab	7f43566
 IP30/unix	kernel	n64	.text	0xa80000002004aca0	176	pcibr_xintr_preset	symtab	d70a781cc8b3		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002004ad50	588	pcibr_intr_func	symtab	e128390994e5		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002004af9c	48	print_bridge_errcmd	symtab	272c5a312c28		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002004afcc	4188	pcibr_error_dump	symtab	a6e9b1039153		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP30/unix	kernel	n64	.text	0xa80000002004afcc	4188	pcibr_error_dump	symtab	a6e9b1039153		in	located	chips/pic/README.md#access-sequences	Access sequences
 IP30/unix	kernel	n64	.text	0xa80000002004c028	132	pcibr_errintr_group	symtab	ecd63d84c398		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002004c214	1380	pcibr_error_intr_handler	symtab	9369e43af8a8		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 IP30/unix	kernel	n64	.text	0xa80000002004c778	740	pcibr_addr_toslot	symtab	003fe8970d90		in	undocumented		
@@ -40388,7 +40388,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201871bc	32	inst_cache_operation	symtab	7d6
 IP30/unix	kernel	n64	.text	0xa8000000201871dc	32	icache_inval	symtab	c78e1eb6a072		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201871fc	28	dcache_inval	symtab	aed161f3559f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020187218	520	bclean_caches	symtab	cb79d661f68b		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020187420	8	machine_error_dump	symtab	78aa5094d5ec		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020187420	8	machine_error_dump	symtab	78aa5094d5ec		out:7	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP30/unix	kernel	n64	.text	0xa800000020187428	116	cache_operation_pfnlist	symtab	2ee2640afbe6		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020187540	28	xdki_dcache_inval_readonly	symtab	aed161f3559f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002018755c	28	xdki_dcache_wbinval_readonly	symtab	4397cfbd1d6b		out:7	undocumented		
@@ -50153,7 +50153,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x697c	156	bitlock
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a18	28	mutex_set_always	dwarf+symtab	1be725d32eca		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a34	28	test_and_set_int	dwarf+symtab	a6100690a0d0		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a50	28	test_and_set_int64	dwarf+symtab	71854da0bc74	shared-address	out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a50	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a50	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:8	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a50	28	test_and_set_ptr	symtab	71854da0bc74	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a6c	28	swap_int	dwarf+symtab	646c2554eb36		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a88	152	compare_and_swap_int	dwarf+symtab	fa0b34ecb5ca		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -54306,7 +54306,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(machdep.o)	kernel-object	n64	.text	0xfa8	32	in
 IP30/usr/cpu/sysgen/IP30boot/os.a(machdep.o)	kernel-object	n64	.text	0xfc8	32	icache_inval	dwarf+symtab	bf03997a3bfa		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(machdep.o)	kernel-object	n64	.text	0xfe8	28	dcache_inval	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(machdep.o)	kernel-object	n64	.text	0x1004	520	bclean_caches	dwarf+symtab	ced65e480b1a		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(machdep.o)	kernel-object	n64	.text	0x120c	8	machine_error_dump	dwarf+symtab	78aa5094d5ec		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(machdep.o)	kernel-object	n64	.text	0x120c	8	machine_error_dump	dwarf+symtab	78aa5094d5ec		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP30/usr/cpu/sysgen/IP30boot/os.a(machdep.o)	kernel-object	n64	.text	0x1214	116	cache_operation_pfnlist	dwarf+symtab	c69a37fa9acc		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(machdep.o)	kernel-object	n64	.text	0x1288	164	do_cache_operation_pfnlist	dwarf+symtab	a125d557f35e		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(machdep.o)	kernel-object	n64	.text	0x132c	28	xdki_dcache_inval_readonly	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
@@ -55626,7 +55626,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x3b94	512	pcibr_de
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x3d94	144	pcibr_pcix_rbars_calc	dwarf+symtab	c383e607e0bd		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x3e24	44	pcibr_dma_enabled	dwarf+symtab	e13b8b19b8fb		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x3e50	560	pcibr_debug	dwarf+symtab	ffe374bfb4e2		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x4080	64	pcibr_businfo_get	dwarf+symtab	dae4fd30f9a9		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x4080	64	pcibr_businfo_get	dwarf+symtab	dae4fd30f9a9		in	named-only	chips/ioc4/README.md#control-gpio-and-the-unnamed-0x24	Control, GPIO and the unnamed `0x24`
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x40c0	172	pcibr_bridge_ptr_get	dwarf+symtab	e0bb75f0fe8a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x416c	108	pcibr_pio_flush_read	dwarf+symtab	a9205764f767		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x41d8	8	pcibr_pio_flush_del	dwarf+symtab	78aa5094d5ec		in	undocumented		
@@ -55683,7 +55683,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x80dc	132	pcibr_se
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x8160	176	pcibr_xintr_preset	dwarf+symtab	f6b4637d54af		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x8210	588	pcibr_intr_func	dwarf+symtab	fd61ba9b8277		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x845c	48	print_bridge_errcmd	dwarf+symtab	bb97a47d2d48		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x848c	4188	pcibr_error_dump	dwarf+symtab	b8527183755e		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x848c	4188	pcibr_error_dump	dwarf+symtab	b8527183755e		in	located	chips/pic/README.md#access-sequences	Access sequences
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x94e8	132	pcibr_errintr_group	dwarf+symtab	ecd63d84c398		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x956c	360	pcibr_pioerr_check	dwarf	98471f1131ca		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x96d4	1380	pcibr_error_intr_handler	dwarf+symtab	490fa3779c0f		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
@@ -66474,7 +66474,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc9c0	84	bitlock_
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca14	84	bitlock_condacq_32bit	symtab	85224154ec31		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca68	28	mutex_set_always	symtab	16dbf7b98860		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca84	28	test_and_set_int	symtab	90adb65ce622	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca84	28	test_and_set_long	symtab	90adb65ce622	shared-address	out:9	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca84	28	test_and_set_long	symtab	90adb65ce622	shared-address	out:9	named-only	docs/open-questions.md#open-questions	Open questions
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca84	28	test_and_set_ptr	symtab	90adb65ce622	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcaa0	28	test_and_set_int64	symtab	d7bf6952a39d		out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcabc	28	swap_int	symtab	16dbf7b98860	shared-address	out:9	undocumented		
@@ -70824,7 +70824,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(machdep.o)	kernel-object	n32	.text	0x14cc	32	i
 IP32/usr/cpu/sysgen/IP32boot/os.a(machdep.o)	kernel-object	n32	.text	0x14ec	32	icache_inval	dwarf+symtab	51253a99b143		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(machdep.o)	kernel-object	n32	.text	0x150c	28	dcache_inval	dwarf+symtab	34d7a2e33b85		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(machdep.o)	kernel-object	n32	.text	0x1528	620	bclean_caches	dwarf+symtab	4666b26f09a3		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(machdep.o)	kernel-object	n32	.text	0x1794	8	machine_error_dump	dwarf+symtab	78aa5094d5ec		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(machdep.o)	kernel-object	n32	.text	0x1794	8	machine_error_dump	dwarf+symtab	78aa5094d5ec		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP32/usr/cpu/sysgen/IP32boot/os.a(machdep.o)	kernel-object	n32	.text	0x179c	104	dki_dcache_inval	dwarf+symtab	b79fec17011f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(machdep.o)	kernel-object	n32	.text	0x1804	104	dki_dcache_wbinval	dwarf+symtab	a607ff50f051		out:3	named-only	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
 IP32/usr/cpu/sysgen/IP32boot/os.a(machdep.o)	kernel-object	n32	.text	0x186c	156	cache_operation_pfnlist	dwarf+symtab	f503865c7abe		out:3	undocumented		
@@ -82598,7 +82598,7 @@ IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x8	140	ioc4_mlreset
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x94	184	ioc4_write_ireg	dwarf+symtab	bc07982c965f		in	named-only	chips/ioc4/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x14c	144	ioc4_pending_intrs	dwarf+symtab	fc6633fd8849		in	named-only	chips/ioc4/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x1dc	40	ioc4_init	dwarf+symtab	1d4ad484fa8c		in	named-only	chips/ioc4/README.md#what-identifies-the-chip-established	What identifies the chip (established)
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x204	1024	ioc4_attach	dwarf+symtab	d4233ef5c0d6		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x204	1024	ioc4_attach	dwarf+symtab	d4233ef5c0d6		in	located	chips/ioc4/README.md#control-gpio-and-the-unnamed-0x24	Control, GPIO and the unnamed `0x24`
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x604	672	ioc4_intr_connect	dwarf+symtab	cbb54bd1ea30		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0x8a4	392	ioc4_intr_disconnect	dwarf+symtab	76baa19f30c6		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-object	n64	.text	0xa2c	444	ioc4_intr	dwarf+symtab	7bc66e7df510		in	named-only	chips/ioc4/README.md#open	Open
@@ -84223,7 +84223,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29c94	84	bitlock
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29ce8	28	mutex_set_always	dwarf+symtab	a621ea59a77e		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d04	28	test_and_set_int	dwarf+symtab	90adb65ce622		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d20	28	test_and_set_int64	dwarf+symtab	d7bf6952a39d	shared-address	out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d20	28	test_and_set_long	symtab	d7bf6952a39d	shared-address	out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d20	28	test_and_set_long	symtab	d7bf6952a39d	shared-address	out:11	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d20	28	test_and_set_ptr	symtab	d7bf6952a39d	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d3c	28	swap_int	dwarf+symtab	16dbf7b98860		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d58	40	compare_and_swap_int	dwarf+symtab	42942dafb2b7		out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -88861,7 +88861,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(machdep.o)	kernel-object	n64	.text	0x1040	32	i
 IP35/usr/cpu/sysgen/IP35boot/os.a(machdep.o)	kernel-object	n64	.text	0x1060	32	icache_inval	dwarf+symtab	bf03997a3bfa		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(machdep.o)	kernel-object	n64	.text	0x1080	28	dcache_inval	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(machdep.o)	kernel-object	n64	.text	0x109c	520	bclean_caches	dwarf+symtab	7957126c1800		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(machdep.o)	kernel-object	n64	.text	0x12a4	28	machine_error_dump	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(machdep.o)	kernel-object	n64	.text	0x12a4	28	machine_error_dump	dwarf+symtab	a86de4a9d7a4		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/os.a(machdep.o)	kernel-object	n64	.text	0x12c0	116	cache_operation_pfnlist	dwarf+symtab	c69a37fa9acc		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(machdep.o)	kernel-object	n64	.text	0x1334	164	do_cache_operation_pfnlist	dwarf+symtab	a125d557f35e		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(machdep.o)	kernel-object	n64	.text	0x13d8	28	xdki_dcache_inval_readonly	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
@@ -90289,7 +90289,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x3ffc	512	pcibr_de
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x41fc	144	pcibr_pcix_rbars_calc	dwarf+symtab	b556148ed5a0		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x428c	44	pcibr_dma_enabled	dwarf+symtab	e13b8b19b8fb		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x42b8	564	pcibr_debug	dwarf+symtab	633b5870eda7		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x44ec	232	pcibr_businfo_get	dwarf+symtab	bd501d6a3a4f		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x44ec	232	pcibr_businfo_get	dwarf+symtab	bd501d6a3a4f		in	named-only	chips/ioc4/README.md#control-gpio-and-the-unnamed-0x24	Control, GPIO and the unnamed `0x24`
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x45d4	172	pcibr_bridge_ptr_get	dwarf+symtab	e0bb75f0fe8a		in	located	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x4680	392	idbg_pss_func	dwarf+symtab	f4d89308a196		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x4808	476	idbg_pss_info	dwarf+symtab	64b5cd81e7c2		in	undocumented		
@@ -90343,7 +90343,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x85b8	132	pcibr_se
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x863c	592	pcibr_intr_func	dwarf+symtab	1fe27f24b475		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x888c	92	pcibr_show_dir_state	dwarf+symtab	8eea44ae4213		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x88e8	52	print_bridge_errcmd	dwarf+symtab	7892c86be871		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x891c	4268	pcibr_error_dump	dwarf+symtab	58868e6455ce		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x891c	4268	pcibr_error_dump	dwarf+symtab	58868e6455ce		in	located	chips/pic/README.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x99c8	132	pcibr_errintr_group	dwarf+symtab	ecd63d84c398		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x9a4c	360	pcibr_pioerr_check	dwarf	7563bee22448		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x9bb4	1460	pcibr_error_intr_handler	dwarf+symtab	a6919be1e172		in	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
@@ -90642,7 +90642,7 @@ IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0xe8	376	pic_bus1_wid
 IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x260	48	pic_bus1_device_desc_dup	dwarf+symtab	d58c583e7a79		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x290	412	pic_bus1_redist	dwarf+symtab	634504ee8636		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x42c	544	pic_attach	dwarf+symtab	fbf64880a633		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x64c	3276	pic_attach2	dwarf+symtab	bacdea38314e		in	named-only	chips/pic/README.md#what-identifies-a-pic-established-pic_attach2-in-pico-read-in-full	What identifies a PIC (established, `pic_attach2` in `pic.o`, read in full)
+IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x64c	3276	pic_attach2	dwarf+symtab	bacdea38314e		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x1318	364	pic_pio_flush_new	dwarf+symtab	a196865bd218		in	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x1484	40	issue_force_interrupt	dwarf+symtab	bf8126a450a1		in	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-object	n64	.text	0x14ac	60	pio_spin_wait	dwarf+symtab	9f800fa622cc		in	named-only	chips/pic/README.md#access-sequences	Access sequences
