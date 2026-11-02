@@ -182,9 +182,9 @@ arms IMR[n] with bits 42+n (DBG), 46+n (IPI), 59+n (BERR) and 63 (HEART_EXC). Pr
   before the handler or semaphore step for vectors 3 to 58 (the test at `0xa80000002003ff34`), and after it
   for vectors 0 to 2 (`0xa80000002003ff00`). Vectors 59 and above go to `buserror_intr` with the routine's first
   argument and CLR_ISR is not written for them. After each vector it re-reads IMSR and loops until the masked value is zero. On exit it adds a count to a word at
-  `+208` of the record whose pointer is at `0xffffffffffffc488`, with `ll`/`sc`: the number of vectors served (the
-  loop's delay slot counts one extra pass and `addiu -1` at `0xa80000002003ffb0` removes it), or -1 when nothing
-  was pending on entry.
+  `+208` of the record whose pointer is at `0xffffffffffffc488`, with `ll`/`sc`: the number of vectors served minus
+  one (a counter in `s0` goes up in the delay slot of the loop test after every vector, and `addiu -1` at
+  `0xa80000002003ffb0` is applied on exit), so one vector adds 0 and none pending adds -1.
 - **Reset of the controller state** (`heart_mlreset`, `0xa80000002003ed30`, 164 bytes, read in full). It first calls
   `getcpuid`. The stores in the order issued: a doubleword zero to WID_ERR_MASK (widget `+0x68`); WID_ERR_TYPE
   (`+0x60`) read and stored back; a word zero (`sw`) at `+0x44`, the command-word slot; CAUSE (`+0x10040`) read
