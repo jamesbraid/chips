@@ -5735,7 +5735,7 @@ IP27/unix	kernel	n64	.text	0xc000000000075910	64	pcibr_ate_addr	symtab	395a499d0
 IP27/unix	kernel	n64	.text	0xc000000000075950	784	ate_write	symtab	ab472cd77940		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc000000000075c60	464	do_pcibr_rrb_count_valid	symtab	82ee279bf4eb		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000075e30	276	do_pcibr_rrb_count_avail	symtab	2824ee99514f		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000075f44	564	do_pcibr_rrb_alloc	symtab	c59a35ec962a		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000075f44	564	do_pcibr_rrb_alloc	symtab	c59a35ec962a		out:5	named-only	chips/bridge/README.md#bridge-block-offsets-0x80-to-0x298	Bridge block (offsets 0x80 to 0x298)
 IP27/unix	kernel	n64	.text	0xc000000000076178	680	do_pcibr_rrb_free	symtab	573aae0be291		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000076420	244	do_pcibr_rrb_free_all	symtab	94a55743c670		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000076514	172	do_pcibr_rrb_clear	symtab	af990ff447f7		out:5	undocumented		
@@ -7765,7 +7765,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001725dc	8	edt_bus_info_get	symtab	5168f5d3
 IP27/unix	kernel	n64	.text	0xc0000000001725e4	8	edt_connectpt_get	symtab	fe9332698e56		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001725ec	8	edt_master_get	symtab	34e19bc9b6ca		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001725f4	8	edt_device_desc_get	symtab	4b2c9abfde8d		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001727e8	36	device_admin_info_get	symtab	ed425236b8e4		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001727e8	36	device_admin_info_get	symtab	ed425236b8e4		out:5	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP27/unix	kernel	n64	.text	0xc00000000017280c	320	device_admin_info_set	symtab	c6713c7f0b41		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017294c	48	device_driver_admin_info_get	symtab	821d89bfeda0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017297c	60	device_driver_admin_info_set	symtab	f52e85265cac		out:5	undocumented		
@@ -10712,7 +10712,7 @@ IP27/unix	kernel	n64	.text	0xc0000000002954c8	56	hwgraph_path_get_component	symt
 IP27/unix	kernel	n64	.text	0xc000000000295500	284	hwgraph_path_lookup	symtab	ad56eff86048		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000029561c	384	hwgraph_path_add	symtab	117b85d30f24		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000029579c	348	hwgraph_traverse	symtab	19e2050980c1		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP27/unix	kernel	n64	.text	0xc0000000002958f8	144	hwgraph_path_to_vertex	symtab	6562ee81bbd8		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000002958f8	144	hwgraph_path_to_vertex	symtab	6562ee81bbd8		out:5	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP27/unix	kernel	n64	.text	0xc000000000295988	44	hwgraph_path_to_dev	symtab	aae17cd188d3		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc0000000002959b4	92	hwgraph_link_add	symtab	537829eb00c7		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000295a10	132	hwgraph_device_add	symtab	279fc115ee4f		out:5	undocumented		
@@ -16277,7 +16277,7 @@ IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0x9f8	56
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xa30	284	hwgraph_path_lookup	dwarf+symtab	d2cf46cc966b		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xb4c	384	hwgraph_path_add	dwarf+symtab	20d016bcaf15		out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xccc	348	hwgraph_traverse	dwarf+symtab	c02f9d392fdc		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	e888cded3666		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	e888cded3666		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xeb8	44	hwgraph_path_to_dev	dwarf+symtab	8c583995b6de		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xee4	92	hwgraph_link_add	dwarf+symtab	83753e93bdb2		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xf40	132	hwgraph_device_add	dwarf+symtab	d7817c0c8f04		out:3	undocumented		
@@ -17658,7 +17658,7 @@ IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)	kernel-object	n64	.text	0x288	8	
 IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)	kernel-object	n64	.text	0x290	64	dev_admin_registry_init	dwarf+symtab	b81f7dcffd8a		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)	kernel-object	n64	.text	0x2d0	296	dev_admin_registry_add	dwarf+symtab	3f052bc01b37		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)	kernel-object	n64	.text	0x3f8	132	dev_admin_registry_find	dwarf+symtab	bc1f61715dd1		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)	kernel-object	n64	.text	0x47c	36	device_admin_info_get	dwarf+symtab	e13a9cfc8ae4		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)	kernel-object	n64	.text	0x47c	36	device_admin_info_get	dwarf+symtab	e13a9cfc8ae4		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)	kernel-object	n64	.text	0x4a0	320	device_admin_info_set	dwarf+symtab	6cb174fd4f7c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)	kernel-object	n64	.text	0x5e0	48	device_driver_admin_info_get	dwarf+symtab	b651a06f7129		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)	kernel-object	n64	.text	0x610	60	device_driver_admin_info_set	dwarf+symtab	d7efca1506ad		out:3	undocumented		
@@ -25523,7 +25523,7 @@ IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4ad0	64	pcibr_ate
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4b10	784	ate_write	dwarf+symtab	26f155823a57		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4e20	464	do_pcibr_rrb_count_valid	dwarf+symtab	6bcd31e46948		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4ff0	276	do_pcibr_rrb_count_avail	dwarf+symtab	47dbcf249fe5		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x5104	564	do_pcibr_rrb_alloc	dwarf+symtab	38ef06150eb3		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x5104	564	do_pcibr_rrb_alloc	dwarf+symtab	38ef06150eb3		in	named-only	chips/bridge/README.md#bridge-block-offsets-0x80-to-0x298	Bridge block (offsets 0x80 to 0x298)
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x5338	680	do_pcibr_rrb_free	dwarf+symtab	16e0d9dc880c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x55e0	244	do_pcibr_rrb_free_all	dwarf+symtab	2ea34f7b50aa		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x56d4	172	do_pcibr_rrb_clear	dwarf+symtab	4c2eacb047de		in	undocumented		
@@ -37500,7 +37500,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200473e4	64	pcibr_ate_addr	symtab	9881248fe
 IP30/unix	kernel	n64	.text	0xa800000020047424	784	ate_write	symtab	2e21115a8a4e		out:7	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa800000020047734	464	do_pcibr_rrb_count_valid	symtab	f90a738aaaf9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020047904	276	do_pcibr_rrb_count_avail	symtab	47a9bb41efee		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020047a18	564	do_pcibr_rrb_alloc	symtab	23de2ef326bd		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020047a18	564	do_pcibr_rrb_alloc	symtab	23de2ef326bd		out:7	named-only	chips/bridge/README.md#bridge-block-offsets-0x80-to-0x298	Bridge block (offsets 0x80 to 0x298)
 IP30/unix	kernel	n64	.text	0xa800000020047c4c	680	do_pcibr_rrb_free	symtab	d887d0dea703		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020047ef4	244	do_pcibr_rrb_free_all	symtab	b468c4d18872		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020047fe8	172	do_pcibr_rrb_clear	symtab	8960755db149		out:7	undocumented		
@@ -39479,7 +39479,7 @@ IP30/unix	kernel	n64	.text	0xa80000002013eb4c	8	edt_bus_info_get	symtab	5168f5d3
 IP30/unix	kernel	n64	.text	0xa80000002013eb54	8	edt_connectpt_get	symtab	fe9332698e56		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002013eb5c	8	edt_master_get	symtab	34e19bc9b6ca		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002013eb64	8	edt_device_desc_get	symtab	4b2c9abfde8d		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002013ed58	36	device_admin_info_get	symtab	01ae1e6597f6		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002013ed58	36	device_admin_info_get	symtab	01ae1e6597f6		out:7	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP30/unix	kernel	n64	.text	0xa80000002013ed7c	320	device_admin_info_set	symtab	55ee821f06e4		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002013eebc	48	device_driver_admin_info_get	symtab	8cddf07562db		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002013eeec	60	device_driver_admin_info_set	symtab	794af6527903		out:7	undocumented		
@@ -42229,7 +42229,7 @@ IP30/unix	kernel	n64	.text	0xa80000002023ca68	56	hwgraph_path_get_component	symt
 IP30/unix	kernel	n64	.text	0xa80000002023caa0	284	hwgraph_path_lookup	symtab	f2a14a7d642b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002023cbbc	384	hwgraph_path_add	symtab	2b4263e194e4		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002023cd3c	348	hwgraph_traverse	symtab	75798f71a7b5		out:7	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/unix	kernel	n64	.text	0xa80000002023ce98	144	hwgraph_path_to_vertex	symtab	b6e3fe39c6fe		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002023ce98	144	hwgraph_path_to_vertex	symtab	b6e3fe39c6fe		out:7	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP30/unix	kernel	n64	.text	0xa80000002023cf28	44	hwgraph_path_to_dev	symtab	1cd3300054a2		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa80000002023cf54	92	hwgraph_link_add	symtab	a171222b9ac5		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002023cfb0	132	hwgraph_device_add	symtab	494463f15611		out:7	undocumented		
@@ -47938,7 +47938,7 @@ IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0x9f8	56
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xa30	284	hwgraph_path_lookup	dwarf+symtab	d2cf46cc966b		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xb4c	384	hwgraph_path_add	dwarf+symtab	20d016bcaf15		out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xccc	348	hwgraph_traverse	dwarf+symtab	c02f9d392fdc		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	e888cded3666		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	e888cded3666		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xeb8	44	hwgraph_path_to_dev	dwarf+symtab	8c583995b6de		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xee4	92	hwgraph_link_add	dwarf+symtab	83753e93bdb2		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xf40	132	hwgraph_device_add	dwarf+symtab	d7817c0c8f04		out:3	undocumented		
@@ -49234,7 +49234,7 @@ IP30/usr/cpu/sysgen/IP30boot/io.a(devsupport.o)	kernel-object	n64	.text	0x288	8	
 IP30/usr/cpu/sysgen/IP30boot/io.a(devsupport.o)	kernel-object	n64	.text	0x290	64	dev_admin_registry_init	dwarf+symtab	b81f7dcffd8a		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/io.a(devsupport.o)	kernel-object	n64	.text	0x2d0	296	dev_admin_registry_add	dwarf+symtab	3f052bc01b37		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/io.a(devsupport.o)	kernel-object	n64	.text	0x3f8	132	dev_admin_registry_find	dwarf+symtab	bc1f61715dd1		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/io.a(devsupport.o)	kernel-object	n64	.text	0x47c	36	device_admin_info_get	dwarf+symtab	e13a9cfc8ae4		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/io.a(devsupport.o)	kernel-object	n64	.text	0x47c	36	device_admin_info_get	dwarf+symtab	e13a9cfc8ae4		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP30/usr/cpu/sysgen/IP30boot/io.a(devsupport.o)	kernel-object	n64	.text	0x4a0	320	device_admin_info_set	dwarf+symtab	6cb174fd4f7c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/io.a(devsupport.o)	kernel-object	n64	.text	0x5e0	48	device_driver_admin_info_get	dwarf+symtab	b651a06f7129		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/io.a(devsupport.o)	kernel-object	n64	.text	0x610	60	device_driver_admin_info_set	dwarf+symtab	d7efca1506ad		out:3	undocumented		
@@ -55642,7 +55642,7 @@ IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x48a4	64	pcibr_ate
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x48e4	784	ate_write	dwarf+symtab	26f155823a57		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x4bf4	464	do_pcibr_rrb_count_valid	dwarf+symtab	4091598e243c		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x4dc4	276	do_pcibr_rrb_count_avail	dwarf+symtab	bd4cd4fdc47f		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x4ed8	564	do_pcibr_rrb_alloc	dwarf+symtab	16271246ae6f		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x4ed8	564	do_pcibr_rrb_alloc	dwarf+symtab	16271246ae6f		in	named-only	chips/bridge/README.md#bridge-block-offsets-0x80-to-0x298	Bridge block (offsets 0x80 to 0x298)
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x510c	680	do_pcibr_rrb_free	dwarf+symtab	d9113b1fdc38		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x53b4	244	do_pcibr_rrb_free_all	dwarf+symtab	2ea34f7b50aa		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x54a8	172	do_pcibr_rrb_clear	dwarf+symtab	4c2eacb047de		in	undocumented		
@@ -64115,7 +64115,7 @@ IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xa20	56
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xa58	284	hwgraph_path_lookup	dwarf+symtab	3e15d25a677c		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xb74	388	hwgraph_path_add	dwarf+symtab	0a1b552645c1		out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xcf8	364	hwgraph_traverse	dwarf+symtab	c90201767292		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xe64	144	hwgraph_path_to_vertex	dwarf+symtab	5aa10de74afd		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xe64	144	hwgraph_path_to_vertex	dwarf+symtab	5aa10de74afd		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xef4	44	hwgraph_path_to_dev	dwarf+symtab	0648507f3cae		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xf20	96	hwgraph_link_add	dwarf+symtab	151c5a877442		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xf80	132	hwgraph_device_add	dwarf+symtab	7a4d2240e197		out:3	undocumented		
@@ -65221,7 +65221,7 @@ IP32/usr/cpu/sysgen/IP32boot/io.a(devsupport.o)	kernel-object	n32	.text	0x2ac	8	
 IP32/usr/cpu/sysgen/IP32boot/io.a(devsupport.o)	kernel-object	n32	.text	0x2b4	64	dev_admin_registry_init	dwarf+funcnames+symtab	9f91580f8b9b		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/io.a(devsupport.o)	kernel-object	n32	.text	0x2f4	296	dev_admin_registry_add	dwarf+funcnames+symtab	f639e92ac306		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/io.a(devsupport.o)	kernel-object	n32	.text	0x41c	132	dev_admin_registry_find	dwarf+funcnames+symtab	d1bfe326d9a0		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/io.a(devsupport.o)	kernel-object	n32	.text	0x4a0	36	device_admin_info_get	dwarf+symtab	094a876c9269		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/io.a(devsupport.o)	kernel-object	n32	.text	0x4a0	36	device_admin_info_get	dwarf+symtab	094a876c9269		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP32/usr/cpu/sysgen/IP32boot/io.a(devsupport.o)	kernel-object	n32	.text	0x4c4	320	device_admin_info_set	dwarf+symtab	9dc57c7dd6a6		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/io.a(devsupport.o)	kernel-object	n32	.text	0x604	48	device_driver_admin_info_get	dwarf+symtab	b8d304d5359f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/io.a(devsupport.o)	kernel-object	n32	.text	0x634	60	device_driver_admin_info_set	dwarf+symtab	e41b65c7f2be		out:3	undocumented		
@@ -80921,7 +80921,7 @@ IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0x9f8	56
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xa30	284	hwgraph_path_lookup	dwarf+symtab	d2cf46cc966b		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xb4c	384	hwgraph_path_add	dwarf+symtab	20d016bcaf15		out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xccc	348	hwgraph_traverse	dwarf+symtab	179666ceb30e		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	31f5f28c049a		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	31f5f28c049a		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xeb8	44	hwgraph_path_to_dev	dwarf+symtab	8c583995b6de		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xee4	92	hwgraph_link_add	dwarf+symtab	83753e93bdb2		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xf40	132	hwgraph_device_add	dwarf+symtab	99c3ba720c98		out:3	undocumented		
@@ -82442,7 +82442,7 @@ IP35/usr/cpu/sysgen/IP35boot/io.a(devsupport.o)	kernel-object	n64	.text	0x288	8	
 IP35/usr/cpu/sysgen/IP35boot/io.a(devsupport.o)	kernel-object	n64	.text	0x290	64	dev_admin_registry_init	dwarf+symtab	b81f7dcffd8a		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/io.a(devsupport.o)	kernel-object	n64	.text	0x2d0	296	dev_admin_registry_add	dwarf+symtab	3f052bc01b37		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/io.a(devsupport.o)	kernel-object	n64	.text	0x3f8	132	dev_admin_registry_find	dwarf+symtab	bc1f61715dd1		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/io.a(devsupport.o)	kernel-object	n64	.text	0x47c	36	device_admin_info_get	dwarf+symtab	e13a9cfc8ae4		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/io.a(devsupport.o)	kernel-object	n64	.text	0x47c	36	device_admin_info_get	dwarf+symtab	e13a9cfc8ae4		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
 IP35/usr/cpu/sysgen/IP35boot/io.a(devsupport.o)	kernel-object	n64	.text	0x4a0	320	device_admin_info_set	dwarf+symtab	6cb174fd4f7c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/io.a(devsupport.o)	kernel-object	n64	.text	0x5e0	48	device_driver_admin_info_get	dwarf+symtab	b651a06f7129		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/io.a(devsupport.o)	kernel-object	n64	.text	0x610	60	device_driver_admin_info_set	dwarf+symtab	d7efca1506ad		out:3	undocumented		
@@ -90302,7 +90302,7 @@ IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x4d3c	64	pcibr_ate
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x4d7c	784	ate_write	dwarf+symtab	255bcdeb2a7d		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x508c	464	do_pcibr_rrb_count_valid	dwarf+symtab	6bcd31e46948		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x525c	276	do_pcibr_rrb_count_avail	dwarf+symtab	47dbcf249fe5		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x5370	564	do_pcibr_rrb_alloc	dwarf+symtab	38ef06150eb3		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x5370	564	do_pcibr_rrb_alloc	dwarf+symtab	38ef06150eb3		in	named-only	chips/bridge/README.md#bridge-block-offsets-0x80-to-0x298	Bridge block (offsets 0x80 to 0x298)
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x55a4	680	do_pcibr_rrb_free	dwarf+symtab	16e0d9dc880c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x584c	244	do_pcibr_rrb_free_all	dwarf+symtab	07b618a447b8		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x5940	172	do_pcibr_rrb_clear	dwarf+symtab	4c2eacb047de		in	undocumented		
