@@ -4680,7 +4680,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003a550	56	tfi_save	symtab	23e6f8986331		o
 IP27/unix	kernel	n64	.text	0xc00000000003a588	56	tfi_restore	symtab	0a54feea6840		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003a5c0	4	assbuffer	symtab	df3f619804a9		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003a5c4	1084	assfail	symtab	5360476ee7f3		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc00000000003aa00	12	getsr	symtab	2ea7fc1f266e		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP27/unix	kernel	n64	.text	0xc00000000003aa00	12	getsr	symtab	2ea7fc1f266e		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc00000000003aa0c	16	setsr	symtab	d5ed0e1e4ca1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003aa1c	8	getpc	symtab	c343413c267a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003aa24	8	getsp	symtab	2c412fc24dd8		out:5	undocumented		
@@ -19077,7 +19077,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x213d0	56	tfi_sav
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21408	56	tfi_restore	dwarf+symtab	0a54feea6840		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21440	4	assbuffer	dwarf+symtab	df3f619804a9		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21444	1084	assfail	dwarf+symtab	53f0f6032490		out:6	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21880	12	getsr	dwarf+symtab	2ea7fc1f266e		out:6	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21880	12	getsr	dwarf+symtab	2ea7fc1f266e		out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2188c	16	setsr	dwarf+symtab	d5ed0e1e4ca1		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2189c	8	getpc	dwarf+symtab	c343413c267a		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x218a4	8	getsp	dwarf+symtab	2c412fc24dd8		out:6	undocumented		
@@ -36836,7 +36836,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001bc20	56	tfi_save	symtab	23e6f8986331		o
 IP30/unix	kernel	n64	.text	0xa80000002001bc58	56	tfi_restore	symtab	0a54feea6840		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001bc90	4	assbuffer	symtab	df3f619804a9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001bc94	1084	assfail	symtab	2e3fef0ec41e		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa80000002001c0d0	12	getsr	symtab	2ea7fc1f266e		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP30/unix	kernel	n64	.text	0xa80000002001c0d0	12	getsr	symtab	2ea7fc1f266e		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa80000002001c0dc	16	setsr	symtab	d5ed0e1e4ca1		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c0ec	8	getpc	symtab	c343413c267a		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c0f4	8	getsp	symtab	2c412fc24dd8		out:7	undocumented		
@@ -50392,7 +50392,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbaa0	56	tfi_save
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbad8	56	tfi_restore	dwarf+symtab	0a54feea6840		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbb10	4	assbuffer	dwarf+symtab	df3f619804a9		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbb14	1084	assfail	dwarf+symtab	75e6bf45b75e		out:8	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbf50	12	getsr	dwarf+symtab	2ea7fc1f266e		out:8	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbf50	12	getsr	dwarf+symtab	2ea7fc1f266e		out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbf5c	16	setsr	dwarf+symtab	d5ed0e1e4ca1		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbf6c	8	getpc	dwarf+symtab	c343413c267a		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbf74	8	getsp	dwarf+symtab	2c412fc24dd8		out:8	undocumented		
@@ -66564,7 +66564,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x118f4	56	tfi_sav
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1192c	56	tfi_restore	symtab	61268ef6fa4e		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11964	4	assbuffer	symtab	df3f619804a9		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11968	500	assfail	symtab	b186e6a728a6		out:9	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11b5c	12	getsr	symtab	2ea7fc1f266e		out:9	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11b5c	12	getsr	symtab	2ea7fc1f266e		out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11b68	36	setsr	symtab	9755de041b23		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11b8c	8	getpc	symtab	c343413c267a		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11b94	8	getsp	symtab	2c412fc24dd8		out:9	undocumented		
@@ -83951,7 +83951,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21800	56	tfi_sav
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21838	56	tfi_restore	dwarf+symtab	0a54feea6840		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21870	4	assbuffer	dwarf+symtab	df3f619804a9		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21874	1084	assfail	dwarf+symtab	5ab35cbbb27c		out:11	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21cb0	12	getsr	dwarf+symtab	2ea7fc1f266e		out:11	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21cb0	12	getsr	dwarf+symtab	2ea7fc1f266e		out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21cbc	16	setsr	dwarf+symtab	d5ed0e1e4ca1		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21ccc	8	getpc	dwarf+symtab	c343413c267a		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21cd4	8	getsp	dwarf+symtab	2c412fc24dd8		out:11	undocumented		
@@ -98101,7 +98101,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a65c	32	cpu_restart_rtc	symtab
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	GetSR	symtab	a54a0253bf98	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	get_SR	symtab	a54a0253bf98	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	get_sr	symtab	a54a0253bf98	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	getsr	symtab	a54a0253bf98	shared-address	out:15	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	getsr	symtab	a54a0253bf98	shared-address	out:15	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a68c	24	SetSR	symtab	0ebcae91ae2a	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a68c	24	set_SR	symtab	0ebcae91ae2a	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a68c	24	set_sr	symtab	0ebcae91ae2a	shared-address	out:15	undocumented		
