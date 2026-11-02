@@ -554,8 +554,10 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
 - `IP27/usr/cpu/sysgen/IP27boot/io.a(devsupport.o)` (inferred): the device descriptors and the driver
   administration tables, 47 routines in a 32500-byte member. `device_desc_dup` (160 bytes) and
   `device_desc_default_set` (184 bytes) copy and set a device's descriptor, the `edt_*_get` accessors (8 bytes
-  each) read its fields, and `dev_admin_registry_add` (296 bytes) and `device_admin_info_set` (320 bytes) fill the
-  administration table. `device_driver_getbydev` (356 bytes) looks a driver up, and
+  each) read its fields, and `dev_admin_registry_add` (296 bytes) adds an entry to the administration registry.
+  `device_admin_info_set` (320 bytes) takes a property name and value. It treats the names `INTR_TARGET` and
+  `INTR_SWLEVEL` specially, updating the device's descriptor (one value is resolved with `hwgraph_path_to_vertex`, the
+  other parsed with `atoi`), and stores any other name as a hardware-graph label. `device_driver_getbydev` (356 bytes) looks a driver up, and
   `device_driver_sysgen_thread_pri_get` (436 bytes) reads a driver's thread priority from the system
   configuration. Interrupt priorities come from named tables such as `disk_intr_pri` and `serial_intr_pri`. It
   imports the hardware-graph calls and the string-table routines. No chip is driven.
@@ -571,7 +573,8 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
 - `IP27/usr/cpu/sysgen/IP27boot/io.a(sgset.o)` (inferred): a single-routine wrapper, `sgset` (104 bytes), in a
   3588-byte member. Its only import is `kvsgset`. It drives no chip.
 - `IP27/usr/cpu/sysgen/IP27boot/io.a(lan.o)` (inferred): two interrupt entries, `lan_intr` (36 bytes) and
-  `fram_intr` (40 bytes), in a 4276-byte member. Their only import is `cmn_err`, the kernel's error-message call.
+  `fram_intr` (40 bytes), in a 4276-byte member. Each prints a level-5 `cmn_err` message that the local I/O
+  interrupt (LAN chip, frame buffer) is not supported and returns 0; `cmn_err` is the only import.
 - `IP27/usr/cpu/sysgen/IP27boot/io.a(vme.o)` (inferred): the VME adapter set-up and interrupt-vector allocator, 12
   routines in a 12004-byte member. `vme_init` (216 bytes) and `vme_adap_setup` (244 bytes) bring up an adapter,
   `vme_ivec_alloc` (228 bytes) and `vme_ivec_free` (32 bytes) manage vectors, `vme_ivec_set_ext` (184 bytes) sets
@@ -581,24 +584,32 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
   numbers of a logical volume's subvolumes, one routine, `volume_get_devts` (244 bytes), in a 4180-byte member. It
   imports `xlv_get_subvolumes`, `xvm_get_subvolumes` and `xvm_dev`, the volume-manager calls it wraps.
 - `IP27/usr/cpu/sysgen/IP27boot/io.a(dbg.o)` (inferred): the debug-monitor loader and its string helpers, five
-  routines in a 12676-byte member. `_check_dbg` (1536 bytes) checks the monitor, `chkenv` (184 bytes) reads its
-  environment, `new_str1` (208 bytes) and `fill_dbg` (180 bytes) build its strings, and `init_str` (20 bytes)
-  starts one. It imports `arcs_load`, `get_nasid`, `dbgmon_loadstop` and
+  routines in a 12676-byte member. `_check_dbg` (1536 bytes) decides whether to load a debugger image from environment
+  variables and a list of disk and network boot paths, trying an alternate list when the first fails, and loads it
+  with `arcs_load`. `chkenv` (184 bytes) looks a name up in an environment-string array and returns the text after
+  the `=`. `new_str1` (208 bytes) appends a string to a table limited to 47 entries in a 1408-byte pool and reports an
+  error through `dprintf` when either limit is passed, `fill_dbg` (180 bytes) copies the leading part of a path with `strncpy`, cutting off the file name after the last `)`, and
+  `init_str` (20 bytes) empties the table. It imports `arcs_load`, `get_nasid`, `dbgmon_loadstop` and
   `dbgmon_nmiprom`. Rule 3 excludes the five routines.
-- `IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)` (inferred): the table of kernel-debugger command entries, 19
-  routines in an 11572-byte member. `idbg_addfunc` and `idbg_delfunc` register and remove a command, `idbg_dofunc`
-  runs one, `idbg_setup` (56 bytes) builds the table, and `qprintf` (72 bytes) and `prsymoff` format output. Most
-  of the `idbg_*` routines are 36-byte wrappers. The member imports the debugger's own tables, `dbstab` and
-  `idbgdefault`.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)` (inferred): the entry points of the kernel debugger's command
+  interface, 19 routines in an 11572-byte member, almost all of them stubs. Fifteen are 36-byte routines that load
+  the pointer `idbgfuncs` (an 8-byte data symbol the member defines) and call through a fixed slot of the table it
+  points to: `idbg_addfunc`, `idbg_delfunc`, `idbg_dofunc`, `prsymoff` and the rest. `qprintf` (72 bytes) spills its
+  arguments and does the same through another slot, and `idbg_setup` (56 bytes) calls slot 1, then calls `debug` if
+  the flag `dbgmon_symstop` is set. The member holds no command table of its own and no routine body for
+  registering or running a command; the real routines sit behind the pointer. The one body of its own is
+  `ROUNDPC` (280 bytes), which searches the symbol table through `symmax`. It imports `dbstab`, `idbgdefault`,
+  `symmax`, `_ftext` and `_end`.
 - `IP27/usr/cpu/sysgen/IP27boot/io.a(ioerror_handling.o)` (inferred): the I/O error-action records kept per
   hardware-graph vertex, 18 routines in a 17172-byte member. `error_action_set` (396 bytes), `error_priority_set`
   (244 bytes) and `error_state_set` (200 bytes) record what to do with a fault, `error_action_perform` (140 bytes)
   carries it out, and the `error_retry_count_*` routines count retries. `sys_critical_graph_vertex_add` (212
   bytes) marks vertices that must stay up. It imports `hwgraph_edge_add`, `hwgraph_traverse` and the
   `hwgraph_info_*` calls.
-- `IP27/usr/cpu/sysgen/IP27boot/io.a(hwcopy.o)` (inferred): the copy routines for a hardware buffer, two routines
-  in a 4404-byte member. `hwcpout` (436 bytes) copies out and `hwcpin` (360 bytes) copies in. The member imports
-  no other routine.
+- `IP27/usr/cpu/sysgen/IP27boot/io.a(hwcopy.o)` (inferred): the copy routines for a buffer that is reached in 16-bit
+  units, two routines in a 4404-byte member. `hwcpout` (436 bytes) reads the source as words or halfwords and stores
+  halfwords, and `hwcpin` (360 bytes) loads halfwords and stores words. Both fall back to a byte loop when the length
+  is under four or the two addresses differ in bit 0. The member imports no other routine.
 - `IP27/usr/cpu/sysgen/IP27boot/jlimits.a(jlimits.o)` (inferred): the job-limit system calls behind `syssgi`, 17
   routines in a 28580-byte member. `syssgi_makenewjob` (1632 bytes), `syssgi_setjlimit` (1052 bytes) and
   `syssgi_waitjob` (904 bytes) are the largest, `syssgi_getjlimit` (656 bytes) reads a limit, `jlimits_init` (68
@@ -608,11 +619,16 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
 - `IP27/usr/cpu/sysgen/IP27boot/jlimits.a(jid.o)` (inferred): the job-ID table, eight routines in a 15508-byte
   member. `jid_alloc` (808 bytes) hands out a job ID, `jid_job_free` (584 bytes) releases one, `rm_zombiejobs`
   (608 bytes) removes jobs with no live processes, and `jidtab_init` (300 bytes) builds the table. It allocates
-  its entries from `jobtab_zone` and sleeps on condition variables with `sv_wait` and `sv_broadcast`.
+  its entries from a private zone that `jidtab_init` creates with `kmem_zone_init`, not from `jobtab_zone` (which
+  `syssgi_makenewjob` allocates from and `rm_zombiejobs` frees to), and sleeps on condition variables with `sv_wait`
+  and `sv_broadcast`.
 - `IP27/usr/cpu/sysgen/IP27boot/jlimits.a(jl_pproc.o)` (inferred): the per-process side of job membership, 11
   routines in a 13812-byte member. `proc_joinjob` (176 bytes) and `proc_as_joinjob` (284 bytes) put a process into
-  a job, `proc_leavejob` (752 bytes) takes it out, `proc_job_accum` (492 bytes) adds its usage to the job, and
-  `job_as_exit` (272 bytes) does the same at exit. It imports the accounting hooks `csa_jexit` and `do_csaacct`
+  a job, `proc_leavejob` (752 bytes) takes it out, `proc_job_accum` (492 bytes) adds a usage change to the job's counter under a spin lock, checks it against a
+  limit and, when enforcement is on, sends signal 9 to the process (`sigtopid`, with an error message when the send
+  fails). `job_as_exit` (272 bytes) is not about usage: under a mutex it unlinks one record from a list hanging off
+  the process, releases the address space the record holds with `as_rele` and frees the 32-byte record with
+  `kmem_free`. It imports the accounting hooks `csa_jexit` and `do_csaacct`
   and frees job IDs through `jid_job_free`.
 - `IP27/usr/cpu/sysgen/IP27boot/kmem.a(kern_heap.o)` (inferred): the kernel heap entry points and the arenas
   behind them, 37 routines in a 36436-byte member. `kmem_alloc` (108 bytes), `kern_malloc` (112 bytes) and
@@ -638,7 +654,8 @@ are in the [function scope section](inventory/README.md#function-scope). Objects
 - `IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kmem_zone.o)` (inferred): the checking build of the zone allocator,
   48 routines in a 53204-byte member. `kmem_zone_quick_alloc` is 4388 bytes here against 676 bytes in the
   production member. It imports `kmem_poison`, `kmem_split_zone`, `kmem_make_zones_private_min` and
-  `kmem_make_zones_private_max`, which the production member does not import, and also `cmn_err`. Rule 3 excludes
+  `kmem_make_zones_private_max`, which the production member does not import, and also `cmn_err` and
+  `nested_64bitunlock`. Rule 3 excludes
   the 48 routines.
 - `IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_mbuf.o)` (inferred): the checking build of the mbuf allocator,
   42 routines in a 39508-byte member. Its `m_free` (32 bytes) is a wrapper over `_m_free` (936 bytes), where the
