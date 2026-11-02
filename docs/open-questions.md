@@ -166,12 +166,6 @@ Corrections found while tagging. These are not fixed here.
   (`0x438`, `0x458`) clears it. Tried: the error initialisation, the PI, I/O and network handlers, the spool and stack routines,
   the shipped decode text. Next: `hub_ioerror_handler`, `handle_uncac_buserr` and `hubni_error_handler` in full, the trap dispatcher
   that indexes the cause table, `intr_heuristic`.
-- **Hub registers with no named role.** *[route: software now]* `0x2000c8`, `0x2000d0`, `0x2000d8`, `0x2000e0`, `0x400160`, `0x400190` and `0x4002c8` are
-  touched by `per_hub_init`, `hub_ifdr_fix_value`, `hub_piomap_alloc`, `hub_piomap_free`, an unnamed routine at `0xc00000000003b440`, `hub_ioerror_handler`, `mlreset` and `hub_error_devenable` and are not in the public
-  headers. Next: read those routines in full. The I/O-board PROM is not in the Hub census.
-- **Hub directory error labels.** *[route: software now]* The shipped decode text labels directory error bit 61 uncorrectable and bit 63 correctable; the
-  single-bit-error handler and the public header have them the other way round. Next: read `log_md_errors` and the decode routine
-  `show_hub_md_err` in full.
 - **HEART refused-access errors.** *[route: software now; the held `ide.IP30` diagnostic is stripped, so its half is read without symbols]* What sets CAUSE bits 40, 41 and 42 (bad system read, bad system write, PIU
   register access error), what a failed or timed-out processor store latches, and which of the level 4 vectors 51 to
   63 each error raises. Known: the latch registers and decode paths, the widget error type bits (store timeout is
@@ -205,20 +199,16 @@ Corrections found while tagging. These are not fixed here.
   are clear-on-read as in the public Hub headers, whether the pending register is write-one-to-clear, and what a
   second error does to a status whose valid bit is still set beyond setting overrun (bit 62). Route: none from
   software; a measurement or a published erratum.
-- **Bedrock error spool entry layout.** *[route: software now]* Established: entries are 8 bytes and `get_matching_spool_addr` matches the
-  address (status 0 bits 61:25 `<< 3`) and size; the status 0 field names are shared. Unknown: the entry's own
-  layout (the Hub error stack packs the fields differently), what writes an entry, and the units of the size
-  register (`4096 << (n - 1)`). Next: read `process_error_spool`, `huberror_process_stack_entry` and
-  `hubpi_spool_get_next` in full.
 - **Bedrock pending bits 25 to 34 and fatal selection.** *[route: software now; hardware residue: what physically sets bits 29 to 34; proposed: the mask code that ORs bit 24]* Established: names from the kernel's table and the fatal
   and miscellaneous masks. Unknown: what sets bits 29 to 34 beyond their names (crossbar data cycle count, intervention
   state, state-pending timeout), and why bit 24 is ORed into one interrupt mask only (the first one written).
 - **Bedrock protected-region replies.** *[route: software now]* Unknown: which status 0 type or CRB error code a protection violation
   produces, and what the strings "Protection error response" and "Vector response timeout" index. Next: find
   their table's users in `kernel.o` and read the memory/directory error decode.
-- **Bedrock interrupt numbers.** *[route: software now]* Established: PI error handler on cause line 6, network interface error on vector
-  126. Unknown: the II error level (chosen at run time by `intr_heuristic`), and whether cause line 6 is the Cause
-  IP6 bit. Next: the interrupt allocator and the CPU exception vector in the PROM.
+- **Bedrock interrupt numbers: the dispatcher's input.** *[route: software now]* Answered in chips/hub/README.md, "Interrupts to the processor": the II error
+  level is 64 (inferred from the allocator and the hardwired table) and cause level 6 is the Cause IP6 bit (inferred from the dispatcher's bit tests). Open: that
+  the dispatcher's fourth argument is the Cause word masked by the interrupt mask was not traced to the exception vector. Next: the IP27 exception vector code
+  that calls `intr`.
 - **Harness limits.** *[route: software now; tool work; proposed: map the object's data by gp in the harness]* `scripts/run_routine.py` replaces calls with `v0 = 0` and has no global data, so a routine
   that reads a table by gp (`pcireg_int_ate_set`, `pcireg_force_always_set`, `pcireg_intr_addr_vect_set`) ends in
   an unmapped read; the routines that touch only the chip record run to completion.

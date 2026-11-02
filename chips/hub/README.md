@@ -124,10 +124,10 @@ reset value, except where a section says otherwise).
 | `0x200088` | `MD_MISC_ERROR_CLR` | 8 | r | node | established | Miscellaneous error, read-and-clear alias, read by `hub_error_clear` and `log_md_errors`. |
 | `0x2000a0` | `MD_MOQ_SIZE` | 8 | w | node | inferred | Outgoing queue size, written once by `per_hub_init`. |
 | `0x2000a8` | `MD_MLAN_CTL` | 8 | rw | node | inferred | Microlan (NIC) control, read and written six times by one unnamed kernel routine at 0x6a4d0 that reads the board identification chip. |
-| `0x2000c8` | - | 8 | w | node | unknown | Written once by `per_hub_init` with a value from a kernel variable. No name in the public header; role not read. |
-| `0x2000d0` | - | 8 | r | node | unknown | Read by `hub_ifdr_fix_value`. No name in the public header; the routine fixes the I/O FIFO depth (0x400398), and these two reads feed its value; role not read. |
-| `0x2000d8` | - | 8 | r | node | unknown | Read by `hub_ifdr_fix_value`, next to 0x2000d0. Role not read. |
-| `0x2000e0` | - | 8 | rw | node | unknown | Read and written by `per_hub_init`. No name in the public header; role not read. |
+| `0x2000c8` | - | 8 | w | node | inferred | Written once by `per_hub_init` (0xc000000000026ca8, unconditionally) with the 32-bit kernel variable `hub_core_arb_ctrl` (0xc0000000014cabc0, sign-extended). The role, a core arbitration control, is the variable's name only; no field is read. No name in the public header. |
+| `0x2000d0` | - | 8 | r | node | inferred | Polled by `hub_ifdr_fix_value` until bits 23:17 (a seven-bit count) are zero; on a time-out its value is saved in the kernel variable `last_reqqd_val`. The name suggests a request-queue depth (inferred from the variable name alone). No name in the public header. |
+| `0x2000d8` | - | 8 | r | node | inferred | Polled with `0x2000d0` in the same loop on the same bits 23:17; on a time-out its value is saved in `last_repqd_val` (a reply-queue depth by the same reading). The poll waits for both counts to drain before the I/O FIFO depth field is rewritten. No name in the public header. |
+| `0x2000e0` | - | 8 | rw | node | inferred | `per_hub_init` replaces bits 12:8 with 1 and reads the register back, only when the Hub revision (`get_hub_chiprev`, stored at +0x49b8 of the node record) is below 5, or is 5 and the kernel tunable `enable_poq_war` is nonzero. It is therefore a revision-gated workaround; the field's meaning is not read (the tunable's name suggests an outgoing-queue workaround). No name in the public header. |
 | `0x210000` | `MD_PERF_SEL` | 8 | w | node | inferred | Memory performance counter select, written by `md_perf_start_count` and `md_perf_stop_count`. |
 | `0x210010` | `MD_PERF_CNT0` | 8 | w | local | inferred | Memory performance counter 0; one PROM store (0x1fc0087c), probably a clear. |
 | `0x220000` | `MD_UREG0_0` | 8 | rw | local/node | inferred | Junk-bus microcontroller register 0 ("UART 0 data/command"). The I2C master routines (`i2c_init`, `i2c_arb`, `i2c_master_xmit`, `i2c_master_recv`; the kernel prints "Hub I2C") read and write it to bit-bang the board identification bus, timed with the real-time counter; the PROM stores to it early in boot. |
@@ -149,13 +149,13 @@ reset value, except where a section says otherwise).
 | `0x400130` | `IIO_ILLR` | 8 | rw | local/node | inferred | LLP log: `ii_llp_error_monitor`, `capture_hub_stats` and `init_hub_stats` read and clear it for link error counts. |
 | `0x400138` | `IIO_IIDSR` | 8 | rw | node | established | Interrupt destination (the I/O error interrupt). `hubii_eint_init` (read in full) composes the word: bits 6:0 the level that `intr_heuristic` allocated, bits 16:8 the node number, bit 24 the enable, and stores that word alone (it does not read +0x138 first, so every other bit is written as zero); `hubii_eint_handler` clears bit 24 after servicing, so the interrupt stays off until re-armed. `bte_stall_node` and `hub_error_clear` also read or write it. |
 | `0x400140` | `IIO_IGFX_0` | 8 | rw | node | inferred | Graphics node and widget register 0, written by the graphics flow-control routine at 0x39ba34. |
-| `0x400160` | - | 8 | rw | node | inferred | First of a table of eight-byte entries indexed by a small number. `hub_piomap_alloc` and `hub_piomap_free` write entries; `hub_ioerror_handler` reads an entry (selected from the error code and a base of eight bytes per index) to turn a failed PIO address back into a widget address. Inferred to be the big-window translation table; not named in the public header. |
-| `0x400190` | - | 8 | w | node | unknown | Written once by `mlreset`; no name in the public header; role not read. |
+| `0x400160` | - | 8 | rw | node | established | Big-window translation table, entry 0 of seven (`0x400160` to `0x400190`, one per window 1 to 7 of the Hub address space at `0x20000000` steps of 512 MiB; the window number is bits 31:29 of the physical address). Entry layout: bits 11:8 the widget number, bits 4:0 the Crosstalk address bits 33:29. `hub_piomap_alloc` writes `((widget & 0xf) << 8) \| (address >> 29 & 0x1f)` into entry `slot` (slots 0 to 5 are windows 1 to 6); `hub_piomap_free` stores 0x300 into the entry (bits 9:8 set, address bits zero); `hub_ioerror_handler` takes the window number from bits 31:29 of the faulting address, reads entry `window - 1` and rebuilds the widget and the full address from it. Not named in the public header. |
+| `0x400190` | - | 8 | w | node | inferred | Entry 6 of the big-window table above (`0x160 + 8 * 6`; window 7, which `hub_ioerror_handler` indexes the same way). `mlreset` stores zero to it for every node when the current node id equals the halfword at gp-32620 (0xc000000000026398). No other code touches it, so only the zeroing is established. |
 | `0x400198` | `IIO_IOPRB_0` | 8 | rw | node | established | PIO read buffer entry 0 (`PRB[%d]` in the shipped decode). `hubiio_prb_error_handler` (read in full) tests bit 48, "Write Resp Pkt Error", on entry 0 and then on entries 8 to 15 (0x1a0 to 0x1d8, indexed by eight); a set bit sends the entry to the CRB error path. `hub_setup_prb` programs the entries. |
 | `0x4001e8` | `IIO_IMEM` | 8 | rw | node | established | Miscellaneous enable mask. `hubii_eint_handler` tests bits 0, 4 and 8 to name a shutdown ("Hub Widget 0 has been Shutdown", "BTE 0 ...", "BTE 1 ...") when no timeout bit in 0x400008 explains the error; `hub_xp_error_handler` and `bte_error_handler` write it. |
 | `0x4001f8` | `IIO_IECLR` | 8 | rw | local/node | established | I/O error clear. `hubii_eint_handler` stores `0xffffff` (all error bits); `hub_error_clear` and `bte_error_handler` store to it as well. |
 | `0x400200` | `IIO_IBCN` | 8 | w | node | inferred | CRB count (BTE), written once by `per_hub_init`. |
-| `0x4002c8` | - | 8 | r | node | unknown | Read once by `hub_error_devenable`; no name in the public header; role not read. |
+| `0x4002c8` | - | 8 | r | node | inferred | First of a family of eight-byte registers indexed by the widget number (`0x4002c8 + 8 * widget`; the index is the low byte of the widget id, so the extent is the widget count, not read). `hub_error_devenable` (error code 5 only) reads the register of the widget and, when bit 56 is set, stores the widget number ORed with 0x10 into `IIO_IPDR` (`0x400388`). What bit 56 means is not read. No name in the public header. |
 | `0x400308` | `IIO_PRTE_0` | 8 | rw | node | inferred | PIO read address table entry 0 (base of a family): `hub_widget_reset` read-modify-writes entries. |
 | `0x400388` | `IIO_IPDR` | 8 | rw | node | inferred | PIO table entry deallocation: `hub_widget_reset` and `hub_error_devenable`. |
 | `0x400390` | `IIO_ICDR` | 8 | rw | node | inferred | CRB entry deallocation: `hubiio_crb_free` writes the entry number to release it ("Releasing %s CRB"). |
@@ -273,9 +273,28 @@ bit number is **inferred** (the table is indexed by it; the dispatcher was not r
   status 0 is unknown.
 - **Error stack.** The hardware appends entries to a memory ring whose end it exposes in `0x418` (A) / `0x420` (B); the size code
   is `0x428`. `hubpi_spool_get_next` keeps two software pointers per processor, advances the read pointer by 8 and compares it
-  with the hardware pointer; entries are read from memory, not through registers. The stack entry fields the code uses: bit 12 is
-  the write-buffer flag, bits 63:31 the address (shifted left by 7), and the low three bits the type. (The public header gives
-  the type two bits; the kernel masks three, all valid types fit two.)
+  with the hardware pointer; entries are read from memory, not through registers. The ring is naturally aligned to its size: after
+  the advance the pointer wraps (the size is subtracted) when its low bits below the size are all zero, and the size is `4096 << (code - 1)`
+  bytes, so the size register counts in bytes of ring, not entries (established: `hubpi_spool_get_next`, `hub_error_init`, `dump_error_spool`).
+- **Error stack entry layout** (established, from the kernel's printer `print_spool_entry` in `IP27/unix` at 0xc000000000035428, read in full,
+  with `decode_xrb_err` at 0xc000000000035390 and `decode_crb_stat` at 0xc0000000000353c4). An entry is one doubleword, and a spool read fills only the first output
+  word of `hubpi_spool_get_next`. It is packed differently from the two status registers:
+
+  | Bits | Field (printed as) |
+  |---|---|
+  | 2:0 | error type, named from a read table or a write table by bit 12 |
+  | 5:3 | the "supp" number |
+  | 8:6 | the "T5 req #" number |
+  | 11:9 | the "CRB #" number |
+  | 12 | set: write response block ("WRB"); clear: read response block ("RRB") |
+  | 22:13 | CRB status: bits 14:13 as a decimal digit after an "E", bits 22:15 as eight flag positions, lowest bit first, bit 15 to bit 22 each the letter P, V, R, A, W, H, I, T (the byte string at 0xc0000000014164a8) when set and a dash when clear; the string has a ninth position before the "E" that is always a dash, because the printer passes 10 bits and the ninth flag would be bit 23 |
+  | 30:23 | command ("Cmd %02x") |
+  | 63:31 | cache line address, printed as the field shifted left 7 |
+
+  (The public header gives the type two bits; the printer masks three, and all valid types fit two.)
+  `get_matching_spool_addr` uses the same positions (address from 63:31, buffer kind from bit 12). Inferred: that the hardware writes the entries
+  (no kernel routine read stores into the ring; the kernel only reads it through the `0x9600000000000000` window) and that `0x418` and `0x420` are
+  the hardware's write pointers (the software read pointer is compared with them and refreshed from them when the ring looks empty).
 
 ### Interrupts to the processor
 
@@ -284,12 +303,32 @@ bit number is **inferred** (the table is indexed by it; the dispatcher was not r
 | PI errors | cause level 6 | `cause_intr_connect(6, hubpi_eint_handler)` (`hub_error_init`) |
 | NI errors, local | 126 | `intr_connect_level(cpu, 126, ...)` in `hubni_eint_init`, one connect for the node |
 | NI errors, remote | 103 + slice | `hubni_eint_init` loop over the two slices |
-| II errors | allocated at run time | `intr_heuristic` returns the level; `hubii_eint_init` writes it, the node number and the enable into `0x400138` |
+| II errors | allocated at run time (64, inferred) | `intr_heuristic` returns the level; `hubii_eint_init` writes it, the node number and the enable into `0x400138` |
 | Memory/directory single-bit errors | not read | `install_eccintr` (called from `per_hub_init`) |
 
 Levels 0 to 63 are in pending register `0x98` and mask `0xa8`, levels 64 to 127 in `0xa0` and `0xb0` (CPU A; CPU B's masks are
 0x10 above): `intr_connect_level` writes `level + 64 * group` to `0x90` and sets bit `level` in a software mask. The II error
-level number is not in the binary (inferred: whatever `intr_heuristic` hands out).
+level number is not a constant in the binary, but the allocator is read in full:
+
+- **The II error level** (inferred). `hubii_eint_init` calls `intr_heuristic` with no wanted level (-1) and flag word 4. The shared helper
+  (the code at 0xc00000000003810c that `intr_reserve_level` at 0xc000000000038340 also enters) treats flag bit 2 with a negative wanted level as
+  "use the second block of levels (64 to 127)": it scans the target processor's 64 level records of that block, in index order, for the first
+  whose in-use bit (bit 0 of the word at +4652 of a 48-byte record) is clear, sets the bit and returns the index plus 64. The levels already used
+  when `hub_error_init` runs are the hardwired ones that `intr_reserve_hardwired` (called just before it in `per_hub_init`) reserves, none of which
+  is 64 (list below). So the II error interrupt is level 64 unless another caller took it first on that processor; that none did is not read.
+- **Hardwired levels** (established from the table `intr_reserve_hardwired` walks, 16-byte records of level (first byte), flags (word at +4) and
+  a name pointer (doubleword at +8), starting at 0xc0000000014165f8 and ending at a record whose level byte is 0xff): level 0 "Reserved",
+  1 "Gfx A", 2 "Gfx B", 3 "Migration" (flags 8), 4 "Hub I2C", 5 "Crosscall A", 6 "Crosscall B", 7 "CPU Action A", 8 "CPU Action B",
+  9 "MSC Message" (flags 8); then, all with flags 4: 121 "IO Error", 122 "Clock Error", 123 "Correctable Error A", 124 "Correctable Error B",
+  125 "MD Correct. Error", 126 "NI Error", 103 and 104 "Remote NI Error", 127 "MSC Panic", 105 "LLP Pfail WAR". The reserved levels 126 and 103/104
+  match the network-interface levels `hubni_eint_init` connects. A level named "IO Error" at 121 is therefore reserved but is not the one the
+  II error interrupt receives: `hubii_eint_init` allocates its own.
+- **Cause level 6 as a processor line.** `cause_intr_connect` (0xc000000000038ff4) accepts levels 0, 1 and 4 to 7 (it fails for a negative level,
+  for 2 and 3, and for 8 and above) and stores the handler (doubleword) and its argument (word) in the 16-byte record at `16 * level` of a table.
+  The interrupt dispatcher `intr` (0xc0000000000392d8) tests bits `0x100 << n` of its fourth argument and, for the first set bit in the order
+  n = 6, 3, 5, 7, 4, 0, 2, 1, calls the handler of record n with the argument. Bits 15:8 are the interrupt-pending field of the processor's Cause
+  register, so cause level 6 is the Cause IP6 bit (inferred: that the fourth argument is the Cause word masked by the interrupt mask was not
+  traced to the exception vector).
 
 ### MD error latches
 
@@ -297,11 +336,14 @@ The shipped decode text, with field positions:
 
 - **Directory error** (`0x50`, clear alias `0x58`): bit 0 multiple correctable directory ECC, 1 multiple protection-rights error,
   2 multiple uncorrectable directory ECC, 28:3 bad directory space address, 38:32 bad directory syndrome, 41:39 bad access
-  encoding, and the text labels bit 61 "uncorrectable directory ecc", 62 "protection rights ecc error", 63 "correctable directory
-  ecc". **Conflict with the kernel's own logic**: `memerror_sbe_intr` (the single-bit-error handler) sends the case "bit 63 set"
-  to `log_md_errors` (the hard-error path) and examines bit 61 for the correctable case, and the public header gives 63
-  uncorrectable, 62 access error, 61 correctable. The decode text for bits 61 and 63 looks swapped; the code, the header and
-  the single-bit handler agree with each other.
+  encoding, and the text table holds three valid-bit strings whose leading numbers read "61: uncorrectable", "62: protection rights ecc error" and "63: correctable".
+  **The leading numbers are mis-typed, not the meaning** (established, `show_hub_md_err` in `IP27/unix` at 0xc000000000030cc0, 1160 bytes, read in full).
+  The routine tests bit 63 and prints the string numbered 61 ("uncorrectable directory ecc"), tests bit 62 and prints the string numbered 62, and tests
+  bit 61 and prints the string numbered 63 ("correctable directory ecc"). It also prints the three "multiple" strings only beside their partner:
+  bit 0 ("multiple correctable") only when bit 61 is set, bit 1 ("multiple protection rights") only when bit 62 is set, and bit 2
+  ("multiple uncorrectable") only when bit 63 is set. So the decoder itself treats bit 63 as the uncorrectable flag and bit 61 as the correctable flag,
+  which matches the public header (63 uncorrectable, 62 access error, 61 correctable), `log_md_errors` (bit 63 or 62 is fatal) and `memerror_sbe_intr`.
+  Treat the numbers in the shipped text as a typo; the register meaning is the header's. The whole directory block is printed only when at least one of bits 63, 62 and 61 is set.
 - **Memory error** (`0x70`, clear `0x78`): bit 0 multiple correctable, 1 multiple uncorrectable, 31:3 bad address pointer
   (shifted left by 3), 39:32 bad memory syndrome, 62 correctable, 63 uncorrectable. Agrees with the code (`memerror_sbe_intr`
   treats bit 63 as the hard error) and the public header.
@@ -381,8 +423,7 @@ Graded answers to the write-error questions, from the shipped kernel and PROM on
    out, so a failed read arrives only as the bus error. NI errors: levels 126 (local) and 103 and 104 (per slice remote). II errors:
    a run-time level programmed into `0x400138`. *Inferred*: that a failed write to a **widget** raises the II error rather
    than the PI one (the "Hub nasid %d got a PIO Write error from widget %d" message is in the II path; the PI write-buffer bits are for
-   writes the PI itself sees fail). *Unknown*: the processor line the cause level 6 maps to, the level number `intr_heuristic`
-   hands the II error.
+   writes the PI itself sees fail). *Inferred* (see "Interrupts to the processor"): cause level 6 is Cause IP6 and the II error level is 64.
 4. **A refused write to a Hub register itself.** *Established for the reporting, unknown for the trigger.* `hub_ioerror_local`
    (read in full) tests one bit of PI register `0` of the target node, selected by the accessor's node number, through the node
    alias and, whichever way that goes, calls `kl_panic` with "Hub Register Access Permission error" or "Hub Register Access
@@ -562,8 +603,8 @@ No Hub specification is held, so there is no specification comparison. The Linux
 `hubni.h`, `addrs.h`) were compared with every row.
 
 Agreements:
-- 121 of the 132 census offsets equal an offset the headers define (the other 11: seven with no header name, `0x2000c8`,
-  `0x2000d0`, `0x2000d8`, `0x2000e0`, `0x400160`, `0x400190`, `0x4002c8`, and the four CRB words `0x400408`, `0x400410`, `0x400418`,
+- 121 of the 132 census offsets equal an offset the headers define (the other 11: seven with no header name (`0x2000c8`,
+  `0x2000d0`, `0x2000d8`, `0x2000e0`, `0x400160`, `0x400190`, `0x4002c8`; the register table above records what the code does with each), and the four CRB words `0x400408`, `0x400410`, `0x400418`,
   `0x400428`, which the headers define with an index macro). The census found them from code, not from the headers.
 - Every PI error-interrupt bit position the shipped text prints, except the two noted below, equals the Linux `PI_ERR_*` mask; the
   status 0 field layout (type 2:0, request 5:3, supplemental 16:6, command 24:17, address 61:25, overrun 62, valid 63) and the status
@@ -1782,16 +1823,11 @@ Graded entries; each ends with the route that would settle it. Collected in [doc
   each, including partial (4-byte) stores and stores to a node that does not exist. Next: read `huberror_process_wrb_error`'s
   callers' tests against `hub_ioerror_handler`, the PROM's error dump routines (0x1fc056e0 region reads the MD latches), and the
   "kf_*" analysis routines in the kernel that print a cause per CRB status.
-- **Cause level 6 and the II error level.** Established: the level and the registration. Unknown: the CPU interrupt-pending bit that
-  level 6 is, and the number `intr_heuristic` returns for the II error. Next: read the trap dispatcher that indexes the cause
-  table and `intr_heuristic`.
 - **Status clear semantics.** Established: a store of zero to `0x448`/`0x468` follows every read of a valid first error. Unknown:
   whether reading `0x438`/`0x458` clears status 0, and whether status 1 alone is released by the store. Next: no held code touches
   the status 0 clear aliases; a published erratum or a capture.
 - **Hub register protection.** Established: the report path. Unknown: which writes `PI_CPU_PROTECT` and the II protection registers
   (`0x400100`, `0x400108`, not reached) refuse and what the refused store latches. Next: `hub_ioerror_handler` in full.
-- **Registers with no named role.** `0x2000c8`, `0x2000d0`, `0x2000d8`, `0x2000e0`, `0x400160`, `0x400190`, `0x4002c8` (not in
-  the public headers). Next: `hub_ifdr_fix_value`, `hub_piomap_alloc`, the I/O interface initialisation in full.
 - **Router vector access.** Inferred end to end (`vector_*_node`). Next: read the three routines in full and the router strings.
 - **PROM images beyond the CPU PROM.** The I/O-board PROM (`io6prom.img`) and the IP35 PROM reach Hub-class registers through
   the same windows but are not in this census (the IP35 PROM belongs to the Bedrock page).
