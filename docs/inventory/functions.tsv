@@ -1438,7 +1438,7 @@ IP27/unix	kernel	n64		0x0		io_init_xswitch_widgets	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		io_link_direct_widget	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		io_link_xswitch_widgets	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		io_queue_overflow	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		ioc3_break	dwarf			in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP27/unix	kernel	n64		0x0		ioc3_break	dwarf			in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/unix	kernel	n64		0x0		ioc3_config	dwarf			in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP27/unix	kernel	n64		0x0		ioc3_console_write	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		ioc3_du_keyboard_port	dwarf			in	undocumented		
@@ -1455,7 +1455,7 @@ IP27/unix	kernel	n64		0x0		ioc3_lcl_pckm_setleds	dwarf			in	undocumented
 IP27/unix	kernel	n64		0x0		ioc3_lcl_pckm_setleds_lock	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		ioc3_map	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		ioc3_notification	dwarf			in	undocumented		
-IP27/unix	kernel	n64		0x0		ioc3_open	dwarf			in	undocumented		
+IP27/unix	kernel	n64		0x0		ioc3_open	dwarf			in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/unix	kernel	n64		0x0		ioc3_pckm_bell	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		ioc3_pckm_kbdexists	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		ioc3_pckm_setleds	dwarf			in	undocumented		
@@ -1463,9 +1463,9 @@ IP27/unix	kernel	n64		0x0		ioc3_pending_intrs	dwarf			in	located	chips/ioc3/READ
 IP27/unix	kernel	n64		0x0		ioc3_poll	dwarf			in	located	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP27/unix	kernel	n64		0x0		ioc3_query_CTS	dwarf			in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64		0x0		ioc3_query_DCD	dwarf			in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
-IP27/unix	kernel	n64		0x0		ioc3_read	dwarf			in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP27/unix	kernel	n64		0x0		ioc3_read	dwarf			in	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/unix	kernel	n64		0x0		ioc3_rx_timeout	dwarf			in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
-IP27/unix	kernel	n64		0x0		ioc3_serial_intr	dwarf			in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP27/unix	kernel	n64		0x0		ioc3_serial_intr	dwarf			in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/unix	kernel	n64		0x0		ioc3_set_DTR	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		ioc3_set_RTS	dwarf			in	undocumented		
 IP27/unix	kernel	n64		0x0		ioc3_set_extclk	dwarf			in	undocumented		
@@ -2838,7 +2838,7 @@ IP27/unix	kernel	n64		0x0		sendsig	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		ser_eeprom_chk_ack	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ser_eeprom_prep	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		service_monq	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		set_DTRRTS	dwarf			out:5	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP27/unix	kernel	n64		0x0		set_DTRRTS	dwarf			out:5	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/unix	kernel	n64		0x0		set_baud_ti	dwarf			out:5	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64		0x0		set_bindings	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		set_bp	dwarf			out:5	undocumented		
@@ -5511,7 +5511,7 @@ IP27/unix	kernel	n64	.text	0xc000000000069100	40	nic_setup	symtab	f4ed16eccf58		
 IP27/unix	kernel	n64	.text	0xc000000000069128	400	nic_next	symtab	902f4996686b		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc0000000000693f4	400	nic_read_one_page	symtab	e5af677e3609		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc000000000069584	788	nic_read_mfg	symtab	3d444dae3f72		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/unix	kernel	n64	.text	0xc000000000069ab0	628	nic_eaddr	symtab	0cfe2cffadca		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000069ab0	628	nic_eaddr	symtab	0cfe2cffadca		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/unix	kernel	n64	.text	0xc000000000069d24	136	nic_access_mcr32	symtab	cc6a48c394d2		in	located	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
 IP27/unix	kernel	n64	.text	0xc000000000069dac	184	nic_get_eaddr	symtab	97b9399e6d2f		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc00000000006a304	88	nic_info_get	symtab	505ebbf7da4d		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
@@ -5521,7 +5521,7 @@ IP27/unix	kernel	n64	.text	0xc00000000006a494	60	nic_vertex_info_match	symtab	74
 IP27/unix	kernel	n64	.text	0xc00000000006a5d4	36	nic_hub_vertex_info	symtab	06b860dd51d8		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000006a5f8	32	nic_bridge_vertex_info	symtab	744ef720ad4a		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64	.text	0xc00000000006a618	32	nic_hq4_vertex_info	symtab	744ef720ad4a		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc00000000006a638	48	nic_ioc3_vertex_info	symtab	025d360ff4b3		in	named-only	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
+IP27/unix	kernel	n64	.text	0xc00000000006a638	48	nic_ioc3_vertex_info	symtab	025d360ff4b3		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/unix	kernel	n64	.text	0xc00000000006a668	88	nic_vmc_add	symtab	9d7f3181ac99		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64	.text	0xc00000000006a6c0	12	nic_vmc_del	symtab	ff9cc7fdb4a7		in	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000006a6cc	160	nic_vmc_check	symtab	c03d3224f0a9		in	undocumented		
@@ -7871,7 +7871,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001792a4	80	sio_init_locks	symtab	6b485fc7f
 IP27/unix	kernel	n64	.text	0xc0000000001792f4	156	sio_upgrade_lock	symtab	e31a93cdbaec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000179390	200	sio_downgrade_unlock_lock	symtab	352d5fc7ade1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000179458	296	sio_lock_port	symtab	ff4d36c86879		out:5	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP27/unix	kernel	n64	.text	0xc000000000179580	88	sio_unlock_port	symtab	91a799ce244b		out:5	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
+IP27/unix	kernel	n64	.text	0xc000000000179580	88	sio_unlock_port	symtab	91a799ce244b		out:5	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/unix	kernel	n64	.text	0xc0000000001795d8	124	sio_sleep	symtab	a0bf9df174b9		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP27/unix	kernel	n64	.text	0xc000000000179d34	776	sio_initport	symtab	6a4f40fa50ed		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017a51c	104	sio_tcgeta	symtab	6c3b532ade8e		out:5	undocumented		
@@ -21881,7 +21881,7 @@ IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x878	788	nic_read_mf
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0xb8c	128	char2hex	dwarf+symtab	7bb5e4334828		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0xc0c	140	chars2hex	dwarf+symtab	2fae8aedf6a3		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0xc98	268	chars2print	dwarf+symtab	e75d037be9f4		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0xda4	628	nic_eaddr	dwarf+symtab	7c661884830a		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0xda4	628	nic_eaddr	dwarf+symtab	7c661884830a		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x1018	136	nic_access_mcr32	dwarf+symtab	e51d91ee4c4f		in	understood	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x10a0	184	nic_get_eaddr	dwarf+symtab	7befa8c40a9c		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x1158	1184	nic_mfg_next	dwarf+symtab	df4ad335765d		in	undocumented		
@@ -21893,7 +21893,7 @@ IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x17c4	260	nic_access
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x18c8	36	nic_hub_vertex_info	dwarf+symtab	3e0abafb70a1		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x18ec	32	nic_bridge_vertex_info	dwarf+symtab	a862019d0b09		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x190c	32	nic_hq4_vertex_info	dwarf+symtab	a862019d0b09		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x192c	48	nic_ioc3_vertex_info	dwarf+symtab	e199daca4083		in	named-only	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
+IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x192c	48	nic_ioc3_vertex_info	dwarf+symtab	e199daca4083		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x195c	88	nic_vmc_add	dwarf+symtab	31114cb60a87		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x19b4	12	nic_vmc_del	dwarf+symtab	ff9cc7fdb4a7		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nic.o	kernel-object	n64	.text	0x19c0	160	nic_vmc_check	dwarf+symtab	81fdec6a1784		in	undocumented		
@@ -27233,7 +27233,7 @@ IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x0	80
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x50	156	sio_upgrade_lock	dwarf+symtab	571e48c24a34		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0xec	200	sio_downgrade_unlock_lock	dwarf+symtab	0ea2c76e71b9		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x1b4	296	sio_lock_port	dwarf+symtab	ef645cc94a2f		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
+IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x334	124	sio_sleep	dwarf+symtab	43d3075b269a		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x3b0	356	sio_push_tx_buf	dwarf+symtab	5fd00e7a19a9		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x514	220	do_write_tx_buf	dwarf+symtab	5101b0db9645		out:4	undocumented		
@@ -27298,12 +27298,12 @@ IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2c	7
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x78	20	mask_disable_intrs	dwarf+symtab	d1311ff1d592		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x8c	80	enable_intrs	dwarf+symtab	e1ee2927df70		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xdc	84	disable_intrs	dwarf+symtab	b35c34f00bb6		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x130	1436	ioc3_serial_intr	dwarf+symtab	aad8bfe0b94a		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x130	1436	ioc3_serial_intr	dwarf+symtab	aad8bfe0b94a		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x6cc	232	set_baud_ti	dwarf+symtab	e864a41a702f		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x7b4	676	hardware_init	dwarf+symtab	5f9c1105409c		in	located	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xa58	1212	ioc3_serial_attach	dwarf+symtab	5950666e8142		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xf14	276	ioc3_serial_kill	dwarf+symtab	73dd24de3212		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1028	676	ioc3_open	dwarf+symtab	bcdb1a4d1a30		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1028	676	ioc3_open	dwarf+symtab	bcdb1a4d1a30		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x12cc	916	ioc3_config	dwarf+symtab	daeed7b82d92		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1660	292	ioc3_enable_hfc	dwarf+symtab	ae84bfc36449		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1784	8	ioc3_set_extclk	dwarf+symtab	5ac87f4df361		in	undocumented		
@@ -27311,12 +27311,12 @@ IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x178c
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1a08	28	ioc3_write	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1a24	96	ioc3_sync_write	dwarf+symtab	2031a5c4fb66		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1a84	196	ioc3_wrflush	dwarf+symtab	0f1f4b5c336d		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1b48	676	ioc3_break	dwarf+symtab	c594689f1399		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1b48	676	ioc3_break	dwarf+symtab	c594689f1399		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1dec	528	ioc3_enable_tx	dwarf+symtab	9c659bd5a365		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
-IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1ffc	1840	ioc3_read	dwarf+symtab	548b48b90a2e		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1ffc	1840	ioc3_read	dwarf+symtab	548b48b90a2e		in	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x272c	512	ioc3_notification	dwarf+symtab	4f823e4b943e		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x292c	440	ioc3_rx_timeout	dwarf+symtab	43c1644bd3d5		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
-IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2ae4	468	set_DTRRTS	dwarf+symtab	2f689b0df6e9		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2ae4	468	set_DTRRTS	dwarf+symtab	2f689b0df6e9		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2cb8	32	ioc3_set_DTR	dwarf+symtab	c1ab4b427aa5		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2cd8	32	ioc3_set_RTS	dwarf+symtab	261ba4928844		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2cf8	260	ioc3_query_DCD	dwarf+symtab	1e447fadd7e4		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
@@ -33700,7 +33700,7 @@ IP30/unix	kernel	n64		0x0		interval_tick_to_ts	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		invalidblocks	dwarf			out:7	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP30/unix	kernel	n64		0x0		io6_vmc	dwarf			out:7	located	chips/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP30/unix	kernel	n64		0x0		io_queue_overflow	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		ioc3_break	dwarf			in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP30/unix	kernel	n64		0x0		ioc3_break	dwarf			in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/unix	kernel	n64		0x0		ioc3_config	dwarf			in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP30/unix	kernel	n64		0x0		ioc3_console_write	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		ioc3_du_keyboard_port	dwarf			in	undocumented		
@@ -33717,16 +33717,16 @@ IP30/unix	kernel	n64		0x0		ioc3_lcl_pckm_setleds	dwarf			in	undocumented
 IP30/unix	kernel	n64		0x0		ioc3_lcl_pckm_setleds_lock	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		ioc3_map	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		ioc3_notification	dwarf			in	undocumented		
-IP30/unix	kernel	n64		0x0		ioc3_open	dwarf			in	undocumented		
+IP30/unix	kernel	n64		0x0		ioc3_open	dwarf			in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/unix	kernel	n64		0x0		ioc3_pckm_bell	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		ioc3_pckm_kbdexists	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		ioc3_pckm_setleds	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		ioc3_pending_intrs	dwarf			in	located	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP30/unix	kernel	n64		0x0		ioc3_query_CTS	dwarf			in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64		0x0		ioc3_query_DCD	dwarf			in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
-IP30/unix	kernel	n64		0x0		ioc3_read	dwarf			in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP30/unix	kernel	n64		0x0		ioc3_read	dwarf			in	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/unix	kernel	n64		0x0		ioc3_rx_timeout	dwarf			in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
-IP30/unix	kernel	n64		0x0		ioc3_serial_intr	dwarf			in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP30/unix	kernel	n64		0x0		ioc3_serial_intr	dwarf			in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/unix	kernel	n64		0x0		ioc3_set_DTR	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		ioc3_set_RTS	dwarf			in	undocumented		
 IP30/unix	kernel	n64		0x0		ioc3_set_extclk	dwarf			in	undocumented		
@@ -35147,7 +35147,7 @@ IP30/unix	kernel	n64		0x0		ser_eeprom_chk_ack	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		ser_eeprom_prep	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		service_monq	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		setDACreg	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		set_DTRRTS	dwarf			out:7	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP30/unix	kernel	n64		0x0		set_DTRRTS	dwarf			out:7	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/unix	kernel	n64		0x0		set_attrcache_time	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		set_baud_ti	dwarf			out:7	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64		0x0		set_bindings	dwarf			out:7	undocumented		
@@ -37216,7 +37216,7 @@ IP30/unix	kernel	n64	.text	0xa800000020039218	40	nic_setup	symtab	27c312382fe3		
 IP30/unix	kernel	n64	.text	0xa800000020039240	400	nic_next	symtab	b8ed7dfd4f40		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa80000002003950c	400	nic_read_one_page	symtab	bb68c1cce4d2		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa80000002003969c	788	nic_read_mfg	symtab	eeea89c40434		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP30/unix	kernel	n64	.text	0xa800000020039bc8	628	nic_eaddr	symtab	e86d0e9b730a		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020039bc8	628	nic_eaddr	symtab	e86d0e9b730a		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/unix	kernel	n64	.text	0xa800000020039e3c	136	nic_access_mcr32	symtab	17af3d55c6df		in	located	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
 IP30/unix	kernel	n64	.text	0xa800000020039ec4	184	nic_get_eaddr	symtab	52bfe938c3dd		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa80000002003a420	88	nic_info_get	symtab	e3ae6d2b2003		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
@@ -37225,7 +37225,7 @@ IP30/unix	kernel	n64	.text	0xa80000002003a4a4	268	nic_vertex_info_set	symtab	d06
 IP30/unix	kernel	n64	.text	0xa80000002003a5b0	60	nic_vertex_info_match	symtab	8bce4dc4d915		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP30/unix	kernel	n64	.text	0xa80000002003a5ec	32	nic_bridge_vertex_info	symtab	4db82e70c708		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa80000002003a60c	32	nic_hq4_vertex_info	symtab	4db82e70c708		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP30/unix	kernel	n64	.text	0xa80000002003a62c	48	nic_ioc3_vertex_info	symtab	631e65612304		in	named-only	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
+IP30/unix	kernel	n64	.text	0xa80000002003a62c	48	nic_ioc3_vertex_info	symtab	631e65612304		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/unix	kernel	n64	.text	0xa80000002003a65c	88	nic_vmc_add	symtab	0ad8978867a7		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa80000002003a6b4	12	nic_vmc_del	symtab	ff9cc7fdb4a7		in	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002003a6c0	160	nic_vmc_check	symtab	7d523f63fd70		in	undocumented		
@@ -39586,7 +39586,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201442e0	80	sio_init_locks	symtab	f1d1cc7cc
 IP30/unix	kernel	n64	.text	0xa800000020144330	156	sio_upgrade_lock	symtab	85da2be69639		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201443cc	200	sio_downgrade_unlock_lock	symtab	09addd71c234		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020144494	296	sio_lock_port	symtab	8efbb8e152b0		out:7	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP30/unix	kernel	n64	.text	0xa8000000201445bc	88	sio_unlock_port	symtab	78356de502ad		out:7	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
+IP30/unix	kernel	n64	.text	0xa8000000201445bc	88	sio_unlock_port	symtab	78356de502ad		out:7	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/unix	kernel	n64	.text	0xa800000020144614	124	sio_sleep	symtab	5bb827248de7		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP30/unix	kernel	n64	.text	0xa800000020144ba4	652	sio_initport	symtab	2c517f276a5a		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020145230	104	sio_tcgeta	symtab	a2562c9af711		out:7	undocumented		
@@ -52493,7 +52493,7 @@ IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x844	788	nic_read_mf
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0xb58	128	char2hex	dwarf+symtab	7bb5e4334828		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0xbd8	140	chars2hex	dwarf+symtab	2fae8aedf6a3		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0xc64	268	chars2print	dwarf+symtab	e75d037be9f4		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0xd70	628	nic_eaddr	dwarf+symtab	7c661884830a		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0xd70	628	nic_eaddr	dwarf+symtab	7c661884830a		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0xfe4	136	nic_access_mcr32	dwarf+symtab	e51d91ee4c4f		in	understood	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x106c	184	nic_get_eaddr	dwarf+symtab	7befa8c40a9c		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x1124	1188	nic_mfg_next	dwarf+symtab	8800eb0eb1be		in	undocumented		
@@ -52503,7 +52503,7 @@ IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x164c	268	nic_vertex
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x1758	60	nic_vertex_info_match	dwarf+symtab	2e9718e25267		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x1794	32	nic_bridge_vertex_info	dwarf+symtab	a862019d0b09		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x17b4	32	nic_hq4_vertex_info	dwarf+symtab	a862019d0b09		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x17d4	48	nic_ioc3_vertex_info	dwarf+symtab	e199daca4083		in	named-only	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x17d4	48	nic_ioc3_vertex_info	dwarf+symtab	e199daca4083		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x1804	88	nic_vmc_add	dwarf+symtab	31114cb60a87		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x185c	12	nic_vmc_del	dwarf+symtab	ff9cc7fdb4a7		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-object	n64	.text	0x1868	160	nic_vmc_check	dwarf+symtab	81fdec6a1784		in	undocumented		
@@ -57296,7 +57296,7 @@ IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x0	80
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x50	156	sio_upgrade_lock	dwarf+symtab	571e48c24a34		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0xec	200	sio_downgrade_unlock_lock	dwarf+symtab	0ea2c76e71b9		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x1b4	296	sio_lock_port	dwarf+symtab	ef645cc94a2f		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
+IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x334	124	sio_sleep	dwarf+symtab	43d3075b269a		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x3b0	356	sio_push_tx_buf	dwarf+symtab	5fd00e7a19a9		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x514	220	do_write_tx_buf	dwarf+symtab	5101b0db9645		out:4	undocumented		
@@ -57357,12 +57357,12 @@ IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x40	7
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x8c	20	mask_disable_intrs	dwarf+symtab	d1311ff1d592		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xa0	80	enable_intrs	dwarf+symtab	e1ee2927df70		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xf0	84	disable_intrs	dwarf+symtab	b35c34f00bb6		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x144	848	ioc3_serial_intr	dwarf+symtab	b62a3286ddfd		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x144	848	ioc3_serial_intr	dwarf+symtab	b62a3286ddfd		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x494	232	set_baud_ti	dwarf+symtab	e864a41a702f		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x57c	464	hardware_init	dwarf+symtab	cc02c323618e		in	located	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x74c	1212	ioc3_serial_attach	dwarf+symtab	0d6751210c69		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xc08	64	ioc3_serial_kill	dwarf+symtab	0d7c76339956		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xc48	232	ioc3_open	dwarf+symtab	be18785c4453		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xc48	232	ioc3_open	dwarf+symtab	be18785c4453		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xd30	468	ioc3_config	dwarf+symtab	802db73448dd		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xf04	52	ioc3_enable_hfc	dwarf+symtab	b43f22816bc6		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xf38	8	ioc3_set_extclk	dwarf+symtab	5ac87f4df361		in	undocumented		
@@ -57370,12 +57370,12 @@ IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xf40	
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x10dc	28	ioc3_write	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x10f8	100	ioc3_sync_write	dwarf+symtab	2845281b3daf		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x115c	196	ioc3_wrflush	dwarf+symtab	0f1f4b5c336d		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1220	176	ioc3_break	dwarf+symtab	5cb0e961813f		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1220	176	ioc3_break	dwarf+symtab	5cb0e961813f		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x12d0	320	ioc3_enable_tx	dwarf+symtab	dd35b68bf46e		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
-IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1410	1204	ioc3_read	dwarf+symtab	eddddb993143		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1410	1204	ioc3_read	dwarf+symtab	eddddb993143		in	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x18c4	312	ioc3_notification	dwarf+symtab	41d6bcadf042		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x19fc	192	ioc3_rx_timeout	dwarf+symtab	f4469b7798e7		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
-IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1abc	196	set_DTRRTS	dwarf+symtab	8ab4a6fc61ac		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1abc	196	set_DTRRTS	dwarf+symtab	8ab4a6fc61ac		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1b80	32	ioc3_set_DTR	dwarf+symtab	c1ab4b427aa5		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1ba0	32	ioc3_set_RTS	dwarf+symtab	261ba4928844		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1bc0	20	ioc3_query_DCD	dwarf+symtab	db17c0e615c7		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
@@ -73661,7 +73661,7 @@ IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x0	80
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x50	148	sio_upgrade_lock	dwarf+symtab	17243f73894e		out:4	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0xe4	192	sio_downgrade_unlock_lock	dwarf+symtab	35c2529b9254		out:4	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x1a4	300	sio_lock_port	dwarf+symtab	f885988649d8		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x2d0	84	sio_unlock_port	dwarf+symtab	a5121b2a5907		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
+IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x2d0	84	sio_unlock_port	dwarf+symtab	a5121b2a5907		out:4	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x324	124	sio_sleep	dwarf+symtab	04c20b781bca		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x3a0	356	sio_push_tx_buf	dwarf+funcnames+symtab	9ef5b07029bd		out:4	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x504	248	do_write_tx_buf	dwarf+funcnames+symtab	4ffdb1a87ac6		out:4	undocumented		
@@ -86828,7 +86828,7 @@ IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x878	788	nic_read_mf
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0xb8c	128	char2hex	dwarf+symtab	7bb5e4334828		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0xc0c	140	chars2hex	dwarf+symtab	2fae8aedf6a3		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0xc98	268	chars2print	dwarf+symtab	e75d037be9f4		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0xda4	628	nic_eaddr	dwarf+symtab	7c661884830a		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0xda4	628	nic_eaddr	dwarf+symtab	7c661884830a		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x1018	136	nic_access_mcr32	dwarf+symtab	e51d91ee4c4f		in	understood	chips/ioc3/README.md#one-wire-port-0x30-established-nic_access_mcr32	One-wire port (`0x30`, established: `nic_access_mcr32`)
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x10a0	184	nic_get_eaddr	dwarf+symtab	7befa8c40a9c		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x1158	1184	nic_mfg_next	dwarf+symtab	df4ad335765d		in	undocumented		
@@ -86840,7 +86840,7 @@ IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x17c4	260	nic_access
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x18c8	36	nic_hub_vertex_info	dwarf+symtab	3e0abafb70a1		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x18ec	32	nic_bridge_vertex_info	dwarf+symtab	a862019d0b09		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x190c	32	nic_hq4_vertex_info	dwarf+symtab	a862019d0b09		in	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x192c	48	nic_ioc3_vertex_info	dwarf+symtab	e199daca4083		in	named-only	chips/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
+IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x192c	48	nic_ioc3_vertex_info	dwarf+symtab	e199daca4083		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x195c	88	nic_vmc_add	dwarf+symtab	31114cb60a87		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x19b4	12	nic_vmc_del	dwarf+symtab	ff9cc7fdb4a7		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nic.o	kernel-object	n64	.text	0x19c0	160	nic_vmc_check	dwarf+symtab	81fdec6a1784		in	undocumented		
@@ -91984,7 +91984,7 @@ IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x0	80
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x50	156	sio_upgrade_lock	dwarf+symtab	571e48c24a34		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0xec	200	sio_downgrade_unlock_lock	dwarf+symtab	0ea2c76e71b9		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x1b4	296	sio_lock_port	dwarf+symtab	ef645cc94a2f		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x334	124	sio_sleep	dwarf+symtab	43d3075b269a		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x3b0	356	sio_push_tx_buf	dwarf+symtab	5fd00e7a19a9		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x514	220	do_write_tx_buf	dwarf+symtab	5101b0db9645		out:4	undocumented		
@@ -92064,12 +92064,12 @@ IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2c	7
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x78	20	mask_disable_intrs	dwarf+symtab	d1311ff1d592		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x8c	80	enable_intrs	dwarf+symtab	e1ee2927df70		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xdc	84	disable_intrs	dwarf+symtab	b35c34f00bb6		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x130	1436	ioc3_serial_intr	dwarf+symtab	573972befdcc		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x130	1436	ioc3_serial_intr	dwarf+symtab	573972befdcc		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x6cc	232	set_baud_ti	dwarf+symtab	e864a41a702f		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x7b4	676	hardware_init	dwarf+symtab	a16b78b07782		in	located	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xa58	1300	ioc3_serial_attach	dwarf+symtab	3982020c8653		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0xf6c	280	ioc3_serial_kill	dwarf+symtab	bd4067aaf612		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1084	676	ioc3_open	dwarf+symtab	1fc06e015ed5		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1084	676	ioc3_open	dwarf+symtab	1fc06e015ed5		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1328	912	ioc3_config	dwarf+symtab	e0ea4134c6da		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x16b8	292	ioc3_enable_hfc	dwarf+symtab	002b2443abfd		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x17dc	8	ioc3_set_extclk	dwarf+symtab	5ac87f4df361		in	undocumented		
@@ -92077,12 +92077,12 @@ IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x17e4
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1a60	28	ioc3_write	dwarf+symtab	a86de4a9d7a4		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1a7c	92	ioc3_sync_write	dwarf+symtab	9f95fecac539		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1ad8	196	ioc3_wrflush	dwarf+symtab	0f1f4b5c336d		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1b9c	680	ioc3_break	dwarf+symtab	01dcbbb1e5eb		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1b9c	680	ioc3_break	dwarf+symtab	01dcbbb1e5eb		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x1e44	532	ioc3_enable_tx	dwarf+symtab	f99ae3b72684		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2058	1832	ioc3_read	dwarf+symtab	9d3e2d4f1c6b		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2058	1832	ioc3_read	dwarf+symtab	9d3e2d4f1c6b		in	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2780	512	ioc3_notification	dwarf+symtab	7011e068a102		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2980	440	ioc3_rx_timeout	dwarf+symtab	89a089e2b63f		in	named-only	chips/ioc3/README.md#serial-ports-established-hardware_init-set_baud_ti-ioc3_serial_attach-ioc3_enable_tx-ioc3_read	Serial ports (established: `hardware_init`, `set_baud_ti`, `ioc3_serial_attach`, `ioc3_enable_tx`, `ioc3_read`)
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2b38	468	set_DTRRTS	dwarf+symtab	d90028e92d63		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2b38	468	set_DTRRTS	dwarf+symtab	d90028e92d63		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2d0c	32	ioc3_set_DTR	dwarf+symtab	c1ab4b427aa5		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2d2c	32	ioc3_set_RTS	dwarf+symtab	261ba4928844		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-object	n64	.text	0x2d4c	260	ioc3_query_DCD	dwarf+symtab	5ccc123940bd		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
@@ -92118,7 +92118,7 @@ IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x22ec
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x24fc	1776	ioc4_read	dwarf+symtab	c4a6acd60332		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x2bec	516	ioc4_notification	dwarf+symtab	b24d5fcc382f		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x2df0	440	ioc4_rx_timeout	dwarf+symtab	5b7f015d1a43		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x2fa8	468	set_DTRRTS	dwarf+symtab	aa774e176986		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x2fa8	468	set_DTRRTS	dwarf+symtab	aa774e176986		in	named-only	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x317c	32	ioc4_set_DTR	dwarf+symtab	c1ab4b427aa5		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x319c	32	ioc4_set_RTS	dwarf+symtab	261ba4928844		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-object	n64	.text	0x31bc	260	ioc4_query_DCD	dwarf+symtab	5ccc123940bd		in	named-only	chips/ioc4/README.md#graded-register-table	Graded register table

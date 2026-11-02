@@ -31,6 +31,32 @@ later chip of the same family, is in [../ioc4/README.md](../ioc4/README.md).
   port A.
 - Reset values are unknown for every register: no routine reads one before writing it.
 
+## Unresolved window-pointer sites (triaged)
+
+The scan lists each call that passes the window pointer in an argument register when the callee is not seeded
+(`unresolved.tsv`, summed into [census.md](census/census.md)). The report's "124 distinct sites" counts rows, one per
+argument register that still holds the pointer. The calls are 98: 43 in IP27, 12 in IP30 and 43 in IP35. Each callee
+below was read in the IP27 build (the kernel `unix`, or the `nic.o` object for the two `nic_` routines), and in the IP30
+build where the same routine exists. The IP35 builds have no kernel in the tree, so a routine named only there rests on
+the IP27 body and is inferred.
+
+| callee | calls (IP27 / IP30 / IP35) | what the body does with the pointer | grade |
+|---|---|---|---|
+| `flushbus` | 4 / 3 / 4 | IP27: `sync` and return; the argument is never read. IP30: two dummy loads, at `0xffffffffaff50000` (the HEART register at offset 0x50000) and `0xffffffffb8000000` (HEART widget 8, offset 0), then `sync`. Neither is an IOC3 access. | established (IP27, IP30); IP35 inferred |
+| `spl7` | 10 / 0 / 10 | Reads CP0 Status, ands it with `0x100a5`, returns the old Status in v0. The `mtc0` in the return's delay slot writes the masked value. The argument is never read. | established (IP27); IP35 inferred |
+| `us_delay` | 3 / 3 / 3 | Takes a microsecond count in a0 and busy-waits on a counter word read through a global. The scan's pointer is in a2, which `us_delay` does not take (the IP30 call sets a0 to 1 in its delay slot). The window is not read. | established (IP27); IP30, IP35 inferred |
+| `qprintf` | 1 / 1 / 1 | Saves its argument registers to its frame and calls through a function pointer (`jalr`) with a pointer to them. It does not dereference an argument. | established (IP27); IP30, IP35 inferred |
+| `hub_check_pci_equiv` | 2 / 0 / 2 | Compares NASID bits of its two arguments through `hub_check_window_equiv` and `check_nasid_equiv`. Its own accesses are frame slots only. The IP30 kernel has no such routine. | established (IP27); IP35 inferred |
+| `hwgraph_path_add` | 1 / 1 / 1 | Hardware-graph path work through the hwgraph routines. The fact sheet lists its own memory accesses as kernel data words, frame slots and one store to its third argument; the window is not read. | inferred (body not read in full) |
+| `sio_unlock_port` | 1 / 0 / 1 | Reads and writes fields of the port record its first argument points to, then calls `mutex_spinunlock` or `mutex_unlock`. The window is not read. | established (IP27); IP30 inferred |
+| `nic_ioc3_vertex_info` | 1 / 1 / 1 | Stores `0x200000` (the configuration-space offset) to the word at its third argument, and calls `nic_vertex_info_set` with its first argument as the third. The window is not read. | established (IP27); IP30, IP35 inferred |
+| `nic_get_eaddr` | 1 / 1 / 1 | Calls `nic_eaddr` with the pointer. The one-wire access lies below that call, and `nic_eaddr` was not read, so the link to the one-wire register is inferred. | inferred |
+| indirect | 19 / 2 / 19 | A call through a function pointer loaded from a driver table: IP27 `ioc3_read` loads `80($2)` into `$6` and calls `jalr $6`, after a compare with the constant `0x53435241`. The target is set at run time and no body is read here. | unknown |
+
+The 40 indirect calls sit in the serial driver (`ioc3_serial_intr` 19, `ioc3_read` 6, and one or two each in `ioc3_open`,
+`ioc3_enable_hfc`, `ioc3_serial_kill`, `ioc3_unmap`, `set_DTRRTS` and `hardware_init`, two each) and in the interrupt dispatcher
+(`ioc3_intrd`, 3). Their targets are unknown. A route is to trace each table's store at attach time.
+
 ## What identifies the chip (established)
 
 - `ioc3_init` (`ioc3.o` `0x2a8`, read in full) registers the PCI driver for vendor 4265 (`0x10a9`), device 3, and makes
