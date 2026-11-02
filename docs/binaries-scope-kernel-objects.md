@@ -1099,7 +1099,7 @@ the undefined imports. No routine body was read in full.
   the selective-acknowledgement updates `sack_rcvupdate` and `sack_sndacked` and the socket wake-ups `sowakeup` and
   `soisconnected`.
 - `IP30/usr/cpu/sysgen/IP30boot/bsd.a(tcp_output.o)` (inferred): the TCP transmit side, two routines in a 16068-byte
-  member: `tcp_setpersist` (180 bytes) arms the persist timer, and `tcp_output` has no size in the symbol table. It
+  member: `tcp_setpersist` (180 bytes) arms the persist timer, and `tcp_output` (5216 bytes) is the send routine. It
   passes segments to `ip_output` and `tcp6_output`, and it reads the segment limit `tcp_max_tso_len` and the default
   segment size `tcp_mssdflt`.
 - `IP30/usr/cpu/sysgen/IP30boot/bsd.a(tcp_subr.o)` (inferred): TCP support routines, 29 routines in a 30324-byte member.
@@ -1115,7 +1115,7 @@ the undefined imports. No routine body was read in full.
 - `IP30/usr/cpu/sysgen/IP30boot/bsd.a(tcp_usrreq.o)` (inferred): the TCP request dispatch, five routines in a 15716-byte
   member. `tcp_ctloutput` (624 bytes) handles socket options, `tcp_usrclosed` (380 bytes) closes the send side, and
   `tcp_attach` (180 bytes) and `tcp_disconnect` (180 bytes) start and end a connection. The dispatch routine `tcp_usrreq`
-  has no size in the symbol table. It imports the protocol control block calls `in_pcballoc`, `in_pcbbind`,
+  (1860 bytes) is the largest. It imports the protocol control block calls `in_pcballoc`, `in_pcbbind`,
   `in_pcbconnect` and `in_pcblisten`, and `tcp_newtcpcb`, which creates the connection state.
 - `IP30/usr/cpu/sysgen/IP30boot/bsd.a(udp_usrreq.o)` (inferred): UDP, eight routines in a 23604-byte member. `udp_input`
   (2724 bytes) takes inbound datagrams, `udp_usrreq` (2088 bytes) is the request dispatch, `udp_output` (1296 bytes)
@@ -1123,7 +1123,7 @@ the undefined imports. No routine body was read in full.
   imports include the IPv6 output `udp6_output` and the connection calls `in_pcbconnect` and `in_pcbdetach`.
 - `IP30/usr/cpu/sysgen/IP30boot/bsd.a(rsvp_input.o)` (inferred): the RSVP receive path, two routines in an 8836-byte
   member. `rsvp_input` (620 bytes) takes an RSVP packet from the raw IP layer through `rip_input` and queues it with
-  `sbappendaddr` and `sowakeup`. The second routine, `socket_send`, has no size in the symbol table. The member holds a
+  `sbappendaddr` and `sowakeup`. The second routine, `socket_send`, is 176 bytes. The member holds a
   5632-byte table `viftable`, which the virtual interface lookups use.
 - `IP30/usr/cpu/sysgen/IP30boot/bsd.a(offload.o)` (inferred): fragment vectors for transmit offload, ten routines in a
   14804-byte member. `build_frag_vec` (1664 bytes) is the largest, `frag_vec_coalesce_long_chain` (344 bytes) merges a long
@@ -1293,15 +1293,14 @@ tables. Labels are inferred, from the symbol table and the undefined imports. No
   option entry and passes the multicast router and RSVP options to `ip_mrouter_set`, `ip_mrouter_get`, `ip_rsvp_vif_init`
   and `ip_rsvp_vif_done`, and `rip_input` receives packets for the raw socket through `raw_input`.
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_debug.o)` (inferred): TCP trace support, one routine, `tcp_trace`, in an 8612-byte
-  member. It imports `printf` and `iptime`, so it prints trace lines with a time stamp. The symbol table gives the routine
-  no size.
+  member. It imports `printf` and `iptime`, so it prints trace lines with a time stamp. The routine is 1192 bytes.
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_input.o)` (inferred): TCP segment input, 13 routines in a 36612-byte member.
   `tcp_input_private` (9992 bytes) is the largest. `tcp_input` (1172 bytes) is the entry, `tcp_dooptions` (820 bytes)
   parses the options, `tcp_mss` (1440 bytes) sets the segment size, and `tcp_defer_segment` (480 bytes) holds segments
   back. It calls the SACK routines `sack_rcvupdate`, `sack_rcvacked` and `sack_sndlist`, wakes sockets with `sowakeup`,
   and sends replies with `tcp_output`.
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_output.o)` (inferred): TCP output, two routines in a 14036-byte member.
-  `tcp_output` is the send routine, and the symbol table gives it no size. `tcp_setpersist` (188 bytes) arms the persist
+  `tcp_output` (5464 bytes) is the send routine. `tcp_setpersist` (188 bytes) arms the persist
   timer. It builds segments with `m_copy` and `m_datacopy`, sends through `ip_output` for IPv4 and `tcp6_output` for IPv6,
   and reads the settings `tcp_sack`, `tcp_timestamps` and `tcp_mss`.
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(tcp_subr.o)` (inferred): TCP support routines, 29 routines in a 24356-byte member.
@@ -1329,7 +1328,7 @@ tables. Labels are inferred, from the symbol table and the undefined imports. No
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(rsvp_input.o)` (inferred): RSVP message input for IPv4, two routines in a 6596-byte
   member. `rsvp_input` (592 bytes) takes an RSVP message and hands it to the RSVP daemon's socket, through `ip_rsvpd`,
   `sbappendaddr` and `sowakeup`, and passes a copy to the raw path through `rip_input`. The second routine, `socket_send`,
-  has no size in the symbol table.
+  is 176 bytes.
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(offload.o)` (inferred): fragment-vector builders for transmit offload, six routines in
   a 4804-byte member. `frgvec_add_linkhdrs` (212 bytes) is the largest, and `ip_to_frag_vec`, `tcp_to_frag_vec`,
   `udp_to_frag_vec_cksum` and `ip_to_stripe_vec` build the vectors for the IP, TCP, UDP and stripe paths. `tcp_max_tso_len`
@@ -1386,7 +1385,7 @@ tables. Labels are inferred, from the symbol table and the undefined imports. No
   `mfhasvalue`, tests the multicast list, and `laf_hash` computes a hash of a multicast address for the driver's filter.
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(mclance.o)` (inferred): the multicast address glue for the same driver, three routines
   in a 3700-byte member. `AddMulti` (196 bytes) and `DeleteMulti` (152 bytes) add and remove a multicast address through
-  `mfadd` and `mfdel`, and `CalcIndex` gives the filter index. The symbol table gives `CalcIndex` no size. The member also
+  `mfadd` and `mfdel`, and `CalcIndex` (152 bytes) gives the filter index. The member also
   imports `mfhasvalue` and `mfmatch`.
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(remque.o)` (inferred): the queue primitives, two routines, `_insque` and `_remque`, in a
   2948-byte member. `_remque` (28 bytes) unlinks an entry from a doubly linked list and `_insque` links one in. The member
@@ -1407,7 +1406,7 @@ tables. Labels are inferred, from the symbol table and the undefined imports. No
   `vsocket_release` (152 bytes) and `vsocket_hold` (68 bytes) count its references, and `vsocket_free` (64 bytes) returns
   it. It sets up its behaviour head with `bhv_head_init` and `bhv_insert_initial`, and its zone with `kmem_zone_init`.
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(lsock.o)` (inferred): the local socket file operations, two routines in a 6116-byte
-  member: `lcreate` (the symbol table gives it no size) and `lclose` (272 bytes). Its 28 imports are socket calls, `socreate`,
+  member: `lcreate` (116 bytes) and `lclose` (272 bytes). Its 28 imports are socket calls, `socreate`,
   `sosend`, `soreceive`, `soioctl`, `sopoll` and the `uipc_*` entry points, so it forwards file operations to the socket
   layer. It binds its behaviour through `bhv_insert_initial`.
 - `IP32/usr/cpu/sysgen/IP32boot/bsd.a(vsock_lp.o)` (inferred): one routine, `vsock_hinit`, in a 2164-byte member that
@@ -1422,7 +1421,7 @@ The IPv6 stack of this build is in its own `ipv6.a` archive, with no byte-identi
   the interface. It imports `gif_encapcheck4`, `gif_encapcheck6`, `in_gif_output` and `in6_gif_output`, and registers the
   interface with `if_attach`. No chip is driven.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(dest6.o)` (inferred): the IPv6 destination options header, one routine, `dest6_input`
-  (no size in the symbol table), in a 4132-byte member. It imports `ip6_unknown_opt` for options it does not know, and
+  (496 bytes), in a 4132-byte member. It imports `ip6_unknown_opt` for options it does not know, and
   `m_pullup` and `m_freem` for the header mbuf.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(frag6.o)` (inferred): IPv6 fragment reassembly, nine routines in a 9860-byte member.
   `frag6_input` (1940 bytes) takes a fragment, `frag6_freef` (208 bytes) frees a reassembly queue, `frag6_enq` (28 bytes)
@@ -1443,7 +1442,7 @@ The IPv6 stack of this build is in its own `ipv6.a` archive, with no byte-identi
   joins the all-nodes group through `icmp6_joingroup` and `icmp6_leavegroup`, runs duplicate address detection with
   `ndp6_do_dad`, and uses the tunnel attach `sitattach` and the switch `auto_tunnel_enable`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_gif.o)` (inferred): the IPv6 side of the generic tunnel, three routines in a
-  7252-byte member: `in6_gif_output` (no size in the symbol table), `in6_gif_input` (268 bytes) and `gif_encapcheck6` (612
+  7252-byte member: `in6_gif_output` (800 bytes), `in6_gif_input` (268 bytes) and `gif_encapcheck6` (612
   bytes). It carries packets to and from `ip6_output` and `gif_input`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_pcb.o)` (inferred): IPv6 protocol control blocks, eight routines in a 15492-byte
   member. `in6_pcbnotify` (2260 bytes) passes an error to the matching blocks, `in6_pcbconnect` (748 bytes) and
@@ -1477,25 +1476,25 @@ The IPv6 stack of this build is in its own `ipv6.a` archive, with no byte-identi
   `icmp6_filter_set` and `icmp6_filter_get`, uses the IPv4 block code through `in_pcballoc` and `in_pcbdetach`, and
   passes the multicast router calls `ip6_mrouter_set`, `ip6_mrouter_get` and `ip6_mrouter_done`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(route6.o)` (inferred): the IPv6 routing header handler, two routines in a 5604-byte
-  member. `route6_input` (no size in the symbol table) processes a routing header, and `ipv6_rthdr0` (640 bytes) handles
+  member. `route6_input` (488 bytes) processes a routing header, and `ipv6_rthdr0` (640 bytes) handles
   type 0 headers. It forwards with `ip6_forward` and uses `ip6forwsrcrt` for source routes.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(tcp6_input.o)` (inferred): TCP over IPv6 input, three routines in a 20644-byte member.
-  `tcp6_input` (8204 bytes) is the receive path, `tcp6_mssopt` (80 bytes) sets the segment size, and `tcp6_reass` (no size
-  in the symbol table) is the reassembly routine. It shares the TCP state code with the IPv4 path through `tcp_dooptions`,
+  `tcp6_input` (8204 bytes) is the receive path, `tcp6_mssopt` (80 bytes) sets the segment size, and `tcp6_reass` (796
+  bytes) is the reassembly routine. It shares the TCP state code with the IPv4 path through `tcp_dooptions`,
   `tcp_close`, `tcp_drop` and `tcp_canceltimers`, and looks up its block with `in_pcblookupx`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(tcp6_output.o)` (inferred): TCP over IPv6 output, one routine, `tcp6_output`, in a
-  9188-byte member; the symbol table gives it no size. It sends segments through `ip6_output`, computes the checksum with
+  9188-byte member; the routine is 3192 bytes. It sends segments through `ip6_output`, computes the checksum with
   `ip6_cksum`, reads the path MTU through `ip6_getpmtu`, and arms its persist timer through `tcp_setpersist`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(tcp6_subr.o)` (inferred): TCP over IPv6 support, two routines in a 5332-byte member.
-  `tcp6_rtlookup` (208 bytes) finds a route for a connection and `tcp6_ctlinput` (no size in the symbol table) passes
+  `tcp6_rtlookup` (208 bytes) finds a route for a connection and `tcp6_ctlinput` (292 bytes) passes
   errors. It notifies blocks through `in6_pcbnotify` and calls `tcp_notify` and `tcp_quench`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(tcp6_usrreq.o)` (inferred): the user request entry for TCP over IPv6, three routines in
   a 9556-byte member. `tcp6_connect` (448 bytes) and `tcp6_ctloutput` (448 bytes) connect a socket and handle options, and
-  `tcp6_usrreq` (no size in the symbol table) is the request switch. It creates the TCP block through `tcp_attach` and
+  `tcp6_usrreq` (1596 bytes) is the request switch. It creates the TCP block through `tcp_attach` and
   closes it through `tcp_close` and `tcp_disconnect`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(udp6_usrreq.o)` (inferred): UDP over IPv6, three routines in a 12500-byte member.
   `udp6_output` (1496 bytes) builds and sends datagrams through `ip6_output`, `udp6_ctlinput` (164 bytes) passes errors, and
-  `udp6_input` (no size in the symbol table) receives. It hands datagrams to `nfs_input` for the NFS port `nfs_port`, and it
+  `udp6_input` (2868 bytes) receives. It hands datagrams to `nfs_input` for the NFS port `nfs_port`, and it
   imports `sesmgr_enabled`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip_encap.o)` (inferred): the encapsulation switch that routes tunnelled packets to the
   right decapsulator, eight routines in a 10244-byte member. `encap_attach` (1028 bytes) and `encap_detach` (160 bytes)
@@ -1503,7 +1502,7 @@ The IPv6 stack of this build is in its own `ipv6.a` archive, with no byte-identi
   (528 bytes) and `encap6_input` (468 bytes) dispatch IPv4 and IPv6 packets. It hands packets to `sit_input`, `rip_input`,
   `rip6_input` and `ipip_input`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in_gif.o)` (inferred): the IPv4 side of the generic tunnel, three routines in a
-  6676-byte member: `in_gif_output` (no size in the symbol table), `in_gif_input` (240 bytes) and `gif_encapcheck4` (408
+  6676-byte member: `in_gif_output` (676 bytes), `in_gif_input` (240 bytes) and `gif_encapcheck4` (408
   bytes). It sends with `ip_output` and passes packets to `gif_input`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ipsec.o)` (inferred): IPsec entry stubs, eleven routines in a 5332-byte member:
   `ipsec_create`, `ipsec_change`, `ipsec_delete`, `ipsec_attach`, `ipsec_detach` and six more. Each is 8 bytes in the symbol
