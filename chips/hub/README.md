@@ -320,7 +320,7 @@ level number is not a constant in the binary, but the allocator is read in full:
   a name pointer (doubleword at +8), starting at 0xc0000000014165f8 and ending at a record whose level byte is 0xff): level 0 "Reserved",
   1 "Gfx A", 2 "Gfx B", 3 "Migration" (flags 8), 4 "Hub I2C", 5 "Crosscall A", 6 "Crosscall B", 7 "CPU Action A", 8 "CPU Action B",
   9 "MSC Message" (flags 8); then, all with flags 4: 121 "IO Error", 122 "Clock Error", 123 "Correctable Error A", 124 "Correctable Error B",
-  125 "MD Correct. Error", 126 "NI Error", 103 and 104 "Remote NI Error", 127 "MSC Panic", 105 "LLP Pfail WAR". The reserved levels 126 and 103/104
+  125 "MD Correct. Error", 126 "NI Error", 103 and 104 "Remote NI Error", 127 "MSC Panic", 105 and 106 "LLP Pfail WAR" (one shared name string). The reserved levels 126 and 103/104
   match the network-interface levels `hubni_eint_init` connects. A level named "IO Error" at 121 is therefore reserved but is not the one the
   II error interrupt receives: `hubii_eint_init` allocates its own.
 - **Cause level 6 as a processor line.** `cause_intr_connect` (0xc000000000038ff4) accepts levels 0, 1 and 4 to 7 (it fails for a negative level,

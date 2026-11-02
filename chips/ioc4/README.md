@@ -204,7 +204,7 @@ exists. The PIC and Bedrock side of IP35 is in [../pic/README.md](../pic/README.
 | UART byte lane | line control at UART+3 | `ioc4_uartregs` puts line control first | differ in lane, as expected: IRIX is big-endian and Linux ia64 little-endian, so the lane order mirrors; inferred |
 | ATA windows | `0x0` (32 bytes), `0x100` (32), `0x120` (4), `0x140` (36) | `IOC4_INTR_OFFSET 0`, `IOC4_CMD_OFFSET 0x100`, `IOC4_CTRL_OFFSET 0x120`, `IOC4_DMA_OFFSET 0x140`, `IOC4_CMD_CTL_BLK_SIZE 0x20` | agree |
 | ATA interrupt indices | block indices 3 (status) and 5 (enable set) | `IOC4_INTR_REG 3`, `IOC4_INTR_SET 5`, `IOC4_INTR_CLEAR 7` | agree; and the four-byte stride |
-| ATA DMA words | 32-bit writes at indices 1, 2 and 8 and byte writes at 7 in `xide_pktDMA_start`; reads of 5, 6 and 7 in `xide_pktDMA_complete` | `IOC4_DMA_PTR_L 1`, `PTR_H 2`, `DMA_CTRL 7`, `BC_DEV 5`, `BC_MEM 6`, `ADDR_H 4`, `TIMING 0` | agree on 1, 2, 5, 6 and 7; IRIX also writes index 8, which is not in the names read; indices 0 and 4 are not touched on this chip |
+| ATA DMA words | 32-bit stores at indices 1, 2 and 8 and at 7 (the accessor is named for a byte, but on this part it stores the whole word) in `xide_pktDMA_start`; reads of 5, 6 and 7 in `xide_pktDMA_complete` | `IOC4_DMA_PTR_L 1`, `PTR_H 2`, `DMA_CTRL 7`, `BC_DEV 5`, `BC_MEM 6`, `ADDR_H 4`, `TIMING 0` | agree on 1, 2, 5, 6 and 7; IRIX also writes index 8, which is not in the names read; indices 0 and 4 are not touched on this chip |
 | DMA error read of index 4 | `xide_intr_clear` reads index 4 after index 0 and only prints it, labelled the high word | high word is at `0x4` (index 1) | **differ**; the read has no effect except a debug line, so the contract is unaffected (the routine is read in full) |
 
 ## Reset expectations
