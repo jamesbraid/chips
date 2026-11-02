@@ -47,3 +47,6 @@
 	path = arcboot
 	url = https://github.com/agx/arcboot.git
 	shallow = true
+[submodule "retools"]
+	path = retools
+	url = ../sgi-retools.git
