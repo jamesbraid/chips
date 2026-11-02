@@ -139,9 +139,17 @@ Totals over the **41 rows** below (families count once each; a row graded for so
   (Bridge part only); identification; the mode and speed accessors, whose result goes to record +116; for
   `revision | part << 4` below `0xc0024`, `pcireg_timeout_bit_clr(0x3ff)`; interrupt reset `0x7f`; interrupt device
   `0xffffffff`; `pcibr_directmap_init`; `xbridge_attach` sets control bit `0x200000` through `pcireg_control_bit_set`; every internal translation entry zeroed; on type 0
-  `pcibr_init_ext_ate_ram`; interrupt enable read, ORed with the literal and written back whole (the `revision | part << 4` tests
-  near it, against `0xc0023` and `0xc0022`, set record fields and never touch the enable); interrupt mode 0; target flush read. The Bridge revision 2 path (at `0xc000000000070d98`)
-  builds the enable mask differently and was not decoded. `xbridge_attach` returns -1 on two exit paths and 0 on the third. The returning instructions in each build's `xbridge.o` are: IP27 `0x15c` and `0x918` (-1), `0x85c` (0); IP30 `0x150` and `0x8d8` (-1), `0x820` (0); IP35 `0x19c` and `0xb14` (-1), `0xa3c` (0).
+  `pcibr_init_ext_ate_ram`; interrupt enable read, ORed with the literal; then two revision tests change the mask before the write (below); interrupt mode 0; target flush read.
+  **Enable mask by revision (established, `0xc000000000070918` to `0xc000000000070950` and `0xc000000000070d98` to `0xc000000000070db4`, read in full).** With `v` = the
+  `revision | part << 4` word at record +120: the routine reads the enable register (`pcireg_intr_enable_get`) and ORs the literal `0x00003eff7ffffe00` (bits 9 to 30, 32 to 39 and 41 to 45). If `v` is below
+  `0xc0023` (signed compare; Bridge revisions 1 and 2) it then clears bit 28 (`0x10000000`). If `v` equals `0xc0022` exactly (Bridge revision 2) it also prints a debug message
+  ("Turning on LLP_REC_CBERR for Rev B Bridge", at level 4), ORs in bit 20 (`0x100000`) and ANDs with `0xffffffbbffff77ff`, which clears bits 11, 15, 34 and 38; the message and the AND are in
+  that order (the AND sits in the call's delay slot). Every other `v` goes straight to the write with the literal's bits and, below `0xc0023`, bit 28 clear. The write is `pcireg_intr_enable_set`.
+  The shipped text table that the IP35 `pcibr_error_dump` uses (IP27 `pcibr.o` carries the same first string, "08: GIO non-contiguous byte enable in crosstalk packet"; the rest of its table was not compared) names bit 20 "LLP Receiver check bit error", bit 28 "Framing error, response cmd data size does not match actual",
+  bit 11 "PCI bus device select timeout" and bit 15 "PCI abort condition"; bits 34 and 38 are PCI-X names that no Bridge raises, so their clear is moot there (inferred; the revision-2 path
+  is the only place that names them). So on a revision 2 Bridge the receiver check-bit error is armed (the message says so), and the two PCI abort bits and bit 28 are left disabled, as on revision 1 for bit 28.
+  The same four bits (11, 15, 34, 38) are the programmed-I/O error bits that the PIC error handler adds to or drops from its dump mask (chips/pic/README.md, "Error interrupt service"). Why bit 28 is left off
+  below revision 3 is not stated anywhere in the object: unknown (inferred only: an erratum workaround, from the revision gate). `xbridge_attach` returns -1 on two exit paths and 0 on the third. The returning instructions in each build's `xbridge.o` are: IP27 `0x15c` and `0x918` (-1), `0x85c` (0); IP30 `0x150` and `0x8d8` (-1), `0x820` (0); IP35 `0x19c` and `0xb14` (-1), `0xa3c` (0).
 - **External translation RAM probe (established, `pcibr_init_ext_ate_ram` at `0xc00000000007566c`, read in full).** For
   sizes 1, 2 and 3 it writes `0x0123456789abcdef` to the last entry of the candidate size from a table of 8192, 16384
   and 65536 entries (the table is in the `unix` data section), writes zero to the last entries of the smaller
@@ -191,7 +199,7 @@ bits 22:20 and buffer number bits 19:16, which agree).
   run time and neither has symbols. Open.
 - Registers reached through an index the scan does not follow (device, interrupt pin, buffer and translation indexes):
   recorded at the family base.
-- The revision 2 attach path and the decision trees of `pcibr_pioerror` and `pcibr_error_dump`: not read in full; the
+- The decision trees of `pcibr_pioerror` and the IP27 `pcibr_error_dump`: not read in full (the revision 2 attach path is read, see "Attach order"; the IP35 `pcibr_error_dump` is in chips/pic/README.md); the
   constants they pass are in `census/fields.tsv`.
 
 ## Reset expectations
@@ -302,6 +310,6 @@ The routines of the IP27 kernel that serve the same family are in [docs/ip27-ker
 
 ## Open
 
-See docs/open-questions.md: the revision 2 attach path; the interrupt device value at attach; the units and layout of
+See docs/open-questions.md: the interrupt device value at attach; the units and layout of
 the response buffer registers; whether any XBridge register lies above `0x298`; the PROMs that reach the chip through
 a run-time window.
