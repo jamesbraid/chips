@@ -1389,7 +1389,7 @@ The IPv6 stack of this build is in its own `ipv6.a` archive, with no byte-identi
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(udp6_usrreq.o)` (inferred): UDP over IPv6, three routines in a 12500-byte member.
   `udp6_output` (1496 bytes) builds and sends datagrams through `ip6_output`, `udp6_ctlinput` (164 bytes) passes errors, and
   `udp6_input` (no size in the symbol table) receives. It hands datagrams to `nfs_input` for the NFS port `nfs_port`, and it
-  imports `sesmgr_enabled` for the session checks.
+  imports `sesmgr_enabled`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ip_encap.o)` (inferred): the encapsulation switch that routes tunnelled packets to the
   right decapsulator, eight routines in a 10244-byte member. `encap_attach` (1028 bytes) and `encap_detach` (160 bytes)
   register and remove a handler, `mask_match` (836 bytes) matches a packet against the handler's masks, and `encap4_input`
@@ -1400,12 +1400,12 @@ The IPv6 stack of this build is in its own `ipv6.a` archive, with no byte-identi
   bytes). It sends with `ip_output` and passes packets to `gif_input`.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(ipsec.o)` (inferred): IPsec entry stubs, eleven routines in a 5332-byte member:
   `ipsec_create`, `ipsec_change`, `ipsec_delete`, `ipsec_attach`, `ipsec_detach` and six more. Each is 8 bytes in the symbol
-  table, the size of a return-only routine, and the member has no imports. The IPv6 output path imports these names
-  (`bsd.a` is not involved), so this member fills them in this build.
+  table, the size of a return-only routine, and the member has no imports. The IPv6 output path,
+  `ipv6.a(ip6_output.o)`, imports these names, so this member supplies them in this build.
 - `IP32/usr/cpu/sysgen/IP32boot/ipv6.a(in6_src.o)` (inferred): IPv6 source address selection, seven routines in a 10804-byte
   member. `in6_selectroute` (1236 bytes) chooses the outgoing interface and route, `in6_selectsrc` (1152 bytes) picks the
   source address, and `in6_pcbsetport` (468 bytes) assigns a port. It draws ports with `read_random_real` and
-  `inpcb_randomize_ports`, and reads the port bound `ipport_maxport`.
+  `inpcb_randomize_ports`, and reads the port limit `ipport_maxport`.
 
 ## Scope questions
 
