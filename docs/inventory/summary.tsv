@@ -1,14 +1,14 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	input
 binaries	3092	0	625	0	625	3	4	144	2319	0	20.2	20.3	25.0	20.2							0			
-functions	6301	91992	827	116	655	9	867	1436	3171	0	13.1	26.9	49.7	13.1			85.0	20	2026-11-02		0	0	16	
-functions (distinct names)	2481	21770	549	115	545	9	15	557	1360	0	22.1	22.7	45.2	22.1							0			
+functions	6301	91992	827	116	655	9	867	1446	3161	0	13.1	26.9	49.8	13.1			85.0	20	2026-11-02		0	0	16	
+functions (distinct names)	2481	21770	549	115	545	9	15	559	1358	0	22.1	22.7	45.3	22.1							0			
 mmio	25	0	25	0	25	0	0	0	0	0	100.0	100.0	100.0	100.0	0						0			
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ioctls	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 ucode	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0						0	0			
 spec-registers	174	0	159	10	158	0	0	4	11	0	91.4	91.4	93.7	91.4							0			
 input root manifest	928																							500055fe4acccbc9256d61eb7716475b355bdd721167f32bf1c18b9c15f2372d
-functions in IP27/unix	995	12489	301	88	301	0	83	233	378	0	30.3	38.6	62.0	30.3							0	0	0	
+functions in IP27/unix	995	12489	301	88	301	0	83	235	376	0	30.3	38.6	62.2	30.3							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/acl_hwg.o	0	3	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/acl_nfs3.o	0	2	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -621,7 +621,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/sball.o	0	15	0	0	0	0	0	0	0	0	0.0	0.0	0
 functions in IP27/usr/cpu/sysgen/IP27boot/scsi.o	0	70	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/scsiha.o	0	3	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	0	64	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	35	0	0	0	0	0	2	16	17	0	0.0	5.7	51.4	0.0							0	0	0	
+functions in IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	35	0	0	0	0	0	2	18	15	0	0.0	5.7	57.1	0.0							0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/sem.o	0	50	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/sessionidbg.a(sessionidbg.o)	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/sgi.a(bit.o)	0	17	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -869,7 +869,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_snapshot.o)	0	58	0	0	0	0	0	0
 functions in IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_irix_snapshot.o)	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/xvmidbg.o	0	40	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP27/usr/cpu/sysgen/IP27boot/zero.o	0	8	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP30/unix	718	12369	188	24	187	0	113	161	256	0	26.2	41.9	64.3	26.2							0	0	5	
+functions in IP30/unix	718	12369	188	24	187	0	113	163	254	0	26.2	41.9	64.6	26.2							0	0	5	
 functions in IP30/usr/cpu/sysgen/IP30boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/asidbg.a(asidbg.o)	0	38	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	0	20	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -1346,7 +1346,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/sball.o	0	15	0	0	0	0	0	0	0	0	0.0	0.0	0
 functions in IP30/usr/cpu/sysgen/IP30boot/sbp2.o	0	76	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/sbp2idbg.o	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	0	59	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
-functions in IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	36	0	0	0	0	0	2	17	17	0	0.0	5.6	52.8	0.0							0	0	0	
+functions in IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	36	0	0	0	0	0	2	19	15	0	0.0	5.6	58.3	0.0							0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/sem.o	0	50	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/sessionidbg.a(sessionidbg.o)	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP30/usr/cpu/sysgen/IP30boot/sflash.o	0	14	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
@@ -2804,7 +2804,7 @@ functions in IP35/usr/cpu/sysgen/IP35boot/sbp2.o	0	76	0	0	0	0	0	0	0	0	0.0	0.0	0.
 functions in IP35/usr/cpu/sysgen/IP35boot/sbp2idbg.o	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	0	60	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_l1.o)	19	0	0	0	0	0	0	4	15	0	0.0	0.0	21.1	0.0							0	0	0	
-functions in IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	35	0	0	0	0	0	2	16	17	0	0.0	5.7	51.4	0.0							0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	35	0	0	0	0	0	2	18	15	0	0.0	5.7	57.1	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	36	0	0	0	0	0	1	11	24	0	0.0	2.8	33.3	0.0							0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/sem.o	0	50	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
 functions in IP35/usr/cpu/sysgen/IP35boot/sessionidbg.a(sessionidbg.o)	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0			
