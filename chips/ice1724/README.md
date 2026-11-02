@@ -2,7 +2,8 @@
 
 Mode: **no-spec** (no vendor datasheet is held here; the public Linux `sound/pci/ice1712` driver, Linux 7.2-rc7 `envy24ht.h`,
 `ice1724.c` and `revo.c`, was read after the binary and only for names and conflicts). The part is not an SGI chip. It is
-the controller of the SGI DMediaPro DM8 PCI audio option, see [docs/audio/dm8.md](../../docs/audio/dm8.md) for the board.
+the controller of the SGI DMediaPro DM8 PCI audio option, see [docs/audio/dm8.md](../../docs/audio/dm8.md) for the board,
+and [docs/audio/survey.md](../../docs/audio/survey.md) for where it sits among the audio options.
 
 Source of every fact below: the IRIX 6.5.30 driver object `mad_dd.o` of the IP35 build
 (`IP35/usr/cpu/sysgen/IP35boot/mad_dd.o`, SHA-256 `905a72a73b0351378bc32c265ddae66b4f9f696b31e0eb9d65993acba78c1518`),

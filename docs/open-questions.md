@@ -247,13 +247,22 @@ Corrections found while tagging. These are not fixed here.
   chip side of this path. Tried: the held kernel, the `jtagio.a` and `irouter.o` objects, the `l1_command.o` task census, the public
   `l1.h` and `router.h`. Next: the L1 command-path callers of task `0xf` in `l1_command.o`, and any diagnostic or monitor image that
   names the scan operations (none found in the IP35 boot set).
-- **DM8 board contents: sub-device ID, EEPROM image, part numbers.** *[route: missing source: a published `lspci -vv` or EEPROM dump of a DM8, or an SGI parts list; no shipped file holds them]* The IP35 `mad_dd.o` tests config `0x2e` against `0x3630` and
-  copies a 19-byte EEPROM image into the controller, but the DM8's own values are not in any held file. Established: the code, the
+- **DM8 board contents: sub-device ID, EEPROM image, part numbers.** *[route: missing source: a published `lspci -vv` or EEPROM dump of a DM8, or an SGI parts list; no shipped file holds them]* `mad_create_subsys` (`mad_dd.o` `0x1e4`, 560 bytes) tests config `0x2e` against `0x3630` and
+  `mad_set_eeprom` (`mad_dd.o` `0x2f54`, 280 bytes) copies a 19-byte EEPROM image into the controller, but the DM8's own values are not in any held file. Read: the code, the
   probe `1412:1724`, the SGI note naming the controller. Unknown: the real sub-vendor and sub-device values, the EEPROM bytes,
   the SGI part number, whether SGI changed a component. Next: any public capture of a DM8; a `hinv -vm` line from a DM8 host gives
   the revision only (docs/audio/dm8.md).
 - **ICE1724 register contract.** *[route: missing source: the vendor datasheet; software now for the remainder]* Offsets and widths the driver touches are in chips/ice1724/README.md.
   Unknown: reset values, write masks, the rate-code table in full, the DMA size and count units, the effect of `MT+0x19`
   and `MT+0x05` bit 7. Next: re-read `mad_set_rate` (`0x2268`) and `mad_start_dma` (`0xe48`) against a public vendor datasheet when one is held.
-- **DM8 converter identities.** *[route: missing source: a board photograph or parts list; public AKM datasheets for the field meanings]* AK4381, AK4355 and AK5380 are inferred from a sibling board's public
-  driver and secondary reviews (chips/ak4381, chips/ak4355, chips/ak5380). No SGI document or shipped file names them.
+- **DM8 converter identities.** *[route: missing source: a board photograph or parts list; public AKM datasheets for the field meanings]* AK4381, AK4355 and AK5380 are leads from a sibling board's public
+  driver and secondary reviews (chips/ak4381, chips/ak4355, chips/ak5380); `mad_init_revolution` (`mad_dd.o` `0x2b2c`, 412 bytes) programs them without naming them. No SGI document or shipped file names them.
+- **Tezro tower onboard audio chip.** *[route: software now, then missing source]* The tower guide places analog jacks on the IO daughtercard. Candidate driver
+  `emu_dd.o` (PCI `1102:0004`), a lead only from being the one audio driver unique to the IP35 build. Next: read `emu_voice_setup` (`emu_dd.o` `0x2fbc`, 208 bytes),
+  `emu_start_dma` (`emu_dd.o` `0x18ec`, 400 bytes) and `emu_init_efx` (`emu_dd.o` `0x25a8`, 864 bytes) in full, and look for any IP35 hinv with an EMU line (chips/emu10k2/README.md).
+- **RAD register contract in this workspace.** *[route: software now]* chips/rad/README.md records only the probe, windows and board dispatch of `rad_dd.o`. The register
+  offsets, DMA engines, subcode and clock paths are not read here. Next: read `rad_start_device`, `rad_create_device`, `rad_set_*_if_params`
+  in the IP35 and IP30 objects.
+- **Fuel and Octane support for the DM8; Fuel support for the RAD board.** *[route: missing source: hinv captures or SGI support lists]* The Fuel evidence is a single user's hinv; the IP30 build
+  carries `mad_dd.o` but no SGI document lists the Octane as a host (docs/audio/survey.md).
+- **USB audio converter for the Fuel (007-4530-001).** *[route: missing source: USB descriptors or a teardown]* The class driver is `usbaudio_dd.o`; the converter's chip is not named anywhere read.

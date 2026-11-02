@@ -44,7 +44,7 @@ All from 007-4077-001 unless stated. **Established** as SGI's published statemen
   or later (pp. 1, 4). "Recommended that it not be installed in other SGI systems" (p. 1).
 - No digital connector is listed. The driver has a digital output interface (below); with no connector on the panel it is
   inferred to be unpopulated.
-- Troubleshooting says to set `DEFAULT_INPUT`/`DEFAULT_OUTPUT` in `apanel` when two are installed (p. 4).
+- Troubleshooting says to check the default input and output settings in the audio panel when two are installed (p. 4).
 
 Machine support, graded separately:
 

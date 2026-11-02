@@ -1914,7 +1914,7 @@ IP27/unix	kernel	n64		0x0		mad_create_clockgen	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		mad_create_device	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_create_interfaces	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_create_mclks	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_create_subsys	dwarf			out:5	named-only	chips/ice1724/README.md#identification	Identification
+IP27/unix	kernel	n64		0x0		mad_create_subsys	dwarf			out:5	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64		0x0		mad_disable_ust	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_enable_ust	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_error_handler	dwarf			out:5	undocumented		
@@ -1931,7 +1931,7 @@ IP27/unix	kernel	n64		0x0		mad_gpio_write_spi_register	dwarf			out:5	named-only	
 IP27/unix	kernel	n64		0x0		mad_halt_intr_ops	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_i2c_read	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP27/unix	kernel	n64		0x0		mad_i2s_mute	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_init_revolution	dwarf			out:5	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
+IP27/unix	kernel	n64		0x0		mad_init_revolution	dwarf			out:5	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64		0x0		mad_initial_val	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_read_configuration	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP27/unix	kernel	n64		0x0		mad_read_eeprom	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
@@ -1941,7 +1941,7 @@ IP27/unix	kernel	n64		0x0		mad_set_analog_in_if_params	dwarf			out:5	undocumente
 IP27/unix	kernel	n64		0x0		mad_set_analog_out_if_params	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_set_clockgen_params	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		mad_set_digital_if_params	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		mad_set_eeprom	dwarf			out:5	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/unix	kernel	n64		0x0		mad_set_eeprom	dwarf			out:5	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64		0x0		mad_set_i2s_analog_gain	dwarf			out:5	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP27/unix	kernel	n64		0x0		mad_set_rate	dwarf			out:5	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64		0x0		mad_set_ust_offset	dwarf			out:5	undocumented		
@@ -2627,7 +2627,7 @@ IP27/unix	kernel	n64		0x0		rad_calculate_rate_frac	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		rad_cg_update_dev	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		rad_check_adat_rx	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		rad_create_clockgen	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		rad_create_device	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		rad_create_device	dwarf			out:5	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64		0x0		rad_create_ifs	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		rad_create_mclks	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		rad_create_subcode_device	dwarf			out:5	undocumented		
@@ -2648,7 +2648,7 @@ IP27/unix	kernel	n64		0x0		rad_process_aesrx_subcode	dwarf			out:5	undocumented
 IP27/unix	kernel	n64		0x0		rad_set_analog_in_gain	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		rad_set_clockgen	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		rad_start_clockgen	dwarf			out:5	undocumented		
-IP27/unix	kernel	n64		0x0		rad_start_device	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		rad_start_device	dwarf			out:5	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64		0x0		rad_start_status_dma	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		rad_stop_status_dma	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		rad_update_ksync	dwarf			out:5	undocumented		
@@ -6783,7 +6783,7 @@ IP27/unix	kernel	n64	.text	0xc000000000100dac	40	rad_halt_intr_ops	symtab	f527bc
 IP27/unix	kernel	n64	.text	0xc000000000100eb4	180	rad_attach	symtab	453ef61e5120		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc000000000100f68	8	rad_detach	symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000100f70	8	rad_error	symtab	87506497337c		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000101010	52	rad_init	symtab	824a528c820e		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000101010	52	rad_init	symtab	824a528c820e		out:5	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP27/unix	kernel	n64	.text	0xc000000000101044	220	rad_halt	symtab	14a6d1f17fd3		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001013d8	936	rad_set_device_params	symtab	73ace56df7cb		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000101780	8	rad_commit_device_params	symtab	78aa5094d5ec		out:5	undocumented		
@@ -9215,7 +9215,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001f42b4	132	sthread_exit	symtab	9f4609ee77
 IP27/unix	kernel	n64	.text	0xc0000000001f4338	28	drv_thread_exit	symtab	027d58a86aa0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f4354	48	stdestroy	symtab	7c094128eecf		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f4384	400	sthread_boot_bind	symtab	58bd3c762743		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001f4534	56	open	symtab	9174521bcb7e		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001f4534	56	open	symtab	9174521bcb7e		out:5	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP27/unix	kernel	n64	.text	0xc0000000001f456c	596	vn_remove_audit_extended	symtab	317251d2b17f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f47c0	44	creat	symtab	76a77878bc02		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001f47ec	608	copen	symtab	c1acee1870da		out:5	undocumented		
@@ -21148,7 +21148,7 @@ IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x134	8	mad_open	d
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x13c	8	mad_close	dwarf+symtab	87506497337c		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x144	8	mad_halt	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x14c	152	mad_attach	dwarf+symtab	46247149f81a		out:4	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1e4	548	mad_create_subsys	dwarf+symtab	2f229ff96c33		out:4	named-only	chips/ice1724/README.md#identification	Identification
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x1e4	548	mad_create_subsys	dwarf+symtab	2f229ff96c33		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x408	180	mad_read_configuration	dwarf+symtab	a417db4d228b		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x4bc	8	mad_detach	dwarf+symtab	87506497337c		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x4c4	152	mad_error_handler	dwarf+symtab	2333b5174767		out:4	undocumented		
@@ -21196,10 +21196,10 @@ IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2990	76	mad_gpio
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x29dc	48	mad_gpio_deassert_cs	dwarf+symtab	d7c7f3d434cf		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2a0c	36	mad_gpio_mute	dwarf+symtab	cfea07e482b2		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2a30	164	mad_i2s_mute	dwarf+symtab	b3a52d818ebf		out:4	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2ad4	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2ad4	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2c70	136	mad_i2c_read	dwarf+symtab	4ccbe9cdf447		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2cf8	516	mad_read_eeprom	dwarf+symtab	bed0117f2b70		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
-IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2efc	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x2efc	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x3014	232	mad_ac97_write	dwarf+symtab	f2495c786478		out:4	named-only	chips/ice1724/README.md#the-ac97-variant-inferred-to-be-unused-by-the-dm8	The AC'97 variant (inferred to be unused by the DM8)
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x30fc	240	mad_ac97_read	dwarf+symtab	1775dd8c0f7b		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-object	n64	.text	0x31ec	392	mad_create_clockgen	dwarf+symtab	74debe93ac7d		out:4	undocumented		
@@ -25128,7 +25128,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(vmdump.o)	kernel-object	n64	.text	0x256c	828	d
 IP27/usr/cpu/sysgen/IP27boot/os.a(vmdump.o)	kernel-object	n64	.text	0x28a8	400	dump_flush	dwarf+symtab	87af19f57034		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vmdump.o)	kernel-object	n64	.text	0x2a38	200	dump_write	dwarf+symtab	5dc7b598e054		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vmdump.o)	kernel-object	n64	.text	0x2b00	1468	move_buffer	dwarf+symtab	94700f6a56b6		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x0	56	open	dwarf+symtab	ac976a06c884		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x0	56	open	dwarf+symtab	ac976a06c884		out:3	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x38	596	vn_remove_audit_extended	dwarf+symtab	a9947c918660		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x28c	44	creat	dwarf+symtab	191b93d5f355		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	copen	dwarf+symtab	ad37a8dfb996		out:3	undocumented		
@@ -26507,8 +26507,8 @@ IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x1170	52	rad_enab
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x11a4	40	rad_disable_ust	dwarf+symtab	3af608ae52d0		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x11cc	248	rad_reset_ust	dwarf+symtab	9832e6da56e9		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x12c4	104	rad_set_ust_offset	dwarf+symtab	277ed94f919f		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x132c	1280	rad_create_device	dwarf+symtab	1a8c08a8b15e		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x182c	144	rad_start_device	dwarf+symtab	8fe23629de17		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x132c	1280	rad_create_device	dwarf+symtab	1a8c08a8b15e		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x182c	144	rad_start_device	dwarf+symtab	8fe23629de17		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x18bc	1308	rad_create_ifs	dwarf+symtab	e24ba7ba4ae7		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x1dd8	336	rad_create_subcode_device	dwarf+symtab	8607c615ef5b		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x1f28	1428	rad_create_subcodes	dwarf+symtab	6b944245d85d		in	undocumented		
@@ -26540,7 +26540,7 @@ IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x4f10	180	rad_att
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x4fc4	8	rad_detach	dwarf+symtab	87506497337c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x4fcc	8	rad_error	dwarf+symtab	87506497337c		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x4fd4	152	rad_error_handler	dwarf+symtab	c16c7a56a178		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x506c	52	rad_init	dwarf+symtab	4aecbe5106ff		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x506c	52	rad_init	dwarf+symtab	4aecbe5106ff		in	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x50a0	220	rad_halt	dwarf+symtab	0c8b3d76317a		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x517c	68	Mem_to_PCI_DMA	dwarf+symtab	65f6bc9f8720		in	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-object	n64	.text	0x51c0	628	rad_initial_val	dwarf+symtab	0b3996fb1019		in	undocumented		
@@ -34186,7 +34186,7 @@ IP30/unix	kernel	n64		0x0		mad_create_clockgen	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		mad_create_device	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_create_interfaces	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_create_mclks	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_create_subsys	dwarf			out:7	named-only	chips/ice1724/README.md#identification	Identification
+IP30/unix	kernel	n64		0x0		mad_create_subsys	dwarf			out:7	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64		0x0		mad_disable_ust	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_enable_ust	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_error_handler	dwarf			out:7	undocumented		
@@ -34203,7 +34203,7 @@ IP30/unix	kernel	n64		0x0		mad_gpio_write_spi_register	dwarf			out:7	named-only	
 IP30/unix	kernel	n64		0x0		mad_halt_intr_ops	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_i2c_read	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP30/unix	kernel	n64		0x0		mad_i2s_mute	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_init_revolution	dwarf			out:7	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
+IP30/unix	kernel	n64		0x0		mad_init_revolution	dwarf			out:7	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64		0x0		mad_initial_val	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_read_configuration	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP30/unix	kernel	n64		0x0		mad_read_eeprom	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
@@ -34213,7 +34213,7 @@ IP30/unix	kernel	n64		0x0		mad_set_analog_in_if_params	dwarf			out:7	undocumente
 IP30/unix	kernel	n64		0x0		mad_set_analog_out_if_params	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_set_clockgen_params	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		mad_set_digital_if_params	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		mad_set_eeprom	dwarf			out:7	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/unix	kernel	n64		0x0		mad_set_eeprom	dwarf			out:7	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64		0x0		mad_set_i2s_analog_gain	dwarf			out:7	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP30/unix	kernel	n64		0x0		mad_set_rate	dwarf			out:7	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64		0x0		mad_set_ust_offset	dwarf			out:7	undocumented		
@@ -34908,7 +34908,7 @@ IP30/unix	kernel	n64		0x0		rad_calculate_rate_frac	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		rad_cg_update_dev	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		rad_check_adat_rx	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		rad_create_clockgen	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		rad_create_device	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		rad_create_device	dwarf			out:7	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64		0x0		rad_create_ifs	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		rad_create_mclks	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		rad_create_subcode_device	dwarf			out:7	undocumented		
@@ -34929,7 +34929,7 @@ IP30/unix	kernel	n64		0x0		rad_process_aesrx_subcode	dwarf			out:7	undocumented
 IP30/unix	kernel	n64		0x0		rad_set_analog_in_gain	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		rad_set_clockgen	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		rad_start_clockgen	dwarf			out:7	undocumented		
-IP30/unix	kernel	n64		0x0		rad_start_device	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		rad_start_device	dwarf			out:7	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64		0x0		rad_start_status_dma	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		rad_stop_status_dma	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		rad_update_ksync	dwarf			out:7	undocumented		
@@ -38572,7 +38572,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200d8e4c	40	rad_halt_intr_ops	symtab	ba28d8
 IP30/unix	kernel	n64	.text	0xa8000000200d8f58	180	rad_attach	symtab	76d3763419ac		out:7	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/unix	kernel	n64	.text	0xa8000000200d900c	8	rad_detach	symtab	87506497337c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d9014	8	rad_error	symtab	87506497337c		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200d90b4	56	rad_init	symtab	d11d0709a90e		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200d90b4	56	rad_init	symtab	d11d0709a90e		out:7	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP30/unix	kernel	n64	.text	0xa8000000200d90ec	220	rad_halt	symtab	48b389820512		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d9480	924	rad_set_device_params	symtab	107929888518		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200d981c	8	rad_commit_device_params	symtab	78aa5094d5ec		out:7	undocumented		
@@ -40887,7 +40887,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201b55b8	132	sthread_exit	symtab	da6ad7a2d4
 IP30/unix	kernel	n64	.text	0xa8000000201b563c	28	drv_thread_exit	symtab	1029f3660c31		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5658	48	stdestroy	symtab	c7e3ae23b906		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5688	400	sthread_boot_bind	symtab	2811c011774d		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201b5838	56	open	symtab	27bcc3b3b452		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201b5838	56	open	symtab	27bcc3b3b452		out:7	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP30/unix	kernel	n64	.text	0xa8000000201b5870	596	vn_remove_audit_extended	symtab	5d9f5ec42d32		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5ac4	44	creat	symtab	5adde406a17d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201b5af0	608	copen	symtab	965dafb25d17		out:7	undocumented		
@@ -51860,7 +51860,7 @@ IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x134	8	mad_open	d
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x13c	8	mad_close	dwarf+symtab	87506497337c		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x144	8	mad_halt	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x14c	152	mad_attach	dwarf+symtab	46247149f81a		out:4	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1e4	548	mad_create_subsys	dwarf+symtab	2f229ff96c33		out:4	named-only	chips/ice1724/README.md#identification	Identification
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x1e4	548	mad_create_subsys	dwarf+symtab	2f229ff96c33		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x408	180	mad_read_configuration	dwarf+symtab	a417db4d228b		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x4bc	8	mad_detach	dwarf+symtab	87506497337c		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x4c4	152	mad_error_handler	dwarf+symtab	2333b5174767		out:4	undocumented		
@@ -51908,10 +51908,10 @@ IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2990	76	mad_gpio
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x29dc	48	mad_gpio_deassert_cs	dwarf+symtab	d7c7f3d434cf		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2a0c	36	mad_gpio_mute	dwarf+symtab	cfea07e482b2		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2a30	164	mad_i2s_mute	dwarf+symtab	b3a52d818ebf		out:4	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2ad4	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2ad4	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2c70	136	mad_i2c_read	dwarf+symtab	4ccbe9cdf447		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2cf8	516	mad_read_eeprom	dwarf+symtab	bed0117f2b70		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
-IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2efc	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x2efc	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x3014	232	mad_ac97_write	dwarf+symtab	f2495c786478		out:4	named-only	chips/ice1724/README.md#the-ac97-variant-inferred-to-be-unused-by-the-dm8	The AC'97 variant (inferred to be unused by the DM8)
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x30fc	240	mad_ac97_read	dwarf+symtab	1775dd8c0f7b		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/mad_dd.o	kernel-object	n64	.text	0x31ec	392	mad_create_clockgen	dwarf+symtab	74debe93ac7d		out:4	undocumented		
@@ -55317,7 +55317,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(vmdump.o)	kernel-object	n64	.text	0x13bc	268	c
 IP30/usr/cpu/sysgen/IP30boot/os.a(vmdump.o)	kernel-object	n64	.text	0x14c8	84	dump_dir_ent	dwarf+symtab	b8ffd2312101		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vmdump.o)	kernel-object	n64	.text	0x151c	184	dump_flush	dwarf+symtab	7765bebf0b0a		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vmdump.o)	kernel-object	n64	.text	0x15d4	196	dump_write	dwarf+symtab	1c759b15a7d7		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x0	56	open	dwarf+symtab	ac976a06c884		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x0	56	open	dwarf+symtab	ac976a06c884		out:3	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x38	596	vn_remove_audit_extended	dwarf+symtab	a54d49c9bacc		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x28c	44	creat	dwarf+symtab	191b93d5f355		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	copen	dwarf+symtab	ad37a8dfb996		out:3	undocumented		
@@ -56562,8 +56562,8 @@ IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x1050	52	rad_enab
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x1084	40	rad_disable_ust	dwarf+symtab	3af608ae52d0		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x10ac	56	rad_reset_ust	dwarf+symtab	1683ad621443		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x10e4	120	rad_set_ust_offset	dwarf+symtab	d1bb667f8cc3		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x115c	1280	rad_create_device	dwarf+symtab	7a6b0ed04fc4		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x165c	144	rad_start_device	dwarf+symtab	8fe23629de17		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x115c	1280	rad_create_device	dwarf+symtab	7a6b0ed04fc4		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x165c	144	rad_start_device	dwarf+symtab	8fe23629de17		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x16ec	1308	rad_create_ifs	dwarf+symtab	8e11c3e8a285		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x1c08	336	rad_create_subcode_device	dwarf+symtab	8607c615ef5b		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x1d58	1424	rad_create_subcodes	dwarf+symtab	4f8e383243b0		in	undocumented		
@@ -56595,7 +56595,7 @@ IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4d40	180	rad_att
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4df4	8	rad_detach	dwarf+symtab	87506497337c		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4dfc	8	rad_error	dwarf+symtab	87506497337c		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4e04	152	rad_error_handler	dwarf+symtab	8a37a66284eb		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4e9c	56	rad_init	dwarf+symtab	4464d79e7480		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4e9c	56	rad_init	dwarf+symtab	4464d79e7480		in	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4ed4	220	rad_halt	dwarf+symtab	3770707f023f		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4fb0	68	Mem_to_PCI_DMA	dwarf+symtab	65f6bc9f8720		in	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-object	n64	.text	0x4ff4	628	rad_initial_val	dwarf+symtab	35dd8afd0a01		in	undocumented		
@@ -71871,7 +71871,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(vmdump.o)	kernel-object	n32	.text	0x1728	276	c
 IP32/usr/cpu/sysgen/IP32boot/os.a(vmdump.o)	kernel-object	n32	.text	0x183c	72	dump_dir_ent	dwarf+funcnames+symtab	c218dafe2967		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vmdump.o)	kernel-object	n32	.text	0x1884	184	dump_flush	dwarf+funcnames+symtab	a528e4a63807		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vmdump.o)	kernel-object	n32	.text	0x193c	204	dump_write	dwarf+funcnames+symtab	593da7f54fae		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x0	48	open	dwarf+symtab	da08500021e3		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x0	48	open	dwarf+symtab	da08500021e3		out:3	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x30	492	vn_remove_audit_extended	dwarf+symtab	b67c87a9846e		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x21c	44	creat	dwarf+symtab	03e2c91e3946		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(vncalls.o)	kernel-object	n32	.text	0x248	604	copen	dwarf+symtab	8de2ae21c535		out:3	undocumented		
@@ -72849,8 +72849,8 @@ IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0xee4	64	rad_enabl
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0xf24	64	rad_disable_ust	dwarf+symtab	f988c1e1b03c		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0xf64	92	rad_reset_ust	dwarf+symtab	f8f941643a84		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0xfc0	164	rad_set_ust_offset	dwarf+symtab	64fc61357938		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x1064	1344	rad_create_device	dwarf+funcnames+symtab	44bc8a3bcc2c		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x15a4	168	rad_start_device	dwarf+funcnames+symtab	f8fbc7f95e21		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x1064	1344	rad_create_device	dwarf+funcnames+symtab	44bc8a3bcc2c		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x15a4	168	rad_start_device	dwarf+funcnames+symtab	f8fbc7f95e21		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x164c	1324	rad_create_ifs	dwarf+funcnames+symtab	5397e4abbdc3		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x1b78	348	rad_create_subcode_device	dwarf+funcnames+symtab	0f619b602ef2		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x1cd4	1432	rad_create_subcodes	dwarf+funcnames+symtab	987593fa921b		in	undocumented		
@@ -72882,7 +72882,7 @@ IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x4e8c	300	rad_att
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x4fb8	8	rad_detach	dwarf+symtab	87506497337c		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x4fc0	8	rad_error	dwarf+symtab	87506497337c		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x4fc8	172	rad_error_handler	dwarf+funcnames+symtab	4aedd3595032		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x5074	52	rad_init	dwarf+symtab	287a528ea7ce		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x5074	52	rad_init	dwarf+symtab	287a528ea7ce		in	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x50a8	244	rad_halt	dwarf+symtab	c0541647488a		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x519c	68	Mem_to_PCI_DMA	dwarf+funcnames+symtab	5ce1633c7ec5		in	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP32/usr/cpu/sysgen/IP32boot/rad_dd.o	kernel-object	n32	.text	0x51e0	632	rad_initial_val	dwarf+funcnames+symtab	0c31c3d1d6fd		in	undocumented		
@@ -79951,8 +79951,8 @@ IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_vnodeops.o)	kernel-object	n64	.text	0x386
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_vnodeops.o)	kernel-object	n64	.text	0x3874	780	efs_fcntl	dwarf+symtab	e3c7cfe3d1d6		out:1	named-only	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_vnodeops.o)	kernel-object	n64	.text	0x3b80	340	efs_attr_get	dwarf+symtab	03e0cbe589cb		out:1	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_vnodeops.o)	kernel-object	n64	.text	0x3cd4	472	efs_attr_set	dwarf+symtab	152185e7943d		out:1	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x0	48	emu_init	dwarf+symtab	67e4b04e1e9c		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x30	116	emu_attach	dwarf+symtab	5a1fa893b168		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x0	48	emu_init	dwarf+symtab	67e4b04e1e9c		out:4	named-only	chips/emu10k2/README.md#creative-emu10k2-audio-controller-pci-11020004-ip35-build-driver-emu_ddo	Creative EMU10K2 audio controller, PCI 1102:0004 (IP35 build driver `emu_dd.o`)
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x30	116	emu_attach	dwarf+symtab	5a1fa893b168		out:4	named-only	chips/emu10k2/README.md#creative-emu10k2-audio-controller-pci-11020004-ip35-build-driver-emu_ddo	Creative EMU10K2 audio controller, PCI 1102:0004 (IP35 build driver `emu_dd.o`)
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0xa4	8	emu_detach	dwarf+symtab	87506497337c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0xac	260	emu_ioctl	dwarf+symtab	83318884c545		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1b0	8	emu_open	dwarf+symtab	87506497337c		out:4	undocumented		
@@ -79981,7 +79981,7 @@ IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x16e8	324	emu_set
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x182c	8	emu_commit_device_params	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1834	176	emu_initial_val	dwarf+symtab	952e134a33e0		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x18e4	8	emu_cg_update_hrb	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x18ec	400	emu_start_dma	dwarf+symtab	7ecad3053bdd		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x18ec	400	emu_start_dma	dwarf+symtab	7ecad3053bdd		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1a7c	120	emu_stop_dma	dwarf+symtab	9ec8747e3655		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1af4	588	emu_update_dev	dwarf+symtab	6f36adfd8a3b		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1d40	308	postswap	dwarf+symtab	17f203be2995		out:4	undocumented		
@@ -79990,19 +79990,19 @@ IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1e90	8	emu_pre_c
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x1e98	1808	emu_init_device	dwarf+symtab	f7f49ad59e7a		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x25a8	864	emu_init_efx	dwarf+symtab	45eccfa91804		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2908	140	emu_addefxop	dwarf+symtab	4ad931f67b4f		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2994	28	emu_wrefx	dwarf+symtab	c070abef8958		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2994	28	emu_wrefx	dwarf+symtab	c070abef8958		out:4	named-only	chips/emu10k2/README.md#creative-emu10k2-audio-controller-pci-11020004-ip35-build-driver-emu_ddo	Creative EMU10K2 audio controller, PCI 1102:0004 (IP35 build driver `emu_dd.o`)
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x29b0	220	emu_voice_invalidate_cache	dwarf+symtab	7cf4d80dc95d		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2a8c	300	emu_voice_start	dwarf+symtab	b0f5c0e472c4		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2bb8	240	emu_voice_stop	dwarf+symtab	4f621d131c3a		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2ca8	788	emu_voice_write	dwarf+symtab	b3f759414343		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2fbc	208	emu_voice_setup	dwarf+symtab	73205e3d9481		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x2fbc	208	emu_voice_setup	dwarf+symtab	73205e3d9481		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x308c	404	emu_memalloc	dwarf+symtab	e337f1695391		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x3220	68	emu_memstart	dwarf+symtab	51db2a41f17b		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x3264	152	emu_rate_to_pitch	dwarf+symtab	e112a03d0708		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x32fc	32	emu_rate_to_linearpitch	dwarf+symtab	b0d1a9958dff		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x331c	100	emu_writemask	dwarf+symtab	8ade85b5310d		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x3380	96	emu_ac97_read	dwarf+symtab	37a2aa9666ab		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x33e0	112	emu_ac97_write	dwarf+symtab	dc8451c4cb5a		out:4	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x33e0	112	emu_ac97_write	dwarf+symtab	dc8451c4cb5a		out:4	named-only	chips/emu10k2/README.md#creative-emu10k2-audio-controller-pci-11020004-ip35-build-driver-emu_ddo	Creative EMU10K2 audio controller, PCI 1102:0004 (IP35 build driver `emu_dd.o`)
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x3450	60	kdsp_idbg_emu_dump_subsys	dwarf+symtab	b3575bca6c14		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x348c	68	kdsp_idbg_emu_dump_cg	dwarf+symtab	c37ce8be06d4		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/emu_dd.o	kernel-object	n64	.text	0x34d0	64	kdsp_idbg_emu_dump_device	dwarf+symtab	f7dc4c4c1b63		out:4	undocumented		
@@ -86171,7 +86171,7 @@ IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x134	8	mad_open	d
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x13c	8	mad_close	dwarf+symtab	87506497337c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x144	8	mad_halt	dwarf+symtab	78aa5094d5ec		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x14c	152	mad_attach	dwarf+symtab	46247149f81a		out:4	named-only	chips/ice1724/README.md#windows-and-byte-lanes	Windows and byte lanes
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1e4	560	mad_create_subsys	dwarf+symtab	5fdc2bc3de66		out:4	named-only	chips/ice1724/README.md#identification	Identification
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x1e4	560	mad_create_subsys	dwarf+symtab	5fdc2bc3de66		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x414	180	mad_read_configuration	dwarf+symtab	d5cb4b60410b		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x4c8	8	mad_detach	dwarf+symtab	87506497337c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x4d0	152	mad_error_handler	dwarf+symtab	2333b5174767		out:4	undocumented		
@@ -86219,10 +86219,10 @@ IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x29e8	76	mad_gpio
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2a34	48	mad_gpio_deassert_cs	dwarf+symtab	d7c7f3d434cf		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2a64	36	mad_gpio_mute	dwarf+symtab	cfea07e482b2		out:4	named-only	chips/ice1724/README.md#converters-on-the-gpio-port-revolution-path	Converters on the GPIO port (Revolution path)
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2a88	164	mad_i2s_mute	dwarf+symtab	6db938e1021b		out:4	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2b2c	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	named-only	chips/ak4355/README.md#akm-ak4355-six-channel-dac-dmediapro-dm8-inferred	AKM AK4355 six-channel DAC (DMediaPro DM8, inferred)
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2b2c	412	mad_init_revolution	dwarf+symtab	86ae29426ca9		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2cc8	136	mad_i2c_read	dwarf+symtab	4ccbe9cdf447		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2d50	516	mad_read_eeprom	dwarf+symtab	bed0117f2b70		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
-IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2f54	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	named-only	chips/ice1724/README.md#controller-registers-bar0-ccs	Controller registers (BAR0, "CCS")
+IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x2f54	280	mad_set_eeprom	dwarf+symtab	73bbd010429f		out:4	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x306c	236	mad_ac97_write	dwarf+symtab	bb203b84d46a		out:4	named-only	chips/ice1724/README.md#the-ac97-variant-inferred-to-be-unused-by-the-dm8	The AC'97 variant (inferred to be unused by the DM8)
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x3158	244	mad_ac97_read	dwarf+symtab	b4572a2b8b5c		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/mad_dd.o	kernel-object	n64	.text	0x324c	392	mad_create_clockgen	dwarf+symtab	ac1a0e01941b		out:4	undocumented		
@@ -89907,7 +89907,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(vmdump.o)	kernel-object	n64	.text	0x2530	944	d
 IP35/usr/cpu/sysgen/IP35boot/os.a(vmdump.o)	kernel-object	n64	.text	0x28e0	372	dump_flush	dwarf+symtab	cd54a6de1bf8		out:14	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vmdump.o)	kernel-object	n64	.text	0x2a54	200	dump_write	dwarf+symtab	5dc7b598e054		out:14	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vmdump.o)	kernel-object	n64	.text	0x2b1c	1884	move_buffer	dwarf+symtab	015abef63ff3		in	named-only	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x0	56	open	dwarf+symtab	ac976a06c884		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x0	56	open	dwarf+symtab	ac976a06c884		out:3	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x38	596	vn_remove_audit_extended	dwarf+symtab	1129824c1c7a		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x28c	44	creat	dwarf+symtab	191b93d5f355		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(vncalls.o)	kernel-object	n64	.text	0x2b8	608	copen	dwarf+symtab	83af387d869a		out:3	undocumented		
@@ -91250,8 +91250,8 @@ IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x10ec	52	rad_enab
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x1120	40	rad_disable_ust	dwarf+symtab	3af608ae52d0		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x1148	268	rad_reset_ust	dwarf+symtab	9909f3cc4bb1		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x1254	104	rad_set_ust_offset	dwarf+symtab	bf1b0f437b9c		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x12bc	1276	rad_create_device	dwarf+symtab	5afc3047b2cd		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x17b8	144	rad_start_device	dwarf+symtab	8fe23629de17		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x12bc	1276	rad_create_device	dwarf+symtab	5afc3047b2cd		in	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x17b8	144	rad_start_device	dwarf+symtab	8fe23629de17		in	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x1848	1308	rad_create_ifs	dwarf+symtab	3056ffdb4dd0		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x1d64	336	rad_create_subcode_device	dwarf+symtab	8607c615ef5b		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x1eb4	1428	rad_create_subcodes	dwarf+symtab	4ac51ed0b3fb		in	undocumented		
@@ -91283,7 +91283,7 @@ IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x4fb4	180	rad_att
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5068	8	rad_detach	dwarf+symtab	87506497337c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5070	8	rad_error	dwarf+symtab	87506497337c		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5078	152	rad_error_handler	dwarf+symtab	258b0512bf46		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5110	76	rad_init	dwarf+symtab	1cbed863cebc		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5110	76	rad_init	dwarf+symtab	1cbed863cebc		in	named-only	chips/rad/README.md#sgi-rad-audio-controller-pci-10a90005-stub	SGI RAD audio controller, PCI 10a9:0005 (stub)
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x515c	220	rad_halt	dwarf+symtab	0c8b3d76317a		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x5238	68	Mem_to_PCI_DMA	dwarf+symtab	65f6bc9f8720		in	named-only	chips/ice1724/README.md#multitrack-registers-bar1-mt	Multitrack registers (BAR1, "MT")
 IP35/usr/cpu/sysgen/IP35boot/rad_dd.o	kernel-object	n64	.text	0x527c	628	rad_initial_val	dwarf+symtab	9f1a2a6dce4d		in	undocumented		
