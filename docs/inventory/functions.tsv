@@ -818,7 +818,7 @@ IP27/unix	kernel	n64		0x0		ef_getcdc	dwarf			out:5	named-only	chips/ioc3/README.
 IP27/unix	kernel	n64		0x0		ef_hexdump	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ef_init	dwarf			out:5	undocumented		
 IP27/unix	kernel	n64		0x0		ef_intr	dwarf			out:5	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
-IP27/unix	kernel	n64		0x0		ef_ioc3eaddr	dwarf			out:5	undocumented		
+IP27/unix	kernel	n64		0x0		ef_ioc3eaddr	dwarf			out:5	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64		0x0		ef_ioc3init	dwarf			out:5	named-only	docs/open-questions.md#open-questions	Open questions
 IP27/unix	kernel	n64		0x0		ef_ioc3reset	dwarf			out:5	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
 IP27/unix	kernel	n64		0x0		ef_ioctl	dwarf			out:5	undocumented		
@@ -7871,7 +7871,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001792a4	80	sio_init_locks	symtab	6b485fc7f
 IP27/unix	kernel	n64	.text	0xc0000000001792f4	156	sio_upgrade_lock	symtab	e31a93cdbaec		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000179390	200	sio_downgrade_unlock_lock	symtab	352d5fc7ade1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000179458	296	sio_lock_port	symtab	ff4d36c86879		out:5	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP27/unix	kernel	n64	.text	0xc000000000179580	88	sio_unlock_port	symtab	91a799ce244b		out:5	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
+IP27/unix	kernel	n64	.text	0xc000000000179580	88	sio_unlock_port	symtab	91a799ce244b		out:5	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
 IP27/unix	kernel	n64	.text	0xc0000000001795d8	124	sio_sleep	symtab	a0bf9df174b9		out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP27/unix	kernel	n64	.text	0xc000000000179d34	776	sio_initport	symtab	6a4f40fa50ed		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000017a51c	104	sio_tcgeta	symtab	6c3b532ade8e		out:5	undocumented		
@@ -17168,7 +17168,7 @@ IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x2d0	44	if_efinit	
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x2fc	792	if_efattach	dwarf+symtab	974077a04b2c		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x614	120	ef_detach	dwarf+symtab	df9e8f574e80		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x68c	176	mactoh	dwarf+symtab	2aad3585424a		in	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x73c	84	ef_ioc3eaddr	dwarf+symtab	17e20e862618		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x73c	84	ef_ioc3eaddr	dwarf+symtab	17e20e862618		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x790	116	ssram_discovery	dwarf+symtab	6628a06666eb		in	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x804	188	ef_allocef	dwarf+symtab	e1cd4a3909ad		in	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-object	n64	.text	0x8c0	68	ef_deallocef	dwarf+symtab	c386d5422b9d		in	undocumented		
@@ -27233,7 +27233,7 @@ IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x0	80
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x50	156	sio_upgrade_lock	dwarf+symtab	571e48c24a34		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0xec	200	sio_downgrade_unlock_lock	dwarf+symtab	0ea2c76e71b9		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x1b4	296	sio_lock_port	dwarf+symtab	ef645cc94a2f		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
+IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x334	124	sio_sleep	dwarf+symtab	43d3075b269a		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x3b0	356	sio_push_tx_buf	dwarf+symtab	5fd00e7a19a9		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x514	220	do_write_tx_buf	dwarf+symtab	5101b0db9645		out:4	undocumented		
@@ -33022,7 +33022,7 @@ IP30/unix	kernel	n64		0x0		ef_getcdc	dwarf			out:7	named-only	chips/ioc3/README.
 IP30/unix	kernel	n64		0x0		ef_hexdump	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ef_init	dwarf			out:7	undocumented		
 IP30/unix	kernel	n64		0x0		ef_intr	dwarf			out:7	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
-IP30/unix	kernel	n64		0x0		ef_ioc3eaddr	dwarf			out:7	undocumented		
+IP30/unix	kernel	n64		0x0		ef_ioc3eaddr	dwarf			out:7	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64		0x0		ef_ioc3init	dwarf			out:7	named-only	docs/open-questions.md#open-questions	Open questions
 IP30/unix	kernel	n64		0x0		ef_ioc3reset	dwarf			out:7	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
 IP30/unix	kernel	n64		0x0		ef_ioctl	dwarf			out:7	undocumented		
@@ -39586,7 +39586,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201442e0	80	sio_init_locks	symtab	f1d1cc7cc
 IP30/unix	kernel	n64	.text	0xa800000020144330	156	sio_upgrade_lock	symtab	85da2be69639		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201443cc	200	sio_downgrade_unlock_lock	symtab	09addd71c234		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020144494	296	sio_lock_port	symtab	8efbb8e152b0		out:7	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP30/unix	kernel	n64	.text	0xa8000000201445bc	88	sio_unlock_port	symtab	78356de502ad		out:7	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
+IP30/unix	kernel	n64	.text	0xa8000000201445bc	88	sio_unlock_port	symtab	78356de502ad		out:7	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
 IP30/unix	kernel	n64	.text	0xa800000020144614	124	sio_sleep	symtab	5bb827248de7		out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP30/unix	kernel	n64	.text	0xa800000020144ba4	652	sio_initport	symtab	2c517f276a5a		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020145230	104	sio_tcgeta	symtab	a2562c9af711		out:7	undocumented		
@@ -48766,7 +48766,7 @@ IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x2d0	44	if_efinit	
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x2fc	788	if_efattach	dwarf+symtab	301f6b1af075		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x610	120	ef_detach	dwarf+symtab	df9e8f574e80		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x688	176	mactoh	dwarf+symtab	2aad3585424a		in	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x738	84	ef_ioc3eaddr	dwarf+symtab	17e20e862618		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x738	84	ef_ioc3eaddr	dwarf+symtab	17e20e862618		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x78c	116	ssram_discovery	dwarf+symtab	6628a06666eb		in	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x800	188	ef_allocef	dwarf+symtab	e1cd4a3909ad		in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-object	n64	.text	0x8bc	68	ef_deallocef	dwarf+symtab	c386d5422b9d		in	undocumented		
@@ -57296,7 +57296,7 @@ IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x0	80
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x50	156	sio_upgrade_lock	dwarf+symtab	571e48c24a34		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0xec	200	sio_downgrade_unlock_lock	dwarf+symtab	0ea2c76e71b9		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x1b4	296	sio_lock_port	dwarf+symtab	ef645cc94a2f		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
+IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x334	124	sio_sleep	dwarf+symtab	43d3075b269a		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x3b0	356	sio_push_tx_buf	dwarf+symtab	5fd00e7a19a9		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x514	220	do_write_tx_buf	dwarf+symtab	5101b0db9645		out:4	undocumented		
@@ -73661,7 +73661,7 @@ IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x0	80
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x50	148	sio_upgrade_lock	dwarf+symtab	17243f73894e		out:4	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0xe4	192	sio_downgrade_unlock_lock	dwarf+symtab	35c2529b9254		out:4	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x1a4	300	sio_lock_port	dwarf+symtab	f885988649d8		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x2d0	84	sio_unlock_port	dwarf+symtab	a5121b2a5907		out:4	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
+IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x2d0	84	sio_unlock_port	dwarf+symtab	a5121b2a5907		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x324	124	sio_sleep	dwarf+symtab	04c20b781bca		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x3a0	356	sio_push_tx_buf	dwarf+funcnames+symtab	9ef5b07029bd		out:4	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sduart.a(serialio.o)	kernel-object	n32	.text	0x504	248	do_write_tx_buf	dwarf+funcnames+symtab	4ffdb1a87ac6		out:4	undocumented		
@@ -81820,7 +81820,7 @@ IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x2d0	44	if_efinit	
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x2fc	788	if_efattach	dwarf+symtab	301f6b1af075		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x610	120	ef_detach	dwarf+symtab	df9e8f574e80		in	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x688	176	mactoh	dwarf+symtab	2aad3585424a		in	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x738	532	ef_ioc3eaddr	dwarf+symtab	95472b07bde1		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x738	532	ef_ioc3eaddr	dwarf+symtab	95472b07bde1		in	named-only	chips/ioc3/README.md#graded-register-table	Graded register table
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x94c	116	ssram_discovery	dwarf+symtab	6628a06666eb		in	named-only	chips/ioc3/README.md#ethernet-established-ef_ioc3init-ef_ioc3reset-ef_phyget-ef_phyput-ssram_discovery	Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0x9c0	188	ef_allocef	dwarf+symtab	e1cd4a3909ad		in	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_ef.o	kernel-object	n64	.text	0xa7c	68	ef_deallocef	dwarf+symtab	c386d5422b9d		in	undocumented		
@@ -91984,7 +91984,7 @@ IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x0	80
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x50	156	sio_upgrade_lock	dwarf+symtab	571e48c24a34		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0xec	200	sio_downgrade_unlock_lock	dwarf+symtab	0ea2c76e71b9		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x1b4	296	sio_lock_port	dwarf+symtab	ef645cc94a2f		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	located	chips/ioc3/README.md#unresolved-window-pointer-sites-triaged	Unresolved window-pointer sites (triaged)
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x2dc	88	sio_unlock_port	dwarf+symtab	9debbe5d8c4e		out:4	named-only	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x334	124	sio_sleep	dwarf+symtab	43d3075b269a		out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x3b0	356	sio_push_tx_buf	dwarf+symtab	5fd00e7a19a9		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-object	n64	.text	0x514	220	do_write_tx_buf	dwarf+symtab	5101b0db9645		out:4	undocumented		
