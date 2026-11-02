@@ -4,7 +4,6 @@ variant	register	source	kind	bits_or_value	sites	functions	example
 ?	0x0	load	mask	3:0	2	2	prom_ffffffffbfc48624@c48844
 ?	0x0	load	shift	shift 60	6	6	prom_ffffffffbfc50c94@c50cac
 ?	0x0	load	shift	shift 36	2	2	prom_ffffffffbfc48624@c48844
-?	0x0	load	shift	shift 0	1	1	prom_ffffffffbfc304e0@c30b84
 ?	0x18	store	const	0x100000	1	1	dobuserr_common@0250c0
 ?	0x40	store	const	0x45	1	1	sub_a80000002038f230@38f258
 ?	0x60	load	shift	shift 3	1	1	gfx_flow_credit_count_get@38f698
@@ -36,12 +35,10 @@ variant	register	source	kind	bits_or_value	sites	functions	example
 ?	0x20000	load	shift	shift 2	3	1	nanotime@0163f8
 ?	0x20000	load	shift	shift 4	3	1	nanotime@0163f8
 ?	0x50000	load	shift	shift 3	19	7	_ecc_errorvec@01dd4c
-?	0x50000	load	shift	shift 0	18	7	badaddr@01c23c
 ?	0x50000	load	shift	shift 15	8	5	prom_ffffffffbfc00634@c008c0
 ?	0x50000	load	shift	shift 16	8	2	prom_ffffffffbfc01ac0@c01bf8
 ?	0x50000	load	shift	shift 51	2	2	VEC_dbe@026964
 ?	0x60000	load	shift	shift 59	1	1	dobuserr_common@025090
-?	0x100000	load	shift	shift 0	17	12	flushbus@01c1d0
 ?	0x100000	load	shift	shift 28	5	5	heart_rev@0401f8
 ?	0x100010	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16aa0
 ?	0x100018	load	shift	shift 16	4	2	prom_ffffffffbfc16680@c16acc
