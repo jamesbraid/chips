@@ -190,7 +190,7 @@ four `pcireg_dirmap_*` setters at 0x11bac, 0x11d48, 0x11f38 and 0x120b8).** It t
 The setters take either a chip window address (an address with bits 63, 60 and 57 set, the 0x92... window; they then read the identification word and
 pick the path from its part number and manufacturer field) or a bridge record (they read the chip type from the halfword at +114 of the record).
 The chip type selects the register access: 0 Bridge and 1 XBridge use the 32-bit word at `+0x84`, the low half of the doubleword at `+0x80`; 2 PIC
-and 3 (the part with identification 0xe000 or 0xe010) use the doubleword at `+0x80`; -1 or any other type prints an error through `cmn_err`. For the PIC (type 2) the fields are: widget number bits 23:20 (the setter clears `0xf00000` and stores
+and 3 (the part with identification 0xe000 or 0xe010) use the doubleword at `+0x80`; type -1 or a null record calls `panic`, and any other value returns without a store. For the PIC (type 2) the fields are: widget number bits 23:20 (the setter clears `0xf00000` and stores
 `(w & 0xf) << 20`), offset bits 16:0 (cleared with `0xfffffffffffe0000`, then ORed with the argument masked to 17 bits), add-512-MiB bit 17
 (`0x20000`). The part of type 3 has one more field, bits 25:20 (mask `0x3f00000`, overlapping the widget field), which its offset setter writes first from bits 22:17 of the argument (the argument shifted left by 3, masked). So the PIC direct-map
 register is `{widget:4 at bit 20, add512 at bit 17, offset:17 at bit 0}`, and the driver puts into it the widget number, the translated address in
