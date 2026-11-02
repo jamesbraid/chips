@@ -5076,7 +5076,7 @@ IP27/unix	kernel	n64	.text	0xc00000000004ba14	132	nvram_enable_cpu_set	symtab	4a
 IP27/unix	kernel	n64	.text	0xc00000000004ba98	36	set_part_reboot_nvram	symtab	43acd0da7a1f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004bcd0	12	VEC_breakpoint	symtab	7291318231b0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004bcd8	4	kernelbp	symtab	cd09e81bee54		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000004bcdc	120	debug	symtab	f143c9f4bda5		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/unix	kernel	n64	.text	0xc00000000004bcdc	120	debug	symtab	f143c9f4bda5		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc00000000004bd54	4	sstepbp	symtab	0df244da6067		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004bd60	736	ULIsystrap	symtab	e32809582337		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004beb0	400	keruliframe	symtab	2581e7388156		out:5	undocumented		
@@ -5142,7 +5142,7 @@ IP27/unix	kernel	n64	.text	0xc00000000004d4b0	88	_ecc_errorvec	symtab	d389ddcbd7
 IP27/unix	kernel	n64	.text	0xc00000000004d508	8	_ecc_end	symtab	af5570f5a181		out:5	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000004d510	8	VEC_addrerr	symtab	94ad74e6003f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004d520	68	VEC_tlbmiss	symtab	a4a0776e0b54		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000004d564	560	dprintf	symtab	4fdb8a77a66a		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000004d564	560	dprintf	symtab	4fdb8a77a66a		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc00000000004d838	300	fp_intr	symtab	40791bc1126e		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004e3cc	836	_rsqrt_sd	symtab	39ed20bd8a21		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004e710	348	_cvtsd_l	symtab	288636261a16		out:5	undocumented		
@@ -7343,7 +7343,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001422c8	232	pollwakeup	symtab	de090b4fbea5
 IP27/unix	kernel	n64	.text	0xc0000000001423b0	112	pollwakeup_thread	symtab	cd4b2baada16		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000142420	72	strcmp	symtab	92ef65fa378b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000142468	84	strncmp	symtab	7b3921051c1e		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001424bc	136	strncpy	symtab	1ee05fa5dab1		out:5	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP27/unix	kernel	n64	.text	0xc0000000001424bc	136	strncpy	symtab	1ee05fa5dab1		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc000000000142544	84	strcpy	symtab	de0d909fb422		out:5	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc000000000142598	36	strchr	symtab	55dabc5243f9		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001425bc	124	strrchr	symtab	be136f59c45e		out:5	undocumented		
@@ -7805,7 +7805,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001738ac	36	printflags	symtab	2c3d66d1f2e8	
 IP27/unix	kernel	n64	.text	0xc0000000001738d0	36	padstr	symtab	44828f2998be		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001738f4	36	pmrlock	symtab	375bdcc4cafc		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000173918	36	prsymoff	symtab	49aa92a2a05f		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP27/unix	kernel	n64	.text	0xc00000000017393c	280	ROUNDPC	symtab	20d18819532b		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000017393c	280	ROUNDPC	symtab	20d18819532b		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc000000000173a54	44	roundpc	symtab	4b8c768cf465		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000173a80	28	getmajor	symtab	2d569e8ce79e		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc000000000173a9c	28	getemajor	symtab	2045a54b3a24		out:5	undocumented		
@@ -8644,7 +8644,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001ba9ac	244	sigaddq	symtab	d90cee51f8a1		o
 IP27/unix	kernel	n64	.text	0xc0000000001baaa0	172	sigdeq	symtab	30e9ad91f877		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001bab4c	180	sigdelq	symtab	077b6b36fd17		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001bac00	48	cursiginfofree	symtab	bdf905317b0a		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001bacc8	380	sigtopid	symtab	cad54499c410		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001bacc8	380	sigtopid	symtab	cad54499c410		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc0000000001bae44	140	sigdelete	symtab	335d11d67955		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001baed0	240	sigtouthread	symtab	ce6dae814a8b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001bafc0	876	sigtouthread_common	symtab	73d72b3c9136		out:5	undocumented		
@@ -10583,7 +10583,7 @@ IP27/unix	kernel	n64	.text	0xc000000000286580	20	nested_bitunlock	symtab	c49a203
 IP27/unix	kernel	n64	.text	0xc000000000286594	76	mutex_64bitlock	symtab	5237c25bffb1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000002865e0	24	mutex_64bitunlock	symtab	b2cd23655120		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000002865f8	36	nested_64bitlock	symtab	ce1b7bce01e8		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000028661c	16	nested_64bitunlock	symtab	6fc85cf2d3e9		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000028661c	16	nested_64bitunlock	symtab	6fc85cf2d3e9		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc00000000028662c	76	mutex_spintrylock	symtab	9d98f984ed02		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000286678	96	mutex_spintrylock_spl	symtab	481a8ce05554		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000002866d8	76	mutex_bittrylock	symtab	83e86e7cad24	shared-address	out:5	undocumented		
@@ -10712,7 +10712,7 @@ IP27/unix	kernel	n64	.text	0xc0000000002954c8	56	hwgraph_path_get_component	symt
 IP27/unix	kernel	n64	.text	0xc000000000295500	284	hwgraph_path_lookup	symtab	ad56eff86048		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000029561c	384	hwgraph_path_add	symtab	117b85d30f24		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc00000000029579c	348	hwgraph_traverse	symtab	19e2050980c1		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP27/unix	kernel	n64	.text	0xc0000000002958f8	144	hwgraph_path_to_vertex	symtab	6562ee81bbd8		out:5	named-only	chips/pic/README.md#access-sequences	Access sequences
+IP27/unix	kernel	n64	.text	0xc0000000002958f8	144	hwgraph_path_to_vertex	symtab	6562ee81bbd8		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc000000000295988	44	hwgraph_path_to_dev	symtab	aae17cd188d3		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc0000000002959b4	92	hwgraph_link_add	symtab	537829eb00c7		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000295a10	132	hwgraph_device_add	symtab	279fc115ee4f		out:5	undocumented		
@@ -14963,7 +14963,7 @@ IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1cec	32	nested_64bittrylock	dwarf+symtab	4dc33ab9256e		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1d0c	100	mutex_64bittrylock	dwarf+symtab	f057322fbbdc		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1d70	176	nested_64bitlock	dwarf+symtab	835a4e48b14e		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1e20	108	nested_64bitunlock	dwarf+symtab	6a9b2af70898		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1e20	108	nested_64bitunlock	dwarf+symtab	6a9b2af70898		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1e8c	128	mutex_64bitunlock	dwarf+symtab	c99892363daf		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1f0c	612	_64bitlockdebug	dwarf+symtab	98c706637e66		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x2170	96	try64bitlockdebug	dwarf+symtab	caec0a30142d		out:3	undocumented		
@@ -16277,7 +16277,7 @@ IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0x9f8	56
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xa30	284	hwgraph_path_lookup	dwarf+symtab	d2cf46cc966b		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xb4c	384	hwgraph_path_add	dwarf+symtab	20d016bcaf15		out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xccc	348	hwgraph_traverse	dwarf+symtab	c02f9d392fdc		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	e888cded3666		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
+IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	e888cded3666		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xeb8	44	hwgraph_path_to_dev	dwarf+symtab	8c583995b6de		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xee4	92	hwgraph_link_add	dwarf+symtab	83753e93bdb2		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xf40	132	hwgraph_device_add	dwarf+symtab	d7817c0c8f04		out:3	undocumented		
@@ -16646,7 +16646,7 @@ IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x294	76	mutex_64bitlock	dwarf+symtab	5237c25bffb1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x2e0	24	mutex_64bitunlock	dwarf+symtab	b2cd23655120		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x2f8	36	nested_64bitlock	dwarf+symtab	ce1b7bce01e8		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x31c	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x31c	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x32c	76	mutex_spintrylock	dwarf+symtab	9d98f984ed02		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x378	96	mutex_spintrylock_spl	dwarf+symtab	b199ac3eea7c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x3d8	76	mutex_bittrylock	dwarf+symtab	83e86e7cad24	shared-address	out:3	undocumented		
@@ -16688,7 +16688,7 @@ IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x3d4	84	mutex_64bitlock	dwarf+symtab	0373e9297495		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x428	24	mutex_64bitunlock	dwarf+symtab	b2cd23655120		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x440	48	nested_64bitlock	dwarf+symtab	2f88a55281fc		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x470	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x470	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x480	92	mutex_spintrylock	dwarf+symtab	80673620434b		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x4dc	116	mutex_spintrylock_spl	dwarf+symtab	75db61524083		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x550	92	mutex_bittrylock	dwarf+symtab	7d205add3cdf		out:3	undocumented		
@@ -17734,7 +17734,7 @@ IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)	kernel-object	n64	.text	0x20c	36	
 IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)	kernel-object	n64	.text	0x230	36	padstr	dwarf+symtab	6aa7a91ac283		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)	kernel-object	n64	.text	0x254	36	pmrlock	dwarf+symtab	2e6ac9b7aa72		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)	kernel-object	n64	.text	0x278	36	prsymoff	dwarf+symtab	01431fefb905		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)	kernel-object	n64	.text	0x29c	280	ROUNDPC	dwarf+symtab	8daaa5816100		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)	kernel-object	n64	.text	0x29c	280	ROUNDPC	dwarf+symtab	8daaa5816100		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/io.a(idbgentry.o)	kernel-object	n64	.text	0x3b4	44	roundpc	dwarf+symtab	063e479e7f42		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/io.a(ioerror_handling.o)	kernel-object	n64	.text	0x0	68	error_state_get	dwarf+symtab	2c1c2e67bb94		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/io.a(ioerror_handling.o)	kernel-object	n64	.text	0x44	200	error_state_set	dwarf+symtab	3350605b22c5		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
@@ -19512,7 +19512,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x32a60	188	nvchec
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x32b1c	52	update_checksum_base	dwarf	f28e7d75ab70		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x32b50	12	VEC_breakpoint	dwarf+symtab	3614e4802762		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x32b58	4	kernelbp	symtab	cd09e81bee54		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x32b5c	120	debug	dwarf+symtab	920ba04ec3dd		out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x32b5c	120	debug	dwarf+symtab	920ba04ec3dd		out:6	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x32bd4	4	sstepbp	dwarf+symtab	0df244da6067		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x32be0	736	ULIsystrap	dwarf+symtab	e72f3439af4b		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x32d30	400	keruliframe	symtab	3dd4780639f8		out:6	undocumented		
@@ -19578,7 +19578,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34330	88	_ecc_er
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34388	8	_ecc_end	symtab	af5570f5a181		out:6	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34390	8	VEC_addrerr	dwarf+symtab	6cc16abd70ee		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x343a0	68	VEC_tlbmiss	dwarf+symtab	1503c13cfd26		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x343e4	560	dprintf	dwarf+symtab	399172d54927		out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x343e4	560	dprintf	dwarf+symtab	399172d54927		out:6	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34614	84	strayfp_intr	dwarf	d1145a205e01		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34668	80	sendSIGFPE	dwarf	af2d37ed7578		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x346b8	300	fp_intr	dwarf+symtab	ddf2e0555f93		out:6	undocumented		
@@ -21914,7 +21914,7 @@ IP27/usr/cpu/sysgen/IP27boot/nolocks.a(cnolocks.o)	kernel-object	n64	.text	0xb4	
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_64bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/ip27-kernel-entropy-readers.md#kernel-routines-that-read-the-hub-real-time-counter-for-entropy-ip27-build	Kernel routines that read the Hub real-time counter for entropy (IP27 build)
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
@@ -24598,7 +24598,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(sig.o)	kernel-object	n64	.text	0x29c	180	sigde
 IP27/usr/cpu/sysgen/IP27boot/os.a(sig.o)	kernel-object	n64	.text	0x350	48	cursiginfofree	dwarf+symtab	43057c1fee97		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(sig.o)	kernel-object	n64	.text	0x380	52	asv_sigtopid	dwarf+symtab	1b4e6e30dcf0		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(sig.o)	kernel-object	n64	.text	0x3b4	100	send_sigtopid	dwarf+symtab	420f08df445b		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(sig.o)	kernel-object	n64	.text	0x418	380	sigtopid	dwarf+symtab	02ab0eb234a7		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(sig.o)	kernel-object	n64	.text	0x418	380	sigtopid	dwarf+symtab	02ab0eb234a7		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/os.a(sig.o)	kernel-object	n64	.text	0x594	140	sigdelete	dwarf+symtab	bc46afdad465		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(sig.o)	kernel-object	n64	.text	0x620	240	sigtouthread	dwarf+symtab	5120d3de8dc3		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(sig.o)	kernel-object	n64	.text	0x710	876	sigtouthread_common	dwarf+symtab	ae1bf99060e1		out:3	undocumented		
@@ -27571,7 +27571,7 @@ IP27/usr/cpu/sysgen/IP27boot/sgi.a(fs_bio.o)	kernel-object	n64	.text	0x5d80	148	
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(fs_bio.o)	kernel-object	n64	.text	0x5e14	8	__global_pragmas_pu	symtab	78aa5094d5ec		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x0	72	strcmp	dwarf+symtab	92ef65fa378b		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x48	84	strncmp	dwarf+symtab	7b3921051c1e		out:1	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x9c	136	strncpy	dwarf+symtab	1ee05fa5dab1		out:1	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x9c	136	strncpy	dwarf+symtab	1ee05fa5dab1		out:1	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x124	84	strcpy	dwarf+symtab	de0d909fb422		out:1	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x178	36	strchr	dwarf+symtab	55dabc5243f9		out:1	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sgi.a(libc_src.o)	kernel-object	n64	.text	0x19c	124	strrchr	dwarf+symtab	be136f59c45e		out:1	undocumented		
@@ -36519,7 +36519,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200130c8	8	ip30_board_rev	symtab	a739a19fe9
 IP30/unix	kernel	n64	.text	0xa8000000200132a4	8	add_ioboard	symtab	78aa5094d5ec		out:7	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa8000000200132ac	184	add_cpuboard	symtab	29ed8d5c8ecb		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020013364	8	cpuboard	symtab	32295a3087c3		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001336c	444	dprintf	symtab	b1a5a48d99c9		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002001336c	444	dprintf	symtab	b1a5a48d99c9		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa800000020013528	56	cpu_isvalid	symtab	6c546974cfe7		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020013808	548	init_all_devices	symtab	fb41b14df377		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020013a2c	28	sendintr	symtab	0aa68a818cd4		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
@@ -36868,7 +36868,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001c908	92	baerror	symtab	66e4e51225b1		in
 IP30/unix	kernel	n64	.text	0xa80000002001c964	96	earlybaerror	symtab	c66268cf7682		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001c9d0	12	VEC_breakpoint	symtab	1c3f5b008867		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c9d8	4	kernelbp	symtab	cd09e81bee54		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001c9dc	120	debug	symtab	cf7ab5ac7a34		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP30/unix	kernel	n64	.text	0xa80000002001c9dc	120	debug	symtab	cf7ab5ac7a34		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa80000002001ca54	4	sstepbp	symtab	0df244da6067		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ca60	736	ULIsystrap	symtab	84b93c40359d		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001cbb0	400	keruliframe	symtab	5d28588806fc		out:7	undocumented		
@@ -39247,7 +39247,7 @@ IP30/unix	kernel	n64	.text	0xa800000020128370	860	chunkcommit	symtab	08b72080b0f
 IP30/unix	kernel	n64	.text	0xa8000000201286cc	356	chunkfree	symtab	0c59e93f6805		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020128838	72	strcmp	symtab	92ef65fa378b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020128880	84	strncmp	symtab	7b3921051c1e		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201288d4	136	strncpy	symtab	1ee05fa5dab1		out:7	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/unix	kernel	n64	.text	0xa8000000201288d4	136	strncpy	symtab	1ee05fa5dab1		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa80000002012895c	84	strcpy	symtab	de0d909fb422		out:7	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa8000000201289b0	36	strchr	symtab	55dabc5243f9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201289d4	124	strrchr	symtab	be136f59c45e		out:7	undocumented		
@@ -39559,7 +39559,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201414d0	36	printflags	symtab	4238a2b24b7d	
 IP30/unix	kernel	n64	.text	0xa8000000201414f4	36	padstr	symtab	cdf93c730148		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020141518	36	pmrlock	symtab	4180695bbfc3		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002014153c	36	prsymoff	symtab	baf96b411562		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP30/unix	kernel	n64	.text	0xa800000020141560	280	ROUNDPC	symtab	61f4c2be1e98		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020141560	280	ROUNDPC	symtab	61f4c2be1e98		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa800000020141678	44	roundpc	symtab	4f717afe020c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201416a4	68	error_state_get	symtab	f3969b20e3a5		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa8000000201416e8	200	error_state_set	symtab	e328c714f9b7		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
@@ -40332,7 +40332,7 @@ IP30/unix	kernel	n64	.text	0xa80000002017f304	244	sigaddq	symtab	868c9bae0c9c		o
 IP30/unix	kernel	n64	.text	0xa80000002017f3f8	172	sigdeq	symtab	30e9ad91f877		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002017f4a4	180	sigdelq	symtab	b0baf6398947		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002017f558	48	cursiginfofree	symtab	cd96b5dee04f		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002017f620	380	sigtopid	symtab	aa9bb70fc39f		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002017f620	380	sigtopid	symtab	aa9bb70fc39f		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa80000002017f79c	140	sigdelete	symtab	412792bb4c16		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002017f828	240	sigtouthread	symtab	c408223239f4		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002017f918	876	sigtouthread_common	symtab	fb323076fee1		out:7	undocumented		
@@ -42100,7 +42100,7 @@ IP30/unix	kernel	n64	.text	0xa80000002022db20	20	nested_bitunlock	symtab	c49a203
 IP30/unix	kernel	n64	.text	0xa80000002022db34	76	mutex_64bitlock	symtab	d5ef7f952c2c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002022db80	24	mutex_64bitunlock	symtab	b2cd23655120		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002022db98	36	nested_64bitlock	symtab	ce1b7bce01e8		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002022dbbc	16	nested_64bitunlock	symtab	6fc85cf2d3e9		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002022dbbc	16	nested_64bitunlock	symtab	6fc85cf2d3e9		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa80000002022dbcc	76	mutex_spintrylock	symtab	74bc2906e62c		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa80000002022dc18	96	mutex_spintrylock_spl	symtab	14817555b21c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002022dc78	76	mutex_bittrylock	symtab	41ef316d4bf3	shared-address	out:7	undocumented		
@@ -42229,7 +42229,7 @@ IP30/unix	kernel	n64	.text	0xa80000002023ca68	56	hwgraph_path_get_component	symt
 IP30/unix	kernel	n64	.text	0xa80000002023caa0	284	hwgraph_path_lookup	symtab	f2a14a7d642b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002023cbbc	384	hwgraph_path_add	symtab	2b4263e194e4		out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa80000002023cd3c	348	hwgraph_traverse	symtab	75798f71a7b5		out:7	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/unix	kernel	n64	.text	0xa80000002023ce98	144	hwgraph_path_to_vertex	symtab	b6e3fe39c6fe		out:7	named-only	chips/pic/README.md#access-sequences	Access sequences
+IP30/unix	kernel	n64	.text	0xa80000002023ce98	144	hwgraph_path_to_vertex	symtab	b6e3fe39c6fe		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa80000002023cf28	44	hwgraph_path_to_dev	symtab	1cd3300054a2		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa80000002023cf54	92	hwgraph_link_add	symtab	a171222b9ac5		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002023cfb0	132	hwgraph_device_add	symtab	494463f15611		out:7	undocumented		
@@ -46689,7 +46689,7 @@ IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1cec	32	nested_64bittrylock	dwarf+symtab	4dc33ab9256e		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1d0c	100	mutex_64bittrylock	dwarf+symtab	f057322fbbdc		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1d70	176	nested_64bitlock	dwarf+symtab	aa8daf670a71		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1e20	108	nested_64bitunlock	dwarf+symtab	6a9b2af70898		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1e20	108	nested_64bitunlock	dwarf+symtab	6a9b2af70898		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1e8c	128	mutex_64bitunlock	dwarf+symtab	c99892363daf		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1f0c	612	_64bitlockdebug	dwarf+symtab	7c579b5d9bfd		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x2170	96	try64bitlockdebug	dwarf+symtab	a23805d9b74a		out:3	undocumented		
@@ -47938,7 +47938,7 @@ IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0x9f8	56
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xa30	284	hwgraph_path_lookup	dwarf+symtab	d2cf46cc966b		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xb4c	384	hwgraph_path_add	dwarf+symtab	20d016bcaf15		out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xccc	348	hwgraph_traverse	dwarf+symtab	c02f9d392fdc		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	e888cded3666		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
+IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	e888cded3666		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xeb8	44	hwgraph_path_to_dev	dwarf+symtab	8c583995b6de		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xee4	92	hwgraph_link_add	dwarf+symtab	83753e93bdb2		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xf40	132	hwgraph_device_add	dwarf+symtab	d7817c0c8f04		out:3	undocumented		
@@ -48292,7 +48292,7 @@ IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x294	76	mutex_64bitlock	dwarf+symtab	d5ef7f952c2c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x2e0	24	mutex_64bitunlock	dwarf+symtab	b2cd23655120		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x2f8	36	nested_64bitlock	dwarf+symtab	ce1b7bce01e8		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x31c	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x31c	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x32c	76	mutex_spintrylock	dwarf+symtab	74bc2906e62c		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x378	96	mutex_spintrylock_spl	dwarf+symtab	b199ac3eea7c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x3d8	76	mutex_bittrylock	dwarf+symtab	41ef316d4bf3	shared-address	out:3	undocumented		
@@ -48334,7 +48334,7 @@ IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x3d4	84	mutex_64bitlock	dwarf+symtab	299340c9ac06		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x428	24	mutex_64bitunlock	dwarf+symtab	b2cd23655120		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x440	48	nested_64bitlock	dwarf+symtab	2f88a55281fc		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x470	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x470	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x480	92	mutex_spintrylock	dwarf+symtab	687dd4843065		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x4dc	116	mutex_spintrylock_spl	dwarf+symtab	75db61524083		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x550	92	mutex_bittrylock	dwarf+symtab	0fca01996205		out:3	undocumented		
@@ -50050,7 +50050,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3050	212	init_bo
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3124	8	add_ioboard	dwarf+symtab	78aa5094d5ec		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x312c	184	add_cpuboard	dwarf+symtab	ccb11ca02f3d		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x31e4	8	cpuboard	dwarf+symtab	32295a3087c3		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x31ec	444	dprintf	dwarf+symtab	d18b3fd89138		out:8	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x31ec	444	dprintf	dwarf+symtab	d18b3fd89138		out:8	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x33a8	56	cpu_isvalid	dwarf+symtab	647b501f26e0		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x33e0	340	ip30_chips_mlreset	dwarf	a928137a0660		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3534	340	ip30_early_piotrans_addr	dwarf	cdebabf88b45		out:8	undocumented		
@@ -50424,7 +50424,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc788	92	baerror	
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc7e4	96	earlybaerror	dwarf+symtab	6379e44e03ee		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc850	12	VEC_breakpoint	dwarf+symtab	3614e4802762		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc858	4	kernelbp	symtab	cd09e81bee54		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc85c	120	debug	dwarf+symtab	920ba04ec3dd		out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc85c	120	debug	dwarf+symtab	920ba04ec3dd		out:8	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc8d4	4	sstepbp	dwarf+symtab	0df244da6067		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc8e0	736	ULIsystrap	dwarf+symtab	f26d21e3181b		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xca30	400	keruliframe	symtab	b6b215c979d8		out:8	undocumented		
@@ -52524,7 +52524,7 @@ IP30/usr/cpu/sysgen/IP30boot/nolocks.a(cnolocks.o)	kernel-object	n64	.text	0xb4	
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_64bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/ip27-kernel-entropy-readers.md#kernel-routines-that-read-the-hub-real-time-counter-for-entropy-ip27-build	Kernel routines that read the Hub real-time counter for entropy (IP27 build)
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
@@ -54812,7 +54812,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(sig.o)	kernel-object	n64	.text	0x29c	180	sigde
 IP30/usr/cpu/sysgen/IP30boot/os.a(sig.o)	kernel-object	n64	.text	0x350	48	cursiginfofree	dwarf+symtab	744212f98bb6		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(sig.o)	kernel-object	n64	.text	0x380	52	asv_sigtopid	dwarf+symtab	1b4e6e30dcf0		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(sig.o)	kernel-object	n64	.text	0x3b4	100	send_sigtopid	dwarf+symtab	420f08df445b		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(sig.o)	kernel-object	n64	.text	0x418	380	sigtopid	dwarf+symtab	02ab0eb234a7		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(sig.o)	kernel-object	n64	.text	0x418	380	sigtopid	dwarf+symtab	02ab0eb234a7		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/os.a(sig.o)	kernel-object	n64	.text	0x594	140	sigdelete	dwarf+symtab	633bda80b648		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(sig.o)	kernel-object	n64	.text	0x620	240	sigtouthread	dwarf+symtab	5120d3de8dc3		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(sig.o)	kernel-object	n64	.text	0x710	876	sigtouthread_common	dwarf+symtab	24949a11a11e		out:3	undocumented		
@@ -64115,7 +64115,7 @@ IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xa20	56
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xa58	284	hwgraph_path_lookup	dwarf+symtab	3e15d25a677c		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xb74	388	hwgraph_path_add	dwarf+symtab	0a1b552645c1		out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xcf8	364	hwgraph_traverse	dwarf+symtab	c90201767292		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xe64	144	hwgraph_path_to_vertex	dwarf+symtab	5aa10de74afd		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
+IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xe64	144	hwgraph_path_to_vertex	dwarf+symtab	5aa10de74afd		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xef4	44	hwgraph_path_to_dev	dwarf+symtab	0648507f3cae		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xf20	96	hwgraph_link_add	dwarf+symtab	151c5a877442		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/graph.a(hwgraph.o)	kernel-object	n32	.text	0xf80	132	hwgraph_device_add	dwarf+symtab	7a4d2240e197		out:3	undocumented		
@@ -65290,7 +65290,7 @@ IP32/usr/cpu/sysgen/IP32boot/io.a(idbgentry.o)	kernel-object	n32	.text	0x210	36	
 IP32/usr/cpu/sysgen/IP32boot/io.a(idbgentry.o)	kernel-object	n32	.text	0x234	36	padstr	dwarf+symtab	0fc97d23e957		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/io.a(idbgentry.o)	kernel-object	n32	.text	0x258	36	pmrlock	dwarf+symtab	c56fb4a98088		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/io.a(idbgentry.o)	kernel-object	n32	.text	0x27c	36	prsymoff	dwarf+symtab	77bad2a210e8		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP32/usr/cpu/sysgen/IP32boot/io.a(idbgentry.o)	kernel-object	n32	.text	0x2a0	312	ROUNDPC	dwarf+symtab	b23febfce979		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/io.a(idbgentry.o)	kernel-object	n32	.text	0x2a0	312	ROUNDPC	dwarf+symtab	b23febfce979		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/io.a(idbgentry.o)	kernel-object	n32	.text	0x3d8	48	roundpc	dwarf+symtab	5c2ac8156525		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/io.a(ioerror_handling.o)	kernel-object	n32	.text	0x0	72	error_state_get	dwarf+symtab	12c054c98ab3		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP32/usr/cpu/sysgen/IP32boot/io.a(ioerror_handling.o)	kernel-object	n32	.text	0x48	208	error_state_set	dwarf+symtab	113806b0df8c		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
@@ -66554,7 +66554,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x115e8	56	readada
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11620	8	cpuboard	symtab	121d4b8ee2ba		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11628	72	fp_find	symtab	777a198ee686		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11670	28	fp_init	symtab	d51ef8b359e7		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1168c	316	dprintf	symtab	dbd2c1d0ea50		out:9	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1168c	316	dprintf	symtab	dbd2c1d0ea50		out:9	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x117c8	68	get_isa_dma_buf_addr	symtab	dd800c4fb3a8		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1180c	20	query_cyclecntr	symtab	8bdd40067301		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11820	24	absolute_rtc_current_time	symtab	3f79b5b25c5c		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
@@ -66638,7 +66638,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x149a8	100	baerro
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14a0c	88	earlybaerror	symtab	f697dc69ced7		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14a64	12	VEC_breakpoint	symtab	3614e4802762		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14a6c	4	kernelbp	symtab	cd09e81bee54		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14a70	72	debug	symtab	dcffcaf7af27		out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14a70	72	debug	symtab	dcffcaf7af27		out:9	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14ab8	4	sstepbp	symtab	0df244da6067		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14abc	1004	intrnorm	symtab	1c5abbf32d0d		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x14b74	820	_baduk	symtab	ad0c94b16a45		out:9	undocumented		
@@ -68979,7 +68979,7 @@ IP32/usr/cpu/sysgen/IP32boot/nolocks.a(cnolocks.o)	kernel-object	n32	.text	0xb4	
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x0	8	nested_64bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x0	8	nested_bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8	8	nested_bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/ip27-kernel-entropy-readers.md#kernel-routines-that-read-the-hub-real-time-counter-for-entropy-ip27-build	Kernel routines that read the Hub real-time counter for entropy (IP27 build)
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
@@ -71372,7 +71372,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(sig.o)	kernel-object	n32	.text	0x2ac	180	sigde
 IP32/usr/cpu/sysgen/IP32boot/os.a(sig.o)	kernel-object	n32	.text	0x360	48	cursiginfofree	dwarf+symtab	f6164229458c		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(sig.o)	kernel-object	n32	.text	0x390	52	asv_sigtopid	dwarf+funcnames+symtab	d8a0ae053f68		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(sig.o)	kernel-object	n32	.text	0x3c4	104	send_sigtopid	dwarf+funcnames+symtab	696a581f22de		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(sig.o)	kernel-object	n32	.text	0x42c	380	sigtopid	dwarf+symtab	71da2d573dc7		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(sig.o)	kernel-object	n32	.text	0x42c	380	sigtopid	dwarf+symtab	71da2d573dc7		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/os.a(sig.o)	kernel-object	n32	.text	0x5a8	116	sigdelete	dwarf+symtab	993a343c7765		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(sig.o)	kernel-object	n32	.text	0x61c	236	sigtouthread	dwarf+symtab	83eda5658bda		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(sig.o)	kernel-object	n32	.text	0x708	860	sigtouthread_common	dwarf+symtab	97c933fa8d31		out:3	undocumented		
@@ -73988,7 +73988,7 @@ IP32/usr/cpu/sysgen/IP32boot/sgi.a(fs_bio.o)	kernel-object	n32	.text	0x5c70	144	
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(fs_bio.o)	kernel-object	n32	.text	0x5d00	136	buf_avoid_search	dwarf+symtab	5192df3c2b00		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x0	72	strcmp	dwarf+symtab	d58298f34bcf		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x48	84	strncmp	dwarf+symtab	8289031da5f9		out:1	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x9c	132	strncpy	dwarf+symtab	7cfa5fbce052		out:1	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x9c	132	strncpy	dwarf+symtab	7cfa5fbce052		out:1	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x120	84	strcpy	dwarf+symtab	f7e6e8b86831		out:1	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x174	36	strchr	dwarf+symtab	f33858367dfc		out:1	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/sgi.a(libc_src.o)	kernel-object	n32	.text	0x198	124	strrchr	dwarf+symtab	111f68a65f0b		out:1	undocumented		
@@ -79157,7 +79157,7 @@ IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1cec	32	nested_64bittrylock	dwarf+symtab	4dc33ab9256e		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1d0c	100	mutex_64bittrylock	dwarf+symtab	f057322fbbdc		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1d70	176	nested_64bitlock	dwarf+symtab	fc4451e38654		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1e20	108	nested_64bitunlock	dwarf+symtab	6a9b2af70898		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1e20	108	nested_64bitunlock	dwarf+symtab	6a9b2af70898		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1e8c	128	mutex_64bitunlock	dwarf+symtab	c99892363daf		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x1f0c	612	_64bitlockdebug	dwarf+symtab	4be1d21750d4		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/dhardlocks.a(dhardlocks.o)	kernel-object	n64	.text	0x2170	96	try64bitlockdebug	dwarf+symtab	da111df113c3		out:3	undocumented		
@@ -80921,7 +80921,7 @@ IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0x9f8	56
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xa30	284	hwgraph_path_lookup	dwarf+symtab	d2cf46cc966b		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xb4c	384	hwgraph_path_add	dwarf+symtab	20d016bcaf15		out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xccc	348	hwgraph_traverse	dwarf+symtab	179666ceb30e		out:3	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	31f5f28c049a		out:3	named-only	chips/pic/README.md#access-sequences	Access sequences
+IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xe28	144	hwgraph_path_to_vertex	dwarf+symtab	31f5f28c049a		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xeb8	44	hwgraph_path_to_dev	dwarf+symtab	8c583995b6de		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xee4	92	hwgraph_link_add	dwarf+symtab	83753e93bdb2		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/graph.a(hwgraph.o)	kernel-object	n64	.text	0xf40	132	hwgraph_device_add	dwarf+symtab	99c3ba720c98		out:3	undocumented		
@@ -81275,7 +81275,7 @@ IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x21c	76	mutex_64bitlock	dwarf+symtab	7888c5979ace		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x268	24	mutex_64bitunlock	dwarf+symtab	b2cd23655120		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x280	36	nested_64bitlock	dwarf+symtab	a80c36036528		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x2a4	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x2a4	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x2b4	76	mutex_spintrylock	dwarf+symtab	2820fd33ed7f		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x300	96	mutex_spintrylock_spl	dwarf+symtab	816f0cb794c3		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks.a(llsclocks.o)	kernel-object	n64	.text	0x360	76	mutex_bittrylock	dwarf+symtab	a129c6c8bc83	shared-address	out:3	undocumented		
@@ -81317,7 +81317,7 @@ IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x35c	84	mutex_64bitlock	dwarf+symtab	4305e7db03b8		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x3b0	24	mutex_64bitunlock	dwarf+symtab	b2cd23655120		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x3c8	48	nested_64bitlock	dwarf+symtab	a57591f1e52b		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x3f8	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x3f8	16	nested_64bitunlock	dwarf+symtab	6fc85cf2d3e9		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x408	92	mutex_spintrylock	dwarf+symtab	c668fe9380d1		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x464	116	mutex_spintrylock_spl	dwarf+symtab	2af04a4eef6a		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/hardlocks_statistics.a(llsclocks.o)	kernel-object	n64	.text	0x4d8	92	mutex_bittrylock	dwarf+symtab	aac55a1a091b		out:3	undocumented		
@@ -84281,7 +84281,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2cdcc	128	groupi
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2ce4c	264	sendgroupintr	dwarf+symtab	9468630c995a		in	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2cf60	12	VEC_breakpoint	dwarf+symtab	3614e4802762		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2cf68	4	kernelbp	symtab	cd09e81bee54		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2cf6c	120	debug	dwarf+symtab	920ba04ec3dd		out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2cf6c	120	debug	dwarf+symtab	920ba04ec3dd		out:11	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2cfe4	4	sstepbp	dwarf+symtab	0df244da6067		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2cff0	736	ULIsystrap	dwarf+symtab	79f730b36b5e		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2d140	400	keruliframe	symtab	af8b3a046b4d		out:11	undocumented		
@@ -84368,7 +84368,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2efbc	188	nvchec
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2f078	52	update_checksum_base	dwarf	d05bec34369e		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2f0b0	8	VEC_addrerr	dwarf+symtab	6cc16abd70ee		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2f0c0	68	VEC_tlbmiss	dwarf+symtab	1503c13cfd26		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2f104	560	dprintf	dwarf+symtab	3202c7951459		out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2f104	560	dprintf	dwarf+symtab	3202c7951459		out:11	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2f334	120	moduleid_to_decompressed_rack	dwarf	07afb9b5d9ff		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2f3ac	148	brick_lookup	dwarf	7c0aa14866bc		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2f440	240	brick_register	dwarf	5c146c92c353		out:11	undocumented		
@@ -86861,7 +86861,7 @@ IP35/usr/cpu/sysgen/IP35boot/nolocks.a(cnolocks.o)	kernel-object	n64	.text	0xb4	
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_64bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/ip27-kernel-entropy-readers.md#kernel-routines-that-read-the-hub-real-time-counter-for-entropy-ip27-build	Kernel routines that read the Hub real-time counter for entropy (IP27 build)
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
@@ -89389,7 +89389,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(sig.o)	kernel-object	n64	.text	0x29c	180	sigde
 IP35/usr/cpu/sysgen/IP35boot/os.a(sig.o)	kernel-object	n64	.text	0x350	48	cursiginfofree	dwarf+symtab	70e025f19413		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(sig.o)	kernel-object	n64	.text	0x380	52	asv_sigtopid	dwarf+symtab	1b4e6e30dcf0		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(sig.o)	kernel-object	n64	.text	0x3b4	100	send_sigtopid	dwarf+symtab	420f08df445b		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(sig.o)	kernel-object	n64	.text	0x418	380	sigtopid	dwarf+symtab	0ead7e896dca		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(sig.o)	kernel-object	n64	.text	0x418	380	sigtopid	dwarf+symtab	0ead7e896dca		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/os.a(sig.o)	kernel-object	n64	.text	0x594	140	sigdelete	dwarf+symtab	508554107375		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(sig.o)	kernel-object	n64	.text	0x620	240	sigtouthread	dwarf+symtab	32f2ed6334ad		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(sig.o)	kernel-object	n64	.text	0x710	876	sigtouthread_common	dwarf+symtab	5fad9e0d67d7		out:3	undocumented		
@@ -97290,7 +97290,7 @@ sbin/stand/sash64	diagnostic	n64	.text	0x62e8	8	get_pc	symtab	c343413c267a	share
 sbin/stand/sash64	diagnostic	n64	.text	0x62e8	8	getpc	symtab	c343413c267a	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x62f0	8	get_sp	symtab	2c412fc24dd8	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x62f0	8	getsp	symtab	2c412fc24dd8	shared-address	out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x62f8	12	debug	symtab	0c4f367106e0	shared-address	out:4	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+sbin/stand/sash64	diagnostic	n64	.text	0x62f8	12	debug	symtab	0c4f367106e0	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 sbin/stand/sash64	diagnostic	n64	.text	0x62f8	12	exec_brkpt	symtab	0c4f367106e0	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x6304	36	quiet_debug	symtab	01cf47be29a2		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x6328	16	memcpy	symtab	1f4dca75e773		out:4	undocumented		
@@ -97456,7 +97456,7 @@ sbin/stand/sash64	diagnostic	n64	.text	0x121f4	172	_init_libsc_private	symtab	63
 sbin/stand/sash64	diagnostic	n64	.text	0x122a0	448	sa_get_response	symtab	05ba9631d6dd		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x12460	228	token	symtab	7cc39142fe65		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x12544	72	strncmp	symtab	02235298ef94		out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x1258c	112	strncpy	symtab	034e0cc383c4		out:4	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+sbin/stand/sash64	diagnostic	n64	.text	0x1258c	112	strncpy	symtab	034e0cc383c4		out:4	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 sbin/stand/sash64	diagnostic	n64	.text	0x125fc	116	strncat	symtab	4d3e4618d058		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x12670	36	index	symtab	77db9593233b		out:4	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 sbin/stand/sash64	diagnostic	n64	.text	0x12694	36	rindex	symtab	7f0328ecde88		out:4	undocumented		
@@ -98187,7 +98187,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2d0	8	get_pc	symtab	c343413c2
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2d0	8	getpc	symtab	c343413c267a	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2d8	8	get_sp	symtab	2c412fc24dd8	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2d8	8	getsp	symtab	2c412fc24dd8	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2e0	12	debug	symtab	0c4f367106e0	shared-address	out:15	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2e0	12	debug	symtab	0c4f367106e0	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2e0	12	exec_brkpt	symtab	0c4f367106e0	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2ec	20	quiet_debug	symtab	e5271de22208		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d300	16	memcpy	symtab	899afbfe5b5c		out:15	undocumented		
@@ -98244,7 +98244,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030ad0	48	strchr	symtab	cc7b44f7
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030b00	420	sa_get_response	symtab	bf34ac395516		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030ca4	188	token	symtab	dd6c53a8c043		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030d60	80	strncmp	symtab	3fec96eeb2ec		out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030db0	96	strncpy	symtab	4a439ff1f0b5		out:15	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030db0	96	strncpy	symtab	4a439ff1f0b5		out:15	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030e10	96	strncat	symtab	587b5177e7f0		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030e70	36	index	symtab	f33858367dfc		out:15	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0030e94	36	rindex	symtab	574ccb33b9d9		out:15	undocumented		
