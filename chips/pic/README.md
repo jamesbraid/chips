@@ -93,8 +93,8 @@ non-PIC path (see Reset expectations).
 | `+0x80000` + unseen index | 8 | rw | 4 | `ext_ate_get`, `ext_ate_set` |  | unknown unless the names say: see the entry |
 
 Names are the shipped routines' own (`id_get`, `control_bit_set`, ...): `_get` reads, `_set` writes the whole
-register, `_bit_set` and `_bit_clr` read-modify-write. A `+0x18000` run is the write-request RAM cleared in the
-attach sequence below.
+register, `_bit_set` and `_bit_clr` read-modify-write. A `+0x18000` run is the three 256-doubleword banks cleared in the
+attach sequence below; no routine names what they hold.
 
 ### Registers whose use is established by reading the code
 
@@ -126,15 +126,22 @@ attach sequence below.
 - `+0x200 + 8n` device, `+0x240 + 8n` write-buffer flush, `+0x280` and `+0x288` read response buffers (index 0 even,
   1 odd, established by running `pcireg_rrb_bit_set` in the harness: index 0 touches +0x280, index 1 +0x288),
   `+0x290` status, `+0x298` clear: inferred from names. Bits 19:16 and 3:0 of both response-buffer registers are
-  set by the attach for revision 1 (established: constant 0xf000f).
+  set by the attach for revision 1 (established: constant 0xf000f). The buffer fields are established from the allocator
+  `do_pcibr_rrb_alloc` (chips/bridge/README.md, "Response buffer fields"): eight 4-bit fields per register, the register chosen by
+  slot parity (`slot & 1`: +0x280 even, +0x288 odd), and for the PIC each field is bit 3 valid, bits 2:1 virtual channel (0 to 3), bit 0 the device
+  pair `slot >> 1` (slots 0 to 3 only). The revision-1 constant 0xf000f therefore marks fields 0 and 4 of each register valid, on virtual channel 3,
+  for device pair 1 (slots 2 and 3); why the workaround reserves exactly those is not read.
 - `+0x600` to `+0x630` (seven registers): PCI-X error address, attribute, data, split-address, split-attribute,
   request-error attribute and request-error address, in that order (inferred from the accessor names
   `pcix_bus_err_addr_get` ... `pcix_req_err_addr_get`; read-only).
 - `+0x10000 + 8n` internal address translation entries: 1024 entries cleared one by one in the attach
   (`pcireg_int_ate_set(i, 0)`, established).
 - `+0x18000`, `+0x18800`, `+0x19000`: three banks of 256 doublewords cleared with zero in the attach
-  (established: the loop stores zero at base + 8i for i below 256 into each). What they hold: unknown; the
-  accessor-free direct stores mean the driver names no register for them.
+  (established: `pic_attach2` at 0x954, 0x958 and 0x95c of `pic.o`; the loop, unrolled by two, stores a doubleword
+  zero at base + 8i for i below 256, in each pass in the order +0x18000, +0x18800, +0x19000). They are the only accesses to the range in any
+  of the three images the census covers (`pcibr.o`, `pic.o` and the IP35 PROM, the last with no unresolved window pointer), and no
+  accessor names them, so nothing the shipped software does depends on their contents. What they hold is unknown; the end state is
+  "no software dependency beyond the zeroing".
 - `+0x20000` configuration windows and `+0x80000` external translation RAM accessors exist in the shared code
   (`pcireg_type0_cfg_addr`, `pcireg_type1_cfg_addr`, `pcireg_ext_ate_*`); whether they apply to PIC: unknown.
 
@@ -150,7 +157,7 @@ attach sequence below.
    interrupt/error groups); the value is established.
 5. `pcireg_intr_device_set(0x6db6db)`: write 0x6db6db to `+0x120`: eight 3-bit fields each holding 3
    (established arithmetic; that a field names a device for a pin: inferred).
-6. Initialise the direct map (`pcibr_directmap_init`, a separate routine, not read here).
+6. Initialise the direct map (`pcibr_directmap_init`, read in full, below).
 7. Read control, mask, merge in the widget number and the constants above, write control. Then for each of the
    1024 translation entries write zero.
 8. Allocate an interrupt for error reporting (`xtalk_intr_alloc`, `xtalk_intr_connect`), which reaches
@@ -165,6 +172,30 @@ attach sequence below.
     space, device init, PCI-X rbar init, device attach; last, for a device whose two identity words equal 4116
     and 423, clear the low ten bits of the timeout register `+0xc0` (`pcireg_timeout_bit_clr(0x3ff)`;
     meaning unknown).
+
+**Direct map set-up (established: `pcibr_directmap_init`, `IP35/.../IP35boot/pcibr.o` at 0x1080, 300 bytes, read in full, with the
+four `pcireg_dirmap_*` setters at 0x11bac, 0x11d48, 0x11f38 and 0x120b8).** It takes the bridge record in `a0` (its Crosstalk widget handle at
++0, vertex at +4, window pointer at +8, widget number byte at +48) and returns nothing.
+
+1. It reads the device-administration string `PCIBUS_DMATRANS_NODE` from the vertex (`device_admin_info_get`). When present, the string is a
+   hardware-graph path: `hwgraph_path_to_vertex` and `nodevertex_to_cnodeid` turn it into a compact node number; a failure prints the text
+   "Invalid hwgraph node path specified:" with the device-admin name and value (`cmn_err`, level 4) and uses node 0. With no string it uses node 0.
+2. It asks `xtalk_dmatrans_addr` for a direct-map address on the widget, with device 0, the address `nasid << 33` (the NASID is the halfword for
+   that node in `compact_to_nasid_node`), a length of 0x4000 and no flags. Call the result `x`.
+3. It stores `x >> 31` through `pcireg_dirmap_diroff_set`, the widget number through `pcireg_dirmap_wid_set`, and copies the widget byte to +88
+   of the record.
+4. When `x` is exactly 0x20000000 it sets the add-512-MiB bit (`pcireg_dirmap_add512_set`) and keeps 0x20000000 at +80 of the record; for any other
+   value it clears that bit (`pcireg_dirmap_add512_clr`) and keeps `x & 0x80000000` at +80.
+
+The setters take either a chip window address (an address with bits 63, 60 and 57 set, the 0x92... window; they then read the identification word and
+pick the path from its part number and manufacturer field) or a bridge record (they read the chip type from the halfword at +114 of the record).
+The chip type selects the register access: 0 Bridge and 1 XBridge use the 32-bit word at `+0x84`, the low half of the doubleword at `+0x80`; 2 PIC
+and 3 (the part with identification 0xe000 or 0xe010) use the doubleword at `+0x80`; -1 or any other type prints an error through `cmn_err`. For the PIC (type 2) the fields are: widget number bits 23:20 (the setter clears `0xf00000` and stores
+`(w & 0xf) << 20`), offset bits 16:0 (cleared with `0xfffffffffffe0000`, then ORed with the argument masked to 17 bits), add-512-MiB bit 17
+(`0x20000`). The part of type 3 has one more field, bits 25:20 (mask `0x3f00000`, overlapping the widget field), which its offset setter writes first from bits 22:17 of the argument (the argument shifted left by 3, masked). So the PIC direct-map
+register is `{widget:4 at bit 20, add512 at bit 17, offset:17 at bit 0}`, and the driver puts into it the widget number, the translated address in
+units of 2 GiB, and the 512 MiB add-on only for the translation that equals 0x20000000. Established: the code. Inferred: that the register at `+0x80`
+is the one meant (the setters touch `+0x80` in every chip-type path) and that "2 GiB units" is the offset granularity, from the shift of 31.
 
 **Programmed-I/O flush workaround (established: `pic_pio_flush_new`, `issue_force_interrupt`, `pio_spin_wait`).**
 For chip type 2 and certain devices, the driver takes a spin lock and picks a pin from a per-chip mask (the mask
@@ -245,4 +276,4 @@ with its address list.
 ## Open
 
 See docs/open-questions.md: the literal-pool base of `pic.o`, the error and interrupt service routines, the
-direct-map routine, the revision-1-only steps, and what the +0x18000 banks hold.
+revision-1-only steps.

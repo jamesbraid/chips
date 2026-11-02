@@ -55,9 +55,6 @@ Corrections found while tagging. These are not fixed here.
 - **Bridge and XBridge: the interrupt device register at attach.** *[route: software now]* IRIX writes `0xffffffff`; the public Linux and
   OpenBSD drivers write 0. Neither says why, and no shipped routine reads the reset value. Next: the pin-to-device
   assignment in `pcibr_intr_alloc` and what the all-ones value does before any pin is assigned.
-- **Bridge and XBridge: response buffer registers.** *[route: software now]* `0x280` and `0x288` are accessed through `pcireg_rrb_*`; only the
-  enable constant `0x8` and the index-to-offset mapping are read. The field layout (enable, virtual channel, device) is
-  the public drivers' and was not derived. Next: `pcibr_rrb_alloc`, `pcibr_alloc_all_rrbs` and `pcibr_rrb_check`.
 - **Bridge and XBridge: registers above 0x298.** *[route: software now; PROM search; an accepted end state if none is found]* Whether the XBridge has registers between `0x2a0` and `0x10000`
   (the census reaches none and the public headers name none). Valid end state unless a routine that touches them is
   found. Next: the IP27 PROM and I/O-board PROM, which the scan could not resolve.
@@ -178,9 +175,9 @@ Corrections found while tagging. These are not fixed here.
 - **PIC error and interrupt service.** *[route: software now]* `pcibr_error_dump` and `pcibr_error_intr_handler` in `pcibr.o` and the
   PIC branches of the error accessors are not read. Next: read both in full and fill the error and interrupt
   sections of chips/pic/README.md.
-- **PIC direct map and revision-1 steps.** *[route: software now; proposed: read pcibr_directmap_init in full]* `pcibr_directmap_init` is not read; what the revision-1-only
-  writes (control bit 29 test, request timeout 0x750, enable bits 39 and 9, response buffer bits) fix is unknown.
-- **PIC +0x18000 banks.** *[route: software now; proposed: every reader and writer of the block in pcibr.o and the PROMs]* Three banks of 256 doublewords are cleared at attach; their contents are unknown.
+- **PIC revision-1 steps.** *[route: software now]* The direct map is answered (chips/pic/README.md, "Direct map set-up"). Open: what the revision-1-only
+  writes (control bit 29 test, request timeout 0x750, enable bits 39 and 9, response buffer bits) fix. Next: the same steps in `xbridge_attach` and the
+  response-buffer allocator.
 - **Bedrock block boundaries and indexed families.** *[route: software now]* Registers are listed by offset; membership of the
   processor interface, memory, I/O, network and local blocks is inferred from routine-name prefixes only.
   Many accesses add a node or block index the scan does not follow. Next: read the index arithmetic in

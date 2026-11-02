@@ -114,7 +114,7 @@ Totals over the **41 rows** below (families count once each; a row graded for so
 | `0x1c0` + 8n | force interrupt with pin (n = 0 to 7) | w | X | `pcibr_force_interrupt` (`pcireg_force_intr_set`) | write per pin on type 1 | I |
 | `0x200` + 8n | device (n = 0 to 7) | rw | both | `pcibr_device_flags_set`, `pcibr_priority_bits_set`, `pcibr_endian_set`, `pcireg_device_*`; IP30 PROM (one write) | `pcibr_endian_set` sets or clears the two bits `0x180000`; the flags and priority routines rewrite the register and read the flush register; the IP30 PROM writes device 2 with `0x1004` | I |
 | `0x240` + 8n | write-buffer flush (n = 0 to 7) | r | both | `pcibr_wrb_flush` (`pcireg_wrb_flush_get`) | read of the device's slot; the value is returned | I |
-| `0x280`, `0x288` | even and odd response buffers | rw | both | `pcibr_alloc_all_rrbs`, `pcibr_rrb_flush`, `pcireg_rrb_*` | index 0 touches `0x280`, index 1 `0x288`; the attach path passes `0x8` | I |
+| `0x280`, `0x288` | even and odd response buffers | rw | both | `pcibr_alloc_all_rrbs`, `pcibr_rrb_flush`, `pcireg_rrb_*` | index 0 touches `0x280`, index 1 `0x288`; each register is eight 4-bit buffer fields, field `i` at bits `4i+3:4i` (see "Response buffer fields" below); the attach path passes `0x8` | E (the allocator `do_pcibr_rrb_alloc` read in full) |
 | `0x290` | response status | r | both | `pcireg_rrb_status_get` | read | I |
 | `0x298` | response clear | w | both | `pcireg_rrb_clear_set` | write | I |
 
@@ -229,6 +229,16 @@ Compared after the reading above. **Agree** means the driver's number or name is
   stored at record +112.
 - **Agree: XBridge-only registers.** OpenBSD marks `0x180 + 8d` (force always) and `0x1c0 + 8d` (force with pin) as
   XBridge-only; the binary panics on them for type 0.
+- **Response buffer fields** (established: `do_pcibr_rrb_alloc`, `IP35/usr/cpu/sysgen/IP35boot/pcibr.o` at 0x5370, 0x23c bytes, read in full, with
+  the register getter `pcireg_rrb_get` at 0x17404 and `pcibr_rrb_alloc` at 0x5f68). The allocator takes the bridge record, a slot, a virtual
+  channel and a count. The register index is `slot & 1`: `0x280` for even slots, `0x288` for odd. Each register holds eight 4-bit fields. A field
+  is in use when its bit 3 is set; the allocator walks the fields from field 0 up, rewrites each free one with a new value and stops when the
+  count is spent (it returns 0 when all were placed, -1 otherwise). The new value is `8 | (slot >> 1) | (vchan << k)`, with k = 2 for the Bridge
+  (part 0xc002, manufacturer 54) and the XBridge (part 0xd002, manufacturer 36), and k = 1 for every other part, which is the PIC and the TIO-class
+  part. The slot and channel limits differ with k as well: with k = 2 the slot is below 8 and the channel 0 or 1, so the field is
+  bit 3 valid, bit 2 virtual channel, bits 1:0 the device pair `slot >> 1`; with k = 1 the slot is below 4 and the channel 0 to 3, so the field is
+  bit 3 valid, bits 2:1 virtual channel, bit 0 the device pair `slot >> 1`. Slot 255 is refused in both cases (the call prints an error through
+  `cmn_err` and returns -1). The Bridge-style layout equals the public driver constants below; the second layout is the PIC's and is not in them.
 - **Agree: response buffer fields.** OpenBSD `RRB_VALID 0x8`, `RRB_VCHAN 0x4`, `RRB_DEVICE_MASK 0x3`; Linux
   `BRIDGE_RRB_EN 0x8`; the attach path passes `0x8`.
 - **Disagree: interrupt device register at attach.** The Linux probe and OpenBSD both write 0 to the interrupt device
