@@ -25,3 +25,4 @@ root/
 
 # Census intermediates (disassembly, unpacked PROMs, model copies)
 /work/
+.re-leak-terms

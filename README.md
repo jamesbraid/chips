@@ -71,8 +71,7 @@ To reproduce a cited result:
 - A claim an entry marks as established by execution is reproduced by the script in `scripts/` that
   the entry names; its docstring says what it reproduces and how to run it, always as
   `tools/re-run python3 scripts/NAME.py ...`.
-- `tools/check-shared` verifies that the toolchain files (`tools/`) are byte-identical to the copies in
-  the sibling repositories. The optional Ghidra image is built from `tools/Containerfile.ghidra` by
+- The shared tooling (container definitions, wrappers, Ghidra scripts, the inventory, fact sheet and claim checker, and the device extractors) is the `retools/` submodule (sgi-retools); the files under `tools/`, `scripts/` and `ghidra/` are links into it, so a change to them is made there and the pin here moves with a commit. `tools/check-shared` verifies the pin. The optional Ghidra image is built from `tools/Containerfile.ghidra` by
   `tools/re-run --ghidra COMMAND`, and `tools/re-run --ghidra-export OBJECT` writes decompiled C and
   function-similarity output as JSON (see `ghidra/README.md`); nothing else needs it. `tools/README-analysis.md`
   describes the `.mdebug` importer and the kernel table extractors.
