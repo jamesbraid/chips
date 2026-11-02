@@ -70,8 +70,8 @@ CLR_ISR, ISR, IMSR, COUNT, TRIGGER, PRID and SYNC are printed by no held file an
 | `0x10008` | IMR1 | 8 | rw | established | As IMR0, processor 1. |
 | `0x10010` | IMR2 | 8 | rw | established | As IMR0, processor 2. |
 | `0x10018` | IMR3 | 8 | rw | established | As IMR0, processor 3. |
-| `0x10020` | SET_ISR | 8 | w | established | Doubleword stores of one bit, from three routines read in full. `sendintr` (`0xa800000020013a2c`) stores `1 << (n + 46)`, a 64-bit shift, to interrupt processor n. `debug_stop_all_cpus` (`0xa800000020013a48`) stores `1 << (42 + i)` for every processor i except the caller. `heart_set_cpu_intr` (`0xa800000020013f10`) stores `1 << a0` with a 32-bit variable shift (`sllv`), so it can reach vectors 0 to 31 only; its one direct call (`0xa800000020049d98`, inside `pcibr_force_interrupt`) passes the sign-extended low halfword of what `xtalk_intr_vector_get` returned. Name from the public driver. |
-| `0x10028` | CLR_ISR | 8 | w | established | `heart_intr` writes 1 << vector to acknowledge a vector, before the handler for vectors 3 and above, after it for vectors 0 to 2. |
+| `0x10020` | SET_ISR | 8 | w | established | Doubleword stores of one bit, from three routines read in full. `sendintr` (`0xa800000020013a2c`) stores `1 << (n + 46)`, a 64-bit shift, to interrupt processor n. `debug_stop_all_cpus` (`0xa800000020013a48`) stores `1 << (42 + i)` for every processor i except the caller. `heart_set_cpu_intr` (`0xa800000020013f10`) stores `1 << a0` with a 32-bit variable shift (`sllv`), so the shift count wraps at 32 and vector 31 gives `0xffffffff80000000` (the 32-bit result is sign-extended), setting bits 31 to 63 together; it is correct for vectors 0 to 30 only; its one direct call (`0xa800000020049d98`, inside `pcibr_force_interrupt`) passes the sign-extended low halfword of what `xtalk_intr_vector_get` returned. Name from the public driver. |
+| `0x10028` | CLR_ISR | 8 | w | established | `heart_intr` writes 1 << vector to acknowledge a vector, before the handler for vectors 3 to 58, after it for vectors 0 to 2, and not at all for vectors 59 and above, which go to `buserror_intr`. |
 | `0x10030` | ISR | 8 | r | inferred | Interrupt status. Read in the error-lock wait loop of `dobuserr_common` to see whether this processor's bit 46+n is pending. Name from the public driver. |
 | `0x10038` | IMSR | 8 | r | inferred | Read by `heart_intr` and ANDed with the argument it was given, then dispatched by highest set bit: used as the pending-and-enabled word (inferred). Name from the public driver. |
 | `0x10040` | CAUSE | 8 | rw | established | Error cause bits, named in the cause bits section. The probe routines store back the value they read; the memory scrub path stores 1 (write-one-to-clear is inferred). |
@@ -179,9 +179,9 @@ arms IMR[n] with bits 42+n (DBG), 46+n (IPI), 59+n (BERR) and 63 (HEART_EXC). Pr
   called with `jalr` at `0xa80000002003ff98`. When the word at entry `+24` has bit `0x1000` set, the routine
   instead takes the semaphore at entry `+32`: `valusema`, then `vsema` when the value is below 28673, `cvsema`
   otherwise, and it does not call the handler itself. CLR_ISR (`+0x10028`) is written with the vector's bit
-  before the handler or semaphore step for vector 3 and above (the test at `0xa80000002003ff34`), and after it
+  before the handler or semaphore step for vectors 3 to 58 (the test at `0xa80000002003ff34`), and after it
   for vectors 0 to 2 (`0xa80000002003ff00`). Vectors 59 and above go to `buserror_intr` with the routine's first
-  argument. After each vector it re-reads IMSR and loops until the masked value is zero. On exit it adds a count to a word at
+  argument and CLR_ISR is not written for them. After each vector it re-reads IMSR and loops until the masked value is zero. On exit it adds a count to a word at
   `+208` of the record whose pointer is at `0xffffffffffffc488`, with `ll`/`sc`: the number of vectors served (the
   loop's delay slot counts one extra pass and `addiu -1` at `0xa80000002003ffb0` removes it), or -1 when nothing
   was pending on entry.
