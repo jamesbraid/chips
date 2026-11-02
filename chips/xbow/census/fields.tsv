@@ -19,7 +19,6 @@ variant	register	source	kind	bits_or_value	sites	functions	example
 ?	0x30	store	mask	15:0	3	1	xbow_intr_preset@9d8
 ?	0x58	load	shift	shift 6	3	1	idbg_xbowregs@2364
 ?	0x80	store	const	0xff	1	1	prom_c00000001fc01a24@c01b44
-?	0xb8	load	shift	shift 0	3	1	prom_c00000001fc01a24@c01b80
 ?	0x108	store	const	0x80000	2	2	prom_c00000001fc4bd30@c4bd5c
 ?	0x108	load	mask	3	6	1	xbow_errintr_handler@e30
 ?	0x110	load	shift	shift 31	6	2	xbow_link_alive@8d4
