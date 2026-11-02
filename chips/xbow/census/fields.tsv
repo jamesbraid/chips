@@ -1,18 +1,25 @@
 variant	register	source	kind	bits_or_value	sites	functions	example
-?	0x0	load	mask	15:0	15	9	xbow_attach@138
+?	0x0	load	mask	15:0	17	11	xbow_attach@138
 ?	0x0	load	mask	10:0	1	1	sub_b59c@b5e8
-?	0x0	load	shift	shift 12	15	9	xbow_attach@138
+?	0x0	load	mask	2:0	1	1	prom_c00000001fc44dcc@c44dfc
+?	0x0	load	shift	shift 12	18	12	xbow_attach@138
 ?	0x0	load	shift	shift 28	10	4	xbow_attach@138
 ?	0x0	load	shift	shift 4	3	1	xbow_attach@138
 ?	0x0	load	shift	shift 1	1	1	sub_b59c@b5e8
+?	0x0	load	shift	shift 6	1	1	prom_c00000001fc44dcc@c44dfc
 ?	0x8	load	mask	5,2	1	1	prom_ffffffffbfc6ac2c@c6ac4c
+?	0x8	load	mask	9:6	1	1	prom_c00000001fc01a24@c01aac
 ?	0x8	load	shift	shift 2	2	1	save_xbow_err@16e90
+?	0x8	load	shift	shift 6	1	1	prom_c00000001fc01a24@c01aac
 ?	0x10	load	shift	shift 6	3	3	prom_c00000001fc0aeec@c0afb0
 ?	0x20	store	const	0x24	3	1	xbow_attach@224
+?	0x20	store	const	0x80000000	1	1	prom_c000000011c66344@c664d0
 ?	0x20	load	mask	3:0	4	2	sub_bdd8@c0c0
 ?	0x20	load	mask	7:0	4	2	sub_bdd8@c0c0
 ?	0x30	store	mask	15:0	3	1	xbow_intr_preset@9d8
 ?	0x58	load	shift	shift 6	3	1	idbg_xbowregs@2364
+?	0x80	store	const	0xff	1	1	prom_c00000001fc01a24@c01b44
+?	0xb8	load	shift	shift 0	3	1	prom_c00000001fc01a24@c01b80
 ?	0x108	store	const	0x80000	2	2	prom_c00000001fc4bd30@c4bd5c
 ?	0x108	load	mask	3	6	1	xbow_errintr_handler@e30
 ?	0x110	load	shift	shift 31	6	2	xbow_link_alive@8d4
@@ -23,6 +30,7 @@ variant	register	source	kind	bits_or_value	sites	functions	example
 ?	0x138	load	shift	shift 16	3	1	xbow_update_llp_status@1d34
 ?	0x148	load	mask	3	3	1	xbow_errintr_handler@e30
 ?	0x178	load	mask	5	2	2	prom_c00000001fc4a500@c4a5d8
+?	0x1d8	store	const	0x9	1	1	prom_c00000001fc4d65c@c4da24
 ?	0x100148	store	mask	7:0	3	1	xbow_update_llp_status@1d60
 pxbow	0x0	load	mask	10:0	6	2	xbow_widget_present@89c
 pxbow	0x0	load	shift	shift 1	6	2	xbow_widget_present@89c
