@@ -3,7 +3,8 @@
 Scope: which audio hardware the SGI documents and the IRIX 6.5.30 IP30 and IP35 driver objects tie to the Fuel (IP35 build), the Tezro (IP35 build) and the Octane/Octane2 (IP30 build). Labels as in [AGENTS.md](../../AGENTS.md):
 **established**, **inferred**, **unknown**. Document citations are title, number, printed page. "(pdf n)" gives the file page
 where the printed page differs. I read the binaries named below; for those drivers this workspace's reading is binary-only.
-The DM8 board has its own page: [dm8.md](dm8.md).
+The DM8 board has its own page: [dm8.md](dm8.md). The per-driver audit (every audio driver in 6.5.30 and 6.5.22, configuration, inventory strings, hinv captures,
+the Audigy question) is [drivers.md](drivers.md); where this page disagrees with it, drivers.md is later.
 
 ## Audio drivers in the 6.5.30 builds
 
@@ -13,7 +14,7 @@ Read from the object files in `root/<build>/usr/cpu/sysgen/<build>boot/` (symbol
 |---|---|---|---|---|---|
 | `mad_dd.o` | IP27, IP30, IP35 | PCI `1412:1724` (`mad_init`, IP35 `0x0`) | `version MAD revision %d, number %d` | probe established | [chips/ice1724](../../chips/ice1724/README.md) |
 | `rad_dd.o` | IP27, IP30, IP32, IP35 | PCI `10a9:0005` (`rad_init`, IP35 `0x5110`) | `version RAD revision %d.%d, number %d` | probe established | [chips/rad](../../chips/rad/README.md) |
-| `emu_dd.o` | IP35 only | PCI `1102:0004` (`emu_init`, `0x0`) | `version EMU revision %02X, number %d` | probe established | [chips/emu10k2](../../chips/emu10k2/README.md) |
+| `emu_dd.o` | IP35 only, 6.5.30 (absent in 6.5.22) | PCI `1102:0004` (`emu_init`, `0x0`) | `version EMU revision %02X, number %d` | probe established | [chips/emu10k2](../../chips/emu10k2/README.md) |
 | `usbaudio_dd.o` | IP35 only (not in IP30, IP27, IP32) | USB audio class, no PCI | `USB audio revision %d.%d, number %d` | strings established | this page |
 | `a3_dd.o` | IP32 only | MACE audio, not PCI | `version A3 revision %d` | out of scope (O2) | none |
 
@@ -30,7 +31,7 @@ machine therefore has no audio device of its own; every audio device below is an
 
 | Option | Evidence | Chips and bus | Grade |
 |---|---|---|---|
-| DMediaPro DM8 PCI audio | Fuel guide pp. 39 and 42 list a "Digital Audio I/O board" without a product name. A Fuel owner's hinv in a Usenet post (`V1UGh.52430$Da4.30732@newsfe6-gui.ntli.net`) shows `Iris Audio Processor: version MAD revision 1, number 1` and calls it a DM8 | PCI; ICE1724 plus two AKM DACs, see [dm8.md](dm8.md) | Fuel use: reported, unverified. The SGI DM8 note (007-4077-001, p. 1) does not list the Fuel among tested hosts. Board identity: see dm8.md |
+| DMediaPro DM8 PCI audio | Fuel guide pp. 39 and 42 list a "Digital Audio I/O board" without a product name. A Fuel owner's hinv in a Usenet post (`V1UGh.52430$Da4.30732@newsfe6-gui.ntli.net`) shows `Iris Audio Processor: version MAD revision 1, number 1` and calls it a DM8 | PCI; ICE1724 plus two AKM DACs, see [dm8.md](dm8.md) | Fuel use: 13 of 36 published Fuel hinv captures show MAD revision 1 (drivers.md); SGI support statement: none. The SGI DM8 note (007-4077-001, p. 1) does not list the Fuel among tested hosts. Board identity: see dm8.md |
 | SGI Fuel USB Digital Audio Converter | 007-4530-001 (2002), pp. 1 to 3: a USB-A converter with a 3.5 mm output for powered speakers; needs IRIX 6.5.16, or patches 4579/4580 and 4583 on 6.5.15 | USB audio class; the IRIX class driver `usbaudio_dd.o` | established as a product; the chip inside is **unknown** |
 | PCI Digital Audio Board (RAD-based) | 007-3502-003 (2000) p. 8, Table 1-2: boards 030-1649-001 and 030-1441-001 are "all platforms, except as noted" and no list names the Fuel (the guide predates the Fuel) | PCI `10a9:0005` | Fuel support: **unknown**. |
 | DMediaPro DM10 (IEEE 1394 audio/video) | `sbin/hinv` has the text `DMediaPro DM10 FW option: unit %d, revision %d.%d.%d` (`0xc8a8`) and the Fuel hinv post shows `revision 1.1.0` | PCI/FireWire; it carries digital audio over AV/C but is not an audio card | listed for completeness; not read further |
@@ -45,7 +46,7 @@ Two guides: the tower, 007-4564-001 (2003), and the rackmount, 007-4643-003 (200
 
 | Option | Evidence | Chips and bus | Grade |
 |---|---|---|---|
-| Tower: onboard analog audio on the I/O daughtercard | 007-4564-001 p. 32: four RCA audio jacks (two in, two out), a 2.5 mm powered-speaker connector, one 3.5 mm stereo in and one out. Diagnostics test "audio and I/O daughtercard" (p. 117). The rear view labels "Line in and Line out", "MIC", "Audio jacks" (p. 7, pdf 29) | unknown bus and chips. **Inferred** candidate driver: `emu_dd.o` (PCI `1102:0004`), because it is the only audio driver present in the IP35 build and absent from the other builds. No document or hinv ties it | onboard audio presence: established; chip: unknown |
+| Tower: onboard analog audio on the I/O daughtercard | 007-4564-001 p. 32: four RCA audio jacks (two in, two out), a 2.5 mm powered-speaker connector, one 3.5 mm stereo in and one out. Diagnostics test "audio and I/O daughtercard" (p. 117). The rear view labels "Line in and Line out", "MIC", "Audio jacks" (p. 7, pdf 29) | unknown bus and chips. The `emu_dd` guess is **withdrawn**: see [drivers.md](drivers.md); captures show a RAD (`10a9:0005`, revision 13.0) beside the IO9's IOC4 on Tezro, so a RAD at board 13 is the **inferred** onboard part. The Audigy (`emu_dd`) is a PCI option card | onboard audio presence: established; chip: inferred RAD |
 | Tower: "8-channel Digital Audio I/O board" | p. 42 (options list) | likely the DM8 | inferred |
 | Rackmount: "optional audio" | 007-4643-003 p. 27 block diagram labels "Optional audio"; p. 42 marks "Bus 2, slot 2 (optional audio)"; p. 34 lists "DMediaPro DM8 Audio I/O PCI option" among media boards | PCI DM8, see [dm8.md](dm8.md) | established (SGI statement) |
 | Rackmount: DM10 FireWire, DM6 video | p. 34 | PCI | listed for completeness |
@@ -54,7 +55,7 @@ Two guides: the tower, 007-4564-001 (2003), and the rackmount, 007-4643-003 (200
 A rackmount audio count: one slot is marked for audio; whether it is also usable for a second card is **unknown**.
 The 6.5.30 media has one build directory for this family, `IP35boot`; the linked IP35 kernel carries the board-name strings
 `IP34` and `IP53`, so the Fuel and the Tezro boards both run the IP35 build (**inferred** from the strings; which string is
-which product is not read here). The `emu_dd` link to the Tezro is therefore only a candidate: the Fuel runs the same build.
+which product is not read here). The `emu_dd` link to the Tezro tower's onboard audio is withdrawn (drivers.md).
 
 ## Octane and Octane2 (IP30 build)
 
@@ -66,8 +67,8 @@ which product is not read here). The `emu_dd` link to the Tezro is therefore onl
 | DA1100 Digital Audio Card | 007-3873-001 (1999): the Windows NT (320/540) version of the same board class; "compatible with all IRIX-based platforms if the required software is installed" per 007-3502-003 Table 1-2 for 030-1441-001 | PCI, RAD | inferred to be the same part family |
 | DM8 | `mad_dd.o` is in the IP30 build; the DM8 note does not list the Octane | PCI | unknown |
 
-The Octane's onboard controller identity (PCI `10a9:0005`, revision `0xc0`, board 12) is the same part the PCI board uses (hinv
-revision 12.0): `rad_attach` takes the board number from bits 7:4 of the PCI revision and gives board 12 a different PCI
+The Octane's onboard controller identity (PCI `10a9:0005`, revision `0xc0`, board 12) is the same PCI ID the PCI board uses; the board number
+is not the same: captures of a RAD in a PCI slot read 13.0 (drivers.md), and the 12.0 in 007-3502-003 is an Octane-class value: `rad_attach` takes the board number from bits 7:4 of the PCI revision and gives board 12 a different PCI
 priority ([chips/rad](../../chips/rad/README.md)); **established** as driver behaviour. That the Octane onboard device is
 revision `0xc0` is not in the driver and is not evidence here.
 
@@ -85,6 +86,6 @@ revision `0xc0` is not in the driver and is not evidence here.
 ## Gaps
 
 - No capture of any DM8, Tezro or Fuel audio hinv in `-vm` form; no board part numbers other than those for the RAD boards.
-- The Tezro tower's onboard audio chip is unknown ([open-questions](../open-questions.md)).
+- The Tezro tower's onboard audio chip is inferred to be a RAD, not read from a document ([open-questions](../open-questions.md)).
 - USB audio converter chip unknown (no teardown or USB descriptors).
 - The RAD register contract is not read in full here (stub).

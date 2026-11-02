@@ -257,9 +257,11 @@ Corrections found while tagging. These are not fixed here.
   and `MT+0x05` bit 7. Next: re-read `mad_set_rate` (`0x2268`) and `mad_start_dma` (`0xe48`) against a public vendor datasheet when one is held.
 - **DM8 converter identities.** *[route: missing source: a board photograph or parts list; public AKM datasheets for the field meanings]* AK4381, AK4355 and AK5380 are leads from a sibling board's public
   driver and secondary reviews (chips/ak4381, chips/ak4355, chips/ak5380); `mad_init_revolution` (`mad_dd.o` `0x2b2c`, 412 bytes) programs them without naming them. No SGI document or shipped file names them.
-- **Tezro tower onboard audio chip.** *[route: software now, then missing source]* The tower guide places analog jacks on the IO daughtercard. Candidate driver
-  `emu_dd.o` (PCI `1102:0004`), a lead only from being the one audio driver unique to the IP35 build. Next: read `emu_voice_setup` (`emu_dd.o` `0x2fbc`, 208 bytes),
-  `emu_start_dma` (`emu_dd.o` `0x18ec`, 400 bytes) and `emu_init_efx` (`emu_dd.o` `0x25a8`, 864 bytes) in full, and look for any IP35 hinv with an EMU line (chips/emu10k2/README.md).
+- **Tezro tower onboard audio chip.** *[route: missing source: a tower hinv with PCI adapter IDs next to a known tower, or a daughtercard photograph]* The tower guide places analog jacks on the IO daughtercard.
+  Unverified: published captures put a RAD (`10a9:0005`, revision 13.0) beside the IO9's IOC4 on Tezro, which suggests a RAD; the Audigy (PCI `1102:0004`) is an option card, not this part (docs/audio/drivers.md).
+- **The SGI "basic audio" PCI option and the release that added `emu_dd`.** *[route: missing source: an SGI option list; the 6.5.23 to 6.5.29 IP35 object directories and any 6.5.30 `audio.sm`]* The Onyx 350 and Onyx4 guides list a basic and a
+  professional PCI audio card without chip or part number; Creative Audigy cards (`1102:0004`, `4001`, `7003`) appear in Fuel, Tezro, Origin 300, Origin 350 and Onyx 350 captures. `emu_dd` is absent in 6.5.22 (docs/audio/drivers.md).
+- **IP22-family audio objects.** *[route: missing source: the dmedia audio package's IP22 object directory]* The A2 (HAL2), indigo and hdsp drivers are named by master files and hinv strings only; no object is held.
 - **RAD register contract in this workspace.** *[route: software now]* chips/rad/README.md records only the probe, windows and board dispatch of `rad_dd.o`. The register
   offsets, DMA engines, subcode and clock paths are not read here. Next: read `rad_start_device`, `rad_create_device`, `rad_set_*_if_params`
   in the IP35 and IP30 objects.
