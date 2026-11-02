@@ -8411,7 +8411,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001a93f4	48	ghostpagewait	symtab	43775bda3d
 IP27/unix	kernel	n64	.text	0xc0000000001a9424	308	kvpalloc	symtab	85d5521497c5		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc0000000001a9558	76	kvpalloc_node_hint	symtab	dea1536785b6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001a95a4	1332	kvpalloc_node	symtab	81ed9601c9f1		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001a9ad8	240	kvalloc	symtab	1c652aaaa762		out:5	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP27/unix	kernel	n64	.text	0xc0000000001a9ad8	240	kvalloc	symtab	1c652aaaa762		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc0000000001a9ea0	204	kmem_contig_alloc	symtab	aff002f1e11a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001a9f6c	460	kmem_contig_alloc_node	symtab	9ced6b851d99		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000001aa138	1080	kmem_contig_free	symtab	d959721c3466		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -9058,7 +9058,7 @@ IP27/unix	kernel	n64	.text	0xc0000000001e2ec4	120	pflip	symtab	24657f4252b5		out
 IP27/unix	kernel	n64	.text	0xc0000000001e2f3c	64	psync	symtab	d065332708e0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e2f7c	32	vtop	symtab	32a2cb54d845		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e2f9c	112	vtopv	symtab	f90d41369cd9		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001e300c	100	maputokptbl	symtab	8304b211df5c		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001e300c	100	maputokptbl	symtab	8304b211df5c		out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/unix	kernel	n64	.text	0xc0000000001e3070	128	vaddr_to_pde	symtab	435ef47a0482		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e30f0	212	uvaddr_to_alenlist	symtab	4b60d5f2edf0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001e31c4	36	shaddr_init	symtab	f045a8eb2063		out:5	undocumented		
@@ -23514,7 +23514,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x13ac	12
 IP27/usr/cpu/sysgen/IP27boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1424	64	psync	dwarf+symtab	2238675c5e26		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1464	32	vtop	dwarf+symtab	0e062ee4c291		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1484	112	vtopv	dwarf+symtab	94d0da1e3621		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x14f4	100	maputokptbl	dwarf+symtab	fe894fee225c		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x14f4	100	maputokptbl	dwarf+symtab	fe894fee225c		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1558	128	vaddr_to_pde	dwarf+symtab	bc0e6f30db18		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x15d8	212	uvaddr_to_alenlist	dwarf+symtab	a6ca66aa3a49		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(avl.o)	kernel-object	n64	.text	0x0	576	retreat	dwarf+symtab	6e6dcd27ef3c		out:3	undocumented		
@@ -24312,7 +24312,7 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-object	n64	.text	0x29c	48	ghost
 IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-object	n64	.text	0x2cc	308	kvpalloc	dwarf+symtab	af409a78e60d		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-object	n64	.text	0x400	76	kvpalloc_node_hint	dwarf+symtab	fcd10f351ce1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-object	n64	.text	0x44c	1332	kvpalloc_node	dwarf+symtab	5d8f2f2e936f		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-object	n64	.text	0x980	240	kvalloc	dwarf+symtab	5f9e311bb986		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-object	n64	.text	0x980	240	kvalloc	dwarf+symtab	5f9e311bb986		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-object	n64	.text	0xa70	728	kpalloc_node	dwarf+symtab	1a816e81f655		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-object	n64	.text	0xd48	204	kmem_contig_alloc	dwarf+symtab	36673b396e65		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-object	n64	.text	0xe14	460	kmem_contig_alloc_node	dwarf+symtab	4df905e217e1		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -40107,7 +40107,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201707d8	60	pagebad	symtab	6a51349d112e		ou
 IP30/unix	kernel	n64	.text	0xa800000020170814	40	ghostpagedone	symtab	751731e705f5		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002017083c	48	ghostpagewait	symtab	cceee586f587		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002017086c	1072	kvpalloc	symtab	6d210d01db6d		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP30/unix	kernel	n64	.text	0xa800000020170c9c	212	kvalloc	symtab	a48fa85839c5		out:7	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa800000020170c9c	212	kvalloc	symtab	a48fa85839c5		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa800000020170fd4	428	kmem_contig_alloc	symtab	0941e5ab4f82		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020171180	780	kmem_contig_free	symtab	38ef1ca0d5b5		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa80000002017148c	636	kvpffree	symtab	136599d96584		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
@@ -40766,7 +40766,7 @@ IP30/unix	kernel	n64	.text	0xa8000000201a6ab0	120	pflip	symtab	35339a7c1f50		out
 IP30/unix	kernel	n64	.text	0xa8000000201a6b28	64	psync	symtab	a5afac11a2d9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201a6b68	32	vtop	symtab	d1036885c10f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201a6b88	112	vtopv	symtab	c659f20260b3		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201a6bf8	100	maputokptbl	symtab	2b9ec6b520e1		out:7	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201a6bf8	100	maputokptbl	symtab	2b9ec6b520e1		out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa8000000201a6c5c	128	vaddr_to_pde	symtab	77ac89231ef7		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201a6cdc	212	uvaddr_to_alenlist	symtab	779e4bc75e15		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201a6db0	36	shaddr_init	symtab	de74473baad6		out:7	undocumented		
@@ -53822,7 +53822,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x13ac	12
 IP30/usr/cpu/sysgen/IP30boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1424	64	psync	dwarf+symtab	2238675c5e26		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1464	32	vtop	dwarf+symtab	0e062ee4c291		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1484	112	vtopv	dwarf+symtab	94d0da1e3621		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x14f4	100	maputokptbl	dwarf+symtab	fe894fee225c		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x14f4	100	maputokptbl	dwarf+symtab	fe894fee225c		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1558	128	vaddr_to_pde	dwarf+symtab	bc0e6f30db18		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x15d8	212	uvaddr_to_alenlist	dwarf+symtab	a6ca66aa3a49		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(behavior.o)	kernel-object	n64	.text	0x0	36	bhv_global_init	dwarf+symtab	14841cf7dbef		out:3	undocumented		
@@ -54558,7 +54558,7 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-object	n64	.text	0x220	60	pageb
 IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-object	n64	.text	0x25c	40	ghostpagedone	dwarf+symtab	08b04f056136		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-object	n64	.text	0x284	48	ghostpagewait	dwarf+symtab	3177056a3534		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-object	n64	.text	0x2b4	1072	kvpalloc	dwarf+symtab	78b4a869ba1c		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-object	n64	.text	0x6e4	212	kvalloc	dwarf+symtab	1828e810e5fc		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-object	n64	.text	0x6e4	212	kvalloc	dwarf+symtab	1828e810e5fc		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-object	n64	.text	0x7b8	612	kpalloc	dwarf+symtab	a3a9e4319d8b		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-object	n64	.text	0xa1c	428	kmem_contig_alloc	dwarf+symtab	6114c0fae3ba		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-object	n64	.text	0xbc8	780	kmem_contig_free	dwarf+symtab	bb5ce83d30e0		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -70320,7 +70320,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(as_scalls.o)	kernel-object	n32	.text	0x14c8	13
 IP32/usr/cpu/sysgen/IP32boot/os.a(as_scalls.o)	kernel-object	n32	.text	0x154c	76	psync	dwarf+symtab	d4fcff9b0c60		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(as_scalls.o)	kernel-object	n32	.text	0x1598	32	vtop	dwarf+symtab	e977a9facd4b		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(as_scalls.o)	kernel-object	n32	.text	0x15b8	124	vtopv	dwarf+symtab	2a965df5c8f5		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(as_scalls.o)	kernel-object	n32	.text	0x1634	132	maputokptbl	dwarf+symtab	557cb3e48c9e		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(as_scalls.o)	kernel-object	n32	.text	0x1634	132	maputokptbl	dwarf+symtab	557cb3e48c9e		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/os.a(as_scalls.o)	kernel-object	n32	.text	0x16b8	140	vaddr_to_pde	dwarf+symtab	45476316d93b		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(as_scalls.o)	kernel-object	n32	.text	0x1744	224	uvaddr_to_alenlist	dwarf+symtab	3e083124bca9		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(avl.o)	kernel-object	n32	.text	0x0	588	retreat	dwarf+funcnames+symtab	feaca4d6f732		out:3	undocumented		
@@ -71102,7 +71102,7 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(page.o)	kernel-object	n32	.text	0x2b8	68	pageb
 IP32/usr/cpu/sysgen/IP32boot/os.a(page.o)	kernel-object	n32	.text	0x2fc	44	ghostpagedone	dwarf+symtab	b952ee88da93		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(page.o)	kernel-object	n32	.text	0x328	52	ghostpagewait	dwarf+symtab	5ede41ba3d04		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(page.o)	kernel-object	n32	.text	0x35c	2468	kvpalloc	dwarf+symtab	9093be93ee28		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP32/usr/cpu/sysgen/IP32boot/os.a(page.o)	kernel-object	n32	.text	0xd00	216	kvalloc	dwarf+symtab	08a8cd8a36d4		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP32/usr/cpu/sysgen/IP32boot/os.a(page.o)	kernel-object	n32	.text	0xd00	216	kvalloc	dwarf+symtab	08a8cd8a36d4		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/os.a(page.o)	kernel-object	n32	.text	0xdd8	1008	kpalloc	dwarf+funcnames+symtab	71067b71e0cc		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(page.o)	kernel-object	n32	.text	0x11c8	988	kmem_contig_alloc	dwarf+symtab	202b399e612a		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(page.o)	kernel-object	n32	.text	0x15a4	852	kmem_contig_free	dwarf+symtab	5bfecdbb377d		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
@@ -88374,7 +88374,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x143c	12
 IP35/usr/cpu/sysgen/IP35boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x14b4	64	psync	dwarf+symtab	2238675c5e26		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x14f4	32	vtop	dwarf+symtab	0e062ee4c291		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1514	112	vtopv	dwarf+symtab	94d0da1e3621		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1584	100	maputokptbl	dwarf+symtab	fe894fee225c		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1584	100	maputokptbl	dwarf+symtab	fe894fee225c		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x15e8	128	vaddr_to_pde	dwarf+symtab	bc0e6f30db18		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(as_scalls.o)	kernel-object	n64	.text	0x1668	212	uvaddr_to_alenlist	dwarf+symtab	a6ca66aa3a49		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(behavior.o)	kernel-object	n64	.text	0x0	36	bhv_global_init	dwarf+symtab	14841cf7dbef		out:3	undocumented		
@@ -89117,7 +89117,7 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(page.o)	kernel-object	n64	.text	0x29c	48	ghost
 IP35/usr/cpu/sysgen/IP35boot/os.a(page.o)	kernel-object	n64	.text	0x2cc	308	kvpalloc	dwarf+symtab	25a3ecdad936		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/os.a(page.o)	kernel-object	n64	.text	0x400	76	kvpalloc_node_hint	dwarf+symtab	fcd10f351ce1		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(page.o)	kernel-object	n64	.text	0x44c	1332	kvpalloc_node	dwarf+symtab	33b9f6b55e31		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(page.o)	kernel-object	n64	.text	0x980	240	kvalloc	dwarf+symtab	5f9e311bb986		out:3	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
+IP35/usr/cpu/sysgen/IP35boot/os.a(page.o)	kernel-object	n64	.text	0x980	240	kvalloc	dwarf+symtab	5f9e311bb986		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/os.a(page.o)	kernel-object	n64	.text	0xa70	732	kpalloc_node	dwarf+symtab	4c142e7337b3		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(page.o)	kernel-object	n64	.text	0xd4c	204	kmem_contig_alloc	dwarf+symtab	d4d3c4ce0843		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(page.o)	kernel-object	n64	.text	0xe18	460	kmem_contig_alloc_node	dwarf+symtab	ae678463d061		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
