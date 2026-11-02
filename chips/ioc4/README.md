@@ -65,7 +65,7 @@ constant is itself the fact), **I** inferred, **U** unknown. Widths are 32-bit w
 | `0x40 + 4n` | GPIO pin n | 4 | w | `ioc4_set_proto` writes 0 or 1 to a pin number kept in the port's record | I |
 | `0x100` to `0x11c` | ATA command block, 8 words | 4 | rw | `ide.o` (below), index n at `0x100 + 4n` | I |
 | `0x120` | ATA control block | 4 | w | `ide.o` (below) | I |
-| `0x140` to `0x160` | ATA DMA block, 9 words | 4 | rw | `ide.o` (below), index n at `0x140 + 4n` | 7 I, 2 U |
+| `0x140` to `0x160` | ATA DMA block, 9 words | 4 | rw | `ide.o` (below), index n at `0x140 + 4n` | 6 I (indices 1, 2, 5, 6, 7, 8), 3 U (0, 3, 4) |
 | `0x200` | keyboard and mouse control | 4 | rw | `ioc4_pckm_attach` stores `0xc00000`; `pckm_sendok` polls bits 0 and 1; `pckm_restart` sets bit 18 or 19 | E |
 | `0x204`, `0x208` | keyboard, mouse receive | 4 | r | `pckm_pollcmd` reads one by port | E |
 | `0x20c`, `0x210` | keyboard, mouse transmit | 4 | w | `pckm_pollcmd` writes one by port | E |
@@ -76,8 +76,8 @@ constant is itself the fact), **I** inferred, **U** unknown. Widths are 32-bit w
 | `0x387` | UART 0 register 7 | 1 | w | `set_baud_ti` stores a computed value | I |
 
 **59 register kinds** (the GPIO pins as one family; the four serial ports' repeats are not counted again; the ATA command
-block counts eight kinds and the DMA block nine): **32 established, 23 inferred, 4 unknown.** The unknowns are `0x24`, `0x38`
-and DMA indices 6 and 8 (no access with a constant index reaches them).
+block counts eight kinds and the DMA block nine): **32 established, 22 inferred, 5 unknown.** The unknowns are `0x24`, `0x38`
+and DMA indices 0, 3 and 4 (no IOC4 path reaches them).
 
 ### Interrupt registers (`0x8` to `0x1c`): established
 
@@ -168,10 +168,15 @@ Established.
 - **Control block** (`0x120`, record +488): accessed by `xide_bus_reset`, `xide_piocommand` and `xide_execute_device_diagnostic`, mostly
   writes; inferred: the ATA device control register. (The index arguments the call-site pass could recover for this base are
   stale values of an earlier argument, so no index is claimed.)
-- **DMA block** (`0x140`, record +496): indices 0 to 5 and 7 are accessed by `xide_pktDMA_start`, `xide_pktDMA_complete` and
-  `xide_dma_init` (32-bit writes to 1, 2 and 4 in `xide_pktDMA_start`; byte accesses to 0, 2, 3 and 7; a halfword read of 5 in
-  `xide_pktDMA_complete`). Indices 6 and 8 are not accessed with a constant (`xide_pktDMA_start` also writes index 8 of a different
-  base, a record pointer plus 6840, which is not this mapping). Roles: inferred only.
+- **DMA block** (`0x140`, record +496; established: `xide_pktDMA_start` `0x2d30`, 892 bytes, `xide_pktDMA_complete` `0x30ac`, 612 bytes and `xide_dma_init` `0x6290`, 908 bytes, read in full; these three and `xide_attach`'s pointer stores are the only routines of `ide.o` that load the record's DMA pointer).
+  Each routine first compares the controller's vendor halfword (record +286) with `0x1095` (another vendor's controller, which gets its own path) and `0x10a9` (this chip); any other value returns 0. Index n is the 32-bit word at `0x140 + 4n`.
+  Earlier text on this page credited the other vendor's path accesses to this chip; they are removed here.
+  - `xide_dma_init` touches no register on this chip: the `0x10a9` case falls through to `return 0` (its other path computes a transfer-mode value from the drive's identify words and writes the other controller's registers and PCI configuration bytes 81 and 83 to 86).
+  - `xide_pktDMA_start`, this chip's path, in order: read index 7; if bit 3 is set, write 2 to index 7 and re-read it up to 100 times (a `delay` call before each read) until bit 1 reads clear, printing a message on the 100th failure; read index 7 again, and if bit 4 is set write 2 to it and poll bit 1 up to 100 times without the delay call (same message on failure);
+    write the low 32 bits of the 64-bit bus address held at request +32 to index 1 and the high 32 bits to index 2; clear 128 bytes at controller +392 (`bzero`, a table in memory); write the 32-bit word at controller +388 to index 8; set the byte at request +224 to 64; write 1, or 5 when bit 0 of the halfword at +18 of the request's command record is set, to index 7 (the last access, the start).
+  - `xide_pktDMA_complete`, this chip's path: write 2 to index 7 and poll bit 1 clear up to 100 times; read index 7 (byte), index 5 and index 6 (both read as 32-bit words and masked to 16 bits by the halfword accessor); print them and their bits 4:1; return 16 (an error code) when index 7 bit 4 is set or the byte at controller +271 (the latch `xide_intr_clear` sets on a memory error) is nonzero; otherwise return 0. The only other effect is a warning, printed when index 6 plus 8 (the whole values) is below index 5, and skipped when both values have zero in their low 9 bits (whole-value compare, then the return 0 is the same either way). Return values for the other vendor's path are not read here.
+  - Roles (inferred; no spec and no string names them): 1 and 2 are the low and high halves of the transfer's bus address (what the start writes there); 8 is the bus address of the 128-byte table (what the start stores from +388 after clearing the table at +392); 7 is a control and status byte, written 2 to clear or abort, 1 or 5 to start (bit 2 is set for one transfer direction), with bit 1 busy while it clears, and bits 3 and 4 tested before a new transfer, bit 4 an error; 5 and 6 are counters (their low 9 bits are what the completion compares).
+    Indices 0, 3 and 4 are not accessed on this chip by any `ide.o` routine; the other vendor's path writes 0, 2, 3 and 4 of the same base with its own meaning, which does not carry over.
 
 ### Keyboard and mouse (established)
 
@@ -199,7 +204,7 @@ exists. The PIC and Bedrock side of IP35 is in [../pic/README.md](../pic/README.
 | UART byte lane | line control at UART+3 | `ioc4_uartregs` puts line control first | differ in lane, as expected: IRIX is big-endian and Linux ia64 little-endian, so the lane order mirrors; inferred |
 | ATA windows | `0x0` (32 bytes), `0x100` (32), `0x120` (4), `0x140` (36) | `IOC4_INTR_OFFSET 0`, `IOC4_CMD_OFFSET 0x100`, `IOC4_CTRL_OFFSET 0x120`, `IOC4_DMA_OFFSET 0x140`, `IOC4_CMD_CTL_BLK_SIZE 0x20` | agree |
 | ATA interrupt indices | block indices 3 (status) and 5 (enable set) | `IOC4_INTR_REG 3`, `IOC4_INTR_SET 5`, `IOC4_INTR_CLEAR 7` | agree; and the four-byte stride |
-| ATA DMA words | 32-bit writes at indices 1, 2, 4; byte accesses at 0, 2, 3, 7 | `IOC4_DMA_PTR_L 1`, `PTR_H 2`, `ADDR_H 4`, `DMA_CTRL 7`, `TIMING 0`, `BC_DEV 5`, `BC_MEM 6` | the touched index set is a subset of the public names; roles were not read in IRIX |
+| ATA DMA words | 32-bit writes at indices 1, 2 and 8 and byte writes at 7 in `xide_pktDMA_start`; reads of 5, 6 and 7 in `xide_pktDMA_complete` | `IOC4_DMA_PTR_L 1`, `PTR_H 2`, `DMA_CTRL 7`, `BC_DEV 5`, `BC_MEM 6`, `ADDR_H 4`, `TIMING 0` | agree on 1, 2, 5, 6 and 7; IRIX also writes index 8, which is not in the names read; indices 0 and 4 are not touched on this chip |
 | DMA error read of index 4 | `xide_intr_clear` reads index 4 after index 0 and only prints it, labelled the high word | high word is at `0x4` (index 1) | **differ**; the read has no effect except a debug line, so the contract is unaffected (the routine is read in full) |
 
 ## Reset expectations
@@ -209,8 +214,7 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 ## Open
 
 - **`0x24`**: what bits 3:0 do. The trigger is read in full (see "Control, GPIO and the unnamed `0x24`"); the register's role is not in any shipped string. No further software route is known; valid end state unless a published IOC4 erratum or a PCI-X IOC4 driver names it.
-- **ATA register roles**: the command, control and DMA block roles are inferred from index order and the public driver; the DMA
-  register meanings need `xide_pktDMA_start` and `xide_dma_init` read in full.
+- **ATA register roles**: the command and control block roles are inferred from index order and the public driver. The DMA block's accesses are read in full (see "ATA controller"); its role names stay inferred.
 - **Ports 1 to 3 GPIO pins and the per-port tables** are static data not extracted.
 - **`ioc4_error_handler` and `ioc4_intr`/`ioc4_intrd`** are read for their accesses only.
 - **Interrupt dispatch**: which `sio_ir` and `other_ir` bits each handler claims is not read.
