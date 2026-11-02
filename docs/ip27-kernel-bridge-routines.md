@@ -87,7 +87,7 @@ which choose among Bridge, XBridge, PIC and TIOCP at run time as described in [c
 - `pcireg_int_ate_addr` (`IP27/unix` at 0xc000000000089340,
   596 bytes) returns the address of one internal address-translation entry of a Bridge-family chip instead of reading it. It takes the chip's register-block pointer or the
   per-chip record in `a0` and the entry index in `a1`, and returns the base plus `index * 8 + 0x10000`, where the base is the raw pointer or the doubleword at record +0x8. A
-  record of type 3, 2 or 1 accepts indexes up to and including 1024 (`assfail` with source lines 3131, 3135 and 3139) and type 0 up to and including 128 (line 3143);
+  record of type 3, 2 or 1 accepts indexes from 0 up to and including 1024 (a negative index fails the same check; the address is returned either way) (`assfail` with source lines 3131, 3135 and 3139) and type 0 up to and including 128 (line 3143);
   the same limits follow from the raw dispatch: parts 0xe000, 0xe010, 0xd102, 0xd112 and 0xd002 (manufacturer 36) allow 1024 and 0xc002 (manufacturer 54) allows 128.
   A null `a0`, a type of -1 or an unknown raw part calls `panic` ("pcireg_int_ate_addr(): unknown bridgetype") and returns 0; any other record type returns 0 without a
   message. It touches no register. Established. Inferred: that the entries are the chip's address-translation table, from the 0x10000 base shared with the get and set accessors.

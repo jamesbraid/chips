@@ -462,7 +462,7 @@ issued, including delay slots, which run before the branch or call they belong t
 - `heart_dmamap_done` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xdb8`, 8 bytes, read in full, established): a `jr
   ra` at `0xdb8` and a nop at `0xdbc`. The entry arguments are ignored.
 - `heart_dmamap_drain` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xf4c`, 8 bytes, read in full, established):
-  consists of `jr ra` at `0xf4c` and a nop at `0xf50`. It does nothing else.
+  consists of `jr ra` at `0xf4c` and a nop at `0xf50`. It does nothing else. The kernel `IP30/unix` carries the same two instructions at `0xa80000002003f7b4`.
 - `heart_dmaaddr_drain` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xf54`, 8 bytes, read in full, established): `jr
   ra` at `0xf54` followed by a nop at `0xf58`.
 - `heart_dmalist_drain` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xf5c`, 8 bytes, read in full, established): `jr

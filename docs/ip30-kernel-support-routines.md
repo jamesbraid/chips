@@ -10,17 +10,19 @@ running the code and the doubleword at -15744 holds that processor's flag bits.
   0xa8000000204b0380 indexed by the processor number, and reads the free-running counter at 0xffffffffaff20000 for the
   timestamp. The log has two modes. When the word at structure +0x310 is nonzero it uses a private ring: the record at
   the pointer in +0x300 is filled in the order timestamp (+0x8), fifth argument (+0x28), fourth (+0x20), third
-  (+0x18), second (+0x10), then the event code at +0x0, and the pointer advances by 48 bytes or wraps to the start in
-  +0x2f8 when it was below the limit in +0x308. When it is zero it uses the shared ring at +0x288 if one exists: when
+  (+0x18), second (+0x10), then the event code at +0x0, and the pointer advances by 48 bytes while it is below the limit in +0x308 and
+  otherwise wraps to the start in +0x2f8. When it is zero it uses the shared ring at +0x288 if one exists: when
   the first word of the shared header is nonzero it adds 1 to it with `ll` and `sc` and stops; otherwise it takes a
-  slot with `atomicIncWithWrap` on the header's word at +8 (wrap size at +0x14), adds 1 to the header's first word the
-  same way and stops when the slot's first word is already nonzero, fills its arguments, chooses the timestamp (the
-  current count, or one less than the following slot's when that is not later), clears the halfword at +6, stores the
+  slot with `atomicIncWithWrap` on the header's word at +8 (wrap size at +0x14 of the ring descriptor; the slots are 48 bytes each from the base in +0x2f8), adds 1 to the header's
+  first word the same way and stops when the slot's first word is already nonzero, fills its arguments, chooses the timestamp (the
+  current count, unless the following slot is in use and its stamp is not later than the count, in which case one less
+  than that stamp), clears the halfword at +6, stores the
   event code and bumps the used count at header +4 with `ll` and `sc`. When the used count reaches the threshold at
   +0x18, the reader count at +0x28 is nonzero, the event code is not 0xea62 and no per-processor suppression byte (at
-  -16302) is set, it raises the interrupt level with `spl1` (only when `issplprof` says the current level allows it),
-  calls `compare_and_dec_int_gt` on the reader count and, when that succeeds, `sv_signal` on the semaphore at +0x20,
-  and restores the level with `splx`. The routine returns nothing. Established.
+  -16302) is set, it reads the status register (`getsr`) and passes it to `issplprof`: a nonzero answer ends the routine
+  with no wake-up at all. On a zero answer it raises the level with `spl1`, re-reads the ring descriptor and repeats the
+  used-count and reader-count tests, calls `compare_and_dec_int_gt` on the reader count and, when that succeeds,
+  `sv_signal` on the semaphore at +0x20, and restores the level with `splx`. The routine returns nothing. Established.
 - `log_tstamp_vevent` (`IP30/unix` `0xa8000000201f29f8`, 1168 bytes, frame 112 bytes) is the variable-length sibling
   of `log_tstamp_event`: the second argument points to a payload and the third is its length in bytes. In the private
   mode it rounds the record to a multiple of 48 bytes by ((length + 7) / 40) + 1 slots, wrapping the pointer in +0x300
