@@ -4281,8 +4281,8 @@ IP27/unix	kernel	n64	.text	0xc00000000001fb00	88	swcopyout	symtab	227239aa6ec4		
 IP27/unix	kernel	n64	.text	0xc00000000001fb58	140	uzero	symtab	76f2a0f2c713		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001fbe4	20	cerror	symtab	0450a8508780		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001fbf8	276	memset	symtab	327dd5bf2d15		out:5	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP27/unix	kernel	n64	.text	0xc00000000001fd0c	60	blkclr	symtab	438bc6af403a	shared-address	out:5	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP27/unix	kernel	n64	.text	0xc00000000001fd0c	164	bzero	symtab	62975b520d71	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP27/unix	kernel	n64	.text	0xc00000000001fd0c	60	blkclr	symtab	438bc6af403a	shared-address	out:5	named-only		
+IP27/unix	kernel	n64	.text	0xc00000000001fd0c	164	bzero	symtab	62975b520d71	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc00000000001fd48	104	bzero_pref	symtab	721fae2475d8		out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000001fdb0	8	bzero_end	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000001fdb0	8	bzerror	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
@@ -4320,8 +4320,8 @@ IP27/unix	kernel	n64	.text	0xc000000000020370	36	ustore_half	symtab	c2f010b1e045
 IP27/unix	kernel	n64	.text	0xc000000000020394	8	fixade_error	symtab	4429c69e8a79		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000002039c	1184	memcpy	symtab	a6e4b004a38a	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000002039c	12	memmove	symtab	28a29cd9f9c9	shared-address	out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000203a8	116	bcopy	symtab	7c904a821cc2	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP27/unix	kernel	n64	.text	0xc0000000000203a8	116	ovbcopy	symtab	7c904a821cc2	shared-address	out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP27/unix	kernel	n64	.text	0xc0000000000203a8	116	bcopy	symtab	7c904a821cc2	shared-address	out:5	named-only		
+IP27/unix	kernel	n64	.text	0xc0000000000203a8	116	ovbcopy	symtab	7c904a821cc2	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc00000000002041c	80	bcopy_pref1	symtab	c76e59900c0d		out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000002046c	976	bcopy_pref2	symtab	355b16806386		out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000002083c	56	bcopy_end	symtab	ba3fe49622f3	shared-address	out:5	undocumented		
@@ -4707,30 +4707,30 @@ IP27/unix	kernel	n64	.text	0xc00000000003ace8	308	bte_crb_error_handler	symtab	a
 IP27/unix	kernel	n64	.text	0xc00000000003ae1c	944	bte_stall_node	symtab	8de5cc844c93		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003b1cc	292	bte_bpush_war	symtab	f63eb1c49c47		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003b2f0	28	spl0	symtab	77e42c3ec2cb		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	spl1	symtab	d20175b8aee2	shared-address	out:5	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	spl1	symtab	d20175b8aee2	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	spl3	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	spl5	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	spl6	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splgio0	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splgio1	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splgio2	symtab	d20175b8aee2	shared-address	out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhi	symtab	d20175b8aee2	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhi	symtab	d20175b8aee2	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhi_relnet	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splhintr	symtab	d20175b8aee2	shared-address	out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splimp	symtab	d20175b8aee2	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splnet	symtab	d20175b8aee2	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splimp	symtab	d20175b8aee2	shared-address	out:5	named-only		
+IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splnet	symtab	d20175b8aee2	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splretr	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	spltty	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b30c	24	splvme	symtab	d20175b8aee2	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b324	40	issplhi	symtab	0bf45e8a55b9		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b34c	40	issplprof	symtab	670bb52d4881		out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc00000000003b374	48	isspl7	symtab	ee94d618c138		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003b3a4	24	spl65	symtab	dafe8229ec55	shared-address	out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/unix	kernel	n64	.text	0xc00000000003b3a4	24	splprof	symtab	dafe8229ec55	shared-address	out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/unix	kernel	n64	.text	0xc00000000003b3bc	24	spl7	symtab	16c7bb5d00be	shared-address	out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP27/unix	kernel	n64	.text	0xc00000000003b3bc	24	splerr	symtab	16c7bb5d00be	shared-address	out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP27/unix	kernel	n64	.text	0xc00000000003b3a4	24	spl65	symtab	dafe8229ec55	shared-address	out:5	named-only		
+IP27/unix	kernel	n64	.text	0xc00000000003b3a4	24	splprof	symtab	dafe8229ec55	shared-address	out:5	named-only		
+IP27/unix	kernel	n64	.text	0xc00000000003b3bc	24	spl7	symtab	16c7bb5d00be	shared-address	out:5	named-only		
+IP27/unix	kernel	n64	.text	0xc00000000003b3bc	24	splerr	symtab	16c7bb5d00be	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc00000000003b3d4	32	splecc	symtab	8a6f9bd0170c		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003b3f4	28	splx	symtab	50d1a155518b	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
+IP27/unix	kernel	n64	.text	0xc00000000003b3f4	28	splx	symtab	50d1a155518b	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc00000000003b3f4	28	splxecc	symtab	50d1a155518b	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b410	32	isspl0	symtab	9bdb1538e91c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003b430	8	delay_for_intr	symtab	78aa5094d5ec		out:5	undocumented		
@@ -4896,7 +4896,7 @@ IP27/unix	kernel	n64	.text	0xc000000000043730	8	dcache_wb	symtab	78aa5094d5ec	sh
 IP27/unix	kernel	n64	.text	0xc000000000043730	8	dcache_wbinval	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000043730	8	dki_dcache_inval	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000043730	8	dki_dcache_wb	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000043730	8	dki_dcache_wbinval	symtab	78aa5094d5ec	shared-address	out:5	named-only	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
+IP27/unix	kernel	n64	.text	0xc000000000043730	8	dki_dcache_wbinval	symtab	78aa5094d5ec	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc000000000043730	8	dummy_func	symtab	78aa5094d5ec	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000043738	208	bootstrap	symtab	4a9e2b428ea6		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000043808	168	mapped_kernel_setup_tlb	symtab	a4decd02e59c		out:5	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -4997,7 +4997,7 @@ IP27/unix	kernel	n64	.text	0xc000000000047d74	36	atomicFieldAssignUint	symtab	f5
 IP27/unix	kernel	n64	.text	0xc000000000047d98	36	atomicClearCpumask	symtab	8d9ece15d049		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047dbc	32	atomicAddInt64	symtab	79b77734d479	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047dbc	32	atomicAddUint64	symtab	79b77734d479	shared-address	out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000047ddc	32	atomicAddInt64Hot2	symtab	3ad5d1d780d4	shared-address	out:5	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP27/unix	kernel	n64	.text	0xc000000000047ddc	32	atomicAddInt64Hot2	symtab	3ad5d1d780d4	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc000000000047ddc	32	atomicAddUint64Hot2	symtab	3ad5d1d780d4	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047dfc	56	atomicPush	symtab	3f55c5561aaf		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000047e34	44	atomicPull	symtab	a4bc4b646893		out:5	undocumented		
@@ -5011,8 +5011,8 @@ IP27/unix	kernel	n64	.text	0xc000000000047f50	156	bitlock_condacq	symtab	95bb416
 IP27/unix	kernel	n64	.text	0xc000000000047fec	156	bitlock_condacq_32bit	symtab	60fdb0a48a06		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000048088	28	mutex_set_always	symtab	1be725d32eca		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000480a4	28	test_and_set_int	symtab	a6100690a0d0		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000480c0	28	test_and_set_int64	symtab	71854da0bc74	shared-address	out:5	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/unix	kernel	n64	.text	0xc0000000000480c0	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:5	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/unix	kernel	n64	.text	0xc0000000000480c0	28	test_and_set_int64	symtab	71854da0bc74	shared-address	out:5	named-only		
+IP27/unix	kernel	n64	.text	0xc0000000000480c0	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc0000000000480c0	28	test_and_set_ptr	symtab	71854da0bc74	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000480dc	28	swap_int	symtab	646c2554eb36		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000480f8	152	compare_and_swap_int	symtab	fa0b34ecb5ca		out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -5022,7 +5022,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000482c4	156	compare_and_dec_int_gt_hot2	sy
 IP27/unix	kernel	n64	.text	0xc000000000048360	28	swap_int64	symtab	1be725d32eca	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000048360	28	swap_long	symtab	1be725d32eca	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000048360	28	swap_ptr	symtab	1be725d32eca	shared-address	out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_int64	symtab	e993d0870d2c	shared-address	out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_int64	symtab	e993d0870d2c	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_kt	symtab	e993d0870d2c	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_long	symtab	e993d0870d2c	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004837c	152	compare_and_swap_ptr	symtab	e993d0870d2c	shared-address	out:5	undocumented		
@@ -5201,7 +5201,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000533d0	32	VEC_unexp	symtab	8e64d9c7b1d1		
 IP27/unix	kernel	n64	.text	0xc0000000000533f0	288	backtouser_rsa	symtab	ca87f8ceedee		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000053510	148	backtouser	symtab	c67c2c59fb41		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000535b0	12	_get_count	symtab	88b3839417d9	shared-address	out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000535b0	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP27/unix	kernel	n64	.text	0xc0000000000535b0	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc0000000000535bc	12	_get_compare	symtab	c1f9913f23f1		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000000535c8	12	_set_count	symtab	fceb04cdbe22		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000535d4	84	resetcounter	symtab	70c33a9c3f2b		out:5	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -18598,8 +18598,8 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6980	88	swcopyou
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x69d8	140	uzero	dwarf+symtab	fae4f94bac2d		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6a64	20	cerror	dwarf+symtab	0450a8508780		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6a78	276	memset	dwarf+symtab	327dd5bf2d15		out:6	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6b8c	60	blkclr	symtab	438bc6af403a	shared-address	out:6	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6b8c	164	bzero	dwarf+symtab	62975b520d71	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6b8c	60	blkclr	symtab	438bc6af403a	shared-address	out:6	named-only		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6b8c	164	bzero	dwarf+symtab	62975b520d71	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6bc8	104	bzero_pref	symtab	721fae2475d8		out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6c30	8	bzero_end	symtab	78aa5094d5ec	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x6c30	8	bzerror	dwarf+symtab	78aa5094d5ec	shared-address	out:6	undocumented		
@@ -18637,8 +18637,8 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x71f0	36	ustore_h
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x7214	8	fixade_error	dwarf+symtab	4429c69e8a79		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x721c	1184	memcpy	dwarf+symtab	a6e4b004a38a	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x721c	12	memmove	symtab	28a29cd9f9c9	shared-address	out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x7228	116	bcopy	symtab	7c904a821cc2	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x7228	116	ovbcopy	symtab	7c904a821cc2	shared-address	out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x7228	116	bcopy	symtab	7c904a821cc2	shared-address	out:6	named-only		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x7228	116	ovbcopy	symtab	7c904a821cc2	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x729c	80	bcopy_pref1	symtab	c76e59900c0d		out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x72ec	976	bcopy_pref2	symtab	355b16806386		out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x76bc	56	bcopy_end	symtab	ba3fe49622f3	shared-address	out:6	undocumented		
@@ -19104,30 +19104,30 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21b68	308	bte_cr
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x21c9c	944	bte_stall_node	dwarf+symtab	cc9bdf047a13		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2204c	292	bte_bpush_war	dwarf+symtab	1d701e1dc957		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22170	28	spl0	dwarf+symtab	77e42c3ec2cb		out:6	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	spl1	symtab	d20175b8aee2	shared-address	out:6	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	spl1	symtab	d20175b8aee2	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	spl3	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	spl5	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	spl6	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splgio0	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splgio1	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splgio2	symtab	d20175b8aee2	shared-address	out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhi	dwarf+symtab	d20175b8aee2	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhi	dwarf+symtab	d20175b8aee2	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhi_relnet	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splhintr	symtab	d20175b8aee2	shared-address	out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splimp	symtab	d20175b8aee2	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splnet	symtab	d20175b8aee2	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splimp	symtab	d20175b8aee2	shared-address	out:6	named-only		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splnet	symtab	d20175b8aee2	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splretr	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	spltty	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2218c	24	splvme	symtab	d20175b8aee2	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x221a4	40	issplhi	dwarf+symtab	0bf45e8a55b9		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x221cc	40	issplprof	dwarf+symtab	670bb52d4881		out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x221f4	48	isspl7	dwarf+symtab	ee94d618c138		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22224	24	spl65	symtab	dafe8229ec55	shared-address	out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22224	24	splprof	dwarf+symtab	dafe8229ec55	shared-address	out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2223c	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2223c	24	splerr	symtab	16c7bb5d00be	shared-address	out:6	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22224	24	spl65	symtab	dafe8229ec55	shared-address	out:6	named-only		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22224	24	splprof	dwarf+symtab	dafe8229ec55	shared-address	out:6	named-only		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2223c	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:6	named-only		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2223c	24	splerr	symtab	16c7bb5d00be	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22254	32	splecc	dwarf+symtab	8a6f9bd0170c		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22274	28	splx	dwarf+symtab	50d1a155518b	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22274	28	splx	dwarf+symtab	50d1a155518b	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22274	28	splxecc	symtab	50d1a155518b	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x22290	32	isspl0	dwarf+symtab	9bdb1538e91c		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x222b0	8	delay_for_intr	dwarf+symtab	78aa5094d5ec		out:6	undocumented		
@@ -19317,7 +19317,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dcache_w
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dcache_wbinval	symtab	78aa5094d5ec	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dki_dcache_inval	symtab	78aa5094d5ec	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dki_dcache_wb	symtab	78aa5094d5ec	shared-address	out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dki_dcache_wbinval	symtab	78aa5094d5ec	shared-address	out:6	named-only	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dki_dcache_wbinval	symtab	78aa5094d5ec	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b0	8	dummy_func	dwarf+symtab	78aa5094d5ec	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a5b8	208	bootstrap	dwarf+symtab	81eb9fafe9d5		out:6	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2a688	168	mapped_kernel_setup_tlb	dwarf+symtab	30b324c402ed		out:6	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -19425,7 +19425,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ebf4	36	atomicF
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ec18	36	atomicClearCpumask	dwarf+symtab	8d9ece15d049		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ec3c	32	atomicAddInt64	dwarf+symtab	79b77734d479	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ec3c	32	atomicAddUint64	symtab	79b77734d479	shared-address	out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ec5c	32	atomicAddInt64Hot2	dwarf+symtab	3ad5d1d780d4	shared-address	out:6	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ec5c	32	atomicAddInt64Hot2	dwarf+symtab	3ad5d1d780d4	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ec5c	32	atomicAddUint64Hot2	symtab	3ad5d1d780d4	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ec7c	56	atomicPush	dwarf+symtab	3f55c5561aaf		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ecb4	44	atomicPull	dwarf+symtab	a4bc4b646893		out:6	undocumented		
@@ -19439,8 +19439,8 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2edd0	156	bitloc
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ee6c	156	bitlock_condacq_32bit	dwarf+symtab	60fdb0a48a06		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef08	28	mutex_set_always	dwarf+symtab	1be725d32eca		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef24	28	test_and_set_int	dwarf+symtab	a6100690a0d0		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef40	28	test_and_set_int64	dwarf+symtab	71854da0bc74	shared-address	out:6	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef40	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:6	named-only	docs/open-questions.md#open-questions	Open questions
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef40	28	test_and_set_int64	dwarf+symtab	71854da0bc74	shared-address	out:6	named-only		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef40	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef40	28	test_and_set_ptr	symtab	71854da0bc74	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef5c	28	swap_int	dwarf+symtab	646c2554eb36		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2ef78	152	compare_and_swap_int	dwarf+symtab	fa0b34ecb5ca		out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -19450,7 +19450,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f144	156	compar
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1e0	28	swap_int64	dwarf+symtab	1be725d32eca	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1e0	28	swap_long	symtab	1be725d32eca	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1e0	28	swap_ptr	symtab	1be725d32eca	shared-address	out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_int64	dwarf+symtab	e993d0870d2c	shared-address	out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_int64	dwarf+symtab	e993d0870d2c	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_kt	symtab	e993d0870d2c	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_long	symtab	e993d0870d2c	shared-address	out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2f1fc	152	compare_and_swap_ptr	symtab	e993d0870d2c	shared-address	out:6	undocumented		
@@ -19643,7 +19643,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a250	32	VEC_une
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a270	288	backtouser_rsa	dwarf+symtab	f85052a77181		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a390	148	backtouser	dwarf+symtab	618c1bffd92e		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a430	12	_get_count	dwarf+symtab	88b3839417d9	shared-address	out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a430	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:6	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a430	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a43c	12	_get_compare	dwarf+symtab	c1f9913f23f1		out:6	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a448	12	_set_count	dwarf+symtab	fceb04cdbe22		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x3a454	84	resetcounter	dwarf+symtab	70c33a9c3f2b		out:6	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -21913,16 +21913,16 @@ IP27/usr/cpu/sysgen/IP27boot/nolocks.a(cnolocks.o)	kernel-object	n64	.text	0xa0	
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(cnolocks.o)	kernel-object	n64	.text	0xb4	8	destroy_64bitlock	dwarf+symtab	78aa5094d5ec		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_64bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only		
+IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/ip27-kernel-entropy-readers.md#kernel-routines-that-read-the-hub-real-time-counter-for-entropy-ip27-build	Kernel routines that read the Hub real-time counter for entropy (IP27 build)
+IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_64bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x20	8	mutex_bitlock_spl	dwarf+symtab	0cccebfff1c4		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_tryspinlock_spl	symtab	90248ee03ac0	shared-address	out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x30	8	nested_spintrylock	dwarf+symtab	a7e7ca11a6b8		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x38	8	mutex_64bitunlock	symtab	a7e57193e8ea	shared-address	out:3	undocumented		
@@ -36447,29 +36447,29 @@ IP30/unix	kernel	n64	.text	0xa8000000200111ac	68	resumeidle	symtab	a3db8b84fc85	
 IP30/unix	kernel	n64	.text	0xa8000000200111f0	60	toidlestk	symtab	85d17e1eb426		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001122c	60	setjmp	symtab	99dfa838538b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011268	60	longjmp	symtab	925d6d0f3f0a		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020011300	8	ackkgclock	symtab	78aa5094d5ec	shared-address	out:7	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP30/unix	kernel	n64	.text	0xa800000020011300	8	ackkgclock	symtab	78aa5094d5ec	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	allowintrs	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	apsfail	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020011300	8	bump_leds	symtab	78aa5094d5ec	shared-address	out:7	named-only	chips/mace/README.md#other-rows	Other rows
+IP30/unix	kernel	n64	.text	0xa800000020011300	8	bump_leds	symtab	78aa5094d5ec	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	check_delay_iflush	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	disallowboot	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	dma_mapinit	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	dummy_func	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020011300	8	heart_dcache_inval	symtab	78aa5094d5ec	shared-address	in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/unix	kernel	n64	.text	0xa800000020011300	8	heart_dcache_wb_inval	symtab	78aa5094d5ec	shared-address	in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/unix	kernel	n64	.text	0xa800000020011300	8	heart_dcache_inval	symtab	78aa5094d5ec	shared-address	in	named-only		
+IP30/unix	kernel	n64	.text	0xa800000020011300	8	heart_dcache_wb_inval	symtab	78aa5094d5ec	shared-address	in	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	heart_write_dcache_inval	symtab	78aa5094d5ec	shared-address	in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	heart_write_dcache_wb_inval	symtab	78aa5094d5ec	shared-address	in	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	stopkgclock	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020011300	8	vme_init	symtab	78aa5094d5ec	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP30/unix	kernel	n64	.text	0xa800000020011300	8	vme_init	symtab	78aa5094d5ec	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	vme_ivec_init	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011300	8	wd93_init	symtab	78aa5094d5ec	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011308	12	dcache_wb	symtab	fe6c46bcec9e	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011308	12	dcache_wbinval	symtab	fe6c46bcec9e	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011308	12	dki_dcache_wb	symtab	fe6c46bcec9e	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020011308	12	dki_dcache_wbinval	symtab	fe6c46bcec9e	shared-address	out:7	named-only	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
+IP30/unix	kernel	n64	.text	0xa800000020011308	12	dki_dcache_wbinval	symtab	fe6c46bcec9e	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020011314	12	dki_dcache_inval	symtab	a974d7eff783		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011320	8	dummyret0_func	symtab	87506497337c	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020011320	8	heart_need_flush	symtab	87506497337c	shared-address	in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/unix	kernel	n64	.text	0xa800000020011320	8	heart_need_flush	symtab	87506497337c	shared-address	in	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020011320	8	is_vme_space	symtab	87506497337c	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011320	8	vme_adapter	symtab	87506497337c	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011328	12	_get_timestamp	symtab	d603fc5cc21b		in	named-only	chips/heart/README.md#register-inventory	Register inventory
@@ -36486,7 +36486,7 @@ IP30/unix	kernel	n64	.text	0xa800000020011690	16	heart_intr_hi	symtab	129523307d
 IP30/unix	kernel	n64	.text	0xa8000000200116a0	12	heart_intr_err	symtab	dbb731b0aaf4		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa8000000200116ac	456	_pagecopy	symtab	3abdad091512		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011874	176	_pagezero	symtab	caea6384e0f5		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020011980	112	resetcounter	symtab	c0c26568356e	shared-address	out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa800000020011980	112	resetcounter	symtab	c0c26568356e	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020011980	128	resetcounter_val	symtab	75f17e76d08b	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011a00	96	trimcompare	symtab	60ae07e06eed		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011a80	28	initcounter	symtab	6e26752754ef		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
@@ -36597,7 +36597,7 @@ IP30/unix	kernel	n64	.text	0xa800000020016884	36	atomicFieldAssignUint	symtab	f5
 IP30/unix	kernel	n64	.text	0xa8000000200168a8	36	atomicClearCpumask	symtab	fc3b1b9c80e9		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200168cc	32	atomicAddInt64	symtab	79b77734d479	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200168cc	32	atomicAddUint64	symtab	79b77734d479	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200168ec	32	atomicAddInt64Hot2	symtab	3ad5d1d780d4	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP30/unix	kernel	n64	.text	0xa8000000200168ec	32	atomicAddInt64Hot2	symtab	3ad5d1d780d4	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa8000000200168ec	32	atomicAddUint64Hot2	symtab	3ad5d1d780d4	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001690c	56	atomicPush	symtab	3f55c5561aaf		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016944	44	atomicPull	symtab	a4bc4b646893		out:7	undocumented		
@@ -36611,8 +36611,8 @@ IP30/unix	kernel	n64	.text	0xa800000020016a60	156	bitlock_condacq	symtab	95bb416
 IP30/unix	kernel	n64	.text	0xa800000020016afc	156	bitlock_condacq_32bit	symtab	60fdb0a48a06		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016b98	28	mutex_set_always	symtab	1be725d32eca		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016bb4	28	test_and_set_int	symtab	a6100690a0d0		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020016bd0	28	test_and_set_int64	symtab	71854da0bc74	shared-address	out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/unix	kernel	n64	.text	0xa800000020016bd0	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:7	named-only	docs/open-questions.md#open-questions	Open questions
+IP30/unix	kernel	n64	.text	0xa800000020016bd0	28	test_and_set_int64	symtab	71854da0bc74	shared-address	out:7	named-only		
+IP30/unix	kernel	n64	.text	0xa800000020016bd0	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020016bd0	28	test_and_set_ptr	symtab	71854da0bc74	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016bec	28	swap_int	symtab	646c2554eb36		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016c08	152	compare_and_swap_int	symtab	fa0b34ecb5ca		out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -36622,7 +36622,7 @@ IP30/unix	kernel	n64	.text	0xa800000020016dd4	156	compare_and_dec_int_gt_hot2	sy
 IP30/unix	kernel	n64	.text	0xa800000020016e70	28	swap_int64	symtab	1be725d32eca	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016e70	28	swap_long	symtab	1be725d32eca	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016e70	28	swap_ptr	symtab	1be725d32eca	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_int64	symtab	e993d0870d2c	shared-address	out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_int64	symtab	e993d0870d2c	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_kt	symtab	e993d0870d2c	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_long	symtab	e993d0870d2c	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020016e8c	152	compare_and_swap_ptr	symtab	e993d0870d2c	shared-address	out:7	undocumented		
@@ -36636,8 +36636,8 @@ IP30/unix	kernel	n64	.text	0xa800000020017180	88	swcopyout	symtab	40b6d96debce		
 IP30/unix	kernel	n64	.text	0xa8000000200171d8	140	uzero	symtab	37551ca9ba1b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020017264	20	cerror	symtab	0450a8508780		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020017278	276	memset	symtab	327dd5bf2d15		out:7	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP30/unix	kernel	n64	.text	0xa80000002001738c	28	blkclr	symtab	f2fe1132b195	shared-address	out:7	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP30/unix	kernel	n64	.text	0xa80000002001738c	192	bzero	symtab	bd979b0e882a	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP30/unix	kernel	n64	.text	0xa80000002001738c	28	blkclr	symtab	f2fe1132b195	shared-address	out:7	named-only		
+IP30/unix	kernel	n64	.text	0xa80000002001738c	192	bzero	symtab	bd979b0e882a	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa8000000200173a8	48	bzero_nopage	symtab	b84f8cdc2282		out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa8000000200173d8	12	bzero_stores	symtab	a8059efed35f		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200173e4	104	bzero_pref	symtab	721fae2475d8		out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -36677,8 +36677,8 @@ IP30/unix	kernel	n64	.text	0xa800000020017a0c	36	ustore_half	symtab	c2f010b1e045
 IP30/unix	kernel	n64	.text	0xa800000020017a30	8	fixade_error	symtab	4429c69e8a79		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020017a38	1224	memcpy	symtab	fe053e530b22	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020017a38	12	memmove	symtab	28a29cd9f9c9	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020017a44	40	bcopy	symtab	c153460a2791	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP30/unix	kernel	n64	.text	0xa800000020017a44	40	ovbcopy	symtab	c153460a2791	shared-address	out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa800000020017a44	40	bcopy	symtab	c153460a2791	shared-address	out:7	named-only		
+IP30/unix	kernel	n64	.text	0xa800000020017a44	40	ovbcopy	symtab	c153460a2791	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020017a6c	112	bcopy_nopage	symtab	63553917ba4a		out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa800000020017adc	28	bcopy_pref1	symtab	31f068478062		out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa800000020017af8	56	bcopy_stores	symtab	1ce20dc8acb1		out:7	undocumented		
@@ -36804,30 +36804,30 @@ IP30/unix	kernel	n64	.text	0xa80000002001ba10	12	uli_getasids	symtab	5522d938358
 IP30/unix	kernel	n64	.text	0xa80000002001ba1c	12	uli_setasids	symtab	54ba683355d1		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba28	44	uli_eret	symtab	6ab98be69964		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba60	28	spl0	symtab	77e42c3ec2cb		out:7	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	spl1	symtab	d1a16d27e908	shared-address	out:7	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	spl1	symtab	d1a16d27e908	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	spl3	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	spl5	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	spl6	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splgio0	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splgio1	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splgio2	symtab	d1a16d27e908	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhi	symtab	d1a16d27e908	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhi	symtab	d1a16d27e908	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhi_relnet	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splhintr	symtab	d1a16d27e908	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splimp	symtab	d1a16d27e908	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splnet	symtab	d1a16d27e908	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splimp	symtab	d1a16d27e908	shared-address	out:7	named-only		
+IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splnet	symtab	d1a16d27e908	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splretr	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	spltty	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba7c	24	splvme	symtab	d1a16d27e908	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001ba94	40	issplhi	symtab	728da3f2e22b		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001babc	40	issplprof	symtab	1f1947887a0d		out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa80000002001bae4	48	isspl7	symtab	ee94d618c138		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001bb14	24	spl65	symtab	10237783c926	shared-address	out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/unix	kernel	n64	.text	0xa80000002001bb14	24	splprof	symtab	10237783c926	shared-address	out:7	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/unix	kernel	n64	.text	0xa80000002001bb2c	24	spl7	symtab	16c7bb5d00be	shared-address	out:7	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP30/unix	kernel	n64	.text	0xa80000002001bb2c	24	splerr	symtab	16c7bb5d00be	shared-address	out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP30/unix	kernel	n64	.text	0xa80000002001bb14	24	spl65	symtab	10237783c926	shared-address	out:7	named-only		
+IP30/unix	kernel	n64	.text	0xa80000002001bb14	24	splprof	symtab	10237783c926	shared-address	out:7	named-only		
+IP30/unix	kernel	n64	.text	0xa80000002001bb2c	24	spl7	symtab	16c7bb5d00be	shared-address	out:7	named-only		
+IP30/unix	kernel	n64	.text	0xa80000002001bb2c	24	splerr	symtab	16c7bb5d00be	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa80000002001bb44	32	splecc	symtab	8a6f9bd0170c		out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001bb64	28	splx	symtab	50d1a155518b	shared-address	out:7	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
+IP30/unix	kernel	n64	.text	0xa80000002001bb64	28	splx	symtab	50d1a155518b	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa80000002001bb64	28	splxecc	symtab	50d1a155518b	shared-address	out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001bb80	32	isspl0	symtab	9bdb1538e91c		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001bba0	8	delay_for_intr	symtab	78aa5094d5ec		out:7	undocumented		
@@ -36996,7 +36996,7 @@ IP30/unix	kernel	n64	.text	0xa80000002002683c	280	renorm_d	symtab	725f5a71ba33		
 IP30/unix	kernel	n64	.text	0xa800000020026960	88	VEC_dbe	symtab	4be872986970		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa8000000200269b8	204	renorm_s	symtab	2e7cbd7e2477		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020026a90	12	_get_count	symtab	88b3839417d9	shared-address	out:7	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020026a90	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP30/unix	kernel	n64	.text	0xa800000020026a90	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:7	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020026a9c	12	_get_compare	symtab	c1f9913f23f1		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa800000020026aa8	12	_set_count	symtab	fceb04cdbe22		out:7	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020026ab4	116	_add_sd	symtab	109a491be802		out:7	undocumented		
@@ -49971,29 +49971,29 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x102c	68	resumeid
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1070	60	toidlestk	dwarf+symtab	85d17e1eb426		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x10ac	60	setjmp	dwarf+symtab	99dfa838538b		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x10e8	60	longjmp	dwarf+symtab	925d6d0f3f0a		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	ackkgclock	symtab	78aa5094d5ec	shared-address	out:8	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	ackkgclock	symtab	78aa5094d5ec	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	allowintrs	symtab	78aa5094d5ec	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	apsfail	symtab	78aa5094d5ec	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	bump_leds	symtab	78aa5094d5ec	shared-address	out:8	named-only	chips/mace/README.md#other-rows	Other rows
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	bump_leds	symtab	78aa5094d5ec	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	check_delay_iflush	symtab	78aa5094d5ec	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	disallowboot	symtab	78aa5094d5ec	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	dma_mapinit	symtab	78aa5094d5ec	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	dummy_func	dwarf+symtab	78aa5094d5ec	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	heart_dcache_inval	symtab	78aa5094d5ec	shared-address	in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	heart_dcache_wb_inval	symtab	78aa5094d5ec	shared-address	in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	heart_dcache_inval	symtab	78aa5094d5ec	shared-address	in	named-only		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	heart_dcache_wb_inval	symtab	78aa5094d5ec	shared-address	in	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	heart_write_dcache_inval	symtab	78aa5094d5ec	shared-address	in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	heart_write_dcache_wb_inval	symtab	78aa5094d5ec	shared-address	in	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	stopkgclock	symtab	78aa5094d5ec	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	vme_init	symtab	78aa5094d5ec	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	vme_init	symtab	78aa5094d5ec	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	vme_ivec_init	symtab	78aa5094d5ec	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1180	8	wd93_init	symtab	78aa5094d5ec	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1188	12	dcache_wb	dwarf+symtab	ebab3ebba3b7	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1188	12	dcache_wbinval	symtab	ebab3ebba3b7	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1188	12	dki_dcache_wb	symtab	ebab3ebba3b7	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1188	12	dki_dcache_wbinval	symtab	ebab3ebba3b7	shared-address	out:8	named-only	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1188	12	dki_dcache_wbinval	symtab	ebab3ebba3b7	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1194	12	dki_dcache_inval	dwarf+symtab	da89f70a37dc		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	dummyret0_func	dwarf+symtab	87506497337c	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	heart_need_flush	symtab	87506497337c	shared-address	in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	heart_need_flush	symtab	87506497337c	shared-address	in	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	is_vme_space	symtab	87506497337c	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	vme_adapter	symtab	87506497337c	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a8	12	_get_timestamp	dwarf+symtab	d603fc5cc21b		out:8	named-only	chips/heart/README.md#register-inventory	Register inventory
@@ -50010,7 +50010,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1510	16	heart_in
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1520	12	heart_intr_err	symtab	cdae2ac73ade		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x152c	456	_pagecopy	dwarf+symtab	3abdad091512		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16f4	176	_pagezero	dwarf+symtab	caea6384e0f5		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1800	112	resetcounter	dwarf+symtab	c0c26568356e	shared-address	out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1800	112	resetcounter	dwarf+symtab	c0c26568356e	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1800	128	resetcounter_val	symtab	75f17e76d08b	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1880	96	trimcompare	dwarf+symtab	60ae07e06eed		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1900	28	initcounter	dwarf+symtab	6e26752754ef		out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
@@ -50138,7 +50138,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6704	36	atomicFi
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6728	36	atomicClearCpumask	dwarf+symtab	fc3b1b9c80e9		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x674c	32	atomicAddInt64	dwarf+symtab	79b77734d479	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x674c	32	atomicAddUint64	symtab	79b77734d479	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x676c	32	atomicAddInt64Hot2	dwarf+symtab	3ad5d1d780d4	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x676c	32	atomicAddInt64Hot2	dwarf+symtab	3ad5d1d780d4	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x676c	32	atomicAddUint64Hot2	symtab	3ad5d1d780d4	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x678c	56	atomicPush	dwarf+symtab	3f55c5561aaf		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x67c4	44	atomicPull	dwarf+symtab	a4bc4b646893		out:8	undocumented		
@@ -50152,8 +50152,8 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x68e0	156	bitlock
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x697c	156	bitlock_condacq_32bit	dwarf+symtab	60fdb0a48a06		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a18	28	mutex_set_always	dwarf+symtab	1be725d32eca		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a34	28	test_and_set_int	dwarf+symtab	a6100690a0d0		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a50	28	test_and_set_int64	dwarf+symtab	71854da0bc74	shared-address	out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a50	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:8	named-only	docs/open-questions.md#open-questions	Open questions
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a50	28	test_and_set_int64	dwarf+symtab	71854da0bc74	shared-address	out:8	named-only		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a50	28	test_and_set_long	symtab	71854da0bc74	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a50	28	test_and_set_ptr	symtab	71854da0bc74	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a6c	28	swap_int	dwarf+symtab	646c2554eb36		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6a88	152	compare_and_swap_int	dwarf+symtab	fa0b34ecb5ca		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -50163,7 +50163,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6c54	156	compare
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6cf0	28	swap_int64	dwarf+symtab	1be725d32eca	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6cf0	28	swap_long	symtab	1be725d32eca	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6cf0	28	swap_ptr	symtab	1be725d32eca	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_int64	dwarf+symtab	e993d0870d2c	shared-address	out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_int64	dwarf+symtab	e993d0870d2c	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_kt	symtab	e993d0870d2c	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_long	symtab	e993d0870d2c	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6d0c	152	compare_and_swap_ptr	symtab	e993d0870d2c	shared-address	out:8	undocumented		
@@ -50177,8 +50177,8 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7000	88	swcopyou
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7058	140	uzero	dwarf+symtab	74bc23d2bbcb		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x70e4	20	cerror	dwarf+symtab	0450a8508780		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x70f8	276	memset	dwarf+symtab	327dd5bf2d15		out:8	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x720c	28	blkclr	symtab	2ada87dde48f	shared-address	out:8	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x720c	192	bzero	dwarf+symtab	0c44222bb92f	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x720c	28	blkclr	symtab	2ada87dde48f	shared-address	out:8	named-only		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x720c	192	bzero	dwarf+symtab	0c44222bb92f	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7228	48	bzero_nopage	symtab	b84f8cdc2282		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7258	12	bzero_stores	symtab	a8059efed35f		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7264	104	bzero_pref	symtab	721fae2475d8		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -50218,8 +50218,8 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x788c	36	ustore_h
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x78b0	8	fixade_error	dwarf+symtab	4429c69e8a79		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x78b8	1224	memcpy	dwarf+symtab	05f1a21e80fa	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x78b8	12	memmove	symtab	28a29cd9f9c9	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x78c4	40	bcopy	symtab	791179d433c4	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x78c4	40	ovbcopy	symtab	791179d433c4	shared-address	out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x78c4	40	bcopy	symtab	791179d433c4	shared-address	out:8	named-only		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x78c4	40	ovbcopy	symtab	791179d433c4	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x78ec	112	bcopy_nopage	symtab	63553917ba4a		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x795c	28	bcopy_pref1	symtab	31f068478062		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7978	56	bcopy_stores	symtab	1ce20dc8acb1		out:8	undocumented		
@@ -50360,30 +50360,30 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb890	12	uli_geta
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb89c	12	uli_setasids	dwarf+symtab	54ba683355d1		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8a8	44	uli_eret	dwarf+symtab	6ab98be69964		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8e0	28	spl0	dwarf+symtab	77e42c3ec2cb		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	spl1	symtab	d1a16d27e908	shared-address	out:8	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	spl1	symtab	d1a16d27e908	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	spl3	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	spl5	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	spl6	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splgio0	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splgio1	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splgio2	symtab	d1a16d27e908	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhi	dwarf+symtab	d1a16d27e908	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhi	dwarf+symtab	d1a16d27e908	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhi_relnet	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splhintr	symtab	d1a16d27e908	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splimp	symtab	d1a16d27e908	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splnet	symtab	d1a16d27e908	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splimp	symtab	d1a16d27e908	shared-address	out:8	named-only		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splnet	symtab	d1a16d27e908	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splretr	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	spltty	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb8fc	24	splvme	symtab	d1a16d27e908	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb914	40	issplhi	dwarf+symtab	728da3f2e22b		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb93c	40	issplprof	dwarf+symtab	1f1947887a0d		out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb964	48	isspl7	dwarf+symtab	ee94d618c138		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb994	24	spl65	symtab	10237783c926	shared-address	out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb994	24	splprof	dwarf+symtab	10237783c926	shared-address	out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9ac	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9ac	24	splerr	symtab	16c7bb5d00be	shared-address	out:8	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb994	24	spl65	symtab	10237783c926	shared-address	out:8	named-only		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb994	24	splprof	dwarf+symtab	10237783c926	shared-address	out:8	named-only		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9ac	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:8	named-only		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9ac	24	splerr	symtab	16c7bb5d00be	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9c4	32	splecc	dwarf+symtab	8a6f9bd0170c		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9e4	28	splx	dwarf+symtab	50d1a155518b	shared-address	out:8	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9e4	28	splx	dwarf+symtab	50d1a155518b	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xb9e4	28	splxecc	symtab	50d1a155518b	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xba00	32	isspl0	dwarf+symtab	9bdb1538e91c		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xba20	8	delay_for_intr	dwarf+symtab	78aa5094d5ec		out:8	undocumented		
@@ -50475,7 +50475,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdb84	4	utlbmiss_
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdb88	32	utlbmissj	dwarf+symtab	59e7addb5e06		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdba8	8	eutlbmissj	symtab	af5570f5a181		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdbb0	104	_ecc_errorvec	dwarf+symtab	cd7fffd4cb81		out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc18	24	_ecc_end	symtab	3d30d72cf42a	shared-address	out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc18	24	_ecc_end	symtab	3d30d72cf42a	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc18	24	get_mem_conf	dwarf	3d30d72cf42a	shared-address	out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc30	36	bank_addrlo	dwarf	3c3721cae68b		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc54	68	banksz	dwarf	8c88bea536d7		out:8	undocumented		
@@ -50564,7 +50564,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x166bc	280	renorm
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x167e0	88	VEC_dbe	dwarf+symtab	8a61e43b6a1d		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16838	204	renorm_s	dwarf+symtab	4243e23df2e3		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16910	12	_get_count	dwarf+symtab	88b3839417d9	shared-address	out:8	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16910	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:8	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16910	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:8	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1691c	12	_get_compare	dwarf+symtab	c1f9913f23f1		out:8	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16928	12	_set_count	dwarf+symtab	fceb04cdbe22		out:8	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16934	116	_add_sd	dwarf+symtab	cfa432885708		out:8	undocumented		
@@ -52523,16 +52523,16 @@ IP30/usr/cpu/sysgen/IP30boot/nolocks.a(cnolocks.o)	kernel-object	n64	.text	0xa0	
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(cnolocks.o)	kernel-object	n64	.text	0xb4	8	destroy_64bitlock	dwarf+symtab	78aa5094d5ec		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_64bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only		
+IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/ip27-kernel-entropy-readers.md#kernel-routines-that-read-the-hub-real-time-counter-for-entropy-ip27-build	Kernel routines that read the Hub real-time counter for entropy (IP27 build)
+IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_64bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x20	8	mutex_bitlock_spl	dwarf+symtab	0cccebfff1c4		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_tryspinlock_spl	symtab	90248ee03ac0	shared-address	out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x30	8	nested_spintrylock	dwarf+symtab	a7e7ca11a6b8		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x38	8	mutex_64bitunlock	symtab	a7e57193e8ea	shared-address	out:3	undocumented		
@@ -66134,12 +66134,12 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12ac	76	longjmp	
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	apsfail	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	check_delay_iflush	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	check_delay_tlbflush	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	da_flush_tlb	symtab	78aa5094d5ec	shared-address	out:9	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	da_flush_tlb	symtab	78aa5094d5ec	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	disallowboot	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	dma_mapinit	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	dummy_func	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	rmi_fixecc	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	vme_init	symtab	78aa5094d5ec	shared-address	out:9	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	vme_init	symtab	78aa5094d5ec	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	vme_ivec_init	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f8	8	wd93_init	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1300	12	dcache_wb	symtab	a062718a5413	shared-address	out:9	undocumented		
@@ -66155,7 +66155,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13f0	8	appsema	s
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13f0	8	apvsema	symtab	87506497337c	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13f0	8	disarm_threeway_trigger	symtab	87506497337c	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13f0	8	dummyret0_func	symtab	87506497337c	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13f0	8	getcpuid	symtab	87506497337c	shared-address	out:9	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13f0	8	getcpuid	symtab	87506497337c	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13f0	8	is_fullhouse	symtab	87506497337c	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13f0	8	is_vme_space	symtab	87506497337c	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x13f0	8	threeway_trigger_armed	symtab	87506497337c	shared-address	out:9	undocumented		
@@ -66206,8 +66206,8 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3340	88	swcopyou
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3398	88	uzero	symtab	d0d40199f1d3		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x33f0	20	cerror	symtab	2c420a423a29		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3404	276	memset	symtab	36fbd346ab81		out:9	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3518	4	blkclr	symtab	7625eea86b52	shared-address	out:9	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3518	180	bzero	symtab	8ebec24cc32f	shared-address	out:9	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3518	4	blkclr	symtab	7625eea86b52	shared-address	out:9	named-only		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3518	180	bzero	symtab	8ebec24cc32f	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x351c	176	bzero_cdx_entry	symtab	d0e4d16db57c		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x35cc	8	bzero_end	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x35cc	8	bzerror	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
@@ -66244,8 +66244,8 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3b44	36	ustore_h
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3b68	8	fixade_error	symtab	4429c69e8a79		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3b70	1120	memcpy	symtab	83b6323707a8	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3b70	12	memmove	symtab	28a29cd9f9c9	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3b7c	12	bcopy	symtab	34c8fcd5c3eb	shared-address	out:9	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3b7c	12	ovbcopy	symtab	34c8fcd5c3eb	shared-address	out:9	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3b7c	12	bcopy	symtab	34c8fcd5c3eb	shared-address	out:9	named-only		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3b7c	12	ovbcopy	symtab	34c8fcd5c3eb	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3b88	1096	bcopy_cdx_entry	symtab	e6b14e3607aa		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3fd0	56	bcopy_end	symtab	7b8004182b30	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x3fd0	56	swbcopy	symtab	7b8004182b30	shared-address	out:9	undocumented		
@@ -66382,28 +66382,28 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xaea8	144	crimeve
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb0e4	196	unsetcrimevector	symtab	11c5f3fb207f		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb1a8	36	sendintr	symtab	f9a9f6566807		out:9	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb1cc	80	spl0	symtab	67fd70f20787		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	spl1	symtab	2204b057e629	shared-address	out:9	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	spl1	symtab	2204b057e629	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	spl3	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	spl5	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	spl6	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splgio0	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splgio1	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splgio2	symtab	2204b057e629	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhi	symtab	2204b057e629	shared-address	in	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhi	symtab	2204b057e629	shared-address	in	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhi_relnet	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splhintr	symtab	2204b057e629	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splimp	symtab	2204b057e629	shared-address	out:9	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splnet	symtab	2204b057e629	shared-address	out:9	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splimp	symtab	2204b057e629	shared-address	out:9	named-only		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splnet	symtab	2204b057e629	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splretr	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	spltty	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb21c	132	splvme	symtab	2204b057e629	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb2a0	52	issplhi	symtab	ad372c36f7f8		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb2d4	52	issplprof	symtab	db61764e0b92		out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb308	132	spl65	symtab	f2798e5c5417	shared-address	out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb308	132	splprof	symtab	f2798e5c5417	shared-address	in	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb308	132	spl65	symtab	f2798e5c5417	shared-address	out:9	named-only		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb308	132	splprof	symtab	f2798e5c5417	shared-address	in	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb38c	132	spl7	symtab	eb4efc90de15		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb410	64	splecc	symtab	9d41a659e3ee		out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb450	100	splx	symtab	36bfc546d0e2	shared-address	in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb450	100	splx	symtab	36bfc546d0e2	shared-address	in	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb450	100	splxecc	symtab	36bfc546d0e2	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb4b4	72	splint	symtab	8e2c388976a9		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xb4fc	32	isspl0	symtab	f82aa27804e6		out:9	undocumented		
@@ -66474,13 +66474,13 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xc9c0	84	bitlock_
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca14	84	bitlock_condacq_32bit	symtab	85224154ec31		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca68	28	mutex_set_always	symtab	16dbf7b98860		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca84	28	test_and_set_int	symtab	90adb65ce622	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca84	28	test_and_set_long	symtab	90adb65ce622	shared-address	out:9	named-only	docs/open-questions.md#open-questions	Open questions
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca84	28	test_and_set_long	symtab	90adb65ce622	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xca84	28	test_and_set_ptr	symtab	90adb65ce622	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcaa0	28	test_and_set_int64	symtab	d7bf6952a39d		out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcabc	28	swap_int	symtab	16dbf7b98860	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcabc	28	swap_long	symtab	16dbf7b98860	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcabc	28	swap_ptr	symtab	16dbf7b98860	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcad8	40	compare_and_swap_int	symtab	42942dafb2b7	shared-address	out:9	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcad8	40	compare_and_swap_int	symtab	42942dafb2b7	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcad8	40	compare_and_swap_kt	symtab	42942dafb2b7	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcad8	40	compare_and_swap_long	symtab	42942dafb2b7	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xcad8	40	compare_and_swap_ptr	symtab	42942dafb2b7	shared-address	out:9	undocumented		
@@ -66688,7 +66688,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15924	16	_j_ende
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15924	16	_j_endexceptnorm_nosymmon	symtab	374708fff771	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15934	48	_ecc_errorvec	symtab	029756763faa	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15934	24	_endexceptnorm_prolog	symtab	ba1c3ba6bd47	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1594c	24	_ecc_end	symtab	ba1c3ba6bd47	shared-address	out:9	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1594c	24	_ecc_end	symtab	ba1c3ba6bd47	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1594c	24	_r10k_ecc_errorvec	symtab	ba1c3ba6bd47	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15964	892	_r10k_ecc_end	symtab	17330d2fd81a	shared-address	out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x15964	96	is_in_pfdat	symtab	9914d4307cfb	shared-address	out:9	undocumented		
@@ -66749,7 +66749,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1b708	1652	maddr
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1bd7c	16	VEC_unexp	symtab	177285a3e2f2		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1bd8c	268	backtouser	symtab	e6cedf079888		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1be98	8	first_address	symtab	78aa5094d5ec	shared-address	out:9	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1be98	8	migrate_timeouts	symtab	78aa5094d5ec	shared-address	out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1be98	8	migrate_timeouts	symtab	78aa5094d5ec	shared-address	out:9	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1bea0	792	fpunit_fpload_s	symtab	c23982345858		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1c1b8	284	renorm_d	symtab	0cd2c9b70619		out:9	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x1c2d4	132	VEC_dbe	symtab	9affc89ef9bb		in	named-only	chips/crime/README.md#graded-register-table	Graded register table
@@ -68385,7 +68385,7 @@ IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xbe74	1776	mvpreg_sy
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xc564	144	mvpreg_gettiming	dwarf+funcnames	800bc84e48a1		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xc5f4	960	mvpreg_syncdevice_controls	dwarf+symtab	353a98a0402c		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xc9b4	128	mvp_pio_read64	dwarf+symtab	1b82094aa278	shared-address	in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xc9b4	128	pciio_pio_read64	symtab	1b82094aa278	shared-address	in	named-only	chips/mace/README.md#other-rows	Other rows
+IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xc9b4	128	pciio_pio_read64	symtab	1b82094aa278	shared-address	in	named-only		
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xca34	348	mvpsystem_ioctl	dwarf+symtab	8f1f5b63b37f		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xcb90	668	move_mipmap	dwarf+funcnames	af2564518518		in	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xce2c	632	mvpmipmap_move_mipmap	dwarf+symtab	2402b7553212		in	undocumented		
@@ -68978,16 +68978,16 @@ IP32/usr/cpu/sysgen/IP32boot/nolocks.a(cnolocks.o)	kernel-object	n32	.text	0xa0	
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(cnolocks.o)	kernel-object	n32	.text	0xb4	8	destroy_64bitlock	dwarf+symtab	78aa5094d5ec		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x0	8	nested_64bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x0	8	nested_bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only		
+IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8	8	nested_bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/ip27-kernel-entropy-readers.md#kernel-routines-that-read-the-hub-real-time-counter-for-entropy-ip27-build	Kernel routines that read the Hub real-time counter for entropy (IP27 build)
+IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x18	8	mutex_64bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x18	8	mutex_bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x20	8	mutex_bitlock_spl	dwarf+symtab	0cccebfff1c4		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x28	8	mutex_tryspinlock_spl	symtab	90248ee03ac0	shared-address	out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x30	8	nested_spintrylock	dwarf+symtab	a7e7ca11a6b8		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP32/usr/cpu/sysgen/IP32boot/nolocks.a(asmnolocks.o)	kernel-object	n32	.text	0x38	8	mutex_64bitunlock	symtab	a7e57193e8ea	shared-address	out:3	undocumented		
@@ -83489,8 +83489,8 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7590	88	swcopyou
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x75e8	140	uzero	dwarf+symtab	3e9c71c51a96		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7674	20	cerror	dwarf+symtab	0450a8508780		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7688	276	memset	dwarf+symtab	327dd5bf2d15		out:11	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x779c	60	blkclr	symtab	438bc6af403a	shared-address	out:11	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x779c	164	bzero	dwarf+symtab	62975b520d71	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x779c	60	blkclr	symtab	438bc6af403a	shared-address	out:11	named-only		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x779c	164	bzero	dwarf+symtab	62975b520d71	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x77d8	104	bzero_pref	symtab	721fae2475d8		out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7840	8	bzero_end	symtab	78aa5094d5ec	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7840	8	bzerror	dwarf+symtab	78aa5094d5ec	shared-address	out:11	undocumented		
@@ -83528,8 +83528,8 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7e00	36	ustore_h
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7e24	8	fixade_error	dwarf+symtab	4429c69e8a79		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7e2c	1184	memcpy	dwarf+symtab	a6e4b004a38a	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7e2c	12	memmove	symtab	28a29cd9f9c9	shared-address	out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7e38	116	bcopy	symtab	7c904a821cc2	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7e38	116	ovbcopy	symtab	7c904a821cc2	shared-address	out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7e38	116	bcopy	symtab	7c904a821cc2	shared-address	out:11	named-only		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7e38	116	ovbcopy	symtab	7c904a821cc2	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7eac	80	bcopy_pref1	symtab	c76e59900c0d		out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x7efc	976	bcopy_pref2	symtab	355b16806386		out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x82cc	56	bcopy_end	symtab	ba3fe49622f3	shared-address	out:11	undocumented		
@@ -83974,30 +83974,30 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dbc	20	ip26_re
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dbc	20	ip28_enable_ucmem	symtab	4bb71562d901	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dbc	20	ip28_return_ucmem	symtab	4bb71562d901	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dd0	28	spl0	dwarf+symtab	77e42c3ec2cb		out:11	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	spl1	symtab	d20175b8aee2	shared-address	out:11	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	spl1	symtab	d20175b8aee2	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	spl3	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	spl5	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	spl6	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splgio0	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splgio1	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splgio2	symtab	d20175b8aee2	shared-address	out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhi	dwarf+symtab	d20175b8aee2	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhi	dwarf+symtab	d20175b8aee2	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhi_relnet	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splhintr	symtab	d20175b8aee2	shared-address	out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splimp	symtab	d20175b8aee2	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splnet	symtab	d20175b8aee2	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splimp	symtab	d20175b8aee2	shared-address	out:11	named-only		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splnet	symtab	d20175b8aee2	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splretr	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	spltty	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21dec	24	splvme	symtab	d20175b8aee2	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e04	40	issplhi	dwarf+symtab	0bf45e8a55b9		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e2c	40	issplprof	dwarf+symtab	670bb52d4881		out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e54	48	isspl7	dwarf+symtab	ee94d618c138		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e84	24	spl65	symtab	dafe8229ec55	shared-address	out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e84	24	splprof	dwarf+symtab	dafe8229ec55	shared-address	out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e9c	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e9c	24	splerr	symtab	16c7bb5d00be	shared-address	out:11	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e84	24	spl65	symtab	dafe8229ec55	shared-address	out:11	named-only		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e84	24	splprof	dwarf+symtab	dafe8229ec55	shared-address	out:11	named-only		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e9c	24	spl7	dwarf+symtab	16c7bb5d00be	shared-address	out:11	named-only		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21e9c	24	splerr	symtab	16c7bb5d00be	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21eb4	32	splecc	dwarf+symtab	8a6f9bd0170c		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21ed4	28	splx	dwarf+symtab	50d1a155518b	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21ed4	28	splx	dwarf+symtab	50d1a155518b	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21ed4	28	splxecc	symtab	50d1a155518b	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21ef0	32	isspl0	dwarf+symtab	9bdb1538e91c		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x21f10	8	delay_for_intr	dwarf+symtab	78aa5094d5ec		out:11	undocumented		
@@ -84101,7 +84101,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dcache_w
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dcache_wbinval	symtab	78aa5094d5ec	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dki_dcache_inval	symtab	78aa5094d5ec	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dki_dcache_wb	symtab	78aa5094d5ec	shared-address	out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dki_dcache_wbinval	symtab	78aa5094d5ec	shared-address	out:11	named-only	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dki_dcache_wbinval	symtab	78aa5094d5ec	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e0	8	dummy_func	dwarf+symtab	78aa5094d5ec	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x252e8	208	bootstrap	dwarf+symtab	824615eebe43		out:11	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x253b8	168	mapped_kernel_setup_tlb	dwarf+symtab	d97a23f621a0		out:11	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -84208,7 +84208,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29a70	36	atomicF
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29a94	36	atomicClearCpumask	dwarf+symtab	f288af0524d6		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29ab8	28	atomicAddInt64	dwarf+symtab	ef07517114e4	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29ab8	28	atomicAddUint64	symtab	ef07517114e4	shared-address	out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29ad4	32	atomicAddInt64Hot2	dwarf+symtab	32436cd69dcf	shared-address	out:11	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	IP35 build: process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29ad4	32	atomicAddInt64Hot2	dwarf+symtab	32436cd69dcf	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29ad4	32	atomicAddUint64Hot2	symtab	32436cd69dcf	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29af4	56	atomicPush	dwarf+symtab	46c73d40eccb		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29b2c	44	atomicPull	dwarf+symtab	bb1d76bae887		out:11	undocumented		
@@ -84222,8 +84222,8 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29c40	84	bitlock
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29c94	84	bitlock_condacq_32bit	dwarf+symtab	85224154ec31		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29ce8	28	mutex_set_always	dwarf+symtab	a621ea59a77e		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d04	28	test_and_set_int	dwarf+symtab	90adb65ce622		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d20	28	test_and_set_int64	dwarf+symtab	d7bf6952a39d	shared-address	out:11	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d20	28	test_and_set_long	symtab	d7bf6952a39d	shared-address	out:11	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d20	28	test_and_set_int64	dwarf+symtab	d7bf6952a39d	shared-address	out:11	named-only		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d20	28	test_and_set_long	symtab	d7bf6952a39d	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d20	28	test_and_set_ptr	symtab	d7bf6952a39d	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d3c	28	swap_int	dwarf+symtab	16dbf7b98860		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29d58	40	compare_and_swap_int	dwarf+symtab	42942dafb2b7		out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -84233,7 +84233,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29dd8	48	compare
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e08	28	swap_int64	dwarf+symtab	a621ea59a77e	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e08	28	swap_long	symtab	a621ea59a77e	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e08	28	swap_ptr	symtab	a621ea59a77e	shared-address	out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_int64	dwarf+symtab	efbdd7ce0ed7	shared-address	out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_int64	dwarf+symtab	efbdd7ce0ed7	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_kt	symtab	efbdd7ce0ed7	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_long	symtab	efbdd7ce0ed7	shared-address	out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x29e24	40	compare_and_swap_ptr	symtab	efbdd7ce0ed7	shared-address	out:11	undocumented		
@@ -84342,8 +84342,8 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e290	4	utlbmiss
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e294	32	utlbmissj	dwarf+symtab	59e7addb5e06		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e2b4	12	eutlbmissj	symtab	15ec7bf0b507		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e2c0	88	_ecc_errorvec	dwarf+symtab	05262da04530		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e318	36	_ecc_end	symtab	cd988059adf8	shared-address	out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e318	36	get_nvreg	dwarf+symtab	cd988059adf8	shared-address	out:11	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e318	36	_ecc_end	symtab	cd988059adf8	shared-address	out:11	named-only		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e318	36	get_nvreg	dwarf+symtab	cd988059adf8	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e33c	128	set_nvreg	dwarf+symtab	e524051e91bd		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e3bc	164	get_nvram_buf	dwarf+symtab	589876a18339		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e460	96	update_checksum	dwarf+symtab	f94ea06b0a5e		out:11	undocumented		
@@ -84456,7 +84456,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x36e68	1332	maddr
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x373a0	32	VEC_unexp	dwarf+symtab	ed78c3559b29		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x373c0	128	backtouser	dwarf+symtab	e153a7238f2a		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37440	12	_get_count	dwarf+symtab	88b3839417d9	shared-address	out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37440	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:11	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37440	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:11	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x3744c	12	_get_compare	dwarf+symtab	c1f9913f23f1		out:11	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37458	12	_set_count	dwarf+symtab	fceb04cdbe22		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x37464	84	resetcounter	dwarf+symtab	70c33a9c3f2b		out:11	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
@@ -86860,16 +86860,16 @@ IP35/usr/cpu/sysgen/IP35boot/nolocks.a(cnolocks.o)	kernel-object	n64	.text	0xa0	
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(cnolocks.o)	kernel-object	n64	.text	0xb4	8	destroy_64bitlock	dwarf+symtab	78aa5094d5ec		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_64bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_bitlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x0	8	nested_spinlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only		
+IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_64bitunlock	symtab	78aa5094d5ec	shared-address	out:3	named-only		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_bitunlock	symtab	78aa5094d5ec	shared-address	out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only	docs/ip27-kernel-entropy-readers.md#kernel-routines-that-read-the-hub-real-time-counter-for-entropy-ip27-build	Kernel routines that read the Hub real-time counter for entropy (IP27 build)
+IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x8	8	nested_spinunlock	dwarf+symtab	78aa5094d5ec	shared-address	out:3	named-only		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x10	8	mutex_spinunlock	dwarf+symtab	2f1f361c7d23		out:3	named-only	docs/binaries-scope-kernel-objects.md#ip30-build-network-streams-and-cluster-objects-scope-rule-2	IP30 build: network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_64bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_bitlock	symtab	6cc16abd70ee	shared-address	out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x18	8	mutex_spinlock	dwarf+symtab	6cc16abd70ee	shared-address	out:3	named-only		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x20	8	mutex_bitlock_spl	dwarf+symtab	0cccebfff1c4		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_spinlock_spl	dwarf+symtab	90248ee03ac0	shared-address	out:3	named-only		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x28	8	mutex_tryspinlock_spl	symtab	90248ee03ac0	shared-address	out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x30	8	nested_spintrylock	dwarf+symtab	a7e7ca11a6b8		out:3	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP35/usr/cpu/sysgen/IP35boot/nolocks.a(asmnolocks.o)	kernel-object	n64	.text	0x38	8	mutex_64bitunlock	symtab	a7e57193e8ea	shared-address	out:3	undocumented		
@@ -97290,7 +97290,7 @@ sbin/stand/sash64	diagnostic	n64	.text	0x62e8	8	get_pc	symtab	c343413c267a	share
 sbin/stand/sash64	diagnostic	n64	.text	0x62e8	8	getpc	symtab	c343413c267a	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x62f0	8	get_sp	symtab	2c412fc24dd8	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x62f0	8	getsp	symtab	2c412fc24dd8	shared-address	out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x62f8	12	debug	symtab	0c4f367106e0	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+sbin/stand/sash64	diagnostic	n64	.text	0x62f8	12	debug	symtab	0c4f367106e0	shared-address	out:4	named-only		
 sbin/stand/sash64	diagnostic	n64	.text	0x62f8	12	exec_brkpt	symtab	0c4f367106e0	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x6304	36	quiet_debug	symtab	01cf47be29a2		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x6328	16	memcpy	symtab	1f4dca75e773		out:4	undocumented		
@@ -97485,24 +97485,24 @@ sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	cpsema	symtab	78aa5094d5ec	shar
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	dma_mapbp	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	dummy_func	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	freesema	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	init_sema	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	init_spinlock	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	init_sema	symtab	78aa5094d5ec	shared-address	out:4	named-only		
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	init_spinlock	symtab	78aa5094d5ec	shared-address	out:4	named-only		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	initnsema	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	makesname	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	preemptchk	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	psema	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl0	symtab	78aa5094d5ec	shared-address	out:4	named-only	chips/crime/README.md#graded-register-table	Graded register table
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	psema	symtab	78aa5094d5ec	shared-address	out:4	named-only		
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl0	symtab	78aa5094d5ec	shared-address	out:4	named-only		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl5	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl7	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splhi	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splimp	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splx	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spl7	symtab	78aa5094d5ec	shared-address	out:4	named-only		
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splhi	symtab	78aa5094d5ec	shared-address	out:4	named-only		
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splimp	symtab	78aa5094d5ec	shared-address	out:4	named-only		
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	splx	symtab	78aa5094d5ec	shared-address	out:4	named-only		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	spsema	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	svpsema	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	svsema	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	timeout	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	timeout	symtab	78aa5094d5ec	shared-address	out:4	named-only		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	untimeout	symtab	78aa5094d5ec	shared-address	out:4	undocumented		
-sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	vsema	symtab	78aa5094d5ec	shared-address	out:4	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	vsema	symtab	78aa5094d5ec	shared-address	out:4	named-only		
 sbin/stand/sash64	diagnostic	n64	.text	0x14eec	8	suser	symtab	a7e7ca11a6b8		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ef4	8	cvsema	symtab	87506497337c		out:4	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 sbin/stand/sash64	diagnostic	n64	.text	0x14efc	772	ls	symtab	a4ee8e5596da		out:4	undocumented		
@@ -97889,7 +97889,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0021e4c	892	__dcache_inval	symtab
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00221c8	684	__dcache_wb	symtab	8f0155449e7f		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0022474	688	__dcache_wb_inval	symtab	1bf1fbec4b3e		out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0022724	1148	__icache_inval	symtab	cf014a91df62		out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0022ba0	840	__cache_wb_inval	symtab	ff102c5333cc	shared-address	out:15	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0022ba0	840	__cache_wb_inval	symtab	ff102c5333cc	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0022ba0	840	clear_cache	symtab	ff102c5333cc	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0022ee8	1392	config_cache	symtab	c713881bdc17		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0023458	172	size_2nd_cache	symtab	4e538662c226		out:15	undocumented		
@@ -97909,7 +97909,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0023850	140	_munge_decc	symtab	dd
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00238dc	96	_read_tag	symtab	4039c6dd3cc2		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002393c	88	_write_tag	symtab	105d38c13535		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0023994	108	FlushAllCaches	symtab	5265b81c217d	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0023994	108	flush_cache	symtab	5265b81c217d	shared-address	out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0023994	108	flush_cache	symtab	5265b81c217d	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0023a00	196	invalidate_sc_page	symtab	c055eb00501b		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0023ac4	132	invalidate_sc_line	symtab	739b4a853a41		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0023b48	108	invalidate_caches	symtab	6ce17b4a678c		out:15	undocumented		
@@ -97956,7 +97956,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0024adc	12	r4k_getticker	symtab	9
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0024ae8	12	r4k_setticker	symtab	5967f733518c		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0024af4	12	r4k_setcompare	symtab	36d5b735ab25		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0024b00	16	r4k_getconfig	symtab	7c19e39c28b6		out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0024b10	20	get_cpu_irr	symtab	4251e271390c	shared-address	out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0024b10	20	get_cpu_irr	symtab	4251e271390c	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0024b10	20	r4k_getprid	symtab	4251e271390c	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0024b24	20	get_fpc_irr	symtab	52081b282666	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0024b24	20	r4k_get_fpirr	symtab	52081b282666	shared-address	out:15	undocumented		
@@ -98049,8 +98049,8 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00284c4	40	_circ_nread	symtab	caf
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00284ec	8	businfo	symtab	78aa5094d5ec		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00284f4	20	read_reg64	symtab	35318dc3efd5		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028508	24	write_reg64	symtab	be72b96394d8		out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	flushbus	symtab	640df3041b0b	shared-address	out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	wbflush	symtab	640df3041b0b	shared-address	in	named-only	chips/crime/README.md#graded-register-table	Graded register table
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	flushbus	symtab	640df3041b0b	shared-address	out:15	named-only		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028520	32	wbflush	symtab	640df3041b0b	shared-address	in	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028540	20	Read_C0_LLADDR	symtab	0bed81c21644		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028554	12	Read_C0_Config	symtab	65d36b16835c		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0028560	12	Write_C0_Config	symtab	702d110d5a68		out:15	undocumented		
@@ -98101,7 +98101,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a65c	32	cpu_restart_rtc	symtab
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	GetSR	symtab	a54a0253bf98	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	get_SR	symtab	a54a0253bf98	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	get_sr	symtab	a54a0253bf98	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	getsr	symtab	a54a0253bf98	shared-address	out:15	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	getsr	symtab	a54a0253bf98	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a68c	24	SetSR	symtab	0ebcae91ae2a	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a68c	24	set_SR	symtab	0ebcae91ae2a	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a68c	24	set_sr	symtab	0ebcae91ae2a	shared-address	out:15	undocumented		
@@ -98187,7 +98187,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2d0	8	get_pc	symtab	c343413c2
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2d0	8	getpc	symtab	c343413c267a	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2d8	8	get_sp	symtab	2c412fc24dd8	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2d8	8	getsp	symtab	2c412fc24dd8	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2e0	12	debug	symtab	0c4f367106e0	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2e0	12	debug	symtab	0c4f367106e0	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2e0	12	exec_brkpt	symtab	0c4f367106e0	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d2ec	20	quiet_debug	symtab	e5271de22208		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002d300	16	memcpy	symtab	899afbfe5b5c		out:15	undocumented		
@@ -98260,24 +98260,24 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	cpsema	symtab	78aa5094d
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	dma_mapbp	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	dummy_func	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	freesema	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	init_sema	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	init_spinlock	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	init_sema	symtab	78aa5094d5ec	shared-address	out:15	named-only		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	init_spinlock	symtab	78aa5094d5ec	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	initnsema	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	makesname	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	preemptchk	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	psema	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl0	symtab	78aa5094d5ec	shared-address	out:15	named-only	chips/crime/README.md#graded-register-table	Graded register table
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	psema	symtab	78aa5094d5ec	shared-address	out:15	named-only		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl0	symtab	78aa5094d5ec	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl5	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl7	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splhi	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#ip32-build-network-streams-and-cluster-objects-scope-rule-2	IP32 build: network, STREAMS and cluster objects (scope rule 2)
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splimp	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splx	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spl7	symtab	78aa5094d5ec	shared-address	out:15	named-only		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splhi	symtab	78aa5094d5ec	shared-address	out:15	named-only		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splimp	symtab	78aa5094d5ec	shared-address	out:15	named-only		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	splx	symtab	78aa5094d5ec	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	spsema	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	svpsema	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	svsema	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	timeout	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	timeout	symtab	78aa5094d5ec	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	untimeout	symtab	78aa5094d5ec	shared-address	out:15	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	vsema	symtab	78aa5094d5ec	shared-address	out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a0	8	vsema	symtab	78aa5094d5ec	shared-address	out:15	named-only		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311a8	8	suser	symtab	a7e7ca11a6b8		out:15	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311b0	8	cvsema	symtab	87506497337c		out:15	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00311b8	164	init_rb	symtab	73b8f2f3310d		out:15	undocumented		
