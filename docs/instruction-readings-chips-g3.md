@@ -159,7 +159,7 @@ These entries record instruction facts rendered from the routines below. They de
   The `jal` at 0x1220c calls splhi with a0=a0 at entry (arg0), a1=a1 at entry (arg1), a2=a2 at entry (arg2), a3=a3 at entry (arg3).
   The `jal` at 0x1228c calls pciio_pio_read64 with a0=0xffffffffbf310018, a1=-0x20, a2=([0xffffffffbf3a4b07]:1 | 0x9), a3=?, a4=-0x53, a6=-0x4, a7=([0xffffffffbf3a0a07]:1 | 0x10).
   The `jal` at 0x1229c calls pciio_pio_write64 with a0=(ret(pciio_pio_read64) | 0x100), a1=0xffffffffbf310018, a2=?, a3=?.
-  The `jal` at 0x122a4 calls splx with a0=?, a1=?, a2=?, a3=?.
+  The `jal` at 0x122a4 calls splx with a0=ret(splhi), a1=?, a2=?, a3=?.
   The `beq` branch at 0x121fc targets 0x1220c, is taken when at(=[sym(.sdata)+252]) == 0, and falls through when at(=[sym(.sdata)+252]) != 0.
   The `beq` branch at 0x122ac targets 0x12204 and is always taken.
   The return at 0x12204 has v0 = one of ?, ret(splx).
@@ -213,7 +213,7 @@ These entries record instruction facts rendered from the routines below. They de
   The `jal` at 0x12bb8 calls pciio_pio_write8 with a0=[a1+7]:1, a1=0xffffffffbf3a4807, a2=?, a3=?.
   The `jal` at 0x12be0 calls pciio_pio_read8 with a0=0xffffffffbf3a0b07, a1=?, a2=?, a3=?.
   The `jal` at 0x12bf4 calls pciio_pio_write8 with a0=?, a1=0xffffffffbf3a0b07, a2=?, a3=?.
-  The `jal` at 0x12c00 calls splx with a0=?, a1=?, a2=?, a3=?.
+  The `jal` at 0x12c00 calls splx with a0=ret(splhi), a1=?, a2=?, a3=?.
   The `jal` at 0x12c18 calls rtc_init [0x121f4] with a0=?, a1=?, a2=?, a3=?.
   The `beq` branch at 0x12a24 targets 0x12c18, is taken when at(=[sym(.sdata)+252]) == 0, and falls through when at(=[sym(.sdata)+252]) != 0.
   The `bne` branch at 0x12a50 targets 0x12b04, is taken when t8(=a0) != 0, and falls through when t8(=a0) == 0.
@@ -253,7 +253,7 @@ These entries record instruction facts rendered from the routines below. They de
   The `jal` at 0x12ed4 calls pciio_pio_read8 with a0=0xffffffffbf3a0a07, a1=?, a2=?, a3=?.
   The `jal` at 0x12eec calls pciio_pio_write8 with a0=?, a1=0xffffffffbf3a0a07, a2=?, a3=?.
   The `jal` at 0x12ef8 calls pciio_pio_read8 with a0=0xffffffffbf3a0e07, a1=?, a2=?, a3=?.
-  The `jal` at 0x12f04 calls splx with a0=?, a1=?, a2=?, a3=?.
+  The `jal` at 0x12f04 calls splx with a0=ret(splhi), a1=?, a2=?, a3=?.
   The return at 0x12f18 has v0 = ?.
 - `sn00_vmc` in `IP27/unix` at 0xc000000000025998 (n64).
   Evidence grade: inferred.
@@ -441,7 +441,7 @@ These entries record instruction facts rendered from the routines below. They de
   2 such `lh` accesses load 2 bytes from a0 (arg0 at entry) +0x1a, including `lh` at 0xc0000000000e17b8, `lh` at 0xc0000000000e1824.
   The `jal` at 0xc0000000000e1740 calls eg_docmd [0xc0000000000e4bd8] with a0=a0 at entry (arg0), a1=0xf1, a2=a1 at entry (arg1), a3=0x0.
   The `jal` at 0xc0000000000e17bc calls printf [0xc0000000001fda70] with a0=0xc0000000003d3a68, a1=[a0+26]:2, a2=?, a3=?, a4=[[a0+816]:8+1660].
-  The `jal` at 0xc0000000000e17d0 calls printf [0xc0000000001fda70] with a0=0xc0000000003d3d20, a1=?, a2=?, a3=?.
+  The `jal` at 0xc0000000000e17d0 calls printf [0xc0000000001fda70] with a0=0xc0000000003d3d20, a1=?, a2=[[a0+816]:8+1660], a3=?.
   The `jal` at 0xc0000000000e1828 calls printf [0xc0000000001fda70] with a0=0xc0000000003d3a68, a1=[a0+26]:2, a2=?, a3=?, a4=[[a0+816]:8+1660].
   The `jal` at 0xc0000000000e1838 calls printf [0xc0000000001fda70] with a0=0xc0000000003d3cf0, a1=a1 at entry (arg1), a2=?, a3=?.
   The `beq` branch at 0xc0000000000e1748 targets 0xc0000000000e1758, is taken when v0(=ret(eg_docmd)) == 0, and falls through when v0(=ret(eg_docmd)) != 0.
@@ -616,7 +616,7 @@ These entries record instruction facts rendered from the routines below. They de
   The `jal` at 0xa800000020018030 calls spl65 [0xa80000002001bb14] with a0=a0 at entry (arg0), a1=a1 at entry (arg1), a2=a2 at entry (arg2), a3=a3 at entry (arg3).
   The `jal` at 0xa800000020018070 calls _get_count [0xa800000020026a90] with a0=?, a1=?, a2=?, a3=[0xffffffffaff20000]:8.
   The `jal` at 0xa8000000200180e0 calls _get_count [0xa800000020026a90] with a0=?, a1=?, a2=?, a3=[0xffffffffaff20000]:8+12500.
-  The `jal` at 0xa8000000200180ec calls splx [0xa80000002001bb64] with a0=?, a1=?, a2=?, a3=?.
+  The `jal` at 0xa8000000200180ec calls splx [0xa80000002001bb64] with a0=ret(spl65), a1=?, a2=?, a3=?.
   The `beq` branch at 0xa80000002001801c targets 0xa80000002001802c, is taken when v0(=[0xa8000000204ae430]) == 0, and falls through when v0(=[0xa8000000204ae430]) != 0.
   The `bne` branch at 0xa800000020018044 targets 0xa800000020018070, is taken when s1(=[0xffffffffaff20000]:8) != a3(=[0xffffffffaff20000]:8), and falls through when s1(=[0xffffffffaff20000]:8) == a3(=[0xffffffffaff20000]:8).
   The `bne` branch at 0xa800000020018050 targets 0xa800000020018070, is taken when s1(=[0xffffffffaff20000]:8) != a3(=[0xffffffffaff20000]:8), and falls through when s1(=[0xffffffffaff20000]:8) == a3(=[0xffffffffaff20000]:8).
@@ -678,7 +678,7 @@ These entries record instruction facts rendered from the routines below. They de
   2 such `lh` accesses load 2 bytes from a0 (arg0 at entry) +0x1a, including `lh` at 0xa8000000200b9a84, `lh` at 0xa8000000200b9af0.
   The `jal` at 0xa8000000200b9a0c calls eg_docmd [0xa8000000200bcea4] with a0=a0 at entry (arg0), a1=0xf1, a2=a1 at entry (arg1), a3=0x0.
   The `jal` at 0xa8000000200b9a88 calls printf [0xa8000000201c78ec] with a0=0xa8000000203c3478, a1=[a0+26]:2, a2=?, a3=?, a4=[[a0+816]:8+1660].
-  The `jal` at 0xa8000000200b9a9c calls printf [0xa8000000201c78ec] with a0=0xa8000000203c3730, a1=?, a2=?, a3=?.
+  The `jal` at 0xa8000000200b9a9c calls printf [0xa8000000201c78ec] with a0=0xa8000000203c3730, a1=?, a2=[[a0+816]:8+1660], a3=?.
   The `jal` at 0xa8000000200b9af4 calls printf [0xa8000000201c78ec] with a0=0xa8000000203c3478, a1=[a0+26]:2, a2=?, a3=?, a4=[[a0+816]:8+1660].
   The `jal` at 0xa8000000200b9b04 calls printf [0xa8000000201c78ec] with a0=0xa8000000203c3700, a1=a1 at entry (arg1), a2=?, a3=?.
   The `beq` branch at 0xa8000000200b9a14 targets 0xa8000000200b9a24, is taken when v0(=ret(eg_docmd)) == 0, and falls through when v0(=ret(eg_docmd)) != 0.
