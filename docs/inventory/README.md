@@ -52,7 +52,7 @@ One row per distinct file content in scope. An archive contributes one row per m
 | `sha256` | first 16 hex digits of the content hash |
 | `copies` | the other paths with the same content |
 | `functions` | rows this binary has in `functions.tsv` |
-| `address_source` | which source gave the binary's function addresses: `symtab`, `dynsym`, `mdebug`, `dwarf`, joined by `+`, or `strings` (names only); see Function addresses |
+| `address_source` | which sources gave the binary's function addresses: `symtab`, `dynsym`, `mdebug`, `dwarf`, joined by `+`, or `strings` (names only), with a note when stale DWARF addresses were dropped; see Function addresses |
 | `access_sites` | register access sites resolved to an offset |
 | `unresolved_sites` | register access sites whose offset could not be traced |
 
@@ -71,7 +71,7 @@ One row per (binary, function symbol). A function present in several distinct bi
 | `name` | the symbol |
 | `source` | where the name came from: `symtab`, `dynsym`, `mdebug` (o32 procedure table), `funcnames` (`.debug_funcnames`), `dwarf`, or `strings` (names found by pattern in a raw image) |
 | `code_sha` | first 12 hex digits of the hash of the function's bytes, empty when they could not be read. A name with the same `code_sha` in two binaries has the same code there |
-| `rejected` | `multi-unit` (the name is defined at several addresses in the binary), `shared-address` (another name has the row's address), both joined by `+`, or empty; a rejected row is at most `named-only`, except a `shared-address` row that an entry credits by giving its binary and exact address (see Function rows the generator rejects) |
+| `rejected` | `multi-unit` (the name is defined at several addresses in the binary), `shared-address` (another name has the row's address), `address-unknown` (no source gives the function an address; see Rows with no address), these joined by `+`, or empty; a rejected row is at most `named-only`, except a `shared-address` row that an entry credits by giving its binary and exact address (see Function rows the generator rejects) |
 
 ### mmio.tsv
 
@@ -162,6 +162,7 @@ One row per table, plus `functions (distinct names)`, which counts each function
 | `reused` | rows held at `located` because their entry's role text is a sibling workspace's (see Cross-workspace role check) |
 | `input` | on the `input root manifest` and `input sibling <name>` rows only: the sha256 of the root manifest, or the sibling's commit (`skipped` when the check did not run). See Reproducible runs |
 | `multi_unit`, `shared_address` | for `functions` and `functions in <binary>` rows: rows rejected for a name defined at several addresses, and for an address several names share; empty for other tables |
+| `address_unknown` | for `functions` and `functions in <binary>` rows: rows with `rejected` = `address-unknown`, which `rows` and every other count leave out (see Rows with no address); empty for other tables |
 
 ### audits.tsv
 
@@ -260,11 +261,21 @@ The siblings are the config's `siblings` (`{name: path from the repository root}
 
 ### Function rows the generator rejects
 
-A function row stands for one function, so its name has to pick one out. A row is rejected, and is at most `named-only` whatever documents it, when its name is defined at more than one address in the binary (a name defined in several compilation units, such as a generic routine and a board's own copy of it). When another name sits at its address (aliases and duplicates), a name alone cannot say which row a document means, so that row is at most `named-only` unless an entry's header gives its subject as one of the names at that address, writes that exact address (not an offset) and cites the row's binary (and archive member, if any). Such an entry credits every name at the address, up to the status it earns with the template cap and the other demotes still applied. A mention of the name, or an entry at another address, leaves the row at most `named-only`. `functions.tsv` says which in `rejected`: `multi-unit`, `shared-address` or both joined by `+`. `summary.tsv` counts them separately in `multi_unit` and `shared_address` for `functions` and the per-binary rows (a row can be in both), and `coverage.md` repeats the totals. A document can still be right about such a function, but the table cannot tell which row it means.
+A function row stands for one function, so its name has to pick one out. A row is rejected, and is at most `named-only` whatever documents it, when its name is defined at more than one address in the binary (a name defined in several compilation units, such as a generic routine and a board's own copy of it). When another name sits at its address (aliases and duplicates), a name alone cannot say which row a document means, so that row is at most `named-only` unless an entry's header gives its subject as one of the names at that address, writes that exact address (not an offset) and cites the row's binary (and archive member, if any). Such an entry credits every name at the address, up to the status it earns with the template cap and the other demotes still applied. A mention of the name, or an entry at another address, leaves the row at most `named-only`. `functions.tsv` says which in `rejected`: `multi-unit`, `shared-address` or both joined by `+`. `summary.tsv` counts them separately in `multi_unit` and `shared_address` for `functions` and the per-binary rows (a row can be in both), and `coverage.md` repeats the totals. `address-unknown` rows are not counted as ambiguous: see Rows with no address. A document can still be right about such a function, but the table cannot tell which row it means.
 
 ### Function addresses
 
-A function's address comes from one source, chosen per binary and named in `address_source` of `binaries.tsv`. The ELF symbol tables come first (`symtab`, then `dynsym`); `mdebug` gives addresses to names they lack; `dwarf` only to names that neither has, and only when it can be trusted. DWARF is not trusted in a binary where any function it names sits at an address the symbol tables do not give it, which happens when a library was relinked after its debug information was written (a `libGL.so` whose `glXQueryVersion` is at 0xd833278 in `.dynsym` and at 0xd80f0a0 in DWARF). Its addresses are then dropped and the label says so (`dynsym (dwarf addresses stale, dropped)`); its names stay, with no address. A name defined at several addresses in the chosen source takes the lowest and is rejected (above).
+A function's address comes from one source per name, and `address_source` in `binaries.tsv` lists the sources a binary used. The ELF symbol tables come first (`symtab`, then `dynsym`). `mdebug` supplies names they lack, and `dwarf` supplies names that neither has.
+
+DWARF can be out of date. If the library was relinked after its debug information was written, the code moved and DWARF's addresses are wrong (a `libGL.so` has `glXQueryVersion` at 0xd833278 in `.dynsym` and at 0xd80f0a0 in DWARF). The script treats a binary's DWARF as stale only when some name has DWARF addresses that share none with the addresses the symbol tables give that same name. A static function that is defined in several compilation units, where the symbol table keeps only one of them, does not show this: its DWARF addresses overlap the table's, and the file's other DWARF addresses stay in use.
+
+When DWARF is stale, its addresses are dropped and the label says so with a suffix such as `dynsym+dwarf (dwarf addresses stale, dropped except sections ...)`, whose last words, in full in `binaries.tsv`, name the exception below. The exception is a function that fills a section by itself, such as `_init` in `.init`. Relinking did not move those sections, so DWARF's address, which is the section start, is kept (hence `+dwarf` in the label). Without that exception the label reads `dynsym (dwarf addresses stale, dropped)`. A name left with no address after this is covered below.
+
+A name defined at several addresses in the chosen source takes the lowest and is rejected (above).
+
+### Rows with no address
+
+Some static functions have code in the binary, and a name in its debug information, but no source gives an address for them: the symbol tables omit them and DWARF is stale. The `functions.tsv` row for such a function has address 0x0 and `rejected` = `address-unknown`. Nothing can credit such a row by address, and a reading round cannot render it, so it is not open work. `summary.tsv` and `coverage.md` leave these rows out of every status count and the denominator, as they do out-of-scope rows, and report them in the `address_unknown` column and a line under the coverage table. Reading round target selection skips them. They become ordinary rows again when a source supplies an address.
 
 ### What understood means for each table
 
