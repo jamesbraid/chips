@@ -289,7 +289,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000254c8	532	sys_critical_graph_init	dwarf	
 IP27/unix	kernel	n64	.text	0xc0000000000256dc	184	baseio_ctlr_num_set	dwarf	d7eeaf67461c		out:5	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc000000000025794	452	sn00_rrb_alloc	dwarf+symtab	127ad818b402		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000025958	64	xbox_vmc	dwarf	fd8b3fa347e0		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000025998	200	sn00_vmc	dwarf	968610e93063		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000025998	200	sn00_vmc	dwarf	968610e93063		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc000000000025a60	136	do_init_hub_provider	dwarf+symtab	790360b06ec6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000025ae8	252	do_init_hub_provider_pebrick	dwarf+symtab	0912b909e9be		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000025be4	84	init_hub_provider	dwarf+symtab	a1ab80c6013d		out:5	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -626,7 +626,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000398f8	68	tlbintr	dwarf	78b82efb9cb2		in	
 IP27/unix	kernel	n64	.text	0xc00000000003993c	176	install_tlbintr	dwarf+symtab	4701504b9984		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000399ec	264	protected_broadcast	dwarf+symtab	6763796cd7a0		out:5	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc000000000039af4	80	chkdebug	dwarf+symtab	9f18032e378f		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc000000000039b44	104	install_gfxintr	dwarf+symtab	94ea8b0968c6		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000039b44	104	install_gfxintr	dwarf+symtab	94ea8b0968c6		out:5	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc000000000039bac	108	hub_migrintr_init	dwarf+symtab	1346c16ff288		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000039c18	236	debug_stop_all_cpus	dwarf+symtab	f4e7fd059e3e		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/unix	kernel	n64	.text	0xc000000000039d04	292	intr_reserve_hardwired	dwarf+symtab	5576d27a22e4		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -796,7 +796,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003e014	112	iLine	dwarf+symtab	cb38742b746
 IP27/unix	kernel	n64	.text	0xc00000000003e084	36	iCacheSize	dwarf+symtab	5bd333765010		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003e0a8	136	sLine	dwarf+symtab	22ae3f295db1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003e130	32	sCacheSize	dwarf+symtab	8d2d001b2026		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003e150	112	msc_owner_cpu	dwarf	52253d877131		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003e150	112	msc_owner_cpu	dwarf	52253d877131		out:5	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000003e1c0	56	msc_owner_cnode	dwarf	2aebfe5fa754		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003e1f8	368	llp_pfail_barrier	dwarf+symtab	92aa72bc826a		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003e368	188	llp_pfail_getmode	dwarf+symtab	04054e405507		out:5	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -807,8 +807,8 @@ IP27/unix	kernel	n64	.text	0xc00000000003e81c	28	syssgi_pf16	dwarf+symtab	dad667
 IP27/unix	kernel	n64	.text	0xc00000000003e838	484	syssgi_pfshow	dwarf+symtab	1c864813249e		in	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc00000000003ea1c	268	showall	dwarf	8d1094f510b4		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003eb28	36	syssgi_pfshowall	dwarf+symtab	8ad2b0c9c3e7		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003eb4c	164	do_powerfail_wars	dwarf	c4a68b4779ff		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000003ebf0	248	do_reset_wars	dwarf	ca1939e29fa3		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003eb4c	164	do_powerfail_wars	dwarf	c4a68b4779ff		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP27/unix	kernel	n64	.text	0xc00000000003ebf0	248	do_reset_wars	dwarf	ca1939e29fa3		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000003ece8	308	msc_message	dwarf	6a754ed28436		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003ee1c	312	msc_extend	dwarf	a772b87c1eff		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003ef54	40	msc_heartbeat	dwarf	d4003719e679		out:5	undocumented		
@@ -817,7 +817,7 @@ IP27/unix	kernel	n64	.text	0xc00000000003f0a4	848	process_message	dwarf	de1c85b7
 IP27/unix	kernel	n64	.text	0xc00000000003f3f4	232	message_intr	dwarf	355d9b307a16		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003f4dc	44	msc_intr_unblock	dwarf+symtab	ccd82ae76c23		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003f508	92	sysctlr_check_reenable	dwarf+symtab	6aada35dff09		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc00000000003f564	444	msc_intr	dwarf	c2a4d2e2625c		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000003f564	444	msc_intr	dwarf	c2a4d2e2625c		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000003f720	128	sysctlr_rps_query	dwarf+symtab	8631a3d11bed		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003f7a0	496	sysctlr_init	dwarf+symtab	bafc5908801a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000003f990	92	sysctlr_power_off	dwarf+symtab	07e6e2c2ae0a		out:5	undocumented		
@@ -2449,7 +2449,7 @@ IP27/unix	kernel	n64	.text	0xc000000000099788	76	elsc_cell_set	dwarf+symtab	09c6
 IP27/unix	kernel	n64	.text	0xc0000000000997d4	72	elsc_cell_get	dwarf+symtab	42095cf1f8a4		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009981c	76	elsc_bist_set	dwarf+symtab	1596cd94ddbd		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000099868	84	elsc_bist_get	dwarf+symtab	39564d4cbd86		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000998bc	280	elsc_lock	dwarf+symtab	6ef9c418571f		in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP27/unix	kernel	n64	.text	0xc0000000000998bc	280	elsc_lock	dwarf+symtab	6ef9c418571f		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc0000000000999d4	104	elsc_unlock	dwarf+symtab	563b8ffd22dd		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000099a3c	116	elsc_display_char	dwarf+symtab	c662f0d4e61a		out:5	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc000000000099ab0	72	elsc_display_digit	dwarf+symtab	1d32bfc5620b		out:5	undocumented		
@@ -2462,7 +2462,7 @@ IP27/unix	kernel	n64	.text	0xc000000000099de0	108	elsc_power_down	dwarf+symtab	d
 IP27/unix	kernel	n64	.text	0xc000000000099e4c	104	elsc_system_reset	dwarf+symtab	3560ab0be85b		out:5	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc000000000099eb4	104	elsc_power_cycle	dwarf+symtab	eea58b8fccbb		out:5	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc000000000099f1c	132	elsc_dip_switches	dwarf+symtab	aba0ffc1cbb9		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000099fa0	148	nic_access	dwarf	6de4e8ec45eb		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000099fa0	148	nic_access	dwarf	6de4e8ec45eb		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000009a034	128	elsc_nic_get	dwarf+symtab	3c7c6b21e25c		out:5	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000009a0b4	176	_elsc_hbt	dwarf+symtab	42ede8f321e4		out:5	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000009a164	36	_elscuart_probe	dwarf+symtab	d2395fe37671		out:5	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -2498,7 +2498,7 @@ IP27/unix	kernel	n64	.text	0xc00000000009b7c4	8	return_1	dwarf	a7e7ca11a6b8		out
 IP27/unix	kernel	n64	.text	0xc00000000009b7cc	348	i2cinit	dwarf+symtab	394c27ad473b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009b928	120	enable_heartbeat	dwarf	9848eea946c8		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009b9a0	20	disable_heartbeat	dwarf	7f737b667312		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000009b9b4	236	heartbeat	dwarf	df41ad0a3038		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000009b9b4	236	heartbeat	dwarf	df41ad0a3038		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000009baa0	28	i2c_open	dwarf	1e6eae2615de		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009babc	204	i2c_write	dwarf	3b153c38365c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000009bb88	116	i2c_wrflush	dwarf	e8d6292185d2		out:5	undocumented		
@@ -3269,7 +3269,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000db230	192	tg_enable_intrs	dwarf	3756f987
 IP27/unix	kernel	n64	.text	0xc0000000000db2f0	200	tg_disable_intrs	dwarf	b3d5e4250269		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000db3b8	196	tg_alloctg	dwarf	a37c9502431c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000db47c	116	tg_dealloctg	dwarf	77766185a113		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000db4f0	460	tg_free	dwarf	504f66736363		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000db4f0	460	tg_free	dwarf	504f66736363		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc0000000000db6bc	2248	tg_intr	dwarf	6095a6904565		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000dbf84	148	tg_tx_coal_incr	dwarf	531f89abf103		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000dc018	244	tg_get_macaddr	dwarf	df263d075c4d		out:5	undocumented		
@@ -3314,7 +3314,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000e1314	244	eg_fill_std	dwarf	285e4a5b320d
 IP27/unix	kernel	n64	.text	0xc0000000000e1408	244	eg_fill_jmb	dwarf	4838c1336322		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000e14fc	44	eg_fill	dwarf	51b270e7ffea		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000e1528	500	eg_st_init	dwarf	66f08a902f59		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000000e171c	300	eg_st_bid_notify	dwarf	873d8bed0e7b		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000e171c	300	eg_st_bid_notify	dwarf	873d8bed0e7b		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc0000000000e1848	3124	eg_ioctl	dwarf	95fc72198dd6		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000000e247c	968	eg_intr	dwarf	803b0b40fe75		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000e2844	24	eg_errupdate	dwarf	605f7209791b		out:5	undocumented		
@@ -3337,7 +3337,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000e47fc	64	eg_stopFW	dwarf	3c40034d64cb		o
 IP27/unix	kernel	n64	.text	0xc0000000000e483c	104	eg_freeFW	dwarf	ea94941fc6c6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000e48a4	732	eg_loadFW	dwarf	b27de6e93511		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/unix	kernel	n64	.text	0xc0000000000e4b80	88	eg_startFW	dwarf	74a45e219ad1		out:5	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/unix	kernel	n64	.text	0xc0000000000e4bd8	272	eg_docmd	dwarf	785928d4bb68		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000e4bd8	272	eg_docmd	dwarf	785928d4bb68		out:5	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc0000000000e4ce8	328	eg_waitforevent	dwarf	fa3eb304289d		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000e4e30	172	eg_getmacaddr	dwarf	f89c874b31db		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000000e4edc	84	eg_setmacaddr	dwarf	5aefc4920b2b		out:5	undocumented		
@@ -5501,8 +5501,8 @@ IP27/unix	kernel	n64	.text	0xc00000000018d1bc	8	randmap	dwarf+symtab	16a640724d3
 IP27/unix	kernel	n64	.text	0xc00000000018d1c4	8	randunmap	dwarf+symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018d1cc	12	randpoll	dwarf+symtab	44f926dae2a1		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018d1d8	148	random_kthread	dwarf	29cbc9306e66		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000018d26c	296	random_harvest_internal	dwarf	1119dd2fc78c		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000018d394	224	random_write_internal	dwarf	3f3eb379b976		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000018d26c	296	random_harvest_internal	dwarf	1119dd2fc78c		out:5	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP27/unix	kernel	n64	.text	0xc00000000018d394	224	random_write_internal	dwarf	3f3eb379b976		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000018d474	376	random_process_event	dwarf+symtab	e260e2ebaeb2		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018d5ec	208	random_init	dwarf+symtab	ca6322846aa2		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000018d6bc	32	random_deinit	dwarf+symtab	f539ff4a483e		out:5	undocumented		
@@ -7264,14 +7264,14 @@ IP27/unix	kernel	n64	.text	0xc0000000001feb2c	192	printL	dwarf	5c4a10431f73		out
 IP27/unix	kernel	n64	.text	0xc0000000001febec	28	printn	dwarf	0f31e5485679		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001fec08	324	printregs	dwarf+symtab	ca23ec06c40f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001fed4c	28	conbuf_flush_timeout	dwarf	9083f684ef55		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001fed68	220	conbuf_flush	dwarf+symtab	414b11b9057d		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001fed68	220	conbuf_flush	dwarf+symtab	414b11b9057d		out:5	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc0000000001fee44	48	dopromreset	dwarf	5130016053c8		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001fee74	136	panic_coproc_select	dwarf	34e4609783df		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001feefc	220	panicspin	dwarf+symtab	f1dd201f93d8		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc0000000001fefd8	92	syncreboot	dwarf	db49d8420370		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001ff034	204	mdboot	dwarf+symtab	c108502e3373		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001ff100	400	mprboot	dwarf	15407567a2c6		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc0000000001ff290	272	do_mprboot	dwarf	3530cc6e6c80		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000001ff290	272	do_mprboot	dwarf	3530cc6e6c80		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc0000000001ff3a0	204	get_conmsg	dwarf	9a3ca6b2b5cc		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001ff46c	216	printputbuf	dwarf+symtab	fd3fed711ef8		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc0000000001ff544	296	_assfail	dwarf+symtab	d0824791c2bb		out:5	undocumented		
@@ -11931,7 +11931,7 @@ IP27/unix	kernel	n64	.text	0xc000000000377624	404	mgrasInitBoard	dwarf+symtab	af
 IP27/unix	kernel	n64	.text	0xc0000000003777b8	80	MgrasProbe	dwarf+symtab	f1ab7dbf686f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000377808	1268	MgrasGatherInfo	dwarf+symtab	71594aba094e		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000377cfc	256	MgrasGatherDynamicInfo	dwarf+symtab	74a17b909033		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000377dfc	84	hub_set_fire_n_forget	dwarf	e2a836bfce5d		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000377dfc	84	hub_set_fire_n_forget	dwarf	e2a836bfce5d		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc000000000377e50	324	MgrasReset	dwarf+symtab	cbbaca30ab22		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000377f94	196	MgrasInitHQ	dwarf+symtab	eb801d75a2b6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000378058	104	MgrasInitDCBctrl	dwarf+symtab	24dbcef78d7e		out:5	undocumented		
@@ -12188,7 +12188,7 @@ IP27/unix	kernel	n64	.text	0xc00000000039594c	212	median	dwarf	5ed22e2d404a		out
 IP27/unix	kernel	n64	.text	0xc000000000395a20	208	CCInit	dwarf	a4ee6775d028		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000395af0	892	MgrasInitCCR	dwarf+symtab	69e1869a5872		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000395e6c	144	gfx_flow_delayed_hiwater_intr_prehandler	dwarf+symtab	af34397f149e		in	understood	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
-IP27/unix	kernel	n64	.text	0xc000000000395efc	428	gfx_flow_init	dwarf	235b6a88c8e2		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc000000000395efc	428	gfx_flow_init	dwarf	235b6a88c8e2		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc0000000003960a8	916	gfx_flow_alloc	dwarf+symtab	6ad5b1631c2f		out:5	located	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP27/unix	kernel	n64	.text	0xc00000000039643c	12	gfx_flow_reset	dwarf+symtab	edc75ebbd907		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000396448	72	gfx_flow_dealloc	dwarf+symtab	b5c0332bc345		out:5	located	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -12275,8 +12275,8 @@ IP27/unix	kernel	n64	.text	0xc00000000039b71c	156	find_konapipe	dwarf+symtab	728
 IP27/unix	kernel	n64	.text	0xc00000000039b7b8	104	init_graphics	dwarf	032fa2f52243		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039b820	124	get_eeprom_state	dwarf	5fe8935c0cda		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039b89c	408	get_graphics_info	dwarf	f2adc64ef95c		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000039ba34	308	kona_fc_attach	dwarf	ce9d23c2871b		in	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000039bb68	144	kona_fc_detach	dwarf	79904727f453		in	undocumented		
+IP27/unix	kernel	n64	.text	0xc00000000039ba34	308	kona_fc_attach	dwarf	ce9d23c2871b		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP27/unix	kernel	n64	.text	0xc00000000039bb68	144	kona_fc_detach	dwarf	79904727f453		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000039bbf8	224	KONAcreateddrn	dwarf+symtab	814f42a86b85		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039bcd8	120	kona_mopup_complete	dwarf+symtab	cb6eaea10bbc		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000039bd50	1228	KONAdestroyddrn	dwarf+symtab	3a73a3f81335		out:5	undocumented		
@@ -15825,7 +15825,7 @@ IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xe9c	76	elsc_cell_s
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xee8	72	elsc_cell_get	dwarf+symtab	c5df4b7a3f02		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xf30	76	elsc_bist_set	dwarf+symtab	e94b8e183086		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xf7c	84	elsc_bist_get	dwarf+symtab	378cb54cbfad		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xfd0	280	elsc_lock	dwarf+symtab	af3c62554c7f		in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0xfd0	280	elsc_lock	dwarf+symtab	af3c62554c7f		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x10e8	104	elsc_unlock	dwarf+symtab	327b7bf1b83b		out:6	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1150	116	elsc_display_char	dwarf+symtab	d981ed9649e9		out:6	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x11c4	72	elsc_display_digit	dwarf+symtab	35046301b1e7		out:6	undocumented		
@@ -15838,7 +15838,7 @@ IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x14f4	108	elsc_powe
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1560	104	elsc_system_reset	dwarf+symtab	508ff24a2297		out:6	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x15c8	104	elsc_power_cycle	dwarf+symtab	79a2c3172157		out:6	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1630	132	elsc_dip_switches	dwarf+symtab	32548874592c		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x16b4	148	nic_access	dwarf+symtab	f6785106ca2d		out:6	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x16b4	148	nic_access	dwarf+symtab	f6785106ca2d		out:6	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1748	128	elsc_nic_get	dwarf+symtab	c5a290205e0a		out:6	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x17c8	176	_elsc_hbt	dwarf+symtab	246a52810838		out:6	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1878	36	_elscuart_probe	dwarf+symtab	1280546ef94f		out:6	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -17224,7 +17224,7 @@ IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x1aa0	244	eg_fill_
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x1b94	244	eg_fill_jmb	dwarf+symtab	f5f89df0435f		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x1c88	44	eg_fill	dwarf+symtab	3a8a0df22292		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x1cb4	500	eg_st_init	dwarf+symtab	719d47443900		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x1ea8	300	eg_st_bid_notify	dwarf+symtab	d4522520b7bf		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x1ea8	300	eg_st_bid_notify	dwarf+symtab	d4522520b7bf		out:2	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x1fd4	3124	eg_ioctl	dwarf+symtab	cdbe9cefe6aa		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x2c08	968	eg_intr	dwarf+symtab	302eb834ce99		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x2fd0	24	eg_errupdate	dwarf+symtab	605f7209791b		out:2	undocumented		
@@ -17247,7 +17247,7 @@ IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x4f88	64	eg_stopFW
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x4fc8	104	eg_freeFW	dwarf+symtab	14422147d99e		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x5030	732	eg_loadFW	dwarf+symtab	f4258a286d6e		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x530c	88	eg_startFW	dwarf+symtab	91b0a94fe65f		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x5364	272	eg_docmd	dwarf+symtab	9a3f1010b825		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x5364	272	eg_docmd	dwarf+symtab	9a3f1010b825		out:2	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x5474	328	eg_waitforevent	dwarf+symtab	7136a482acba		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x55bc	172	eg_getmacaddr	dwarf+symtab	f1dd65a82c4c		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-object	n64	.text	0x5668	84	eg_setmacaddr	dwarf+symtab	3d14b9f78290		out:2	undocumented		
@@ -17498,7 +17498,7 @@ IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xb890	192	tg_enabl
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xb950	200	tg_disable_intrs	dwarf+symtab	164bffaa8e8a		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xba18	196	tg_alloctg	dwarf+symtab	809db5577c8e		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xbadc	116	tg_dealloctg	dwarf+symtab	9f9022d2e9bb		out:2	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xbb50	460	tg_free	dwarf+symtab	8c24876ee2f0		out:2	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xbb50	460	tg_free	dwarf+symtab	8c24876ee2f0		out:2	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xbd1c	2248	tg_intr	dwarf+symtab	e1dabcdd44a4		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xc5e4	148	tg_tx_coal_incr	dwarf+symtab	db8a2e1a949b		out:2	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-object	n64	.text	0xc678	244	tg_get_macaddr	dwarf+symtab	330beac3c65a		out:2	undocumented		
@@ -18724,7 +18724,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xc348	532	sys_cri
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xc55c	184	baseio_ctlr_num_set	dwarf	a3c6bd292d17		out:7	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xc614	452	sn00_rrb_alloc	dwarf+symtab	745dee73ed9e		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xc7d8	64	xbox_vmc	dwarf	9870211c3846		out:7	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xc818	200	sn00_vmc	dwarf	da9b88928331		out:7	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xc818	200	sn00_vmc	dwarf	da9b88928331		out:7	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xc8e0	136	do_init_hub_provider	dwarf+symtab	4237b326bc56		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xc968	252	do_init_hub_provider_pebrick	dwarf+symtab	be0ec086a5b3		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xca64	84	init_hub_provider	dwarf+symtab	7565a2fefdec		out:7	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -19061,7 +19061,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20778	68	tlbintr
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x207bc	176	install_tlbintr	dwarf+symtab	f0973873e6c4		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2086c	264	protected_broadcast	dwarf+symtab	91641c4471bb		out:7	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20974	80	chkdebug	dwarf+symtab	14553b0d82ec		out:7	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x209c4	104	install_gfxintr	dwarf+symtab	b46b8249de5a		out:7	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x209c4	104	install_gfxintr	dwarf+symtab	b46b8249de5a		out:7	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20a2c	108	hub_migrintr_init	dwarf+symtab	b2d92f247684		in	located	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20a98	236	debug_stop_all_cpus	dwarf+symtab	91f1209595c3		out:7	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x20b84	292	intr_reserve_hardwired	dwarf+symtab	061649ecc96e		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -19231,7 +19231,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x24e94	112	iLine	
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x24f04	36	iCacheSize	dwarf+symtab	5bd333765010		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x24f28	136	sLine	dwarf+symtab	a455b314187a		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x24fb0	32	sCacheSize	dwarf+symtab	8d2d001b2026		out:7	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x24fd0	112	msc_owner_cpu	dwarf	f72faeb62db0		out:7	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x24fd0	112	msc_owner_cpu	dwarf	f72faeb62db0		out:7	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25040	56	msc_owner_cnode	dwarf	2aebfe5fa754		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25078	368	llp_pfail_barrier	dwarf+symtab	955854c18af7		out:7	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x251e8	188	llp_pfail_getmode	dwarf+symtab	c5c22cc5d5b7		out:7	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -19242,8 +19242,8 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2569c	28	syssgi_
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x256b8	484	syssgi_pfshow	dwarf+symtab	8cb2e3aa988b		out:7	located	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2589c	268	showall	dwarf	106464e077c3		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x259a8	36	syssgi_pfshowall	dwarf+symtab	0769f511aa3a		out:7	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x259cc	164	do_powerfail_wars	dwarf	97d5e256d54b		out:7	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25a70	248	do_reset_wars	dwarf	113e61b353f4		out:7	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x259cc	164	do_powerfail_wars	dwarf	97d5e256d54b		out:7	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25a70	248	do_reset_wars	dwarf	113e61b353f4		out:7	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25b68	308	msc_message	dwarf	f1263fa04ab0		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25c9c	312	msc_extend	dwarf	0a8b3afbdee9		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25dd4	40	msc_heartbeat	dwarf	e3ff54e75801		out:7	undocumented		
@@ -19252,7 +19252,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x25f24	848	proces
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26274	232	message_intr	dwarf	5e7d326a9e53		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x2635c	44	msc_intr_unblock	dwarf+symtab	70b4469a9d99		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26388	92	sysctlr_check_reenable	dwarf+symtab	3875f60fe959		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x263e4	444	msc_intr	dwarf	09c7f50e4471		out:7	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x263e4	444	msc_intr	dwarf	09c7f50e4471		out:7	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x265a0	128	sysctlr_rps_query	dwarf+symtab	9071fd19bdcb		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26620	496	sysctlr_init	dwarf+symtab	c1b080ebe683		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x26810	92	sysctlr_power_off	dwarf+symtab	62d3fd6aa3dc		out:7	undocumented		
@@ -24462,14 +24462,14 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x1f58	192	p
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2018	28	printn	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2034	324	printregs	dwarf+symtab	17ec0bea82a5		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2178	28	conbuf_flush_timeout	dwarf+symtab	8dd1dc8e45d1		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2194	220	conbuf_flush	dwarf+symtab	8b6185c6644e		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2194	220	conbuf_flush	dwarf+symtab	8b6185c6644e		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2270	48	dopromreset	dwarf+symtab	c3275ac8bf9c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x22a0	136	panic_coproc_select	dwarf+symtab	79c7ef9de1d2		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2328	220	panicspin	dwarf+symtab	48b3f552a248		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2404	92	syncreboot	dwarf+symtab	a9255e890e3c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2460	204	mdboot	dwarf+symtab	05fea89a0ea1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x252c	400	mprboot	dwarf+symtab	4ba1ecceb70f		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x26bc	272	do_mprboot	dwarf+symtab	307d7db07286		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x26bc	272	do_mprboot	dwarf+symtab	307d7db07286		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x27cc	204	get_conmsg	dwarf+symtab	9fc7fddb3bcf		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2898	216	printputbuf	dwarf+symtab	407f8452d5c4		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-object	n64	.text	0x2970	296	_assfail	dwarf+symtab	9f2198e16ca2		out:3	undocumented		
@@ -26594,8 +26594,8 @@ IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-object	n64	.text	0x364	8	rand
 IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-object	n64	.text	0x36c	8	randunmap	dwarf+symtab	87506497337c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-object	n64	.text	0x374	12	randpoll	dwarf+symtab	44f926dae2a1		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-object	n64	.text	0x380	148	random_kthread	dwarf+symtab	5f7883e8a849		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-object	n64	.text	0x414	296	random_harvest_internal	dwarf+symtab	ccee1a508df6		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-object	n64	.text	0x53c	224	random_write_internal	dwarf+symtab	596904c7df25		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-object	n64	.text	0x414	296	random_harvest_internal	dwarf+symtab	ccee1a508df6		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-object	n64	.text	0x53c	224	random_write_internal	dwarf+symtab	596904c7df25		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/rand.a(yarrow.o)	kernel-object	n64	.text	0x0	376	random_process_event	dwarf+symtab	c90806e10109		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rand.a(yarrow.o)	kernel-object	n64	.text	0x178	208	random_init	dwarf+symtab	431af3a961ef		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rand.a(yarrow.o)	kernel-object	n64	.text	0x248	32	random_deinit	dwarf+symtab	0b7ad2dc61be		out:3	undocumented		
@@ -27636,7 +27636,7 @@ IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	kernel-object	n64	.text	0x8	8	return_1	dw
 IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	kernel-object	n64	.text	0x10	348	i2cinit	dwarf+symtab	6e7465b5fb87		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	kernel-object	n64	.text	0x16c	120	enable_heartbeat	dwarf+symtab	68d67088c80c		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	kernel-object	n64	.text	0x1e4	20	disable_heartbeat	dwarf+symtab	7f737b667312		out:3	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	kernel-object	n64	.text	0x1f8	236	heartbeat	dwarf+symtab	6539de0ec161		out:3	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	kernel-object	n64	.text	0x1f8	236	heartbeat	dwarf+symtab	6539de0ec161		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	kernel-object	n64	.text	0x2e4	28	i2c_open	dwarf+symtab	1e6eae2615de		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	kernel-object	n64	.text	0x300	204	i2c_write	dwarf+symtab	2cf229809ed8		out:3	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sio_i2c.o	kernel-object	n64	.text	0x3cc	116	i2c_wrflush	dwarf+symtab	2370f786e5b9		out:3	undocumented		
@@ -32365,8 +32365,8 @@ IP30/unix	kernel	n64	.text	0xa800000020012810	96	set_leds	dwarf+symtab	d1d36afda
 IP30/unix	kernel	n64	.text	0xa800000020012870	28	reset_leds	dwarf+symtab	a95d3559205d		out:8	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa80000002001288c	28	sys_setled	dwarf+symtab	ec58991314ea		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200128a8	348	dobootduty	dwarf	6945e6cc28e8		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020012a04	48	cpu_disable	dwarf	60cb5dcc562e		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020012a34	32	cpu_exists	dwarf	3151317b3d13		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020012a04	48	cpu_disable	dwarf	60cb5dcc562e		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP30/unix	kernel	n64	.text	0xa800000020012a34	32	cpu_exists	dwarf	3151317b3d13		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020012a54	20	cpu_enabled	dwarf+symtab	463fded8373b		out:8	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020012a68	980	allowboot	dwarf+symtab	adb8aefe526b		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020012e3c	424	cboot	dwarf+symtab	516575dc8b75		out:8	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -32382,7 +32382,7 @@ IP30/unix	kernel	n64	.text	0xa800000020013364	8	cpuboard	dwarf+symtab	32295a3087
 IP30/unix	kernel	n64	.text	0xa80000002001336c	444	dprintf	dwarf+symtab	b1a5a48d99c9		out:8	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/unix	kernel	n64	.text	0xa800000020013528	56	cpu_isvalid	dwarf+symtab	6c546974cfe7		out:8	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020013560	340	ip30_chips_mlreset	dwarf	ccedde41227c		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200136b4	340	ip30_early_piotrans_addr	dwarf	3eb3bb20bb03		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200136b4	340	ip30_early_piotrans_addr	dwarf	3eb3bb20bb03		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020013808	548	init_all_devices	dwarf+symtab	fb41b14df377		out:8	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020013a2c	28	sendintr	dwarf+symtab	0aa68a818cd4		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020013a48	140	debug_stop_all_cpus	dwarf+symtab	4f653de98bb8		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
@@ -32559,7 +32559,7 @@ IP30/unix	kernel	n64	.text	0xa800000020017f38	48	rtlock_ownerstamp	dwarf+symtab	
 IP30/unix	kernel	n64	.text	0xa800000020017f68	80	dumpcopy	dwarf+symtab	9618a71e8fde		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020017fb8	48	delay_calibrate	dwarf+symtab	c3dbaa4e60b6		out:8	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020017fe8	44	us_delaybus	dwarf+symtab	08fe7388a305		out:8	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP30/unix	kernel	n64	.text	0xa800000020018014	288	find_pclk_freq	dwarf	719865c67931		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020018014	288	find_pclk_freq	dwarf	719865c67931		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020018134	164	findcpufreq_hz	dwarf+symtab	98bb658c0d78		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200181d8	48	cpu_mhz_rating	dwarf+symtab	89aaa4819e3e		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020018208	52	findcpufreq	dwarf+symtab	5a1247cdcea9		out:8	undocumented		
@@ -32580,7 +32580,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200187c8	56	flash_led	dwarf	c4534e933af9		o
 IP30/unix	kernel	n64	.text	0xa800000020018800	48	cpu_waitforreset	dwarf+symtab	785bad6c66af		out:8	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020018830	452	rtodc	dwarf+symtab	92a577858888		out:8	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa8000000200189f4	112	wtodc	dwarf+symtab	2e479b426bd8		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020018a64	524	_clock_func	dwarf	6c351be4150e		out:8	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020018a64	524	_clock_func	dwarf	6c351be4150e		out:8	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020018c70	412	set_autopoweron	dwarf+symtab	2c2e85e182d8		out:8	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020018e0c	484	secs_to_calendar_time	dwarf	3d9ae5a2b822		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020018ff0	112	cpu_clearpower	dwarf+symtab	d3278a9d5ff9		out:8	undocumented		
@@ -34969,7 +34969,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200b3504	192	tg_enable_intrs	dwarf	656bfdd3
 IP30/unix	kernel	n64	.text	0xa8000000200b35c4	200	tg_disable_intrs	dwarf	9b2d606821d5		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b368c	196	tg_alloctg	dwarf	406adab89100		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b3750	116	tg_dealloctg	dwarf	74398851921d		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200b37c4	460	tg_free	dwarf	905348aa859a		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200b37c4	460	tg_free	dwarf	905348aa859a		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa8000000200b3990	2248	tg_intr	dwarf	ef9dd85ae96d		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b4258	148	tg_tx_coal_incr	dwarf	3261bc242ece		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b42ec	244	tg_get_macaddr	dwarf	d0c99e10929f		out:8	undocumented		
@@ -35014,7 +35014,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200b95e4	244	eg_fill_std	dwarf	030310be9f9c
 IP30/unix	kernel	n64	.text	0xa8000000200b96d8	244	eg_fill_jmb	dwarf	66e7eb82e216		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b97cc	44	eg_fill	dwarf	9fbc1d842b54		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200b97f8	496	eg_st_init	dwarf	aa53a44e8e6f		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000200b99e8	300	eg_st_bid_notify	dwarf	a90b2d2206d5		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200b99e8	300	eg_st_bid_notify	dwarf	a90b2d2206d5		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa8000000200b9b14	3124	eg_ioctl	dwarf	f2563eb8aff8		out:8	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200ba748	968	eg_intr	dwarf	9288830b8a0b		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200bab10	24	eg_errupdate	dwarf	605f7209791b		out:8	undocumented		
@@ -35037,7 +35037,7 @@ IP30/unix	kernel	n64	.text	0xa8000000200bcac8	64	eg_stopFW	dwarf	c8864039baf7		o
 IP30/unix	kernel	n64	.text	0xa8000000200bcb08	104	eg_freeFW	dwarf	0c7b58ccf5ef		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200bcb70	732	eg_loadFW	dwarf	36c7d0b4032b		out:8	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/unix	kernel	n64	.text	0xa8000000200bce4c	88	eg_startFW	dwarf	d6311b8ee645		out:8	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/unix	kernel	n64	.text	0xa8000000200bcea4	272	eg_docmd	dwarf	a39ba7e37827		out:8	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000200bcea4	272	eg_docmd	dwarf	a39ba7e37827		out:8	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa8000000200bcfb4	328	eg_waitforevent	dwarf	939f54920be0		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200bd0fc	172	eg_getmacaddr	dwarf	30eacde2e3b2		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200bd1a8	84	eg_setmacaddr	dwarf	5818873c8886		out:8	undocumented		
@@ -37094,8 +37094,8 @@ IP30/unix	kernel	n64	.text	0xa80000002015607c	8	randmap	dwarf+symtab	16a640724d3
 IP30/unix	kernel	n64	.text	0xa800000020156084	8	randunmap	dwarf+symtab	87506497337c		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002015608c	12	randpoll	dwarf+symtab	44f926dae2a1		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020156098	148	random_kthread	dwarf	f63cfcb9cfa4		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002015612c	296	random_harvest_internal	dwarf	5c497586a0d4		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020156254	224	random_write_internal	dwarf	572cf8f910e2		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002015612c	296	random_harvest_internal	dwarf	5c497586a0d4		out:8	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP30/unix	kernel	n64	.text	0xa800000020156254	224	random_write_internal	dwarf	572cf8f910e2		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020156334	376	random_process_event	dwarf+symtab	98b337706658		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201564ac	208	random_init	dwarf+symtab	5c3913884870		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002015657c	32	random_deinit	dwarf+symtab	7f1e54aa45cd		out:8	undocumented		
@@ -38914,13 +38914,13 @@ IP30/unix	kernel	n64	.text	0xa8000000201c8878	92	_putstr	dwarf	54dea27d22f1		out
 IP30/unix	kernel	n64	.text	0xa8000000201c88d4	192	printL	dwarf	f4826bbd9d42		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c8994	28	printn	dwarf	dbfb6be718ff		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c89b0	324	printregs	dwarf+symtab	1ede3b4443ad		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201c8af4	148	conbuf_flush	dwarf+symtab	b5e07a3c2647		out:8	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201c8af4	148	conbuf_flush	dwarf+symtab	b5e07a3c2647		out:8	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa8000000201c8b88	48	dopromreset	dwarf	21a9541ae6ec		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c8bb8	212	panicspin	dwarf+symtab	6a207bbbd533		out:8	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa8000000201c8c8c	92	syncreboot	dwarf	055eb055ffd5		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c8ce8	204	mdboot	dwarf+symtab	ae541b6ec18d		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c8db4	400	mprboot	dwarf	d97fadbdba78		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa8000000201c8f44	284	do_mprboot	dwarf	8bc856b9ee90		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa8000000201c8f44	284	do_mprboot	dwarf	8bc856b9ee90		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa8000000201c9060	204	get_conmsg	dwarf	12a79bc1d75d		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c912c	216	printputbuf	dwarf+symtab	6d2a30e6b892		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000201c9204	296	_assfail	dwarf+symtab	9d1877ae37fc		out:8	undocumented		
@@ -44292,8 +44292,8 @@ IP30/unix	kernel	n64	.text	0xa80000002038edec	824	odsy_probeDenaliChannel	dwarf	
 IP30/unix	kernel	n64	.text	0xa80000002038f124	124	odsy_ProbeDenali	dwarf+symtab	39cf2ff12397		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f1a0	136	gfx_flow_delayed_hiwater_intr_prehandler	dwarf+symtab	5652ea304a63		in	understood	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f228	8	gfx_flow_pipe_head	dwarf+symtab	ee203e2bd9f8		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002038f230	64	gfx_flow_init	dwarf	701c5f3673d2		in	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002038f270	168	gfx_flow_pipe_head_init	dwarf	c226e95cd2ce		in	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002038f230	64	gfx_flow_init	dwarf	701c5f3673d2		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP30/unix	kernel	n64	.text	0xa80000002038f270	168	gfx_flow_pipe_head_init	dwarf	c226e95cd2ce		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa80000002038f318	512	gfx_flow_alloc	dwarf+symtab	2827fd0cc2f3		in	understood	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002038f518	12	gfx_flow_reset	dwarf+symtab	0f2f165b22fa		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002038f524	284	gfx_flow_dealloc	dwarf+symtab	316de108bdfe		in	understood	docs/ip30-kernel-odyssey-routines.md#odyssey-graphics-routines-of-the-ip30-kernel	Odyssey graphics routines of the IP30 kernel
@@ -48822,7 +48822,7 @@ IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x1a8c	244	eg_fill_
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x1b80	244	eg_fill_jmb	dwarf+symtab	f5f89df0435f		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x1c74	44	eg_fill	dwarf+symtab	3a8a0df22292		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x1ca0	496	eg_st_init	dwarf+symtab	feee961fbd64		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x1e90	300	eg_st_bid_notify	dwarf+symtab	d4522520b7bf		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x1e90	300	eg_st_bid_notify	dwarf+symtab	d4522520b7bf		out:2	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x1fbc	3124	eg_ioctl	dwarf+symtab	cdbe9cefe6aa		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x2bf0	968	eg_intr	dwarf+symtab	655bd413f5a3		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x2fb8	24	eg_errupdate	dwarf+symtab	605f7209791b		out:2	undocumented		
@@ -48845,7 +48845,7 @@ IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x4f70	64	eg_stopFW
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x4fb0	104	eg_freeFW	dwarf+symtab	14422147d99e		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x5018	732	eg_loadFW	dwarf+symtab	f4258a286d6e		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x52f4	88	eg_startFW	dwarf+symtab	6454eb65d62e		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x534c	272	eg_docmd	dwarf+symtab	9a3f1010b825		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x534c	272	eg_docmd	dwarf+symtab	9a3f1010b825		out:2	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x545c	328	eg_waitforevent	dwarf+symtab	7136a482acba		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x55a4	172	eg_getmacaddr	dwarf+symtab	f1dd65a82c4c		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-object	n64	.text	0x5650	84	eg_setmacaddr	dwarf+symtab	3d14b9f78290		out:2	undocumented		
@@ -49096,7 +49096,7 @@ IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xb74c	192	tg_enabl
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xb80c	200	tg_disable_intrs	dwarf+symtab	de246b8a8ebf		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xb8d4	196	tg_alloctg	dwarf+symtab	c98bec86c259		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xb998	116	tg_dealloctg	dwarf+symtab	9f9022d2e9bb		out:2	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xba0c	460	tg_free	dwarf+symtab	39d3bb105fea		out:2	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xba0c	460	tg_free	dwarf+symtab	39d3bb105fea		out:2	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xbbd8	2248	tg_intr	dwarf+symtab	b8daa9b33ac6		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xc4a0	148	tg_tx_coal_incr	dwarf+symtab	db8a2e1a949b		out:2	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-object	n64	.text	0xc534	244	tg_get_macaddr	dwarf+symtab	c66b0380e6d0		out:2	undocumented		
@@ -50036,8 +50036,8 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2690	96	set_leds
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x26f0	28	reset_leds	dwarf+symtab	7817ac548105		out:9	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x270c	28	sys_setled	dwarf+symtab	a86de4a9d7a4		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2728	348	dobootduty	dwarf	d4aeee827e3f		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2884	48	cpu_disable	dwarf	a902ef13a125		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28b4	32	cpu_exists	dwarf	3151317b3d13		out:9	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2884	48	cpu_disable	dwarf	a902ef13a125		out:9	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28b4	32	cpu_exists	dwarf	3151317b3d13		out:9	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28d4	20	cpu_enabled	dwarf+symtab	4b82f3c90019		out:9	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28e8	980	allowboot	dwarf+symtab	346df109e278		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2cbc	424	cboot	dwarf+symtab	9c532ced7935		out:9	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -50053,7 +50053,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x31e4	8	cpuboard	
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x31ec	444	dprintf	dwarf+symtab	d18b3fd89138		out:9	named-only	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x33a8	56	cpu_isvalid	dwarf+symtab	647b501f26e0		out:9	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x33e0	340	ip30_chips_mlreset	dwarf	a928137a0660		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3534	340	ip30_early_piotrans_addr	dwarf	cdebabf88b45		out:9	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3534	340	ip30_early_piotrans_addr	dwarf	cdebabf88b45		out:9	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3688	548	init_all_devices	dwarf+symtab	bc27230d4631		out:9	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x38ac	28	sendintr	dwarf+symtab	0aa68a818cd4		out:9	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x38c8	140	debug_stop_all_cpus	dwarf+symtab	09b9c330cac9		out:9	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
@@ -50230,7 +50230,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7db8	48	rtlock_o
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7de8	80	dumpcopy	dwarf+symtab	ca2a208dfba3		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7e38	48	delay_calibrate	dwarf+symtab	420d11b29430		out:9	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7e68	44	us_delaybus	dwarf+symtab	3a8a0df22292		out:9	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7e94	288	find_pclk_freq	dwarf	0f6b691ace66		out:9	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7e94	288	find_pclk_freq	dwarf	0f6b691ace66		out:9	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x7fb4	164	findcpufreq_hz	dwarf+symtab	cf976c1674db		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8058	48	cpu_mhz_rating	dwarf+symtab	70a483e4d53c		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8088	52	findcpufreq	dwarf+symtab	7e52fa7daa38		out:9	undocumented		
@@ -50251,7 +50251,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8648	56	flash_le
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8680	48	cpu_waitforreset	dwarf+symtab	f4d18822d894		out:9	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x86b0	452	rtodc	dwarf+symtab	f39ae75b511e		out:9	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8874	112	wtodc	dwarf+symtab	7d93fcea7304		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x88e4	524	_clock_func	dwarf	c24baab75067		out:9	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x88e4	524	_clock_func	dwarf	c24baab75067		out:9	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8af0	412	set_autopoweron	dwarf+symtab	f2a7180a692d		out:9	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8c8c	484	secs_to_calendar_time	dwarf	1bf85e5fd0a0		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x8e70	112	cpu_clearpower	dwarf+symtab	36f76f72cd6a		out:9	undocumented		
@@ -54677,13 +54677,13 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1d78	92	_p
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1dd4	192	printL	dwarf+symtab	8bb78f5f4b54		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1e94	28	printn	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1eb0	324	printregs	dwarf+symtab	17ec0bea82a5		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1ff4	148	conbuf_flush	dwarf+symtab	0238171117de		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x1ff4	148	conbuf_flush	dwarf+symtab	0238171117de		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x2088	48	dopromreset	dwarf+symtab	002c2bfd791b		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x20b8	212	panicspin	dwarf+symtab	7fec5b0bd6d8		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x218c	92	syncreboot	dwarf+symtab	359c052a8a5b		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x21e8	204	mdboot	dwarf+symtab	cb84561608ac		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x22b4	400	mprboot	dwarf+symtab	4633141a8baf		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x2444	284	do_mprboot	dwarf+symtab	41b0d84ba262		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x2444	284	do_mprboot	dwarf+symtab	41b0d84ba262		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x2560	204	get_conmsg	dwarf+symtab	9fc7fddb3bcf		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x262c	216	printputbuf	dwarf+symtab	407f8452d5c4		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-object	n64	.text	0x2704	296	_assfail	dwarf+symtab	52094702595d		out:3	undocumented		
@@ -56649,8 +56649,8 @@ IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-object	n64	.text	0x364	8	rand
 IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-object	n64	.text	0x36c	8	randunmap	dwarf+symtab	87506497337c		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-object	n64	.text	0x374	12	randpoll	dwarf+symtab	44f926dae2a1		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-object	n64	.text	0x380	148	random_kthread	dwarf+symtab	5f7883e8a849		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-object	n64	.text	0x414	296	random_harvest_internal	dwarf+symtab	ccee1a508df6		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-object	n64	.text	0x53c	224	random_write_internal	dwarf+symtab	b61a3e6a465d		out:3	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-object	n64	.text	0x414	296	random_harvest_internal	dwarf+symtab	ccee1a508df6		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-object	n64	.text	0x53c	224	random_write_internal	dwarf+symtab	b61a3e6a465d		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/rand.a(yarrow.o)	kernel-object	n64	.text	0x0	376	random_process_event	dwarf+symtab	c90806e10109		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rand.a(yarrow.o)	kernel-object	n64	.text	0x178	208	random_init	dwarf+symtab	431af3a961ef		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rand.a(yarrow.o)	kernel-object	n64	.text	0x248	32	random_deinit	dwarf+symtab	0b7ad2dc61be		out:3	undocumented		
@@ -66132,8 +66132,8 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x237c	376	get_fla
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x24f4	28	update_flash_version	dwarf+symtab	ac1bbde0ea38		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x2510	28	load_nvram_tab	dwarf+symtab	34d7a2e33b85		out:10	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x252c	20	flash_version	dwarf+symtab	506ac9e2524c		out:10	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x2540	24	flash_write_enable	dwarf+funcnames	5b8115db5346		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x2558	28	flash_write_disable	dwarf+funcnames	405e32e668ed		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x2540	24	flash_write_enable	dwarf+funcnames	5b8115db5346		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x2558	28	flash_write_disable	dwarf+funcnames	405e32e668ed		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x2574	288	flash_write_sector	dwarf+symtab	15cb92e001eb		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x2694	108	flash_read_sector	dwarf+symtab	181c5c464d03		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x2700	744	set_env_var	dwarf+funcnames	6218b7529e0e		out:10	undocumented		
@@ -66289,7 +66289,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x80ac	96	cache_ta
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x810c	84	VEC_trap	dwarf+symtab	ffdd7d585250	shared-address	out:10	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x810c	84	soft_trap	symtab	ffdd7d585250	shared-address	out:10	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8160	8	add_ioboard	dwarf+symtab	78aa5094d5ec		out:10	named-only	chips/crime/README.md#graded-register-table	Graded register table
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8168	124	add_vice	dwarf+funcnames	f5016f23145c		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8168	124	add_vice	dwarf+funcnames	f5016f23145c		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x81e4	216	add_cpuboard	dwarf+symtab	9b2b408e83de		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x82bc	268	init_sysid	dwarf+symtab	2a61486e82df		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x83c8	316	setup_ip32_flags	dwarf+funcnames	1e233f1fa920		out:10	undocumented		
@@ -66320,7 +66320,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x9d1c	84	mte_spin
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x9d70	272	mte_set_tlb	dwarf+symtab	5b9d8c0a4857		out:10	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x9e80	112	mte_fifo_wait	dwarf+symtab	e2ed07372b97		out:10	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x9ef0	48	strayc0	dwarf+funcnames	9c6ab412d98a		out:10	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x9f20	52	crimestray	dwarf+funcnames	f83e6405ae8b		in	named-only	docs/binaries-scope-chip-drivers.md#ip32-build	IP32 build
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x9f20	52	crimestray	dwarf+funcnames	f83e6405ae8b		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x9f54	36	crmerr_intr	dwarf+symtab	b1f452e5d4f9		out:10	named-only	chips/crime/README.md#write-error-questions	Write-error questions
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x9f78	128	set_hwperf_intr	dwarf+symtab	a1c1ca8f8334		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x9ff8	220	synthclock	dwarf+symtab	1de465b95fe4		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -66329,7 +66329,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xa1ac	48	is_thd	d
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xa1dc	108	crimegang	dwarf+symtab	cb3a138505af		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xa248	64	crime_intr_enable	dwarf+symtab	296e46e5ca75		in	understood	chips/crime/README.md#interrupt-and-bus-routines-kernelo	Interrupt and bus routines (`kernel.o`)
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xa288	68	crime_intr_disable	dwarf+symtab	c9cb8f2fec13		in	understood	chips/crime/README.md#interrupt-and-bus-routines-kernelo	Interrupt and bus routines (`kernel.o`)
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xa2cc	684	crime_intr	dwarf+funcnames	ed775fd57a19		in	named-only	docs/binaries-scope-chip-drivers.md#ip32-build	IP32 build
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xa2cc	684	crime_intr	dwarf+funcnames	ed775fd57a19		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xa578	588	intr	dwarf+symtab	7d8af72607ca		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xa7c4	8	setkgvector	dwarf+symtab	0704e46b90c8		out:10	named-only	chips/hub/README.md#clock-timer-and-processor-identity	Clock, timer and processor identity
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xa7cc	360	getcvpriority	dwarf+symtab	5bec9452990c		out:10	undocumented		
@@ -66468,7 +66468,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xd430	568	ecc_pan
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xd668	236	ecc_is_branch	dwarf+funcnames	8ec9087ef8ef		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xd754	320	ecc_get_perr_addr	dwarf+funcnames	27fef7747f66		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xd894	1368	ecc_handler	dwarf+symtab	98fa34b9fb73		in	located	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xddec	116	ecc_fixmem	dwarf+funcnames	7dfd1bacee97		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xddec	116	ecc_fixmem	dwarf+funcnames	7dfd1bacee97		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xde60	572	ecc_fixcache	dwarf+funcnames	29b57cd751f8		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xe09c	136	ecc_find_bad_cline	dwarf+symtab	591ea919a261		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xe124	1016	ecc_fixctag	dwarf+symtab	e1d2bbe3849f		out:10	undocumented		
@@ -66497,7 +66497,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xfb60	60	ecc_same
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xfb9c	576	decode_inst	dwarf+symtab	9cb250dd414d		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xfddc	200	map_physaddr	dwarf+symtab	1aa7ca9a289a		out:10	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xfea4	100	unmap_physaddr	dwarf+symtab	7b1df8db27d9		out:10	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xff08	72	err_save_regs	dwarf+funcnames	2da3aa775f12		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xff08	72	err_save_regs	dwarf+funcnames	2da3aa775f12		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xff50	160	ecc_error_correction	dwarf+symtab	e2c015d7e3cf		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0xfff0	52	syn_to_data_bit	dwarf+funcnames	b1ee0a6235c3		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x10024	40	bitcount	dwarf+funcnames	71634bd9f6e9		out:10	undocumented		
@@ -66579,17 +66579,17 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11e90	40	handle_
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x11eb8	828	kmiss	dwarf+symtab	5c3e7c4791e7		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12094	272	kmissnxt	symtab	ba59a4ab46f2		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x121a4	80	kvmiss_hit	symtab	b82206e3ab19		out:10	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x121f4	192	rtc_init	dwarf+funcnames	2fbdf2e8cf18		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x121f4	192	rtc_init	dwarf+funcnames	2fbdf2e8cf18		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x122b4	504	inittodr	dwarf+symtab	5c4f629b92f2		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x124ac	28	resettodr	dwarf+symtab	34d7a2e33b85		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x124c8	532	rtodc	dwarf+symtab	5d67821cb229		out:10	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x126dc	780	wtodc	dwarf+symtab	781ecac648a2		out:10	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x129e8	576	_clock_func	dwarf+funcnames	00bdc0462db8		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x129e8	576	_clock_func	dwarf+funcnames	00bdc0462db8		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12c28	216	read_dallas_nvram	dwarf+symtab	6e5f2e897e6b		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12d00	216	write_dallas_nvram	dwarf+symtab	b21651d9ba34		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12dd8	112	setbadclock	dwarf+funcnames	ea44328546c0		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12e48	116	clearbadclock	dwarf+funcnames	ae295ee164ba		in	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12ebc	100	isbadclock	dwarf+funcnames	06c6976444ff		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12dd8	112	setbadclock	dwarf+funcnames	ea44328546c0		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12e48	116	clearbadclock	dwarf+funcnames	ae295ee164ba		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12ebc	100	isbadclock	dwarf+funcnames	06c6976444ff		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x12f20	696	set_autopoweron	dwarf+symtab	d85899924571		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x131d8	260	get_dayof_week	dwarf+funcnames	55ee26e5cad6		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x132dc	84	chktimedrift	dwarf+symtab	e7c2a34212ed		out:10	undocumented		
@@ -71251,13 +71251,13 @@ IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1cec	92	_p
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1d48	200	printL	dwarf+funcnames+symtab	09a799d54d34		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1e10	196	printn	dwarf+funcnames+symtab	3e9c8fd24b78		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x1ed4	328	printregs	dwarf+symtab	98b0c65fb4d2		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x201c	148	conbuf_flush	dwarf+symtab	dd6cada2bdb9		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x201c	148	conbuf_flush	dwarf+symtab	dd6cada2bdb9		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x20b0	48	dopromreset	dwarf+funcnames+symtab	51b2b902f248		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x20e0	176	panicspin	dwarf+symtab	25c29a0341d0		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x2190	64	syncreboot	dwarf+funcnames+symtab	64dd5cb7f2c8		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x21d0	220	mdboot	dwarf+symtab	152a7763b96f		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x22ac	372	mprboot	dwarf+funcnames+symtab	a7e5464f821f		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x2420	260	do_mprboot	dwarf+funcnames+symtab	5687e2ceb8a8		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x2420	260	do_mprboot	dwarf+funcnames+symtab	5687e2ceb8a8		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x2524	196	get_conmsg	dwarf+funcnames+symtab	0786ec445794		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x25e8	228	printputbuf	dwarf+symtab	6731d3565882		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/os.a(printf.o)	kernel-object	n32	.text	0x26cc	312	_assfail	dwarf+symtab	3c15fdd7f52d		out:3	undocumented		
@@ -72936,8 +72936,8 @@ IP32/usr/cpu/sysgen/IP32boot/rand.a(rand.o)	kernel-object	n32	.text	0x374	8	rand
 IP32/usr/cpu/sysgen/IP32boot/rand.a(rand.o)	kernel-object	n32	.text	0x37c	8	randunmap	dwarf+symtab	87506497337c		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rand.a(rand.o)	kernel-object	n32	.text	0x384	12	randpoll	dwarf+symtab	44f926dae2a1		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rand.a(rand.o)	kernel-object	n32	.text	0x390	144	random_kthread	dwarf+funcnames+symtab	9be5d662a0a5		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/rand.a(rand.o)	kernel-object	n32	.text	0x420	304	random_harvest_internal	dwarf+funcnames+symtab	b297ee27cbf6		out:3	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/rand.a(rand.o)	kernel-object	n32	.text	0x550	236	random_write_internal	dwarf+funcnames+symtab	031a244e5a55		out:3	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/rand.a(rand.o)	kernel-object	n32	.text	0x420	304	random_harvest_internal	dwarf+funcnames+symtab	b297ee27cbf6		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/rand.a(rand.o)	kernel-object	n32	.text	0x550	236	random_write_internal	dwarf+funcnames+symtab	031a244e5a55		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/rand.a(yarrow.o)	kernel-object	n32	.text	0x0	348	random_process_event	dwarf+symtab	86760fd19095		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rand.a(yarrow.o)	kernel-object	n32	.text	0x15c	212	random_init	dwarf+symtab	555403db0d88		out:3	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/rand.a(yarrow.o)	kernel-object	n32	.text	0x230	28	random_deinit	dwarf+symtab	adf1bd5bf0be		out:3	undocumented		
@@ -81876,7 +81876,7 @@ IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x1a8c	244	eg_fill_
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x1b80	244	eg_fill_jmb	dwarf+symtab	f5f89df0435f		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x1c74	44	eg_fill	dwarf+symtab	3a8a0df22292		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x1ca0	496	eg_st_init	dwarf+symtab	feee961fbd64		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x1e90	300	eg_st_bid_notify	dwarf+symtab	d4522520b7bf		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x1e90	300	eg_st_bid_notify	dwarf+symtab	d4522520b7bf		out:2	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x1fbc	3124	eg_ioctl	dwarf+symtab	cdbe9cefe6aa		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x2bf0	968	eg_intr	dwarf+symtab	302eb834ce99		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x2fb8	24	eg_errupdate	dwarf+symtab	605f7209791b		out:2	undocumented		
@@ -81899,7 +81899,7 @@ IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x4f70	64	eg_stopFW
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x4fb0	104	eg_freeFW	dwarf+symtab	14422147d99e		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x5018	732	eg_loadFW	dwarf+symtab	f4258a286d6e		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x52f4	88	eg_startFW	dwarf+symtab	91b0a94fe65f		out:2	named-only	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x534c	272	eg_docmd	dwarf+symtab	9a3f1010b825		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x534c	272	eg_docmd	dwarf+symtab	9a3f1010b825		out:2	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x545c	328	eg_waitforevent	dwarf+symtab	7136a482acba		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x55a4	172	eg_getmacaddr	dwarf+symtab	f1dd65a82c4c		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_eg.o	kernel-object	n64	.text	0x5650	84	eg_setmacaddr	dwarf+symtab	3d14b9f78290		out:2	undocumented		
@@ -82150,7 +82150,7 @@ IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xb88c	192	tg_enabl
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xb94c	200	tg_disable_intrs	dwarf+symtab	164bffaa8e8a		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xba14	196	tg_alloctg	dwarf+symtab	809db5577c8e		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xbad8	116	tg_dealloctg	dwarf+symtab	9f9022d2e9bb		out:2	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xbb4c	460	tg_free	dwarf+symtab	8c24876ee2f0		out:2	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xbb4c	460	tg_free	dwarf+symtab	8c24876ee2f0		out:2	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xbd18	2248	tg_intr	dwarf+symtab	e6813ca4215b		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xc5e0	148	tg_tx_coal_incr	dwarf+symtab	db8a2e1a949b		out:2	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_tg.o	kernel-object	n64	.text	0xc674	244	tg_get_macaddr	dwarf+symtab	330beac3c65a		out:2	undocumented		
@@ -83936,7 +83936,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20988	72	tlbintr
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x209d0	180	install_tlbintr	dwarf+symtab	38667997fd1b		out:12	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20a84	304	protected_broadcast	dwarf+symtab	d378b42f237a		out:12	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20bb4	84	chkdebug	dwarf+symtab	cb70855fb2fa		in	located	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20c08	108	install_gfxintr	dwarf+symtab	b364e8960641		out:12	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20c08	108	install_gfxintr	dwarf+symtab	b364e8960641		out:12	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20c74	272	debug_stop_all_cpus	dwarf+symtab	22143b3ce548		in	located	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20d84	348	intr_reserve_hardwired	dwarf+symtab	575f20e6ecf8		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x20ee0	120	intr_clear_bits	dwarf	10af38853fbc		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -89253,14 +89253,14 @@ IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x1f04	92	_p
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x1f60	192	printL	dwarf+symtab	8bb78f5f4b54		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2020	28	printn	dwarf+symtab	a86de4a9d7a4		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x203c	324	printregs	dwarf+symtab	17ec0bea82a5		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2180	148	conbuf_flush	dwarf+symtab	0238171117de		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2180	148	conbuf_flush	dwarf+symtab	0238171117de		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2214	48	dopromreset	dwarf+symtab	c3275ac8bf9c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2244	136	panic_coproc_select	dwarf+symtab	b9d170e52495		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x22cc	220	panicspin	dwarf+symtab	6c9c56a5e99f		out:3	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x23a8	112	syncreboot	dwarf+symtab	1aa2d3275967		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2418	204	mdboot	dwarf+symtab	80cd3fccc474		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x24e4	400	mprboot	dwarf+symtab	6e75ce3013ce		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2674	272	do_mprboot	dwarf+symtab	8e23ff23fcc9		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2674	272	do_mprboot	dwarf+symtab	8e23ff23fcc9		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2784	204	get_conmsg	dwarf+symtab	9fc7fddb3bcf		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2850	216	printputbuf	dwarf+symtab	407f8452d5c4		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/os.a(printf.o)	kernel-object	n64	.text	0x2928	296	_assfail	dwarf+symtab	c0d83fe9cac4		out:3	undocumented		
@@ -91337,8 +91337,8 @@ IP35/usr/cpu/sysgen/IP35boot/rand.a(rand.o)	kernel-object	n64	.text	0x364	8	rand
 IP35/usr/cpu/sysgen/IP35boot/rand.a(rand.o)	kernel-object	n64	.text	0x36c	8	randunmap	dwarf+symtab	87506497337c		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rand.a(rand.o)	kernel-object	n64	.text	0x374	12	randpoll	dwarf+symtab	44f926dae2a1		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rand.a(rand.o)	kernel-object	n64	.text	0x380	148	random_kthread	dwarf+symtab	5f7883e8a849		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/rand.a(rand.o)	kernel-object	n64	.text	0x414	296	random_harvest_internal	dwarf+symtab	ccee1a508df6		out:3	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/rand.a(rand.o)	kernel-object	n64	.text	0x53c	224	random_write_internal	dwarf+symtab	596904c7df25		out:3	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/rand.a(rand.o)	kernel-object	n64	.text	0x414	296	random_harvest_internal	dwarf+symtab	ccee1a508df6		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP35/usr/cpu/sysgen/IP35boot/rand.a(rand.o)	kernel-object	n64	.text	0x53c	224	random_write_internal	dwarf+symtab	596904c7df25		out:3	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/rand.a(yarrow.o)	kernel-object	n64	.text	0x0	376	random_process_event	dwarf+symtab	c90806e10109		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rand.a(yarrow.o)	kernel-object	n64	.text	0x178	208	random_init	dwarf+symtab	431af3a961ef		out:3	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/rand.a(yarrow.o)	kernel-object	n64	.text	0x248	32	random_deinit	dwarf+symtab	0b7ad2dc61be		out:3	undocumented		
@@ -97799,10 +97799,10 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00203dc	164	n16c550Init	dwarf+fun
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0020480	92	n16c550ReadStat	dwarf+funcnames	5c1627150223		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00204dc	200	n16c550_strat	dwarf+funcnames	bb0929adb8bb		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00205a4	400	getBaud	dwarf+funcnames	25d0303cf716		out:16	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0020734	288	configurePort	dwarf+funcnames	1779da25043a		in	undocumented		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0020734	288	configurePort	dwarf+funcnames	1779da25043a		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0020854	48	nextBaud	dwarf+funcnames	b11798507262		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0020884	92	checkSerialBaudRate	dwarf+funcnames	ec9095893eff		out:16	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00208e0	28	mapBaud	dwarf+funcnames	ff41880b1362		out:16	undocumented		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00208e0	28	mapBaud	dwarf+funcnames	ff41880b1362		out:16	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00208fc	296	consgetc	dwarf+symtab	37d8f9e126c1		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0020a24	176	consputc	dwarf+symtab	a6dfae5283a2		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0020ad4	108	mace_errputc	dwarf+symtab	c3af9af91eb0		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -97987,7 +97987,7 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00275ec	164	cpu_scandevs	dwarf+sy
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0027690	236	cpu_get_freq	dwarf+symtab	53ac7e48aebd		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002777c	72	flashWrite	dwarf+funcnames	b3d6c39d4f38		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00277c4	8	flashFlush	dwarf+funcnames	78aa5094d5ec		out:16	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00277cc	52	flashEnable	dwarf+funcnames	f5bb88d61e1b		in	undocumented		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa00277cc	52	flashEnable	dwarf+funcnames	f5bb88d61e1b		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0027800	44	log2	dwarf+funcnames	cb5c91c31616		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002782c	76	CRCengine	dwarf+symtab	437156968b8a		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa0027878	204	setCPUSpecifics	dwarf+funcnames	99bc6890a05c		out:16	undocumented		
@@ -98070,8 +98070,8 @@ sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a218	316	_rtodc	dwarf+symtab	c
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a354	272	get_dayof_week	dwarf+symtab	4c1a1ab7377b		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a464	32	fromBcd	dwarf+funcnames	0b54a5ad4ec0		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a484	48	toBcd	dwarf+funcnames	5236b53570f8		out:16	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a4b4	272	clockAccess	dwarf+funcnames	9cdc723f4542		in	undocumented		
-sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a5c4	152	resetClock	dwarf+funcnames	7bfe1fb81c12		in	undocumented		
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a4b4	272	clockAccess	dwarf+funcnames	9cdc723f4542		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a5c4	152	resetClock	dwarf+funcnames	7bfe1fb81c12		in	located	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a65c	32	cpu_restart_rtc	dwarf+symtab	906b772e3a42		out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	GetSR	symtab	a54a0253bf98	shared-address	out:16	undocumented		
 sbin/stand/symmon.IP32	diagnostic	n32	.text	0xa002a67c	16	get_SR	dwarf+symtab	a54a0253bf98	shared-address	out:16	undocumented		
