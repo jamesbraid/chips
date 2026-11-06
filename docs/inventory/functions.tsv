@@ -2242,7 +2242,7 @@ IP27/unix	kernel	n64		0x0		pcibr_intrd_start	dwarf			in	located	docs/instruction
 IP27/unix	kernel	n64		0x0		pcibr_pioerr_check	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64		0x0		pcibr_probe_work	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64		0x0		pcibr_thread_setup	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP27/unix	kernel	n64		0x0		pcibr_try_set_device	dwarf			in	undocumented		
+IP27/unix	kernel	n64		0x0		pcibr_try_set_device	dwarf			in	located	docs/instruction-readings-chips-g2.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64		0x0		pciio_cardinfo_get	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64		0x0		pciio_device_inventory_add	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64		0x0		pciio_device_inventory_remove	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -25457,7 +25457,7 @@ IP27/usr/cpu/sysgen/IP27boot/pciba.o	kernel-object	n64	.text	0x2924	824	pciba_ma
 IP27/usr/cpu/sysgen/IP27boot/pciba.o	kernel-object	n64	.text	0x2c5c	420	pciba_unmap	dwarf+symtab	0349c0f2f14d		out:4	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pciba.o	kernel-object	n64	.text	0x2e00	152	pciba_clearuli	dwarf+symtab	e7133245c875		out:4	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/pciba.o	kernel-object	n64	.text	0x2e98	112	pciba_intr	dwarf+symtab	e2223faf2e68		out:4	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x0	1188	pcibr_try_set_device	dwarf	f19be39b8ded		in	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x0	1188	pcibr_try_set_device	dwarf	f19be39b8ded		in	located	docs/instruction-readings-chips-g2.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x4a4	176	pcibr_release_device	dwarf+symtab	73215fb2e87f		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x554	28	pcibr_device_write_gather_flush	dwarf	a86de4a9d7a4		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-object	n64	.text	0x570	52	pcibr_open	dwarf+symtab	35d319e54c3b		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
@@ -34566,7 +34566,7 @@ IP30/unix	kernel	n64		0x0		pcibr_intrd_start	dwarf			in	located	docs/instruction
 IP30/unix	kernel	n64		0x0		pcibr_pioerr_check	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64		0x0		pcibr_probe_work	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64		0x0		pcibr_thread_setup	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP30/unix	kernel	n64		0x0		pcibr_try_set_device	dwarf			in	undocumented		
+IP30/unix	kernel	n64		0x0		pcibr_try_set_device	dwarf			in	located	docs/instruction-readings-chips-g2.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64		0x0		pciio_cardinfo_get	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64		0x0		pciio_device_inventory_add	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64		0x0		pciio_device_inventory_remove	dwarf			in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -55576,7 +55576,7 @@ IP30/usr/cpu/sysgen/IP30boot/pciba.o	kernel-object	n64	.text	0x2924	824	pciba_ma
 IP30/usr/cpu/sysgen/IP30boot/pciba.o	kernel-object	n64	.text	0x2c5c	420	pciba_unmap	dwarf+symtab	0349c0f2f14d		out:4	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP30/usr/cpu/sysgen/IP30boot/pciba.o	kernel-object	n64	.text	0x2e00	152	pciba_clearuli	dwarf+symtab	e7133245c875		out:4	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciba.o	kernel-object	n64	.text	0x2e98	112	pciba_intr	dwarf+symtab	239e6b905a68		out:4	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x0	1188	pcibr_try_set_device	dwarf	f19be39b8ded		in	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x0	1188	pcibr_try_set_device	dwarf	f19be39b8ded		in	located	docs/instruction-readings-chips-g2.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x4a4	176	pcibr_release_device	dwarf+symtab	73215fb2e87f		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x554	28	pcibr_device_write_gather_flush	dwarf	a86de4a9d7a4		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-object	n64	.text	0x570	52	pcibr_open	dwarf+symtab	35d319e54c3b		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
@@ -68220,7 +68220,7 @@ IP32/usr/cpu/sysgen/IP32boot/msg.o	kernel-object	n32	.text	0xc0c	1272	msgsnd	dwa
 IP32/usr/cpu/sysgen/IP32boot/msg.o	kernel-object	n32	.text	0x1104	528	msgsema	dwarf+funcnames+symtab	45dd8316e4de		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/msg.o	kernel-object	n32	.text	0x1314	228	msgsys	dwarf+symtab	4d6c5130bf61		out:2	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/msg.o	kernel-object	n32	.text	0x13f8	612	sysget_msgq	dwarf+symtab	6a094a34d773		out:2	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x0	52	gbe_too_late	dwarf+funcnames	88b9415881f3		in	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x0	52	gbe_too_late	dwarf+funcnames	88b9415881f3		in	located	docs/instruction-readings-chips-g2.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x34	128	mvptransfer_too_many_errors	dwarf+funcnames	5883dd10206d		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0xb4	168	mvptransfer_datacount	dwarf+funcnames	7681331c6e01		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-object	n32	.text	0x15c	52	mvptransfer_update_path_controls	dwarf+funcnames	cb6a223e9fda		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -90238,7 +90238,7 @@ IP35/usr/cpu/sysgen/IP35boot/pciba.o	kernel-object	n64	.text	0x2924	824	pciba_ma
 IP35/usr/cpu/sysgen/IP35boot/pciba.o	kernel-object	n64	.text	0x2c5c	420	pciba_unmap	dwarf+symtab	0349c0f2f14d		out:4	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP35/usr/cpu/sysgen/IP35boot/pciba.o	kernel-object	n64	.text	0x2e00	152	pciba_clearuli	dwarf+symtab	e7133245c875		out:4	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/pciba.o	kernel-object	n64	.text	0x2e98	112	pciba_intr	dwarf+symtab	f892d3a03275		out:4	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x0	1188	pcibr_try_set_device	dwarf	359ecbd2f483		in	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x0	1188	pcibr_try_set_device	dwarf	359ecbd2f483		in	located	docs/instruction-readings-chips-g2.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x4a4	176	pcibr_release_device	dwarf+symtab	b37b0f9951ec		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x554	28	pcibr_device_write_gather_flush	dwarf	a86de4a9d7a4		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/pcibr.o	kernel-object	n64	.text	0x570	52	pcibr_open	dwarf+symtab	35d319e54c3b		in	located	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
