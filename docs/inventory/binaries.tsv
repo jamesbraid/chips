@@ -1,5 +1,5 @@
 binary	group	role	kind	abi	bytes	sha256	copies	functions	address_source	access_sites	unresolved_sites	status	doc	section
-IP27/unix	kernel-IP27	kernel	executable	n64	11101184	567474674eaa83d3		13484	symtab (dwarf addresses stale, dropped)	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP27/unix	kernel-IP27	kernel	executable	n64	11101184	567474674eaa83d3		13484	symtab+dwarf	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	kernel-IP27	kernel-object	object	n64	20676	93e38b80d7e58c70		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/acl_hwg.o	kernel-IP27	kernel-object	object	n64	5520	b071d343630f4190	IP30/usr/cpu/sysgen/IP30boot/acl_hwg.o;IP35/usr/cpu/sysgen/IP35boot/acl_hwg.o	3	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/acl_nfs3.o	kernel-IP27	kernel-object	object	n64	6288	474f67cd98710f42	IP30/usr/cpu/sysgen/IP30boot/acl_nfs3.o;IP35/usr/cpu/sysgen/IP35boot/acl_nfs3.o	2	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -885,7 +885,7 @@ IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_snapshot.o)	kernel-IP27	kernel-object	obj
 IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_irix_snapshot.o)	kernel-IP27	kernel-object	object	n64	22788	16d14a20f8a04fda		25	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xvmidbg.o	kernel-IP27	kernel-object	object	n64	107480	cb5d043e8d3a9b51		40	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/zero.o	kernel-IP27	kernel-object	object	n64	7120	b059ec0a6b6e9562	IP30/usr/cpu/sysgen/IP30boot/zero.o;IP35/usr/cpu/sysgen/IP35boot/zero.o	8	symtab	0	0	undocumented		
-IP30/unix	kernel-IP30	kernel	executable	n64	10716216	607a432f441d15f7		13087	symtab (dwarf addresses stale, dropped)	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP30/unix	kernel-IP30	kernel	executable	n64	10716216	607a432f441d15f7		13087	symtab+dwarf	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/acl.a(acl.o)	kernel-IP30	kernel-object	object	n64	20644	3dba25c036f232eb		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/asidbg.a(asidbg.o)	kernel-IP30	kernel-object	object	n64	64148	79de05aaf66be2d5		38	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-IP30	kernel-object	object	n64	26532	42fe1bed5a0efedb		20	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
@@ -1807,7 +1807,7 @@ IP32/usr/cpu/sysgen/IP32boot/kbd.o	kernel-IP32	kernel-object	object	n32	40872	37
 IP32/usr/cpu/sysgen/IP32boot/kdsp.a(kdsp_di.o)	kernel-IP32	kernel-object	object	n32	130548	b7f46540878d12bc		132	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kdsp.a(kdsp_events.o)	kernel-IP32	kernel-object	object	n32	19428	991fd9c9dbc04269		25	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kdsp.a(audutil.o)	kernel-IP32	kernel-object	object	n32	28628	85c9b423177b5f3b		94	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-IP32	kernel-object	object	n32	504132	ebf09eeae80f3726		811	symtab (dwarf addresses stale, dropped)	154	0	understood	docs/binaries-scope-chip-drivers.md#ip32-build	IP32 build
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-IP32	kernel-object	object	n32	504132	ebf09eeae80f3726		811	symtab+dwarf	154	0	understood	docs/binaries-scope-chip-drivers.md#ip32-build	IP32 build
 IP32/usr/cpu/sysgen/IP32boot/keyboard.a(pckbd.o)	kernel-IP32	kernel-object	object	n32	13060	082fbaca817b8bfb		14	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP32/usr/cpu/sysgen/IP32boot/klog.o	kernel-IP32	kernel-object	object	n32	8040	ab0080f4a8d30417		7	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	kernel-IP32	kernel-object	object	n32	27172	80f3184d10bc6d1e		37	symtab	0	0	undocumented		
@@ -3090,4 +3090,4 @@ sbin/stand/ide.IP32	standalone	diagnostic	executable	o32	763504	9c2ded7e65b68405
 sbin/stand/sash.ARCS	standalone	diagnostic	data	-	343604	a96e5d2ba76fccae		0		0	0	named-only	chips/mace/README.md#mace	MACE
 sbin/stand/sash64	standalone	diagnostic	object	n64	266768	7b86941c14cb8679		345	symtab	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
 sbin/stand/symmon.IP30	standalone	diagnostic	executable	n64	367160	521fd47460bf2d1c		0	none	0	0	named-only	chips/heart/README.md#heart	HEART
-sbin/stand/symmon.IP32	standalone	diagnostic	executable	n32	502980	12d8ecedae658546		755	symtab (dwarf addresses stale, dropped)	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+sbin/stand/symmon.IP32	standalone	diagnostic	executable	n32	502980	12d8ecedae658546		755	symtab+dwarf	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
