@@ -1,5 +1,5 @@
 binary	group	role	kind	abi	bytes	sha256	copies	functions	address_source	access_sites	unresolved_sites	status	doc	section
-IP27/unix	kernel-IP27	kernel	executable	n64	11101184	567474674eaa83d3		13484	symtab (dwarf addresses stale, dropped)	0	0	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+IP27/unix	kernel-IP27	kernel	executable	n64	11101184	567474674eaa83d3		13484	symtab (dwarf addresses stale, dropped)	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	kernel-IP27	kernel-object	object	n64	20676	93e38b80d7e58c70		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/acl_hwg.o	kernel-IP27	kernel-object	object	n64	5520	b071d343630f4190	IP30/usr/cpu/sysgen/IP30boot/acl_hwg.o;IP35/usr/cpu/sysgen/IP35boot/acl_hwg.o	3	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/acl_nfs3.o	kernel-IP27	kernel-object	object	n64	6288	474f67cd98710f42	IP30/usr/cpu/sysgen/IP30boot/acl_nfs3.o;IP35/usr/cpu/sysgen/IP35boot/acl_nfs3.o	2	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -885,7 +885,7 @@ IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_snapshot.o)	kernel-IP27	kernel-object	obj
 IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_irix_snapshot.o)	kernel-IP27	kernel-object	object	n64	22788	16d14a20f8a04fda		25	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xvmidbg.o	kernel-IP27	kernel-object	object	n64	107480	cb5d043e8d3a9b51		40	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/zero.o	kernel-IP27	kernel-object	object	n64	7120	b059ec0a6b6e9562	IP30/usr/cpu/sysgen/IP30boot/zero.o;IP35/usr/cpu/sysgen/IP35boot/zero.o	8	symtab	0	0	undocumented		
-IP30/unix	kernel-IP30	kernel	executable	n64	10716216	607a432f441d15f7		13087	symtab (dwarf addresses stale, dropped)	0	0	named-only	docs/ip30-kernel-bridge-routines.md#bridge-family-accessors-and-attach-routines-of-the-ip30-kernel	Bridge-family accessors and attach routines of the IP30 kernel
+IP30/unix	kernel-IP30	kernel	executable	n64	10716216	607a432f441d15f7		13087	symtab (dwarf addresses stale, dropped)	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/acl.a(acl.o)	kernel-IP30	kernel-object	object	n64	20644	3dba25c036f232eb		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/asidbg.a(asidbg.o)	kernel-IP30	kernel-object	object	n64	64148	79de05aaf66be2d5		38	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-IP30	kernel-object	object	n64	26532	42fe1bed5a0efedb		20	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
@@ -1030,7 +1030,7 @@ IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(chardlocks.o)	kernel-IP30	kernel-object
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-IP30	kernel-object	object	n64	10404	5e997695259bd62e		22	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(chardlocks.o)	kernel-IP30	kernel-object	object	n64	10036	39843280e9cc8380		19	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-IP30	kernel-object	object	n64	11828	5169c015298ef8c5		22	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-IP30	kernel-object	object	n64	47064	50c0bf96e614be14		67	symtab	0	0	named-only	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-IP30	kernel-object	object	n64	47064	50c0bf96e614be14		67	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/hitachi.o	kernel-IP30	kernel-object	object	n64	26272	52a62e6d07e3fe7f		9	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgvnops.o)	kernel-IP30	kernel-object	object	n64	25812	b028bacb55fe271f		21	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-IP30	kernel-object	object	n64	961880	daccfdbb78270fc5		298	symtab+dwarf	0	0	undocumented		
@@ -1146,7 +1146,7 @@ IP30/usr/cpu/sysgen/IP30boot/nfs3.a(nfs3_vfsops.o)	kernel-IP30	kernel-object	obj
 IP30/usr/cpu/sysgen/IP30boot/nfs3.a(xattr_clnt.o)	kernel-IP30	kernel-object	object	n64	15876	9957ad5bcfe7aa45		10	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfs3.a(xattr_subr.o)	kernel-IP30	kernel-object	object	n64	9764	775646f4fa6b4b45		2	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfsidbg.a(nfsidbg.o)	kernel-IP30	kernel-object	object	n64	12676	870c59322f92573a		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
-IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-IP30	kernel-object	object	n64	25800	82bdecf4feb8a2c1		29	symtab	0	0	named-only	chips/ioc3/README.md#one-wire-bit-and-byte-routines-ip30-nico-build-established-unless-marked	One-wire bit and byte routines (IP30 `nic.o` build, established unless marked)
+IP30/usr/cpu/sysgen/IP30boot/nic.o	kernel-IP30	kernel-object	object	n64	25800	82bdecf4feb8a2c1		29	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(cnolocks.o)	kernel-IP30	kernel-object	object	n64	8372	d45e8116fea6e4df		14	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nolocks.a(asmnolocks.o)	kernel-IP30	kernel-object	object	n64	5748	0a859dcab71d13c7		16	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/noncell.a(behavior_noncell.o)	kernel-IP30	kernel-object	object	n64	8244	84f51ca9a1b8e397		15	symtab	0	0	undocumented		
@@ -1546,7 +1546,7 @@ IP30/usr/cpu/sysgen/IP30boot/xvm.a(xvm_gpt.o)	kernel-IP30	kernel-object	object	n
 IP30/usr/cpu/sysgen/IP30boot/xvm.a(xvm_snapshot.o)	kernel-IP30	kernel-object	object	n64	74740	6cdd67bd661891f3		58	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xvm.a(xvm_irix_snapshot.o)	kernel-IP30	kernel-object	object	n64	22740	1ed47a739fa015ff		25	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xvmidbg.o	kernel-IP30	kernel-object	object	n64	107424	95025d911139b6ae		40	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/a3_dd.o	kernel-IP32	kernel-object	object	n32	53544	d78116d803856ce6		55	symtab	0	0	named-only	chips/mace/README.md#mace	MACE
+IP32/usr/cpu/sysgen/IP32boot/a3_dd.o	kernel-IP32	kernel-object	object	n32	53544	d78116d803856ce6		55	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/acl.a(acl.o)	kernel-IP32	kernel-object	object	n32	14884	155fb21e982a2823		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP32/usr/cpu/sysgen/IP32boot/acl_hwg.o	kernel-IP32	kernel-object	object	n32	4112	ea960a5f7a3fc9c4		3	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/acl_nfs3.o	kernel-IP32	kernel-object	object	n32	4976	15bea98015b7cd27		2	symtab	0	0	undocumented		
@@ -1640,17 +1640,17 @@ IP32/usr/cpu/sysgen/IP32boot/compression.a(zp.o)	kernel-IP32	kernel-object	objec
 IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_procfs.o)	kernel-IP32	kernel-object	object	n32	41172	9aaf9b459e734546		49	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_sys.o)	kernel-IP32	kernel-object	object	n32	16580	0fb08f775f58296c		22	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/cpr.a(ckpt_util.o)	kernel-IP32	kernel-object	object	n32	7716	061bc80b6b39a330		9	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-IP32	kernel-object	object	n32	61572	1cc4da3459d921fe		65	symtab	3	0	named-only	chips/crime/README.md#rendering-engine-registers-pixel-pipeline-first-group	Rendering engine registers (pixel pipeline, first group)
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-IP32	kernel-object	object	n32	11268	f66d63177831f79c		6	symtab	0	0	named-only	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-IP32	kernel-object	object	n32	19972	8a1446b8d97db075		14	symtab	4	0	named-only	chips/crime/README.md#tlb-pages	TLB pages
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-IP32	kernel-object	object	n32	32916	1839b4af7754b7d8		29	symtab	6	0	named-only	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime.o)	kernel-IP32	kernel-object	object	n32	61572	1cc4da3459d921fe		65	symtab	3	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_dma.o)	kernel-IP32	kernel-object	object	n32	11268	f66d63177831f79c		6	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_init.o)	kernel-IP32	kernel-object	object	n32	19972	8a1446b8d97db075		14	symtab	4	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_retrace.o)	kernel-IP32	kernel-object	object	n32	32916	1839b4af7754b7d8		29	symtab	6	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_zbuf.o)	kernel-IP32	kernel-object	object	n32	5876	1f59a4d0a4414528		2	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip32-build	IP32 build
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-IP32	kernel-object	object	n32	11412	b6d0dcc90f598770		11	symtab	0	0	named-only	chips/crime/README.md#pixel-pipeline-null-and-flush	Pixel pipeline null and flush
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tp.o)	kernel-IP32	kernel-object	object	n32	11412	b6d0dcc90f598770		11	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_busts.o)	kernel-IP32	kernel-object	object	n32	980	4b3d4554333ee522		0	none	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_tiles.o)	kernel-IP32	kernel-object	object	n32	26388	f422bfb8e7ac5464		33	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip32-build	IP32 build
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-IP32	kernel-object	object	n32	45284	b8cf1d46113ad828		52	symtab	0	0	named-only	chips/crime/README.md#serial-and-edid-routines-crime_i2co-crime_inito	Serial and EDID routines (`crime_i2c.o`, `crime_init.o`)
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_i2c.o)	kernel-IP32	kernel-object	object	n32	45284	b8cf1d46113ad828		52	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_db.o)	kernel-IP32	kernel-object	object	n32	4820	cac57fb03217df9b		2	symtab	0	0	named-only	chips/crime/README.md#tile-bookkeeping-crimeacrime_dbo	Tile bookkeeping (`crime.a(crime_db.o)`)
-IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_debug.o)	kernel-IP32	kernel-object	object	n32	4244	761feae31d6f6d83		2	symtab	0	0	named-only	chips/crime/README.md#rendering-engine-registers-pixel-pipeline-first-group	Rendering engine registers (pixel pipeline, first group)
+IP32/usr/cpu/sysgen/IP32boot/crime.a(crime_debug.o)	kernel-IP32	kernel-object	object	n32	4244	761feae31d6f6d83		2	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/crypto.a(sha2.o)	kernel-IP32	kernel-object	object	n32	13492	00cb162e461125e0		18	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crypto.a(rijndael-alg-fst.o)	kernel-IP32	kernel-object	object	n32	23860	a157e054b441eff8		4	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/crypto.a(rijndael-api-fst.o)	kernel-IP32	kernel-object	object	n32	10436	d9aff78e3d67f57f		6	symtab	0	0	undocumented		
@@ -1695,7 +1695,7 @@ IP32/usr/cpu/sysgen/IP32boot/dms.a(dmslt.o)	kernel-IP32	kernel-object	object	n32
 IP32/usr/cpu/sysgen/IP32boot/dms.a(dmrbcompat.o)	kernel-IP32	kernel-object	object	n32	964	41878249243c27cd		0	none	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsreq.o)	kernel-IP32	kernel-object	object	n32	17732	bfbf0d62e48c47f4		15	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ds.a(dsglue.o)	kernel-IP32	kernel-object	object	n32	7876	27b7b8a4b15b189e		7	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ecplp.o	kernel-IP32	kernel-object	object	n32	41832	10704560a8444e28		35	symtab	0	0	named-only	chips/mace/README.md#mace	MACE
+IP32/usr/cpu/sysgen/IP32boot/ecplp.o	kernel-IP32	kernel-object	object	n32	41832	10704560a8444e28		35	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_bitmap.o)	kernel-IP32	kernel-object	object	n32	6644	3c424f7f8020c8ea		4	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_bmap.o)	kernel-IP32	kernel-object	object	n32	12612	e0e9177ef85a6105		6	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/efs.a(efs_dalloc.o)	kernel-IP32	kernel-object	object	n32	10500	7b4257bb85218dda		5	symtab	0	0	undocumented		
@@ -1748,8 +1748,8 @@ IP32/usr/cpu/sysgen/IP32boot/hwgfs.a(hwgvfsops.o)	kernel-IP32	kernel-object	obje
 IP32/usr/cpu/sysgen/IP32boot/hwgfs.a(hwgsubr.o)	kernel-IP32	kernel-object	object	n32	12548	a93d2283bff5aa83		11	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-IP32	kernel-object	object	n32	492640	419283520bbb8adc		292	symtab+dwarf	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/idev.o	kernel-IP32	kernel-object	object	n32	21952	8d7b69be9b64eb1a		22	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/if_ecf.o	kernel-IP32	kernel-object	object	n32	40720	0fdc1b7a96da404c		27	symtab	0	0	named-only	chips/mace/README.md#mace	MACE
-IP32/usr/cpu/sysgen/IP32boot/if_me.o	kernel-IP32	kernel-object	object	n32	39944	5eac39161d831003		40	symtab	0	0	named-only	docs/open-questions.md#open-questions	Open questions
+IP32/usr/cpu/sysgen/IP32boot/if_ecf.o	kernel-IP32	kernel-object	object	n32	40720	0fdc1b7a96da404c		27	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/if_me.o	kernel-IP32	kernel-object	object	n32	39944	5eac39161d831003		40	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/if_ppp.o	kernel-IP32	kernel-object	object	n32	45576	cb37ff32743b14a1		25	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/if_ptr.o	kernel-IP32	kernel-object	object	n32	74592	9c26b721ce811076		69	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/if_rns.o	kernel-IP32	kernel-object	object	n32	59800	f1778825bf1a1c3b		62	symtab	0	0	undocumented		
@@ -1842,14 +1842,14 @@ IP32/usr/cpu/sysgen/IP32boot/lofs.a(lofs_vfsops.o)	kernel-IP32	kernel-object	obj
 IP32/usr/cpu/sysgen/IP32boot/lofs.a(lofs_vnops.o)	kernel-IP32	kernel-object	object	n32	18372	b79f0725cf35f307		42	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/lofs.a(lofs_icrash.o)	kernel-IP32	kernel-object	object	n32	9092	85a35a54a72488a3		1	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/log.o	kernel-IP32	kernel-object	object	n32	14552	e492cd99b37d145e		12	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-IP32	kernel-object	object	n32	9704	5c8a35eeeef61004		12	symtab	0	0	named-only	chips/mace/README.md#mace	MACE
+IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-IP32	kernel-object	object	n32	9704	5c8a35eeeef61004		12	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/magellan.o	kernel-IP32	kernel-object	object	n32	17720	c81fc7a55e994397		16	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mem.o	kernel-IP32	kernel-object	object	n32	11640	2b35f014642b5c47		12	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mhpckm.o	kernel-IP32	kernel-object	object	n32	21960	fd0938e2ac2241d2		24	symtab	0	0	named-only	chips/mace/README.md#mace	MACE
+IP32/usr/cpu/sysgen/IP32boot/mhpckm.o	kernel-IP32	kernel-object	object	n32	21960	fd0938e2ac2241d2		24	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/mloadidbg.o	kernel-IP32	kernel-object	object	n32	23072	40bdb1c199507d70		10	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mouse.a(pcmouse.o)	kernel-IP32	kernel-object	object	n32	12004	43be2695e227e3ea		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP32/usr/cpu/sysgen/IP32boot/msg.o	kernel-IP32	kernel-object	object	n32	17872	84b59b6cd0e6d237		11	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-IP32	kernel-object	object	n32	167864	214b4dfbf57dcdc0		169	symtab+dwarf	1	0	named-only	docs/open-questions.md#open-questions	Open questions
+IP32/usr/cpu/sysgen/IP32boot/mvp.o	kernel-IP32	kernel-object	object	n32	167864	214b4dfbf57dcdc0		169	symtab+dwarf	1	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/namefs.a(namevfs.o)	kernel-IP32	kernel-object	object	n32	13588	9a162a4b4ed9a8f8		12	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/namefs.a(namevno.o)	kernel-IP32	kernel-object	object	n32	13604	0c41670c01f61919		21	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/nfs.a(bootparam_xdr.o)	kernel-IP32	kernel-object	object	n32	5396	8762fe45dd474692		9	symtab	0	0	undocumented		
@@ -2420,7 +2420,7 @@ IP35/usr/cpu/sysgen/IP35boot/ds.a(dsreq.o)	kernel-IP35	kernel-object	object	n64	
 IP35/usr/cpu/sysgen/IP35boot/ds.a(dsglue.o)	kernel-IP35	kernel-object	object	n64	10388	ec4f92f302364497		7	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
 IP35/usr/cpu/sysgen/IP35boot/eag.a(eag.o)	kernel-IP35	kernel-object	object	n64	10500	e426d45372fc7e48		6	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP35/usr/cpu/sysgen/IP35boot/ecpplp.o	kernel-IP35	kernel-object	object	n64	57232	ce5fcac545bae5eb		33	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#ip35-build-device-drivers-and-input-objects-scope-rule-4	IP35 build: device drivers and input objects (scope rule 4)
-IP35/usr/cpu/sysgen/IP35boot/eeprom.o	kernel-IP35	kernel-object	object	n64	44384	968fe5a88d27c279		42	symtab	0	0	named-only	chips/bedrock/README.md#window-and-how-it-is-reached	Window and how it is reached
+IP35/usr/cpu/sysgen/IP35boot/eeprom.o	kernel-IP35	kernel-object	object	n64	44384	968fe5a88d27c279		42	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_bitmap.o)	kernel-IP35	kernel-object	object	n64	8644	7b1564a782fc1999		4	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_bmap.o)	kernel-IP35	kernel-object	object	n64	15204	16b19f581a5cdce0		6	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
 IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_dalloc.o)	kernel-IP35	kernel-object	object	n64	13044	a9cab3b7004aa03d		5	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip35-build-file-system-volume-and-checkpoint-objects-scope-rule-1	IP35 build: file-system, volume and checkpoint objects (scope rule 1)
@@ -2495,9 +2495,9 @@ IP35/usr/cpu/sysgen/IP35boot/io6.o	kernel-IP35	kernel-object	object	n64	6776	db2
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-IP35	kernel-object	object	n64	27688	5e69438504a0ae29		27	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/ioc3_pckm.o	kernel-IP35	kernel-object	object	n64	37480	307a39f751ae13a4		36	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/ioc3ei.o	kernel-IP35	kernel-object	object	n64	21168	bdfefd9773253391		19	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-IP35	kernel-object	object	n64	23976	e15e32c04c326024		21	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
-IP35/usr/cpu/sysgen/IP35boot/ioc4_ei.o	kernel-IP35	kernel-object	object	n64	21512	d1296012cdbeec0d		19	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
-IP35/usr/cpu/sysgen/IP35boot/ioc4_pckm.o	kernel-IP35	kernel-object	object	n64	36408	c2d08701d772ec62		35	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-IP35	kernel-object	object	n64	23976	e15e32c04c326024		21	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP35/usr/cpu/sysgen/IP35boot/ioc4_ei.o	kernel-IP35	kernel-object	object	n64	21512	d1296012cdbeec0d		19	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP35/usr/cpu/sysgen/IP35boot/ioc4_pckm.o	kernel-IP35	kernel-object	object	n64	36408	c2d08701d772ec62		35	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-IP35	kernel-object	object	n64	41144	86743841a0450c23		34	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipfilter.o	kernel-IP35	kernel-object	object	n64	18800	1eef1c1b78008594		9	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ipv6.a(dest6.o)	kernel-IP35	kernel-object	object	n64	5380	6aeb0b91e82dbd85		1	symtab	0	0	undocumented		
@@ -2557,8 +2557,8 @@ IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mutex.o)	kernel-IP35	kernel-obje
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(sema.o)	kernel-IP35	kernel-object	object	n64	61140	27a33eca8ebf6a84		97	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(klstat.o)	kernel-IP35	kernel-object	object	n64	10676	15bff1086695505c		7	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_statistics.a(mrlock.o)	kernel-IP35	kernel-object	object	n64	6260	f074b7566fe5c0a1		8	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-IP35	kernel-object	object	n64	55640	cf461fa67eb3150e		61	symtab	0	0	named-only	chips/bedrock/README.md#window-and-how-it-is-reached	Window and how it is reached
-IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-IP35	kernel-object	object	n64	60216	ab5c3f4dce4eda0b		86	symtab	0	0	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/l1.o	kernel-IP35	kernel-object	object	n64	55640	cf461fa67eb3150e		61	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP35/usr/cpu/sysgen/IP35boot/l1_command.o	kernel-IP35	kernel-object	object	n64	60216	ab5c3f4dce4eda0b		86	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2.o)	kernel-IP35	kernel-object	object	n64	32916	9c0b72fd2dce806b		23	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/llc2.a(llc2dlpi.o)	kernel-IP35	kernel-object	object	n64	41636	e96c1d973dbbc038		40	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/lockd.o	kernel-IP35	kernel-object	object	n64	144336	36bbbaa1b3f33569		128	symtab+dwarf	0	0	undocumented		
@@ -2818,7 +2818,7 @@ IP35/usr/cpu/sysgen/IP35boot/pciio.o	kernel-IP35	kernel-object	object	n64	47872	
 IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	kernel-IP35	kernel-object	object	n64	27528	aadca7cfd050b4f2		18	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/pciiox.o	kernel-IP35	kernel-object	object	n64	6120	bc9406dffebc6428		2	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/pgrpidbg.a(pgrpidbg.o)	kernel-IP35	kernel-object	object	n64	10724	987ce2fa3e8bcc60		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
-IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-IP35	kernel-object	object	n64	32656	4ccc69e42c0fde78		13	symtab	0	0	named-only	docs/open-questions.md#open-questions	Open questions
+IP35/usr/cpu/sysgen/IP35boot/pic.o	kernel-IP35	kernel-object	object	n64	32656	4ccc69e42c0fde78		13	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/pipefs.a(pipevnops.o)	kernel-IP35	kernel-object	object	n64	23332	2f0d0d7e3624700a		21	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP35/usr/cpu/sysgen/IP35boot/pipemod.o	kernel-IP35	kernel-object	object	n64	5656	c00b0aebd600bac7		3	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ppp_fram.o	kernel-IP35	kernel-object	object	n64	34352	d06e5f62548dfecd		18	symtab	0	0	undocumented		
@@ -2855,7 +2855,7 @@ IP35/usr/cpu/sysgen/IP35boot/sbp2idbg.o	kernel-IP35	kernel-object	object	n64	193
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-IP35	kernel-object	object	n64	57460	c199717209c94a35		60	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_l1.o)	kernel-IP35	kernel-object	object	n64	16612	ffa7a6efbfab3c6f		19	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-IP35	kernel-object	object	n64	41364	1c6370081471b192		35	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-IP35	kernel-object	object	n64	44756	eaf1d7d5d4e6f7db		36	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-IP35	kernel-object	object	n64	44756	eaf1d7d5d4e6f7db		36	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/sem.o	kernel-IP35	kernel-object	object	n64	45784	d1fcedb841dd899a		50	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sessionidbg.a(sessionidbg.o)	kernel-IP35	kernel-object	object	n64	13204	702dafb0a6ff0933		7	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP35/usr/cpu/sysgen/IP35boot/sgi.a(chunkio.o)	kernel-IP35	kernel-object	object	n64	99700	e71570ef09a9c2b7		72	symtab	0	0	undocumented		
@@ -3090,4 +3090,4 @@ sbin/stand/ide.IP32	standalone	diagnostic	executable	o32	763504	9c2ded7e65b68405
 sbin/stand/sash.ARCS	standalone	diagnostic	data	-	343604	a96e5d2ba76fccae		0		0	0	named-only	chips/mace/README.md#mace	MACE
 sbin/stand/sash64	standalone	diagnostic	object	n64	266768	7b86941c14cb8679		345	symtab	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
 sbin/stand/symmon.IP30	standalone	diagnostic	executable	n64	367160	521fd47460bf2d1c		0	none	0	0	named-only	chips/heart/README.md#heart	HEART
-sbin/stand/symmon.IP32	standalone	diagnostic	executable	n32	502980	12d8ecedae658546		755	symtab (dwarf addresses stale, dropped)	0	0	named-only	docs/open-questions.md#open-questions	Open questions
+sbin/stand/symmon.IP32	standalone	diagnostic	executable	n32	502980	12d8ecedae658546		755	symtab (dwarf addresses stale, dropped)	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
