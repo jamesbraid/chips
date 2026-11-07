@@ -9,7 +9,7 @@ type 0; any other part gives type -1. A nonzero handle without those two bits is
 record +0x72 and whose window is the doubleword at record +0x8. A null handle gives type -1 and window 0. Registers of types 0
 and 1 are 8-byte slots read and written as one 32-bit word at slot +0x4; registers of types 2 and 3 are the whole 64-bit slot.
 A record whose type is outside -1 to 3 is not trapped: a getter returns 0 and a setter stores nothing. Each `assfail` names the
-source file `../io/pcibr/pcibr_reg.c` and a line number, and the strings sit in the kernel's `.rodata`. The `panic` messages
+source file the chipset code source unit 1 and a line number, and the strings sit in the kernel's `.rodata`. The `panic` messages
 all begin with the routine's own name, apart from the three that borrow a neighbour's name, which are listed.
 
 - `pcireg_type0_cfg_addr` (`IP30/unix` `0xa800000020059f0c`, 688 bytes) returns the address of one 32-bit word of PCI

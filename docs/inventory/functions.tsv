@@ -44006,7 +44006,7 @@ IP30/unix	kernel	n64	.text	0xa8000000203638f0	756	gfP_OdsyMakeCurrent	dwarf+symt
 IP30/unix	kernel	n64	.text	0xa800000020363be4	452	gfP_OdsyPbufAssoc	dwarf+symtab	ccfe835dbea9		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020363da8	392	gfP_OdsyPbufDeassoc	dwarf+symtab	e4709616a6fb		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020363f30	48	odsy_tport_lock_init	dwarf+symtab	ef6fd611ae8f		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020363f60	2440	ODSY_SET_GC	dwarf+symtab	9f51d820efab		out:8	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020363f60	2440	the set graphics-context Odyssey driver request	dwarf+symtab	9f51d820efab		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203648e8	216	odsy_color	dwarf	97553ffec8bb		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000203649c0	256	odsy_mapcolor	dwarf	9afb413b18ea		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020364ac0	600	odsy_sboxfi	dwarf	03e24ba0be08		out:8	undocumented		
