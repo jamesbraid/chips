@@ -196,7 +196,7 @@ A derivation citation must tie the entry to its own item. Each of these counts, 
 
 - an offset (`+0x1a4`, "offset 0x40"), or a hex address after "address", "at", "entry", "record" or `@`. A table row's own address, slot or index cell is its identity, not a derivation: a number that is the row's own cell (or its low 20 bits) does not count, only a different location does;
 - a callee or caller written in code (`calls`, `calling`, `called from` or `called by` followed by a backticked name; every name of a list such as ``calls `a`, `b` and `c` `` counts, and none of them is an extra item on the line);
-- a source file or a path with at least two slashes (`odsy_init.c`, `libglcore/asm/ODYSSEY/x.s`);
+- a source file or a path with at least two slashes (the Odyssey kernel driver initialization source unit, `libglcore/asm/ODYSSEY/x.s`);
 - a binary or object file name (`odsy.o`, `libGLcore.so`) together with a backticked routine of it other than the subject.
 
 A release or patch number (`6.5.30m`, `patch 4103`), a binary name alone, and a link to another page are not citations: every item of a build shares them.

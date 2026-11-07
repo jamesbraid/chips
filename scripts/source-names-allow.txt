@@ -1,0 +1,23 @@
+# Source-file names and request names the reference docs may carry: each one is a name that a published source holds,
+# a file shipped in the installed system, or a file in this workspace. Anything else is described in words.
+# NAME<TAB>REASON; checked by retools/scripts/check-leaks.py.
+ad1843.h	name in published Linux or OpenBSD source
+arch/mips/include/asm/pci/bridge.h	name in published Linux source
+arch/mips/pci/pci-xtalk-bridge.c	name in published Linux source
+drivers/net/ethernet/sgi/ioc3-eth.c	name in published Linux source
+drivers/video/fbdev/gbefb.c	name in published Linux source
+hal2.h	name in published Linux or OpenBSD source
+hub.h	name in published Linux or OpenBSD source
+libglcore/asm/ODYSSEY/x.s	path to a file in this workspace
+pci-xtalk-bridge.c	name in published Linux or OpenBSD source
+revo.h	name in published Linux or OpenBSD source
+router.h	name in published Linux or OpenBSD source
+sound/mips/hal2.c	name in published Linux source
+sound/mips/sgio2audio.c	name in published Linux source
+tiocp.h	name in published Linux or OpenBSD source
+widget.h	name in published Linux or OpenBSD source
+xbow.c	name in published Linux or OpenBSD source
+xbridge.c	name in published Linux or OpenBSD source
+xbridgereg.h	name in published Linux or OpenBSD source
+xheart.c	name in published Linux or OpenBSD source
+xheartreg.h	name in published Linux or OpenBSD source
