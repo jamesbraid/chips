@@ -80,7 +80,7 @@ To reproduce a cited result:
 
 ## Clone and query
 
-    git clone <forge-url>/chips.git && cd chips
+    git clone https://github.com/jamesbraid/chips.git && cd chips
     tools/setup-clone.sh --root /path/to/filled/root
     tools/disasm.sh tools/configs/pic.json             # stage 1, in the container
     python3 tools/scan.py tools/configs/bridge.json --base "$PWD" --out work/bridge
