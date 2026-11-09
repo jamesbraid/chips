@@ -2,7 +2,7 @@
 
 You produce register-access evidence for one chip from the shipped IRIX binaries, then write entries from it.
 Read AGENTS.md first: the labels and the reading rules there are the contract. Run commands from the
-repository root, inside the container wrapper (`tools/re-run COMMAND`; `tools/disasm.sh` uses it by default). Do not read any
+repository root, inside the container wrapper (`retools/tools/re-run COMMAND`; `retools/tools/chips/disasm.sh` uses it by default). Do not read any
 IRIX source tree and do not open any document store other than this repository and the paths named here.
 
 ## Two modes
@@ -24,17 +24,17 @@ a hypothesis, stated as such, never evidence.
 
 ## Steps
 
-1. `tools/disasm.sh tools/configs/<chip>.json` (writes `work/dis/`; unpacks PROM containers).
+1. `retools/tools/chips/disasm.sh tools/configs/<chip>.json` (writes `work/dis/`; unpacks PROM containers).
 2. Edit the config if the seeds are empty (stub configs): find the accessor functions by name in
    `work/dis/<image>.nm` (symbols such as the chip's name, `_get`/`_set` suffixes), list them in
    `seeds.args` with the register that holds the window pointer on entry (`$4` = 4), and read two accessors
    by hand to confirm the offsets before trusting the scan. Where a function receives the pointer from a
    caller, add the caller's call to `seeds.calls` or let `probe` find it (an identification-register probe).
-3. `python3 tools/scan.py tools/configs/<chip>.json --base "$PWD" --out work/<chip>`; read `scan-stats.json`,
+3. `python3 retools/tools/chips/scan.py tools/configs/<chip>.json --base "$PWD" --out work/<chip>`; read `scan-stats.json`,
    `unresolved.tsv` (window pointers passed to unseeded callees) and `suspects.tsv` (memory accesses with a
    register-like displacement through an unresolved base). Each is a to-do, not an error.
-4. Spec-backed only: `tools/ref.py` and `tools/join.py` (or `tools/run.sh`) for the comparison.
-5. `python3 tools/fields.py ...` for field evidence. Then write entries (AGENTS.md labels) in
+4. Spec-backed only: `retools/tools/chips/ref.py` and `retools/tools/chips/join.py` (or `retools/tools/chips/run.sh`) for the comparison.
+5. `python3 retools/tools/chips/fields.py ...` for field evidence. Then write entries (AGENTS.md labels) in
    `chips/<chip>/README.md`, one heading per register with the offset in backticks, and regenerate the
    inventory.
 

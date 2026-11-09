@@ -130,7 +130,7 @@ Corrections found while tagging. These are not fixed here.
   specification use `0x10` and `0x18`. Next: the Linux I2C driver that uses the structure, to see which offsets it
   reaches in practice.
 - **Hub, Bedrock, IOC3, IOC4 inventories.** *[route: software now; stale in part: duplicates the Bedrock, IOC3, IOC4 entry]* Censuses not run (stub configs). Next: write each config's
-  seeds (see HAIKU-BRIEF.md) and run `tools/run.sh`.
+  seeds (see HAIKU-BRIEF.md) and run `retools/tools/chips/run.sh`.
 - **Model of a PROM's window base.** *[route: software now; overlaps the IP27 and I/O-board PROM entry]* A PROM builds its window pointer at run time; the census recovers a
   pointer only where an identity-register probe shows it. Next: constant-fold the PROM's address setup.
 - **IP35 reset window.** *[route: software now; hardware residue: item 1, the routing rule, which the linked question says only a hardware observation settles]* The routing rule that returns boot-PROM bytes for uncached memory-space fetches of physical
@@ -202,7 +202,7 @@ Corrections found while tagging. These are not fixed here.
   level is 64 (inferred from the allocator and the hardwired table) and cause level 6 is the Cause IP6 bit (inferred from the dispatcher's bit tests). Open: that
   the dispatcher's fourth argument is the Cause word masked by the interrupt mask was not traced to the exception vector. Next: the IP27 exception vector code
   that calls `intr`.
-- **Harness limits.** *[route: software now; tool work; proposed: map the object's data by gp in the harness]* `scripts/run_routine.py` replaces calls with `v0 = 0` and has no global data, so a routine
+- **Harness limits.** *[route: software now; tool work; proposed: map the object's data by gp in the harness]* `retools/tools/chips/run_routine.py` replaces calls with `v0 = 0` and has no global data, so a routine
   that reads a table by gp (`pcireg_int_ate_set`, `pcireg_force_always_set`, `pcireg_intr_addr_vect_set`) ends in
   an unmapped read; the routines that touch only the chip record run to completion.
 - **Scanner fixes after the first audit.** *[route: software now; tool work; a status note with one open item (large no-return code spans), so it belongs in the tool notes]* Since that audit the scan reads gp from each object's options record

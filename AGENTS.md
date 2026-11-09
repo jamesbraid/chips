@@ -39,7 +39,7 @@ report agreement or disagreement, never to supply a fact.
 - `chips/<chip>/README.md`: one page per chip. Register entries with labels. Chips with no entry yet say so.
 - `chips/<chip>/census/`: machine-made census tables (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`).
   Never edit by hand; fix the tool or the config and rerun.
-- `docs/inventory/` and `docs/coverage.md`: written by `scripts/inventory.py`. Never edit by hand.
+- `docs/inventory/` and `docs/coverage.md`: written by `retools/tools/inventory.py`. Never edit by hand.
 - `tools/`: the census scanner and its configs (one per chip, marked spec-backed or no-spec); `scripts/`: the
   inventory, disassembly helpers and the unicorn run harness (`mips_shim.py`).
 - Commit small. Subjects are lowercase, component-prefixed imperatives (`docs: ...`, `scripts: ...`,
@@ -65,8 +65,8 @@ samples `understood` rows and re-derives them from the binaries; the result goes
   record the number, not a guess at its name.
 - **GOT and gp-relative loads.** In position-independent code a load `ld $reg,-N($28)` reads a global-offset
   table slot at `$gp - N`; the slot holds the address of a symbol (resolve it with the relocation or the table
-  in the object). `scripts/resolve_got.py` does this for objects with a table. In a relocatable kernel object
-  the same load reads a literal pool entry (`.lit8`, `.srdata`) at `gp + offset`; `tools/scan.py` reads those
+  in the object). `retools/tools/resolve_got.py` does this for objects with a table. In a relocatable kernel object
+  the same load reads a literal pool entry (`.lit8`, `.srdata`) at `gp + offset`; `retools/tools/chips/scan.py` reads those
   literals from the object (`literals` and `gp` in an image's config entry).
 - **Call-label hazard.** In a relocatable object an unrelocated `jal` shows a target of zero or the next
   instruction. Disassemble with relocations (`objdump -r`) and name the call from the relocation. In a linked
@@ -92,10 +92,10 @@ samples `understood` rows and re-derives them from the binaries; the result goes
 
 ## Procedure for a chip
 
-1. Fill `root/` (IRIX_FILES.md) and run `scripts/inventory.py` to see the rows.
+1. Fill `root/` (IRIX_FILES.md) and run `retools/tools/inventory.py` to see the rows.
 2. Write the chip's census config (`tools/configs/<chip>.json`): the images, the seeds that tell the scanner
    which functions receive the chip's window pointer, the chip-type compares, and the literal-pool settings.
-3. `tools/run.sh tools/configs/<chip>.json` (see tools/README.md) and read `chips/<chip>/census/census.md`.
+3. `retools/tools/chips/run.sh tools/configs/<chip>.json` (see tools/README.md) and read `chips/<chip>/census/census.md`.
 4. Take each register to an entry in `chips/<chip>/README.md` using `fields.tsv` and `context.tsv` as the
    starting evidence, then read the function in full before labelling anything established.
 5. Regenerate the inventory in the same commit as the finding.

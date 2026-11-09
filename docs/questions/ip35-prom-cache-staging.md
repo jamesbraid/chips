@@ -15,20 +15,20 @@ the flash word at the same offset. At two sites the routine refuses to stage a r
 from a cached alias.
 
 Sources. The shipped IP35 PROM, SGI Version 6.210 (built Aug 26 2004), container segment `ip35prom`, load
-address 0xc00000001fc00000, length 0x1686a8, additive checksum ok; unpacked with `tools/promgen64.py`. MIPS
+address 0xc00000001fc00000, length 0x1686a8, additive checksum ok; unpacked with `retools/tools/chips/promgen64.py`. MIPS
 R10000 Microprocessor User's Manual, version 2.0 (October 10, 1996): sections 4.1 to 4.3 (cache organisation,
 pp. 46 to 52), 5.1 (secondary cache arrays), 10.1 to 10.22 (CACHE operations, Table 10-1, pp. 191 to 202),
 14.21 (ECC register, p. 273) and 14.23 (TagLo and TagHi, Figures 14-28 to 14-33, pp. 278 to 283). Companion
 page: [ip35-reset-window.md](ip35-reset-window.md).
 
-Simulator: `tools/cache_stage_sim.py` (needs Python with `capstone`). It interprets the integer, CP1-move, CP0-move and
+Simulator: `retools/tools/chips/cache_stage_sim.py` (needs Python with `capstone`). It interprets the integer, CP1-move, CP0-move and
 CACHE instructions of the two paths straight from the PROM bytes, with the cache model below, and stops on
 anything else. It does not use the Unicorn harness: Unicorn runs CACHE as a no-op and exposes no TagLo, TagHi or ECC
 registers, so a purpose-built interpreter was shorter than hooking it (the Unicorn route was not tried).
 
-    python3 tools/promgen64.py ip35prom.img OUT ip35
-    python3 tools/cache_stage_sim.py OUT/ip35.ip35prom.bin --dword lo-hi --regions
-    python3 tools/cache_stage_sim.py OUT/ip35.ip35prom.bin --matrix --copy-len 0x2000
+    python3 retools/tools/chips/promgen64.py ip35prom.img OUT ip35
+    python3 retools/tools/chips/cache_stage_sim.py OUT/ip35.ip35prom.bin --dword lo-hi --regions
+    python3 retools/tools/chips/cache_stage_sim.py OUT/ip35.ip35prom.bin --matrix --copy-len 0x2000
 
 ## Cache model (from the manual)
 
@@ -203,7 +203,7 @@ separate routine at 0x1fc028cc. The routine of this page stores the words it rea
 unchanged. Established by exact comparison with the flash instructions at the same addresses: the table words follow
 one layout (the 26 non-opcode instruction bits rearranged, the 6-bit opcode replaced by 10 bits, the parity bit the
 even parity of all 36). Inferred: that the table is the hardware's own predecode output (a capture of what the cache
-holds after a refill) rather than something generated another way. `tools/predecode_table.py` reproduces the
+holds after a refill) rather than something generated another way. `retools/tools/chips/predecode_table.py` reproduces the
 numbers below.
 
 **1. Every Index Store Data (I) in the three PROMs, and the source of what it stores** (code areas only, found by
@@ -279,7 +279,7 @@ the opcode is expanded. Example: `addiu $4,$0,2` is 0x3:44200004; opcode 001001 
 instructions the flash holds at the addresses whose table word carries it (the pairing is observed; that the class means
 this opcode for any other occurrence is inferred). p[28:26] is f[28:26]. "Bits 4:0" says which instruction field sits in
 p[4:0]: rt (`f[20:16]`, the operations that write rt) or the rd position (`f[15:11]`: SPECIAL rd, a branch offset's top bits,
-`mtc0` rd, `cache`/`jal` bits). `tools/predecode_table.py` prints these rows.
+`mtc0` rd, `cache`/`jal` bits). `retools/tools/chips/predecode_table.py` prints these rows.
 
     class  opcode / funct                         f[31:29]  bits 4:0  p[28:26]            words  source
     0x00   SPECIAL funct 00 (sll; the nop)        000       -         000                 14     table lines 0-4

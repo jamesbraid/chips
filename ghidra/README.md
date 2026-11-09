@@ -12,9 +12,10 @@ ghidra/
                        tests/, tools/)
   import/<name>/       loader and import scripts for firmware images
   types/<name>/        data-type scripts
-  scripts/             the shared IRIX scripts (IrixGp, IrixJumpTables,
-                       FindWindowStores, ...), linked from the retools submodule
 ```
+
+The shared IRIX scripts (IrixGp, IrixJumpTables, FindWindowStores, ...) are in the retools submodule
+at `retools/ghidra/scripts/`; `retools/tools/re-run --ghidra-export` uses them from there.
 
 ## Build and run
 
@@ -22,11 +23,11 @@ Run a component's `tests/run-ghidra.sh` in the Ghidra image, then its
 `tests/check.py` on the dump directory it writes:
 
 ```sh
-tools/re-run --ghidra -- ghidra/processors/NAME/tests/run-ghidra.sh .cache/NAME
-tools/re-run python3 ghidra/processors/NAME/tests/check.py .cache/NAME
+retools/tools/re-run --ghidra -- ghidra/processors/NAME/tests/run-ghidra.sh .cache/NAME
+retools/tools/re-run python3 ghidra/processors/NAME/tests/check.py .cache/NAME
 ```
 
-(`tools/re-run` mounts the workspace at `/work`, the Ghidra image with `--ghidra` and
+(`retools/tools/re-run` mounts the workspace at `/work`, the Ghidra image with `--ghidra` and
 the toolchain image without.)
 
 ## Components
@@ -37,27 +38,27 @@ the toolchain image without.)
 
 ## Decompiled C as JSON, typed structures and function similarity
 
-`tools/re-run --ghidra-export OBJECT` runs Ghidra over one ELF object under `root/` (a linked
+`retools/tools/re-run --ghidra-export OBJECT` runs Ghidra over one ELF object under `root/` (a linked
 library or kernel, or a relocatable driver object) and prints the path of the JSON it wrote under
 `.cache/ghidra-export/`, which git ignores, so there is nothing to commit by accident. It builds the
 Ghidra image on first use. A relocatable object has no load address: name its functions, do not give
-addresses (Ghidra places such an object itself, so the addresses in its JSON are Ghidra's, not section offsets). The options are listed at the top of [tools/ghidra-export.py](../tools/ghidra-export.py);
+addresses (Ghidra places such an object itself, so the addresses in its JSON are Ghidra's, not section offsets). The options are listed at the top of [retools/tools/ghidra-export.py](../retools/tools/ghidra-export.py);
 function-similarity databases live in `.cache/ghidra-bsim/`.
 
 ```sh
 # decompiled C per function, as JSON with the decompiler's warnings
-tools/re-run --ghidra-export root/IP30/unix \
+retools/tools/re-run --ghidra-export root/IP30/unix \
     --decompile-symbol NAME --decompile-symbol 'prefix_*' --decompile-symbol @0xADDRESS
 # the same, with named structure fields
-tools/re-run --ghidra-export root/IP30/unix \
+retools/tools/re-run --ghidra-export root/IP30/unix \
     --decompile-symbol NAME --types ghidra/types/context.types.json
 # a routine of a relocatable kernel object: name it
-tools/re-run --ghidra-export root/IP35/usr/cpu/sysgen/IP35boot/kernel.o --decompile-symbol NAME
+retools/tools/re-run --ghidra-export root/IP35/usr/cpu/sysgen/IP35boot/kernel.o --decompile-symbol NAME
 # every function, or a list file (one name, glob or @address per line)
-tools/re-run --ghidra-export OBJECT --decompile-all
-tools/re-run --ghidra-export OBJECT --decompile-list names.txt
+retools/tools/re-run --ghidra-export OBJECT --decompile-all
+retools/tools/re-run --ghidra-export OBJECT --decompile-list names.txt
 # function similarity: one object per run, each matched against those before it
-tools/re-run --ghidra-export OBJECT --bsim-db kernels --bsim-label board-name
+retools/tools/re-run --ghidra-export OBJECT --bsim-db kernels --bsim-label board-name
 ```
 
 `--types` takes a JSON file kept in the repository, with `structs`
@@ -77,7 +78,7 @@ is the machine address and `ghidra_address` where Ghidra holds it (the C text us
 
 ```sh
 # the routine at 0x1fc04980 of the IP35 PROM: a 4096-byte container header, then the payload at 0x1fc00000
-tools/re-run --ghidra-export root/firmware/ip35prom.img --flat --header 4096 --load 0x1fc00000 \
+retools/tools/re-run --ghidra-export root/firmware/ip35prom.img --flat --header 4096 --load 0x1fc00000 \
     --decompile-symbol @0x1fc04980
 ```
 

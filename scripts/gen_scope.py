@@ -1,1 +1,0 @@
-../retools/scripts/chips/gen_scope.py

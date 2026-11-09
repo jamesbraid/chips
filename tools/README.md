@@ -3,6 +3,9 @@
 Static register-access census from MIPS binaries. One config per chip in `configs/`, marked `mode`
 spec-backed or no-spec.
 
+The tools below are in the retools submodule, under `retools/tools/chips/`; run them from the repository
+root (`retools/tools/chips/scan.py tools/configs/bridge.json ...`). The configs stay here in `configs/`.
+
 | Stage | Tool | Output (work/) |
 |---|---|---|
 | 1 disassemble (container) | `disasm.sh CONFIG` | `dis/*.s`, `.nm`, literal pools; PROM containers unpacked by `promgen64.py` |
@@ -42,5 +45,5 @@ same `census.tsv` and `census-sites.tsv` shape as the scan, plus `call-sites.tsv
 `or_is_add` (scan.py) makes an `ori` on a window pointer add the constant; it is for a register block reached as a window
 constant plus an or-ed offset (`configs/l1.json`) and is off by default.
 
-`scripts/mips_shim.py` is a unicorn harness for running a shipped routine over chosen inputs (see
-`scripts/test_mips_shim.py` for the pattern); `scripts/check-leaks.sh` is the pre-push check.
+`retools/tools/mips_shim.py` is a unicorn harness for running a shipped routine over chosen inputs (see
+`retools/tools/test_mips_shim.py` for the pattern).

@@ -1,1 +1,0 @@
-../retools/tools/ghidra-export.py

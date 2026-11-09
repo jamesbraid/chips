@@ -62,7 +62,7 @@ serve it, so its rows appear in the census under their own variant and are not d
 Offsets are slot addresses from the window base; the access is a 32-bit word at slot +4 unless the width column says
 8. **Applies** says which of the two chips the routine reaches (B Bridge, X XBridge): read from the dispatch of the
 accessor in the IP27 `unix` and, for four accessors where the chips differ, run in the unicorn harness
-(`scripts/run_routine.py`) over the IP35 copy of the accessors (a harness stop is a panic path or a stub read, not told
+(`retools/tools/chips/run_routine.py`) over the IP35 copy of the accessors (a harness stop is a panic path or a stub read, not told
 apart). Grade is of the role and fields: **E** established (the accessor and its callers read in full, or an arithmetic
 the code performs), **I** inferred (role from an accessor name or a PROM string, no field arithmetic read), **U**
 unknown. Names are the public names used in `include/bridge.h`, except where an IRIX accessor name is quoted.

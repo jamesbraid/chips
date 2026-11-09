@@ -34,17 +34,18 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
     chips/<chip>/      one directory per chip: README.md (the page), census/ (machine-made tables),
                        notes/ (working notes). Chips: hub bedrock heart xbow bridge pic tiocp router scan l1
                        ioc3 ioc4 crime mace gbe vice. bridge/ also holds the XBridge census; router/ is a
-                       call-argument census (tools/callargs.py): the router has no memory window.
-    include/<chip>.h   generated register headers (tools/gen_headers.py); chips_check.c compiles them together
+                       call-argument census (retools/tools/chips/callargs.py): the router has no memory window.
+    include/<chip>.h   generated register headers (retools/tools/chips/gen_headers.py); chips_check.c compiles them together
     ip27/ ip30/ ip32/ ip35/   per board: relative symlinks into root/ (boot objects, members, kernel,
                        PROM, ide, symmon, sash)
     docs/              specs.md, published-sources.md, open-questions.md, coverage.md, inventory/ (tables),
                        sources/specs/ (committed spec PDFs)
-    scripts/           inventory.py (shared with the graphics workspaces, byte for byte), populate-root,
-                       map_binaries.py, disasm_kernel.py, resolve_got.py, clean_asm.py, mips_shim.py,
-                       run_routine.py, check-leaks.sh, inventory-config.json
-    tools/             the census scanner (scan, ref, join, fields, entries, gen_headers) and configs/
-    ghidra/            headless scripts for IRIX code (shared with the graphics workspaces)
+    scripts/           inventory-config.json, inventory-siblings.json, inventory-root.sha256 and the
+                       allow-lists the inventory reads; no scripts of its own
+    tools/             configs/ (one census config per chip) and setup-clone.sh, the bootstrap stub
+    retools/           submodule (sgi-retools): the shared tools in retools/tools/, the census tools in
+                       retools/tools/chips/, the Ghidra scripts in retools/ghidra/
+    ghidra/            this workspace's Ghidra processors, import and type scripts
     m2c spimdisasm linux linux-ia64 linux-2.5.40 linux-2.4.37 linux-ip30 netbsd openbsd gxemul mame arcboot
                        public submodules, pinned and shallow (init only what you need; docs/sources/INDEX.md)
     root/              the filled IRIX tree and spec text; ignored, never committed
@@ -55,38 +56,38 @@ repository; the graphics workspaces own them.
 ## Running the tools and reproducing a result
 
 The host needs Podman, git and python3. Everything else runs in a container built from
-[tools/Containerfile](tools/Containerfile): MIPS binutils, dwarfdump, pyelftools, capstone, unicorn,
+[retools/tools/Containerfile](retools/tools/Containerfile): MIPS binutils, dwarfdump, pyelftools, capstone, unicorn,
 numpy, pycparser and spimdisasm, at pinned versions on a pinned Debian base.
 
     tools/setup-clone.sh --root /path/to/filled/root   # siblings at their pins, submodules, root/
-    tools/re-run python3 scripts/inventory.py          # the first run builds the image
+    retools/tools/re-run python3 retools/tools/inventory.py          # the first run builds the image
 
-`tools/re-run COMMAND` runs `COMMAND` in the image with this repository mounted at `/work`, `root/`
+`retools/tools/re-run COMMAND` runs `COMMAND` in the image with this repository mounted at `/work`, `root/`
 included; with no command it opens a shell. `root/` is your own copy of the IRIX 6.5.30 files listed in
-[IRIX_FILES.md](IRIX_FILES.md); they are never committed. Fill it from your install or media, then run
-`scripts/populate-root` on the host to make the links the tools expect.
+[IRIX_FILES.md](IRIX_FILES.md); they are never committed. Fill it from your install or media, then unpack and
+link the archives by hand as IRIX_FILES.md describes; retools no longer ships a script for that.
 
 To reproduce a cited result:
 
-- Generated tables under `docs/inventory/` come from `tools/re-run python3 scripts/inventory.py`.
+- Generated tables under `docs/inventory/` come from `retools/tools/re-run python3 retools/tools/inventory.py`.
   `git status --short docs` shows nothing afterwards when your `root/` matches `scripts/inventory-root.sha256`.
 - A claim an entry marks as established by execution is reproduced by the script in `scripts/` that
   the entry names; its docstring says what it reproduces and how to run it, always as
-  `tools/re-run python3 scripts/NAME.py ...`.
-- The shared tooling (container definitions, wrappers, Ghidra scripts, the inventory, fact sheet and claim checker, and the device extractors) is the `retools/` submodule (sgi-retools); the files under `tools/`, `scripts/` and `ghidra/` are links into it, so a change to them is made there and the pin here moves with a commit. `tools/check-shared` verifies the pin. The optional Ghidra image is built from `tools/Containerfile.ghidra` by
-  `tools/re-run --ghidra COMMAND`, and `tools/re-run --ghidra-export OBJECT` writes decompiled C and
-  function-similarity output as JSON (see `ghidra/README.md`); nothing else needs it. `tools/README-analysis.md`
+  `retools/tools/re-run python3 retools/tools/NAME.py ...` from the repository root.
+- The shared tooling (container definitions, wrappers, Ghidra scripts, the inventory, fact sheet and claim checker, and the device extractors) is the `retools/` submodule (sgi-retools). Run its tools by their submodule path from the repository root (`retools/tools/NAME`, device tools under `retools/tools/chips/`); they find this workspace from the current directory. There are no local links into it, so a change to a shared tool is made in retools and the pin here moves with a commit. The optional Ghidra image is built from `retools/tools/Containerfile.ghidra` by
+  `retools/tools/re-run --ghidra COMMAND`, and `retools/tools/re-run --ghidra-export OBJECT` writes decompiled C and
+  function-similarity output as JSON (see `ghidra/README.md`); nothing else needs it. `retools/tools/README-analysis.md`
   describes the `.mdebug` importer and the kernel table extractors.
 
 ## Clone and query
 
     git clone https://github.com/jamesbraid/chips.git && cd chips
     tools/setup-clone.sh --root /path/to/filled/root
-    tools/disasm.sh tools/configs/pic.json             # stage 1, in the container
-    python3 tools/scan.py tools/configs/bridge.json --base "$PWD" --out work/bridge
+    retools/tools/chips/disasm.sh tools/configs/pic.json             # stage 1, in the container
+    python3 retools/tools/chips/scan.py tools/configs/bridge.json --base "$PWD" --out work/bridge
 
 Questions are answered from `chips/<chip>/census/` (the TSV tables), `chips/<chip>/README.md` (entries with
 labels) and `grep -r` over `root/spec/*.txt` (text of the specifications, not committed).
 
 Licence: BSD-3-Clause, see [LICENSE](LICENSE). The scripts descend from gr4's
-and keep its notice in [scripts/LICENSE-gr4](scripts/LICENSE-gr4).
+and keep its notice in [retools/tools/LICENSE-gr4](retools/tools/LICENSE-gr4).

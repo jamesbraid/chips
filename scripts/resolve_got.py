@@ -1,1 +1,0 @@
-../retools/scripts/resolve_got.py
