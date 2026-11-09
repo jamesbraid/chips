@@ -12,12 +12,12 @@ conflict, never to supply a fact; where a name appears it is that header's name 
 
 Census: [census/](census/) (`census.tsv`, `census-sites.tsv`, `call-sites.tsv`, `values.tsv`, `census-symbolic.tsv`,
 `unresolved.tsv`), config [`tools/configs/router.json`](../../tools/configs/router.json), scanner
-[`tools/callargs.py`](../../tools/callargs.py), headers [`include/router_ip27.h`](../../include/router_ip27.h) and
+[`retools/tools/chips/callargs.py`](../../retools/tools/chips/callargs.py), headers [`include/router_ip27.h`](../../include/router_ip27.h) and
 [`include/router_ip35.h`](../../include/router_ip35.h).
 
 ## What this census covers, and what it does not
 
-- `tools/callargs.py` resolves the register number at each call to `router_reg_read`, `router_reg_write`,
+- `retools/tools/chips/callargs.py` resolves the register number at each call to `router_reg_read`, `router_reg_write`,
   `hub_vector_read`, `hub_vector_write`, `vector_read_node` and `vector_write_node` by straight-line constant
   propagation. It found **67 call sites** in the two kernels. 47 resolve to a constant or to a constant added to a
   per-port base the code builds from a port number; 20 do not (the accessors themselves, which forward their

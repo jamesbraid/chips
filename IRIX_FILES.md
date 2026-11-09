@@ -2,7 +2,7 @@
 
 Proprietary SGI files, copied by the reader from their own IRIX 6.5.30 install or media into `root/`. They are
 never committed: `root/` is ignored. Paths only; the manifest `scripts/inventory-root.sha256` pins the exact
-bytes the tables were made from, and `scripts/inventory.py` fails on any difference.
+bytes the tables were made from, and `retools/tools/inventory.py` fails on any difference.
 
 `root/` holds one tree per build, named by board: `IP27`, `IP30`, `IP32`, `IP35`, each mirroring the IRIX
 file system, plus `spec/` (text extractions of the published specifications, see docs/specs.md).
@@ -35,7 +35,7 @@ What is held (each remaining gap is a question in docs/open-questions.md):
   `l1.o`, and so on). The linked IP35 and IP32 kernels are not held; the IP35 kernel exists only as `kernel.o`
   plus these objects.
 - PROMs: IP27, IP30, IP32 and IP35 CPU PROMs and the I/O-board PROM (`io6prom.img`), all in `firmware/`. The
-  IP35 and IP27 images are promgen64 containers; `tools/promgen64.py` unpacks them (checksum verified).
+  IP35 and IP27 images are promgen64 containers; `retools/tools/chips/promgen64.py` unpacks them (checksum verified).
 - Diagnostics and loaders in `sbin/stand/`: `ide` for IP30 and IP32, `symmon` for IP30 and IP32, `sash`.
   No `ide` for IP27 or IP35.
 - System-controller firmware `l1.bin`, `l2.bin` and `mmscfw.bin` are listed on the media; only `mmscfw.bin` is a file here.
@@ -45,8 +45,8 @@ What is held (each remaining gap is a question in docs/open-questions.md):
 Copy each build's whole `usr/cpu/sysgen/IPxxboot/` directory (the three installation overlay discs hold the
 files; later discs add a few objects to the same directories) into `root/IPxx/usr/cpu/sysgen/IPxxboot/`; copy
 `usr/cpu/firmware/*` into `root/firmware/` and `sbin/stand/*` into `root/sbin/stand/`; put the linked kernels
-`unix` for IP27 and IP30 at `root/IP27/unix` and `root/IP30/unix`. Then run `scripts/populate-root`, which
-unpacks every archive below into `ARCHIVE_members/` beside it and links each member into `root/IPxx/members/`.
+`unix` for IP27 and IP30 at `root/IP27/unix` and `root/IP30/unix`. Then unpack every archive below into `ARCHIVE_members/` beside it and link each member into `root/IPxx/members/`
+(retools no longer ships a script for this).
 
 ```archives
 root/IP27/usr/cpu/sysgen/IP27boot/acl.a root/IP27/members

@@ -1,1 +1,0 @@
-../retools/scripts/map_binaries.py

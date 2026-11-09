@@ -12,7 +12,7 @@ by offset. The public Linux headers `asm-ia64/sn/ksys/l1.h` and `asm-ia64/sn/rou
 submodule, see [docs/sources/INDEX.md](../../docs/sources/INDEX.md)) were read afterwards, for agreement and conflict only.
 
 Census: [census/](census/) and the config [`tools/configs/scan-tunnel.json`](../../tools/configs/scan-tunnel.json), run with
-[`tools/callargs.py`](../../tools/callargs.py). It finds the **2 call sites** of `read_rr_reg` in the kernel and resolves
+[`retools/tools/chips/callargs.py`](../../retools/tools/chips/callargs.py). It finds the **2 call sites** of `read_rr_reg` in the kernel and resolves
 neither: both pass the selector as arithmetic on a loop index (below), which the straight-line pass cannot fold, so
 `census.tsv` is empty and `unresolved.tsv` lists them. No header is generated: the values here are selectors, opcodes and
 framing constants, not offsets into a window, and a register-offset header would misstate them. The tables below are the

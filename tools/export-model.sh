@@ -1,1 +1,0 @@
-../retools/tools/chips/export-model.sh

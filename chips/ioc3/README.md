@@ -456,6 +456,6 @@ control, enables and status); the rest are unknown.
   section's relocations and read the words.
 - **UART byte lane** and the **register 7 prescaler**: see the comparison.
 - **Parallel port**: roles of `0x84` to `0x98` and bit meanings at `0x20151` to `0x2015a`; `plp_dma`, `plpintr` and `plp_reset` are not read.
-- **Error address words** (cfg `0x40`, `0x44`): `ioc3_error_handler` is read only for its accesses and the shape above (valid-bit test, jump table on bits 4:1, constant 1 stored to `0x40`); the table targets are not read. The routine cannot be run through `scripts/facts.py` (it fails on a literal tuple); the objdump listing was used.
+- **Error address words** (cfg `0x40`, `0x44`): `ioc3_error_handler` is read only for its accesses and the shape above (valid-bit test, jump table on bits 4:1, constant 1 stored to `0x40`); the table targets are not read. The routine cannot be run through `retools/tools/facts.py` (it fails on a literal tuple); the objdump listing was used.
 - **Keyboard and mouse bit meanings** in `0x9c` and `0xa0` to `0xac`: from the routines' masks only.
 - **Per-slot subdevice masks**: which board string selects `0x91`.

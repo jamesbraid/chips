@@ -1,6 +1,6 @@
 # Source-file names and request names the reference docs may carry: each one is a name that a published source holds,
 # a file shipped in the installed system, or a file in this workspace. Anything else is described in words.
-# NAME<TAB>REASON; checked by retools/scripts/check-leaks.py.
+# NAME<TAB>REASON; the leak check that read this file is no longer part of retools.
 ad1843.h	name in published Linux or OpenBSD source
 arch/mips/include/asm/pci/bridge.h	name in published Linux source
 arch/mips/pci/pci-xtalk-bridge.c	name in published Linux source

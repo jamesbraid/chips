@@ -1,1 +1,0 @@
-../retools/scripts/syssgi_selectors.py

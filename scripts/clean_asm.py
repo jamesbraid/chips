@@ -1,1 +1,0 @@
-../retools/scripts/clean_asm.py

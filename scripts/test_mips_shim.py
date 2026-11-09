@@ -1,1 +1,0 @@
-../retools/scripts/test_mips_shim.py

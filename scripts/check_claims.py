@@ -1,1 +1,0 @@
-../retools/scripts/check_claims.py

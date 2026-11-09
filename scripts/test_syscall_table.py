@@ -1,1 +1,0 @@
-../retools/scripts/test_syscall_table.py

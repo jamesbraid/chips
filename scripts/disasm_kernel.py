@@ -1,1 +1,0 @@
-../retools/scripts/disasm_kernel.py
