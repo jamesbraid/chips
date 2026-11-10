@@ -373,11 +373,12 @@ spurious read response. **Error header 1**: 6:0 command, 18:8 supplemental, 30:2
    has no direct call to that name.
    Which CRB error code a refused write to a nonexistent widget, to a protected region or to a full request buffer
    produces: unknown.
-5. **Protected-region replies.** The kernel carries the strings "Protection error response" and "Vector response
-   timeout" (their table was not read), and prints protection-index, protection-value and protection-rights ECC
-   fields in its memory/directory error decode (strings only; those routines were not read). Which of the status 0 types a protection violation
-   sets, and whether it is the same as the poisoned access violation (type 4) or the access error (type 0):
-   unknown.
+5. **Protected-region replies.** The strings "Protection error response" and "Vector response timeout" are not Bedrock
+   error texts: they are entries of the table of return-code texts for the router vector routines (return codes -6 and -7;
+   see the Hub page, "The texts for the vector routines' return codes"; established). The kernel also prints protection-index,
+   protection-value and protection-rights ECC fields in its memory/directory error decode (strings only; those routines were
+   not read). Which of the status 0 types a protection violation of memory sets, and whether it is the same as the poisoned
+   access violation (type 4) or the access error (type 0): unknown.
 
 ### Interrupts
 
