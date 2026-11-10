@@ -165,9 +165,7 @@ Corrections found while tagging. These are not fixed here.
 - **Bedrock pending bits 25 to 34 and fatal selection.** *[route: software now; hardware residue: what physically sets bits 29 to 34; proposed: the mask code that ORs bit 24]* Established: names from the kernel's table and the fatal
   and miscellaneous masks. Unknown: what sets bits 29 to 34 beyond their names (crossbar data cycle count, intervention
   state, state-pending timeout), and why bit 24 is ORed into one interrupt mask only (the first one written).
-- **Bedrock protected-region replies.** *[route: software now]* Unknown: which status 0 type or CRB error code a protection violation
-  produces, and what the strings "Protection error response" and "Vector response timeout" index. Next: find
-  their table's users in `kernel.o` and read the memory/directory error decode.
+- **Bedrock protected-region replies.** *[route: software now]* The strings "Protection error response" and "Vector response timeout" are settled (chips/hub/README.md, "The texts for the vector routines' return codes": router vector return codes -6 and -7, not Bedrock status). Unknown: which status 0 type or CRB error code a memory protection violation produces. Next: the memory/directory error decode in `kernel.o` that prints the protection-index, protection-value and protection-rights fields, and the IP35 PROM error dump.
 - **Bedrock interrupt numbers: the dispatcher's input.** *[route: software now]* Answered in chips/hub/README.md, "Interrupts to the processor": the II error
   level is 64 (inferred from the allocator and the hardwired table) and cause level 6 is the Cause IP6 bit (inferred from the dispatcher's bit tests). Open: that
   the dispatcher's fourth argument is the Cause word masked by the interrupt mask was not traced to the exception vector. Next: the IP27 exception vector code
