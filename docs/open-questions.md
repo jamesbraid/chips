@@ -169,9 +169,9 @@ Corrections found while tagging. These are not fixed here.
   probe `1412:1724`, the SGI note naming the controller. Unknown: the real sub-vendor and sub-device values, the EEPROM bytes,
   the SGI part number, whether SGI changed a component. Next: any public capture of a DM8; a `hinv -vm` line from a DM8 host gives
   the revision only (docs/audio/dm8.md).
-- **ICE1724 register contract.** *[route: missing source: the vendor datasheet; software now for the remainder]* Offsets and widths the driver touches are in chips/ice1724/README.md.
-  Unknown: reset values, write masks, the rate-code table in full, the DMA size and count units, the effect of `MT+0x19`
-  and `MT+0x05` bit 7. Next: re-read `mad_set_rate` (`0x2268`) and `mad_start_dma` (`0xe48`) against a public vendor datasheet when one is held.
+- **ICE1724 register contract.** *[route: missing source: the vendor datasheet; software now for the remainder]* Offsets and widths the driver touches are in chips/ice1724/README.md, and the rate-to-code table is now read in full there.
+  Unknown: reset values, write masks, the DMA size and count units, the effect of `MT+0x19`
+  and `MT+0x05` bit 7. Next: re-read `mad_start_dma` (`0xe48`) against a public vendor datasheet when one is held.
 - **DM8 converter identities.** *[route: missing source: a board photograph or parts list; public AKM datasheets for the field meanings]* AK4381, AK4355 and AK5380 are leads from a sibling board's public
   driver and secondary reviews (chips/ak4381, chips/ak4355, chips/ak5380); `mad_init_revolution` (`mad_dd.o` `0x2b2c`, 412 bytes) programs them without naming them. No SGI document or shipped file names them.
 - **Tezro tower onboard audio chip.** *[route: missing source: a tower hinv with PCI adapter IDs next to a known tower, or a daughtercard photograph]* The tower guide places analog jacks on the IO daughtercard.
