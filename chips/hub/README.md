@@ -326,9 +326,18 @@ level number is not a constant in the binary, but the allocator is read in full:
 - **Cause level 6 as a processor line.** `cause_intr_connect` (0xc000000000038ff4) accepts levels 0, 1 and 4 to 7 (it fails for a negative level,
   for 2 and 3, and for 8 and above) and stores the handler (doubleword) and its argument (word) in the 16-byte record at `16 * level` of a table.
   The interrupt dispatcher `intr` (0xc0000000000392d8) tests bits `0x100 << n` of its fourth argument and, for the first set bit in the order
-  n = 6, 3, 5, 7, 4, 0, 2, 1, calls the handler of record n with the argument. Bits 15:8 are the interrupt-pending field of the processor's Cause
-  register, so cause level 6 is the Cause IP6 bit (inferred: that the fourth argument is the Cause word masked by the interrupt mask was not
-  traced to the exception vector).
+  n = 6, 3, 5, 7, 4, 0, 2, 1, calls the handler of record n. **The fourth argument is the processor's raw Cause register
+  (established, `IP27boot/kernel.o` and `IP35boot/kernel.o`, same code in both).** The exception entry `ecommon` (`kernel.o` 0x2d770 in the IP35 object)
+  executes `mfc0 a3, Cause`, saves Status in `s0`, takes `(Cause & 0x7c)` as the exception code and jumps through a table indexed by it; the
+  table entry for code 0 is `VEC_int`, which passes Status as the third argument (`move a2, s0`) and calls `intr` with the
+  frame, the exception code, Status and Cause. `intr` first requires `Status & Cause & 0xff00` to be nonzero (otherwise it takes
+  a no-pending-interrupt path), then picks the handler from the raw Cause bits, not from the masked set: a pending line that Status has
+  masked off still outranks a lower-priority enabled one if its bit comes earlier in the order above (it tests `0x4000`, `0x800`,
+  `0x2000`, `0x8000`, `0x1000`, `0x100`, ... in turn). Bits 15:8 of Cause are the interrupt-pending field, so cause level 6 is the Cause IP6 bit
+  (`0x4000`): **established** for the dispatcher side. Before calling the handler it runs `splx` with the word at `+8` of the record
+  (`cause_intr_connect`'s third argument, which `hub_error_init` passes as 1) and `intr` returns in `v0` the word it reloads from `+0xc` of the record after the handler runs (`cause_intr_connect` stores only the handler at `+0` and its third argument at `+8`; who writes `+0xc` was not read). The handler is
+  called with the exception frame as its only argument. What still rests on inference is that the PI error pending
+  bits are wired to that line by the hardware: no software writes the wiring.
 
 ### MD error latches
 
@@ -423,7 +432,7 @@ Graded answers to the write-error questions, from the shipped kernel and PROM on
    out, so a failed read arrives only as the bus error. NI errors: levels 126 (local) and 103 and 104 (per slice remote). II errors:
    a run-time level programmed into `0x400138`. *Inferred*: that a failed write to a **widget** raises the II error rather
    than the PI one (the "Hub nasid %d got a PIO Write error from widget %d" message is in the II path; the PI write-buffer bits are for
-   writes the PI itself sees fail). *Inferred* (see "Interrupts to the processor"): cause level 6 is Cause IP6 and the II error level is 64.
+   writes the PI itself sees fail). *Established for the dispatcher* (see "Interrupts to the processor"): cause level 6 is the Cause IP6 bit; the II error level is 64 (inferred).
 4. **A refused write to a Hub register itself.** *Established for the reporting, unknown for the trigger.* `hub_ioerror_local`
    (read in full) tests one bit of PI register `0` of the target node, selected by the accessor's node number, through the node
    alias and, whichever way that goes, calls `kl_panic` with "Hub Register Access Permission error" or "Hub Register Access
@@ -700,7 +709,6 @@ use the local alias of the table above (`0x9200000001000000 + offset`).
   and gets the node record at +104; interface 0 gets a 4-byte lock initialised as "bte_recover" at +96 and interface 1
   copies that pointer. Each record then gets a zeroed 16384-byte page and an unzeroed one; both must lie in
   `0xa800000000000000` to `0xa800010000000000` (an `IS_KSEG0(zpage)` assertion in the binary), and their low 40 bits are stored at +8 and +16. A second loop ORs bits 0 and 1 into the
-
   byte at +66 of both records. Established: the sequence. Inferred: +8 holds the zero page and +16 the poison page,
   from the allocation failure texts ("BTE zero page", "BTE poison transfers").
 - `bte_pbcopy` (`IP27/unix` at 0xc00000000002c3f4,
