@@ -32,9 +32,21 @@ when the chip type is 3 or the part number is `0xe000` or `0xe010`: the `tiocp` 
   raw pointer whose part number is `0xe000` or `0xe010` with manufacturer 36; the message text was not read, so whether it
   says the register is undefined for the chip is unknown.
 
+## Against the public Linux ia64 header (reported after the reading above)
+
+The Linux ia64 SN code of the 2.6.33 era carries a `struct tiocp` (`arch/ia64/include/asm/sn/tiocp.h`). All 41 census
+offsets that fall below `+0x10000` and the `+0x10000` translation RAM sit at the same offsets there, with the same
+register meanings the accessor names give (agree; two software readings meeting, so inferred, not a measurement). Two
+differences, both read in full in the IRIX accessors and independent of the header: `+0x48` does not exist (the shared
+accessor panics with "undefined register", the header leaves padding), and the `+0x80000` external translation RAM does
+not exist (`pcireg_ext_ate_get` panics with "not a BRIDGE ASIC" for chip type 3 and for parts `0xe000` and `0xe010`; the
+census row at `+0x80000` credits the Bridge-only read path to the TIOCP variant and is a scanner artifact). The grading,
+the Linux-only facts (54-bit interrupt address, command type in DMA address bits 61:60, the PV907516 flush erratum) and
+the tests that would settle the rest are in [docs/coverage-tiocp.md](../../docs/coverage-tiocp.md).
+
 ## Open
 
-- Which product carries a TIOCP, and whether the register layout beyond the shared accessors matches PIC. Routes tried:
-  the census of the shared accessors, a symbol and string search of the IP27 and IP35 boot objects and PROM images. Next:
-  the public Altix-era headers in the pinned older Linux tree (`linux-ia64`, `tiocp.h`), read after the binary reading, for
-  names to compare.
+- Which product carries a TIOCP. No shipped software here instantiates one (inferred, same page); a published hardware
+  overview of the Altix-class generation would settle it.
+- The `+0x14000` manual-parity translation RAM and the `+0x18000` and `+0x1c000` write-request and read-response RAMs
+  exist only in the public header. No IRIX accessor reaches them.
