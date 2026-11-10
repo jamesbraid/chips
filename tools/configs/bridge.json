@@ -275,7 +275,7 @@
  "accessor_calls": "^pcireg_",
  "status": "census run over the IP27 and IP30 kernels, the IP35 driver objects and the PROMs; page written (Bridge and XBridge; PIC and TIOCP rows come from the shared accessors)",
  "spec": "none used as evidence: the held Bridge and XBridge specifications have suspended clearance (see docs/specs.md)",
- "name_source": "the public Linux Bridge header (arch/mips/include/asm/pci/bridge.h) and the OpenBSD xbridgereg.h names by offset, else the shipped accessor name; every name is inferred (config register_names)",
+ "name_source": "the public Linux Bridge register header and the public OpenBSD XBridge register header names by offset, else the shipped accessor name; every name is inferred (config register_names)",
  "register_names": {
   "0x0": "WID_ID",
   "0x8": "WID_STAT",
