@@ -464,7 +464,7 @@ above 0 it calls `dump_hub_registers` (`0xc0000000002c956c`, 944 bytes, read in 
 whose first word is negative) at `0xc000000001597388`, in 8-byte steps: 521 registers. For each node in the node list it
 forms `0x9200000001800000` (the pool word at gp+0x8f0) plus the node's NASID shifted left 33 plus the offset. That is the
 node-named form of the 8 MB register window (bit 23 set); the local alias is `0x9200000001000000`. Every read is a plain
-64-bit `ld` with no fault guard and no value check. The value goes into slot `(offset >> 3) & 0x7ff` of a 16 KB staging
+64-bit `ld` (the load is at `0xc0000000002c97e0`; `0xc0000000002e7350` in the other kernel) with no fault guard and no value check. The value goes into slot `(offset >> 3) & 0x7ff` of a 16 KB staging
 buffer on the stack, pre-filled with `0x5555555555555555`. The buffer goes to the block writer
 (`compress_and_write_block`, `0xc0000000002c8f6c`) whenever the 16 KB page number or offset bits 23:20 change, so the dump
 holds a sparse image of the window. The node count is the word at gp+0x2824, plus 4 when a word at +0x184 of a node
