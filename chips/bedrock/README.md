@@ -4,6 +4,7 @@ Mode: **no-spec** (no specification is held for Bedrock; the system-architecture
 register content). Evidence: the IP35 kernel object `kernel.o` and the IP35 boot-directory objects named below,
 IRIX 6.5.30. The IP35 CPU PROM yields no sites yet (its window base is built at run time: open question).
 Census: [census/](census/census.md).
+Start-up of several processors by the IP35 PROM (presence bits, rendezvous waits, memory configuration): [docs/questions/ip35-prom-mp-presence-poll.md](../../docs/questions/ip35-prom-mp-presence-poll.md).
 
 ## Window and how it is reached
 
