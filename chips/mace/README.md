@@ -30,8 +30,8 @@ scan follows. It does **not** reach:
   (only the three Ethernet rows the `ide` diagnostic touches are in the census), the 16550 serial driver
   `sio_ti16550.o` and the video code in `mvp.o` (one probe read). The PS/2 registers are read by hand below,
   because their base addresses sit in a constant table;
-- the IP32 PROM: the image holds three compressed segments (`sloader`, `post1`, `firmware`) and no tool in this
-  repository unpacks them, so no PROM access is in the census (open question);
+- the IP32 PROM: the `firmware` segment is plain code (see "IP32 PROM image layout" below), but no census config reads it yet,
+  so no PROM access is in the census (open question);
 - video channel registers, the DP-RAM, the parallel DMA context registers and the serial ring pointers: no routine
   read reaches them by constant address.
 
@@ -428,6 +428,27 @@ fixed value. Each entry below states the value and what the routine touches, whi
   buffer at `a2`, when `a0` is nonzero and `a3` is 1, 2, 4 or 8. The copy is a byte, halfword, word or doubleword for
   those widths. It returns 1 after a copy and 0 otherwise, including for any other width. Established for the copy and
   the return. Inferred: the copy reads back the device after a programmed-I/O write, as the name suggests.
+
+## IP32 PROM image layout (established, `usr/cpu/firmware/ip32prom.image` of IRIX 6.5.30, 431872 bytes)
+
+The earlier belief that the segment bodies are compressed is wrong for `firmware`, the segment that carries almost all the code. The
+file starts with an eight-byte `PROM` header and holds five `SHDR` records at `0x108` (`sloader`), `0x4108` (`env`), `0x4508`
+(`post1`), `0x9308` (`firmware`) and `0x69308` (`version`); the file is `0x69700` bytes long. Every record has the same layout: the
+word `SHDR`, a length word at +4 (`0x4000`, `0x400`, `0x4d44`, `0x5fffc`, `0x388`), three type bytes at +8, the segment name at +0xc,
+a version string at +0x2c ("1.0" for the first three, "4.18" for `firmware` and `version`) and a per-segment check word at +0x34
+(`0x8cb4693c`, `0x131811ae`, `0xc516c9e5`, `0x82b4a297`, `0x012d56b7`; the public decompiler calls these checksums, not verified here). Only the
+`firmware` record carries two more words, the load address `0x81000000` at +0x38 and the code length `0x48e70` (298608 bytes) at
++0x3c; the code starts at +0x40, file offset `0x9348`. This first subsection is plain code: all 74,635 words from `0x9348` for 298608 bytes
+decode as instructions and all 4,989 `jal` and `j` targets lie inside `0x81000000` to `0x81048e70`. The rest of the segment (file
+offset `0x521b8` on, up to the next record) holds the strings and tables, as further subsections with their own headers that
+were not decoded here (the public decompiler documents three subsections with separate load addresses); the message text
+("checksum", "date", "boot [-f FILE] [-n] [ARGS]") is readable there. The first instructions copy
+the arguments, build a stack at `0xa13fc000` and call `0x81040d28`. Loading the body at `0x81000000` (a KSEG0 address) is what makes
+absolute branches resolve; read at any other base the code looks like data. No decompression is involved; the scan only needs a PROM
+image entry with this base. The `sloader` and `post1` segments (which start with code in place of the extra two words) were not decoded here. Twenty `lui` loads of the CRIME window base
+(`0xb400....`) and 74 of the MACE bases (`0xbf08`, `0xbf28`, `0xbf30`, `0xbf31` and `0xbf32`) are in the firmware, which is the material the CRIME and MACE
+open entries wait for. The layout agrees with the independent public decompiler of this image (its notes give the same load address,
+length and "branch over SHDR" structure).
 
 ## Open
 

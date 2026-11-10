@@ -83,12 +83,7 @@ Corrections found while tagging. These are not fixed here.
   response error bit; what a PIO to an ISA device that never answers does (the specification gives the peripheral
   controller no timeout or error flag); a second error's effect on the latched address. Next: CRIME's own error
   registers (the CRIME census), and the compressed IP32 PROM's PCI and ISA probes once it can be read.
-- **MACE: the compressed IP32 PROM.** *[route: software now; unlocks the MACE and CRIME PROM entries]* `ip32prom.image` holds three segments (`sloader`, `post1`, `firmware`) with
-  an eight-byte `PROM` header and `SHDR` records at `0x108`, `0x4108`, `0x4508`, `0x9308`; their bodies are not plain
-  code. The census therefore holds no PROM access. Tried: the Xbow-era container unpacker (a different layout);
-  string search (only the `sloader` and `post1` banner and a few message strings are readable). Next: read the
-  decompression routine from the `sloader` body (the one segment small enough to read by hand) and unpack
-  `firmware` with it.
+- **IP32 PROM: no census config reads the firmware segment yet.** *[route: software now; unlocks the MACE failure and CRIME register entries]* The premise of the earlier entry is gone: the `firmware` segment is not compressed, it is plain code loaded at `0x81000000` (chips/mace/README.md, "IP32 PROM image layout"). Open: a census image entry for the IP32 PROM with that base (file offset `0x9348`, 298608 bytes), seeds for its CRIME and MACE window loads (20 CRIME-base and 74 MACE-base `lui` sites), the same for the `sloader` and `post1` segments, and decoding the string and table subsections after the code. Next: add the config entries and run the scan.
 - **MACE: blocks reached through run-time pointers.** *[route: software now]* The Ethernet driver (`if_me.o`), the 16550 serial driver
   (`sio_ti16550.o`, `serialio.o`), the video code (`mvp.o`) and the DP-RAM and parallel context registers take their
   addresses from records. The census has three Ethernet rows (from `ide`) and one video row. Next: constant-fold the
