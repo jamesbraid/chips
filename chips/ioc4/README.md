@@ -58,7 +58,7 @@ constant is itself the fact), **I** inferred, **U** unknown. Widths are 32-bit w
 | `0x10`, `0x14` | serial, other interrupt enable set | 4 | w | `ioc4_write_ireg` | E |
 | `0x18`, `0x1c` | serial, other interrupt enable clear | 4 | w | `ioc4_write_ireg` | E |
 | `0x20` | control | 4 | rw | `ioc4_attach` writes `0xf`; `hardware_init` polls bit 7 | I |
-| `0x24` | not named | 4 | rw | `ioc4_attach` read-modify-write (below) | U |
+| `0x24` | miscellaneous control: bits 3:0 PCI bus speed (0 is 33 MHz, 1 is 66 MHz) | 4 | rw | `ioc4_attach` read-modify-write (below) | I (role from a shipped development header; see [docs/coverage-ioc4.md](../../docs/coverage-ioc4.md)) |
 | `0x28` | external interrupt output | 4 | w | `ioc4_eiattach` writes 0 | I |
 | `0x30`, `0x34` | GPIO control set, clear | 4 | w | `ioc4_attach` writes `0x30` to `0x30`; `ioc4_eiattach` writes `0x200` or `0xff00` to `0x30` and 2 to `0x34` | I |
 | `0x38` | GPIO data | 4 | | no routine touches it | U |
@@ -76,8 +76,10 @@ constant is itself the fact), **I** inferred, **U** unknown. Widths are 32-bit w
 | `0x387` | UART 0 register 7 | 1 | w | `set_baud_ti` stores a computed value | I |
 
 **59 register kinds** (the GPIO pins as one family; the four serial ports' repeats are not counted again; the ATA command
-block counts eight kinds and the DMA block nine): **32 established, 22 inferred, 5 unknown.** The unknowns are `0x24`, `0x38`
-and DMA indices 0, 3 and 4 (no IOC4 path reaches them).
+block counts eight kinds and the DMA block nine): **32 established, 22 inferred, 5 unknown** as graded by the code alone. The coverage pass
+([docs/coverage-ioc4.md](../../docs/coverage-ioc4.md)) moves `0x24` to inferred and the DMA block roles (indices 1, 2, 5, 6, 7, 8) to
+established by a public driver; the unknowns left are `0x38` (no routine touches it) and DMA indices 0, 3 and 4 (named by the
+public driver as timing and the current memory address, which no IOC4 path reaches).
 
 ### Interrupt registers (`0x8` to `0x1c`): established
 
@@ -223,7 +225,7 @@ exists. The PIC and Bedrock side of IP35 is in [../pic/README.md](../pic/README.
 | `other_ir` bits 1:0 | ATA interrupt and memory error written as 3 to the enable set | `ioc4_other_int`: `ata_int` bit 0, `ata_memerr` bit 1 | agree |
 | error address low | bit 0 valid, bit 1 RX or TX word, bits 4:2 port number, bit 5 multiple, bits 31:6 address | `ioc4_pci_err_addr_l`: valid, `master_id:4` (bits 4:1), `mul_err`, address 31:6 | agree on valid, multiple and address; IRIX splits bits 4:1 into bit 1 (RX or TX word) and bits 4:2 (port number), Linux calls bits 4:1 one master identifier |
 | control `0x20` | stores `0xf`, waits for bit 7 | `cmd_pulse:4` (bits 3:0) and `sio_diag_idle` at bit 7 | agree on the polled bit; the stored `0xf` is a four-bit field, equal to the public `cmd_pulse` width |
-| `0x24` | bits 3:0 cleared at revision 79 or later on a conventional-PCI bus with speed field 0 (bus speed value 1) | `unused1` | **differ**: IRIX uses it; role unknown |
+| `0x24` | bits 3:0 cleared at revision 79 or later on a conventional-PCI bus with speed field 0 (bus speed value 1) | `unused1` | **differ**: IRIX uses it; a shipped development header names it a PCI bus speed field (inferred) |
 | serial layout | ring bases `0x300` to `0x30c` (pair order low then high), ports at `0x310` and every `0x1c`, UARTs at `0x380` and every 8 | `struct ioc4_serial`: `sbbr01_l`, `sbbr01_h`, `sbbr23_l`, `sbbr23_h`, then four 7-word ports, then four UARTs | agree |
 | ring base write | high word, then low word ORed with 1 | `IOC4_SBBR_L_SIZE` 1 means 4 KB rings; the driver writes high then low plus the size bit | agree |
 | reset wait | `0x20` bit 7 | `IOC4_SIO_CR_SIO_DIAG_IDLE` | agree |
@@ -239,8 +241,10 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 
 ## Open
 
-- **`0x24`**: what bits 3:0 do. The trigger is read in full (see "Control, GPIO and the unnamed `0x24`"); the register's role is not in any shipped string. No further software route is known; valid end state unless a published IOC4 erratum or a PCI-X IOC4 driver names it.
-- **ATA register roles**: the command and control block roles are inferred from index order and the public driver. The DMA block's accesses are read in full (see "ATA controller"); its role names stay inferred.
+- **`0x24`**: the role is inferred (bus speed field). Open: why the clear is gated on revision 79 and what values above 1 mean.
+- **ATA DMA block**: roles are established by the Linux driver and the IRIX accesses agree ([docs/coverage-ioc4.md](../../docs/coverage-ioc4.md));
+  index 8 is the end-of-transfer flag area, not a second table. Open: whether IRIX waits on that area, and the request's list layout.
+- **ATA error line**: `xide_intr_clear` compares the masked error address with 8 where the driver's table puts ATA at 8 in a field that masks to `0x10`.
 - **Ports 1 to 3 GPIO pins and the per-port tables** are static data not extracted.
 - **`ioc4_error_handler` and `ioc4_intr`/`ioc4_intrd`** are read for their accesses only.
 - **Interrupt dispatch**: which `sio_ir` and `other_ir` bits each handler claims is not read.
