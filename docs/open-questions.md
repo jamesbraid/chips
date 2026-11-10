@@ -106,14 +106,7 @@ Corrections found while tagging. These are not fixed here.
 - **IP35 reset window.** *[route: software now; hardware residue: item 1, the routing rule, which the linked question says only a hardware observation settles]* The routing rule that returns boot-PROM bytes for uncached memory-space fetches of physical
   0x1fc0xxxx after bank 0 is enabled, and whether any write ends it, are not visible in the PROM. Tried: full read of
   the reset, memory and jump-to-RAM path. Next: see [docs/questions/ip35-reset-window.md](questions/ip35-reset-window.md).
-- **Census scanner faults found by the audit.** *[route: software now; tool work; partly covered by the scanner-fix entry, so rerun to check]* (1) A load or store whose displacement is added at run time through
-  a `movz`-selected constant or a loop counter is recorded at the window base or at one iteration's slot
-  (`dump_error_spool`, `hub_error_clear`, `part_discovery`); the families they build need their bounds read from the
-  code. (2) A site in a routine with no symbol is credited to the preceding named routine (the three `+0x1000090`
-  stores). (3) The IP35 PROM image is split after each return, so a block that is jumped to from earlier in the
-  same routine (the PIC branch of the interrupt-register clear at 0xc00000001fc41f38) is missed while the other
-  branch is labelled PIC. Next: do not split a PROM pseudo-function at an address a branch from the previous one
-  reaches, and fold `movz` of two constants into two sites.
+- **Census scanner faults: the IP35 PROM split.** *[route: software now; tool work]* Faults (1) and (2) of the first audit are fixed in the current census output: `hub_error_clear`, `dump_error_spool` and `part_discovery` now carry indexed sites (index flag 1), alternatives chosen by a conditional move appear as separate sites on both processor-interface windows, and the three `+0x1000090` stores sit in separate `sub_` routines (`chips/bedrock/census/census-sites.tsv`, `chips/bedrock/README.md`). Open: fault (3). The `ip35-prom` image has no rows in the Bedrock census, so whether cutting a PROM pseudo-function only where nothing branches in (the fix in `retools/tools/chips/scan.py`) recovers the PIC branch of the interrupt-register clear at 0xc00000001fc41f38 has not been checked. Next: rerun the scan on `ip35prom.img` and look for rows at that address.
 - **Hub PI write-buffer errors: which fault sets which.** *[route: software now]* PI error pending bits 4 to 7 (write response block timeout and write
   error) and 18 and 19 (error during spool), the status 0 and 1 latches (address, command, type 0 write error, 1 partial write error,
   3 timeout), the clear sequence and the interrupt (cause level 6) are read from the kernel (graded entries in
