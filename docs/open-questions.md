@@ -166,11 +166,7 @@ Corrections found while tagging. These are not fixed here.
   refused read of a Crosstalk widget produces, and what the processor sees (data bus error or a zero return). No
   shipped code distinguishes these. Next: read `handle_io_buserr` and `hub_ioerror_handler` in full, and the PROM
   error dump.
-- **Bedrock error status clear semantics.** *[route: missing source: the public Hub headers the entry cites and a published erratum, neither held; the entry's no-software-route claim is not established]* Established: the kernel writes all ones to PI `0x438` and `0x458` and zero
-  to `0x448` and `0x468`, and writes the handled bit back to the pending register. Unknown: whether those four
-  are clear-on-read as in the public Hub headers, whether the pending register is write-one-to-clear, and what a
-  second error does to a status whose valid bit is still set beyond setting overrun (bit 62). Route: none from
-  software; a measurement or a published erratum.
+- **Bedrock error status clear: the second-error and read effects.** *[route: hardware residue]* The clear mechanism is write-clear for the status words and write-one-to-clear for the pending register, per the Bedrock-family header, consistent with every IRIX access (docs/coverage-bedrock.md, graded inferred). Open: what a second error does to a status word whose valid bit is still set beyond the overrun bit, and whether a read of the clear address has any effect.
 - **Bedrock pending bits 25 to 34 and fatal selection.** *[route: software now; hardware residue: what physically sets bits 29 to 34; proposed: the mask code that ORs bit 24]* Established: names from the kernel's table and the fatal
   and miscellaneous masks. Unknown: what sets bits 29 to 34 beyond their names (crossbar data cycle count, intervention
   state, state-pending timeout), and why bit 24 is ORed into one interrupt mask only (the first one written).
