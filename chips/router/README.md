@@ -12,8 +12,8 @@ conflict, never to supply a fact; where a name appears it is that header's name 
 
 Census: [census/](census/) (`census.tsv`, `census-sites.tsv`, `call-sites.tsv`, `values.tsv`, `census-symbolic.tsv`,
 `unresolved.tsv`), config [`tools/configs/router.json`](../../tools/configs/router.json), scanner
-[`retools/tools/chips/callargs.py`](../../retools/tools/chips/callargs.py), headers [`include/router_ip27.h`](../../include/router_ip27.h) and
-[`include/router_ip35.h`](../../include/router_ip35.h).
+[`retools/tools/chips/callargs.py`](../../retools/tools/chips/callargs.py), headers [`include/router_origin2000.h`](../../include/router_origin2000.h) and
+[`include/router_origin3000.h`](../../include/router_origin3000.h).
 
 ## What this census covers, and what it does not
 

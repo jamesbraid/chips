@@ -1,0 +1,58 @@
+# Shared publish-safety check over the generated census headers (include/*.h).
+#   python3 retools/tools/defs/check-publish-safe.py --config defs.toml
+# The headers carry the census labels [E] established, [I] inferred, [U] unknown, which are the grades of the
+# decode-header grammar. They do not use the REG/FIELD grammar (offsets run to 0x2000000, past the 4-digit REG
+# limit), so only the publish-safety rules apply; [checks] is set wide so a later REG header can use them.
+# CRIME and GBE are not here: the crime repository is canonical for both.
+
+[project]
+name = "chips"
+
+[checks]
+address_bits = 32
+max_reg_offset = 0xffffffff
+
+[[headers]]
+file = "include/bedrock.h"
+
+[[headers]]
+file = "include/bridge.h"
+
+[[headers]]
+file = "include/heart.h"
+
+[[headers]]
+file = "include/hub.h"
+
+[[headers]]
+file = "include/ioc3.h"
+
+[[headers]]
+file = "include/ioc4.h"
+
+[[headers]]
+file = "include/l1.h"
+
+[[headers]]
+file = "include/mace.h"
+
+[[headers]]
+file = "include/pic.h"
+
+[[headers]]
+file = "include/router_origin2000.h"
+
+[[headers]]
+file = "include/router_origin3000.h"
+
+[[headers]]
+file = "include/tiocp.h"
+
+[[headers]]
+file = "include/vice.h"
+
+[[headers]]
+file = "include/xbow.h"
+
+[[headers]]
+file = "include/xbridge.h"

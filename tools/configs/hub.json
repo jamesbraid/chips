@@ -217,7 +217,7 @@
   "0x638000": "NI_META_TABLE0",
   "0x638100": "NI_LOCAL_TABLE0"
  },
- "name_source": "the public Linux SN0 Hub headers (hubpi.h, hubmd.h, hubio.h, hubni.h) by offset; IRIX prints no register names, so every name is inferred (config register_names)",
+ "name_source": "the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)",
  "header_skip": [
   "0x0"
  ],

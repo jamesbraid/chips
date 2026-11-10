@@ -1,5 +1,7 @@
 # GBE
 
+The register header for GBE is canonical in the crime repository (`GBE.h` and `GBE_DECODE.h`); this repository does not generate one.
+
 Mode: **spec-backed** (see [docs/specs.md](../../docs/specs.md)).
 
 O2 display back end. Spec: GBE ASIC spec, revision 1.1 (18 July 1996). Builds: IP32.

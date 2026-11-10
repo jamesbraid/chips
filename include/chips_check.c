@@ -1,4 +1,4 @@
-/* Compile check: every header must parse together. Built by tools/check-headers.sh. */
+/* Compile check: every header must parse together. Built by retools/tools/chips/check-headers.sh. */
 #include "pic.h"
 #include "bridge.h"
 #include "xbridge.h"
@@ -8,12 +8,10 @@
 #include "hub.h"
 #include "ioc3.h"
 #include "ioc4.h"
-#include "crime.h"
 #include "mace.h"
-#include "gbe.h"
 #include "vice.h"
 #include "tiocp.h"
 #include "l1.h"
-#include "router_ip27.h"
-#include "router_ip35.h"
+#include "router_origin2000.h"
+#include "router_origin3000.h"
 int chips_headers_ok(void) { return 1; }

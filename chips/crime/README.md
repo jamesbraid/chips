@@ -13,8 +13,7 @@ kernel, so a kernel routine is cited as `name` at its `kernel.o` offset. The pub
 Linux and NetBSD drivers were read afterwards, to report agreement and conflict, never to supply a fact. OpenBSD's
 CRIME code was looked for and not retrieved; nothing here depends on it.
 Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`,
-`census-windows.tsv`), config [`tools/configs/crime.json`](../../tools/configs/crime.json), header
-[`include/crime.h`](../../include/crime.h).
+`census-windows.tsv`), config [`tools/configs/crime.json`](../../tools/configs/crime.json). Register header: the crime repository (`CRIME.h` and `CRIME_DECODE.h`), which is canonical for CRIME; this repository no longer generates a CRIME header.
 
 ## Addresses and widths (established)
 
