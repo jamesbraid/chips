@@ -198,8 +198,9 @@ requirement is not new with Bedrock. The IP35 values (local boot at +0x18000000,
    is on. A hardware observation would: with bank 0 enabled, write a marker to RAM through 0x96000000_1fc00040
    and read both 0x96000000_1fc00040 and 0xbfc00040; flash bytes from one and the marker from the other
    settles it.
-2. Whether the cached staging fetch at 0x98000000_1fc04f10 is cache-served. Next: simulate the staging routine
-   against the R10000 cache-operation semantics (index store tag and data for the primary instruction and
-   secondary caches), from 0x1fc04980 to its return, and report whether the fetch hits; the PROM image
-   alone is enough input.
+2. **Answered** in [ip35-prom-cache-staging.md](ip35-prom-cache-staging.md): the routine was run against an R10000 cache
+   model (`retools/tools/chips/cache_stage_sim.py`, PROM bytes only). The fetch at 0x98000000_1fc04f10 misses the primary
+   instruction cache, hits the secondary line the routine staged and is refilled from it, with no system-interface read, under the
+   page's stated word-order assumption for secondary-cache doublewords (the manual does not settle that order; the page
+   lists what changes if it is swapped). Point 6 above stays "inferred" for the same reason.
 3. The full ordered list of memory configuration writes up to bank 0 enable (needs the remaining helpers read).
