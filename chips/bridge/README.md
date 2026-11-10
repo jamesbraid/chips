@@ -112,7 +112,7 @@ Totals over the **41 rows** below (families count once each; a row graded for so
 | `0x178` | interrupt multiple | r | X | `pcireg_intr_multiple_get` | as `0x170` | I |
 | `0x180` + 8n | force interrupt always (n = 0 to 7) | w | X | `pcireg_force_always_set` | write on type 1; type 0 reaches `panic` (read in full) | E (chip, bound), I (role) |
 | `0x1c0` + 8n | force interrupt with pin (n = 0 to 7) | w | X | `pcibr_force_interrupt` (`pcireg_force_intr_set`) | write per pin on type 1 | I |
-| `0x200` + 8n | device (n = 0 to 7) | rw | both | `pcibr_device_flags_set`, `pcibr_priority_bits_set`, `pcibr_endian_set`, `pcireg_device_*`; IP30 PROM (one write) | `pcibr_endian_set` sets or clears the two bits `0x180000`; the flags and priority routines rewrite the register and read the flush register; the IP30 PROM writes device 2 with `0x1004` | I |
+| `0x200` + 8n | device (n = 0 to 7) | rw | both | `pcibr_device_flags_set`, `pcibr_priority_bits_set`, `pcibr_endian_set`, `pcireg_device_*`; IP30 PROM (one write) | `pcibr_endian_set` sets or clears the two bits `0x180000`; the flags and priority routines rewrite the register and read the flush register (bit translation under "Device register bits written by the flag routines"); the IP30 PROM writes device 2 with `0x1004` | E (flag routines), I (rest) |
 | `0x240` + 8n | write-buffer flush (n = 0 to 7) | r | both | `pcibr_wrb_flush` (`pcireg_wrb_flush_get`) | read of the device's slot; the value is returned | I |
 | `0x280`, `0x288` | even and odd response buffers | rw | both | `pcibr_alloc_all_rrbs`, `pcibr_rrb_flush`, `pcireg_rrb_*` | index 0 touches `0x280`, index 1 `0x288`; each register is eight 4-bit buffer fields, field `i` at bits `4i+3:4i` (see "Response buffer fields" below); the attach path passes `0x8` | E (the allocator `do_pcibr_rrb_alloc` read in full) |
 | `0x290` | response status | r | both | `pcireg_rrb_status_get` | read | I |
@@ -171,6 +171,48 @@ Totals over the **41 rows** below (families count once each; a row graded for so
   order.
 - **Error clean-up (established, `pcibr_error_cleanup`).** Writes `0x41` to the interrupt reset register (the low
   word of `0x3cff00000041`), then reads the flush register. `pcibr_dmard_error` writes `0x10`.
+
+## Device register bits written by the flag routines (established)
+
+Read in full in both kernels: `pcibr_device_flags_set` (`IP27boot/pcibr.o` at 0x3d90 and `IP35boot/pcibr.o` at
+0x3ffc, 512 bytes each, the same logic), `pcibr_priority_bits_set` (344 bytes) and `pcibr_endian_set` (232 bytes).
+Each keeps a shadow of the slot's device register in the per-slot part of the bridge record (slot index shifted
+left 7; the shadow word is at +0x138 in the IP27 build and +0x140 in the IP35 build, and the lock is at +0x80 and
++0x8c). A routine builds a set mask and a clear mask, computes `(shadow & ~clear) | set` (set wins when both name
+a bit) and, only when the result differs, writes it with `pcireg_device_set`, stores it to the shadow and reads the
+target flush register.
+
+`pcibr_device_flags_set` takes a flag word. Each pair of flag bits is a "set" bit and a "clear" bit for one
+device-register bit or pair of bits:
+
+| flag bits (set, clear) | device register bits | public name of those bits |
+|---|---|---|
+| 16, 17 | 24 and 23 together | PMU and direct write-gather enables (`BRIDGE_DEV_PMU_WRGA_EN`, `BRIDGE_DEV_DIR_WRGA_EN`) |
+| 18, 19 | 18 | prefetch (`BRIDGE_DEV_PREF`) |
+| 20, 21 | 17 | precise exception (`BRIDGE_DEV_PRECISE`) |
+| 22, 23 | 15 | barrier (`BRIDGE_DEV_BARRIER`) |
+| 26, 27 | 22 | 64-bit device size (`BRIDGE_DEV_DEV_SIZE`) |
+
+The bit positions agree with the device-register constants in Linux 6.1 `arch/mips/include/asm/pci/bridge.h`. Two
+conditions apply. The 64-bit request (flag bit 26) is dropped from the set mask when the record's chip type
+(halfword at +114) is 2, which is the PIC. No other flag bit is tested (bits 0 to 15, 24, 25 and 28 up are
+ignored). The routine returns 1 on every path. The only direct caller in the 6.5.30 IP27 and IP35 kernel sets is
+the Fibre Channel adapter attach (`fcadpattach` in `fcadp.o`, call at 0x6ef4), which passes flag bit 17 alone
+(write-gather off). No other object or archive member in either set references the routine, by relocation or in a
+data table, so any other flag combination can come only from a driver outside the boot sets.
+
+`pcibr_priority_bits_set(record, slot, mode)` touches one bit, `0x200000` (bit 21, the real-time bit in the public
+header), and only when the word at record +120 (`revision | part << 4`) equals `0xc0022`, a revision 2 Bridge.
+Modes 1 and 2 increment a per-slot counter (+0x140 in the IP27 build, +0x148 in the IP35 build) and set the bit
+when the counter becomes 1; on any other chip they still increment the counter and return -1. Mode 0 decrements the
+counter, returning -1 if it was already 0 or below, and clears the bit when the counter reaches 0 (on a chip that is
+not a revision 2 Bridge the clear is skipped).
+
+`pcibr_endian_set(old, new)` clears the pair `0x180000` (bits 20:19, the PMU and direct byte-swap bits in the
+public header) when its two arguments are equal and sets it otherwise.
+
+Bit 13 (the per-device swap bit in the public header) is written by none of these three routines. See
+docs/open-questions.md for the routine that sets it for the IOC3 window.
 
 ## IP30 PROM (established for the accesses, role inferred)
 
