@@ -26,6 +26,7 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
   submodules, older Linux trees for SN1, SN2 and IP27, the IP30 port and the sources recorded by URL only.
 - [docs/coverage.md](docs/coverage.md) and [docs/inventory/](docs/inventory/): measured coverage.
 - [docs/open-questions.md](docs/open-questions.md): what is not settled and the next route.
+- [docs/xio-fibre-channel.md](docs/xio-fibre-channel.md): the XIO Fibre Channel board (AIC-1160) and its `fcadp` driver contract.
 - [chips/*/census/](chips/*/census/): register-access censuses per chip, produced by [tools/](tools/).
 
 ## Layout
