@@ -78,15 +78,7 @@ Corrections found while tagging. These are not fixed here.
   write, how the vector is chosen) are in chips/xbow/README.md, "Error reporting for a refused or timed-out register
   write". Open there: what a link-level time-out latches, how a 4-byte access reaches a double-word-only register
   file, a second error's effect, and the registers of the PXBOW part.
-- **CRIME: identification register upper word.** *[route: software now]* `get_crimerev` in the IP32 kernel object reads bits 63:32 of the
-  identification doubleword and returns 0x13 for 1 and 0x14 for anything larger, while the specification defines only
-  bits 7:0 and the PROM and diagnostic compare the low word with 0xa0 and 0xa1 only. Tried: the kernel, PROM,
-  diagnostic and monitor censuses; the public Linux and NetBSD revision constants (0x11, 0x13, 0x14) match the kernel's
-  return values but not how the kernel derives them. Next: the other IP32 objects that read the register (the
-  graphics driver's identification probe and its callers), and the history of the public drivers' revision constants.
-- **CRIME: CPU error status location on CRIME 1.5.** *[route: software now]* The specification puts it at 0x4048 for 1.5 and 0x48 for 1.1; every
-  IP32 routine uses 0x48. Next: the graphics driver's error paths and any public source that
-  reads the status register by its 1.5 address.
+- **CRIME: what the identification register's upper word holds on a CRIME 1.5; where the CPU error status lives on a 1.5.** *[route: hardware residue]* The upper word is a 1.1, 1.3 or 1.4 discriminator (docs/coverage-crime.md: IRIX arithmetic and NetBSD's attach text agree), and IRIX, NetBSD and Linux all read the 1.5 error status at `0x48` while the specification says `0x4048`. Open: what a real 1.5 returns for either, which only a read on the part answers.
 - **CRIME: write-error behaviour.** *[route: software now; hardware residue: the bus-level exception and the failed-store latch on the part]* The graded answers (what sets CPU error status bit 2, what a failed or timed-out
   uncached store latches, which interrupt bits fire, how the kernel detects a failed store) are in chips/crime/README.md,
   "Write-error questions". Open there: which addresses are "invalid", whether a read and a write differ in the

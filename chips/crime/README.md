@@ -38,7 +38,7 @@ Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, 
 - The PROM and the diagnostic read the identification word at `+4` and compare it with 0xa0 and 0xa1 only: 0xa0
   selects the path for revision 0, 0xa1 the path for revision 1.1. No shipped routine compares it with another value.
   The PROM's low-level helper at `0xbfc06808` returns `id & 0xf`.
-- Why the kernel reads bits 63:32 is **unknown**: the specification's identification register has only bits 7:0
+- Why the kernel reads bits 63:32: the upper word is a minor-revision discriminator of the pre-1.5 parts (0 is 1.1, 1 is 1.3, larger is 1.4), by the IRIX return values and NetBSD's attach text agreeing ([docs/coverage-crime.md](../../docs/coverage-crime.md)). What a 1.5 holds there is **unknown**; the specification's identification register has only bits 7:0
   (ID value 7:4, revision 3:0). See the open entry.
 
 ## Register inventory
