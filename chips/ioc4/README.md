@@ -146,7 +146,7 @@ public driver as timing and the current memory address, which no IOC4 path reach
   port is the first of its pair, or to `0x30c` and `0x308` for the pair that starts at port 2; the other two ports write nothing
   (the first pair's configuration entry compares with the table start, the second with the start plus 80 bytes). Established.
 - **Pause and indices**: as for IOC3 (`ioc4_enable_tx` `0x22ec` stores `0x20000000` to the control register and polls bit 30).
-- **Mode select**: `ioc4_set_proto` (`0x33c4`, returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin from a static table (not read).
+- **Mode select**: `ioc4_set_proto` (`0x33c4`, returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin is the byte at +0x24 of the port's configuration record, which is 4, 5, 6 and 7 for ports 0 to 3 (extracted from the `.data` of `sio_ioc4.o`; see docs/coverage-ioc4.md, "Serial transceiver select").
 - **UART registers**: line control at UART+3, divisor latch at +0 and +1, FIFO control at +2, modem control at +4, line status at +5
   (established, from `hardware_init` and `set_baud_ti`), register 7 as IOC3.
 
@@ -245,6 +245,6 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 - **ATA DMA block**: roles are established by the Linux driver and the IRIX accesses agree ([docs/coverage-ioc4.md](../../docs/coverage-ioc4.md));
   index 8 is the end-of-transfer flag area, not a second table. Open: whether IRIX waits on that area, and the request's list layout.
 - **ATA error line**: `xide_intr_clear` compares the masked error address with 8 where the driver's table puts ATA at 8 in a field that masks to `0x10`.
-- **Ports 1 to 3 GPIO pins and the per-port tables** are static data not extracted.
+- **Ports 1 to 3 GPIO pins** are 5, 6 and 7 (extracted; docs/coverage-ioc4.md). The other words of the 0x28-byte per-port record (nine words before the pin byte) are not read.
 - **`ioc4_error_handler` and `ioc4_intr`/`ioc4_intrd`** are read for their accesses only.
 - **Interrupt dispatch**: which `sio_ir` and `other_ir` bits each handler claims is not read.
