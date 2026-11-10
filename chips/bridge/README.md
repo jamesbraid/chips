@@ -31,6 +31,12 @@ serve it, so its rows appear in the census under their own variant and are not d
   (PIC) and `0xe000` and `0xe010` (TIOCP) with manufacturer 36. Which part is which chip is read from the dispatch
   structure and from `pic.o` setting type 2 with `0xd102` and `0xd112` (established for PIC, inferred for the rest).
   Bit 0 of the word is not used.
+  The part number `0xd100` that `xbow_widget_present` tests is not one of these: the shipped Crosstalk crossbar header
+  (`sys/xtalk/xbow.h` in the 6.5.30 header set) lists `0xd100` as the crossbar function of the PIC package (its comment says
+  "PIC") and `0xd000` as a second crossbar part (its comment says "Xbridge"), against `0x0` for the Crossbow. So the
+  `0xd100` block is the PIC's own crossbar identification, read from the block `xbow_widget_present` is given: established for the
+  value and the header's naming, inferred that the code reads that block rather than a Bridge-family register file. The header names no
+  `0xe000` or `0xe010` part; those two values rest on the dispatch structure alone.
 - **Attach (established, `xbridge_attach` at `0xc0000000000703ac` of the IP27 `unix`, 2592 bytes, read in full).** It
   is the attach routine for both chips. It maps the window with `pcibr_bridge_ptr_get`, reads the identification word
   and, for part `0xc002` with manufacturer 54 only, reads the status register and returns -1 unless status bit 5 is

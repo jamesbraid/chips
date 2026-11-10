@@ -41,13 +41,7 @@ Corrections found while tagging. These are not fixed here.
 - Self-contradiction: the MACE revision-strap entry says NetBSD was already read, then names the NetBSD PS/2 driver as the next route.
 - Unestablished claim: the Bedrock error-clear entry says no software route exists, but the public Hub headers it cites are a software route. They are not held in this clone.
 
-- **Chip numbering inside the shared Bridge-family accessors.** *[route: software now]* The accessors choose among four chips by a
-  type field and by the identification word's part number. For Bridge (part `0xc002`), XBridge (`0xd002`) and PIC
-  (`0xd102`, `0xd112`) the part numbers and the 32-bit and 64-bit layouts match the public Linux and OpenBSD constants
-  (chips/bridge/README.md, "Against the public drivers"), so those three are settled. Still open: the type 3 and part
-  `0xe000`/`0xe010` chip (see TIOCP). The part number `0xd100` that `xbow_widget_present` tests is not a Bridge-family part: the routine reads it from the word at +4 of the block it is given and then reads per-link words at +0x13c from a 0x40 stride, so it names the crossbar's own identification (inferred).
-  Next: the Crossbow probe routines' callers, and the public Linux `pci-xtalk-bridge.c` history for the later part
-  numbers.
+- **Chip numbering inside the shared Bridge-family accessors: the type 3 part.** *[route: missing source: a published Altix-class hardware overview or driver history naming parts `0xe000` and `0xe010`]* Bridge (`0xc002`), XBridge (`0xd002`) and PIC (`0xd102`, `0xd112`) are settled against the public drivers, and the `0xd100` that `xbow_widget_present` tests is the PIC package's crossbar part per the shipped Crosstalk header (chips/bridge/README.md). Open: only the identity of the type 3 chip with parts `0xe000` and `0xe010`; the 6.5.30 header set names neither.
 - **Bridge and XBridge: registers above 0x298.** *[route: software now; PROM search; an accepted end state if none is found]* Whether the XBridge has registers between `0x2a0` and `0x10000`
   (the census reaches none and the public headers name none). Valid end state unless a routine that touches them is
   found. Next: the IP27 PROM and I/O-board PROM, which the scan could not resolve.
