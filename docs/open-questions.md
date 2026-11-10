@@ -66,9 +66,7 @@ Corrections found while tagging. These are not fixed here.
   link credit and arbitration setup, the diagnostics and any write of widget 0 control, packet time-out, LLP control and
   arbitration reload. Next: read each by hand, or constant-fold the record fields; settle the input-buffer flush
   register, the packet time-out and arbitration reload values and the NIC register.
-- **Xbow: interrupt vector assignment.** *[route: software now]* IRIX writes the vector into interrupt destination upper from the interrupt
-  layer at run time; which number each product uses is not in `xbow.o`. Next: the interrupt allocation code of the node
-  controller and HEART, and any PROM routine that programs the register.
+- **Xbow: interrupt vector assignment.** *[route: software now]* Answered for IP30 (vector 58) and IP27 (a run-time level in the second block, 65 when only the II error took one first) in chips/xbow/README.md, "Which interrupt vectors fire?". Open: the level the IP35 `intr_heuristic` returns for flag word 4 (the request is the same; the search routine is longer and was not compared with the IP27 one), and any PROM routine that programs the interrupt destination upper register.
 - **Xbow: write-error behaviour.** *[route: software now; proposed: the link time-out and second-error routines in the held images; the PXBOW registers need a PXBOW object, none is held]* The graded answers (what sets each error bit, what is latched on a refused register
   write, how the vector is chosen) are in chips/xbow/README.md, "Error reporting for a refused or timed-out register
   write". Open there: what a link-level time-out latches, how a 4-byte access reaches a double-word-only register
