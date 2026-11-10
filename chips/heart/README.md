@@ -43,8 +43,8 @@ CLR_ISR, ISR, IMSR, COUNT, TRIGGER, PRID and SYNC are printed by no held file an
 | Offset | Name | Width | Access | Grade | What the held code shows |
 |---|---|---|---|---|---|
 | `0x0` | MODE | 8 | rw | established | Mode and reset control. Bit 22 is set by read-modify-write in the PROM followed by a read-back loop (soft reset, see below); bits 63:60 are the four processor-disable bits the PROM tests (shift 60). Bit names from the monitor table. |
-| `0x8` | SDRAM_MODE | 8 | - | unknown | Listed by the diagnostic (mask 0xfffff, not read-write tested); no held code touches it. |
-| `0x10` | MEM_REF | 8 | - | unknown | Listed by the diagnostic (mask 0xfffff); no held code touches it. |
+| `0x8` | SDRAM_MODE | 8 | w | established (access), inferred (role) | The PROM's memory set-up writes it eight times in a loop (doubleword stores, seven `nop`s apart): `(n << 16) \| 0x21` for n from 7 down to 0 (`IP30prom.bin`, 6.5.30, store at `0xbfc0099c`, in the loop `0xbfc00990` to `0xbfc009bc`; a second copy of the same code at `0xbfc30754`; the 6.5-base PROM has both). Read in full. Inferred: n is a bank (or device) number in bits 18:16 and `0x21` the SDRAM mode word, from the loop count of eight and the diagnostic's 20-bit mask 0xfffff. The diagnostic lists it (not read-write tested). |
+| `0x10` | MEM_REF | 8 | w | established (access), inferred (role) | Written once, right after the SDRAM_MODE loop, with `0x84000` (bits 19 and 14), at `0xbfc009d8` (second copy `0xbfc30790`) in the 6.5.30 PROM; the 6.5-base PROM also writes it. The same routine then sets bits 4, 11 and 17 of MODE (`ld`, `and` with `0xfffdffff`, `or` with `0x20810`, `sd`; the MODE bit meanings are not read). Inferred: the refresh interval, from the name the diagnostic gives it. |
 | `0x18` | MEM_ARB | 8 | rw | inferred | Memory request arbitration. The kernel sets bit 20 around a memory scrub in the correctable-error path and restores the old value; the name and mask 0x1fffff come from the diagnostic. |
 | `0x20` | MEMCFG0 | 8, 4 | rw | inferred | Bank configuration, two 32-bit entries per register (diagnostic mask 0x803f01ff in each half). Also read as words at 0x20 + 4k, k below 8. |
 | `0x28` | MEMCFG1 | 8 | rw | inferred | As MEMCFG0. |
@@ -513,10 +513,14 @@ entry ends with the route that would settle it. Collected in [docs/open-question
   widget (8) has no vector of its own and shares 58. Unknown: which CAUSE bits assert 59 to 62 and which assert
   63, and whether bit 16 asserts a widget vector or HEART_EXC. Next: the PROM error dump and the diagnostic's
   interrupt-register tests ("Heart Interrupt Registers").
-- **Registers no held code reaches.** SDRAM_MODE, MEM_REF, FC0_TIMER, FC1_TIMER, MLAN_CLK_DIV, MLAN_CTL, COMPARE,
-  WID_STAT, WID_CONTROL, WID_LLP, WID_TARG_FLUSH: only the diagnostic's table names them. TRIGGER (two PROM
-  stores) and SYNC (one kernel read) are reached but their roles are not read. Unknown: roles and reset values.
-  Valid end state unless a held PROM or diagnostic routine that sets them is found.
+- **Registers no held code reaches.** FC0_TIMER, FC1_TIMER, MLAN_CLK_DIV, MLAN_CTL, COMPARE, WID_STAT, WID_CONTROL, WID_LLP,
+  WID_TARG_FLUSH: only the diagnostic's table names them. (SDRAM_MODE and MEM_REF were in this list; the PROM's memory
+  set-up writes both, see the table. The earlier census missed those stores.) A second pass folded constant addresses linearly through the
+  6.5.30 and 6.5-base PROMs, the 6.5-base and 6.5.30 `ide` and the 6.5-base `symmon` for the HEART window (kseg1
+  `0xaff00000`, the `0x900000000ff00000` alias, and the widget-8 window) and found none of these nine; the `ide` base comes from a
+  register the pass cannot follow, so that image is not covered (the `ide` table names them, which is how they are known). TRIGGER
+  (two PROM stores) and SYNC (one kernel read) are reached but their roles are not read. Unknown: roles and reset values. Valid end
+  state unless a routine that sets them is found in code the pass could not follow.
 - **Small-data pointers.** The census follows loads of the widget-block pointers the kernel keeps in its small-data
   area only where the word holds an address inside a configured window; a pointer held in a register across a call
   is not followed. A widget-block access through such a pointer in a routine not listed above would be missed.
