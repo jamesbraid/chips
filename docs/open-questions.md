@@ -213,14 +213,7 @@ Corrections found while tagging. These are not fixed here.
   of the hardware enable register and polls them every tick while bit 27 or 28 is enabled; the mechanism is read in full
   (chips/ioc3/README.md), the reason is in no string the objects carry. Next: a hardware note for the part; Linux and OpenBSD
   have no equivalent.
-- **IOC3: UART byte lane.** *[route: software now; hardware residue: which physical byte lane the part presents; the Linux bridge half needs the uninitialised linux submodule]* IRIX addresses the line-control register at UART+3 (the 16550 index as the byte offset); Linux's 8250
-  glue uses `offset ^ 3` and so reads it at UART+0. Which lane the hardware presents, and whether a bridge byte-swap setting
-  explains the difference, is not settled. Next: the PIO mapping flags the IRIX drivers pass and the Linux bridge setup.
-- **IOC3: Ethernet inter-frame gap table, parallel-port registers, error address words.** *[route: software now]* The three table words `ef_ioc3init`
-  stores to the transmit control register sit in the object's data and are not extracted; the parallel-port DMA words
-  (`0x84` to `0x98`) and super-I/O registers (`0x20151` to `0x2015a`) are touched but their routines are not read; the
-  configuration words `0x40` and `0x44` are read and written by `ioc3_error_handler`, read for accesses only. Next: resolve the
-  data relocations; read `plp_dma`, `plpintr`, `plp_reset` and the error handler.
+- **IOC3: which routine sets the device swap bit for the IOC3 window; parallel-port DMA control bit 29.** *[route: software now for the first, hardware residue for the second]* The byte lane, the inter-frame gap values, the parallel-port DMA roles and the error address decode are settled (docs/coverage-ioc3.md). Open: the IRIX routine that makes the IOC3 window byte-swapped (the Bridge device register bit 13 in the public header), and the meaning of bit 29 of the DMA control word at `0x8c`.
 - **IOC4: why the word at `0x24` is cleared only from revision 79.** *[route: missing source: a published IOC4 erratum; accepted end state otherwise]* The register is a PCI bus speed field (inferred, docs/coverage-ioc4.md). Open: the revision gate and the meaning of values above 1.
 - **IOC4: ATA end-of-transfer area and request list layout.** *[route: software now]* The DMA block roles are settled (docs/coverage-ioc4.md). Open: whether IRIX waits on the 128-byte area, the layout of the list the IRIX builder writes, and the error line's mask.
 - **IOC3 and IOC4: reset values and the per-port tables.** *[route: software now; hardware residue: reset values of registers that no routine reads; the per-port tables are software now]* No routine reads a reset value; the mode-select pin numbers and
