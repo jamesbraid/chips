@@ -269,9 +269,9 @@ specification.
 
 - **`0x310000` bit 4** is used as a revision flag (above); the specification says reserved, read as zero.
 - **`0x304018`** is an address inside the peripheral controller's audio block that the specification's register list
-  does not have. The specification says unused space in a block is aliased to existing registers, which would make
-  this an alias of `0x300018` (codec status input, read-only) and the writes harmless; that is not read from the
-  binary, and the specification states the repeat for the whole block (page 181), not for this offset.
+  does not have. The specification says the registers that exist are repeated to fill each block (pp. 122 and 181), so it
+  aliases `0x300018` (codec status input, read-only) and the writes are discarded: settled in
+  [docs/coverage-mace.md](../../docs/coverage-mace.md).
 - **Calendar-clock user RAM** spacing (above).
 - **PS/2 rev 0 treatment** of status bit 6 (above).
 
@@ -282,7 +282,7 @@ specification.
   timer and audio layouts, the PS/2 port layout (`tx`, `rx`, `control`, `status`) and the calendar clock at
   `isa + 0x20000` agree with the code. **One disagreement:** the header's `struct mace_i2c` puts `config`, `control`
   and `data` at 0, 8 and 0x10 (8-byte members); IRIX and the specification put control and status at `0x10` and data
-  at `0x18`. Linux's `ip32-irq.c` comment lists CRIME slot 7 as "PCI bridge errors", as the specification and IRIX do.
+  at `0x18` (the specification has a fourth word, an alias of the configuration word, at 8; no Linux driver uses the structure, see [docs/coverage-mace.md](../../docs/coverage-mace.md)). Linux's `ip32-irq.c` comment lists CRIME slot 7 as "PCI bridge errors", as the specification and IRIX do.
   Linux `ip32-berr.c` prints and stops on a bus error without reading any MACE register.
 - NetBSD `sys/arch/sgimips/mace/pci_mace.c` and `macereg.h` (trunk, retrieved 2026-10-31): the same names. Its PCI
   error handler reads flags then address, ignores master abort without a message (its comment: "more-or-less normal
@@ -431,6 +431,6 @@ fixed value. Each entry below states the value and what the routine touches, whi
 
 ## Open
 
-See docs/open-questions.md: the compressed IP32 PROM, the Ethernet, serial and video blocks reached by pointer, the
-failure behaviour above, `0x310000` bit 4, `0x304018`, the calendar-clock RAM spacing, the
-Linux I2C offsets and the PS/2 revision 0 handling.
+See docs/open-questions.md and [docs/coverage-mace.md](../../docs/coverage-mace.md): the compressed IP32 PROM, the Ethernet,
+serial and video blocks reached by pointer, the failure behaviour above, `0x310000` bit 4 and the PS/2 revision 0 handling,
+and the calendar-clock RAM stride (base register `0x0e` and size 114 established, stride conflicts with the specification).

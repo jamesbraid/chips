@@ -26,7 +26,7 @@ Ordered software-now list. Earlier steps unlock more entries, and each step name
 7. PROM window bases, constant-folded: the IP27 and I/O-board PROMs, the IP35 PROM window setup, the `hubspc.o` and `nic.o` uses of the second window, and a PROM search for registers above 0x298. Settles registers above 0x298, the IP27 and I/O-board PROM window base, the window-base model and the Bedrock second window.
 8. Xbow: the large crossbar routines in the four PROM images, the interrupt allocation in the node controller and HEART, and the link time-out and second-error routines. Settles the Xbow large routines and interrupt vector assignment. The PXBOW registers stay open until a PXBOW object is held.
 9. CRIME: the other IP32 objects that call `get_crimerev`, the graphics driver's error paths and the write-error handlers. Settles CRIME identification, CRIME error status location, CRIME write-error (software half) and CRIME registers no image reaches.
-10. MACE records and registers: the Ethernet, serial and video attach routines, the audio block at `0x304018`, and the calendar RAM writer and its callers. Settles MACE run-time pointers, `0x304018` and calendar RAM spacing.
+10. MACE records and registers: the Ethernet, serial and video attach routines and the calendar RAM writer's callers (the audio block at `0x304018` is settled in docs/coverage-mace.md). Settles MACE run-time pointers and calendar RAM spacing.
 11. IOC3 and IOC4: resolve the data relocations, read `plp_dma`, `plpintr`, `plp_reset`, `pciio_businfo_bus_speed_get`, `xide_pktDMA_start`, `xide_dma_init`, `xide_intr_clear`, and the IRIX PIO mapping flags. Settles the IOC3 UART lane (software half), the IOC3 tables, the IOC4 word at 0x24, the IOC4 ATA registers and the per-port tables.
 12. HEART: the PROM error dump, the PIU access and widget error tests of the stripped `ide.IP30`, and one search of every held image for the eleven registers the diagnostic table names. Settles HEART refused-access errors and HEART registers no held code reaches.
 13. Router: the callers of task `0xf` in `l1_command.o`. Settles the router scan-chain entry.
@@ -114,17 +114,8 @@ Corrections found while tagging. These are not fixed here.
   (`sio_ti16550.o`, `serialio.o`), the video code (`mvp.o`) and the DP-RAM and parallel context registers take their
   addresses from records. The census has three Ethernet rows (from `ide`) and one video row. Next: constant-fold the
   record fields, or read the attach routines by hand and add the registers to the page.
-- **MACE: revision strap at `0x310000` bit 4.** *[route: missing source: the NetBSD driver is in an uninitialised submodule; the entry also says NetBSD was already read, so drop it if so]* `pckm_attach` sets a `mace_rev` flag from bit 4 of the ring base and
-  reset register, which the specification calls reserved; the PS/2 code treats status bit 6 differently when the flag
-  is 0. Tried: the specification's PS/2 and ISA chapters, Linux and NetBSD (neither reads it). Next: the specification
-  revision history pages (host bridge revision 0 versus 1 notes) and the NetBSD PS/2 driver for the same quirk.
-- **MACE: `0x304018`.** *[route: software now]* The Ethernet driver writes and reads this address as a flush target. It is not in the
-  specification's register list. Next: confirm the block repeat on the peripheral controller's audio block.
-- **MACE: calendar-clock user RAM spacing.** *[route: software now]* `read_dallas_nvram` reads one byte apart from `0x3a0e08` while every
-  other register of the block is 256 bytes apart. Next: read the writer and its callers.
-- **MACE: Linux I2C offsets.** *[route: missing source: the Linux header and driver are in the uninitialised linux submodule]* `struct mace_i2c` in the Linux header puts control and data at 8 and 0x10; IRIX and the
-  specification use `0x10` and `0x18`. Next: the Linux I2C driver that uses the structure, to see which offsets it
-  reaches in practice.
+- **MACE: revision strap at `0x310000` bit 4.** *[route: hardware residue: no public source or specification page names it]* Tried and recorded in docs/coverage-mace.md: the specification's ring base, PS/2 and host bridge revision pages, NetBSD `macekbc.c` and Linux `maceps2.c` (neither reads it). Hypothesis (inferred): it tracks the MACE revision whose PS/2 parity flag is reliable. Test: read `0x310000` and `0x8000c` on a MACE 1.0 and a 2.0 part.
+- **MACE: calendar-clock user RAM stride.** *[route: software now for the callers; hardware residue for the stride]* Base register `0x0e` and size 114 are established (docs/coverage-mace.md). Open: the one-byte stride in `read_dallas_nvram` against the specification's 256 bytes per register, and whether anything calls it (nothing in the IP32 kernel objects does; the stripped diagnostic and monitor were not searched).
 - **Hub, Bedrock, IOC3, IOC4 inventories.** *[route: software now; stale in part: duplicates the Bedrock, IOC3, IOC4 entry]* Censuses not run (stub configs). Next: write each config's
   seeds (see HAIKU-BRIEF.md) and run `retools/tools/chips/run.sh`.
 - **Model of a PROM's window base.** *[route: software now; overlaps the IP27 and I/O-board PROM entry]* A PROM builds its window pointer at run time; the census recovers a
