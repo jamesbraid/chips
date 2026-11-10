@@ -286,9 +286,23 @@ open.
    with bit 8 clear; only one interrupt is outstanding however many errors occur (specification pp. 64 to 65). There
    is one vector field (bits 31:24 of interrupt destination upper) for widget 0 and every link. IRIX writes it in
    `xbow_intr_preset` from `xtalk_intr_vector_get`; the interrupt layer allocates the number at run time, so which
-   number a product uses is **unknown** from `xbow.o`. Route: the interrupt-allocation code for the node controller
-   and for HEART, and any PROM routine that programs `0x30`: not read. Which processor interrupt level the vector
-   reaches belongs to those chips' pages.
+   number a product uses is not in `xbow.o`. The attach routine does fix the request: `xbow_attach` (`xbow.o` of the IP27, IP30
+   and IP35 boot sets: duplicate the device descriptor, `ori` 1 into its flags, name it "Crossbow error", call `xtalk_intr_alloc`,
+   then `xtalk_intr_connect` with `xbow_errintr_handler`; read in full, established) asks for a widget-error interrupt, descriptor
+   flag bit 0. What each processor chip does with that bit is in its own allocator:
+   - IP30 (HEART): `do_heart_intr_alloc` maps flag bit 0 to the vector `51 + ((widget + 7) & 7)`, which for the Crossbow's widget 0 is **58**
+     (established from the two routines; the allocation is for widget 0 because the Crossbow is the widget the call is made for, inferred
+     from the argument being the Crossbow's own vertex). See chips/heart/README.md.
+   - IP27 (Hub): the shared allocator `do_hub_intr_alloc` (`kernel.o` 0x22b8c, 688 bytes, read in full) turns descriptor flag bit 0
+     into the flag word 4 for the level search; with a null descriptor it uses 8 (thread) or 0. Flag word 4 is the one `hubii_eint_init` uses for
+     the II error interrupt, so the request is "first free level of the second block, 64 to 127, on the target processor". The result depends on what
+     took levels first (the hardwired ones in chips/hub/README.md are all above 100 or below 10, and the II error interrupt takes 64): so the
+     Crossbow's number is a run-time level in that block, **inferred** to be 65 on a processor where only the II error took one first,
+     and the vector field carries that level (inferred: the Hub's interrupt level is the packet's data byte).
+   - IP35 (Bedrock): `xbow_attach` makes the same request. The IP35 allocator (`kernel.o` 0x22800; its flag handling at 0x22874 to 0x22888
+     and 0x229ac to 0x229cc read) maps descriptor flag bit 0 to the same flag word 4 and otherwise 8 or 0 (established). The IP35 level search
+     it calls (`intr_heuristic`, 980 bytes here against 572 on IP27) was not compared with the IP27 one, so the level number is **unknown**.
+   Which processor interrupt level the vector reaches belongs to those chips' pages.
 4. **How a processor's 4-byte access reaches a double-word-only register file. (inferred.)** See the width note above.
    Route: the processor-interface censuses of the node controller and HEART.
 5. **What a second error does to the capture and the flags. (unknown.)** The specification says later errors are not
