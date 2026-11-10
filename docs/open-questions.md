@@ -132,10 +132,6 @@ Corrections found while tagging. These are not fixed here.
 - **HEART registers no held code reaches.** *[route: software now; proposed: one search of every held image, then accept as no software dependency]* Eleven registers appear only in the diagnostic's register table (SDRAM mode,
   memory refresh, flow-control timers, MicroLAN divider and control, compare, widget status, control, link layer,
   target flush); TRIGGER and SYNC are reached but unread. Valid end state unless a routine setting them is found.
-- **PIC error interrupt handler: rate limiter and programmed-I/O check.** *[route: software now]* The handler's flow, its fatal and dump masks and the registers `pcibr_error_dump` reads
-  for each status bit are answered (chips/pic/README.md, "Error interrupt service"). Open: the thresholds and revision conditions of the per-bit rate limiter
-  at record +2276, the routine at `pcibr.o` 0x9a4c that bits 11, 15, 34 and 38 call, what `test_and_set_long` does with the dump-guard word at record +2120, and what the
-  record word at +72 is (`pic_attach2` stores a value there at `pic.o` 0x858; the halfword at +116 is the PCI-X mode bit and speed field). Next: read the 0x9a4c routine and the limiter loop in full and trace the +72 value.
 - **PIC revision-1 steps.** *[route: software now]* The direct map is answered (chips/pic/README.md, "Direct map set-up"). Open: what the revision-1-only
   writes (control bit 29 test, request timeout 0x750, enable bits 39 and 9, response buffer bits) fix. Next: the same steps in `xbridge_attach` and the
   response-buffer allocator.
