@@ -122,9 +122,7 @@ Corrections found while tagging. These are not fixed here.
   type bit 2), the vector formula for widget errors. Unknown: the triggers and the cause-to-vector mapping. Tried:
   kernel error handler and probe routines, PROM, monitor decode tables. Next: the stripped diagnostic's PIU access
   and widget error tests, and the PROM error dump. Entries: [chips/heart/README.md](../chips/heart/README.md#open).
-- **HEART registers no held code reaches.** *[route: software now; proposed: one search of every held image, then accept as no software dependency]* Eleven registers appear only in the diagnostic's register table (SDRAM mode,
-  memory refresh, flow-control timers, MicroLAN divider and control, compare, widget status, control, link layer,
-  target flush); TRIGGER and SYNC are reached but unread. Valid end state unless a routine setting them is found.
+- **HEART registers no held code reaches.** *[route: software now, accepted end state]* SDRAM_MODE and MEM_REF are settled (the PROM writes both; chips/heart/README.md table). Nine remain in the diagnostic's register table only (FC0 and FC1 timers, MicroLAN divider and control, compare, widget status, control, link layer, target flush): a linear constant-folding pass over both PROMs, both `ide` builds and the monitor found no access. The one image it cannot cover is `ide`, whose base address arrives in a register; reading its register-test routine by hand would show whether it only reads and writes the table's masks. Valid end state unless that reading, or another image, finds a setter.
 - **PIC revision-1 steps.** *[route: software now]* The direct map is answered (chips/pic/README.md, "Direct map set-up"). Open: what the revision-1-only
   writes (control bit 29 test, request timeout 0x750, enable bits 39 and 9, response buffer bits) fix. Next: the same steps in `xbridge_attach` and the
   response-buffer allocator.
