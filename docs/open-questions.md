@@ -115,11 +115,6 @@ Corrections found while tagging. These are not fixed here.
 - **IP35 reset window.** *[route: software now; hardware residue: item 1, the routing rule, which the linked question says only a hardware observation settles]* The routing rule that returns boot-PROM bytes for uncached memory-space fetches of physical
   0x1fc0xxxx after bank 0 is enabled, and whether any write ends it, are not visible in the PROM. Tried: full read of
   the reset, memory and jump-to-RAM path. Next: see [docs/questions/ip35-reset-window.md](questions/ip35-reset-window.md).
-- **Literal-pool bases (PIC and Bedrock objects): settled by audit.** *[route: closed: the one remaining item, reading gp from the options record, is done per the scanner-fix entry; move the fact to its chip page and delete]* Every object's options record carries its
-  gp (0x7ff0 for `kernel.o`, 0x7800 for the eleven others checked, including `pic.o`), and in each of them the
-  lowest `.lit8` displacement equals minus gp and the pool is exactly covered by the displacements used, so
-  `gp: auto-min` gives the stated base. The constants read this way can be labelled established where the function
-  is read in full. Remaining: the census tool could read the gp from the options record instead of inferring it.
 - **Census scanner faults found by the audit.** *[route: software now; tool work; partly covered by the scanner-fix entry, so rerun to check]* (1) A load or store whose displacement is added at run time through
   a `movz`-selected constant or a loop counter is recorded at the window base or at one iteration's slot
   (`dump_error_spool`, `hub_error_clear`, `part_discovery`); the families they build need their bounds read from the
