@@ -354,6 +354,19 @@ are `0x5408aaa00` (A) and `0x2a0455500` (B), its miscellaneous masks `0x142000aa
 is bits 9, 11, 13, 15, 17, 19, 23, 30, 32, 34; miscellaneous A is bits 1, 3, 5, 7, 21, 26, 28 (established:
 initialised words in the small-data section).
 
+**How `hub_error_init` builds the two error masks (established, `kernel.o` `hub_error_init`, read in full; the pairing is inferred).**
+It runs the same step for each of the node's two processor-interface blocks (window offsets `0x1800000` and `0x1a00000`), and
+tests each side with the words at `+0x40`/`+0x50` (side A) and `+0x48`/`+0x58` (side B): a side counts as present when the AND of
+its two words is nonzero. With both sides present it stores into the A mask (`+0x408`) the B fatal mask OR the A miscellaneous
+mask, and into the B mask (`+0x410`) the A fatal mask OR the B miscellaneous mask, so a fatal error of one CPU side interrupts
+the other side. With only one side present its mask is its own fatal OR its own miscellaneous mask. Bit 24 (memory or directory
+uncorrectable error), which has no A and B pair, is ORed into the first mask the routine actually stores (a local starts at
+`0x1000000` and is cleared after the first store, `hub_error_init` `0x17bd4`, `0x17e60`, `0x17e78`): that is the A mask of the first
+processor-interface block that has side A present, else its B mask, else the same choice in the second block. So exactly one
+mask in the node enables bit 24, which keeps the error from interrupting two CPUs at once (the reason is the structure; no
+string states it, inferred). Afterwards it clears bit 21 in each A mask and bit 20 in each B mask (`0xffdf....` and
+`0xffef....` ANDs) and zeroes the `+0x448` and `+0x468` families.
+
 **II CRB entry A** (printed by `dump_crb`): bit 0 I/O write operation; bit 1 valid; 39:2 network address (`<< 2`);
 44:40 transaction number of the Crosstalk request; 48:45 source id; 49 error set in the incoming Crosstalk request;
 50 entry has been marked; 51 uncorrectable error on incoming data from the network; 54:52 error code; 55 entry has an
