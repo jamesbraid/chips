@@ -98,7 +98,32 @@ The destination address is a **local-brick-style L1 address**: type 0 in bits 31
 in bits 17:12 and a task in bits 4:0, which is the public `l1.h` layout (agreement; the header gives type 0 as the L1 and tasks
 1 to 6). So the packed position is a bay in its low 6 bits and a rack number, held as a two-field decimal-style code, in bits
 11:6; the +1 makes the rack one-based. Inferred: the role (rack and bay) comes from the match with the public layout, the
-arithmetic is established. The task value `0xf` is **not** in the public header (it names tasks 1 to 6 only): unknown.
+arithmetic is established. The task value `0xf` is **not** in the public header (it names tasks 1 to 6 only); the L1
+firmware answers it (next section).
+
+### The L1 end of the scan command: task 15 (established, firmware 1.44.0)
+
+The L1 firmware image shipped with IRIX 6.5.30 (version 1.44.0, build stamp 20060717182038, ColdFire code loaded at
+`0xffe00000`) registers a local endpoint for **task 15 (`0xf`)** at `0xffe71842`, in the routine that also creates a queue
+named `SCAN_QUE` and a task named `SCAN_TSK` (entry `0xffe718cc`). So the kernel's `| 0xf` is a task number in the L1's table
+of local tasks (the table `packet_deliver` indexes for tasks 1 to 24); the other local tasks registered by the image are 1 to 6,
+10 to 12 and 14 to 20, each from its own init routine. The task's loop (`0xffe718cc` to `0xffe71bb4`):
+
+- Takes one packet at a time from `SCAN_QUE`. A packet must carry exactly one argument (byte at packet +0x20 equal to 1), of
+  argument type 1 (low three bits of the byte at +0x24); otherwise it logs "Invalid Scan packet received" and drops it with
+  no reply. The argument is the data block, its length is the halfword at +0x26.
+- Requires bit 31 of the block's first word to be set. If it is clear the task logs `Boundary scan "si" functions disabled
+  in this L1 image!` and does not process the request; the reply path is not taken. (When the one-time initialisation flag at `0x30000044` is
+  clear it instead logs "Error initializing scan", clears bits 15:8 of that first word, which is the field the kernel reads as
+  the reply status, and again sends no reply.)
+- When a mode word at `0x3000007c` equals 2 it byte-swaps the first four words (the 16-byte request header) of the block in
+  place before and after processing; the routine that does the work is at `0xffe7296c` (not read).
+- Replies through `response_send` with one argument of type 1, a pointer to the same block and the same length, so the reply
+  payload is the request block modified in place. Failure to send logs "Error sending Scan packet response".
+
+That grades the role of task 15 as **established**: it is a scan service, named so by its own queue and task strings and by the
+message text that calls the function set boundary scan. The data format beyond the bit 31 flag and the header swap, what
+`0xffe7296c` shifts and into which chain, and how the kernel's 197-bit command maps to it are **unknown**.
 
 ## Sending the command: `simp_process_scancmd` and `scancmd_to_irtr` (established)
 
@@ -186,5 +211,5 @@ Inferred from strings only; the image's code was not disassembled, and whether i
 
 ## Open
 
-See [../../docs/open-questions.md](../../docs/open-questions.md): the meaning of the selector, the L1 task `0xf`, the scan-chain
-state codes, and the L2 controller.
+See [../../docs/open-questions.md](../../docs/open-questions.md): the meaning of the selector, the scan-chain
+state codes, the work done at L1 `0xffe7296c`, and the L2 controller.

@@ -183,13 +183,10 @@ Corrections found while tagging. These are not fixed here.
   swap and copy routines, and a displacement scan of all 702 member objects. Next: the PROM, diagnostic and monitor
   images, an X server module, and the public CRIME frame-buffer drivers.
 - **Router scan-chain tunnel (IP35).** *[route: software now]* `read_rr_reg` asks the L1 to shift 197 bits through the router chain and keeps 128 of
-  them; established: the command layout, the bit reversal, the iRouter framing and the address arithmetic
-  (chips/scan/README.md). Unknown: which router state the selector `2*(port-1)` and `2*(port-1)+1` names, what the 128 bits
-  hold, the L1 task value `0xf` that the scan command is addressed to (the public header names tasks 1 to 6), what the `state`
-  values 0, 1 and 16 stand for, and whether the router's JTAG controller registers (public `RR_LB_TO_L2`, `RR_L2_TO_LB`) are the
-  chip side of this path. Tried: the held kernel, the `jtagio.a` and `irouter.o` objects, the `l1_command.o` task census, the public
-  `l1.h` and `router.h`. Next: the L1 command-path callers of task `0xf` in `l1_command.o`, and any diagnostic or monitor image that
-  names the scan operations (none found in the IP35 boot set).
+  them; established: the command layout, the bit reversal, the iRouter framing, the address arithmetic and the L1 end (task `0xf` is the firmware's scan service,
+  chips/scan/README.md). Unknown: which router state the selector `2*(port-1)` and `2*(port-1)+1` names, what the 128 bits
+  hold, what the `state` values 0, 1 and 16 stand for, what the L1 routine at `0xffe7296c` shifts into which chain, and whether the router's JTAG controller registers (public `RR_LB_TO_L2`, `RR_L2_TO_LB`) are the
+  chip side of this path. Next: read the L1 routine at `0xffe7296c` and its callees in the 1.44.0 image.
 - **DM8 board contents: sub-device ID, EEPROM image, part numbers.** *[route: missing source: a published `lspci -vv` or EEPROM dump of a DM8, or an SGI parts list; no shipped file holds them]* `mad_create_subsys` (`mad_dd.o` `0x1e4`, 560 bytes) tests config `0x2e` against `0x3630` and
   `mad_set_eeprom` (`mad_dd.o` `0x2f54`, 280 bytes) copies a 19-byte EEPROM image into the controller, but the DM8's own values are not in any held file. Read: the code, the
   probe `1412:1724`, the SGI note naming the controller. Unknown: the real sub-vendor and sub-device values, the EEPROM bytes,
