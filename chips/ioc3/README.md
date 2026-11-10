@@ -176,8 +176,9 @@ each) and builds port B's pointers from port A's: the register block moves from 
   of the requested count and 4095 at block +0x14.
 - **Shadow**: `ioc3_query_DCD` and `ioc3_query_CTS` read block +0x18 (the shadow); `set_DTRRTS` (returns 0 or -1) ORs bits into it and writes UART register 4. The
   bit positions are inferred from the routine names.
-- **Mode select**: `ioc3_set_proto` (`0x2f00`, returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin number being a byte of a static
-  per-port table (not read). Inferred: transceiver select.
+- **Mode select**: `ioc3_set_proto` (returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin number being the byte at +0x20 of the port's configuration record (`ioc3_set_proto` is at `0x2f54` in the IP35 6.5.30
+  `sio_ioc3.o`; the record pointer is at port +0x70). The records are the two 0x24-byte elements at the start of the object's `.data`
+  and the pin byte is **7** for element 0 and **6** for element 1 (established as data; that element 0 is port A is inferred from order). Inferred: transceiver select.
 - **UART registers**: the code uses the 16550 register index as the byte offset from the UART base, so register 3 (line
   control, DLAB in bit 7) is at `0x2017b`, 0 and 1 (divisor low and high when DLAB is set) at `0x20178` and `0x20179`, 2 at
   `0x2017a`, 4 (modem control) at `0x2017c` and 5 (line status) at `0x2017d`. `set_baud_ti` (`0x6cc`, returns 0 or 1) also stores a value it

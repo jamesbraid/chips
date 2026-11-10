@@ -102,7 +102,11 @@ the Linux driver's comments and was not independently derived from the IRIX requ
 `ioc4_set_proto` (`sio_ioc4.o` `0x33c4`, read in full) writes 0 or 1 to a general-purpose pin register whose index is a
 byte kept in the port's record. The Linux serial driver writes 0 for RS-232 and 1 for RS-422 to pins 4, 5, 6 and 7 for
 ports 0 to 3; the direction bits for those pins sit at `0x10`, `0x20`, `0x40` and `0x80` in the pin-direction field. The
-IRIX per-port byte is static data and was not extracted, so the pin numbers on the IRIX side are **inferred** equal.
+IRIX per-port byte is the byte at +0x24 of the port's configuration record (`ioc4_set_proto`: `lbu` of +0x24 from the record pointer at
+port +0x68, shifted left 2 and added to the register base plus 0x40). The records are the four 0x28-byte elements at the start of the
+`.data` of `sio_ioc4.o` (the attach routine stores the address of `.data` in the first port's +0x68 at 0xe20 and the object compares record pointers with
+`.data`, `.data`+0x28 and `.data`+0x50). Extracted from the object's `.data` bytes (IP35 6.5.30): the pin byte is **4, 5, 6 and 7** for
+elements 0 to 3 (established as data; that element n belongs to port n is inferred from the stride), the same pins the Linux driver uses.
 
 ### The byte bus, the 8-bit window (public driver only)
 
@@ -120,5 +124,5 @@ depends on it.
 |---|---|---|
 | Reset values of every register | none from software: no routine reads one before writing it | read all of `0x0` to `0x160` immediately after a PCI reset, before any driver runs |
 | Why `0x24` is gated on revision 79 | a published IOC4 erratum | see above |
-| Per-port pin and record tables (`ioc4_set_proto` pin byte, serial configuration records) | extract the data section through its relocations | none needed once extracted |
+| Per-port record words other than the pin byte (`sio_ioc4.o` `.data`, 0x28 bytes each) | read each word against its users in `sio_ioc4.o` | none needed |
 | `ioc4_error_handler`, `ioc4_intr`, `ioc4_intrd` | read in full: software work, not done here | n/a |
