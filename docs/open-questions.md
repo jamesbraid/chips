@@ -17,7 +17,7 @@ Counts for the 55 entries:
 
 Ordered software-now list. Earlier steps unlock more entries, and each step names the entries it settles.
 
-1. Unpack the IP32 PROM: read the `sloader` decompression routine by hand and unpack `firmware`. Unlocks MACE failure, CRIME registers no image reaches, and CRIME transfer-engine tile formats.
+1. Add the IP32 PROM to the census: the `firmware` segment is plain code at `0x81000000` (chips/mace/README.md), so no unpacking is needed; give it an image entry. Unlocks MACE failure, CRIME registers no image reaches, and CRIME transfer-engine tile formats.
 2. Hub error handlers, read in full: `hub_ioerror_handler`, `handle_uncac_buserr`, `hubni_error_handler`, `log_md_errors`, `show_hub_md_err`, `process_error_spool`, `huberror_process_stack_entry`, `hubpi_spool_get_next`. Settles Hub PI write-buffer errors, Hub directory error labels, Bedrock refused widget read, Bedrock spool entry layout and Bedrock protected-region replies.
 3. Bedrock block indexing and interrupts: `hub_error_init`, `hub_error_clear`, `intr_connect_level`, `intr_heuristic`, plus the mask code that ORs bit 24. Settles Bedrock block boundaries, Bedrock interrupt numbers and the software half of Bedrock pending bits 25 to 34.
 4. Hub registers with no named role: `per_hub_init`, `hub_ifdr_fix_value`, `hub_piomap_alloc`, `hub_piomap_free`, the unnamed routine at `0xc00000000003b440` (it stores `0x400160`), `mlreset`, `hub_error_devenable`. Settles Hub registers with no named role.

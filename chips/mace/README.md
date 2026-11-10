@@ -431,7 +431,7 @@ fixed value. Each entry below states the value and what the routine touches, whi
 
 ## IP32 PROM image layout (established, `usr/cpu/firmware/ip32prom.image` of IRIX 6.5.30, 431872 bytes)
 
-The earlier belief that the segment bodies are compressed is wrong for `firmware`, the segment that carries almost all the code. The
+The `firmware` segment is not compressed. It is the segment that carries almost all the code. The
 file starts with an eight-byte `PROM` header and holds five `SHDR` records at `0x108` (`sloader`), `0x4108` (`env`), `0x4508`
 (`post1`), `0x9308` (`firmware`) and `0x69308` (`version`); the file is `0x69700` bytes long. Every record has the same layout: the
 word `SHDR`, a length word at +4 (`0x4000`, `0x400`, `0x4d44`, `0x5fffc`, `0x388`), three type bytes at +8, the segment name at +0xc,
@@ -452,6 +452,6 @@ length and "branch over SHDR" structure).
 
 ## Open
 
-See docs/open-questions.md and [docs/coverage-mace.md](../../docs/coverage-mace.md): the compressed IP32 PROM, the Ethernet,
+See docs/open-questions.md and [docs/coverage-mace.md](../../docs/coverage-mace.md): the IP32 PROM census entry, the Ethernet,
 serial and video blocks reached by pointer, the failure behaviour above, `0x310000` bit 4 and the PS/2 revision 0 handling,
 and the calendar-clock RAM stride (base register `0x0e` and size 114 established, stride conflicts with the specification).
