@@ -455,6 +455,6 @@ gap values, the parallel-port DMA registers `0x80` to `0x98` and the error addre
 
 - **Why interrupts are polled while the top interrupt bits are enabled** (`ioc3_write_ireg`): the mechanism is read in full; the
   reason is in no string or comment the binary carries. Route: a hardware note.
-- **Which routine sets the device swap bit** for the IOC3 window, and `0x8c` bit 29 (parallel-port DMA control).
+- **`0x8c` bit 29** (parallel-port DMA control). The device swap bit question is answered in docs/coverage-ioc3.md: IRIX clears it for the IOC3 window; the remaining question there is why the byte lanes mirror Linux's.
 - **Keyboard and mouse bit meanings** in `0x9c` and `0xa0` to `0xac`: from the routines' masks only.
 - **Per-slot subdevice masks**: which board string selects `0x91`.

@@ -56,9 +56,6 @@ Corrections found while tagging. These are not fixed here.
 - **Bridge and XBridge: the IP27 and I/O-board PROMs.** *[route: software now]* The window base is built at run time and neither PROM has
   symbols, so the census holds no access from them. Next: constant-fold the PROM's widget-window setup, or read the
   I/O-board PROM's bridge probe by hand.
-- **Bridge and XBridge: device register bits.** *[route: software now]* Only the pair `0x180000` (`pcibr_endian_set`) and the IP30 PROM's
-  `0x1004` are read; the other bits the flags routines pass are derived from their callers at run time. Next:
-  `pcibr_device_flags_set`'s callers and `pcibr_slot_addr_space_init`.
 - **TIOCP: which product carries one.** *[route: missing source: a published hardware overview of the Altix-class generation]* The register layout, the identification and the two registers the shared code says the chip lacks are settled
   (chips/tiocp/README.md, docs/coverage-tiocp.md). Open: only the product list. No TIO code is held, so no software route exists.
 - **Xbow: the PROMs' large crossbar routines.** *[route: software now]* The census seeds only the small routines it could tie to the
@@ -185,7 +182,7 @@ Corrections found while tagging. These are not fixed here.
   of the hardware enable register and polls them every tick while bit 27 or 28 is enabled; the mechanism is read in full
   (chips/ioc3/README.md), the reason is in no string the objects carry. Next: a hardware note for the part; Linux and OpenBSD
   have no equivalent.
-- **IOC3: which routine sets the device swap bit for the IOC3 window; parallel-port DMA control bit 29.** *[route: software now for the first, hardware residue for the second]* The byte lane, the inter-frame gap values, the parallel-port DMA roles and the error address decode are settled (docs/coverage-ioc3.md). Open: the IRIX routine that makes the IOC3 window byte-swapped (the Bridge device register bit 13 in the public header), and the meaning of bit 29 of the DMA control word at `0x8c`.
+- **IOC3: why the device swap bit is clear for the IOC3 window while IRIX and Linux offsets mirror each other; parallel-port DMA control bit 29.** *[route: software now for the first (PROM and control-register swap bits), hardware residue for the second]* The routine that writes the device swap bit is identified and the IOC3 attach asks for it clear (docs/coverage-ioc3.md). Open: where the byte mirror comes from if bit 13 is clear (the widget control swap bits 23:22 are the candidate), and the meaning of bit 29 of the DMA control word at `0x8c`. Next: find the control-register writes in the PROMs and in the large-window state code of the kernel.
 - **IOC4: why the word at `0x24` is cleared only from revision 79.** *[route: missing source: a published IOC4 erratum; accepted end state otherwise]* The register is a PCI bus speed field (inferred, docs/coverage-ioc4.md). Open: the revision gate and the meaning of values above 1.
 - **IOC4: ATA end-of-transfer area and request list layout.** *[route: software now]* The DMA block roles are settled (docs/coverage-ioc4.md). Open: whether IRIX waits on the 128-byte area, the layout of the list the IRIX builder writes, and the error line's mask.
 - **IOC3 and IOC4: reset values and the per-port tables.** *[route: software now; hardware residue: reset values of registers that no routine reads; the per-port tables are software now]* No routine reads a reset value; the mode-select pin numbers and

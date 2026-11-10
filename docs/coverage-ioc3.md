@@ -37,11 +37,26 @@ in Linux, and the parallel-port control and status registers come in the opposit
 - **So IRIX is looking at the same bytes through a swapped path: inferred.** IRIX uses the natural order, which a
   big-endian CPU gets only if the path swaps bytes within each 32-bit word. The Bridge-family device register has such a
   bit (the public Linux header calls it the device swap bit, `0x2000`, distinct from the two DMA swap bits at
-  `0x180000`). The IP35 `pcibr.o` tests the same constant in its flag code (`pcibr_write_gather_flush`,
-  `pcibr_piospace_free`, `pcibr_dmamap_alloc`), but those routines were not read to the point of tying the bit to the
-  IOC3 window, and the IOC3 attach calls the PIO address routine with flags 0. **Unknown:** which routine sets the swap
-  for the IOC3 window and whether the PROM or the kernel does. Test: read the IOC3 slot's Bridge device register on a
-  running IRIX system and check bit 13.
+  `0x180000`).
+- **Which routine sets that bit, and what the IOC3 asks of it: established (read in full, IP27 and IP35 `pcibr.o`).**
+  Bit 13 of a slot's device register is written by one routine only: the generic address-mapping routine that
+  `pcibr_piotrans_addr` and the map allocator reach (`IP27boot/pcibr.o` 0x1004, `IP35boot/pcibr.o` 0x1250; neither
+  carries a symbol, both sit between `pcibr_write_gather_flush` and `pcibr_piomap_alloc`). When a request lands in one of
+  the device windows (spaces 8 to 13) it rebuilds the register as: keep the old value above bit 12, clear bit 12 and
+  bit 13 together, set bit 12 (I/O versus memory select, in the Linux header's wording) unless the space is the large
+  window (space 2), put the window offset in bits 11:0, and finally set bit 13 if bit 12 of the caller's flag word is
+  set and clear it otherwise. The IOC3 attach (`IP35boot/ioc3.o` 0x3bc and 0x3f8) maps spaces 7 and 8 (the device window is space 8) with flag word 0, so
+  the routine clears bit 13 for the IOC3 window; no other routine in either kernel, including the bit-by-bit device
+  register routines `pcibr_device_flags_set`, `pcibr_priority_bits_set` and `pcibr_endian_set` (see
+  chips/bridge/README.md), writes it. A request with flag bit 12 clear also refuses to share a device window whose shadow
+  has bit 13 set, so the two kinds of mapping never mix in one slot.
+- **Consequence for the swapped-path inference above: the IRIX kernel itself does not turn the device swap bit on for the
+  IOC3.** What is still unknown is why IRIX's byte offsets are the exclusive-or-3 mirror of Linux's if the swap bit is
+  clear in both. Candidates (inferred, not read): the PROM leaves another swap path on (the widget control swap bits 23
+  and 22 that the Linux probe clears), or the IP27/IP35 hardware presents big-endian CPU accesses to the little-endian
+  PCI side with the byte lanes already mirrored, so the `^ 3` is Linux compensating for something its own probe changed.
+  Test: on a running IRIX system read the IOC3 slot's device register (bit 13) and the bridge control register
+  (bits 23:22); on a stock PROM read both before IRIX loads.
 
 **Consequence for a model.** The hardware presents the 16550 and PC parallel-port registers at natural PCI byte
 addresses base + *n*. A model that wants both guests to work must either swap bytes within each word for the large
@@ -112,7 +127,7 @@ for the polling. Route: a published hardware note. Valid end state otherwise.
 
 | item | route | discriminating test |
 |---|---|---|
-| Which routine sets the device swap bit for the IOC3 window | read `pcibr_piomap_alloc` and the callers of `pcibr_device_flags_set` | read the Bridge device register bit 13 |
+| Why the device swap bit is clear for the IOC3 window yet IRIX and Linux offsets mirror each other | the routine is identified (above); the remaining path is the widget control swap bits, set by the PROM or by the large-window state | read the device register bit 13 and the control register bits 23:22 on running IRIX and before it loads |
 | `0x8c` bit 29 and the exact meaning of bit 30 | silicon, or a published IOC3 data sheet | set bit 29 alone and observe the transfer |
 | Reset values | no routine reads one | read everything after a PCI reset |
 | Requester numbers 5 to 7 and 13 to 15 | silicon only | provoke each master's error and read config `0x40` |
