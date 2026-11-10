@@ -89,9 +89,16 @@ that IRIX means the same), then move bytes one at a time at the
   register and read the data in byte lane 7 (`(reg << 8) + 7`). IRIX steps one byte. If the register file really is at
   256-byte spacing, the IRIX loop reads register `0x0e` repeatedly (every address in its 256-byte slot decodes to it) and
   returns the same value for every index. Callers: no object or archive member of the IP32 boot set has an undefined
-  reference to either routine (`nm` over every `.o` and every archive member). The stripped diagnostic and monitor images
-  were not searched. If nothing calls them the routines are unused and the conflict has no consequence for the kernel:
-  **inferred**, not shown.
+  reference to either routine (`nm` over every `.o` and every archive member), and `kernel.o` itself has no call
+  relocation to either one (every relocation in both the 6.5-base and 6.5.30 IP32 `kernel.o` checked: the only references to the two
+  symbols are in the debug sections). The stripped diagnostic (`ide`, IP32, 6.5-base) and monitor (`symmon`, IP32, 6.5-base) were
+  searched for any address built from the upper half `0xbf3a` and a lower half in `0x0e00` to `0xffff` within 24 instructions
+  (a scan of the code for `lui` followed by an add, or, load or store using the same register). The diagnostic forms only
+  `0xbf3a0007` to `0xbf3a0c00`, `0xbf3a4a00` and `0xbf3a4b00`, the monitor only `0xbf3a4807`, `0xbf3a4a07` and `0xbf3a4b07`. Neither forms an address
+  in `0xbf3a0e08` to `0xbf3a0e79`, the span the one-byte-stride loop covers. So no held IRIX code calls the two routines
+  (**inferred**: the scan does not follow an address passed in a register from a caller or built across more than 24
+  instructions, and the compressed IP32 PROM, which is not unpacked here, is not covered). The routines are unused
+  in the shipped software and the stride conflict has no consequence for it.
 - Test that settles the hardware side: write distinct bytes to user RAM registers 14 and 15 through the lane-7 addresses
   `0x3a0e07` and `0x3a0f07`, then read `0x3a0e08` through `0x3a0e0f` and `0x3a0f00`; a slot that aliases every byte
   address returns the same value everywhere.
