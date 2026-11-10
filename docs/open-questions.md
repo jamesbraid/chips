@@ -170,14 +170,6 @@ Corrections found while tagging. These are not fixed here.
 - **Harness limits.** *[route: software now; tool work; proposed: map the object's data by gp in the harness]* `retools/tools/chips/run_routine.py` replaces calls with `v0 = 0` and has no global data, so a routine
   that reads a table by gp (`pcireg_int_ate_set`, `pcireg_force_always_set`, `pcireg_intr_addr_vect_set`) ends in
   an unmapped read; the routines that touch only the chip record run to completion.
-- **Scanner fixes after the first audit.** *[route: software now; tool work; a status note with one open item (large no-return code spans), so it belongs in the tool notes]* Since that audit the scan reads gp from each object's options record
-  (the auto-min rule is a flagged fallback and no object needed it), alternatives chosen by a conditional move
-  are kept as separate conditional sites, loop counters are widened to an indexed site instead of one site per
-  pass, and routines are cut by control flow (after a return that nothing branches to, and at call targets)
-  rather than by symbol or by every return. Fixed since: the PROM's non-PIC 32-bit stores are no longer
-  labelled `pic`, and routines following an unconditional branch or reached only as a delay-slot duplicate are
-  cut or merged by control flow. Remaining: large code spans with no return
-  (PROM data disassembled as code) stay single routines.
 - **IOC3: why interrupts are polled while the top interrupt bits are enabled.** *[route: missing source: a published IOC3 hardware note, not held]* `ioc3_write_ireg` keeps interrupt bits 22:0 out
   of the hardware enable register and polls them every tick while bit 27 or 28 is enabled; the mechanism is read in full
   (chips/ioc3/README.md), the reason is in no string the objects carry. Next: a hardware note for the part; Linux and OpenBSD

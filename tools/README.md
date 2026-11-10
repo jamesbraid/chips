@@ -47,3 +47,14 @@ constant plus an or-ed offset (`configs/l1.json`) and is off by default.
 
 `retools/tools/mips_shim.py` is a unicorn harness for running a shipped routine over chosen inputs (see
 `retools/tools/test_mips_shim.py` for the pattern).
+
+## Scanner status
+
+The scan reads the global pointer of each object from its options record (the lowest-literal-displacement rule is a
+flagged fallback; no object checked needed it). Alternatives chosen by a conditional move stay separate conditional
+sites. Loop counters are widened to one indexed site rather than one site per pass. Routines are cut by control flow:
+after a return that nothing branches to, and at call targets, not by symbol and not at every return. A PROM's non-PIC
+32-bit stores are no longer labelled `pic`, and a routine that follows an unconditional branch, or is reached only as a
+duplicated delay-slot target, is cut or merged by control flow. Checked against `retools/tools/chips/scan.py`
+(`gp_from_options`, the `movz`/`movn` handling and the branch-target cut). Remaining limit: a large code span with no
+return (PROM data disassembled as code) stays one routine.
