@@ -97,7 +97,7 @@ that IRIX means the same), then move bytes one at a time at the
   `0xbf3a0007` to `0xbf3a0c00`, `0xbf3a4a00` and `0xbf3a4b00`, the monitor only `0xbf3a4807`, `0xbf3a4a07` and `0xbf3a4b07`. Neither forms an address
   in `0xbf3a0e08` to `0xbf3a0e79`, the span the one-byte-stride loop covers. So no held IRIX code calls the two routines
   (**inferred**: the scan does not follow an address passed in a register from a caller or built across more than 24
-  instructions, and the compressed IP32 PROM, which is not unpacked here, is not covered). The routines are unused
+  instructions, and the IP32 PROM, whose firmware segment is plain code at `0x81000000` but is not yet in the census, is not covered). The routines are unused
   in the shipped software and the stride conflict has no consequence for it.
 - Test that settles the hardware side: write distinct bytes to user RAM registers 14 and 15 through the lane-7 addresses
   `0x3a0e07` and `0x3a0f07`, then read `0x3a0e08` through `0x3a0e0f` and `0x3a0f00`; a slot that aliases every byte
@@ -111,4 +111,4 @@ that IRIX means the same), then move bytes one at a time at the
 | Linux I2C offsets | closed, above |
 | revision strap | unchanged, test given |
 | calendar-clock user RAM spacing | base register and size established, stride conflict recorded with its test |
-| the compressed PROM, run-time pointer blocks, failure behaviour | not touched: the PROM unpack and the Ethernet, serial and video attach routines are separate software work |
+| the IP32 PROM, run-time pointer blocks, failure behaviour | not touched: the PROM census entry and the Ethernet, serial and video attach routines are separate software work |
