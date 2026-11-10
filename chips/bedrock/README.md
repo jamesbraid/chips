@@ -448,6 +448,143 @@ Hub is the previous node controller, a sibling, so agreement is a hypothesis che
   Bedrock kernel only writes them, so whether a read clears is unknown for Bedrock.
 - **Not comparable.** The Hub headers have no Bedrock-style second PI register file.
 
+## Register walk of the crash dump (`dump_hub_registers`, IP35 kernel)
+
+Image: `6.5.30/unix.IP35` (13,104,040 bytes, sha256 `412a1aae553a348376bc30cacbaf65044de1745d30222f02ec5f88297dcb1dfa`). The
+other linked 6.5.30 IP35 kernel in the workspace (14,238,624 bytes, sha256 `8404e226a649c622ebefe452a234566d74cbb81e802d793f22acdcbab518b9a8`)
+carries the same table byte for byte, with the routine at `0xc0000000002e70dc`.
+
+**What it reads.** The crash dump driver prints "Dumping hub information ..." and calls `dump_hub_data`
+(`0xc0000000002c90e4`). That routine tests the tunable `dump_hub_info` (a word at `0xc00000000163c64c`, initial value 2):
+above 0 it calls `dump_hub_registers` (`0xc0000000002c956c`, 944 bytes, read in full); 2 or more also calls
+`dump_hub_dir_mem` (`0xc0000000002c9144`). The next word, `dump_level` (`0xc00000000163c650`), starts at 4. Established.
+
+`dump_hub_registers` walks a table of 67 `{first, last}` offset pairs (16 bytes each, `last` inclusive, ended by a pair
+whose first word is negative) at `0xc000000001597388`, in 8-byte steps: 521 registers. For each node in the node list it
+forms `0x9200000001800000` (the pool word at gp+0x8f0) plus the node's NASID shifted left 33 plus the offset. That is the
+node-named form of the 8 MB register window (bit 23 set); the local alias is `0x9200000001000000`. Every read is a plain
+64-bit `ld` with no fault guard and no value check. The value goes into slot `(offset >> 3) & 0x7ff` of a 16 KB staging
+buffer on the stack, pre-filled with `0x5555555555555555`. The buffer goes to the block writer
+(`compress_and_write_block`, `0xc0000000002c8f6c`) whenever the 16 KB page number or offset bits 23:20 change, so the dump
+holds a sparse image of the window. The node count is the word at gp+0x2824, plus 4 when a word at +0x184 of a node
+structure equals `0x5045626b`; the NASIDs come from a halfword table at gp-0x1cc8. Established for the loop; what the
+`0x5045626b` word marks is unknown. The table is the same for every node and covers the second processor interface at
+`+0x200000`.
+
+The 67 pairs, as offsets from the window base. Names are from the public SN1 register headers (Linux v2.5.40 `hubpi.h`,
+`hubio.h`, `hublb.h`, `hubni.h`, `hubxb.h`, `hubmd.h`); the second interface repeats the first interface's names:
+
+| # | offsets | count | block | public names |
+|---|---|---:|---|---|
+| 1 | `0x0` to `0x58` | 12 | PI interface 0 | PI_CPU_PROTECT to PI_CPU_ENABLE_B |
+| 2 | `0x98` to `0xc0` | 6 | PI interface 0 | PI_INT_PEND0 to PI_INT_MASK1_B |
+| 3 | `0xd8` to `0xf0` | 4 | PI interface 0 | PI_CC_PEND_CLR_A to PI_INT_PEND1_REMAP |
+| 4 | `0x108` to `0x160` | 12 | PI interface 0 | PI_RT_COMPARE_A to PI_DEBUG_SEL |
+| 5 | `0x300` to `0x348` | 10 | PI interface 0 | PI_GFX_PAGE_A to PI_GFX_INT_CMP_B |
+| 6 | `0x3f8` to `0x430` | 8 | PI interface 0 | PI_ERR_INT_PEND_WR to PI_ERR_STATUS0_A |
+| 7 | `0x440` | 1 | PI interface 0 | PI_ERR_STATUS1_A |
+| 8 | `0x450` | 1 | PI interface 0 | PI_ERR_STATUS0_B |
+| 9 | `0x460` | 1 | PI interface 0 | PI_ERR_STATUS1_B |
+| 10 | `0x470` to `0x4d8` | 14 | PI interface 0 | PI_SPOOL_CMP_A to PI_ERR_INJECT |
+| 11 | `0x10060` | 1 | PI interface 0 | PI_REPLY_LEVEL |
+| 12 | `0x20068` | 1 | PI interface 0 | PI_GFX_CREDIT_MODE |
+| 13 | `0x30100` | 1 | PI interface 0 | PI_RT_COUNTER |
+| 14 | `0x40200` to `0x40210` | 3 | PI interface 0 | PI_PERF_CNTL_A to PI_PERF_CNTR1_A |
+| 15 | `0x50200` to `0x50210` | 3 | PI interface 0 | PI_PERF_CNTL_B to PI_PERF_CNTR1_B |
+| 16 | `0x200000` to `0x200058` | 12 | PI interface 1 | PI_CPU_PROTECT to PI_CPU_ENABLE_B |
+| 17 | `0x200098` to `0x2000c0` | 6 | PI interface 1 | PI_INT_PEND0 to PI_INT_MASK1_B |
+| 18 | `0x2000d8` to `0x2000f0` | 4 | PI interface 1 | PI_CC_PEND_CLR_A to PI_INT_PEND1_REMAP |
+| 19 | `0x200108` to `0x200160` | 12 | PI interface 1 | PI_RT_COMPARE_A to PI_DEBUG_SEL |
+| 20 | `0x200300` to `0x200348` | 10 | PI interface 1 | PI_GFX_PAGE_A to PI_GFX_INT_CMP_B |
+| 21 | `0x2003f8` to `0x200430` | 8 | PI interface 1 | PI_ERR_INT_PEND_WR to PI_ERR_STATUS0_A |
+| 22 | `0x200440` | 1 | PI interface 1 | PI_ERR_STATUS1_A |
+| 23 | `0x200450` | 1 | PI interface 1 | PI_ERR_STATUS0_B |
+| 24 | `0x200460` | 1 | PI interface 1 | PI_ERR_STATUS1_B |
+| 25 | `0x200470` to `0x2004d8` | 14 | PI interface 1 | PI_SPOOL_CMP_A to PI_ERR_INJECT |
+| 26 | `0x210060` | 1 | PI interface 1 | PI_REPLY_LEVEL |
+| 27 | `0x220068` | 1 | PI interface 1 | PI_GFX_CREDIT_MODE |
+| 28 | `0x230100` | 1 | PI interface 1 | PI_RT_COUNTER |
+| 29 | `0x240200` to `0x240210` | 3 | PI interface 1 | PI_PERF_CNTL_A to PI_PERF_CNTR1_A |
+| 30 | `0x250200` to `0x250210` | 3 | PI interface 1 | PI_PERF_CNTL_B to PI_PERF_CNTR1_B |
+| 31 | `0x400000` to `0x400008` | 2 | I/O | IIO_WID to IIO_WSTAT |
+| 32 | `0x400020` | 1 | I/O | IIO_WCR |
+| 33 | `0x400100` to `0x400228` | 38 | I/O | IIO_ILAPR to IIO_IIEPH2 |
+| 34 | `0x400300` to `0x400340` | 9 | I/O | IIO_IPCA to IIO_IPRTE7 |
+| 35 | `0x400388` to `0x4003c0` | 8 | I/O | IIO_IPDR to IIO_ICTP |
+| 36 | `0x400400` to `0x4005d8` | 60 | I/O | IIO_ICRB0_A to IIO_ICRBE_D |
+| 37 | `0x400600` to `0x400610` | 3 | I/O | IIO_ICSML to IIO_IDBSS |
+| 38 | `0x410000` to `0x410028` | 6 | I/O | IIO_IBLS0 to IIO_IBIA0 |
+| 39 | `0x420000` to `0x420028` | 6 | I/O | IIO_IBLS1 to IIO_IBIA1 |
+| 40 | `0x430000` to `0x430008` | 2 | I/O | IIO_IPCR to IIO_IPPR |
+| 41 | `0x600000` | 1 | local block | LB_REV_ID |
+| 42 | `0x604000` to `0x604030` | 7 | local block | LB_CPU_PERMISSION to LB_MICROLAN_CTL |
+| 43 | `0x604040` to `0x604060` | 5 | local block | LB_ERROR_BITS to LB_ERROR_DATA |
+| 44 | `0x604100` to `0x604108` | 2 | local block | LB_DEBUG_SELECT to LB_DEBUG_PINS |
+| 45 | `0x604200` to `0x604208` | 2 | local block | LB_RT_LOCAL_CTRL to LB_RT_FILTER_CTRL |
+| 46 | `0x608000` to `0x608020` | 5 | local block | LB_SCRATCH_REG0 to LB_SCRATCH_REG4 |
+| 47 | `0x60c000` to `0x60c010` | 3 | local block | LB_VECTOR_PARMS to LB_VECTOR_DATA |
+| 48 | `0x60c020` to `0x60c030` | 3 | local block | LB_VECTOR_STATUS to LB_VECTOR_READ_DATA |
+| 49 | `0x680000` to `0x680038` | 8 | network | NI_PORT_STATUS to NI_CHANNEL_AGE |
+| 50 | `0x680100` to `0x680118` | 4 | network | NI_PORT_ERRORS to NI_PORT_SIDEBAND |
+| 51 | `0x681000` to `0x6813f8` | 128 | network | NI_LOCAL_TABLE_0 to NI_LOCAL_TABLE_127 |
+| 52 | `0x682000` | 1 | network | NI_GLOBAL_TABLE |
+| 53 | `0x700000` to `0x7000a0` | 21 | crossbar | XB_PARMS to XB_DEBUG_ARB_CTL |
+| 54 | `0x780000` to `0x780028` | 6 | memory/directory | MD_CURRENT_CELL to MD_FANDOP_CAC_STAT1 |
+| 55 | `0x780040` to `0x780048` | 2 | memory/directory | MD_MISC0_ERROR to MD_MISC1_ERROR |
+| 56 | `0x780060` | 1 | memory/directory | MD_OUTGOING_RP_QUEUE_SIZE |
+| 57 | `0x790000` to `0x790018` | 4 | memory/directory | MD_PERF_SEL0 to MD_PERF_CNT1 |
+| 58 | `0x7a0000` to `0x7a0048` | 10 | memory/directory | MD_REFRESH_CONTROL to MD_BIST_STATUS |
+| 59 | `0x7a0060` | 1 | memory/directory | MD_IB_DEBUG |
+| 60 | `0x7c0000` | 1 | memory/directory | MD_DIR_CONFIG |
+| 61 | `0x7c0010` | 1 | memory/directory | MD_DIR_ERROR |
+| 62 | `0x7c0020` | 1 | memory/directory | MD_PROTOCOL_ERROR |
+| 63 | `0x7c0030` | 1 | memory/directory | MD_MIG_CANDIDATE |
+| 64 | `0x7c0040` to `0x7c0060` | 5 | memory/directory | MD_MIG_DIFF_THRESH to MD_DB_DEBUG |
+| 65 | `0x7e0000` | 1 | memory/directory | MD_MB_ECC_CONFIG |
+| 66 | `0x7e0010` | 1 | memory/directory | MD_MEM_ERROR |
+| 67 | `0x7e0020` to `0x7e0040` | 5 | memory/directory | MD_BIST_MB_ERR_DATA_0 to MD_MB_DEBUG |
+
+Pairs 1 to 13 and 16 to 28 are the processor interface's identity, protection, interrupt, timer, graphics, error-status and
+real-time-counter registers, including debug-select, spool-compare, error-injection and reply-level registers. Pairs 14,
+15, 29 and 30 are the six performance registers of each processor interface: `+0x40200` to `+0x40210` (processor A) and
+`+0x50200` to `+0x50210` (processor B). The unit boundaries agree with the bases used elsewhere in this document (I/O
+`0x400000`, local block `0x600000`, network `0x680000`, crossbar `0x700000`, memory/directory `0x780000`). Established.
+
+**The first pair outside the ordinary registers.** `+0x40200` is `PI_PERF_CNTL_A` in the public SN1 header, `+0x40208` and
+`+0x40210` are `PI_PERF_CNTR0_A` and `PI_PERF_CNTR1_A`, and the B set repeats at `+0x50200`. The header gives names only: no
+fields, reset value or access note. Role: a performance-counter control register and two counters per processor, inferred
+from the names. Width: 8 bytes (established; the walk's `ld`). The dump stores whatever comes back and tests nothing. This
+walk is the only reader found; the rest of the kernel was not searched for others (unknown). What a real Bedrock returns
+after a normal boot is unknown: no capture, document or shipped code in this workspace states it. That a shipped default
+(`dump_hub_info` 2) walks them on every crash implies the read completes on hardware (inferred).
+
+**What happens when a walk read fails.** The load raises a data bus error. `dobuserre` (`0xc00000000005c2a0`) classifies the
+faulting address by its extended-physical bits (uncached attribute 2, space bits 58:57 equal to 1) and calls
+`handle_io_buserr` (`0xc00000000005cedc`, call at `0xc00000000005c6bc`) with the address reduced to its low 40 bits. That
+routine looks for a matching entry in the processor-interface error spool (`get_matching_spool_addr`,
+`0xc00000000005aa14`); for match results 0, 1 and 2 it calls `kl_ioerror_handler` (`0xc00000000005e4dc`, error kind 5), and
+for -1 it only logs. Its third argument selects a mode: 0 gives mode 1, 1 gives mode 0, anything else mode 2. The record's
+address field is the 40-bit address, with a flag marking it valid. `hub_ioerror_handler` (`0xc000000000077ccc`) sends a
+record whose widget number is 1 (the Hub itself) to `hub_ioerror_local` (`0xc000000000077a80`). Modes 0, 2 and 3 return
+without a message. Any other mode (the bus-error path produces only 0, 1 and 2, so mode 1) reads the
+doubleword at `+0x0` of one node's window, tests the bit numbered by the other node's NASID (both come from halfwords of the
+record), and prints one of two messages through `cmn_err` level 4, each
+followed by `kl_panic`. Bit set: "Error accessing Hub Register %x on node (%d/%d) from (%d/%d), with access permission",
+then "Hub Register Access error". Bit clear: the "No permission" message and "Hub Register Access Permission error". The
+printed number is the faulting address, so a register at node 0 prints as `0x1800000` plus its offset: "Error accessing
+Hub Register 1840200" is `+0x40200`. Established for the code path; that the register at `+0x0` is `PI_CPU_PROTECT` is inferred from the public header
+(the offset is established from the code; the name is not). During a crash dump the kernel is already panicking,
+so the second `kl_panic` is the "DOUBLE PANIC" and the machine restarts with the dump unfinished. Inferred: the walk's
+reads before `+0x40200` completed, because the walk is in ascending order and stops at the first failure.
+
+**The rest of `dump_hub_info` 2.** `dump_hub_dir_mem` reads the doubleword at `0x9200000001fc0000` plus the node bits
+(`+0x7c0000`, a memory/directory register in the table) and uses its bit 0, then reads two consecutive doublewords per
+128-byte line of every dumpable page from the directory back door at `0x90000001c0000000` (pool word gp+0x950) plus an
+address-derived index. Established; the meaning of bit 0 is unknown here.
+
+*Open:* the reset value and fields of `PI_PERF_CNTL_A`, `PI_PERF_CNTR0_A`, `PI_PERF_CNTR1_A` and the B set. Route: a
+Bedrock hardware reference, or a read on a running Origin 300; neither is held.
+
 ## Reset expectations
 
 Unknown for every register; `per_hub_init` and `hub_error_init` write fixed values (above) without reading
