@@ -209,18 +209,37 @@ caller's flush record. `issue_force_interrupt` then zeroes that counter and forc
 `pio_spin_wait` spins until the counter equals 493. Nothing in these routines writes 493: the interrupt service
 routine is not read. Purpose: ordering PIO writes by making an interrupt arrive: inferred from the structure.
 
-**Error interrupt service (established for the paths named: `pcibr_error_intr_handler` at 0x9bb4 and `pcibr_error_dump` at 0x891c of IP35 `pcibr.o`; the rate limiter and the callee at 0x9a4c are not decoded).**
+**Error interrupt service (established: `pcibr_error_intr_handler` at 0x9bb4, the counting routine at 0x9a4c and `pcibr_error_dump` at 0x891c of IP35 `pcibr.o`, all read in full).**
 The handler takes the bridge record in `a0`, finds it in the global list of bridge records (no match: `panic`, "is not a pcibr_soft!"), then:
 
 1. Asks `hubii_check_widget_disabled` about the record's node and widget byte. If it says disabled, the handler schedules itself again one tick later
    (`timeout`), adds one to the word at record +2104 and returns without touching the chip.
 2. Reads the interrupt status (`+0x100`, `pcireg_intr_status_get`). Only bits 63:8 count as errors; bits 7:0 (the pin interrupts) are not examined, and a status
    with none of 63:8 set returns at once. Bit 31 is dropped from the set the rest of the routine works on.
-3. If status bit 11, 15, 34 or 38 is set (mask `0x4400008800`) it calls the routine at 0x9a4c (a programmed-I/O error check; not read).
-4. Keeps a 12-byte record per status bit 8 to 63 at record +2276 + 12 * (bit - 8): a count it increments each time the bit is seen, a tick stamp and a count at that
-   stamp. From them it works out an error rate per tick and prints "Excessive error interrupts" or "Error rate" through `cmn_err`; for a bit that
-   keeps firing it collects the bit and later clears it from the enable register (`+0x108`, `pcireg_intr_enable_bit_clr`) under the spin lock at record +140, printing
-   "Disabling error interrupt type". The thresholds and which revisions skip this are not decoded. Inferred purpose: stop an error storm.
+3. If status bit 11, 15, 34 or 38 is set (mask `0x4400008800`) it calls the routine at 0x9a4c, read in full: it reads the status and
+   the PCI bus error address (`pcireg_pci_bus_addr_get`), walks every device of every slot of the bridge, and for each programmed-I/O
+   mapping of a device whose bus window contains the error address (window base from the slot's base-register table at +0x50 plus the
+   mapping's own offset and size, at mapping +0x10 and +0x18) atomically adds one (`ll`/`sc`) to a word at mapping +0x48. It prints
+   nothing and changes no chip state: it only counts, per mapping, the programmed-I/O errors that landed in it. Established.
+4. Keeps a 12-byte record per status bit 8 to 63 at record +2276 + 12 * (bit - 8): an event count, a tick stamp and the count at
+   that stamp. For each bit set in the working set it adds one to the count, then (ticks are the kernel `lbolt` counter):
+   `elapsed = lbolt - stamp`, `delta = count - count at stamp`, `rate = delta / elapsed` (integer, skipped when `elapsed` is 0).
+   Established from the full read of `pcibr_error_intr_handler` (0x9bb4 to 0xa168):
+   - A bit is "excessive" when `elapsed` is above 100 ticks and `rate` is above 100 per tick. The handler then prints "Error rate
+     N/tick" through `cmn_err` (level 5) with the bit's name, and restarts the window (stamp = now, count at stamp = count). It
+     does not disable the bit on this path.
+   - Bit 18 on bus 0 (the record word at +72 equal to 0) has an extra rule: when `delta` is at least 100 and `rate` is nonzero and above
+     a global high-water mark, the handler prints "Excessive error interrupts : N/tick" (level 4), stores this rate as the new mark, and restarts the
+     window; when `elapsed` is 0 it restarts the window if `delta` is 10000 or more. On bus 1 and for every other bit only the plain
+     test above applies.
+   - Disabling: only for chip type 2 revision 1 (`(1 << (record word +120 & 0xf)) & 2`), only when status bit 40 is not in the working
+     set, and only for a bit whose count has reached 10001. The handler prints "Disabling error interrupt type" (level 5) and collects the
+     bit; after the scan it clears the collected bits from the enable register (`+0x108`, `pcireg_intr_enable_bit_clr`) under the spin lock
+     at record +140. Every other chip type and revision never disables a bit from this handler.
+   The word at record +72 is the PIC bus number: `pic_attach` calls `pic_attach2` once with 0 and once with 1 as the fourth argument,
+   and `pic_attach2` stores it at 0x858. The global mark is a zero-initialised `.sbss` word, so it starts at 0 and only ever rises; the tick rate of `lbolt` is the kernel's and was not read. The record word at +2120 is a guard: `test_and_set_long` is an
+   atomic exchange (`lld`/`scd` in `kernel.o`) that stores its second argument and returns the old value, so `pcibr_error_dump`
+   returns early only when another caller has already stored the same status mask there, and the handler stores 0 at the end.
 5. Status bit 24 (request with an invalid address for the bridge widget) is cleared from the working set only when the bus-error register (`+0x18`)
    has bits 63:22 equal to 3 and the command-word error register (`+0x40`) under mask `0xf07f00` equals `0x402000`; the meaning of those values is not read (inferred:
    one access the handler is meant to ignore).
@@ -325,4 +344,4 @@ with its address list.
 
 ## Open
 
-See docs/open-questions.md: the revision-1-only steps, the rate limiter thresholds in the error handler and the programmed-I/O error check it calls.
+See docs/open-questions.md: the revision-1-only steps.
