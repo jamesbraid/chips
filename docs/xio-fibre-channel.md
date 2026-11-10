@@ -23,20 +23,17 @@ establishes identity and IRIX-visible behaviour. Binary RE of the shipped `fcadp
 driver objects establishes the PCI front door, register map, firmware-load handshake
 and command path.
 
-
-
+Every statement rests on one of three things: the shipped 6.5.30 `fcadp` objects
 (`hwutil.o:sh_loadnrun_lip`, `hwlip.o:sh_start_lip_sequencer`,
 `hwconfig.o:sh_init_hardware`, `fcadp.o:fill_lip_tcb`, `fcadp.o:fcadp_ctlrinit` and
+the routines named in place, each cited with its offset), a public document, or a
+newsgroup capture. Where a fact is one that only the controller's source could settle
+(a reason for a driver choice, a name for a register bit, how the chip itself behaves),
+the sheet says so and marks it **U** or **I** with the binary read that would settle it.
+Symbol names quoted below (for example `sh_load_sequencer`) and strings quoted from
+the objects are what the shipped objects contain, cited as locators. Layouts are
 described in prose in this sheet's own words. Names for register bits and fields that
-
-
-
-
-
-
-
-
-
+do not appear in the objects are this sheet's role labels, not vendor names.
 
 ### Sources
 
@@ -64,7 +61,6 @@ disassembled driver (B1) is the sole source for the register and command contrac
 below.
 
 ### Corrections (2026-11-10)
-
 
 A re-check against the shipped driver and the owner's guide changed the following. Readers who relied on the earlier text should note:
 
@@ -102,7 +98,9 @@ A re-check against the shipped driver and the owner's guide changed the followin
   is **not established**. This sheet describes the driver's `0x9004:0x1160` match and
   the copper boards the posts describe.
 - **Two ports.** The driver attaches once per PCI function and keeps a separate state
-
+  block for each, and the hardware graph shows two `scsi_ctlr` nodes (`pci/0`, `pci/1`,
+  Bridge slot numbers). Whether the two are two chips or two functions of one chip is **U**;
+  a PCI configuration dump of the board, or the board photographs, would settle it.
 - **Invalid WWN** only prints a warning and skips reading the media-type word; the
   port is still brought up (media type 0) and presents the invalid name.
 - **LIP TCB layout.** The loop-map buffer address is at LIP-TCB offset 0x38, not 0x58,
@@ -152,9 +150,8 @@ touches XIO directly (E, B1). This matches the hardware graph, which enumerates
 the XIO widget as `fibre_channel` with two PCI devices under it (`pci/0`, `pci/1`,
 IRIX's Bridge slot naming), each a `scsi_ctlr` (E, U2).
 
-
-
 Each port is attached independently: `fcadpattach` runs once per PCI function (whether
+that is one chip per port is **U**, see the corrections above),
 allocating one ~1920-byte per-controller state block each (`kmem_zalloc(0x780, …)`),
 so the two ports are two independent softc instances (E, B1). The driver also recognises an optical
 media-interface adapter (MIA) module on a port (`sh_read_mia_type`; syslog
@@ -212,7 +209,6 @@ accessors do **16-bit** loads/stores (`ulmutil.o` `inMemByte`/`outMemByte` =
 **bank-switched**: the byte at **0x2c** selects which of several overlapping register
 sets is visible, so an offset can carry different functions in different banks. Offsets
 are **established**; roles are read from the driver's use (routine cited). A note like "(bank 4)" gives the
-
 bank the driver selects before touching that register.
 
 | Offset | Width | Role | Cite |
@@ -445,6 +441,18 @@ diagnostic is only reached on the reprogram path, not during normal init (E, B1)
 | PCI class / subclass / prog-if | Held in the chip's PCI config space (offsets 0x0b/0x0a/0x09). The driver binds purely on the vendor/device key `0x9004 / 0x1160` (`pciio_driver_register`) and never reads the class, and the IRIX Bridge PCI layer enumerates and attaches by vendor/device, not class — so IRIX does not gate attach on the class value (the conventional Fibre Channel class is 0x0c / 0x04). The chip's actual class bytes are still not established from the driver | I that attach does not depend on it; U for the exact bytes — a config-space dump of real hardware settles them |
 | XIO widget ID and address decode | A property of the host machine's XIO→PCI bridge, supplied by IRIX's generic bridge layer; `fcadp` never touches XIO or the widget directly | U — a host hardware-graph / widget-ID capture settles it |
 | SGI bridge revision | Likewise a host-board property, not readable from `fcadp` | U — host bridge identification settles it |
+
+### The same board on an Octane (IP30, IRIX 6.5.21)
+
+Checked against the 6.5.21 IP30 kernel and `fcadp` archive (kernel SHA-256 `c5cb4521…`;
+`usr/cpu/sysgen/IP30boot/fcadp.a`, 203,988 bytes, SHA-256 `6d8f8c6b…`).
+
+| Question | Answer | Grade |
+|---|---|---|
+| Does the 6.5.21 IP30 driver take a different value list, mask or width at bank-4 0x63 than 6.5.30 IP27? | **No.** `hwconfig.o`, `hwutil.o`, `hwintr.o`, `hwlip.o`, `hwtrans.o` and `ulmutil.o` of the 6.5.21 IP30 archive have the same code bytes as the 6.5.30 IP30 and IP27 archives (only the compiler option note and the line table differ). `fcadp.o` matches the 6.5.30 IP30 build and differs from the IP27 build in one routine, `fcadp_mapbp` (frame size and register allocation; a DMA-mapping routine off the config path, not traced instruction by instruction). In every build `hwconfig.o:sh_read_link_speed` (text offset 0x2a4, 168 bytes) writes 0x44 to register 0x2c, does one byte read of 0x63, forms `(value & 0xfc) \| 0x02`, and accepts exactly 0xbe, 0x2e, 0xfe or 0x6e (stored divisors 1, 2, 2, 4); anything else returns 1 | E (disassembly; sections compared byte for byte) |
+| Can "error -2 in getting config" come from anywhere else? | No. The only −2 return in `sh_get_configuration` (text offset 0, 676 bytes; at offset 0xe8) is the non-zero return of the link-speed routine; the TCB-count probe fails with −1. So a −2 means the byte read of BAR 0 + 0x63, after the 0x44 write to BAR 0 + 0x2c, returned a value outside the list | E |
+| What touches widget offset `0xc00000` on an Octane? | The IP30 kernel's Bridge flash driver (`srflash_attach`), not `fcadp`. The Bridge map has registers at 0, type-0 config space for devices 0 to 7 at 0x20000, device PIO windows at 0x200000 (device 0, 2 MB), 0x400000 (device 1, 2 MB) and 0x600000 to 0xbfffff (1 MB each), and the external flash, two 2 MB chip selects, at 0xc00000. The driver registers for the Bridge widget identity (part 0xc002, manufacturer 0x36), so the kernel runs it for **every** Bridge, including this board's. It maps the register block; returns quietly unless Status bit 5 (PCI mode) is set; maps flash offset 0xc00000, size 8; sets Control bit 31 (flash write enable); stores 0x9090; reads the halfwords at offsets 0 and 2 and wants 0x00b0 and 0x66a8; on a mismatch repeats at 0xe00000; then clears Control bit 31 and gives up without a message. It sets up no fault handler. The 6.5.21 IP27 kernel has no such driver (no `srflash` symbol or string), so the board never touches the flash window on an Origin 2000 | E for the IP30 routine and the IP27 kernel; I that the 6.5.30 IP30 kernel does the same (not read) |
+| What must the board's Bridge do? | Real X9-FC-2P boards attach on Octanes (U3, D1) without a bus error, so on the real board either a flash is fitted or an empty select reads without faulting. The probe needs the reads of 0xc00000 and 0xe00000 and the 16-bit store to complete, and the reads must not be 0x00b0 / 0x66a8 (all ones passes). What the real board returns is not known | E for what the probe needs; U for the board. A read of flash offset 0 on a real X9-FC-2P settles it |
 
 ### Command / response path
 
@@ -761,7 +769,6 @@ tunable `fcadp_hostid` (default 125, B2) or the previously held address. The chi
 
 `fcadp.o:fc_lip_complete` reads that map in one of two forms (**in the shipped big-endian
 build the driver does not byte-swap the buffer** — the call list of `fc_lip_complete` has no
-
 swap call and byte 0 is loaded directly; so the chip writes the map in logical byte order, **I** from the missing swap):
 
 - **Position list (LIRP):** byte 0 is the device count N, and bytes 1…N are the present
