@@ -101,7 +101,7 @@ is of the role, with the evidence in the row.
 | `0x38` | GPIO control clear | 4 | w | `eiattach` writes `0x2` | I |
 | `0x3c` | GPIO data | 4 | | no routine touches it | U |
 | `0x40 + 4n` | GPIO pin n | 4 | w, rw | `ef_phyunreset` drives pin 5; `ioc3_set_proto` writes 0 or 1 to a pin number kept in the port's record | I |
-| `0x84` to `0x98` | parallel-port DMA family | 4 | rw | `ecpplp.o` touches `0x84`, `0x88`, `0x8c`, `0x90`, `0x94`, `0x98`; `plp_dma`, `plpintr` not read | U |
+| `0x80` to `0x98` | parallel-port DMA: buffer address high and low, count and flags, control (`0x8c`), the same three for context B | 4 | rw | `plp_dma`, `plp_dma_reset`, `plp_stop_dma`, `plpintr` (`ecpplp.o`), read in full; roles in [docs/coverage-ioc3.md](../../docs/coverage-ioc3.md) | E for `0x80` to `0x88` and `0x90` to `0x98`; I for the `0x8c` bits |
 | `0x9c` | keyboard and mouse control | 4 | rw | `pckm_attach` stores `0xc00000`; `pckm_sendok` polls bits 0 and 1; `pckm_restart` sets bit 18 or 19 | E |
 | `0xa0`, `0xa4` | keyboard, mouse receive | 4 | r | `pckm_pollcmd` reads one by port and tests bits 31:29 | E |
 | `0xa8`, `0xac` | keyboard, mouse transmit | 4 | w | `pckm_pollcmd` writes the command byte to one by port | E |
@@ -110,12 +110,12 @@ is of the role, with the evidence in the row.
 | `0xd0` | port A shadow | 4 | rw | `set_DTRRTS`, `ioc3_query_DCD`, `ioc3_query_CTS` | I |
 | `0xf0` to `0x150` | Ethernet (25 registers) | 4 | rw | `if_ef.o`: graded one by one in "Ethernet" | 19 E, 5 I, 1 U |
 | `0x20151`, `0x20152` | parallel-port status and control | 1 | r, rw | `ecpplp.o` | I |
-| `0x2015a` | parallel-port configuration | 1 | rw | `plpattach` reads it, tests bits 0 and 1, then stores `0x34` | U |
+| `0x2015a` | parallel-port extended control (PC ECP layout) | 1 | rw | `plpattach` reads it, tests bits 0 and 1, then stores `0x34`; `plp_dma` sets bit 3 and clears bit 2 | I |
 | `0x20178` to `0x2017d` | UART A registers 0 to 5 | 1 | rw | `sio_ioc3.o` (below); UART B at `0x20170` | E |
 | `0x2017f` | UART A register 7 | 1 | w | `set_baud_ti` stores a computed value | I |
 
 **64 register kinds** (the parallel-port DMA words count as one family, the GPIO pins as one family): **45 established, 15
-inferred, 4 unknown.** The unknowns are `0x3c`, the parallel-port DMA family, `0x124` and `0x2015a`.
+inferred, 4 unknown** as graded by the code alone; the coverage pass ([docs/coverage-ioc3.md](../../docs/coverage-ioc3.md)) moves the parallel-port DMA family and `0x2015a` out of unknown. The unknowns left are `0x3c` and `0x124`.
 
 ### Interrupt registers (`0x1c`, `0x20`, `0x24`): established
 
@@ -432,14 +432,14 @@ older `ioc3-eth.c` copies that were not compared line by line.
 | offsets `0x1c` to `0x150` | as in the table | Linux header and OpenBSD `iocreg.h` agree on every offset the census reached, including port A at `0xb8` to `0xd0` and port B at `0xd4` to `0xec` | agree |
 | command write | ORs `0x8146` | Linux names `0x8000` (drop on parity error), `0x100` (SERR), `0x40` (parity response) plus standard bits | agree |
 | control `0x28` | writes `0x7ae5e` at attach | neither driver writes it | IRIX-only; the Linux field layout (bit 0 reset, 7:1 and 14:8 DMA poll bases) is not checked against the value |
-| UART byte lane | register 3 at UART+3, registers 0 and 1 at +0 and +1 | Linux uses `offset ^ 3`, so line control at +0; OpenBSD gives the UART bases `0x20178` and `0x20170` | **differ** for byte accesses. Which lane the hardware presents is unknown; a host-bridge byte-swap setting is a hypothesis |
+| UART byte lane | register 3 at UART+3, registers 0 and 1 at +0 and +1 | Linux uses `offset ^ 3`, so line control at +0; OpenBSD gives the UART bases `0x20178` and `0x20170` and applies the same `^ 3` | **agree after the exclusive-or**: the IRIX order is the natural register order seen through a swapped path (see [docs/coverage-ioc3.md](../../docs/coverage-ioc3.md)); which routine sets the swap is unknown |
 | PHY reset | pin 5 low 10 microseconds, high, 500 microseconds | both name pin 5 PHY reset (mask `0x20`) | agree |
 | MII | busy `0x800`, read trigger `0x400`, phy at bit 5 | same in both | agree |
 | Ethernet setup | `0xfc` threshold, `0x108` = `0x1000000`, `0x114` = 0, bit 0 of `0x12c` set | Linux: threshold 15, barrier `0x100 << 16` (equal to `0x1000000`), `ertr` 0, ring size bit 0 | agree on `0x108`, `0x114`; the threshold is a tunable here |
 | `emcr` start | `0xac` (field 8:3 = `0x15`, padding enable) plus duplex and promiscuous | Linux: `(RX_OFFSET / 2) << 3` plus DMA and MAC enables and padding | the receive-offset field differs by design; `ef_ioc3init` sets neither DMA nor MAC enable (a later routine does; not read) |
-| inter-frame gaps `0x118` | from a table | Linux 21/21/21 full duplex, 17/11/21 half | table values not extracted: unknown |
+| inter-frame gaps `0x118` | from a table whose values are 21/21/21 full duplex and 21/11/17 half (shipped tunable file) | Linux 21/21/21 full duplex, 17/11/21 half | agree field for field |
 | one-wire `0x30` | `(pulse << 10) | (sample << 2)`, done bit 1, data bit 0; 6/110, 80/30, 520/65 | OpenBSD `iocow_pulse` identical, 6/110 for a 1 and 80/30 for a 0 | agree |
-| parallel port | reads `0x20151`, read-modify-writes `0x20152` | Linux header names `0x20151` control and `0x20152` status | **differ** in order; a PC-style port has status then control |
+| parallel port | reads `0x20151`, read-modify-writes `0x20152` | Linux header names `0x20151` control and `0x20152` status | **agree after the exclusive-or with 3**: IRIX status `0x20151` is Linux `0x20152`, IRIX control `0x20152` is Linux `0x20151` |
 | enable polling | low bits polled while bit 27 or 28 is enabled | no equivalent | IRIX-only; reason unknown |
 | external interrupt | input pin 1, edge, output low | Linux has `GPCR_EDGE` and `INT_OUT_MODE`; `eiattach` sets edge bit 16, clears direction bit 1 | agree |
 
@@ -450,12 +450,11 @@ control, enables and status); the rest are unknown.
 
 ## Open
 
+Items settled by the coverage pass are in [docs/coverage-ioc3.md](../../docs/coverage-ioc3.md): the byte lane, the inter-frame
+gap values, the parallel-port DMA registers `0x80` to `0x98` and the error address decode.
+
 - **Why interrupts are polled while the top interrupt bits are enabled** (`ioc3_write_ireg`): the mechanism is read in full; the
   reason is in no string or comment the binary carries. Route: a hardware note.
-- **Ethernet inter-frame gap table**: `ef_ioc3init` loads three words from tables in the object's data. Next: resolve the data
-  section's relocations and read the words.
-- **UART byte lane** and the **register 7 prescaler**: see the comparison.
-- **Parallel port**: roles of `0x84` to `0x98` and bit meanings at `0x20151` to `0x2015a`; `plp_dma`, `plpintr` and `plp_reset` are not read.
-- **Error address words** (cfg `0x40`, `0x44`): `ioc3_error_handler` is read only for its accesses and the shape above (valid-bit test, jump table on bits 4:1, constant 1 stored to `0x40`); the table targets are not read. The routine cannot be run through `retools/tools/facts.py` (it fails on a literal tuple); the objdump listing was used.
+- **Which routine sets the device swap bit** for the IOC3 window, and `0x8c` bit 29 (parallel-port DMA control).
 - **Keyboard and mouse bit meanings** in `0x9c` and `0xa0` to `0xac`: from the routines' masks only.
 - **Per-slot subdevice masks**: which board string selects `0x91`.
