@@ -47,10 +47,23 @@ address here, and after a transfer polls it until the engine has written non-zer
 writes ones there to show the previous data DMA is finished, because register reads and DMA writes can be reordered. The
 128 bytes equal the cache line the driver allocates. So index 8 is not a second descriptor table: it is a completion
 flag area, and the IRIX code that clears 128 bytes before arming is the same pattern. What IRIX does after the transfer
-with that area was not read (`xide_pktDMA_complete` does not poll it), so whether IRIX relies on it is **unknown**.
-Linux describes each list entry as 16 bytes: a 64-bit address entry and a 64-bit entry holding a 16-bit byte count and an
-end-of-list bit (bit 31), both big-endian; the IRIX list builder was not read, so that layout is **established as a
-driver's statement** only.
+with that area is read in the interrupt service (below).
+
+**IRIX waits on the end-of-transfer area: established** (`xide_intr`, `IP35boot/ide.o` 0x18b0, the loop at 0x19b0 to 0x1ab4,
+read in full). For a controller whose PCI device id (record +0x11c) is `0x100a`, vendor (+0x11e) `0x10a9` and whose
+halfword at +0x120 is at least `0x2d` (45; the halfword's source was not traced, inferred to be the revision), `xide_intr`
+scans the 128 bytes for a byte that is greater than zero as a signed value. If none is found it calls `delay(3)` and
+rescans, up to 30 passes, printing a debug line on failure; after the scan it clears the 128 bytes again with `bzero`. This
+matches the Linux driver's wait for the engine to write ones there. The unit of the `delay` argument was not read.
+
+**List layout: established** (`xide_maplist` 0x5e3c, `xide_getmap` 0x4fc4, same object). For this controller each entry is
+16 bytes: a 64-bit bus address, then a 64-bit word whose low bits are the byte count, both stored with 64-bit stores in the
+CPU's big-endian order, so no software byte swap. The builder walks the address list and appends one entry per element; for a
+request whose word at +0xa8 (before the elements) or +0xa4 (after them) is positive it adds an extra entry whose address is
+the controller record's word at +0x160 and whose count is that request word (`xide_getmap` 0x568c and 0x56e4); what those
+words stand for (padding to a boundary is the likely reading) is inferred. Afterwards it sets bit 31 (`0x80000000`) of the second word of the
+last entry (`xide_getmap` 0x54ac to 0x54c8), which is the Linux end-of-list bit. The count word carries no other flag in this
+code.
 
 ### DMA control register `0x15c`, bits (established by agreement)
 
@@ -107,6 +120,5 @@ depends on it.
 |---|---|---|
 | Reset values of every register | none from software: no routine reads one before writing it | read all of `0x0` to `0x160` immediately after a PCI reset, before any driver runs |
 | Why `0x24` is gated on revision 79 | a published IOC4 erratum | see above |
-| Whether IRIX waits on the end-of-transfer area | read `xide_pktDMA_complete`'s callers | trace a packet DMA on a model and check whether the guest reads the 128 bytes |
 | Per-port pin and record tables (`ioc4_set_proto` pin byte, serial configuration records) | extract the data section through its relocations | none needed once extracted |
 | `ioc4_error_handler`, `ioc4_intr`, `ioc4_intrd` | read in full: software work, not done here | n/a |
