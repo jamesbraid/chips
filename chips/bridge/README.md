@@ -297,8 +297,14 @@ Compared after the reading above. **Agree** means the driver's number or name is
   interrupt object does not yet exist it allocates one (`xtalk_intr_alloc_nothd`) and, once the object is installed, calls
   `pcireg_intr_device_bit_clr` with `7 << (3 * pin)` and `pcireg_intr_device_bit_set` with the device's slot number (the byte at +540 of the device record that `pcibr_info_get` returns) shifted by `3 * pin`, so field `p` names the
   device that pin `p` is attributed to. The attach value is written before any pin has been allocated: all-ones makes every field 7 (and 0x6db6db
-  makes every field 3), a placeholder that the allocation overwrites. That the placeholder is a deliberate "no device" value rather than a leftover is
-  not read, so the reason stays open.
+  makes every field 3), a placeholder that the allocation overwrites. Nothing in the shipped code treats the all-ones value as a
+  marker (established, IP35 `pcibr.o`): the only calls of the four interrupt device accessors are in `pcibr_intr_alloc` (the clear and
+  the set above, at 0x7c84 and 0x7c98), `pcibr_intr_free` (a clear of the same three bits at 0x7f80, which leaves the field at 0, not
+  7) and `pcibr_slot_info_return` (0xc364), which stores the register unexamined in a snapshot record at +0x198. So a field
+  that has been allocated and freed reads 0 and a field never allocated reads 7 (or 3 on the PIC), and no routine distinguishes them.
+  Why the attach writes that value rather than 0 (the public drivers' choice) is **unknown**; no held software depends on it,
+  which is a valid end state. What the hardware does with a pending pin whose field names a device that has no interrupt
+  object would need a hardware observation, and is not a question any shipped code asks.
 - **Disagree: control swap bits.** The Linux probe clears the I/O and memory swap bits (23 and 22) in control; the
   IRIX attach does not touch them. The reset value of those bits is unknown.
 - **Not in the public drivers: the SSRAM probe.** Neither public driver sizes the external translation RAM; IRIX does
@@ -352,6 +358,6 @@ The routines of the IP27 kernel that serve the same family are in [docs/ip27-ker
 
 ## Open
 
-See docs/open-questions.md: the interrupt device value at attach; the units and layout of
+See docs/open-questions.md: the units and layout of
 the response buffer registers; whether any XBridge register lies above `0x298`; the PROMs that reach the chip through
 a run-time window.
