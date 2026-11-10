@@ -111,9 +111,9 @@ the same as the public `revo.h`; the **bit-banging itself is established from th
   clock low, 1 microsecond, data, 1 microsecond, clock high, 1 microsecond; deassert. The chip address is 1 for chip 1 and 3 for
   chip 2 (`0x28c4`, `0x28cc`: `0x40` and `0xc0`). The function also stores the value in a shadow table at offsets 5497 and 5502
   of the device record (`0x29d8`, `0x29e0`). **Established.**
-- **Rate to code table (established, `mad_set_rate` `IP35boot/mad_dd.o` 0x2268, 1280 bytes, read in full).** The routine first snaps the
-  requested rate to the nearest supported rate by the thresholds below (each is the first rate it does not accept; 0 is returned and nothing
-  is written when the snapped value is not in the exact table), then writes the code at register `0x01`:
+- **Rate to code table (established, `mad_set_rate` `IP35boot/mad_dd.o` 0x2268, 1280 bytes, read in full).** The routine returns at once when the
+  request equals the rate it last set (the word at record +0x15a0). Otherwise it snaps the request to the first row below whose
+  limit is above it (rows are tested in order), then writes the code at register `0x01`:
 
   | requested rate below (Hz) | snapped to (Hz) | code |
   |---:|---:|---:|
@@ -135,7 +135,7 @@ the same as the public `revo.h`; the **bit-banging itself is established from th
 
   Code 13 is not produced. The table equals the public driver's rate table entry for entry (48000 is 0, 24000 is 1, 12000 is 2,
   9600 is 3, 32000 is 4, 16000 is 5, 8000 is 6, 96000 is 7, 44100 is 8, 22050 is 9, 11025 is 10, 88200 is 11, 176400 is 12, 192000
-  is 14, 64000 is 15). The snapping thresholds are not in the public driver.
+  is 14, 64000 is 15). The snapping limits are not in the public driver. A snapped value outside the exact table cannot occur; the routine's fallback for it returns 0 without writing.
 - Chip 1 takes registers 0 to 4 (`mad_init_revolution`, `0x2b2c`; values `0x0c`, `3`, `0`, `0xff`, `0xff`, then `0x0f` to
   register 0). Chip 2 takes registers 0 to 10. The rate-dependent registers are chip 1 register 1 (`3`, `11` or `19` for rates
   below 60000, below 120000 and above) and chip 2 register 2 (`14`, `30` or `46`). The attenuation registers are chip 1 registers
