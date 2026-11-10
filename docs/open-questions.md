@@ -147,8 +147,7 @@ Corrections found while tagging. These are not fixed here.
   processor interface, memory, I/O, network and local blocks is inferred from routine-name prefixes only.
   Many accesses add a node or block index the scan does not follow. Next: read the index arithmetic in
   `hub_error_init`, `hub_error_clear`, `intr_connect_level`.
-- **Bedrock PROM and second window.** *[route: software now; proposed: constant-fold the IP35 PROM window setup, then read the hubspc.o and nic.o uses]* The IP35 PROM builds its window base at run time (no sites yet) and the
-  0x90000000_18xxxxxx window of `hubspc.o` and `nic.o` is uninterpreted.
+- **Bedrock PROM window base.** *[route: software now; proposed: constant-fold the IP35 PROM window setup]* The second window is settled (chips/bedrock/README.md, "The `window-18` space": the local boot space). Open: the IP35 PROM builds its own window base at run time (no census sites yet), and what the boot-space words at +0x78 (a clock rate, inferred), +0xa0 and +0xa4 hold and who writes them.
 - **Bedrock refused widget read: what the silicon latches.** *[route: software now; hardware residue: what the hardware latches for a refused read, if the handlers do not split it]* Established: a read that gets a timeout or error reply
   is typed in PI error status 0 (type 3 timeout; read types 1 to 3) and the kernel prints "Read timeout, physaddr".
   Inferred: no pending bit exists for it; the exception is the bus error and the spool entry carries the address.

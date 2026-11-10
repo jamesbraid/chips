@@ -1772,9 +1772,10 @@ treats 0 as the other driver (`mem_refcnt_*`, from another object) and anything 
   and 1 at +4 (a byte), the word read from `0x90000000100000a4` at +12 and the word read from `0x90000000100000a0` at +16,
   attaches the record to the device vertex under the label `_detail_invent` with `hwgraph_info_add_LBL`, and exports that label
   with `hwgraph_info_export_LBL` (length 32). Established. Inferred: the two words are firmware-supplied identification of the
-  node's PROM, because they are copied unchanged into an inventory record that is labelled `_detail_invent`. Unknown: what lies at
-  physical `0x100000a0` and `0x100000a4`. Route: the Bedrock census lists the same physical offsets for several routines, and the PROM's own
-  readers of them are the next place to look.
+  node's PROM, because they are copied unchanged into an inventory record that is labelled `_detail_invent`. The two addresses are not Hub registers: with the
+  uncached 0x90 top byte they are in the local boot space (the node's boot PROM and other directory-bus devices; Bedrock page, "The
+  `window-18` space"), at offsets 0xa0 and 0xa4 (established from the shipped address map). Unknown: what the two words hold; they are firmware-supplied. Route:
+  the PROM's own readers and writers of them.
 - `cpuprom_attach` (`IP27/usr/cpu/sysgen/IP27boot/hubspc.o` at 0x1cc, 128 bytes)
   takes the controller vertex in `a0`. It calls `hwgraph_char_device_add` with that vertex, the name `prom`, the prefix `hubspc_`
   and a stack slot that receives the new device vertex, then `device_inventory_add` (that vertex, class 21, 1, three zeros),

@@ -16,7 +16,30 @@ of the register space: 61 of the 119 literals in `kernel.o` (the first draft sai
 `partition.o`), `hubspc.o`, `nic.o`, `l1.o`, `l1_command.o`, `eeprom.o`, `klconfig.o`, `numa_hw.o`, `pda.o`,
 `vmdump.o`, `syssgi.o`, and graphics objects (not counted). The register offsets below are the low 24 bits of
 the literal plus the displacement of the load or store; a second window with literals starting 0x90000000_18
-(`hubspc.o`, `nic.o`) is recorded in the census as `window-18` and not interpreted yet.
+(`hubspc.o`, `nic.o`) is recorded in the census as `window-18`. It is the local boot space, not a second register block
+(next paragraph).
+**The `window-18` space (IP35 `hubspc.o`, `nic.o`).** The node address map in the system headers shipped with IRIX 6.5.30 (read for facts, nothing copied) lays out the uncached window with the 0x90 top byte, per node, in 128 MB
+pieces for the layout this build matches: the position-independent memory alias at +0x0, the local register space at
++0x10000000, the local boot space at +0x18000000 (the local node's boot PROM and the other devices on the node's directory bus; two PROMs at a 32 MB stride), and for another node `n` the remote register space at +0x30000000 and its boot
+space at +0x38000000, all under the node's address bits. So `window-18` is the local boot space (established from the
+header; that the IP35 objects follow its second, wider layout rather than the first is inferred from the literal values: the
+same code reads +0x10000000 offsets in the IP27 `hubspc.o` and `nic.o`, which the header's first layout puts at the start of the
+boot space of that board). The 0x92 literals are a different, smaller alias of the local registers (8 MB, widget 1). Two uses are
+read in full:
+- `nic_get_phase_bits` (`nic.o` 0x68, 52 bytes) reads the doubleword at boot space +0x78, divides it by 1,000,000, halves
+  the quotient, subtracts one and returns the result in two copies, at bit 20 and at bit 27. `nic_access_hub` (0x17c4, 260
+  bytes) calls it, ORs it with `(a1 << 10) | (a2 << 2)` and stores the whole word to the doubleword at +0x4030 of the Hub
+  register literal (the node picked by a shift of 33), then reads that word back until bit 1 is set (five reads, then
+  `us_delay` with its fourth argument, repeated) and returns bit 0. Established. Inferred: the word at +0x78 is a clock
+  rate in hertz and the two fields are timing counts of the Hub's MicroLAN (serial-number chip) interface, from the divisor and
+  from bit 1 being waited on as "done" and bit 0 returned as "data". Unknown: who writes the word at +0x78 (it is read from
+  the boot space of a node; no held routine writes it).
+- `cpuprom_detailed_inventory_info_add` (`hubspc.o`) copies the words at boot space +0xa0 and +0xa4 into an inventory
+  record; the contents are firmware-supplied and unknown (the Hub page, `hubspc.o` routines).
+`per_hub_init`'s store of 15 at `0x9000000030000000` plus the node bits plus `8 * slice + 192` is in the remote register
+space of the header (+0x30000000): a register at offset 0xc0 to 0xd8 of the node's registers, reached through the remote
+alias (established from the header; the register's role is not read).
+
 That 0x92... is the node-local register space and that the low 24 bits are the register offset: inferred from the
 clustering (no named source). Many accesses add a node index (`ld` of the literal, `daddu` with a
 per-node value): the table marks those `+ unseen index`; the offset is then the base of an array of per-node
@@ -247,8 +270,7 @@ there was one). The meaning of the registers is unknown.
 to choose 4 (bit clear) or 8 (bit set) for `+0x1c00200`, writes 0xfffe or 0xfffffe (depending on a global compared with 33) at
 `+0x1c003c0`, 255 at `+0x1c003b8`, and 0x200000 at `+0x1800038` and `+0x1a00038`, zero at `+0x1fa0038` (established by audit, read in full). It also stores
 15 at `0x9000000030000000` plus the node offset plus `8 * slice + 192` for each of the four processor slices
-that `cpu_enabled` reports as absent, in the second window (`window-18`), which this page does not interpret;
-the first draft did not list it.
+that `cpu_enabled` reports as absent, in the remote register space (`0x9000000030000000`, see "The `window-18` space"); the first draft did not list it.
 
 **Network port reset (`ni_reset_port`, read in full: 8 instructions).** Writes 1 to `+0x1680010` and 6 to
 `+0x1680008`. (established; roles unknown)
