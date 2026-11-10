@@ -59,12 +59,8 @@ Corrections found while tagging. These are not fixed here.
 - **Bridge and XBridge: device register bits.** *[route: software now]* Only the pair `0x180000` (`pcibr_endian_set`) and the IP30 PROM's
   `0x1004` are read; the other bits the flags routines pass are derived from their callers at run time. Next:
   `pcibr_device_flags_set`'s callers and `pcibr_slot_addr_space_init`.
-- **TIOCP and TIO.** *[route: missing source: Altix-era headers in the uninitialised linux-2.5.40 submodule; the product history needs a published document that is not held]* Whether any product in scope carries a TIOCP is not established, and no TIO code is held: the
-  names `tio_init_xswitch_widgets` and `Tio_brick_map_widget` are in the debug name tables of the IP35 `kernel.o` with no
-  text symbol, and the software enumeration `pciio_asic_type_e` has a TIOCP value (chips/tiocp/README.md). Tried: the
-  census of the shared accessors, a string and symbol search of every IP27 and IP35 object and PROM image. Next: the
-  public Altix-era headers in the pinned older Linux tree, and `pci-xtalk-bridge.c` in current Linux, read after the
-  binary reading.
+- **TIOCP: which product carries one.** *[route: missing source: a published hardware overview of the Altix-class generation]* The register layout, the identification and the two registers the shared code says the chip lacks are settled
+  (chips/tiocp/README.md, docs/coverage-tiocp.md). Open: only the product list. No TIO code is held, so no software route exists.
 - **Xbow: the PROMs' large crossbar routines.** *[route: software now]* The census seeds only the small routines it could tie to the
   Crossbow (link-usable tests, link reset, error save, the IP30 interrupt service). Routines that touch the
   link-block displacements and were not read: IP27 PROM `0x1fc444b0`; I/O-board PROM `0x11c1d4ac`, `0x11c21c58`,
