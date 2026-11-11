@@ -33,13 +33,13 @@ contract.
 
 ## Call chain (established)
 
-| step | routine | what it does |
-|---|---|---|
-| 1 | `router_acquire_port_info` (`kernel.o` `0x27bc`) | per router port, calls `read_rr_reg` twice with the node halfword at record +4, the halfword at record +504, and selector `2*port - 1` then `2*port - 2` (port is one-based, so `2*(port-1) + 1` and `2*(port-1)`). The first result (two doublewords) lands in the port record at offsets 0 and 8; the second goes to a stack buffer and only its first doubleword is kept, stored at port record +16. A zero return takes the error exit. |
-| 2 | `read_rr_reg` (`read_reg.o` `0x0`, 364 bytes) | the read-one-register command, below |
-| 3 | `simp_process_scancmd` (`smpl_jtagio.o` `0x478`) | validates, bit-reverses, hands the command to the packet layer and checks the reply |
-| 4 | `scancmd_to_irtr` (`smpl_jtagio.o` `0x8b4`) | wraps the command in an iRouter packet, sends it to the L1 and waits for the reply |
-| 5 | `IRouterWritePacket`, `IRouterReadPacket` (`irouter.o` `0x14`, `0x190`) | frame the packet into 127-byte sends and reassemble the reply |
+| step | routine | what it does | Grade |
+|---|---|---|---|
+| 1 | `router_acquire_port_info` (`kernel.o` `0x27bc`) | per router port, calls `read_rr_reg` twice with the node halfword at record +4, the halfword at record +504, and selector `2*port - 1` then `2*port - 2` (port is one-based, so `2*(port-1) + 1` and `2*(port-1)`). The first result (two doublewords) lands in the port record at offsets 0 and 8; the second goes to a stack buffer and only its first doubleword is kept, stored at port record +16. A zero return takes the error exit. | established |
+| 2 | `read_rr_reg` (`read_reg.o` `0x0`, 364 bytes) | the read-one-register command, below | established |
+| 3 | `simp_process_scancmd` (`smpl_jtagio.o` `0x478`) | validates, bit-reverses, hands the command to the packet layer and checks the reply | established |
+| 4 | `scancmd_to_irtr` (`smpl_jtagio.o` `0x8b4`) | wraps the command in an iRouter packet, sends it to the L1 and waits for the reply | established |
+| 5 | `IRouterWritePacket`, `IRouterReadPacket` (`irouter.o` `0x14`, `0x190`) | frame the packet into 127-byte sends and reassemble the reply | established |
 
 ## The command record
 
@@ -53,12 +53,12 @@ both). `simp_jtag_close` frees the record; nothing in the held objects calls it.
 
 **Grade of the table.** Established, and checked against the routines' constants in this pass: the operation byte of word 0 (`0x88` in `read_rr_reg`, `0x83` in the scan-instruction and scan-data wrappers, `0x84` in the select wrapper, `0x80` in reset). The word 2 bit assignments are established from the stores as the cells say; what each bit means on the wire is inferred.
 
-| header word | content (established from the stores) |
-|---|---|
-| word 0 | top byte is the operation: `0x88` read one router register (`read_rr_reg`), `0x80` reset (`simp_jtag_reset`), `0x83` scan an instruction or data register (`simp_jtag_scan_ir`, `simp_jtag_scan_dr`), `0x84` select (`simp_jtag_sel_sic`). The low 24 bits are cleared by the init. The reply is read back from this word: bits 15:8 of the reply's first word are a status byte (below). |
-| word 2 | bit 31: set by `scan_dr`, cleared by `scan_ir`, and set from the low bit of the second argument by `reset`. Bit 29 is cleared when the global `l3_bigend` is non-zero and set otherwise (below). Bit 27: the low bit of the global `psi`. Bits 15:8: the low byte of the global `state`. Bits 7:0: 1 for `scan_ir` and `scan_dr`, 0 otherwise (`read_rr_reg` clears them explicitly). |
-| word 3 | the number of bits in the payload: 197 for `read_rr_reg`, 192 for `sel_sic`, the caller's count for IR and DR scans. |
-| words 4 up | payload, `ceil(bits/32)` words. `sel_sic` stores six words: its second, third and fourth arguments, the fifth (a 64-bit value) split high word then low word, and the sixth; they fill its 192 bits exactly. Its seventh argument is the error buffer. |
+| header word | content (established from the stores) | Grade |
+|---|---|---|
+| word 0 | top byte is the operation: `0x88` read one router register (`read_rr_reg`), `0x80` reset (`simp_jtag_reset`), `0x83` scan an instruction or data register (`simp_jtag_scan_ir`, `simp_jtag_scan_dr`), `0x84` select (`simp_jtag_sel_sic`). The low 24 bits are cleared by the init. The reply is read back from this word: bits 15:8 of the reply's first word are a status byte (below). | established |
+| word 2 | bit 31: set by `scan_dr`, cleared by `scan_ir`, and set from the low bit of the second argument by `reset`. Bit 29 is cleared when the global `l3_bigend` is non-zero and set otherwise (below). Bit 27: the low bit of the global `psi`. Bits 15:8: the low byte of the global `state`. Bits 7:0: 1 for `scan_ir` and `scan_dr`, 0 otherwise (`read_rr_reg` clears them explicitly). | established |
+| word 3 | the number of bits in the payload: 197 for `read_rr_reg`, 192 for `sel_sic`, the caller's count for IR and DR scans. | established |
+| words 4 up | payload, `ceil(bits/32)` words. `sel_sic` stores six words: its second, third and fourth arguments, the fifth (a 64-bit value) split high word then low word, and the sixth; they fill its 192 bits exactly. Its seventh argument is the error buffer. | established |
 
 Globals (`smpl_jtagio.o` `.sdata`, read from the object): `max_sc_len` starts 0, `l3_bigend` starts 1, `psi` starts 0, the
 record pointer starts 0. `simp_jtag_open` stores its first argument in `max_sc_len` and 1 in `l3_bigend`. `psi` is never
@@ -158,14 +158,14 @@ message text that calls the function set boundary scan. The data format beyond t
 `IRouterWritePacket` sends a packet as a sequence of `sc_send` calls, each at most **127 bytes**: a 9-byte header and up to
 118 data bytes (it copies `min(remaining, 118)` per send). The header, as the receiver reads it, is:
 
-| offset | content |
-|---|---|
-| 0 to 3 | zero as sent |
-| 4 | `0x30` |
-| 5 | frame type: 1 first frame of a head packet (bit 7 of the node byte at +37 set), 2 first frame of any other packet, 3 each further frame of the same packet |
-| 6 | for type 1 the low 7 bits of the byte at +37 of the packet node (`IRouterMakePacket` fills it with a descending number and sets bit 7 on the head); zero otherwise |
-| 7, 8 | the data length of the whole packet, big-endian (as sent in every first-of-packet frame; a continuation frame carries zero here) |
-| 9 on | data |
+| offset | content | Grade |
+|---|---|---|
+| 0 to 3 | zero as sent | established |
+| 4 | `0x30` | established |
+| 5 | frame type: 1 first frame of a head packet (bit 7 of the node byte at +37 set), 2 first frame of any other packet, 3 each further frame of the same packet | established |
+| 6 | for type 1 the low 7 bits of the byte at +37 of the packet node (`IRouterMakePacket` fills it with a descending number and sets bit 7 on the head); zero otherwise | established |
+| 7, 8 | the data length of the whole packet, big-endian (as sent in every first-of-packet frame; a continuation frame carries zero here) | established |
+| 9 on | data | established |
 
 The receiver, `IRouterReadPacket`, calls `sc_recv_intr` with the constant 4,000,000 (`0x3d0900`) as its time-out argument (unit
 unknown) and reads the 16 bits at offsets 4 and 5 as `0x3001`, `0x3002` or `0x3003`. For 1 and 2 it takes the length and, for 1, the

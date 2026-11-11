@@ -115,24 +115,24 @@ The kernel holds a 37-entry table of CAUSE bit names (entries of mask, negated b
 `0x412ba8` of `unix`) and the monitor holds the same bits under other names (`0x49280` of `symmon.IP30`). The
 diagnostic names bit 16 `WIDGET_ERR`. Both tables agree on every position.
 
-| Bit | Kernel name | Monitor name |
-|---|---|---|
-| 63:60 | PE_SysCorErr3 to 0 | PE_SYS_COR_ERR_3 to 0 |
-| 44 | PIOWDB_OV | PIOWDB_OFLOW |
-| 43 | PIORWRB_OV | PIORWRB_OFLOW |
-| 42 | PIUR_AccessErr | PIU_REG_ACC_ERR |
-| 41 | BadSysWrErr | SYSAD_WR_ERR |
-| 40 | BadSysRdErr | SYSAD_RD_ERR |
-| 39:36 | SysStateErrProc3 to 0 | SYSSTATE_ERR_3 to 0 |
-| 35:32 | SysCmdErrProc3 to 0 | SYSCMD_ERR_3 to 0 |
-| 31:28 | NCorSysErrProc3 to 0 | NCOR_SYSAD_ERR_3 to 0 |
-| 27:24 | CorSysErrProc3 to 0 | COR_SYSAD_ERR_3 to 0 |
-| 23:20 | DataElmntErrProc3 to 0 | DATA_ELMNT_ERR_3 to 0 |
-| 16 | WidgetError | WIDGET_ERR |
-| 7:4 | MemAddrErrProc3 to 0 | MEM_ADDR_ERR_3 to 0 |
-| 2 | MemAddrErrIO | MEM_ADDR_ERR_IO |
-| 1 | NCorMemErr | NCOR_MEM_ERR |
-| 0 | CorMemErr | COR_MEM_ERR |
+| Bit | Kernel name | Monitor name | Grade |
+|---|---|---|---|
+| 63:60 | PE_SysCorErr3 to 0 | PE_SYS_COR_ERR_3 to 0 | established |
+| 44 | PIOWDB_OV | PIOWDB_OFLOW | established |
+| 43 | PIORWRB_OV | PIORWRB_OFLOW | established |
+| 42 | PIUR_AccessErr | PIU_REG_ACC_ERR | established |
+| 41 | BadSysWrErr | SYSAD_WR_ERR | established |
+| 40 | BadSysRdErr | SYSAD_RD_ERR | established |
+| 39:36 | SysStateErrProc3 to 0 | SYSSTATE_ERR_3 to 0 | established |
+| 35:32 | SysCmdErrProc3 to 0 | SYSCMD_ERR_3 to 0 | established |
+| 31:28 | NCorSysErrProc3 to 0 | NCOR_SYSAD_ERR_3 to 0 | established |
+| 27:24 | CorSysErrProc3 to 0 | COR_SYSAD_ERR_3 to 0 | established |
+| 23:20 | DataElmntErrProc3 to 0 | DATA_ELMNT_ERR_3 to 0 | established |
+| 16 | WidgetError | WIDGET_ERR | established |
+| 7:4 | MemAddrErrProc3 to 0 | MEM_ADDR_ERR_3 to 0 | established |
+| 2 | MemAddrErrIO | MEM_ADDR_ERR_IO | established |
+| 1 | NCorMemErr | NCOR_MEM_ERR | established |
+| 0 | CorMemErr | COR_MEM_ERR | established |
 
 MODE has a matching set of error-enable bits (monitor table at `0x47ca0`, low word): bit 10 BAD_SYSWR_ERE, 9
 BAD_SYSRD_ERE, 8 SYSSTATE_ERE, 7 SYSCMD_ERE, 6 NCOR_SYS_ERE, 5 COR_SYS_ERE, 4 DATA_ELMNT_ERE, 3 MEM_ADDR_PROC_ERE,

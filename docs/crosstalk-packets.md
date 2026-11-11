@@ -219,19 +219,19 @@ printed pp. 85-86; Bridge spec section 3.2, error command word), the shipped
 IRIX 6.5.30 `<sys/xtalk/xwidget.h>`, and Linux mainline
 `arch/mips/include/asm/xtalk/xwidget.h`. **Established.**
 
-| Bits | Field | Meaning |
-|---|---|---|
-| 31:28 | DIDN | destination widget number |
-| 27:24 | SIDN | source widget number |
-| 23:20 | PACTYP | packet type (3.3) |
-| 19:15 | TNUM | transaction number (3.4) |
-| 14 | CT | coherent transaction |
-| 13:12 | DS | data size (3.5) |
-| 11 | GBR | the packet is on the guaranteed-bandwidth ring (priority class) |
-| 10 | VBPM | virtual backplane message |
-| 9 | ERROR | the sender marks the packet as carrying an error |
-| 8 | BO | barrier operation |
-| 7:0 | reserved | |
+| Bits | Field | Meaning | Grade |
+|---|---|---|---|
+| 31:28 | DIDN | destination widget number | established |
+| 27:24 | SIDN | source widget number | established |
+| 23:20 | PACTYP | packet type (3.3) | established |
+| 19:15 | TNUM | transaction number (3.4) | established |
+| 14 | CT | coherent transaction | established |
+| 13:12 | DS | data size (3.5) | established |
+| 11 | GBR | the packet is on the guaranteed-bandwidth ring (priority class) | established |
+| 10 | VBPM | virtual backplane message | established |
+| 9 | ERROR | the sender marks the packet as carrying an error | established |
+| 8 | BO | barrier operation | established |
+| 7:0 | reserved | | established |
 
 **The introductory table in the Crossbow specification disagrees.** Table 1 on
 printed p. 24 lists TNUM at 23:19 (five bits) and the packet type at 18:15 (four
@@ -393,18 +393,18 @@ by decoding the type and size fields and ignoring the tail marker (Crossbow spec
 section 3.4.5 and Table 25, printed pp. 93-94, checked against the page image).
 **Established** for the rows given; the table has gaps (below).
 
-| PACTYP | DS 00 | DS 01 | DS 10 | DS 11 |
-|---|---|---|---|---|
-| 0001 read response | 1 | 3 | 9 | 9 |
-| 0010 write request, response | 2 | 3 | 9 | 9 |
-| 0011 write response | 1 (any DS) | | | |
-| 0100 write request, no response | 2 | not listed | not listed | not listed |
-| 0101 | 1 | not listed | | |
-| 0110 fetch-and-op | 1 (any DS) | | | |
-| 0111 | 1 | | | |
-| 1000 store-and-op | 2 | | | |
-| 1001-1101 | 1 | | | |
-| 1110, 1111 special | 9 (any DS) | | | |
+| PACTYP | DS 00 | DS 01 | DS 10 | DS 11 | Grade |
+|---|---|---|---|---|---|
+| 0001 read response | 1 | 3 | 9 | 9 | established |
+| 0010 write request, response | 2 | 3 | 9 | 9 | established |
+| 0011 write response | 1 (any DS) | | | | established |
+| 0100 write request, no response | 2 | not listed | not listed | not listed | established |
+| 0101 | 1 | not listed | | | established |
+| 0110 fetch-and-op | 1 (any DS) | | | | established |
+| 0111 | 1 | | | | established |
+| 1000 store-and-op | 2 | | | | established |
+| 1001-1101 | 1 | | | | established |
+| 1110, 1111 special | 9 (any DS) | | | | established |
 
 The counts agree with a header of two doublewords plus data: a doubleword
 response is a 64-bit header plus one data doubleword (1 micropacket of 128 bits);
@@ -764,17 +764,17 @@ Every layer has its own clock, so a missing response is reported at the layer
 that waits longest last. Values below are **established** unless noted; tick sizes
 that appear in crosstalk-link.md are not repeated.
 
-| Layer | What waits | Where | Result when it expires |
-|---|---|---|---|
-| LLP | one micropacket, retries counted | max retry field, widget `0x48` | link fatal error, needs link reset (2.2) |
-| Crossbow | a packet received but not delivered | packet timeout register `0x28`, 1.28 µs per tick, reset `0xfffff` (Crossbow spec p. 88; the first interval after reset is shorter, 2.56 µs) | destination timeout, packet dropped, error logged |
-| Crossbow | a packet being received stalls | same register | source timeout: the packet is completed with filler data marked "sideband invalid" (spec pp. 67, 113) |
-| Crossbow | a destination out of request credit | same register | "max request timeout", port begins taking requests to drain (spec pp. 66-67) |
-| Crossbow widget 0 | its own response or interrupt packet is not accepted | same | "connection timeout" in widget-0 status (spec p. 69) |
-| Bridge | a read response | request timeout value register `0x28`, one tick per 960 ns (32 PCI clocks) | interrupt status bit 9 "PCI to Crosstalk read request timeout"; PCI address, buffer number, device saved (Bridge spec printed p. 23 and Table 30) |
-| Hub | a request-buffer entry | CRB timeout and prescaler (`0x4003b8`, `0x4003c0`) | request-buffer error code "timeout" (IRIX `hubio.h`) |
-| HEART | a processor I/O read | widget error type "PIO read timeout" bit 3 | bus error to the processor, with the failing address saved (IRIX 6.5 base-release `heart.h`) |
-| Hub | credits below threshold | `0x4001e0` | credit-timeout interrupt (6.4) |
+| Layer | What waits | Where | Result when it expires | Grade |
+|---|---|---|---|---|
+| LLP | one micropacket, retries counted | max retry field, widget `0x48` | link fatal error, needs link reset (2.2) | established |
+| Crossbow | a packet received but not delivered | packet timeout register `0x28`, 1.28 µs per tick, reset `0xfffff` (Crossbow spec p. 88; the first interval after reset is shorter, 2.56 µs) | destination timeout, packet dropped, error logged | established |
+| Crossbow | a packet being received stalls | same register | source timeout: the packet is completed with filler data marked "sideband invalid" (spec pp. 67, 113) | established |
+| Crossbow | a destination out of request credit | same register | "max request timeout", port begins taking requests to drain (spec pp. 66-67) | established |
+| Crossbow widget 0 | its own response or interrupt packet is not accepted | same | "connection timeout" in widget-0 status (spec p. 69) | established |
+| Bridge | a read response | request timeout value register `0x28`, one tick per 960 ns (32 PCI clocks) | interrupt status bit 9 "PCI to Crosstalk read request timeout"; PCI address, buffer number, device saved (Bridge spec printed p. 23 and Table 30) | established |
+| Hub | a request-buffer entry | CRB timeout and prescaler (`0x4003b8`, `0x4003c0`) | request-buffer error code "timeout" (IRIX `hubio.h`) | established |
+| HEART | a processor I/O read | widget error type "PIO read timeout" bit 3 | bus error to the processor, with the failing address saved (IRIX 6.5 base-release `heart.h`) | established |
+| Hub | credits below threshold | `0x4001e0` | credit-timeout interrupt (6.4) | established |
 
 Linux sets the Hub request timeout to 5 ms, below the processor interface timeout
 of 10 ms (`arch/mips/sgi-ip27/ip27-init.c`): the requester must give up before
@@ -789,16 +789,16 @@ bits at `0x28`) and its tick size outside the Bridge are **unknown**.
 **Established** from the Bridge (Tables 53, 54, printed pp. 78-80), the Crossbow
 (Tables 4 and 5, pp. 67-70), and IRIX handlers.
 
-| Fault | Bridge | Crossbow widget 0 |
-|---|---|---|
-| Write response where none was asked | unexpected response; command word saved | "invalid packet type": register-access error |
-| Fetch, store, special request, or a response aimed at it | "unsupported operation"; address and command word saved | register-access error; address and command word saved |
-| Response with TNUM above 15, or buffer not armed | unexpected response | n/a |
-| Data size disagrees with the head and tail framing | bad request packet (request) or a flag in the read buffer, later bad response packet when the PCI device reads it (response) | register-access error |
-| Command-word ERROR bit set, or sideband invalid during data | request: "request crosstalk error", and a write is **not performed**; reads do not check it. Response: flag in the buffer, "response crosstalk error" when read | "crosstalk error" in widget-0 status |
-| Request address the widget does not support | "invalid address" | register-access error |
-| Request arrives when the request FIFO is full | request FIFO overflow (credit misprogramming) | n/a (input overallocation on the link) |
-| Request to a read-only register | n/a | register-access error |
+| Fault | Bridge | Crossbow widget 0 | Grade |
+|---|---|---|---|
+| Write response where none was asked | unexpected response; command word saved | "invalid packet type": register-access error | established |
+| Fetch, store, special request, or a response aimed at it | "unsupported operation"; address and command word saved | register-access error; address and command word saved | established |
+| Response with TNUM above 15, or buffer not armed | unexpected response | n/a | established |
+| Data size disagrees with the head and tail framing | bad request packet (request) or a flag in the read buffer, later bad response packet when the PCI device reads it (response) | register-access error | established |
+| Command-word ERROR bit set, or sideband invalid during data | request: "request crosstalk error", and a write is **not performed**; reads do not check it. Response: flag in the buffer, "response crosstalk error" when read | "crosstalk error" in widget-0 status | established |
+| Request address the widget does not support | "invalid address" | register-access error | established |
+| Request arrives when the request FIFO is full | request FIFO overflow (credit misprogramming) | n/a (input overallocation on the link) | established |
+| Request to a read-only register | n/a | register-access error | established |
 
 The ERROR bit in a command word is how a responder reports "I could not do it";
 the Bridge sets it on a response when its SSRAM has a parity error (Bridge spec

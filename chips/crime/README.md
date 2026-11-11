@@ -202,11 +202,11 @@ read in full and their message strings.
 
 **Three-bit layout** (revision non-zero), printed as `CPU Error/Addr 0x<stat & 5><...>: 0x<addr>` and `VICE Error/Addr`:
 
-| bit | meaning in the kernel's strings |
-|---:|---|
-| 2 | CPU "Invalid address" |
-| 1 | VICE "Write parity error" |
-| 0 | CPU "Write parity error" |
+| bit | meaning in the kernel's strings | Grade |
+|---:|---|---|
+| 2 | CPU "Invalid address" | established |
+| 1 | VICE "Write parity error" | established |
+| 0 | CPU "Write parity error" | established |
 
 The routine tests `stat & 5` for the CPU line and `stat & 2` for the VICE line; bits 8:3 are never tested (the
 specification adds address bits 39:34 there, "if it can be implemented"). The address is printed as read, not shifted left
@@ -230,14 +230,14 @@ Decode routine at `kernel.o` `0x105c4` (read in full), printed as `MEMORY Error/
 
 **Grade of the table.** Established: which status bit selects which printed string, and the mask arithmetic (the decode routine read in full). Inferred: that each string names the hardware condition that sets its bit, as for every kernel-string table here. The specification text quoted in the rows is a published source.
 
-| bits | meaning in the kernel's strings |
-|---|---|
-| 27, 26, 25 | invalid memory address on R/M/W, on write, on read (mask `0x0e000000`; exactly one tested at a time) |
-| 22 | multiple ECC errors, "on R/M/W" if bit 24 is set, otherwise "on read" |
-| 21 | hard ECC error, same bit-24 rule |
-| 20 | soft ECC error, same bit-24 rule |
-| 24 | R/M/W flag for 22, 21 and 20 (specification: "ECC read error during a read-modify-write") |
-| 18, 17, 16, 15, 7 | access source: CPU, VICE, GBE, RE, MACE (the single bit under mask `0x78080`; none or several prints "UNKNOWN ACCESS TYPE") |
+| bits | meaning in the kernel's strings | Grade |
+|---|---|---|
+| 27, 26, 25 | invalid memory address on R/M/W, on write, on read (mask `0x0e000000`; exactly one tested at a time) | established |
+| 22 | multiple ECC errors, "on R/M/W" if bit 24 is set, otherwise "on read" | established |
+| 21 | hard ECC error, same bit-24 rule | established |
+| 20 | soft ECC error, same bit-24 rule | established |
+| 24 | R/M/W flag for 22, 21 and 20 (specification: "ECC read error during a read-modify-write") | established |
+| 18, 17, 16, 15, 7 | access source: CPU, VICE, GBE, RE, MACE (the single bit under mask `0x78080`; none or several prints "UNKNOWN ACCESS TYPE") | established |
 
 `ecc_handler` (`0xd894`, the R10000 cache-error exception path) reads `0x48`, `0x250`, `0x40` and `0x258`, tests
 `0x250 & 0x240000` (hard error with CPU access), `0x48 & 5 == 5` and, for the ten-bit layout, `0x48 & 0x201 == 0x201`, and in
