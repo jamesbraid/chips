@@ -82,7 +82,7 @@ facts that matter for these chips:
 | `0x50` | target flush | read after posted register writes to force them out | established (use), inferred (name) |
 | `0x58` | auxiliary error command word | link-side error | inferred |
 | `0x60` / `0x68` | response buffer error, upper / lower | device number 22:20, buffer number 19:16, address | established |
-| `0x70` | test pin control | no shipped software touches it | unknown |
+| `0x70` | test pin control | no shipped software touches it; layout in the Bridge specification rev 4.0 section 3.2.15 and Xbridge specification rev 0.5 section 6.2.15 (see the Bridge README row) | established (layout, specifications), unknown (use) |
 | `0x78` | link-side error address | PIC (read-only by accessor); the IP35 PROM diagnostic, which runs one sequence for PIC and Bridge, writes the word at `0x7c` | inferred |
 
 The device-side registers (`0x80` direct map, `0x90` map fault or SSRAM parity, `0xa0` arbitration, `0xb0` Number In A
