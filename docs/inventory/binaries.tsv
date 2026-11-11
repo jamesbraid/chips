@@ -2960,8 +2960,8 @@ IP35/usr/cpu/sysgen/IP35boot/usb.a(usb_hid.o)	kernel-IP35	kernel-object	object	n
 IP35/usr/cpu/sysgen/IP35boot/usb.a(usb_hub.o)	kernel-IP35	kernel-object	object	n64	39780	781d224129f033b4		32	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/usb.a(usb_ohci.o)	kernel-IP35	kernel-object	object	n64	49316	66fde359080f2f4f		39	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/usb.a(usb_debug.o)	kernel-IP35	kernel-object	object	n64	4660	3f2b4beba0bbb7e0		2	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/usb_comp.o	kernel-IP35	kernel-object	object	n64	25840	217bf6340ab090ec		18	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/usb_pckm.o	kernel-IP35	kernel-object	object	n64	47896	bb69f038485f2f01		39	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/usb_comp.o	kernel-IP35	kernel-object	object	n64	25840	217bf6340ab090ec		18	symtab	0	0	named-only	docs/onyx3000-graphics-topology.md#question-3-the-graphics-console-keyboard	Question 3: the graphics console keyboard
+IP35/usr/cpu/sysgen/IP35boot/usb_pckm.o	kernel-IP35	kernel-object	object	n64	47896	bb69f038485f2f01		39	symtab	0	0	named-only	docs/onyx3000-graphics-topology.md#question-3-the-graphics-console-keyboard	Question 3: the graphics console keyboard
 IP35/usr/cpu/sysgen/IP35boot/usb_tablet.o	kernel-IP35	kernel-object	object	n64	26448	8ede102a21617f20		17	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/usbaudio_dd.o	kernel-IP35	kernel-object	object	n64	78672	b90e819c26a56b21		69	symtab	0	0	named-only	docs/open-questions.md#open-questions	Open questions
 IP35/usr/cpu/sysgen/IP35boot/usbidbg.a(usbidbg.o)	kernel-IP35	kernel-object	object	n64	34356	faa26cb60b847d69		24	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
