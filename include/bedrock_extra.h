@@ -27,6 +27,18 @@
 /* Widget error header words, saved raw by the kernel's I/O error-header save and print routines. */
 #define BEDROCK_II_ERROR_HEADER_1            0x400220   /* [E] width 8 byte(s), access r; fields printed by the show routine, see chips/bedrock/README.md */
 #define BEDROCK_II_ERROR_HEADER_2            0x400228   /* [E] width 8 byte(s), access r; as above */
+/* Fields of the two words, from the kernel's print routine for them (one machine build, read in full): each field is a mask
+ * and shift the routine applies before printing, and each printed line names its bit range. Bit 44 of header 1 is only
+ * the condition on which the routine prints header 1 at all (its test is a sign test after a left shift); that it
+ * means "valid" is [I]. */
+#define BEDROCK_II_ERROR_HEADER_1_COMMAND    0x000000000000007full /* [E] bits 6:0 */
+#define BEDROCK_II_ERROR_HEADER_1_SUPPLEMENTAL 0x000000000007ff00ull /* [E] bits 18:8 */
+#define BEDROCK_II_ERROR_HEADER_1_SOURCE     0x000000007ff00000ull /* [E] bits 30:20 */
+#define BEDROCK_II_ERROR_HEADER_1_ERR_TYPE   0x0000000f00000000ull /* [E] bits 35:32; 2 short request packet, 3 short reply packet, 4 long request packet, 5 long reply packet, any other value prints as unknown (each value selects its own text in the print routine) */
+#define BEDROCK_II_ERROR_HEADER_1_OVERRUN    0x0000010000000000ull /* [E] bit 40 */
+#define BEDROCK_II_ERROR_HEADER_1_PRINT_GATE 0x0000100000000000ull /* [E] bit 44 gates the print; [I] header valid */
+#define BEDROCK_II_ERROR_HEADER_2_ADDRESS    0x0000003fffffffffull /* [E] bits 37:0 */
+#define BEDROCK_II_ERROR_HEADER_2_TAIL       0x0000010000000000ull /* [E] bit 40 */
 
 /* Memory controller bank configuration word: four byte lanes, one per pair of DIMM banks. Read and written by the
  * PROM at the node-alias offset below; the kernel's local-form address is 0x780008 (BEDROCK_MDIR_XLATE_ADDR_MEM in
