@@ -303,9 +303,9 @@ relocations; `pcibr_force_interrupt` and `pcibr_intr_func` read in full).
   `arch/ia64/sn/io/sn2/pcibr/pcibr_intr.c` lines 236 to 270, which names XBridge and PIC). Two cases leave a status
   bit set with no packet in flight: a second device interrupt arriving about 60 ns after the first was cleared (no
   transition is seen), and a status bit shared by two devices where one re-asserts while the other's handler runs,
-  so the line never goes inactive between them. The comment calls both a deadlock. So the chip does not re-send on
-  its own while the pin stays active. That is the authors' account for the SN2 chip; for PIC revision 3
-  specifically it is **inferred**.
+  so the line never goes inactive between them. The comment calls both a deadlock. So the chip is **inferred** not to re-send on
+  its own while the pin stays active: that rests on a code comment by the SN2 driver authors, not on a measurement, and for PIC revision 3
+  specifically it is a further step.
 - **Software re-posts through the force registers** (established for the semantics the header describes, `pic.h`
   lines 1603 to 1622): a write to force-always (`+0x180 + 8n`) sends a set packet as if the pin had transitioned,
   and sends one more if the pin is already active; a write to force-with-pin (`+0x1c0 + 8n`) does the same only
@@ -321,8 +321,8 @@ relocations; `pcibr_force_interrupt` and `pcibr_intr_func` read in full).
   no force registers) it reads status and, if the pin's bit is set, the CPU stores `0x100 | vector` to the node's
   interrupt-modify address itself: the set packet written by software (established for the instructions; that the
   target is the Hub pending-modify register is inferred from the constant and the destination setup above).
-  The reissue a held pin needs is therefore a guest register write at the end of each dispatch, not a timer in the
-  chip. There is no period: it happens once per dispatch.
+  Both consumers therefore reissue by a register write at the end of each dispatch. Whether the chip also has a timer or
+  retry of its own is **unknown** (see the refused-or-lost bullet below); none was found in the sources read.
 - **A second software path is periodic, on another platform** (established for that driver: `arch/ia64/sn/kernel/
   irq.c` lines 295 to 360, `arch/ia64/sn/kernel/sn2/timer_interrupt.c`, interval constant 100 timer ticks). Every 100
   ticks it compares each registered pin's status with the previous scan. A pin high in both, with the interrupt
@@ -334,7 +334,10 @@ relocations; `pcibr_force_interrupt` and `pcibr_intr_func` read in full).
   skips it. What the toggle does inside the chip, including whether re-enabling a still-active pin sends a packet:
   **unknown**.
 - **A refused or lost packet**: **unknown**. No public header or shipped object describes a chip-side retry, timer
-  or response for an interrupt write, and no register names a reissue period. The consumers' recovery assumes a
+  or response for an interrupt write, and no register names a reissue period. The error-status table above has no bit
+  for a refused interrupt write; bits 17 to 21 are the link layer's own retry counters (inferred: it retransmits a
+  packet the far end did not accept), and bits 22 to 29 describe requests to the PIC and responses to its reads.
+  Nothing in `pcibr_error_intr_handler` or `pcibr_error_dump` handles an interrupt-write failure. The consumers' recovery assumes a
   lost packet leaves the status bit set and stays lost until software forces another. Whether the Bedrock can refuse
   an inbound write to its pending-modify address, and what the PIC then logs, is open.
 - **Does the enable bit gate a forced packet?** **Unknown.** What bears on it: the public header says force-with-pin
@@ -345,13 +348,9 @@ relocations; `pcibr_force_interrupt` and `pcibr_intr_func` read in full).
   programmed-I/O flush path writes only a pin's vector and address (`pic_pio_flush_new` calls `pcireg_intr_addr_vect_set`
   and `pcireg_intr_addr_addr_set`, no enable write; `issue_force_interrupt` then writes the force-always register)
   for a pin chosen from a per-chip mask whose meaning was not read, so whether that pin's enable was set elsewhere is
-  open. Its packet's data is established as `0x1ed` (the spin routine waits for the word at the programmed address to equal 493,
-  which is `0x100 | 0xed`, the vector), so a forced packet is a write of `0x100 | vector` to the programmed address,
+  open. Its packet's data is **inferred** to be `0x1ed`: what is established is that the spin routine waits for the word at the programmed address to equal 493,
+  which is `0x100 | 0xed`, the vector; nothing read writes 493 (the interrupt service routine was not read). If so, a forced packet is a write of `0x100 | vector` to the programmed address,
   the same shape the type-0 software path stores. Settling route: one physical read, below.
-- **Refused or lost interrupt packet.** **Unknown** (unchanged). Added check: the error-status table above has no bit
-  for a refused interrupt write; bits 17 to 21 are the link layer's own retry counters (inferred: it retransmits a
-  packet the far end did not accept), and bits 22 to 29 describe requests to the PIC and responses to its reads.
-  Nothing in `pcibr_error_intr_handler` or `pcibr_error_dump` handles an interrupt-write failure.
 
 - **A pending bit cleared at the Bedrock while the pin is still active**: no source read describes a Bedrock
   timer that sets it again. **Unknown**; the Bedrock page owns the processor-interface side.
@@ -386,20 +385,10 @@ Same labelling. Sources: SN2 `include/asm-ia64/sn/pci/bridge.h` lines 1512 to 15
 
 Labels as above. The question: for the 32-bit direct window, does a set bit or a clear bit select the byte-swapped
 lane assignment? Short answer: **a set bit selects the swapper, and "swapped" means the address-preserving lane
-map; a clear bit means the lane-preserving map.** This is established for XBridge and for what IRIX asks of a PIC;
-for the PIC silicon it is **inferred**, because no PIC specification is held and nothing measured the chip.
+map; a clear bit means the lane-preserving map.** This is **inferred** for the PIC, from the public header text, the
+vendor driver's flag routine and what public software sets; no PIC specification is held and nothing measured the chip.
 
-- **Lane map, XBridge (established, sibling chip).** The revision-A XBridge specification (revision 0.5, 1 October
-  1998, marked proprietary and confidential, held locally in `root/spec/`) defines `SWAP_DIRECT` at Device bit 19 as
-  "1 enables swapping in direct-mapped space" (Device register table, field list), and its byte-swapping appendix
-  gives the lane maps for a big-endian system (tables 103 and 111, processor-to-PCI direction). With swapping on, the
-  processor-bus byte lane 63:56 (the lowest address of a word) goes to PCI byte lane 7:0, so a byte keeps its address
-  across the bridge: a byte stream arrives in order. With swapping off, lane 63:56 goes to PCI lane 31:24, so a
-  32-bit value keeps its numeric value and a byte at address `a` shows up at address `a ^ 3` from the card's point of
-  view. The tables cover the processor-to-PCI direction. That the DMA direction is the mirror image is **inferred**:
-  the swapper is a lane permutation, and the appendix says swapping applies to PCI-to-Crosstalk in both mapping
-  modes. Hypothesis, not evidence, for PIC: it keeps the same field at the same bit (`pic.h` line 1645).
-- **IRIX 6.5.30 IP35 `pcibr.o` treats chip types 1 and 2 (XBridge and PIC) identically (established, read in full).**
+- **IRIX 6.5.30 IP35 `pcibr.o` treats chip types 1 and 2 identically (established, read in full; that type 1 is XBridge is inferred; type 2 is PIC as stated at the top of this page).**
   The device-register flag routine at `.text` 0x0 (it takes the bits it may change as its last argument: `0x898000` from `pcibr_dmamap_alloc` at 0x24e8 and
   `pcibr_dmatrans_addr` at 0x33cc, `0x8f8000` from them at 0x254c and 0x3474, `0x1100000` for the translated path; it reads the
   chip type halfword at record +0x72; the call targets are relocation-free `.text`+0, checked against the routine's prologue
@@ -408,7 +397,7 @@ for the PIC silicon it is **inferred**, because no PIC specification is held and
   type 0 (Bridge); the word-values flag (0x2000) clears bit 19 only for types 1 and 2 (0x174-0x198, 0x3ec-0x3f4)
   and bits 20:19 for type 0. The 64-bit attribute routine at 0x2228 maps the same two flags to address bit 55 (set for
   byte stream, clear for word values) for types 1 and 2. So the vendor driver treats "set" as the byte-stream setting
-  on a PIC exactly as on an XBridge, with no PIC-specific branch. `pcibr_endian_set` (0x3d70) is a second, older
+  on a type 2 chip exactly as on a type 1 chip, with no PIC-specific branch. `pcibr_endian_set` (0x3d70) is a second, older
   route: when the caller's two endianness arguments differ it sets bits 20:19 together on every chip type, otherwise
   clears them.
 - **Public SGI code carries the same convention in words (established as the authors' statement).** Linux 2.4 at
@@ -425,11 +414,11 @@ for the PIC silicon it is **inferred**, because no PIC specification is held and
   IOC3. OpenBSD `2df91d80c104636deeef8124252ddd5951b55fbf`, `sys/arch/sgi/xbow/xbridge.c` lines 2456 to 2467, sets
   bits 20 and 19 on every device except IOC3, IOC4 and RAD1, and clears both for those three. The pattern is the
   same everywhere: ordinary little-endian cards get the swapper on, SGI's own big-endian-aware IOC chips get it off.
-  The Linux author reports the O300 and O350 SCSI controller working with this setting. None of these ran with the
-  level inverted, so they cannot by themselves rule the inverted sense out for PIC.
+  None of these ran with the level inverted, and none states the sense in words, so they cannot by themselves rule
+  the inverted sense out for PIC.
 - **What IRIX does for the three IO9 devices (established for the flags, from the shipped objects).**
   - ISP12160, driver object `ql.o`: byte-stream plus 64-bit-address flags on every mapping (`fill_sg_elem` at 0x5618 to
-    0x5648 builds `0x2001460`; `ql_download_fw` at 0x6480 builds `0x2001060`; `ql_reset_interface` at 0x6acc builds
+    0x5648 builds `0x2001460` and `0x1001460` (the 64-bit-address flag is absent from the second); `ql_download_fw` at 0x6480 builds `0x2001060`; `ql_reset_interface` at 0x6acc builds
     `0x2001050`). Address bit 55 is set; the flag routine also sets bit 19 as a side effect of the byte-stream flag.
     The queue entries are still reversed in software per 32-bit word, which is what a byte-stream (address-preserving)
     path of a little-endian card needs on a big-endian host.
@@ -440,10 +429,11 @@ for the PIC silicon it is **inferred**, because no PIC specification is held and
     0x418); the per-mapping flags are only 0x10, 0x20 and 0x100, with no 64-bit flag. So the IOC4 uses the **32-bit
     direct window** and bit 19 is left as found.
   So no IO9 driver requests bit 19 for a 32-bit transfer, and the two drivers that rely on a particular lane map use
-  the 64-bit address attribute, which does not consult the Device register on XBridge (that exclusion is the
-  XBridge reading and is **unknown** for PIC). Bit 19's effect on a real PIC 32-bit transfer is therefore not
+  the 64-bit address attribute. Whether that path consults the Device register on a PIC is **unknown**. Bit 19's effect on a real PIC 32-bit transfer is therefore not
   exercised by these three drivers except for the IOC4, whose value is whatever the PROM left.
 - **What the PROM expects in the Device registers (established for the comparison; what it implies is inferred).**
+  Conflict: the check below sits on the path where the mode word's 0x40 bit is clear, while this page says a PIC takes the
+  0x40-set path (see the identification-word paths above), so it may never run for a PIC and the conclusion may be vacuous.
   On the path where the mode word's 0x40 bit is clear, `bridge_sanity` (0xc00000001fc4d0d8 to 0xc00000001fc4d174) compares
   the low words at +0x204, +0x20c, +0x214 and +0x21c with `0x18001000`, `0x18001002`, `0x18001004` and `0x18001005`, and
   counts and prints a mismatch. Bit 19 (`0x80000`) is clear in all four, so a part passing that check has bit 19 clear
@@ -451,7 +441,7 @@ for the PIC silicon it is **inferred**, because no PIC specification is held and
   is **unknown**. A search of the whole PROM for a store that sets bit 19 was not made: **unknown**. The IOC4's
   32-bit transfers therefore run with bit 19 clear unless something between reset and the driver sets it; the
   IRIX IOC4 driver does not.
-- **Consequence for a model.** Hardware-visible rule (established for XBridge, inferred for PIC): for 32-bit direct DMA
+- **Consequence for a model.** Hardware-visible rule (inferred for PIC): for 32-bit direct DMA
   with bit 19 **set**, a byte written at PCI byte lane `k` of an aligned word lands at the lowest-address-plus-`k`
   byte; with bit 19 **clear** it lands at `k ^ 3`. A model that represents memory as bytes by address needs the
   correction when the bit is **clear**, not when it is set. A model that applies a "swap" operation when the bit is

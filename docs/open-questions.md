@@ -128,9 +128,9 @@ Corrections found while tagging. These are not fixed here.
   data phase (chips/pic/README.md, "Interrupt packets" and "DMA address attributes"). Known: the pin-level status, the force
   registers, the per-dispatch force by both consumers. Tried: the SN2 public tree, the MIPS port, the IRIX 6.5.30 IP35
   `pcibr.o`. Next: a published PIC specification, or a bus capture of one interrupt write and one DMA burst.
-- **PIC direct-window lane sense (Device bit 19).** *[route: hardware residue, one read]* Settled by sibling evidence:
+- **PIC direct-window lane sense (Device bit 19).** *[route: hardware residue, one read]* Inferred from public software, not measured on a PIC:
   set selects the address-preserving lane map, clear the lane-preserving one (chips/pic/README.md, "Device-register
-  bit 19"). Not measured on a PIC. Smallest test, on the Origin 350 only and only after approval: first, offline, read the PROM's
+  bit 19"). Smallest test, on the Origin 350 only and only after approval: first, offline, read the PROM's
   ISP12160 disk path to learn whether it maps its buffers through the 32-bit direct window. If it does, from the PROM monitor
   after a successful disk listing, read the 8 bytes at PIC base + 0x210 (Device 2, the ISP12160 slot) once, with no writes,
   and note bit 19 together with whether the volume header's magic bytes read in address order in the PROM's buffer. A
@@ -138,7 +138,7 @@ Corrections found while tagging. These are not fixed here.
   written, no OS booted. If the PROM uses the 64-bit path instead, this read cannot discriminate and no cheaper test exists.
 - **PIC force register and enable gating.** *[route: hardware residue, small write test]* Whether a force-always write sends a
   packet while the pin's enable bit is clear. Smallest test, Origin 350, after approval, from the PROM monitor: pick a pin
-  no device uses (pins 4, 6 or 7 on the IO9 PIC), point that pin's host address (+0x130 + 8n) at a scratch RAM word with
+  no device uses (which pins the IO9 uses is unknown; the flush workaround's per-chip mask allows pins 4, 6 and 7 for one device kind, so check what is wired first), point that pin's host address (+0x130 + 8n) at a scratch RAM word with
   vector 0xed, leave the enable bit (+0x108 bit n) clear, write 1 to +0x180 + 8n, and read the word (a packet writes
   0x1ed); then set the enable bit and repeat. Safety: the pin is unwired, its address is RAM, and the sequence is the one the
   shipped flush path already performs; set the enable bit back to its starting value afterwards.
