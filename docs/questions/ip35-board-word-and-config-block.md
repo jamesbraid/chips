@@ -74,22 +74,22 @@ and `hubni.h` / `hubni_next.h` (SN1 headers); OpenBSD `sys/arch/sgi/sgi/ip27_mac
    | 7, 8 | 12, 23 | 0x549bab85 | 600 | 200 | 4 | 0xa | 2 |
    | 9 | 17 | 0x549bad85 | 700 | 200 | 4 | 0xa | 2 |
    | a | 18 | 0x549cad85 | 700 | 200 | 8 | 0xa | 2 |
-   | b | 19 | 0x549dad85 | 700 | 200 | field 5 | 0xa | 2 |
+   | b | 19 | 0x549dad85 | 700 | 200 | 16 | 0xa | 2 |
    | c | 20 | 0x549baf85 | 800 | 200 | 4 | 0xa | 2 |
    | d | 21 | 0x549caf85 | 800 | 200 | 8 | 0xa | 2 |
-   | e | 22 | 0x549daf85 | 800 | 200 | field 5 | 0xa | 2 |
+   | e | 22 | 0x549daf85 | 800 | 200 | 16 | 0xa | 2 |
 
    The "tap" is the secondary-cache clock tap, bits 28:25 of the mode word; "cache" is the three-bit size field,
-   bits 18:16 (1, 2, 3, 4 = 1, 2, 4, 8 MB by the public rows; the value 5 has no public row).
+   bits 18:16 (1 << (field - 1) MB: 1, 2, 3, 4, 5 = 1, 2, 4, 8, 16 MB; the PROM's printers decode the field the same way).
+   The full 29-row table, with the other classes and the clock-divisor arithmetic, is in
+   [ip35-prom-cpu-config-table.md](ip35-prom-cpu-config-table.md); the two pages agree row for row.
    **Agreement with a real Fuel:** the public transcript of a Fuel's processor listings shows 500 MHz / 2 MB /
    tap 0xa, 600 / 4 / 0xa, 700 R16000 / 4 / 0xc, 800 / 4 / 0xa and 900 / 8 / 0xb; those are nibbles 4 or 6, 7
    or 8, 3, c and 2. The same page's `flash -f` run for 800 MHz, 200 MHz bus and 4 MB prints the mode word
    0x549baf85, which is row 20 (nibble c). Independent of the PROM table, so the table is not merely self-consistent.
 6. **Established: failure path.** An index with row -1 makes the fallback return zero. The report routine
-   (outer 0x1fc1e104) then does not print the "board/PIMM PSC" report and takes its other branch; that branch
-   prints a message saying the PIMM/PSC type is unknown or the board has no EEPROM values (the string is at outer
-   offset 0x798e0; that this is the branch's text is **inferred** from the call structure, the branch itself not
-   followed to the print).
+   (outer 0x1fc1e104) then skips the "board/PIMM PSC" report and prints a message saying the PIMM/PSC type is
+   unknown or the board has no EEPROM values (string at outer offset 0x798e0, printed at 0x1fc1e1f0).
 7. **Unknown.** What a real processor module presents in bits 3:0 for each shipped option (the rows above bound
    the answer; they do not say which of the two aliases, 4 or 6, 7 or 8, a real 500 or 600 MHz module drives);
    whether bits 11:4 and 63:16 read zero on a Fuel; what class 0xc is on the hardware side. Route that would settle
