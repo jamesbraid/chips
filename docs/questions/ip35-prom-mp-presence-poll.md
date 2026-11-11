@@ -132,3 +132,11 @@ The pointer table holds these as 0x9200000001400150 (scratch 0, table word at se
 | presence count | 0x1fc647c8 | established |
 | configuration record per fitted slot | 0x1fc5fe00 to 0x1fc5fea0, 0x1fc54170 | established |
 | memory step and configuration word stores | 0x1fc6a8a0, 0x1fc54f14, 0x1fc56e28, 0x1fc57c20 | established |
+
+## PROM 6.211 (patch 7208) check
+
+Established. The marker-wait routine in 6.211 starts at 0x1fc6922c (8 bytes earlier than in 6.210) and is
+word-for-word identical to 6.210's 105 words except seven `jal` targets, which move with the shifted tail. The
+retry bound 0x30d40 is built at 0x1fc692d8 and 0x1fc692e0, the compare registers at 0x1fc692ac and 0x1fc692b8, and
+the partner-enable stores at 0x1fc69314 and 0x1fc693c0. Method: `hostfacts.py` on both payloads and a word compare
+of the two routines. The bound therefore holds for both shipped CPU PROMs.
