@@ -212,6 +212,12 @@ Corrections found while tagging. These are not fixed here.
   three bank-select stores (0x1fc65aa4, 0x1fc65b38, 0x1fc65b4c), are not reduced to one expression
   ([docs/questions/ip35-prom-memory-bank-config.md](questions/ip35-prom-memory-bank-config.md) items 3 and 5).
   Next: run the routine over a scripted carrier image with 64 MB to 1 GB banks; trace the branch ahead of 0x1fc65aa4.
+- **IP35 PROM: pending bank 0 bits 12 to 17 and the progress doublewords at 0x100000c0.** *[route: software now for
+  the users; hardware residue for the meaning]* The PROM tests and clears bank 0 bits 12 + slot, 14 + slot and
+  16 + slot, and stores progress codes at physical 0x100000c0 + 8 x slice; neither the bits' source nor the
+  doublewords' behaviour is read by any PROM routine found
+  ([docs/questions/ip35-prom-reset-barrier.md](questions/ip35-prom-reset-barrier.md) items 9 and 11).
+  Next: the readers of those doublewords (none found) and the interrupt-source list in a Bedrock reference.
 
 - **Tezro: the graphics board's revision digit in the base-I/O PROM's diagnostic, and the credit table's consumer.** *[route: software now for the first (read the diagnostic's code in the nested base-I/O image); a PROM-monitor read of widget 12 `+4` on hardware]* Open: which input the digit after "Buzz revision" comes from, and which routine indexes the PROM's fourteen-row credit table. Next: docs/questions/tezro-io-topology.md.
 
