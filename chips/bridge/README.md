@@ -100,7 +100,7 @@ Totals over the **41 rows** below (families count once each; a row graded for so
 | `0x58` | auxiliary error command word | r | both | `pcireg_linkside_err_get`; PROM error dump | read; the PROM prints it under "Aux error command word" | inferred |
 | `0x60` | response buffer error, upper | r | both | `pcireg_resp_err_buf_get`, `pcireg_resp_err_dev_get`, `pcireg_resp_err_get` | bits 19:16 returned as a buffer number (shift 16, mask `0xf`), bits 22:20 as a device number (shift 20, mask 7), bits 15:0 are address bits 47:32 | established |
 | `0x68` | response buffer error, lower | r | both | `pcireg_resp_err_addr_get` | address bits 31:0 | established |
-| `0x70` | test pin control | | | none | no shipped routine touches it | unknown: no software depends on it |
+| `0x70` | test pin control | rw | both | none | no shipped routine touches it. The published Bridge ASIC specification (rev 4.0, 3/27/97, section 3.2.15, table 20) gives bits 11:8 as test data out and four 2-bit pin-function selects at 7:6, 5:4, 3:2 and 1:0, all resetting to 0; the Xbridge ASIC specification (rev 0.5, section 6.2.15, table 51) widens it to eight selects and an 8-bit data field at 23:16. Which pins a board routes out is not stated | established (layout, from the two specifications), unknown (use: no software depends on it; settled by the census, which finds no access at 0x70 in any scanned image, and by the specifications, which describe it as a selector for test pin outputs) |
 
 ### Bridge block (offsets 0x80 to 0x298)
 
