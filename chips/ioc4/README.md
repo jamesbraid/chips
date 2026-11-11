@@ -25,6 +25,9 @@ Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, 
   a constant index.
 - Keyboard and mouse data registers are read by hand (the scan loses the join at the port choice, as in IOC3). Serial ports 1
   to 3 repeat port 0 at fixed distances read from `ioc4_serial_attach`.
+- Census rerun (2026-11-10, retools at the pinned commit, 154 sites) does not reach `0x204` to `0x210` either:
+  `pckm_pollcmd` (`ioc4_pckm.o`, same shape as the IOC3 routine) stores and loads through a per-port pointer chosen at
+  run time. Established from that routine, not census-visible; `include/ioc4_extra.h` carries the four offsets.
 - Reset values are unknown for every register.
 
 ## What identifies the chip (established)
