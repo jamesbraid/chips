@@ -563,13 +563,13 @@ repeated in the data (**inferred**: an interrupt is an ordinary write packet).
 
 **Where the packet lands depends on the host.**
 
-| Host | Address the widget is told to write | Source |
-|---|---|---|
-| HEART (Octane, Octane2) | offset `0x80` of HEART's own widget space, where the IRIX 6.5 base-release HEART header places an interrupt status register | OpenBSD `sys/arch/sgi/xbow/xheart.c` (`xbow_intr_address = 0x80`); Linux `arch/mips/sgi-ip30/ip30-xtalk.c` (`HEART_INTR_ADDR 0x80`) |
-| Hub (Origin 200/2000/Onyx2) | address bit 47 set, plus `0x0180_0000`, plus offset `0x90`, the processor interface's "write to set pending interrupts" register; the node number is merged in through each Bridge pin register | Linux `arch/mips/sgi-ip27/ip27-xtalk.c` (`BIT_ULL(47) + 0x01800000 + PI_INT_PEND_MOD`), `arch/mips/pci/pci-xtalk-bridge.c`, `asm/sn/sn0/hubpi.h` |
-| Bedrock | not examined for this page | |
+| Host | Address the widget is told to write | Source | Grade |
+|---|---|---|---|
+| HEART (Octane, Octane2) | offset `0x80` of HEART's own widget space, where the IRIX 6.5 base-release HEART header places an interrupt status register | OpenBSD `sys/arch/sgi/xbow/xheart.c` (`xbow_intr_address = 0x80`); Linux `arch/mips/sgi-ip30/ip30-xtalk.c` (`HEART_INTR_ADDR 0x80`) | established (two public drivers agree on the value; that it is an interrupt status register is the IRIX header's statement, inferred here) |
+| Hub (Origin 200/2000/Onyx2) | address bit 47 set, plus `0x0180_0000`, plus offset `0x90`, the processor interface's "write to set pending interrupts" register; the node number is merged in through each Bridge pin register | Linux `arch/mips/sgi-ip27/ip27-xtalk.c` (`BIT_ULL(47) + 0x01800000 + PI_INT_PEND_MOD`), `arch/mips/pci/pci-xtalk-bridge.c`, `asm/sn/sn0/hubpi.h` | established (the public Linux sources; not cross-checked against a shipped binary) |
+| Bedrock | not examined for this page | | unknown. Settling test: in the Origin 350 generation kernel object, read the routine that programs a Bedrock's interrupt destination (the I/O interface register at `0x138`, chips/bedrock/README.md) for the address it hands each widget |
 
-**Established** for the three rows above as software settings. What the host does
+**Established** for the first two rows above as software settings (public driver statements); the Bedrock row is unknown. What the host does
 with the packet (decode vector, set a pending bit, raise a processor interrupt)
 is host-specific.
 
