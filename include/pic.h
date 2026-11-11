@@ -13,7 +13,7 @@
 
 /* ---- registers (8-byte slots) ------------------------------------ */
 
-#define PIC_PCIBR_BRIDGE_PTR               0x000000   /* [E] width 4/8 byte(s), access r; name [I] from pcibr_bridge_ptr, prom_c00000001fc41f38, id; reached in 5 sites, 3 routine(s) */
+#define PIC_PCIBR_BRIDGE_PTR               0x000000   /* [E] width 4/8 byte(s), access r; name [I] from pcibr_bridge_ptr, id; reached in 5 sites, 3 routine(s) */
 #define   PIC_PCIBR_BRIDGE_PTR_B_10_0      0x7ff   /* [I] load mask: the code isolates these bits (90 sites) */
 #define   PIC_PCIBR_BRIDGE_PTR_B_15_0      0xffff   /* [I] load mask: the code isolates these bits (108 sites) */
 #define PIC_BUS_ERR                        0x000018   /* [E] width 8 byte(s), access r; name [I] from bus_err; reached in 1 sites, 1 routine(s) */
@@ -39,8 +39,8 @@
 #define PIC_TYPE1_CNTR                     0x0000c8   /* [E] width 8 byte(s), access rw; name [I] from type1_cntr; reached in 2 sites, 2 routine(s) */
 #define PIC_PCI_BUS_ADDR                   0x0000d8   /* [E] width 8 byte(s), access r; name [I] from pci_bus_addr, pci_bus_addr_addr; reached in 2 sites, 2 routine(s) */
 #define PIC_INTR_STATUS                    0x000100   /* [E] width 8 byte(s), access r; name [I] from intr_status; reached in 1 sites, 1 routine(s) */
-#define PIC_INTR_ENABLE                    0x000108   /* [E] width 8 byte(s), access rw; name [I] from intr_enable, prom_c00000001fc41f38; reached in 7 sites, 5 routine(s) */
-#define PIC_INTR_RESET                     0x000110   /* [E] width 8 byte(s), access rw; name [I] from intr_reset, prom_c00000001fc41f38; reached in 4 sites, 3 routine(s) */
+#define PIC_INTR_ENABLE                    0x000108   /* [E] width 8 byte(s), access rw; name [I] from intr_enable; reached in 7 sites, 5 routine(s) */
+#define PIC_INTR_RESET                     0x000110   /* [E] width 8 byte(s), access rw; name [I] from intr_reset; reached in 4 sites, 3 routine(s) */
 #define PIC_INTR_MODE                      0x000118   /* [E] width 8 byte(s), access rw; name [I] from intr_mode; reached in 6 sites, 4 routine(s) */
 #define PIC_INTR_DEVICE                    0x000120   /* [E] width 8 byte(s), access rw; name [I] from intr_device; reached in 6 sites, 4 routine(s) */
 #define PIC_INTR_HOST_ERR                  0x000128   /* [E] width 8 byte(s), access rw; name [I] from intr_host_err; reached in 2 sites, 2 routine(s) */

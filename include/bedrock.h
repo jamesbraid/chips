@@ -6,6 +6,9 @@
  * Offsets and widths: [E] a load or store in the cited routine reaches that offset with that width.
  * Names: [I] from the accessor routine names the shipped objects carry. Fields: [I] masks and constants
  * the code applies; their meaning is not read. Reset values: [U] throughout.
+ * Views: the offset is the 8-byte slot address. "4 at slot+4" is a 32-bit load or store at that
+ * address plus 4, the low word of the slot on a big-endian machine; a 64-bit access to the slot
+ * address reaches the same register.
  * Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000
  * above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the
  * node-indexed alias (the code adds the node number << 33); the same register is at offset - 0x800000
@@ -19,17 +22,46 @@
 /* ---- PROCESSOR_INTERFACE_LIKE: low window: interrupt send, clocks, error masks, time counter [I, routine-name prefixes] --- */
 
 #define BEDROCK_HANDLE_CAC_BUSERR          0x000018   /* [E] width 8 byte(s), access r; name [I] from handle_cac_buserr; reached in 1 sites, 1 routine(s) */
-#define BEDROCK_SUB_1BCF0                  0x000020   /* [E] width 8 byte(s), access r; name [I] from sub_1bcf0, get_slice, getcpuid; reached in 10 sites, 8 routine(s) */
-#define   BEDROCK_SUB_1BCF0_B_0            0x1   /* [I] load mask: the code isolates these bits (2 sites) */
-#define BEDROCK_MEMORY_ISCALIAS            0x000028   /* [E] width 8 byte(s), access r; name [I] from memory_iscalias, page_local_calias; reached in 2 sites, 2 routine(s) */
-#define BEDROCK_NIC_GET_PHASE_BITS         0x000078   /* [E] width 8 byte(s), access r; name [I] from nic_get_phase_bits; reached in 1 sites, 1 routine(s) */
-#define BEDROCK_SUB_20EE0                  0x000090   /* [E] width 8 byte(s), access w; name [I] from sub_20ee0, sub_200f0, sub_20250; reached in 7 sites, 6 routine(s) */
+#define BEDROCK_SUB_1BCF0                  0x000020   /* [E] width 8 byte(s), access rw; name [I] from sub_1bcf0, get_slice, getcpuid; reached in 115 sites, 24 routine(s) */
+#define   BEDROCK_SUB_1BCF0_V_CAFE         0xcafe   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_SUB_1BCF0_B_0            0x1   /* [I] load mask: the code isolates these bits (32 sites) */
+#define   BEDROCK_SUB_1BCF0_B_1            0x2   /* [I] load mask: the code isolates these bits (1 sites) */
+#define BEDROCK_MEMORY_ISCALIAS            0x000028   /* [E] width 8 byte(s), access rw; name [I] from memory_iscalias, page_local_calias; reached in 3 sites, 3 routine(s) */
+#define   BEDROCK_MEMORY_ISCALIAS_V_1      0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define BEDROCK_REG_000040                 0x000040   /* [E] width 8 byte(s), access r; name [I] from no accessor name; reached in 2 sites, 1 routine(s) */
+#define BEDROCK_NIC_GET_PHASE_BITS         0x000078   /* [E] width 8 byte(s), access r; name [I] from nic_get_phase_bits; reached in 2 sites, 2 routine(s) */
+#define BEDROCK_SUB_20EE0                  0x000090   /* [E] width 8 byte(s), access w; name [I] from sub_20ee0, sub_200f0, sub_20250; reached in 9 sites, 7 routine(s) */
 #define   BEDROCK_SUB_20EE0_V_40           0x40   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   BEDROCK_SUB_20EE0_V_64           0x64   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   BEDROCK_SUB_20EE0_V_6B           0x6b   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   BEDROCK_SUB_20EE0_V_7            0x7   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
-#define BEDROCK_SUB_200F0                  0x000098   /* [E] width 8 byte(s), access r; name [I] from sub_200f0, sub_20ee0, sub_20250; reached in 9 sites, 6 routine(s) */
-#define BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD 0x0000a0   /* [E] width 4/8 byte(s), access r; name [I] from cpuprom_detailed_inventory_info_add, prom_has_vga_support, sub_20250; reached in 6 sites, 4 routine(s) */
+#define   BEDROCK_SUB_20EE0_B_0            0x1   /* [I] store mask: the code writes these bits (1 sites) */
+#define BEDROCK_SUB_200F0                  0x000098   /* [E] width 4/8 byte(s), access r; name [I] from sub_200f0, sub_20ee0, sub_20250; reached in 13 sites, 8 routine(s) */
+#define BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD 0x0000a0   /* [E] width 4/8 byte(s), access r; name [I] from cpuprom_detailed_inventory_info_add, prom_has_vga_support, sub_20250; reached in 9 sites, 5 routine(s) */
+#define   BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD_B_0 0x1   /* [I] load mask: the code isolates these bits (3 sites) */
+#define BEDROCK_REG_000108                 0x000108   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from no accessor name; reached in 24 sites, 2 routine(s) */
+#define   BEDROCK_REG_000108_V_1           0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_2           0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_2A          0x2a   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_2B          0x2b   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_3           0x3   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_35          0x35   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_36          0x36   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_4           0x4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_5           0x5   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_5D          0x5d   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_5E          0x5e   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_5F          0x5f   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_60          0x60   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_81          0x81   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_83          0x83   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_84          0x84   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_A           0xa   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_B           0xb   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_B4          0xb4   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_C           0xc   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_E           0xe   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_000108_V_F           0xf   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define BEDROCK_STARTKGCLOCK               0x000118   /* [E] width 8 byte(s), access w; name [I] from startkgclock, prof_intr; reached in 2 sites, 2 routine(s) */
 #define BEDROCK_ACKTMOCLOCK                0x000120   /* [E] width 8 byte(s), access w; name [I] from acktmoclock; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_ACKTMOCLOCK_128            0x000128   /* [E] width 8 byte(s), access w; name [I] from acktmoclock; reached in 1 sites, 1 routine(s) */
@@ -41,7 +73,7 @@
 #define BEDROCK_ERR_INT_BLOCK_MASK         0x000408   /* [E] width 8 byte(s), access rw; name [I] from err_int_block_mask, err_int_unblock_mask, md_int_block; reached in 10 sites, 6 routine(s) */
 #define BEDROCK_ERR_INT_BLOCK_MASK_410     0x000410   /* [E] width 8 byte(s), access rw; name [I] from err_int_block_mask, err_int_unblock_mask, md_int_block; reached in 10 sites, 6 routine(s) */
 #define BEDROCK_HUBPI_SPOOL_GET_NEXT       0x000418   /* [E] width 8 byte(s), access r; name [I] from hubpi_spool_get_next; reached in 1 sites, 1 routine(s) */
-#define BEDROCK_HUBPI_SPOOL_GET_NEXT_420   0x000420   /* [E] width 8 byte(s), access r; name [I] from hubpi_spool_get_next; reached in 1 sites, 1 routine(s) */
+#define BEDROCK_HUBPI_SPOOL_GET_NEXT_420   0x000420   /* [E] width 8 byte(s), access r; name [I] from hubpi_spool_get_next; reached in 2 sites, 2 routine(s) */
 #define BEDROCK_HUBPI_SPOOL_GET_NEXT_430   0x000430   /* [E] width 8 byte(s), access r; name [I] from hubpi_spool_get_next; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_HUBPI_SPOOL_GET_NEXT_440   0x000440   /* [E] width 8 byte(s), access r; name [I] from hubpi_spool_get_next; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_HUBPI_SPOOL_GET_NEXT_448   0x000448   /* [E] width 8 byte(s), access w; name [I] from hubpi_spool_get_next; reached in 1 sites, 1 routine(s) */
@@ -51,24 +83,39 @@
 #define BEDROCK_HUBPI_EINT_HANDLER_4C8     0x0004c8   /* [E] width 8 byte(s), access rw; name [I] from hubpi_eint_handler; reached in 2 sites, 1 routine(s) */
 #define   BEDROCK_HUBPI_EINT_HANDLER_4C8_B_7_0 0xff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define BEDROCK_HUBPI_EINT_HANDLER_4D0     0x0004d0   /* [E] width 8 byte(s), access rw; name [I] from hubpi_eint_handler; reached in 2 sites, 1 routine(s) */
-#define BEDROCK_RESTORE_HUB_ERR            0x030100   /* [E] width 8 byte(s), access r; name [I] from restore_hub_err, sub_2973c, us_delay; reached in 96 sites, 50 routine(s) */
+#define BEDROCK_RESTORE_HUB_ERR            0x030100   /* [E] width 8 byte(s), access rw; name [I] from restore_hub_err, sub_2973c, us_delay; reached in 103 sites, 56 routine(s) */
 
 /* ---- registers --------------------------------------------------- */
 
+#define BEDROCK_REG_400110                 0x400110   /* [E] width 8 byte(s), access w; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
+#define   BEDROCK_REG_400110_V_FF01        0xff01   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define BEDROCK_REG_400128                 0x400128   /* [E] width 8 byte(s), access rw; name [I] from no accessor name; reached in 3 sites, 1 routine(s) */
+#define   BEDROCK_REG_400128_V_100         0x100   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_400128_B_13          0x2000   /* [I] load mask: the code isolates these bits (1 sites) */
 #define BEDROCK_II_LLP_ERROR_MONITOR       0x400130   /* [E] width 8 byte(s), access rw; name [I] from ii_llp_error_monitor; reached in 2 sites, 1 routine(s) */
 #define   BEDROCK_II_LLP_ERROR_MONITOR_B_15_0 0xffff   /* [I] load mask: the code isolates these bits (2 sites) */
-#define BEDROCK_SUB_3D1D8                  0x4001f8   /* [E] width 8 byte(s), access w; name [I] from sub_3d1d8; reached in 2 sites, 1 routine(s) */
+#define BEDROCK_SUB_3D1D8                  0x4001f8   /* [E] width 8 byte(s), access w; name [I] from sub_3d1d8; reached in 4 sites, 2 routine(s) */
+#define   BEDROCK_SUB_3D1D8_V_1            0x1   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define   BEDROCK_SUB_3D1D8_V_10000        0x10000   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
 #define   BEDROCK_SUB_3D1D8_V_20000        0x20000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 
 /* ---- NETWORK_INTERFACE_LIKE: ports, router tables, a counter [I, routine-name prefixes] --- */
 
-#define BEDROCK_SUB_1BCF0_600000           0x600000   /* [E] width 8 byte(s), access r; name [I] from sub_1bcf0, get_nasid, is_fine_dirmode; reached in 4 sites, 3 routine(s) */
+#define BEDROCK_SUB_1BCF0_600000           0x600000   /* [E] width 8 byte(s), access r; name [I] from sub_1bcf0, get_nasid, is_fine_dirmode; reached in 16 sites, 13 routine(s) */
 #define   BEDROCK_SUB_1BCF0_600000_B_1_0   0x3   /* [I] load mask: the code isolates these bits (2 sites) */
-#define   BEDROCK_SUB_1BCF0_600000_B_7_0   0xff   /* [I] load mask: the code isolates these bits (2 sites) */
+#define   BEDROCK_SUB_1BCF0_600000_B_6_0   0x7f   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   BEDROCK_SUB_1BCF0_600000_B_7_0   0xff   /* [I] load mask: the code isolates these bits (5 sites) */
 #define BEDROCK_SUB_1BCF0_604020           0x604020   /* [E] width 8 byte(s), access r; name [I] from sub_1bcf0; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_SUB_1BCF0_604028           0x604028   /* [E] width 8 byte(s), access r; name [I] from sub_1bcf0; reached in 1 sites, 1 routine(s) */
-#define BEDROCK_SUB_28E3C                  0x604200   /* [E] width 8 byte(s), access r; name [I] from sub_28e3c, nanotime_syscall, init_timebase; reached in 58 sites, 33 routine(s) */
+#define BEDROCK_SUB_28E3C                  0x604200   /* [E] width 8 byte(s), access rw; name [I] from sub_28e3c, nanotime_syscall, init_timebase; reached in 67 sites, 36 routine(s) */
+#define   BEDROCK_SUB_28E3C_B_13_4         0x3ff0   /* [I] load mask: the code isolates these bits (3 sites) */
 #define   BEDROCK_SUB_28E3C_B_9_0          0x3ff   /* [I] load mask: the code isolates these bits (58 sites) */
+#define BEDROCK_REG_608000                 0x608000   /* [E] width 8 byte(s), access w; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
+#define BEDROCK_REG_608008                 0x608008   /* [E] width 8 byte(s), access rw; name [I] from no accessor name; reached in 17 sites, 5 routine(s) */
+#define   BEDROCK_REG_608008_V_7F80000     0x7f80000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define BEDROCK_REG_608010                 0x608010   /* [E] width 8 byte(s), access rw; name [I] from no accessor name; reached in 3 sites, 1 routine(s) */
+#define   BEDROCK_REG_608010_V_7           0x7   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define   BEDROCK_REG_608010_B_8           0x100   /* [I] load mask: the code isolates these bits (1 sites) */
 #define BEDROCK_SUB_11984                  0x680000   /* [E] width 8 byte(s), access r; name [I] from sub_11984, part_discovery; reached in 2 sites, 2 routine(s) */
 #define   BEDROCK_SUB_11984_B_0            0x1   /* [I] load mask: the code isolates these bits (1 sites) */
 #define BEDROCK_SUB_10C0                   0x680008   /* [E] width 8 byte(s), access w; name [I] from sub_10c0, ni_reset_port; reached in 2 sites, 2 routine(s) */
@@ -90,8 +137,14 @@
 #define BEDROCK_SUB_1BCF0_780000           0x780000   /* [E] width 8 byte(s), access r; name [I] from sub_1bcf0; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_MDIR_XLATE_ADDR_MEM        0x780008   /* [E] width 8 byte(s), access r; name [I] from mdir_xlate_addr_mem, mdir_xlate_addr_pdir, mdir_xlate_addr_sdir; reached in 3 sites, 3 routine(s) */
 #define   BEDROCK_MDIR_XLATE_ADDR_MEM_B_1_0 0x3   /* [I] load mask: the code isolates these bits (3 sites) */
+#define BEDROCK_REG_790010                 0x790010   /* [E] width 8 byte(s), access w; name [I] from no accessor name; reached in 2 sites, 2 routine(s) */
+#define BEDROCK_REG_7A0000                 0x7a0000   /* [E] width 8 byte(s), access r; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
+#define   BEDROCK_REG_7A0000_B_11_0        0xfff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define BEDROCK_REG_7A0008                 0x7a0008   /* [E] width 8 byte(s), access rw; name [I] from no accessor name; reached in 2 sites, 1 routine(s) */
 #define BEDROCK_DOACVEC                    0x7a0038   /* [E] width 8 byte(s), access r; name [I] from doacvec; reached in 1 sites, 1 routine(s) */
 #define   BEDROCK_DOACVEC_B_0              0x1   /* [I] load mask: the code isolates these bits (1 sites) */
+#define BEDROCK_REG_7C0018                 0x7c0018   /* [E] width 8 byte(s), access r; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
+#define BEDROCK_REG_7E0018                 0x7e0018   /* [E] width 8 byte(s), access r; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
 
 /* ---- PROCESSOR_INTERFACE_ALIAS: second alias: dump and error routines [I, routine-name prefixes] --- */
 
@@ -102,12 +155,14 @@
 #define BEDROCK_MLRESET                    0x800028   /* [E] width 8 byte(s), access rw, indexed (family base); name [I] from mlreset, move_buffer; reached in 2 sites, 2 routine(s) */
 #define BEDROCK_PER_HUB_INIT               0x800038   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from per_hub_init; reached in 1 sites, 1 routine(s) */
 #define   BEDROCK_PER_HUB_INIT_V_200000    0x200000   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
+#define BEDROCK_REG_800040                 0x800040   /* [E] width 8 byte(s), access r; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_HUB_ERROR_INIT             0x800040   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from hub_error_init; reached in 2 sites, 1 routine(s) */
+#define BEDROCK_REG_800048                 0x800048   /* [E] width 8 byte(s), access r; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_HUB_ERROR_INIT_800048      0x800048   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from hub_error_init; reached in 2 sites, 1 routine(s) */
 #define BEDROCK_HUB_ERROR_INIT_800050      0x800050   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from hub_error_init; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_HUB_ERROR_INIT_800058      0x800058   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from hub_error_init; reached in 1 sites, 1 routine(s) */
-#define BEDROCK_SUB_1BCF0_800090           0x800090   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from sub_1bcf0, cleanup_remote_pi, intr_connect_level; reached in 8 sites, 7 routine(s) */
-#define   BEDROCK_SUB_1BCF0_800090_V_100   0x100   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
+#define BEDROCK_SUB_1BCF0_800090           0x800090   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from sub_1bcf0, cleanup_remote_pi, intr_connect_level; reached in 9 sites, 8 routine(s) */
+#define   BEDROCK_SUB_1BCF0_800090_V_100   0x100   /* [I] a constant the code writes here (3 sites); meaning unknown [U] */
 #define   BEDROCK_SUB_1BCF0_800090_V_64    0x64   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define BEDROCK_BRL1_INTR_POLL             0x800098   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from brl1_intr_poll, intr_connect_level; reached in 3 sites, 2 routine(s) */
 #define   BEDROCK_BRL1_INTR_POLL_B_4       0x10   /* [I] load mask: the code isolates these bits (1 sites) */
