@@ -1,14 +1,21 @@
 variant	register	source	kind	bits_or_value	sites	functions	example
 ?	0x1c	store	const	0x400000	3	1	pckm_reinit_lock@1074
+?	0x1c	store	const	0x3c0000	3	1	plp_dma@2d44
 ?	0x1c	load	mask	0	9	1	ioc3_wrflush@1a88
 ?	0x24	store	const	0xffff	2	1	ioc3_write_ireg@1e4
 ?	0x24	store	const	0x7f0000	2	1	ioc3_write_ireg@1e4
 ?	0x28	store	const	0xae5e	3	1	ioc3_attach@4f0
 ?	0x28	store	const	0x70000	3	1	ioc3_attach@4f0
+?	0x28	load	shift	shift 42	3	1	plp_dma_reset@30ec
+?	0x28	load	shift	shift 41	3	1	plp_dma_reset@3110
 ?	0x34	store	const	0x20	3	1	ef_phyunreset@ed0
 ?	0x34	store	const	0x10000	2	1	eiattach@570
 ?	0x38	store	const	0x2	2	1	eiattach@568
 ?	0x54	store	const	0x1	3	1	ef_phyunreset@ef8
+?	0x88	store	const	0x40000000	6	2	plpintr@27a8
+?	0x8c	store	const	0x80000000	3	1	plp_dma@2d08
+?	0x8c	store	const	0x40000000	3	1	plp_dma_reset@30e0
+?	0x98	store	const	0x40000000	3	1	plpintr@26e8
 ?	0xb8	store	const	0x20000000	15	5	ioc3_open@10a4
 ?	0xb8	store	const	0x80000000	3	1	hardware_init@7fc
 ?	0xb8	store	const	0x8000000	3	1	ioc3_read@20d0
