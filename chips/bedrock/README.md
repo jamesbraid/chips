@@ -365,30 +365,30 @@ tables and routine names; they are not specification names.
 
 | block offset | register | access seen | who touches it (`kernel.o`) | what the code does | grade |
 |---|---|---|---|---|---|
-| PI `0x040`, `0x048` | CPU present A, B | r | `hub_error_init` | read per PI and combined with the enable word of the same side | I |
-| PI `0x050`, `0x058` | CPU enable A, B | r | `hub_error_init`, `save_hub_pi_error` | when the A word is zero the saved pending word has every CPU A bit cleared (mask `0xfffffffaab555555`), when the B word is zero every CPU B bit (mask `0xfffffffd55aaaaaa`) | E |
-| PI `0x400` | error interrupt pending | rw | `hubpi_eint_handler`, `hub_error_clear`, `handle_uncac_buserr`, `save_hub_pi_error` | bits 0 to 34 named below; handler writes the one bit it handled; `hub_error_clear` writes all ones | E (bits; that a write of one clears is inferred) |
-| PI `0x408`, `0x410` | error interrupt mask A, B | rw | `hubpi_eint_handler`, `hub_error_init` | handler ANDs pending with the mask of its own CPU side (side from bit 0 of a per-CPU slice byte); init stores fatal or miscellaneous masks and clears bit 21 in A and bit 20 in B | E |
-| PI `0x418`, `0x420` | error spool address A, B | r | `hub_error_init`, `show_hub_pi_err` | read per side and kept in the per-node record; `show_hub_pi_err` walks 8-byte entries from it | I |
-| PI `0x428` | error spool size | r | `hub_error_init`, `show_hub_pi_err` | when nonzero the spool size is `4096 << (value - 1)` bytes | E (the byte unit follows from the pointer wrap in `hubpi_spool_get_next`) |
-| PI `0x430`, `0x450` | error status 0 A, B | r | `save_hub_pi_error`, `show_hub_pi_err` | saved only when bit 63 is set; fields below | E |
-| PI `0x438`, `0x458` | status 0 A, B, second address | w | `hub_error_clear` | all ones written, in the same routine and at the same step as the writes that re-arm the pending register and the spurious message headers; no held routine reads the alias back | U (role). Settled by: a published Bedrock register list (none held), or on a node controller a read of status 0 before and after a write to the alias; no further binary route, since no held code reads it |
-| PI `0x440`, `0x460` | error status 1 A, B | r | `save_hub_pi_error`, `show_hub_pi_err` | fields below | E |
-| PI `0x448`, `0x468` | status 1 A, B, second address | w | `hub_error_init`, `hubpi_spool_get_next` | zero written for every node's A and B pair at init (a loop in `hub_error_init`), and zero written again by `hubpi_spool_get_next` after it has read status 0 and 1 (re-read in the kernel object: in address order the store comes after the two status loads) | U (role); inferred only that the second write releases the latched status. Settled by: a published Bedrock register list (none held), or a hardware read of status 1 before and after a write to the alias |
-| PI `0x4c8` | spurious message header 0 | rw | `hubpi_eint_handler`, `save_hub_pi_error`, `hub_error_clear` | fields below; zero written to re-arm | E |
-| PI `0x4d0` | spurious message header 1 | rw | same | bits 63:53 message source; zero written to re-arm | E |
-| II `0x008` | widget status | r | `hubii_eint_handler`, `save_hub_io_error`, `hubii_check_widget_disabled` | bit 32 error ("crazy"); with it set, bit 9 retry timeout, bit 5 tail timeout, bit 4 credit timeout name the reason | E |
-| II `0x138` | interrupt destination | rw | `hubii_eint_init`, `hubii_eint_handler`, `hub_error_clear` | bits 6:0 level, bit 8 PI side, bits 16:9 node, bit 24 set at init, bit 28 cleared by the handler and by `hub_error_clear` | E (fields; the enable and sent meaning of bits 24 and 28 is inferred) |
-| II `0x198 + 8i`, i = 0 to 8 | pending request buffer entries (PRB) | rw | `hubiio_prb_error_handler`, `hub_error_clear`, `dump_crb` | entry 0 is widget 0, entries 1 to 8 widgets 8 to 15; only bit 48 is tested; bits 48 to 51 named below | E |
-| II `0x1e8` | shutdown status | r | `hubii_eint_handler`, `bte_error_handler`, `hub_xp_error_handler` | bit 0 widget 0 shut down, bit 4 BTE 0, bit 8 BTE 1 | E |
-| II `0x1f8` | error clear | w | `hubii_eint_handler`, `hub_error_clear` | `0xffffff` after the buffers are handled; `hub_error_clear` writes all ones | E (the per-source meaning of the bits is inferred) |
-| II `0x220`, `0x228` | error header 1, 2 | r | `save_hub_io_ieph`, `show_hub_io_ieph` | fields below; saved raw | E |
-| II `0x400 + 0x20i`, i = 0 to 14 | CRB entry A | r | `hubiio_crb_error_handler`, `save_hub_io_crb`, `dump_crb` | fields below | E |
-| II `0x408 + 0x20i` | CRB entry B | r | same | bits 32:30 and 41:40 are compared with constants to tell a BTE entry from a processor one; fields not named in the dump | I |
-| II `0x410 + 0x20i` | CRB entry C | r | same | bit 48 chooses which bit of entry B is handed to the BTE handler | I |
-| II `0x10000`, `0x20000` | BTE 0, BTE 1 status | r | `save_hub_io_error` | bits 15:0 length in cache lines, bit 16 error | E |
+| PI `0x040`, `0x048` | CPU present A, B | r | `hub_error_init` | read per PI and combined with the enable word of the same side | inferred |
+| PI `0x050`, `0x058` | CPU enable A, B | r | `hub_error_init`, `save_hub_pi_error` | when the A word is zero the saved pending word has every CPU A bit cleared (mask `0xfffffffaab555555`), when the B word is zero every CPU B bit (mask `0xfffffffd55aaaaaa`) | established |
+| PI `0x400` | error interrupt pending | rw | `hubpi_eint_handler`, `hub_error_clear`, `handle_uncac_buserr`, `save_hub_pi_error` | bits 0 to 34 named below; handler writes the one bit it handled; `hub_error_clear` writes all ones | established (bits; that a write of one clears is inferred) |
+| PI `0x408`, `0x410` | error interrupt mask A, B | rw | `hubpi_eint_handler`, `hub_error_init` | handler ANDs pending with the mask of its own CPU side (side from bit 0 of a per-CPU slice byte); init stores fatal or miscellaneous masks and clears bit 21 in A and bit 20 in B | established |
+| PI `0x418`, `0x420` | error spool address A, B | r | `hub_error_init`, `show_hub_pi_err` | read per side and kept in the per-node record; `show_hub_pi_err` walks 8-byte entries from it | inferred |
+| PI `0x428` | error spool size | r | `hub_error_init`, `show_hub_pi_err` | when nonzero the spool size is `4096 << (value - 1)` bytes | established (the byte unit follows from the pointer wrap in `hubpi_spool_get_next`) |
+| PI `0x430`, `0x450` | error status 0 A, B | r | `save_hub_pi_error`, `show_hub_pi_err` | saved only when bit 63 is set; fields below | established |
+| PI `0x438`, `0x458` | status 0 A, B, second address | w | `hub_error_clear` | all ones written, in the same routine and at the same step as the writes that re-arm the pending register and the spurious message headers; no held routine reads the alias back | unknown (role). Settled by: a published Bedrock register list (none held), or on a node controller a read of status 0 before and after a write to the alias; no further binary route, since no held code reads it |
+| PI `0x440`, `0x460` | error status 1 A, B | r | `save_hub_pi_error`, `show_hub_pi_err` | fields below | established |
+| PI `0x448`, `0x468` | status 1 A, B, second address | w | `hub_error_init`, `hubpi_spool_get_next` | zero written for every node's A and B pair at init (a loop in `hub_error_init`), and zero written again by `hubpi_spool_get_next` after it has read status 0 and 1 (re-read in the kernel object: in address order the store comes after the two status loads) | unknown (role); inferred only that the second write releases the latched status. Settled by: a published Bedrock register list (none held), or a hardware read of status 1 before and after a write to the alias |
+| PI `0x4c8` | spurious message header 0 | rw | `hubpi_eint_handler`, `save_hub_pi_error`, `hub_error_clear` | fields below; zero written to re-arm | established |
+| PI `0x4d0` | spurious message header 1 | rw | same | bits 63:53 message source; zero written to re-arm | established |
+| II `0x008` | widget status | r | `hubii_eint_handler`, `save_hub_io_error`, `hubii_check_widget_disabled` | bit 32 error ("crazy"); with it set, bit 9 retry timeout, bit 5 tail timeout, bit 4 credit timeout name the reason | established |
+| II `0x138` | interrupt destination | rw | `hubii_eint_init`, `hubii_eint_handler`, `hub_error_clear` | bits 6:0 level, bit 8 PI side, bits 16:9 node, bit 24 set at init, bit 28 cleared by the handler and by `hub_error_clear` | established (fields; the enable and sent meaning of bits 24 and 28 is inferred) |
+| II `0x198 + 8i`, i = 0 to 8 | pending request buffer entries (PRB) | rw | `hubiio_prb_error_handler`, `hub_error_clear`, `dump_crb` | entry 0 is widget 0, entries 1 to 8 widgets 8 to 15; only bit 48 is tested; bits 48 to 51 named below | established |
+| II `0x1e8` | shutdown status | r | `hubii_eint_handler`, `bte_error_handler`, `hub_xp_error_handler` | bit 0 widget 0 shut down, bit 4 BTE 0, bit 8 BTE 1 | established |
+| II `0x1f8` | error clear | w | `hubii_eint_handler`, `hub_error_clear` | `0xffffff` after the buffers are handled; `hub_error_clear` writes all ones | established (the per-source meaning of the bits is inferred) |
+| II `0x220`, `0x228` | error header 1, 2 | r | `save_hub_io_ieph`, `show_hub_io_ieph` | fields below; saved raw | established |
+| II `0x400 + 0x20i`, i = 0 to 14 | CRB entry A | r | `hubiio_crb_error_handler`, `save_hub_io_crb`, `dump_crb` | fields below | established |
+| II `0x408 + 0x20i` | CRB entry B | r | same | bits 32:30 and 41:40 are compared with constants to tell a BTE entry from a processor one; fields not named in the dump | inferred |
+| II `0x410 + 0x20i` | CRB entry C | r | same | bit 48 chooses which bit of entry B is handed to the BTE handler | inferred |
+| II `0x10000`, `0x20000` | BTE 0, BTE 1 status | r | `save_hub_io_error` | bits 15:0 length in cache lines, bit 16 error | established |
 
-Totals: 22 rows, graded **16 established, 4 inferred, 2 unknown**. The sub-items inside E rows that are only inferred or unknown are listed in the open questions.
+Totals: 22 rows, graded **16 established, 4 inferred, 2 unknown**. The sub-items inside established rows that are only inferred or unknown are listed in the open questions.
 
 **PI error status 0** (the binary prints these ranges): bits 2:0 error type; 5:3 request-buffer number; 16:6
 message supplemental; 24:17 message command (name table indexed 0 to 255); 61:25 error address, printed

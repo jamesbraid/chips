@@ -52,29 +52,29 @@ fields: **E** established (the routine that uses it read in full, or an arithmet
 
 | slot | register | width | access seen | who touches it (`xbow.o` routine unless stated) | what the code does | grade |
 |---|---|---:|---|---|---|---|
-| `0x0` | identification | 4 | r | `xbow_attach`, `xbow_widget_present`, `xbow_error_handler`, `is_xbox_config` (`kernel.o`), PROM present tests | bits 31:28 revision, 27:12 part, 11:1 manufacturer (the PXBOW test requires 0) | E |
-| `0x8` | widget 0 status | 4 | r | `xbow_error_handler`, `idbg_xbowregs`, `save_xbow_err` (`kernel.o` and PROMs) | printed and saved raw; the IP30 PROM interrupt routine tests `& 0xff800000` and bits 5 and 2 | E |
-| `0x10` | error upper address | 4 | r | `xbow_errintr_handler`, `xbow_error_handler`, `save_xbow_err` | low 16 bits are address bits 47:32 of a 48-bit address | E |
-| `0x18` | error lower address | 4 | r | same | address bits 31:0 | E |
-| `0x20` | widget 0 control | 4 | rw | `xbow_attach` writes 0x24; `xbow_errintr_handler` ANDs it with status; `idbg_xbowregs` | 0x24 sets bits 5 and 2 | E |
-| `0x28` | packet time-out | 4 | r | `idbg_xbowregs` only | printed; the kernel never writes it | I |
-| `0x30` | interrupt destination upper | 4 | rw | `xbow_intr_preset` writes; `idbg_xbowregs` reads | `(vector << 24) \| (target << 16 & 0xf0000) \| (address >> 32 & 0xffff)` | E |
-| `0x38` | interrupt destination lower | 4 | rw | `xbow_intr_preset` writes; `idbg_xbowregs` reads | address bits 31:0 | E |
-| `0x40` | error command word | 4 | rw | `xbow_errintr_handler` reads then writes 0; `xbow_error_handler`; `save_xbow_err`; IP30 PROM interrupt routine | bits 27:24 compared with the port number; the write of 0 re-arms the capture | E |
-| `0x48` | LLP control | 4 | r | `idbg_xbowregs` only | printed | I |
-| `0x50` | widget 0 status, read-and-clear alias | 4 | r | `xbow_errintr_handler` | read once per interrupt; bits 0, 2, 5 and 31:24 tested | E |
-| `0x58` | arbitration reload | 4 | r | `idbg_xbowregs` only | printed | I |
-| `0x60` | performance counter A | 4 | rw | `xbow_update_perf_counters`, `xbow_enable_perf_counter`, through a pointer to slot + 4 that `xbow_attach` stores | bits 19:0 count (mask 0xfffff), bits 22:20 link select | E |
-| `0x68` | performance counter B | 4 | rw | same, second pointer | same | E |
-| `0x70` | NIC | - | none | no scanned routine | none; see the reset section | U (test: a PROM-monitor read of it on an Octane, listed in `docs/xbow-family.md`) |
-| `0x100` + `0x40` per link (`0x100` link 8 up to `0x2c0` link 15) | link input buffer flush | - | r | no held routine reaches it | a read marks every entry in that link's input buffer and its response is held until those packets have been delivered to their targets; the value read is 0 when the flush finished, 1 when another link's flush is already in progress and this one was refused (retry later); only one flush runs at a time | E (Crossbow ASIC specification rev 12.0, sections 3.1.2 and 3.3.1, printed pp. 70, 71 and 77, and the register map, p. 74); no shipped software is seen using it |
-| `0x108` | link control | 4 | rw | `xbow_attach`, `xbow_errintr_handler`, `xbow_enable_perf_counter`, `xbow_reset_link`; PROM link reset | see the entry below | E |
-| `0x110` | link status | 4 | r | `xbow_link_alive`, `xbow_reset_link`, `xbow_error_handler`, PROM tests | bit 31 is "alive" | E |
-| `0x118` | link arbitration upper | 4 | rw | `xbow_prio_bw_alloc`; PROM link reset writes 0 | four 8-bit lanes with a 5-bit count at the bottom of each, sources 8 to 11 | E |
-| `0x120` | link arbitration lower | 4 | rw | same | same lanes, sources 12 to 15 | E |
-| `0x128` | link status, read-and-clear alias | 4 | r | `xbow_errintr_handler`, `xbow_update_llp_status`, PROM link reset | read to consume errors; bit 31 and the error bits tested | E |
-| `0x130` | link reset | 4 | w | `xbow_reset_link`; IP27 PROM and IP30 PROM reset routines (the IP35 PROM routine does not write it) | the value written is 0 | E |
-| `0x138` | link auxiliary status | 4 | r | `xbow_widget_present`, `xbow_update_llp_status`, `xbow_error_handler`, PROM tests | bit 5 "widget present"; bits 31:24 and 23:16 summed as two byte counters | E |
+| `0x0` | identification | 4 | r | `xbow_attach`, `xbow_widget_present`, `xbow_error_handler`, `is_xbox_config` (`kernel.o`), PROM present tests | bits 31:28 revision, 27:12 part, 11:1 manufacturer (the PXBOW test requires 0) | established |
+| `0x8` | widget 0 status | 4 | r | `xbow_error_handler`, `idbg_xbowregs`, `save_xbow_err` (`kernel.o` and PROMs) | printed and saved raw; the IP30 PROM interrupt routine tests `& 0xff800000` and bits 5 and 2 | established |
+| `0x10` | error upper address | 4 | r | `xbow_errintr_handler`, `xbow_error_handler`, `save_xbow_err` | low 16 bits are address bits 47:32 of a 48-bit address | established |
+| `0x18` | error lower address | 4 | r | same | address bits 31:0 | established |
+| `0x20` | widget 0 control | 4 | rw | `xbow_attach` writes 0x24; `xbow_errintr_handler` ANDs it with status; `idbg_xbowregs` | 0x24 sets bits 5 and 2 | established |
+| `0x28` | packet time-out | 4 | r | `idbg_xbowregs` only | printed; the kernel never writes it | inferred |
+| `0x30` | interrupt destination upper | 4 | rw | `xbow_intr_preset` writes; `idbg_xbowregs` reads | `(vector << 24) \| (target << 16 & 0xf0000) \| (address >> 32 & 0xffff)` | established |
+| `0x38` | interrupt destination lower | 4 | rw | `xbow_intr_preset` writes; `idbg_xbowregs` reads | address bits 31:0 | established |
+| `0x40` | error command word | 4 | rw | `xbow_errintr_handler` reads then writes 0; `xbow_error_handler`; `save_xbow_err`; IP30 PROM interrupt routine | bits 27:24 compared with the port number; the write of 0 re-arms the capture | established |
+| `0x48` | LLP control | 4 | r | `idbg_xbowregs` only | printed | inferred |
+| `0x50` | widget 0 status, read-and-clear alias | 4 | r | `xbow_errintr_handler` | read once per interrupt; bits 0, 2, 5 and 31:24 tested | established |
+| `0x58` | arbitration reload | 4 | r | `idbg_xbowregs` only | printed | inferred |
+| `0x60` | performance counter A | 4 | rw | `xbow_update_perf_counters`, `xbow_enable_perf_counter`, through a pointer to slot + 4 that `xbow_attach` stores | bits 19:0 count (mask 0xfffff), bits 22:20 link select | established |
+| `0x68` | performance counter B | 4 | rw | same, second pointer | same | established |
+| `0x70` | NIC | - | none | no scanned routine | none; see the reset section | unknown (test: a PROM-monitor read of it on an Octane, listed in `docs/xbow-family.md`) |
+| `0x100` + `0x40` per link (`0x100` link 8 up to `0x2c0` link 15) | link input buffer flush | - | r | no held routine reaches it | a read marks every entry in that link's input buffer and its response is held until those packets have been delivered to their targets; the value read is 0 when the flush finished, 1 when another link's flush is already in progress and this one was refused (retry later); only one flush runs at a time | established (Crossbow ASIC specification rev 12.0, sections 3.1.2 and 3.3.1, printed pp. 70, 71 and 77, and the register map, p. 74); no shipped software is seen using it |
+| `0x108` | link control | 4 | rw | `xbow_attach`, `xbow_errintr_handler`, `xbow_enable_perf_counter`, `xbow_reset_link`; PROM link reset | see the entry below | established |
+| `0x110` | link status | 4 | r | `xbow_link_alive`, `xbow_reset_link`, `xbow_error_handler`, PROM tests | bit 31 is "alive" | established |
+| `0x118` | link arbitration upper | 4 | rw | `xbow_prio_bw_alloc`; PROM link reset writes 0 | four 8-bit lanes with a 5-bit count at the bottom of each, sources 8 to 11 | established |
+| `0x120` | link arbitration lower | 4 | rw | same | same lanes, sources 12 to 15 | established |
+| `0x128` | link status, read-and-clear alias | 4 | r | `xbow_errintr_handler`, `xbow_update_llp_status`, PROM link reset | read to consume errors; bit 31 and the error bits tested | established |
+| `0x130` | link reset | 4 | w | `xbow_reset_link`; IP27 PROM and IP30 PROM reset routines (the IP35 PROM routine does not write it) | the value written is 0 | established |
+| `0x138` | link auxiliary status | 4 | r | `xbow_widget_present`, `xbow_update_llp_status`, `xbow_error_handler`, PROM tests | bit 5 "widget present"; bits 31:24 and 23:16 summed as two byte counters | established |
 
 Totals: 23 register kinds (15 common, 8 per link; 79 slots with the link family at eight links), graded **18
 established, 3 inferred, 2 unknown**. The reserved slots `0x78` to `0xf8` and `0x300` upward are touched by no

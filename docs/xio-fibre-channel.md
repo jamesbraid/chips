@@ -28,7 +28,7 @@ Every statement rests on one of three things: the shipped 6.5.30 `fcadp` objects
  `fcadp.o:fill_lip_tcb`, `fcadp.o:fcadp_ctlrinit` and
 the routines named in place, each cited with its offset), a public document, or a
 (a reason for a driver choice, a name for a register bit, how the chip itself behaves),
-the sheet says so and marks it **U** or **I** with the binary read that would settle it.
+the sheet says so and marks it unknown or inferred with the binary read that would settle it.
 Symbol names quoted below (for example `sh_load_sequencer`) and strings quoted from
 the objects are what the shipped objects contain, cited as locators. Layouts are
 described in prose in this sheet's own words. Names for register bits and fields that
@@ -98,15 +98,15 @@ A re-check against the shipped driver and the owner's guide changed the followin
   the copper boards the posts describe.
 - **Two ports.** The driver attaches once per PCI function and keeps a separate state
   block for each, and the hardware graph shows two `scsi_ctlr` nodes (`pci/0`, `pci/1`,
-  Bridge slot numbers). Whether the two are two chips or two functions of one chip is **U**;
+  Bridge slot numbers). Whether the two are two chips or two functions of one chip is unknown;
   a PCI configuration dump of the board, or the board photographs, would settle it.
 - **Invalid WWN** only prints a warning and skips reading the media-type word; the
   port is still brought up (media type 0) and presents the invalid name.
 - **LIP TCB layout.** The loop-map buffer address is at LIP-TCB offset 0x38, not 0x58,
   and the frame header starts at 0x08 (details in the LIP section).
-- **TCB byte 0x07** (value 0x01 for a SCSI command) is regraded I: it is a chip
+- **TCB byte 0x07** (value 0x01 for a SCSI command) is regraded inferred: it is a chip
   encoding, not the on-wire R_CTL (FCP_CMND is 0x06 on the wire).
-- **BAR type** is regraded I (inference from the command-register value 0x55); nothing else confirms it.
+- **BAR type** is regraded inferred (inference from the command-register value 0x55); nothing else confirms it.
 - Spot-checked and left as written: done-queue entry byte positions (the 6.5.30
   back-end interrupt routine reads bytes 0, 1, 2, 3 directly), and the PLOGI/PRLI/ADISC
   codes. ADISC is issued only when a target's flag asks for it; the abort builder is a
@@ -118,25 +118,25 @@ A re-check against the shipped driver and the owner's guide changed the followin
 
 | Item | Value | Label |
 |---|---|---|
-| Marketing name | XT-FC-2P (2-port Fibre Channel XIO controller, "for SGI Origin/Onyx2"), part number 030-0927-00x, for Origin 2000, Origin 200 GIGAchannel and Onyx2. X9-FC-2P (013-2119-00x) is the identical Octane variant | E (M1 Table 1-4; U5). IRIX product `xt_fc_2p_O` is from D1 and was not re-checked |
-| Related optical boards (not covered by this sheet) | XT-FC-2POPT-B (013-4048-00x: Origin 2000, Onyx2, Origin 3000 X-brick) and X9-FC-2POPT-B (013-4046-00x: Octane, Octane2); LC connectors, 133 MHz, 200 MB/s, IRIX 6.5.16 or later | E for the product facts (M1); U for whether they use this chip |
-| Bus | XIO | E (U1/U5/U6) |
-| Controller ASIC | Adaptec AIC-1160 (chip marking "AIC-11606") | E (U4) |
-| Ports | 2, DB-9 copper; an optional pluggable optical media adapter (MIA) fits the DB-9 | E (M1; U1/U5) |
-| Topology limits | Class 3 and FC-AL (arbitrated loop) only, as an L_Port; **no fabric / switch support** | E (M1 p. 13) |
-| Required IRIX | IRIX 6.5 or later, or 6.4.1 with the June 1999 patch set | E (M1 p. 12) |
-| IRIX `hinv` string | `Integral SCSI controller N: Version Fibre Channel AIC-1160, revision 2` (rev 1 also seen) | E (U1/U2/U3/U9) |
-| IRIX driver | `fcadp` ("Adaptec Fibrechannel driver"; syslog `fcadp6 (0):`; nodes `fcadp3t1l0`) | E (U1/U4, B2) |
-| PCI vendor : device ID | `0x9004 : 0x1160` (Adaptec : AIC-1160) | E (B1; identical in IP27/IP30/IP35) |
-| Board assembly (one sample) | assy `030-0927003E`, FAB `034-0927-002 rev B`, build 04-20-99 | E for that sample, I for the family (U4) |
-| Host machines | XT-FC-2P: Origin 2000, Origin 200 GIGAchannel, Onyx2. X9-FC-2P: Octane. The guide lists Octane2 only with the optical X9-FC-2POPT-B, while a post and the Smoke guide (D1) tie Octane2 to the XIO FC board; which board an Octane2 carries is not settled here | E (M1) for the table; U1/U3/U9/D1 reports not reconciled with it |
-| On-chip firmware | two sequencer microcode images shipped inside the driver and downloaded at init: a mainline image and a loop-init (LIP) image | E (B1) |
-| Firmware version string on the board | — | U (no version string in the driver objects). Settled by: a printable-string scan of the two downloaded sequencer images once they are extracted from the driver (not done; the driver object is not in the held set of this clone), or the controller's own version register if the databook names one |
+| Marketing name | XT-FC-2P (2-port Fibre Channel XIO controller, "for SGI Origin/Onyx2"), part number 030-0927-00x, for Origin 2000, Origin 200 GIGAchannel and Onyx2. X9-FC-2P (013-2119-00x) is the identical Octane variant | established (M1 Table 1-4; U5). IRIX product `xt_fc_2p_O` is from D1 and was not re-checked |
+| Related optical boards (not covered by this sheet) | XT-FC-2POPT-B (013-4048-00x: Origin 2000, Onyx2, Origin 3000 X-brick) and X9-FC-2POPT-B (013-4046-00x: Octane, Octane2); LC connectors, 133 MHz, 200 MB/s, IRIX 6.5.16 or later | established for the product facts (M1); unknown for whether they use this chip |
+| Bus | XIO | established (U1/U5/U6) |
+| Controller ASIC | Adaptec AIC-1160 (chip marking "AIC-11606") | established (U4) |
+| Ports | 2, DB-9 copper; an optional pluggable optical media adapter (MIA) fits the DB-9 | established (M1; U1/U5) |
+| Topology limits | Class 3 and FC-AL (arbitrated loop) only, as an L_Port; **no fabric / switch support** | established (M1 p. 13) |
+| Required IRIX | IRIX 6.5 or later, or 6.4.1 with the June 1999 patch set | established (M1 p. 12) |
+| IRIX `hinv` string | `Integral SCSI controller N: Version Fibre Channel AIC-1160, revision 2` (rev 1 also seen) | established (U1/U2/U3/U9) |
+| IRIX driver | `fcadp` ("Adaptec Fibrechannel driver"; syslog `fcadp6 (0):`; nodes `fcadp3t1l0`) | established (U1/U4, B2) |
+| PCI vendor : device ID | `0x9004 : 0x1160` (Adaptec : AIC-1160) | established (B1; identical in IP27/IP30/IP35) |
+| Board assembly (one sample) | assy `030-0927003E`, FAB `034-0927-002 rev B`, build 04-20-99 | established for that sample, inferred for the family (U4) |
+| Host machines | XT-FC-2P: Origin 2000, Origin 200 GIGAchannel, Onyx2. X9-FC-2P: Octane. The guide lists Octane2 only with the optical X9-FC-2POPT-B, while a post and the Smoke guide (D1) tie Octane2 to the XIO FC board; which board an Octane2 carries is not settled here | established (M1) for the table; U1/U3/U9/D1 reports not reconciled with it |
+| On-chip firmware | two sequencer microcode images shipped inside the driver and downloaded at init: a mainline image and a loop-init (LIP) image | established (B1) |
+| Firmware version string on the board | — | unknown (no version string in the driver objects). Settled by: a printable-string scan of the two downloaded sequencer images once they are extracted from the driver (not done; the driver object is not in the held set of this clone), or the controller's own version register if the databook names one |
 
 ## Composition
 
 The board is an **XIO→PCI bridge with the Fibre Channel controller(s) on PCI
-behind it**, now confirmed from the driver (E, B1). `fcadp` is a pure PCI driver:
+behind it**, now confirmed from the driver (established, B1). `fcadp` is a pure PCI driver:
 it registers through the IRIX `pciio` interface (`pciio_driver_register` with the
 vendor/device key `0x9004 / 0x1160`), maps its register windows with
 `pciio_piotrans_addr` / `pciio_pio_addr`, translates DMA addresses with
@@ -145,36 +145,36 @@ vendor/device key `0x9004 / 0x1160`), maps its register windows with
 `pciio_intr_connect`. The `pcibr_*` symbols are SGI's Bridge/XBridge-class PCI
 bridge layer, so the controller sits on PCI behind an SGI Bridge reached over XIO;
 IRIX's generic bridge code does the XIO↔PCI translation and the driver never
-touches XIO directly (E, B1). This matches the hardware graph, which enumerates
+touches XIO directly (established, B1). This matches the hardware graph, which enumerates
 the XIO widget as `fibre_channel` with two PCI devices under it (`pci/0`, `pci/1`,
-IRIX's Bridge slot naming), each a `scsi_ctlr` (E, U2).
+IRIX's Bridge slot naming), each a `scsi_ctlr` (established, U2).
 
 Each port is attached independently: `fcadpattach` runs once per PCI function (whether
-that is one chip per port is **U**, see the corrections above),
+that is one chip per port is unknown, see the corrections above),
 allocating one ~1920-byte per-controller state block each (`kmem_zalloc(0x780, …)`),
-so the two ports are two independent softc instances (E, B1). The driver also recognises an optical
+so the two ports are two independent softc instances (established, B1). The driver also recognises an optical
 media-interface adapter (MIA) module on a port (`sh_read_mia_type`; syslog
 "Optical MIA attached", "MIA Fault or Optical Loss of Signal") — the DB-9 copper
-boards take an optional pluggable optical MIA (E, B1/M1). The optical dual-channel
+boards take an optional pluggable optical MIA (established, B1/M1). The optical dual-channel
 `-B` boards are different boards with LC connectors, not a DB-9 board plus MIA (M1).
 
 Still unknown: the exact SGI bridge revision used on each host board; and the XIO widget ID and XIO
 address decode, which are a property of the host machine's bridge, not of this
 board, and are supplied by the generic IRIX bridge layer rather than by `fcadp`
-(**U**).
+(unknown).
 
 ## How IRIX drives it (behaviour contract, not a register contract)
 
 - Each FC port is a separate "Integral SCSI controller"; Fibre Channel is a SCSI
   transport, so attached drives appear as `Disk drive: unit M on SCSI controller
-  N` and RAID LUNs as `RAID lun: unit M, lun L` (E, U9).
+  N` and RAID LUNs as `RAID lun: unit M, lun L` (established, U9).
 - The `fcadp` driver performs FC-AL loop init / LIP and per-target port login; it
-  works against JBODs, FC RAID (Clariion-class) and hubs on an arbitrated loop (E,
+  works against JBODs, FC RAID (Clariion-class) and hubs on an arbitrated loop (established,
   M1/B1; U1/U9 for what owners saw). It does **not** log in to a fabric: the shipped
   driver has no fabric login, and the owner's guide says these boards do not support
-  fabric (switches) and run Class 3 and FC-AL only (E, M1 p. 13, B1).
+  fabric (switches) and run Class 3 and FC-AL only (established, M1 p. 13, B1).
 - Controller numbers are persisted in `/etc/ioconfig.conf`; `scsiha -lp <ctlr>;
-  ioconfig -f /hw` rebuilds the graph (E, U2/U9).
+  ioconfig -f /hw` rebuilds the graph (established, U2/U9).
 
 ## Register and command contract
 
@@ -184,20 +184,20 @@ from an on-chip RAM, much as Adaptec's contemporary AIC-7xxx SCSI parts do, but
 here adapted to Fibre Channel. The driver's event-string table names the chip's
 internal blocks — a microcode engine the driver calls MTPE, a command/message
 controller "CMC" that posts interrupts and runs DMA to and from PCI, send/receive
-path blocks, a SERDES for the FC serial link, and the optical MIA — which fixes the chip's functional decomposition (E, B1).
+path blocks, a SERDES for the FC serial link, and the optical MIA — which fixes the chip's functional decomposition (established, B1).
 
 ### PCI front door
 
 | Item | Value | Label |
 |---|---|---|
-| PCI vendor : device | `0x9004 : 0x1160` (the exact `pciio_driver_register` match key, `fcadp.o:fcadpinit`) | E (B1) |
-| Chip revision | read from PCI config space and printed as "Adaptec AIC 1160 rev. %d found"; owners report revisions 1 and 2 | E (B1, U1/D1) |
-| BAR type — **I/O space, not memory** | The chip's register windows are **I/O-space BARs** (the BAR's low bit is set), **not** memory BARs. The driver enables the chip by writing the PCI command register with **0x55** (I/O-space-enable 0x01 + bus-master 0x04 + memory-write-and-invalidate 0x10 + parity-response 0x40); **memory-space-enable (0x02) is deliberately never set** (`fcadp.o:fcadpattach`). IRIX enables only I/O space, so BARs that were memory BARs would stay disabled and the first register access would fault. The 0x55 command write is observed in the driver; that the BAR type bit is I/O is an inference from it, because the driver never reads the type bit. | E for the 0x55 write (B1); **I** for the I/O-space BAR type |
-| PIO windows mapped | three 256-byte windows per function, mapped in `fcadp.o:fcadpattach`. Two are I/O-space PCI base-address registers and one is the chip's own PCI configuration space, requested as `pciio` spaces 7, 8 and 11: **space 7 is PCI config space** (not a BAR), **space 8 is BAR 0** and **space 11 is BAR 3** (the numeric arguments passed to the PIO mapping call). BAR 1 and BAR 2 exist on the chip but the driver zeroes them and never uses them (why it does so is **U**); IRIX still sizes all six BAR slots during enumeration. The driver stores the three pointers in a handle block at softc+0x80 in the order BAR 0, BAR 3, config (offsets 0, 8, 16). **BAR 0 (space 8) is the primary chip-register window**; **BAR 3 (space 11) is the sequencer-RAM window** (on-chip scratch RAM, TCB SRAM, scatter/gather RAM — "RAM" names what the window exposes, not a memory-space BAR); the third pointer is the chip's PCI config registers | E, including the BAR↔space mapping (B1) |
-| PCI command / config setup at attach | `fcadp.o:fcadpattach` writes command register 0x55 (above), cache-line size 32 (128-byte lines), latency timer 0xf0 (240 clocks), and **OR-sets config register 0x40 bit 0x04 = Dual-Address-Cycle enable** (arms 64-bit PCI DMA addressing). It also writes 0 to BAR 1 and BAR 2 (reason **U**). Config 0x40 is a writable device-config register whose bit 0x04 enables 64-bit DMA | E (B1) |
-| DMA | kernel buffers are run through `kvtophys` then `pcibr_dmatrans_addr`; the chip DMAs to/from the resulting PCI bus addresses. Descriptor and queue addresses are carried as **8-byte little-endian** fields, and 64-bit addressing is armed (config 0x40 bit 0x04 Dual-Address-Cycle enable, and the 64-bit DMA flag on the bridge translation), so the DMA path is **64-bit**, not 32-bit as an earlier draft guessed | E (B1) |
-| Interrupt | one level-style interrupt per function via `pciio_intr_alloc`/`_connect`, handler `fcadpintr` | E (B1) |
-| PCI error handling | the driver reads the PCI status register and logs master/target abort, parity and system-error bits (`hwintr.o` strings "PCI STATUS1 - …", "Signal Target Abort not set in PCI status register") | E (B1) |
+| PCI vendor : device | `0x9004 : 0x1160` (the exact `pciio_driver_register` match key, `fcadp.o:fcadpinit`) | established (B1) |
+| Chip revision | read from PCI config space and printed as "Adaptec AIC 1160 rev. %d found"; owners report revisions 1 and 2 | established (B1, U1/D1) |
+| BAR type — **I/O space, not memory** | The chip's register windows are **I/O-space BARs** (the BAR's low bit is set), **not** memory BARs. The driver enables the chip by writing the PCI command register with **0x55** (I/O-space-enable 0x01 + bus-master 0x04 + memory-write-and-invalidate 0x10 + parity-response 0x40); **memory-space-enable (0x02) is deliberately never set** (`fcadp.o:fcadpattach`). IRIX enables only I/O space, so BARs that were memory BARs would stay disabled and the first register access would fault. The 0x55 command write is observed in the driver; that the BAR type bit is I/O is an inference from it, because the driver never reads the type bit. | established for the 0x55 write (B1); inferred for the I/O-space BAR type |
+| PIO windows mapped | three 256-byte windows per function, mapped in `fcadp.o:fcadpattach`. Two are I/O-space PCI base-address registers and one is the chip's own PCI configuration space, requested as `pciio` spaces 7, 8 and 11: **space 7 is PCI config space** (not a BAR), **space 8 is BAR 0** and **space 11 is BAR 3** (the numeric arguments passed to the PIO mapping call). BAR 1 and BAR 2 exist on the chip but the driver zeroes them and never uses them (why it does so is unknown); IRIX still sizes all six BAR slots during enumeration. The driver stores the three pointers in a handle block at softc+0x80 in the order BAR 0, BAR 3, config (offsets 0, 8, 16). **BAR 0 (space 8) is the primary chip-register window**; **BAR 3 (space 11) is the sequencer-RAM window** (on-chip scratch RAM, TCB SRAM, scatter/gather RAM — "RAM" names what the window exposes, not a memory-space BAR); the third pointer is the chip's PCI config registers | established, including the BAR↔space mapping (B1) |
+| PCI command / config setup at attach | `fcadp.o:fcadpattach` writes command register 0x55 (above), cache-line size 32 (128-byte lines), latency timer 0xf0 (240 clocks), and **OR-sets config register 0x40 bit 0x04 = Dual-Address-Cycle enable** (arms 64-bit PCI DMA addressing). It also writes 0 to BAR 1 and BAR 2 (reason unknown). Config 0x40 is a writable device-config register whose bit 0x04 enables 64-bit DMA | established (B1) |
+| DMA | kernel buffers are run through `kvtophys` then `pcibr_dmatrans_addr`; the chip DMAs to/from the resulting PCI bus addresses. Descriptor and queue addresses are carried as **8-byte little-endian** fields, and 64-bit addressing is armed (config 0x40 bit 0x04 Dual-Address-Cycle enable, and the 64-bit DMA flag on the bridge translation), so the DMA path is **64-bit**, not 32-bit as an earlier draft guessed | established (B1) |
+| Interrupt | one level-style interrupt per function via `pciio_intr_alloc`/`_connect`, handler `fcadpintr` | established (B1) |
+| PCI error handling | the driver reads the PCI status register and logs master/target abort, parity and system-error bits (`hwintr.o` strings "PCI STATUS1 - …", "Signal Target Abort not set in PCI status register") | established (B1) |
 
 ### Chip host-register map (primary window, BAR 0)
 
@@ -268,16 +268,16 @@ accessing the window at 0x45. The **config-space window (space 7)** carries the 
 PCI configuration registers; the BIST byte the prior pass placed at a "third window
 +0x0f" is PCI config offset 0x0f (`hwconfig.o:sh_run_bist`), and the chip revision,
 command and status bytes are read from the same config window. All three window maps
-are established (E, B1).
+are established (established, B1).
 
 **Endianness.** The chip is a little-endian PCI device. The driver byte-swaps
 16-bit quantities on the register path — the microcode stream is swapped
 word-by-word (`ULM_SWAP_SHORT`) on the way to the RAM port — while single-register
-byte accesses are endian-neutral (E, B1). The control-block swap routines
+byte accesses are endian-neutral (established, B1). The control-block swap routines
 (`ulm_swap8`, `fc_swapctl`) are **empty stubs in the shipped objects** (8 bytes each,
 IP27, IP30 and IP35): descriptor lists, TCBs and the residual block are not swapped
 before or after the chip. Treat them as plain little-endian fields in host memory
-(E, B1). Why the build empties them is **U**; the 8-byte bodies are what the objects contain.
+(established, B1). Why the build empties them is unknown; the 8-byte bodies are what the objects contain.
 Whether the host bridge byte-swaps in hardware depends on the host, not on `fcadp`.
 
 ### Config collection (the first chip access after attach — gates before any reset)
@@ -317,7 +317,7 @@ per-bank cells under all eight banks and the **scatter/gather RAM through the pr
 bank-2 data port at register 0x60** (rewound by 0x8b, TCB-indexed by 0x64) — see the RAM
 test table in the register-map section. A chip with only the BAR 3 window backed
 would pass config collection but fail here at the bank-2 0x60 scatter/gather test. All of
-the RAM regions must echo their writes (E, B1; the 0x63 gate, the 0x62 = 0x81 write and the
+the RAM regions must echo their writes (established, B1; the 0x63 gate, the 0x62 = 0x81 write and the
 bank-2 0x60/0x8b/0x64 scatter/gather test are read from the binary).
 
 ### Reset and firmware (sequencer) load
@@ -338,7 +338,7 @@ static arrays: the mainline image `sh_mainline_code` (3912 bytes, `.data` of
 `hwutil.o`) and the loop-init image `sh_lip_code` (1644 bytes, `.data` of
 `hwlip.o`); `sh_reload_mainline_firmware` reloads the mainline image after a loop
 event, and `sh_loadnrun_lip` swaps in the LIP image to drive a loop
-initialisation, then restores mainline (E, B1).
+initialisation, then restores mainline (established, B1).
 
 ### Queue and status-block setup (how the chip finds the rings)
 
@@ -353,13 +353,13 @@ a time (`sh_output_paddr`).
 
 | Region | How the chip is told | Cite | Grade |
 |---|---|---|---|
-| **New-TCB ring base** | 8-byte host PCI address of the TCB ring written to scratch offset **0x1c** | software-setup in `hwutil.o` → `sh_output_paddr` | E |
-| New-TCB ring stride / count | Entries are **128-byte TCBs**; the ring holds as many entries as the probed TCB count — taken from the on-chip TCB-SRAM capacity and capped at 512. The producer index (register 0x2a, control-block offset 0x82) and the chip's consumer index (bank-4 register 0x6a, zeroed at init) wrap at that count | `fcadpattach` (allocates count × 128 bytes), `sh_init_hardware` | E |
-| **Done-queue base** | 8-byte host PCI address of the done queue written to scratch offset **0x08** | software-setup in `hwutil.o` → `sh_output_paddr` | E |
-| **Done-queue size** | Negative entry count (the negated TCB count) written to scratch offset **0x48** (two's-complement, so the sequencer counts up to zero); entries are 4 bytes, one per TCB | software-setup in `hwutil.o` | E |
-| **Done-queue pass byte** | Scratch offset **0x45** written `0xff` and read back — the "0x45" the prior pass read as a primary register is this scratch byte, reached through the sequencer-RAM window | `sh_setup_doneq` | E |
-| **Host status block** | 8-byte host PCI address written to the bank-4 status-block DMA registers at **0x70–0x77** | `sh_init_hardware` | E |
-| **Completion arming** | Bank-4 register **0x29 bit `0x20`** arms completion/interrupt DMA posting. With the done-queue scratch set up, the per-source masks at 0x98/0x99 enabled, and the master interrupt enable at 0x22 bit `0x04`, this is what lets the chip post completions and raise interrupts; a doorbell write to 0x2a then starts command fetch | `sh_init_hardware`, `sh_deliver_tcb` | E |
+| **New-TCB ring base** | 8-byte host PCI address of the TCB ring written to scratch offset **0x1c** | software-setup in `hwutil.o` → `sh_output_paddr` | established |
+| New-TCB ring stride / count | Entries are **128-byte TCBs**; the ring holds as many entries as the probed TCB count — taken from the on-chip TCB-SRAM capacity and capped at 512. The producer index (register 0x2a, control-block offset 0x82) and the chip's consumer index (bank-4 register 0x6a, zeroed at init) wrap at that count | `fcadpattach` (allocates count × 128 bytes), `sh_init_hardware` | established |
+| **Done-queue base** | 8-byte host PCI address of the done queue written to scratch offset **0x08** | software-setup in `hwutil.o` → `sh_output_paddr` | established |
+| **Done-queue size** | Negative entry count (the negated TCB count) written to scratch offset **0x48** (two's-complement, so the sequencer counts up to zero); entries are 4 bytes, one per TCB | software-setup in `hwutil.o` | established |
+| **Done-queue pass byte** | Scratch offset **0x45** written `0xff` and read back — the "0x45" the prior pass read as a primary register is this scratch byte, reached through the sequencer-RAM window | `sh_setup_doneq` | established |
+| **Host status block** | 8-byte host PCI address written to the bank-4 status-block DMA registers at **0x70–0x77** | `sh_init_hardware` | established |
+| **Completion arming** | Bank-4 register **0x29 bit `0x20`** arms completion/interrupt DMA posting. With the done-queue scratch set up, the per-source masks at 0x98/0x99 enabled, and the master interrupt enable at 0x22 bit `0x04`, this is what lets the chip post completions and raise interrupts; a doorbell write to 0x2a then starts command fetch | `sh_init_hardware`, `sh_deliver_tcb` | established |
 
 **Done-queue tag / toggle rule (exact).** Each 4-byte done-queue entry is
 `{ TCB handle (2, little-endian), status (1), pass-count (1) }`. At setup every
@@ -372,14 +372,14 @@ it reaches the end of the ring it bumps the expected value by one, so the chip's
 guarantees no not-yet-written slot matches the initial expected value 0. (Front-end and
 back-end ISRs keep separate expected counters over the same ring.) This is **not** a
 one-bit toggle — it is a wrapping lap counter (`hwintr.o:sh_frontend_isr`,
-`sh_backend_isr`; E, B1).
+`sh_backend_isr`; established, B1).
 
 **Status-block mirroring.** The host status block is an 8-byte area whose first two
 bytes mirror interrupt-status bytes 0x24 and 0x25. When an interrupt condition arises
 the chip DMAs those bytes into the block, so the ISR reads interrupt status from host
 memory without a PCI read; it then clears handled bits by writing them back to the chip
 at 0x24/0x25 and clears its host-memory copy. A separate sequencer transfer-count area
-is DMA'd for residual computation (E, B1).
+is DMA'd for residual computation (established, B1).
 
 ### Serial SEEPROM (identity store)
 
@@ -390,13 +390,13 @@ offset **0x6b** takes the opcode and start bit and reports busy, and offsets
 **0x68/0x69** return the read-data low/high byte. A word read writes the address to
 0x6a, writes the read opcode (`0x61`, read-opcode bits + start) to 0x6b, spins on the
 busy bit (`0x01`) at 0x6b, then reads 0x68 and 0x69. The sequencer must be paused for
-the access (`hwutil.o:sh_read_seeprom`, `sh_write_seeprom`; E, B1).
+the access (`hwutil.o:sh_read_seeprom`, `sh_write_seeprom`; established, B1).
 
 | SEEPROM word(s) | Contents | Cite | Grade |
 |---|---|---|---|
-| 0 | Control / speed word. The driver checks its **low nibble (`word0 & 0xF`) against the expected multi-host-speed value `0xF`**; if it differs it tries to **reprogram** the SEEPROM (logs "reprogramming adapter for multi-host uses"). A word 0 with low nibble `0xF` (e.g. `0x000F`) avoids the reprogram path; a word 0 of 0 drives it (below), which fails harmlessly but is noisy | `fcadp.o:fcadpattach` | E |
-| 2 | Media-interface (MIA) sense word. Only bits 8 and 7 are tested (`word2 & 0x180`): **`0x180` = a media module is described and it is read by current sensing; `0x100` = described and read by voltage sensing; anything else (`0x000`, `0x080`) prints "WARNING: SEEPROM MIA information incorrect - media_type == 0x…" and skips the media read.** See the media-sense note below. The warning is **not fatal**: attach continues, and a word of zero merely leaves the media type at 0. It is only looked at when the WWN in words 3–6 is valid. A word of 0 produces exactly the warning and nothing else | `fcadp.o:fcadp_ctlrinit` (the word-2 read at `0x507c`, mask/compare at `0x5084`–`0x5098`) | E |
-| 3–6 | **World-Wide Name** — 8 bytes (four 16-bit words) read starting at word 3, assembled most-significant-word first into the 64-bit port name. A WWN is **valid** when it is non-zero, not all-ones, and not the unprogrammed signature (top 60 bits `0x2000_0800_6900_000`). A WWN of 0 gets the warning "invalid wwname 0x0", the media-type word 2 is not read (media type stays 0), and bring-up continues regardless with that invalid port name, which targets may reject at login | `fcadpattach` (`sh_read_seeprom(…,3,4)`) | E |
+| 0 | Control / speed word. The driver checks its **low nibble (`word0 & 0xF`) against the expected multi-host-speed value `0xF`**; if it differs it tries to **reprogram** the SEEPROM (logs "reprogramming adapter for multi-host uses"). A word 0 with low nibble `0xF` (e.g. `0x000F`) avoids the reprogram path; a word 0 of 0 drives it (below), which fails harmlessly but is noisy | `fcadp.o:fcadpattach` | established |
+| 2 | Media-interface (MIA) sense word. Only bits 8 and 7 are tested (`word2 & 0x180`): **`0x180` = a media module is described and it is read by current sensing; `0x100` = described and read by voltage sensing; anything else (`0x000`, `0x080`) prints "WARNING: SEEPROM MIA information incorrect - media_type == 0x…" and skips the media read.** See the media-sense note below. The warning is **not fatal**: attach continues, and a word of zero merely leaves the media type at 0. It is only looked at when the WWN in words 3–6 is valid. A word of 0 produces exactly the warning and nothing else | `fcadp.o:fcadp_ctlrinit` (the word-2 read at `0x507c`, mask/compare at `0x5084`–`0x5098`) | established |
+| 3–6 | **World-Wide Name** — 8 bytes (four 16-bit words) read starting at word 3, assembled most-significant-word first into the 64-bit port name. A WWN is **valid** when it is non-zero, not all-ones, and not the unprogrammed signature (top 60 bits `0x2000_0800_6900_000`). A WWN of 0 gets the warning "invalid wwname 0x0", the media-type word 2 is not read (media type stays 0), and bring-up continues regardless with that invalid port name, which targets may reject at login | `fcadpattach` (`sh_read_seeprom(…,3,4)`) | established |
 
 **Media-sense note (what word 2 selects, and what "copper" and "optical" mean to the
 driver).** The driver has no copper-versus-optical switch. Word 2 only says *which of two
@@ -405,22 +405,22 @@ bit 7 set picks the sample taken after the lock-to-reference bit is also set (cu
 sensing), bit 7 clear picks the earlier sample taken with only the sync-enable bit set
 (voltage sensing); bit 8 says the word is meaningful at all. The two low bits of that sample
 are the **media-module type: 0 = no module sensed, 1 = multimode optical, 2 = single-mode
-optical, 3 = unknown** (`hwutil.o:sh_read_mia_type`; E for the codes, read from the code and
+optical, 3 = unknown** (`hwutil.o:sh_read_mia_type`; established for the codes, read from the code and
 checked against the two `0xeb` reads and `&3` masks in `hwconfig.o:sh_initialize`). Only a
 non-zero type prints "Information: Optical MIA attached(N)". A board with a sensed optical
 module therefore has word 2 = `0x0100` or `0x0180` and a SERDES status whose low
 two bits are 1 or 2 in the selected sample; a **copper (DB9) board** has the same word with the
 low two bits 0 (the copper port has no sensed module, so type 0 and no "Optical MIA" line)
-(I — the code cannot tell a copper port from an empty optical socket, and the XT-FC-2P
+(inferred — the code cannot tell a copper port from an empty optical socket, and the XT-FC-2P
 syslog quoted in U1 is not held with that line either way). **Which of `0x100` or `0x180` a
-real copper or optical board's SEEPROM actually carries is U**; the driver is satisfied by
+real copper or optical board's SEEPROM actually carries is unknown**; the driver is satisfied by
 either. A SEEPROM image dump from a real board
 would settle it.
 
 The **loop host-id is not stored in the SEEPROM.** The driver sets the host-id to an
 invalid value at attach and the real AL_PA is settled during loop initialisation; the
 only host-id input is the driver tunable `fcadp_hostid` (default 125, B2), used as the
-preferred loop address (E, B1/B2).
+preferred loop address (established, B1/B2).
 
 **SEEPROM reprogram path and the "Signal Target Abort" check.** When word 0's low nibble
 is wrong the driver enters its SEEPROM-write path (`fcadp.o:write_seeprom`). That path
@@ -431,15 +431,15 @@ configuration status byte (config offset 0x07) and requires the **Signal-Target-
 (0x08)** to have set — if not, it prints "Signal Target Abort not set in PCI status
 register" and gives up on the write. A valid word 0 (low nibble 0xF) keeps this path from being entered; if it is entered, a read of
 bank-0 register 0x1c has to raise a target abort and set config-status bit 0x08. This
-diagnostic is only reached on the reprogram path, not during normal init (E, B1).
+diagnostic is only reached on the reprogram path, not during normal init (established, B1).
 
 ### PCI class, XIO widget and bridge
 
 | Item | Value | Grade |
 |---|---|---|
-| PCI class / subclass / prog-if | Held in the chip's PCI config space (offsets 0x0b/0x0a/0x09). The driver binds purely on the vendor/device key `0x9004 / 0x1160` (`pciio_driver_register`) and never reads the class, and the IRIX Bridge PCI layer enumerates and attaches by vendor/device, not class — so IRIX does not gate attach on the class value (the conventional Fibre Channel class is 0x0c / 0x04). The chip's actual class bytes are still not established from the driver | I that attach does not depend on it; U for the exact bytes — a config-space dump of real hardware settles them |
-| XIO widget ID and address decode | A property of the host machine's XIO→PCI bridge, supplied by IRIX's generic bridge layer; `fcadp` never touches XIO or the widget directly | U — a host hardware-graph / widget-ID capture settles it |
-| SGI bridge revision | Likewise a host-board property, not readable from `fcadp` | U — host bridge identification settles it |
+| PCI class / subclass / prog-if | Held in the chip's PCI config space (offsets 0x0b/0x0a/0x09). The driver binds purely on the vendor/device key `0x9004 / 0x1160` (`pciio_driver_register`) and never reads the class, and the IRIX Bridge PCI layer enumerates and attaches by vendor/device, not class — so IRIX does not gate attach on the class value (the conventional Fibre Channel class is 0x0c / 0x04). The chip's actual class bytes are still not established from the driver | inferred that attach does not depend on it; unknown for the exact bytes — a config-space dump of real hardware settles them |
+| XIO widget ID and address decode | A property of the host machine's XIO→PCI bridge, supplied by IRIX's generic bridge layer; `fcadp` never touches XIO or the widget directly | unknown — a host hardware-graph / widget-ID capture settles it |
+| SGI bridge revision | Likewise a host-board property, not readable from `fcadp` | unknown — host bridge identification settles it |
 
 ### The same board on an Octane (IP30, IRIX 6.5.21)
 
@@ -448,10 +448,10 @@ Checked against the 6.5.21 IP30 kernel and `fcadp` archive (kernel SHA-256 `c5cb
 
 | Question | Answer | Grade |
 |---|---|---|
-| Does the 6.5.21 IP30 driver take a different value list, mask or width at bank-4 0x63 than 6.5.30 IP27? | **No.** `hwconfig.o`, `hwutil.o`, `hwintr.o`, `hwlip.o`, `hwtrans.o` and `ulmutil.o` of the 6.5.21 IP30 archive have the same code bytes as the 6.5.30 IP30 and IP27 archives (only the compiler option note and the line table differ). `fcadp.o` matches the 6.5.30 IP30 build and differs from the IP27 build in one routine, `fcadp_mapbp` (frame size and register allocation; a DMA-mapping routine off the config path, not traced instruction by instruction). In every build `hwconfig.o:sh_read_link_speed` (text offset 0x2a4, 168 bytes) writes 0x44 to register 0x2c, does one byte read of 0x63, forms `(value & 0xfc) \| 0x02`, and accepts exactly 0xbe, 0x2e, 0xfe or 0x6e (stored divisors 1, 2, 2, 4); anything else returns 1 | E (disassembly; sections compared byte for byte) |
-| Can "error -2 in getting config" come from anywhere else? | No. The only −2 return in `sh_get_configuration` (text offset 0, 676 bytes; at offset 0xe8) is the non-zero return of the link-speed routine; the TCB-count probe fails with −1. So a −2 means the byte read of BAR 0 + 0x63, after the 0x44 write to BAR 0 + 0x2c, returned a value outside the list | E |
-| What touches widget offset `0xc00000` on an Octane? | The IP30 kernel's Bridge flash driver (`srflash_attach`), not `fcadp`. The Bridge map has registers at 0, type-0 config space for devices 0 to 7 at 0x20000, device PIO windows at 0x200000 (device 0, 2 MB), 0x400000 (device 1, 2 MB) and 0x600000 to 0xbfffff (1 MB each), and the external flash, two 2 MB chip selects, at 0xc00000. The driver registers for the Bridge widget identity (part 0xc002, manufacturer 0x36), so the kernel runs it for **every** Bridge, including this board's. It maps the register block; returns quietly unless Status bit 5 (PCI mode) is set; maps flash offset 0xc00000, size 8; sets Control bit 31 (flash write enable); stores 0x9090; reads the halfwords at offsets 0 and 2 and wants 0x00b0 and 0x66a8; on a mismatch repeats at 0xe00000; then clears Control bit 31 and gives up without a message. It sets up no fault handler. The 6.5.21 IP27 kernel has no such driver (no `srflash` symbol or string), so the board never touches the flash window on an Origin 2000 | E for the IP30 routine and the IP27 kernel; I that the 6.5.30 IP30 kernel does the same (not read) |
-| What must the board's Bridge do? | Real X9-FC-2P boards attach on Octanes (U3, D1) without a bus error, so on the real board either a flash is fitted or an empty select reads without faulting. The probe needs the reads of 0xc00000 and 0xe00000 and the 16-bit store to complete, and the reads must not be 0x00b0 / 0x66a8 (all ones passes). What the real board returns is not known | E for what the probe needs; U for the board. A read of flash offset 0 on a real X9-FC-2P settles it |
+| Does the 6.5.21 IP30 driver take a different value list, mask or width at bank-4 0x63 than 6.5.30 IP27? | **No.** `hwconfig.o`, `hwutil.o`, `hwintr.o`, `hwlip.o`, `hwtrans.o` and `ulmutil.o` of the 6.5.21 IP30 archive have the same code bytes as the 6.5.30 IP30 and IP27 archives (only the compiler option note and the line table differ). `fcadp.o` matches the 6.5.30 IP30 build and differs from the IP27 build in one routine, `fcadp_mapbp` (frame size and register allocation; a DMA-mapping routine off the config path, not traced instruction by instruction). In every build `hwconfig.o:sh_read_link_speed` (text offset 0x2a4, 168 bytes) writes 0x44 to register 0x2c, does one byte read of 0x63, forms `(value & 0xfc) \| 0x02`, and accepts exactly 0xbe, 0x2e, 0xfe or 0x6e (stored divisors 1, 2, 2, 4); anything else returns 1 | established (disassembly; sections compared byte for byte) |
+| Can "error -2 in getting config" come from anywhere else? | No. The only −2 return in `sh_get_configuration` (text offset 0, 676 bytes; at offset 0xe8) is the non-zero return of the link-speed routine; the TCB-count probe fails with −1. So a −2 means the byte read of BAR 0 + 0x63, after the 0x44 write to BAR 0 + 0x2c, returned a value outside the list | established |
+| What touches widget offset `0xc00000` on an Octane? | The IP30 kernel's Bridge flash driver (`srflash_attach`), not `fcadp`. The Bridge map has registers at 0, type-0 config space for devices 0 to 7 at 0x20000, device PIO windows at 0x200000 (device 0, 2 MB), 0x400000 (device 1, 2 MB) and 0x600000 to 0xbfffff (1 MB each), and the external flash, two 2 MB chip selects, at 0xc00000. The driver registers for the Bridge widget identity (part 0xc002, manufacturer 0x36), so the kernel runs it for **every** Bridge, including this board's. It maps the register block; returns quietly unless Status bit 5 (PCI mode) is set; maps flash offset 0xc00000, size 8; sets Control bit 31 (flash write enable); stores 0x9090; reads the halfwords at offsets 0 and 2 and wants 0x00b0 and 0x66a8; on a mismatch repeats at 0xe00000; then clears Control bit 31 and gives up without a message. It sets up no fault handler. The 6.5.21 IP27 kernel has no such driver (no `srflash` symbol or string), so the board never touches the flash window on an Origin 2000 | established for the IP30 routine and the IP27 kernel; inferred that the 6.5.30 IP30 kernel does the same (not read) |
+| What must the board's Bridge do? | Real X9-FC-2P boards attach on Octanes (U3, D1) without a bus error, so on the real board either a flash is fitted or an empty select reads without faulting. The probe needs the reads of 0xc00000 and 0xe00000 and the 16-bit store to complete, and the reads must not be 0x00b0 / 0x66a8 (all ones passes). What the real board returns is not known | established for what the probe needs; unknown for the board. A read of flash offset 0 on a real X9-FC-2P settles it |
 
 #### How the IRIX 6.5.21 kernel places the board's BARs
 
@@ -460,19 +460,19 @@ allocator functions).
 
 | Question | Answer | Grade |
 |---|---|---|
-| Where does the kernel allocate an I/O BAR? | From a per-Bridge pool, not from the device window. At Bridge attach it builds three pools: **I/O space starts at 0x200000, runs to about 0x10000000, in 1 MB units**; one memory range starts at 0x4000 and is 0xfc000 long in 16 KB units; the other 32-bit memory range starts at 0x200000 in 1 MB units. The pool is chosen from the BAR's recorded type. Every I/O BAR therefore takes a whole 1 MB unit, first fit, shared by all slots on the Bridge. Origin 2000 placements (BAR 0 = 0x200000, BAR 3 = 0x300000) follow from this | E (disassembly; the allocator and pool set-up are the same code in both kernels) |
-| Does it keep an address firmware already assigned? | It tries. The slot set-up reads each BAR; if the command register's I/O-decode bit is set it takes the BAR's address as firmware's assignment and asks the pool to reserve it. Later, only a BAR whose recorded address is below its size (unassigned) is given a fresh allocation | E for the mechanism; U for what the reserved size is in practice and when the reserve is skipped |
-| Does the kernel treat the AIC-1160 specially? | Yes: when it turns decoding on it enables bus master and **I/O decode only** for vendor 0x9004 device 0x1160, and I/O plus memory decode for other devices | E |
-| What BARs does the real chip present? | BAR 0 (registers) and BAR 3 (sequencer, TCB and scatter/gather RAM) are each used as 256-byte windows and are I/O BARs (inferred from the I/O-only decode and from the BAR type bit deciding the pool). The driver clears BARs 1 and 2 as a chip-bug workaround, so they exist and are likely memory BARs (inferred). BAR sizes, BAR 4 and 5 are unknown; no public Adaptec register document was found | I; U for sizes and BARs 4 and 5. A config-space dump of a real board settles it |
+| Where does the kernel allocate an I/O BAR? | From a per-Bridge pool, not from the device window. At Bridge attach it builds three pools: **I/O space starts at 0x200000, runs to about 0x10000000, in 1 MB units**; one memory range starts at 0x4000 and is 0xfc000 long in 16 KB units; the other 32-bit memory range starts at 0x200000 in 1 MB units. The pool is chosen from the BAR's recorded type. Every I/O BAR therefore takes a whole 1 MB unit, first fit, shared by all slots on the Bridge. Origin 2000 placements (BAR 0 = 0x200000, BAR 3 = 0x300000) follow from this | established (disassembly; the allocator and pool set-up are the same code in both kernels) |
+| Does it keep an address firmware already assigned? | It tries. The slot set-up reads each BAR; if the command register's I/O-decode bit is set it takes the BAR's address as firmware's assignment and asks the pool to reserve it. Later, only a BAR whose recorded address is below its size (unassigned) is given a fresh allocation | established for the mechanism; unknown for what the reserved size is in practice and when the reserve is skipped |
+| Does the kernel treat the AIC-1160 specially? | Yes: when it turns decoding on it enables bus master and **I/O decode only** for vendor 0x9004 device 0x1160, and I/O plus memory decode for other devices | established |
+| What BARs does the real chip present? | BAR 0 (registers) and BAR 3 (sequencer, TCB and scatter/gather RAM) are each used as 256-byte windows and are I/O BARs (inferred from the I/O-only decode and from the BAR type bit deciding the pool). The driver clears BARs 1 and 2 as a chip-bug workaround, so they exist and are likely memory BARs (inferred). BAR sizes, BAR 4 and 5 are unknown; no public Adaptec register document was found | inferred; unknown for sizes and BARs 4 and 5. A config-space dump of a real board settles it |
 
 #### The firmware-placed BAR 0 and the kernel's reserve
 
 With command word 0x7 and BAR 0 reading 0x200001 / 0x400001, the 6.5.21 IP30 kernel's slot set-up masks the
 type bit off, takes the lowest set bit of the address as the size (2 MB / 4 MB) and asks the I/O pool to
-reserve that range; the range fits the pool, so the type bit is not what defeats the reserve (E). All slots
-do this before any slot allocates its unassigned BARs (E). Which pool the reserve targets comes from a stack
-value that static reading does not resolve (U), and a failed reserve is silent. Whether a real board plus the
-real PROM ends with the same BAR 0 / BAR 3 overlap is therefore not settled (U); a config-space dump of a
+reserve that range; the range fits the pool, so the type bit is not what defeats the reserve (established). All slots
+do this before any slot allocates its unassigned BARs (established). Which pool the reserve targets comes from a stack
+value that static reading does not resolve (unknown), and a failed reserve is silent. Whether a real board plus the
+real PROM ends with the same BAR 0 / BAR 3 overlap is therefore not settled (unknown); a config-space dump of a
 real board, or the pool and result of the reserve call in a run, settles it.
 
 #### Firmware-placed BAR 0 and the 6.5.21 reserve defect
@@ -507,7 +507,7 @@ the chip by doorbell; completions come back as fixed-size entries the chip write
 into a **done queue** in host memory, flagged by an interrupt. The layout below is
 from the IP30 objects and was cross-checked identical on IP27 and IP35: the command
 doorbell offset, the producer-index location and the CDB offset match byte-for-byte,
-with identical argument wiring in `fill_normal_tcb` (E, B1).
+with identical argument wiring in `fill_normal_tcb` (established, B1).
 
 All offsets are from the start of the TCB (the block `fill_normal_tcb` fills through
 the pointer the driver's command-block header carries). **Endianness matters and is
@@ -517,7 +517,7 @@ one byte at a time, low byte first (`fcadp.o:assign_int16`/`assign_int32`/
 `assign_int64`), because the chip is a little-endian PCI device; but the embedded
 FCP command fields that travel on the wire are stored in **big-endian / FC network
 order** (the data length at 0x40 is written with an unaligned `swl`/`swr` pair, and
-the SCSI CDB is copied through verbatim), exactly as Fibre Channel requires (E, B1).
+the SCSI CDB is copied through verbatim), exactly as Fibre Channel requires (established, B1).
 
 #### TCB byte layout (built by `fcadp.o:fill_normal_tcb`)
 
@@ -536,33 +536,33 @@ scatter-gather mapper.
 
 | Offset | Width / order | Field (meaning) | Cite / grade |
 |---|---|---|---|
-| 0x00 | 2, LE | **Originator exchange ID (OX_ID) = the TCB handle / command tag.** The same value is written again at 0x68 and echoed in the done-queue entry, so it is the chip's command identifier | `fill_normal_tcb` via `assign_int16`; E |
-| 0x02 | 2 | Responder exchange ID (RX_ID), set to 0xffff (unassigned) on an outbound command | `fill_normal_tcb`; E |
-| 0x04 | 3 | **Destination ID (D_ID)** of the target; on a loop its low byte (0x04) is the target AL_PA, looked up in the target-id→AL_PA table. The chip fills the source ID itself from its own loop address, so the TCB has no S_ID | `fill_normal_tcb`; E |
-| 0x07 | 1 | **R_CTL byte** (chip encoding, not the wire value): **0x01** for a SCSI (FCP) command; 0x22 for a link-service request, 0x23 on the expected reply. The wire R_CTL of FCP_CMND is 0x06, so 0x01 (FC "solicited data") is not the on-wire category; it is not the on-wire value. 0x22/0x23 match the real ELS values | `fill_normal_tcb`/`fill_plogi_tcb`; E that the bytes are written, I for their meaning |
-| 0x09 | 1 | Frame delimiter: **0x05** = class-3 normal | `fill_normal_tcb`; E |
-| 0x0e–0x11 | 4 | **F_CTL / TYPE.** 0x0e = F_CTL2 (0x29 for a SCSI command); **0x0f = FC-4 TYPE: 0x08 = FCP (SCSI), 0x01 = extended link service**; 0x10 = F_CTL0 (0x08); 0x11 = F_CTL1 | `fill_normal_tcb`; E for the stores at 0x0e (0x29), 0x0f (0x08) and 0x10 (0x08), re-read in the IP27 object; **the normal builder does not store at 0x11**, so F_CTL1's value for a SCSI command is whatever the block held before (unknown), and its name is I. The link-service builders (`fill_plogi_tcb`, `fill_adisc_tcb`) store a four-byte big-endian word at 0x10 to 0x13 (PLOGI constant `0x000100f4`): E that the word is written; the field split inside it is I |
-| 0x13–0x15 | 3 | Sequence ID (0x13) and sequence count (0x14–0x15) | **I.** Re-read: `fill_normal_tcb` has no store to 0x13 to 0x15 (an earlier version of this row cited it as E). The only store reaching 0x13 in the builders read is the link-service word above. The names follow the FC frame-header layout, not a store |
-| 0x1c | 1 | Loop open / fairness flags: **0x18** when host-unfair is set (open half-duplex), **0x40** otherwise (open half-duplex, arbitrate fair) | `fill_normal_tcb`; E |
-| 0x21 | 1 | **TCB control byte — command-type discriminator.** 0x00 = SCSI read / no-data initiator command, **0x01 = unsolicited-receive buffer** (a posted receive TCB, below), **0x02 = SCSI write** (data-out direction bit), **0x0a = send-link-command / receive-link-reply** (every PLOGI / PRLI / ADISC). This is a primary way the sequencer tells a link service / receive buffer from a SCSI command | `fill_normal_tcb`/`fill_unsol_tcb`/`fill_plogi_tcb`; E |
-| 0x23 | 1 | Data-descriptor mode: **0x08** = one directly-addressed data buffer, **0x0b** = scatter-gather list, **0x0c** = no data. Set by the mapper, overwriting an earlier value | `fcadp_map` / `fcadp_maplist`; E |
-| 0x24 | 8, FC order | FCP_LUN. The driver writes the request's LUN bytes here (first two bytes from the SCSI request) | `fill_normal_tcb`; E that LUN data lands here, I for full 8-byte LUN form |
-| 0x2c | 4 | FCP_CNTL. Byte at **0x2f** carries the transfer-direction control: **0x02 = read** (data to host), **0x01 = write** (data from host) | `fill_normal_tcb`; E for the 0x2f direction byte, I for the rest of FCP_CNTL |
-| 0x30 | 16 | FCP_CDB — the SCSI CDB, `bcopy`'d in from the request, length taken from the request's CDB-length field. **Confirmed at 0x30 on IP27/IP30/IP35** | `fill_normal_tcb` `bcopy(dst=tcb+0x30, …)`; E |
-| 0x40 | 4, **big-endian** | FCP_DL — the FCP data length, in FC network byte order (`swl`/`swr`) | `fill_normal_tcb`; E |
-| 0x44 | 8, LE | **Next-TCB link:** PCI bus address of the next slot in the driver's circular TCB queue (`fc_next_rrtcb` returns a TCB slot, not a data or response buffer). The unsolicited and LIP TCBs carry the same link | `fill_normal_tcb` via `assign_int64`; E for the address, I that the chip uses it as a chain link |
-| 0x4c | 8, LE | **Data DMA pointer.** For mode 0x08 it is the PCI bus address of the single data buffer; for mode 0x0b it is the PCI bus address of the scatter-gather list | `fcadp_map` / `fcadp_maplist` via `assign_int64`; E |
-| 0x54 | 4, LE | **Transfer length** (byte count) for a single buffer (mode 0x08). In list mode (0x0b) the driver writes **zero** here; no entry count exists, and the list is terminated by the end flag in its last descriptor | `fcadp_map` / `fcadp_maplist` (`assign_int32` single, zero-store list); E |
-| 0x58 | 8, LE | PCI bus address of the 256-byte FCP response / sense buffer (the driver's per-command sense area) | `fill_normal_tcb` via `assign_int64`; E |
-| 0x60 | 4, LE | Data length (copy of the transfer length) | `fill_normal_tcb` via `assign_int32`; E |
-| 0x68 | 2, LE | TCB handle, repeated | `fill_normal_tcb` via `assign_int16`; I |
+| 0x00 | 2, LE | **Originator exchange ID (OX_ID) = the TCB handle / command tag.** The same value is written again at 0x68 and echoed in the done-queue entry, so it is the chip's command identifier | `fill_normal_tcb` via `assign_int16`; established |
+| 0x02 | 2 | Responder exchange ID (RX_ID), set to 0xffff (unassigned) on an outbound command | `fill_normal_tcb`; established |
+| 0x04 | 3 | **Destination ID (D_ID)** of the target; on a loop its low byte (0x04) is the target AL_PA, looked up in the target-id→AL_PA table. The chip fills the source ID itself from its own loop address, so the TCB has no S_ID | `fill_normal_tcb`; established |
+| 0x07 | 1 | **R_CTL byte** (chip encoding, not the wire value): **0x01** for a SCSI (FCP) command; 0x22 for a link-service request, 0x23 on the expected reply. The wire R_CTL of FCP_CMND is 0x06, so 0x01 (FC "solicited data") is not the on-wire category; it is not the on-wire value. 0x22/0x23 match the real ELS values | `fill_normal_tcb`/`fill_plogi_tcb`; established that the bytes are written, inferred for their meaning |
+| 0x09 | 1 | Frame delimiter: **0x05** = class-3 normal | `fill_normal_tcb`; established |
+| 0x0e–0x11 | 4 | **F_CTL / TYPE.** 0x0e = F_CTL2 (0x29 for a SCSI command); **0x0f = FC-4 TYPE: 0x08 = FCP (SCSI), 0x01 = extended link service**; 0x10 = F_CTL0 (0x08); 0x11 = F_CTL1 | `fill_normal_tcb`; established for the stores at 0x0e (0x29), 0x0f (0x08) and 0x10 (0x08), re-read in the IP27 object; **the normal builder does not store at 0x11**, so F_CTL1's value for a SCSI command is whatever the block held before (unknown), and its name is inferred. The link-service builders (`fill_plogi_tcb`, `fill_adisc_tcb`) store a four-byte big-endian word at 0x10 to 0x13 (PLOGI constant `0x000100f4`): established that the word is written; the field split inside it is inferred |
+| 0x13–0x15 | 3 | Sequence ID (0x13) and sequence count (0x14–0x15) | **inferred.** Re-read: `fill_normal_tcb` has no store to 0x13 to 0x15 (an earlier version of this row cited it as established). The only store reaching 0x13 in the builders read is the link-service word above. The names follow the FC frame-header layout, not a store |
+| 0x1c | 1 | Loop open / fairness flags: **0x18** when host-unfair is set (open half-duplex), **0x40** otherwise (open half-duplex, arbitrate fair) | `fill_normal_tcb`; established |
+| 0x21 | 1 | **TCB control byte — command-type discriminator.** 0x00 = SCSI read / no-data initiator command, **0x01 = unsolicited-receive buffer** (a posted receive TCB, below), **0x02 = SCSI write** (data-out direction bit), **0x0a = send-link-command / receive-link-reply** (every PLOGI / PRLI / ADISC). This is a primary way the sequencer tells a link service / receive buffer from a SCSI command | `fill_normal_tcb`/`fill_unsol_tcb`/`fill_plogi_tcb`; established |
+| 0x23 | 1 | Data-descriptor mode: **0x08** = one directly-addressed data buffer, **0x0b** = scatter-gather list, **0x0c** = no data. Set by the mapper, overwriting an earlier value | `fcadp_map` / `fcadp_maplist`; established |
+| 0x24 | 8, FC order | FCP_LUN. The driver writes the request's LUN bytes here (first two bytes from the SCSI request) | `fill_normal_tcb`; established that LUN data lands here, inferred for full 8-byte LUN form |
+| 0x2c | 4 | FCP_CNTL. Byte at **0x2f** carries the transfer-direction control: **0x02 = read** (data to host), **0x01 = write** (data from host) | `fill_normal_tcb`; established for the 0x2f direction byte, inferred for the rest of FCP_CNTL |
+| 0x30 | 16 | FCP_CDB — the SCSI CDB, `bcopy`'d in from the request, length taken from the request's CDB-length field. **Confirmed at 0x30 on IP27/IP30/IP35** | `fill_normal_tcb` `bcopy(dst=tcb+0x30, …)`; established |
+| 0x40 | 4, **big-endian** | FCP_DL — the FCP data length, in FC network byte order (`swl`/`swr`) | `fill_normal_tcb`; established |
+| 0x44 | 8, LE | **Next-TCB link:** PCI bus address of the next slot in the driver's circular TCB queue (`fc_next_rrtcb` returns a TCB slot, not a data or response buffer). The unsolicited and LIP TCBs carry the same link | `fill_normal_tcb` via `assign_int64`; established for the address, inferred that the chip uses it as a chain link |
+| 0x4c | 8, LE | **Data DMA pointer.** For mode 0x08 it is the PCI bus address of the single data buffer; for mode 0x0b it is the PCI bus address of the scatter-gather list | `fcadp_map` / `fcadp_maplist` via `assign_int64`; established |
+| 0x54 | 4, LE | **Transfer length** (byte count) for a single buffer (mode 0x08). In list mode (0x0b) the driver writes **zero** here; no entry count exists, and the list is terminated by the end flag in its last descriptor | `fcadp_map` / `fcadp_maplist` (`assign_int32` single, zero-store list); established |
+| 0x58 | 8, LE | PCI bus address of the 256-byte FCP response / sense buffer (the driver's per-command sense area) | `fill_normal_tcb` via `assign_int64`; established |
+| 0x60 | 4, LE | Data length (copy of the transfer length) | `fill_normal_tcb` via `assign_int32`; established |
+| 0x68 | 2, LE | TCB handle, repeated | `fill_normal_tcb` via `assign_int16`; inferred |
 
 The sibling builders produce the link-service frames through the same mechanism:
 `fcadp.o:fill_plogi_tcb` (N-port login), `fill_prli_tcb` (process login),
 `fill_adisc_tcb`, `fill_abts_tcb` (abort), `fill_lip_tcb`, `fill_unsol_tcb` and
 `fill_prim_tcb` (loop primitives). They differ in the FC/FCP framing bytes, not in the
 posting or completion path; the link-service framing and the loop-discovery flow are
-detailed in the link-service section below (E, B1).
+detailed in the link-service section below (established, B1).
 
 #### Scatter-gather descriptor format
 
@@ -585,7 +585,7 @@ size of the driver's scatter/gather descriptor (8 + 4 + 4
 bytes), confirmed by the per-entry indexing in `fcadp.o:fcadp_maplist`/`fcadp_map`
 and by the allocation size. DMA addresses are
 real PCI-bus addresses produced by the Bridge DMA path, not raw physical addresses
-(E, B1).
+(established, B1).
 
 #### Posting: producer index and command doorbell
 
@@ -596,7 +596,7 @@ writes the **same value to the command doorbell at register 0x2a** as a 16-bit
 little-endian store (`outMemWord`). So the doorbell value handed to the chip is the
 post-increment producer index, i.e. the count of commands ever posted modulo 2^16;
 the chip consumes command blocks from a circular queue up to that index. This is
-identical on IP27/IP30/IP35 (E, B1).
+identical on IP27/IP30/IP35 (established, B1).
 
 #### Done queue and consumer index
 
@@ -607,19 +607,19 @@ into byte +3 and byte +7 of each 8-byte stride**, which makes each **done-queue 
 also writes 0xff to, and reads back, the done-queue pass byte at **sequencer
 scratch-RAM offset 0x45** (reached through the sequencer-RAM window, not a primary
 register — see the queue-setup section for the full mechanism and the exact pass-count
-rule) (E, B1).
+rule) (established, B1).
 
 A done-queue entry, as read by `hwintr.o:sh_backend_isr`, is:
 
 | Offset | Width | Field | Grade |
 |---|---|---|---|
-| 0x00 | 2, LE | Completed TCB handle (OX_ID) — the same tag written to TCB 0x00 | E |
-| 0x02 | 1 | Completion status byte (see the code table below) | E |
-| 0x03 | 1 | Pass byte. Initialised to 0xff; the chip writes the ring-lap number (mod 256) and the ISR consumes while it equals the expected value (full rule in the queue-setup section) | E |
+| 0x00 | 2, LE | Completed TCB handle (OX_ID) — the same tag written to TCB 0x00 | established |
+| 0x02 | 1 | Completion status byte (see the code table below) | established |
+| 0x03 | 1 | Pass byte. Initialised to 0xff; the chip writes the ring-lap number (mod 256) and the ISR consumes while it equals the expected value (full rule in the queue-setup section) | established |
 
 The backend ISR pulls the handle out of entry bytes 0–1, stores it where the
 completion layer reads it, advances the consumer, and calls `ulm_tcb_complete`
-(E, B1).
+(established, B1).
 
 **Completion status-byte codes** (entry byte 0x02; the sequencer sets them). For a
 normal command these are transfer/frame outcomes; a LIP-TCB completion overloads a few
@@ -628,23 +628,23 @@ negotiated host AL_PA here.
 
 | Code | Meaning (normal command) | Grade |
 |---|---|---|
-| 0x00 | Success, no error | E |
-| 0x01 | Data overrun | E |
-| 0x02 | Data underrun (short transfer; residual follows) | E |
-| 0x03 | TCB parity error | E |
-| 0x04 | Error response — the target returned an FCP_RSP with status/sense (the driver then parses the response buffer) | E |
-| 0x05 | Frame received out of order | E |
-| 0x06 | Frame-format error | E |
-| 0x07 | Count overflow (sequence ID / count / relative offset) | E |
-| 0x08 | Frame came back undelivered — target not reachable (the "no device" case) | E |
-| 0x09 / 0x0a | Bad start-of-frame / end-of-frame delimiter | E |
-| 0x0b | Aborted | E |
-| 0x0f | Primitive timed out | E |
+| 0x00 | Success, no error | established |
+| 0x01 | Data overrun | established |
+| 0x02 | Data underrun (short transfer; residual follows) | established |
+| 0x03 | TCB parity error | established |
+| 0x04 | Error response — the target returned an FCP_RSP with status/sense (the driver then parses the response buffer) | established |
+| 0x05 | Frame received out of order | established |
+| 0x06 | Frame-format error | established |
+| 0x07 | Count overflow (sequence ID / count / relative offset) | established |
+| 0x08 | Frame came back undelivered — target not reachable (the "no device" case) | established |
+| 0x09 / 0x0a | Bad start-of-frame / end-of-frame delimiter | established |
+| 0x0b | Aborted | established |
+| 0x0f | Primitive timed out | established |
 
 For a LIP-TCB completion the same byte instead carries, on failure, 0x05 timeout,
 0x06 non-participating, 0x07 hardware error, 0x09 old-port-state, 0x0a unexpected
 close; on success it is the loop address the host negotiated (`fcadp.o:fc_lip_complete`,
-`hwintr.o:sh_backend_isr`; E, B1).
+`hwintr.o:sh_backend_isr`; established, B1).
 
 #### Completion and the FCP response
 
@@ -653,7 +653,7 @@ the driver's handle-indexed table (an inactive command is flagged by the low bit
 its table pointer), reads the command type, and dispatches on it. The type codes are
 read straight out of the dispatch: **5 → SCSI** (`fc_scsi_complete`), 1 → LIP,
 2 → ADISC, 3 → PLOGI, 4 → PRLI, 6 → unsolicited, 7 → ABTS (abort). Each has its own
-completion routine (E, B1).
+completion routine (established, B1).
 
 A command that completes cleanly needs none of this: the whole FCP_RSP path runs
 **only when the completion status byte is 0x04 (error response)**. In that case
@@ -663,17 +663,17 @@ size). It is a standard FCP_RSP IU:
 
 | Response-buffer offset | Width / order | Field | Grade |
 |---|---|---|---|
-| 0x0a | 1 | FCP status flags (the FCP_STATUS byte). Bits the driver tests: **0x01 = response-length valid, 0x02 = sense-length valid, 0x04 = residual overrun, 0x08 = residual underrun** (the earlier sheet mislabelled these and invented a "confirm" bit) | E |
-| 0x0b | 1 | SCSI status byte (passed up as the command's SCSI status; 0x28 = queue-full is handled specially) | E |
-| 0x0c | 4, big-endian | FCP residual byte count. On underrun the driver takes this as the command residual; on overrun it is reported as a CDB/data-length mismatch | E |
-| 0x10 | 4 | FCP sense-data length | E |
-| 0x14 | 4 | FCP response-data length | E |
-| 0x18… | — | Response-info then sense-info payload | E |
-| 0x80 | 16 | **Adapter residual-info block.** The chip writes it little-endian and the driver reads it as written (its swap call is an empty stub in the shipped objects), so every field is plain **little-endian**: an 8-byte little-endian bus pointer to the current scatter-gather page at +0, a 3-byte little-endian current-segment residual (low byte first) at +8, and the current scatter-gather element index (high nibble) at +12. `hwutil.o:sh_get_residual_length` walks it plus the remaining scatter-gather entries to compute the untransferred byte count, and **cross-checks it against the FCP_RSP residual**; a mismatch is a hard error. So the FCP_RSP residual is the primary figure and this block is the independent check — not a plain bytes-moved counter. The fields are plain little-endian as listed, with no per-unit byte reversal | E |
+| 0x0a | 1 | FCP status flags (the FCP_STATUS byte). Bits the driver tests: **0x01 = response-length valid, 0x02 = sense-length valid, 0x04 = residual overrun, 0x08 = residual underrun** (the earlier sheet mislabelled these and invented a "confirm" bit) | established |
+| 0x0b | 1 | SCSI status byte (passed up as the command's SCSI status; 0x28 = queue-full is handled specially) | established |
+| 0x0c | 4, big-endian | FCP residual byte count. On underrun the driver takes this as the command residual; on overrun it is reported as a CDB/data-length mismatch | established |
+| 0x10 | 4 | FCP sense-data length | established |
+| 0x14 | 4 | FCP response-data length | established |
+| 0x18… | — | Response-info then sense-info payload | established |
+| 0x80 | 16 | **Adapter residual-info block.** The chip writes it little-endian and the driver reads it as written (its swap call is an empty stub in the shipped objects), so every field is plain **little-endian**: an 8-byte little-endian bus pointer to the current scatter-gather page at +0, a 3-byte little-endian current-segment residual (low byte first) at +8, and the current scatter-gather element index (high nibble) at +12. `hwutil.o:sh_get_residual_length` walks it plus the remaining scatter-gather entries to compute the untransferred byte count, and **cross-checks it against the FCP_RSP residual**; a mismatch is a hard error. So the FCP_RSP residual is the primary figure and this block is the independent check — not a plain bytes-moved counter. The fields are plain little-endian as listed, with no per-unit byte reversal | established |
 
 TCB bookkeeping uses a free list (`fc_get_rrtcb`/`fc_next_rrtcb`), and the driver
 guards against "TCB maximum count exceeded" and checksum/parity errors on TCBs
-(E, B1). With the TCB layout, the producer/doorbell post, the done-queue entry format
+(established, B1). With the TCB layout, the producer/doorbell post, the done-queue entry format
 and the FCP response fields above all mapped, the command path is mapped end to end — see the end-of-sheet items for what remains open.
 
 ### Interrupt-status register (0x24) and the host status block
@@ -682,7 +682,7 @@ The interrupt-status register at **0x24 is 16-bit** and is read whole by
 `hwutil.o:sh_interrupt_pending` (`inMemWord`). "An interrupt is pending" is decided by
 masking the register with **0xff08** — that is, the whole high byte (bits 8–15) plus
 **bit 3** of the low byte count as real interrupt sources; the other low-byte bits are
-ignored for the pending test (E, B1).
+ignored for the pending test (established, B1).
 
 The chip also mirrors the status into a **two-byte status block in host memory** (the
 address the driver hands it as the interrupt-status block, dereferenced in
@@ -692,18 +692,18 @@ reads the mirror, accumulates the bits, acts on them, and **clears handled bits 
 writing them back to the chip as byte writes to 0x24 and 0x25** (`outMemByte`). Reads
 and writes to these registers go through the little-endian address swizzle the MMIO
 accessors apply (halfword accesses XOR the address with 2, byte accesses with 3), so
-the register file is seen little-endian from the big-endian host (E, B1).
+the register file is seen little-endian from the big-endian host (established, B1).
 
 Bits the ISRs actually test (meanings inferred from the branch each guards):
 
 | Register.bit | Mask | What the driver does with it | Grade |
 |---|---|---|---|
-| 0x24 bit 3 | 0x0008 | **Loop / attention interrupt.** When set, the back-end ISR selects bank 1, reads the loop-state register at 0xa1 and raises loop events (below), plus sync-spindle/sync-clock events from 0xa2 | E |
-| 0x25 bit 7 | 0x8000 | PCI error interrupt | E |
-| 0x25 bit 6 | 0x4000 | Hardware error interrupt — the ISR reads and latches the error-status register at 0x23 | E |
-| 0x25 bit 5 | 0x2000 | Software error interrupt | E |
-| 0x25 bit 4 | 0x1000 | **Sequencer / completion interrupt** — this is the done-queue completion bit (**not** 0x25 bit 2, the completion-reporting-counter interrupt, which the driver does not rely on) | E |
-| 0x25 bit 0 | 0x0100 | **Sequencer-ready-for-LIP ("LIP READY")** — the chip raises it when it has run loop initialisation far enough to accept the host's LIP TCB. The back-end ISR then suspends the sequencer and posts the LIP TCB (see the loop bring-up handshake). The chip must raise this after the driver requests a LIP, or loop init times out | E |
+| 0x24 bit 3 | 0x0008 | **Loop / attention interrupt.** When set, the back-end ISR selects bank 1, reads the loop-state register at 0xa1 and raises loop events (below), plus sync-spindle/sync-clock events from 0xa2 | established |
+| 0x25 bit 7 | 0x8000 | PCI error interrupt | established |
+| 0x25 bit 6 | 0x4000 | Hardware error interrupt — the ISR reads and latches the error-status register at 0x23 | established |
+| 0x25 bit 5 | 0x2000 | Software error interrupt | established |
+| 0x25 bit 4 | 0x1000 | **Sequencer / completion interrupt** — this is the done-queue completion bit (**not** 0x25 bit 2, the completion-reporting-counter interrupt, which the driver does not rely on) | established |
+| 0x25 bit 0 | 0x0100 | **Sequencer-ready-for-LIP ("LIP READY")** — the chip raises it when it has run loop initialisation far enough to accept the host's LIP TCB. The back-end ISR then suspends the sequencer and posts the LIP TCB (see the loop bring-up handshake). The chip must raise this after the driver requests a LIP, or loop init times out | established |
 
 **What actually gates the completion drain.** The front-end ISR does **not** gate the
 done-queue drain on any status bit: it scans the done-queue pass bytes directly on
@@ -712,7 +712,7 @@ the hardware does not always post). When it finds entries it sets the sequencer 
 completion bit (0x25 bit 4) in software and drains them. The chip posts 0x25
 bit 4 and raises the interrupt when it writes a completion, but the driver harvests
 the completion from the pass byte regardless. **0x24 bit 3 is a separate thing** — the
-loop/attention interrupt, for link events, not completions (E, B1).
+loop/attention interrupt, for link events, not completions (established, B1).
 
 **Loop up / down / error, corrected.** The loop state is not read from the interrupt
 high byte; it is decoded from the loop-state register at **0xa1** after a 0x24 bit-3
@@ -725,7 +725,7 @@ and **sequencer-ready-for-a-LIP-TCB (0x05)**; confirmed against the binary's
 immediates and the strings "Spindle Sync" and "Clock Sync" in `hwintr.o`. Error notifications are a separate block of event
 codes (parity, PCI abort, loss-of-signal and loss-of-sync, SERDES fault) raised from
 the 0x25 error bits and from the link/SERDES status at 0xe1/0xeb; the back-end ISR
-pauses the sequencer and reloads the mainline microcode on the recoverable ones (E, B1).
+pauses the sequencer and reloads the mainline microcode on the recoverable ones (established, B1).
 
 Register **0x23** is the error-status register (parity / illegal-opcode flags) the ISR
 latches on a hardware-error interrupt; the `0x11` written to **0x2c** in the back-end
@@ -733,7 +733,7 @@ path is a bank select (bank 1 for the loop registers), not a reset; and **0x45**
 done-queue pass byte in the sequencer scratch RAM, reached through the sequencer-memory
 window, not a primary register. The driver's own `intr_state` software field takes the
 values 0 (clear), 2 (loss of signal), 3 (reset-retry) and 4 (fatal) while handling these
-events; that is driver state, not a hardware register (E, B1).
+events; that is driver state, not a hardware register (established, B1).
 
 ### Link-service and loop-discovery path (what finds the disks)
 
@@ -768,7 +768,7 @@ target's service parameters and its port/node names (its WWN); PRLI returns the 
 service parameters that confirm the target speaks FCP; ADISC returns the target's hard
 address and port ID (used to detect a target that moved). `fcadp.o:fill_abts_tcb` is a
 print-only stub in the shipped driver: an abort request reaches the TCB dispatch but
-the builder fills nothing (E, B1).
+the builder fills nothing (established, B1).
 
 #### Loop bring-up handshake (before the LIP map)
 
@@ -794,7 +794,7 @@ Loop initialisation is a handshake. The driver's attempt looks like this:
   the driver's loop-wait flag stays set, and after a timeout it prints **"Loop init
   timeout: LIP READY not received"** and retries (three receive TCBs per attempt).
 
-So the chip holds the three control-byte-1 receive TCBs and does not complete handle 0; when the driver requests a LIP by writing config 0x4b, it runs loop init and raises interrupt-status 0x25 bit 0x01 ("LIP READY") so the driver posts the LIP TCB. The LIP TCB then completes with the negotiated AL_PA and the loop-position map, as covered next (E, B1; the receive-TCB layout, the config-0x4b primitive path and the 0x25-bit-0 gate are from the init and completion routines, binary-cross-checked).
+So the chip holds the three control-byte-1 receive TCBs and does not complete handle 0; when the driver requests a LIP by writing config 0x4b, it runs loop init and raises interrupt-status 0x25 bit 0x01 ("LIP READY") so the driver posts the LIP TCB. The LIP TCB then completes with the negotiated AL_PA and the loop-position map, as covered next (established, B1; the receive-TCB layout, the config-0x4b primitive path and the 0x25-bit-0 gate are from the init and completion routines, binary-cross-checked).
 
 #### LIP and loop discovery
 
@@ -815,7 +815,7 @@ tunable `fcadp_hostid` (default 125, B2) or the previously held address. The chi
 
 `fcadp.o:fc_lip_complete` reads that map in one of two forms (**in the shipped big-endian
 build the driver does not byte-swap the buffer** — the call list of `fc_lip_complete` has no
-swap call and byte 0 is loaded directly; so the chip writes the map in logical byte order, **I** from the missing swap):
+swap call and byte 0 is loaded directly; so the chip writes the map in logical byte order, inferred from the missing swap):
 
 - **Position list (LIRP):** byte 0 is the device count N, and bytes 1…N are the present
   AL_PAs in loop-position order. Used when the loop reported positions.
@@ -844,10 +844,10 @@ bring it into the SCSI graph. Loop state during all this is read from the loop-s
 register at 0xa1 after a 0x24-bit-3 (attention) interrupt: LIP received `0x80`, bypass
 `0x40`, enable/on-loop `0x20`, with the low nibble giving the loop-port state (the
 loop-init "open" state is `0x09`). The driver also handles loss-of-signal/sync and
-loop-primitive bypass/enable (E, B1). It has no fabric login or fabric-port handling.
+loop-primitive bypass/enable (established, B1). It has no fabric login or fabric-port handling.
 
 SCSI then rides on top: each FC port is a separate "Integral SCSI controller", loop
-disks appear as SCSI targets and RAID LUNs as LUNs, exactly as owners report (E, U9).
+disks appear as SCSI targets and RAID LUNs as LUNs, exactly as owners report (established, U9).
 The generic contract a loop target must satisfy for the driver to log it in and accept
 it as a disk is pinned in the next section. Product-specific INQUIRY vendor/product
 strings are not a property of this HBA driver.
@@ -860,16 +860,16 @@ doorbell (0x2a). It is loaded straight into the chip's on-chip TCB RAM, the loop
 microcode image replaces the mainline image, and the sequencer is started. The driver then
 sleeps on a timer and a completion interrupt. All of it is `hwutil.o:sh_loadnrun_lip`
 (entered from `hwtrans.o:sh_special_tcb` with the "deliver LIP TCB" function, itself called
-by `fcadp.o:perform_lip` from the back-end ISR on the "ready for LIP" event); E, B1 for the
+by `fcadp.o:perform_lip` from the back-end ISR on the "ready for LIP" event); established, B1 for the
 sequence and immediates; the stage names are this sheet's labels.
 
-**LIP TCB layout (128 bytes, as the chip receives it in TCB RAM; E, B1 `fill_lip_tcb`
+**LIP TCB layout (128 bytes, as the chip receives it in TCB RAM; established, B1 `fill_lip_tcb`
 stores; names are roles).**
 
 | Offset | Size | Value the driver writes | Role |
 |---|---|---|---|
 | 0x00 | 4 | 132 | Size of the position map to return (a count, not a flag) |
-| 0x04 | 1 | `0x11` | Host-block configuration byte (the same value as the bank-1 select; its use by the microcode is U) |
+| 0x04 | 1 | `0x11` | Host-block configuration byte (the same value as the bank-1 select; its use by the microcode is unknown) |
 | 0x06 | 1 | bit 0 clear | "Resume I/O after the LIP" request; the driver never sets it here |
 | 0x07 | 1 | 1 | Scratch page that holds the valid-AL_PA list (step 6) |
 | 0x08–0x27 | 32 | frame header | Starts at 0x08 (not 0): X_ID words `ffff ffff` at 0x08–0x0b, destination AL_PA **0xef** at 0x0c, R_CTL **0x22** at 0x0f, delimiter **0x05** at 0x11, F_CTL byte **0x38** at 0x16, TYPE **0x01** at 0x17, sequence-config byte **0x02** at 0x24 |
@@ -888,7 +888,7 @@ bridge's and the net layout is the same. The fields the driver relies on are the
 address, the next-ring address (to restore scratch 0x1c, which the mainline image
 re-reads), and optionally the AL_PA preference fields.
 
-**Order of the register traffic in `sh_loadnrun_lip` (E, B1; offsets in `hwutil.o` in
+**Order of the register traffic in `sh_loadnrun_lip` (established, B1; offsets in `hwutil.o` in
 parentheses, and `hwtrans.o:sh_special_tcb` for the entry).** The TCB number *N* is the number of the driver's reserved LIP TCB: the first
 TCB after the unsolicited receive TCBs, so **N = 4** (TCBs 1–3 are the
 receive buffers, TCB 0 the primitive TCB). Mode/bank values below are the 0x2c selects.
@@ -896,13 +896,13 @@ receive buffers, TCB 0 the primitive TCB). Mode/bank values below are the 0x2c s
 1. Config byte `0x4b` (PCI config space) ← `0x00`: releases the sequencer from the
    host's LIP-primitive request (the earlier request wrote 1; see the handshake above). (`0x25a8`).
 2. `0x28` ← `0x0a`; `0x29` ← `0xa0` (written with no bank select first; the table above lists
-   them under bank 4, and whether they are visible in every bank is U) — a host real-time-clock period and its enable (`0x80`), with the
+   them under bank 4, and whether they are visible in every bank is unknown) — a host real-time-clock period and its enable (`0x80`), with the
    completion-posting bit `0x20` kept set. By its use it is a roughly 10 ms timer the driver
    polls at 0x25 bit 2 and clears by writing the bit back, to watch for loop failure while
    the sequencer is paused.
 3. Pause the sequencer (0x22 ← pause, poll the ack, as everywhere) and write `0x00` to
    scratch page-0 byte `0x47`, the mainline image's link-error status byte (`0x25e8`). The
-   loop image keeps the same byte at `0x45`, which the driver does not clear here (U — the
+   loop image keeps the same byte at `0x45`, which the driver does not clear here (unknown — the
    microcode's own use).
 4. For each of **six register banks in this order — 0, 2, 1, 5, 4, 3 — select the bank,
    quiesce that block's engine and write the 16-bit TCB pointer at 0x64/0x65 ← N**
@@ -924,19 +924,19 @@ receive buffers, TCB 0 the primitive TCB). Mode/bank values below are the 0x2c s
    exactly this sorted set. This is the FC-AL valid-AL_PA list the loop microcode consults
    (the LIP TCB's page selector says "the list is in page 1"). **It supersedes the earlier
    statement that page 1 holds a loop-position table the microcode fills in**: the host
-   fills page 1 here; whether the microcode also scribbles on it is U. Then 0x34 ← 0
+   fills page 1 here; whether the microcode also scribbles on it is unknown. Then 0x34 ← 0
    (page 0).
 7. If the loop image is not the one resident (`sh_load_sequencer` type 2): stream it as
    described in "Reset and firmware load" — **822 sixteen-bit words (1644 bytes) plus four
    zero padding words**, versus 1956 words (3912 bytes) for the mainline image — verify,
-   `0x00` ← `0x40`. The images are told apart by length (E, B1; the sizes are the
+   `0x00` ← `0x40`. The images are told apart by length (established, B1; the sizes are the
    `.data` sizes of `sh_lip_code` and `sh_mainline_code`).
 8. `0x29` ← `0x20`: the real-time timer is switched off again and completion/interrupt
    DMA posting stays armed (`0x2850`).
 9. **Re-initialise the done queue (`sh_setup_doneq`)**: every host done-queue entry's
    pass byte ← `0xff`, the driver's consume position ← slot 0, expected pass ← 0, and
    scratch page-0 byte `0x45` ← `0xff` (read back). *This is the signal that the chip's
-   done-queue write position and lap counter restart too* (I — the driver restarts its
+   done-queue write position and lap counter restart too* (inferred — the driver restarts its
    own at slot 0, pass 0, here and again at the mainline reload, so the chip cannot
    keep counting from where it was and still be consumed; so the chip's write index and lap count must restart at 0 on this write).
 10. Bank 1: `0xa0` AND-ed with `0xdf` (the "cannot be loop master until an AL_PA is held" bit
@@ -947,7 +947,7 @@ receive buffers, TCB 0 the primitive TCB). Mode/bank values below are the 0x2c s
     initialise, non-participating; `0x50` participating; `0x14`/`0x54` for the reset
     variant), `0x4c` ← the destination AL_PA (0 for the plain LIP). These tell the loop
     microcode which LIP to put on the wire first (`hwlip.o:sh_send_lip_primitive_in_lip`,
-    E, B1; the meaning of the individual values is U — they are the microcode's own codes).
+    established, B1; the meaning of the individual values is unknown — they are the microcode's own codes).
 12. **Start the loop image** (`hwlip.o:sh_start_lip_sequencer`): `0x00` ← `0x40`, then
     - if the primitive was sent first: `0x00` ← **`0x42`** (reset program counter, start at the
       image's entry);
@@ -957,8 +957,8 @@ receive buffers, TCB 0 the primitive TCB). Mode/bank values below are the 0x2c s
     then unpause (0x22 AND-ed with `~0xc0`) and read 0x22 back. **This unpause starts the
     loop microcode running.**
 
-**What the sequencer does with it, and the completion the driver expects (E for the
-driver's expectations, B1; U for how the chip computes them).** The loop
+**What the sequencer does with it, and the completion the driver expects (established for the
+driver's expectations, B1; unknown for how the chip computes them).** The loop
 microcode performs FC-AL loop initialisation (select master, fabric/previous/hard/soft
 AL_PA claim using the three address preferences in the LIP TCB, position map), then:
 
@@ -967,7 +967,7 @@ AL_PA claim using the three address preferences in the LIP TCB, position map), t
    driver clears the first 20 bytes before the TCB is issued and reads the buffer **without any
    byte reordering**, so memory byte 0 is the position-list count N (zero selects the
    bitmap form), bytes 1…N the AL_PAs in loop order, or in the bitmap form 16 bytes at
-   offset 4. Bitmap bit numbering (E, B1: `fc_lip_complete` copies 16 bytes from offset 4, masks the top bit of the first 8, and scans the second 8 then the first, counting target ids up from the low bit of the last byte): count
+   offset 4. Bitmap bit numbering (established, B1: `fc_lip_complete` copies 16 bytes from offset 4, masks the top bit of the first 8, and scans the second 8 then the first, counting target ids up from the low bit of the last byte): count
    bits from the most significant bit of byte 4 as position 0; position *p* stands for target
    id 127 − *p*, i.e. position 1 is id 126 = AL_PA 0x00 and position 127 is id 0 = AL_PA 0xef
    (through the fixed id-to-AL_PA table); position 0 (id 127) is ignored. The host's own AL_PA
@@ -979,21 +979,21 @@ AL_PA claim using the three address preferences in the LIP TCB, position map), t
    prefers the address its tunable names (default id 125, which the driver's fixed id-to-AL_PA table maps to **AL_PA 0x01**; the id is
    converted by the table in the discovery text) but accepts any valid AL_PA; it must not
    equal a target's AL_PA, and must not be one of the LIP error codes
-   (`0x05`, `0x06`, `0x07`, `0x09`, `0x0a` — none is a valid AL_PA, so no collision) (E, B1;
+   (`0x05`, `0x06`, `0x07`, `0x09`, `0x0a` — none is a valid AL_PA, so no collision) (established, B1;
    `fcadp.o:fc_lip_complete`, `hwintr.o:sh_backend_isr`).
 3. Raises the completion interrupt: **interrupt-status 0x25 bit 4** (sequencer/completion),
-   mirrored into the host status block if the status-block DMA is armed (E; see the
+   mirrored into the host status block if the status-block DMA is armed (established; see the
    interrupt-status table). Whether the real chip also needs the per-source enable at 0x99
-   bit 4 set is **U**: the driver's init value for 0x99 does not have that bit, yet the driver
+   bit 4 set is unknown: the driver's init value for 0x99 does not have that bit, yet the driver
    treats 0x25 bit 4 as the completion interrupt. Settling test: a published AIC-1160 interrupt-enable table, or a read-back of 0x99 after init on a real board. The line is to be raised for the
    completion regardless. **An interrupt is mandatory here.** During the LIP phase
    the driver has no command in flight, and its 50 Hz missed-interrupt poll
    (`fcadp.o:fc_timeout_check`) only calls the interrupt routine when at least one SCSI/login
    command is outstanding — the LIP TCB is not counted. A done-queue entry without an
-   interrupt is never seen and the driver times out (I from the poll's gate, the failure shows as
+   interrupt is never seen and the driver times out (inferred from the poll's gate, the failure shows as
    "LIP TCB not completed").
 
-**What the driver then does on seeing the entry (E, B1).** The back-end ISR notices
+**What the driver then does on seeing the entry (established, B1).** The back-end ISR notices
 tcb number *N* ≠ 0 while loop init is in process, and: if it had sent a LIP primitive
 first, **synthesises its own primitive completion** (so no TCB-0
 completion is expected, and one that finds no primitive pending produces the "primitive
@@ -1016,7 +1016,7 @@ the original primitive request) the driver arms a **single 3-second callout** (3
   done queue** (host memory, found through the done-queue base programmed at scratch 0x08)
   for an entry whose pass byte equals its expected value (0 for the first entry), then
   looking at the host **interrupt-status block** (host memory, mirrored from 0x24/0x25) and,
-  only if that shows nothing, doing **one 16-bit PIO read of 0x24**  — the fall-back read when no work is found (E, B1; `hwintr.o:sh_frontend_isr`);
+  only if that shows nothing, doing **one 16-bit PIO read of 0x24**  — the fall-back read when no work is found (established, B1; `hwintr.o:sh_frontend_isr`);
 - *another ready-for-LIP, loop-failure or error interrupt* handled as usual;
 - *the callout firing.* With the LIP TCB issued the message is "Loop init timeout: LIP TCB
   not completed"; if the TCB had not been issued yet it is "…LIP READY not received".
@@ -1024,7 +1024,7 @@ the original primitive request) the driver arms a **single 3-second callout** (3
   parameters) and re-sends a plain LIP; every sixth try it sends the reset-all variant. It
   gives up after **15 attempts when no SCSI command is waiting (60 if one is, 2 if the last
   failure was loss of signal)**, marks the port off line and fails queued commands — the
-  "giving up [15]" message (E, B1; the 15, 60, 2 and six-try constants are compare immediates in `fcadp.o:fc_lip_error`; `fcadp.o:fc_lip_error`, `fc_lip_timeout`).
+  "giving up [15]" message (established, B1; the 15, 60, 2 and six-try constants are compare immediates in `fcadp.o:fc_lip_error`; `fcadp.o:fc_lip_error`, `fc_lip_timeout`).
 
 **Corrections to earlier text.** (0) Interrupt-status 0x25 bit 2, listed above as
 "host-completion", is the **host real-time-clock expiry** (step 2); it is not a completion
@@ -1041,43 +1041,43 @@ the LIP TCB is the BAR 3 byte copy above. The bank-1 and bank-3 writes at `0xea`
 every loop-init timeout** (the reset to 0x22 = `0x43`, then the full bring-up again:
 `hwconfig.o:sh_initialize` → `sh_init_hardware` at `0x10a0`–`0x1164` and `sh_initialize` at
 `0xc44`–`0xdfc`), and the same registers are written on the first attach. The bank selects are
-the 0x2c values (0x11 = bank 1 … 0x33 = bank 3). Grade: E for offsets, values and order
-(binary); roles are E where the driver reads them back or branches on them and I where only
+the 0x2c values (0x11 = bank 1 … 0x33 = bank 3). Grade: established for offsets, values and order
+(binary); roles are established where the driver reads them back or branches on them and inferred where only
 the register's use in the loop-init sequence suggests the role.
 
 | Bank | Reg | Written / read by the driver | Role |
 |---|---|---|---|
-| 1 | 0xa0 | init: `0x4d` (request enable, participating) when the driver holds an AL_PA, else `0x0d`; LIP load: AND `0xdf`; after LIP: `0x5f`; loop-failure path: OR `0x80` | Loop-port-state-machine command. Bit `0x80` reset the state machine, `0x40` "I participate (hold an AL_PA)", `0x20` "loop master", low five bits the request (`0x0d` enable, `0x10` initialise, `0x1f` non-active). I |
-| 1 | 0xa1 | read in the attention ISR | LPSM status 1 (LIP/bypass/enable received; low nibble the state, `0x09` = open-init). Already described above. E |
-| 1 | 0xa4 | init: the driver's loop-init timeout setting, `0x60` | Loop-init watchdog; the time unit is not established (U — a chip databook or a timed hardware run would settle it). I |
-| 1 | 0xc4 | init `0x08`; later AND `~0x08` (the end of `sh_initialize`); LIP load `0x00` (banks 1 and 5) | Send-frame-control command byte. Bit `0x08` = hand the loop-port state machine to the host (set until the link is brought up, then cleared), `0x20` repeat frame. I |
-| 1 | 0xc8 | init `0x00` | Count of free receive buffers the send side may advertise. I |
-| 1 | 0xd2 | init `0x00` | Arbitrated-loop latency timer (disabled; why the driver leaves it off is **U**). I |
-| 1 | 0xd3 | init `0x00` | Acknowledge wait time (class 1/2 only). I |
-| 1 | 0x68–0x6b, 0x6c–0x6f | 0x68–0x6a = the board's AL_PA (`0xef 00 00` before a real one is known, else the driver's chosen address) and 0x6b ← 1 "valid"; 0x6c–0x6f (second address) ← 0 | Own source address, A and B. 0x6b ← 0 at LIP load; ← 1 again after a good LIP. E |
-| 1 | 0xd0 | init `0x80` (continuous idles); only on the loop-failure recovery path the driver writes `0x80 + 0x28` (LIP F7,F7) or `0x80 + 0x2a` (LIP F7,AL_PS) | Ordered-set transmit control. E |
-| 1 | 0xea | init sequence (below) ending `0x0a`, then OR `0x20` | **SERDES control.** `0x20` fault-interrupt enable, `0x10` lock-not-in-use interrupt enable, `0x08` lock to reference clock (low), `0x04` LRC enable, `0x02` sync enable, `0x01` internal loopback. E for the bits it sets and clears (B1); the bit names are this sheet's role labels (**I**) |
-| 1 | 0xeb | read twice during init (`&3` each time); read in the error ISR for `0x10` and `0x08` | **SERDES status.** `0x10` fault, `0x08` lock-not-in-use, low 2 bits the media-module sense (above). **Keep 0x10 clear** or the error ISR reports "MIA Fault or Optical Loss of Signal" and resets. E |
-| 1 | 0xf0 | `0x02` at LIP load and at mainline reload | Send-side frame buffer control: `0x02` = clear the buffer. I |
-| 1 | 0xb6, 0xb7 | `0xff`/`0xff` at LIP load; `0x02`/`0x00` after (the mainline restart) | Sequencer-config bytes 0 and 2. `0x02` in 0xb6 = "disable full-duplex" (reason for the setting **U**). I |
-| 3 | 0xe0 | read in the loop-failure check; `0x08` written back to clear | Receive-frame-control status A; `0x08` = link error latched. E |
-| 3 | 0xe1 | `0x20` then `0x40` after the SERDES sequence; read in the error ISR (`0x01` loss of signal, `0x02` loss of sync) | Link-error status when read, link control when written: `0x20` link reset, `0x40` link enable. Already in the main table. E |
-| 3 | 0xea | init `0x9e` | **Data-frame mask C** — which frame-header events the receive block flags for the sequencer (the value masks off sequence-initiative, end-of-sequence, last, first and context bits). I |
-| 3 | 0xeb | init `0xc0` | **Data-frame mask D** (reserved bit and the F_CTL offset-present bit masked). I |
-| 3 | 0xba | init `0xd4` | **Receive-frame-control mode**; `0x01` internal loopback, `0x10` hold, `0x04` clear; init value is the driver's default. I |
-| 0,2 | 0x8c | `0x00` at LIP load | Host send (bank 2) and host receive (bank 0) DMA control; 0 = off. E |
-| 5 | 0xc4 | `0x00` at LIP load and at reload | Send-frame-control command, second copy. E |
-| 4 | 0x8e | `0x00` at LIP load | Completion/command DMA control; 0 = engines off. E |
-| 4 | 0x99 | OR `0x40` at LIP load and at mainline reload (init value `0xe7`) | Interrupt-posting enables for status byte 1. `0x40` is the hardware-error interrupt, re-armed because the error ISR clears it. E |
-| any | 0x64/0x65 | the LIP TCB number *N*, written to every bank in turn | TCB pointer. E |
+| 1 | 0xa0 | init: `0x4d` (request enable, participating) when the driver holds an AL_PA, else `0x0d`; LIP load: AND `0xdf`; after LIP: `0x5f`; loop-failure path: OR `0x80` | Loop-port-state-machine command. Bit `0x80` reset the state machine, `0x40` "I participate (hold an AL_PA)", `0x20` "loop master", low five bits the request (`0x0d` enable, `0x10` initialise, `0x1f` non-active). inferred |
+| 1 | 0xa1 | read in the attention ISR | LPSM status 1 (LIP/bypass/enable received; low nibble the state, `0x09` = open-init). Already described above. established |
+| 1 | 0xa4 | init: the driver's loop-init timeout setting, `0x60` | Loop-init watchdog; the time unit is not established (unknown — a chip databook or a timed hardware run would settle it). inferred |
+| 1 | 0xc4 | init `0x08`; later AND `~0x08` (the end of `sh_initialize`); LIP load `0x00` (banks 1 and 5) | Send-frame-control command byte. Bit `0x08` = hand the loop-port state machine to the host (set until the link is brought up, then cleared), `0x20` repeat frame. inferred |
+| 1 | 0xc8 | init `0x00` | Count of free receive buffers the send side may advertise. inferred |
+| 1 | 0xd2 | init `0x00` | Arbitrated-loop latency timer (disabled; why the driver leaves it off is unknown). inferred |
+| 1 | 0xd3 | init `0x00` | Acknowledge wait time (class 1/2 only). inferred |
+| 1 | 0x68–0x6b, 0x6c–0x6f | 0x68–0x6a = the board's AL_PA (`0xef 00 00` before a real one is known, else the driver's chosen address) and 0x6b ← 1 "valid"; 0x6c–0x6f (second address) ← 0 | Own source address, A and B. 0x6b ← 0 at LIP load; ← 1 again after a good LIP. established |
+| 1 | 0xd0 | init `0x80` (continuous idles); only on the loop-failure recovery path the driver writes `0x80 + 0x28` (LIP F7,F7) or `0x80 + 0x2a` (LIP F7,AL_PS) | Ordered-set transmit control. established |
+| 1 | 0xea | init sequence (below) ending `0x0a`, then OR `0x20` | **SERDES control.** `0x20` fault-interrupt enable, `0x10` lock-not-in-use interrupt enable, `0x08` lock to reference clock (low), `0x04` LRC enable, `0x02` sync enable, `0x01` internal loopback. established for the bits it sets and clears (B1); the bit names are this sheet's role labels (inferred) |
+| 1 | 0xeb | read twice during init (`&3` each time); read in the error ISR for `0x10` and `0x08` | **SERDES status.** `0x10` fault, `0x08` lock-not-in-use, low 2 bits the media-module sense (above). **Keep 0x10 clear** or the error ISR reports "MIA Fault or Optical Loss of Signal" and resets. established |
+| 1 | 0xf0 | `0x02` at LIP load and at mainline reload | Send-side frame buffer control: `0x02` = clear the buffer. inferred |
+| 1 | 0xb6, 0xb7 | `0xff`/`0xff` at LIP load; `0x02`/`0x00` after (the mainline restart) | Sequencer-config bytes 0 and 2. `0x02` in 0xb6 = "disable full-duplex" (reason for the setting unknown). inferred |
+| 3 | 0xe0 | read in the loop-failure check; `0x08` written back to clear | Receive-frame-control status A; `0x08` = link error latched. established |
+| 3 | 0xe1 | `0x20` then `0x40` after the SERDES sequence; read in the error ISR (`0x01` loss of signal, `0x02` loss of sync) | Link-error status when read, link control when written: `0x20` link reset, `0x40` link enable. Already in the main table. established |
+| 3 | 0xea | init `0x9e` | **Data-frame mask C** — which frame-header events the receive block flags for the sequencer (the value masks off sequence-initiative, end-of-sequence, last, first and context bits). inferred |
+| 3 | 0xeb | init `0xc0` | **Data-frame mask D** (reserved bit and the F_CTL offset-present bit masked). inferred |
+| 3 | 0xba | init `0xd4` | **Receive-frame-control mode**; `0x01` internal loopback, `0x10` hold, `0x04` clear; init value is the driver's default. inferred |
+| 0,2 | 0x8c | `0x00` at LIP load | Host send (bank 2) and host receive (bank 0) DMA control; 0 = off. established |
+| 5 | 0xc4 | `0x00` at LIP load and at reload | Send-frame-control command, second copy. established |
+| 4 | 0x8e | `0x00` at LIP load | Completion/command DMA control; 0 = engines off. established |
+| 4 | 0x99 | OR `0x40` at LIP load and at mainline reload (init value `0xe7`) | Interrupt-posting enables for status byte 1. `0x40` is the hardware-error interrupt, re-armed because the error ISR clears it. established |
+| any | 0x64/0x65 | the LIP TCB number *N*, written to every bank in turn | TCB pointer. established |
 
-**SERDES bring-up sequence (bank 1, `sh_initialize`, E):** clear the sync-enable bit if set;
+**SERDES bring-up sequence (bank 1, `sh_initialize`, established):** clear the sync-enable bit if set;
 sample 0xeb low two bits as the **voltage-sensing media type**; 0xea ← `0x02`; delay 1 ms;
 0xea ← `0x0a`; delay 1 ms; sample 0xeb low two bits as the **current-sensing media type**; then
 (bank 3) 0xe1 ← `0x20`, 0xe1 ← `0x40` (reset then enable the link) and (bank 1) 0xea ORed with
 `0x20`. The per-board "which sample" choice is SEEPROM word 2 bit 7.
 
-**Reset-side init values (E, B1):** bank 3 0xea = `0x9e`, 0xeb =
+**Reset-side init values (established, B1):** bank 3 0xea = `0x9e`, 0xeb =
 `0xc0`, 0xba = `0xd4`; bank 1 0xc8 = 0, 0xc4 = `0x08`, 0xa4 = `0x60`, 0x6d–0x6f = 0, 0xd3 = 0,
 0xd2 = 0 — written in that order (`hwconfig.o:0x10a0`–`0x115c`).
 
@@ -1094,7 +1094,7 @@ firmware/BIOS expansion). Page 0 holds the queue-control variables (the ring bas
 done-queue pass byte and size described in the queue-setup section, all in its lower
 half); **page 1 holds the valid-AL_PA list** the host loads for loop initialisation (the LIP
 TCB points the sequencer at page 1 for it). The exact contents of the upper half of
-page 0 and of page 2 are not all enumerated (**partly U**) (E, B1).
+page 0 and of page 2 are not all enumerated (**partly unknown**) (established, B1).
 
 ### What a loop target must present (general FC-AL target contract)
 
@@ -1115,15 +1115,15 @@ bytes +5 and +6. The accept is a 116-byte port-login payload:
 
 | Reply offset | Bytes | Field | Grade |
 |---|---|---|---|
-| 0x00 | 4 | Link-service code — **0x02 (accept)** in the top byte; the driver gates login on this | E |
-| 0x04 | 16 | Common service parameters: FC-PH version, buffer-to-buffer credit, common features, receive-data field size, max concurrent sequences, relative offset, error-detect timeout | E |
-| 0x14 | 8 | **Port-name WWN** of the target | E |
-| 0x1c | 8 | **Node-name WWN** of the target | E |
-| 0x24 | 16 | Class-1 service parameters | E |
-| 0x34 | 16 | Class-2 service parameters | E |
-| 0x44 | 16 | Class-3 service parameters | E |
-| 0x54 | 16 | Reserved | E |
-| 0x64 | 16 | Vendor version | E |
+| 0x00 | 4 | Link-service code — **0x02 (accept)** in the top byte; the driver gates login on this | established |
+| 0x04 | 16 | Common service parameters: FC-PH version, buffer-to-buffer credit, common features, receive-data field size, max concurrent sequences, relative offset, error-detect timeout | established |
+| 0x14 | 8 | **Port-name WWN** of the target | established |
+| 0x1c | 8 | **Node-name WWN** of the target | established |
+| 0x24 | 16 | Class-1 service parameters | established |
+| 0x34 | 16 | Class-2 service parameters | established |
+| 0x44 | 16 | Class-3 service parameters | established |
+| 0x54 | 16 | Reserved | established |
+| 0x64 | 16 | Vendor version | established |
 
 For login to succeed the driver needs only the accept code and a good status; it stores
 the whole payload (including the two WWNs) for later use but does **not** validate the
@@ -1143,23 +1143,23 @@ a 20-byte process-login payload:
 
 | Reply offset | Bytes | Field | Grade |
 |---|---|---|---|
-| 0x00 | 1 | Link-service code — **0x02 (accept)**; the driver gates on this | E |
-| 0x01 | 1 | Page length | E |
-| 0x02 | 2 | Payload length | E |
-| 0x04 | 1 | Type code — **0x08 (FCP)** | E |
-| 0x05 | 1 | Type-code extension | E |
-| 0x06 | 2 | Flags: originator/responder process valid, established image pair, response code | E |
-| 0x08 | 4 | Originator process associator | E |
-| 0x0c | 4 | Responder process associator | E |
-| 0x10 | 3 | Reserved | E |
-| 0x13 | 1 | **FCP service-parameter byte — must be 0x12** (target function 0x10 + read-transfer-ready-disabled 0x02) | E |
+| 0x00 | 1 | Link-service code — **0x02 (accept)**; the driver gates on this | established |
+| 0x01 | 1 | Page length | established |
+| 0x02 | 2 | Payload length | established |
+| 0x04 | 1 | Type code — **0x08 (FCP)** | established |
+| 0x05 | 1 | Type-code extension | established |
+| 0x06 | 2 | Flags: originator/responder process valid, established image pair, response code | established |
+| 0x08 | 4 | Originator process associator | established |
+| 0x0c | 4 | Responder process associator | established |
+| 0x10 | 3 | Reserved | established |
+| 0x13 | 1 | **FCP service-parameter byte — must be 0x12** (target function 0x10 + read-transfer-ready-disabled 0x02) | established |
 
 #### ADISC accept (address discovery)
 
 The driver issues ADISC but its completion handler `fcadp.o:fc_adisc_complete` is a stub
 in the shipped driver — it does not parse the reply, so the ADISC accept content gates nothing. The ADISC payload nominally carries
 the target's hard address, port and node WWNs and N_Port ID; none of it is checked here
-(E, B1).
+(established, B1).
 
 #### LUN-0 INQUIRY (accepting the target as a disk)
 
@@ -1181,44 +1181,44 @@ number are read at this stage. Any vendor/product string matching is done by upp
 enumerates the remaining LUNs. The AL_PA a target answers at must be one of the entries
 in the standard FC-AL arbitrated-loop-address priority table (target id 0 maps to the
 highest-priority AL_PA, descending); the driver converts between AL_PA and SCSI target id
-through that fixed table (E, B1; binary-confirmed accept codes 0x02 and the 0x12 service
+through that fixed table (established, B1; binary-confirmed accept codes 0x02 and the 0x12 service
 byte, INQUIRY opcode 0x12).
 
 ### Settled and open items
 
 | Item | Status |
 |---|---|
-| PCI vendor/device, BAR/PIO windows, bridge/DMA/interrupt path | E |
-| Primary register offsets and bit-level semantics for pause (0x22=0x40 on attach; reset 0x22=0x43 only on error recovery), bank select (0x2c), sequencer load, doorbell (0x2a), interrupt status (0x24/0x25) and enable (0x22 bit 0x04), SEEPROM | E |
-| BAR type: BAR 0 and BAR 3 are **I/O-space** BARs (not memory) by inference; the driver enables command register 0x55 (I/O + master, never memory-space 0x02, E); config 0x40 bit 0x04 arms 64-bit DMA | E for the writes, I for the BAR type |
-| Config-collection gates (bank-4 0x63 link-speed must read 0xbe/0x2e/0xfe/0x6e, else "error -2 in getting config"; then TCB-count probe echoes 0x66dd55aa through BAR 3) | E |
-| Init RAM test (`sh_init_1160_ram`) covers scratch pages (BAR 3), per-bank cells under all 8 banks, TCB data (BAR 3), **scatter/gather RAM at bank-2 register 0x60** (rewind 0x8b, index 0x64), global cells 0x38, command buffer bank-4 0x20/0x9e | E |
-| SEEPROM word 0 low nibble must read 0xF (else reprogram path); WWN at words 3–6 must be non-zero / not all-ones / not the unprogrammed signature | E |
-| Loop bring-up handshake: three control-byte-1 receive TCBs (handle at 0x68) held not auto-completed; LIP primitive sent via config 0x4b; chip must raise interrupt-status 0x25 bit 0x01 ("LIP READY") to make the driver post the LIP TCB | E |
-| Window roles: BAR 0 = primary registers, BAR 3 = sequencer RAM (scratch/TCB/SG RAM), config space = PCI config | E |
-| Queue and status-block setup: ring base addresses in sequencer scratch (new-TCB 0x1c, done-queue 0x08, size 0x48, pass byte 0x45), status block at 0x70–0x77, completion arming at 0x29 bit 0x20 | E |
-| SEEPROM access (command controller at 0x6a/0x6b/0x68/0x69) and layout (control word 0, media sense 2, WWN words 3–6; host-id is a tunable, not in SEEPROM) | E |
-| Remaining bit fields of lightly-used control registers in each bank | partly U |
-| TCB byte layout (handle, FCP_CMND with CDB at 0x30, FCP_DL at 0x40, next-TCB link at 0x44, data pointer at 0x4c, length at 0x54 for a single buffer only, sense at 0x58); the LIP TCB has its own layout | E (offsets + widths + endianness, IP27/IP30/IP35; byte 0x07 meaning I) |
-| Scatter-gather descriptor format (16-byte stride: 8-byte PCI address + 4-byte length + 4 reserved; last entry flagged by length top byte = 1, no entry count; single vs list mode at 0x23) | E |
-| Producer index and command doorbell (16-bit index at control-block 0x82, doorbell 0x2a) | E |
-| Done-queue entry format (4-byte entry: handle, status, pass byte) and the exact pass-count rule (init 0xff; chip writes the ring-lap number mod 256; ISR consumes while pass == expected) | E |
-| FCP response fields (SCSI status, validity flags, residual in the 256-byte response buffer) | E |
-| Interrupt-status bits: pending mask 0xff08; 0x24 bit 3 = loop/attention; 0x25 bits = PCI/HW/SW/sequencer/ready-for-LIP; loop up/down decoded from the 0xa1 loop-state register (not from the event codes 0x2a/0x2b/0x05, which are sync/ready events) | E |
-| FC-header byte roles (OX_ID 0x00, RX_ID 0x02, D_ID/AL_PA 0x04, R_CTL-encoding byte 0x07, delimiter 0x09, F_CTL/TYPE 0x0e–0x11, fairness 0x1c, control 0x21, mode 0x23) and the read/write direction byte at 0x2f | E |
-| Link-service discrimination (control 0x0a + TYPE 0x01 + R_CTL 0x22; ELS code PLOGI 0x03 / PRLI 0x20 / ADISC 0x52; 1–7 dispatch is driver software keyed by handle) | E |
-| Loop discovery (LIP map: LIRP count-list or LISA 128-bit bitmap at +4; status = negotiated AL_PA; AL_PA→target via the FC-AL priority table) | E |
-| Completion status-byte codes (0x00 ok, 0x02 underrun, 0x04 error-response, 0x08 undelivered/no-device, 0x0b aborted, …; LIP overloads 5/6/7/9/0x0a) | E |
-| Done-queue completion interrupt bit (0x25 bit 4); drain is by pass-byte scan, not gated on a status bit | E |
-| LIP TCB delivery: loaded as 128 bytes into TCB RAM slot *N* (BAR 3 `0x80`…`0xff`) with the TCB pointer (0x64) aimed at every bank, valid-AL_PA list to scratch page 1, loop image (822 words) loaded, started by `0x00` ← `0x42` (primitive sent) or address `0x0a` (not), then unpause | E |
-| LIP completion: map (count-then-AL_PAs, or bitmap) to the buffer at LIP-TCB `0x38` in logical byte order, one done-queue entry {*N*, host AL_PA, lap}, 0x25 bit 4 and an interrupt; done queue restarts at slot 0 / lap 0 at the loop start and again at the mainline reload | E for what the driver needs; I that the chip restarts its write position on the 0x45 ← `0xff` write |
-| Whether the real chip needs 0x99 bit 4 to deliver the completion interrupt (the driver's init value for 0x99 lacks it) | U — a hardware run or the chip databook |
-| Time unit of the loop-init watchdog (0xa4 = `0x60`) and the meaning of the individual LIP-primitive codes scratch `0x4a`/`0x4b`/`0x4c` carry | U. Settled by: the controller's public databook for the watchdog unit and the primitive codes, or a timed loop-init on a real board with the watchdog set to two values; the driver gives only the stored values |
-| SEEPROM word 2 value on real optical and copper boards (driver accepts `0x100` or `0x180`) | U. Settled by: a dump of the SEEPROM from one real copper board and one real optical board (the driver only reads it) |
-| Sequencer microcode semantics (what the downloaded code does on-chip) | out of scope / U |
-| Fabric login | Not present in the driver; boards are Class 3 / FC-AL only per the owner's guide (E, M1/B1) |
-| Whether the -B optical boards use this controller | U. Settled by: the PCI vendor and device identifiers from a hinv or PCI listing of an optical -B board; the driver table already lists one identifier, so a board that reports the same pair is the same controller |
-| Generic loop-target login contract (PLOGI accept code 0x02; PRLI accept + FCP service byte 0x12 at reply 0x13; ADISC not parsed; INQUIRY byte 0 = 0x00 for a disk, SCSI status GOOD) | E |
+| PCI vendor/device, BAR/PIO windows, bridge/DMA/interrupt path | established |
+| Primary register offsets and bit-level semantics for pause (0x22=0x40 on attach; reset 0x22=0x43 only on error recovery), bank select (0x2c), sequencer load, doorbell (0x2a), interrupt status (0x24/0x25) and enable (0x22 bit 0x04), SEEPROM | established |
+| BAR type: BAR 0 and BAR 3 are **I/O-space** BARs (not memory) by inference; the driver enables command register 0x55 (I/O + master, never memory-space 0x02, established); config 0x40 bit 0x04 arms 64-bit DMA | established for the writes, inferred for the BAR type |
+| Config-collection gates (bank-4 0x63 link-speed must read 0xbe/0x2e/0xfe/0x6e, else "error -2 in getting config"; then TCB-count probe echoes 0x66dd55aa through BAR 3) | established |
+| Init RAM test (`sh_init_1160_ram`) covers scratch pages (BAR 3), per-bank cells under all 8 banks, TCB data (BAR 3), **scatter/gather RAM at bank-2 register 0x60** (rewind 0x8b, index 0x64), global cells 0x38, command buffer bank-4 0x20/0x9e | established |
+| SEEPROM word 0 low nibble must read 0xF (else reprogram path); WWN at words 3–6 must be non-zero / not all-ones / not the unprogrammed signature | established |
+| Loop bring-up handshake: three control-byte-1 receive TCBs (handle at 0x68) held not auto-completed; LIP primitive sent via config 0x4b; chip must raise interrupt-status 0x25 bit 0x01 ("LIP READY") to make the driver post the LIP TCB | established |
+| Window roles: BAR 0 = primary registers, BAR 3 = sequencer RAM (scratch/TCB/SG RAM), config space = PCI config | established |
+| Queue and status-block setup: ring base addresses in sequencer scratch (new-TCB 0x1c, done-queue 0x08, size 0x48, pass byte 0x45), status block at 0x70–0x77, completion arming at 0x29 bit 0x20 | established |
+| SEEPROM access (command controller at 0x6a/0x6b/0x68/0x69) and layout (control word 0, media sense 2, WWN words 3–6; host-id is a tunable, not in SEEPROM) | established |
+| Remaining bit fields of lightly-used control registers in each bank | partly unknown |
+| TCB byte layout (handle, FCP_CMND with CDB at 0x30, FCP_DL at 0x40, next-TCB link at 0x44, data pointer at 0x4c, length at 0x54 for a single buffer only, sense at 0x58); the LIP TCB has its own layout | established (offsets + widths + endianness, IP27/IP30/IP35; byte 0x07 meaning inferred) |
+| Scatter-gather descriptor format (16-byte stride: 8-byte PCI address + 4-byte length + 4 reserved; last entry flagged by length top byte = 1, no entry count; single vs list mode at 0x23) | established |
+| Producer index and command doorbell (16-bit index at control-block 0x82, doorbell 0x2a) | established |
+| Done-queue entry format (4-byte entry: handle, status, pass byte) and the exact pass-count rule (init 0xff; chip writes the ring-lap number mod 256; ISR consumes while pass == expected) | established |
+| FCP response fields (SCSI status, validity flags, residual in the 256-byte response buffer) | established |
+| Interrupt-status bits: pending mask 0xff08; 0x24 bit 3 = loop/attention; 0x25 bits = PCI/HW/SW/sequencer/ready-for-LIP; loop up/down decoded from the 0xa1 loop-state register (not from the event codes 0x2a/0x2b/0x05, which are sync/ready events) | established |
+| FC-header byte roles (OX_ID 0x00, RX_ID 0x02, D_ID/AL_PA 0x04, R_CTL-encoding byte 0x07, delimiter 0x09, F_CTL/TYPE 0x0e–0x11, fairness 0x1c, control 0x21, mode 0x23) and the read/write direction byte at 0x2f | established |
+| Link-service discrimination (control 0x0a + TYPE 0x01 + R_CTL 0x22; ELS code PLOGI 0x03 / PRLI 0x20 / ADISC 0x52; 1–7 dispatch is driver software keyed by handle) | established |
+| Loop discovery (LIP map: LIRP count-list or LISA 128-bit bitmap at +4; status = negotiated AL_PA; AL_PA→target via the FC-AL priority table) | established |
+| Completion status-byte codes (0x00 ok, 0x02 underrun, 0x04 error-response, 0x08 undelivered/no-device, 0x0b aborted, …; LIP overloads 5/6/7/9/0x0a) | established |
+| Done-queue completion interrupt bit (0x25 bit 4); drain is by pass-byte scan, not gated on a status bit | established |
+| LIP TCB delivery: loaded as 128 bytes into TCB RAM slot *N* (BAR 3 `0x80`…`0xff`) with the TCB pointer (0x64) aimed at every bank, valid-AL_PA list to scratch page 1, loop image (822 words) loaded, started by `0x00` ← `0x42` (primitive sent) or address `0x0a` (not), then unpause | established |
+| LIP completion: map (count-then-AL_PAs, or bitmap) to the buffer at LIP-TCB `0x38` in logical byte order, one done-queue entry {*N*, host AL_PA, lap}, 0x25 bit 4 and an interrupt; done queue restarts at slot 0 / lap 0 at the loop start and again at the mainline reload | established for what the driver needs; inferred that the chip restarts its write position on the 0x45 ← `0xff` write |
+| Whether the real chip needs 0x99 bit 4 to deliver the completion interrupt (the driver's init value for 0x99 lacks it) | unknown — a hardware run or the chip databook |
+| Time unit of the loop-init watchdog (0xa4 = `0x60`) and the meaning of the individual LIP-primitive codes scratch `0x4a`/`0x4b`/`0x4c` carry | unknown. Settled by: the controller's public databook for the watchdog unit and the primitive codes, or a timed loop-init on a real board with the watchdog set to two values; the driver gives only the stored values |
+| SEEPROM word 2 value on real optical and copper boards (driver accepts `0x100` or `0x180`) | unknown. Settled by: a dump of the SEEPROM from one real copper board and one real optical board (the driver only reads it) |
+| Sequencer microcode semantics (what the downloaded code does on-chip) | out of scope / unknown |
+| Fabric login | Not present in the driver; boards are Class 3 / FC-AL only per the owner's guide (established, M1/B1) |
+| Whether the -B optical boards use this controller | unknown. Settled by: the PCI vendor and device identifiers from a hinv or PCI listing of an optical -B board; the driver table already lists one identifier, so a board that reports the same pair is the same controller |
+| Generic loop-target login contract (PLOGI accept code 0x02; PRLI accept + FCP service byte 0x12 at reply 0x13; ADISC not parsed; INQUIRY byte 0 = 0x00 for a disk, SCSI status GOOD) | established |
 
 The command path is mapped end to end: the PCI identity, window map, reset and
 firmware-load handshake, and interrupt wiring are established, and so are the TCB byte
@@ -1227,7 +1227,7 @@ the done-queue entry format and the FCP response fields (`fill_*_tcb`,
 `fcadp_map`/`fcadp_maplist`, `sh_deliver_tcb`, `sh_setup_doneq`, `sh_backend_isr`,
 `ulm_tcb_complete`, `fc_scsi_complete`). What remains open is the on-chip sequencer
 behaviour (what the downloaded microcode does), the full per-bit decode of the
-loop/error interrupt events, and the items marked U above.
+loop/error interrupt events, and the items marked unknown above.
 
 ## Related controllers
 
@@ -1240,5 +1240,5 @@ Establishes the board's identity, composition, PCI front door, chip register map
 reset and firmware-load handshake, and command, loop and login behaviour from binary
 RE of the shipped driver. The command and completion path (TCB layout, scatter-gather
 descriptors, producer/doorbell post, done-queue entries and the FCP response) is
-mapped from the binary. Facts are graded E/I/U throughout; the remaining U items are
+mapped from the binary. Facts are graded established, inferred or unknown throughout; the remaining unknown items are
 listed above.

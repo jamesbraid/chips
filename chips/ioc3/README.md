@@ -94,32 +94,32 @@ is of the role, with the evidence in the row.
 
 | offset | register | width | access | who touches it, what the code does | grade |
 |---|---|---:|---|---|---|
-| cfg `0x4` | command | 4 | rw | `ioc3_attach` reads it and writes it back ORed with `0x8146` | E |
-| cfg `0x8` | revision | 4 | r | `if_efattach` keeps the low byte | E |
-| cfg `0xc` | latency timer word | 4 | w | `ioc3_attach` stores the whole word: `0xff00` on IP27 and IP35, `0x2800` on IP30 | E |
-| cfg `0x40`, `0x44` | error address, low and high | 4 | rw, r | `ioc3_error_handler` reads both, tests bit 0 of `0x40` (valid) and selects among 13 cases by bits 4:1 through a jump table, then stores the constant 1 to `0x40`; the cases are not read | I |
-| `0x1c` | interrupt status | 4 | rw | `ioc3_attach` writes all ones; `ioc3_pending_intrs` reads it; `ioc3_serial_intr` reads it and writes handled bits back | E |
-| `0x20` | interrupt enable set | 4 | w | `ioc3_write_ireg` (below) | E |
-| `0x24` | interrupt enable clear | 4 | w | `ioc3_write_ireg` (below) | E |
-| `0x28` | control | 4 | rw | `ioc3_attach` writes `0x7ae5e`; `hardware_init` polls bit 22 and bits 21:19 | I |
-| `0x2c` | external interrupt output | 4 | w | `eiattach` writes 0 | I |
-| `0x30` | one-wire control | 4 | rw | `nic_access_mcr32` (below) | E |
-| `0x34` | GPIO control set | 4 | w | `ioc3_attach` writes `0xc0`; `ef_phyunreset` writes `0x20`; `eiattach` writes `0x10000`; `nic_ioc3_vertex_info` and `nic_get_eaddr` store `0x200000` through the pointer they are handed (the window `0x34` address, from the call sites in `ioc3_attach` and `ef_ioc3eaddr`) | I |
-| `0x38` | GPIO control clear | 4 | w | `eiattach` writes `0x2` | I |
-| `0x3c` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see docs/sources/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | U |
-| `0x40 + 4n` | GPIO pin n | 4 | w, rw | `ef_phyunreset` drives pin 5; `ioc3_set_proto` writes 0 or 1 to a pin number kept in the port's record | I |
-| `0x80` to `0x98` | parallel-port DMA: buffer address high and low, count and flags, control (`0x8c`), the same three for context B | 4 | rw | `plp_dma`, `plp_dma_reset`, `plp_stop_dma`, `plpintr` (`ecpplp.o`), read in full; roles in [docs/coverage-ioc3.md](../../docs/coverage-ioc3.md) | E for `0x80` to `0x88` and `0x90` to `0x98`; I for the `0x8c` bits |
-| `0x9c` | keyboard and mouse control | 4 | rw | `pckm_attach` stores `0xc00000`; `pckm_sendok` polls bits 0 and 1; `pckm_restart` sets bit 18 or 19 | E |
-| `0xa0`, `0xa4` | keyboard, mouse receive | 4 | r | `pckm_pollcmd` reads one by port and tests bits 31:29 | E |
-| `0xa8`, `0xac` | keyboard, mouse transmit | 4 | w | `pckm_pollcmd` writes the command byte to one by port | E |
-| `0xb0`, `0xb4` | serial ring base, high, low | 4 | w | `hardware_init` | E |
-| `0xb8` to `0xcc` | port A control, TX producer, TX consumer, RX producer, RX consumer, RX timer | 4 | rw | `sio_ioc3.o` (below); port B repeats 0x1c higher | E |
-| `0xd0` | port A shadow | 4 | rw | `set_DTRRTS`, `ioc3_query_DCD`, `ioc3_query_CTS` | I |
-| `0xf0` to `0x150` | Ethernet (25 registers) | 4 | rw | `if_ef.o`: graded one by one in "Ethernet" | 19 E, 5 I, 1 U |
-| `0x20151`, `0x20152` | parallel-port status and control | 1 | r, rw | `ecpplp.o` | I |
-| `0x2015a` | parallel-port extended control (PC ECP layout) | 1 | rw | `plpattach` reads it, tests bits 0 and 1, then stores `0x34`; `plp_dma` sets bit 3 and clears bit 2 | I |
-| `0x20178` to `0x2017d` | UART A registers 0 to 5 | 1 | rw | `sio_ioc3.o` (below); UART B at `0x20170` | E |
-| `0x2017f` | UART A register 7 | 1 | w | `set_baud_ti` stores a computed value | I |
+| cfg `0x4` | command | 4 | rw | `ioc3_attach` reads it and writes it back ORed with `0x8146` | established |
+| cfg `0x8` | revision | 4 | r | `if_efattach` keeps the low byte | established |
+| cfg `0xc` | latency timer word | 4 | w | `ioc3_attach` stores the whole word: `0xff00` on IP27 and IP35, `0x2800` on IP30 | established |
+| cfg `0x40`, `0x44` | error address, low and high | 4 | rw, r | `ioc3_error_handler` reads both, tests bit 0 of `0x40` (valid) and selects among 13 cases by bits 4:1 through a jump table, then stores the constant 1 to `0x40`; the cases are not read | inferred |
+| `0x1c` | interrupt status | 4 | rw | `ioc3_attach` writes all ones; `ioc3_pending_intrs` reads it; `ioc3_serial_intr` reads it and writes handled bits back | established |
+| `0x20` | interrupt enable set | 4 | w | `ioc3_write_ireg` (below) | established |
+| `0x24` | interrupt enable clear | 4 | w | `ioc3_write_ireg` (below) | established |
+| `0x28` | control | 4 | rw | `ioc3_attach` writes `0x7ae5e`; `hardware_init` polls bit 22 and bits 21:19 | inferred |
+| `0x2c` | external interrupt output | 4 | w | `eiattach` writes 0 | inferred |
+| `0x30` | one-wire control | 4 | rw | `nic_access_mcr32` (below) | established |
+| `0x34` | GPIO control set | 4 | w | `ioc3_attach` writes `0xc0`; `ef_phyunreset` writes `0x20`; `eiattach` writes `0x10000`; `nic_ioc3_vertex_info` and `nic_get_eaddr` store `0x200000` through the pointer they are handed (the window `0x34` address, from the call sites in `ioc3_attach` and `ef_ioc3eaddr`) | inferred |
+| `0x38` | GPIO control clear | 4 | w | `eiattach` writes `0x2` | inferred |
+| `0x3c` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see docs/sources/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | unknown |
+| `0x40 + 4n` | GPIO pin n | 4 | w, rw | `ef_phyunreset` drives pin 5; `ioc3_set_proto` writes 0 or 1 to a pin number kept in the port's record | inferred |
+| `0x80` to `0x98` | parallel-port DMA: buffer address high and low, count and flags, control (`0x8c`), the same three for context B | 4 | rw | `plp_dma`, `plp_dma_reset`, `plp_stop_dma`, `plpintr` (`ecpplp.o`), read in full; roles in [docs/coverage-ioc3.md](../../docs/coverage-ioc3.md) | established for `0x80` to `0x88` and `0x90` to `0x98`; inferred for the `0x8c` bits |
+| `0x9c` | keyboard and mouse control | 4 | rw | `pckm_attach` stores `0xc00000`; `pckm_sendok` polls bits 0 and 1; `pckm_restart` sets bit 18 or 19 | established |
+| `0xa0`, `0xa4` | keyboard, mouse receive | 4 | r | `pckm_pollcmd` reads one by port and tests bits 31:29 | established |
+| `0xa8`, `0xac` | keyboard, mouse transmit | 4 | w | `pckm_pollcmd` writes the command byte to one by port | established |
+| `0xb0`, `0xb4` | serial ring base, high, low | 4 | w | `hardware_init` | established |
+| `0xb8` to `0xcc` | port A control, TX producer, TX consumer, RX producer, RX consumer, RX timer | 4 | rw | `sio_ioc3.o` (below); port B repeats 0x1c higher | established |
+| `0xd0` | port A shadow | 4 | rw | `set_DTRRTS`, `ioc3_query_DCD`, `ioc3_query_CTS` | inferred |
+| `0xf0` to `0x150` | Ethernet (25 registers) | 4 | rw | `if_ef.o`: graded one by one in "Ethernet" | 19 established, 5 inferred, 1 unknown |
+| `0x20151`, `0x20152` | parallel-port status and control | 1 | r, rw | `ecpplp.o` | inferred |
+| `0x2015a` | parallel-port extended control (PC ECP layout) | 1 | rw | `plpattach` reads it, tests bits 0 and 1, then stores `0x34`; `plp_dma` sets bit 3 and clears bit 2 | inferred |
+| `0x20178` to `0x2017d` | UART A registers 0 to 5 | 1 | rw | `sio_ioc3.o` (below); UART B at `0x20170` | established |
+| `0x2017f` | UART A register 7 | 1 | w | `set_baud_ti` stores a computed value | inferred |
 
 **64 register kinds** (the parallel-port DMA words count as one family, the GPIO pins as one family): **45 established, 15
 inferred, 4 unknown** as graded by the code alone; the coverage pass ([docs/coverage-ioc3.md](../../docs/coverage-ioc3.md)) moves the parallel-port DMA family and `0x2015a` out of unknown. The unknowns left are `0x3c` and `0x124`.
@@ -213,9 +213,9 @@ The driver holds the register block base `0xf0` (record +816) and the chip windo
 - **Buffer RAM** (`ssram_discovery` `0x790`): ORs `0x1200` into `0xf0`, writes the patterns `0x5555` and `0xaaaa` to two words
   of the buffer-RAM window (offset `0x40000`, mapped 128 KB), reads them back and records the result. Established for the
   accesses; the meaning of bits 12 and 9 is inferred.
-- Grades: **E** `0xf0`, `0xf8`, `0xfc`, `0x100`, `0x104`, `0x110`, `0x118`, `0x120`, `0x128`, `0x12c`, `0x130`, `0x134`, `0x138`, `0x13c`,
-  `0x140`, `0x144`, `0x148`, `0x14c`, `0x150`. **I** `0xf4` (acknowledge by write: from the read-back pattern), `0x108`, `0x10c`
-  (stored 0 at reset only), `0x114`, `0x11c`. **U** `0x124` (read only by the register dump routine).
+- Grades: established `0xf0`, `0xf8`, `0xfc`, `0x100`, `0x104`, `0x110`, `0x118`, `0x120`, `0x128`, `0x12c`, `0x130`, `0x134`, `0x138`, `0x13c`,
+  `0x140`, `0x144`, `0x148`, `0x14c`, `0x150`. inferred `0xf4` (acknowledge by write: from the read-back pattern), `0x108`, `0x10c`
+  (stored 0 at reset only), `0x114`, `0x11c`. unknown `0x124` (read only by the register dump routine).
 
 ### One-wire port (`0x30`, established: `nic_access_mcr32`)
 

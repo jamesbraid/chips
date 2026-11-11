@@ -51,32 +51,32 @@ constant is itself the fact), **I** inferred, **U** unknown. Widths are 32-bit w
 
 | offset | register | width | access | who touches it, what the code does | grade |
 |---|---|---:|---|---|---|
-| cfg `0x0` | device and vendor id | 2 | r | `xide_attach`, `xide_chip_init` compare the halves with `0x100a` and `0x10a9` | E |
-| cfg `0x4` | command and status | 2, 4 | rw | `ioc4_attach` reads the word and writes it back ORed with `0x146` | E |
-| cfg `0x8` | revision | 4, 1 | r | `ioc4_attach` compares the byte with 79 | E |
-| `0x0` | PCI error address, low | 4 | rw | `ioc4_dma_error_intr` reads it: bit 0 valid, bit 1 chooses the word RX or TX in the message, bit 5 multiple errors, bits 31:6 address, bits 4:2 serial port number; `ioc4_error_handler` reads and writes it | E |
-| `0x4` | PCI error address, high | 4 | r | `ioc4_dma_error_intr` joins it to the low word | E |
-| `0x8` | serial interrupt status | 4 | rw | `ioc4_attach` writes all ones; `ioc4_pending_intrs` and `ioc4_serial_intr` read it | E |
-| `0xc` | other interrupt status | 4 | rw | `ioc4_attach` writes all ones; `ioc4_dma_error_intr` writes a port's bit; `xide_intr_clear` reads and writes it | E |
-| `0x10`, `0x14` | serial, other interrupt enable set | 4 | w | `ioc4_write_ireg` | E |
-| `0x18`, `0x1c` | serial, other interrupt enable clear | 4 | w | `ioc4_write_ireg` | E |
-| `0x20` | control | 4 | rw | `ioc4_attach` writes `0xf`; `hardware_init` polls bit 7 | I |
-| `0x24` | miscellaneous control: bits 3:0 PCI bus speed (0 is 33 MHz, 1 is 66 MHz) | 4 | rw | `ioc4_attach` read-modify-write (below) | I (role from a shipped development header; see [docs/coverage-ioc4.md](../../docs/coverage-ioc4.md)) |
-| `0x28` | external interrupt output | 4 | w | `ioc4_eiattach` writes 0 | I |
-| `0x30`, `0x34` | GPIO control set, clear | 4 | w | `ioc4_attach` writes `0x30` to `0x30`; `ioc4_eiattach` writes `0x200` or `0xff00` to `0x30` and 2 to `0x34` | I |
-| `0x38` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see docs/sources/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | U |
-| `0x40 + 4n` | GPIO pin n | 4 | w | `ioc4_set_proto` writes 0 or 1 to a pin number kept in the port's record | I |
-| `0x100` to `0x11c` | ATA command block, 8 words | 4 | rw | `ide.o` (below), index n at `0x100 + 4n` | I |
-| `0x120` | ATA control block | 4 | w | `ide.o` (below) | I |
-| `0x140` to `0x160` | ATA DMA block, 9 words | 4 | rw | `ide.o` (below), index n at `0x140 + 4n` | 6 I (indices 1, 2, 5, 6, 7, 8), 3 U (0, 3, 4) |
-| `0x200` | keyboard and mouse control | 4 | rw | `ioc4_pckm_attach` stores `0xc00000`; `pckm_sendok` polls bits 0 and 1; `pckm_restart` sets bit 18 or 19 | E |
-| `0x204`, `0x208` | keyboard, mouse receive | 4 | r | `pckm_pollcmd` reads one by port | E |
-| `0x20c`, `0x210` | keyboard, mouse transmit | 4 | w | `pckm_pollcmd` writes one by port | E |
-| `0x300` to `0x30c` | serial ring bases: ports 0 and 1 low, high; ports 2 and 3 low, high | 4 | w | `hardware_init` | E |
-| `0x310` to `0x324` | port 0 control, TX producer, TX consumer, RX producer, RX consumer, RX timer | 4 | rw | `sio_ioc4.o` (below); ports 1 to 3 at `+0x1c`, `+0x38`, `+0x54` | E |
-| `0x328` | port 0 shadow | 4 | rw | `set_DTRRTS`, `ioc4_query_DCD`, `ioc4_query_CTS` | I |
-| `0x380` to `0x385` | UART 0 registers 0 to 5 | 1 | rw | `sio_ioc4.o`; UARTs 1 to 3 at `+8`, `+0x10`, `+0x18` | E |
-| `0x387` | UART 0 register 7 | 1 | w | `set_baud_ti` stores a computed value | I |
+| cfg `0x0` | device and vendor id | 2 | r | `xide_attach`, `xide_chip_init` compare the halves with `0x100a` and `0x10a9` | established |
+| cfg `0x4` | command and status | 2, 4 | rw | `ioc4_attach` reads the word and writes it back ORed with `0x146` | established |
+| cfg `0x8` | revision | 4, 1 | r | `ioc4_attach` compares the byte with 79 | established |
+| `0x0` | PCI error address, low | 4 | rw | `ioc4_dma_error_intr` reads it: bit 0 valid, bit 1 chooses the word RX or TX in the message, bit 5 multiple errors, bits 31:6 address, bits 4:2 serial port number; `ioc4_error_handler` reads and writes it | established |
+| `0x4` | PCI error address, high | 4 | r | `ioc4_dma_error_intr` joins it to the low word | established |
+| `0x8` | serial interrupt status | 4 | rw | `ioc4_attach` writes all ones; `ioc4_pending_intrs` and `ioc4_serial_intr` read it | established |
+| `0xc` | other interrupt status | 4 | rw | `ioc4_attach` writes all ones; `ioc4_dma_error_intr` writes a port's bit; `xide_intr_clear` reads and writes it | established |
+| `0x10`, `0x14` | serial, other interrupt enable set | 4 | w | `ioc4_write_ireg` | established |
+| `0x18`, `0x1c` | serial, other interrupt enable clear | 4 | w | `ioc4_write_ireg` | established |
+| `0x20` | control | 4 | rw | `ioc4_attach` writes `0xf`; `hardware_init` polls bit 7 | inferred |
+| `0x24` | miscellaneous control: bits 3:0 PCI bus speed (0 is 33 MHz, 1 is 66 MHz) | 4 | rw | `ioc4_attach` read-modify-write (below) | inferred (role from a shipped development header; see [docs/coverage-ioc4.md](../../docs/coverage-ioc4.md)) |
+| `0x28` | external interrupt output | 4 | w | `ioc4_eiattach` writes 0 | inferred |
+| `0x30`, `0x34` | GPIO control set, clear | 4 | w | `ioc4_attach` writes `0x30` to `0x30`; `ioc4_eiattach` writes `0x200` or `0xff00` to `0x30` and 2 to `0x34` | inferred |
+| `0x38` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see docs/sources/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | unknown |
+| `0x40 + 4n` | GPIO pin n | 4 | w | `ioc4_set_proto` writes 0 or 1 to a pin number kept in the port's record | inferred |
+| `0x100` to `0x11c` | ATA command block, 8 words | 4 | rw | `ide.o` (below), index n at `0x100 + 4n` | inferred |
+| `0x120` | ATA control block | 4 | w | `ide.o` (below) | inferred |
+| `0x140` to `0x160` | ATA DMA block, 9 words | 4 | rw | `ide.o` (below), index n at `0x140 + 4n` | 6 inferred (indices 1, 2, 5, 6, 7, 8), 3 unknown (0, 3, 4) |
+| `0x200` | keyboard and mouse control | 4 | rw | `ioc4_pckm_attach` stores `0xc00000`; `pckm_sendok` polls bits 0 and 1; `pckm_restart` sets bit 18 or 19 | established |
+| `0x204`, `0x208` | keyboard, mouse receive | 4 | r | `pckm_pollcmd` reads one by port | established |
+| `0x20c`, `0x210` | keyboard, mouse transmit | 4 | w | `pckm_pollcmd` writes one by port | established |
+| `0x300` to `0x30c` | serial ring bases: ports 0 and 1 low, high; ports 2 and 3 low, high | 4 | w | `hardware_init` | established |
+| `0x310` to `0x324` | port 0 control, TX producer, TX consumer, RX producer, RX consumer, RX timer | 4 | rw | `sio_ioc4.o` (below); ports 1 to 3 at `+0x1c`, `+0x38`, `+0x54` | established |
+| `0x328` | port 0 shadow | 4 | rw | `set_DTRRTS`, `ioc4_query_DCD`, `ioc4_query_CTS` | inferred |
+| `0x380` to `0x385` | UART 0 registers 0 to 5 | 1 | rw | `sio_ioc4.o`; UARTs 1 to 3 at `+8`, `+0x10`, `+0x18` | established |
+| `0x387` | UART 0 register 7 | 1 | w | `set_baud_ti` stores a computed value | inferred |
 
 **59 register kinds** (the GPIO pins as one family; the four serial ports' repeats are not counted again; the ATA command
 block counts eight kinds and the DMA block nine): **32 established, 22 inferred, 5 unknown** as graded by the code alone. The coverage pass
