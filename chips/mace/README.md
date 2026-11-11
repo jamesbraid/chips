@@ -48,7 +48,7 @@ video input bases `0x100000` and `0x180000`; the helpers are not read.
 - **A `mace_rev` flag (established arithmetic, unexplained).** `pckm_attach` (`mhpckm.o`, read to its first branch)
   reads the 64-bit register at `0x310000` and tests bit 4: set gives `mace_rev` 1, clear gives 0. The PS/2 code then
   branches on `mace_rev` (see "Other established sequences"). The specification calls bits 14:1 of that register
-  reserved and read as zero. Whether bit 4 is a revision strap the specification omits is **unknown**.
+  reserved and read as zero. Whether bit 4 is a revision strap the specification omits is **unknown**. Settling test: read the branches on `mace_rev` in the PS/2 code ("Other established sequences") for what differs between the two values, and compare the bit across `hinv`-reported MACE revisions in public captures; a correlation with the printed revision would make it a strap.
 
 ## Register inventory
 
@@ -333,7 +333,7 @@ binaries show only which bits are read and cleared), the rest are open or partia
    response.
 5. **What a second error does. (unknown.)** The specification does not say whether a second master abort overwrites
    the address or is lost; the flags table has no multiple-error bit. The handler clears all flags at once, so no
-   code shows it.
+   code shows it. Settling test: a deliberate double master abort with the address register read between, on hardware this repository does not assume; no software depends on it, so unknown is a valid end state.
 
 ## Reset expectations
 

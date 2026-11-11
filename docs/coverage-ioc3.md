@@ -101,7 +101,7 @@ header):
 
 These equal Linux's full and half duplex constants field for field (full: 21 in each; half: 21 gap, 11 first receive gap,
 17 second receive gap). They are initialised tunables the administrator can change, so they are IRIX defaults that
-happen to equal Linux's; the part's reset value is still **unknown**. Check: `ef_ioc3init` stores them at bit offsets
+happen to equal Linux's; the part's reset value is still **unknown** (settling test: read the register from an early-boot monitor before `ef_ioc3init` runs, or a published IOC3 specification page; no held code reads it first). Check: `ef_ioc3init` stores them at bit offsets
 0, 8 and 16 (chip page), so full duplex writes `0x00151515` and half duplex `0x00110b15`.
 
 ## Error address registers (config `0x40`, `0x44`): established decode
@@ -112,7 +112,7 @@ generic message), bits 31:6 are address bits 31:6 and the word at `0x44` supplie
 clears the latch by storing 1 to `0x40`. The shipped header and Linux agree on the same fields. Requester numbers
 (shipped header): 0 serial port A transmit, 1 A receive, 2 port B transmit, 3 B receive, 4 parallel port, 8 Ethernet
 transmit descriptor read, 9 and 10 transmit buffer reads, 11 receive descriptor read, 12 receive buffer write. Numbers 5
-to 7 and 13 to 15 are named nowhere: **unknown**. The same two registers also appear as a mirror at `0x14` and `0x18`
+to 7 and 13 to 15 are named nowhere: **unknown**. Settling test: a published IOC3 specification page listing the DMA requester numbers; no shipped code writes or tests those numbers (the census over the IOC3 objects reaches none), so the end state is unknown with no software dependency. The same two registers also appear as a mirror at `0x14` and `0x18`
 of the memory window (Linux and the shipped header): **established** by two sources, not accessed by the IRIX objects
 read.
 

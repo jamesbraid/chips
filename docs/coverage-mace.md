@@ -50,7 +50,7 @@ IRIX put them at `0x10` and `0x18`. Two things settle it.
 
 So the offsets IRIX and the specification use stand unchanged; the Linux disagreement is closed with the finding that
 Linux never reaches the MACE I2C block. What the configuration and reset word does is still **unknown**: IRIX never
-writes `0x330000` and the specification says only "Config & Reset".
+writes `0x330000` and the specification says only "Config & Reset". Settling test: a published MACE specification page for the I2C block's configuration word; no binary route, since no held code writes it.
 
 ## `0x310000` bit 4 and `mace_rev`: tried, still unknown
 

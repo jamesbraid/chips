@@ -98,13 +98,13 @@ widget-status pending-field position.
 | Interrupt number space | 64 vectors, 5 priority levels, 4 per-CPU masks | 128 numbers in two banks of 64, 2 per-CPU masks per bank | same as Hub, per PI |
 | Where the vector in the packet comes from | the widget's interrupt-destination registers (upper word bits 31:24), or a Bridge's per-pin register; 6 bits used | same sources; 7 bits used | same as Hub |
 | Host's own error interrupt | HEART vectors 63 (HEART exception) and 59-62 (bus error per CPU) | II interrupt destination `0x400138`: node 16:8, level 6:0 | same register, node 16:9, PI-select bit 8, level 6:0 |
-| Widget-request timeout (common register `+0x28`) | implemented, no prescale, unit unknown | slot `0x400028` has no defined register | same |
+| Widget-request timeout (common register `+0x28`) | implemented, no prescale, unit unknown (test: a timed uncached read of an unclaimed widget address at two programmed values, as in section 2.4; hardware, not assumed) | slot `0x400028` has no defined register | same |
 | Request-buffer (widget-to-memory request) timeout | none visible | II `0x4003b8` (7:0) and `0x4003c0` (23:0 prescale) | same pair |
 | PIO read-response timeout | widget `+0x28` plus read-timeout latch `+0x90` | PI request-buffer timeout `0x30` / scale `0x38`; II tail timeout `0x4001f0` (25:0 only) | adds II read-response prescaler (54:32) and timeout (59:55) in `0x4001f0`; PI `0x30`/`0x38` |
 | Credit-wait timeout | none visible | II `0x4001e0` exists, layout undocumented | II `0x4001e0`, 25:0, 128-clock ticks |
 | Widget status timeout flags | no timeout bits named | bit 6 tail, bit 5 credit | bit 5 tail, bit 4 credit (**differs from Hub**) |
-| Credit toward the crossbar | not seen in the shipped binaries' census; unknown | widget control 15:13; reset unknown; IP27 PROM write unknown | widget control 15:13; PROM writes 4 for an integrated crossbar or Crossbow revision 3 and later, else 3 |
-| Per-widget PIO credits | none visible (PIO buffer overflow flags in the cause register) | request-buffer entries `0x400198`, `0x4001a0`+8(w-8); credits 7:0, reset unknown | same offsets, wider layout |
+| Credit toward the crossbar | not seen in the shipped binaries' census; unknown | widget control 15:13; reset unknown; IP27 PROM write unknown (test: unpack the IP27 PROM with `promgen64.py` and read its store to the widget control credit field with `hostfacts.py`, as was done for the IP35 PROM; the reset value needs an early-boot register read) | widget control 15:13; PROM writes 4 for an integrated crossbar or Crossbow revision 3 and later, else 3 |
+| Per-widget PIO credits | none visible (PIO buffer overflow flags in the cause register) | request-buffer entries `0x400198`, `0x4001a0`+8(w-8); credits 7:0, reset unknown (test: an early-boot read of the entries before any PROM store; no held code reads one before writing it) | same offsets, wider layout |
 | Error clear | write back the value read (cause, widget error type) | `0x4001f8` clear, plus per-register write-one-to-clear | same, wider layout |
 | Window naming | none from SGI | LWin / BWin, IAlias | LWin / BWin, IAlias |
 
@@ -151,7 +151,7 @@ ranges, each naming the widget in the address:
   back to Main for widget 0 and for every identification read. **Established**.
 - Access goes through uncached K1/xkphys addresses. A MODE bit enables cached PIO
   (bit 18) and another enables cached PROM (bit 17); the kernel path uses uncached.
-  **Established** names (Linux `heart.h`, monitor table); effect of bit 18 **unknown**.
+  **Established** names (Linux `heart.h`, monitor table); effect of bit 18 **unknown** (settling test: set the bit from a PROM monitor and time a cacheable-attribute PIO read, or a HEART specification page on the mode word; the kernel never sets it).
 - Octane has *no* Big-Window equivalent: a 64 GB Huge window per widget replaces
   programmable slices. This is the largest structural difference from Hub and Bedrock.
 - HEART has no Hub-style "IAlias" for its own registers: they are at fixed physical
@@ -250,7 +250,7 @@ addresses given there):
 - Credit errors are widget error type bits 28 and 29; the kernel treats both as fatal.
   **Established** (Census error paths).
 - PIO flow control inside HEART is visible only as cause bits 43 and 44 (overflow).
-  Buffer depths are **unknown**. There is no per-widget PIO credit register.
+  Buffer depths are **unknown**. There is no per-widget PIO credit register. Settling test: a HEART specification page; no software reads a depth.
 
 ---
 
@@ -361,7 +361,7 @@ an alias macro without ever defining the address. Instead there are separate mec
   Census "Error reporting for a refused or timed-out write"); trigger conditions
   **unknown** (no held code causes one).
 - Timeout tick units for all four registers are **unknown**; only Linux's 5 ms intent exists
-  for the prescale/timeout pair, and IRIX writes twice that prescale.
+  for the prescale/timeout pair, and IRIX writes twice that prescale. Settling test: the timed unclaimed-widget read at two prescale values (hardware, not assumed), or an I/O-interface clock-period statement in a published document.
 
 ### 3.5 Error registers
 
@@ -385,12 +385,12 @@ an alias macro without ever defining the address. Instead there are separate mec
 
 - Hub widget control `0x400020`: 22:18 elasticity threshold, 17 direct-connect, 16 force bad
   packet, **15:13 crossbar credit**, 4 tag mode, 3:0 own Crossbow port. **Established**
-  fields (Linux); the reset value is **unknown**.
+  fields (Linux); the reset value is **unknown** (settling test: an early-boot read before the PROM's first store).
 - The 3-or-4 credit rule by Crossbow revision is **established** in the IP35 PROM for Bedrock
-  (4.6); for IP27 it is **unknown**.
+  (4.6); for IP27 it is **unknown** (settling test: read the IP27 PROM's credit store by the route in the table above).
 - Per-widget PIO credits: request-buffer entry `0x400198` (widget 0) and `0x4001a0` + 8(w-8),
   low 8 bits credits, reset unknown; fields for NACK counters, mode, fire-and-forget,
-  overflow count and error. **Established** layout (Linux); behaviour **unknown**.
+  overflow count and error. **Established** layout (Linux); behaviour **unknown** (settling test: a Hub specification page; no held code reads the credit count).
 - Crossbow side: link-control widget credit (22:18, reset 2) for the Hub's port, per the
   Crossbow sheet. Whether any IP27 firmware writes it for a Hub port is **unknown**.
 
@@ -483,7 +483,7 @@ works on an eight-entry "PIO read address table" at `0x400308` + 8n whose entrie
 timeout count (62:58). Layout **established** from the header, behaviour **inferred**. The
 Hub's Linux header names the same table (`IIO_PRTE_0`, eight entries) with no timeout field
 and its tail-timeout register has no read-response fields; whether Hub silicon has the
-Bedrock fields is **unknown**.
+Bedrock fields is **unknown** (settling test: the public Linux SN0 Hub header's field list for this register, not held; or an early-boot read on a Hub system, not assumed).
 
 ### 4.5 Error registers
 
@@ -551,7 +551,7 @@ Against [crosstalk-link.md](crosstalk-link.md) (commit `3cb44f3`):
    established (two public drivers). That HEART *honours the deassert bit* is inferred, and
    the packet data encoding is from the Bridge/Crossbow specifications, not a HEART source.
 3. **Section 3.1 "Hub's own number resets to 1".** No cited document gives the reset value, so
-   it is **unknown**. The register's *meaning* (the Crossbow port the Hub occupies) is read
+   it is **unknown**. Settling test: an early-boot read of the register on a halted Hub, or the Crossbow specification's statement of the Hub port reset; no held code reads it before writing. The register's *meaning* (the Crossbow port the Hub occupies) is read
    from a shipped kernel.
 4. **Matrix "Crosstalk timeout/prescale: HEART --".** HEART has a widget request timeout
    register (`+0x28`) that Hub and Bedrock lack; the matrix cell should name it.
@@ -578,7 +578,7 @@ Against [crosstalk-link.md](crosstalk-link.md) (commit `3cb44f3`):
 | 11 | What global selects the IP35 kernel's `0x4003c0` prescale (`0xfffe` or `0x00fffffe`) | Trace the global read by `per_hub_init` to its writer |
 | 12 | Meaning of the two conditions selecting `0xd0`/`0xd400` versus `0xfe`/`0xc000` in the IP27 PI timeout stores | Read `per_hub_init` to the tests |
 | 13 | HEART write to an unclaimed address: which error bits set | One 64-bit uncached store to an unmapped widget range, then read `+0x60`, cause and `+0x70`/`+0x78` |
-| 14 | Credit semantics (what a credit unit bounds) in HEART | Not testable without a bus analyser; documented as unknown |
+| 14 | Credit semantics (what a credit unit bounds) in HEART | Not testable without a bus analyser; documented as unknown. Settling test: a HEART specification page on the credit or flow-control scheme (none held), or a bus-analyser trace of the link under load on hardware this repository does not assume; no binary route, since no held code reads a credit count |
 
 ---
 

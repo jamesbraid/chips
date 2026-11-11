@@ -68,12 +68,12 @@ chip is driven by code in the image-converter plugins, not by this library. The 
 
 - opens a per-unit device, queries the driver version and the chip ID, then maps **`0x14000` bytes** of the unit
   (`mmap` length `0x14000`, read-write, shared). The specification's chip window is `0x10000` bytes; the extra `0x4000` is
-  not described. **Unknown** whether it is hardware (a second region) or a driver construct.
+  not described. **Unknown** whether it is hardware (a second region) or a driver construct. Settling test: read the kernel driver's mmap handler for the unit with `hostfacts.py` and see whether it maps a second physical range at `0x10000` or only extends the first window; a second range is hardware, an extension of a mapped range is a driver construct.
 - sets the chip's 64-entry translation table through the driver (ioctl `0x76780004`, `vice_settlb`; the table is at
   slot `0xf000`, spec Table 2) and updates it through a further ioctl; locks the unit through `0x76780006`.
 - loads microcode for the two processors (`vice_load_msp_code`, `vice_load_bsp_code`, `vice_load_bsp_table`) from files:
   the instruction memories are at `0x2000` (MSP) and `0x4000` (BSP), the BSP table memory at `0x5000` (spec Table 2). The
-  load routines were not read: the load order and the reset sequence around them are **unknown**.
+  load routines were not read: the load order and the reset sequence around them are **unknown**. Settling test: read `vice_load_msp_code`, `vice_load_bsp_code` and `vice_load_bsp_table` with `hostfacts.py` and record the order of the stores to the reset and instruction-memory slots.
 - builds DMA buffers and an event path (`vice_dmbuf_*`, `vice_event_*`) over the system's media buffer library; not read.
 
 ## Still open

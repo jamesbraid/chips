@@ -285,7 +285,7 @@ in the kernel object:
   timeout; the Linux header reserves bit 2, and the kernel's interrupt handler tests none
   of bit 2 and prints "Maximum Request Timeout" for bit 1 and "Source Timeout Error" for
   bit 0. Established as naming. Whether any consumer acts on bit 2 is **unknown**: the
-  shipped fault-analysis object keeps its crossbar rules in tables not decoded here.
+  shipped fault-analysis object keeps its crossbar rules in tables not decoded here. Settling test: dump the object's rule tables from its data section and look for the link-status bit 2 mask.
 - **Link auxiliary status**: 31:24 receive error count; 23:16 transmit retry count; 15:8
   timed-out source (one bit per port); 6 link failure mode; 5 widget present; 4 eight-bit
   mode (0 = sixteen). Established. The kernel sums bits 31:24 and 23:16 into two running

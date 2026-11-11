@@ -168,7 +168,7 @@ Octane, Origin 200 and Origin 2000 run the first; the Origin 350 runs the second
 - **Translation RAM by revision.** The Origin 300 carries revision 2 (`hinv`). The Xbridge specification describes
   revision A as 512 entries at `0x1_0000`; OpenBSD describes 1024 internal entries and the Linux IP35 PIC header places a second
   view at `0x1_2000` (manual parity generation, for PIC); SGI's board diagnostic reads that view on an Origin 300. Whether revision 2 maps all 1024 entries
-  for DMA is **U**.
+  for DMA is **U**. Settling test: read the Origin 300 kernel's and PROM's translation-RAM fill loop with `hostfacts.py` for its entry count and the highest index it writes; a count above 512 would settle it as software behaviour, not silicon.
 
 ## PIC
 
@@ -288,7 +288,7 @@ All three chips present the same three PCI-visible DMA views (E: Linux `bridge.h
   address bit means swap, and the default state of the swap controls, are **U** for the chip reset state (no shipped code
   reads a reset value).
 - The Bridge Linux driver clears the I/O and memory swap bits in control at probe; IRIX does not touch them (E).
-  Reset values of those bits are **U**.
+  Reset values of those bits are **U**. Settling test: an early-boot read of the Bridge control register before any software write, from a PROM monitor on a halted boot (hardware, not assumed); no held code reads one before writing.
 - DMA reaches memory through Crosstalk without translation by Crossbow (I, project xbow datasheet statement; the Hub
   translates widget-relative addresses).
 - PIC 64-bit direct DMA in PCI mode uses virtual channel 0 for function 0 and channel 1 for other functions (Linux IP35,
