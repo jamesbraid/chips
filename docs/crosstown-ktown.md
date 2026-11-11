@@ -140,8 +140,10 @@ Crosstown (**inferred**: no manual or capture read ties them to a KTOWN).
 - Onyx 350 with an IX-brick, public thread "What to do with some lonely O350's?"
   (<https://forums.irixnet.org/thread-3009.html>): the pipe is
   `/hw/module/001c01/IXbrick/xtalk/10` with a `KTOWN2` record (030-1593-001 rev H). A second public
-  Origin 3000 capture, "Onyx 3000, 12x600MHz, 6GB, dual-pipe IR3 with HD-GVO", puts the pipe at
-  `/hw/module/001c07/Ibrick/xtalk/11` with `KTOWN2` (030-1593-001 rev H). **Established** for those
+  Onyx 3000 capture, "Onyx 3000, 12x600MHz, 6GB, dual-pipe IR3 with HD-GVO" (Nekonomicon thread 16719632,
+  2008-12-05, <https://nekonomicon.irixnet.org/forum/14/16719632/1.html>), puts the pipe at
+  `/hw/module/001c07/Ibrick/xtalk/11` with `KTOWN2` (030-1593-001 rev H) and the second pipe at
+  `/hw/module/001c10/Xbrick/xtalk/11`; see [onyx3000-graphics-topology.md](onyx3000-graphics-topology.md). **Established** for those
   machines: the pipe is a Crosstalk widget at port 10 or 11 of an I/O brick. 007-4240-002 p135
   labels the I-brick's two Crosstown2 connectors `XIO 10` and `XIO 11`, which fits those port numbers
   (inferred; the guide does not say the connector label equals the widget number).
