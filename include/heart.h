@@ -6,6 +6,9 @@
  * Offsets and widths: [E] a load or store in the cited routine reaches that offset with that width.
  * Names: [I] from the accessor routine names the shipped objects carry. Fields: [I] masks and constants
  * the code applies; their meaning is not read. Reset values: [U] throughout.
+ * Views: the offset is the 8-byte slot address. "4 at slot+4" is a 32-bit load or store at that
+ * address plus 4, the low word of the slot on a big-endian machine; a 64-bit access to the slot
+ * address reaches the same register.
  * HEART: names come from the config register_names (the shipped diagnostic prints them, or the public
  * Linux driver where it prints none); offsets 0x100000 and up are the widget block, see the chip page.
  */
@@ -72,7 +75,7 @@
 #define HEART_WID_ID                       0x100000   /* [E] width 4/8 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 28 sites, 21 routine(s) */
 #define HEART_WID_ERR_UPPER                0x100010   /* [E] width 4 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
 #define HEART_WID_ERR_LOWER                0x100018   /* [E] width 4 byte(s), access r; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 3 sites, 3 routine(s) */
-#define HEART_WID_REQ_TIMEOUT              0x100028   /* [E] width 4 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 4 sites, 2 routine(s) */
+#define HEART_WID_REQ_TIMEOUT              0x100028   /* [E] width 4 byte(s) at slot+4, access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 4 sites, 2 routine(s) */
 #define   HEART_WID_REQ_TIMEOUT_V_80       0x80   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define HEART_WID_ERR_CMDWORD              0x100040   /* [E] width 4/8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 12 sites, 11 routine(s) */
 #define HEART_WID_ERR_TYPE                 0x100060   /* [E] width 4/8 byte(s), access rw; name [I] from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names); reached in 20 sites, 11 routine(s) */

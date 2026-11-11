@@ -6,6 +6,11 @@
  * Offsets and widths: [E] a load or store in the cited routine reaches that offset with that width.
  * Names: [I] from the accessor routine names the shipped objects carry. Fields: [I] masks and constants
  * the code applies; their meaning is not read. Reset values: [U] throughout.
+ * Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000
+ * above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the
+ * node-indexed alias (the code adds the node number << 33); the same register is at offset - 0x800000
+ * in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local
+ * alias, where the code reads its neighbours (0x680108 to 0x680120) directly.
  */
 #ifndef BEDROCK_H
 #define BEDROCK_H

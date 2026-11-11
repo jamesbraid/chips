@@ -6,6 +6,9 @@
  * Offsets and widths: [E] a load or store in the cited routine reaches that offset with that width.
  * Names: [I] from the accessor routine names the shipped objects carry. Fields: [I] masks and constants
  * the code applies; their meaning is not read. Reset values: [U] throughout.
+ * Views: the offset is the 8-byte slot address. "4 at slot+4" is a 32-bit load or store at that
+ * address plus 4, the low word of the slot on a big-endian machine; a 64-bit access to the slot
+ * address reaches the same register.
  */
 #ifndef MACE_H
 #define MACE_H
@@ -38,11 +41,11 @@
 
 /* ---- Ethernet ---------------------------------------------------- */
 
-#define MACE_ETH_MAC_CONTROL               0x280000   /* [E] width 4 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 3 routine(s) */
+#define MACE_ETH_MAC_CONTROL               0x280000   /* [E] width 4 byte(s) at slot+4, access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 3 routine(s) */
 #define   MACE_ETH_MAC_CONTROL_V_1         0x1   /* [I] a constant the code writes here (2 sites); meaning unknown [U] */
 #define   MACE_ETH_MAC_CONTROL_B_7_0       0xff   /* [I] load mask: the code isolates these bits (1 sites) */
 #define MACE_ETH_RX_FIFO                   0x280040   /* [E] width 1 byte(s), access r; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 7 sites, 1 routine(s) */
-#define MACE_ETH_INTERNAL_RAM              0x280100   /* [E] width 4 byte(s), access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 1 routine(s) */
+#define MACE_ETH_INTERNAL_RAM              0x280100   /* [E] width 4 byte(s) at slot+4, access rw; name [I] from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code); reached in 5 sites, 1 routine(s) */
 
 /* ---- audio ------------------------------------------------------- */
 
