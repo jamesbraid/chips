@@ -235,7 +235,7 @@ longest, so the host must give up before the processor does.
 | Hub II request-buffer ("CRB") timeout and prescale | `0x4003b8` (7:0), `0x4003c0` (23:0) | IRIX writes `0xff` and `0x1000`; Linux writes `0xff` and `0x800` (a 5 ms intent, below the 10 ms processor-interface timeout) | values established; unit unknown |
 | Hub PI request-buffer timeout and scale | PI `0x30`, `0x38` | IRIX writes `0xd0`/`0xd400` or `0xfe`/`0xc000` under conditions not read | values established |
 | Hub II tail timeout | `0x4001f0` (25:0) | — | register named in Linux; layout inferred |
-| Hub II credit-count timeout | `0x4001e0` | — | register named in Linux; layout unknown |
+| Hub II credit-count timeout | `0x4001e0` | — | register named in Linux; layout unknown. Settled by: the public Linux SN0 hub register header's field definitions for this register (the `linux` submodule is not checked out here); no held Hub-era object writes it, and the Bedrock layout on the next row is a sibling, so it is a hypothesis for the Hub and not a fact |
 | Bedrock II | same pair at `0x4003b8`/`0x4003c0`; credit-count `0x4001e0`; tail `0x4001f0` 25:0; read-response prescaler 54:32 and timeout 59:55 | 128-clock ticks for credit-count | layout established |
 
 The Hub and Bedrock `0x4003b8`/`0x4003c0` pair times entries in the I/O interface's

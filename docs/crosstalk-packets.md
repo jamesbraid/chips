@@ -71,13 +71,15 @@ Layout in the specification's Figure 9, as a 16-bit control word beside 64-bit
 data rows: the control word holds the sideband in its top byte and the two
 sequence numbers in its bottom byte; the check bits are the second halfword.
 The bit order of the check halfword and which nibble is the transmit number are
-not given in a form that can be read off the figure: **unknown** (a capture
-would show them).
+not given in a form that can be read off the figure: **unknown**. Settled by: reading Figure 9 from the specification's page image (the held text extraction
+loses the figure's bit labels), or a capture of a micropacket with known sequence numbers.
 
 **Check code.** The Origin manual says errors are found with a CCITT CRC code
 (007-3439-002 printed p. 82). The 16-bit width matches CRC-16-CCITT. The exact
 polynomial, the initial value, which bits it covers (data only, or data plus
-sideband and sequence numbers) and its bit order are **unknown**. The Crossbow
+sideband and sequence numbers) and its bit order are **unknown**. Settled by: the polynomial in the
+published link-controller patent text or an LLP figure in a router specification, or a captured link trace with
+known payloads; none is held. The Crossbow
 specification says the CRC is computed over "the micropacket", and its receive
 logic discards both halves of a micropacket (D0 and D1) when it is bad (pp. 104-105).
 Test: a capture of one micropacket with a known payload.

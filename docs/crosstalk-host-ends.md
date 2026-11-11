@@ -123,7 +123,8 @@ Sections 2 to 4 give the detail and the grade behind each cell.
   `ip30-xtalk.c` ("HEART is always 8").
 - The widget number is HEART status bits 3:0 (`0x0ff00080`), read by the kernel and passed to
   the widget layer as the master. **Established** (kernel `heart_startup`, read in full).
-  Whether the field is strapped or fixed is **unknown**.
+  Whether the field is strapped or fixed is **unknown**. Settled by: a HEART specification page on the status register (none is held), or the status word read on boards
+  built with different crossbar ports (the owner's one Octane2 gives a single sample and cannot tell the two apart).
 - Identity word: owner read of one 64-bit access at physical `0x18000000` on an initialized
   Octane2 returned `0x000000006c00106d`: revision 6 (HEART "F"), part `0xc001`, manufacturer
   `0x36`, bit 0 set. **Established** for that board and moment. Which of revisions 1 to 5 (A to E) earlier boards carry is **unknown**.
