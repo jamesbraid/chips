@@ -191,6 +191,8 @@ target flush register.
 `pcibr_device_flags_set` takes a flag word. Each pair of flag bits is a "set" bit and a "clear" bit for one
 device-register bit or pair of bits:
 
+**Grade of the table.** Established: the mapping from flag bits to device-register bits (the kernel routine read in full, and the same bit positions in the public Linux driver's device-register constants). Inferred: the hardware meaning of each device-register bit, which rests on those public names.
+
 | flag bits (set, clear) | device register bits | public name of those bits |
 |---|---|---|
 | 16, 17 | 24 and 23 together | PMU and direct write-gather enables (`BRIDGE_DEV_PMU_WRGA_EN`, `BRIDGE_DEV_DIR_WRGA_EN`) |

@@ -51,6 +51,8 @@ call it with 0 bits, so they clear only the 16-byte header and leave the payload
 share it; the kernel's one caller does not hold its own lock across the two reads either (it takes a spinlock only after
 both). `simp_jtag_close` frees the record; nothing in the held objects calls it.
 
+**Grade of the table.** Established, and checked against the routines' constants in this pass: the operation byte of word 0 (`0x88` in `read_rr_reg`, `0x83` in the scan-instruction and scan-data wrappers, `0x84` in the select wrapper, `0x80` in reset). The word 2 bit assignments are established from the stores as the cells say; what each bit means on the wire is inferred.
+
 | header word | content (established from the stores) |
 |---|---|
 | word 0 | top byte is the operation: `0x88` read one router register (`read_rr_reg`), `0x80` reset (`simp_jtag_reset`), `0x83` scan an instruction or data register (`simp_jtag_scan_ir`, `simp_jtag_scan_dr`), `0x84` select (`simp_jtag_sel_sic`). The low 24 bits are cleared by the init. The reply is read back from this word: bits 15:8 of the reply's first word are a status byte (below). |

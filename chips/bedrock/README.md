@@ -55,6 +55,8 @@ Access widths: every access in this table is a 64-bit doubleword except where li
 inferred from the prefixes of the routine names that touch it (`hub_`, `hubii_`/`hubiio_`, `md_`/`mdir_`,
 `ni_`, `bte_`, `intr_`, `part_`, `nic_`); unknown otherwise.
 
+**Grade of the table.** Established: each offset, width, access direction and site count (a load or store in the cited routine reaches that offset with that width; the generated `include/bedrock.h` carries the same label). Inferred: every name, the role column and the block membership, from routine-name prefixes. Unknown wherever the role column says so.
+
 | register | widths | access | sites | accessors and callers (names from the binary) | field evidence | role (inferred from the names) |
 |---|---|---|---:|---|---|---|
 | `+0x1000018` | 8 | r | 1 | `handle_cac_buserr` |  | unknown unless the names say: see the entry |
@@ -475,6 +477,8 @@ structure equals `0x5045626b`; the NASIDs come from a halfword table at gp-0x1cc
 
 The 67 pairs, as offsets from the window base. Names are from the public SN1 register headers (Linux v2.5.40 `hubpi.h`,
 `hubio.h`, `hublb.h`, `hubni.h`, `hubxb.h`, `hubmd.h`); the second interface repeats the first interface's names:
+
+**Grade of the table.** Established: the 67 offset pairs and their counts, which are the table the shipped kernel's dump routine walks (read above; not re-read for this grade). Inferred: the names, matched by offset from the public SN1 headers, and the block label of each row.
 
 | # | offsets | count | block | public names |
 |---|---|---:|---|---|
