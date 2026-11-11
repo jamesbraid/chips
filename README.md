@@ -29,6 +29,79 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
 - [docs/xio-fibre-channel.md](docs/xio-fibre-channel.md): the XIO Fibre Channel board (AIC-1160) and its `fcadp` driver contract.
 - `chips/<chip>/census/`: register-access censuses per chip, produced by [tools/](tools/).
 
+### Every document under docs/
+
+Generated tables under `docs/inventory/` and the generated block of `docs/coverage.md` are listed above, not here.
+
+Audio:
+
+- [docs/audio/dm8.md](docs/audio/dm8.md): DMediaPro DM8 PCI audio option, not an SGI ASIC board.
+- [docs/audio/drivers.md](docs/audio/drivers.md): Audio driver objects and config lines in IRIX 6.5.30 and 6.5.22.
+- [docs/audio/survey.md](docs/audio/survey.md): Audio options of the Fuel, Tezro and Octane.
+
+Kernel object scope:
+
+- [docs/binaries-scope-chip-drivers.md](docs/binaries-scope-chip-drivers.md): Chip driver objects in the IP27, IP30, IP32 and IP35 kernel builds.
+- [docs/binaries-scope-filesystem.md](docs/binaries-scope-filesystem.md): File-system objects in the kernel builds.
+- [docs/binaries-scope-kernel-objects.md](docs/binaries-scope-kernel-objects.md): Excluded kernel objects of the IP27 build.
+
+Crosstalk, XIO and interconnect:
+
+- [docs/bridge-family.md](docs/bridge-family.md): Bridge, Xbridge and PIC as Crosstalk widgets.
+- [docs/crosstalk-host-ends.md](docs/crosstalk-host-ends.md): Crosstalk host ends: HEART, Hub and Bedrock.
+- [docs/crosstalk-link.md](docs/crosstalk-link.md): Crosstalk (XIO): the link, its widgets and its host ends.
+- [docs/crosstalk-packets.md](docs/crosstalk-packets.md): Crosstalk packets and the link under them.
+- [docs/crosstown-ktown.md](docs/crosstown-ktown.md): Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards.
+- [docs/interconnect-naming.md](docs/interconnect-naming.md): SGI interconnect naming: every name, from the deepest source.
+- [docs/xbow-family.md](docs/xbow-family.md): Crossbow (XBOW), XXBOW and PXBOW: the XIO switch family.
+
+Chip coverage pages:
+
+- [docs/coverage-bedrock.md](docs/coverage-bedrock.md): Bedrock coverage: processor-interface error clear semantics.
+- [docs/coverage-crime.md](docs/coverage-crime.md): CRIME coverage: two coverage questions graded beyond the chip page.
+- [docs/coverage-ioc3.md](docs/coverage-ioc3.md): IOC3 coverage: what the shipped software and public drivers settle.
+- [docs/coverage-ioc4.md](docs/coverage-ioc4.md): IOC4 coverage: what shipped software and public drivers settle.
+- [docs/coverage-mace.md](docs/coverage-mace.md): MACE coverage: what software, specification and drivers settle.
+- [docs/coverage-tiocp.md](docs/coverage-tiocp.md): TIOCP coverage: what the shipped software and drivers settle.
+- [docs/coverage-vice.md](docs/coverage-vice.md): VICE coverage: the O2's video imaging and compression engine.
+
+Routine readings from the kernels and PROMs:
+
+- [docs/hw-explanations-chips-w1.md](docs/hw-explanations-chips-w1.md): Hardware-facing routine explanations, CRIME and the IP32 kernel, wave 1.
+- [docs/ip27-kernel-bridge-routines.md](docs/ip27-kernel-bridge-routines.md): Routines of the IP27 kernel that serve the Bridge family.
+- [docs/ip27-kernel-entropy-readers.md](docs/ip27-kernel-entropy-readers.md): Kernel routines that read the Hub real-time counter for entropy (IP27 build).
+- [docs/ip27-xconn.md](docs/ip27-xconn.md): The xconn.o pairing driver of the IP27 build.
+- [docs/ip30-kernel-bridge-routines.md](docs/ip30-kernel-bridge-routines.md): Bridge-family accessors and attach routines of the IP30 kernel.
+- [docs/ip30-kernel-heart-routines.md](docs/ip30-kernel-heart-routines.md): HEART error, timer and reset routines of the IP30 kernel.
+- [docs/ip30-kernel-odyssey-routines.md](docs/ip30-kernel-odyssey-routines.md): Odyssey graphics routines of the IP30 kernel.
+- [docs/ip30-kernel-support-routines.md](docs/ip30-kernel-support-routines.md): Machine-independent kernel routines of the IP30 build read for completeness.
+- [docs/ip30-kernel-xbow-routines.md](docs/ip30-kernel-xbow-routines.md): Xbow routines of the IP30 kernel.
+- [docs/instruction-readings-chips-g1.md](docs/instruction-readings-chips-g1.md), [g2](docs/instruction-readings-chips-g2.md) and [g3](docs/instruction-readings-chips-g3.md): instruction readings from hostfacts, one group, not listed entry by entry.
+
+Open questions, one page each:
+
+- [docs/questions/ip35-board-class-and-flash-record.md](docs/questions/ip35-board-class-and-flash-record.md): IP35 PROM: board class of IP53 and IP59 node boards, flash record.
+- [docs/questions/ip35-board-word-and-config-block.md](docs/questions/ip35-board-word-and-config-block.md): IP35 PROM: board-identification word and config block.
+- [docs/questions/ip35-io9-pci-wiring.md](docs/questions/ip35-io9-pci-wiring.md): IP35 base I/O board: which PCI devices sit where.
+- [docs/questions/ip35-prom-cache-staging.md](docs/questions/ip35-prom-cache-staging.md): IP35 PROM cache staging: do later cached fetches hit staged lines?
+- [docs/questions/ip35-prom-cpu-config-table.md](docs/questions/ip35-prom-cpu-config-table.md): IP35 PROM: the processor speed table and what feeds it.
+- [docs/questions/ip35-prom-l1-brick-class.md](docs/questions/ip35-prom-l1-brick-class.md): IP35 PROM: use of the brick type and known board names.
+- [docs/questions/ip35-prom-memory-bank-config.md](docs/questions/ip35-prom-memory-bank-config.md): IP35 PROM: how the memory bank configuration word is read and sized.
+- [docs/questions/ip35-prom-mp-presence-poll.md](docs/questions/ip35-prom-mp-presence-poll.md): IP35 PROM: how processors publish presence and end their waits.
+- [docs/questions/ip35-prom-reset-barrier.md](docs/questions/ip35-prom-reset-barrier.md): IP35 PROM: reset barrier, boot-master election and progress registers.
+- [docs/questions/ip35-reset-window.md](docs/questions/ip35-reset-window.md): IP35 reset window: how the boot PROM runs at 0x1fc0_0000.
+- [docs/questions/tezro-io-topology.md](docs/questions/tezro-io-topology.md): Tezro: widget population, per-head PCI devices and second PROM build.
+- [docs/questions/tezro-v12-placement.md](docs/questions/tezro-v12-placement.md): Tezro: where the V12 sits and what differs on one-processor boards.
+- [docs/questions/tezro-widget-11.md](docs/questions/tezro-widget-11.md): Tezro: how the PROM discovers the second PIC at widget 0xb.
+
+Published sources and specifications:
+
+- [docs/sources/README.md](docs/sources/README.md): Published sources held in this repository.
+- [docs/sources/specs/crime-1.5-specification-rev0.3.registers.md](docs/sources/specs/crime-1.5-specification-rev0.3.registers.md): CRIME 1.5 specification rev 0.3: CPU interface register map.
+- [docs/sources/specs/crossbow-asic-specification-rev12.0.registers.md](docs/sources/specs/crossbow-asic-specification-rev12.0.registers.md): Crossbow ASIC Specification, revision 12.0: register map.
+- [docs/sources/specs/mace-specification.registers.md](docs/sources/specs/mace-specification.registers.md): MACE I/O ASIC Specification, chip revision 2.0: register map.
+- The spec PDFs in `docs/sources/specs/` are listed in [docs/specs.md](docs/specs.md), not here.
+
 ## Layout
 
     AGENTS.md  HAIKU-BRIEF.md  IRIX_FILES.md  LICENSE  README.md
