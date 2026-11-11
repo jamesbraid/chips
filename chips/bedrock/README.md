@@ -337,8 +337,93 @@ to choose 4 (bit clear) or 8 (bit set) for `+0x1c00200`, writes 0xfffe or 0xffff
 15 at `0x9000000030000000` plus the node offset plus `8 * slice + 192` for each of the four processor slices
 that `cpu_enabled` reports as absent, in the remote register space (`0x9000000030000000`, see "The `window-18` space"); the first draft did not list it.
 
-**Network port reset (`ni_reset_port`, read in full: 8 instructions).** Writes 1 to `+0x1680010` and 6 to
-`+0x1680008`. (established; roles unknown)
+**Network port reset (`ni_reset_port`; established).** Two 64-bit stores through the local alias: 1 to `+0x1680010`,
+then 6 to `+0x1680008`. Read in full in three places: IP35 kernel `unix.IP35` (6.5.30) `0xc000000000041534`
+(7 instructions; the two addresses come from the global pointer table at gp+0x8a0 and gp+0x8a8, read from the image's
+data), the same code inlined in the restart routine at `0xc000000000041390`, and the IP35 PROM
+(`ip35prom` segment, 6.210) `0x1fc642b8`, which first spins a 0x40000-count countdown loop (`0x1fc040e0`) and then makes
+the same two stores (`0x1fc642d0` to `0x1fc642ec`).
+
+- **Register names and bits (established as agreement, not as derivation).** Public Linux 2.5.40
+  (`include/asm-ia64/sn/sn1/hubni.h`, `hubni_next.h`) names `+0x680010` `NI_RESET_ENABLE` ("Warm Reset Enable";
+  `NRE_RESETOK` bit 0, "Let LLP reset bedrock") and `+0x680008` `NI_PORT_RESET` ("Reset the Network Interface";
+  `NPR_LINKRESET` bit 0 "Send link reset", `NPR_PORTRESET` bit 1 "Send warm reset", `NPR_LOCALRESET` bit 2 "Reset loc.
+  bdrck"). Its `ni_reset_port` in `arch/ia64/sn/io/sn1/ip37.c` stores `NRE_RESETOK`, then
+  `NPR_PORTRESET | NPR_LOCALRESET`: the same two stores, so the shipped value 6 is bits 1 and 2 and the value 1 is
+  the enable bit. The offsets agree with the shipped blocks (the NI block is at `+0x680000` of the node-local alias
+  `+0x1000000`). The bit names are labels from the public header; no shipped code tests the bits.
+- **Not the same register as the IP27 Hub.** The IP27 build stores 0x81 to `+0x600008` (see the Hub page). On
+  IP35 the NI block moved to `+0x680000` and the value is 6 after an enable store. Do not carry the 0x81 form over.
+- **Callers (established as code).** Kernel: the restart routine below (the one caller by direct call is at
+  `0xc000000000041338`). PROM: `0x1fc35724`, in the `go` command, reached when its argument equals the string
+  `hell` (the usage line lists only `dex` and `unc`; inferred that the string is a hidden debug form), and
+  `0x1fc6ac9c`, in the main start-up routine after the secondary-cache self-test failure message "scache_test: ... FAILED.
+  Disabling and resetting system...", after a progress code 0x85 and a 2,000,000-count wait. The PROM `reset`
+  command (strings "This will reset ALL partitions" and "Resetting the system...", code near `0x1fc38c10`) does not
+  call it: for each node record of type 1 it stores 1 to `+0x680010` (`0x1fc38d98` to `0x1fc38da8`, through a
+  remote-register helper reached by a global-pointer table, not resolved), writes router-record registers for type 2,
+  and then calls one more routine through the same table, not resolved.
+
+**IP35 restart path (kernel 6.5.30; read in full unless noted).**
+
+1. `mdboot(fcn)` (`0xc0000000002af460`): for the halt, restart and power-off codes it passes `prom_reboot`
+   (`0xc0000000002afa98`) to a shared stop routine (`0xc0000000002af52c`), and for code 1 it passes `prom_autoboot`
+   (`0xc0000000000404c0`). Code 9 first sets the power-off flag.
+2. The stop routine takes a lock, calls every routine in a null-terminated table of shutdown callbacks
+   (`0xc0000000015400f8`; the entries were not enumerated), then interrupts every other CPU (`cpuaction`) to run a
+   per-CPU stop routine (`0xc0000000002af6bc`). The CPU running the master processor record flushes the console buffer
+   and waits (100000-count delays) until the other CPUs have counted themselves out, then calls the saved routine.
+3. `prom_reboot` runs `prom_reinit` (`0xc0000000000404dc`) unless the system is in a panic; `prom_reinit` powers off
+   through the L1 (`elsc_pwr_off`, command 0x2005) when the power-off request was received, and otherwise calls
+   `he_arcs_restart` (`0xc0000000000413b8`). `prom_autoboot` calls `he_arcs_reboot` (`0xc0000000000413d8`). Both
+   call the restart routine at `0xc000000000041240` with 0x0ead0030 (restart) or 0x0ead0040 (reboot).
+4. The restart routine: (a) for each node up to `maxnodes` it stores its argument, OR 0x100 when the panic level word
+   is zero, to `+0x1e08010` of that node (node number shifted left 33; the register is not named in any held source;
+   the value reads as a reason code the next start could read, **inferred**, and no PROM instruction pair that builds
+   `+0x1e08010` was found, so the reader is **unknown**); (b) waits 1,000,000 counts (`us_delay`); (c) if the word at
+   the `reboot_on_panic` symbol equals 2, it opens the L1 and sends request 0x2001 (`elsc_system_reset`); a negative
+   result prints "MSC Reset command failed. Doing warm reset" and runs the inline NI reset above; otherwise (d) the master CPU calls
+   `ni_reset_port` (or, when the power-off flag is set, `sc_power_down_all` first and waits 3,000,000 counts) and then
+   keeps waiting 3,000,000 counts in a loop. Which branch a given run takes depends on that word and on the power-off
+   flag; the word's value in the image is -1 as a 32-bit load (not run), so the default is (d): the NI reset is the
+   restart. Whether the NI reset is the whole reset (no further software step is read after it) is established only
+   as "no further step is in this routine".
+
+**What the reset reaches (mostly unknown).**
+
+- Local Bedrock reset on the node issuing it: **inferred** from `NPR_LOCALRESET` "Reset loc. bdrck" (public header
+  comment) plus the restart path having no other step. Settled by: a Bedrock specification, or a register comparison
+  across the store on hardware (proposal required first).
+- Reaching the node's XIO side (Crossbow, PIC, PXBOW, widgets such as the graphics board): **unknown**. The widgets
+  keep their own link and board reset registers; every driver and PROM path that resets a widget does so itself
+  (docs/xbow-family.md), which is consistent with the NI reset not reaching them but does not show it (a boot after reset
+  would reset them anyway). Settled by: the Bedrock specification, or the Crossbow specification's statements on a
+  warm reset from the Bedrock side, or a before and after read of a widget register on hardware.
+- The warm-reset pattern sent out the network port (`NPR_PORTRESET`), and the effect on a router or neighbouring node:
+  **unknown** (public header comment only). On a single node system with no router, nothing is read that depends on
+  it.
+- Whether a local reset brings back the PROM and the L1: PROM restart is **inferred** (the reset vector is
+  the only way into the PROM and the kernel does nothing afterwards but wait). The L1 is **unknown**: the NI reset does
+  not send a command to it; the L1 request 0x2001 path is separate (chips/l1/README.md). Settled by: observing the L1
+  console across the store on hardware, or the Bedrock specification.
+- The reset enable bit (`NRE_RESETOK`, "Let LLP reset bedrock") also suggests a warm reset received on the link resets
+  the Bedrock; the kernel's NI error handler and `force_system_shutdown` fall back to the same store.
+
+**V12 board reset on IP35 (established as code; the meaning of the board bit is not).** `odsyLowLevelReset`
+(`odsy_init.o` in the IP35 `odyssey.a`, `0x2054`, 908 bytes) stores 0x200 to the board window word at `+0x100c`
+(`0x22f8`, a `sync` follows), waits 1,000,000 counts, then tests port link status bit 31 and the auxiliary status
+bit 5 of the board's Crossbow port (`+0x114`, `+0x13c` above the port base). If either is not set it prints a message
+and repeats from the store, with a counter that rises by 2 and stops at 7: at most four stores. On success it
+restores the port's interrupt masks. The IP35 build has no revision branch and no 0x16d form (the IP30 build does;
+docs/xbow-family.md). So repeated 0x200 stores at +0x100c are this retry loop, and are the driver's own board reset
+on IP35, not a consequence of the NI reset. `odsyReset` is the only caller; its callers are `odsy_earlyinit`,
+`odsy_init`, `odsy_attach`, `gf_OdsyInitialize`, `odsy_tpinit` and the diagnostic reset. No shutdown or halt entry
+in the IP35 odyssey archive calls it, so the writes seen "during reboot" are the next start's initialisation
+(inferred); whether they occur on the way down is **unknown** in this read. What bit 9 does inside the board is
+**unknown**.
+
+**Wider note.** `softreset n:NODE` in the PROM (strings "Sending soft reset to all CPUs on NASID %d") stores 1 at
+`+0x1e04018` of that node (`0x1fc1c3c0`): a CPU soft reset, not the NI reset. Not otherwise read.
 
 **Interrupt connect (`intr_connect_level`).** Stores into `+0x1800000` plus an index, ORs a bit into a
 per-CPU mask `1 << level`; the register offsets are indexed and not resolved (inferred from context).
