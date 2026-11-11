@@ -259,7 +259,7 @@ every build builds the offset as `(port & 7) << 6`. Established.
 
 | +Slot | Register | Software use | Grade |
 |---|---|---|---|
-| `+0x00` | Input buffer flush | not reached by any scanned routine | unknown role in software; header names it |
+| `+0x00` | Input buffer flush | not reached by any scanned routine | hardware role established from the Crossbow specification rev 12.0 (section 3.3.1: a read returns 0 once the link's input buffer is flushed, 1 if another flush is running); role in software unknown. Settling test: add the flush slots (`+0x100` plus `0x40` per link) to the Xbow census configuration and rerun it over the kernels and PROMs; a hit names the caller. The PROM reset test below does not read it |
 | `+0x08` | Link control | attach: replaces the word by `(old & 0xfffffe2f) \| 0x3002b` for each alive, present port; link reset saves and restores it | established |
 | `+0x10` | Link status | bit 31 is "alive"; error bits printed | established |
 | `+0x18`, `+0x20` | Arbitration upper (sources 8..B), lower (C..F) | four 8-bit lanes: a 5-bit guaranteed-bandwidth count in 4:0, a 3-bit round-robin weight above | established |

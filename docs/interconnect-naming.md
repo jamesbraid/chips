@@ -68,7 +68,7 @@ none was rejected.
 
 - Internal identifiers: macro, function, flag, enumeration and part-prefix
   names from the shipped headers and kernel objects, and the shipped file and
-  object names. Where a claim needed a pointer, it now says what kind of thing was
+  object names. Where a claim needed a pointer, it 
   found, in plain words.
 - Quoted or paraphrased header comments, and the citations of SGI documents
   that only the headers name.
@@ -564,7 +564,7 @@ A brick letter does not imply a chip outside this table.
 | PXBOW | shipped 6.5.30 header, one name in the IP35 kernel; Linux, OpenBSD | name established, meaning inferred |
 | Bridge | manuals, firmware, `hinv` | established |
 | Xbridge | manuals, firmware, L1 text ("XBridge") | established |
-| PIC | 007-4377-001; shipped header and kernel | established; widget adjacency unknown |
+| PIC | 007-4377-001; shipped header and kernel | established; widget adjacency unknown. Settling test: the widget numbers that published hinv or hardware-graph captures of a PIC brick give its three PICs (007-4377-001 p67 says three make an IX-brick or PX-brick); the numbers in several captures show which widgets are adjacent |
 | TIO, TIOCP | shipped 6.5.30 IP35 kernel; Linux, OpenBSD | name established; expansion unknown |
 | TIOCA, TIOCE | Linux, OpenBSD only | established as OS names |
 | HEART | OCTANE Technical Report; firmware; headers | established |
@@ -575,8 +575,8 @@ A brick letter does not imply a chip outside this table.
 | SHub | Altix manual 007-4520-007; Linux; one IRIX name | established |
 | Junkbus | L1 text | established |
 | Crosstown, KTOWN, Ktown2, Crosstown2, Xtown, Xtown2 | manuals, kernel archive, script | established |
-| HQ4, XG | shipped headers | name established; expansion unknown |
-| UXHEART, GHBridge, HXBOW | one IP30 PROM only | unknown |
+| HQ4, XG | shipped headers | name established; expansion unknown. Settling test: search the Library for the spelled-out names in the graphics manuals and board guides; no held source spells either out, so until one does the expansion stays unknown |
+| UXHEART, GHBridge, HXBOW | one IP30 PROM only | unknown. A byte search of the held firmware images, the IP30 and IP27 kernels, the IP32 and IP35 kernel objects and `sbin/` finds the three strings in `IP30prom.bin` alone. Settling test: a second occurrence in another PROM revision, a shipped manual or a public PROM listing; absent that, no software dependency is recorded |
 
 ## 5. What this means for the datasheets
 
