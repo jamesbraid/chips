@@ -236,5 +236,9 @@
   "0x200004": "cfg_command_status",
   "0x200008": "cfg_revision"
  },
- "name_source": "the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are the window base 0x200000 plus the configuration offset"
+ "name_source": "the public Linux headers' register titles (comparison names; the offsets and roles were read from the shipped routines first); configuration-space rows are the window base 0x200000 plus the configuration offset",
+ "deprecated_defines": [
+  {"name": "IOC4_24", "space": "", "offset": "0x24",
+   "why": "was named by offset because names were looked up by 8-byte slot, not the register's own offset"}
+ ]
 }
