@@ -475,6 +475,15 @@ value that static reading does not resolve (U), and a failed reserve is silent. 
 real PROM ends with the same BAR 0 / BAR 3 overlap is therefore not settled (U); a config-space dump of a
 real board, or the pool and result of the reserve call in a run, settles it.
 
+#### Firmware-placed BAR 0 and the 6.5.21 reserve defect
+
+The 6.5.21 IP30 kernel reserves a firmware-placed I/O BAR using a space code read from a stack slot that nothing
+initialises on the I/O path (the only other writer stores a memory-space code), so the reserve misses the I/O pool
+and a later allocation of the unassigned BAR 3 can land on BAR 0; the 6.5.30 kernel passes the recorded code.
+Established from both kernels and a breakpoint run. What a real board does depends on whether the real firmware
+places BAR 0 at the first free I/O unit (0x200000) or at all: unknown, and settled by reading a real board's BAR 0
+or the firmware's PCI scan. The IRIX-side description is in the kudzu repository (`docs/ip35-pci-bridge.md`).
+
 ### Command / response path
 
 Commands are **transfer control blocks (TCBs)** built in host memory and handed to
