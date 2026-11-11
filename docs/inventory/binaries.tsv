@@ -287,7 +287,7 @@ IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-IP27	kernel-object	object	n
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-IP27	kernel-object	object	n64	58948	cf0c75424f1b8009		98	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mrlock.o)	kernel-IP27	kernel-object	object	n64	6308	97edb3b15ed63eda		8	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-IP27	kernel-object	object	n64	49412	1b9e3e33d48d746d		63	symtab	5	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-IP27	kernel-object	object	n64	78836	900e38eac4fd9d4e		110	symtab	10	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-IP27	kernel-object	object	n64	78836	900e38eac4fd9d4e		110	symtab	10	0	named-only	docs/routines/t1-chips-b001.md#tier-1-routine-roles-chips-batch-1	Tier-1 routine roles, chips batch 1
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mrlock.o)	kernel-IP27	kernel-object	object	n64	6164	13cb78289c056d7a		5	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-IP27	kernel-object	object	n64	45284	0454c5194117f945		61	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-IP27	kernel-object	object	n64	63044	4121fa7f4e693736		101	symtab	0	0	undocumented		
@@ -959,7 +959,7 @@ IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_sys.o)	kernel-IP30	kernel-object	object	
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-IP30	kernel-object	object	n64	10932	f1e0c0bbaad87aa0		9	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cserialio.o	kernel-IP30	kernel-object	object	n64	21752	ed14f73400e10b1b		22	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/devpoll.o	kernel-IP30	kernel-object	object	n64	31912	a9ce981b3bfa2984		27	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-IP30	kernel-object	object	n64	41556	27d70c5e9cd55c9e		63	symtab	11	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-IP30	kernel-object	object	n64	41556	27d70c5e9cd55c9e		63	symtab	11	0	named-only	docs/routines/t1-chips-b001.md#tier-1-routine-roles-chips-batch-1	Tier-1 routine roles, chips batch 1
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocksasm.o)	kernel-IP30	kernel-object	object	n64	4116	8792bf4e95be5668		3	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dial.o	kernel-IP30	kernel-object	object	n64	29904	2ce8485cdc56f189		14	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dialbox.o	kernel-IP30	kernel-object	object	n64	27432	d90c9248cc43bf46		14	symtab	0	0	undocumented		
@@ -1820,7 +1820,7 @@ IP32/usr/cpu/sysgen/IP32boot/ksync.a(mutex.o)	kernel-IP32	kernel-object	object	n
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(sema.o)	kernel-IP32	kernel-object	object	n32	43204	adc81604ad02fe83		96	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync.a(mrlock.o)	kernel-IP32	kernel-object	object	n32	4212	5a2175b7ff848f97		8	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mutex.o)	kernel-IP32	kernel-object	object	n32	36964	1a9e587beb2b7512		62	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-IP32	kernel-object	object	n32	59604	cdd5261c679037e8		108	symtab	0	0	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(sema.o)	kernel-IP32	kernel-object	object	n32	59604	cdd5261c679037e8		108	symtab	0	0	named-only	docs/routines/t1-chips-b003.md#ip32-meter-records	IP32 meter records
 IP32/usr/cpu/sysgen/IP32boot/ksync_metered.a(mrlock.o)	kernel-IP32	kernel-object	object	n32	4116	9e49af5688d33a5c		5	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(mutex.o)	kernel-IP32	kernel-object	object	n32	33188	8df271c45cd4ad9c		60	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/ksync_named.a(sema.o)	kernel-IP32	kernel-object	object	n32	46676	e2c34980f17a302c		99	symtab	0	0	undocumented		
@@ -2548,7 +2548,7 @@ IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	kernel-IP35	kernel-object	object	n
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	kernel-IP35	kernel-object	object	n64	58868	5e5925672f53c8ec		98	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync.a(mrlock.o)	kernel-IP35	kernel-object	object	n64	6244	ec146aaf3e072369		8	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	kernel-IP35	kernel-object	object	n64	49316	afcaf0a223907fcf		63	symtab	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-IP35	kernel-object	object	n64	78756	2853a8d396d56523		110	symtab	0	0	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	kernel-IP35	kernel-object	object	n64	78756	2853a8d396d56523		110	symtab	0	0	named-only	docs/routines/t1-chips-b004.md#routine-roles-from-the-chips-kernel-binaries-set-4	Routine roles from the chips kernel binaries, set 4
 IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mrlock.o)	kernel-IP35	kernel-object	object	n64	6100	158abbec687be177		5	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	kernel-IP35	kernel-object	object	n64	45204	dd19bf187eca3982		61	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(sema.o)	kernel-IP35	kernel-object	object	n64	62964	a2ad782dbc9c9162		101	symtab	0	0	undocumented		

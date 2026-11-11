@@ -4,6 +4,7 @@
  "docs": {
   "prose": [
    "docs/*.md",
+   "docs/routines/*.md",
    "chips/*/README.md",
    "chips/*/notes/*.md"
   ],
