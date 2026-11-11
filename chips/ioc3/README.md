@@ -191,6 +191,54 @@ each) and builds port B's pointers from port A's: the register block moves from 
   `0x2017a`, 4 (modem control) at `0x2017c` and 5 (line status) at `0x2017d`. `set_baud_ti` (`0x6cc`, returns 0 or 1) also stores a value it
   searches from 6 to 63 for the closest baud rate to UART register 7 (UART offset +0x7); inferred: a clock prescaler.
 
+### Serial port count and names by board (Origin 2000, Onyx2)
+
+Which boards carry serial ports, and what the guest calls them. The driver half is read from the IP27 `sio_ioc3.o` and
+`serialio.o` objects; the board half comes from published SGI documents and published `hinv` captures, which were read afterwards
+and agree.
+
+- **Port names come from a controller number** (established: `ioc3_serial_attach` `0xa58` in `sio_ioc3.o`, `sio_make_hwgraph_nodes` `0x2500`
+  in `serialio.o`). Each IOC3 gives its two UARTs the hardware-graph edges `tty/1` and `tty/2`. When the IOC3 is the console
+  device (`ioc3_is_console` true) the attach calls `device_controller_num_set` with 1 for port A and 2 for port B, and
+  `sio_make_hwgraph_nodes` then adds, under the `ttys` directory, one edge per port variant named `tty` + variant suffix + controller number
+  (the object carries the suffixes `d`, `m`, `f`, `4d` and `4f`). So the console IOC3's ports are `ttyd1` and `ttyd2`
+  (established that the numbers are 1 and 2 and that the edge pattern is `tty%s%d`; that the plain-`d` node is the one `/dev/ttyd1`
+  names is inferred from the Origin 200 and Origin 2000 hardware documents using `ttyd1` and `ttyd2` for the first two ports). The attach
+  sets no number on an IOC3 that is not the console device. The numbers for those ports come from elsewhere (see Open).
+  Controller numbers outside 1 to 1000 get no nodes.
+- **Origin 2000 BaseIO (IO6, server)**: two ports, both on the board's single IOC3 (established, published: the installation instructions
+  for the Origin 2000 and Onyx2 deskside and rackmount systems, 108-0155-003, sections "Origin2000 BaseIO Board" and "BaseIO Board
+  (Server Version)": two 460-kilobaud serial ports with dual independent UARTs, panel labels `tty_1` (marked Console) and `tty_2`; the
+  Origin and Onyx2 theory of operations, 007-3439-002, "BaseIO Board": same count; the Hardware Quick-reference Booklet,
+  HMQ-380-C, lists one external serial console port on the deskside rear panel and the alternate console port in addition). A published `hinv`
+  from a one-module Origin 2000 with a server BaseIO (part 030-1124-002, named PCA IO6 Server in the illustrated parts catalog
+  HMM-408-B) lists exactly `tty1` and `tty2` for that board. **`ttyd3` and `ttyd4` do not exist on a stock Origin 2000 server.**
+- **Onyx2 BaseIO-G (IO6G) with MIO**: four ports on the panel, labelled `tty_1` to `tty_4` (established, published: 108-0155-003
+  "BaseIO Board (Graphics Version)"). The extra two are on the Media I/O (MIO) daughterboard plugged into the IO6G's PCI
+  bus (established, published: 007-3439-002, "MediaIO (MIO) Board" and its block diagram: its own IOC3 with a super-I/O part giving two
+  serial ports, a parallel port, a keyboard and a mouse; an MIO is standard in every graphics configuration per the Onyx2
+  technical report and optional in server ones). Two published Onyx2 deskside `hinv` captures with InfiniteReality graphics list `tty1` to
+  `tty4` and nothing higher; one of them shows an MIO board (part 030-0880-003) beside the BaseIO (part 030-0734-002) and two PCI
+  adapters with the IOC3 identifier on that board's bridge. **`ttyd3` and `ttyd4` exist on a stock Onyx2 deskside with graphics, served by
+  a second IOC3 (the MIO's)**, not a separate UART part. Inferred: the second IOC3 is the one that is not the Ethernet-bearing
+  device on the bridge; the captures list two IOC3 identifiers there but do not say which serves tty3 and tty4.
+- **Conflict in the published count for the MIO.** The theory of operations and the technical report say the MIO adds two serial ports;
+  the installation instructions' list says the MIO adds four. The panel drawing in the same installation instructions shows four ports in
+  total on the graphics BaseIO, and the product guides list four asynchronous serial ports for an Onyx2 deskside, which agrees with two
+  on the BaseIO plus two on the MIO and with the captures. Read as 2 + 2; the "four" is a total counted as an addition (inferred).
+- **Optional ports on an Origin 2000 server.** The four-port Fast Ethernet adapter with asynchronous serial XIO board (MENET/MSER,
+  installation instructions 108-0151-001) adds six asynchronous serial ports and four Ethernet ports from IOC3 chips behind a Bridge
+  (established, published: its block diagram has three IOC3 chips each with a serial transceiver pair, S1 to S6, and a fourth
+  without; the document says the IOC3 also sits on the BaseIO). A published `hinv` from an eight-processor Origin 2000 with a server
+  BaseIO and two such boards lists 14 ports `tty1` to `tty14`: 2 from the BaseIO and 6 from each board (established count; which
+  board holds which numbers is not shown). The same capture has a PCI adapter board with part number 030-1155-002 (PCA PCI IOC3 in
+  HMM-408-B) on a crosstalk-to-PCI bridge, listed as Fast Ethernet and adding no serial port, so a PCI IOC3 card in that
+  form is an Ethernet option, not a serial one (established for that card as captured). No published document or capture reviewed names a serial XIO or PCI card
+  that is the usual source of `ttyd3` on a server; the MENET/MSER board is the only published option found.
+- **Discreet note.** For `TabletDriver dlwacom, ttyd2` the second port of the BaseIO IOC3 exists on every Origin 2000 and Onyx2 deskside
+  (inferred for the name; established for the port). `Security /dev/ttyd3`, on a graphics Onyx2, is the first MIO port; on a server it
+  exists only with an option board or an MIO.
+
 ### Ethernet (established: `ef_ioc3init`, `ef_ioc3reset`, `ef_phyget`, `ef_phyput`, `ssram_discovery`)
 
 The driver holds the register block base `0xf0` (record +816) and the chip window (+920).
@@ -466,3 +514,8 @@ gap values, the parallel-port DMA registers `0x80` to `0x98` and the error addre
 - **`0x8c` bit 29** (parallel-port DMA control). The device swap bit question is answered in docs/coverage-ioc3.md: IRIX clears it for the IOC3 window; the remaining question there is why the byte lanes mirror Linux's.
 - **Keyboard and mouse bit meanings** in `0x9c` and `0xa0` to `0xac`: from the routines' masks only.
 - **Per-slot subdevice masks**: which board string selects `0x91`.
+- **How a non-console IOC3's serial ports get their numbers.** `ioc3_serial_attach` sets numbers only on the console IOC3, and the
+  published captures show contiguous numbering across boards (`tty1` to `tty14` on one system). The assigning routine is in the user-space
+  device configuration tool (`ioconfig` reports finding a serial controller and keeps persistent numbers), not read. Route: read its serial
+  branch, or a published `ls -l /dev/ttyd*` and `/etc/ioconfig.conf` from a system with an MIO or MENET/MSER board. Also unsettled: which of the two IOC3s on
+  an IO6G bridge serves `tty3` and `tty4` (route: a `hinv -v` with hardware-graph paths from an Onyx2 with an MIO).
