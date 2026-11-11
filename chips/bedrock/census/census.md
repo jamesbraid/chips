@@ -24,11 +24,12 @@ Datasheet checkout `` (datasheets, spec transcriptions); model at `?` (model sou
 
 ## Summary
 
-- **905 access sites** resolved to a window offset, folded into **212 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
+- **905 access sites** resolved to a window offset, folded into **208 register rows** (one per variant and register slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
+- **7 boot-space rows** (11 sites) are accesses through a different address-space window; they are kept apart from the register rows and are not compared with the datasheet or model.
 
 | variant | rows | sites | model: handled+specified | model: handled, guessed or LOG_UNIMP | model: unhandled / out of scope | not in datasheet | not in spec | spec conflict |
 |---|---|---|---|---|---|---|---|---|
-| bedrock | 212 | 905 | 0 | 0 | 0 | 0 | 0 | 0 |
+| bedrock | 208 | 894 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 `?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). This census compares only with the published specification: no emulator datasheet or model is read, so the datasheet and model columns carry no information.
 

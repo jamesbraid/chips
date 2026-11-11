@@ -346,9 +346,18 @@
  "status": "pilot",
  "collapse_above": 268435456,
  "note_windows": "window ranges are inferred from the clustering of the 64-bit literals the kernel object loads (top byte 0x92, low 24 bits below 0x1ffffff), not read from a named source",
- "header_skip": [
-  "0x60",
-  "0x80",
-  "0x88"
- ]
+ "deprecated_defines": [
+  {"name": "BEDROCK_NIC_GET_PHASE_BITS", "space": "boot-space", "offset": "0x78",
+   "why": "was a boot-space row"},
+  {"name": "BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD", "space": "boot-space", "offset": "0xa0",
+   "why": "was a boot-space row"},
+  {"name": "BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD_B_0", "space": "", "offset": "0xa0", "field": "_B_0",
+   "why": "was a boot-space row; the mask belongs to the register row"}
+ ],
+ "address_spaces": {
+  "window-18": {
+   "space": "boot-space",
+   "slot_bytes": 4
+  }
+ }
 }
