@@ -326,7 +326,7 @@ and the offset travels unchanged. A host reaches widget space differently:
   Linux).
 - **HEART** has no programmable translation. Fixed decodes name the widget in the
   physical address: 16 MB per widget from `0x1000_0000`, 2 GB per widget from
-  `0x8_0000_0000` (unknown), and 64 GB per widget at widget number times
+  `0x8_0000_0000` (unknown; settling test: a HEART or Hub specification page for the large window, or an OpenBSD/Linux use of it, none seen), and 64 GB per widget at widget number times
   `0x10_0000_0000`, with none for widget 0. SGI's Octane report names none of these;
   the names are IRIX and OpenBSD software names. Established for the 16 MB and 64 GB
   ranges.
@@ -448,7 +448,7 @@ and interrupt writes.
 | Host's own error interrupt | HEART vectors 63 and 59-62 | II destination `0x400138`: node 16:8, level 6:0, enable 24, sent 28 (inferred; Linux's own masks say node 15:8, level 5:0, see below) | same, node 16:9, PI-select bit 8, forwarded-pending 32/33 |
 | Request-buffer timeout | none visible | `0x4003b8`/`0x4003c0` | same pair |
 | Widget request timeout (`0x28`) | implemented | none defined | none defined |
-| Credits toward the switch | unknown | widget control 15:13, PROM writes 3, or 4 for Crossbow code 3 and later | same field; PROM writes 4 for an integrated crossbar or code 3 and later |
+| Credits toward the switch | unknown (reset: an early-boot read of widget control before the PROM writes it; the IP27 PROM's write is read by the route in the host-ends page) | widget control 15:13, PROM writes 3, or 4 for Crossbow code 3 and later | same field; PROM writes 4 for an integrated crossbar or code 3 and later |
 | Block-transfer engines | not covered | 2 (`0x410000`, `0x420000`) | 2 (same offsets) |
 
 What is common: a widget interrupt is a Crosstalk write the host turns into a pending bit

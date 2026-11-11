@@ -125,7 +125,7 @@ of local tasks (the table `packet_deliver` indexes for tasks 1 to 24); the other
 
 That grades the role of task 15 as **established**: it is a scan service, named so by its own queue and task strings and by the
 message text that calls the function set boundary scan. The data format beyond the bit 31 flag and the header swap, what
-`0xffe7296c` shifts and into which chain, and how the kernel's 197-bit command maps to it are **unknown**.
+`0xffe7296c` shifts and into which chain, and how the kernel's 197-bit command maps to it are **unknown**. Settling test: read the routine at `0xffe7296c` and its callers in the L1 firmware image with `hostfacts.py --flat` and follow the 197-bit buffer from the caller to the shift loop; the chain's own wiring is not in software, so the mapping to physical chains stays unknown beyond that.
 
 ## Sending the command: `simp_process_scancmd` and `scancmd_to_irtr` (established)
 

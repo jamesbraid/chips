@@ -107,7 +107,7 @@ US 6,553,446 B1). The protocol is a sliding window with go-back-N retry:
   Specification rev 4.0, printed p. 81, Table 56).
 
 The 4-bit sequence numbers give a window of at most 15 outstanding micropackets
-by the usual go-back-N rule. The actual window the hardware uses is **unknown**.
+by the usual go-back-N rule. The actual window the hardware uses is **unknown**. Settling test: the Crossbow specification's retry-buffer section for the sequence window (a document read); no software depends on it.
 The Crossbow's retry buffer is sized so a full 128-byte packet (9 micropackets)
 fits while an 8-bit link drains slowly (spec p. 123-124); that is a lower bound
 of 9, not the window.
@@ -124,7 +124,7 @@ numbers and acknowledgements moving. What the null micropacket looks like on the
 wire is **unknown**.
 
 The Hub has its own link control register with the same three fields; its reset
-values are **unknown**. See crosstalk-link.md section 1.
+values are **unknown** (settling test: an early-boot read of the register on a halted Hub). See crosstalk-link.md section 1.
 
 ### 2.4 Sideband
 
@@ -203,12 +203,12 @@ word in its lower half. Data doublewords follow, lowest address first
 (Table 2 shows a quarter-line write with four). The figure labels the address
 "48:32", but the field is 16 bits wide and the text says 48-bit address, so it is
 bits 47:32. **Established** for write
-requests with data; **unknown** whether a read request with no data carries the
+requests with data; **unknown** (settling test: the Hub or Bridge request-packet table in a specification, or a capture) whether a read request with no data carries the
 same two header doublewords, a shorter header, or the same header with unused
 enables (see 4.2).
 
 Response packets carry a command word and, for reads, data. Whether a response
-carries the address back is **unknown** (the Bridge's response logic keys on the
+carries the address back is **unknown** (settling test: a response-packet field table in a Crosstalk specification page) (the Bridge's response logic keys on the
 transaction number, not an address: 3.4).
 
 ### 3.2 Command word
@@ -299,7 +299,7 @@ packet (the Crossbow "never issues requests which result in responses", so none
 is expected there). Crossbow spec Table 5, printed p. 69; Bridge spec Table 54,
 pp. 79-80. The
 fetch-and-op and store-and-op packets are for memory-side atomic operations;
-whether they cross a Crossbow toward a Hub is **unknown** (the Crossbow forwards
+whether they cross a Crossbow toward a Hub is **unknown** (settling test: the Hub specification's list of packet types a Crossbow port accepts, or a Hub-side error log from such a packet) (the Crossbow forwards
 by destination and size without decoding the operation, Table 25, but the
 operations go to a memory special region, not a widget; see crosstalk-link.md
 section 2.2).
@@ -327,7 +327,7 @@ p. 88):
 
 Device numbers 0 to 7 would give 0x18 to 0x1f, so device 7's pin interrupt would
 share `0x1f` with the error interrupt; the specification does not say how that
-is resolved (**unknown**, and moot if the Bridge never uses device 7 for an
+is resolved (**unknown**, settling test a specification page on device-7 arbitration, and moot if the Bridge never uses device 7 for an
 interrupting pin). The device number is the bus-request/bus-grant pair in use,
 "usually but not always" the configuration-space number (Bridge spec p. 118). Receiving a read response whose TNUM is above 15, or whose buffer is not
 armed for a response, raises the "unexpected response" error and stores the
@@ -337,7 +337,7 @@ A response carries the request's TNUM back. **Established** for the Bridge (its
 response buffers are indexed by it); **inferred** generally, that DIDN and SIDN
 are swapped on the way back. A Hub keeps the TNUM of an incoming request
 (`tnum` in its request buffer entry). How a Hub chooses the TNUM of a PIO request it launches is
-**unknown**: the Hub header and error handler describe only incoming-side fields.
+**unknown**: the Hub header and error handler describe only incoming-side fields. Settling test: the Hub specification's outgoing request-buffer description; no held code sets it.
 
 ### 3.5 Data size and byte enables
 
@@ -359,7 +359,7 @@ low 8 bits to pick bytes of its one data doubleword; a quarter-line write uses 3
 bits, one per byte of its four doublewords. A full-line packet has no enables and
 transfers all 128 bytes. The enabled bytes need not be adjacent. **Established**
 (Bridge). Whether a quarter-line *read* request carries enables, and what the
-enables of a read mean to the responder, is **unknown**: the Bridge spec
+enables of a read mean to the responder, is **unknown** (settling test: the Crossbow request-packet table for read packets): the Bridge spec
 describes enables for "the double-word read/write packets and the quarter
 cache-line write packets" only.
 
@@ -417,7 +417,7 @@ arithmetic fits; the table does not state the header sizes).
 The OCTANE report's 140-byte ceiling for a special packet does not match a
 9-micropacket maximum of 144 bytes (a full-line write with two header doublewords).
 Either the report rounds loosely or the headers are shorter than 3.1 draws them;
-**unknown**.
+**unknown**. Settling test: the micropacket-count table in the specification, or a link capture.
 
 **Gaps in the table.** There is no row for PACTYP 0000 (read request), although
 that value is named in the software headers. There is no row for type 0100
@@ -486,7 +486,7 @@ records and are distinct from processor PIO (IRIX 6.5.30 `hubio.h`, request-type
 list: block read, BTE read, BTE exclusive read, write invalidate, PIO read, PIO
 write, fetch-and-op, store-and-op, peer-to-peer write). The request-type list is
 the Hub's internal vocabulary; how each one maps onto PACTYP on the Crosstalk
-side is **inferred** only for the PIO read and write and **unknown** for the rest.
+side is **inferred** only for the PIO read and write and **unknown** for the rest (settling test: the Hub specification's packet-type mapping table).
 A "peer to peer write" entry means one widget writing to another through the Hub
 and Crossbow without touching memory; the patent US 5,991,824 describes the peer
 I/O mechanism.
@@ -499,7 +499,7 @@ that must retire before a barrier operation is processed (IRIX 6.5.30 `hubio.h`,
 CRB register D). The Bridge sets the barrier bit from a per-device, per-page-entry
 or 64-bit-address attribute (Bridge spec Device(x) register; XBridge Tables 86-93).
 **Established** that the bit exists and who sets it; its precise ordering
-guarantee on the wire is **unknown**.
+guarantee on the wire is **unknown** (settling test: the specification's ordering-rules section).
 
 A read of a widget's **target flush** register (offset 0x50) completes only after
 every earlier access to that widget has completed; that is how software makes a
@@ -662,7 +662,7 @@ a credit count and a mode: a plain mode in which writes wait for responses
 mechanism and its two modes exist. Which credit counts and modes software
 programs for which widgets, and why, is **unknown** here: no shipped header or
 manual states it. Whether a write to a Crossbow's link-reset control returns a
-response is likewise **unknown**.
+response is likewise **unknown** (settling test: the Crossbow specification's link-reset description, or a capture of a reset write).
 
 The SN0 Hub also has a credit **timeout**: a counter increments every 128 Hub I/O
 clocks while outbound credits are below a threshold (1 in direct-connect mode, 2
@@ -782,7 +782,7 @@ the processor does so the failure can be attributed. **Established** (a
 comment in the Linux code, a software choice, not a hardware constant).
 
 The width of the widget request timeout field in a widget other than a Bridge (20
-bits at `0x28`) and its tick size outside the Bridge are **unknown**.
+bits at `0x28`) and its tick size outside the Bridge are **unknown** (settling test: the timed unclaimed-widget read at two programmed values on each widget type; hardware, not assumed).
 
 ### 8.2 What a receiver does with a bad packet
 

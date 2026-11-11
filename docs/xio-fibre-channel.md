@@ -960,7 +960,7 @@ AL_PA claim using the three address preferences in the LIP TCB, position map), t
    mirrored into the host status block if the status-block DMA is armed (E; see the
    interrupt-status table). Whether the real chip also needs the per-source enable at 0x99
    bit 4 set is **U**: the driver's init value for 0x99 does not have that bit, yet the driver
-   treats 0x25 bit 4 as the completion interrupt; the line is to be raised for the
+   treats 0x25 bit 4 as the completion interrupt. Settling test: a published AIC-1160 interrupt-enable table, or a read-back of 0x99 after init on a real board. The line is to be raised for the
    completion regardless. **An interrupt is mandatory here.** During the LIP phase
    the driver has no command in flight, and its 50 Hz missed-interrupt poll
    (`fcadp.o:fc_timeout_check`) only calls the interrupt routine when at least one SCSI/login
