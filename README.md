@@ -52,6 +52,7 @@ Crosstalk, XIO and interconnect:
 - [docs/crosstalk-link.md](docs/crosstalk-link.md): Crosstalk (XIO): the link, its widgets and its host ends.
 - [docs/crosstalk-packets.md](docs/crosstalk-packets.md): Crosstalk packets and the link under them.
 - [docs/crosstown-ktown.md](docs/crosstown-ktown.md): Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards.
+- [docs/onyx3000-graphics-topology.md](docs/onyx3000-graphics-topology.md): Onyx 3000 graphics bricks: where a G-brick pipe and a V-brick V12 sit, and the smallest configuration.
 - [docs/interconnect-naming.md](docs/interconnect-naming.md): SGI interconnect naming: every name, from the deepest source.
 - [docs/xbow-family.md](docs/xbow-family.md): Crossbow (XBOW), XXBOW and PXBOW: the XIO switch family.
 
