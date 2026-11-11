@@ -5,6 +5,7 @@ register content). Evidence: the IP35 kernel object `kernel.o` and the IP35 boot
 IRIX 6.5.30. The IP35 CPU PROM yields no sites yet (its window base is built at run time: open question).
 Census: [census/](census/census.md).
 Start-up of several processors by the IP35 PROM (presence bits, rendezvous waits, memory configuration): [docs/questions/ip35-prom-mp-presence-poll.md](../../docs/questions/ip35-prom-mp-presence-poll.md).
+The memory-controller configuration word (bank decode, bank select, size probe) as the PROM and kernel use it: [docs/questions/ip35-prom-memory-bank-config.md](../../docs/questions/ip35-prom-memory-bank-config.md).
 The board-identification register at `+0x4000000`, the PROM's processor table and flash configuration block, and the network-interface port status bits the PROM and kernel read: [docs/questions/ip35-board-word-and-config-block.md](../../docs/questions/ip35-board-word-and-config-block.md).
 
 ## Window and how it is reached
