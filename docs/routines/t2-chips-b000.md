@@ -72,7 +72,7 @@ Each entry names a routine in an IP27 boot-set object and its address. The state
   **Inferred.** Builds one router record at boot. It allocates a 0x1b8-byte record with `kmem_zalloc_node` at 0x2f40 and frees it with `kmem_free` at 0x3334, initializes its lock at 0x2f74, and registers its info at 0x2f60. It reads and writes router registers with `router_reg_read` at 0x2ff0 and 0x3008 and `router_reg_write` at 0x3078, then calls `router_port_init` at 0x31d0, `router_set_fences` at 0x3200 and `build_router_invent_info` at 0x3234. Assertions `assfail` at 0x334c and 0x3364 report line numbers 0x46b and 0x470.
 
 - `hub_widget_id` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x44cc
-  **Inferred.** A leaf that loads one doubleword from the address formed by `a0` shifted by 32 plus a fixed offset (load at 0x44d8) and returns the loaded value at 0x44dc. The return is not derived beyond the load, so the widget-id meaning rests on the name.
+  **Inferred.** A leaf that loads one doubleword from the address formed by `a0` shifted by 32 plus a fixed offset (load at 0x44d8) and returns its low four bits: the delay slot of the return at 0x44dc is `andi v0,v0,0xf`. What the loaded word holds is not derived, so the widget-id meaning rests on the name.
 
 - `get_slice` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x4500
   **Inferred.** A leaf that loads one doubleword from the fixed global at 0x9200000001000020 (load at 0x4504) and returns it unchanged (return at 0x4508). The slice meaning rests on the name and the single load.
