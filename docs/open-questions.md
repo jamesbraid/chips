@@ -219,6 +219,17 @@ Corrections found while tagging. These are not fixed here.
   doublewords' behaviour is read by any PROM routine found
   ([docs/questions/ip35-prom-reset-barrier.md](questions/ip35-prom-reset-barrier.md) items 9 and 11).
   Next: the readers of those doublewords (none found) and the interrupt-source list in a Bedrock reference.
+- **IP35 PROM: what a poll pass costs in time (uncached instruction fetch from the boot window, uncached register load) and the real-time counter's period on hardware.**
+  *[route: hardware read, read-only]* The PROM's marker wait is 200,000 passes of six instructions and one load, all from the uncached boot
+  window, so its window is 200,000 x (6 fetch times + 1 load time); neither time is given by any source read (bounds 35 ms to about 0.23 s)
+  ([docs/questions/ip35-prom-poll-timing.md](questions/ip35-prom-poll-timing.md) items 3 and 4). The counter period is 800 ns by the PROM's own
+  write and the kernel's own arithmetic; what the register reads is not observed.
+  Next: one 64-bit read each of local-block +0x604200 (prediction low bits 0x04f1, bit 32 set) and memory-controller +0x7a0008 (prediction 0x0000ffff0c021010)
+  on a running IP35 system, and a timed loop of reads of the real-time counter from user level; no read-only route is known for the fetch time.
+- **BCM5701 on the IO9: the DMA share of the time from transmit doorbell to receive completion.** *[route: hardware timing]* The coalescing and wire
+  terms are established; the PCI/PCI-X DMA terms have no source
+  ([docs/questions/ip35-bcm5701-completion-latency.md](questions/ip35-bcm5701-completion-latency.md)). Next: a real-time-counter timestamp on both sides of a
+  MAC-loopback frame on a real IO9.
 
 - **Tezro: the graphics board's revision digit in the base-I/O PROM's diagnostic, and the credit table's consumer.** *[route: software now for the first (read the diagnostic's code in the nested base-I/O image); a PROM-monitor read of widget 12 `+4` on hardware]* Open: which input the digit after "Buzz revision" comes from, and which routine indexes the PROM's fourteen-row credit table. Next: docs/questions/tezro-io-topology.md.
 

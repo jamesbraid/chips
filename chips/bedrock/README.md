@@ -6,6 +6,7 @@ IRIX 6.5.30. The IP35 CPU PROM image is in the census since the 2026-11-10 rerun
 Census: [census/](census/census.md).
 Start-up of several processors by the IP35 PROM (presence bits, rendezvous waits, memory configuration): [docs/questions/ip35-prom-mp-presence-poll.md](../../docs/questions/ip35-prom-mp-presence-poll.md).
 The memory-controller configuration word (bank decode, bank select, size probe) as the PROM and kernel use it: [docs/questions/ip35-prom-memory-bank-config.md](../../docs/questions/ip35-prom-memory-bank-config.md). The reset barrier on local-block scratch 1, the boot-master election, the progress registers and the PROM's check that pending bits reach the processor's interrupt lines: [docs/questions/ip35-prom-reset-barrier.md](../../docs/questions/ip35-prom-reset-barrier.md).
+What the PROM's waits and polls cost in time, how it programs the real-time counter's rate from two flash configuration words, and what the reset barrier's skew margin is: [docs/questions/ip35-prom-poll-timing.md](../../docs/questions/ip35-prom-poll-timing.md). The BCM5701 on the IO9, from transmit doorbell to receive completion: [docs/questions/ip35-bcm5701-completion-latency.md](../../docs/questions/ip35-bcm5701-completion-latency.md).
 The board-identification register at `+0x4000000`, the PROM's processor table and flash configuration block, and the network-interface port status bits the PROM and kernel read: [docs/questions/ip35-board-word-and-config-block.md](../../docs/questions/ip35-board-word-and-config-block.md).
 
 ## Window and how it is reached
