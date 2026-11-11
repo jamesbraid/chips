@@ -1,5 +1,5 @@
 binary	group	role	kind	abi	bytes	sha256	copies	functions	address_source	access_sites	unresolved_sites	status	doc	section
-IP27/unix	kernel-IP27	kernel	executable	n64	11101184	567474674eaa83d3		13484	symtab+dwarf	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP27/unix	kernel-IP27	kernel	executable	n64	11101184	567474674eaa83d3		13484	symtab+dwarf	5	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	kernel-IP27	kernel-object	object	n64	20676	93e38b80d7e58c70		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/acl_hwg.o	kernel-IP27	kernel-object	object	n64	5520	b071d343630f4190	IP30/usr/cpu/sysgen/IP30boot/acl_hwg.o;IP35/usr/cpu/sysgen/IP35boot/acl_hwg.o	3	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/acl_nfs3.o	kernel-IP27	kernel-object	object	n64	6288	474f67cd98710f42	IP30/usr/cpu/sysgen/IP30boot/acl_nfs3.o;IP35/usr/cpu/sysgen/IP35boot/acl_nfs3.o	2	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
@@ -98,7 +98,7 @@ IP27/usr/cpu/sysgen/IP27boot/crypto.a(rijndael-alg-fst.o)	kernel-IP27	kernel-obj
 IP27/usr/cpu/sysgen/IP27boot/crypto.a(rijndael-api-fst.o)	kernel-IP27	kernel-object	object	n64	12324	dae4e9385cec1775	IP30/usr/cpu/sysgen/IP30boot/crypto.a(rijndael-api-fst.o);IP35/usr/cpu/sysgen/IP35boot/crypto.a(rijndael-api-fst.o)	6	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/cserialio.o	kernel-IP27	kernel-object	object	n64	21768	6a5a462f0c7e9a61		22	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
 IP27/usr/cpu/sysgen/IP27boot/devpoll.o	kernel-IP27	kernel-object	object	n64	31936	f12a1cca32aabddc		27	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-IP27	kernel-object	object	n64	41892	0f4db2e173eb1108		63	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocks.o)	kernel-IP27	kernel-object	object	n64	41892	0f4db2e173eb1108		63	symtab	11	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/dhardlocks.a(dhardlocksasm.o)	kernel-IP27	kernel-object	object	n64	4580	e7a6b156f60f18ee		3	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/dial.o	kernel-IP27	kernel-object	object	n64	29928	cb564ab048963698		14	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/dialbox.o	kernel-IP27	kernel-object	object	n64	27448	eadff62b0ff0a5a3		14	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
@@ -150,7 +150,7 @@ IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_inode.o)	kernel-IP27	kernel-object	object
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_subr.o)	kernel-IP27	kernel-object	object	n64	7716	b417bff2357f123c	IP30/usr/cpu/sysgen/IP30boot/efs.a(efs_subr.o);IP35/usr/cpu/sysgen/IP35boot/efs.a(efs_subr.o)	4	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_vfsops.o)	kernel-IP27	kernel-object	object	n64	29588	9a7efe0286671e26		21	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/efs.a(efs_vnodeops.o)	kernel-IP27	kernel-object	object	n64	47396	f74ff1599dee6455		37	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-IP27	kernel-object	object	n64	38240	e398abc7dce1db1a		64	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-IP27	kernel-object	object	n64	38240	e398abc7dce1db1a		64	symtab	3	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/failover.o	kernel-IP27	kernel-object	object	n64	57080	e976c3d59f28afa5	IP30/usr/cpu/sysgen/IP30boot/failover.o;IP35/usr/cpu/sysgen/IP35boot/failover.o	49	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/fcadp.a(hwlip.o)	kernel-IP27	kernel-object	object	n64	8708	b2f699ebfb0a9546	IP30/usr/cpu/sysgen/IP30boot/fcadp.a(hwlip.o);IP35/usr/cpu/sysgen/IP35boot/fcadp.a(hwlip.o)	6	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
 IP27/usr/cpu/sysgen/IP27boot/fcadp.a(hwutil.o)	kernel-IP27	kernel-object	object	n64	46916	83eb65dcfc9d6c11	IP30/usr/cpu/sysgen/IP30boot/fcadp.a(hwutil.o);IP35/usr/cpu/sysgen/IP35boot/fcadp.a(hwutil.o)	45	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#device-drivers-and-input-objects-scope-rule-4	Device drivers and input objects (scope rule 4)
@@ -205,17 +205,17 @@ IP27/usr/cpu/sysgen/IP27boot/hubspc.o	kernel-IP27	kernel-object	object	n64	12976
 IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgvnops.o)	kernel-IP27	kernel-object	object	n64	25876	15f89ff79270d3d3		21	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgvfsops.o)	kernel-IP27	kernel-object	object	n64	10612	5d1b65ae4a600a1d	IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgvfsops.o);IP35/usr/cpu/sysgen/IP35boot/hwgfs.a(hwgvfsops.o)	5	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
 IP27/usr/cpu/sysgen/IP27boot/hwgfs.a(hwgsubr.o)	kernel-IP27	kernel-object	object	n64	15428	74f197762fbc885f	IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgsubr.o);IP35/usr/cpu/sysgen/IP35boot/hwgfs.a(hwgsubr.o)	11	symtab	0	0	understood	docs/binaries-scope-filesystem.md#file-system-objects-in-the-kernel-builds	File-system objects in the kernel builds
-IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-IP27	kernel-object	object	n64	12224	0eebeaa53cacbc83		7	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
-IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-IP27	kernel-object	object	n64	991696	e6c9165004d38eb4		304	symtab+dwarf	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP27/usr/cpu/sysgen/IP27boot/i2c.o	kernel-IP27	kernel-object	object	n64	12224	0eebeaa53cacbc83		7	symtab	23	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
+IP27/usr/cpu/sysgen/IP27boot/idbg.o	kernel-IP27	kernel-object	object	n64	991696	e6c9165004d38eb4		304	symtab+dwarf	1	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/idev.o	kernel-IP27	kernel-object	object	n64	25896	1f3d93b2c33ae3dd		22	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
 IP27/usr/cpu/sysgen/IP27boot/if_cl.o	kernel-IP27	kernel-object	object	n64	49024	f1c0f0c8ea19ab78		35	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-IP27	kernel-object	object	n64	50288	d4acc2e8f87a4d22		47	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-IP27	kernel-object	object	n64	77856	ea32e15258ef4ee2		55	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/if_ef.o	kernel-IP27	kernel-object	object	n64	50288	d4acc2e8f87a4d22		47	symtab	1	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/if_eg.o	kernel-IP27	kernel-object	object	n64	77856	ea32e15258ef4ee2		55	symtab	1	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/if_ppp.o	kernel-IP27	kernel-object	object	n64	53480	8dfad381a4766ba6		25	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/if_ptr.o	kernel-IP27	kernel-object	object	n64	129544	fea544dd2746dcb7		69	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/if_rns.o	kernel-IP27	kernel-object	object	n64	71800	267cbefb3a3e9f51		61	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/if_rns.o	kernel-IP27	kernel-object	object	n64	71800	267cbefb3a3e9f51		61	symtab	1	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/if_sl.o	kernel-IP27	kernel-object	object	n64	33048	2ed4d336d461d0dc		17	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
-IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-IP27	kernel-object	object	n64	199984	d1da340986ed2c76		92	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
+IP27/usr/cpu/sysgen/IP27boot/if_tg.o	kernel-IP27	kernel-object	object	n64	199984	d1da340986ed2c76		92	symtab	2	0	understood	docs/binaries-scope-kernel-objects.md#network-streams-and-cluster-objects-scope-rule-2	Network, STREAMS and cluster objects (scope rule 2)
 IP27/usr/cpu/sysgen/IP27boot/imon.o	kernel-IP27	kernel-object	object	n64	43408	e557d2bc31b409c9		49	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#scope-questions	Scope questions
 IP27/usr/cpu/sysgen/IP27boot/imp.o	kernel-IP27	kernel-object	object	n64	25736	889554daa1985ce1		10	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#scope-questions	Scope questions
 IP27/usr/cpu/sysgen/IP27boot/io.a(alenlist.o)	kernel-IP27	kernel-object	object	n64	15540	f7af89ab50a9b06a	IP30/usr/cpu/sysgen/IP30boot/io.a(alenlist.o);IP35/usr/cpu/sysgen/IP35boot/io.a(alenlist.o)	22	symtab	0	0	understood	docs/binaries-scope-kernel-objects.md#process-memory-scheduler-lock-and-debugger-objects-scope-rule-3	Process, memory, scheduler, lock and debugger objects (scope rule 3)
@@ -272,7 +272,7 @@ IP27/usr/cpu/sysgen/IP27boot/kbd.o	kernel-IP27	kernel-object	object	n64	65432	93
 IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_di.o)	kernel-IP27	kernel-object	object	n64	160516	ebd554d7c2b05491		134	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_events.o)	kernel-IP27	kernel-object	object	n64	24164	834da7826616c359		25	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kdsp.a(audutil.o)	kernel-IP27	kernel-object	object	n64	36500	c62cfc2956342776		94	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-IP27	kernel-object	object	n64	1248568	0e5875e8ed602411		1361	symtab+dwarf	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-IP27	kernel-object	object	n64	1248568	0e5875e8ed602411		1361	symtab+dwarf	214	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/keyboard.a(pckbd.o)	kernel-IP27	kernel-object	object	n64	17572	0c39e8c0b9d1d8ea		14	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/kitchen_sync.o	kernel-IP27	kernel-object	object	n64	13992	db3397092dcce7aa		10	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/klidbg.o	kernel-IP27	kernel-object	object	n64	21864	978024c00fa04b77		19	symtab	0	0	undocumented		
@@ -286,14 +286,14 @@ IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_mbuf.o)	kernel-IP27	kernel-object
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	kernel-IP27	kernel-object	object	n64	42196	2989c2bb0e7af5cd		58	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	kernel-IP27	kernel-object	object	n64	58948	cf0c75424f1b8009		98	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync.a(mrlock.o)	kernel-IP27	kernel-object	object	n64	6308	97edb3b15ed63eda		8	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-IP27	kernel-object	object	n64	49412	1b9e3e33d48d746d		63	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-IP27	kernel-object	object	n64	78836	900e38eac4fd9d4e		110	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	kernel-IP27	kernel-object	object	n64	49412	1b9e3e33d48d746d		63	symtab	5	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	kernel-IP27	kernel-object	object	n64	78836	900e38eac4fd9d4e		110	symtab	10	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mrlock.o)	kernel-IP27	kernel-object	object	n64	6164	13cb78289c056d7a		5	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	kernel-IP27	kernel-object	object	n64	45284	0454c5194117f945		61	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(sema.o)	kernel-IP27	kernel-object	object	n64	63044	4121fa7f4e693736		101	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mrlock.o)	kernel-IP27	kernel-object	object	n64	6324	1fe78d5426d261cb		8	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-IP27	kernel-object	object	n64	42660	9fe23f7c82e501a2		58	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-IP27	kernel-object	object	n64	61236	18b86658b120ecd9		97	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mutex.o)	kernel-IP27	kernel-object	object	n64	42660	9fe23f7c82e501a2		58	symtab	2	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(sema.o)	kernel-IP27	kernel-object	object	n64	61236	18b86658b120ecd9		97	symtab	8	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(klstat.o)	kernel-IP27	kernel-object	object	n64	10772	4fdbe44bc9a163f6		7	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ksync_statistics.a(mrlock.o)	kernel-IP27	kernel-object	object	n64	6324	d4d88dba44ca9211		8	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ldterm.o	kernel-IP27	kernel-object	object	n64	3040	971df4df7572986f	IP30/usr/cpu/sysgen/IP30boot/ldterm.o;IP35/usr/cpu/sysgen/IP35boot/ldterm.o	0	none	0	0	undocumented		
@@ -327,7 +327,7 @@ IP27/usr/cpu/sysgen/IP27boot/nfs.a(nfs_xdr.o)	kernel-IP27	kernel-object	object	n
 IP27/usr/cpu/sysgen/IP27boot/nfs.a(nfs_compat.o)	kernel-IP27	kernel-object	object	n64	11332	1648157ebdfa2446		11	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfs.a(nfs_rmount.o)	kernel-IP27	kernel-object	object	n64	30436	f869400f4ef3930d		16	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfs.a(nfs_rnode.o)	kernel-IP27	kernel-object	object	n64	15876	d8bc71d25d7581ee		10	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/nfs.a(nfs_subr.o)	kernel-IP27	kernel-object	object	n64	35476	3f574638f6c27dd0		35	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/nfs.a(nfs_subr.o)	kernel-IP27	kernel-object	object	n64	35476	3f574638f6c27dd0		35	symtab	1	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfs.a(bds.o)	kernel-IP27	kernel-object	object	n64	40388	87a3029f8bc7fd7c		17	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfs.a(nlm_debug.o)	kernel-IP27	kernel-object	object	n64	13460	ac34d8aee58b437d		6	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/nfs.a(nlm_prot.o)	kernel-IP27	kernel-object	object	n64	18564	db48c2bc0a9ecb3f	IP30/usr/cpu/sysgen/IP30boot/nfs.a(nlm_prot.o);IP35/usr/cpu/sysgen/IP35boot/nfs.a(nlm_prot.o)	34	symtab	0	0	undocumented		
@@ -373,7 +373,7 @@ IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_coald.o)	kernel-IP27	kernel-object	obje
 IP27/usr/cpu/sysgen/IP27boot/numa.a(debug_levels.o)	kernel-IP27	kernel-object	object	n64	3012	19368b7a79379608	IP30/usr/cpu/sysgen/IP30boot/numa.a(debug_levels.o);IP35/usr/cpu/sysgen/IP35boot/numa.a(debug_levels.o)	1	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(numa_init.o)	kernel-IP27	kernel-object	object	n64	8596	d06e03d41b04fca9		2	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_interrupt.o)	kernel-IP27	kernel-object	object	n64	7188	3fbc1c5b703dc1bb		2	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_tick.o)	kernel-IP27	kernel-object	object	n64	12180	2c4421046fd9bb93		5	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/numa.a(mem_tick.o)	kernel-IP27	kernel-object	object	n64	12180	2c4421046fd9bb93		5	symtab	2	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_control.o)	kernel-IP27	kernel-object	object	n64	14916	dda03d155c8c9f92		1	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(pfms.o)	kernel-IP27	kernel-object	object	n64	5972	b5dd7292dd529b2d		1	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/numa.a(migr_states.o)	kernel-IP27	kernel-object	object	n64	11780	603316008c6a6a6b		8	symtab	0	0	undocumented		
@@ -533,10 +533,10 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(move.o)	kernel-IP27	kernel-object	object	n64	1
 IP27/usr/cpu/sysgen/IP27boot/os.a(name.o)	kernel-IP27	kernel-object	object	n64	22260	a75944dfc18ebe26		14	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(page.o)	kernel-IP27	kernel-object	object	n64	87028	75fc3333728a319b		72	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pathname.o)	kernel-IP27	kernel-object	object	n64	10372	cbc4d64725d6bbf5	IP30/usr/cpu/sysgen/IP30boot/os.a(pathname.o);IP35/usr/cpu/sysgen/IP35boot/os.a(pathname.o)	13	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-IP27	kernel-object	object	n64	59444	546dcc9e14be42dc		42	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(pda.o)	kernel-IP27	kernel-object	object	n64	59444	546dcc9e14be42dc		42	symtab	1	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(physio.o)	kernel-IP27	kernel-object	object	n64	12212	40746933107705a0		4	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(pipe.o)	kernel-IP27	kernel-object	object	n64	8212	eaed841126fb1fa1		1	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-IP27	kernel-object	object	n64	55396	62a02884e1875e70		44	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(printf.o)	kernel-IP27	kernel-object	object	n64	55396	62a02884e1875e70		44	symtab	2	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(probe.o)	kernel-IP27	kernel-object	object	n64	14900	796a3fa4df151fba		9	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(procset.o)	kernel-IP27	kernel-object	object	n64	8676	4bc5f4c6e69830c7		3	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(prsched.o)	kernel-IP27	kernel-object	object	n64	18660	356b01aabd89233d		3	symtab	0	0	undocumented		
@@ -561,25 +561,25 @@ IP27/usr/cpu/sysgen/IP27boot/os.a(syssgi.o)	kernel-IP27	kernel-object	object	n64
 IP27/usr/cpu/sysgen/IP27boot/os.a(thread.o)	kernel-IP27	kernel-object	object	n64	19668	a026be80b37e004f		7	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(tile.o)	kernel-IP27	kernel-object	object	n64	1204	ef780bf112224208	IP30/usr/cpu/sysgen/IP30boot/os.a(tile.o);IP35/usr/cpu/sysgen/IP35boot/os.a(tile.o)	0	none	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(time.o)	kernel-IP27	kernel-object	object	n64	21188	b1dfe68ceb754b73		21	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(timers.o)	kernel-IP27	kernel-object	object	n64	6260	5b4dbc3f63745af6		5	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(timers.o)	kernel-IP27	kernel-object	object	n64	6260	5b4dbc3f63745af6		5	symtab	5	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(tlbmgr.o)	kernel-IP27	kernel-object	object	n64	33492	af7072bd94661069		35	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(trap.o)	kernel-IP27	kernel-object	object	n64	68916	3681064629f7e846		41	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(tstamp.o)	kernel-IP27	kernel-object	object	n64	31156	e3e8d4e1b0d88c5f		23	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(tstamp.o)	kernel-IP27	kernel-object	object	n64	31156	e3e8d4e1b0d88c5f		23	symtab	4	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(uidact.o)	kernel-IP27	kernel-object	object	n64	6772	a078bedbcdc30757	IP30/usr/cpu/sysgen/IP30boot/os.a(uidact.o);IP35/usr/cpu/sysgen/IP35boot/os.a(uidact.o)	4	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(uli.o)	kernel-IP27	kernel-object	object	n64	24996	b6f0f11aa81b1053		26	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(uthread.o)	kernel-IP27	kernel-object	object	n64	32308	d87bb82ba91880dd		29	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(utssys.o)	kernel-IP27	kernel-object	object	n64	21220	ef0f5f45135b9e85		14	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(uuid.o)	kernel-IP27	kernel-object	object	n64	10404	61638d845874c36c		10	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(uuid.o)	kernel-IP27	kernel-object	object	n64	10404	61638d845874c36c		10	symtab	1	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vfs.o)	kernel-IP27	kernel-object	object	n64	47508	d10068c0b74050e8		55	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(vmdump.o)	kernel-IP27	kernel-object	object	n64	47044	8ead0dc4a8ba76fe		25	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(vmdump.o)	kernel-IP27	kernel-object	object	n64	47044	8ead0dc4a8ba76fe		25	symtab	2	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vncalls.o)	kernel-IP27	kernel-object	object	n64	97572	18b9be5e6c5de670		100	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vnode.o)	kernel-IP27	kernel-object	object	n64	48580	0e2b68c2411639eb		33	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(vn_passthru.o)	kernel-IP27	kernel-object	object	n64	34324	05d078e111cf6e2f		66	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(watchpoints.o)	kernel-IP27	kernel-object	object	n64	12484	ae236c74a56d5bfb		10	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-IP27	kernel-object	object	n64	16820	72a054f22b67472b		15	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	kernel-IP27	kernel-object	object	n64	16820	72a054f22b67472b		15	symtab	1	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	kernel-IP27	kernel-object	object	n64	14948	3c986c5edaac4a21		10	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/os.a(mtext.o)	kernel-IP27	kernel-object	object	n64	1204	5ef49fb88a63b17c	IP30/usr/cpu/sysgen/IP30boot/os.a(mtext.o);IP35/usr/cpu/sysgen/IP35boot/os.a(mtext.o)	0	none	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-IP27	kernel-object	object	n64	70472	015d3886d676869b		70	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/partition.o	kernel-IP27	kernel-object	object	n64	70472	015d3886d676869b		70	symtab	2	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pciba.o	kernel-IP27	kernel-object	object	n64	52096	b08d9d9bc49a9db0		25	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pcibr.o	kernel-IP27	kernel-object	object	n64	291328	9076f781d14016f4		259	symtab+dwarf	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/pciio.o	kernel-IP27	kernel-object	object	n64	48352	6a9e6e13a1cffd15		108	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
@@ -618,7 +618,7 @@ IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1_tpinit.o)	kernel-IP27	kernel-object	
 IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1_tport.o)	kernel-IP27	kernel-object	object	n64	12372	543761b5ba2f66d0		10	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad1pci.a(rad1data.o)	kernel-IP27	kernel-object	object	n64	2852	8c867bb214d79529		0	none	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rad_dd.o	kernel-IP27	kernel-object	object	n64	139032	7928b382eecc2c62		84	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-IP27	kernel-object	object	n64	13860	c51ef50f3f1ee68d		15	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/rand.a(rand.o)	kernel-IP27	kernel-object	object	n64	13860	c51ef50f3f1ee68d		15	symtab	2	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rand.a(yarrow.o)	kernel-IP27	kernel-object	object	n64	10628	c6689af38b620955		7	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rand.a(harvest.o)	kernel-IP27	kernel-object	object	n64	7028	a5790f8f33909713		6	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/rand.a(hash.o)	kernel-IP27	kernel-object	object	n64	4980	0be9c96a542d3ac5	IP30/usr/cpu/sysgen/IP30boot/rand.a(hash.o);IP35/usr/cpu/sysgen/IP35boot/rand.a(hash.o)	5	symtab	0	0	undocumented		
@@ -629,7 +629,7 @@ IP27/usr/cpu/sysgen/IP27boot/sat.a(sat.o)	kernel-IP27	kernel-object	object	n64	1
 IP27/usr/cpu/sysgen/IP27boot/sball.o	kernel-IP27	kernel-object	object	n64	34656	33a5948eae8667ca		15	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/scsi.o	kernel-IP27	kernel-object	object	n64	59912	dc6378cd99c835a2	IP30/usr/cpu/sysgen/IP30boot/scsi.o;IP35/usr/cpu/sysgen/IP35boot/scsi.o	70	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/scsiha.o	kernel-IP27	kernel-object	object	n64	7728	e235b891fb8bffbc	IP30/usr/cpu/sysgen/IP30boot/scsiha.o;IP35/usr/cpu/sysgen/IP35boot/scsiha.o	3	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-IP27	kernel-object	object	n64	64260	c5e4f8047760c0c2		64	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/sduart.a(serialio.o)	kernel-IP27	kernel-object	object	n64	64260	c5e4f8047760c0c2		64	symtab	1	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sduart.a(sio_ioc3.o)	kernel-IP27	kernel-object	object	n64	40532	c4ccd623bab32f3f		35	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/sem.o	kernel-IP27	kernel-object	object	n64	45872	622bcabcdd400366		50	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/sessionidbg.a(sessionidbg.o)	kernel-IP27	kernel-object	object	n64	13284	7982c8358e24a9be		7	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
@@ -683,7 +683,7 @@ IP27/usr/cpu/sysgen/IP27boot/stp.a(st_wsi.o)	kernel-IP27	kernel-object	object	n6
 IP27/usr/cpu/sysgen/IP27boot/stp.a(st_wsr.o)	kernel-IP27	kernel-object	object	n64	11684	ea87ae351bc78d34		2	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stp.a(st_proto.o)	kernel-IP27	kernel-object	object	n64	2820	e51a81fa5514f8c4	IP30/usr/cpu/sysgen/IP30boot/stp.a(st_proto.o);IP35/usr/cpu/sysgen/IP35boot/stp.a(st_proto.o)	0	none	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stp.a(st_slots.o)	kernel-IP27	kernel-object	object	n64	17060	1dc02794039e28e1		11	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/stp.a(st_ec.o)	kernel-IP27	kernel-object	object	n64	30436	00aceba7b5777094		23	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/stp.a(st_ec.o)	kernel-IP27	kernel-object	object	n64	30436	00aceba7b5777094		23	symtab	2	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stp.a(st_et.o)	kernel-IP27	kernel-object	object	n64	20132	54995702093a7c6f		14	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stp.a(st_ega.o)	kernel-IP27	kernel-object	object	n64	9060	08168dd164f61683		4	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stp.a(st_ip.o)	kernel-IP27	kernel-object	object	n64	23460	45c863505d4213fb		15	symtab	0	0	undocumented		
@@ -692,7 +692,7 @@ IP27/usr/cpu/sysgen/IP27boot/stp.a(st_sesmgr.o)	kernel-IP27	kernel-object	object
 IP27/usr/cpu/sysgen/IP27boot/stp.a(stp_icrash.o)	kernel-IP27	kernel-object	object	n64	48532	d03956870651dc3e		1	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stpidbg.o	kernel-IP27	kernel-object	object	n64	38008	4bb25b152c9eeb64	IP30/usr/cpu/sysgen/IP30boot/stpidbg.o;IP35/usr/cpu/sysgen/IP35boot/stpidbg.o	16	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stream.a(stream.o)	kernel-IP27	kernel-object	object	n64	57652	44ab895ad3fafc53		72	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/stream.a(streamio.o)	kernel-IP27	kernel-object	object	n64	111652	23b2d31b9bd2a8d5		37	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/stream.a(streamio.o)	kernel-IP27	kernel-object	object	n64	111652	23b2d31b9bd2a8d5		37	symtab	1	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stream.a(strmp.o)	kernel-IP27	kernel-object	object	n64	28452	2aa6e34417986dd8		31	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stream.a(strcalls.o)	kernel-IP27	kernel-object	object	n64	9204	b0e1cc11e1dcd432		5	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/stream.a(strsubr.o)	kernel-IP27	kernel-object	object	n64	50980	111e7f7e445a7282		51	symtab	0	0	undocumented		
@@ -717,7 +717,7 @@ IP27/usr/cpu/sysgen/IP27boot/tpiudp6.o	kernel-IP27	kernel-object	object	n64	1032
 IP27/usr/cpu/sysgen/IP27boot/tportpckbd.a(pckeyboard.o)	kernel-IP27	kernel-object	object	n64	16756	36bfc690e8539883	IP30/usr/cpu/sysgen/IP30boot/tportpckbd.a(pckeyboard.o);IP35/usr/cpu/sysgen/IP35boot/tportpckbd.a(pckeyboard.o)	6	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/tpsc.o	kernel-IP27	kernel-object	object	n64	217032	7110738512a36f9c		86	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/tpscutil.o	kernel-IP27	kernel-object	object	n64	5184	f1c66f28194900e8	IP30/usr/cpu/sysgen/IP30boot/tpscutil.o;IP35/usr/cpu/sysgen/IP35boot/tpscutil.o	1	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/tpu.o	kernel-IP27	kernel-object	object	n64	77664	4dc8f5e4ca18152d		86	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/tpu.o	kernel-IP27	kernel-object	object	n64	77664	4dc8f5e4ca18152d		86	symtab	41	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/tpuidbg.o	kernel-IP27	kernel-object	object	n64	36080	1efe4ecff13decce		21	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/tpusim.o	kernel-IP27	kernel-object	object	n64	14960	4ed9e66f41b131f8		17	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/ts.o	kernel-IP27	kernel-object	object	n64	276656	5fb9db104d91a442		126	symtab	0	0	undocumented		
@@ -760,7 +760,7 @@ IP27/usr/cpu/sysgen/IP27boot/vmeuli.o	kernel-IP27	kernel-object	object	n64	6208	
 IP27/usr/cpu/sysgen/IP27boot/vmidbg.a(vmidbg.o)	kernel-IP27	kernel-object	object	n64	46100	e3d1adfc02c633d7		27	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP27/usr/cpu/sysgen/IP27boot/wacom.o	kernel-IP27	kernel-object	object	n64	174776	e7a46650d1ebcce3		95	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xbmon.o	kernel-IP27	kernel-object	object	n64	20064	11990c65cee98201		18	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
-IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-IP27	kernel-object	object	n64	38112	2cf831cc85047975		33	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
+IP27/usr/cpu/sysgen/IP27boot/xbow.o	kernel-IP27	kernel-object	object	n64	38112	2cf831cc85047975		33	symtab	4	0	understood	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/xbridge.o	kernel-IP27	kernel-object	object	n64	18648	a75cdb5762ff5550		2	symtab	0	0	named-only	chips/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP27/usr/cpu/sysgen/IP27boot/xconn.o	kernel-IP27	kernel-object	object	n64	13680	ef14dfd8a45d96ee		9	symtab	0	0	named-only	docs/ip27-xconn.md#the-xconno-pairing-driver-of-the-ip27-build	The `xconn.o` pairing driver of the IP27 build
 IP27/usr/cpu/sysgen/IP27boot/xfs.a(xfs_alloc.o)	kernel-IP27	kernel-object	object	n64	39892	17c370f6a884a388		24	symtab	0	0	undocumented		
@@ -885,7 +885,7 @@ IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_snapshot.o)	kernel-IP27	kernel-object	obj
 IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_irix_snapshot.o)	kernel-IP27	kernel-object	object	n64	22788	16d14a20f8a04fda		25	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/xvmidbg.o	kernel-IP27	kernel-object	object	n64	107480	cb5d043e8d3a9b51		40	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/zero.o	kernel-IP27	kernel-object	object	n64	7120	b059ec0a6b6e9562	IP30/usr/cpu/sysgen/IP30boot/zero.o;IP35/usr/cpu/sysgen/IP35boot/zero.o	8	symtab	0	0	undocumented		
-IP30/unix	kernel-IP30	kernel	executable	n64	10716216	607a432f441d15f7		13087	symtab+dwarf	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP30/unix	kernel-IP30	kernel	executable	n64	10716216	607a432f441d15f7		13087	symtab+dwarf	201	10	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/acl.a(acl.o)	kernel-IP30	kernel-object	object	n64	20644	3dba25c036f232eb		16	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/asidbg.a(asidbg.o)	kernel-IP30	kernel-object	object	n64	64148	79de05aaf66be2d5		38	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	kernel-IP30	kernel-object	object	n64	26532	42fe1bed5a0efedb		20	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
@@ -959,7 +959,7 @@ IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_sys.o)	kernel-IP30	kernel-object	object	
 IP30/usr/cpu/sysgen/IP30boot/cpr.a(ckpt_util.o)	kernel-IP30	kernel-object	object	n64	10932	f1e0c0bbaad87aa0		9	symtab	0	0	understood	docs/binaries-scope-filesystem.md#ip30-boot-set	IP30 boot set
 IP30/usr/cpu/sysgen/IP30boot/cserialio.o	kernel-IP30	kernel-object	object	n64	21752	ed14f73400e10b1b		22	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/devpoll.o	kernel-IP30	kernel-object	object	n64	31912	a9ce981b3bfa2984		27	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-IP30	kernel-object	object	n64	41556	27d70c5e9cd55c9e		63	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocks.o)	kernel-IP30	kernel-object	object	n64	41556	27d70c5e9cd55c9e		63	symtab	11	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dhardlocks.a(dhardlocksasm.o)	kernel-IP30	kernel-object	object	n64	4116	8792bf4e95be5668		3	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dial.o	kernel-IP30	kernel-object	object	n64	29904	2ce8485cdc56f189		14	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/dialbox.o	kernel-IP30	kernel-object	object	n64	27432	d90c9248cc43bf46		14	symtab	0	0	undocumented		
@@ -1030,18 +1030,18 @@ IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(chardlocks.o)	kernel-IP30	kernel-object
 IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	kernel-IP30	kernel-object	object	n64	10404	5e997695259bd62e		22	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(chardlocks.o)	kernel-IP30	kernel-object	object	n64	10036	39843280e9cc8380		19	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	kernel-IP30	kernel-object	object	n64	11828	5169c015298ef8c5		22	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-IP30	kernel-object	object	n64	47064	50c0bf96e614be14		67	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-IP30	kernel-object	object	n64	47064	50c0bf96e614be14		67	symtab	17	2	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/hitachi.o	kernel-IP30	kernel-object	object	n64	26272	52a62e6d07e3fe7f		9	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgvnops.o)	kernel-IP30	kernel-object	object	n64	25812	b028bacb55fe271f		21	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-IP30	kernel-object	object	n64	961880	daccfdbb78270fc5		298	symtab+dwarf	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/idbg.o	kernel-IP30	kernel-object	object	n64	961880	daccfdbb78270fc5		298	symtab+dwarf	1	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/idev.o	kernel-IP30	kernel-object	object	n64	25872	ab1e8520f962f0f7		22	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-IP30	kernel-object	object	n64	49920	fea4df21fb80f8d7		47	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-IP30	kernel-object	object	n64	77632	a88d78d7424f03ad		55	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/if_ef.o	kernel-IP30	kernel-object	object	n64	49920	fea4df21fb80f8d7		47	symtab	1	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/usr/cpu/sysgen/IP30boot/if_eg.o	kernel-IP30	kernel-object	object	n64	77632	a88d78d7424f03ad		55	symtab	1	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_ppp.o	kernel-IP30	kernel-object	object	n64	53464	7c06696aa39ed248		25	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_ptr.o	kernel-IP30	kernel-object	object	n64	129384	73d38b991dace9d0		69	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/if_rns.o	kernel-IP30	kernel-object	object	n64	71600	9ced6100bd57a28f		61	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/if_rns.o	kernel-IP30	kernel-object	object	n64	71600	9ced6100bd57a28f		61	symtab	1	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/if_sl.o	kernel-IP30	kernel-object	object	n64	33032	8ec16acd71977ca7		17	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-IP30	kernel-object	object	n64	198880	edd163f3e38afae9		92	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/if_tg.o	kernel-IP30	kernel-object	object	n64	198880	edd163f3e38afae9		92	symtab	2	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/imon.o	kernel-IP30	kernel-object	object	n64	43392	d53d400da73cc117		49	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/imp.o	kernel-IP30	kernel-object	object	n64	25720	ca96e1819519f360		10	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/io.a(ddi.o)	kernel-IP30	kernel-object	object	n64	17956	66b97f608fd9e352		29	symtab	0	0	undocumented		
@@ -1084,7 +1084,7 @@ IP30/usr/cpu/sysgen/IP30boot/kbd.o	kernel-IP30	kernel-object	object	n64	65408	39
 IP30/usr/cpu/sysgen/IP30boot/kdsp.a(kdsp_di.o)	kernel-IP30	kernel-object	object	n64	160436	b9a447a74585a1b5		134	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kdsp.a(kdsp_events.o)	kernel-IP30	kernel-object	object	n64	24084	5b79716c30064123		25	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kdsp.a(audutil.o)	kernel-IP30	kernel-object	object	n64	36500	7fc58219fecaebb1		94	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-IP30	kernel-object	object	n64	577112	32d900592e14a557		726	symtab+dwarf	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-IP30	kernel-object	object	n64	577112	32d900592e14a557		726	symtab+dwarf	131	5	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/keyboard.a(pckbd.o)	kernel-IP30	kernel-object	object	n64	17700	cfba3a3fa859986f		14	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/kitchen_sync.o	kernel-IP30	kernel-object	object	n64	13424	17055f0af8bc4148		10	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/klog.o	kernel-IP30	kernel-object	object	n64	10560	6aa3ae41d9eb138d		7	symtab	0	0	undocumented		
@@ -1097,14 +1097,14 @@ IP30/usr/cpu/sysgen/IP30boot/kmem_debug.a(kern_mbuf.o)	kernel-IP30	kernel-object
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-IP30	kernel-object	object	n64	42164	4a6678b9a428bba6		58	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-IP30	kernel-object	object	n64	58932	ad3cefe8be04756b		98	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mrlock.o)	kernel-IP30	kernel-object	object	n64	5844	9e2a29e0dc272587		8	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-IP30	kernel-object	object	n64	49220	e29d6e02b155a7ad		63	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-IP30	kernel-object	object	n64	78532	a752473a3208a006		110	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-IP30	kernel-object	object	n64	49220	e29d6e02b155a7ad		63	symtab	5	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-IP30	kernel-object	object	n64	78532	a752473a3208a006		110	symtab	10	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mrlock.o)	kernel-IP30	kernel-object	object	n64	5700	0b85d9581cb0542e		5	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-IP30	kernel-object	object	n64	45268	346ea2491f593e0a		61	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-IP30	kernel-object	object	n64	63028	6c4c03c8a87ae629		101	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mrlock.o)	kernel-IP30	kernel-object	object	n64	5844	04bbe9ed7096d817		8	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-IP30	kernel-object	object	n64	42484	95599190738cf208		58	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-IP30	kernel-object	object	n64	60948	cc0d9803c389d44f		97	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mutex.o)	kernel-IP30	kernel-object	object	n64	42484	95599190738cf208		58	symtab	2	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(sema.o)	kernel-IP30	kernel-object	object	n64	60948	cc0d9803c389d44f		97	symtab	8	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(klstat.o)	kernel-IP30	kernel-object	object	n64	10740	e669521f7de9889a		7	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_statistics.a(mrlock.o)	kernel-IP30	kernel-object	object	n64	5860	b58988e626b5de84		8	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/llc2.a(llc2.o)	kernel-IP30	kernel-object	object	n64	32980	304d11200aadc80b		23	symtab	0	0	undocumented		
@@ -1129,7 +1129,7 @@ IP30/usr/cpu/sysgen/IP30boot/nfs.a(nfs_xdr.o)	kernel-IP30	kernel-object	object	n
 IP30/usr/cpu/sysgen/IP30boot/nfs.a(nfs_compat.o)	kernel-IP30	kernel-object	object	n64	11316	0058bb2305c884aa		11	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfs.a(nfs_rmount.o)	kernel-IP30	kernel-object	object	n64	30404	bc3b15590944fd2f		16	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfs.a(nfs_rnode.o)	kernel-IP30	kernel-object	object	n64	15860	b96c30a215a8dc02		10	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/nfs.a(nfs_subr.o)	kernel-IP30	kernel-object	object	n64	35316	26b82abd31b56c55		35	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/nfs.a(nfs_subr.o)	kernel-IP30	kernel-object	object	n64	35316	26b82abd31b56c55		35	symtab	1	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfs.a(bds.o)	kernel-IP30	kernel-object	object	n64	40356	24a27b50627f4796		17	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfs.a(nlm_debug.o)	kernel-IP30	kernel-object	object	n64	13444	4f6fa28c30c74580		6	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/nfs.a(subr_kudp.o)	kernel-IP30	kernel-object	object	n64	6820	1d9b822e608c032c		2	symtab	0	0	undocumented		
@@ -1281,10 +1281,10 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(mload.o)	kernel-IP30	kernel-object	object	n64	
 IP30/usr/cpu/sysgen/IP30boot/os.a(move.o)	kernel-IP30	kernel-object	object	n64	10756	44c9cfc54235b7ba		11	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(name.o)	kernel-IP30	kernel-object	object	n64	21812	af7c1eca0ebc0f63		14	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(page.o)	kernel-IP30	kernel-object	object	n64	62532	d0871c444b4ed440		54	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-IP30	kernel-object	object	n64	57812	809d442d8b679d3f		42	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(pda.o)	kernel-IP30	kernel-object	object	n64	57812	809d442d8b679d3f		42	symtab	1	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(physio.o)	kernel-IP30	kernel-object	object	n64	12020	75b90a67d43b52a6		4	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(pipe.o)	kernel-IP30	kernel-object	object	n64	8180	e431a0fea8b40b5d		1	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-IP30	kernel-object	object	n64	52052	d9595e4df622fddb		41	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(printf.o)	kernel-IP30	kernel-object	object	n64	52052	d9595e4df622fddb		41	symtab	2	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(probe.o)	kernel-IP30	kernel-object	object	n64	14772	8a07e573c8728ff1		9	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(procset.o)	kernel-IP30	kernel-object	object	n64	8660	115d01cf245db31c		3	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(prsched.o)	kernel-IP30	kernel-object	object	n64	17828	ac9c48e533930e13		3	symtab	0	0	undocumented		
@@ -1307,21 +1307,21 @@ IP30/usr/cpu/sysgen/IP30boot/os.a(sysmp.o)	kernel-IP30	kernel-object	object	n64	
 IP30/usr/cpu/sysgen/IP30boot/os.a(syssgi.o)	kernel-IP30	kernel-object	object	n64	99732	45ea2c1b7c003b76		22	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(thread.o)	kernel-IP30	kernel-object	object	n64	19508	4f1be443c049a33c		7	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(time.o)	kernel-IP30	kernel-object	object	n64	21172	330adcb9c83f4553		21	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(timers.o)	kernel-IP30	kernel-object	object	n64	6036	a1e475889a335a7e		5	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(timers.o)	kernel-IP30	kernel-object	object	n64	6036	a1e475889a335a7e		5	symtab	5	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(tlbmgr.o)	kernel-IP30	kernel-object	object	n64	32500	a434b970ab47768a		35	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(trap.o)	kernel-IP30	kernel-object	object	n64	68516	7886d006a6fe02e5		41	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(tstamp.o)	kernel-IP30	kernel-object	object	n64	30964	3ff37fc0f3f40da9		23	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(tstamp.o)	kernel-IP30	kernel-object	object	n64	30964	3ff37fc0f3f40da9		23	symtab	4	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(uli.o)	kernel-IP30	kernel-object	object	n64	23460	7fa4f524de47b5e4		24	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(uthread.o)	kernel-IP30	kernel-object	object	n64	32244	09e79b68a81ceb57		29	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(utssys.o)	kernel-IP30	kernel-object	object	n64	21204	9865e48da6baa4bb		14	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(uuid.o)	kernel-IP30	kernel-object	object	n64	10340	e90b3cd87fd0802e		10	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(uuid.o)	kernel-IP30	kernel-object	object	n64	10340	e90b3cd87fd0802e		10	symtab	1	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vfs.o)	kernel-IP30	kernel-object	object	n64	47492	675aacdfe7e49ece		55	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vmdump.o)	kernel-IP30	kernel-object	object	n64	27588	88f24f483c5a1ebd		15	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vncalls.o)	kernel-IP30	kernel-object	object	n64	97316	e2f1fa7b1793b1cf		100	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vnode.o)	kernel-IP30	kernel-object	object	n64	47220	ce80ff54036a1fbc		33	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(vn_passthru.o)	kernel-IP30	kernel-object	object	n64	34196	da4de94ea27638b9		66	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(watchpoints.o)	kernel-IP30	kernel-object	object	n64	12468	42d40645359f017d		10	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-IP30	kernel-object	object	n64	16676	a8b329c4874d09f4		15	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/os.a(xthread.o)	kernel-IP30	kernel-object	object	n64	16676	a8b329c4874d09f4		15	symtab	1	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/os.a(xthread_table.o)	kernel-IP30	kernel-object	object	n64	14916	972fa119397d8c93		10	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/pciba.o	kernel-IP30	kernel-object	object	n64	52000	893ca14bdad76680		25	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/pcibr.o	kernel-IP30	kernel-object	object	n64	286600	57403fc7d367dca6		259	symtab+dwarf	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
@@ -1351,7 +1351,7 @@ IP30/usr/cpu/sysgen/IP30boot/qlfc.a(qlfc.o)	kernel-IP30	kernel-object	object	n64
 IP30/usr/cpu/sysgen/IP30boot/qlfc_idbg.o	kernel-IP30	kernel-object	object	n64	29632	b15615fe380cd03b		13	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/quotas.o	kernel-IP30	kernel-object	object	n64	29088	171312ca4fad6f35		19	symtab+dwarf	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rad_dd.o	kernel-IP30	kernel-object	object	n64	136904	e5fa4e36e4f9100a		84	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-IP30	kernel-object	object	n64	13700	f0c5bb06d0daeecf		15	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/rand.a(rand.o)	kernel-IP30	kernel-object	object	n64	13700	f0c5bb06d0daeecf		15	symtab	2	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rand.a(yarrow.o)	kernel-IP30	kernel-object	object	n64	10612	381b9aa48000c890		7	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rand.a(harvest.o)	kernel-IP30	kernel-object	object	n64	6996	096ae14459024f63		6	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/rand.a(randisr.o)	kernel-IP30	kernel-object	object	n64	9332	77544b6fd55bff43		5	symtab	0	0	undocumented		
@@ -1361,7 +1361,7 @@ IP30/usr/cpu/sysgen/IP30boot/sat.a(sat.o)	kernel-IP30	kernel-object	object	n64	1
 IP30/usr/cpu/sysgen/IP30boot/sball.o	kernel-IP30	kernel-object	object	n64	34632	40c147973dd74f12		15	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sbp2.o	kernel-IP30	kernel-object	object	n64	87352	6ad962c731229d8a		76	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sbp2idbg.o	kernel-IP30	kernel-object	object	n64	19344	8b6dbfbca3c2f16a		10	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-IP30	kernel-object	object	n64	57156	6af264a510944fbc		59	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/sduart.a(serialio.o)	kernel-IP30	kernel-object	object	n64	57156	6af264a510944fbc		59	symtab	1	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sduart.a(sio_ioc3.o)	kernel-IP30	kernel-object	object	n64	30452	7d6ccb4eb706f86d		36	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/sem.o	kernel-IP30	kernel-object	object	n64	45848	2f45fb25e4ddd989		50	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/sessionidbg.a(sessionidbg.o)	kernel-IP30	kernel-object	object	n64	13268	983d6ab00575f796		7	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
@@ -1404,7 +1404,7 @@ IP30/usr/cpu/sysgen/IP30boot/stp.a(st_soreceive.o)	kernel-IP30	kernel-object	obj
 IP30/usr/cpu/sysgen/IP30boot/stp.a(st_wsi.o)	kernel-IP30	kernel-object	object	n64	8852	7c5e3519eb645f4b		2	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stp.a(st_wsr.o)	kernel-IP30	kernel-object	object	n64	11668	66d313b05a32cfaf		2	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stp.a(st_slots.o)	kernel-IP30	kernel-object	object	n64	17028	2335775d96cbc870		11	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/stp.a(st_ec.o)	kernel-IP30	kernel-object	object	n64	30228	e15d923f78856265		23	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/stp.a(st_ec.o)	kernel-IP30	kernel-object	object	n64	30228	e15d923f78856265		23	symtab	2	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stp.a(st_et.o)	kernel-IP30	kernel-object	object	n64	20068	ebeb050b58eb7361		14	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stp.a(st_ega.o)	kernel-IP30	kernel-object	object	n64	8948	f22be2e9cbf21639		4	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stp.a(st_ip.o)	kernel-IP30	kernel-object	object	n64	23396	688594e300aa546a		15	symtab	0	0	undocumented		
@@ -1412,7 +1412,7 @@ IP30/usr/cpu/sysgen/IP30boot/stp.a(st_map.o)	kernel-IP30	kernel-object	object	n6
 IP30/usr/cpu/sysgen/IP30boot/stp.a(st_sesmgr.o)	kernel-IP30	kernel-object	object	n64	16068	f7f0ba2d48e676c3		4	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stp.a(stp_icrash.o)	kernel-IP30	kernel-object	object	n64	48148	202613dee592cd6c		1	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stream.a(stream.o)	kernel-IP30	kernel-object	object	n64	57524	60f54a1e33d3a27f		72	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/stream.a(streamio.o)	kernel-IP30	kernel-object	object	n64	111588	3f23aef4b3719c13		37	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/stream.a(streamio.o)	kernel-IP30	kernel-object	object	n64	111588	3f23aef4b3719c13		37	symtab	1	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stream.a(strmp.o)	kernel-IP30	kernel-object	object	n64	28436	bd9e5e78144e6e5c		31	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stream.a(strcalls.o)	kernel-IP30	kernel-object	object	n64	9188	3407b347aae86851		5	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/stream.a(strsubr.o)	kernel-IP30	kernel-object	object	n64	50964	1225ab0fe5298611		51	symtab	0	0	undocumented		
@@ -1435,7 +1435,7 @@ IP30/usr/cpu/sysgen/IP30boot/tpitcp6.o	kernel-IP30	kernel-object	object	n64	1424
 IP30/usr/cpu/sysgen/IP30boot/tpiudp.o	kernel-IP30	kernel-object	object	n64	10248	f274162276892f38		3	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/tpiudp6.o	kernel-IP30	kernel-object	object	n64	10296	62963511fcbf91d6		3	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/tpsc.o	kernel-IP30	kernel-object	object	n64	216928	c7dcf2d5fd261739		86	symtab	0	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/tpu.o	kernel-IP30	kernel-object	object	n64	77432	67328819c70c3e7d		86	symtab	0	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/tpu.o	kernel-IP30	kernel-object	object	n64	77432	67328819c70c3e7d		86	symtab	41	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/tpuidbg.o	kernel-IP30	kernel-object	object	n64	35976	1c8cb0c89697d7b6		21	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/tpusim.o	kernel-IP30	kernel-object	object	n64	14888	c4462fe687e56ff7		17	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ts.o	kernel-IP30	kernel-object	object	n64	276552	8692fd619d2fb87f		126	symtab	0	0	undocumented		
@@ -1464,7 +1464,7 @@ IP30/usr/cpu/sysgen/IP30boot/usync.o	kernel-IP30	kernel-object	object	n64	22584	
 IP30/usr/cpu/sysgen/IP30boot/vmidbg.a(vmidbg.o)	kernel-IP30	kernel-object	object	n64	39012	7fd0f257ba4e08f1		24	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP30/usr/cpu/sysgen/IP30boot/wacom.o	kernel-IP30	kernel-object	object	n64	174752	004d8a277dc30de0		95	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/xbmon.o	kernel-IP30	kernel-object	object	n64	19776	91e6a2ed0aa63b67		18	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
-IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-IP30	kernel-object	object	n64	34824	6b3358aed976cd4d		30	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
+IP30/usr/cpu/sysgen/IP30boot/xbow.o	kernel-IP30	kernel-object	object	n64	34824	6b3358aed976cd4d		30	symtab	4	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/xbridge.o	kernel-IP30	kernel-object	object	n64	18168	d0820152ac029db9		2	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/xconn.o	kernel-IP30	kernel-object	object	n64	13656	5cfda0d1dff36ef0		9	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/xfs.a(xfs_alloc.o)	kernel-IP30	kernel-object	object	n64	39876	328da22c808e9c1e		24	symtab	0	0	undocumented		
@@ -1749,7 +1749,7 @@ IP32/usr/cpu/sysgen/IP32boot/hwgfs.a(hwgsubr.o)	kernel-IP32	kernel-object	object
 IP32/usr/cpu/sysgen/IP32boot/idbg.o	kernel-IP32	kernel-object	object	n32	492640	419283520bbb8adc		292	symtab+dwarf	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/idev.o	kernel-IP32	kernel-object	object	n32	21952	8d7b69be9b64eb1a		22	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/if_ecf.o	kernel-IP32	kernel-object	object	n32	40720	0fdc1b7a96da404c		27	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP32/usr/cpu/sysgen/IP32boot/if_me.o	kernel-IP32	kernel-object	object	n32	39944	5eac39161d831003		40	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/if_me.o	kernel-IP32	kernel-object	object	n32	39944	5eac39161d831003		40	symtab	0	0	named-only	docs/coverage-mace.md#mace-coverage	MACE coverage
 IP32/usr/cpu/sysgen/IP32boot/if_ppp.o	kernel-IP32	kernel-object	object	n32	45576	cb37ff32743b14a1		25	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/if_ptr.o	kernel-IP32	kernel-object	object	n32	74592	9c26b721ce811076		69	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/if_rns.o	kernel-IP32	kernel-object	object	n32	59800	f1778825bf1a1c3b		62	symtab	0	0	undocumented		
@@ -1845,7 +1845,7 @@ IP32/usr/cpu/sysgen/IP32boot/log.o	kernel-IP32	kernel-object	object	n32	14552	e4
 IP32/usr/cpu/sysgen/IP32boot/mace.o	kernel-IP32	kernel-object	object	n32	9704	5c8a35eeeef61004		12	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/magellan.o	kernel-IP32	kernel-object	object	n32	17720	c81fc7a55e994397		16	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mem.o	kernel-IP32	kernel-object	object	n32	11640	2b35f014642b5c47		12	symtab	0	0	undocumented		
-IP32/usr/cpu/sysgen/IP32boot/mhpckm.o	kernel-IP32	kernel-object	object	n32	21960	fd0938e2ac2241d2		24	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP32/usr/cpu/sysgen/IP32boot/mhpckm.o	kernel-IP32	kernel-object	object	n32	21960	fd0938e2ac2241d2		24	symtab	0	0	named-only	docs/coverage-mace.md#mace-coverage	MACE coverage
 IP32/usr/cpu/sysgen/IP32boot/mloadidbg.o	kernel-IP32	kernel-object	object	n32	23072	40bdb1c199507d70		10	symtab	0	0	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/mouse.a(pcmouse.o)	kernel-IP32	kernel-object	object	n32	12004	43be2695e227e3ea		5	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP32/usr/cpu/sysgen/IP32boot/msg.o	kernel-IP32	kernel-object	object	n32	17872	84b59b6cd0e6d237		11	symtab	0	0	undocumented		
@@ -2470,7 +2470,7 @@ IP35/usr/cpu/sysgen/IP35boot/hitachi.o	kernel-IP35	kernel-object	object	n64	2620
 IP35/usr/cpu/sysgen/IP35boot/hubspc.o	kernel-IP35	kernel-object	object	n64	13056	899394978cddc968		13	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/hwgfs.a(hwgvnops.o)	kernel-IP35	kernel-object	object	n64	25812	9ca9d559bbede8ee		21	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/idbg.o	kernel-IP35	kernel-object	object	n64	987960	8db9e6022bcc473a		304	symtab+dwarf	0	0	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-IP35	kernel-object	object	n64	119144	1e61f46697355749		74	symtab	0	0	named-only	chips/ioc4/README.md#ioc4	IOC4
+IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-IP35	kernel-object	object	n64	119144	1e61f46697355749		74	symtab	0	0	named-only	docs/coverage-ioc4.md#ioc4-coverage	IOC4 coverage
 IP35/usr/cpu/sysgen/IP35boot/ide_idbg.o	kernel-IP35	kernel-object	object	n64	20104	525922cbdc84aaae		10	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/idev.o	kernel-IP35	kernel-object	object	n64	25808	95261f60f2333df0		22	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/if_cl.o	kernel-IP35	kernel-object	object	n64	48944	3b269259a1d9ab75	IP35/usr/cpu/sysgen/IP35boot/if_cl_part.o	35	symtab	0	0	undocumented		
@@ -2495,7 +2495,7 @@ IP35/usr/cpu/sysgen/IP35boot/io6.o	kernel-IP35	kernel-object	object	n64	6776	db2
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-IP35	kernel-object	object	n64	27688	5e69438504a0ae29		27	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/ioc3_pckm.o	kernel-IP35	kernel-object	object	n64	37480	307a39f751ae13a4		36	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/ioc3ei.o	kernel-IP35	kernel-object	object	n64	21168	bdfefd9773253391		19	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-IP35	kernel-object	object	n64	23976	e15e32c04c326024		21	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP35/usr/cpu/sysgen/IP35boot/ioc4.o	kernel-IP35	kernel-object	object	n64	23976	e15e32c04c326024		21	symtab	0	0	named-only	docs/coverage-ioc4.md#ioc4-coverage	IOC4 coverage
 IP35/usr/cpu/sysgen/IP35boot/ioc4_ei.o	kernel-IP35	kernel-object	object	n64	21512	d1296012cdbeec0d		19	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/ioc4_pckm.o	kernel-IP35	kernel-object	object	n64	36408	c2d08701d772ec62		35	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/ip_mroute.o	kernel-IP35	kernel-object	object	n64	41144	86743841a0450c23		34	symtab	0	0	undocumented		
@@ -2855,7 +2855,7 @@ IP35/usr/cpu/sysgen/IP35boot/sbp2idbg.o	kernel-IP35	kernel-object	object	n64	193
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(serialio.o)	kernel-IP35	kernel-object	object	n64	57460	c199717209c94a35		60	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_l1.o)	kernel-IP35	kernel-object	object	n64	16612	ffa7a6efbfab3c6f		19	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
 IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc3.o)	kernel-IP35	kernel-object	object	n64	41364	1c6370081471b192		35	symtab	0	0	understood	docs/binaries-scope-chip-drivers.md#ip35-build	IP35 build
-IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-IP35	kernel-object	object	n64	44756	eaf1d7d5d4e6f7db		36	symtab	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
+IP35/usr/cpu/sysgen/IP35boot/sduart.a(sio_ioc4.o)	kernel-IP35	kernel-object	object	n64	44756	eaf1d7d5d4e6f7db		36	symtab	0	0	named-only	docs/coverage-ioc4.md#ioc4-coverage	IOC4 coverage
 IP35/usr/cpu/sysgen/IP35boot/sem.o	kernel-IP35	kernel-object	object	n64	45784	d1fcedb841dd899a		50	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/sessionidbg.a(sessionidbg.o)	kernel-IP35	kernel-object	object	n64	13204	702dafb0a6ff0933		7	symtab	0	0	named-only	IRIX_FILES.md#how-the-tree-is-filled	How the tree is filled
 IP35/usr/cpu/sysgen/IP35boot/sgi.a(chunkio.o)	kernel-IP35	kernel-object	object	n64	99700	e71570ef09a9c2b7		72	symtab	0	0	undocumented		
@@ -3079,15 +3079,15 @@ IP35/usr/cpu/sysgen/IP35boot/xvm.a(xvm_gpt.o)	kernel-IP35	kernel-object	object	n
 IP35/usr/cpu/sysgen/IP35boot/xvm.a(xvm_snapshot.o)	kernel-IP35	kernel-object	object	n64	74708	44f50e379c03c023		58	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xvm.a(xvm_irix_snapshot.o)	kernel-IP35	kernel-object	object	n64	22708	be841889d5cb09da		25	symtab	0	0	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/xvmidbg.o	kernel-IP35	kernel-object	object	n64	107400	d257b6091b3a821b		40	symtab	0	0	undocumented		
-firmware/IP30prom.bin	firmware	prom	data	-	879312	ee4722ca6f9b821f		0		0	0	named-only	chips/bridge/README.md#bridge-and-xbridge	Bridge and XBridge
-firmware/io6prom.img	firmware	prom	data	-	365328	024d2f28b526933e		0		0	0	named-only	chips/bridge/README.md#what-the-census-does-not-reach	What the census does not reach
-firmware/ip27prom.img	firmware	prom	data	-	912848	0dbd5d5f7027e380		0		0	0	named-only	chips/hub/README.md#hub	Hub
-firmware/ip32prom.image	firmware	prom	data	-	431872	11230c353cb14fcc		0		0	0	named-only	docs/open-questions.md#open-questions	Open questions
-firmware/ip35prom.img	firmware	prom	data	-	1480360	d74b4b7ef9c11c66		0		0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
+firmware/IP30prom.bin	firmware	prom	data	-	879312	ee4722ca6f9b821f		0		0	0	named-only	docs/interconnect-naming.md#1-sources-and-how-far-each-reaches	1. Sources, and how far each reaches
+firmware/io6prom.img	firmware	prom	data	-	365328	024d2f28b526933e		0		0	0	named-only	docs/interconnect-naming.md#1-sources-and-how-far-each-reaches	1. Sources, and how far each reaches
+firmware/ip27prom.img	firmware	prom	data	-	912848	0dbd5d5f7027e380		0		0	0	named-only	docs/crosstown-ktown.md#sources	Sources
+firmware/ip32prom.image	firmware	prom	data	-	431872	11230c353cb14fcc		0		0	0	named-only	docs/interconnect-naming.md#1-sources-and-how-far-each-reaches	1. Sources, and how far each reaches
+firmware/ip35prom.img	firmware	prom	data	-	1480360	d74b4b7ef9c11c66		0		0	0	named-only	docs/interconnect-naming.md#1-sources-and-how-far-each-reaches	1. Sources, and how far each reaches
 firmware/mmscfw.bin	firmware	prom	data	-	1023075	6c3db7ffd7fb4cc4		0		0	0	named-only	chips/scan/README.md#l2-and-the-rack-controller-image	L2 and the rack controller image
-sbin/stand/ide.IP30	standalone	diagnostic	executable	n64	1594880	19d7a194cb417330		0	none	0	0	named-only	docs/open-questions.md#open-questions	Open questions
+sbin/stand/ide.IP30	standalone	diagnostic	executable	n64	1594880	19d7a194cb417330		0	none	200	3	named-only	docs/open-questions.md#open-questions	Open questions
 sbin/stand/ide.IP32	standalone	diagnostic	executable	o32	763504	9c2ded7e65b68405		0	none	0	0	named-only	docs/open-questions.md#open-questions	Open questions
 sbin/stand/sash.ARCS	standalone	diagnostic	data	-	343604	a96e5d2ba76fccae		0		0	0	named-only	chips/mace/README.md#mace	MACE
 sbin/stand/sash64	standalone	diagnostic	object	n64	266768	7b86941c14cb8679		345	symtab	0	0	named-only	IRIX_FILES.md#irix-files-this-repository-reads	IRIX files this repository reads
-sbin/stand/symmon.IP30	standalone	diagnostic	executable	n64	367160	521fd47460bf2d1c		0	none	0	0	named-only	chips/heart/README.md#heart	HEART
+sbin/stand/symmon.IP30	standalone	diagnostic	executable	n64	367160	521fd47460bf2d1c		0	none	74	3	named-only	chips/heart/README.md#heart	HEART
 sbin/stand/symmon.IP32	standalone	diagnostic	executable	n32	502980	12d8ecedae658546		755	symtab+dwarf	0	0	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
