@@ -1,11 +1,16 @@
 variant	offset	idx	name	access_seen	widths	halves	sites	functions	images	example	datasheet	datasheet_ref	spec	spec_ref	model	model_detail	flags	tasks
 bedrock	0x18	0		r	8	0	1	1	ip35-kernel	handle_cac_buserr@1d9b4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x20	0		r	8	0	10	8	ip35-kernel,ip35-l1,ip35-l1_command	get_slice@12d4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x28	0		r	8	0	2	2	ip35-kernel	memory_iscalias@100cc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x78	0		r	8	0	1	1	ip35-nic	nic_get_phase_bits@70	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x90	0		w	8	0	7	6	ip35-kernel	sub_200f0@20170	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x98	0		r	8	0	9	6	ip35-kernel	sub_200f0@20110	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0xa0	0		r	4,8	0,4	6	4	ip35-hubspc,ip35-kernel,ip35-klconfig	sub_20250@2026c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+bedrock	0x20	0		rw	8	0	115	24	ip35-kernel,ip35-l1,ip35-l1_command,ip35-prom	get_slice@12d4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x28	0		rw	8	0	3	3	ip35-kernel,ip35-prom	memory_iscalias@100cc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x40	0		r	8	0	2	1	ip35-prom	prom_c00000001fc01284@c012c0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x60	0		r	4	4	2	1	ip35-prom	prom_c00000001fc00000@c006a8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+bedrock	0x78	0		r	8	0	2	2	ip35-nic,ip35-prom	nic_get_phase_bits@70	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x80	0		r	8	0	1	1	ip35-prom	prom_c00000001fc6b600@c6b650	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x88	0		r	4	4	1	1	ip35-prom	prom_c00000001fc00000@c00b7c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+bedrock	0x90	0		w	8	0	9	7	ip35-kernel,ip35-prom	sub_200f0@20170	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x98	0		r	4,8	0,4	13	8	ip35-kernel,ip35-prom	sub_200f0@20110	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+bedrock	0xa0	0		r	4,8	0,4	9	5	ip35-hubspc,ip35-kernel,ip35-klconfig,ip35-prom	sub_20250@2026c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared	32-bit access to a 64-bit register	no-spec: inventory from the binaries
+bedrock	0x108	1		w	8	0	24	2	ip35-prom	prom_c00000001fc00000@c00454	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x118	0		w	8	0	2	2	ip35-kernel	startkgclock@2a170	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x120	0		w	8	0	1	1	ip35-kernel	acktmoclock@29fbc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x128	0		w	8	0	1	1	ip35-kernel	acktmoclock@29fac	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
@@ -17,7 +22,7 @@ bedrock	0x400	0		rw	8	0	14	4	ip35-kernel	hubpi_eint_handler@18244	n/a		n/a		n/a	
 bedrock	0x408	0		rw	8	0	10	6	ip35-kernel	hubpi_eint_handler@18240	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x410	0		rw	8	0	10	6	ip35-kernel	hubpi_eint_handler@18240	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x418	0		r	8	0	1	1	ip35-kernel	hubpi_spool_get_next@19c4c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x420	0		r	8	0	1	1	ip35-kernel	hubpi_spool_get_next@19c4c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x420	0		r	8	0	2	2	ip35-kernel,ip35-prom	hubpi_spool_get_next@19c4c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x430	0		r	8	0	1	1	ip35-kernel	hubpi_spool_get_next@19bb8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x440	0		r	8	0	1	1	ip35-kernel	hubpi_spool_get_next@19be4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x448	0		w	8	0	1	1	ip35-kernel	hubpi_spool_get_next@19c44	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
@@ -26,13 +31,18 @@ bedrock	0x460	0		r	8	0	1	1	ip35-kernel	hubpi_spool_get_next@19be4	n/a		n/a		n/a	
 bedrock	0x468	0		w	8	0	1	1	ip35-kernel	hubpi_spool_get_next@19c44	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x4c8	0		rw	8	0	2	1	ip35-kernel	hubpi_eint_handler@184ac	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x4d0	0		rw	8	0	2	1	ip35-kernel	hubpi_eint_handler@184b0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x30100	0		r	8	0	96	50	ip35-eeprom,ip35-kernel,ip35-l1,ip35-pda,ip35-vmdump	numalinkstats_up2date@23d0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x30100	0		rw	8	0	103	56	ip35-eeprom,ip35-kernel,ip35-l1,ip35-pda,ip35-prom,ip35-vmdump	numalinkstats_up2date@23d0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x400110	0		w	8	0	1	1	ip35-prom	prom_c00000001fc01a24@c01a7c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x400128	0		rw	8	0	3	1	ip35-prom	prom_c00000001fc01a24@c01a94	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x400130	0		rw	8	0	2	1	ip35-kernel	ii_llp_error_monitor@1b1a0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x4001f8	0		w	8	0	2	1	ip35-kernel	sub_3d1d8@3d284	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x600000	0		r	8	0	4	3	ip35-kernel	get_nasid@12b8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x4001f8	0		w	8	0	4	2	ip35-kernel,ip35-prom	sub_3d1d8@3d284	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x600000	0		r	8	0	16	13	ip35-kernel,ip35-prom	get_nasid@12b8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x604020	0		r	8	0	1	1	ip35-kernel	sub_1bcf0@1bd98	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x604028	0		r	8	0	1	1	ip35-kernel	sub_1bcf0@1bda0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x604200	0		r	8	0	58	33	ip35-eeprom,ip35-kernel,ip35-l1,ip35-vmdump	numalinkstats_up2date@23d4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x604200	0		rw	8	0	67	36	ip35-eeprom,ip35-kernel,ip35-l1,ip35-prom,ip35-vmdump	numalinkstats_up2date@23d4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x608000	0		w	8	0	1	1	ip35-prom	prom_c00000001fc00000@c007d4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x608008	0		rw	8	0	17	5	ip35-prom	prom_c00000001fc00000@c007ec	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x608010	0		rw	8	0	3	1	ip35-prom	prom_c00000001fc00000@c00804	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x680000	0		r	8	0	2	2	ip35-kernel,ip35-partition	sub_11984@11988	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x680008	0		w	8	0	2	2	ip35-kernel	sub_10c0@1228	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x680010	0		w	8	0	2	2	ip35-kernel	sub_10c0@121c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
@@ -50,18 +60,25 @@ bedrock	0x682000	1		r	8	0	2	1	ip35-partition	part_discovery@2050	n/a		n/a		n/a	n
 bedrock	0x682008	0		r	8	0	1	1	ip35-partition	part_discovery@2080	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x780000	0		r	8	0	1	1	ip35-kernel	sub_1bcf0@1bd9c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x780008	0		r	8	0	3	3	ip35-kernel	mdir_xlate_addr_mem@2b870	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x790010	0		w	8	0	2	2	ip35-prom	prom_c00000001fc00000@c00480	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x7a0000	0		r	8	0	1	1	ip35-prom	prom_c00000001fc0411c@c042dc	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x7a0008	0		rw	8	0	2	1	ip35-prom	prom_c00000001fc00000@c00b40	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x7a0038	0		r	8	0	1	1	ip35-pda	doacvec@1c14	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x7c0018	0		r	8	0	1	1	ip35-prom	prom_c00000001fc059d0@c05b1c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x7e0018	0		r	8	0	1	1	ip35-prom	prom_c00000001fc059d0@c05b00	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800000	1		rw	8	0	19	16	ip35-kernel,ip35-partition,ip35-vmdump	timeout_poll@3968	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800010	1		w	8	0	1	1	ip35-partition	part_init_node@764	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800018	1		rw	8	0	8	5	ip35-kernel,ip35-partition	mlreset@db00	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800020	1		r	8	0	1	1	ip35-kernel	save_hub_err@13c68	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800028	1		rw	8	0	2	2	ip35-kernel,ip35-vmdump	mlreset@db08	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800038	1		w	8	0	1	1	ip35-kernel	per_hub_init@e3a0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x800040	0		r	8	0	1	1	ip35-prom	prom_c00000001fc01284@c012f4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800040	1		r	8	0	2	1	ip35-kernel	hub_error_init@17b40	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x800048	0		r	8	0	1	1	ip35-prom	prom_c00000001fc01284@c0130c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800048	1		r	8	0	2	1	ip35-kernel	hub_error_init@17b64	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800050	1		r	8	0	1	1	ip35-kernel	hub_error_init@17b54	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800058	1		r	8	0	1	1	ip35-kernel	hub_error_init@17b74	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-bedrock	0x800090	1		w	8	0	8	7	ip35-kernel,ip35-l1	cleanup_remote_pi@1b364	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+bedrock	0x800090	1		w	8	0	9	8	ip35-kernel,ip35-l1,ip35-prom	cleanup_remote_pi@1b364	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x800098	1		r	8	0	3	2	ip35-kernel,ip35-l1	intr_connect_level@1f350	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x8000a0	1		r	8	0	2	2	ip35-kernel	sub_18a24@18a64	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 bedrock	0x8000a8	1		w	8	0	1	1	ip35-kernel	intr_clear_all@2100c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries

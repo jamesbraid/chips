@@ -345,5 +345,10 @@
  "buckets": [],
  "status": "pilot",
  "collapse_above": 268435456,
- "note_windows": "window ranges are inferred from the clustering of the 64-bit literals the kernel object loads (top byte 0x92, low 24 bits below 0x1ffffff), not read from a named source"
+ "note_windows": "window ranges are inferred from the clustering of the 64-bit literals the kernel object loads (top byte 0x92, low 24 bits below 0x1ffffff), not read from a named source",
+ "header_skip": [
+  "0x60",
+  "0x80",
+  "0x88"
+ ]
 }

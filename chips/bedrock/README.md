@@ -2,7 +2,7 @@
 
 Mode: **no-spec** (no specification is held for Bedrock; the system-architecture document that was reviewed has no
 register content). Evidence: the IP35 kernel object `kernel.o` and the IP35 boot-directory objects named below,
-IRIX 6.5.30. The IP35 CPU PROM yields no sites yet (its window base is built at run time: open question).
+IRIX 6.5.30. The IP35 CPU PROM image is in the census since the 2026-11-10 rerun (see "What the PROM adds" below).
 Census: [census/](census/census.md).
 Start-up of several processors by the IP35 PROM (presence bits, rendezvous waits, memory configuration): [docs/questions/ip35-prom-mp-presence-poll.md](../../docs/questions/ip35-prom-mp-presence-poll.md).
 The memory-controller configuration word (bank decode, bank select, size probe) as the PROM and kernel use it: [docs/questions/ip35-prom-memory-bank-config.md](../../docs/questions/ip35-prom-memory-bank-config.md). The reset barrier on local-block scratch 1, the boot-master election, the progress registers and the PROM's check that pending bits reach the processor's interrupt lines: [docs/questions/ip35-prom-reset-barrier.md](../../docs/questions/ip35-prom-reset-barrier.md).
@@ -230,6 +230,41 @@ The same register can appear under three offsets, and none of them is a conflict
   `0x7c0040` (inferred), and `+0x40` of the block that starts at `+0x1fc0000`. `migr_effthreshold_diff_set` stores one doubleword
   there (`sd` at `0xc00000000032b5f0` in the IP35 `unix`) and the census has no load of it, so the kernel's access is
   write-only. Whether the hardware register reads back is unknown: no shipped software depends on it.
+
+## What the PROM adds to the census
+
+The census config lists the IP35 CPU PROM (`ip35prom.img`, unpacked to a flat image at `0xc00000001fc00000`; the
+scanner cuts it into pseudo-functions after each `jr $31`). The 2026-11-10 rerun adds 17 rows and removes none, and
+changes five. The earlier note that the PROM's window base is built at run time does not hold for these sites: the PROM
+builds the window literal with `lui`/`daddiu`/`dsll`/`ori` sequences, which `retools/tools/hostfacts.py` resolves
+to a constant (for example `0x9200000001000000` plus the displacement). That is established from the instructions.
+Every PROM row is reached only from such constant-built bases, except the `window-18` sites listed after the table.
+
+Each changed row, checked by running `hostfacts.py` over the unpacked PROM segment (`--flat --load
+0xc00000001fc00000`) and, where the routine is entered by a register jump so the tool does not reach it from its entry,
+by reading the instruction words around the site:
+
+| row | change | evidence (PROM address, instruction, resolved target) | status |
+|---|---|---|---|
+| `0x20` | r to rw | 22 doubleword stores (`sd`) in three pseudo-functions. Read from the instruction words: `k0` is built as `0x9200000001000020` (`0xc00000001fc020e4` to `0xc00000001fc020f4`, and the same sequence at `0xc00000001fc024b4`), then the CP0 words read by `mfc0`/`dmfc0` are stored there in turn (`0xc00000001fc020fc`, `0xc00000001fc02104`, `0xc00000001fc0210c`, `0xc00000001fc024cc` and others), and a fixed marker doubleword is stored at `0xc00000001fc02a90`. 83 PROM loads by `ld` (hostfacts: `abs 0x9200000001000020` at `0xc00000001fc01c54`, `0xc00000001fc01d74` and others). | established; what the stores mean is unknown |
+| `0x28` | r to rw | `sd` of 1 at `0xc00000001fc009ac`, `0x28(v0)` with `v0` = `0x9200000001000000` (hostfacts: `abs 0x9200000001000028`, value `0x1`) | established |
+| `0x30100` | r to rw | `sd` of zero at `0xc00000001fc6b648` through `a2` = `0x9200000001030100`; `0xc00000001fc6b600` is a short routine that also stores 1 in bit 32 of the word at `0x604200` first | established |
+| `0x604200` | r to rw | `sd` at `0xc00000001fc6b644` (value `0x100000000`) and `0xc00000001fc6b688` (a count built from two window-18 reads, below), and a read-modify-write that clears bit 0 (`0xc00000001fc6b6a4` to `0xc00000001fc6b6b0`) and one that sets bit 0 (`0xc00000001fc6b6c8` to `0xc00000001fc6b6d4`); base `0x9200000001604200` | established |
+| `0x98` | r w8 to r w4/8 | **not evidence about the register.** The one 4-byte access is `lwu` at `0xc00000001fc00b8c` through `0x900000001800009c`, which is the `window-18` boot space, not the `0x92...` register window. The census row for `0x98` also holds the 8-byte register reads (`0xc00000001fc04564` and two more, `0x92...` base) and keeps the register's width at 8. | the row's width column is wrong for the register; see below |
+
+`window-18` accesses are not separated from register accesses in `census.tsv`: the join keys a row by offset only. This
+already made rows `0x78` and `0xa0` partly boot-space reads (`nic_get_phase_bits`, `cpuprom_detailed_inventory_info_add`);
+the PROM adds reads at `0x64` (`0xc00000001fc006a8`, `0xc00000001fc006dc`), `0x78` and `0x80`
+(`0xc00000001fc6b64c`, `0xc00000001fc6b650`, which the shipped code divides to get the count stored at `0x604200`),
+`0x8c` and `0x9c`. The three rows that only boot-space reads reach (`0x60`, `0x80`, `0x88`) stay in `census.tsv`
+as evidence but have no define in `include/bedrock.h` (the config's `header_skip`), because their offsets are not register
+offsets. The two existing defines at `0x78` and `0xa0` stay, as before, with the boot-space reads included; the `0x98` define
+inherits the width mix described above. Separating the windows in the join would remove or rename those defines, so it is a
+separate change.
+
+Names. A PROM has no symbols, so its pseudo-function names carry an address and never name a define. A register that
+only the PROM reaches is `BEDROCK_REG_<offset>` (for example `BEDROCK_REG_608008`); the other defines keep the names the
+named kernel routines gave them, so no existing define changed.
 
 ## Groups by routine names (inferred)
 
