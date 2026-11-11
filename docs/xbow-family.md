@@ -68,7 +68,7 @@ Sources for the table:
 | Octane, Octane2 (IP30) | `0` | PROM banner "Xbow ASIC: Revision 1.2", "1.3", "1.4" in public boot captures (5, 5, 7 held); an Octane2 identification word read `0x5000_0001`, code 5, whose banner is 1.4 | public boot captures; PROM Command Monitor read, 2026-10-02 | established |
 | Origin 2000, Onyx2 (IP27) midplane | `0` | `hinv -v` prints "ASIC XBOW Rev 2" (once), "Rev 4" (twice) and "Rev 5" (three times) "on midplane of Module 1" in public captures | public `hinv` captures | established that these codes occur; what each silicon stepping fixed is unknown |
 | Origin 200 base (IP29) | none; widget 0 answers with the Bridge identity | | Origin 200 captures and OpenBSD's probe | established |
-| Origin 200 GIGAchannel | `0` (external Crossbow on the expansion path) | not captured | | inferred from the product's expansion path; revision unknown |
+| Origin 200 GIGAchannel | `0` (external Crossbow on the expansion path) | not captured | | inferred from the product's expansion path; revision unknown. Settling test: a published PROM-monitor or hardware-inventory capture from an Origin 200 with a GIGAchannel link that prints widget 0's identification register of the external chip (revision in bits 31:28); no shipped binary can settle it because the kernel reads the register at run time and none of the held objects embeds the value |
 | Origin 300 (IP45), Fuel (IP34) | `0xd000` | "ASIC XBOW Rev 2, on CBrick", printed beside "ASIC BRIDGE Rev 2"; OpenBSD prints "XXBow revision 2" with Xbridges at widgets 14 and 15 | public `hinv` and OpenBSD captures | revision: established; part number: established by OpenBSD's own match |
 | Origin 350, Onyx 350, Tezro (IP53, IP35 platform) | `0xd100` (inferred) | "ASIC XBOW Rev 3, on CBrick" in multiple public captures | public `hinv` captures | revision: established; part: the PROM accepts parts `0`, `0xd000`, `0xd100` at widget 0 and the captures do not print the part, so which one is inferred |
 | IX-brick (and, by the same PIC generation, PX-brick) | PIC (`0xd102`/`0xd112` heads); crossbar part not read | | 007-4377-001 p67 (three PICs in an IX-brick) | the crossbar part of these bricks is **unknown**; test: a verbose PROM capture of an IX-brick |
@@ -222,7 +222,7 @@ load or store at slot + 4. Established.
 | `0x58` | Arbitration reload | read for printing only | inferred |
 | `0x60`, `0x68` | Performance counters A and B (bits 22:20 link select, 19:0 count) | read and written | established |
 | `0x70` | NIC (one-wire identity line) | untouched | unknown; test: a PROM read of it on an Octane |
-| `0x78` | Widget 0 reset fence | code-5 chips only | existence and read value measured on one Octane2; reset value unknown |
+| `0x78` | Widget 0 reset fence | code-5 chips only | existence and read value measured on one Octane2; reset value unknown. Settling test: the early-boot read of this register on a code-5 chip before the PROM's first fence access (the same read the lock row below names), since no shipped code reads it before writing |
 | `0x80`..`0xb8` | Reset fences for links 8..F | as above | as above |
 | `0xc0`, `0xc8` | Resource lock; lock clear | as above | read value measured on one Octane2; acquire and release inferred |
 
@@ -312,7 +312,7 @@ reproduced from the proprietary specification. What is known:
 | Register | Value | Grade |
 |---|---|---|
 | Identification | part 0, manufacturer 0 for the Crossbow; revision silicon-dependent | established (OpenBSD, header) |
-| Link control | the IP27 PROM's link bring-up writes `0x0008_0000` (widget credit 2, all else clear): a deliberate write, not evidence of the reset value | established as a write; reset value unknown |
+| Link control | the IP27 PROM's link bring-up writes `0x0008_0000` (widget credit 2, all else clear): a deliberate write, not evidence of the reset value | established as a write; reset value unknown. Settling test: an early-boot read of link control on each link before the PROM's bring-up write (the same read as the fences and the lock); the shipped bring-up reads and rewrites the register but no held routine records what it read, so a binary route cannot settle it |
 | Performance counters A, B | the kernel clears exactly bits 22:20 and stores port minus 8 there | established as software behaviour |
 | Fences (code 5) | `0xf7` measured on one Octane2 after the PROM ran | measured; power-on value unknown. Settling test: read the fences from a PROM monitor before the PROM clears any bit (halted early boot), or find the PROM image's earliest write to them (open question list below) |
 | Lock (code 5) | 0, measured on one Octane2 | measured (one system, after the PROM ran): established as that observation only; reset value unknown. Settling test: the same early-boot read as the fences |

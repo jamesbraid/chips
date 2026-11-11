@@ -222,3 +222,11 @@ Corrections found while tagging. These are not fixed here.
 - **Tezro: the graphics board's revision digit in the base-I/O PROM's diagnostic, and the credit table's consumer.** *[route: software now for the first (read the diagnostic's code in the nested base-I/O image); a PROM-monitor read of widget 12 `+4` on hardware]* Open: which input the digit after "Buzz revision" comes from, and which routine indexes the PROM's fourteen-row credit table. Next: docs/questions/tezro-io-topology.md.
 
 - **Route: software now.** IP35 PROM: what is the 64-bit register at `0x9200000001608008`, and what do its bits 62 and 61 mean? The PROM's brick-type classifier skips the system controller when bit 61 is set and bit 62 is clear ([questions/ip35-prom-l1-brick-class.md](questions/ip35-prom-l1-brick-class.md)); the reset code writes the register ([questions/ip35-reset-window.md](questions/ip35-reset-window.md)). Tried: the classifier and the reset code. Next: the Bedrock block layout around `+0x1600000` from the kernel's hub routines, then a read on running hardware.
+
+- **Settling tests added in the gap-fill pass.** *[route: mixed, each item names its own]* Each unknown below already carries its test next to the fact; this list is the index.
+  FC: whether the bank-select nibbles select banks separately (hardware read; the `0xff` question is answered, it is a scratch-window store);
+  FC: the on-chip microcode's completion status (docs/xio-fibre-channel.md, loop initialisation); IOC4: ATA DMA words 0, 3 and 4 (chips/ioc4/README.md);
+  router: the global port definition bits (chips/router/README.md); PIC: widget control bits 55:48 and 47:40 (docs/bridge-family.md);
+  Crossbow: the Origin 200 GIGAchannel revision, the reset fence and link control reset values (docs/xbow-family.md); Bedrock: every reset value (chips/bedrock/README.md);
+  CRIME: reset values (chips/crime/README.md); Hub: the remaining fields of the link log word (docs/crosstalk-link.md); fetch-and-op across a Crossbow (docs/crosstalk-link.md);
+  sideband bit encoding (docs/crosstalk-packets.md); Bedrock host-end interrupt address (docs/crosstalk-packets.md).

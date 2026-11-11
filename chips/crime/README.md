@@ -340,7 +340,7 @@ numbers are printed pages of the CRIME 1.5 Specification, revision 0.3.
 
 ## Reset expectations
 
-Unknown for every register. No scanned routine reads a register before writing it except `0x8` (`mlreset` and the PROM
+Unknown for every register in this repository's own evidence (CRIME is canonical in another repository, which owns the per-register reset table). Route: the held CRIME specification (rev 0.3) prints a Reset Value column in every register table of its register chapter; the canonical repository's datasheet should take those values with the page citation, and this page then points there. No scanned routine reads a register before writing it except `0x8` (`mlreset` and the PROM
 read-modify-write it). The specification gives defaults (JUICE field 001, endianness bit reading 1, everything else 0, ECC
 off); the code agrees only in intent: the PROM stores 0 to `0x200`, `0x18`, `0x20`, `0x28` and `0x50`, and `mlreset` stores 0
 to `0x18`, `0x10`, `0x30`, `0x48` and `0x250`.
