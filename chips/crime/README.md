@@ -228,6 +228,8 @@ to `0x48` and `0x250` in `VEC_dbe`, `VEC_ibe`, the save routine at `0xff08` and 
 
 Decode routine at `kernel.o` `0x105c4` (read in full), printed as `MEMORY Error/Addr 0x<stat><<kind> during <access>>`:
 
+**Grade of the table.** Established: which status bit selects which printed string, and the mask arithmetic (the decode routine read in full). Inferred: that each string names the hardware condition that sets its bit, as for every kernel-string table here. The specification text quoted in the rows is a published source.
+
 | bits | meaning in the kernel's strings |
 |---|---|
 | 27, 26, 25 | invalid memory address on R/M/W, on write, on read (mask `0x0e000000`; exactly one tested at a time) |

@@ -69,7 +69,8 @@ record, `dsll32` by 1). The scan lists the offsets from that base. Every access 
 A router brick has no node-local window to the L1, so `rtr_uart_putc` (`0x634`), `rtr_uart_getc` (`0x784`) and
 `rtr_uart_init` (`0x818`) use `vector_read_node` and `vector_write_node` with the register numbers below. The numbers are
 the router's second JBUS bank (the public router header names `RR_JBUS1(_D)` at `0x240 + 8 * D`) and follow the same
-16550 indexing. Established from the call arguments. `rtr_uart_init` (`0x818`, read at its call sites) follows the
+16550 indexing. The register numbers and access are established from the call arguments; the roles in the table's last column are
+inferred from that indexing and from `uart_init`, which the routine mirrors. `rtr_uart_init` (`0x818`, read at its call sites) follows the
 order of `uart_init` with one difference: the interrupt-enable index receives 0 where the node-local routine writes 1.
 
 | router register | index | access | use |
@@ -131,7 +132,7 @@ task 6 general requests (agreement).
 | `0x1009` | `elsc_led_set` | none (the header has `0x1007` for the event subchannel) | E; role I |
 | `0x100a` | `elsc_evt_unreg` | none | E; role from the name (I) |
 | `0x100c` | `sc_set_system_state` | none | E; role from the name (I) |
-| `0x2001` | `elsc_system_reset` | header: `0x2001` is `L1_REQ_PCI_UP`, `0x2000` is `L1_REQ_RESET` | conflict, below |
+| `0x2001` | `elsc_system_reset` | header: `0x2001` is `L1_REQ_PCI_UP`, `0x2000` is `L1_REQ_RESET` | E that this routine sends `0x2001`; role I from the routine name; the header's meaning is for another firmware generation (I), so the conflict is not settled here, see below |
 | `0x2005` | `elsc_pwr_off` | none | E; role from the name (I) |
 | `0x2006` | `elsc_pwr_cycle` | none | E; role from the name (I) |
 | `0x2007`, `0x2008` | `elsc_ody_expander_get`, `elsc_ody_expander_set` | none | E; role from the names (I) |

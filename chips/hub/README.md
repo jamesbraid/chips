@@ -224,6 +224,8 @@ The decode text the kernel prints for this register (the "HUB error interrupt re
 are CPU A, even are CPU B (every pair is B at the even bit); the order agrees with `hub_error_init` and the handler, which pick
 the A bit when the processor's slice is 0.
 
+**Grade of the table.** Established: the bit-to-text mapping (the 25 strings the kernel prints, in bit order) and the pairing of odd bits with CPU A and even with CPU B (the routines named above, read in full). The handler-class column is established for the routines read in full and inferred for `hubii_eint_handler`, `handle_uncac_buserr` and the other routines listed above as not read in full. Inferred: that each text names the condition that sets its bit.
+
 | Bit | Mask | Shipped text | Handler class |
 |---|---|---|---|
 | 0, 1 | `0x1`, `0x2` | B, A spool count compare | misc: `process_error_spool`, then clear |
