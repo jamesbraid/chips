@@ -199,8 +199,19 @@ Corrections found while tagging. These are not fixed here.
   *[route: hardware only]* Software tests bit 1 (link up) and, in one diagnostic, bits 1:0 as zero or nonzero; the
   public SN1 header calls bits 1:0 "port status" and bit 2 "remote power". No capture of the word is held.
 - **IP35 PROM refusal of 256 MB DIMM banks "on IP27 node boards": what selects it on an IP35 board.**
-  *[route: software now]* The text is at outer offset 0x86aa8 of the 6.210 segment; the routine that raises it was
-  not read. Next: read the memory-configuration routine that calls it.
+  *[route: software now]* The text is at outer offset 0x86aa8 of the 6.210 segment, in a record of the fatal
+  progress-code table whose code is 0x65. No instruction loads 0x65 as an immediate except three character compares,
+  so the code is raised by a computed value or by a path not yet found (tried: every `addiu`/`ori` of 0x65 in the
+  image, every gp-relative and `lui`-built reference to the table; answered in part in
+  [docs/questions/ip35-prom-memory-bank-config.md](questions/ip35-prom-memory-bank-config.md) item 6). The size probe
+  itself does not single out 256 MB. Next: find stores of a computed progress code in the memory-configuration
+  and node-class code, and evaluate them for a 256 MB size code.
+- **IP35 PROM size probe: return mapping and the bank-0 swap guard.** *[route: software now]* The probe at 0x1fc2d18c
+  counts how many of five power-of-two offsets read back their own pattern; the routing of that count to the
+  return value through the override and directory-type flags (0x1fc2d370 to 0x1fc2d3f8), and the test ahead of the
+  three bank-select stores (0x1fc65aa4, 0x1fc65b38, 0x1fc65b4c), are not reduced to one expression
+  ([docs/questions/ip35-prom-memory-bank-config.md](questions/ip35-prom-memory-bank-config.md) items 3 and 5).
+  Next: run the routine over a scripted carrier image with 64 MB to 1 GB banks; trace the branch ahead of 0x1fc65aa4.
 
 - **Tezro: the graphics board's revision digit in the base-I/O PROM's diagnostic, and the credit table's consumer.** *[route: software now for the first (read the diagnostic's code in the nested base-I/O image); a PROM-monitor read of widget 12 `+4` on hardware]* Open: which input the digit after "Buzz revision" comes from, and which routine indexes the PROM's fourteen-row credit table. Next: docs/questions/tezro-io-topology.md.
 
