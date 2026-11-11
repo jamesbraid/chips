@@ -27,7 +27,14 @@ read beyond those string offsets. Register names for the Ethernet controller are
   allocates INTA for function 0 and INTB only when the function number is 1 (`if_tgattach`, `if_tg.o` 0x9344 with the
   `movn` at 0x9348), so a single-port 5701 uses INTA alone.
 - Inferred: the Tezro's IO9 is the same board family as the Origin 350's, so the three placements and inputs carry over.
-  No public capture of a Tezro's PCI device list or interrupt numbers was found.
+  No public capture of a Tezro's interrupt numbers was found.
+- Established (captures, [tezro-io-topology.md](tezro-io-topology.md) item 3): a Tezro's widget 15 head 0 lists the
+  IOC4 at pci id 1, a TI PCI-to-PCI bridge (vendor `0x104c`, device `0xac28`) at pci id 2, the SCSI controller at 3 and
+  the gigabit Ethernet at 4. The bridge is on all five Tezro postings that print that head and on none of the seven
+  Origin 350 and Onyx 350 IO9 captures. If the printed pci id is one more than the logical device number used above,
+  the bridge is logical device 1 (window 2), the slot the Origin 350 layout leaves empty, and the SCSI and Ethernet
+  parts keep windows 3 and 4. That mapping is **inferred**, and the cause of the bridge's absence on Origin 350 is
+  **unknown**.
 - Established (PROM 6.210): the PROM scans all eight configuration windows of the bus from 0x20000 in steps of
   0x1000 (the loop at 0x1fc426d8 to 0x1fc426d4, helper 0x1fc47d44 called with the window index) and decides what each
   device is from the identification dword (device id high, vendor low). Inferred (the compare tree was read, not every
@@ -45,6 +52,7 @@ read beyond those string offsets. Register names for the Ethernet controller are
 | Item | Grade | What would settle it |
 |---|---|---|
 | IOC4 at window 1, ISP at 3, BCM5701 at 4, inputs 0, 2, 3 on a Tezro | inferred (established for an Origin 350 by capture) | a Tezro boot capture that lists PCI devices and interrupt numbers, or a Tezro `hinv -v` with the hardware graph paths |
+| TI bridge (104c:ac28) at widget 15 pci id 2 on a Tezro, window 2 | printed presence established (five Tezro postings); window mapping inferred; the cause of its absence on Origin 350 unknown | a Tezro capture that lists a card behind the bridge (see [tezro-io-topology.md](tezro-io-topology.md)) |
 | BCM5701 PCI revision 0x15 (chip id 0x105) on a Tezro | inferred, same board family | the same capture on a Tezro |
 | INTB and INTD wiring on the board | unknown | no software on this board uses them for these parts; a board schematic would settle it |
 | Why the IOC4 reports PCI bus speed through register 0x24 | see [../../chips/ioc4/README.md](../../chips/ioc4/README.md) | the PIC control register's speed field on the IO9 bus, read by the PROM or IRIX at attach |

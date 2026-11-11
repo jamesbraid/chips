@@ -41,6 +41,14 @@ diagnostic only (item 7). Nothing was run.
    adapter in the stock capture; in the one capture that carries optional cards, those appear under widget 11 (ids 1 and 2) and under bus index 1 of widget 15 (ids 1 and 3). Which printed "pci id" is the bridge's device-select number is **inferred** (the
    numbering matches the four device slots a PIC head has). What the `0xac28` bridge feeds, and its interrupt route,
    are **unknown**; no capture lists anything behind it.
+   Five distinct Tezro postings print a widget 15 entry and all five show the bridge there: the three PROM captures
+   (`docs/library/hinv/fresh-prawn/02.hinv`, `mighty-fox/01.hinv`, `immune-raptor/01.hinv`) and two IRIX board lists
+   (`docs/library/hinv/model-stork/01.hinv`, `close-bug/01.hinv`), which print `PCI Adapter ID (vendor 0x104c, device
+   0xac28) PCI slot 2`. Seven Origin 350 and Onyx 350 captures carry an IO9 board line and none shows the bridge
+   (`docs/library/hinv/polite-rat/01.hinv`, `loving-slug/01.hinv`, `fast-oryx/01.hinv`, `living-raptor/01.hinv`,
+   `vocal-stag/01.hinv`, `vocal-stag/03.hinv`, `cute-shrimp/02.hinv`). On `cute-shrimp/01.hinv`'s PROM form, widget 15
+   pci id 2 holds a USB (OHCI) adapter instead. **Established** for those captures. The cause of the difference is
+   **unknown**, and the sample is small (five Tezro, seven Origin 350 and Onyx 350).
 4. **Established for the build compared, inferred for behaviour.** The PROM 6.211 build carries the same widget
    discovery code as 6.210. I located twelve routines of the discovery and graphics paths in 6.211 by instruction shape
    (jump targets masked): the identity read of widget 0 (6.210 `0x1fc66b08`, 6.211 `0x1fc66b00`), the widget-0 part
