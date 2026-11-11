@@ -25,9 +25,8 @@ and command path.
 
 Every statement rests on one of three things: the shipped 6.5.30 `fcadp` objects
 (`hwutil.o:sh_loadnrun_lip`, `hwlip.o:sh_start_lip_sequencer`,
-`hwconfig.o:sh_init_hardware`, `fcadp.o:fill_lip_tcb`, `fcadp.o:fcadp_ctlrinit` and
+ `fcadp.o:fill_lip_tcb`, `fcadp.o:fcadp_ctlrinit` and
 the routines named in place, each cited with its offset), a public document, or a
-newsgroup capture. Where a fact is one that only the controller's source could settle
 (a reason for a driver choice, a name for a register bit, how the chip itself behaves),
 the sheet says so and marks it **U** or **I** with the binary read that would settle it.
 Symbol names quoted below (for example `sh_load_sequencer`) and strings quoted from
@@ -453,6 +452,18 @@ Checked against the 6.5.21 IP30 kernel and `fcadp` archive (kernel SHA-256 `c5cb
 | Can "error -2 in getting config" come from anywhere else? | No. The only −2 return in `sh_get_configuration` (text offset 0, 676 bytes; at offset 0xe8) is the non-zero return of the link-speed routine; the TCB-count probe fails with −1. So a −2 means the byte read of BAR 0 + 0x63, after the 0x44 write to BAR 0 + 0x2c, returned a value outside the list | E |
 | What touches widget offset `0xc00000` on an Octane? | The IP30 kernel's Bridge flash driver (`srflash_attach`), not `fcadp`. The Bridge map has registers at 0, type-0 config space for devices 0 to 7 at 0x20000, device PIO windows at 0x200000 (device 0, 2 MB), 0x400000 (device 1, 2 MB) and 0x600000 to 0xbfffff (1 MB each), and the external flash, two 2 MB chip selects, at 0xc00000. The driver registers for the Bridge widget identity (part 0xc002, manufacturer 0x36), so the kernel runs it for **every** Bridge, including this board's. It maps the register block; returns quietly unless Status bit 5 (PCI mode) is set; maps flash offset 0xc00000, size 8; sets Control bit 31 (flash write enable); stores 0x9090; reads the halfwords at offsets 0 and 2 and wants 0x00b0 and 0x66a8; on a mismatch repeats at 0xe00000; then clears Control bit 31 and gives up without a message. It sets up no fault handler. The 6.5.21 IP27 kernel has no such driver (no `srflash` symbol or string), so the board never touches the flash window on an Origin 2000 | E for the IP30 routine and the IP27 kernel; I that the 6.5.30 IP30 kernel does the same (not read) |
 | What must the board's Bridge do? | Real X9-FC-2P boards attach on Octanes (U3, D1) without a bus error, so on the real board either a flash is fitted or an empty select reads without faulting. The probe needs the reads of 0xc00000 and 0xe00000 and the 16-bit store to complete, and the reads must not be 0x00b0 / 0x66a8 (all ones passes). What the real board returns is not known | E for what the probe needs; U for the board. A read of flash offset 0 on a real X9-FC-2P settles it |
+
+#### How the IRIX 6.5.21 kernel places the board's BARs
+
+Read from the 6.5.21 IP30 kernel and the 6.5.21 Origin kernel (the Bridge slot set-up and address
+allocator functions).
+
+| Question | Answer | Grade |
+|---|---|---|
+| Where does the kernel allocate an I/O BAR? | From a per-Bridge pool, not from the device window. At Bridge attach it builds three pools: **I/O space starts at 0x200000, runs to about 0x10000000, in 1 MB units**; one memory range starts at 0x4000 and is 0xfc000 long in 16 KB units; the other 32-bit memory range starts at 0x200000 in 1 MB units. The pool is chosen from the BAR's recorded type. Every I/O BAR therefore takes a whole 1 MB unit, first fit, shared by all slots on the Bridge. Origin 2000 placements (BAR 0 = 0x200000, BAR 3 = 0x300000) follow from this | E (disassembly; the allocator and pool set-up are the same code in both kernels) |
+| Does it keep an address firmware already assigned? | It tries. The slot set-up reads each BAR; if the command register's I/O-decode bit is set it takes the BAR's address as firmware's assignment and asks the pool to reserve it. Later, only a BAR whose recorded address is below its size (unassigned) is given a fresh allocation | E for the mechanism; U for what the reserved size is in practice and when the reserve is skipped |
+| Does the kernel treat the AIC-1160 specially? | Yes: when it turns decoding on it enables bus master and **I/O decode only** for vendor 0x9004 device 0x1160, and I/O plus memory decode for other devices | E |
+| What BARs does the real chip present? | BAR 0 (registers) and BAR 3 (sequencer, TCB and scatter/gather RAM) are each used as 256-byte windows and are I/O BARs (inferred from the I/O-only decode and from the BAR type bit deciding the pool). The driver clears BARs 1 and 2 as a chip-bug workaround, so they exist and are likely memory BARs (inferred). BAR sizes, BAR 4 and 5 are unknown; no public Adaptec register document was found | I; U for sizes and BARs 4 and 5. A config-space dump of a real board settles it |
 
 ### Command / response path
 
