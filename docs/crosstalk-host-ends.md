@@ -347,7 +347,7 @@ an alias macro without ever defining the address. Instead there are separate mec
 | PI maximum request-buffer timeout | PI `0x30` | 7:0, reset unknown | IRIX writes `0xd0` or `0xfe` depending on two kernel conditions | values established; conditions not read |
 | PI request-buffer scale factor | PI `0x38` | 23:0 on Bedrock; Hub width and reset unknown | IRIX writes `0xd400` or `0xc000` with the matching value above | values established |
 | II tail timeout | `0x4001f0` | 25:0, reset unknown | no held code writes it | layout inferred |
-| II credit-count timeout | `0x4001e0` | 25:0 (public SN1 header; the Origin 2000 header names the register only) | no held code writes it | layout established from the SN1 header; role as in section 4.4; no software consumer in anything held |
+| II credit-count timeout | `0x4001e0` | 25:0 (public SN1 header, the Bedrock-generation chip; the Origin 2000 header names the register only) | no held code writes it | Hub layout **inferred**: the SN1 header describes a sibling chip, which is a hypothesis for the Hub and does not fill a field. Bedrock layout is established from that header (see the Bedrock table below); role as in section 4.4; no software consumer in anything held. Settling test for the Hub: the public Linux SN0 Hub register header's field definitions for this register, or a timed read on hardware this repository does not assume |
 
 - **Correction.** The II pair at `0x4003b8`/`0x4003c0` times out entries in the II's request
   buffer table (the "CRB": requests widgets make toward memory, i.e. coherent DMA requests).

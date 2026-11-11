@@ -314,8 +314,8 @@ reproduced from the proprietary specification. What is known:
 | Identification | part 0, manufacturer 0 for the Crossbow; revision silicon-dependent | established (OpenBSD, header) |
 | Link control | the IP27 PROM's link bring-up writes `0x0008_0000` (widget credit 2, all else clear): a deliberate write, not evidence of the reset value | established as a write; reset value unknown |
 | Performance counters A, B | the kernel clears exactly bits 22:20 and stores port minus 8 there | established as software behaviour |
-| Fences (code 5) | `0xf7` measured on one Octane2 after the PROM ran | measured; power-on value unknown |
-| Lock (code 5) | 0, measured on one Octane2 | measured (one system, after the PROM ran): established as that observation only; reset value unknown |
+| Fences (code 5) | `0xf7` measured on one Octane2 after the PROM ran | measured; power-on value unknown. Settling test: read the fences from a PROM monitor before the PROM clears any bit (halted early boot), or find the PROM image's earliest write to them (open question list below) |
+| Lock (code 5) | 0, measured on one Octane2 | measured (one system, after the PROM ran): established as that observation only; reset value unknown. Settling test: the same early-boot read as the fences |
 | Everything else (packet timeout, arbitration reload, interrupt destination, LLP control, NIC) | none | unknown; test: read each from a PROM monitor immediately after reset, on a halted early boot |
 
 ## 6. Link-up, reset and port mapping
