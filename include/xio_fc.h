@@ -44,10 +44,23 @@
 #define XIO_FC_DONE_STATUS                   0x02       /* [E] byte; completion status code (normal-command meanings: 0 success, 1 overrun, 2 underrun, 3 TCB parity error, 4 error response, 5 out of order, 6 frame format, 7 count overflow, 8 undelivered, 9 and 0xa bad delimiter, 0xb aborted, 0xf primitive timeout [E]; a loop-init completion reuses some values, and a successful one returns the negotiated loop address) */
 #define XIO_FC_DONE_PASS                     0x03       /* [E] byte; initialised to 0xff; the chip writes the ring-lap number modulo 256 and the driver consumes while it equals the expected value */
 
+/* FCP response buffer: the 256-byte buffer whose bus address is XIO_FC_TCB_RESP_PTR. The chip writes a standard FCP
+ * response unit here, and the driver reads it only when the done-queue status is 4 (error response). Re-read against
+ * the completion routine of one machine build's driver object: the three byte loads and the unaligned word load
+ * below are what it does. */
+#define XIO_FC_RESP_FCP_STATUS_FLAGS         0x0a       /* [E] byte; bits 0x01 response-length valid, 0x02 sense-length valid, 0x04 residual overrun, 0x08 residual underrun (each tested by a single-bit branch); the names follow the FC-4 SCSI profile [I] */
+#define XIO_FC_RESP_SCSI_STATUS              0x0b       /* [E] byte; passed up as the command's SCSI status; 0x28 (queue full) is compared and handled apart */
+#define XIO_FC_RESP_RESIDUAL                 0x0c       /* [E] 4 bytes big-endian (read as an unaligned word pair); the command residual on underrun, reported as a length mismatch on overrun */
+#define XIO_FC_RESP_SENSE_LEN                0x10       /* [E] 4 bytes big-endian, read as an unaligned word pair */
+#define XIO_FC_RESP_RESPONSE_LEN             0x14       /* [E] 4 bytes big-endian, read as an unaligned word pair */
+
 /* Interrupt-status register at 0x24 (16-bit pending test masks with 0xff08; the chip mirrors it into a two-byte
  * host status block, low byte = 0x24, high byte = 0x25; handled bits are cleared by writing them back as byte
  * writes). Meanings are inferred from the branch each bit guards [I]; that the driver tests each bit is [E]. */
 #define XIO_FC_INT_LOOP_ATTENTION            0x0008     /* [E] register 0x24 bit 3: the back-end routine then selects bank 1 and reads the loop-state register at 0xa1 */
+#define XIO_FC_INT_SEQ_READY_FOR_LIP         0x0100     /* [E] register 0x25 bit 0: tested by the back-end routine on its saved copy of the status byte; set means the sequencer has run loop initialisation far enough for the host to post its loop-initialisation command block, and the routine then pauses the sequencer. Name [I] */
+#define XIO_FC_INT_HOST_COMPLETION           0x0400     /* [I] register 0x25 bit 2: named by the sheet's register map; neither interrupt routine tests it on its own, and the driver does not depend on it */
+#define XIO_FC_INT_BREAKPOINT                0x0200     /* [I] register 0x25 bit 1: named by the sheet's register map; neither interrupt routine tests it on its own */
 #define XIO_FC_INT_PCI_ERROR                 0x8000     /* [E] register 0x25 bit 7 */
 #define XIO_FC_INT_HARDWARE_ERROR            0x4000     /* [E] register 0x25 bit 6: the routine reads and latches the error-status register at 0x23 */
 #define XIO_FC_INT_SOFTWARE_ERROR            0x2000     /* [E] register 0x25 bit 5 */
