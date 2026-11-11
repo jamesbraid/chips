@@ -54,7 +54,7 @@ Machine support, graded separately:
 | Tezro rackmount | media options list names "DMediaPro DM8 Audio I/O PCI option", 007-4643-003, p. 34; the slot diagram marks "Bus 2, slot 2 (optional audio)", p. 42 | established (SGI statement) |
 | Tezro tower | options list "8-channel Digital Audio I/O board", 007-4564-001, p. 42. The text does not say DM8. | inferred that this is the DM8 (eight channels, same era) |
 | Fuel | the hardware guide (007-4480-001, pp. 39 and 42) lists a "Digital Audio I/O board"; it does not name DM8. A Fuel owner's hinv with `Iris Audio Processor: version MAD revision 1, number 1` and the post's subject "DM8 audio card" (Usenet message-id `V1UGh.52430$Da4.30732@newsfe6-gui.ntli.net`) | the user report is evidence a DM8 works on a Fuel; **not** an SGI support statement. Grade: **inferred** that a DM8 ran in a Fuel (one user's own hinv and post subject; the MAD revision 1 line is the one the DM8 note gives for the board, but the line names the audio processor, not the card); SGI support: **unknown** |
-| Octane/Octane2 | `mad_dd.o` is in the IP30 build; the DM8 note does not list it | unknown: the driver carries a probe, nothing says SGI supported the board there |
+| Octane/Octane2 | `mad_dd.o` is in the IP30 build; the DM8 note does not list it | unknown: the driver carries a probe, nothing says SGI supported the board there. No MAD line appears in 29 Octane and 3 Octane2 captures of the published hinv corpus (the table in [drivers.md](drivers.md)), which shows no use but is not evidence of absence. Settling test: the Octane and Octane2 option lists in the owner's guides, or a capture from an owner who installed one |
 
 ## What the IRIX driver expects (`mad_dd.o`, IP35 build)
 
@@ -90,7 +90,7 @@ Register-level tables and byte-lane rule: [chips/ice1724](../../chips/ice1724/RE
 | AKM AK4381 | front stereo DAC | not given | driver sequence vs public driver | inferred |
 | AKM AK4355 | six-channel DAC | not given | same | inferred |
 | AKM AK5380 | line/mic ADC | not given | secondary reviews only; no software path | unknown. Settled by: a photograph of the board's converter package marking, or a parts list; no driver reads the ADC, so no binary route exists |
-| 24Cxx-style I2C EEPROM at 8-bit address `0xa0` | board configuration | not given | `mad_read_eeprom` (`0x2d50`) | established as a device at that address; part unknown |
+| 24Cxx-style I2C EEPROM at 8-bit address `0xa0` | board configuration | not given | `mad_read_eeprom` (`0x2d50`) | established as a device at that address; part unknown. `mad_read_eeprom` reads 19 bytes at word addresses 0 to 0x12 through `mad_i2c_read` (routine fact tool). Settling test: read `mad_i2c_read` to see whether it sends one address byte (then the part is a 24C01 to 24C16 class device) or two; the exact part needs a photograph of the board's EEPROM marking or a parts list |
 
 ## Unknowns and what would settle them
 

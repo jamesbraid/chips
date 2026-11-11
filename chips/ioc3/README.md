@@ -99,7 +99,7 @@ is of the role, with the evidence in the row.
 | `0x30` | one-wire control | 4 | rw | `nic_access_mcr32` (below) | E |
 | `0x34` | GPIO control set | 4 | w | `ioc3_attach` writes `0xc0`; `ef_phyunreset` writes `0x20`; `eiattach` writes `0x10000`; `nic_ioc3_vertex_info` and `nic_get_eaddr` store `0x200000` through the pointer they are handed (the window `0x34` address, from the call sites in `ioc3_attach` and `ef_ioc3eaddr`) | I |
 | `0x38` | GPIO control clear | 4 | w | `eiattach` writes `0x2` | I |
-| `0x3c` | GPIO data | 4 | | no routine touches it | U |
+| `0x3c` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see docs/sources/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | U |
 | `0x40 + 4n` | GPIO pin n | 4 | w, rw | `ef_phyunreset` drives pin 5; `ioc3_set_proto` writes 0 or 1 to a pin number kept in the port's record | I |
 | `0x80` to `0x98` | parallel-port DMA: buffer address high and low, count and flags, control (`0x8c`), the same three for context B | 4 | rw | `plp_dma`, `plp_dma_reset`, `plp_stop_dma`, `plpintr` (`ecpplp.o`), read in full; roles in [docs/coverage-ioc3.md](../../docs/coverage-ioc3.md) | E for `0x80` to `0x88` and `0x90` to `0x98`; I for the `0x8c` bits |
 | `0x9c` | keyboard and mouse control | 4 | rw | `pckm_attach` stores `0xc00000`; `pckm_sendok` polls bits 0 and 1; `pckm_restart` sets bit 18 or 19 | E |

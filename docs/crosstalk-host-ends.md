@@ -188,7 +188,7 @@ ranges, each naming the widget in the address:
 | Register | Offset | What the code shows | Grade |
 |---|---|---|---|
 | Widget request timeout | widget `+0x28` (32-bit value at `+0x2c`) | Owner PROM read returned `0x28` (40).  The IRIX 6.5.30 kernel `heart_startup` loads the constant 40000 and, when a debug flag is set, the constant 128 (both seen in the disassembly; the register they are stored to is reached through a pointer and was not confirmed as `+0x28`); the GIO bridge attach path raises it to at least 128 (not rechecked). | owner read and kernel constants **established**; destination of the kernel store **inferred**; unit **unknown** |
-| Prescale | none | No HEART prescale register exists in any header or held binary. | **established** absence in held code; **unknown** in silicon |
+| Prescale | none | No HEART prescale register exists in any header or held binary. | **established** absence in held code; **unknown** in silicon. Settling test: none in software (no held code or public driver names a HEART prescale); the silicon answer is the timed unclaimed-widget read described for the request timeout in [crosstalk-link.md](crosstalk-link.md), on hardware this repository does not assume |
 
 - **Unit.** **Unknown.** No held specification gives the tick. The Crossbow's own packet
   timeout is 1.28 us per count (Crossbow sheet), and crosstalk-link.md records 960 ns per
@@ -343,11 +343,11 @@ an alias macro without ever defining the address. Instead there are separate mec
 | Register | Offset | Layout | What the code shows | Grade |
 |---|---|---|---|---|
 | II request-buffer ("CRB") timeout | `0x4003b8` | 7:0, reset unknown | IRIX 6.5.30 IP27 `per_hub_init` writes `0xff`; Linux writes `0xff` | established values |
-| II request-buffer timeout prescale | `0x4003c0` | 23:0 | IRIX 6.5.30 writes **`0x1000`**; Linux writes **`0x800`** with a comment: 5 ms, "less than the processor-interface timeout of 10 ms" | established values; unit **unknown** |
+| II request-buffer timeout prescale | `0x4003c0` | 23:0 | IRIX 6.5.30 writes **`0x1000`**; Linux writes **`0x800`** with a comment: 5 ms, "less than the processor-interface timeout of 10 ms" | established values; unit **unknown**. The public SN1 header says an internal counter counts up to the prescale value, then every valid request-buffer timer increments and the counter restarts, so one timeout step is about one prescale count; it does not say how long a count is in II clocks. Settling test: a timed read of an unclaimed widget address at two prescale values (hardware, not assumed), or an II clock-period statement in a published document |
 | PI maximum request-buffer timeout | PI `0x30` | 7:0, reset unknown | IRIX writes `0xd0` or `0xfe` depending on two kernel conditions | values established; conditions not read |
 | PI request-buffer scale factor | PI `0x38` | 23:0 on Bedrock; Hub width and reset unknown | IRIX writes `0xd400` or `0xc000` with the matching value above | values established |
 | II tail timeout | `0x4001f0` | 25:0, reset unknown | no held code writes it | layout inferred |
-| II credit-count timeout | `0x4001e0` | undocumented | no held code writes it | unknown |
+| II credit-count timeout | `0x4001e0` | 25:0 (public SN1 header; the Origin 2000 header names the register only) | no held code writes it | layout established from the SN1 header; role as in section 4.4; no software consumer in anything held |
 
 - **Correction.** The II pair at `0x4003b8`/`0x4003c0` times out entries in the II's request
   buffer table (the "CRB": requests widgets make toward memory, i.e. coherent DMA requests).
@@ -472,7 +472,7 @@ Same Little Window / Big Window structure as the Hub, with these differences:
 | Register | Offset | Layout | Evidence | Grade |
 |---|---|---|---|---|
 | II request-buffer timeout | `0x4003b8` | 7:0 | IP35 kernel `per_hub_init` stores `0xff` (disassembly) | established |
-| II request-buffer prescale | `0x4003c0` | 23:0 | IP35 kernel `per_hub_init` stores `0x00fffffe` when a global count is `0x21` or more, else `0xfffe` (disassembly; what the global holds is not read) | values established; unit unknown |
+| II request-buffer prescale | `0x4003c0` | 23:0 | IP35 kernel `per_hub_init` stores `0x00fffffe` when a global count is `0x21` or more, else `0xfffe` (disassembly). The global is the 32-bit word at the symbol `maxnodes`, compared signed with 0x21 (routine fact tool on the IP35 `kernel.o`): a node-count limit by its name (inferred), so the branch a system takes follows its configured size, not the binary alone | values established; unit unknown, settling test as for the Origin 2000 pair above |
 | II credit-count timeout | `0x4001e0` | 25:0 | counts 128-clock ticks while outbound credits are below 1 (direct) or 2 (crossbar); saturates and raises one interrupt (SN1 header) | layout established; no consumer |
 | II tail timeout | `0x4001f0` | 25:0 | SN1 header | layout established |
 | II read-response timeout | `0x4001f0` | prescaler 54:32, timeout 59:55 | SN1 header; unit unknown | layout established |
