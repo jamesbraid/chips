@@ -441,6 +441,9 @@ vendor driver's flag routine and what public software sets; no PIC specification
   is **unknown**. A search of the whole PROM for a store that sets bit 19 was not made: **unknown**. The IOC4's
   32-bit transfers therefore run with bit 19 clear unless something between reset and the driver sets it; the
   IRIX IOC4 driver does not.
+- **IOC4 on a PIC numbers its bytes big-endian across the lanes (inferred from public SGI Linux, established per fact).**
+  See chips/ioc4/README.md, "IOC4 behind a PIC". With bit 19 clear on a big-endian host that is what the chip needs;
+  a model that flips the PIC's bit-19 sense must flip the IOC4's own byte order with it, as for the IOC3 behind a Bridge.
 - **Consequence for a model.** Hardware-visible rule (inferred for PIC): for 32-bit direct DMA
   with bit 19 **set**, a byte written at PCI byte lane `k` of an aligned word lands at the lowest-address-plus-`k`
   byte; with bit 19 **clear** it lands at `k ^ 3`. A model that represents memory as bytes by address needs the

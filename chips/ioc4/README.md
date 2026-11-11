@@ -238,6 +238,55 @@ exists. The PIC and Bedrock side of IP35 is in [../pic/README.md](../pic/README.
 | ATA DMA words | 32-bit stores at indices 1, 2 and 8 and at 7 (the accessor is named for a byte, but on this part it stores the whole word) in `xide_pktDMA_start`; reads of 5, 6 and 7 in `xide_pktDMA_complete` | `IOC4_DMA_PTR_L 1`, `PTR_H 2`, `DMA_CTRL 7`, `BC_DEV 5`, `BC_MEM 6`, `ADDR_H 4`, `TIMING 0` | agree on 1, 2, 5, 6 and 7; IRIX also writes index 8, which is not in the names read; indices 0 and 4 are not touched on this chip |
 | DMA error read of index 4 | `xide_intr_clear` reads index 4 after index 0 and only prints it, labelled the high word | high word is at `0x4` (index 1) | **differ**; the read has no effect except a debug line, so the contract is unaffected (the routine is read in full) |
 
+## IOC4 behind a PIC: how its DMA bytes are numbered (public Linux)
+
+Labels as above. Question: does the IOC4 take its DMA bytes in plain address order, or does it number them as an IOC3
+does, big-endian across the PCI lanes, so that a set Device bit 19 (swap) on a big-endian host would scramble them?
+Short answer: **the chip numbers bytes big-endian across the lanes, the first byte of a 32-bit word on lane 31:24
+(inferred from four independent public facts below); on a big-endian host that means bit 19 must be clear, the
+lane-preserving map, and no bridge swap is relied on.** Sources: SGI's Linux 2.4 SN2 tree
+(`8ef7d46c94d54ae907217463caf30ad4de88211b`, an Itanium, little-endian host with a PIC) and mainline Linux
+(`5e647d79be7717edaf9928ebd57e2d482b9e310d`, 2.6.16; `c9bace5bce3ea330dec7696e4bf54b2f48b5cba8`, 4.19-era).
+
+1. **The 2.4 SN2 IOC4 drivers ask the PIC to swap, on a little-endian host (established as what the code does).**
+   `arch/ia64/sn/io/sn2/ioc4/ioc4.c` line 293 calls `snia_pciio_endian_set(pci_handle, PCIDMA_ENDIAN_LITTLE,
+   PCIDMA_ENDIAN_BIG)`: device little, desired big. `drivers/ide/pci/sgiioc4.c` lines 126 to 129 makes the same call under
+   the comment "Enable Byte Swapping in the PIC". The routine behind it, `pcibr_dvr.c` lines 3694 to 3716, sets
+   `BRIDGE_DEV_SWAP_BITS` (Device bits 20:19) whenever the two arguments differ and clears them when equal. The ring
+   mapping, `sio_ioc4.c` lines 458 to 472, asks for `PCIIO_BYTE_STREAM`, with `PCIIO_DMA_A64` in the 64-bit variant, which
+   sets address bit 55 (`pcibr_dvr.c` lines 2766 to 2772) or the translated-map swap. So SGI's own Linux driver runs
+   IOC4 with the swapper on when the host is little-endian.
+2. **The IDE descriptor table is written big-endian (established).** `sgiioc4.c` in 2.4 (lines 544, 588, 594, 608), in
+   mainline 2.6.16 (lines 474, 518, 523, 537) and later (`c9bace5` lines 406, 446, 451, 465) says the scatter-gather entry
+   "should be in the BIG-ENDIAN format" and stores address, length and end flag through `cpu_to_be32`. On an
+   Itanium host that puts the most significant byte at the lowest address.
+3. **The serial rings carry no byte conversion (established).** `ioc4_serial.c` (`c9bace5`) keeps each ring entry as two
+   32-bit halves seen either as words or as four data bytes and four status bytes indexed alike (lines 588 to 607;
+   filled at 1432 to 1453), allocates the rings with `pci_alloc_consistent` (line 1148) and has no `cpu_to_*`, `*_to_cpu`
+   or swab call anywhere in the file or in `sgiioc4.c`'s data path. Status masks use a repeated-byte pattern (line 603), so
+   they carry no order. Character `i` is `data[i]` and its status is `sc[i]`, in address order; the file contains no
+   endianness register or bit for the chip, and neither do `drivers/misc/ioc4.c` or `include/linux/ioc4.h`.
+4. **The base-I/O chip family agrees (established, other chips).** On big-endian hosts public Linux clears Device bit 19
+   for the IOC3 and sets it for ordinary cards (`pci-sgipic.c` line 432; mainline `pci-ip27.c`), and OpenBSD clears it
+   for IOC3, IOC4 and RAD1 (`xbridge.c` lines 2456 to 2467). The IRIX 6.5.30 IP35 `ide.o` leaves the IOC4 slot alone
+   (flags zero, no 64-bit flag; see the bit 19 section above) and the PROM expects the Device registers with bit 19
+   clear.
+
+Reading them together (inferred; each step is a fact above, the combination is not stated by any source):
+a big-endian host with the bit clear presents a word's first byte (its lowest address) on lane 31:24, and the IOC4 treats
+lane 31:24 as its first character and the most significant byte of a descriptor word: IRIX works with the bit clear.
+A little-endian Itanium host presents the first byte on lane 7:0, so SGI's Linux needs the swapper set to move it to
+lane 31:24, and does ask for it (point 1) while also storing descriptors big-endian in address order (point 2). Both
+hosts then deliver the same lane order to the chip. The alternative, a chip that takes bytes in address order, would
+need the swapper on for the big-endian host and off for the Itanium: the opposite of both the IRIX flags and the
+Linux 2.4 calls. The mainline kernels dropped the `endian_set` call; where the Device register comes from there is
+not read, so they are silent on the sense.
+
+So: the IOC4 is an IOC3-style chip, numbering bytes big-endian across the lanes inside the chip. **Unknown:** the chip's
+register-level behaviour (no specification held), and the Itanium host's own lane presentation (that it puts byte 0
+on lane 7:0 is inferred from the host being little-endian, not read). A bit-19 flip in anything that also models the
+IOC4 therefore has to flip the IOC4's own byte order with it, exactly as for the IOC3 behind a Bridge.
+
 ## Reset expectations
 
 None read. `ioc4_attach` writes the control, GPIO control, enables and both status registers before use; everything else is unknown.
