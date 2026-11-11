@@ -309,6 +309,10 @@ microseconds and returns when bit 0 (port 0) or bit 1 (port 1) is clear. `pckm_r
 `pckm_pollcmd` (`0x1810`) writes the command byte to `0xa8` (port 0) or `0xac` (port 1), then reads `0xa0` or `0xa4` up to 250
 times at 50 microseconds until any of bits 31:29 is set. Port 0 is the keyboard by the routine names; inferred.
 
+On the Onyx 3000 and Origin 3000 I-brick the IOC3 serves serial, Ethernet and the real-time interrupt jacks, and the
+keyboard and mouse are USB devices on a separate OHCI controller; the panel has no PS/2 connector
+([docs/onyx3000-graphics-topology.md](../../docs/onyx3000-graphics-topology.md) question 3).
+
 ## Routines in the IP27 `ioc3.o` build
 
 One entry per routine, read in full from the IRIX 6.5.30 IP27 `ioc3.o` (`IP27/usr/cpu/sysgen/IP27boot/ioc3.o`). Addresses are

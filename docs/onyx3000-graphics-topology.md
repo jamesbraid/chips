@@ -1,8 +1,8 @@
 # Onyx 3000 graphics bricks: where the pipe and the V12 sit
 
-Two questions about the Onyx 3000 family (IP35 platform, Bedrock hosts, Xbridge I/O bricks): which Crosstalk
-widget an InfiniteReality pipe in a G-brick answers at and what is between it and the compute brick, and what a
-V-brick (InfinitePerformance, V12 boards) looks like to a host. Labels follow [AGENTS.md](../AGENTS.md):
+Three questions about the Onyx 3000 family (IP35 platform, Bedrock hosts, Xbridge I/O bricks): which Crosstalk
+widget an InfiniteReality pipe in a G-brick answers at and what is between it and the compute brick, what a
+V-brick (InfinitePerformance, V12 boards) looks like to a host, and what keyboard the graphics console uses. Labels follow [AGENTS.md](../AGENTS.md):
 **established**, **inferred**, **unknown**. Manuals are cited by SGI document number and printed page. The
 Onyx 3000 graphics owner's guide is 007-4264-002 (November 2001, the revision that adds the V-brick). The family
 reference guide is "SGI 3000 Family Reference Guide". Binaries are named by IRIX release, object and routine.
@@ -82,6 +82,41 @@ number, the heads' board records, the hardware-graph brick name); `l1cmd` or `cf
 V-brick (the type letter); the V-brick midplane identity EEPROM name; a read of the V-brick Xbridge's per-link status
 registers from the PROM monitor (widgets 8 to 15 alive and present bits). For the N-brick pipe widget: the same
 listing from an Onyx 3000 with an N-brick.
+
+## Question 3: the graphics console keyboard
+
+A graphics console (`console=g`) needs a keyboard. The I-brick's base I/O (the board the Origin 3000 architecture
+guide calls IO7) carries an IOC3, so the question is whether the keyboard is the IOC3's PS/2 port, a USB keyboard on
+the I-brick's USB controller, or something on the G-brick or the L2. Sources: the Onyx 3000 graphics owner's guide
+007-4264-002; the preliminary "SGI 3000 Series Systems Cabling" course book (108-xxxx-PR2); a public `hinv -mv`
+of an Origin 3200 (two C-bricks, one I-brick each, PROM 6.210; forum thread 16723604, posted 2010-06-18, an Origin
+3200 and not an Onyx, but the I-brick part number 030-1557-007 is the one the Onyx 3000 capture above lists);
+the nested I-brick PROM inside the IP35 PROM 6.210 container (segment `io7prom`, load address
+0xc000000013000000, sha256 `f903b3ce33b86c286f168ba43395f36a0073c24b1d4e703adce240f683b8c2d7`; addresses below
+are into that segment) and the unpacked CPU PROM (segment `ip35prom`, sha256
+`554924380189a03a512156af2faa38344902f251b49fd5c80c253c23ecaff27b`, address = 0x1fc00000 + offset); IRIX 6.5.30
+IP35 kernel objects `ioc3_pckm.o` and `usb_pckm.o` (present, not read for this question). No IRIX source
+and no emulator behaviour used.
+
+| # | Claim | Grade | Basis |
+|---|---|---|---|
+| 1 | An Onyx 3000 graphics system's keyboard and mouse are USB devices plugged into the I-brick's rear panel. The owner's guide ships "a standard 101-key USB keyboard and a USB mouse", labels two I-brick rear-panel USB connectors "Keyboard" (1) and "Mouse" (2), and says "The SGI Onyx 3000 series graphics systems use USB to provide keyboard and mouse input". | **established** as printed | 007-4264-002 pp11, 76 to 77, Figure 3-10 |
+| 2 | The I-brick panel has no PS/2 connector, and nothing separate (a keyboard and mouse adapter, a "KBM" option) is listed. The cabling book's I-brick connector table (Table 1-5, printed pp1-10 to 1-11) lists PCI slots, an SVGA-labelled DB9 ("Not Used. Used with future products."), serial (via U715, U714, U701), USB 1 and USB 2 (both from U702), 1394 (U707, U706), the two real-time interrupt jacks, ENET (U708 through U701) and the two XIO connectors; no keyboard or mouse connector. The graphics guide's I-brick figure and text name none either. Absence in two documents: not proof that no PS/2 pins exist on the board. | connector set **established** as printed; "no PS/2 anywhere on the board" **inferred** | 108-xxxx-PR2; 007-4264-002 |
+| 3 | The USB controller is OHCI, behind the I-brick's Xbridge on widget 15, at IRIX PCI slot 5. The guide's own example hardware path is `/hw/module/001c13/Ibrick/xtalk/15/pci/5/usb/1/1/keyboard` (keyboard) and `.../usb/1/2/mouse`, "a USB controller at PCI slot 5 on the I-brick connected to C-brick 001c13". The Origin 3200 capture lists `USB controller: type OHCI` and a PCI adapter with vendor 0x11c1, device 0x5802 at PCI slot 5, the IOC3 (vendor 0x10a9, device 0x0003; `ef0` at pci 4) at slot 4 and a vendor 0x104c, device 0x8009 part at slot 6 beside `IEEE 1394 ... Type: OHCI`. That the 0x11c1:0x5802 part is the USB controller is **inferred** from the slot agreeing with the guide's path (the capture does not label it). Both USB connectors hang off one controller behind U702 on Xbridge port F, per the cabling book. | path and slot: **established** as printed; part identity **inferred** | 007-4264-002 p78; 108-xxxx-PR2 Table 1-5; capture |
+| 4 | The IOC3 on the I-brick serves the serial port, the Ethernet and the real-time interrupt jacks (U701 in the cabling book's connector table), not a keyboard. | connection list **established** as printed; that its keyboard and mouse registers go unused is **inferred** from there being no connector | 108-xxxx-PR2 Table 1-5 |
+| 5 | Nothing on the G-brick or the L2 provides the keyboard. The L2 and the rack's USB hub carry L1 and L2 traffic (USB signals between bricks), and the guide's USB local and remote extenders re-extend the I-brick's keyboard and mouse ports by up to 100 m; the G-brick pipe is an XIO widget with no keyboard function in anything read. | **inferred** (absence in the guides) | 007-4264-002 pp76 to 78; cabling book |
+| 6 | The I-brick PROM understands both input paths. It carries KLCONFIG component names for the PS/2 route (`IOC3-PCKBD` at 0x130f4de8, name `ioc3pckm` at 0x13101350, `ioc3ms` at 0x13101378, with IOC4 equivalents at 0x130f4f18 and 0x131013e0) and for the USB route (`USB (OHCI interface)` at 0x130f4e90, `USB (KeyBoard)` at 0x130f4ea8, `USB (Mouse)` at 0x130f4eb8, `usbkbd` at 0x13101398, `usbms` at 0x131013a0); a USB HID keyboard driver (`usb_pckm_init():  init pckm driver ...` at 0x130fdce8) with the device paths `/dev/input/usb/keyboard` at 0x130fe370 and `/dev/input/usb/mouse` at 0x130fe388; the PS/2 device paths `/dev/input/ioc3pckm0` at 0x130f1f40, `/dev/input/ioc4pckm0` at 0x130f1f70, `/dev/input/ioc3ms0` at 0x130f1f88; the message `Cannot connect to keyboard -- check the cable.` at 0x130f8278; `pckbd_install: Keyboard/mouse not attached to an IOC3 or IOC4` at 0x13102470; and `graphics install: searching for pipe %d` at 0x1310a080. The CPU PROM carries `init_klcfg_usb: Cannot add component. Node %d` (0x1fc7e460) and `%s: No USB found on BASEIO.` (0x1fc84da8). | string and table presence **established**. Which of the two a given machine's console install picks, and on what test: **unknown** (no reference to these strings was resolved; the PROM reaches them through a literal pool the scan did not follow) | PROM images |
+| 7 | The IRIX 6.5.30 IP35 kernel set has both drivers: `ioc3_pckm.o` and `ioc4_pckm.o` (PS/2 over IOC3 and IOC4) and `usb_pckm.o`, `usb_comp.o` and `usb.a` (the 6.5.22 IP35 install also lists an `ohci.o`). | presence **established** (file names); behaviour not read here | IP35boot object listing |
+
+What the Onyx 3000 keyboard answer rests on: rows 1 and 3, printed in the owner's guide, plus a real I-brick listing
+whose slot 5 agrees. A PS/2 keyboard on an I-brick is not something either manual describes.
+
+What would settle the unknowns. Which input the PROM's graphics console binds when both could exist: resolve the
+literal-pool references to the strings in row 6 (the install routine reached through `graphics install: searching
+for pipe %d`) and read the branch that chooses `ioc3pckm0` over `usb/keyboard`. Whether the I-brick board has PS/2
+pins on the IOC3: the IO7 schematic or a bare-board photograph, neither held. The identity of the 0x11c1:0x5802
+part: a `hinv -vm` or `gfxinfo` of an Onyx 3000 printing the USB controller's PCI id, or the 007-4264-002 hardware
+path of that machine's keyboard resolved against its `/hw` listing.
 
 ## Corrections this page makes
 
