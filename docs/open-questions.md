@@ -200,3 +200,5 @@ Corrections found while tagging. These are not fixed here.
 - **IP35 PROM refusal of 256 MB DIMM banks "on IP27 node boards": what selects it on an IP35 board.**
   *[route: software now]* The text is at outer offset 0x86aa8 of the 6.210 segment; the routine that raises it was
   not read. Next: read the memory-configuration routine that calls it.
+
+- **Tezro: the graphics board's revision digit in the base-I/O PROM's diagnostic, and the credit table's consumer.** *[route: software now for the first (read the diagnostic's code in the nested base-I/O image); a PROM-monitor read of widget 12 `+4` on hardware]* Open: which input the digit after "Buzz revision" comes from, and which routine indexes the PROM's fourteen-row credit table. Next: docs/questions/tezro-io-topology.md.
