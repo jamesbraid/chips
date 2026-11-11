@@ -286,6 +286,86 @@ register (`+0x178`) and, for any chip type but 0, prints for every set bit 8 to 
 Which register each getter names is from its name and its `+offset` in `pcireg_*` (see above); which bit of the status each text describes is the shipped text, so for the status register bits 8 to 45 the PIC names are established as the strings the driver prints (as labels, not as a hardware specification).
 Bits 46 to 63 have no text and no dump; bits 7:0 are not errors here.
 
+## Interrupt packets: edge-only delivery, recovery by software
+
+Labels follow the rules at the top of the repository. A public driver or header statement is **established as that
+author's statement**; it is not a measurement of silicon. Sources: the SGI SN2 Linux tree (branch `linux-2.4`, commit
+`8ef7d46c94d54ae907217463caf30ad4de88211b`), file by file below, and the shipped IRIX 6.5.30 IP35 `pcibr.o`
+(SHA-256 `5a79bfd6f2bf07f4c614b5794a9a3e6f5f973f8e60110e0ac2f6b293eb252a29`, offsets into `.text` after applying
+relocations; `pcibr_force_interrupt` and `pcibr_intr_func` read in full).
+
+- **Status is the pin level, not the packet** (established: the header's own description,
+  `include/asm-ia64/sn/pci/pic.h` lines 1298 to 1306). Status bits 7:0 hold the current state of the eight INT_N
+  pins, active high for a pin driven low, and the register is read-only. Whether status changes before the packet
+  leaves the chip: **inferred**, no source gives the internal order. Nothing read suggests a packet can precede its
+  own status bit.
+- **A set packet goes out on a transition, once** (established as the driver authors' statement,
+  `arch/ia64/sn/io/sn2/pcibr/pcibr_intr.c` lines 236 to 270, which names XBridge and PIC). Two cases leave a status
+  bit set with no packet in flight: a second device interrupt arriving about 60 ns after the first was cleared (no
+  transition is seen), and a status bit shared by two devices where one re-asserts while the other's handler runs,
+  so the line never goes inactive between them. The comment calls both a deadlock. So the chip does not re-send on
+  its own while the pin stays active. That is the authors' account for the SN2 chip; for PIC revision 3
+  specifically it is **inferred**.
+- **Software re-posts through the force registers** (established for the semantics the header describes, `pic.h`
+  lines 1603 to 1622): a write to force-always (`+0x180 + 8n`) sends a set packet as if the pin had transitioned,
+  and sends one more if the pin is already active; a write to force-with-pin (`+0x1c0 + 8n`) does the same only
+  while the pin is active and is otherwise ignored. Both also perform the buffer flushes. Both are write-only and
+  ignore the data written.
+- **Both consumers call force-with-pin when an interrupt dispatch ends.** The SN2 driver calls its
+  `pcibr_force_interrupt` after the last handler returns with no threaded handler running (`pcibr_intr.c` lines
+  1034 to 1042; the routine itself, lines 272 to 291, writes `b_force_pin[bit].intr = 1`). In the IRIX 6.5.30 IP35
+  `pcibr.o`, `pcibr_intr_func` (`0x863c`, 592 bytes) reaches `jal pcibr_force_interrupt` at `0x887c` by the branch at `0x87a8`
+  when the running-handler word at record +0x18 is zero (established, read in full).
+  `pcibr_force_interrupt` (`0x7678`, 232 bytes) reads the chip type at record +0x72. For a nonzero type (XBridge,
+  PIC, the fourth chip) it calls `pcireg_force_intr_set` with the pin (established). For type 0 (Bridge, which has
+  no force registers) it reads status and, if the pin's bit is set, the CPU stores `0x100 | vector` to the node's
+  interrupt-modify address itself: the set packet written by software (established for the instructions; that the
+  target is the Hub pending-modify register is inferred from the constant and the destination setup above).
+  The reissue a held pin needs is therefore a guest register write at the end of each dispatch, not a timer in the
+  chip. There is no period: it happens once per dispatch.
+- **A second software path is periodic, on another platform** (established for that driver: `arch/ia64/sn/kernel/
+  irq.c` lines 295 to 360, `arch/ia64/sn/kernel/sn2/timer_interrupt.c`, interval constant 100 timer ticks). Every 100
+  ticks it compares each registered pin's status with the previous scan. A pin high in both, with the interrupt
+  neither pending in the CPU nor in service, gets a force. The tick rate of that tree was not read. It runs on
+  Itanium with a different host chip, so it is not evidence about a Bedrock.
+- **Early-revision enable toggle** (established: `pcibr_intr_func` `0x8674` to `0x8864`; the driver at `pcibr_intr.c`
+  lines 943 to 966). For chip type 2 at PIC revision 1 only (the test is `(1 << rev) & 2`), the handler clears and
+  sets the pin's enable bit under the chip lock on entry, a workaround for a runaway interrupt. A revision 3 PIC
+  skips it. What the toggle does inside the chip, including whether re-enabling a still-active pin sends a packet:
+  **unknown**.
+- **A refused or lost packet**: **unknown**. No public header or shipped object describes a chip-side retry, timer
+  or response for an interrupt write, and no register names a reissue period. The consumers' recovery assumes a
+  lost packet leaves the status bit set and stays lost until software forces another. Whether the Bedrock can refuse
+  an inbound write to its pending-modify address, and what the PIC then logs, is open.
+- **A pending bit cleared at the Bedrock while the pin is still active**: no source read describes a Bedrock
+  timer that sets it again. **Unknown**; the Bedrock page owns the processor-interface side.
+
+## DMA address attributes and byte placement: what public software says
+
+Same labelling. Sources: SN2 `include/asm-ia64/sn/pci/bridge.h` lines 1512 to 1520, `pic.h` lines 1625 to 1654,
+`arch/ia64/sn/io/sn2/pcibr/pcibr_dvr.c` lines 2735 to 2800; the out-of-tree MIPS IP35 port at
+`9f613a321ea03fb91bd9947cca7dda2888ccb447`, `arch/mips/pci/pci-sgipic.c` lines 54 to 128 and 226.
+
+- **64-bit direct address attributes** (established as software's declaration): target widget 63:60, prefetch 59,
+  precise 58, virtual channel 57, barrier 56, swap 55. Bit 55 is a different bit from prefetch.
+- **Bit 55 is named swap; the driver sets it for byte-stream and clears it for word-values** (established for the
+  driver: `pcibr_flags_to_d64`, `pcibr_dvr.c` lines 2766 to 2772, one routine for XBridge and PIC). The MIPS port
+  sets bits 56, 55 and 58 in every PIC address (`pci-sgipic.c` line 226) and sets the 32-bit direct swap in each
+  Device register. What swap does to bytes inside a bus data phase (per 32-bit word, per 64-bit doubleword, or by
+  access size): **unknown for PIC** in citable sources. The names do not say, and a sibling chip's byte-position
+  rules are not evidence for PIC.
+- **PCI-X mode keeps only barrier and swap** (established as driver behaviour, `pcibr_dvr.c` lines 2796 to 2799:
+  prefetch, precise and virtual-channel bits are masked off). Whether the hardware ignores them or the driver is
+  merely conservative: **unknown**.
+- **32-bit direct window, swap**: Device register bit 19, named `swap_direct` (`pic.h` line 1645), separate from
+  bit 13 `dev_swap`, and bit 23 `dir_wrt_gen`, a direct-path write-gather enable (`pic.h` lines 1641 to 1651). The
+  names are established; the semantics are inferred from the names and the driver's use. The window is
+  `0x80000000` to `0xffffffff` (`bridge.h` lines 1462 to 1463).
+- **Write width, partial-word and ragged-end behaviour at memory**: **unknown**. No public source or shipped object
+  states how a PCI-X burst is cut into crosstalk packets, whether a partial doubleword is written with byte enables
+  or as a read-modify-write, or whether a processor can observe a half-updated aligned word. Route: a published PIC
+  specification, or a matching bus capture.
+
 ## Reset expectations
 
 Unknown for every register: no routine reads a register before writing it in the attach sequence, apart from
