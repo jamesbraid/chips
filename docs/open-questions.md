@@ -190,6 +190,7 @@ Corrections found while tagging. These are not fixed here.
   the SGI part number, whether SGI changed a component. Next: any public capture of a DM8; a `hinv -vm` line from a DM8 host gives
   the revision only (docs/audio/dm8.md).
 - **ICE1724 register contract.** *[route: missing source: the vendor datasheet; software now for the remainder]* Offsets and widths the driver touches are in chips/ice1724/README.md, and the rate-to-code table is now read in full there.
+  Answered from the binary and the published manuals, with grades: the 32-bit stores that touch the unassigned CCS `0x1b` and MT `0x17` bytes, BARs 2 and 3, D3hot to D0, the Tezro board's unknown subsystem and codec parts, and the TI PCI2050 upper prefetchable registers are in docs/questions/tezro-ice1724.md.
   Unknown: reset values, write masks, the DMA size and count units, the effect of `MT+0x19`
   and `MT+0x05` bit 7. Next: re-read `mad_start_dma` (`0xe48`) against a public vendor datasheet when one is held.
 - **DM8 converter identities.** *[route: missing source: a board photograph or parts list; public AKM datasheets for the field meanings]* AK4381, AK4355 and AK5380 are leads from a sibling board's public
