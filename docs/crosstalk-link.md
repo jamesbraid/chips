@@ -362,20 +362,20 @@ its errata), the Kona graphics widget `0x98`/`0x9c`, MardiGras graphics `0x01109
 6.5.30 headers, OpenBSD tables and census, [interconnect-naming.md](interconnect-naming.md)
 section 2):
 
-| Part | Mfr | Chip |
-|---|---|---|
-| `0x0000` | 0 | Crossbow (XBOW) |
-| `0xd000` | 0 | XXBOW, crossbar section of the Xbridge |
-| `0xd100` | 0 | PXBOW, crossbar face of the PIC (meaning inferred) |
-| `0xc001` | `0x36` | HEART (an owner read of an Octane2 gave `0x6c00106d`, revision 6) |
-| `0xc002` | `0x36` | Bridge |
-| `0xd002` | `0x24` | Xbridge |
-| `0xd102`, `0xd112` | `0x24` | PIC, bus 0 and bus 1 (`0xd112` unseen in a shipped system) |
-| `0xc101` | `0x36` published | Hub (Linux `xwidget.h` and OpenBSD both say `0x36`; one vendor register listing says `0x24`; no hardware read, so not established) |
-| `0xc110` | `0x36` published | Bedrock (Linux `xwidget.h` and OpenBSD both say `0x36`; no hardware read; no consumer found that tests it) |
-| `0xc003` / `0xc102` | `0x2aa` | MardiGras (HQ4) / Kona (XG) graphics |
-| `0xc013` | `0x23` | Odyssey graphics |
-| `0xc202` | `0x24` | TPU |
+| Part | Mfr | Chip | Grade |
+|---|---|---|---|
+| `0x0000` | 0 | Crossbow (XBOW) | established (the Crossbow registration call in the IP27 kernel passes part 0 and manufacturer 0) |
+| `0xd000` | 0 | XXBOW, crossbar section of the Xbridge | established (same routine, part `0xd000`, manufacturer 0) |
+| `0xd100` | 0 | PXBOW, crossbar face of the PIC (meaning inferred) | established (same routine, part `0xd100`, manufacturer 0); inferred (the crossbar-face meaning) |
+| `0xc001` | `0x36` | HEART (an owner read of an Octane2 gave `0x6c00106d`, revision 6) | established (the HEART registration routine in the IP30 kernel passes part `0xc001` and manufacturer `0x36`); the Octane2 read is a reported capture |
+| `0xc002` | `0x36` | Bridge | established (the Xbridge/Bridge registration routine in the IP27 kernel passes part `0xc002`, manufacturer `0x36`) |
+| `0xd002` | `0x24` | Xbridge | established (same routine, part `0xd002`, manufacturer `0x24`) |
+| `0xd102`, `0xd112` | `0x24` | PIC, bus 0 and bus 1 (`0xd112` unseen in a shipped system) | established for `0xd102` and manufacturer `0x24` (the PIC registration routine in the IP35 object); inferred for `0xd112` (published tables only, no shipped routine registers it) |
+| `0xc101` | `0x36` published | Hub (Linux `xwidget.h` and OpenBSD both say `0x36`; one vendor register listing says `0x24`; no hardware read, so not established) | inferred (published headers only; the IP27 kernel registers no widget driver under this number in the routines read) |
+| `0xc110` | `0x36` published | Bedrock (Linux `xwidget.h` and OpenBSD both say `0x36`; no hardware read; no consumer found that tests it) | inferred (published headers only; no consumer in anything held) |
+| `0xc003` / `0xc102` | `0x2aa` | MardiGras (HQ4) / Kona (XG) graphics | inferred (published headers only, not re-read in a binary) |
+| `0xc013` | `0x23` | Odyssey graphics | inferred (published table only, not re-read in a binary) |
+| `0xc202` | `0x24` | TPU | inferred (published tables only, not re-read in a binary) |
 
 What the manufacturer numbers identify (a design group or a fab) is unknown; test: a
 published Crosstalk specification page defining the field.

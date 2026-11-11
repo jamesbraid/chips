@@ -68,7 +68,7 @@ none was rejected.
 
 - Internal identifiers: macro, function, flag, enumeration and part-prefix
   names from the shipped headers and kernel objects, and the shipped file and
-  object names. Where a claim needed a pointer, it 
+  object names. Where a claim needed a pointer, it now says what kind of thing was
   found, in plain words.
 - Quoted or paraphrased header comments, and the citations of SGI documents
   that only the headers name.
@@ -142,25 +142,30 @@ revision in bits 31:28, part number in bits 27:12, manufacturer in bits 11:1.
 IRIX compares revisions as `part << 4 | rev`. The part number is what drivers
 dispatch on, so it is the best stable key for a name.
 
-| Part | Mfr | Name | Where the number comes from |
-|---|---|---|---|
-| 0x0000 | 0x000 | XBOW (Crossbow) | H (both releases); O `xbowdevs` |
-| 0xd000 | 0x000 | XXBOW | H (6.5.30 only); L `arch/mips/sgi-ip27/ip27-xtalk.c` and `arch/ia64/sn/include/xtalk/xbow.h`; O |
-| 0xd100 | 0x000 | PXBOW | H (6.5.30 only); L `arch/ia64/sn/include/xtalk/xbow.h`; O |
-| 0xc001 | 0x036 | HEART | H; O |
-| 0xc002 | 0x036 | Bridge | H; O |
-| 0xd002 | 0x024 | Xbridge | H (6.5.30 only); O |
-| 0xd102 / 0xd112 | 0x024 | PIC, bus 0 / bus 1 | H (6.5.30 only); O gives the second id |
-| 0xe000 / 0xe010 | 0x024 | TIOCP, head 0 / head 1 | C `chips/tiocp/README.md` (the IP35 kernel's bridge accessors branch on both, manufacturer 36 decimal); O |
-| 0xe020 | 0x024 | TIOCA | L `arch/ia64/include/asm/sn/tioca.h`; O |
-| 0xce00 | not read | TIOCE | L `arch/ia64/include/asm/sn/tioce.h`, `tiocx.h` |
-| 0xc101 | 0x036 (O) | Hub | H |
-| 0xc110 | 0x036 (O) | Bedrock | H |
-| 0xc120 | not read | SHub | L `arch/ia64/include/asm/sn/shubio.h` |
-| 0xc003 | 0x2aa | HQ4 (MardiGras / Impact graphics) | H (6.5 base) |
-| 0xc102 | 0x2aa | XG (Kona / InfiniteReality graphics) | H (6.5 base) |
-| 0xc013 | 0x023 (O) | Odyssey | O `xbowdevs` |
-| 0xc202 | 0x024 | TPU | H; O `xbowdevs` |
+| Part | Mfr | Name | Where the number comes from | Grade |
+|---|---|---|---|---|
+| 0x0000 | 0x000 | XBOW (Crossbow) | H (both releases); O `xbowdevs` | established |
+| 0xd000 | 0x000 | XXBOW | H (6.5.30 only); L `arch/mips/sgi-ip27/ip27-xtalk.c` and `arch/ia64/sn/include/xtalk/xbow.h`; O | established |
+| 0xd100 | 0x000 | PXBOW | H (6.5.30 only); L `arch/ia64/sn/include/xtalk/xbow.h`; O | established |
+| 0xc001 | 0x036 | HEART | H; O | established |
+| 0xc002 | 0x036 | Bridge | H; O | established |
+| 0xd002 | 0x024 | Xbridge | H (6.5.30 only); O | established |
+| 0xd102 / 0xd112 | 0x024 | PIC, bus 0 / bus 1 | H (6.5.30 only); O gives the second id | established (0xd102); inferred (0xd112) |
+| 0xe000 / 0xe010 | 0x024 | TIOCP, head 0 / head 1 | C `chips/tiocp/README.md` (the IP35 kernel's bridge accessors branch on both, manufacturer 36 decimal); O | inferred (not re-read here; the TIOCP page holds the reading) |
+| 0xe020 | 0x024 | TIOCA | L `arch/ia64/include/asm/sn/tioca.h`; O | inferred |
+| 0xce00 | not read | TIOCE | L `arch/ia64/include/asm/sn/tioce.h`, `tiocx.h` | inferred |
+| 0xc101 | 0x036 (O) | Hub | H | inferred |
+| 0xc110 | 0x036 (O) | Bedrock | H | inferred |
+| 0xc120 | not read | SHub | L `arch/ia64/include/asm/sn/shubio.h` | inferred |
+| 0xc003 | 0x2aa | HQ4 (MardiGras / Impact graphics) | H (6.5 base) | inferred |
+| 0xc102 | 0x2aa | XG (Kona / InfiniteReality graphics) | H (6.5 base) | inferred |
+| 0xc013 | 0x023 (O) | Odyssey | O `xbowdevs` | inferred |
+| 0xc202 | 0x024 | TPU | H; O `xbowdevs` | inferred |
+
+Grades: established means a shipped kernel routine that registers a driver for the part was read and passes that part and
+manufacturer number (`xbow_init` and `xbridge_init` in the IP27 kernel, the HEART initialiser in the IP30 kernel,
+`pic_init` in the IP35 object); the other rows are inferred, resting on published headers or tables with no binary read.
+The "H" source column records where a number is also printed, for provenance only; no text from it is reproduced.
 
 No widget ids for the GSN graphics boards are given here: the only source
 found for them is not public.
