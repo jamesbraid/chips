@@ -465,7 +465,7 @@ allocator functions).
 | Where does the kernel allocate an I/O BAR? | From a per-Bridge pool, not from the device window. At Bridge attach it builds three pools: **I/O space starts at 0x200000, runs to about 0x10000000, in 1 MB units**; one memory range starts at 0x4000 and is 0xfc000 long in 16 KB units; the other 32-bit memory range starts at 0x200000 in 1 MB units. The pool is chosen from the BAR's recorded type. Every I/O BAR therefore takes a whole 1 MB unit, first fit, shared by all slots on the Bridge. Origin 2000 placements (BAR 0 = 0x200000, BAR 3 = 0x300000) follow from this | established (disassembly; the allocator and pool set-up are the same code in both kernels) |
 | Does it keep an address firmware already assigned? | It tries. The slot set-up reads each BAR; if the command register's I/O-decode bit is set it takes the BAR's address as firmware's assignment and asks the pool to reserve it. Later, only a BAR whose recorded address is below its size (unassigned) is given a fresh allocation | established for the mechanism; unknown for what the reserved size is in practice and when the reserve is skipped |
 | Does the kernel treat the AIC-1160 specially? | Yes: when it turns decoding on it enables bus master and **I/O decode only** for vendor 0x9004 device 0x1160, and I/O plus memory decode for other devices | established |
-| What BARs does the real chip present? | BAR 0 (registers) and BAR 3 (sequencer, TCB and scatter/gather RAM) are each used as 256-byte windows and are I/O BARs (inferred from the I/O-only decode and from the BAR type bit deciding the pool). The driver clears BARs 1 and 2 as a chip-bug workaround, so they exist and are likely memory BARs (inferred). BAR sizes, BAR 4 and 5 are unknown; no public Adaptec register document was found | inferred; unknown for sizes and BARs 4 and 5. A config-space dump of a real board settles it |
+| What BARs does the real chip present? | Measured on a PCI AHA-F950 (AIC-1160 rev 02): `lspci -v` posted to the Linux kernel mailing list by Mark Watts on 2004-06-18, subject "Adaptec AHA-F950 FC card". Region 0 is I/O, 256 bytes; region 1 is 64-bit non-prefetchable memory, 4 KiB (it occupies BARs 1 and 2); region 3 is I/O, 256 bytes; the expansion ROM is 64 KiB; there is no BAR 4 or 5. It agrees with the driver (BAR 0 and 3 used as 256-byte windows, BARs 1 and 2 cleared) and the kernel's I/O-only decode | E for the chip on that card; I for the XIO board (same chip and revision) |
 
 #### The firmware-placed BAR 0 and the kernel's reserve
 
@@ -498,9 +498,13 @@ the cursor rounded to the larger of its size and 0x4000, and advances the cursor
 first BAR that sizes to zero**, then sizes the expansion ROM, so BARs after an absent one are left unassigned
 (E). After BAR 0 it writes the slot's Device register (window base = BAR 0 address >> 20) and finally ORs 7 into the command word (E).
 Only the IOC3 ID (device 3, vendor 0x10a9) is special-cased (BAR 0 only); the class code is never read (E).
-Hence a 256-byte I/O BAR 0 in slot 0 lands at 0x200000 and in slot 1 at 0x400000 (E). Whether a real AIC-1160
-has non-zero BARs 1 and 2, which would make the PROM place BAR 3 as well, is unknown (inferred likely from the
-driver clearing them).
+Hence a 256-byte I/O BAR 0 in slot 0 lands at 0x200000 and in slot 1 at 0x400000 (E). A 64-bit memory BAR is
+recognised from the type bits read back after clearing (0x1fc534b8 to 0x1fc534c0): only its low dword is sized, the
+upper dword is written 0 and the walk steps over it to the next BAR (0x1fc53554) (E). With the measured layout
+(see above) slot 0 gets BAR 0 I/O 0x200000, BAR 1 memory 0x200000 (memory space is separate), BAR 3 I/O 0x204000
+(I/O cursor after BAR 0, 0x4000 minimum alignment) and the 64 KiB expansion ROM address 0x210000, written with the
+enable bit clear (E for the routine, I for the board, which has the same chip). The 6.5.21 kernel treats a placed
+64-bit BAR like a 32-bit one and also steps over its upper half, so BAR 3 counts as assigned (E).
 
 ### Command / response path
 
