@@ -309,7 +309,7 @@ All three chips present the same three PCI-visible DMA views (E: Linux `bridge.h
 | error status bits | 8 to 31 | 8 to 31 | 8 to 45 |
 | translated DMA swap | per-device bit | address bit 29 and entry bit 5 | address bit 29 |
 | PCI I/O window | rev 4 and later | yes (no revision gate) | no |
-| one-wire at `0xb0` | Number In A Can | inert in the Xbridge-mode specification, pin moved to widget 0 offset `0x70` (specification-sourced) | parity-error register in the IRIX accessor |
+| one-wire at `0xb0` | Number In A Can | not used in Xbridge mode, pin reached through the internal crossbar's widget 0 NIC register at offset `0x70` (E: Xbridge ASIC specification rev 0.5, 10/1/98, sections 3.2 and 6.5 and its register map; in Super Bridge mode, where the internal crossbar is disabled, the bridge on the port that powers up as 0xf uses its own `0xb0` register) | parity-error register in the IRIX accessor |
 | crossbar inside | no (needs an external Crossbow or a Hub) | yes (`XXBOW`) | no (external widget-0 crossbar, `PXBOW`, part `0xd100`) |
 
 The PIC `0xb0` row is U: the IRIX parity-error accessor reads `0xb0` on a PIC, and Linux IP35 comments it

@@ -258,6 +258,8 @@ the same dump). The header is "PCI BRIDGE ERROR: int_status is 0x%lx for %s". Th
 returning zero) with one status bit set at a time, then checking the branch structure in the disassembly; it lists the register getters called for each bit. Each bit's text comes from a table of 8-byte string pointers in the object's data
 (entry for bit n at data +0x10 + 1920 + 8n); the texts are quoted in the shipped object and name the bit as in the table.
 
+**Grade of the table.** Established: for each status bit 8 to 45, the text the driver prints (the 38 consecutive strings in the shipped Bridge driver object `pcibr.o` of the 6.5.30 Origin 3000 build, one per bit number, checked here against the strings of that object; for example "09: PCI to Crosstalk read request timeout", "30: PMU Access Fault", "45: PCI-X split completion message parity error"), and the registers read per bit (harness run plus the branch structure, as described above). Inferred, never established: that each text names the hardware condition that sets its bit. The text is a label the driver chose, not a hardware specification, and no published PIC document is held to check it against. `pic.h`, generated from the census, carries no names for these bits.
+
 | status bit | text | registers read for the dump |
 |---|---|---|
 | 8 | GIO non-contiguous byte enable in crosstalk packet | nothing: bits 8, 16 and 31 are skipped, text included, for every chip type but 0 |

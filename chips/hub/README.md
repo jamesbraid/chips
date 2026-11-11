@@ -240,6 +240,8 @@ the A bit when the processor's slice is 0.
 | 22, 23 | `0x400000`, `0x800000` | SysState tag error (the text says B for both) | fatal |
 | 24 | `0x1000000` | memory/directory uncorrectable error | `log_md_errors` |
 
+**Grade of the table.** Established: the bit numbers and the shipped text of all 25 entries (the kernel's decode strings, one per bit from 0 to 24, in order, read from the `IP27/unix` string table; for example "0: CPU B spool count compare", "24: Memory/Directory uncorrectable error") and the handler class of bits 0 to 23 (`hubpi_eint_handler`, read in full). Inferred: what hardware condition raises each bit, since the text is all the kernel says (the spool count compare, the spurious message and the two write-response-block errors are named, not described). Bit 24 goes to `log_md_errors`, which was read only as far as its call list (it snapshots four memory-controller register groups through `save_md_error`, with one path to `kl_panic`), so its handler class stays inferred. `hub.h`, generated from the census, carries no names for these bits.
+
 "Fatal" is established from `hubpi_eint_handler`: when `pending & mask & 0xcfff00` is nonzero (bits 8 to 19 and 22 to 23)
 it calls `enter_panic_mode`, prints "Fatal PI error interrupt received" and `kl_panic`. The misc bits (0 to 7, 20, 21) are
 handled and cleared by storing the bit mask back to `0x400`.
@@ -292,6 +294,7 @@ bit number is **inferred** (the table is indexed by it; the dispatcher was not r
   | 63:31 | cache line address, printed as the field shifted left 7 |
 
   (The public header gives the type two bits; the printer masks three, and all valid types fit two.)
+  **Grade and the status 0 address.** The field positions in this table are established by `print_spool_entry`: its shift and mask immediates are 7 (the type, "supp", "T5 req #" and "CRB #" masks, plus the left shift of the address), 3, 6, 9 and 13 (right shifts), `0x3ff` (the ten-bit CRB status passed to `decode_crb_stat`), 23, `0xff` (the command), 31 (the address shift) and a shift by 51 that moves bit 12 to the sign for the write-or-read test (re-read with `retools/tools/hostfacts.py`; the pairing of each immediate with its field was checked against the printed labels, not traced instruction by instruction). The meaning of "supp" and "T5 req #" is unknown beyond the printed label. The address line is not in conflict with the status 0 bullet above: the stack entry and status 0 are different registers with different packing. Both reach a 40-bit physical address, 33 bits shifted left 7 here (a 128-byte line address) against 37 bits shifted left 3 there (a doubleword address).
   `get_matching_spool_addr` uses the same positions (address from 63:31, buffer kind from bit 12). Inferred: that the hardware writes the entries
   (no kernel routine read stores into the ring; the kernel only reads it through the `0x9600000000000000` window) and that `0x418` and `0x420` are
   the hardware's write pointers (the software read pointer is compared with them and refreshed from them when the ring looks empty).
