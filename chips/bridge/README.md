@@ -208,7 +208,9 @@ device-register bit or pair of bits:
 | 22, 23 | 15 | barrier (`BRIDGE_DEV_BARRIER`) |
 | 26, 27 | 22 | 64-bit device size (`BRIDGE_DEV_DEV_SIZE`) |
 
-The bit positions agree with the device-register constants in Linux 6.1 `arch/mips/include/asm/pci/bridge.h`. Two
+The bit positions agree with the device-register constants in Linux 6.1 `arch/mips/include/asm/pci/bridge.h`. Per-row grade: every row is
+established for the flag-bit-to-register-bit mapping (the mask the routine builds) and inferred for the hardware meaning in the third
+column, which is the public header's name; the bit numbers are in `include/bridge_extra.h`. Two
 conditions apply. The 64-bit request (flag bit 26) is dropped from the set mask when the record's chip type
 (halfword at +114) is 2, which is the PIC. No other flag bit is tested (bits 0 to 15, 24, 25 and 28 up are
 ignored). The routine returns 1 on every path. The only direct caller in the 6.5.30 IP27 and IP35 kernel sets is

@@ -76,7 +76,12 @@ code.
 | 4 | the engine met a PCI error | `xide_pktDMA_start` writes 2 when it is set; the same bit is the read-back in `xide_pktDMA_complete` |
 
 The IRIX bit meanings follow from the tests the code makes, read in full; the names come from the Linux driver and the
-header, which agree with each other. The direction convention (what IRIX's flag means for a read or a write) rests on
+header, which agree with each other. Per-bit grade, re-read in this pass in the IP35 `ide.o` (sha256
+`1e61f46697355749673539c0b4a90a3112f7f87d95c5b47d99e45e0ab74baa8c`): bit 1 (stop) is established, `xide_pktDMA_start` stores the value 2
+through the index 7 accessor at two places on the branch for this part, each followed by index 7 reads, and `xide_pktDMA_complete` stores 2 and reads index 7; that
+the poll runs at most 100 times and the polled bit is bit 1 were taken from the earlier reading and not re-derived. Bit 0 (start) is
+established by the earlier full reading (a single store of start ORed with the direction bit, computed from a record halfword) and the
+combined value was not re-derived here; the names are inferred from the public driver (`include/ioc4_extra.h` carries them). The direction convention (what IRIX's flag means for a read or a write) rests on
 the Linux driver's comments and was not independently derived from the IRIX request structure: **inferred**.
 
 ### Interrupt and error words

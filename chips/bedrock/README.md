@@ -60,7 +60,7 @@ inferred from the prefixes of the routine names that touch it (`hub_`, `hubii_`/
 
 | register | widths | access | sites | accessors and callers (names from the binary) | field evidence | role (inferred from the names) |
 |---|---|---|---:|---|---|---|
-| `+0x1000018` | 8 | r | 1 | `handle_cac_buserr` |  | unknown unless the names say: see the entry |
+| `+0x1000018` | 8 | r | 1 | `handle_cac_buserr` | the routine shifts 1 left by the faulting address's region number (`nasid_to_region` of address bits 47:33, sign-extended from 15 bits) and ANDs the result with this register; a nonzero result sends the error to `nasid_to_partid` and `partition_handle_error`, a zero result (when the mode is not 3) logs an error line | established for that access pattern (IP35 `kernel.o`, sha256 `2e847fdcadfdb958f84acf54ac91325980a0bfcce282f89b6df70da1043b47c4`, load at 0x1d9b4, re-read); inferred that it is a per-region bitmask (one bit per region, the shipped partition logic's input); the register is in `include/bedrock_extra.h` |
 | `+0x1000020` | 8 | r | 10 | `sub_1bcf0`, `get_slice`, `getcpuid`, `save_cache_error`, `hubpi_eint_handler`, `klsave_spool_registers` (+2) | load mask 0 (2 sites); load shift shift 0 (4 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1000028` | 8 | r | 2 | `memory_iscalias`, `page_local_calias` | load shift shift 0 (2 sites) | unknown unless the names say: see the entry |
 | `+0x1000078` | 8 | r | 1 | `nic_get_phase_bits` |  | unknown unless the names say: see the entry |
