@@ -37,6 +37,8 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
                        ioc3 ioc4 crime mace gbe vice. bridge/ also holds the XBridge census; router/ is a
                        call-argument census (retools/tools/chips/callargs.py): the router has no memory window.
     include/<chip>.h   generated register headers (retools/tools/chips/gen_headers.py); chips_check.c compiles them together
+    include/*_extra.h, l1_requests.h   hand-written companions for established facts the census cannot reach
+                       (PROM stores, specification pages, request codes); gen_headers.py never writes them
     ip27/ ip30/ ip32/ ip35/   per board: relative symlinks into root/ (boot objects, members, kernel,
                        PROM, ide, symmon, sash)
     docs/              specs.md, published-sources.md, open-questions.md, coverage.md, inventory/ (tables),
