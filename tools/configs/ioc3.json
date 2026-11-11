@@ -203,6 +203,11 @@
     "functions": "^(check_port|data_check|default_kbd_setting|default_ms_setting|ioc3_du_keyboard_port|ioc3_early_pckminit|ioc3_gl_setporthandler|ioc3_lcl_pckm_setleds|ioc3_lcl_pckm_setleds_lock|ioc3_pckm_bell|ioc3_pckm_kbdexists|ioc3_pckm_mlreset|ioc3_pckm_rmalias|ioc3_pckm_setleds|ioc_pckm_add_hwgraph_alias|pckm_attach|pckm_close|pckm_flushinp|pckm_getbp|pckm_intr|pckm_intr_lock|pckm_open|pckm_pollcmd|pckm_reinit|pckm_reinit_core|pckm_reinit_lock|pckm_restart|pckm_rsrv|pckm_rsrv_timer|pckm_rsrv_timer_lock|pckm_rx|pckm_sendok|pckm_wput|pckminit|set_ports|valid_data)$",
     "reg": 4,
     "off": 268435456
+   },
+   {
+    "functions": "^(plp_dma|plp_dma_reset|plp_stop_dma|plpintr)$",
+    "reg": 4,
+    "off": 268435456
    }
   ],
   "calls": [],
@@ -389,6 +394,14 @@
    "base_off": 536870912,
    "kind": "pointer",
    "off": 0
+  },
+  {
+   "functions": "^(plp_dma|plp_dma_reset|plp_stop_dma|plpintr)$",
+   "load": "ld",
+   "disp": 24,
+   "base_off": 268435456,
+   "kind": "pointer",
+   "off": 0
   }
  ],
  "discriminators": {},
@@ -463,6 +476,13 @@
   "0x74": "gppr13",
   "0x78": "gppr14",
   "0x7c": "gppr15",
+  "0x80": "ppbr_h_a",
+  "0x84": "ppbr_l_a",
+  "0x88": "ppcr_a",
+  "0x8c": "ppcr",
+  "0x90": "ppbr_h_b",
+  "0x94": "ppbr_l_b",
+  "0x98": "ppcr_b",
   "0x9c": "km_csr",
   "0xa0": "k_rd",
   "0xa4": "m_rd",
@@ -502,6 +522,8 @@
   "0x148": "micr",
   "0x14c": "midr_r",
   "0x150": "midr_w",
+  "0x20152": "pp_dcr",
+  "0x2015a": "pp_ecr",
   "0x20178": "uarta_reg0",
   "0x20179": "uarta_reg1",
   "0x2017a": "uarta_reg2",
