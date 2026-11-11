@@ -39,4 +39,18 @@
 #define XIO_FC_TCB_UNKNOWN_64                0x64       /* [E] byte written 0x14 by the normal builder (re-read); role [U]: settle by reading the sequencer microcode's use of this byte, or a capture of a completed command block */
 #define XIO_FC_TCB_HANDLE_COPY               0x68       /* [E] 2 bytes LE written; the TCB handle repeated, chip use [I] */
 
+/* Done-queue entry, read by the back-end interrupt routine after the chip writes a completion. */
+#define XIO_FC_DONE_HANDLE                   0x00       /* [E] 2 bytes LE; completed TCB handle, the tag written at XIO_FC_TCB_OX_ID */
+#define XIO_FC_DONE_STATUS                   0x02       /* [E] byte; completion status code (normal-command meanings: 0 success, 1 overrun, 2 underrun, 3 TCB parity error, 4 error response, 5 out of order, 6 frame format, 7 count overflow, 8 undelivered, 9 and 0xa bad delimiter, 0xb aborted, 0xf primitive timeout [E]; a loop-init completion reuses some values, and a successful one returns the negotiated loop address) */
+#define XIO_FC_DONE_PASS                     0x03       /* [E] byte; initialised to 0xff; the chip writes the ring-lap number modulo 256 and the driver consumes while it equals the expected value */
+
+/* Interrupt-status register at 0x24 (16-bit pending test masks with 0xff08; the chip mirrors it into a two-byte
+ * host status block, low byte = 0x24, high byte = 0x25; handled bits are cleared by writing them back as byte
+ * writes). Meanings are inferred from the branch each bit guards [I]; that the driver tests each bit is [E]. */
+#define XIO_FC_INT_LOOP_ATTENTION            0x0008     /* [E] register 0x24 bit 3: the back-end routine then selects bank 1 and reads the loop-state register at 0xa1 */
+#define XIO_FC_INT_PCI_ERROR                 0x8000     /* [E] register 0x25 bit 7 */
+#define XIO_FC_INT_HARDWARE_ERROR            0x4000     /* [E] register 0x25 bit 6: the routine reads and latches the error-status register at 0x23 */
+#define XIO_FC_INT_SOFTWARE_ERROR            0x2000     /* [E] register 0x25 bit 5 */
+#define XIO_FC_INT_SEQ_COMPLETION            0x1000     /* [E] register 0x25 bit 4: the done-queue completion bit; the driver drains the queue by scanning pass bytes regardless of this bit. Whether the per-source enable at 0x99 bit 4 is needed is [U] */
+
 #endif /* XIO_FC_H */
