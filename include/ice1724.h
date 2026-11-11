@@ -12,6 +12,8 @@
 
 /* Controller registers (first base-address region, "CCS"). Order matters when the driver loads them from the
  * EEPROM: 0x04 to 0x07, then 0x18, a 10 microsecond delay, then 0x16 and 0x1f, another delay, then 0x14 and 0x1e. */
+#define ICE1724_CCS_IRQ_MASK                 0x01       /* [I] byte; never touched by the shipped driver; 1 = masked, reset FE per the vendor datasheet; the driver therefore never gets an interrupt */
+#define ICE1724_CCS_IRQ_STATUS               0x02       /* [I] byte; never touched by the shipped driver */
 #define ICE1724_CCS_SYSCONF                  0x04       /* [E] byte; access r (bits 1:0 read) and w (EEPROM byte 6; the driver stores 0x40 when no EEPROM answers); role [I]: system configuration, bits 1:0 = number of stereo DACs less one (value 3 gives 8 analog output channels, 0 to 2 give 2) */
 #define ICE1724_CCS_AC97_CONF                0x05       /* [E] byte; read (bit 7 sets the per-device I2S converter flag) and written from EEPROM byte 7; role [I] */
 #define ICE1724_CCS_I2S_FEATURES             0x06       /* [E] byte; written from EEPROM byte 8; role [I] */
@@ -27,15 +29,17 @@
 #define ICE1724_CCS_GPIO_MASK_HI             0x1f       /* [E] byte; GPIO write mask bits 22:16, loaded from EEPROM byte 15; role [I] */
 
 /* Multitrack registers (second base-address region, "MT"). */
+#define ICE1724_MT_IRQ_STATUS                0x00       /* [I] byte; never touched by the shipped driver; write 1 to clear */
+#define ICE1724_MT_DMA_INT_MASK              0x03       /* [I] byte; never touched by the shipped driver; 1 = masked, reset FF per the vendor datasheet */
 #define ICE1724_MT_RATE                      0x01       /* [E] byte; sample rate code written by the rate routine: 0 for 48 kHz, 4 for 32 kHz, 2 for 12 kHz, 11 for 88.2 kHz equal the public driver's table */
 #define ICE1724_MT_MCLK_128X                 0x02       /* [E] byte; bit 3 set for rates of 120000 Hz and above, cleared below; "128x master clock" role [I] */
 #define ICE1724_MT_CONVERTER_RESET           0x05       /* [E] byte; bit 7 set, 10 microsecond delay, then cleared during a rate change; role [I] (a converter reset line) */
 #define ICE1724_MT_PLAYBACK_ADDR             0x10       /* [E] 32-bit; start address of the playback buffer; role [I] */
-#define ICE1724_MT_PLAYBACK_SIZE             0x14       /* [E] 32-bit; written with the frame count less one; unit not extracted [U] */
+#define ICE1724_MT_PLAYBACK_SIZE             0x14       /* [E] 32-bit; written with the dword count less one: the driver zeroes count<<2 bytes of the buffer and programs count-1 (mad_start_dma 0xe70..0xe98, 0xf90..0xf98); matches the vendor datasheet and Linux, OpenBSD, FreeBSD [E] for the arithmetic, byte unit of the zeroing call [I] */
 #define ICE1724_MT_DMA_CONTROL               0x18       /* [E] byte; the driver keeps a shadow and writes it at start and stop: bit 0 analog output stream, bit 1 capture stream, bit 7 digital output stream; bit roles [I] */
 #define ICE1724_MT_BURST                     0x19       /* [E] byte; written 0 when analog output has 8 channels, 3 otherwise; role [I] */
 #define ICE1724_MT_CAPTURE_ADDR              0x20       /* [E] 32-bit; capture buffer address; role [I] */
-#define ICE1724_MT_CAPTURE_SIZE              0x24       /* [E] 16-bit; capture size, frame count less one; also read back as the DMA position; "current address" semantics [I] */
+#define ICE1724_MT_CAPTURE_SIZE              0x24       /* [E] 16-bit; capture size, dword count less one (16-bit field); also read back as the DMA position; "current address" semantics [I] */
 #define ICE1724_MT_SPDIF_OUT_ADDR            0x40       /* [E] 32-bit; digital output buffer address; role [I] */
 #define ICE1724_MT_SPDIF_OUT_SIZE            0x44       /* [E] 16-bit; digital output size; role [I] */
 
