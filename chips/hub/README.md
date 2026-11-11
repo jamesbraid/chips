@@ -226,21 +226,21 @@ the A bit when the processor's slice is 0.
 
 **Grade of the table.** Established: the bit-to-text mapping (the 25 strings the kernel prints, in bit order) and the pairing of odd bits with CPU A and even with CPU B (the routines named above, read in full). The handler-class column is established for the routines read in full and inferred for `hubii_eint_handler`, `handle_uncac_buserr` and the other routines listed above as not read in full. Inferred: that each text names the condition that sets its bit.
 
-| Bit | Mask | Shipped text | Handler class |
-|---|---|---|---|
-| 0, 1 | `0x1`, `0x2` | B, A spool count compare | misc: `process_error_spool`, then clear |
-| 2, 3 | `0x4`, `0x8` | B, A spurious message | misc: message printed, clear |
-| 4, 5 | `0x10`, `0x20` | B, A write response block, **timeout** error | misc: `process_error_spool`, then clear |
-| 6, 7 | `0x40`, `0x80` | B, A write response block, **write** error | misc: `process_error_spool`, then clear |
-| 8, 9 | `0x100`, `0x200` | B, A SysState parity error | fatal |
-| 10, 11 | `0x400`, `0x800` | B, A SysAd error during data cycle | fatal |
-| 12, 13 | `0x1000`, `0x2000` | B, A SysAd error during address cycle | fatal |
-| 14, 15 | `0x4000`, `0x8000` | B, A SysCmd parity error (the text says "address cycle") | fatal |
-| 16, 17 | `0x10000`, `0x20000` | B, A SysCmd parity error (the text says "data cycle") | fatal |
-| 18, 19 | `0x40000`, `0x80000` | B, A write or timeout error during spool | fatal |
-| 20, 21 | `0x100000`, `0x200000` | B, A received uncorrectable error during an uncached load | the handler has a print-and-clear branch, but `hub_error_init` masks both bits out, so it never runs; the bits are read through the bus-error path |
-| 22, 23 | `0x400000`, `0x800000` | SysState tag error (the text says B for both) | fatal |
-| 24 | `0x1000000` | memory/directory uncorrectable error | `log_md_errors` |
+| Bit | Mask | Shipped text | Handler class | Grade |
+|---|---|---|---|---|
+| 0, 1 | `0x1`, `0x2` | B, A spool count compare | misc: `process_error_spool`, then clear | established (text); established (class: the handler tests this A/B pair of pending bits and takes the misc path); inferred (condition) |
+| 2, 3 | `0x4`, `0x8` | B, A spurious message | misc: message printed, clear | established (text); established (class: the handler tests this A/B pair of pending bits and takes the misc path); inferred (condition) |
+| 4, 5 | `0x10`, `0x20` | B, A write response block, **timeout** error | misc: `process_error_spool`, then clear | established (text); established (class: the handler tests this A/B pair of pending bits and takes the misc path); inferred (condition) |
+| 6, 7 | `0x40`, `0x80` | B, A write response block, **write** error | misc: `process_error_spool`, then clear | established (text); established (class: the handler tests this A/B pair of pending bits and takes the misc path); inferred (condition) |
+| 8, 9 | `0x100`, `0x200` | B, A SysState parity error | fatal | established (text); established (class: inside the `0xcfff00` test that sends `hubpi_eint_handler` to its fatal path); inferred (condition) |
+| 10, 11 | `0x400`, `0x800` | B, A SysAd error during data cycle | fatal | established (text); established (class: inside the `0xcfff00` test that sends `hubpi_eint_handler` to its fatal path); inferred (condition) |
+| 12, 13 | `0x1000`, `0x2000` | B, A SysAd error during address cycle | fatal | established (text); established (class: inside the `0xcfff00` test that sends `hubpi_eint_handler` to its fatal path); inferred (condition) |
+| 14, 15 | `0x4000`, `0x8000` | B, A SysCmd parity error (the text says "address cycle") | fatal | established (text); established (class: inside the `0xcfff00` test that sends `hubpi_eint_handler` to its fatal path); inferred (condition) |
+| 16, 17 | `0x10000`, `0x20000` | B, A SysCmd parity error (the text says "data cycle") | fatal | established (text); established (class: inside the `0xcfff00` test that sends `hubpi_eint_handler` to its fatal path); inferred (condition) |
+| 18, 19 | `0x40000`, `0x80000` | B, A write or timeout error during spool | fatal | established (text); established (class: inside the `0xcfff00` test that sends `hubpi_eint_handler` to its fatal path); inferred (condition) |
+| 20, 21 | `0x100000`, `0x200000` | B, A received uncorrectable error during an uncached load | the handler has a print-and-clear branch, but `hub_error_init` masks both bits out, so it never runs; the bits are read through the bus-error path | established (bits and text); established (the `0x100000`/`0x200000` test in `hubpi_eint_handler`, and that `hub_error_init` masks both out, as above) |
+| 22, 23 | `0x400000`, `0x800000` | SysState tag error (the text says B for both) | fatal | established (text); established (class: inside the `0xcfff00` test that sends `hubpi_eint_handler` to its fatal path); inferred (condition) |
+| 24 | `0x1000000` | memory/directory uncorrectable error | `log_md_errors` | established (bit and text, read from the kernel string table); inferred (class: `log_md_errors` read only to its call list) |
 
 **Grade of the table.** Established: the bit numbers and the shipped text of all 25 entries (the kernel's decode strings, one per bit from 0 to 24, in order, read from the `IP27/unix` string table; for example "0: CPU B spool count compare", "24: Memory/Directory uncorrectable error") and the handler class of bits 0 to 23 (`hubpi_eint_handler`, read in full). Inferred: what hardware condition raises each bit, since the text is all the kernel says (the spool count compare, the spurious message and the two write-response-block errors are named, not described). Bit 24 goes to `log_md_errors`, which was read only as far as its call list (it snapshots four memory-controller register groups through `save_md_error`, with one path to `kl_panic`), so its handler class stays inferred. `hub.h`, generated from the census, carries no names for these bits.
 

@@ -318,12 +318,12 @@ A 5-bit TNUM ties a response to a request and, at a Hub or Bridge, carries a
 source identity. **Established for the Bridge** (Bridge spec section 7.3, printed
 p. 88):
 
-| TNUM | Used by Bridge for |
-|---|---|
-| `0x00`-`0x0f` | read requests: the number of the response buffer assigned to the read |
-| `0x10`-`0x17` | PCI write requests: `0x10` plus the PCI device number |
-| `0x18`-`0x1f` | interrupt writes from device pins: `0x18` plus the device number |
-| `0x1f` | error interrupts |
+| TNUM | Used by Bridge for | Grade |
+|---|---|---|
+| `0x00`-`0x0f` | read requests: the number of the response buffer assigned to the read | established (Bridge spec rev 4.0, section 7.3, p. 88: "valid value are 0x0-0xf"; the Xbridge spec rev 0.5 repeats the tnum 0 to 15 limit for read responses) |
+| `0x10`-`0x17` | PCI write requests: `0x10` plus the PCI device number | established (same passage: "valid value are 0x10-0x17") |
+| `0x18`-`0x1f` | interrupt writes from device pins: `0x18` plus the device number | established (same passage: pin interrupts plus `0x18`, range `0x18`-`0x1f`) |
+| `0x1f` | error interrupts | established (same passage) |
 
 Device numbers 0 to 7 would give 0x18 to 0x1f, so device 7's pin interrupt would
 share `0x1f` with the error interrupt; the specification does not say how that
