@@ -465,6 +465,16 @@ allocator functions).
 | Does the kernel treat the AIC-1160 specially? | Yes: when it turns decoding on it enables bus master and **I/O decode only** for vendor 0x9004 device 0x1160, and I/O plus memory decode for other devices | E |
 | What BARs does the real chip present? | BAR 0 (registers) and BAR 3 (sequencer, TCB and scatter/gather RAM) are each used as 256-byte windows and are I/O BARs (inferred from the I/O-only decode and from the BAR type bit deciding the pool). The driver clears BARs 1 and 2 as a chip-bug workaround, so they exist and are likely memory BARs (inferred). BAR sizes, BAR 4 and 5 are unknown; no public Adaptec register document was found | I; U for sizes and BARs 4 and 5. A config-space dump of a real board settles it |
 
+#### The firmware-placed BAR 0 and the kernel's reserve
+
+With command word 0x7 and BAR 0 reading 0x200001 / 0x400001, the 6.5.21 IP30 kernel's slot set-up masks the
+type bit off, takes the lowest set bit of the address as the size (2 MB / 4 MB) and asks the I/O pool to
+reserve that range; the range fits the pool, so the type bit is not what defeats the reserve (E). All slots
+do this before any slot allocates its unassigned BARs (E). Which pool the reserve targets comes from a stack
+value that static reading does not resolve (U), and a failed reserve is silent. Whether a real board plus the
+real PROM ends with the same BAR 0 / BAR 3 overlap is therefore not settled (U); a config-space dump of a
+real board, or the pool and result of the reserve call in a run, settles it.
+
 ### Command / response path
 
 Commands are **transfer control blocks (TCBs)** built in host memory and handed to
