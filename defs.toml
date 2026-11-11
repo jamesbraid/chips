@@ -65,6 +65,9 @@ file = "include/heart_extra.h"
 file = "include/xbow_extra.h"
 
 [[headers]]
+file = "include/bedrock_extra.h"
+
+[[headers]]
 file = "include/ioc3_extra.h"
 
 [[headers]]
@@ -75,3 +78,6 @@ file = "include/router_origin3000_extra.h"
 
 [[headers]]
 file = "include/l1_requests.h"
+
+[[headers]]
+file = "include/xio_fc.h"
