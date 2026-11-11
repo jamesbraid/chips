@@ -333,8 +333,8 @@ Established (the kernel's link-alive and widget-present routines, PROM routines)
   alive is clear. Established from the kernel's two diagnostic messages, one for each case.
 - Width is auxiliary bit 4. Control bit 24 forces eight-bit mode and the kernel's reset
   routine preserves the control word across the reset, which is how software can choose a
-  width and re-run training. Established (reset routine); whether the chip itself
-  clears bit 24 on a link reset is unknown.
+  width and re-run training. Established (reset routine); the Crossbow specification says
+  bit 24 is not reset by a link reset (compared only; see the link reset subsection below).
 
 ### Reset sequences software issues
 
@@ -365,6 +365,92 @@ Established (the kernel's link-alive and widget-present routines, PROM routines)
   configuration; the IP30 GIO Bridge object saves the two registers before the reset,
   waits 100 microseconds, restores them and reinitialises the rest. Established (object
   read in full); the IP27 set has no GIO Bridge object.
+
+### Link reset: who issues it, what the widget sees, what software expects
+
+Question this answers: what happens to an XIO widget when its Crossbow port is link-reset, and does any
+shipped software depend on that. Short answer: the register and every issuer are established; what the widget
+does is **not** established anywhere held; the software evidence says the widget's Crosstalk interface registers
+are lost and no driver relies on the reset to clear board state.
+
+**The register (established).** The link reset register is the 32-bit word at `+0x34` of the port's block (slot
+`+0x30`; absolute `0x130 + 0x40 × (port − 8)`), write-only, no fields. Shipped code never uses the written value:
+the kernel routine and the three PROM routines write 0, and the IMPACT driver's direct fallback writes 1 (IP30
+`mgras.a(mgras_init.o)` `MgrasReset`, store at `0x1368`; IP27 same object, `0x1464`). Two different values both
+used by shipped code, so the value is **inferred** not decoded. Public Linux
+`arch/ia64/sn/include/xtalk/xbow.h` (the Linux 2.6.16 merge) defines `XB_LINK_RESET(x)` as `0x100 + 0x40 × x +
+0x34` and has no caller: agrees on the offset. The Crossbow specification rev 12.0 (section 3.3.7, compared
+only) calls it a one-shot of two core clocks and says no response comes back to a write-with-response packet
+(section 3.4.3: use plain write requests).
+
+**Who writes it (established, each routine read in full except where noted).**
+
+| Software | Routine, address | What surrounds the write |
+|---|---|---|
+| Kernel, all three platforms | `xbow_reset_link`: IP27 `unix` `0xc00000000006eefc`, IP30 `unix` `0xa80000002003d430`, IP35 `xbow.o` `0x1dfc` | save link control, write 0, delay, poll status bit 31, restore control (above) |
+| Kernel wrappers | `xswitch_reset_link` (IP27 `0xc00000000006cca0`, IP30 `0xa80000002003b58c`); `xwidget_reset` (IP27 `0xc00000000006c8ec`, IP30 `0xa80000002003b254`) forward to it. `xwidget_gfx_reset` (IP27 `0xc00000000006c908`) forwards, then calls `hub_widget_reset`; the IP30 build (`0xa80000002003b270`) has no hub step | |
+| IMPACT driver | `MgrasReset` in `mgras_init.o`: IP30 `0x1248`, IP27 `0x1334`, called from `mgrasInitBoard` and `MgrasInitialize`. With a device handle it calls `xwidget_reset`; without one it writes the register itself (save control, write 1, wait 1000 µs, restore) | then `MgrasInitDCBctrl`, a poll of a board status field and three board register stores |
+| InfiniteReality driver | `kona_reset_adaptor`: IP27 `unix` `0xc0000000003a6d00` (call at `0xc0000000003a6d10`), also in the IP35 `kona.a` | `xwidget_gfx_reset` first, then the driver rewrites the widget's registers (read from the driver object) |
+| V12 (Odyssey) driver | `odsyLLPReset`, `odsy_init.o`: IP30 `0xa800000020360724` (call to `xwidget_reset` at `0xa800000020360748`), called only from `odsyLowLevelReset` (`0xa800000020360794`) | after the board's own reset pulse (below). Defined but never called in the IP35 object |
+| GIO bridge (IP30) | `giobr.o` calls `xwidget_reset` | saves and restores widget control and LLP configuration around it (see above) |
+| IP30 PROM | `0xbfc6b198` (store at `0xbfc6b1b8`: zeroes link control, both arbitration words, then the reset word); wrapper `0xbfc6b1bc` saves control, waits 1000 units, restores it; its one caller is the V12 reset routine (`0xbfc48dec` to `0xbfc4912c`, call at `0xbfc490b4` through `0xbfc49870`) | no other store to `+0x134` in the image; the census agrees |
+| IP27 PROM | `0x1fc43758` (store at `0x1fc4379c`), one caller at `0x1fc441ec`, reached only when the widget's identification part is `0xc002`, `0xd002`, `0xd102` or `0xd112`, the four Bridge-family parts | a widget of any other part is not link-reset by this routine |
+| I/O-board PROM | wrapper `0xc000000011c1d4ac` (store at `0xc000000011c1d514`, save and restore control around it, 1000 units), one caller at `0xc000000011c3d788` in the IMPACT console install path (the code that prints "mgras_install: Bad news, too many MGRAS Boards!") | the routine goes on to board initialisation; no other caller, so InfiniteReality is not link-reset by this PROM |
+| IP35 PROM | none | see the bring-up note above |
+
+The IP27 PROM caller test and the I/O-board PROM's tie to IMPACT are **inferred**: the compare chain at
+`0x1fc441ac` to `0x1fc441f4` and the strings in the routine's neighbourhood were read, the whole walk around
+them was not. The IP30 `unix` symbol table shows 8-byte stubs for the IMPACT entry points; the IP30 IMPACT
+code is read from the `mgras.a` archive object, and whether a given shipped kernel links it was not checked.
+
+**A rule hidden in the V12 path (established as code, inferred as meaning).** `odsyLowLevelReset` in the IP30
+kernel and the IP30 PROM's copy of it (`0xbfc48dec`) both test the Crossbow's revision code (identification
+bits 31:28) against 4. For code 5 and above they pulse the board's own reset register (`+0x100c` = 0x200, wait,
+clear) and write **no** link reset. For codes up to 4 they pulse it with 0x16d and then link-reset the port.
+Around either pulse they clear the port's link-control interrupt enables and restore them afterwards, which
+reads as masking the error reports the board reset would cause on the link (inferred). On code 5 the PROM
+also clears bits in the fence words (from Crossbow `+0x7c`) for the other live ports; their purpose is unknown.
+The IP35 kernel has only the 0x200 form. So on an Octane2 (code 5 measured) the shipped V12 reset path does not use
+the link reset at all; the board register does the work.
+
+**What the widget sees (unknown).** No held source states it.
+
+- Crossbow side, specification statements, compared only: the write resets the local and remote LLP circuitry,
+  forces mode arbitration, clears the port's link controller, and leaves other ports alone; a link reset is
+  contained to the port, unlike a warm reset, which resets the whole Crossbow (sections 3.3.7 and 4.5). Link
+  control bit 24 (force eight-bit) is "not reset by a link reset" (section 3.3.2); this answers the question
+  above about bit 24 for the specified part.
+- The widget side is left to the Crosstalk specification, which is not held. The Crossbow specification is also
+  inconsistent: section 4.5 says a Crossbow-initiated port reset sends a warm-reset pattern, set by a "Link
+  Reset bit in the Link Control register", and the register list has no such bit; section 3.3.7 says it asserts
+  the remote link-reset signal. Which pattern a widget receives from a write to `+0x34` is unresolved.
+- Whether "link reset" is a full reset of the widget's internal logic is therefore unknown. Software evidence,
+  all about the widget's generic Crosstalk registers: the kernel reads the V12's widget control word before each
+  step that resets its link and rewrites it afterwards from the widget number (`odsyReset`, final value
+  `id | 0x4200`, then a 100 ms wait); the InfiniteReality driver rewrites widget control, both interrupt
+  destination words, the three interrupt vectors, the request time-out, the error status and the FIFO water
+  marks after `xwidget_gfx_reset`; the IP30 GIO bridge object saves and restores its widget control and LLP
+  configuration. Inferred: a link reset clears the widget's Crosstalk interface registers, at least on the
+  parts these drivers serve. Against a full reset: the InfiniteReality recovery path does not re-run its map RAM
+  initialisation (inferred expectation that map RAM survives), and the V12's reset-path code treats the link
+  reset as separate from its own board reset.
+
+**Do drivers or PROMs rely on it to reset the board (established as code order, inferred as intent).** None
+skips its own board reset after a link reset. IMPACT initialises board registers after it; InfiniteReality
+pulses its host-interface reset register in the attach and credit-recovery paths, separately from
+`kona_reset_adaptor`; the V12 pulses `+0x100c` before it (older Crossbows) or instead of it (code 5 and above).
+No shipped path reads a board status afterwards to confirm that the link reset cleared board state, and none
+depends on it clearing graphics-engine, microcode or FIFO state. Boards that are not link-reset at all on some
+path (V12 on code 5 and above, V12 on IP35, every non-Bridge widget under the IP27 PROM, everything under the
+IP35 PROM) still initialise there, so software does not need the link reset for those boards (inferred: the
+paths exist and were read, not run). Whether stale board state survives a link reset when the board's own reset
+is skipped is not tested by any shipped path, so software evidence cannot answer it.
+
+**Settling the unknowns.** Widget behaviour: the Crosstalk interface specification (not held), or a
+logic-analyser capture of a write to `+0x34` against a widget with a known register state, or a read-only
+register comparison (widget control, interrupt destination, request time-out) before and after a link reset on
+the user's Octane2 or Origin 350, behind a proposal under the physical-test rule. Pattern type: the same
+capture, or a second published Crossbow revision. Reset-path timing: the polling bound above.
 
 ### Training and timing
 

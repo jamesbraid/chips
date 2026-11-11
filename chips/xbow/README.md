@@ -73,7 +73,7 @@ fields: **E** established (the routine that uses it read in full, or an arithmet
 | `0x118` | link arbitration upper | 4 | rw | `xbow_prio_bw_alloc`; PROM link reset writes 0 | four 8-bit lanes with a 5-bit count at the bottom of each, sources 8 to 11 | established |
 | `0x120` | link arbitration lower | 4 | rw | same | same lanes, sources 12 to 15 | established |
 | `0x128` | link status, read-and-clear alias | 4 | r | `xbow_errintr_handler`, `xbow_update_llp_status`, PROM link reset | read to consume errors; bit 31 and the error bits tested | established |
-| `0x130` | link reset | 4 | w | `xbow_reset_link`; IP27 PROM and IP30 PROM reset routines (the IP35 PROM routine does not write it) | the value written is 0 | established |
+| `0x130` | link reset | 4 | w | `xbow_reset_link`; IP27, IP30 and I/O-board PROM routines (the IP35 PROM does not write it); the IMPACT driver's direct fallback | the kernel and PROMs write 0, the IMPACT fallback writes 1, so the value is not decoded (inferred); what the widget sees is unknown, see `docs/xbow-family.md` "Link reset: who issues it" | established (register and issuers) |
 | `0x138` | link auxiliary status | 4 | r | `xbow_widget_present`, `xbow_update_llp_status`, `xbow_error_handler`, PROM tests | bit 5 "widget present"; bits 31:24 and 23:16 summed as two byte counters | established |
 
 Totals: 23 register kinds (15 common, 8 per link; 79 slots with the link family at eight links), graded **18
