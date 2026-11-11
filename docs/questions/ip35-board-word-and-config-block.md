@@ -92,7 +92,8 @@ and `hubni.h` / `hubni_next.h` (SN1 headers); OpenBSD `sys/arch/sgi/sgi/ip27_mac
    unknown or the board has no EEPROM values (string at outer offset 0x798e0, printed at 0x1fc1e1f0).
 7. **Unknown.** What a real processor module presents in bits 3:0 for each shipped option (the rows above bound
    the answer; they do not say which of the two aliases, 4 or 6, 7 or 8, a real 500 or 600 MHz module drives);
-   whether bits 11:4 and 63:16 read zero on a Fuel; what class 0xc is on the hardware side. Route that would settle
+   whether bits 11:4 and 63:16 read zero on a Fuel; what class 0xc is on the hardware side. The class of IP53 and IP59 boards, excluded
+   from 4, 8 and c and inferred 0x2 for IP53, is in [ip35-board-class-and-flash-record.md](ip35-board-class-and-flash-record.md). Route that would settle
    them: a raw read from a running Fuel, or a service manual for the node board.
 
 ### 2. The 80-byte configuration block and its machine-type field
@@ -119,7 +120,8 @@ and `hubni.h` / `hubni_next.h` (SN1 headers); OpenBSD `sys/arch/sgi/sgi/ip27_mac
    The names are from the public SN1 header; the offsets and the values the fallback stores match it field for
    field (agreement). The early reset path separately reads the word at 0x64 (the mode word) from the local
    flash copy and compares its low 16 bits and bits 24:16 with CP0 Config after writing it (outer 0x1fc006a8 to 0x1fc006f4;
-   a mismatch takes the branch at 0x1fc006fc, which stores code 0xb4 in the real-time compare register).
+   a mismatch takes the branch at 0x1fc006fc, which stores code 0xb4 in the real-time compare register, disables the processor and
+   returns into the normal path; see [ip35-board-class-and-flash-record.md](ip35-board-class-and-flash-record.md#5-the-early-flash-check-and-the-0x1fc006fc-arm)).
 2. **Established: the mismatch check.** After the diagnostics the nested segment's summary routine
    (0xc0000000130e1f78) walks the modules and calls a comparison (0xc0000000130d6808). The comparison builds a
    reference record, first by asking for the board's configuration text record through the EEPROM request
@@ -134,7 +136,9 @@ and `hubni.h` / `hubni_next.h` (SN1 headers); OpenBSD `sys/arch/sgi/sgi/ip27_mac
 3. **Established: the machine-type value set the PROM carries.** Across all 29 rows of the table the byte at +13
    is 0, 1 or 2: 0 for the rows reached from class 0x0 and class 0x2000 (200 to 800 MHz options), 1 for the rows
    reached from class 0x8000 indices 0x10 to 0x14 (four rows), 2 for every row reached from class 0x4000. So the
-   Fuel class is type 2 and the Origin 300 class type 1. **Inferred, with agreement:**
+   Fuel class is type 2 and the Origin 300 class type 1. The reference record the comparison builds from the board EEPROM text record
+   derives the type from the class instead (4 gives 2, 8 gives 1, any other 0), so a class outside 4 and 8 needs 0
+   ([ip35-board-class-and-flash-record.md](ip35-board-class-and-flash-record.md#3-the-machine-type-word-of-the-flash-block)). **Inferred, with agreement:**
    0 = "SN1", 1 = "SN10", 2 = "SN11", 3 = "SN12" is the naming of the user-space flash utility's prompt in the
    public transcript ("Enter machine type (0)SN1 (1)SN10 (2)SN11 (3)SN12"); that utility is not held, so
    the mapping from the table's 0, 1, 2 to those names rests on the transcript, where a real Fuel's owner enters 2.

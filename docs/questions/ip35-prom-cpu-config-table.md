@@ -101,8 +101,9 @@ Established, from the control flow of each routine (6.210; the 6.211 addresses d
 1. Early start-up (`0x1fc00690` to `0x1fc006fc`). Before any RAM, the PROM reads the configuration record flashed at
    `flash + 0x60` (the word at record +4, flash address `0x9000000018000064`), writes it to CP0 Config (`mtc0` at
    `0x1fc006ac`), reads Config back, and compares the low 16 bits and then bits 24:16 of readback and flash word. A
-   mismatch jumps to `0x1fc006fc`, which stores 0xb4 to two per-slice registers and calls `0x1fc50c34`; where that path
-   ends was not traced. Nothing consults the speed table or the node EEPROM at this point.
+   mismatch jumps to `0x1fc006fc`, which stores 0xb4 to two per-slice registers and calls `0x1fc50c34`, which disables the
+   processor (clears its presence bit and enable word) and returns into the normal path at `0x1fc00780`; see
+   [ip35-board-class-and-flash-record.md](ip35-board-class-and-flash-record.md#5-the-early-flash-check-and-the-0x1fc006fc-arm). Nothing consults the speed table or the node EEPROM at this point.
 2. The configuration report (`0x1fc1e034`). It copies the 80-byte record from `0x9000000038000060 + (nasid << 33)`
    and prints it under "Config values flashed in the PROM". For the local node it then prints the live Config
    register decode (`0x1fc03c40`, register 16, then `0x1fc1dc74`) under "Config values loaded from nasid N CPU c".
@@ -135,9 +136,10 @@ Established (6.210 and 6.211, same offsets).
   mask, and otherwise returns at once. Socket bit 0 is slice A, 1 slice B, 2 slice C, 3 slice D, so a 2CPU product
   allows slices A and C, a 1CPU product slice A only.
 - The routine returns immediately, without touching these rows, when the board register class (bits 15:12 of the
-  register at `0x9000000014000000`) is `0x4000` (`0x1fc66da4` to `0x1fc66dc0`). The class values of IP53 and IP59 nodes
-  are not established in the PROM; the R16000 rows above are reached through class `0x4000`, which suggests but does
-  not show that node boards of those products carry it.
+  register at `0x9000000014000000`) is `0x4000` (`0x1fc66da4` to `0x1fc66dc0`). The class of IP53 and IP59 nodes is not
+  `0x4000`: the banner code and the kernel both treat them as outside the Fuel, Origin 300 and PE-brick classes
+  ([ip35-board-class-and-flash-record.md](ip35-board-class-and-flash-record.md)), so for them this early return does not apply and the
+  table is live.
 
 ## What the table does not settle
 
@@ -150,6 +152,8 @@ Established (6.210 and 6.211, same offsets).
   raw read of the flash record (`flash + 0x64`) or the node EEPROM `CpuCfg0Reg` of a 1 GHz module, or a CP0 Config read
   on one. No such capture is public. Software-only routes are exhausted for the PROM; the L1 and kernel images do
   not hold it.
-- Unknown: which board-register class IP53 and IP59 node boards carry.
+- Established: IP53 and IP59 boards are not class 0x4000, 0x8000 or 0xc000; inferred: IP53 is 0x2000 (IP59 unknown). The R16000 rows
+  of the table are reached only through class 0x4000, so no IP53 or IP59 board takes its word from the table. Evidence and the remaining unknown (the
+  raw word) are in [ip35-board-class-and-flash-record.md](ip35-board-class-and-flash-record.md).
 
 Tracked in [open-questions.md](../open-questions.md) as "IP35 PROM: the 1 GHz R16000 configuration word".
