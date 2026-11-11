@@ -674,8 +674,8 @@ size). It is a standard FCP_RSP IU:
 | 0x0c | 4, big-endian | FCP residual byte count. On underrun the driver takes this as the command residual; on overrun it is reported as a CDB/data-length mismatch | established |
 | 0x10 | 4 | FCP sense-data length | established |
 | 0x14 | 4 | FCP response-data length | established |
-| 0x18… | — | Response-info then sense-info payload | established |
-| 0x80 | 16 | **Adapter residual-info block.** The chip writes it little-endian and the driver reads it as written (its swap call is an empty stub in the shipped objects), so every field is plain **little-endian**: an 8-byte little-endian bus pointer to the current scatter-gather page at +0, a 3-byte little-endian current-segment residual (low byte first) at +8, and the current scatter-gather element index (high nibble) at +12. `hwutil.o:sh_get_residual_length` walks it plus the remaining scatter-gather entries to compute the untransferred byte count, and **cross-checks it against the FCP_RSP residual**; a mismatch is a hard error. So the FCP_RSP residual is the primary figure and this block is the independent check — not a plain bytes-moved counter. The fields are plain little-endian as listed, with no per-unit byte reversal | established |
+| 0x18… | — | Response-info then sense-info payload | established (the completion routine reads the byte at 0x1b; IP27 build `fcadp.o:fc_scsi_complete`, re-read); inferred (that it is the response code, and that the sense data follows the response info, from the standard unit layout) |
+| 0x80 | 16 | **Adapter residual-info block.** The chip writes it little-endian and the driver reads it as written (its swap call is an empty stub in the shipped objects), so every field is plain **little-endian**: an 8-byte little-endian bus pointer to the current scatter-gather page at +0, a 3-byte little-endian current-segment residual (low byte first) at +8, and the current scatter-gather element index (high nibble) at +12. `hwutil.o:sh_get_residual_length` walks it plus the remaining scatter-gather entries to compute the untransferred byte count, and **cross-checks it against the FCP_RSP residual**; a mismatch is a hard error. So the FCP_RSP residual is the primary figure and this block is the independent check — not a plain bytes-moved counter. The fields are plain little-endian as listed, with no per-unit byte reversal | established (the 8-byte value at +0x80, three single-byte loads at +0x88 to +0x8a and a byte load at +0x8c in `hwutil.o:sh_get_residual_length`, IP27 build; re-read); inferred (the roles of the pointer and the nibble, from how the routine uses them) |
 
 TCB bookkeeping uses a free list (`fc_get_rrtcb`/`fc_next_rrtcb`), and the driver
 guards against "TCB maximum count exceeded" and checksum/parity errors on TCBs
@@ -1121,15 +1121,15 @@ bytes +5 and +6. The accept is a 116-byte port-login payload:
 
 | Reply offset | Bytes | Field | Grade |
 |---|---|---|---|
-| 0x00 | 4 | Link-service code — **0x02 (accept)** in the top byte; the driver gates login on this | established |
-| 0x04 | 16 | Common service parameters: FC-PH version, buffer-to-buffer credit, common features, receive-data field size, max concurrent sequences, relative offset, error-detect timeout | established |
-| 0x14 | 8 | **Port-name WWN** of the target | established |
-| 0x1c | 8 | **Node-name WWN** of the target | established |
-| 0x24 | 16 | Class-1 service parameters | established |
-| 0x34 | 16 | Class-2 service parameters | established |
-| 0x44 | 16 | Class-3 service parameters | established |
-| 0x54 | 16 | Reserved | established |
-| 0x64 | 16 | Vendor version | established |
+| 0x00 | 4 | Link-service code — **0x02 (accept)** in the top byte; the driver gates login on this | established (`fcadp.o:fc_plogi_complete`, IP27 build, re-read: an unaligned word load of bytes 0 to 3, bytes +5 and +6 logged on reject, and a 0x74-byte copy of the whole reply) |
+| 0x04 | 16 | Common service parameters: FC-PH version, buffer-to-buffer credit, common features, receive-data field size, max concurrent sequences, relative offset, error-detect timeout | inferred (the standard login-payload shape: the driver copies the 116 bytes whole and reads only the code word and bytes +5 and +6 on a reject, so it never reads this field) |
+| 0x14 | 8 | **Port-name WWN** of the target | inferred (the standard login-payload shape: the driver copies the 116 bytes whole and reads only the code word and bytes +5 and +6 on a reject, so it never reads this field) |
+| 0x1c | 8 | **Node-name WWN** of the target | inferred (the standard login-payload shape: the driver copies the 116 bytes whole and reads only the code word and bytes +5 and +6 on a reject, so it never reads this field) |
+| 0x24 | 16 | Class-1 service parameters | inferred (the standard login-payload shape: the driver copies the 116 bytes whole and reads only the code word and bytes +5 and +6 on a reject, so it never reads this field) |
+| 0x34 | 16 | Class-2 service parameters | inferred (the standard login-payload shape: the driver copies the 116 bytes whole and reads only the code word and bytes +5 and +6 on a reject, so it never reads this field) |
+| 0x44 | 16 | Class-3 service parameters | inferred (the standard login-payload shape: the driver copies the 116 bytes whole and reads only the code word and bytes +5 and +6 on a reject, so it never reads this field) |
+| 0x54 | 16 | Reserved | inferred (the standard login-payload shape: the driver copies the 116 bytes whole and reads only the code word and bytes +5 and +6 on a reject, so it never reads this field) |
+| 0x64 | 16 | Vendor version | inferred (the standard login-payload shape: the driver copies the 116 bytes whole and reads only the code word and bytes +5 and +6 on a reject, so it never reads this field) |
 
 For login to succeed the driver needs only the accept code and a good status; it stores
 the whole payload (including the two WWNs) for later use but does **not** validate the
@@ -1149,16 +1149,16 @@ a 20-byte process-login payload:
 
 | Reply offset | Bytes | Field | Grade |
 |---|---|---|---|
-| 0x00 | 1 | Link-service code — **0x02 (accept)**; the driver gates on this | established |
-| 0x01 | 1 | Page length | established |
-| 0x02 | 2 | Payload length | established |
-| 0x04 | 1 | Type code — **0x08 (FCP)** | established |
-| 0x05 | 1 | Type-code extension | established |
-| 0x06 | 2 | Flags: originator/responder process valid, established image pair, response code | established |
-| 0x08 | 4 | Originator process associator | established |
-| 0x0c | 4 | Responder process associator | established |
-| 0x10 | 3 | Reserved | established |
-| 0x13 | 1 | **FCP service-parameter byte — must be 0x12** (target function 0x10 + read-transfer-ready-disabled 0x02) | established |
+| 0x00 | 1 | Link-service code — **0x02 (accept)**; the driver gates on this | established (the first byte of the reply is loaded and tested in `fc_prli_complete`, re-read; the 20-byte copy of the whole reply is also seen) |
+| 0x01 | 1 | Page length | inferred (the standard process-login page shape: the driver copies 20 bytes whole and reads only the code byte, the byte at 0x13, and bytes +5 and +6 on a reject) |
+| 0x02 | 2 | Payload length | inferred (the standard process-login page shape: the driver copies 20 bytes whole and reads only the code byte, the byte at 0x13, and bytes +5 and +6 on a reject) |
+| 0x04 | 1 | Type code — **0x08 (FCP)** | inferred (the standard process-login page shape: the driver copies 20 bytes whole and reads only the code byte, the byte at 0x13, and bytes +5 and +6 on a reject) |
+| 0x05 | 1 | Type-code extension | inferred (the standard process-login page shape: the driver copies 20 bytes whole and reads only the code byte, the byte at 0x13, and bytes +5 and +6 on a reject) |
+| 0x06 | 2 | Flags: originator/responder process valid, established image pair, response code | inferred (the standard process-login page shape: the driver copies 20 bytes whole and reads only the code byte, the byte at 0x13, and bytes +5 and +6 on a reject) |
+| 0x08 | 4 | Originator process associator | inferred (the standard process-login page shape: the driver copies 20 bytes whole and reads only the code byte, the byte at 0x13, and bytes +5 and +6 on a reject) |
+| 0x0c | 4 | Responder process associator | inferred (the standard process-login page shape: the driver copies 20 bytes whole and reads only the code byte, the byte at 0x13, and bytes +5 and +6 on a reject) |
+| 0x10 | 3 | Reserved | inferred (the standard process-login page shape: the driver copies 20 bytes whole and reads only the code byte, the byte at 0x13, and bytes +5 and +6 on a reject) |
+| 0x13 | 1 | **FCP service-parameter byte — must be 0x12** (target function 0x10 + read-transfer-ready-disabled 0x02) | established (`fcadp.o:fc_prli_complete`, IP27 build, re-read: a byte load at +0x13 compared with 0x12; the meanings of the 0x10 and 0x02 bits are inferred) |
 
 #### ADISC accept (address discovery)
 

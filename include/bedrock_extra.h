@@ -49,4 +49,23 @@
 #define BEDROCK_MEM_BANK_CONFIG_BANK_SELECT  0x300000000ull /* [E] bits 33:32; the PROM clears these and ORs in a selector shifted left 32 (not masked to two bits by that routine) */
 #define BEDROCK_MEM_BANK_CONFIG_B_58_56      0x0700000000000000ull /* [E] the same write ORs in 7 here; meaning [U]: settle by a published Bedrock register list (none held) or the same routine's callers' use of the result */
 
+/* Processor-interface error spool size (address 0x800428; bedrock.h carries the address without the encoding). Read in the error-print routine of the Origin 350 generation kernel (one machine build, re-read): a zero value
+ * means no spool; otherwise the routine loads the value, subtracts one and shifts 4096 left by the result. */
+#define BEDROCK_PI_ERROR_SPOOL_SIZE_BASE     4096       /* [E] bytes for a value of 1 */
+/* [E] encoding: bytes = 4096 << (value - 1) for a nonzero value; the field width is not shown by the routine ([U]). */
+
+/* I/O interface widget status (address 0x400008). The handler tests bit 32 as the error flag; with it set,
+ * the routine that names the reason tests the three bits below. Register offset and bit 32 re-read in the widget-disabled
+ * check of the Origin 350 generation kernel; the three reason bits are the README table's established reading. */
+#define BEDROCK_II_WIDGET_STATUS             0x400008   /* [E] width 8 byte(s), access r */
+#define BEDROCK_II_WIDGET_STATUS_ERROR       0x0000000100000000ull /* [E] bit 32, the "crazy" error flag; name [I] */
+#define BEDROCK_II_WIDGET_STATUS_RETRY_TIMEOUT 0x0000000000000200ull /* [E] bit 9, reason when bit 32 is set */
+#define BEDROCK_II_WIDGET_STATUS_TAIL_TIMEOUT  0x0000000000000020ull /* [E] bit 5, reason when bit 32 is set */
+#define BEDROCK_II_WIDGET_STATUS_CREDIT_TIMEOUT 0x0000000000000010ull /* [E] bit 4, reason when bit 32 is set */
+
+/* Node region bitmask at address 0x1000018 (node alias). The bus-error handler shifts 1 left by the faulting address's
+ * region number and ANDs it with this register; a nonzero result sends the error to the partition error path. Access
+ * pattern [E] (re-read in the Origin 350 generation kernel's cached bus-error handler); that it is a per-region bitmask is [I]. */
+#define BEDROCK_NODE_REGION_MASK             0x1000018  /* [E] width 8 byte(s), access r; name [I] */
+
 #endif /* BEDROCK_EXTRA_H */

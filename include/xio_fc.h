@@ -66,4 +66,69 @@
 #define XIO_FC_INT_SOFTWARE_ERROR            0x2000     /* [E] register 0x25 bit 5 */
 #define XIO_FC_INT_SEQ_COMPLETION            0x1000     /* [E] register 0x25 bit 4: the done-queue completion bit; the driver drains the queue by scanning pass bytes regardless of this bit. Whether the per-source enable at 0x99 bit 4 is needed is [U] */
 
+/* Chip host registers, primary window (BAR 0). Byte accessors are 8-bit, "word" accessors 16-bit. The register file is
+ * bank-switched by the byte at XIO_FC_REG_BANK_SELECT, so an offset can mean different things in different banks.
+ * Re-read in one machine build's driver objects (the same bytes in the other two builds for the three objects that
+ * carry these accesses); the roles are inferred from the driver's use and say so. */
+#define XIO_FC_REG_SEQ_CONTROL               0x00       /* [E] byte; sequencer control */
+#define XIO_FC_SEQ_CTRL_RAM_LOAD             0x01       /* [E] written alone before the microcode image is streamed in */
+#define XIO_FC_SEQ_CTRL_RUN                  0x40       /* [E] written after the image is verified, to run the sequencer */
+#define XIO_FC_SEQ_CTRL_RESET_PC             0x02       /* [I] reset the sequencer program counter; seen only inside the 0x42 write */
+#define XIO_FC_SEQ_CTRL_START                0x42       /* [E] run plus reset, written after the mainline image is loaded to start it from the top */
+#define XIO_FC_REG_HOST_CONTROL              0x22       /* [E] byte; host control */
+#define XIO_FC_HOST_CTRL_MASTER_IRQ_EN       0x04       /* [E] set and cleared by the interrupt enable and disable routines; name [I] */
+#define XIO_FC_HOST_CTRL_PAUSE               0x40       /* [E] set to pause the sequencer, polled for the acknowledge */
+#define XIO_FC_HOST_CTRL_PAUSE_AT_TOP        0x80       /* [E] set to pause at the top of the program, polled for the acknowledge; unpause clears 0xc0 */
+#define XIO_FC_HOST_CTRL_RESET_WRITE         0x43       /* [E] the value the error-recovery reset writes after a pause (pause plus 0x02 plus 0x01); the effect of the two low bits is [I]; this is a value written, not a reset value of the register ([U]) */
+#define XIO_FC_REG_BANK_SELECT               0x2c       /* [E] byte; register-bank select, not a reset */
+#define XIO_FC_BANK_CODE_STEP                0x11       /* [E] bank n is selected by writing n * 0x11: 0x00, 0x11, 0x22, 0x33, 0x44, 0x55 are written as immediates; 0x66 and 0x77 only by the RAM test, which steps through all eight codes; whether the two nibbles select banks separately is [U] */
+#define XIO_FC_REG_CLOCK_STATUS              0x63       /* [E] byte, read under bank 4: the link-speed routine masks the low two bits with 0xfc, ORs in 0x02 and requires 0xbe, 0x2e, 0xfe or 0x6e, otherwise configuration collection fails */
+#define XIO_FC_CLOCK_STATUS_MASK             0xfc       /* [E] */
+#define XIO_FC_CLOCK_STATUS_OR               0x02       /* [E] */
+#define XIO_FC_CLOCK_STATUS_DIV_1            0xbe       /* [E] accepted result; divisor names [I] */
+#define XIO_FC_CLOCK_STATUS_DIV_2_A          0x2e       /* [E] accepted result; divisor names [I] */
+#define XIO_FC_CLOCK_STATUS_DIV_2_B          0xfe       /* [E] accepted result; divisor names [I] */
+#define XIO_FC_CLOCK_STATUS_DIV_4            0x6e       /* [E] accepted result; divisor names [I] */
+#define XIO_FC_REG_LINK_CONTROL              0xe1       /* [E] byte; written 0x20 then 0x40 under bank 3 by the initialiser, read under bank 2 by the error routine */
+#define XIO_FC_LINK_CTRL_LOSS_OF_SIGNAL      0x01       /* [E] tested on the read, raises the loss-of-signal notice; name [I] */
+#define XIO_FC_LINK_CTRL_LOSS_OF_SYNC        0x02       /* [E] tested on the read, raises the loss-of-synchronisation notice; name [I] */
+#define XIO_FC_LINK_CTRL_LINK_RESET          0x20       /* [E] written first by the initialiser; name [I] */
+#define XIO_FC_LINK_CTRL_LINK_ENABLE         0x40       /* [E] written second by the initialiser; name [I] */
+#define XIO_FC_REG_SERDES_STATUS             0xeb       /* [E] byte, read under bank 1 */
+#define XIO_FC_SERDES_FAULT                  0x10       /* [E] tested by the error routine, raises the media-fault notice; name [I] */
+#define XIO_FC_SERDES_LOCK_NOT_IN_USE        0x08       /* [E] tested only when bit 0x10 of 0xea is set, raises the link-not-usable notice; name [I] */
+#define XIO_FC_SERDES_MEDIA_SENSE_MASK       0x03       /* [E] the initialiser masks these two bits and stores them; that they sense the media module is [I] */
+
+/* Layout offsets of the host-memory structures the chip fills or the driver reads, beyond the fields above. */
+#define XIO_FC_RESP_PAYLOAD                  0x18       /* [I] response information, then sense data, from the standard response unit; [E] only that the completion routine reads the byte at 0x1b */
+#define XIO_FC_RESP_RESIDUAL_INFO            0x80       /* [E] 16-byte adapter residual-info block, written by the chip little-endian and read as written */
+#define XIO_FC_RESID_SG_PAGE_PTR             0x00       /* [E] offset in that block: 8-byte bus pointer to the current scatter-gather page */
+#define XIO_FC_RESID_SEGMENT_RESIDUAL        0x08       /* [E] 3 bytes, low byte first; the byte count left in the current segment */
+#define XIO_FC_RESID_SG_ELEMENT_INDEX        0x0c       /* [E] byte; the element index is the high nibble ([I] that it is an index) */
+
+/* Link-service accept payloads (the reply the chip DMAs into the driver's buffer). The driver copies each whole, reads
+ * only the first word (PLOGI) or byte (PRLI), the byte at offset 0x13 (PRLI) and, on a reject, bytes +5 and +6, so the field
+ * layout below is the standard payload shape and its grade is [I], not what the driver parses. */
+#define XIO_FC_PLOGI_ACC_CODE                0x00       /* [E] top byte 0x02 is accept, 0x01 is reject; the driver gates login on it */
+#define XIO_FC_PLOGI_REJECT_REASON           0x05       /* [E] logged on a reject */
+#define XIO_FC_PLOGI_REJECT_EXPLANATION      0x06       /* [E] logged on a reject */
+#define XIO_FC_PLOGI_ACC_COMMON_PARAMS       0x04       /* [I] 16 bytes */
+#define XIO_FC_PLOGI_ACC_PORT_NAME           0x14       /* [I] 8 bytes, target port name */
+#define XIO_FC_PLOGI_ACC_NODE_NAME           0x1c       /* [I] 8 bytes, target node name */
+#define XIO_FC_PLOGI_ACC_CLASS1_PARAMS       0x24       /* [I] 16 bytes */
+#define XIO_FC_PLOGI_ACC_CLASS2_PARAMS       0x34       /* [I] 16 bytes */
+#define XIO_FC_PLOGI_ACC_CLASS3_PARAMS       0x44       /* [I] 16 bytes */
+#define XIO_FC_PLOGI_ACC_RESERVED            0x54       /* [I] 16 bytes */
+#define XIO_FC_PLOGI_ACC_VENDOR_VERSION      0x64       /* [I] 16 bytes */
+#define XIO_FC_PLOGI_ACC_LENGTH              0x74       /* [E] bytes copied (116) */
+#define XIO_FC_PRLI_ACC_CODE                 0x00       /* [E] byte; 0x02 is accept, 0x01 is reject */
+#define XIO_FC_PRLI_ACC_PAGE_LENGTH          0x01       /* [I] */
+#define XIO_FC_PRLI_ACC_PAYLOAD_LENGTH       0x02       /* [I] 2 bytes */
+#define XIO_FC_PRLI_ACC_TYPE                 0x04       /* [I] byte; 0x08 for the SCSI protocol */
+#define XIO_FC_PRLI_ACC_FLAGS                0x06       /* [I] 2 bytes */
+#define XIO_FC_PRLI_ACC_ORIGINATOR_ASSOC     0x08       /* [I] 4 bytes */
+#define XIO_FC_PRLI_ACC_RESPONDER_ASSOC      0x0c       /* [I] 4 bytes */
+#define XIO_FC_PRLI_ACC_SERVICE_BYTE         0x13       /* [E] byte; the driver requires 0x12 (target-function bit 0x10 plus 0x02), otherwise rejects the target; the bit meanings are [I] */
+#define XIO_FC_PRLI_ACC_LENGTH               0x14       /* [E] bytes copied (20) */
+
 #endif /* XIO_FC_H */
