@@ -1,1 +1,7 @@
 number	hex	table	handler	evidence	senders	binaries	example	status	doc	section
+8	0x8		sn0drv_ioctl	boundary,handled		1	IP27/unix:sn0drv_ioctl	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+12	0xc		sn0drv_ioctl	handled		1	IP27/unix:sn0drv_ioctl	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+14	0xe		sn0drv_ioctl	handled		1	IP27/unix:sn0drv_ioctl	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+15	0xf		sn0drv_ioctl	boundary,handled		1	IP27/unix:sn0drv_ioctl	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+16	0x10		sn0drv_ioctl	handled		1	IP27/unix:sn0drv_ioctl	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
+22	0x16		sn0drv_ioctl	handled		1	IP27/unix:sn0drv_ioctl	understood	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
