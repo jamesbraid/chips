@@ -131,19 +131,19 @@ two header doublewords, and whether a response repeats the address.
 Command word, 32 bits, established by three agreeing sources (Crossbow and Bridge
 error-command-word tables, IRIX 6.5.30 `xwidget.h`, Linux `xwidget.h`):
 
-| Bits | Field |
-|---|---|
-| 31:28 | destination widget number |
-| 27:24 | source widget number |
-| 23:20 | packet type |
-| 19:15 | transaction number |
-| 14 | coherent transaction |
-| 13:12 | data size |
-| 11 | guaranteed-bandwidth ring |
-| 10 | virtual backplane message |
-| 9 | error |
-| 8 | barrier |
-| 7:0 | reserved |
+| Bits | Field | Grade |
+|---|---|---|
+| 31:28 | destination widget number | established |
+| 27:24 | source widget number | established |
+| 23:20 | packet type | established |
+| 19:15 | transaction number | established |
+| 14 | coherent transaction | established |
+| 13:12 | data size | established |
+| 11 | guaranteed-bandwidth ring | established |
+| 10 | virtual backplane message | established |
+| 9 | error | established |
+| 8 | barrier | established |
+| 7:0 | reserved | established |
 
 An introductory table in the Crossbow spec disagrees with these positions; it cannot be
 right and the register table and both OSes agree with the layout above. Whether the
@@ -291,11 +291,11 @@ unknown.
 
 A widget number is 4 bits. Established as a machine property, not a chip property.
 
-| Number | Meaning |
-|---|---|
-| 0 | the crossbar's own register and error endpoint, and the discovery address; on a switchless host the one attached bridge answers here |
-| 1-7 | not switch ports. On a Hub or Bedrock, widget slot 1 of the processor's Little Window is where the node chip keeps its own registers |
-| 8-F | the eight external switch links; arbitration groups them as upper (8-B) and lower (C-F) |
+| Number | Meaning | Grade |
+|---|---|---|
+| 0 | the crossbar's own register and error endpoint, and the discovery address; on a switchless host the one attached bridge answers here | established |
+| 1-7 | not switch ports. On a Hub or Bedrock, widget slot 1 of the processor's Little Window is where the node chip keeps its own registers | established |
+| 8-F | the eight external switch links; arbitration groups them as upper (8-B) and lower (C-F) | established |
 
 A widget's own number is written by firmware into the low four bits of its control register
 (slot `0x20`) on the Hub, Bedrock and Bridge-class widgets; HEART instead reports its
@@ -566,14 +566,14 @@ KTOWN, and the letters in HQ4, XG and TIO, stand for is unknown.
 
 ### Inferred
 
-| Claim | Discriminating test |
-|---|---|
-| Part `0xd100` is a PIC crossbar face; the Tezro and Origin 350 widget 0 reports it | PROM-monitor read of the identification word at slot `0x00` (offset 4) on an Origin 350; read links 8-F and `0x78`-`0xc8` |
-| HEART honours a deassert interrupt packet | Bridge pin with clear mode on; watch HEART's pending bit when the pin drops |
-| HEART request timeout is 1.28 us per count | timed uncached read to an unclaimed widget at two programmed values |
-| Early Crossbow revisions have three usable input buffers | four back-to-back packets with crossbar credit 4; watch input overallocation |
-| Fences and lock are independent across a warm reset on code 5 | write the lock and a fence, warm-reset from a second host, re-read |
-| Converters in Crosstown are transparent | `hinv` and port status of a rack slot with an XTOWN, cable attached and detached |
+| Claim | Discriminating test | Grade |
+|---|---|---|
+| Part `0xd100` is a PIC crossbar face; the Tezro and Origin 350 widget 0 reports it | PROM-monitor read of the identification word at slot `0x00` (offset 4) on an Origin 350; read links 8-F and `0x78`-`0xc8` | inferred |
+| HEART honours a deassert interrupt packet | Bridge pin with clear mode on; watch HEART's pending bit when the pin drops | inferred |
+| HEART request timeout is 1.28 us per count | timed uncached read to an unclaimed widget at two programmed values | inferred |
+| Early Crossbow revisions have three usable input buffers | four back-to-back packets with crossbar credit 4; watch input overallocation | inferred |
+| Fences and lock are independent across a warm reset on code 5 | write the lock and a fence, warm-reset from a second host, re-read | inferred |
+| Converters in Crosstown are transparent | `hinv` and port status of a rack slot with an XTOWN, cable attached and detached | inferred |
 
 ### Unknown
 

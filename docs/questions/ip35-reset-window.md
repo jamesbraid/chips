@@ -105,15 +105,15 @@ what the manual's LED table calls UALIAS space.
 Each helper builds `0xc00000001fc0xxxx | 0xffffffffa0000000`, jumps there, runs the privileged sequence, then
 masks the return address and ORs 0xc000000000000000 to return into the mapped window. Established.
 
-| Helper | Hop target | Does |
-| --- | --- | --- |
-| 0x1fc05b30 | 0x1fc05b58 | EntryHi/Lo0/Lo1, Index, `tlbwi` at 0x1fc05b74 |
-| 0x1fc05b80 | 0x1fc05ba8 | `tlbr` |
-| 0x1fc05bc4 | 0x1fc05bec | `tlbr`, read EntryLo |
-| 0x1fc05c54 | 0x1fc05c80 | clear TLB, install entry 62 (before memory) |
-| 0x1fc05ce0 | 0x1fc05d0c | entry 61 (after memory and copy) |
-| 0x1fc05d5c | 0x1fc05d88 | entry 60 |
-| 0x1fc05dd8 | 0x1fc05e04 | entry 59 |
+| Helper | Hop target | Does | Grade |
+| --- | --- | --- | --- |
+| 0x1fc05b30 | 0x1fc05b58 | EntryHi/Lo0/Lo1, Index, `tlbwi` at 0x1fc05b74 | established |
+| 0x1fc05b80 | 0x1fc05ba8 | `tlbr` | established |
+| 0x1fc05bc4 | 0x1fc05bec | `tlbr`, read EntryLo | established |
+| 0x1fc05c54 | 0x1fc05c80 | clear TLB, install entry 62 (before memory) | established |
+| 0x1fc05ce0 | 0x1fc05d0c | entry 61 (after memory and copy) | established |
+| 0x1fc05d5c | 0x1fc05d88 | entry 60 | established |
+| 0x1fc05dd8 | 0x1fc05e04 | entry 59 | established |
 
 The routine at 0x1fc05e70 returns its argument with 0xffffffffa0000000 ORed in when the current ASID is 1: the
 PROM treats ASID 1 as "running from the PROM window".

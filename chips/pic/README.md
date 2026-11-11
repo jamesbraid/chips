@@ -260,26 +260,26 @@ returning zero) with one status bit set at a time, then checking the branch stru
 
 **Grade of the table.** Established: for each status bit 8 to 45, the text the driver prints (the 38 consecutive strings in the shipped Bridge driver object `pcibr.o` of the 6.5.30 Origin 3000 build, one per bit number, checked here against the strings of that object; for example "09: PCI to Crosstalk read request timeout", "30: PMU Access Fault", "45: PCI-X split completion message parity error"), and the registers read per bit (harness run plus the branch structure, as described above). Inferred, never established: that each text names the hardware condition that sets its bit. The text is a label the driver chose, not a hardware specification, and no published PIC document is held to check it against. `pic.h`, generated from the census, carries no names for these bits.
 
-| status bit | text | registers read for the dump |
-|---|---|---|
-| 8 | GIO non-contiguous byte enable in crosstalk packet | nothing: bits 8, 16 and 31 are skipped, text included, for every chip type but 0 |
-| 9 | PCI to Crosstalk read request timeout | response error (`+0x68` and its device and buffer fields `+0x60`) |
-| 10 to 15 | PCI retry count exhausted; device select timeout; device and bridge parity; address or command parity; abort | PCI bus address (`+0xd8`), read by the raw getter and by the address getter and printed on two lines |
-| 16 | SSRAM parity error | nothing on a PIC (skipped as above; the SSRAM parity getter is reached only for chip type 0) |
-| 17 to 21 | LLP transmitter retry wrap, transmitter retry, receiver retry wrap, receiver check bit error, receiver sequence error | none (text only); on a PIC, bits 17 to 21 and 23 are skipped entirely when the record word at +72 is nonzero |
-| 22, 23 | request packet overflow; request not supported (23 is skipped as noted for bits 17 to 21) | link-side error (`+0x58`) printed through the command decoder, then link-side error address (`+0x78`) |
-| 24, 25, 27 | invalid address for the bridge widget; request command word error; request framing | command-word error (`+0x40`) through the decoder, then bus error (`+0x18`) read by two getters and printed on two lines |
-| 26 | response command word error | link-side error (`+0x58`) through the decoder, response error (`+0x68`, `+0x60`), then the directory state printer |
-| 28 | response framing | link-side error (`+0x58`), response error with address (`+0x68`) |
-| 29 | unexpected response | link-side error (`+0x58`) through the decoder |
-| 30 | PMU access fault | map fault address (`+0x90`) |
-| 31 | multiple errors | nothing (skipped, see bit 8) |
-| 32 to 38 | PCI-X address or attribute parity; data parity; master timeout; pio retry exhausted; SERR; PERR; target abort | PCI-X bus error address, attribute and data (`+0x600`, `+0x608`, `+0x610`) |
-| 39 | PCI-X read request timeout | PCI-X request error address and attribute (`+0x630`, `+0x628`) |
-| 40 | PCI or PCI-X device requesting arbitration error | arbitration (`+0xa0`) |
-| 41 | internal RAM parity error | parity error (`+0xb0`) |
-| 42 | PCI-X unexpected completion cycle to master | PCI-X bus error address, attribute, data |
-| 43 to 45 | split completion timeout; split completion error message; split completion message parity | PCI-X split address and attribute (`+0x618`, `+0x620`), then bus error address, attribute, data |
+| status bit | text | registers read for the dump | Grade |
+|---|---|---|---|
+| 8 | GIO non-contiguous byte enable in crosstalk packet | nothing: bits 8, 16 and 31 are skipped, text included, for every chip type but 0 | established |
+| 9 | PCI to Crosstalk read request timeout | response error (`+0x68` and its device and buffer fields `+0x60`) | established |
+| 10 to 15 | PCI retry count exhausted; device select timeout; device and bridge parity; address or command parity; abort | PCI bus address (`+0xd8`), read by the raw getter and by the address getter and printed on two lines | established |
+| 16 | SSRAM parity error | nothing on a PIC (skipped as above; the SSRAM parity getter is reached only for chip type 0) | established |
+| 17 to 21 | LLP transmitter retry wrap, transmitter retry, receiver retry wrap, receiver check bit error, receiver sequence error | none (text only); on a PIC, bits 17 to 21 and 23 are skipped entirely when the record word at +72 is nonzero | established |
+| 22, 23 | request packet overflow; request not supported (23 is skipped as noted for bits 17 to 21) | link-side error (`+0x58`) printed through the command decoder, then link-side error address (`+0x78`) | established |
+| 24, 25, 27 | invalid address for the bridge widget; request command word error; request framing | command-word error (`+0x40`) through the decoder, then bus error (`+0x18`) read by two getters and printed on two lines | established |
+| 26 | response command word error | link-side error (`+0x58`) through the decoder, response error (`+0x68`, `+0x60`), then the directory state printer | established |
+| 28 | response framing | link-side error (`+0x58`), response error with address (`+0x68`) | established |
+| 29 | unexpected response | link-side error (`+0x58`) through the decoder | established |
+| 30 | PMU access fault | map fault address (`+0x90`) | established |
+| 31 | multiple errors | nothing (skipped, see bit 8) | established |
+| 32 to 38 | PCI-X address or attribute parity; data parity; master timeout; pio retry exhausted; SERR; PERR; target abort | PCI-X bus error address, attribute and data (`+0x600`, `+0x608`, `+0x610`) | established |
+| 39 | PCI-X read request timeout | PCI-X request error address and attribute (`+0x630`, `+0x628`) | established |
+| 40 | PCI or PCI-X device requesting arbitration error | arbitration (`+0xa0`) | established |
+| 41 | internal RAM parity error | parity error (`+0xb0`) | established |
+| 42 | PCI-X unexpected completion cycle to master | PCI-X bus error address, attribute, data | established |
+| 43 to 45 | split completion timeout; split completion error message; split completion message parity | PCI-X split address and attribute (`+0x618`, `+0x620`), then bus error address, attribute, data | established |
 
 When the half-word at record +116 has bit 0 set (the mode value `pic_attach2` stores there: 1 is PCI-X, see chips/ioc4/README.md, "Control, GPIO and the unnamed `0x24`"), bits 26, 28 and 29 also print the PCI-X request error address and attribute (`+0x630`, `+0x628`). After the loop it reads the multiple-interrupt
 register (`+0x178`) and, for any chip type but 0, prints for every set bit 8 to 63 the same text with a "Multiple Interrupt Register" header.

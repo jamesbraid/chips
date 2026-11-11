@@ -223,18 +223,18 @@ base PROM 6.11). The routine at image address `0x1fc41538` (payload mapped at `0
 the 4 KB container header) parses a board's identity text record by record and compares each record's
 part number against a list of nine-character prefixes. A match sets a board type and a later match overwrites an earlier one:
 
-| Prefix | Board type returned | Meaning |
-|---|---|---|
-| 030-1250-, 030-1252- | `0x26` | PCI expansion cabinet board |
-| 030-0734-, 030-1124-, 030-1025-, 030-1244-, 030-1291-, 030-1308-, 030-1389- | `0x21` | base I/O |
-| 030-1264- | `0x21` | base I/O |
-| 030-0872-, 030-1243-, 030-1281- | `0x22` | SCSI |
-| 030-0873- | `0x23` | Ethernet |
-| 030-0927- | `0x29` | Fibre Channel |
-| 030-1062- | `0x26` | PCI shoebox |
-| 030-9999- | `0x2a` | the LINC type (Linux `KLTYPE_LINC`) |
-| 030-0956- | `0x27` | Linux `KLTYPE_VME` |
-| 030-0880- | no type returned | sets bit 7 of a flag byte through the caller's pointer; the use of the flag was not traced |
+| Prefix | Board type returned | Meaning | Grade |
+|---|---|---|---|
+| 030-1250-, 030-1252- | `0x26` | PCI expansion cabinet board | established |
+| 030-0734-, 030-1124-, 030-1025-, 030-1244-, 030-1291-, 030-1308-, 030-1389- | `0x21` | base I/O | established |
+| 030-1264- | `0x21` | base I/O | established |
+| 030-0872-, 030-1243-, 030-1281- | `0x22` | SCSI | established |
+| 030-0873- | `0x23` | Ethernet | established |
+| 030-0927- | `0x29` | Fibre Channel | established |
+| 030-1062- | `0x26` | PCI shoebox | established |
+| 030-9999- | `0x2a` | the LINC type (Linux `KLTYPE_LINC`) | established |
+| 030-0956- | `0x27` | Linux `KLTYPE_VME` | established |
+| 030-0880- | no type returned | sets bit 7 of a flag byte through the caller's pointer; the use of the flag was not traced | established |
 
 The type values and names are the public Linux board types (`asm/sn/klconfig.h`: `KLTYPE_BASEIO` is
 `0x21`, `KLTYPE_HAROLD` is `0x26`, `KLCLASS_IO` is `0x20`). The 030-1264 row is the Crosstown fact:
