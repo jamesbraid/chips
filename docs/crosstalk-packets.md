@@ -148,6 +148,9 @@ unknown.** Eight sideband bits ride with every micropacket. Crossbow spec:
 
 The position of each bit in the 8-bit field, and what distinguishes a head
 micropacket from a continuation one, are **unknown**; only the signals are read.
+Settling test: read the Crossbow specification's sideband datapath section (section 4.3.12, printed p. 124) and the receive-control signal
+list that names `Sideband[7:0]`; if neither assigns a signal to each bit, the Bridge specification's LLP receive section (pp. 78-79) is the
+next route, and a signal analyser capture of a live link the last.
 
 ### 2.5 Link widths and modes
 

@@ -93,9 +93,15 @@ defaults differ from the reset values, so a software default is not a reset valu
 ([xbow-family.md](xbow-family.md) section 5).
 
 **Link error log.** The Hub's I/O interface has an LLP log word at hub-relative
-`0x400130` (named in the Linux Hub header). Its field layout is
-unknown; register existence at that address: established (Linux). The 6.5.30 kernel reads it and evaluates an error rate (inferred
-from the census).
+`0x400130` (named in the Linux Hub header). Register existence at that address: established (Linux). The 6.5.30 kernel reads it and
+evaluates an error rate (inferred from the census). Re-read in this pass: the link-error monitor routine (the same 104-byte routine in the
+Origin 200 generation kernel, sha256 `567474674eaa83d36431e70f079a35819d0bc3ce1d4b4a2758b8e891b5acc463`, and in the Origin 350 generation kernel
+object, sha256 `2e847fdcadfdb958f84acf54ac91325980a0bfcce282f89b6df70da1043b47c4`) loads the doubleword, stores zero back to it (read and
+clear), isolates the 16 bits at 15:0 and the 16 bits at 31:16, compares each with `0xffff`, and adds one to a separate byte counter in the
+caller's record for each field that equals `0xffff`. Established: those two 16-bit fields, the read-and-clear use and the `0xffff` test.
+Inferred: that they are saturating link error counters (the test against all ones is the only evidence). Unknown: what each counter
+counts and whether bits 63:32 are used; settled by a published Hub register reference or by reading the register before and after
+injected link errors, neither held.
 
 ---
 
@@ -169,7 +175,7 @@ opposite ends: unknown.
 
 Fetch-and-op and store-and-op are packet types, not widget operations. Neither a Crossbow
 nor a Bridge supports them (logged as invalid packet type). They belong to memory-side
-atomic operations; whether they cross a Crossbow toward a Hub is unknown.
+atomic operations; whether they cross a Crossbow toward a Hub is unknown. Settling test: the Crossbow specification's input-port decode and routing-lookup text (the sections around its link controller description) to see whether the packet-type check precedes the destination lookup. The error table that lists these types sits under the register-access error row, which reads as a check on packets addressed to the Crossbow itself; that is an inference from one table row, not a settled answer.
 
 ### 2.3 Transaction numbers
 
