@@ -156,4 +156,47 @@ Established (6.210 and 6.211, same offsets).
   of the table are reached only through class 0x4000, so no IP53 or IP59 board takes its word from the table. Evidence and the remaining unknown (the
   raw word) are in [ip35-board-class-and-flash-record.md](ip35-board-class-and-flash-record.md).
 
+## Further sources searched for a 1 GHz word
+
+Searched after the sections above: every retained inventory and console capture, the public mail archives, the Linux and
+OpenBSD IP35 code, the IRIX 6.5.30 IP35 kernel, the 6.5.30 flash updater and the processor manuals. No source holds a
+1 GHz module's Config word, `CpuCfg0Reg` or flash `+0x64` value. What they do settle:
+
+- Established (public NEC VR12000A manual, tables C-1 and C-2, same fields as the R10000 manual v2.0 table 8-1): SysClkDiv
+  code 9 (1001b) is a defined divisor of 5, and SCClkDiv code 5 (101b) is a defined divisor of 3. Mode bits 30:29 select
+  HSTL levels, so the word's bits 31:25 are real mode bits, not decoration. The clock rule PClk = SysClk x (SysClkDiv + 1) / 2
+  is the processors' own definition, not only a fit to the 29 rows. R14000 rows use codes 6, 7 and 8 under the same rule.
+  Inferred: R16000 keeps the encoding, so 1 GHz on a 200 MHz hub is SysClkDiv 9.
+- Established: in all 29 rows bits 15, 13, 8:7, 2 and 0 are set and bits 24, 14, 6:3 and 22 are clear; bits 30:29 are 10b in
+  every row but the 200 MHz one; bit 23 (DDR) is set in every row at 700 MHz and above. So the low half of a 1 GHz word is
+  fixed by SysClkDiv alone: 0xb385 for code 9. Captures pin tap bits 28:25 = 5, bit 22 set (printed tap 0x15), SCClkDiv 5 and
+  SCSize 5. Inferred: every bit no capture pins keeps its value from the 700 to 900 MHz rows. 0x4aedb385 is the only word
+  that satisfies that; it is a derivation, not a read.
+- Established (6.5.30 `usr/sbin/flash`, 115,384 bytes, sha256 718e0ea5...fcc253): the manual full-entry path of the IP35
+  branch (prompts at file offsets 0x18688 to 0x18b70; assembly at 0x1000eb54 to 0x1000ec00) builds the word from a 4-bit tap
+  shifted to bit 25, a 1-bit DDR at bit 23, a 3-bit SCClkDiv at 19, a 3-bit SCSize at 16, a 4-bit SysClkDiv at 9, and the
+  constant 0xa005. It offers only "R10K/R12K" or "R14K" and never writes bit 22. This updater therefore cannot produce a tap of
+  0x15, and its 29-row table stops at 900 MHz. A 1 GHz word came from another tool or from factory programming.
+- Established, bounded to the six read sites found by a scan of every `mfc0 $16` in the 6.5.30 IP35 kernel: the kernel reads Config
+  only to size the primary caches (bits 31:29 and 28:26) and the secondary cache (18:16) in `config_cache` at 0xc000000000050740
+  and the three size routines at 0xc000000000064574, 0xc000000000064604 and 0xc0000000000646b0, and in two one-instruction
+  readers (0xc0000000000636ac, 0xc0000000000644c8). Nothing decodes SysClkDiv, SCClkDiv or the tap.
+- Inferred (the call site is established): the second reader (0xc0000000000644c8) is called from the system-call code at
+  0xc0000000002e2ec8, after running on the target processor. That is the selector-1200 path, which copies out the live Config word and, if asked, the
+  node's 80-byte flash block (inferred from the earlier IRIX 6.5 call's layout and the pool-word census above). It is the
+  least invasive route to the real values: see the test below.
+- Established, negative: OpenBSD `sys/arch/sgi/sgi/ip27_machdep.c` (2df91d80c104) reads no flash block on IP35, and its
+  CPU speed and cache clock come from the firmware's processor records (`sginode.c:260-274`); the Linux `refs/linux-ip35`
+  tree (9f613a321ea0, 2015) and mainline have no IP35 reader of Config's clock fields. No retained capture, Usenet or forum
+  post prints a Config decode, an EEPROM text record or a flash block from any IP35 board.
+- Established (captures): a 1 GHz part pairs with the 200 MHz Bedrock (`HUB ... Speed 200.00 Mhz` on every IP59 capture) and
+  with the IP59 name rows (masks identical to IP53). Board class: outside 4, 8 and c (the 1.0 GHz Tezro console prints the
+  workstation banner and no mode line); 0x2 is inferred, not read.
+
+Smallest test, if the inference needs proof: on any running 1 GHz IP59 system (Tezro, Origin 350 or Onyx 350), as root, call
+system call selector 1200 once for one enabled processor, requesting both outputs, and print the 32-bit Config and the
+word at block offset 4. It reads two values and writes nothing; no PROM monitor, flash or EEPROM access is needed. The
+block word equals flash `+0x64`. Compare it with 0x4aedb385 (flash) and 0x00edb385 (live Config bits 24:0). No machine
+the project owns is known to carry 1 GHz processors, so this needs an owner's output.
+
 Tracked in [open-questions.md](../open-questions.md) as "IP35 PROM: the 1 GHz R16000 configuration word".
