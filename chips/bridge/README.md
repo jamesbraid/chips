@@ -73,6 +73,13 @@ apart). Grade is of the role and fields: **E** established (the accessor and its
 the code performs), **I** inferred (role from an accessor name or a PROM string, no field arithmetic read), **U**
 unknown. Names are the public names used in `include/bridge.h`, except where an IRIX accessor name is quoted.
 
+Two views to keep apart. The widget identification word (slot `0x0`) is the 32-bit load at `+0x4`, which software that
+numbers bytes of the window calls "byte 4": `pcireg_control_get` loads it with `lw` at displacement 4 of the raw window
+pointer (`0xc00000000007f0cc` in the IP27 `unix`). The interrupt address register of pin n (slot `0x130` + 8n) is a
+32-bit word at `0x134` + 8n on Bridge and XBridge (`lw`, `pcireg_intr_addr_get` at `0xc000000000084e94`) and a
+doubleword at `0x130` + 8n on PIC and TIOCP (`ld` at `0xc000000000084f10`). Established for the instructions; which chip
+each path serves is the dispatch described above. In both layouts the register is one slot.
+
 Totals over the **41 rows** below (families count once each; a row graded for some fields and inferred for the rest counts under its first grade): **17 established, 23 inferred, 1 unknown.**
 
 ### Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
