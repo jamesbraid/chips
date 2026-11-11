@@ -97505,7 +97505,7 @@ sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	untimeout	symtab	78aa5094d5ec	s
 sbin/stand/sash64	diagnostic	n64	.text	0x14ee4	8	vsema	symtab	78aa5094d5ec	shared-address	out:4	named-only		
 sbin/stand/sash64	diagnostic	n64	.text	0x14eec	8	suser	symtab	a7e7ca11a6b8		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x14ef4	8	cvsema	symtab	87506497337c		out:4	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-sbin/stand/sash64	diagnostic	n64	.text	0x14efc	772	ls	symtab	a4ee8e5596da		out:4	undocumented		
+sbin/stand/sash64	diagnostic	n64	.text	0x14efc	772	ls	symtab	a4ee8e5596da		out:4	named-only	chips/ioc3/README.md#open	Open
 sbin/stand/sash64	diagnostic	n64	.text	0x15200	200	drawPcbm	symtab	a4a25d2abc87		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x152c8	200	efs_install	symtab	25d3ea197069		out:4	undocumented		
 sbin/stand/sash64	diagnostic	n64	.text	0x16914	36	efs_swap_extent	symtab	33ff3e7d1747		out:4	undocumented		
