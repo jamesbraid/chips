@@ -107,6 +107,9 @@ Established, from the control flow of each routine (6.210; the 6.211 addresses d
 2. The configuration report (`0x1fc1e034`). It copies the 80-byte record from `0x9000000038000060 + (nasid << 33)`
    and prints it under "Config values flashed in the PROM". For the local node it then prints the live Config
    register decode (`0x1fc03c40`, register 16, then `0x1fc1dc74`) under "Config values loaded from nasid N CPU c".
+   That live decode stops after the secondary-cache clock divisor and the DDR bit: it prints no tap, open-drain or
+   cache-test-mode field, which the flashed-record decode prints; see
+   [ip35-prom-pod-mode-and-live-config.md](ip35-prom-pod-mode-and-live-config.md).
    For a remote node it calls the EEPROM loader `0x1fc1f4dc` and prints "loaded from board EEPROM"; only when that
    returns zero does it call the table lookup `0x1fc1f3a0` and print "loaded from board/PIMM PSC".
 3. The EEPROM loader wraps the parser at `0x1fc1c498` to `0x1fc1c6fc`. It needs `DataValid:Yes`, reads
