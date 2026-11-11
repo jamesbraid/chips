@@ -81,3 +81,6 @@ file = "include/l1_requests.h"
 
 [[headers]]
 file = "include/xio_fc.h"
+
+[[headers]]
+file = "include/ice1724.h"

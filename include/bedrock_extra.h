@@ -28,4 +28,13 @@
 #define BEDROCK_II_ERROR_HEADER_1            0x400220   /* [E] width 8 byte(s), access r; fields printed by the show routine, see chips/bedrock/README.md */
 #define BEDROCK_II_ERROR_HEADER_2            0x400228   /* [E] width 8 byte(s), access r; as above */
 
+/* Memory controller bank configuration word: four byte lanes, one per pair of DIMM banks. Read and written by the
+ * PROM at the node-alias offset below; the kernel's local-form address is 0x780008 (BEDROCK_MDIR_XLATE_ADDR_MEM in
+ * bedrock.h, named there by routine prefix, [I]). Both PROM routines were read in full (docs/questions). */
+#define BEDROCK_MEM_BANK_CONFIG              0x1f80008  /* [E] width 8 byte(s), access rw (node alias); lane i of 0..3 is bits 8i+7:8i */
+#define BEDROCK_MEM_BANK_CONFIG_LANE_ENABLE  0x03       /* [E] per lane, bits 1:0 enable the lane's two banks, one bit each; bits 3:2 are not read by the decode routine [U] */
+#define BEDROCK_MEM_BANK_CONFIG_LANE_SIZE    0xf0       /* [E] per lane, bits 7:4: one size code shared by both banks of the lane */
+#define BEDROCK_MEM_BANK_CONFIG_BANK_SELECT  0x300000000ull /* [E] bits 33:32; the PROM clears these and ORs in a selector shifted left 32 (not masked to two bits by that routine) */
+#define BEDROCK_MEM_BANK_CONFIG_B_58_56      0x0700000000000000ull /* [E] the same write ORs in 7 here; meaning [U]: settle by a published Bedrock register list (none held) or the same routine's callers' use of the result */
+
 #endif /* BEDROCK_EXTRA_H */
