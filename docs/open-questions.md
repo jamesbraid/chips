@@ -182,3 +182,21 @@ Corrections found while tagging. These are not fixed here.
 - **Fuel and Octane support for the DM8; Fuel support for the RAD board.** *[route: missing source: hinv captures or SGI support lists]* The Fuel evidence is a single user's hinv; the IP30 build
   carries `mad_dd.o` but no SGI document lists the Octane as a host (docs/audio/survey.md).
 - **USB audio converter for the Fuel (007-4530-001).** *[route: missing source: USB descriptors or a teardown]* The class driver is `usbaudio_dd.o`; the converter's chip is not named anywhere read.
+- **IP35 board-identification word: class 0xc, bits 11:4, and what a real processor module drives in bits 3:0.**
+  *[route: hardware only: a raw read or a node-board service manual]* Both PROM segments and the kernel read only
+  bits 15:12, plus bits 3:0 (or 7:0 for class 0x8000) in the processor-table fallback; the Fuel-class rows decode and
+  agree with the shipped processor options ([ip35-board-word-and-config-block.md](questions/ip35-board-word-and-config-block.md)).
+  Not known: the meaning of class 0xc on the hardware side, whether bits 11:4 and 63:16 read zero, and which of the
+  paired nibbles (4 or 6, 7 or 8) a real 500 or 600 MHz module drives. Routes tried: both PROM segments, the IP35
+  kernel census, the SN1 headers and OpenBSD.
+- **IP35 flash configuration block: where a real Fuel's reference record comes from and the checksum rule at +0x34.**
+  *[route: software now for the checksum routine; hardware for a physical flash dump]* The PROM compares the flash
+  block with an EEPROM-derived record first and the processor table second; which one a real Fuel supplies is not
+  known, nor is any physical Fuel block. The routine that sets the checksum adjustment was not read. Next: read the
+  PROM's block checksum and the system-controller request that returns the EEPROM record.
+- **IP35 network-interface port status: bit 0 and bit 2, and the whole word on a node with no router.**
+  *[route: hardware only]* Software tests bit 1 (link up) and, in one diagnostic, bits 1:0 as zero or nonzero; the
+  public SN1 header calls bits 1:0 "port status" and bit 2 "remote power". No capture of the word is held.
+- **IP35 PROM refusal of 256 MB DIMM banks "on IP27 node boards": what selects it on an IP35 board.**
+  *[route: software now]* The text is at outer offset 0x86aa8 of the 6.210 segment; the routine that raises it was
+  not read. Next: read the memory-configuration routine that calls it.
