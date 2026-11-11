@@ -89,7 +89,7 @@ Register-level tables and byte-lane rule: [chips/ice1724](../../chips/ice1724/RE
 | VIA/IC Ensemble ICE1724 (Envy24HT) | PCI audio controller | 1 (PCI revision) | driver probe; 007-4077-001 p. 2; hinv post | established |
 | AKM AK4381 | front stereo DAC | not given | driver sequence vs public driver | inferred |
 | AKM AK4355 | six-channel DAC | not given | same | inferred |
-| AKM AK5380 | line/mic ADC | not given | secondary reviews only; no software path | unknown |
+| AKM AK5380 | line/mic ADC | not given | secondary reviews only; no software path | unknown. Settled by: a photograph of the board's converter package marking, or a parts list; no driver reads the ADC, so no binary route exists |
 | 24Cxx-style I2C EEPROM at 8-bit address `0xa0` | board configuration | not given | `mad_read_eeprom` (`0x2d50`) | established as a device at that address; part unknown |
 
 ## Unknowns and what would settle them

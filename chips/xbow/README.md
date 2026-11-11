@@ -67,7 +67,7 @@ fields: **E** established (the routine that uses it read in full, or an arithmet
 | `0x60` | performance counter A | 4 | rw | `xbow_update_perf_counters`, `xbow_enable_perf_counter`, through a pointer to slot + 4 that `xbow_attach` stores | bits 19:0 count (mask 0xfffff), bits 22:20 link select | E |
 | `0x68` | performance counter B | 4 | rw | same, second pointer | same | E |
 | `0x70` | NIC | - | none | no scanned routine | none; see the reset section | U |
-| `0x100` | link input buffer flush | - | none | no resolved routine | none | U |
+| `0x100` + `0x40` per link (`0x100` link 8 up to `0x2c0` link 15) | link input buffer flush | - | r | no held routine reaches it | a read marks every entry in that link's input buffer and its response is held until those packets have been delivered to their targets; the value read is 0 when the flush finished, 1 when another link's flush is already in progress and this one was refused (retry later); only one flush runs at a time | E (Crossbow ASIC specification rev 12.0, sections 3.1.2 and 3.3.1, printed pp. 70, 71 and 77, and the register map, p. 74); no shipped software is seen using it |
 | `0x108` | link control | 4 | rw | `xbow_attach`, `xbow_errintr_handler`, `xbow_enable_perf_counter`, `xbow_reset_link`; PROM link reset | see the entry below | E |
 | `0x110` | link status | 4 | r | `xbow_link_alive`, `xbow_reset_link`, `xbow_error_handler`, PROM tests | bit 31 is "alive" | E |
 | `0x118` | link arbitration upper | 4 | rw | `xbow_prio_bw_alloc`; PROM link reset writes 0 | four 8-bit lanes with a 5-bit count at the bottom of each, sources 8 to 11 | E |

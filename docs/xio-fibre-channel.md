@@ -131,7 +131,7 @@ A re-check against the shipped driver and the owner's guide changed the followin
 | Board assembly (one sample) | assy `030-0927003E`, FAB `034-0927-002 rev B`, build 04-20-99 | E for that sample, I for the family (U4) |
 | Host machines | XT-FC-2P: Origin 2000, Origin 200 GIGAchannel, Onyx2. X9-FC-2P: Octane. The guide lists Octane2 only with the optical X9-FC-2POPT-B, while a post and the Smoke guide (D1) tie Octane2 to the XIO FC board; which board an Octane2 carries is not settled here | E (M1) for the table; U1/U3/U9/D1 reports not reconciled with it |
 | On-chip firmware | two sequencer microcode images shipped inside the driver and downloaded at init: a mainline image and a loop-init (LIP) image | E (B1) |
-| Firmware version string on the board | — | U (no version string in the driver objects) |
+| Firmware version string on the board | — | U (no version string in the driver objects). Settled by: a printable-string scan of the two downloaded sequencer images once they are extracted from the driver (not done; the driver object is not in the held set of this clone), or the controller's own version register if the databook names one |
 
 ## Composition
 
@@ -1188,11 +1188,11 @@ byte, INQUIRY opcode 0x12).
 | LIP TCB delivery: loaded as 128 bytes into TCB RAM slot *N* (BAR 3 `0x80`…`0xff`) with the TCB pointer (0x64) aimed at every bank, valid-AL_PA list to scratch page 1, loop image (822 words) loaded, started by `0x00` ← `0x42` (primitive sent) or address `0x0a` (not), then unpause | E |
 | LIP completion: map (count-then-AL_PAs, or bitmap) to the buffer at LIP-TCB `0x38` in logical byte order, one done-queue entry {*N*, host AL_PA, lap}, 0x25 bit 4 and an interrupt; done queue restarts at slot 0 / lap 0 at the loop start and again at the mainline reload | E for what the driver needs; I that the chip restarts its write position on the 0x45 ← `0xff` write |
 | Whether the real chip needs 0x99 bit 4 to deliver the completion interrupt (the driver's init value for 0x99 lacks it) | U — a hardware run or the chip databook |
-| Time unit of the loop-init watchdog (0xa4 = `0x60`) and the meaning of the individual LIP-primitive codes scratch `0x4a`/`0x4b`/`0x4c` carry | U |
-| SEEPROM word 2 value on real optical and copper boards (driver accepts `0x100` or `0x180`) | U |
+| Time unit of the loop-init watchdog (0xa4 = `0x60`) and the meaning of the individual LIP-primitive codes scratch `0x4a`/`0x4b`/`0x4c` carry | U. Settled by: the controller's public databook for the watchdog unit and the primitive codes, or a timed loop-init on a real board with the watchdog set to two values; the driver gives only the stored values |
+| SEEPROM word 2 value on real optical and copper boards (driver accepts `0x100` or `0x180`) | U. Settled by: a dump of the SEEPROM from one real copper board and one real optical board (the driver only reads it) |
 | Sequencer microcode semantics (what the downloaded code does on-chip) | out of scope / U |
 | Fabric login | Not present in the driver; boards are Class 3 / FC-AL only per the owner's guide (E, M1/B1) |
-| Whether the -B optical boards use this controller | U |
+| Whether the -B optical boards use this controller | U. Settled by: the PCI vendor and device identifiers from a hinv or PCI listing of an optical -B board; the driver table already lists one identifier, so a board that reports the same pair is the same controller |
 | Generic loop-target login contract (PLOGI accept code 0x02; PRLI accept + FCP service byte 0x12 at reply 0x13; ADISC not parsed; INQUIRY byte 0 = 0x00 for a disk, SCSI status GOOD) | E |
 
 The command path is mapped end to end: the PCI identity, window map, reset and

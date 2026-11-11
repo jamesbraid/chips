@@ -160,13 +160,13 @@ None of these is shown to be a boot-window or PROM-enable control. All are unkno
 
 | Address (local alias) | Access | Site | Label |
 | --- | --- | --- | --- |
-| 0x9200000001000028 | 8-byte store of 1 | 0x1fc009ac, just after the first TLB install | unknown |
-| 0x9200000001608008 | store of all ones, then zero | 0x1fc007d4, 0x1fc007ec | unknown |
-| 0x9200000001608010 | read-modify-write: low 12 bits set to 7 | 0x1fc00804 to 0x1fc00828 | unknown |
-| 0x9200000001000420 | read, compared | 0x1fc00840 | unknown |
+| 0x9200000001000028 | 8-byte store of 1 | 0x1fc009ac, just after the first TLB install | unknown. The kernel's local-alias range check on the Origin 2000 reads the same offset of the processor-interface block (`memory_iscalias`, `page_local_calias` in `IP27/unix`, read in full): a hypothesis from a sibling chip that this is an alias size, inferred at best here. Settled by: the IP35 kernel's equivalent routine, once its register offset is read (`kernel.o` is held), and the value it tests against |
+| 0x9200000001608008 | store of all ones, then zero | 0x1fc007d4, 0x1fc007ec | unknown. Settled by: the Bedrock block layout around `+0x1608000` (no held kernel routine reaches it, per the Bedrock census) and a published register list; otherwise a hardware read after reset |
+| 0x9200000001608010 | read-modify-write: low 12 bits set to 7 | 0x1fc00804 to 0x1fc00828 | unknown. Settled by: the same route as the row above |
+| 0x9200000001000420 | read, compared | 0x1fc00840 | unknown in role at reset. The offset is the processor-interface error spool address for processor B, which the kernel reads at `+0x1000420` (`hubpi_spool_get_next`, Bedrock census), so the register is identified; what the PROM compares it with is the open part. Settled by: the compare constant at `0x1fc00840`, read in full with `hostfacts.py` on the PROM image |
 | 0x92000000017a0008 | read, merge with flash-config words, write | 0x1fc00b40 to 0x1fc00b98 | inferred: PROM access timing (LED 0x0e/0x0f bracket it) |
-| 0x9200000001790000, 8, 0x10, 0x18 | stores of zero | 0x1fc00480 (0x10); 0x1fc699c4 to 0x1fc699e4; 0x1fc6a888 (0x18) | unknown |
-| 0x9200000001400150 | read, write back same value | 0x1fc69978, 0x1fc69980 | unknown |
+| 0x9200000001790000, 8, 0x10, 0x18 | stores of zero | 0x1fc00480 (0x10); 0x1fc699c4 to 0x1fc699e4; 0x1fc6a888 (0x18) | unknown. Settled by: a published register list for the block at `+0x1790000` (none held), or the first reader of that block in a held kernel object (the Bedrock census shows none) |
+| 0x9200000001400150 | read, write back same value | 0x1fc69978, 0x1fc69980 | unknown. The address is offset `0x150` of the I/O interface block (`+0x1400000` in the local alias; the Bedrock page lists the interrupt-destination register at `0x138` and others near it, none at `0x150`). Settled by: a published register list for that block (none held), or a kernel reader of `+0x1400150` (the Bedrock census shows none) |
 
 ## Contrast: IP27 PROM 6.156 (public-lineage Hub machines)
 

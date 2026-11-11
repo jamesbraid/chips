@@ -34,8 +34,11 @@ symbol's own body is a bare return) performs, in order:
 
 So the probe is a loopback: arm an interrupt the part can raise by software, raise it, check that CRIME saw it. Every
 register offset and bit agrees with the published specification (a match between a driver reading and a published page:
-established for the offsets and bit positions). That the interrupt enable stays at 4 afterwards and where it is routed is
-**unknown**: the routine does not clear it and no other held kernel routine touches the VICE window.
+established for the offsets and bit positions). That the interrupt enable stays at 4 afterwards is the code's behaviour: the routine does not clear it and no other held kernel routine touches the VICE window.
+The interrupt is routed to bit 31 of CRIME's interrupt status (step 3, CRIME specification table), so the routing at the CRIME input is established;
+which processor line that CRIME bit reaches is CRIME's question, not this page's. **Unknown:** whether a later routine, such as a video compression driver,
+clears or changes the enable. Settled by: that driver's object, which is not in the held set; with it, rerun the VICE census over it and look for stores to the
+interrupt enable and reset registers.
 
 ## Identification (established)
 

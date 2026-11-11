@@ -79,8 +79,8 @@ Totals over the 70 rows: **24 established, 44 inferred, 2 unknown.**
 |---|---|---:|---|---|---|---|
 | `0x200058` | video output hardware configuration | 8 | r | `mvpprobe` (`mvp.o`) | returns bits 35:32 of the 64-bit read (twelve instructions, read in full). The specification's video hardware configuration table (rev 2.0 page 53, table 23) names bits 35:32 "Revision Code for MACE"; its register map prints only bits 18:0 | E |
 | `0x280000` | Ethernet MAC control | 4 (+4) | rw | `ide` only | low word read, then written 0 and 1 (a reset sequence); the driver `if_me.o` is not reached | I |
-| `0x280040` | Ethernet receive FIFO | 1 | r | `ide` only | bytes 5 and 6 read in a wait loop; role not read | U |
-| `0x280100` | Ethernet internal RAM | 4 | rw | `ide` only | one word written at `+4`; role not read | U |
+| `0x280040` | Ethernet receive message-cluster FIFO information (offset `0x40` of the Ethernet block) | 1 | r | `ide` only | bytes 5 and 6 read in a wait loop. The specification gives the register as read-only: bits 20:16 the FIFO write side (bit 20 a generation bit, 19:16 the pointer), bits 12:8 the read side (bit 12 generation, 11:8 pointer), bits 4:0 the count of queued entries, the rest zero, with the same value aliased at `0x48` and `0x50` (MACE specification rev 2.0, table 37 p. 70 and table 45 p. 75). On the big-endian bus byte 5 holds bits 23:16 and byte 6 bits 15:8, so the loop reads the write-side and read-side byte (established for the layout, inferred for the loop: a wait for the two sides to agree or differ; the loop was not read in full) | E (register), I (wait loop's purpose) |
+| `0x280100` to `0x2801f8` | Ethernet receive message-cluster FIFO data port (not an internal RAM) | 4 | rw | `ide` only | one word written at `+4`. The specification defines this 256-byte range as 32 aliases of one FIFO data port: bits 31:12 the 4 KB-aligned cluster base address, bits 11:0 read as zero, and the same location repeated, so the offset is not an index (MACE specification rev 2.0, table 37 p. 70, section 4.2.8 and table 46 p. 75). The word at `+4` is the low half of the doubleword on the big-endian bus, which is the data port's 32-bit field (established for the register, inferred that the diagnostic is pushing an address into the FIFO) | E (register), I (the diagnostic's purpose) |
 | `0x300000` | audio control and status (`AUD_CNTRL_STAT`) | 8 | rw | `a3_probe` (read in full), `a3_start_dma`, `a3_update_subsys` | bit 1 is "codec present" (the probe gives up when it is clear); write 1, delay 1 us, write 0 | E |
 | `0x300008` | codec status control (`AUD_CODEC_REG`) | 8 | rw | `a3_probe`, `do_write_codec_reg` (read in full) | the probe writes `0x10000`; a codec register write stores `(reg << 17) \| (value & 0xffff)` | E |
 | `0x300010` | codec status input mask (`AUD_CODEC_INTR_MASK`) | 8 | rw | `write_codec_reg`, dump | written; role from the name | I |
@@ -217,7 +217,9 @@ specification states for the external ISA space. The routines call the chip a "d
   to 400 times at 250 us. With `mace_rev` 1 a set status bit 6 makes it read and discard the data word and resend
   (bounded by a retry count), which matches the specification's "parity error". With `mace_rev` 0 it ignores that
   meaning and, when bit 6 is set, shifts the received byte right by one and ORs in `0x80`. Why a rev 0 byte needs
-  that is **unknown**.
+  that is **unknown**. Settled by: the PS/2 driver in the public Linux O2 tree or NetBSD (neither is checked out here) for
+  what it does with a set status bit 6 on the first MACE revision, or a hardware read of the status register after a byte with
+  a parity error from a first-revision part; the specification's PS/2 chapter (pp. 139 to 142) does not discuss a revision difference.
 
 ## Against the published specification
 
@@ -304,7 +306,9 @@ binaries show only which bits are read and cleared), the rest are open or partia
    the host sets to send one interrupt packet (it clears itself in host bridge revision 0, not in revision 1). The
    binaries confirm only the master-abort-on-configuration case: IRIX treats it as the normal result of scanning an
    empty slot and drops it silently. What sets 26, 24 and 23, and what a refused memory or I/O window access sets
-   (a master abort with bit 21, or with neither of 20 and 21), is **unknown** by observation; the kernel's
+   (a master abort with bit 21, or with neither of 20 and 21), is **unknown** by observation (settled by: a read of the flags after a
+   deliberate access to an unclaimed PCI memory window and to an unclaimed I/O window on a real O2, or the public Linux and NetBSD
+   handlers' comments, which are not checked out here); the kernel's
    `0x3d000000` mask and NetBSD's per-bit messages show the bits software expects, not their causes.
 2. **What is latched on a failed or timed-out access? (established by the specification for PCI.)** The PCI error
    address register holds the PCI address of the failing PIO and is valid only while one of flags 16 to 19 is set;
@@ -313,9 +317,9 @@ binaries show only which bits are read and cleared), the rest are open or partia
    bits 7:0) when flag 20 is set, and as a PCI memory or I/O address compared with the device windows when it is
    not. That decode is consistent with the captured value being the configuration address word for a configuration
    cycle. The specification does not separate a refused **read** from a refused **write**: both are PIO transactions
-   to the host bridge. Whether a posted write's failure differs from a read's is **unknown**. The ISA side has no
+   to the host bridge. Whether a posted write's failure differs from a read's is **unknown** (settled by: a store followed by a flag read, against a load followed by a flag read, to the same unclaimed address on a real O2). The ISA side has no
    error register: the specification gives the peripheral controller no timeout or error flag for a PIO to an ISA
-   device that never answers (it lists `IOCHRDY` as an input), so what happens then is **unknown**.
+   device that never answers (it lists `IOCHRDY` as an input), so what happens then is **unknown** (settled by: a PIO to an ISA address with no device behind it on a real O2, watching for a hang or a bus error; no held code does this).
 3. **Which interrupt fires? (established.)** The PCI error group is CRIME interrupt slot 7 (specification table
    90); IRIX installs `mace_pci_error` on CRIME vector 7. Whether an error raises that line is controlled by control
    register bits 31:24, one enable per flag (page 164; the kernel writes `0xfe...`). The probe routines read CRIME's
@@ -335,7 +339,7 @@ binaries show only which bits are read and cleared), the rest are open or partia
 
 The specification gives reset values bit by bit (compared only). No binary reads a register to check a reset value:
 `pckm_attach`'s read of `0x310000` and `a3_probe`'s read of `0x300000` read live state. Reset values are **unknown**
-from the binaries. The kernel writes the PCI error flags to 0 and the control register as a full word at start-up and
+from the binaries. The specification does give them for the two registers read live: audio reset control and status (`0x300000`) resets with bit 0 (codec reset) set to 1 and bits 24:1 clear, bit 1 being a read-only line that reports whether a codec clock is present (table 27 p. 62); the peripheral ring base and reset register (`0x310000`) resets with bit 0 (reset of the external serial and parallel controller) set to 1, bits 14:1 reading zero and the base address field zero (table 53 p. 123). Those are specification values, not observed ones; bit 4 of `0x310000`, which `pckm_attach` tests, is reserved in that table. The kernel writes the PCI error flags to 0 and the control register as a full word at start-up and
 reads the control register again only for bit 11.
 
 ## Routines in the IP32 build
