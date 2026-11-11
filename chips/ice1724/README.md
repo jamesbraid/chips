@@ -157,6 +157,14 @@ If the sub-device check fails, `mad_create_subsys` writes AC'97 registers `0x18`
 before and bit `0x20` after, 65536 loops each. **Established** as code. Which board takes this path is **unknown**; the DM8
 manual's connector list (mic, line in, three line outs, headphone) is the Revolution 7.1 shape.
 
+## Tezro placement
+
+On the Tezro tower the controller is inferred to sit behind the TI PCI2050 at IO9 bus 0 device 2, as
+device 2 of the secondary bus; the bridge driver's behaviour, the exact multi-master condition (two or
+more bus masters behind the bridge) and the interrupt swizzle are in
+[docs/questions/tezro-ice1724.md](../../docs/questions/tezro-ice1724.md). The driver imports no interrupt
+call and never writes the interrupt mask or status registers, whose reset state masks every source.
+
 ## Questions
 
 Reset values, write masks and read side effects of every register above are **unknown**: no code reads one before writing it,
