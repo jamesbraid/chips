@@ -120,4 +120,4 @@ diagnostic only (item 7). Nothing was run.
 | Source of the PROM's "Buzz revision" digit | Run the base-I/O PROM against a model of widget 12 with revision nibble `0xb` and compare the printed digit with `0xa`; keep the strap word fixed. A hardware read of widget 12 `+4` on a board that prints 3B settles the nibble directly. |
 | Consumer of the credit table | Find the routine that indexes the table (it must load a part and compare); candidate route: the gp-relative literal pool of the link-reset routine's caller, read with the pool-aware scanner. |
 | Behaviour of 6.211's graphics attach beyond constants | Full read of `0x1fc4ab18` and a diff of its blocks against `0x1fc4ab14`. |
-| What the `0xac28` bridge carries | A `hinv -mv` of a Tezro with a card in a slot behind it, or an IO9 board photograph. |
+| What the `0xac28` bridge carries | See [tezro-ti-bridge.md](tezro-ti-bridge.md): the PROM cannot show anything behind it; an IRIX `/hw` listing of `pci-x/0/2/` on a Tezro, or a board photograph, settles it. |

@@ -52,7 +52,7 @@ read beyond those string offsets. Register names for the Ethernet controller are
 | Item | Grade | What would settle it |
 |---|---|---|
 | IOC4 at window 1, ISP at 3, BCM5701 at 4, inputs 0, 2, 3 on a Tezro | inferred (established for an Origin 350 by capture) | a Tezro boot capture that lists PCI devices and interrupt numbers, or a Tezro `hinv -v` with the hardware graph paths |
-| TI bridge (104c:ac28) at widget 15 pci id 2 on a Tezro, window 2 | printed presence established (five Tezro postings); window mapping inferred; the cause of its absence on Origin 350 unknown | a Tezro capture that lists a card behind the bridge (see [tezro-io-topology.md](tezro-io-topology.md)) |
+| TI bridge (104c:ac28) at widget 15 pci id 2 on a Tezro, window 2 | printed presence established (five Tezro postings); window mapping inferred; the cause of its absence on Origin 350 unknown | an IRIX `/hw` listing of `pci-x/0/2/` on a Tezro (see [tezro-ti-bridge.md](tezro-ti-bridge.md): the PROM scan cannot show devices behind the bridge) |
 | BCM5701 PCI revision 0x15 (chip id 0x105) on a Tezro | inferred, same board family | the same capture on a Tezro |
 | INTB and INTD wiring on the board | unknown | no software on this board uses them for these parts; a board schematic would settle it |
 | Why the IOC4 reports PCI bus speed through register 0x24 | see [../../chips/ioc4/README.md](../../chips/ioc4/README.md) | the PIC control register's speed field on the IO9 bus, read by the PROM or IRIX at attach |
