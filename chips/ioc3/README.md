@@ -29,6 +29,13 @@ later chip of the same family, is in [../ioc4/README.md](../ioc4/README.md).
   window offset in a register-to-register add), the one-wire register (its pointer arrives as an argument), and the
   second serial port, which repeats the first at fixed distances (see "Serial ports"). Per-port families are recorded at
   port A.
+- Census rerun (2026-11-10, retools at the pinned commit, all twenty images, 637 sites) adds none of the following to
+  `census.tsv`, so `include/ioc3.h` has none of them; `include/ioc3_extra.h` carries them. Each is established from the
+  routine named, not census-visible. One-wire `0x30`: `nic_access_mcr32` (`nic.o`) receives the register address as an
+  argument, so no window pointer reaches its accesses. Parallel-port DMA `0x80` to `0x98`: `plp_dma`, `plp_dma_reset`,
+  `plp_stop_dma` and `plpintr` (`ecpplp.o`) load the window pointer from their own record (`ld` at record +24) and the
+  census config does not seed that object, so `ecpplp.o` and `nic.o` give zero sites. Keyboard and mouse `0xa0` to
+  `0xac`: `pckm_pollcmd` (`ioc3_pckm.o`) stores through a per-port pointer chosen at run time.
 - Reset values are unknown for every register: no routine reads one before writing it.
 
 ## Unresolved window-pointer sites (triaged)

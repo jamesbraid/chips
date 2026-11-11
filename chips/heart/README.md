@@ -28,6 +28,11 @@ Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, 
 
 ## Register inventory
 
+`SDRAM_MODE` (`0x8`) and `MEM_REF` (`0x10`) are established from the PROM's memory set-up code (stores at `0xbfc0099c`
+and `0xbfc009d8` in `IP30prom.bin`, 6.5.30), not census-visible: that routine builds its window base at run time and
+the scanner finds a PROM window only through an identification-register probe. The census rerun of 2026-11-10 (765
+site records) has no row at either offset, so `include/heart.h` has none and `include/heart_extra.h` carries them.
+
 Census result over four images (kernel 276 sites, PROM 303, diagnostic 106, monitor 80; 765 site records): 39
 census rows, 41 registers once the two indexed families (flow-control address and count, units 0 and 1) are
 expanded. The diagnostic's register-test table names 11 more that no held code touches. 52 registers in all.
