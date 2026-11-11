@@ -122,12 +122,26 @@ Corrections found while tagging. These are not fixed here.
   writes (control bit 29 test, request timeout 0x750, enable bits 39 and 9, response buffer bits) fix. Next: the same steps in `xbridge_attach` and the
   response-buffer allocator.
 - **PIC interrupt loss and DMA write granularity.** *[route: missing source; hardware residue]* Unknown in every citable source:
-  what a PIC does when its interrupt write is refused, whether re-enabling a still-active pin sends a packet, what a
-  Bedrock does when a pending bit is cleared while the pin stays active, how a PCI-X burst is cut into crosstalk packets,
-  how partial doublewords are written, and what swap does inside a data phase (chips/pic/README.md, "Interrupt packets"
-  and "DMA address attributes"). Known: the pin-level status, the force registers, the per-dispatch force by both
-  consumers. Tried: the SN2 public tree, the MIPS port, the IRIX 6.5.30 IP35 `pcibr.o`. Next: a published PIC
-  specification, or a bus capture of one interrupt write and one DMA burst.
+  what a PIC does when its interrupt write is refused, whether re-enabling a still-active pin sends a packet, whether the
+  pin's enable bit gates a forced packet, what a Bedrock does when a pending bit is cleared while the pin stays active, how
+  a PCI-X burst is cut into crosstalk packets, how partial doublewords are written, and what swap does inside a 64-bit
+  data phase (chips/pic/README.md, "Interrupt packets" and "DMA address attributes"). Known: the pin-level status, the force
+  registers, the per-dispatch force by both consumers. Tried: the SN2 public tree, the MIPS port, the IRIX 6.5.30 IP35
+  `pcibr.o`. Next: a published PIC specification, or a bus capture of one interrupt write and one DMA burst.
+- **PIC direct-window lane sense (Device bit 19).** *[route: hardware residue, one read]* Settled by sibling evidence:
+  set selects the address-preserving lane map, clear the lane-preserving one (chips/pic/README.md, "Device-register
+  bit 19"). Not measured on a PIC. Smallest test, on the Origin 350 only and only after approval: first, offline, read the PROM's
+  ISP12160 disk path to learn whether it maps its buffers through the 32-bit direct window. If it does, from the PROM monitor
+  after a successful disk listing, read the 8 bytes at PIC base + 0x210 (Device 2, the ISP12160 slot) once, with no writes,
+  and note bit 19 together with whether the volume header's magic bytes read in address order in the PROM's buffer. A
+  correct header with bit 19 set confirms the sense; with bit 19 clear it refutes it. Safety: reads only, no register
+  written, no OS booted. If the PROM uses the 64-bit path instead, this read cannot discriminate and no cheaper test exists.
+- **PIC force register and enable gating.** *[route: hardware residue, small write test]* Whether a force-always write sends a
+  packet while the pin's enable bit is clear. Smallest test, Origin 350, after approval, from the PROM monitor: pick a pin
+  no device uses (pins 4, 6 or 7 on the IO9 PIC), point that pin's host address (+0x130 + 8n) at a scratch RAM word with
+  vector 0xed, leave the enable bit (+0x108 bit n) clear, write 1 to +0x180 + 8n, and read the word (a packet writes
+  0x1ed); then set the enable bit and repeat. Safety: the pin is unwired, its address is RAM, and the sequence is the one the
+  shipped flush path already performs; set the enable bit back to its starting value afterwards.
 - **Bedrock block boundaries and indexed families.** *[route: software now]* Registers are listed by offset; membership of the
   processor interface, memory, I/O, network and local blocks is inferred from routine-name prefixes only.
   Many accesses add a node or block index the scan does not follow. Next: read the index arithmetic in
