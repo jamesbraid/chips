@@ -484,6 +484,22 @@ Established from both kernels and a breakpoint run. What a real board does depen
 places BAR 0 at the first free I/O unit (0x200000) or at all: unknown, and settled by reading a real board's BAR 0
 or the firmware's PCI scan. The IRIX-side description is in the kudzu repository (`docs/ip35-pci-bridge.md`).
 
+#### What the IP30 PROM does with a PCI card on an XIO Bridge
+
+From the 6.5.30 IP30 PROM (SHA-256 `ee4722ca…`, routine at 0x1fc53218, started from the bridge set-up at
+0x1fc52a38) and the 6.5-base PROM (SHA-256 `73bf1087…`, same routine at 0x1fc54560 to 0x1fc54a20). It runs for
+every XBridge widget, and for a Bridge widget whose status bit 0x20 (PCI mode) is set, whether or not the
+widget is the boot path (E). For each slot with a non-zero ID word it clears the command word, walks BARs at
+offsets 0x10 to 0x24, and for each: clears it, sizes it with all-ones, rounds the running I/O or memory cursor up
+to the slot's window granule (2 MB for slots 0 and 1, 1 MB for the rest) before the slot's first BAR, places the BAR at
+the cursor rounded to the larger of its size and 0x4000, and advances the cursor (E). The walk **stops at the
+first BAR that sizes to zero**, then sizes the expansion ROM, so BARs after an absent one are left unassigned
+(E). After BAR 0 it writes the slot's Device register (window base = BAR 0 address >> 20) and finally ORs 7 into the command word (E).
+Only the IOC3 ID (device 3, vendor 0x10a9) is special-cased (BAR 0 only); the class code is never read (E).
+Hence a 256-byte I/O BAR 0 in slot 0 lands at 0x200000 and in slot 1 at 0x400000 (E). Whether a real AIC-1160
+has non-zero BARs 1 and 2, which would make the PROM place BAR 3 as well, is unknown (inferred likely from the
+driver clearing them).
+
 ### Command / response path
 
 Commands are **transfer control blocks (TCBs)** built in host memory and handed to
