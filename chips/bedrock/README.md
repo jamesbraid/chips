@@ -250,17 +250,19 @@ by reading the instruction words around the site:
 | `0x28` | r to rw | `sd` of 1 at `0xc00000001fc009ac`, `0x28(v0)` with `v0` = `0x9200000001000000` (hostfacts: `abs 0x9200000001000028`, value `0x1`) | established |
 | `0x30100` | r to rw | `sd` of zero at `0xc00000001fc6b648` through `a2` = `0x9200000001030100`; `0xc00000001fc6b600` is a short routine that also stores 1 in bit 32 of the word at `0x604200` first | established |
 | `0x604200` | r to rw | `sd` at `0xc00000001fc6b644` (value `0x100000000`) and `0xc00000001fc6b688` (a count built from two window-18 reads, below), and a read-modify-write that clears bit 0 (`0xc00000001fc6b6a4` to `0xc00000001fc6b6b0`) and one that sets bit 0 (`0xc00000001fc6b6c8` to `0xc00000001fc6b6d4`); base `0x9200000001604200` | established |
-| `0x98` | r w8 to r w4/8 | **not evidence about the register.** The one 4-byte access is `lwu` at `0xc00000001fc00b8c` through `0x900000001800009c`, which is the `window-18` boot space, not the `0x92...` register window. The census row for `0x98` also holds the 8-byte register reads (`0xc00000001fc04564` and two more, `0x92...` base) and keeps the register's width at 8. | the row's width column is wrong for the register; see below |
+| `0x98` | r w8 unchanged | the one 4-byte access is `lwu` at `0xc00000001fc00b8c` through `0x900000001800009c`, which is the `window-18` boot space, not the `0x92...` register window; it is the separate boot-space row `0x9c`. The register row keeps its 8-byte width (`0xc00000001fc04564` and two more, `0x92...` base). | established |
 
-`window-18` accesses are not separated from register accesses in `census.tsv`: the join keys a row by offset only. This
-already made rows `0x78` and `0xa0` partly boot-space reads (`nic_get_phase_bits`, `cpuprom_detailed_inventory_info_add`);
-the PROM adds reads at `0x64` (`0xc00000001fc006a8`, `0xc00000001fc006dc`), `0x78` and `0x80`
-(`0xc00000001fc6b64c`, `0xc00000001fc6b650`, which the shipped code divides to get the count stored at `0x604200`),
-`0x8c` and `0x9c`. The three rows that only boot-space reads reach (`0x60`, `0x80`, `0x88`) stay in `census.tsv`
-as evidence but have no define in `include/bedrock.h` (the config's `header_skip`), because their offsets are not register
-offsets. The two existing defines at `0x78` and `0xa0` stay, as before, with the boot-space reads included; the `0x98` define
-inherits the width mix described above. Separating the windows in the join would remove or rename those defines, so it is a
-separate change.
+`window-18` accesses used to be folded into register rows because the join keyed a row by offset only. The census now keys
+a row by address space as well as offset (the config's `address_spaces`): the 11 `window-18` sites are seven `boot-space`
+rows in `census.tsv` (offsets `0x64`, `0x78`, `0x80`, `0x8c`, `0x9c`, `0xa0`, `0xa4`, folded to 4-byte slots), and none of
+them merges with a register row. The register rows that remain are what the `0x92...` window reaches: the `0x98` row is
+8 bytes wide (its one 4-byte access was the boot-space `lwu` at `0xc00000001fc00b8c`), and the `0xa0` row is the register
+read by `sub_20250` and `chkdebug`. The rows `0x60`, `0x80`, `0x88` and `0x78` no longer exist as register rows.
+`include/bedrock.h` carries the boot-space rows in their own section, prefixed `BEDROCK_BOOT_SPACE_`, and the two
+register-row names that were really boot-space reads (`BEDROCK_NIC_GET_PHASE_BITS` at `0x78` and
+`BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD` at `0xa0`, with its `_B_0` mask) stay as deprecated aliases of the boot-space
+defines (the config's `deprecated_defines`). The `header_skip` entries are gone: the three boot-space-only slots now have
+defines in the boot-space section.
 
 Names. A PROM has no symbols, so its pseudo-function names carry an address and never name a define. A register that
 only the PROM reaches is `BEDROCK_REG_<offset>` (for example `BEDROCK_REG_608008`); the other defines keep the names the

@@ -6,9 +6,6 @@
  * Offsets and widths: [E] a load or store in the cited routine reaches that offset with that width.
  * Names: [I] from the accessor routine names the shipped objects carry. Fields: [I] masks and constants
  * the code applies; their meaning is not read. Reset values: [U] throughout.
- * Views: the offset is the 8-byte slot address. "4 at slot+4" is a 32-bit load or store at that
- * address plus 4, the low word of the slot on a big-endian machine; a 64-bit access to the slot
- * address reaches the same register.
  * Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000
  * above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the
  * node-indexed alias (the code adds the node number << 33); the same register is at offset - 0x800000
@@ -29,16 +26,16 @@
 #define BEDROCK_MEMORY_ISCALIAS            0x000028   /* [E] width 8 byte(s), access rw; name [I] from memory_iscalias, page_local_calias; reached in 3 sites, 3 routine(s) */
 #define   BEDROCK_MEMORY_ISCALIAS_V_1      0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define BEDROCK_REG_000040                 0x000040   /* [E] width 8 byte(s), access r; name [I] from no accessor name; reached in 2 sites, 1 routine(s) */
-#define BEDROCK_NIC_GET_PHASE_BITS         0x000078   /* [E] width 8 byte(s), access r; name [I] from nic_get_phase_bits; reached in 2 sites, 2 routine(s) */
 #define BEDROCK_SUB_20EE0                  0x000090   /* [E] width 8 byte(s), access w; name [I] from sub_20ee0, sub_200f0, sub_20250; reached in 9 sites, 7 routine(s) */
 #define   BEDROCK_SUB_20EE0_V_40           0x40   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   BEDROCK_SUB_20EE0_V_64           0x64   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   BEDROCK_SUB_20EE0_V_6B           0x6b   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   BEDROCK_SUB_20EE0_V_7            0x7   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   BEDROCK_SUB_20EE0_B_0            0x1   /* [I] store mask: the code writes these bits (1 sites) */
-#define BEDROCK_SUB_200F0                  0x000098   /* [E] width 4/8 byte(s), access r; name [I] from sub_200f0, sub_20ee0, sub_20250; reached in 13 sites, 8 routine(s) */
-#define BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD 0x0000a0   /* [E] width 4/8 byte(s), access r; name [I] from cpuprom_detailed_inventory_info_add, prom_has_vga_support, sub_20250; reached in 9 sites, 5 routine(s) */
-#define   BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD_B_0 0x1   /* [I] load mask: the code isolates these bits (3 sites) */
+#define BEDROCK_SUB_200F0                  0x000098   /* [E] width 8 byte(s), access r; name [I] from sub_200f0, sub_20ee0, sub_20250; reached in 12 sites, 7 routine(s) */
+#define BEDROCK_SUB_20250                  0x0000a0   /* [E] width 8 byte(s), access r; name [I] from sub_20250, chkdebug; reached in 5 sites, 3 routine(s) */
+#define   BEDROCK_SUB_20250_B_0            0x1   /* [I] load mask: the code isolates these bits (3 sites) */
+#define BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD_B_0 BEDROCK_SUB_20250_B_0   /* deprecated: was a boot-space row; the mask belongs to the register row; use BEDROCK_SUB_20250_B_0 */
 #define BEDROCK_REG_000108                 0x000108   /* [E] width 8 byte(s), access w, indexed (family base); name [I] from no accessor name; reached in 24 sites, 2 routine(s) */
 #define   BEDROCK_REG_000108_V_1           0x1   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
 #define   BEDROCK_REG_000108_V_2           0x2   /* [I] a constant the code writes here (1 sites); meaning unknown [U] */
@@ -132,7 +129,7 @@
 #define BEDROCK_PART_DISCOVERY_681010      0x681010   /* [E] width 8 byte(s), access r; name [I] from part_discovery; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_PART_DISCOVERY_681018      0x681018   /* [E] width 8 byte(s), access r; name [I] from part_discovery; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_PART_DISCOVERY_682000      0x682000   /* [E] width 8 byte(s), access r; name [I] from part_discovery; reached in 1 sites, 1 routine(s) */
-#define BEDROCK_PART_DISCOVERY_682000      0x682000   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from part_discovery; reached in 2 sites, 1 routine(s) */
+#define BEDROCK_PART_DISCOVERY_682000_IDX  0x682000   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from part_discovery; reached in 2 sites, 1 routine(s) */
 #define BEDROCK_PART_DISCOVERY_682008      0x682008   /* [E] width 8 byte(s), access r; name [I] from part_discovery; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_SUB_1BCF0_780000           0x780000   /* [E] width 8 byte(s), access r; name [I] from sub_1bcf0; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_MDIR_XLATE_ADDR_MEM        0x780008   /* [E] width 8 byte(s), access r; name [I] from mdir_xlate_addr_mem, mdir_xlate_addr_pdir, mdir_xlate_addr_sdir; reached in 3 sites, 3 routine(s) */
@@ -345,5 +342,19 @@
 #define BEDROCK_MEMERROR_SBE_INTR_FE0010   0xfe0010   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from memerror_sbe_intr; reached in 1 sites, 1 routine(s) */
 #define BEDROCK_MEMERROR_SBE_INTR_FE0018   0xfe0018   /* [E] width 8 byte(s), access r, indexed (family base); name [I] from memerror_sbe_intr, hub_error_clear, log_md_errors; reached in 5 sites, 3 routine(s) */
 #define   BEDROCK_MEMERROR_SBE_INTR_FE0018_B_0 0x1   /* [I] load mask: the code isolates these bits (3 sites) */
+
+/* ---- boot-space: accesses through a separate address-space window, not registers of this ASIC; offsets are from the window base [E] --- */
+
+#define BEDROCK_BOOT_SPACE_OFF_000064      0x000064   /* [E] width 4 byte(s), access r, through the boot-space window; name [I] from no accessor name; reached in 2 sites, 1 routine(s) */
+#define   BEDROCK_BOOT_SPACE_OFF_000064_B_15_0 0xffff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define   BEDROCK_BOOT_SPACE_OFF_000064_B_8_0 0x1ff   /* [I] load mask: the code isolates these bits (1 sites) */
+#define BEDROCK_BOOT_SPACE_NIC_GET_PHASE_BITS 0x000078   /* [E] width 8 byte(s), access r, through the boot-space window; name [I] from nic_get_phase_bits; reached in 2 sites, 2 routine(s) */
+#define BEDROCK_NIC_GET_PHASE_BITS         BEDROCK_BOOT_SPACE_NIC_GET_PHASE_BITS   /* deprecated: was a boot-space row; use BEDROCK_BOOT_SPACE_NIC_GET_PHASE_BITS */
+#define BEDROCK_BOOT_SPACE_OFF_000080      0x000080   /* [E] width 8 byte(s), access r, through the boot-space window; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
+#define BEDROCK_BOOT_SPACE_OFF_00008C      0x00008c   /* [E] width 4 byte(s), access r, through the boot-space window; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
+#define BEDROCK_BOOT_SPACE_OFF_00009C      0x00009c   /* [E] width 4 byte(s), access r, through the boot-space window; name [I] from no accessor name; reached in 1 sites, 1 routine(s) */
+#define BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD 0x0000a0   /* [E] width 4 byte(s), access r, through the boot-space window; name [I] from cpuprom_detailed_inventory_info_add, prom_has_vga_support; reached in 2 sites, 2 routine(s) */
+#define BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD   /* deprecated: was a boot-space row; use BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD */
+#define BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD_A4 0x0000a4   /* [E] width 4 byte(s), access r, through the boot-space window; name [I] from cpuprom_detailed_inventory_info_add, prom_has_vga_support; reached in 2 sites, 2 routine(s) */
 
 #endif /* BEDROCK_H */

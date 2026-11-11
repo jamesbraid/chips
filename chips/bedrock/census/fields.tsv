@@ -1,181 +1,181 @@
-variant	register	source	kind	bits_or_value	sites	functions	example
-bedrock	0x20	store	const	0xcafe	1	1	prom_c00000001fc029a4@c02a90
-bedrock	0x20	load	mask	0	32	6	hubpi_eint_handler@184b4
-bedrock	0x20	load	mask	1	1	1	prom_c00000001fc01284@c01294
-bedrock	0x20	load	shift	shift 3	68	9	prom_c00000001fc00000@c0042c
-bedrock	0x20	load	shift	shift 0	4	4	get_slice@12d4
-bedrock	0x20	load	shift	shift 16	2	1	prom_c00000001fc04474@c04490
-bedrock	0x20	load	shift	shift 15	2	2	prom_c00000001fc0518c@c051b4
-bedrock	0x20	load	shift	shift 11	2	2	prom_c00000001fc0518c@c05200
-bedrock	0x20	load	shift	shift 1	1	1	hubpi_eint_handler@184b4
-bedrock	0x20	load	shift	shift 2	1	1	prom_c00000001fc04474@c046a4
-bedrock	0x28	store	const	0x1	1	1	prom_c00000001fc00000@c009ac
-bedrock	0x28	load	shift	shift 0	2	2	memory_iscalias@100cc
-bedrock	0x60	load	mask	15:0	1	1	prom_c00000001fc00000@c006a8
-bedrock	0x60	load	mask	8:0	1	1	prom_c00000001fc00000@c006dc
-bedrock	0x60	load	shift	shift 16	1	1	prom_c00000001fc00000@c006dc
-bedrock	0x78	load	shift	shift 1	1	1	prom_c00000001fc6b600@c6b64c
-bedrock	0x78	load	shift	shift 4	1	1	prom_c00000001fc6b600@c6b64c
-bedrock	0x90	store	const	0x40	1	1	sub_20250@202a8
-bedrock	0x90	store	const	0x7	1	1	sub_20710@20754
-bedrock	0x90	store	const	0x64	1	1	sub_20884@208b8
-bedrock	0x90	store	const	0x6b	1	1	sub_20988@209b8
-bedrock	0x90	store	mask	0	1	1	prom_c00000001fc04474@c044b0
-bedrock	0x98	load	shift	shift 8	1	1	prom_c00000001fc00000@c00b8c
-bedrock	0xa0	load	mask	0	3	1	prom_c00000001fc04474@c04568
-bedrock	0x108	store	const	0xa	2	1	prom_c00000001fc00000@c00d9c
-bedrock	0x108	store	const	0x81	2	1	prom_c00000001fc01580@c01808
-bedrock	0x108	store	const	0x5e	1	1	prom_c00000001fc00000@c00454
-bedrock	0x108	store	const	0x5f	1	1	prom_c00000001fc00000@c0068c
-bedrock	0x108	store	const	0xb4	1	1	prom_c00000001fc00000@c00734
-bedrock	0x108	store	const	0x60	1	1	prom_c00000001fc00000@c007b8
-bedrock	0x108	store	const	0x5d	1	1	prom_c00000001fc00000@c008a0
-bedrock	0x108	store	const	0x3	1	1	prom_c00000001fc00000@c0094c
-bedrock	0x108	store	const	0x35	1	1	prom_c00000001fc00000@c009e8
-bedrock	0x108	store	const	0x36	1	1	prom_c00000001fc00000@c00a6c
-bedrock	0x108	store	const	0xe	1	1	prom_c00000001fc00000@c00ae8
-bedrock	0x108	store	const	0xf	1	1	prom_c00000001fc00000@c00bd4
-bedrock	0x108	store	const	0x4	1	1	prom_c00000001fc00000@c00c8c
-bedrock	0x108	store	const	0x83	1	1	prom_c00000001fc00000@c00d18
-bedrock	0x108	store	const	0x5	1	1	prom_c00000001fc00000@c00e3c
-bedrock	0x108	store	const	0x84	1	1	prom_c00000001fc00000@c00ec8
-bedrock	0x108	store	const	0xb	1	1	prom_c00000001fc00000@c00fd0
-bedrock	0x108	store	const	0xc	1	1	prom_c00000001fc00000@c01054
-bedrock	0x108	store	const	0x2a	1	1	prom_c00000001fc00000@c010d8
-bedrock	0x108	store	const	0x2b	1	1	prom_c00000001fc00000@c01194
-bedrock	0x108	store	const	0x1	1	1	prom_c00000001fc01580@c015c8
-bedrock	0x108	store	const	0x2	1	1	prom_c00000001fc01580@c0177c
-bedrock	0x4c8	load	mask	7:0	1	1	hubpi_eint_handler@184ac
-bedrock	0x4c8	load	shift	shift 63	1	1	hubpi_eint_handler@184ac
-bedrock	0x4c8	load	shift	shift 17	1	1	hubpi_eint_handler@184ac
-bedrock	0x30100	load	shift	shift 16	2	1	prom_c00000001fc029a4@c02aa8
-bedrock	0x400110	store	const	0xff01	1	1	prom_c00000001fc01a24@c01a7c
-bedrock	0x400128	store	const	0x100	1	1	prom_c00000001fc01a24@c01ba0
-bedrock	0x400128	load	mask	13	1	1	prom_c00000001fc01a24@c01a94
-bedrock	0x400130	load	mask	15:0	2	1	ii_llp_error_monitor@1b1a0
-bedrock	0x400130	load	shift	shift 16	1	1	ii_llp_error_monitor@1b1a0
-bedrock	0x4001f8	store	const	0x1	2	1	prom_c00000001fc01a24@c01a60
-bedrock	0x4001f8	store	const	0x10000	2	1	prom_c00000001fc01a24@c01a60
-bedrock	0x4001f8	store	const	0x20000	1	1	sub_3d1d8@3d324
-bedrock	0x600000	load	mask	7:0	5	4	get_nasid@12b8
-bedrock	0x600000	load	mask	1:0	2	2	is_fine_dirmode@12e4
-bedrock	0x600000	load	mask	6:0	1	1	prom_c00000001fc04438@c04448
-bedrock	0x600000	load	shift	shift 48	4	2	get_nasid@12b8
-bedrock	0x600000	load	shift	shift 33	4	3	bootstrap@25314
-bedrock	0x600000	load	shift	shift 46	2	2	is_fine_dirmode@12e4
-bedrock	0x604200	load	mask	9:0	58	33	numalinkstats_up2date@23d4
-bedrock	0x604200	load	mask	13:4	3	3	prom_c00000001fc6b600@c6b704
-bedrock	0x604200	load	shift	shift 4	58	33	numalinkstats_up2date@23d4
-bedrock	0x604200	load	shift	shift 2	58	33	numalinkstats_up2date@23d4
-bedrock	0x604200	load	shift	shift 1	57	32	numalinkstats_up2date@23d4
-bedrock	0x604200	load	shift	shift 3	3	3	prom_c00000001fc6b600@c6b704
-bedrock	0x608000	store	const	-0x1	1	1	prom_c00000001fc00000@c007d4
-bedrock	0x608008	store	const	0x7f80000	1	1	prom_c00000001fc0125c@c01278
-bedrock	0x608010	store	const	0x7	1	1	prom_c00000001fc00000@c00828
-bedrock	0x608010	load	mask	8	1	1	prom_c00000001fc00000@c00c2c
-bedrock	0x680000	load	mask	0	1	1	sub_11984@11988
-bedrock	0x680000	load	shift	shift 1	1	1	sub_11984@11988
-bedrock	0x680010	store	const	0x1	2	2	sub_10c0@121c
-bedrock	0x680120	load	mask	3:0	3	1	ni_llp_error_monitor@1b208
-bedrock	0x680120	load	shift	shift 16	1	1	ni_llp_error_monitor@1b208
-bedrock	0x680120	load	shift	shift 24	1	1	ni_llp_error_monitor@1b208
-bedrock	0x680120	load	shift	shift 11	1	1	ni_llp_error_monitor@1b208
-bedrock	0x680120	load	shift	shift 40	1	1	ni_llp_error_monitor@1b208
-bedrock	0x680120	load	shift	shift 48	1	1	ni_llp_error_monitor@1b208
-bedrock	0x680120	load	shift	shift 44	1	1	ni_llp_error_monitor@1b208
-bedrock	0x780000	load	shift	shift 48	1	1	sub_1bcf0@1bd9c
-bedrock	0x780008	load	mask	1:0	3	3	mdir_xlate_addr_mem@2b870
-bedrock	0x780008	load	shift	shift 30	3	3	mdir_xlate_addr_mem@2b870
-bedrock	0x7a0000	load	mask	11:0	1	1	prom_c00000001fc0411c@c042dc
-bedrock	0x7a0000	load	shift	shift 12	1	1	prom_c00000001fc0411c@c042dc
-bedrock	0x7a0038	load	mask	0	1	1	doacvec@1c14
-bedrock	0x800000	load	shift	shift 1	1	1	part_interrupt@2460
-bedrock	0x800020	load	shift	shift 62	1	1	save_hub_err@13c68
-bedrock	0x800028	load	shift	shift 0	1	1	move_buffer@2cb0
-bedrock	0x800038	store	const	0x200000	1	1	per_hub_init@e3a0
-bedrock	0x800040	load	shift	shift 0	1	1	hub_error_init@17b40
-bedrock	0x800048	load	shift	shift 0	1	1	hub_error_init@17b64
-bedrock	0x800090	store	const	0x100	3	3	debug_stop_all_cpus@20cec
-bedrock	0x800090	store	const	0x64	1	1	debug_stop_all_cpus@20cec
-bedrock	0x800098	load	mask	4	1	1	brl1_intr_poll@1e00
-bedrock	0x800428	load	shift	shift 0	3	3	show_hub_pi_err@14ed8
-bedrock	0xa00040	load	shift	shift 0	1	1	hub_error_init@17b40
-bedrock	0xa00048	load	shift	shift 0	1	1	hub_error_init@17b64
-bedrock	0xa00090	store	const	0x100	2	2	debug_stop_all_cpus@20cec
-bedrock	0xa00090	store	const	0x64	1	1	debug_stop_all_cpus@20cec
-bedrock	0xa00428	load	shift	shift 0	2	2	show_hub_pi_err@14ed8
-bedrock	0xc00008	load	shift	shift 31	1	1	hubii_eint_handler@1b098
-bedrock	0xc00008	load	shift	shift 54	1	1	hubii_eint_handler@1b098
-bedrock	0xc00020	load	mask	3:0	1	1	hub_widget_id@12a8
-bedrock	0xc00020	load	shift	shift 46	1	1	hub_set_piomode@22e34
-bedrock	0xc00128	load	mask	1	3	3	per_hub_init@e33c
-bedrock	0xc00128	load	mask	13	2	2	sub_b91c@b950
-bedrock	0xc00128	load	mask	10:0	1	1	sub_b91c@b950
-bedrock	0xc00128	load	shift	shift 12	3	3	per_hub_init@e33c
-bedrock	0xc00130	load	mask	15:0	2	1	capture_hub_stats@2b140
-bedrock	0xc00130	load	shift	shift 16	1	1	capture_hub_stats@2b140
-bedrock	0xc00138	store	const	0x1000000	1	1	bte_error_handler@3ef10
-bedrock	0xc00160	store	const	0x300	1	1	hub_piomap_free@22444
-bedrock	0xc00160	store	mask	4:0	1	1	hub_piomap_alloc@222e4
-bedrock	0xc00160	load	mask	4:0	1	1	hub_ioerror_handler@37d08
-bedrock	0xc00160	load	mask	3:0	1	1	hub_ioerror_handler@37d08
-bedrock	0xc00160	load	mask	7:0	1	1	hub_ioerror_handler@37d08
-bedrock	0xc00160	load	shift	shift 48	2	1	hub_ioerror_handler@37d08
-bedrock	0xc00160	load	shift	shift 8	1	1	hub_ioerror_handler@37d08
-bedrock	0xc00160	load	shift	shift 29	1	1	hub_ioerror_handler@37d08
-bedrock	0xc00198	load	shift	shift 15	2	1	hubiio_prb_error_handler@1af54
-bedrock	0xc001e8	store	const	0x101	1	1	bte_error_handler@3eed0
-bedrock	0xc001e8	load	mask	0	1	1	hubii_eint_handler@1b15c
-bedrock	0xc001e8	load	mask	4	1	1	hubii_eint_handler@1b15c
-bedrock	0xc001e8	load	mask	8	1	1	hubii_eint_handler@1b15c
-bedrock	0xc001e8	load	mask	4,0	1	1	hub_xp_error_handler@37a14
-bedrock	0xc001f8	store	const	0xffff	1	1	hubii_eint_handler@1b0d8
-bedrock	0xc001f8	store	const	0xff0000	1	1	hubii_eint_handler@1b0d8
-bedrock	0xc002c8	load	shift	shift 63	1	1	hub_error_devenable@38c5c
-bedrock	0xc00308	load	mask	7:0	1	1	hub_widget_reset@39094
-bedrock	0xc00308	load	shift	shift 3	2	1	hub_widget_reset@39094
-bedrock	0xc00308	load	shift	shift 63	1	1	hub_widget_reset@39094
-bedrock	0xc00308	load	shift	shift 24	1	1	hub_widget_reset@39094
-bedrock	0xc00388	load	mask	4	1	1	hub_widget_reset@390c4
-bedrock	0xc00390	store	const	0x10	1	1	hubiio_crb_free@1aaf8
-bedrock	0xc00390	load	mask	4	2	1	hubiio_crb_free@1ab08
-bedrock	0xc003a8	store	const	0xf0	1	1	per_hub_init@e338
-bedrock	0xc003b0	store	const	0x800	1	1	bte_crb_error_handler@3f208
-bedrock	0xc003b0	load	shift	shift 47	1	1	bte_crb_error_handler@3f20c
-bedrock	0xc003b8	store	const	0xff	1	1	per_hub_init@e384
-bedrock	0xc00400	load	mask	0	1	1	hubiio_crb_error_handler@1ac38
-bedrock	0xc00400	load	mask	4:0	1	1	hubiio_crb_error_handler@1ac38
-bedrock	0xc00400	load	mask	3:0	1	1	hubiio_crb_error_handler@1ac38
-bedrock	0xc00400	load	mask	2:0	1	1	hubiio_crb_error_handler@1ac38
-bedrock	0xc00400	load	shift	shift 13	3	2	hubiio_crb_error_handler@1ac38
-bedrock	0xc00400	load	shift	shift 40	2	2	hubiio_crb_error_handler@1ac38
-bedrock	0xc00400	load	shift	shift 52	1	1	hubiio_crb_error_handler@1ac38
-bedrock	0xc00400	load	shift	shift 45	1	1	hubiio_crb_error_handler@1ac38
-bedrock	0xc00400	load	shift	shift 8	1	1	hub_widgetdev_shutdown@38e14
-bedrock	0xc00408	load	mask	1:0	1	1	crbx@38238
-bedrock	0xc00408	load	shift	shift 41	1	1	crbx@38238
-bedrock	0xc00408	load	shift	shift 25	1	1	crbx@38238
-bedrock	0xc00410	load	shift	shift 15	1	1	hubiio_crb_error_handler@1ac60
-bedrock	0xc30008	load	shift	shift 2	1	1	io_perf_update_count@42b14
-bedrock	0xe00000	load	mask	3:0	1	1	get_hub_chiprev@1304
-bedrock	0xe00000	load	shift	shift 28	1	1	get_hub_chiprev@1304
-bedrock	0xe04030	load	mask	1	5	1	nic_access_hub@1858
-bedrock	0xe04030	load	mask	0	1	1	nic_access_hub@1898
-bedrock	0xe80000	load	mask	2:1	1	1	ni_port_down_reset@1899c
-bedrock	0xe80000	load	mask	1	1	1	ni_port_down_reset@18a04
-bedrock	0xe80120	load	mask	7:0	2	1	capture_hub_stats@2b0a0
-bedrock	0xe80120	load	shift	shift 8	1	1	capture_hub_stats@2b0a0
-bedrock	0xe80120	load	shift	shift 16	1	1	capture_hub_stats@2b0a0
-bedrock	0xf80028	load	shift	shift 6	2	1	fetchop_flush@101c8
-bedrock	0xf80028	load	shift	shift 63	1	1	fetchop_flush@101c8
-bedrock	0xfc0000	load	mask	0	28	16	check_dir_access@f3c4
-bedrock	0xfc0010	load	shift	shift 63	1	1	memerror_sbe_intr@2bbe8
-bedrock	0xfc0018	load	shift	shift 63	2	2	log_md_errors@19224
-bedrock	0xfc0018	load	shift	shift 1	1	1	log_md_errors@19224
-bedrock	0xfc0018	load	shift	shift 2	1	1	memerror_sbe_intr@2bc0c
-bedrock	0xfc0028	load	shift	shift 63	1	1	log_md_errors@1922c
-bedrock	0xfe0010	load	shift	shift 3	1	1	memerror_sbe_intr@2bbfc
-bedrock	0xfe0018	load	mask	0	3	1	memerror_sbe_intr@2bc10
-bedrock	0xfe0018	load	shift	shift 11	3	1	memerror_sbe_intr@2bc10
-bedrock	0xfe0018	load	shift	shift 52	3	1	memerror_sbe_intr@2bc10
-bedrock	0xfe0018	load	shift	shift 3	2	2	log_md_errors@19220
+variant	space	register	source	kind	bits_or_value	sites	functions	example
+bedrock		0x20	store	const	0xcafe	1	1	prom_c00000001fc029a4@c02a90
+bedrock		0x20	load	mask	0	32	6	hubpi_eint_handler@184b4
+bedrock		0x20	load	mask	1	1	1	prom_c00000001fc01284@c01294
+bedrock		0x20	load	shift	shift 3	68	9	prom_c00000001fc00000@c0042c
+bedrock		0x20	load	shift	shift 0	4	4	get_slice@12d4
+bedrock		0x20	load	shift	shift 16	2	1	prom_c00000001fc04474@c04490
+bedrock		0x20	load	shift	shift 15	2	2	prom_c00000001fc0518c@c051b4
+bedrock		0x20	load	shift	shift 11	2	2	prom_c00000001fc0518c@c05200
+bedrock		0x20	load	shift	shift 1	1	1	hubpi_eint_handler@184b4
+bedrock		0x20	load	shift	shift 2	1	1	prom_c00000001fc04474@c046a4
+bedrock		0x28	store	const	0x1	1	1	prom_c00000001fc00000@c009ac
+bedrock		0x28	load	shift	shift 0	2	2	memory_iscalias@100cc
+bedrock		0x90	store	const	0x40	1	1	sub_20250@202a8
+bedrock		0x90	store	const	0x7	1	1	sub_20710@20754
+bedrock		0x90	store	const	0x64	1	1	sub_20884@208b8
+bedrock		0x90	store	const	0x6b	1	1	sub_20988@209b8
+bedrock		0x90	store	mask	0	1	1	prom_c00000001fc04474@c044b0
+bedrock		0xa0	load	mask	0	3	1	prom_c00000001fc04474@c04568
+bedrock		0x108	store	const	0xa	2	1	prom_c00000001fc00000@c00d9c
+bedrock		0x108	store	const	0x81	2	1	prom_c00000001fc01580@c01808
+bedrock		0x108	store	const	0x5e	1	1	prom_c00000001fc00000@c00454
+bedrock		0x108	store	const	0x5f	1	1	prom_c00000001fc00000@c0068c
+bedrock		0x108	store	const	0xb4	1	1	prom_c00000001fc00000@c00734
+bedrock		0x108	store	const	0x60	1	1	prom_c00000001fc00000@c007b8
+bedrock		0x108	store	const	0x5d	1	1	prom_c00000001fc00000@c008a0
+bedrock		0x108	store	const	0x3	1	1	prom_c00000001fc00000@c0094c
+bedrock		0x108	store	const	0x35	1	1	prom_c00000001fc00000@c009e8
+bedrock		0x108	store	const	0x36	1	1	prom_c00000001fc00000@c00a6c
+bedrock		0x108	store	const	0xe	1	1	prom_c00000001fc00000@c00ae8
+bedrock		0x108	store	const	0xf	1	1	prom_c00000001fc00000@c00bd4
+bedrock		0x108	store	const	0x4	1	1	prom_c00000001fc00000@c00c8c
+bedrock		0x108	store	const	0x83	1	1	prom_c00000001fc00000@c00d18
+bedrock		0x108	store	const	0x5	1	1	prom_c00000001fc00000@c00e3c
+bedrock		0x108	store	const	0x84	1	1	prom_c00000001fc00000@c00ec8
+bedrock		0x108	store	const	0xb	1	1	prom_c00000001fc00000@c00fd0
+bedrock		0x108	store	const	0xc	1	1	prom_c00000001fc00000@c01054
+bedrock		0x108	store	const	0x2a	1	1	prom_c00000001fc00000@c010d8
+bedrock		0x108	store	const	0x2b	1	1	prom_c00000001fc00000@c01194
+bedrock		0x108	store	const	0x1	1	1	prom_c00000001fc01580@c015c8
+bedrock		0x108	store	const	0x2	1	1	prom_c00000001fc01580@c0177c
+bedrock		0x4c8	load	mask	7:0	1	1	hubpi_eint_handler@184ac
+bedrock		0x4c8	load	shift	shift 63	1	1	hubpi_eint_handler@184ac
+bedrock		0x4c8	load	shift	shift 17	1	1	hubpi_eint_handler@184ac
+bedrock		0x30100	load	shift	shift 16	2	1	prom_c00000001fc029a4@c02aa8
+bedrock		0x400110	store	const	0xff01	1	1	prom_c00000001fc01a24@c01a7c
+bedrock		0x400128	store	const	0x100	1	1	prom_c00000001fc01a24@c01ba0
+bedrock		0x400128	load	mask	13	1	1	prom_c00000001fc01a24@c01a94
+bedrock		0x400130	load	mask	15:0	2	1	ii_llp_error_monitor@1b1a0
+bedrock		0x400130	load	shift	shift 16	1	1	ii_llp_error_monitor@1b1a0
+bedrock		0x4001f8	store	const	0x1	2	1	prom_c00000001fc01a24@c01a60
+bedrock		0x4001f8	store	const	0x10000	2	1	prom_c00000001fc01a24@c01a60
+bedrock		0x4001f8	store	const	0x20000	1	1	sub_3d1d8@3d324
+bedrock		0x600000	load	mask	7:0	5	4	get_nasid@12b8
+bedrock		0x600000	load	mask	1:0	2	2	is_fine_dirmode@12e4
+bedrock		0x600000	load	mask	6:0	1	1	prom_c00000001fc04438@c04448
+bedrock		0x600000	load	shift	shift 48	4	2	get_nasid@12b8
+bedrock		0x600000	load	shift	shift 33	4	3	bootstrap@25314
+bedrock		0x600000	load	shift	shift 46	2	2	is_fine_dirmode@12e4
+bedrock		0x604200	load	mask	9:0	58	33	numalinkstats_up2date@23d4
+bedrock		0x604200	load	mask	13:4	3	3	prom_c00000001fc6b600@c6b704
+bedrock		0x604200	load	shift	shift 4	58	33	numalinkstats_up2date@23d4
+bedrock		0x604200	load	shift	shift 2	58	33	numalinkstats_up2date@23d4
+bedrock		0x604200	load	shift	shift 1	57	32	numalinkstats_up2date@23d4
+bedrock		0x604200	load	shift	shift 3	3	3	prom_c00000001fc6b600@c6b704
+bedrock		0x608000	store	const	-0x1	1	1	prom_c00000001fc00000@c007d4
+bedrock		0x608008	store	const	0x7f80000	1	1	prom_c00000001fc0125c@c01278
+bedrock		0x608010	store	const	0x7	1	1	prom_c00000001fc00000@c00828
+bedrock		0x608010	load	mask	8	1	1	prom_c00000001fc00000@c00c2c
+bedrock		0x680000	load	mask	0	1	1	sub_11984@11988
+bedrock		0x680000	load	shift	shift 1	1	1	sub_11984@11988
+bedrock		0x680010	store	const	0x1	2	2	sub_10c0@121c
+bedrock		0x680120	load	mask	3:0	3	1	ni_llp_error_monitor@1b208
+bedrock		0x680120	load	shift	shift 16	1	1	ni_llp_error_monitor@1b208
+bedrock		0x680120	load	shift	shift 24	1	1	ni_llp_error_monitor@1b208
+bedrock		0x680120	load	shift	shift 11	1	1	ni_llp_error_monitor@1b208
+bedrock		0x680120	load	shift	shift 40	1	1	ni_llp_error_monitor@1b208
+bedrock		0x680120	load	shift	shift 48	1	1	ni_llp_error_monitor@1b208
+bedrock		0x680120	load	shift	shift 44	1	1	ni_llp_error_monitor@1b208
+bedrock		0x780000	load	shift	shift 48	1	1	sub_1bcf0@1bd9c
+bedrock		0x780008	load	mask	1:0	3	3	mdir_xlate_addr_mem@2b870
+bedrock		0x780008	load	shift	shift 30	3	3	mdir_xlate_addr_mem@2b870
+bedrock		0x7a0000	load	mask	11:0	1	1	prom_c00000001fc0411c@c042dc
+bedrock		0x7a0000	load	shift	shift 12	1	1	prom_c00000001fc0411c@c042dc
+bedrock		0x7a0038	load	mask	0	1	1	doacvec@1c14
+bedrock		0x800000	load	shift	shift 1	1	1	part_interrupt@2460
+bedrock		0x800020	load	shift	shift 62	1	1	save_hub_err@13c68
+bedrock		0x800028	load	shift	shift 0	1	1	move_buffer@2cb0
+bedrock		0x800038	store	const	0x200000	1	1	per_hub_init@e3a0
+bedrock		0x800040	load	shift	shift 0	1	1	hub_error_init@17b40
+bedrock		0x800048	load	shift	shift 0	1	1	hub_error_init@17b64
+bedrock		0x800090	store	const	0x100	3	3	debug_stop_all_cpus@20cec
+bedrock		0x800090	store	const	0x64	1	1	debug_stop_all_cpus@20cec
+bedrock		0x800098	load	mask	4	1	1	brl1_intr_poll@1e00
+bedrock		0x800428	load	shift	shift 0	3	3	show_hub_pi_err@14ed8
+bedrock		0xa00040	load	shift	shift 0	1	1	hub_error_init@17b40
+bedrock		0xa00048	load	shift	shift 0	1	1	hub_error_init@17b64
+bedrock		0xa00090	store	const	0x100	2	2	debug_stop_all_cpus@20cec
+bedrock		0xa00090	store	const	0x64	1	1	debug_stop_all_cpus@20cec
+bedrock		0xa00428	load	shift	shift 0	2	2	show_hub_pi_err@14ed8
+bedrock		0xc00008	load	shift	shift 31	1	1	hubii_eint_handler@1b098
+bedrock		0xc00008	load	shift	shift 54	1	1	hubii_eint_handler@1b098
+bedrock		0xc00020	load	mask	3:0	1	1	hub_widget_id@12a8
+bedrock		0xc00020	load	shift	shift 46	1	1	hub_set_piomode@22e34
+bedrock		0xc00128	load	mask	1	3	3	per_hub_init@e33c
+bedrock		0xc00128	load	mask	13	2	2	sub_b91c@b950
+bedrock		0xc00128	load	mask	10:0	1	1	sub_b91c@b950
+bedrock		0xc00128	load	shift	shift 12	3	3	per_hub_init@e33c
+bedrock		0xc00130	load	mask	15:0	2	1	capture_hub_stats@2b140
+bedrock		0xc00130	load	shift	shift 16	1	1	capture_hub_stats@2b140
+bedrock		0xc00138	store	const	0x1000000	1	1	bte_error_handler@3ef10
+bedrock		0xc00160	store	const	0x300	1	1	hub_piomap_free@22444
+bedrock		0xc00160	store	mask	4:0	1	1	hub_piomap_alloc@222e4
+bedrock		0xc00160	load	mask	4:0	1	1	hub_ioerror_handler@37d08
+bedrock		0xc00160	load	mask	3:0	1	1	hub_ioerror_handler@37d08
+bedrock		0xc00160	load	mask	7:0	1	1	hub_ioerror_handler@37d08
+bedrock		0xc00160	load	shift	shift 48	2	1	hub_ioerror_handler@37d08
+bedrock		0xc00160	load	shift	shift 8	1	1	hub_ioerror_handler@37d08
+bedrock		0xc00160	load	shift	shift 29	1	1	hub_ioerror_handler@37d08
+bedrock		0xc00198	load	shift	shift 15	2	1	hubiio_prb_error_handler@1af54
+bedrock		0xc001e8	store	const	0x101	1	1	bte_error_handler@3eed0
+bedrock		0xc001e8	load	mask	0	1	1	hubii_eint_handler@1b15c
+bedrock		0xc001e8	load	mask	4	1	1	hubii_eint_handler@1b15c
+bedrock		0xc001e8	load	mask	8	1	1	hubii_eint_handler@1b15c
+bedrock		0xc001e8	load	mask	4,0	1	1	hub_xp_error_handler@37a14
+bedrock		0xc001f8	store	const	0xffff	1	1	hubii_eint_handler@1b0d8
+bedrock		0xc001f8	store	const	0xff0000	1	1	hubii_eint_handler@1b0d8
+bedrock		0xc002c8	load	shift	shift 63	1	1	hub_error_devenable@38c5c
+bedrock		0xc00308	load	mask	7:0	1	1	hub_widget_reset@39094
+bedrock		0xc00308	load	shift	shift 3	2	1	hub_widget_reset@39094
+bedrock		0xc00308	load	shift	shift 63	1	1	hub_widget_reset@39094
+bedrock		0xc00308	load	shift	shift 24	1	1	hub_widget_reset@39094
+bedrock		0xc00388	load	mask	4	1	1	hub_widget_reset@390c4
+bedrock		0xc00390	store	const	0x10	1	1	hubiio_crb_free@1aaf8
+bedrock		0xc00390	load	mask	4	2	1	hubiio_crb_free@1ab08
+bedrock		0xc003a8	store	const	0xf0	1	1	per_hub_init@e338
+bedrock		0xc003b0	store	const	0x800	1	1	bte_crb_error_handler@3f208
+bedrock		0xc003b0	load	shift	shift 47	1	1	bte_crb_error_handler@3f20c
+bedrock		0xc003b8	store	const	0xff	1	1	per_hub_init@e384
+bedrock		0xc00400	load	mask	0	1	1	hubiio_crb_error_handler@1ac38
+bedrock		0xc00400	load	mask	4:0	1	1	hubiio_crb_error_handler@1ac38
+bedrock		0xc00400	load	mask	3:0	1	1	hubiio_crb_error_handler@1ac38
+bedrock		0xc00400	load	mask	2:0	1	1	hubiio_crb_error_handler@1ac38
+bedrock		0xc00400	load	shift	shift 13	3	2	hubiio_crb_error_handler@1ac38
+bedrock		0xc00400	load	shift	shift 40	2	2	hubiio_crb_error_handler@1ac38
+bedrock		0xc00400	load	shift	shift 52	1	1	hubiio_crb_error_handler@1ac38
+bedrock		0xc00400	load	shift	shift 45	1	1	hubiio_crb_error_handler@1ac38
+bedrock		0xc00400	load	shift	shift 8	1	1	hub_widgetdev_shutdown@38e14
+bedrock		0xc00408	load	mask	1:0	1	1	crbx@38238
+bedrock		0xc00408	load	shift	shift 41	1	1	crbx@38238
+bedrock		0xc00408	load	shift	shift 25	1	1	crbx@38238
+bedrock		0xc00410	load	shift	shift 15	1	1	hubiio_crb_error_handler@1ac60
+bedrock		0xc30008	load	shift	shift 2	1	1	io_perf_update_count@42b14
+bedrock		0xe00000	load	mask	3:0	1	1	get_hub_chiprev@1304
+bedrock		0xe00000	load	shift	shift 28	1	1	get_hub_chiprev@1304
+bedrock		0xe04030	load	mask	1	5	1	nic_access_hub@1858
+bedrock		0xe04030	load	mask	0	1	1	nic_access_hub@1898
+bedrock		0xe80000	load	mask	2:1	1	1	ni_port_down_reset@1899c
+bedrock		0xe80000	load	mask	1	1	1	ni_port_down_reset@18a04
+bedrock		0xe80120	load	mask	7:0	2	1	capture_hub_stats@2b0a0
+bedrock		0xe80120	load	shift	shift 8	1	1	capture_hub_stats@2b0a0
+bedrock		0xe80120	load	shift	shift 16	1	1	capture_hub_stats@2b0a0
+bedrock		0xf80028	load	shift	shift 6	2	1	fetchop_flush@101c8
+bedrock		0xf80028	load	shift	shift 63	1	1	fetchop_flush@101c8
+bedrock		0xfc0000	load	mask	0	28	16	check_dir_access@f3c4
+bedrock		0xfc0010	load	shift	shift 63	1	1	memerror_sbe_intr@2bbe8
+bedrock		0xfc0018	load	shift	shift 63	2	2	log_md_errors@19224
+bedrock		0xfc0018	load	shift	shift 1	1	1	log_md_errors@19224
+bedrock		0xfc0018	load	shift	shift 2	1	1	memerror_sbe_intr@2bc0c
+bedrock		0xfc0028	load	shift	shift 63	1	1	log_md_errors@1922c
+bedrock		0xfe0010	load	shift	shift 3	1	1	memerror_sbe_intr@2bbfc
+bedrock		0xfe0018	load	mask	0	3	1	memerror_sbe_intr@2bc10
+bedrock		0xfe0018	load	shift	shift 11	3	1	memerror_sbe_intr@2bc10
+bedrock		0xfe0018	load	shift	shift 52	3	1	memerror_sbe_intr@2bc10
+bedrock		0xfe0018	load	shift	shift 3	2	2	log_md_errors@19220
+bedrock	boot-space	0x64	load	mask	15:0	1	1	prom_c00000001fc00000@c006a8
+bedrock	boot-space	0x64	load	mask	8:0	1	1	prom_c00000001fc00000@c006dc
+bedrock	boot-space	0x64	load	shift	shift 16	1	1	prom_c00000001fc00000@c006dc
+bedrock	boot-space	0x78	load	shift	shift 1	1	1	prom_c00000001fc6b600@c6b64c
+bedrock	boot-space	0x78	load	shift	shift 4	1	1	prom_c00000001fc6b600@c6b64c
+bedrock	boot-space	0x9c	load	shift	shift 8	1	1	prom_c00000001fc00000@c00b8c
