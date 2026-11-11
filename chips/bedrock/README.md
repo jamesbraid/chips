@@ -209,6 +209,28 @@ inferred from the prefixes of the routine names that touch it (`hub_`, `hubii_`/
 | `+0x1fe0010` + unseen index | 8 | r | 1 | `memerror_sbe_intr` | load shift shift 3 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1fe0018` + unseen index | 8 | r | 5 | `memerror_sbe_intr`, `hub_error_clear`, `log_md_errors` | load mask 0 (3 sites); load shift shift 11 (3 sites); load shift shift 3 (2 sites); load shift shift 52 (3 sites) | unknown unless the names say: see the entry |
 
+## Views of one register (offsets in this table, the header and other documents)
+
+The same register can appear under three offsets, and none of them is a conflict.
+
+- **Local and node-indexed aliases.** The kernel reaches a hub register through the local alias (`+0x1000000` plus the
+  hub register offset, with the node implied) or through the node-indexed alias (`+0x1800000` plus the hub register
+  offset, with the node number shifted left 33 added). `include/bedrock.h` keeps bits 23:0 only, so a node-indexed
+  register is listed 0x800000 above its local-alias offset and the `+0x1000000` base is not shown. Established for the
+  window literals and the shift (`check_ni_errors_nasid` in the IP35 `unix`, `0xc000000000058ba4`); the equivalence of
+  the two alias offsets is inferred from the two pairs of accesses below.
+- **Network-interface error word.** `0xe80100` in `bedrock.h` (`+0x1e80100` here, rw) is the word a document that names
+  the hub register offset calls `0x680100`. `check_ni_errors_nasid` reads it at `0xc000000000058bc4`, reads the clear
+  word `0x680120` (`0xe80120` in `bedrock.h`) and stores zero to it at `0xc000000000058bfc`, `0xc000000000058c8c` and
+  `0xc000000000058e54`. Nothing in the kernel stores to the local alias of that word (`0x680100` in `bedrock.h`), so the
+  header has no row there. The three words at `0x680108`, `0x680110` and `0x680118` of the local alias are read directly
+  (absolute addresses, `0xc000000000058de8` to `0xc000000000058e10`) and printed in the link-level error report; their
+  roles are not read. Established for the accesses.
+- **Migration threshold.** `0xfc0040` in `bedrock.h` is `+0x1fc0040`, which by the alias rule above is hub register offset
+  `0x7c0040` (inferred), and `+0x40` of the block that starts at `+0x1fc0000`. `migr_effthreshold_diff_set` stores one doubleword
+  there (`sd` at `0xc00000000032b5f0` in the IP35 `unix`) and the census has no load of it, so the kernel's access is
+  write-only. Whether the hardware register reads back is unknown: no shipped software depends on it.
+
 ## Groups by routine names (inferred)
 
 - `+0x1000000` to `+0x10004d0`, `+0x1030100`: processor-interface-like registers (audit correction on the `+0x1000090` store: none of its three census sites is in the routine it is credited to.
