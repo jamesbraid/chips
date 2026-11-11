@@ -121,6 +121,13 @@ Corrections found while tagging. These are not fixed here.
 - **PIC revision-1 steps.** *[route: software now]* The direct map is answered (chips/pic/README.md, "Direct map set-up"). Open: what the revision-1-only
   writes (control bit 29 test, request timeout 0x750, enable bits 39 and 9, response buffer bits) fix. Next: the same steps in `xbridge_attach` and the
   response-buffer allocator.
+- **PIC interrupt loss and DMA write granularity.** *[route: missing source; hardware residue]* Unknown in every citable source:
+  what a PIC does when its interrupt write is refused, whether re-enabling a still-active pin sends a packet, what a
+  Bedrock does when a pending bit is cleared while the pin stays active, how a PCI-X burst is cut into crosstalk packets,
+  how partial doublewords are written, and what swap does inside a data phase (chips/pic/README.md, "Interrupt packets"
+  and "DMA address attributes"). Known: the pin-level status, the force registers, the per-dispatch force by both
+  consumers. Tried: the SN2 public tree, the MIPS port, the IRIX 6.5.30 IP35 `pcibr.o`. Next: a published PIC
+  specification, or a bus capture of one interrupt write and one DMA burst.
 - **Bedrock block boundaries and indexed families.** *[route: software now]* Registers are listed by offset; membership of the
   processor interface, memory, I/O, network and local blocks is inferred from routine-name prefixes only.
   Many accesses add a node or block index the scan does not follow. Next: read the index arithmetic in
