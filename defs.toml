@@ -56,3 +56,22 @@ file = "include/xbow.h"
 
 [[headers]]
 file = "include/xbridge.h"
+
+# Hand-written companions to generated headers: facts the census cannot reach (PROM stores, spec pages, request codes).
+[[headers]]
+file = "include/heart_extra.h"
+
+[[headers]]
+file = "include/xbow_extra.h"
+
+[[headers]]
+file = "include/ioc3_extra.h"
+
+[[headers]]
+file = "include/ioc4_extra.h"
+
+[[headers]]
+file = "include/router_origin3000_extra.h"
+
+[[headers]]
+file = "include/l1_requests.h"
