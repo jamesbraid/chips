@@ -725,6 +725,9 @@
 #define RAD1_STATUS_FLAGS_ADAT_PRESENT_INPLACE       (RAD1_STATUS_FLAGS_ADAT_PRESENT_MASK << RAD1_STATUS_FLAGS_ADAT_PRESENT_SHIFT)
 
 #define RAD1_BAR0_SIZE                               0x2000u /* inferred */
+#define RAD1_CLOCKGEN_AES_OUT                        0x2u /* established */
+#define RAD1_CLOCKGEN_ANALOG_IN                      0x0u /* established */
+#define RAD1_CLOCKGEN_ANALOG_OUT                     0x1u /* established */
 #define RAD1_CLOCKGEN_COUNT                          0x4u /* inferred */
 #define RAD1_DESC_ENTRIES                            0x10u /* inferred */
 #define RAD1_DESC_ENTRY_BYTES                        0xcu /* established */
@@ -737,6 +740,7 @@
 #define RAD1_MODE_PCI_BOARD                          0xdu /* established */
 #define RAD1_MUX_BITS                                0x10u /* established */
 #define RAD1_MUX_PROBE_PASSES                        0x400u /* inferred */
+#define RAD1_PCI_CLASS_OCTANE                        0x0u /* established */
 #define RAD1_PCI_DEVICE                              0x5u /* established */
 #define RAD1_PCI_VENDOR                              0x10a9u /* established */
 #define RAD1_REV_MEDIAIO                             0x70u /* inferred */

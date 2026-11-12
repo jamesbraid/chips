@@ -622,6 +622,9 @@ Slot word at byte offset 0x78 of each status slot. Bits not listed are never rea
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
 | `BAR0_SIZE` | 0x2000 | inferred |  | Bytes of BAR0 the driver maps; a lower bound on the decode size. The BAR sizing response itself is not measured |
+| `CLOCKGEN_AES_OUT` | 0x2 | established | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe | Clock generator that sets the AES3 output rate |
+| `CLOCKGEN_ANALOG_IN` | 0x0 | established | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe | Clock generator that sets the analog input rate |
+| `CLOCKGEN_ANALOG_OUT` | 0x1 | established | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe | Clock generator that sets the analog output rate |
 | `CLOCKGEN_COUNT` | 0x4 | inferred | public Linux RAD1 driver (linux-mips posting, 2008-07-31) | Number of clock generators; select bit 28 + n of the clock load register loads generator n |
 | `DESC_ENTRIES` | 0x10 | inferred |  | Number of 12-byte descriptor RAM entries. The shipped drivers use entries 0 to 7 for the eight data channels and (inferred) entry 15 for the status ring |
 | `DESC_ENTRY_BYTES` | 0xc | established |  | Size of one descriptor RAM entry |
@@ -634,6 +637,7 @@ Slot word at byte offset 0x78 of each status slot. Bits not listed are never rea
 | `MODE_PCI_BOARD` | 0xd | established |  | Board mode value of the PCI audio board; it has no analog section |
 | `MUX_BITS` | 0x10 | established |  | Length in bits of the video-clock mux word the MediaIO card shifts out, most significant bit first |
 | `MUX_PROBE_PASSES` | 0x400 | inferred |  | Status passes between rewrites of the gpio_data register; with the roughly 1 ms status interval this gives the 1.024 s cadence observed on the bus. Inferred |
+| `PCI_CLASS_OCTANE` | 0x0 | established | public Linux lspci capture of the onboard RAD, linux-pci-list message 20170213224512.GA8080@bhelgaas-glaptop.roam.corp.google.com (2017-02-13), bus 0 device 3 function 0 | PCI class code of the onboard RAD on the Octane board: the 24-bit class field (config offset 0x08 bits 31:8) reads zero. Revision 0xc0 is the same listing's byte (REV_OCTANE) |
 | `PCI_DEVICE` | 0x5 | established |  | PCI device id the driver registers for |
 | `PCI_VENDOR` | 0x10a9 | established |  | PCI vendor id the driver registers for |
 | `REV_MEDIAIO` | 0x70 | inferred |  | PCI revision byte presented by the MediaIO card: board mode 7, chip revision 0. Inferred from the mode dispatch and the hinv text, not from a config read |

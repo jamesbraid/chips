@@ -1200,6 +1200,9 @@ pub mod status_flags {
     }
 }
 pub const BAR0_SIZE: u32 = 0x2000; // inferred
+pub const CLOCKGEN_AES_OUT: u32 = 0x2; // established
+pub const CLOCKGEN_ANALOG_IN: u32 = 0x0; // established
+pub const CLOCKGEN_ANALOG_OUT: u32 = 0x1; // established
 pub const CLOCKGEN_COUNT: u32 = 0x4; // inferred
 pub const DESC_ENTRIES: u32 = 0x10; // inferred
 pub const DESC_ENTRY_BYTES: u32 = 0xc; // established
@@ -1212,6 +1215,7 @@ pub const MODE_OCTANE: u32 = 0xc; // established
 pub const MODE_PCI_BOARD: u32 = 0xd; // established
 pub const MUX_BITS: u32 = 0x10; // established
 pub const MUX_PROBE_PASSES: u32 = 0x400; // inferred
+pub const PCI_CLASS_OCTANE: u32 = 0x0; // established
 pub const PCI_DEVICE: u32 = 0x5; // established
 pub const PCI_VENDOR: u32 = 0x10a9; // established
 pub const REV_MEDIAIO: u32 = 0x70; // inferred

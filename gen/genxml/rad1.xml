@@ -374,6 +374,9 @@
     <field name="adat_present" start="6" size="1" type="uint" grade="inferred"/>
   </struct>
   <constant name="BAR0_SIZE" value="0x2000" grade="inferred"/>
+  <constant name="CLOCKGEN_AES_OUT" value="0x2" grade="established" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"/>
+  <constant name="CLOCKGEN_ANALOG_IN" value="0x0" grade="established" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"/>
+  <constant name="CLOCKGEN_ANALOG_OUT" value="0x1" grade="established" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"/>
   <constant name="CLOCKGEN_COUNT" value="0x4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31)"/>
   <constant name="DESC_ENTRIES" value="0x10" grade="inferred"/>
   <constant name="DESC_ENTRY_BYTES" value="0xc" grade="established"/>
@@ -386,6 +389,7 @@
   <constant name="MODE_PCI_BOARD" value="0xd" grade="established"/>
   <constant name="MUX_BITS" value="0x10" grade="established"/>
   <constant name="MUX_PROBE_PASSES" value="0x400" grade="inferred"/>
+  <constant name="PCI_CLASS_OCTANE" value="0x0" grade="established" from="public Linux lspci capture of the onboard RAD, linux-pci-list message 20170213224512.GA8080@bhelgaas-glaptop.roam.corp.google.com (2017-02-13), bus 0 device 3 function 0"/>
   <constant name="PCI_DEVICE" value="0x5" grade="established"/>
   <constant name="PCI_VENDOR" value="0x10a9" grade="established"/>
   <constant name="REV_MEDIAIO" value="0x70" grade="inferred"/>

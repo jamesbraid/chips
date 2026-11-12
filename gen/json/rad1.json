@@ -1604,6 +1604,33 @@
   {
    "unit": "rad1",
    "kind": "constant",
+   "name": "CLOCKGEN_AES_OUT",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
+   "name": "CLOCKGEN_ANALOG_IN",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
+   "name": "CLOCKGEN_ANALOG_OUT",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
    "name": "CLOCKGEN_COUNT",
    "value": 4,
    "count": 1,
@@ -1697,6 +1724,15 @@
    "value": 1024,
    "count": 1,
    "grade": "inferred"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
+   "name": "PCI_CLASS_OCTANE",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux lspci capture of the onboard RAD, linux-pci-list message 20170213224512.GA8080@bhelgaas-glaptop.roam.corp.google.com (2017-02-13), bus 0 device 3 function 0"
   },
   {
    "unit": "rad1",
