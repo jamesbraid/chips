@@ -104,7 +104,7 @@ page does not name them.
 - The guide says the slots support 32-bit or 64-bit addressing. That does not settle the data width.
 - The SGI Gigabit Ethernet guide `007-3819-004` identifies its fiber and copper boards as 32/64-bit
   PCI devices and lists Origin 300 support. It does not give the width negotiated in an installed
-  slot.
+  slot. The chip on those boards, and the one bus-width flag it reads, are on [tigon.md](tigon.md).
 
 ## Unknown
 

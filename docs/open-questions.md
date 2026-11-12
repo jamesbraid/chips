@@ -360,3 +360,8 @@ Corrections found while tagging. These are not fixed here.
 - **SEEQ 80C03: the 80C03 data sheet.** *[route: missing source]* The 80C03 additions (banks, collision counters, control, gap, configuration) rest on public drivers and are inferred. Next: a copy of the 80C03 data sheet, or a read of the part marking on an Indy board ([docs/seeq-8003.md](docs/seeq-8003.md), which part and 80C03 additions).
 
 - **SEEQ 80C03: the encoding of the inter-packet gap register, and whether the transmit command needs `0xf0`.** *[route: hardware residue]* HPC3 and the drivers write a gap byte to bank 2 register 2, and its encoding is not given. OpenBSD writes `0xf0` to the transmit command before selecting a bank, and its next write overwrites it, so no driver needs it. Next: a capture of the IRIX driver's gap writes against the frame spacing on a wire, and a test of a feature a driver enables only after `0xf0` ([docs/seeq-8003.md](docs/seeq-8003.md), unknowns).
+
+## Tigon PCI width (added with docs/tigon.md)
+
+- **Tigon: when bit 20 of the PCI State register shows the host-selected width after reset.** *[route: missing source]* Unknown: the point after reset at which the 32-bit PCI bus flag reflects the host's 64-bit indication. The manual does not say. Next: a later Tigon manual revision that defines the point, or a capture with a stated reset sequence ([docs/tigon.md](docs/tigon.md)).
+- **Tigon: the PCI State register offset.** *[route: missing source]* Unknown: the register's offset in the Tigon register map. The sources used for the Tigon page do not give it. Next: the register map of a Tigon manual revision, which would let the flag enter `defs/` ([docs/tigon.md](docs/tigon.md)).
