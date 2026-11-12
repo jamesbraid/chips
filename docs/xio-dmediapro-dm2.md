@@ -248,3 +248,4 @@ mailbox protocol and the board bus map.
 - [FPGA info table and load protocol](dm2/fpga-load.md)
 - [DMA start path: map RAM entries, pipe control writes, start, completion, errors](dm2/dma.md)
 - [Video interrupts and the status ring](dm2/interrupts-status.md)
+- Discreet's DM2 module against SGI's 1.1.3ml build (stonewire repository, docs/dm2-flame-libdigvid.md)
