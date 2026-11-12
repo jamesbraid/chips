@@ -65,4 +65,5 @@ pub mod vice;
 pub mod xbow;
 pub mod xbow_extra;
 pub mod xbridge;
+pub mod xframe;
 pub mod xio_fc;

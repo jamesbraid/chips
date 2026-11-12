@@ -1,0 +1,172 @@
+unit = "xframe"
+prefix = "XFRAME"
+title = "Neterion Xframe 10-Gigabit Ethernet controller (SGI 10-Gigabit Ethernet card), the offsets, bits and layouts the held sources establish"
+doc = "The Neterion (formerly S2io) Xframe 10-gigabit Ethernet controller on the SGI 10-Gigabit Ethernet card. Grades say how each item was derived: established means the IRIX xg driver object states it on disassembly, or the card manual gives it; inferred means a software expectation taken from a public Linux or OpenBSD driver, from the IRIX driver's behaviour, or from a card manual value the manual does not put in a register table; unknown means no held source settles the value. The offsets here are the register names the public drivers use, so they are software expectations of the card, not measured silicon behaviour. Reset values are not held anywhere in these sources, so each register's reset is unknown. The prose page holds the interrupt chain, link state, receive path and open questions."
+from = "Linux s2io driver"
+public_from = ["Linux s2io driver", "OpenBSD xge driver", "IRIX xg driver object", "SGI 10-Gigabit Ethernet card manual"]
+
+# Interrupt chain. The scheduled timer raises an interrupt with no traffic and no
+# link change, which feeds the driver's watchdog.
+
+[constants.SCHEDULED_INT_CTRL_OFFSET]
+value = 0x918
+grade = "inferred"
+from = "Linux s2io driver (scheduled_int_ctrl); IRIX xg driver object (disassembly)"
+doc = "Offset of the scheduled-interrupt timer control. The IRIX driver arms it during card initialization, and the public driver names it the same way."
+
+[constants.SCHED_INT_CTRL_TIMER_EN]
+value = 0x8000000000000000
+grade = "inferred"
+from = "Linux s2io driver (SCHED_INT_CTRL_TIMER_EN)"
+doc = "Timer enable. Bit 63, which the public header writes as s2BIT(0). The header's own s2BIT numbering puts bit n at 1 << (63 - n), which the OpenBSD fault-bit values below confirm."
+
+[constants.PIC_INT_MASK_OFFSET]
+value = 0x808
+grade = "inferred"
+from = "Linux s2io driver; IRIX xg driver object (disassembly)"
+doc = "Offset of the PIC interrupt mask. Clearing the TXPIC roll-up bit unmasks the scheduled-interrupt source."
+
+[constants.PIC_INT_TX]
+value = 0x8000000000000000
+grade = "inferred"
+from = "Linux s2io driver (PIC_INT_TX)"
+doc = "TXPIC roll-up bit in the PIC interrupt status and mask words, bit 63 (s2BIT(0)). The offset of the status word is not in the held sources."
+
+[constants.TXPIC_INT_REG_OFFSET]
+value = 0x810
+grade = "inferred"
+from = "Linux s2io driver; OpenBSD xge driver; IRIX xg driver object (disassembly)"
+doc = "Offset of the TXPIC leaf status. The scheduled-interrupt source is reported here. The public drivers read it to acknowledge the source, and the IRIX driver writes it instead. The device's own acknowledgement rule is open; see the prose page."
+
+[constants.TXPIC_INT_MASK_OFFSET]
+value = 0x818
+grade = "inferred"
+from = "Linux s2io driver; IRIX xg driver object (disassembly)"
+doc = "Offset of the TXPIC leaf mask. The IRIX driver clears it at bring-up to unmask the scheduled-interrupt source."
+
+[constants.GENERAL_INT_MASK_ENABLE]
+value = 0
+grade = "inferred"
+from = "Linux s2io driver (general interrupt mask enable value)"
+doc = "Value that enables a GENERAL interrupt mask word. The public driver writes zero to enable. The offset of the general mask is not in the held sources."
+
+[constants.WATCHDOG_RESET_COUNT]
+value = 15
+grade = "inferred"
+from = "IRIX xg driver object (disassembly)"
+doc = "Idle count at which the IRIX driver resets the card. The driver clears the count on every interrupt entry, so the reset fires after about fifteen seconds with no interrupt of any kind."
+
+[constants.WATCHDOG_CHECK_SECONDS]
+value = 1
+grade = "inferred"
+from = "IRIX xg driver object (disassembly)"
+doc = "Interval at which the IRIX driver's watchdog checks the idle count."
+
+# Byte order. The IRIX driver's own writes; the card's reading of them is a software
+# expectation (see the prose page).
+
+[constants.SWAPPER_CTRL_LOW_OFFSET]
+value = 0x908
+grade = "established"
+from = "IRIX xg driver object (disassembly)"
+doc = "Offset of the low word of the byte-swapper control that the IRIX driver writes at bring-up. The held sources do not say whether this offset is relative to the card's register base or absolute."
+
+[constants.SWAPPER_CTRL_HIGH_OFFSET]
+value = 0x90c
+grade = "established"
+from = "IRIX xg driver object (disassembly)"
+doc = "Offset of the high word of the byte-swapper control that the IRIX driver writes at bring-up."
+
+[constants.SWAPPER_CTRL_LOW_VALUE]
+value = 0xabffbfff
+grade = "established"
+from = "IRIX xg driver object (disassembly)"
+doc = "Value the IRIX driver writes to the low word of the byte-swapper control after first writing all ones to both halves."
+
+[constants.SWAPPER_CTRL_HIGH_VALUE]
+value = 0xffffeaff
+grade = "established"
+from = "IRIX xg driver object (disassembly)"
+doc = "Value the IRIX driver writes to the high word of the byte-swapper control."
+
+# Link state and the MAC latch.
+
+[constants.MAC_RMAC_ERR_REG_OFFSET]
+value = 0x2028
+grade = "inferred"
+from = "OpenBSD xge driver (MAC error register and its acknowledgement)"
+doc = "Offset of the MAC-block error register. Bit 32 is the link-state-change latch."
+
+[constants.MAC_RMAC_LINK_STATE_CHANGE]
+value = 0x100000000
+grade = "inferred"
+from = "OpenBSD xge driver (MAC error register and its acknowledgement)"
+doc = "Link-state-change latch, bit 32 of the MAC error register. The OpenBSD driver acknowledges it by writing one to the bit."
+
+[constants.ADAPTER_STATUS_RMAC_REMOTE_FAULT]
+value = 0x200000000000000
+grade = "inferred"
+from = "OpenBSD xge driver (RMAC_REMOTE_FAULT); Linux s2io driver (s2BIT(6))"
+doc = "Remote-fault bit of the adapter status word, bit 57. The link is up when this bit and the local-fault bit are both clear."
+
+[constants.ADAPTER_STATUS_RMAC_LOCAL_FAULT]
+value = 0x100000000000000
+grade = "inferred"
+from = "OpenBSD xge driver (RMAC_LOCAL_FAULT); Linux s2io driver (s2BIT(7))"
+doc = "Local-fault bit of the adapter status word, bit 56. The link is up when this bit and the remote-fault bit are both clear."
+
+# Receive rings and descriptors.
+
+[constants.RING_MODE_1]
+value = 0
+grade = "inferred"
+from = "Linux s2io driver (ring mode values)"
+doc = "Ring-mode field value for one-buffer receive descriptors in the receive ring control register."
+
+[constants.RING_MODE_3]
+value = 1
+grade = "inferred"
+from = "Linux s2io driver (ring mode values)"
+doc = "Ring-mode field value for the three-buffer receive descriptor form. The IRIX driver does not select it for jumbo frames."
+
+[constants.RING_MODE_5]
+value = 2
+grade = "inferred"
+from = "Linux s2io driver (ring mode values)"
+doc = "Ring-mode field value for five-buffer receive descriptors. The IRIX driver selects it when the MTU is set to jumbo size."
+
+[constants.RXD_FIVE_BUFFER_BYTES]
+value = 64
+grade = "inferred"
+from = "Linux s2io driver (receive descriptor layout)"
+doc = "Size in bytes of a five-buffer receive descriptor."
+
+[constants.RXD_FIVE_BUFFER_CONTROL_WORDS]
+value = 3
+grade = "inferred"
+from = "Linux s2io driver (receive descriptor layout)"
+doc = "Control words in a five-buffer receive descriptor."
+
+[constants.RXD_FIVE_BUFFER_POINTERS]
+value = 5
+grade = "inferred"
+from = "Linux s2io driver (receive descriptor layout)"
+doc = "Buffer pointers in a five-buffer receive descriptor."
+
+[constants.TXD_WORDS]
+value = 4
+grade = "inferred"
+from = "Linux s2io driver (transmit descriptor layout)"
+doc = "64-bit words in a transmit descriptor: control word 1 (which holds the ownership bit), control word 2, the buffer address, and the host control word."
+
+[constants.DESCRIPTOR_PAGE_BYTES]
+value = 4096
+grade = "inferred"
+from = "Linux s2io driver (descriptor pages)"
+doc = "Size of one descriptor page. Pages chain to the next page by a physical pointer."
+
+[constants.DMA_CHANNELS]
+value = 16
+grade = "inferred"
+from = "SGI 10-Gigabit Ethernet card manual, rev 003 (document number not recorded in the held source)"
+doc = "Total DMA channels the card manual gives. How the channels split between transmit and receive is unknown."
