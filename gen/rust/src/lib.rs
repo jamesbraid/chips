@@ -43,6 +43,7 @@ pub mod pic_extra;
 pub mod r10000_fpu;
 pub mod r10000_identity;
 pub mod r10000_secondary_cache_ecc;
+pub mod r12000a_variant;
 pub mod rad1;
 pub mod router_origin2000;
 pub mod router_origin3000;
