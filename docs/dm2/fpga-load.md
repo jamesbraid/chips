@@ -77,8 +77,9 @@ The table, read from the library's `.data` (`objdump -s`) and checked against th
   aimed at, and bit 7 of the control word is a program-strobe level (idle high, pulsed low). The code only
   shows the values and the pulse shape; the names are mine.
 - **I.** Each of the seven FPGAs owns a 0x800-byte region of the GIF register file (`0x800000 + port offset`),
-  with its status port at word 1 of the region (`| 4`) and the same word aliased with bit 23 set
-  (`0x880004 | offset`) as the data port. The CLINK region (0x803800) is where the library's checked write
+  with its status port at word 1 of the region (`| 4`) and the data port at the same word with bit 19 set
+  (`0x880004 | offset`, where 0x880004 = 0x800004 + 0x80000; the `lui 0x88` / `ori 0x4` pair at L 0x417154 to
+  0x417158 in `xthd_program_xilinx` builds it). The CLINK region (0x803800) is where the library's checked write
   (`xhdWriteWord`, which ORs `0x800004` into the offset, L 0x40d9e0 to 0x40da10) reaches the words for offsets
   `0x38e0`, `0x3860` and `0x3868` (window `0x8038e4`, `0x803864`, `0x80386c`) that reset the CLINK FPGA and set
   its pattern generator (L 0x407f20, 0x407fe8, 0x4081b8), which fits the same layout.

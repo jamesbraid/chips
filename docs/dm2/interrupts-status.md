@@ -88,8 +88,10 @@ All of this is E from `xtdigvid_init_gif` (K30 0x5f70-0x6190, 0x6540-0x6900) and
   at 0x6194 picks `0x74` for pipe 0; reset: `movz` at 0xbfe4 on the same condition picks `0x64` for pipe 1). Right after it the host
   zeroes the ring (`bzero` 2048) and its tail index (pipe + 0x20: 0x61bc, 0xc010). **I** that the register resets the board's write
   index so the next record lands in entry 0; the driver never writes any other value and never reads it. The scoping datasheet's
-  earlier listing (`0x800064`, `0x800074` "cleared when the status buffer is set up") is consistent; the [VBOB note](vbob.md) says
-  `0x800064` is pipe 0, which this reading contradicts (see section 10).
+  earlier listing (`0x800064`, `0x800074` "cleared when the status buffer is set up") is consistent. Pipe 0 owns `0x800074` and
+  pipe 1 owns `0x800064`, as the reset path in `IP30boot/xtdigvid.o` 0xbfe4 shows (`movz t8,ra,t9` with `ra = 0x800064`,
+  `t8 = 0x800074`, `t9 = pipe < 1`). The [VBOB note](vbob.md) still gives `0x800064` for pipe 0, which this reading contradicts
+  (see section 10).
 - **Reset path trigger.** The same three actions (register zero, ring zero, tail zero) run when a VBOB message times out with
   its acknowledge still outstanding (the "reset sdma ring ptr" path, E from the string at that site; see the [VBOB note](vbob.md)).
 
