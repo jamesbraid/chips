@@ -20,12 +20,21 @@
 #define DP83843_BMCR_AN_ENABLE_SHIFT                 12 /* established */
 #define DP83843_BMCR_AN_ENABLE_MASK                  0x1u
 #define DP83843_BMCR_AN_ENABLE_INPLACE               (DP83843_BMCR_AN_ENABLE_MASK << DP83843_BMCR_AN_ENABLE_SHIFT)
+#define DP83843_BMCR_POWER_DOWN_SHIFT                11 /* established */
+#define DP83843_BMCR_POWER_DOWN_MASK                 0x1u
+#define DP83843_BMCR_POWER_DOWN_INPLACE              (DP83843_BMCR_POWER_DOWN_MASK << DP83843_BMCR_POWER_DOWN_SHIFT)
+#define DP83843_BMCR_ISOLATE_SHIFT                   10 /* established */
+#define DP83843_BMCR_ISOLATE_MASK                    0x1u
+#define DP83843_BMCR_ISOLATE_INPLACE                 (DP83843_BMCR_ISOLATE_MASK << DP83843_BMCR_ISOLATE_SHIFT)
 #define DP83843_BMCR_RESTART_AN_SHIFT                9 /* established */
 #define DP83843_BMCR_RESTART_AN_MASK                 0x1u
 #define DP83843_BMCR_RESTART_AN_INPLACE              (DP83843_BMCR_RESTART_AN_MASK << DP83843_BMCR_RESTART_AN_SHIFT)
 #define DP83843_BMCR_DUPLEX_SHIFT                    8 /* established */
 #define DP83843_BMCR_DUPLEX_MASK                     0x1u
 #define DP83843_BMCR_DUPLEX_INPLACE                  (DP83843_BMCR_DUPLEX_MASK << DP83843_BMCR_DUPLEX_SHIFT)
+#define DP83843_BMCR_COLLISION_TEST_SHIFT            7 /* established */
+#define DP83843_BMCR_COLLISION_TEST_MASK             0x1u
+#define DP83843_BMCR_COLLISION_TEST_INPLACE          (DP83843_BMCR_COLLISION_TEST_MASK << DP83843_BMCR_COLLISION_TEST_SHIFT)
 
 /*
  * Basic mode status, read only. The reset value is the one the datasheet gives with no link and no completed autonegotiation, not a value read from a running part.

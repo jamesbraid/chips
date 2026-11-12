@@ -47,6 +47,24 @@
   {
    "unit": "dp83843",
    "kind": "field",
+   "name": "bmcr.power_down",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "DP83843 revision B datasheet, PDF p. 47 (printed p. 46), Table 6"
+  },
+  {
+   "unit": "dp83843",
+   "kind": "field",
+   "name": "bmcr.isolate",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6, and section 3.9, PDF p. 34 (printed p. 33)"
+  },
+  {
+   "unit": "dp83843",
+   "kind": "field",
    "name": "bmcr.restart_an",
    "hi": 9,
    "lo": 9,
@@ -61,6 +79,15 @@
    "lo": 8,
    "grade": "established",
    "from": "DP83843 revision B datasheet, PDF pp. 47-48 (printed pp. 46-47), Table 6"
+  },
+  {
+   "unit": "dp83843",
+   "kind": "field",
+   "name": "bmcr.collision_test",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6"
   },
   {
    "unit": "dp83843",

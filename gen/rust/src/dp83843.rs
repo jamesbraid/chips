@@ -36,6 +36,26 @@ pub mod bmcr {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod power_down { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod isolate { // bits 10:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod restart_an { // bits 9:9, established
         pub const SHIFT: u32 = 9;
         pub const MASK: u32 = 0x1;
@@ -48,6 +68,16 @@ pub mod bmcr {
     }
     pub mod duplex { // bits 8:8, established
         pub const SHIFT: u32 = 8;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod collision_test { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
             (v >> SHIFT) & MASK

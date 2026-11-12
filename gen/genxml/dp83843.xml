@@ -8,8 +8,11 @@
     <field name="loopback" start="14" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6"/>
     <field name="speed_100" start="13" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 47-48 (printed pp. 46-47), Table 6"/>
     <field name="an_enable" start="12" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 47-48 (printed pp. 46-47), Table 6"/>
+    <field name="power_down" start="11" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 47 (printed p. 46), Table 6"/>
+    <field name="isolate" start="10" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6, and section 3.9, PDF p. 34 (printed p. 33)"/>
     <field name="restart_an" start="9" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6"/>
     <field name="duplex" start="8" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 47-48 (printed pp. 46-47), Table 6"/>
+    <field name="collision_test" start="7" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6"/>
   </struct>
   <struct name="BMSR" size="2" grade="inferred" from="DP83843 revision B datasheet, basic mode status register; register number from the clause 22 numbering, not re-read against the PDF" register="yes" offset="0x1" access="r" space="mii" reset="0x7849">
     <doc>Basic mode status, read only. The reset value is the one the datasheet gives with no link and no completed autonegotiation, not a value read from a running part.</doc>

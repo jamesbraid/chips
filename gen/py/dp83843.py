@@ -4,7 +4,7 @@ National DP83843 PHYTER 10/100 Mb/s transceiver, MII registers (Origin 300 IO-8)
 UNIT = 'dp83843'
 REGISTERS = {'bmcr': {'offset': 0, 'access': 'rw', 'width': 16, 'count': 1, 'stride': 1, 'space': 'mii', 'reset': 'unknown', 'grade': 'inferred'}, 'bmsr': {'offset': 1, 'access': 'r', 'width': 16, 'count': 1, 'stride': 1, 'space': 'mii', 'reset': 30793, 'grade': 'inferred'}, 'aner': {'offset': 6, 'access': 'r', 'width': 16, 'count': 1, 'stride': 1, 'space': 'mii', 'reset': 4, 'grade': 'inferred'}, 'lbr': {'offset': 23, 'access': 'rw', 'width': 16, 'count': 1, 'stride': 1, 'space': 'mii', 'reset': 0, 'grade': 'established'}, 'btscr': {'offset': 24, 'access': 'rw', 'width': 16, 'count': 1, 'stride': 1, 'space': 'mii', 'reset': 0, 'grade': 'established'}}
 WORDS = {}
-FIELDS = {'bmcr': {'loopback': (14, 14), 'speed_100': (13, 13), 'an_enable': (12, 12), 'restart_an': (9, 9), 'duplex': (8, 8)}, 'bmsr': {'preamble_suppression': (6, 6), 'an_complete': (5, 5), 'link_status': (2, 2)}, 'aner': {'next_page_able': (2, 2)}, 'lbr': {'data_path_100': (9, 7), 'tw_loopback': (5, 5), 'endec_10_loopback': (4, 4)}, 'btscr': {'full_duplex_or_repeater_readback': (7, 7)}}
+FIELDS = {'bmcr': {'loopback': (14, 14), 'speed_100': (13, 13), 'an_enable': (12, 12), 'power_down': (11, 11), 'isolate': (10, 10), 'restart_an': (9, 9), 'duplex': (8, 8), 'collision_test': (7, 7)}, 'bmsr': {'preamble_suppression': (6, 6), 'an_complete': (5, 5), 'link_status': (2, 2)}, 'aner': {'next_page_able': (2, 2)}, 'lbr': {'data_path_100': (9, 7), 'tw_loopback': (5, 5), 'endec_10_loopback': (4, 4)}, 'btscr': {'full_duplex_or_repeater_readback': (7, 7)}}
 ENUMS = {}
 FIELD_ENUM = {}
 CONSTANTS = {}
