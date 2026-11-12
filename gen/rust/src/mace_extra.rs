@@ -3,3 +3,5 @@
 #![allow(dead_code)]
 
 pub const ISA_MISC_FLASH_WRITE_ENABLE: u32 = 0x1; // established
+pub const ISA_MISC_NIC_DEASSERT: u32 = 0x4; // established
+pub const ISA_MISC_NIC_SAMPLE: u32 = 0x8; // established

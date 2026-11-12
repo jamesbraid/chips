@@ -243,7 +243,8 @@ specification.
 - ISA interrupt bits (p. 125): bit 8 calendar clock (`powerintr` mask `0x100`), bits 9 and 11 keyboard and mouse
   (`0xa00`), bit 1 audio volume change (`a3_err_intr`).
 - ISA control (pp. 122 to 124): ring base and reset at 0x00 with bits 31:15 the base, miscellaneous control at 0x08
-  with bits 4 and 5 the LED enables, interrupt status at 0x10, mask at 0x18; serial channel controls at `0x318000`,
+  with bits 4 and 5 the LED enables and bits 2 and 3 the NIC interface drive and sample bits (table 54, p. 124; see
+  [docs/ds2502.md](../../docs/ds2502.md) for the part on that line), interrupt status at 0x10, mask at 0x18; serial channel controls at `0x318000`,
   `0x318020`, `0x31c000`, `0x31c020` with bit 9 DMA enable.
 - PS/2 (pp. 140 to 142): receive data at +8, control at +0x10 with bit 3 receive interrupt enable, status at +0x18
   with bit 4 receive buffer full and bit 6 parity error; keyboard at `0x320000`, mouse at `0x320020`.

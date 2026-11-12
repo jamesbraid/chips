@@ -7,7 +7,7 @@ WORDS = {}
 FIELDS = {}
 ENUMS = {}
 FIELD_ENUM = {}
-CONSTANTS = {'ISA_MISC_FLASH_WRITE_ENABLE': {'value': 1, 'count': 1, 'stride': 1}}
+CONSTANTS = {'ISA_MISC_FLASH_WRITE_ENABLE': {'value': 1, 'count': 1, 'stride': 1}, 'ISA_MISC_NIC_DEASSERT': {'value': 4, 'count': 1, 'stride': 1}, 'ISA_MISC_NIC_SAMPLE': {'value': 8, 'count': 1, 'stride': 1}}
 TESTS = []
 
 

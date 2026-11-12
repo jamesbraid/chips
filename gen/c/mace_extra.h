@@ -7,5 +7,7 @@
 
 
 #define MACE_ISA_MISC_FLASH_WRITE_ENABLE             0x1u /* established */
+#define MACE_ISA_MISC_NIC_DEASSERT                   0x4u /* established */
+#define MACE_ISA_MISC_NIC_SAMPLE                     0x8u /* established */
 
 #endif /* MACE_GEN_H */

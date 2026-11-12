@@ -15,6 +15,7 @@ pub mod dp83843;
 pub mod ds1685;
 pub mod ds1742;
 pub mod ds1744;
+pub mod ds2502;
 pub mod heart;
 pub mod heart_extra;
 pub mod hpc3_enet;
