@@ -92,12 +92,29 @@ Register-level tables and byte-lane rule: [chips/ice1724](../../chips/ice1724/RE
 | AKM AK5380 | line/mic ADC | not given | secondary reviews only; no software path | unknown. Settled by: a photograph of the board's converter package marking, or a parts list; no driver reads the ADC, so no binary route exists |
 | 24Cxx-style I2C EEPROM at 8-bit address `0xa0` | board configuration | not given | `mad_read_eeprom` (`0x2d50`) | established as a device at that address; part unknown. `mad_read_eeprom` reads 19 bytes at word addresses 0 to 0x12 through `mad_i2c_read` (routine fact tool). Settling test: read `mad_i2c_read` to see whether it sends one address byte (then the part is a 24C01 to 24C16 class device) or two; the exact part needs a photograph of the board's EEPROM marking or a parts list |
 
+## Checks against the controller datasheet
+
+The preliminary ICE1724 datasheet ([chip page](../../chips/ice1724/README.md#vendor-datasheet-facts)) settles the register layout
+and the controller's clock and DMA rules. Applied to this board:
+
+- **Inferred.** The DM8 uses the Envy24HT, not the Envy24PT. The PT part is limited to 96 kHz and 16 GPIO in the public driver's
+  handling. The DM8 note lists 192 kHz playback, so the HT is the match.
+- **Inferred.** The front pair sits on `PSDOUT0` and the three pairs for the six-channel converter on `PSDOUT1` to `PSDOUT3`. This
+  follows the datasheet's slot-to-pin table; no schematic confirms it.
+- **Inferred.** The input converter, if it is the AK5380, samples only from 4 to 96 kHz. Records at 176.4 and 192 kHz would then have no
+  valid converter data, although the controller runs every stream at one rate.
+- **Inferred.** The DM8 has no S/PDIF output connector, so the transmitter is probably not fitted, though the IRIX driver exposes a digital
+  output stream. The datasheet's presence bit in CCS07 would settle it on a real board.
+- **Unknown.** The crystal values. The datasheet allows 24.576 or 49.152 MHz on XIN1 and 22.5792 MHz on XIN2. The rate tables depend on
+  which is fitted.
+
 ## Unknowns and what would settle them
 
 | Unknown | Route |
 |---|---|
 | The DM8's own PCI config (sub-vendor, sub-device, revision) and EEPROM image | none in software; any published `lspci -vv`/EEPROM dump of a DM8; a hinv `-vm` capture of a DM8 would give the revision only |
-| ICE1724 reset values, write masks, rate-code table, DMA size units | the public vendor datasheet (not held), then re-read `mad_set_rate` and `mad_start_dma` against it |
+| ICE1724 DMA size unit: the datasheet counts dwords, the IRIX driver's size is recorded as a frame count | Re-read the size computation in `mad_start_dma` against the datasheet's dword units; a measured buffer wrap on a DM8 |
+| ICE1724 soft-reset effect on this chip (the sibling part's datasheet differs) | A measurement on a DM8; no published source for this chip |
 | Converter register field meanings | AKM AK4381 and AK4355 datasheets (public) |
 | SGI part number, and whether SGI changed anything | SGI parts lists, or a board photograph |
 | Whether the Fuel and Octane support are real (driver present, board unlisted) | a Fuel or Octane hinv capture that shows the MAD line; the Fuel one exists as a user report |

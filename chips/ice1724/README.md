@@ -1,6 +1,6 @@
 # VIA/IC Ensemble ICE1724 (Envy24HT) PCI audio controller
 
-Mode: **no-spec** (no vendor datasheet is held here; the public Linux `sound/pci/ice1712` driver, Linux 7.2-rc7 `envy24ht.h`,
+Mode: **no-spec** (the driver-derived facts below come from the binary; the vendor datasheet in the section after them gives the register layout and reset values; the public Linux `sound/pci/ice1712` driver, Linux 7.2-rc7 `envy24ht.h`,
 `ice1724.c` and `revo.c`, was read after the binary and only for names and conflicts). The part is not an SGI chip. It is
 the controller of the SGI DMediaPro DM8 PCI audio option, see [docs/audio/dm8.md](../../docs/audio/dm8.md) for the board,
 and [docs/audio/survey.md](../../docs/audio/survey.md) for where it sits among the audio options.
@@ -165,7 +165,151 @@ more bus masters behind the bridge) and the interrupt swizzle are in
 [docs/questions/tezro-ice1724.md](../../docs/questions/tezro-ice1724.md). The driver imports no interrupt
 call and never writes the interrupt mask or status registers, whose reset state masks every source.
 
+## Vendor datasheet facts
+
+Source: IC Ensemble, *ICE1724 PCI Multi-Channel Audio Controller (Envy24HT)*, preliminary, running footer "Rev. 0.91, 11/05/01"
+(one page reads "Rev. 0.9"), 68 pages, marked confidential. The copy is a third-party one from the ALSA project's manual archive.
+Page numbers below are the printed ones ("datasheet p."). The register layout, access types and reset values are in
+`defs/ice1724.toml`, which generates [gen/docs/ice1724.md](../../gen/docs/ice1724.md). This section holds the facts that do not fit a
+register table. Grades: established means the datasheet states it; inferred means a reading the text does not state, with the reason given.
+
+The VIA VT1720 datasheet (Envy24PT, rev. 1.0, 2004) is a sibling part. It is named below only where it is noted as a sibling statement
+and never applied to this chip.
+
+### Package and bus
+
+- **Established.** 128-pin PQFP, 3.3 V supply, 5 V tolerant I/O (datasheet pp. ii, 1-10).
+- **Established.** A PCI 2.2 bus master with burst mode. The data path is 32 bits (`AD[31:0]`); DMA address registers use bits 31 to 2.
+- **Established.** Memory-write-and-invalidate is disabled and cache-line size is not supported.
+- **Inferred.** 64-bit buffer addresses are unsupported: the datasheet never mentions dual-address cycles.
+- **Unknown.** The PCI commands the bursts use.
+- **Established.** `INTA#` is open drain. `REQ#` and `GNT#` are the only arbitration pins (p. 2-3).
+- **Established.** The two register windows are I/O-space BARs.
+- **Established.** CCS registers take byte, word and dword access. The datasheet gives no widths for MT registers. Drivers use byte, word and
+  dword accesses at the map offsets; that is an expectation from the public driver, so the rule itself is unknown.
+
+### Reset and power
+
+- **Established.** "Default Value" is the value after PCI `RST#` (pp. 3-7, 4-3).
+- **Established.** D3hot to D0 resets the whole chip, configuration space included (p. 3-7).
+- **Established.** D2 and D3hot power down the blocks selected by CCS1C. A write of D1 (`01`) is not supported; the response is not stated.
+- **Unknown.** What CCS00 bit 7 (soft reset) leaves untouched, and whether the strapped bits reset. The datasheet says nothing about it.
+  The VT1720 sibling states that its soft reset keeps the PCI configuration registers, CCS00 and CCS04 to CCS07, rereads the EEPROM and
+  pulses `PRST#` (VT1720 datasheet p. 27). That is a different chip, so the statement is not applied here.
+
+### Interrupts
+
+- **Established.** One interrupt pin, `INTA#`. The sources are MPU-401 receive and transmit (CCS02 bits 7 and 5) and the multi-channel
+  macro (CCS02 bit 4) (pp. 4-3, 4-4). MT00 sets when an engine's terminal count reaches zero, and bit 3 sets when any underrun or overrun
+  flag is set (pp. 4-12, 4-22). Writing 1 clears a flag.
+- **Inferred.** The macro bit is the OR of the unmasked MT00 bits, and `INTA#` is asserted while any unmasked CCS02 bit is set. The datasheet
+  does not draw this logic.
+- **Inferred.** A masked source does not latch into MT00. The wording suggests this; nothing states it.
+- **Expectation (public Linux driver, inferred here).** The driver unmasks only the multi-channel source and MIDI on demand. It keeps the
+  FIFO-error source masked because it caused continual interrupts. It acknowledges MT00 by writing back the value it read, and it ignores a
+  transmit interrupt that comes with every playback.
+
+### Clocks
+
+- **Established.** XIN1 takes 24.576 MHz (CCS04 bit 6 = 0) or 49.152 MHz (= 1). XIN2 takes 22.5792 MHz.
+- **Established as drawn (figures 4-3 and 4-4, pp. 4-15, 4-16).** The 256x master clock comes from XIN1 through a divider chain, or from XIN2
+  for rate codes `1000` to `1011`, or from `SPMCLKIN` in slave mode. A further divide by two gives the 128x clock when MT02 bit 3 is set.
+  `PBCLK` is 256x or 64x fs, `PSYNC` is fs and `PMCLK` is 256x or 128x fs. The figures were read as images.
+- **Unknown.** Which divider each rate code picks, and whether a halving stage applies on XIN1 when CCS04 bit 6 is 1. The text does not tabulate it.
+- **Established.** Every stream, record and S/PDIF output included, runs at one rate (p. 4-1).
+- **Established.** In slave mode the highest accepted master clock is 256x. AC'97 needs 512x.
+
+### Interleaved and stereo DMA
+
+- **Established.** Streams are 32-bit unpacked words, left justified. A 24-bit sample occupies bits 31 to 8 (p. 4-18).
+- **Established.** Interleaved playback fetches four sample times per burst, so one 8-channel burst is 32 data cycles. The chip buffers
+  12 sample times of 8 channels at 24 bits, so the first fill needs three bus requests (p. 4-18).
+- **Established.** In I2S mode the interleaved slots feed the output pins in pairs: slots 1 and 2 to `PSDOUT0`, 3 and 4 to `PSDOUT1`,
+  5 and 6 to `PSDOUT2`, 7 and 8 to `PSDOUT3` (table 4-3, p. 4-19).
+- **Established.** MT19 sets how many channels are interleaved, which frees PDMA1 to PDMA3 (p. 4-20).
+- **Established.** Each engine's buffer is one contiguous ring. There are no scatter-gather lists. The count register reloads its original
+  value when it reaches zero, so the buffer wraps (p. 4-19).
+- **Inferred.** The buffer limits the field widths imply, assuming the dword unit: about 2 MiB for the interleaved engine and 256 KiB for
+  the stereo engines.
+- **Unknown.** Whether the terminal count reloads after zero, and what its register reads back. The datasheet does not say.
+- **Unknown.** The record burst length. The playback stereo burst is eight cycles, and record is assumed to match (inferred).
+- **Unknown.** The converter output while a stream is stopped, and what stopping mid-buffer does to the address and the count.
+- **Unit conflict (unknown).** The datasheet counts dwords. The IRIX driver notes record a "frame count less one" for the size. An
+  eight-channel frame is eight dwords, so the two readings differ by the channel count. Not reconciled.
+- **Inferred.** The IRIX driver never writes a terminal-count register and polls the position instead. The notes show no such write.
+- **Established.** Start and stop are read-modify-write only; the datasheet insists (p. 4-20). Pause and resume are in MT1B (p. 4-21).
+- **Established.** Reading the RDMA0 pointer is only valid after at least two sample frames have elapsed (p. 4-22).
+
+### Routing, peak meters and S/PDIF
+
+- **Established.** The routing register (MT2C) works only in I2S mode and adds at most one sample time of delay (p. 4-25).
+- **Inferred.** The IRIX driver never writes MT2C, so default routing (every output from DMA) applies there.
+- **Established.** Peak meter: a read of MT3F returns the peak of the selected stream and clears it (p. 4-28).
+- **Established.** The S/PDIF transmitter sample-rate field sets itself from MT01 in master mode and takes a software value in slave mode (p. 4-27).
+- **Inferred.** The IRIX driver does not use the S/PDIF channel status (MT3C); the notes show no access.
+
+### GPIO pins and the converter bus
+
+- **Established.** 23 GPIOs. Each is bidirectional with a weak pull-up and 8 mA drive (p. 4-8).
+- **Established.** A GPIO data bit takes a write only while its write-mask bit is 0. The mask resets to all ones.
+- **Established.** GPIO 0 is the AC-link or I2S strap at reset, with AC-link as the default (p. 2-4). GPIO 3 is the EEPROM-present strap, with present as the default (p. 2-4).
+- **Established.** GPIO direction bit 2 is forced to input while the test-enable pin is active (p. 4-9).
+- **Expectation (public Linux board table, inferred for the DM8).** GPIO 1 is the converter serial clock, GPIO 3 the data out, GPIO 5 and 6
+  the active-low chip selects, and GPIO 22 the mute line. The DM8 board wiring is not documented; see [docs/audio/dm8.md](../../docs/audio/dm8.md).
+- **Established (converter datasheets, not the ICE1724).** The converter frame is 16 bits: two chip address bits, a fixed write bit, a
+  five-bit register address and eight data bits, most significant bit first. Converters take no reads. A write is latched on the rising
+  clock edge and takes effect when the select rises. The minimum clock period is 200 ns. The converters ignore writes while their power-down
+  pin is low or master clock is absent. The idle levels of the clock and select between frames are not stated.
+- **Inferred.** The MT05 bit 7 pulse resets the converters in I2S mode, and the converter reset pins are wired to `PRST#`. The datasheet
+  does not say this. Both drivers rewrite every converter register after the pulse.
+
+### I2C port and EEPROM
+
+- **Established.** The controller is the only I2C master. It does no multi-byte bursts. `SCLK` runs at about 31.25 kHz only during a transfer,
+  and is tri-stated when idle. `SDA` is bidirectional (p. 4-8).
+- **Established.** CCS13 bit 7 mirrors the GPIO 3 strap at reset. A board with no EEPROM leaves it 0, and the driver then uses defaults.
+- **Established.** Device address `1010000` is reserved for the configuration EEPROM; a 24C02 is named (p. 4-7).
+- **Unknown.** NAK handling, error reporting, and what a read does when no device answers.
+- **Expectation (public Linux driver, inferred here).** The EEPROM layout is:
+
+  | Bytes | Contents |
+  |---|---|
+  | 0 to 3 | Subsystem IDs, read little-endian. An all-ones first word means blank. |
+  | 4 | Size in bytes. The driver falls back to 32 when this is under 6 and rejects it above 32. |
+  | 5 | Version, 1 or 2. |
+  | 6 to 9 | Values for CCS04 to CCS07. |
+  | 10 to 12 | CCS18 direction. |
+  | 13 to 15 | GPIO write mask: CCS16 (13, 14) and CCS1F (15). |
+  | 16 to 18 | GPIO data: CCS14 (16, 17) and CCS1E (18). |
+
+### AC'97 port
+
+- **Established.** The datasheet defines the AC'97 port: MT04 to MT06, and CCS05 bit 1 for split or packed slots.
+- **Inferred.** The DM8 is an I2S design, so the AC'97 path is not used on it.
+
+### Datasheet defects and the working reading for each
+
+Each is something a reader must settle. The working reading is the one the rest of this page uses.
+
+| Defect | Working reading |
+|---|---|
+| Table 3-1 puts the subsystem ID mask at 0x40; the register section puts it at 0x42. | 0x42, bit 7. |
+| PCI command bit 8 is read-write in the table but "hardwired to 0" in the text. | Reads 0, writes ignored. |
+| PCI status bits 10:9 are labelled `10b`; the text and the reset value say `01b`. | `01b`. |
+| The class code is shown as 16 bits; the header field is 24 bits with a programming interface. | Programming interface 0. |
+| MT10, MT20, MT30, MT40, MT50, MT60 and MT70 say "dword units" for bits 31:2. | Byte address, dword aligned. Drivers store it unshifted. |
+| MT20 is described as the playback base; it is a record register. | Typo. |
+| MT1C is listed at 1C-1D but its field is 18:0. | Laid out over 1C to 1E, which holds 19 bits. |
+| MT04 to MT06 are "valid only in AC-link mode", yet both drivers use MT05 bit 7 in I2S mode. | Bit 7 works in I2S mode. The sibling datasheet says so; inferred here. |
+| The pin table names "ICE1712". | Copy error. |
+| CCS04 bits 7:6: the datasheet says `00` is 24.576 MHz; a comment in the public driver says 22.5792 MHz. | 24.576 MHz. |
+| CCS13 bit 7 "default 1" against a printed reset of 00. | Follows the GPIO 3 strap: `80` on a board with an EEPROM. |
+| The S/PDIF transmitter presence bit is "CCS07 bit 0" in the pin table and "bit 6" in the register text. | Bit 6. |
+| The interrupt line register is headed with the capability pointer's name. | Offset 3Ch, as Table 3-1 shows. |
+| The "hardware configuration control" register at 0x60 has no description; the pin table cites bit 7 of PCI61. | Unknown; CCS05 bit 7 carries the same strap. |
+
 ## Questions
 
-Reset values, write masks and read side effects of every register above are **unknown**: no code reads one before writing it,
-and no datasheet is held. See [docs/open-questions.md](../../docs/open-questions.md).
+Register layout, access types and reset values come from the vendor datasheet (see `defs/ice1724.toml`). Still unknown: the
+read side effects the datasheet leaves out, the soft-reset effect on this chip, the MPU-401 command bits, the converter
+rate-code divider for each rate, and the DM8's own EEPROM image and subsystem IDs. See [docs/open-questions.md](../../docs/open-questions.md).

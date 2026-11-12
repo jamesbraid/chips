@@ -36,3 +36,1108 @@ MT_PLAYBACK_SIZE = { value = 0x14, grade = "established", doc = "32-bit; written
 MT_RATE = { value = 0x1, grade = "established", doc = "byte; sample rate code written by the rate routine: 0 for 48 kHz, 4 for 32 kHz, 2 for 12 kHz, 11 for 88.2 kHz equal the public driver's table" }
 MT_SPDIF_OUT_ADDR = { value = 0x40, grade = "established", doc = "32-bit; digital output buffer address; role [I]" }
 MT_SPDIF_OUT_SIZE = { value = 0x44, grade = "established", doc = "16-bit; digital output size; role [I]" }
+
+# Register layout from the vendor preliminary datasheet of the Envy24HT
+# (ICE1724 PCI Multi-Channel Audio Controller, rev 0.91, 2001). Each item's
+# from= gives the page. Reset values are the datasheet's "Default Value".
+
+[spaces.pci]
+doc = "PCI configuration header and capability registers."
+
+[spaces.ccs]
+doc = "Controller registers, BAR0 (32 bytes of I/O space)."
+
+[spaces.mt]
+doc = "Multi-channel registers, BAR1 (128 bytes of I/O space)."
+
+[enums.rate_code]
+doc = "MT01 bits 3:0 when bit 4 is 0: the sample-rate code for the internal clock tree."
+
+[enums.rate_code.values.k48]
+value = 0
+grade = "established"
+doc = "48 kHz, the reset code"
+
+[enums.rate_code.values.k24]
+value = 1
+grade = "established"
+doc = "24 kHz"
+
+[enums.rate_code.values.k12]
+value = 2
+grade = "established"
+doc = "12 kHz"
+
+[enums.rate_code.values.k9_6]
+value = 3
+grade = "established"
+doc = "9.6 kHz"
+
+[enums.rate_code.values.k32]
+value = 4
+grade = "established"
+doc = "32 kHz"
+
+[enums.rate_code.values.k16]
+value = 5
+grade = "established"
+doc = "16 kHz"
+
+[enums.rate_code.values.k8]
+value = 6
+grade = "established"
+doc = "8 kHz"
+
+[enums.rate_code.values.k96]
+value = 7
+grade = "established"
+doc = "96 kHz"
+
+[enums.rate_code.values.k44_1]
+value = 8
+grade = "established"
+doc = "44.1 kHz"
+
+[enums.rate_code.values.k22_05]
+value = 9
+grade = "established"
+doc = "22.05 kHz"
+
+[enums.rate_code.values.k11_025]
+value = 10
+grade = "established"
+doc = "11.025 kHz"
+
+[enums.rate_code.values.k88_2]
+value = 11
+grade = "established"
+doc = "88.2 kHz"
+
+[enums.rate_code.values.k176_4]
+value = 12
+grade = "established"
+doc = "176.4 kHz; forces the 128x master clock (MT02 bit 3)"
+
+[enums.rate_code.values.unlisted_13]
+value = 13
+grade = "unknown"
+doc = "Not in the datasheet table; reserved. Behaviour unknown."
+
+[enums.rate_code.values.k192]
+value = 14
+grade = "established"
+doc = "192 kHz; needs the 49.152 MHz crystal (CCS04 bit 6) or the 128x clock with the 24.576 MHz crystal"
+
+[enums.rate_code.values.k64]
+value = 15
+grade = "established"
+doc = "64 kHz"
+
+[enums.spdif_rate]
+doc = "MT3C bits 14:12, the S/PDIF transmitter sample-rate field. Set from MT01 in master mode, by software in slave mode."
+
+[enums.spdif_rate.values.k44_1]
+value = 0
+grade = "established"
+doc = "44.1 kHz"
+
+[enums.spdif_rate.values.reserved_1]
+value = 1
+grade = "established"
+doc = "Reserved in the table"
+
+[enums.spdif_rate.values.k48]
+value = 2
+grade = "established"
+doc = "48 kHz; the default"
+
+[enums.spdif_rate.values.k32]
+value = 3
+grade = "established"
+doc = "32 kHz"
+
+[enums.spdif_rate.values.k88_2]
+value = 4
+grade = "established"
+doc = "88.2 kHz"
+
+[enums.spdif_rate.values.k96]
+value = 5
+grade = "established"
+doc = "96 kHz"
+
+[enums.spdif_rate.values.k192]
+value = 6
+grade = "established"
+doc = "192 kHz"
+
+[enums.spdif_rate.values.k176_4]
+value = 7
+grade = "established"
+doc = "176.4 kHz"
+
+[enums.route_source]
+doc = "MT2C source select for one output channel. Routing works only in I2S mode."
+
+[enums.route_source.values.normal]
+value = 0
+grade = "established"
+doc = "The normal DMA slot"
+
+[enums.route_source.values.psdin0_left]
+value = 2
+grade = "established"
+doc = "Converter input 0, left"
+
+[enums.route_source.values.psdin0_right]
+value = 3
+grade = "established"
+doc = "Converter input 0, right"
+
+[enums.route_source.values.spdin_left]
+value = 6
+grade = "established"
+doc = "S/PDIF input, left"
+
+[enums.route_source.values.spdin_right]
+value = 7
+grade = "established"
+doc = "S/PDIF input, right"
+
+[enums.xin1_clock]
+doc = "CCS04 bits 7:6, the XIN1 crystal. Value 2 and 3 are reserved."
+
+[enums.xin1_clock.values.clk24_576]
+value = 0
+grade = "established"
+doc = "24.576 MHz, for 96 kHz times 256"
+
+[enums.xin1_clock.values.clk49_152]
+value = 1
+grade = "established"
+doc = "49.152 MHz, for 192 kHz times 256"
+
+[enums.adc_inputs]
+doc = "CCS04 bits 3:2, the physical stereo inputs."
+
+[enums.adc_inputs.values.one_stereo]
+value = 0
+grade = "established"
+doc = "One stereo ADC"
+
+[enums.adc_inputs.values.two_stereo]
+value = 1
+grade = "established"
+doc = "Two stereo ADCs"
+
+[enums.adc_inputs.values.one_stereo_spdif]
+value = 2
+grade = "established"
+doc = "One stereo ADC and an S/PDIF receiver"
+
+[enums.adc_inputs.values.none]
+value = 3
+grade = "established"
+doc = "No physical inputs"
+
+[enums.converter_type]
+doc = "CCS05 bit 7, the multi-channel converter type."
+
+[enums.converter_type.values.ac97]
+value = 0
+grade = "established"
+doc = "AC'97 link"
+
+[enums.converter_type.values.i2s]
+value = 1
+grade = "established"
+doc = "I2S converters; reflects the power-up strap on GPIO 0 in reverse"
+
+[enums.ac97_slot]
+doc = "CCS05 bit 1, the AC'97 data slot layout."
+
+[enums.ac97_slot.values.split]
+value = 0
+grade = "established"
+doc = "Each codec on its own PSDOUT pin"
+
+[enums.ac97_slot.values.packed]
+value = 1
+grade = "established"
+doc = "Packed on PSDOUT0"
+
+[enums.resolution_bits]
+doc = "CCS06 bits 5:4, the I2S converter resolution."
+
+[enums.resolution_bits.values.bits16]
+value = 0
+grade = "established"
+doc = "16 bit"
+
+[enums.resolution_bits.values.bits18]
+value = 1
+grade = "established"
+doc = "18 bit"
+
+[enums.resolution_bits.values.bits20]
+value = 2
+grade = "established"
+doc = "20 bit"
+
+[enums.resolution_bits.values.bits24]
+value = 3
+grade = "established"
+doc = "24 bit"
+
+[enums.i2s_format]
+doc = "MT02 bits 1:0, the serial data format. Other values are reserved."
+
+[enums.i2s_format.values.i2s]
+value = 0
+grade = "established"
+doc = "I2S"
+
+[enums.interleave]
+doc = "MT19 bits 1:0, how many playback channels share the interleaved stream."
+
+[enums.interleave.values.all_eight]
+value = 0
+grade = "established"
+doc = "All eight channels, 32 slots"
+
+[enums.interleave.values.first_six]
+value = 1
+grade = "established"
+doc = "First six channels, 24 slots; PDMA3 is free"
+
+[enums.interleave.values.first_four]
+value = 2
+grade = "established"
+doc = "First four channels, 16 slots; PDMA2 and PDMA3 are free"
+
+[enums.interleave.values.first_pair]
+value = 3
+grade = "established"
+doc = "First pair only, 8 slots; PDMA1 to PDMA3 are free"
+
+[enums.i2c_direction]
+doc = "CCS10 bit 0."
+
+[enums.i2c_direction.values.read]
+value = 0
+grade = "established"
+doc = "Read"
+
+[enums.i2c_direction.values.write]
+value = 1
+grade = "established"
+doc = "Write"
+
+[enums.pm_state]
+doc = "PCI PM control bits 1:0."
+
+[enums.pm_state.values.d0]
+value = 0
+grade = "established"
+doc = "D0"
+
+[enums.pm_state.values.d1]
+value = 1
+grade = "established"
+doc = "D1 is not supported; the response to a write of this value is not stated"
+
+[enums.pm_state.values.d2]
+value = 2
+grade = "established"
+doc = "D2; powers down the blocks selected in the power-down register"
+
+[enums.pm_state.values.d3hot]
+value = 3
+grade = "established"
+doc = "D3hot; returning to D0 resets the chip, configuration space included"
+
+# ---- PCI configuration space
+
+[registers.pci_vendor_id]
+space = "pci"
+offset = 0x00
+access = "r"
+width = 16
+reset = 0x1412
+grade = "established"
+from = "ICE1724 datasheet p. 3-2"
+doc = "PCI vendor ID, IC Ensemble."
+
+[registers.pci_device_id]
+space = "pci"
+offset = 0x02
+access = "r"
+width = 16
+reset = 0x1724
+grade = "established"
+from = "ICE1724 datasheet p. 3-2"
+doc = "PCI device ID. The same ID is used by the VT1720 (Envy24PT), so it does not tell the parts apart."
+
+[registers.pci_command]
+space = "pci"
+offset = 0x04
+access = "rw"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 3-2"
+doc = "Bit 1 (memory space) and bits 3 to 7 and 9 are hardwired to 0. The datasheet lists bit 8 as read-write but describes it as hardwired to 0; it reads 0 here."
+fields = { io_space = { bits = [0, 0], grade = "established" }, bus_master = { bits = [2, 2], grade = "established" } }
+
+[registers.pci_status]
+space = "pci"
+offset = 0x06
+access = "rw"
+width = 16
+reset = 0x0210
+grade = "established"
+from = "ICE1724 datasheet p. 3-3"
+doc = "Bits 15 to 12 are write-1-to-clear. Bit 11 is hardwired to 0. Bit 14 reads 0. Bit 4 (capability list) is hardwired to 1."
+fields = { parity_error = { bits = [15, 15], grade = "established" }, master_abort = { bits = [13, 13], grade = "established" }, target_abort = { bits = [12, 12], grade = "established" }, devsel_timing = { bits = [10, 9], grade = "inferred", doc = "The table says 10b; the text and the reset value say medium timing, 01b." }, capability_list = { bits = [4, 4], grade = "established" } }
+
+[registers.pci_revision]
+space = "pci"
+offset = 0x08
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "ICE1724 datasheet p. 3-3"
+doc = "Vendor revision. The datasheet shows it as a placeholder; the value is not given."
+
+[registers.pci_class]
+space = "pci"
+offset = 0x0A
+access = "r"
+width = 16
+reset = 0x0401
+grade = "established"
+from = "ICE1724 datasheet p. 3-3"
+doc = "Class code: multimedia, audio. The field is 24 bits in the header; the programming interface byte at offset 0x09 reads 0."
+fields = { base_class = { bits = [15, 8], grade = "established" }, subclass = { bits = [7, 0], grade = "established" } }
+
+[registers.pci_cache_line]
+space = "pci"
+offset = 0x0C
+access = "r"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 3-4"
+doc = "Not supported; reads 0."
+
+[registers.pci_latency_timer]
+space = "pci"
+offset = 0x0D
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 3-4"
+doc = "Writes take effect in eight-clock steps: writing FF reads back F8."
+fields = { count = { bits = [7, 3], grade = "established" } }
+
+[registers.pci_header_type]
+space = "pci"
+offset = 0x0E
+access = "r"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 3-4"
+doc = "Type 0, single function."
+
+[registers.pci_bist]
+space = "pci"
+offset = 0x0F
+access = "r"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 3-4"
+doc = "Built-in self test is not supported."
+
+[registers.pci_bar0]
+space = "pci"
+offset = 0x10
+access = "rw"
+width = 32
+reset = 0x00000001
+grade = "established"
+from = "ICE1724 datasheet p. 3-4"
+doc = "Controller registers (CCS), 32 bytes of I/O space. Bits 31 to 5 are the base."
+fields = { base = { bits = [31, 5], grade = "established" } }
+
+[registers.pci_bar1]
+space = "pci"
+offset = 0x14
+access = "rw"
+width = 32
+reset = 0x00000001
+grade = "established"
+from = "ICE1724 datasheet p. 3-5"
+doc = "Multi-channel registers (MT), 128 bytes of I/O space. Bits 31 to 7 are the base."
+fields = { base = { bits = [31, 7], grade = "established" } }
+
+[registers.pci_subsystem]
+space = "pci"
+offset = 0x2C
+access = "rw"
+width = 32
+reset = 0x17241412
+grade = "established"
+from = "ICE1724 datasheet p. 3-5"
+doc = "Subsystem IDs. Loaded from the EEPROM after reset when one answers, otherwise the reset value. Writable only while the subsystem mask bit is set. Which EEPROM bytes map to which half is not documented."
+fields = { subsystem_vendor = { bits = [15, 0], grade = "established" }, subsystem_device = { bits = [31, 16], grade = "established" } }
+
+[registers.pci_expansion_rom]
+space = "pci"
+offset = 0x30
+access = "r"
+width = 32
+reset = 0x00000000
+grade = "established"
+from = "ICE1724 datasheet table 3-1"
+doc = "Reserved; the part has no option ROM."
+
+[registers.pci_capability_ptr]
+space = "pci"
+offset = 0x34
+access = "r"
+width = 8
+reset = 0x80
+grade = "established"
+from = "ICE1724 datasheet p. 3-5"
+doc = "Points to the power-management capability at 0x80."
+
+[registers.pci_interrupt_line]
+space = "pci"
+offset = 0x3C
+access = "rw"
+width = 8
+reset = 0xFF
+grade = "established"
+from = "ICE1724 datasheet p. 3-5"
+doc = "Set by firmware. FF means the interrupt is not routed."
+
+[registers.pci_interrupt_pin]
+space = "pci"
+offset = 0x3D
+access = "r"
+width = 8
+reset = 0x01
+grade = "established"
+from = "ICE1724 datasheet p. 3-5"
+doc = "INTA#."
+
+[registers.pci_grant_latency]
+space = "pci"
+offset = 0x3E
+access = "r"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 3-5"
+doc = "Minimum grant in the low byte, maximum latency in the high byte. Both 0."
+fields = { min_grant = { bits = [7, 0], grade = "established" }, max_latency = { bits = [15, 8], grade = "established" } }
+
+[registers.pci_svid_mask]
+space = "pci"
+offset = 0x42
+access = "rw"
+width = 8
+reset = 0x00
+grade = "inferred"
+from = "ICE1724 datasheet p. 4-4 and table 3-1"
+doc = "The table places the subsystem ID mask at 0x40 and the register section at 0x42. Bit 7 is the control that makes the subsystem IDs writable. The offset is taken from the register section."
+fields = { writable = { bits = [7, 7], grade = "inferred" } }
+
+[registers.pci_pm_capability_id]
+space = "pci"
+offset = 0x80
+access = "r"
+width = 8
+reset = 0x01
+grade = "established"
+from = "ICE1724 datasheet p. 3-6"
+doc = "Capability ID: power management."
+
+[registers.pci_pm_next]
+space = "pci"
+offset = 0x81
+access = "r"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 3-6"
+doc = "End of the capability list."
+
+[registers.pci_pm_caps]
+space = "pci"
+offset = 0x82
+access = "r"
+width = 16
+reset = 0x0401
+grade = "established"
+from = "ICE1724 datasheet p. 3-6"
+doc = "Power management version 1.0. D2 is supported, D1 and PME are not."
+
+[registers.pci_pm_control]
+space = "pci"
+offset = 0x84
+access = "rw"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 3-7"
+doc = "Power state select."
+fields = { power_state = { bits = [1, 0], grade = "established", enum = "pm_state" } }
+
+[registers.pci_pm_data]
+space = "pci"
+offset = 0x86
+access = "r"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 3-7"
+doc = "Power management bridge extension and data. Read only, reset 0."
+
+# ---- Controller registers (BAR0)
+
+[registers.ccs_control]
+space = "ccs"
+offset = 0x00
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-3"
+doc = "Bit 7 is a soft reset of the whole chip. The public driver writes 1, waits, then writes 0; the datasheet does not say whether the bit self-clears. Bits 6 to 0 are reserved."
+fields = { soft_reset = { bits = [7, 7], grade = "established" } }
+
+[registers.ccs_irq_mask]
+space = "ccs"
+offset = 0x01
+access = "rw"
+width = 8
+reset = 0xFE
+grade = "established"
+from = "ICE1724 datasheet p. 4-3"
+doc = "Interrupt mask. A set bit masks the source. The datasheet states this polarity only for MT03; here it is inferred from the reset value and the driver's use. Every source is masked at reset."
+fields = { mpu_receive = { bits = [7, 7], grade = "established" }, mpu_transmit = { bits = [5, 5], grade = "established" }, multichannel = { bits = [4, 4], grade = "established", doc = "The single mask for every playback and record engine" } }
+
+[registers.ccs_irq_status]
+space = "ccs"
+offset = 0x02
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-4"
+doc = "Bits 7 and 5 are write-1-to-clear. Bit 4 is read only and clears when its source in the multi-channel register clears. Bits are sticky."
+fields = { mpu_receive = { bits = [7, 7], grade = "established" }, mpu_transmit = { bits = [5, 5], grade = "established" }, multichannel = { bits = [4, 4], grade = "established" } }
+
+[registers.ccs_system_config]
+space = "ccs"
+offset = 0x04
+access = "rw"
+width = 8
+reset = 0x0F
+grade = "established"
+from = "ICE1724 datasheet p. 4-4"
+doc = "The public driver copies EEPROM bytes 6 to 9 here; the datasheet says the driver loads them, and hardware does not. The reset value means 24.576 MHz, no UART, no inputs and four stereo DACs."
+fields = { xin1_clock = { bits = [7, 6], grade = "established", enum = "xin1_clock" }, mpu_uart = { bits = [5, 5], grade = "established" }, adc_inputs = { bits = [3, 2], grade = "established", enum = "adc_inputs" }, dac_count_minus_one = { bits = [1, 0], grade = "established", doc = "Stereo DAC count less one; one to four DACs, at least one required" } }
+
+[registers.ccs_ac97_config]
+space = "ccs"
+offset = 0x05
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-5"
+doc = "Converter type and AC'97 slot layout. Bit 7 reflects the power-up strap on GPIO 0 in reverse and may be overwritten."
+fields = { converter_type = { bits = [7, 7], grade = "established", enum = "converter_type" }, ac97_slot = { bits = [1, 1], grade = "established", enum = "ac97_slot" } }
+
+[registers.ccs_i2s_features]
+space = "ccs"
+offset = 0x06
+access = "rw"
+width = 8
+reset = 0x01
+grade = "established"
+from = "ICE1724 datasheet p. 4-5"
+doc = "Converter capabilities, written from the EEPROM."
+fields = { volume_by_gpio = { bits = [7, 7], grade = "established", doc = "Valid only when the converter type bit is 1" }, supports_96k = { bits = [6, 6], grade = "established" }, resolution = { bits = [5, 4], grade = "established", enum = "resolution_bits" }, supports_192k = { bits = [3, 3], grade = "established" }, other_ids = { bits = [2, 0], grade = "unknown", doc = "Named in the datasheet; the meaning is not given" } }
+
+[registers.ccs_spdif_config]
+space = "ccs"
+offset = 0x07
+access = "rw"
+width = 8
+reset = 0x01
+grade = "established"
+from = "ICE1724 datasheet p. 4-6"
+doc = "S/PDIF transmitter enable and capability bits. Bit 6 is read only and reflects the SPDTX pin during reset, reversed: 0 means the transmitter is on the board."
+fields = { transmitter_enable = { bits = [7, 7], grade = "established", doc = "Valid only when bit 6 is 1; keep 0 while the transmitter mode fields change" }, transmitter_present = { bits = [6, 6], grade = "established" }, spdif_ids = { bits = [5, 2], grade = "unknown", doc = "Named in the datasheet; the meaning is not given" }, spdif_input = { bits = [1, 1], grade = "established" }, external_output = { bits = [0, 0], grade = "established" } }
+
+[registers.ccs_uart_tx_count]
+space = "ccs"
+offset = 0x0A
+access = "r"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-6"
+doc = "Valid bytes in the MPU-401 transmit FIFO, which is 32 deep."
+fields = { count = { bits = [4, 0], grade = "established" } }
+
+[registers.ccs_uart_rx_count]
+space = "ccs"
+offset = 0x0B
+access = "r"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-6"
+doc = "Valid bytes in the MPU-401 receive FIFO, which is 32 deep."
+fields = { count = { bits = [4, 0], grade = "established" } }
+
+[registers.ccs_midi_data]
+space = "ccs"
+offset = 0x0C
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-7"
+doc = "MPU-401 data port."
+
+[registers.ccs_midi_command]
+space = "ccs"
+offset = 0x0D
+access = "rw"
+width = 8
+reset = 0x00
+grade = "unknown"
+from = "ICE1724 datasheet p. 4-7"
+doc = "MPU-401 command and status. The datasheet gives no bit definitions. The public Linux driver's reading (bit 0 UART mode, bits 1 to 4 FIFO empty and full flags) is an expectation, not established."
+
+[registers.ccs_uart_setting]
+space = "ccs"
+offset = 0x0E
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-7"
+doc = "MPU-401 watermark. Both watermarks reset to 0."
+fields = { rx_mark_select = { bits = [5, 5], grade = "established", doc = "1: the watermark is the receive high mark; 0: the transmit low mark" }, watermark = { bits = [4, 0], grade = "established" } }
+
+[registers.ccs_i2c_device]
+space = "ccs"
+offset = 0x10
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-7"
+doc = "Writing this register starts an I2C transfer, so the busy bit must be clear first. Device address 1010000 is reserved for the configuration EEPROM."
+fields = { device = { bits = [7, 1], grade = "established" }, direction = { bits = [0, 0], grade = "established", enum = "i2c_direction" } }
+
+[registers.ccs_i2c_byte]
+space = "ccs"
+offset = 0x11
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-8"
+doc = "I2C byte address."
+
+[registers.ccs_i2c_data]
+space = "ccs"
+offset = 0x12
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-8"
+doc = "I2C data byte, written before a write transfer and read after a read transfer."
+
+[registers.ccs_i2c_status]
+space = "ccs"
+offset = 0x13
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-8"
+doc = "Bit 7 mirrors the EEPROM strap on GPIO 3 at reset, so a board with an EEPROM reads 80. The printed reset 00 conflicts with that text; the text is taken. Bit 0 is busy. Bit 1 is reserved, keep 0."
+fields = { eeprom_present = { bits = [7, 7], grade = "established" }, busy = { bits = [0, 0], grade = "established" } }
+
+[registers.ccs_gpio_data]
+space = "ccs"
+offset = 0x14
+access = "rw"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 4-8"
+doc = "GPIO data, bits 15 to 0. A bit takes a write only while its write-mask bit is 0. Bits 22 to 16 are in ccs_gpio_data_hi."
+
+[registers.ccs_gpio_mask]
+space = "ccs"
+offset = 0x16
+access = "rw"
+width = 16
+reset = 0xFFFF
+grade = "established"
+from = "ICE1724 datasheet p. 4-9"
+doc = "GPIO write mask, bits 15 to 0. Reset masks every bit, so no GPIO data can be written until software clears mask bits. Bits 22 to 16 are in ccs_gpio_mask_hi."
+
+[registers.ccs_gpio_direction]
+space = "ccs"
+offset = 0x18
+access = "rw"
+width = 32
+reset = 0x00000000
+grade = "established"
+from = "ICE1724 datasheet p. 4-9"
+doc = "GPIO direction in three bytes, 0x18 to 0x1A. Bits 22 to 0 are defined: 0 is input, 1 is output. Bit 3 doubles as the EEPROM strap at reset; bit 2 is forced to input while the test-enable pin is active."
+fields = { direction = { bits = [22, 0], grade = "established" } }
+
+[registers.ccs_power_down]
+space = "ccs"
+offset = 0x1C
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-9"
+doc = "Each bit set stops or powers down the named clock. Bits 6 and 1 are reserved. The ALSA driver writes 0 here, which is an expectation."
+fields = { xin1_clock = { bits = [7, 7], grade = "established" }, xin2_clock = { bits = [5, 5], grade = "established" }, i2c_clock = { bits = [4, 4], grade = "established" }, midi_clock = { bits = [3, 3], grade = "established" }, spdif_clock = { bits = [2, 2], grade = "established" }, serial_clock = { bits = [0, 0], grade = "established", doc = "Multi-channel I2S serial clock" } }
+
+[registers.ccs_gpio_data_hi]
+space = "ccs"
+offset = 0x1E
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-10"
+doc = "GPIO data, bits 22 to 16 in bits 6 to 0. Masked by ccs_gpio_mask_hi."
+fields = { data = { bits = [6, 0], grade = "established" } }
+
+[registers.ccs_gpio_mask_hi]
+space = "ccs"
+offset = 0x1F
+access = "rw"
+width = 8
+reset = 0xFF
+grade = "established"
+from = "ICE1724 datasheet p. 4-10"
+doc = "GPIO write mask, bits 22 to 16 in bits 6 to 0."
+fields = { mask = { bits = [6, 0], grade = "established" } }
+
+# ---- Multi-channel registers (BAR1)
+
+[registers.mt_irq_status]
+space = "mt"
+offset = 0x00
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-12"
+doc = "One bit per source; write 1 to clear. The multi-channel source bit in the controller's status register is inferred to be the OR of the unmasked bits here. Bit 3 is set by any underrun or overrun flag."
+fields = { spdif_out = { bits = [7, 7], grade = "established" }, pdma3 = { bits = [6, 6], grade = "established" }, pdma2 = { bits = [5, 5], grade = "established" }, pdma1 = { bits = [4, 4], grade = "established" }, fifo_error = { bits = [3, 3], grade = "established" }, rdma1 = { bits = [2, 2], grade = "established" }, rdma0 = { bits = [1, 1], grade = "established" }, pdma0 = { bits = [0, 0], grade = "established", doc = "Interleaved playback, also PDMA0" } }
+
+[registers.mt_sampling_rate]
+space = "mt"
+offset = 0x01
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-12"
+doc = "Sample rate. When bit 4 is 1 the rate code is ignored and the S/PDIF input clock is the master, with the master clock on the SPMCLKIN pin."
+fields = { spdif_input_master = { bits = [4, 4], grade = "established" }, rate_code = { bits = [3, 0], grade = "established", enum = "rate_code" } }
+
+[registers.mt_i2s_format]
+space = "mt"
+offset = 0x02
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-13"
+doc = "Clock ratio and data format. Bit 3 selects a 128x master clock; 176.4 kHz forces it. Bit 2 is listed read-write with no description."
+fields = { mclk_128x = { bits = [3, 3], grade = "established" }, bit2 = { bits = [2, 2], grade = "unknown", doc = "No description in the datasheet" }, format = { bits = [1, 0], grade = "established", enum = "i2s_format" } }
+
+[registers.mt_irq_mask]
+space = "mt"
+offset = 0x03
+access = "rw"
+width = 8
+reset = 0xFF
+grade = "established"
+from = "ICE1724 datasheet p. 4-14"
+doc = "Source mask, same bit layout as mt_irq_status. A set bit masks the source. Every source is masked at reset."
+fields = { spdif_out = { bits = [7, 7], grade = "established" }, pdma3 = { bits = [6, 6], grade = "established" }, pdma2 = { bits = [5, 5], grade = "established" }, pdma1 = { bits = [4, 4], grade = "established" }, fifo_error = { bits = [3, 3], grade = "established" }, rdma1 = { bits = [2, 2], grade = "established" }, rdma0 = { bits = [1, 1], grade = "established" }, pdma0 = { bits = [0, 0], grade = "established" } }
+
+[registers.mt_ac97_index]
+space = "mt"
+offset = 0x04
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-14"
+doc = "AC'97 register index. Valid only in AC-link mode, though the drivers also use the converter reset bit in I2S mode."
+fields = { index = { bits = [6, 0], grade = "established" } }
+
+[registers.mt_ac97_command]
+space = "mt"
+offset = 0x05
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-17"
+doc = "AC'97 command and status. The datasheet limits this register to AC-link mode. In I2S mode bit 7 is inferred to reset the converters, from the sibling part's datasheet and both drivers."
+fields = { cold_reset = { bits = [7, 7], grade = "established" }, warm_reset = { bits = [6, 6], grade = "established" }, write_cycle = { bits = [5, 5], grade = "established", doc = "Write 1 to start; reads 1 while in progress" }, read_cycle = { bits = [4, 4], grade = "established", doc = "Write 1 to start; reads 1 while in progress" }, codec_ready = { bits = [3, 3], grade = "established" }, codec_select = { bits = [1, 0], grade = "established" } }
+
+[registers.mt_ac97_data]
+space = "mt"
+offset = 0x06
+access = "rw"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 4-17"
+doc = "AC'97 data port."
+
+[registers.mt_pdmai_address]
+space = "mt"
+offset = 0x10
+access = "rw"
+width = 32
+reset = 0x00000000
+grade = "established"
+from = "ICE1724 datasheet p. 4-19"
+doc = "Start of the interleaved playback buffer. Bits 1 and 0 read 0, so the address is dword aligned. The datasheet says the field is in dword units; the drivers store the byte address unshifted, which is taken here."
+fields = { address = { bits = [31, 2], grade = "established" } }
+
+[registers.mt_pdmai_count]
+space = "mt"
+offset = 0x14
+access = "rw"
+width = 32
+reset = 0x00000000
+grade = "established"
+from = "ICE1724 datasheet p. 4-19"
+doc = "Buffer size in dwords less one, counting down as data moves. Reloads at zero, so the buffer wraps. Bits 18 to 0 are used."
+fields = { count = { bits = [18, 0], grade = "established" } }
+
+[registers.mt_dma_start]
+space = "mt"
+offset = 0x18
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-20"
+doc = "Read-modify-write only. A 1 starts the stream and a 0 stops it. Bit 3 is read only, 0. Bit positions are the same as mt_irq_status."
+fields = { pdma4 = { bits = [7, 7], grade = "established" }, pdma3 = { bits = [6, 6], grade = "established", doc = "Usable only when mt_pdmai_streams is above 0" }, pdma2 = { bits = [5, 5], grade = "established", doc = "Usable only when mt_pdmai_streams is above 1" }, pdma1 = { bits = [4, 4], grade = "established", doc = "Usable only when mt_pdmai_streams is 3" }, rdma1 = { bits = [2, 2], grade = "established" }, rdma0 = { bits = [1, 1], grade = "established" }, pdma0 = { bits = [0, 0], grade = "established" } }
+
+[registers.mt_pdmai_streams]
+space = "mt"
+offset = 0x19
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-20"
+doc = "Interleaved channel count; see enum interleave. Sets which of PDMA1 to PDMA3 are free."
+fields = { interleave = { bits = [1, 0], grade = "established", enum = "interleave" } }
+
+[registers.mt_dma_underrun]
+space = "mt"
+offset = 0x1A
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-21"
+doc = "Underrun on playback or overrun on record, per stream. Bit positions are the same as mt_dma_start. Write 1 to clear; any flag raises the interrupt through mt_irq_status bit 3."
+
+[registers.mt_dma_pause]
+space = "mt"
+offset = 0x1B
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-21"
+doc = "Pause and resume, per stream; bit positions are the same as mt_dma_start. A 1 pauses and a 0 resumes."
+
+[registers.mt_pdmai_terminal]
+space = "mt"
+offset = 0x1C
+access = "w"
+width = 32
+reset = 0x00000000
+grade = "established"
+from = "ICE1724 datasheet p. 4-19"
+doc = "Interrupt interval in dwords less one. Counts down; at zero it raises the stream's source. Write only. The index line says 1C to 1D, but the layout covers 1C to 1E, which holds the 19-bit field."
+fields = { count = { bits = [18, 0], grade = "established" } }
+
+[registers.mt_rdma0_address]
+space = "mt"
+offset = 0x20
+access = "rw"
+width = 32
+reset = 0x00000000
+grade = "established"
+from = "ICE1724 datasheet p. 4-22"
+doc = "Start of the first record buffer. Dword aligned, same encoding as mt_pdmai_address."
+fields = { address = { bits = [31, 2], grade = "established" } }
+
+[registers.mt_rdma0_count]
+space = "mt"
+offset = 0x24
+access = "rw"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 4-22"
+doc = "Buffer size in dwords less one, counting down. Read the position only after at least two sample frames have passed."
+
+[registers.mt_rdma0_terminal]
+space = "mt"
+offset = 0x26
+access = "w"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 4-22"
+doc = "Interrupt interval in dwords less one. Write only."
+
+[registers.mt_routing]
+space = "mt"
+offset = 0x2C
+access = "rw"
+width = 32
+reset = 0x00000000
+grade = "inferred"
+from = "ICE1724 datasheet p. 4-25"
+doc = "Source of each output channel, in I2S mode only, adding at most one sample time of delay. The layout is established; the zero reset is inferred from the printed 00h for a 32-bit register."
+fields = { spdif_left = { bits = [2, 0], grade = "established", enum = "route_source" }, spdif_right = { bits = [5, 3], grade = "established", enum = "route_source" }, psdout0_left = { bits = [10, 8], grade = "established", enum = "route_source" }, psdout1_left = { bits = [13, 11], grade = "established", enum = "route_source" }, psdout2_left = { bits = [16, 14], grade = "established", enum = "route_source" }, psdout3_left = { bits = [19, 17], grade = "established", enum = "route_source" }, psdout0_right = { bits = [22, 20], grade = "established", enum = "route_source" }, psdout1_right = { bits = [25, 23], grade = "established", enum = "route_source" }, psdout2_right = { bits = [28, 26], grade = "established", enum = "route_source" }, psdout3_right = { bits = [31, 29], grade = "established", enum = "route_source" } }
+
+[registers.mt_rdma1_address]
+space = "mt"
+offset = 0x30
+access = "rw"
+width = 32
+reset = 0x00000000
+grade = "established"
+from = "ICE1724 datasheet p. 4-23"
+doc = "Start of the second record buffer. Dword aligned, same encoding as mt_pdmai_address."
+fields = { address = { bits = [31, 2], grade = "established" } }
+
+[registers.mt_rdma1_count]
+space = "mt"
+offset = 0x34
+access = "rw"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 4-23"
+doc = "Buffer size in dwords less one, counting down."
+
+[registers.mt_rdma1_terminal]
+space = "mt"
+offset = 0x36
+access = "w"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 4-23"
+doc = "Interrupt interval in dwords less one. Write only."
+
+[registers.mt_spdif_control]
+space = "mt"
+offset = 0x3C
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "ICE1724 datasheet p. 4-27"
+doc = "S/PDIF transmitter channel status. Reads 0000 when the SPDTX pin is floating or high, and 2000 at power-up when the transmitter is fitted. Every field except validity is writable only while ccs_spdif_config bit 7 is 0."
+fields = { validity = { bits = [15, 15], grade = "established", doc = "Validity flag" }, spdif_rate = { bits = [14, 12], grade = "established", enum = "spdif_rate" }, generation_level = { bits = [11, 11], grade = "established" }, category = { bits = [10, 4], grade = "established" }, pre_emphasis = { bits = [3, 3], grade = "established" }, copyright = { bits = [2, 2], grade = "established", doc = "1 means copyright is not asserted" }, non_audio = { bits = [1, 1], grade = "established", doc = "1 means non-PCM" }, professional = { bits = [0, 0], grade = "established" } }
+
+[registers.mt_peak_index]
+space = "mt"
+offset = 0x3E
+access = "rw"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-28"
+doc = "Stream to meter. 0 to 7 are the eight interleaved slots, 8 and 9 the S/PDIF left and right, 10 and 11 RDMA0, 18 and 19 RDMA1. Other values are ignored."
+fields = { index = { bits = [4, 0], grade = "established" } }
+
+[registers.mt_peak_data]
+space = "mt"
+offset = 0x3F
+access = "r"
+width = 8
+reset = 0x00
+grade = "established"
+from = "ICE1724 datasheet p. 4-28"
+doc = "Peak level of the selected stream, the nine most significant bits of the level. Reading clears the peak."
+fields = { peak = { bits = [7, 0], grade = "established" } }
+
+[registers.mt_pdma_address]
+space = "mt"
+offset = 0x40
+count = 4
+stride = 0x10
+access = "rw"
+width = 32
+reset = 0x00000000
+grade = "established"
+from = "ICE1724 datasheet p. 4-29"
+doc = "Start of the playback buffer for the S/PDIF stream and the three extra stereo pairs. Element 0 is PDMA4 (S/PDIF), 1 is PDMA3, 2 is PDMA2, 3 is PDMA1. Dword aligned."
+fields = { address = { bits = [31, 2], grade = "established" } }
+
+[registers.mt_pdma_count]
+space = "mt"
+offset = 0x44
+count = 4
+stride = 0x10
+access = "rw"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 4-30"
+doc = "Buffer size in dwords less one, counting down. Element order as mt_pdma_address."
+
+[registers.mt_pdma_terminal]
+space = "mt"
+offset = 0x46
+count = 4
+stride = 0x10
+access = "w"
+width = 16
+reset = 0x0000
+grade = "established"
+from = "ICE1724 datasheet p. 4-30"
+doc = "Interrupt interval in dwords less one. Write only. Element order as mt_pdma_address."
