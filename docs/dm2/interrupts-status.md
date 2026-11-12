@@ -196,7 +196,7 @@ Bits 20 to 31 have no table entry and no test (E for both).
 ### 6.2 F_INTR
 
 Order (E): host timestamp sampled into +0xac8 and the MSC extension of section 5 (0x38338-0x383b4); field counter +0xaa0 incremented, previous
-value saved at +0xac0 (0x350f0-0x35100); if the pipe's halfword at +0xa5e is zero (meaning **U**), the counter's low bit is compared with FIF and the counter is
+value saved at +0xac0 (0x350f0-0x35100); if the pipe's `progressive` halfword (+0xa5e, see [the pipe timing note](pipes-timing.md), section 3) is zero, the counter's low bit is compared with FIF and the counter is
 bumped once more when they differ, with the message "Resyncing device MSC" (0x3a0a4-0x3a0d4; E for the code, I for the intent); if the
 DMA control shadow (+0xa08) has bit 16 set, post event `0x100` with a 16-byte payload on the stack: the field counter, and an
 `ust_to_nano` conversion into a buffer indexed by 12 times the extended MSC from a table at board + 0x30 (0x35590-0x355fc; E for the code, the
@@ -312,7 +312,7 @@ and K30, a difference this pass did not explain.
 | Whether the interrupt packet needs any register acknowledge | a transaction capture; the driver writes none |
 | ~~XG control bit 17 re-enable site~~ | settled in section 2: `xtdigvid_init_xg` only |
 | Event 256's name; event 128's poster | the library's event table and a scan of libdigvid for the 128 literal |
-| Pipe fields +0x830, +0xa50 to +0xa5e, payload of event 0x100 | reading the DMA start routine and `xtdigvid_dma_abort` (the scoping datasheet's separate open item) |
+| Pipe field +0x830 and the payload of event 0x100; pipe fields +0xa50 to +0xa5e are named in [the pipe timing note](pipes-timing.md), section 3 | reading the DMA start routine and `xtdigvid_dma_abort` (the scoping datasheet's separate open item) |
 | Where the abort bit in the DMA control shadow is set | reading `xtdigvid_dma_abort` (0x14484) |
 | Watchdog unit | the clock tick rate of the host kernel on the target build |
 
