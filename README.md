@@ -68,6 +68,7 @@ Crosstalk, XIO and interconnect:
 - [docs/cxbrick.md](docs/cxbrick.md): Origin 3000 Cx-brick: node boards, memory-only nodes, the router board, XIO connectors, brick naming and what is unknown.
 - [docs/dbrick.md](docs/dbrick.md): Origin 3000 D-brick: the Fibre Channel disk enclosure, its loop attachment, its lack of an L1 and what is unknown.
 - [docs/origin300-numalink-module.md](docs/origin300-numalink-module.md): Origin 300 NUMAlink module (router enclosure): base and PCI expansion population, power, the port 1, 6, 7 and 8 restriction, router board identity and what is unknown. No register contract.
+- [docs/origin300-pci-expansion-module.md](docs/origin300-pci-expansion-module.md): Origin 300 PCI expansion module: the direct NI cable, the BIC's Bedrock and three XBridge chips, the widget-to-bus map, the XBridge and Super Bridge modes, the PCI data width and what is unknown. No register contract.
 - [docs/interconnect-naming.md](docs/interconnect-naming.md): SGI interconnect naming: every name, from the deepest source.
 - [docs/xbow-family.md](docs/xbow-family.md): Crossbow (XBOW), XXBOW and PXBOW: the XIO switch family.
 
