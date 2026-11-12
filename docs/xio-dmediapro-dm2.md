@@ -248,5 +248,6 @@ mailbox protocol and the board bus map.
 - [FPGA info table and load protocol](dm2/fpga-load.md)
 - [DMA start path: map RAM entries, pipe control writes, start, completion, errors](dm2/dma.md)
 - [Video interrupts and the status ring](dm2/interrupts-status.md)
+- ioctl dispatch: every command, argument block and return code (kudzu repository, docs/dm2-ioctl.md)
 - [GIF FPGA registers, XG register block and the widget block](dm2/gif-registers.md)
 - Discreet's DM2 module against SGI's 1.1.3ml build (stonewire repository, docs/dm2-flame-libdigvid.md)
