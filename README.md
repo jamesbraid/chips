@@ -82,6 +82,7 @@ Chip coverage pages:
 - [docs/ds1744.md](docs/ds1744.md): DS1744 32 KiB battery-backed SRAM and clock: package and interface, the clock bytes, the battery flag, the read freeze, and the IO9 board questions that are unknown. The register contract is in `defs/ds1744.toml`.
 - [docs/hpc3-ethernet.md](docs/hpc3-ethernet.md): HPC3 Ethernet DMA channels of the Indy: the interrupt, reset and descriptor rules, the receive and transmit channel behaviour, the IRIX recovery path and what is unknown. The register contract is in `defs/hpc3_enet.toml`.
 - [docs/dp83840.md](docs/dp83840.md): DP83840A and DP83843 Ethernet transceivers of the Origin 200 and Origin 300 I/O boards: identity, the autonegotiation restart, loopback, strap-dependent bits and what is unknown.
+- [docs/ics1890.md](docs/ics1890.md): ICS1890 Ethernet transceiver of the Octane and Octane2 base I/O board: identifier registers, the MII address and what is unknown. The register contract is in `defs/ics1890.toml`.
 - [docs/coverage-ioc4.md](docs/coverage-ioc4.md): IOC4 coverage: what shipped software and public drivers settle.
 - [docs/coverage-mace.md](docs/coverage-mace.md): MACE coverage: what software, specification and drivers settle.
 - [docs/coverage-tiocp.md](docs/coverage-tiocp.md): TIOCP coverage: what the shipped software and drivers settle.
