@@ -43,7 +43,7 @@ HEART	0x10028		w8	21	5	.text;chkdebug;clear_cpu_intr;gfx_flow_alloc;gfx_flow_dea
 HEART	0x10030		r8	20	5	.text;chkdebug;dobuserr_common	constant address	IP30/unix:chkdebug	named-only	chips/heart/README.md#register-inventory	Register inventory
 HEART	0x10038		r8	12	4	.text;heart_intr	constant address	IP30/unix:heart_intr	named-only	chips/heart/README.md#register-inventory	Register inventory
 HEART	0x10040		r8,w8	87	5	.text;badaddr;badaddr_val;baerror;dobuserr_common;earlybadaddr;+6 more	constant address	IP30/unix:badaddr	named-only	chips/heart/README.md#register-inventory	Register inventory
-HEART	0x20000		r8	274	27	.text;_64bitlockdebug;_64bitunlockdebug;__nanotime;_mraccess;_mrupdate;+94 more	constant address	IP30/unix:__nanotime	understood	chips/heart/README.md#register-inventory	Register inventory
+HEART	0x20000		r8	274	27	.text;_64bitlockdebug;_64bitunlockdebug;__nanotime;_mraccess;_mrupdate;+94 more	constant address	IP30/unix:__nanotime	named-only	chips/heart/README.md#register-inventory	Register inventory
 HEART	0x20004		r4	2	2	_get_timestamp	constant address	IP30/unix:_get_timestamp	named-only	chips/heart/README.md#register-inventory	Register inventory
 HEART	0x50000		r8	72	4	.text;VEC_dbe;VEC_ibe;_ecc_errorvec;badaddr;badaddr_val;+8 more	constant address	IP30/unix:VEC_dbe	understood	chips/heart/README.md#register-inventory	Register inventory
 HEART	0x60000		r8	62	3	.text;dobuserr_common	constant address	IP30/unix:dobuserr_common	named-only	chips/heart/README.md#register-inventory	Register inventory
@@ -77,7 +77,7 @@ HUB	0x468		w8	1	1	hub_error_init	constant address	IP27/usr/cpu/sysgen/IP27boot/k
 HUB	0x30100		r8	237	29	_64bitlockdebug;_64bitunlockdebug;__nanotime;_mraccess;_mrupdate;bitlockdebug;+127 more	constant address	IP27/unix:ecc_handler	understood	chips/hub/README.md#lb-pi-space-registers-outside-the-contiguous-map	LB: PI-space registers outside the contiguous map
 HUB	0x200018		r8	3	1	mdir_xlate_addr_mem;mdir_xlate_addr_pdir;mdir_xlate_addr_sdir	constant address	IP27/usr/cpu/sysgen/IP27boot/kernel.o:mdir_xlate_addr_mem	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
 HUB	0x220048		r8	1	1	get_my_slotid	constant address	IP27/usr/cpu/sysgen/IP27boot/kernel.o:get_my_slotid	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
-HUB	0x220050		w8	4	1	sn00_vmc	constant address	IP27/usr/cpu/sysgen/IP27boot/kernel.o:sn00_vmc	named-only	chips/hub/README.md#md-memory-and-directory	MD: memory and directory
+HUB	0x220050		w8	4	1	sn00_vmc	constant address	IP27/usr/cpu/sysgen/IP27boot/kernel.o:sn00_vmc	named-only	docs/origin2000-node-configuration.md#cold-start-mode-word-check	Cold-start mode-word check
 HUB	0x400130		r8,w8	2	1	ii_llp_error_monitor	constant address	IP27/usr/cpu/sysgen/IP27boot/kernel.o:ii_llp_error_monitor	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 HUB	0x4001f8		w8	2	1	bte_init	constant address	IP27/usr/cpu/sysgen/IP27boot/kernel.o:bte_init	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
 HUB	0x600000		r8	9	2	bootstrap;check_ni_errors;get_nasid;is_fine_dirmode;net_link_up;start;+1 more	constant address	IP27/unix:bootstrap	understood	chips/bedrock/README.md#groups-by-routine-names-inferred	Groups by routine names (inferred)
