@@ -2,12 +2,12 @@
 HEART registers outside the census"""
 
 UNIT = 'heart_extra'
-REGISTERS = {'sdram_mode': {'offset': 8, 'access': 'w', 'width': 64, 'count': 1, 'stride': 8, 'space': None, 'reset': 'unknown', 'grade': 'established'}, 'mem_ref': {'offset': 16, 'access': 'w', 'width': 64, 'count': 1, 'stride': 8, 'space': None, 'reset': 'unknown', 'grade': 'established'}}
+REGISTERS = {'sdram_mode': {'offset': 8, 'access': 'w', 'width': 64, 'count': 1, 'stride': 8, 'space': None, 'reset': 'unknown', 'grade': 'established'}, 'mem_ref': {'offset': 16, 'access': 'w', 'width': 64, 'count': 1, 'stride': 8, 'space': None, 'reset': 'unknown', 'grade': 'established'}, 'mlan_ctl': {'offset': 184, 'access': 'rw', 'width': 64, 'count': 1, 'stride': 8, 'space': None, 'reset': 'unknown', 'grade': 'inferred'}}
 WORDS = {}
-FIELDS = {'sdram_mode': {}, 'mem_ref': {}}
+FIELDS = {'sdram_mode': {}, 'mem_ref': {}, 'mlan_ctl': {}}
 ENUMS = {}
 FIELD_ENUM = {}
-CONSTANTS = {'WIDGET_ERR_LOWER': {'value': 120, 'count': 1, 'stride': 1}, 'WIDGET_ERR_TYPE': {'value': 96, 'count': 1, 'stride': 1}, 'WIDGET_ERR_UPPER': {'value': 112, 'count': 1, 'stride': 1}, 'WIDGET_RD_TIMEOUT_LATCH': {'value': 144, 'count': 1, 'stride': 1}, 'WIDGET_REQ_TIMEOUT': {'value': 40, 'count': 1, 'stride': 1}}
+CONSTANTS = {'MEMCFG_ADDR_MASK': {'value': 511, 'count': 1, 'stride': 1}, 'MEMCFG_SIZE_MASK': {'value': 4128768, 'count': 1, 'stride': 1}, 'MEMCFG_SIZE_SHIFT': {'value': 16, 'count': 1, 'stride': 1}, 'MEMCFG_UNIT_SHIFT': {'value': 25, 'count': 1, 'stride': 1}, 'MEMCFG_VALID': {'value': 2147483648, 'count': 1, 'stride': 1}, 'MLAN_DATA_SHIFT': {'value': 2, 'count': 1, 'stride': 1}, 'MLAN_DONE': {'value': 2, 'count': 1, 'stride': 1}, 'MLAN_PULSE_SHIFT': {'value': 10, 'count': 1, 'stride': 1}, 'MLAN_SAMPLE': {'value': 1, 'count': 1, 'stride': 1}, 'WIDGET_ERR_LOWER': {'value': 120, 'count': 1, 'stride': 1}, 'WIDGET_ERR_TYPE': {'value': 96, 'count': 1, 'stride': 1}, 'WIDGET_ERR_UPPER': {'value': 112, 'count': 1, 'stride': 1}, 'WIDGET_RD_TIMEOUT_LATCH': {'value': 144, 'count': 1, 'stride': 1}, 'WIDGET_REQ_TIMEOUT': {'value': 40, 'count': 1, 'stride': 1}}
 TESTS = []
 
 

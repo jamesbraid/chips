@@ -2,7 +2,7 @@ unit = "heart_extra"
 prefix = "HEART"
 title = "HEART registers outside the census"
 from = "shipped Octane PROM memory set-up; HEART widget face from the monitor decode table and the public Linux and OpenBSD headers"
-public_from = ["census:"]
+public_from = ["census:", "OpenBSD"]
 
 [c]
 offset_macro = "bare"
@@ -27,3 +27,22 @@ WIDGET_ERR_TYPE = { value = 0x60, grade = "established", doc = "widget error typ
 WIDGET_ERR_UPPER = { value = 0x70, grade = "established", doc = "failed PIO latch, upper: bits 7:0 address 39:32, 23:22 processor, 15 read/write flag (sense [I]); cleared with the error type [I]" }
 WIDGET_RD_TIMEOUT_LATCH = { value = 0x90, grade = "established", doc = "PIO read-timeout latch: bits 19:18 processor, 15:12 widget port, 11:0 address bits 23:12" }
 WIDGET_REQ_TIMEOUT = { value = 0x28, grade = "established", doc = "value 0x28 (40) read from one Octane2 by its owner, the 32-bit value in the low half of the slot; kernel stores of 40000 and 128 reach it through a pointer and the destination is [I]; tick unit [U]: settle by a timed uncached read of an unclaimed widget address at two programmed values (hardware)" }
+
+MEMCFG_VALID = { value = 0x80000000, grade = "inferred", doc = "bit 31 of a bank configuration word; OpenBSD HEART_MEMORY_VALID" }
+MEMCFG_SIZE_MASK = { value = 0x3f0000, grade = "inferred", doc = "bits 21:16 of a bank configuration word, the size field; OpenBSD HEART_MEMORY_SIZE_MASK" }
+MEMCFG_SIZE_SHIFT = { value = 16, grade = "inferred", doc = "shift of the size field; OpenBSD HEART_MEMORY_SIZE_SHIFT" }
+MEMCFG_ADDR_MASK = { value = 0x1ff, grade = "inferred", doc = "bits 8:0 of a bank configuration word, the base field; OpenBSD HEART_MEMORY_ADDR_MASK" }
+MEMCFG_UNIT_SHIFT = { value = 25, grade = "inferred", doc = "a field step is 2^25 bytes, 32 MiB; OpenBSD HEART_MEMORY_UNIT_SHIFT" }
+MLAN_PULSE_SHIFT = { value = 10, grade = "inferred", doc = "pulse count of a MicroLAN command, shifted to bit 10; OpenBSD SGI HEART one-wire pulse routine" }
+MLAN_DATA_SHIFT = { value = 2, grade = "inferred", doc = "data count of a MicroLAN command, shifted to bit 2; OpenBSD SGI HEART one-wire pulse routine" }
+MLAN_DONE = { value = 0x2, grade = "inferred", doc = "completion bit the driver polls after a command; OpenBSD SGI HEART one-wire pulse routine" }
+MLAN_SAMPLE = { value = 0x1, grade = "inferred", doc = "sampled wire level the driver returns after completion; OpenBSD SGI HEART one-wire pulse routine" }
+
+# MicroLAN (one-wire) control word in the processor-interface block. The census finds no
+# held code that touches it; the public OpenBSD driver is the only user found.
+[registers.mlan_ctl]
+offset = 0xb8
+access = "rw"
+width = 64
+grade = "inferred"
+from = "OpenBSD SGI Crossbow HEART driver at 7011342f6a72: one 64-bit uncached access per pulse, no other user"

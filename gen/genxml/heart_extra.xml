@@ -5,6 +5,17 @@
   </struct>
   <struct name="MEM_REF" size="8" grade="established" register="yes" offset="0x10" access="w" reset="unknown">
   </struct>
+  <struct name="MLAN_CTL" size="8" grade="inferred" from="OpenBSD SGI Crossbow HEART driver at 7011342f6a72: one 64-bit uncached access per pulse, no other user" register="yes" offset="0xb8" access="rw" reset="unknown">
+  </struct>
+  <constant name="MEMCFG_ADDR_MASK" value="0x1ff" grade="inferred"/>
+  <constant name="MEMCFG_SIZE_MASK" value="0x3f0000" grade="inferred"/>
+  <constant name="MEMCFG_SIZE_SHIFT" value="0x10" grade="inferred"/>
+  <constant name="MEMCFG_UNIT_SHIFT" value="0x19" grade="inferred"/>
+  <constant name="MEMCFG_VALID" value="0x80000000" grade="inferred"/>
+  <constant name="MLAN_DATA_SHIFT" value="0x2" grade="inferred"/>
+  <constant name="MLAN_DONE" value="0x2" grade="inferred"/>
+  <constant name="MLAN_PULSE_SHIFT" value="0xa" grade="inferred"/>
+  <constant name="MLAN_SAMPLE" value="0x1" grade="inferred"/>
   <constant name="WIDGET_ERR_LOWER" value="0x78" grade="established"/>
   <constant name="WIDGET_ERR_TYPE" value="0x60" grade="established"/>
   <constant name="WIDGET_ERR_UPPER" value="0x70" grade="established"/>

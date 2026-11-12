@@ -12,6 +12,18 @@
 /* mem_ref: w64, reset unknown */
 #define HEART_MEM_REF                                0x000010 /* established */
 
+/* mlan_ctl: rw64, reset unknown; OpenBSD SGI Crossbow HEART driver at 7011342f6a72: one 64-bit uncached access per pulse, no other user */
+#define HEART_MLAN_CTL                               0x0000b8 /* inferred */
+
+#define HEART_MEMCFG_ADDR_MASK                       0x1ffu /* inferred */
+#define HEART_MEMCFG_SIZE_MASK                       0x3f0000u /* inferred */
+#define HEART_MEMCFG_SIZE_SHIFT                      0x10u /* inferred */
+#define HEART_MEMCFG_UNIT_SHIFT                      0x19u /* inferred */
+#define HEART_MEMCFG_VALID                           0x80000000u /* inferred */
+#define HEART_MLAN_DATA_SHIFT                        0x2u /* inferred */
+#define HEART_MLAN_DONE                              0x2u /* inferred */
+#define HEART_MLAN_PULSE_SHIFT                       0xau /* inferred */
+#define HEART_MLAN_SAMPLE                            0x1u /* inferred */
 #define HEART_WIDGET_ERR_LOWER                       0x78u /* established */
 #define HEART_WIDGET_ERR_TYPE                        0x60u /* established */
 #define HEART_WIDGET_ERR_UPPER                       0x70u /* established */
