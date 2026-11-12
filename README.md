@@ -27,6 +27,7 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
 - [docs/coverage.md](docs/coverage.md) and [docs/inventory/](docs/inventory/): measured coverage.
 - [docs/open-questions.md](docs/open-questions.md): what is not settled and the next route.
 - [docs/xio-fibre-channel.md](docs/xio-fibre-channel.md): the XIO Fibre Channel board (AIC-1160) and its `fcadp` driver contract.
+- [docs/xio-dmediapro-dm2.md](docs/xio-dmediapro-dm2.md): scoping datasheet for the DMediaPro DM2 (XT-DIGVID) XIO video board and, at lower depth, DIVO.
 - `chips/<chip>/census/`: register-access censuses per chip, produced by [tools/](tools/).
 
 ### Every document under docs/
