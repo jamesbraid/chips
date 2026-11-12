@@ -1,6 +1,6 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	address_unknown	input
-binaries	3092	0	625	0	625	3	4	168	2295	0	20.2	20.3	25.8	20.2							0				
-functions	6836	91457	1285	203	1009	3699	3792	1660	99	0	18.8	74.3	98.6	18.8			85.0	20	2026-11-02		0	0	18	0	
+binaries	3092	0	625	0	625	3	4	169	2294	0	20.2	20.3	25.8	20.2							0				
+functions	6836	91457	1287	203	1011	3699	3790	1660	99	0	18.8	74.3	98.6	18.8			85.0	20	2026-11-02		0	0	18	0	
 functions (distinct names)	2570	21681	668	157	664	1832	1842	27	33	0	26.0	97.7	98.7	26.0							0				
 mmio	87	0	62	2	60	0	0	25	0	0	71.3	71.3	100.0	71.3	23						0				
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
@@ -1082,7 +1082,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	2	56	2	0	2	0	0	0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	7	91	7	0	7	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync.a(mrlock.o)	0	8	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	3	60	0	0	0	0	0	3	0	0	0.0	0.0	100.0	0.0							0	0	0	0	
-functions in IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	11	99	4	0	4	0	2	5	0	0	36.4	54.5	100.0	36.4							0	0	0	0	
+functions in IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	11	99	6	0	6	0	0	5	0	0	54.5	54.5	100.0	54.5							0	0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mrlock.o)	0	5	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	2	59	2	0	2	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	7	94	7	0	7	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	

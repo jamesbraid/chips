@@ -1098,7 +1098,7 @@ IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	kernel-IP30	kernel-object	object	n
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	kernel-IP30	kernel-object	object	n64	58932	ad3cefe8be04756b		98	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync.a(mrlock.o)	kernel-IP30	kernel-object	object	n64	5844	9e2a29e0dc272587		8	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	kernel-IP30	kernel-object	object	n64	49220	e29d6e02b155a7ad		63	symtab	5	0	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-IP30	kernel-object	object	n64	78532	a752473a3208a006		110	symtab	10	0	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-IP30	kernel-object	object	n64	78532	a752473a3208a006		110	symtab	10	0	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mrlock.o)	kernel-IP30	kernel-object	object	n64	5700	0b85d9581cb0542e		5	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	kernel-IP30	kernel-object	object	n64	45268	346ea2491f593e0a		61	symtab	0	0	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	kernel-IP30	kernel-object	object	n64	63028	6c4c03c8a87ae629		101	symtab	0	0	undocumented		
