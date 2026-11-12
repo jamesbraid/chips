@@ -24,6 +24,33 @@ cache facts describe the processor, not a board.
 - **Established** (pp. 188, 194): Primary Index Load Tag returns physical tag bits 39:12 through the TagHi and
   TagLo registers.
 
+## Primary instruction cache
+
+- **Established** (R10000 manual p. 46): the instruction cache is a subset of the secondary cache. Each block is 16
+  words (64 bytes), and each block is either invalid or valid. The two ways use least-recently-used replacement.
+  The manual warns that speculative execution affects the exact LRU choice, so a victim cannot be predicted from a
+  few observed refills.
+- **Established** (pp. 188, 194–195): an instruction-cache Index or Index Load Tag operation takes its set from
+  VA[13:6] and its way from VA[0].
+- **Established** (pp. 194–195): Index Load Tag (I) returns TagLo[0] as tag parity, TagLo[2] as state parity,
+  TagLo[3] as the LRU bit, TagLo[6] as the valid state, TagLo[31:8] as physical tag bits 35:12 and TagHi[3:0] as
+  tag bits 39:36. All other TagLo and TagHi bits read as zero, and it ignores parity errors. Index Store Tag (I)
+  writes the same fields back, including both parity bits, and checks no parity.
+- **Established** (p. 197): Hit Invalidate (I) reads both ways at VA[13:6] and compares them with the translated
+  physical address. It clears the valid state of a matching valid entry only, leaves the LRU bit alone and checks
+  parity. With no match it does nothing.
+- **Established** (pp. 201–202): Index Load Data (I) reads one instruction word addressed by VA[13:2], with the way
+  from VA[0]. The word goes to TagLo[31:0] and TagHi[3:0], and its parity bit goes to ECC[0]. The manual describes
+  the stored word as 36 bits of predecoded instruction plus one parity bit. The tag is not read, and parity is not
+  checked.
+- **Established** (p. 202): Index Store Data (I) writes a word from TagLo[31:0], TagHi[3:0] and ECC[0] straight
+  into the instruction cache, bypassing predecode. The tag is unchanged.
+- **Unknown** (pp. 201–202): the diagnostic value of a word that came from an ordinary refill. The manual does not
+  give the predecode algorithm, and it does not say that the low 32 bits equal the raw instruction. Route: a
+  reference that defines predecode, or a read of a word on hardware under a stated plan.
+- **Established** (p. 161): power-on reset initializes all internal state. The manual gives no post-reset tag
+  image, so none is asserted here.
+
 ## Secondary cache
 
 - **Established** (pp. 51, 188): the R10000 needs an external two-way secondary cache with a physical index and
@@ -73,12 +100,22 @@ cache facts describe the processor, not a board.
 - **Established** (pp. 188–190, 200): mapped addressing alone does not raise Address Error. CP0 must be usable.
   A missing or invalid TLB entry can raise TLB Refill or TLB Invalid. A privilege violation can raise Address
   Error. A CACHE operation does not raise TLB Modified.
+- **Established** (p. 189): an Index operation uses the address only to pick a line, so it need not match a tag,
+  and an unmapped address can perform it without a TLB exception. A Hit operation that matches both ways is
+  undefined. CACHE operations raise no Watch exception.
+- **Unknown** (pp. 188–189): the Address Error rule for low address bits. Page 189 says an Index operation ignores
+  bit 0 and that bit 1 can still raise Address Error, and that other operations need zero low bits. The same page
+  says CACHE operations are never checked for alignment Address Error. The page does not settle which applies.
+  Route: an errata entry, or a measured trap on hardware.
 
 ## Aliases
 
-- **Unknown**: the result of a cached and an uncached access to one physical address at the same time, and of
-  two cached virtual addresses with different primary indexes that name one physical line. Route: the
-  manual's virtual-coherency and alias rules, which this page did not read, then a measurement on hardware.
+- **Established** (pp. 67, 345): when a secondary cache access finds that the virtual index bits VA[13:12] differ
+  from the PIdx field in the secondary tag, the hardware purges the primary lines at the old index and writes the
+  new index into PIdx. The R10000 raises no exception for this. It does not implement the Virtual Coherency
+  exception.
+- **Unknown**: the result of a cached and an uncached access to one physical address at the same time. Route: the
+  manual's cacheability rules for mixed access, then a measurement on hardware.
 - **Unknown**: whether invalidating a data cache entry leaves the instruction cache entry for the same line
   valid. The secondary invalidate operations also invalidate primary subsets, so they cannot settle it. Route:
   a primary-only operation, or a measurement on hardware.
@@ -95,6 +132,7 @@ cache facts describe the processor, not a board.
 
 ## Not covered here
 
-Replacement policy, cache contents at reset, the timing of replacement, partial stores, `PREF`, unmapped faults
-and the exact result of mixed alias accesses are not described here. The open items are listed in
+The victim the replacement logic picks under speculative fetch, the timing of replacement, the cache contents after
+reset, partial stores, `PREF`, the soft-reset behaviour of the caches and the exact result of mixed alias accesses
+are not described here. The open items are listed in
 [open-questions.md](open-questions.md).
