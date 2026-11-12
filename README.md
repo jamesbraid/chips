@@ -65,6 +65,7 @@ Chip coverage pages:
 - [docs/bedrock-io-interface.md](docs/bedrock-io-interface.md): Bedrock I/O interface: block transfer engines, processor and widget access gating, link control and what is unknown.
 - [docs/bedrock-local-block.md](docs/bedrock-local-block.md): Bedrock local block: node identity, access vectors, error bits, real-time clock source, scratch locks, vector I/O and what is unknown.
 - [docs/bedrock-memory-directory.md](docs/bedrock-memory-directory.md): Bedrock memory and directory: register layouts, backdoor carriers, directory words, check codes, error records and what is unknown.
+- [docs/bedrock-network-interface.md](docs/bedrock-network-interface.md): Bedrock network interface: the NUMAlink port registers, port error bits, routing tables and what is unknown.
 - [docs/coverage-crime.md](docs/coverage-crime.md): CRIME coverage: two coverage questions graded beyond the chip page.
 - [docs/coverage-ioc3.md](docs/coverage-ioc3.md): IOC3 coverage: what the shipped software and public drivers settle.
 - [docs/coverage-ioc4.md](docs/coverage-ioc4.md): IOC4 coverage: what shipped software and public drivers settle.

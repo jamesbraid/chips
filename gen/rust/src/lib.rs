@@ -4,6 +4,7 @@ pub mod bedrock_extra;
 pub mod bedrock_ii;
 pub mod bedrock_lb;
 pub mod bedrock_md;
+pub mod bedrock_ni;
 pub mod bedrock_xb;
 pub mod bridge;
 pub mod bridge_extra;
