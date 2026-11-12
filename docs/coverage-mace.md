@@ -97,8 +97,23 @@ that IRIX means the same), then move bytes one at a time at the
   `0xbf3a0007` to `0xbf3a0c00`, `0xbf3a4a00` and `0xbf3a4b00`, the monitor only `0xbf3a4807`, `0xbf3a4a07` and `0xbf3a4b07`. Neither forms an address
   in `0xbf3a0e08` to `0xbf3a0e79`, the span the one-byte-stride loop covers. So no held IRIX code calls the two routines
   (**inferred**: the scan does not follow an address passed in a register from a caller or built across more than 24
-  instructions, and the IP32 PROM, whose firmware segment is plain code at `0x81000000` but is not yet in the census, is not covered). The routines are unused
+  instructions; the PROM is read separately in the next item). The routines are unused
   in the shipped software and the stride conflict has no consequence for it.
+- **The IP32 PROM addresses user RAM at 256-byte spacing in lane 7 (established for the code; the spacing of the hardware is inferred).**
+  `ip32prom.image` (sha256 `11230c353cb14fcc50ede286df228e169e32fc9e5a2206276ae29c259fafb23c`), `sloader` segment (record at file offset
+  `0x108`; the entry at `0x148` branches to `0x4a8`). Read from file offset `0x620` to `0x660`: eight byte stores at `0xbf3a3707`, `0xbf3a3807`,
+  `0xbf3a3907`, `0xbf3a3a07`, `0xbf3a3b07`, `0xbf3a3c07`, `0xbf3a3d07` and `0xbf3a3e07` (the last as `0x3e00` from the base plus 7), which are
+  registers `0x37` to `0x3e`, one slot per 256 bytes. The stored register is `$t9`, shifted right by eight between stores. On the fall-through
+  path `$t9` is zero: `0x4dc` to `0x554` clear every general register and nothing writes `$t9` before `0x620`. The only other entry to `0x620`
+  (the branch at `0x214`) does not set it, so on that path the value comes from the caller and is unknown. A second block (`0x6f0` to `0x700`)
+  loads the byte at `0xbf3a3f07`, adds one and stores it back at the same lane-7 address (register `0x3f`). It runs when bit 22 (`0x400000`)
+  of the CP0 Status value saved at `0x558` and restored at `0x618` is set (the branch at `0x694`). These addresses are not in the span the
+  kernel loop covers, and under a one-byte step they would not be one slot each. The `firmware` segment (74,635 words from file offset `0x9348`,
+  load base `0x81000000`) has 13 `lui 0xbf3a` sites; a decode of the loads and stores that use each result gives only the time, alarm and
+  A, B and C registers (displacements `0x000` to `0xc00`) and the bank-1 registers `0x4800` to `0x4b00`, never `0x0e00` to `0x3f00`. Grade:
+  **inferred** that the register file is at 256-byte spacing and that the kernel loop's step of one byte lands every index on register
+  `0x0e`, because the PROM's use is software evidence and no read-back was measured. What the PROM keeps in registers `0x37` to `0x3f`
+  is **unknown** (the increment of `0x3f` is a counter by its shape only). The measurement below is still the way to settle the hardware.
 - Test that settles the hardware side: write distinct bytes to user RAM registers 14 and 15 through the lane-7 addresses
   `0x3a0e07` and `0x3a0f07`, then read `0x3a0e08` through `0x3a0e0f` and `0x3a0f00`; a slot that aliases every byte
   address returns the same value everywhere.
@@ -110,5 +125,5 @@ that IRIX means the same), then move bytes one at a time at the
 | `0x304018` | settled above |
 | Linux I2C offsets | closed, above |
 | revision strap | unchanged, test given |
-| calendar-clock user RAM spacing | base register and size established, stride conflict recorded with its test |
+| calendar-clock user RAM spacing | base register and size established; the PROM uses 256-byte spacing, so the stride conflict is inferred to be the unused kernel loop's alone; test kept |
 | the IP32 PROM, run-time pointer blocks, failure behaviour | not touched: the PROM census entry and the Ethernet, serial and video attach routines are separate software work |
