@@ -139,6 +139,34 @@ Octane, Origin 200 and Origin 2000 run the first; the Origin 350 runs the second
   precise, coherent, barrier, PIO swap, I/O-versus-memory select, and a 12-bit window base in bits 11:0, in units of 1 MB (the window address is the field shifted left 20, OpenBSD
   `BRIDGE_DEVICE_BASE_SHIFT`). The Bridge byte-swap for translated DMA is a per-device bit.
 
+- **Widget control: widget number and reset pins (established for the fields and resets; pin meaning inferred where marked).**
+  Bits 3:0 of the widget control register hold the crosstalk widget number this chip answers at. The reset is `0xf`, the
+  specification's not-yet-assigned value, so the field means something only after firmware writes the assigned number.
+  Bits 27:24 are four software reset pins, `RST_PIN_N(3:0)`, which reset to `0xf` (all released). The chip also has four
+  PCI bus reset outputs, `BUS_RSTN(3:0)`, in the pin table (Bridge ASIC specification rev 4.0, printed page 12; ball list,
+  page 126). A written 1 drives its pin high and a written 0 drives it low. Bit n driving output n is inferred, since the
+  specification has no bit-to-ball table. The chip's own reset does not follow these bits (inferred from the reset chapter,
+  printed page 89, which derives the core reset from the link reset). Which slot or device each pin reaches is board wiring and unknown; see the unknowns table.
+- **Reset from the link (established for revision D from the specification; revision C inferred).** A link reset that
+  arrives from Crossbow also resets the Bridge's core logic. Revision D releases the core only after the link connection
+  has been determined (rev 4.0, section 7.5, printed page 89). The section has no revision qualifier and the revision log
+  records no change to this path, so revision C, the Octane's chip (identity revision 3), is inferred to behave the same
+  way. Link training time and which registers keep their values across the reset are unknown.
+- **REQ64# is not asserted at reset on revisions 2 to 4 (established, anomaly lists).** The revision 2, C and D anomaly
+  lists (printed pages 157, 159 and 161) say the chip does not assert REQ64# during reset, so it cannot signal 64-bit data
+  transfer capability that way. The workaround is external hardware. Whether a given board drives REQ64# at reset is a
+  board question and unknown here.
+- **Device interrupt status follows the device level (inferred).** Each pin's status bit follows the inverted level of the
+  pin and does not latch. The chip sends a clear packet when a pin falls if that pin's mode bit is set, so software does not
+  clear it. OpenBSD services a pin by looping while the live status still shows it asserted, and re-arms through the Hub
+  rather than writing the Bridge when the pin is still set. A latched bit would keep that loop running for as long as the latch held.
+  The grade is inferred: it rests on a public driver's behaviour, not on a register-level statement in a held specification.
+- **Byte lanes for programmed I/O with the device swap bit clear (established for 32-bit data phases; 64-bit unknown).**
+  With `DEVICE` bit 13 clear, a narrow access through a device window has its bytes reversed within the 32-bit word: the
+  low two address bits are XORed with `4 - width` (Bridge ASIC specification rev 4.0, Appendix A, tables 65 and 73). The
+  OpenBSD narrow accessors compute the same correction in software. A doubleword access on a 64-bit data phase is reversed
+  as a whole by table 80, but no held source shows what the chip does in that case, so it stays unknown.
+
 ## Xbridge
 
 - **What.** The Origin 300 / Origin 3000 successor. One chip contains two Bridge-style PCI sections (one PCI bus each) and
@@ -320,6 +348,8 @@ The PIC `0xb0` row is unknown: the IRIX parity-error accessor reads `0xb0` on a 
 | unknown | why it matters | settled by |
 |---|---|---|
 | Reset value of any register (none are read by software before write) | a reset state cannot be modelled from software | a register dump on an Origin 200, Origin 300 and Origin 350 immediately after reset |
+| Which device each Bridge software reset pin (`RST_PIN_N`) reaches | a slot reset from software would need the mapping | a board schematic or trace of a shoehorn, carrier or Octane module, or a firmware capture that clears one bit and shows which card disappears |
+| Bridge byte placement for a 64-bit data phase (swap clear) | decides the byte order of 64-bit DMA and device-window accesses for cards that run 64-bit phases | a held specification resolving table 80 against the 32-bit rule, or a card's own datasheet for its data-phase width |
 | Whether head 1 of a PIC is separately walkable as a widget reporting `0xd112` | the part itself is explained (head 1's register set); the widget-table presentation is not | walk the widget table on an Origin 350, IX-brick, PX-brick or Tezro |
 | 32-bit write to a PIC register (PROM diagnostic) | contradicts the "64-bit only" erratum | the PROM diagnostic against a PIC with the low-word write logged, or a capture of its output |
 | PIC `0x7c` write (diagnostic) | same | read `0x78` before and after the write |

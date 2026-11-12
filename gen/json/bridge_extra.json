@@ -6,6 +6,22 @@
   {
    "unit": "bridge_extra",
    "kind": "constant",
+   "name": "CONTROL_RST_PIN_N",
+   "value": 251658240,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "CONTROL_WIDGET_NUMBER",
+   "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
    "name": "DEVICE_BARRIER",
    "value": 32768,
    "count": 1,
@@ -54,8 +70,24 @@
   {
    "unit": "bridge_extra",
    "kind": "constant",
+   "name": "DEVICE_SWAP_PROGRAMMED",
+   "value": 8192,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
    "name": "DEVICE_WRITE_GATHER_EN",
    "value": 25165824,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INT_STATUS_INVALID_ADDRESS",
+   "value": 16777216,
    "count": 1,
    "grade": "established"
   },

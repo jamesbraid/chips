@@ -2,13 +2,17 @@
 // Bridge-family registers and bits outside the census
 #![allow(dead_code)]
 
+pub const CONTROL_RST_PIN_N: u32 = 0xf000000; // established
+pub const CONTROL_WIDGET_NUMBER: u32 = 0xf; // established
 pub const DEVICE_BARRIER: u32 = 0x8000; // established
 pub const DEVICE_PRECISE: u32 = 0x20000; // established
 pub const DEVICE_PREFETCH: u32 = 0x40000; // established
 pub const DEVICE_REALTIME: u32 = 0x200000; // established
 pub const DEVICE_SIZE_64: u32 = 0x400000; // established
 pub const DEVICE_SWAP_PAIR: u32 = 0x180000; // established
+pub const DEVICE_SWAP_PROGRAMMED: u32 = 0x2000; // established
 pub const DEVICE_WRITE_GATHER_EN: u32 = 0x1800000; // established
+pub const INT_STATUS_INVALID_ADDRESS: u32 = 0x1000000; // established
 pub const TEST_PIN_CONTROL: u32 = 0x70; // established
 pub const TEST_PIN_CONTROL_DATA_OUT: u32 = 0xf00; // established
 pub const TEST_PIN_CONTROL_SELECT0: u32 = 0x3; // established
