@@ -40,6 +40,7 @@ pub mod mace;
 pub mod mace_extra;
 pub mod pic;
 pub mod pic_extra;
+pub mod r10000_config;
 pub mod r10000_fpu;
 pub mod r10000_identity;
 pub mod r10000_secondary_cache_ecc;

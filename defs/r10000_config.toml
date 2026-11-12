@@ -1,0 +1,33 @@
+unit = "r10000_config"
+prefix = "R10KCFG"
+title = "R10000 family CP0 Config register field positions and hardwired primary-cache codes"
+doc = "Constants for the CP0 Config register as the NEC VR10000 and VR12000 user's manual lays it out: the field positions for the boot-loaded clock, endian, reset-mode and secondary-cache fields, the R12000 delayed-speculative-dirty bit, the hardwired primary-cache size codes, and the bits that a reset loads from the mode word. The secondary-cache size and line fields are in the r10000_identity unit. This unit holds constants only; the reset and write rules, and what is unknown for the R14000, are in docs/r14000.md. Grades: established means the processor manual states it for the R10000 and R12000 columns it names; the R14000 is not checked against a processor manual, so its use there is inferred in the page."
+from = "NEC VR10000 Series 64-/32-bit Microprocessor User's Manual, U10278EJ4V0UM00, fourth edition"
+public_from = ["NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 180-182 and 230"]
+
+[constants]
+R10KCFG_PM_SHIFT = { value = 7, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15", doc = "Lowest bit of the two-bit PM field, bits 8:7, PrcReqMax. The R10000 and R12000 columns both name it." }
+R10KCFG_PM_MASK = { value = 0x180, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15", doc = "Mask for the two-bit PM field, bits 8:7 of Config." }
+
+R10KCFG_EC_SHIFT = { value = 9, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15", doc = "Lowest bit of the four-bit EC field, bits 12:9, SysClkDiv. Its value comes from the mode word at reset." }
+R10KCFG_EC_MASK = { value = 0x1e00, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15", doc = "Mask for the four-bit EC field, bits 12:9 of Config." }
+
+R10KCFG_SK_BIT = { value = 14, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15", doc = "Config bit 14, SCCorEn, the secondary-cache correction enable." }
+R10KCFG_SK_MASK = { value = 0x4000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15", doc = "Mask for Config bit 14, SCCorEn." }
+
+R10KCFG_BE_BIT = { value = 15, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 181 and 230", doc = "Config bit 15, MemEnd. Set selects big-endian memory and device byte lanes; clear selects little-endian." }
+R10KCFG_BE_MASK = { value = 0x8000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 181 and 230", doc = "Mask for Config bit 15, MemEnd." }
+
+R10KCFG_SC_SHIFT = { value = 19, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15", doc = "Lowest bit of the three-bit SC field, bits 21:19, SCClkDiv. Its value comes from the mode word at reset." }
+R10KCFG_SC_MASK = { value = 0x380000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15", doc = "Mask for the three-bit SC field, bits 21:19 of Config." }
+
+R10KCFG_DSD_BIT = { value = 24, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 182 and 230", doc = "Config bit 24. On the R10000 it is reserved and reads zero. On the R12000 it is the delayed speculative dirty (DSD) mode bit, read-only and settable only at boot. The R14000 state is unknown." }
+R10KCFG_DSD_MASK = { value = 0x1000000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 182 and 230", doc = "Mask for Config bit 24, the R12000 DSD bit." }
+
+R10KCFG_DC_SHIFT = { value = 26, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15 and Figure 11-16", doc = "Lowest bit of the three-bit DC field, bits 28:26, the primary data cache size. The field is hardwired, not loaded from the mode word." }
+R10KCFG_DC_MASK = { value = 0x1c000000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15 and Figure 11-16", doc = "Mask for the three-bit DC field, bits 28:26 of Config." }
+R10KCFG_IC_SHIFT = { value = 29, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15 and Figure 11-16", doc = "Lowest bit of the three-bit IC field, bits 31:29, the primary instruction cache size. The field is hardwired, not loaded from the mode word." }
+R10KCFG_IC_MASK = { value = 0xe0000000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15 and Figure 11-16", doc = "Mask for the three-bit IC field, bits 31:29 of Config." }
+R10KCFG_CACHE_32K_CODE = { value = 3, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed page 230, Table 11-15", doc = "Binary 011 in the DC and IC fields: the primary caches are hardwired to 32 Kbytes. The manual gives this code for both fields." }
+
+R10KCFG_MODE_BITS_MASK = { value = 0x1ffffff, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 180 and 230", doc = "Bits 24:0 of Config. A power-on or cold reset loads them from the mode bits, and the rest of the register is not loaded this way." }
