@@ -1,0 +1,351 @@
+unit = "hub_pi_extra"
+prefix = "HUB"
+title = "Hub processor interface registers, bit layouts and constants outside the census"
+from = "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+public_from = ["public Linux SN0 Hub processor-interface header"]
+
+# The census has the offsets the shipped kernel and PROM touch in the processor interface, and
+# their names come from the public header by offset. The registers here are the processor
+# interface offsets the census does not reach: protection, cross-call, the self-test block,
+# the graphics page and credit block, and the spool, timeout, check and count registers. Their
+# offsets and names are from the public header. The header states no access type and no reset
+# value, so each register is graded inferred as a whole and its access is an assumption, said so
+# in its doc. The field layouts are the header's own masks and shifts and are established as
+# header facts. The register offsets already in defs/hub.toml are not repeated here.
+
+[registers.pi_cpu_protect]
+offset = 0x0
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "CPU protection register, named PI_CPU_PROTECT in the header. The header gives no fields. Access is assumed read and write."
+
+[registers.pi_prot_override]
+offset = 0x8
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Protection override register, named PI_PROT_OVRRD in the header as the way to clear a CPU protection bit. The header gives neither an unlock value nor a behaviour, so none is imported. Access is assumed write only."
+
+[registers.pi_io_protect]
+offset = 0x10
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Interrupt pending protection register, named PI_IO_PROTECT in the header. The header gives no fields. Access is assumed read and write."
+
+[registers.pi_reply_level]
+offset = 0x60
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Reply level register, named PI_REPLY_LEVEL in the header. The header gives no fields. Access is assumed read and write."
+
+[registers.pi_nmi_b]
+offset = 0x78
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Non-maskable interrupt to processor B, named PI_NMI_B in the header and paired with the processor A register at the same stride. Access is assumed write only, as for the processor A register in defs/hub.toml."
+
+[registers.pi_softreset]
+offset = 0x80
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Soft reset, named PI_SOFTRESET in the header with the comment that it resets both processors. The header gives no value and no fields, so the data written is not imported. Access is assumed write only."
+
+[registers.pi_cc_pend_set_a]
+offset = 0xc8
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Cross-call interrupt pending set for processor A, named PI_CC_PEND_SET_A in the header. Access is assumed write only."
+
+[registers.pi_cc_pend_set_b]
+offset = 0xd0
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Cross-call interrupt pending set for processor B, named PI_CC_PEND_SET_B in the header. The header's pairing rule puts it eight bytes above the processor A set. Access is assumed write only."
+
+[registers.pi_cc_pend_clr_a]
+offset = 0xd8
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Cross-call interrupt pending clear for processor A, named PI_CC_PEND_CLR_A in the header. Access is assumed read and write."
+
+[registers.pi_cc_pend_clr_b]
+offset = 0xe0
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Cross-call interrupt pending clear for processor B, named PI_CC_PEND_CLR_B in the header. Access is assumed read and write."
+
+[registers.pi_cc_mask]
+offset = 0xe8
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Cross-call interrupt mask, named PI_CC_MASK in the header. Access is assumed read and write."
+
+[registers.pi_rt_filter_ctrl]
+offset = 0x168
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. Access is assumed read and write."
+
+[registers.pi_bist_write_data]
+offset = 0x200
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Built-in self-test write data, named PI_BIST_WRITE_DATA in the header. Access is assumed write only."
+
+[registers.pi_bist_read_data]
+offset = 0x208
+access = "r"
+width = 64
+grade = "inferred"
+doc = "Built-in self-test read data, named PI_BIST_READ_DATA in the header. Access is assumed read only."
+
+[registers.pi_bist_count_targ]
+offset = 0x210
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Built-in self-test count and target, named PI_BIST_COUNT_TARG in the header. Access is assumed read and write."
+
+[registers.pi_bist_ready]
+offset = 0x218
+access = "r"
+width = 64
+grade = "inferred"
+doc = "Built-in self-test ready indicator, named PI_BIST_READY in the header. Access is assumed read only."
+
+[registers.pi_bist_shift_load]
+offset = 0x220
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Built-in self-test control, named PI_BIST_SHIFT_LOAD in the header. Access is assumed write only."
+
+[registers.pi_bist_shift_unload]
+offset = 0x228
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Built-in self-test control, named PI_BIST_SHIFT_UNLOAD in the header. Access is assumed write only."
+
+[registers.pi_bist_enter_run]
+offset = 0x230
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Built-in self-test control, named PI_BIST_ENTER_RUN in the header. Access is assumed write only."
+
+[registers.pi_gfx_page_a]
+offset = 0x300
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Graphics page for processor A, named PI_GFX_PAGE_A in the header. The header names only the enable bit, which is in the fields below. Access is assumed read and write."
+
+[registers.pi_gfx_page_a.fields]
+enable = { bits = [40, 40], grade = "established", doc = "Graphics page enable, bit 40. The header names it PI_GFX_PAGE_ENABLE for both processor pages." }
+
+[registers.pi_gfx_credit_cntr_a]
+offset = 0x308
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Graphics credit counter for processor A, named PI_GFX_CREDIT_CNTR_A in the header. The header gives no field layout and no meaning beyond the name. Access is assumed read and write."
+
+[registers.pi_gfx_bias_a]
+offset = 0x310
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Graphics bias for processor A, named PI_GFX_BIAS_A in the header. The header gives no field layout. Access is assumed read and write."
+
+[registers.pi_gfx_int_cntr_a]
+offset = 0x318
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Graphics interrupt counter for processor A, named PI_GFX_INT_CNTR_A in the header. The header gives no field layout. Access is assumed read and write."
+
+[registers.pi_gfx_page_b]
+offset = 0x328
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Graphics page for processor B, named PI_GFX_PAGE_B in the header. The header's pairing rule puts it 0x28 above the processor A page. Access is assumed read and write."
+
+[registers.pi_gfx_page_b.fields]
+enable = { bits = [40, 40], grade = "established", doc = "Graphics page enable, bit 40, the same bit as the processor A page." }
+
+[registers.pi_gfx_credit_cntr_b]
+offset = 0x330
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Graphics credit counter for processor B, named PI_GFX_CREDIT_CNTR_B in the header. Access is assumed read and write."
+
+[registers.pi_gfx_bias_b]
+offset = 0x338
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Graphics bias for processor B, named PI_GFX_BIAS_B in the header. Access is assumed read and write."
+
+[registers.pi_gfx_int_cntr_b]
+offset = 0x340
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Graphics interrupt counter for processor B, named PI_GFX_INT_CNTR_B in the header. Access is assumed read and write."
+
+[registers.pi_err_status0_a_rclr]
+offset = 0x438
+access = "r"
+width = 64
+grade = "inferred"
+doc = "Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. Access is assumed read only."
+
+[registers.pi_err_status0_b_rclr]
+offset = 0x458
+access = "r"
+width = 64
+grade = "inferred"
+doc = "Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. Access is assumed read only."
+
+[registers.pi_spool_cmp_a]
+offset = 0x470
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Error spool compare for processor A, named PI_SPOOL_CMP_A in the header. Access is assumed read and write. The header gives no field layout."
+
+[registers.pi_spool_cmp_b]
+offset = 0x478
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Error spool compare for processor B, named PI_SPOOL_CMP_B in the header. Access is assumed read and write."
+
+[registers.pi_crb_timeout_a]
+offset = 0x480
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Timed-out CRB entries for processor A, named PI_CRB_TIMEOUT_A in the header. The header gives no field layout. Access is assumed read and write."
+
+[registers.pi_crb_timeout_b]
+offset = 0x488
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Timed-out CRB entries for processor B, named PI_CRB_TIMEOUT_B in the header. Access is assumed read and write."
+
+[registers.pi_sysad_errchk_en]
+offset = 0x490
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Enables for the processor bus checks, named PI_SYSAD_ERRCHK_EN in the header. Six enable bits, each named in the header's constants. Access is assumed read and write."
+
+[registers.pi_sysad_errchk_en.fields]
+eccgen = { bits = [0, 0], grade = "established", doc = "Generate error-correction bits, named PI_SYSAD_ERRCHK_ECCGEN in the header." }
+qualgen = { bits = [1, 1], grade = "established", doc = "Generate the data-quality signal, named PI_SYSAD_ERRCHK_QUALGEN in the header." }
+sadp = { bits = [2, 2], grade = "established", doc = "Check SysAD parity, named PI_SYSAD_ERRCHK_SADP in the header." }
+cmdp = { bits = [3, 3], grade = "established", doc = "Check SysCmd parity, named PI_SYSAD_ERRCHK_CMDP in the header." }
+state = { bits = [4, 4], grade = "established", doc = "Check SysState parity, named PI_SYSAD_ERRCHK_STATE in the header." }
+qual = { bits = [5, 5], grade = "established", doc = "Check the data-quality signal, named PI_SYSAD_ERRCHK_QUAL in the header." }
+
+[registers.pi_bad_check_bit_a]
+offset = 0x498
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Forced SysAD check-bit error for processor A, named PI_BAD_CHECK_BIT_A in the header and described there as diagnostic. The header gives no field layout. Access is assumed read and write."
+
+[registers.pi_bad_check_bit_b]
+offset = 0x4a0
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Forced SysAD check-bit error for processor B, named PI_BAD_CHECK_BIT_B in the header. Access is assumed read and write."
+
+[registers.pi_nack_cnt_a]
+offset = 0x4a8
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Consecutive negative-acknowledge counter for processor A, named PI_NACK_CNT_A in the header. Access is assumed read and write."
+
+[registers.pi_nack_cnt_a.fields]
+enable = { bits = [20, 20], grade = "established", doc = "Count enable, bit 20, named PI_NACK_CNT_EN in the header." }
+count = { bits = [19, 0], grade = "established", doc = "Negative-acknowledge count, bits 19:0, named PI_NACK_CNT_MASK in the header." }
+
+[registers.pi_nack_cnt_b]
+offset = 0x4b0
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in the header. Access is assumed read and write."
+
+[registers.pi_nack_cnt_b.fields]
+enable = { bits = [20, 20], grade = "established", doc = "Count enable, bit 20, the same bit as the processor A counter." }
+count = { bits = [19, 0], grade = "established", doc = "Negative-acknowledge count, bits 19:0." }
+
+[registers.pi_nack_cmp]
+offset = 0x4b8
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. Access is assumed read and write."
+
+[words.PI_RT_LOCAL_CTRL_FORMAT]
+width = 64
+grade = "established"
+from = "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
+doc = "Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it."
+
+[words.PI_RT_LOCAL_CTRL_FORMAT.fields]
+use_internal = { bits = [16, 16], grade = "established", doc = "Use internal clock, bit 16, named PRLC_USE_INT in the header. The header gives no behaviour beyond the name." }
+gclk = { bits = [15, 15], grade = "established", doc = "Global clock flag, bit 15, named PRLC_GCLK in the header. The header gives no behaviour beyond the name." }
+gclk_count = { bits = [14, 8], grade = "established", doc = "Global clock count, seven bits at 14:8, named PRLC_GCLK_COUNT in the header." }
+max_count = { bits = [7, 1], grade = "established", doc = "Maximum count, seven bits at 7:1, named PRLC_MAX_COUNT in the header. The header gives no statement of what it sets." }
+gclk_en = { bits = [0, 0], grade = "established", doc = "Global clock enable, bit 0, named PRLC_GCLK_EN in the header." }
+
+[constants]
+# Cause register bits the header names for the processor's pending interrupt lines. Bits 15:8 of
+# the Cause register are the interrupt pending field, so these are the lines IP2 to IP6.
+IP_PEND0 = { value = 0x400, grade = "established", doc = "Cause bit for the first pending bank, named HUB_IP_PEND0 in the header: IP2 line." }
+IP_PEND1_CC = { value = 0x800, grade = "established", doc = "Cause bit for the second pending bank and the cross-call sources, named HUB_IP_PEND1_CC in the header: IP3 line." }
+IP_RT = { value = 0x1000, grade = "established", doc = "Cause bit for the real-time counter comparator, named HUB_IP_RT in the header: IP4 line." }
+IP_PROF = { value = 0x2000, grade = "established", doc = "Cause bit for the profiling comparator, named HUB_IP_PROF in the header: IP5 line." }
+IP_ERROR = { value = 0x4000, grade = "established", doc = "Cause bit for Hub errors, named HUB_IP_ERROR in the header: IP6 line." }
+IP_MASK = { value = 0x7c00, grade = "established", doc = "All five Hub-driven Cause bits together, named HUB_IP_MASK in the header." }
+
+# Cached-alias size codes. The header gives the size each code selects. The register is the one in
+# defs/hub.toml at offset 0x28; these are the values a write to it can hold.
+PI_CALIAS_SIZE_0 = { value = 0, grade = "established", doc = "Cached-alias size code 0: no alias, per the header's name PI_CALIAS_SIZE_0." }
+PI_CALIAS_SIZE_4K = { value = 1, grade = "established", doc = "Cached-alias size code 1: 4 KB, per the header." }
+PI_CALIAS_SIZE_8K = { value = 2, grade = "established", doc = "Cached-alias size code 2: 8 KB, per the header." }
+PI_CALIAS_SIZE_16K = { value = 3, grade = "established", doc = "Cached-alias size code 3: 16 KB, per the header." }
+PI_CALIAS_SIZE_32K = { value = 4, grade = "established", doc = "Cached-alias size code 4: 32 KB, per the header." }
+PI_CALIAS_SIZE_64K = { value = 5, grade = "established", doc = "Cached-alias size code 5: 64 KB, per the header." }
+PI_CALIAS_SIZE_128K = { value = 6, grade = "established", doc = "Cached-alias size code 6: 128 KB, per the header." }
+PI_CALIAS_SIZE_256K = { value = 7, grade = "established", doc = "Cached-alias size code 7: 256 KB, per the header." }
+PI_CALIAS_SIZE_512K = { value = 8, grade = "established", doc = "Cached-alias size code 8: 512 KB, per the header." }
+PI_CALIAS_SIZE_1M = { value = 9, grade = "established", doc = "Cached-alias size code 9: 1 MB, per the header." }
+PI_CALIAS_SIZE_2M = { value = 10, grade = "established", doc = "Cached-alias size code 10: 2 MB, per the header." }
+PI_CALIAS_SIZE_4M = { value = 11, grade = "established", doc = "Cached-alias size code 11: 4 MB, per the header." }
+PI_CALIAS_SIZE_8M = { value = 12, grade = "established", doc = "Cached-alias size code 12: 8 MB, per the header." }
+PI_CALIAS_SIZE_16M = { value = 13, grade = "established", doc = "Cached-alias size code 13: 16 MB, per the header." }
+PI_CALIAS_SIZE_32M = { value = 14, grade = "established", doc = "Cached-alias size code 14: 32 MB, per the header." }
+PI_CALIAS_SIZE_64M = { value = 15, grade = "established", doc = "Cached-alias size code 15: 64 MB, per the header." }

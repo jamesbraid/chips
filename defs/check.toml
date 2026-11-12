@@ -25,6 +25,10 @@ prose_offsets = false
 group = "hub_extra.h"
 prose_offsets = false
 
+[units.hub_pi_extra]
+group = "hub_pi_extra.h"
+prose_offsets = false
+
 [units.ioc3]
 group = "ioc3.h"
 prose_offsets = false
