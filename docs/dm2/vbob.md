@@ -33,7 +33,7 @@ Kernel handler, in order (K30 0xb530 to 0xc020, `out` and `in` copies for pipe 0
 2. Writes the 24 bytes as twelve 16-bit values, byte 2k high and byte 2k+1 low, each as a 32-bit store of the zero-extended value to window offset `0x803804 + 8*k` (k = 0..11), `sync` after each.
 3. Sets the pipe's "ack outstanding" halfword to 1, arms `fast_itimeout(xtdigvid_signal_clink, ..., 250 ticks)`, stores 1 to **`0x8038ec`** (send doorbell), `sync`, then sleeps (`sv_wait_sig`).
 4. Wake by ack: the status-ring service routine, on seeing status flag **bit 18 (0x40000, CLINK_XMIT_DONE)**, logs "VBOB_CLINK_ACK", clears the outstanding halfword and `sv_signal`s. The ioctl cancels the timer, unlocks and returns 0.
-5. Wake by timer with the halfword still set: the ioctl unlocks, writes 0 to `0x800064` (pipe 0) or `0x800074` (pipe 1) (the "reset sdma ring ptr" path), zeroes the pipe's 0x800-byte status page and ring index, returns errno 11.
+5. Wake by timer with the halfword still set: the ioctl unlocks, writes 0 to `0x800074` (pipe 0) or `0x800064` (pipe 1) (the "reset sdma ring ptr" path; **E**, `movz t8,ra,t9` at K30 0xbfe4 with `t9 = pipe < 1`, `ra = 0x800064`, `t8 = 0x800074`; the [DMA part](dma.md) section 8 item 3 has the full reading), zeroes the pipe's 0x800-byte status page and ring index, returns errno 11.
 
 Flag bit numbers come from the kernel's own flag-name table (.data 0x20..0x15f, value/name pairs): 18 = CLINK_XMIT_DONE, 19 = CLINK_RCV_DONE. This corrects the order in scoping section 3, which was marked inferred; the table has 20 entries with a one-letter name at index 1.
 

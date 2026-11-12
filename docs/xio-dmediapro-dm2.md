@@ -67,7 +67,7 @@ window base.
 | `0x800004` | GIF reset/enable word, cleared when `init_gif` is asked to reinitialise; polled for the value `0x80` during FPGA download (section 6) | E (access); U (bit meaning) |
 | `0x80000c` | per-FPGA programming control for the seven FPGAs behind the GIF (section 6) | E |
 | `0x800014` (pipe 0), `0x80003c` (pipe 1) | the pipe's DMA control word; the driver keeps a shadow (`gif_dma_control_shadow`) and rewrites the whole word. Bit 12 `0x1000`, bit 10 `0x400`, bit 9 `0x200` are set and cleared by the raster configuration; the abort path sets bits through the shadow. Initial value `0xea040` (pipe 0) and `0xa040` (pipe 1) | E (offsets, initial values); I (bit roles) |
-| `0x800064`, `0x800074` | per-pipe words cleared when the pipe's status buffer is set up | E (stores); U (meaning) |
+| `0x800064` (pipe 1), `0x800074` (pipe 0) | per-pipe words cleared when the pipe's status buffer is set up, and by the clink-timeout path | E (stores and pipe assignment, [DMA part](dm2/dma.md) section 8 item 3); U (meaning) |
 | `0x800084` | GIF identification: upper 24 bits must read `0x474946` ("GIF" in ASCII); the low byte is the GIF version, printed "GIF version %x". Any other value fails attach with "malfunction: invalid GIF version" | E |
 | `0x80008c` | cleared at UST initialisation (`xtdigvid_init_ust`, text 0x9ff4), just before the host UST is sampled | E (store); U (this is the board's own UST/MSC counter, **I** from the cleared-then-sampled pattern and the message "Use hw ust") |
 | `0x80180c`, `0x80200c` | video control word of each pipe, written with the second shadow word (bit 0 cleared on abort) | E (stores); I (roles) |
