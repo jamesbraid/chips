@@ -1,0 +1,1120 @@
+unit = "bedrock_pi"
+prefix = "BEDROCK_PI"
+title = "Bedrock processor interface (PI) registers: field layouts, interrupt banks, real-time clock, graphics credits and error capture"
+doc = "Offsets are hub-relative inside one processor interface. The second interface repeats the same layout 2 MiB higher in the node window (see the processor-interface page). Register names, offsets, widths and field positions come from the public Linux 2.5.40 SN1 processor-interface register header, so they are established as header facts. Behaviour the header gives only in its comments is inferred. Access modes the header does not state are assumed read and write and labelled so in the text. The header gives no reset value for any register, so every reset is unknown."
+from = "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
+public_from = ["Linux 2.5.40"]
+
+[c]
+offset_macro = "bare"
+
+
+[registers.cpu_protect]
+offset = 0x0
+access = "rw"
+width = 64
+grade = "established"
+doc = "One bit per region. A set bit lets the processor in that region reach this interface's local registers. A denied access gets a protection error reply. The header says the register is not reset by a soft reset and gives no reset value."
+
+[registers.cpu_protect.fields]
+cp_cpu_protect = { bits = [63, 0], grade = "established", doc = "One bit per region." }
+
+[registers.prot_override]
+offset = 0x8
+access = "w"
+width = 64
+grade = "established"
+doc = "A write carrying a special data pattern sets the writing processor's region bit in the CPU protect register. The header does not give the pattern."
+
+[registers.prot_override.fields]
+po_prot_ovrrd = { bits = [63, 0], grade = "established", doc = "Written value compared against the special pattern; the pattern is not stated." }
+
+[registers.io_protect]
+offset = 0x10
+access = "rw"
+width = 64
+grade = "established"
+doc = "One bit per region. Decides whether I/O-initiated interrupt writes from that region may set bits in the two pending banks. The header says it is not reset by a soft reset."
+
+[registers.io_protect.fields]
+ip_io_protect = { bits = [63, 0], grade = "established", doc = "One bit per region." }
+
+[registers.region_present]
+offset = 0x18
+access = "rw"
+width = 64
+grade = "established"
+doc = "One bit per region. Clear bits block speculative coherent reads to that region. A coherent read to an absent region gets an error reply and no error register changes. Partial reads and writes are not checked. Cached-alias accesses are not affected. The header says it is not reset by a soft reset."
+
+[registers.region_present.fields]
+rp_region_present = { bits = [63, 0], grade = "established", doc = "One bit per region." }
+
+[registers.cpu_num]
+offset = 0x20
+access = "r"
+width = 64
+grade = "established"
+doc = "Read by a processor to learn its own slot and interface. Bit 0 is the slot (0 for CPU A, 1 for CPU B); bit 1 is the interface (0 for PI0, 1 for PI1)."
+
+[registers.cpu_num.fields]
+cn_cpu_num = { bits = [0, 0], grade = "established", doc = "0 is CPU A, 1 is CPU B." }
+cn_pi_id = { bits = [1, 1], grade = "established", doc = "0 is PI0, 1 is PI1." }
+
+[registers.calias_size]
+offset = 0x28
+access = "rw"
+width = 64
+grade = "established"
+doc = "Size code for the cached-alias space. The header says all cached-alias spaces in a system must carry the same size. It is not reset by a soft reset."
+
+[registers.calias_size.fields]
+cs_calias_size = { bits = [3, 0], grade = "established", doc = "Size code; the header does not give the size each code means." }
+
+[registers.max_crb_timeout]
+offset = 0x30
+access = "rw"
+width = 64
+grade = "established"
+doc = "Value at which a valid coherency request buffer's timeout counter causes a timeout error. The header refers to the processor interface chapter of the Bedrock manual, which is not held."
+
+[registers.max_crb_timeout.fields]
+mct_max_timeout = { bits = [7, 0], grade = "established", doc = "Maximum timeout value." }
+
+[registers.crb_scale_factor]
+offset = 0x38
+access = "rw"
+width = 64
+grade = "established"
+doc = "Sets how often a valid coherency request buffer's timeout counter increments. The header refers to the same manual section as the maximum timeout register."
+
+[registers.crb_scale_factor.fields]
+cs_sfactor = { bits = [23, 0], grade = "established", doc = "Scale factor." }
+
+[registers.cpu_present_a]
+offset = 0x40
+access = "r"
+width = 64
+grade = "established"
+doc = "Set by the interface when it sees the first transaction from CPU A. The header gives no write behaviour."
+
+[registers.cpu_present_a.fields]
+cpa_cpu_present = { bits = [0, 0], grade = "established" }
+
+[registers.cpu_present_b]
+offset = 0x48
+access = "r"
+width = 64
+grade = "established"
+doc = "Set by the interface when it sees the first transaction from CPU B. The header gives no write behaviour."
+
+[registers.cpu_present_b.fields]
+cpb_cpu_present = { bits = [0, 0], grade = "established" }
+
+[registers.cpu_enable_a]
+offset = 0x50
+access = "rw"
+width = 64
+grade = "established"
+doc = "While clear, the interface ignores the bus request from CPU A and never grants it the bus. The header says it is not reset by a soft reset and gives no reset value."
+
+[registers.cpu_enable_a.fields]
+cea_cpu_enable = { bits = [0, 0], grade = "established" }
+
+[registers.cpu_enable_b]
+offset = 0x58
+access = "rw"
+width = 64
+grade = "established"
+doc = "While clear, the interface ignores the bus request from CPU B and never grants it the bus. The header says it is not reset by a soft reset and gives no reset value."
+
+[registers.cpu_enable_b.fields]
+ceb_cpu_enable = { bits = [0, 0], grade = "established" }
+
+[registers.nmi_a]
+offset = 0x70
+access = "w"
+width = 64
+grade = "established"
+doc = "A write issues a non-maskable interrupt to CPU A. The header gives no predicate on the written value, no latch behaviour and no reset value."
+
+[registers.nmi_b]
+offset = 0x78
+access = "w"
+width = 64
+grade = "established"
+doc = "A write issues a non-maskable interrupt to CPU B. The header gives no predicate on the written value, no latch behaviour and no reset value."
+
+[registers.int_pend_mod]
+offset = 0x90
+access = "w"
+width = 64
+grade = "established"
+doc = "Sets or clears one bit of an interrupt pending bank. It is the only pending-register write an I/O-issued write may make, and I/O protect checks it. Processor writes are checked against CPU protect. The header gives no reset value."
+
+[registers.int_pend_mod.fields]
+ipm_bit_select = { bits = [5, 0], grade = "established", doc = "Bit number 0 to 63 in the bank chosen by the bank field." }
+ipm_reg_select = { bits = [6, 6], grade = "established", doc = "0 selects pending bank 0, 1 selects pending bank 1." }
+ipm_value = { bits = [8, 8], grade = "established", doc = "1 sets the named bit, 0 clears it." }
+
+[registers.int_pend0]
+offset = 0x98
+access = "r"
+width = 64
+grade = "established"
+doc = "Pending bank 0, read only. The bits map to interrupt level 2 in the header's naming. The graphics bits are set by hardware and must be cleared by software."
+
+[registers.int_pend0.fields]
+int_pend0_lo = { bits = [0, 0], grade = "established", doc = "General; not named by the header." }
+gfx_int_a = { bits = [1, 1], grade = "established", doc = "Graphics interrupt for CPU A; set by hardware, cleared by software." }
+gfx_int_b = { bits = [2, 2], grade = "established", doc = "Graphics interrupt for CPU B; set by hardware, cleared by software." }
+page_migration = { bits = [3, 3], grade = "established", doc = "Page migration." }
+uart_ucntrl = { bits = [4, 4], grade = "established", doc = "Name from the header's field list; the header's comment does not describe it." }
+or_cc_pend_a = { bits = [5, 5], grade = "established", doc = "Set when CPU A has a CPU-to-CPU interrupt pending." }
+or_cc_pend_b = { bits = [6, 6], grade = "established", doc = "Set when CPU B has a CPU-to-CPU interrupt pending." }
+int_pend0_hi = { bits = [63, 7], grade = "established", doc = "General." }
+
+[registers.int_pend1]
+offset = 0xa0
+access = "r"
+width = 64
+grade = "established"
+doc = "Pending bank 1, read only. Bits map to interrupt level 3 unless the remap register moves bits 31 to 0 to level 2. The correctable-error, NACK and performance-overflow bits are set by hardware and must be cleared by software. The system shutdown, network, local-block and crossbar bits only reflect other logic and cannot be changed through this interface."
+
+[registers.int_pend1.fields]
+int_pend1_gen = { bits = [53, 0], grade = "established", doc = "General bits 53 to 0." }
+xb_error = { bits = [54, 54], grade = "established", doc = "Crossbar error; reflects other logic." }
+lb_error = { bits = [55, 55], grade = "established", doc = "Local block error; reflects other logic." }
+nack_int_a = { bits = [56, 56], grade = "established", doc = "CPU A NACK count reached its compare; set by hardware." }
+nack_int_b = { bits = [57, 57], grade = "established", doc = "CPU B NACK count reached its compare; set by hardware." }
+perf_cntr_oflow = { bits = [58, 58], grade = "established", doc = "Performance counter overflow. The header's comment for this bank calls the same bit RTC drop-out." }
+sys_cor_err_b = { bits = [59, 59], grade = "established", doc = "Correctable system error for CPU B; set by hardware." }
+sys_cor_err_a = { bits = [60, 60], grade = "established", doc = "Correctable system error for CPU A; set by hardware." }
+md_corr_error = { bits = [61, 61], grade = "established", doc = "Memory and directory correctable error." }
+ni_error = { bits = [62, 62], grade = "established", doc = "Network interface error; reflects other logic." }
+system_shutdown = { bits = [63, 63], grade = "established", doc = "System shutdown; reflects other logic." }
+
+[registers.int_mask0_a]
+offset = 0xa8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Masks bank 0 for CPU A. A set bit passes the pending bit through as a level 2 interrupt (bit 10 of the processor's Cause register)."
+
+[registers.int_mask0_a.fields]
+ima_int_mask0_lo = { bits = [0, 0], grade = "established", doc = "Mask for the general bit 0 of bank 0." }
+ima_gfx_int_a = { bits = [1, 1], grade = "established", doc = "Mask for the CPU A graphics bit." }
+ima_gfx_int_b = { bits = [2, 2], grade = "established", doc = "Mask for the CPU B graphics bit." }
+ima_page_migration = { bits = [3, 3], grade = "established", doc = "Mask for the page migration bit. The header says only one processor per Bedrock should enable it." }
+ima_uart_ucntrl = { bits = [4, 4], grade = "established", doc = "Mask for the UART bit." }
+ima_or_ccp_mask_a = { bits = [5, 5], grade = "established", doc = "Mask for the CPU A CPU-to-CPU bit." }
+ima_or_ccp_mask_b = { bits = [6, 6], grade = "established", doc = "Mask for the CPU B CPU-to-CPU bit." }
+ima_int_mask0_hi = { bits = [63, 7], grade = "established", doc = "Mask for the general bits 63 to 7." }
+
+[registers.int_mask1_a]
+offset = 0xb0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Masks bank 1 for CPU A. Bits 63 to 32 always raise a level 3 interrupt (bit 11 of Cause). Bits 31 to 0 raise level 3 or level 2 depending on the remap register. The header says only one processor per Bedrock should enable the network, local-block, crossbar and memory-correctable bits."
+
+[registers.int_mask1_a.fields]
+ima_int_mask1 = { bits = [63, 0], grade = "established" }
+
+[registers.int_mask0_b]
+offset = 0xb8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Masks bank 0 for CPU B. Same layout and meaning as the CPU A mask."
+
+[registers.int_mask0_b.fields]
+imb_int_mask0_lo = { bits = [0, 0], grade = "established", doc = "Mask for the general bit 0 of bank 0." }
+imb_gfx_int_a = { bits = [1, 1], grade = "established", doc = "Mask for the CPU A graphics bit." }
+imb_gfx_int_b = { bits = [2, 2], grade = "established", doc = "Mask for the CPU B graphics bit." }
+imb_page_migration = { bits = [3, 3], grade = "established", doc = "Mask for the page migration bit. The header says only one processor per Bedrock should enable it." }
+imb_uart_ucntrl = { bits = [4, 4], grade = "established", doc = "Mask for the UART bit." }
+imb_or_ccp_mask_a = { bits = [5, 5], grade = "established", doc = "Mask for the CPU A CPU-to-CPU bit." }
+imb_or_ccp_mask_b = { bits = [6, 6], grade = "established", doc = "Mask for the CPU B CPU-to-CPU bit." }
+imb_int_mask0_hi = { bits = [63, 7], grade = "established", doc = "Mask for the general bits 63 to 7." }
+
+[registers.int_mask1_b]
+offset = 0xc0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Masks bank 1 for CPU B. Same layout and meaning as the CPU A mask."
+
+[registers.int_mask1_b.fields]
+imb_int_mask1 = { bits = [63, 0], grade = "established" }
+
+[registers.cc_pend_set_a]
+offset = 0xc8
+access = "w"
+width = 64
+grade = "established"
+doc = "A store by a CPU sets the bit for the storing processor's region in the CPU A CPU-to-CPU pending register. These registers have no access protection."
+
+[registers.cc_pend_set_a.fields]
+cpsa_cc_pend = { bits = [63, 0], grade = "established", doc = "One bit per region." }
+
+[registers.cc_pend_set_b]
+offset = 0xd0
+access = "w"
+width = 64
+grade = "established"
+doc = "A store by a CPU sets the bit for the storing processor's region in the CPU B CPU-to-CPU pending register. These registers have no access protection."
+
+[registers.cc_pend_set_b.fields]
+cpsb_cc_pend = { bits = [63, 0], grade = "established", doc = "One bit per region." }
+
+[registers.cc_pend_clr_a]
+offset = 0xd8
+access = "rw"
+width = 64
+grade = "established"
+doc = "A read returns the CPU A CPU-to-CPU pending bits. A write clears each bit whose data bit is one."
+
+[registers.cc_pend_clr_a.fields]
+cpca_cc_pend = { bits = [63, 0], grade = "established", doc = "One bit per region." }
+
+[registers.cc_pend_clr_b]
+offset = 0xe0
+access = "rw"
+width = 64
+grade = "established"
+doc = "A read returns the CPU B CPU-to-CPU pending bits. A write clears each bit whose data bit is one."
+
+[registers.cc_pend_clr_b.fields]
+cpcb_cc_pend = { bits = [63, 0], grade = "established", doc = "One bit per region." }
+
+[registers.cc_mask]
+offset = 0xe8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Masks both CPU-to-CPU pending registers."
+
+[registers.cc_mask.fields]
+cm_cc_mask = { bits = [63, 0], grade = "established" }
+
+[registers.int_pend1_remap]
+offset = 0xf0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Moves bank 1 bits 31 to 0 from level 3 to level 2 under control of the low four bits. Bit 4 forwards the memory and unit error interrupts to the I/O interface, which raises its interrupt to the node named in its destination register, so the errors can reach another node. The header does not give the encoding of the four-bit selector."
+
+[registers.int_pend1_remap.fields]
+ipr_remap = { bits = [3, 0], grade = "established", doc = "Low four bits of the remap selector; encoding not given." }
+ipr_error_forward = { bits = [4, 4], grade = "established", doc = "Forward memory, network, local-block and crossbar errors to the I/O interface." }
+
+[registers.rt_counter]
+offset = 0x30100
+access = "rw"
+width = 64
+grade = "established"
+doc = "Real-time counter. It wraps to zero at its maximum value and increments on each rising edge of the global clock. The header puts it in its own 64 KB page so it can be mapped to user space."
+
+[registers.rt_counter.fields]
+rc_count = { bits = [54, 0], grade = "established", doc = "Count." }
+
+[registers.rt_compare_a]
+offset = 0x108
+access = "rw"
+width = 64
+grade = "established"
+doc = "When the real-time counter equals this value, the CPU A real-time pending bit is set. The header's comment says this sends a level 4 interrupt. Access is not stated; read and write is assumed."
+
+[registers.rt_compare_a.fields]
+rca_rt_compare = { bits = [54, 0], grade = "established", doc = "Compare value." }
+
+[registers.rt_compare_b]
+offset = 0x110
+access = "rw"
+width = 64
+grade = "established"
+doc = "When the real-time counter equals this value, the CPU B real-time pending bit is set. The header's comment says this sends a level 4 interrupt. Access is not stated; read and write is assumed."
+
+[registers.rt_compare_b.fields]
+rcb_rt_compare = { bits = [54, 0], grade = "established", doc = "Compare value." }
+
+[registers.profile_compare]
+offset = 0x118
+access = "rw"
+width = 64
+grade = "established"
+doc = "When the low 32 bits of the real-time counter equal this value, both profiling pending registers are set to one. Access is not stated; read and write is assumed."
+
+[registers.profile_compare.fields]
+pc_profile_compare = { bits = [31, 0], grade = "established", doc = "Compare value." }
+
+[registers.rt_int_pend_a]
+offset = 0x120
+access = "rw"
+width = 64
+grade = "established"
+doc = "Real-time interrupt pending for CPU A. When the matching enable is set, CPU A's interrupt line follows this bit. The header's comment on this register says level 5, which conflicts with the compare register's level 4. Any store clears the bit."
+
+[registers.rt_int_pend_a.fields]
+ripa_rtc_int_pend = { bits = [0, 0], grade = "established" }
+
+[registers.rt_int_pend_b]
+offset = 0x128
+access = "rw"
+width = 64
+grade = "established"
+doc = "Real-time interrupt pending for CPU B. When the matching enable is set, CPU B's interrupt line follows this bit. The header's comment says level 5. Any store clears the bit."
+
+[registers.rt_int_pend_b.fields]
+ripb_rtc_int_pend = { bits = [0, 0], grade = "established" }
+
+[registers.prof_int_pend_a]
+offset = 0x130
+access = "rw"
+width = 64
+grade = "established"
+doc = "Profiling interrupt pending for CPU A. Set when the profile compare matches. Any store clears it. The A and B copies are separate so each can be cleared alone."
+
+[registers.prof_int_pend_a.fields]
+pipa_prof_int_pend = { bits = [0, 0], grade = "established" }
+
+[registers.prof_int_pend_b]
+offset = 0x138
+access = "rw"
+width = 64
+grade = "established"
+doc = "Profiling interrupt pending for CPU B. Set when the profile compare matches. Any store clears it."
+
+[registers.prof_int_pend_b.fields]
+pipb_prof_int_pend = { bits = [0, 0], grade = "established" }
+
+[registers.rt_int_en_a]
+offset = 0x140
+access = "rw"
+width = 64
+grade = "established"
+doc = "Enables the real-time interrupt to CPU A."
+
+[registers.rt_int_en_a.fields]
+riea_rtc_int_en = { bits = [0, 0], grade = "established" }
+
+[registers.rt_int_en_b]
+offset = 0x148
+access = "rw"
+width = 64
+grade = "established"
+doc = "Enables the real-time interrupt to CPU B."
+
+[registers.rt_int_en_b.fields]
+rieb_rtc_int_en = { bits = [0, 0], grade = "established" }
+
+[registers.prof_int_en_a]
+offset = 0x150
+access = "rw"
+width = 64
+grade = "established"
+doc = "Enables the profiling interrupt to CPU A."
+
+[registers.prof_int_en_a.fields]
+piea_prof_int_en = { bits = [0, 0], grade = "established" }
+
+[registers.prof_int_en_b]
+offset = 0x158
+access = "rw"
+width = 64
+grade = "established"
+doc = "Enables the profiling interrupt to CPU B."
+
+[registers.prof_int_en_b.fields]
+pieb_prof_int_en = { bits = [0, 0], grade = "established" }
+
+[registers.debug_sel]
+offset = 0x160
+access = "rw"
+width = 64
+grade = "established"
+doc = "Selects the debug data the interface drives, together with the debug module's select. The header gives the selector names below and says the B-select bit chooses CPU A or CPU B logic for some selections. Each low and high selector bit is one signal, named by the header as follows: low selector bits are t5cc A, t5cc B, totcc A, totcc B, reqcc A, reqcc B, rplcc A, rplcc B, intcc, perf increment A 0 and 1, perf increment B 0 and 1; high selector bits are the same names in the same order."
+
+[registers.debug_sel.fields]
+ds_low_select = { bits = [12, 0], grade = "established", doc = "Low selector bits, as named in the register description." }
+ds_high_select = { bits = [25, 13], grade = "established", doc = "High selector bits, as named in the register description." }
+ds_b_sel = { bits = [26, 26], grade = "established", doc = "Chooses CPU B logic where the selection applies to both processors." }
+
+[registers.int_pend_mod_alias]
+offset = 0x180
+access = "w"
+width = 64
+grade = "established"
+doc = "Alias of the pending-modify register with the same layout and checks. The header does not say why a second address exists."
+
+[registers.int_pend_mod_alias.fields]
+ipm_bit_select = { bits = [5, 0], grade = "established", doc = "Bit number 0 to 63 in the bank chosen by the bank field." }
+ipm_reg_select = { bits = [6, 6], grade = "established", doc = "0 selects pending bank 0, 1 selects pending bank 1." }
+ipm_value = { bits = [8, 8], grade = "established", doc = "1 sets the named bit, 0 clears it." }
+
+[registers.perf_cntl_a]
+offset = 0x40200
+access = "rw"
+width = 64
+grade = "established"
+doc = "Controls the two performance counters of CPU A. The header says each counter can be set to count one of several events but does not list the events. Access is not stated; read and write is assumed."
+
+[registers.perf_cntl_a.fields]
+pca_cntr_0_select = { bits = [27, 0], grade = "established", doc = "Event selector for counter 0." }
+pca_cntr_0_mode = { bits = [30, 28], grade = "established", doc = "Counting mode; encoding not given." }
+pca_cntr_0_enable = { bits = [31, 31], grade = "established", doc = "Enables counter 0." }
+pca_cntr_1_select = { bits = [59, 32], grade = "established", doc = "Event selector for counter 1." }
+pca_cntr_1_mode = { bits = [62, 60], grade = "established", doc = "Counting mode; encoding not given." }
+pca_cntr_1_enable = { bits = [63, 63], grade = "established", doc = "Enables counter 1." }
+
+[registers.perf_cntr0_a]
+offset = 0x40208
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 0 of CPU A. Forty bits wide. On overflow it wraps to zero, sets its overflow bit and sets the performance overflow bit in bank 1. Access is not stated; read and write is assumed."
+
+[registers.perf_cntr0_a.fields]
+pca_count_value = { bits = [39, 0], grade = "established", doc = "Count." }
+pca_overflow = { bits = [40, 40], grade = "established", doc = "Set on overflow." }
+
+[registers.perf_cntr1_a]
+offset = 0x40210
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 1 of CPU A. Forty bits wide. On overflow it wraps to zero, sets its overflow bit and sets the performance overflow bit in bank 1. Access is not stated; read and write is assumed."
+
+[registers.perf_cntr1_a.fields]
+pca_count_value = { bits = [39, 0], grade = "established", doc = "Count." }
+pca_overflow = { bits = [40, 40], grade = "established", doc = "Set on overflow." }
+
+[registers.perf_cntl_b]
+offset = 0x50200
+access = "rw"
+width = 64
+grade = "established"
+doc = "Controls the two performance counters of CPU B. The header says each counter can be set to count one of several events but does not list the events. Access is not stated; read and write is assumed."
+
+[registers.perf_cntl_b.fields]
+pcb_cntr_0_select = { bits = [27, 0], grade = "established", doc = "Event selector for counter 0." }
+pcb_cntr_0_mode = { bits = [30, 28], grade = "established", doc = "Counting mode; encoding not given." }
+pcb_cntr_0_enable = { bits = [31, 31], grade = "established", doc = "Enables counter 0." }
+pcb_cntr_1_select = { bits = [59, 32], grade = "established", doc = "Event selector for counter 1." }
+pcb_cntr_1_mode = { bits = [62, 60], grade = "established", doc = "Counting mode; encoding not given." }
+pcb_cntr_1_enable = { bits = [63, 63], grade = "established", doc = "Enables counter 1." }
+
+[registers.perf_cntr0_b]
+offset = 0x50208
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 0 of CPU B. Forty bits wide. On overflow it wraps to zero, sets its overflow bit and sets the performance overflow bit in bank 1. Access is not stated; read and write is assumed."
+
+[registers.perf_cntr0_b.fields]
+pcb_count_value = { bits = [39, 0], grade = "established", doc = "Count." }
+pcb_overflow = { bits = [40, 40], grade = "established", doc = "Set on overflow." }
+
+[registers.perf_cntr1_b]
+offset = 0x50210
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 1 of CPU B. Forty bits wide. On overflow it wraps to zero, sets its overflow bit and sets the performance overflow bit in bank 1. Access is not stated; read and write is assumed."
+
+[registers.perf_cntr1_b.fields]
+pcb_count_value = { bits = [39, 0], grade = "established", doc = "Count." }
+pcb_overflow = { bits = [40, 40], grade = "established", doc = "Set on overflow." }
+
+[registers.gfx_page_a]
+offset = 0x300
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics page for CPU A. Uncached I/O stores into the enabled page are graphics write commands tracked by the credit counter, not ordinary write commands. Access is not stated; read and write is assumed."
+
+[registers.gfx_page_a.fields]
+gpa_gfx_page_addr = { bits = [39, 17], grade = "established", doc = "Page address, bits 39 to 17." }
+gpa_en_gfx_page = { bits = [40, 40], grade = "established", doc = "Enables the page." }
+
+[registers.gfx_credit_cntr_a]
+offset = 0x308
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics credit counter for CPU A. It drops by one per doubleword sent to graphics and rises by one per doubleword acknowledged. When it is below the bias, the header says write-ready is withheld, an interrupt is sent, and write-ready is allowed again. Access is not stated; read and write is assumed."
+
+[registers.gfx_credit_cntr_a.fields]
+gcca_gfx_credit_cntr = { bits = [11, 0], grade = "established", doc = "Credit count." }
+
+[registers.gfx_bias_a]
+offset = 0x310
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics bias for CPU A. When the credit counter is at or below this value, the header says a flow-control interrupt is sent. Access is not stated; read and write is assumed."
+
+[registers.gfx_bias_a.fields]
+gba_gfx_bias = { bits = [11, 0], grade = "established", doc = "Bias value." }
+
+[registers.gfx_int_cntr_a]
+offset = 0x318
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics interrupt counter for CPU A. The header says it is written by software, loaded from the compare on an interrupt, NMI or soft reset, zeroed when the credit counter rises above the bias, and counts one per clock while the credit counter is at or below zero. Access is not stated; read and write is assumed."
+
+[registers.gfx_int_cntr_a.fields]
+gica_gfx_int_cntr = { bits = [25, 0], grade = "established", doc = "Counter value." }
+
+[registers.gfx_int_cmp_a]
+offset = 0x320
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics interrupt compare for CPU A. The interrupt is sent when the interrupt counter reaches this value. Access is not stated; read and write is assumed."
+
+[registers.gfx_int_cmp_a.fields]
+gica_gfx_int_cmp = { bits = [25, 0], grade = "established", doc = "Compare value." }
+
+[registers.gfx_page_b]
+offset = 0x328
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics page for CPU B. Uncached I/O stores into the enabled page are graphics write commands tracked by the credit counter, not ordinary write commands. Access is not stated; read and write is assumed."
+
+[registers.gfx_page_b.fields]
+gpb_gfx_page_addr = { bits = [39, 17], grade = "established", doc = "Page address, bits 39 to 17." }
+gpb_en_gfx_page = { bits = [40, 40], grade = "established", doc = "Enables the page." }
+
+[registers.gfx_credit_cntr_b]
+offset = 0x330
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics credit counter for CPU B. It drops by one per doubleword sent to graphics and rises by one per doubleword acknowledged. When it is below the bias, the header says write-ready is withheld, an interrupt is sent, and write-ready is allowed again. Access is not stated; read and write is assumed."
+
+[registers.gfx_credit_cntr_b.fields]
+gccb_gfx_credit_cntr = { bits = [11, 0], grade = "established", doc = "Credit count." }
+
+[registers.gfx_bias_b]
+offset = 0x338
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics bias for CPU B. When the credit counter is at or below this value, the header says a flow-control interrupt is sent. Access is not stated; read and write is assumed."
+
+[registers.gfx_bias_b.fields]
+gbb_gfx_bias = { bits = [11, 0], grade = "established", doc = "Bias value." }
+
+[registers.gfx_int_cntr_b]
+offset = 0x340
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics interrupt counter for CPU B. The header says it is written by software, loaded from the compare on an interrupt, NMI or soft reset, zeroed when the credit counter rises above the bias, and counts one per clock while the credit counter is at or below zero. Access is not stated; read and write is assumed."
+
+[registers.gfx_int_cntr_b.fields]
+gicb_gfx_int_cntr = { bits = [25, 0], grade = "established", doc = "Counter value." }
+
+[registers.gfx_int_cmp_b]
+offset = 0x348
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics interrupt compare for CPU B. The interrupt is sent when the interrupt counter reaches this value. Access is not stated; read and write is assumed."
+
+[registers.gfx_int_cmp_b.fields]
+gicb_gfx_int_cmp = { bits = [25, 0], grade = "established", doc = "Compare value." }
+
+[registers.gfx_credit_mode]
+offset = 0x20068
+access = "rw"
+width = 64
+grade = "established"
+doc = "Switches the credit counter from counting doublewords to counting transactions. The header puts it in its own 64 KB page so it can be mapped to user space. Access is not stated; read and write is assumed."
+
+[registers.gfx_credit_mode.fields]
+gcm_trans_mode = { bits = [0, 0], grade = "established", doc = "1 counts transactions, 0 counts doublewords." }
+
+[registers.err_int_pend_wr]
+offset = 0x3f8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Writable view of the error interrupt pending bits. A read returns every error source. A direct write sets or clears each unreserved bit, except the memory uncorrectable bit. Bit layout is the same as the write-with-clear register."
+
+[registers.err_int_pend_wr.fields]
+spool_comp_b = { bits = [0, 0], grade = "established" }
+spool_comp_a = { bits = [1, 1], grade = "established" }
+spurious_b = { bits = [2, 2], grade = "established" }
+spurious_a = { bits = [3, 3], grade = "established" }
+wrb_terr_b = { bits = [4, 4], grade = "established" }
+wrb_terr_a = { bits = [5, 5], grade = "established" }
+wrb_werr_b = { bits = [6, 6], grade = "established" }
+wrb_werr_a = { bits = [7, 7], grade = "established" }
+sysstate_par_b = { bits = [8, 8], grade = "established" }
+sysstate_par_a = { bits = [9, 9], grade = "established" }
+sysad_data_ecc_b = { bits = [10, 10], grade = "established" }
+sysad_data_ecc_a = { bits = [11, 11], grade = "established" }
+sysad_addr_ecc_b = { bits = [12, 12], grade = "established" }
+sysad_addr_ecc_a = { bits = [13, 13], grade = "established" }
+syscmd_data_par_b = { bits = [14, 14], grade = "established" }
+syscmd_data_par_a = { bits = [15, 15], grade = "established" }
+syscmd_addr_par_b = { bits = [16, 16], grade = "established" }
+syscmd_addr_par_a = { bits = [17, 17], grade = "established" }
+spool_err_b = { bits = [18, 18], grade = "established" }
+spool_err_a = { bits = [19, 19], grade = "established" }
+ue_uncached_b = { bits = [20, 20], grade = "established" }
+ue_uncached_a = { bits = [21, 21], grade = "established" }
+sysstate_tag_b = { bits = [22, 22], grade = "established" }
+sysstate_tag_a = { bits = [23, 23], grade = "established" }
+mem_unc = { bits = [24, 24], grade = "established" }
+sysad_bad_data_b = { bits = [25, 25], grade = "established" }
+sysad_bad_data_a = { bits = [26, 26], grade = "established" }
+ue_cached_b = { bits = [27, 27], grade = "established" }
+ue_cached_a = { bits = [28, 28], grade = "established" }
+pkt_len_err_b = { bits = [29, 29], grade = "established" }
+pkt_len_err_a = { bits = [30, 30], grade = "established" }
+irb_err_b = { bits = [31, 31], grade = "established" }
+irb_err_a = { bits = [32, 32], grade = "established" }
+irb_timeout_b = { bits = [33, 33], grade = "established" }
+irb_timeout_a = { bits = [34, 34], grade = "established" }
+
+[registers.err_int_pend]
+offset = 0x400
+access = "rw"
+width = 64
+grade = "established"
+doc = "Error interrupt pending. A read returns every error source. A store clears each bit whose data bit is one. Bits 0 to 23 are twelve CPU B and CPU A pairs with B at the even bit, in order: spool complete, spurious message, the two write-buffer error kinds, system-state parity, system data ECC, system address ECC, command data parity, command address parity, spool error, uncached uncorrectable, system-state tag. Bit 24 is memory uncorrectable. Bits 25 to 34 are five pairs with A at the even bit: bad data, cached uncorrectable, packet length, request-buffer error and request-buffer timeout."
+
+[registers.err_int_pend.fields]
+spool_comp_b = { bits = [0, 0], grade = "established" }
+spool_comp_a = { bits = [1, 1], grade = "established" }
+spurious_b = { bits = [2, 2], grade = "established" }
+spurious_a = { bits = [3, 3], grade = "established" }
+wrb_terr_b = { bits = [4, 4], grade = "established" }
+wrb_terr_a = { bits = [5, 5], grade = "established" }
+wrb_werr_b = { bits = [6, 6], grade = "established" }
+wrb_werr_a = { bits = [7, 7], grade = "established" }
+sysstate_par_b = { bits = [8, 8], grade = "established" }
+sysstate_par_a = { bits = [9, 9], grade = "established" }
+sysad_data_ecc_b = { bits = [10, 10], grade = "established" }
+sysad_data_ecc_a = { bits = [11, 11], grade = "established" }
+sysad_addr_ecc_b = { bits = [12, 12], grade = "established" }
+sysad_addr_ecc_a = { bits = [13, 13], grade = "established" }
+syscmd_data_par_b = { bits = [14, 14], grade = "established" }
+syscmd_data_par_a = { bits = [15, 15], grade = "established" }
+syscmd_addr_par_b = { bits = [16, 16], grade = "established" }
+syscmd_addr_par_a = { bits = [17, 17], grade = "established" }
+spool_err_b = { bits = [18, 18], grade = "established" }
+spool_err_a = { bits = [19, 19], grade = "established" }
+ue_uncached_b = { bits = [20, 20], grade = "established" }
+ue_uncached_a = { bits = [21, 21], grade = "established" }
+sysstate_tag_b = { bits = [22, 22], grade = "established" }
+sysstate_tag_a = { bits = [23, 23], grade = "established" }
+mem_unc = { bits = [24, 24], grade = "established" }
+sysad_bad_data_b = { bits = [25, 25], grade = "established" }
+sysad_bad_data_a = { bits = [26, 26], grade = "established" }
+ue_cached_b = { bits = [27, 27], grade = "established" }
+ue_cached_a = { bits = [28, 28], grade = "established" }
+pkt_len_err_b = { bits = [29, 29], grade = "established" }
+pkt_len_err_a = { bits = [30, 30], grade = "established" }
+irb_err_b = { bits = [31, 31], grade = "established" }
+irb_err_a = { bits = [32, 32], grade = "established" }
+irb_timeout_b = { bits = [33, 33], grade = "established" }
+irb_timeout_a = { bits = [34, 34], grade = "established" }
+
+[registers.err_int_mask_a]
+offset = 0x408
+access = "rw"
+width = 64
+grade = "established"
+doc = "Masks the error pending bits for CPU A. A set bit lets that error raise the level 6 interrupt to CPU A. The header says only one processor per Bedrock should enable the memory uncorrectable bit."
+
+[registers.err_int_mask_a.fields]
+eima_mask = { bits = [34, 0], grade = "established", doc = "One bit per error pending bit." }
+
+[registers.err_int_mask_b]
+offset = 0x410
+access = "rw"
+width = 64
+grade = "established"
+doc = "Masks the error pending bits for CPU B. A set bit lets that error raise the level 6 interrupt to CPU B. The header says only one processor per Bedrock should enable the memory uncorrectable bit."
+
+[registers.err_int_mask_b.fields]
+eimb_mask = { bits = [34, 0], grade = "established", doc = "One bit per error pending bit." }
+
+[registers.err_stack_addr_a]
+offset = 0x418
+access = "rw"
+width = 64
+grade = "established"
+doc = "Address of the next write to the CPU A error stack. It increments after each write, and only the low bits that the stack size selects count up. The header says it is not reset by a soft reset."
+
+[registers.err_stack_addr_a.fields]
+esaa_addr = { bits = [32, 3], grade = "established", doc = "Address bits 32 to 3." }
+
+[registers.err_stack_addr_b]
+offset = 0x420
+access = "rw"
+width = 64
+grade = "established"
+doc = "Address of the next write to the CPU B error stack. It increments after each write, and only the low bits that the stack size selects count up. The header says it is not reset by a soft reset."
+
+[registers.err_stack_addr_b.fields]
+esab_addr = { bits = [32, 3], grade = "established", doc = "Address bits 32 to 3." }
+
+[registers.err_stack_size]
+offset = 0x428
+access = "rw"
+width = 64
+grade = "established"
+doc = "Size of the error stack that is spooled to local memory when an error occurs. The header describes it as a count of 64-bit entries and says it is not reset by a soft reset. The encoding of the four-bit field is not given in this header."
+
+[registers.err_stack_size.fields]
+ess_size = { bits = [3, 0], grade = "established" }
+
+[registers.err_status0_a]
+offset = 0x430
+access = "r"
+width = 64
+grade = "established"
+doc = "First error status record for CPU A. Saved only when the valid bit is set. Writing the matching clear alias clears both status records for this CPU. The header says it is not reset by a soft reset."
+
+[registers.err_status0_a.fields]
+esa_error_type = { bits = [2, 0], grade = "established", doc = "Error type; the header gives no encoding in this register's description." }
+esa_proc_req_num = { bits = [5, 3], grade = "established", doc = "Processor request number, as the header names it." }
+esa_supplemental = { bits = [16, 6], grade = "established", doc = "Supplemental message field." }
+esa_cmd = { bits = [24, 17], grade = "established", doc = "Command field." }
+esa_addr = { bits = [61, 25], grade = "established", doc = "Address field." }
+esa_over_run = { bits = [62, 62], grade = "established", doc = "Overrun flag; the header gives no further description." }
+esa_valid = { bits = [63, 63], grade = "established", doc = "Record valid." }
+
+[registers.err_status0_a_clr]
+offset = 0x438
+access = "w"
+width = 64
+grade = "established"
+doc = "Write-clear alias of the first error status record for CPU A. Any write clears both the status 0 and status 1 records for this CPU."
+
+[registers.err_status0_a_clr.fields]
+esca_error_type = { bits = [2, 0], grade = "established", doc = "Error type; the header gives no encoding in this register's description." }
+esca_proc_req_num = { bits = [5, 3], grade = "established", doc = "Processor request number, as the header names it." }
+esca_supplemental = { bits = [16, 6], grade = "established", doc = "Supplemental message field." }
+esca_cmd = { bits = [24, 17], grade = "established", doc = "Command field." }
+esca_addr = { bits = [61, 25], grade = "established", doc = "Address field." }
+esca_over_run = { bits = [62, 62], grade = "established", doc = "Overrun flag; the header gives no further description." }
+esca_valid = { bits = [63, 63], grade = "established", doc = "Record valid." }
+
+[registers.err_status1_a]
+offset = 0x440
+access = "r"
+width = 64
+grade = "established"
+doc = "Second error status record for CPU A. The header says it is not reset by a soft reset."
+
+[registers.err_status1_a.fields]
+spool_count = { bits = [20, 0], grade = "established", doc = "Spool count." }
+time_out_count = { bits = [28, 21], grade = "established", doc = "Timeout counter." }
+inval_count = { bits = [38, 29], grade = "established", doc = "Invalidate counter." }
+crb_num = { bits = [41, 39], grade = "established", doc = "Coherency request buffer number, as the header names it." }
+wrb = { bits = [42, 42], grade = "established", doc = "Write buffer flag; the header gives no further description." }
+e_bits = { bits = [44, 43], grade = "established", doc = "Encoding not given." }
+t_bit = { bits = [45, 45], grade = "established", doc = "Flag; name only in the header." }
+i_bit = { bits = [46, 46], grade = "established", doc = "Flag; name only in the header." }
+h_bit = { bits = [47, 47], grade = "established", doc = "Flag; name only in the header." }
+w_bit = { bits = [48, 48], grade = "established", doc = "Flag; name only in the header." }
+a_bit = { bits = [49, 49], grade = "established", doc = "Flag; name only in the header." }
+r_bit = { bits = [50, 50], grade = "established", doc = "Flag; name only in the header." }
+v_bit = { bits = [51, 51], grade = "established", doc = "Flag; name only in the header." }
+p_bit = { bits = [52, 52], grade = "established", doc = "Flag; name only in the header." }
+source = { bits = [63, 53], grade = "established", doc = "Source of the error." }
+
+[registers.err_status1_a_clr]
+offset = 0x448
+access = "w"
+width = 64
+grade = "established"
+doc = "Write-clear alias of the second error status record for CPU A. Any write clears both status records for this CPU."
+
+[registers.err_status1_a_clr.fields]
+spool_count = { bits = [20, 0], grade = "established", doc = "Spool count." }
+time_out_count = { bits = [28, 21], grade = "established", doc = "Timeout counter." }
+inval_count = { bits = [38, 29], grade = "established", doc = "Invalidate counter." }
+crb_num = { bits = [41, 39], grade = "established", doc = "Coherency request buffer number, as the header names it." }
+wrb = { bits = [42, 42], grade = "established", doc = "Write buffer flag; the header gives no further description." }
+e_bits = { bits = [44, 43], grade = "established", doc = "Encoding not given." }
+t_bit = { bits = [45, 45], grade = "established", doc = "Flag; name only in the header." }
+i_bit = { bits = [46, 46], grade = "established", doc = "Flag; name only in the header." }
+h_bit = { bits = [47, 47], grade = "established", doc = "Flag; name only in the header." }
+w_bit = { bits = [48, 48], grade = "established", doc = "Flag; name only in the header." }
+a_bit = { bits = [49, 49], grade = "established", doc = "Flag; name only in the header." }
+r_bit = { bits = [50, 50], grade = "established", doc = "Flag; name only in the header." }
+v_bit = { bits = [51, 51], grade = "established", doc = "Flag; name only in the header." }
+p_bit = { bits = [52, 52], grade = "established", doc = "Flag; name only in the header." }
+source = { bits = [63, 53], grade = "established", doc = "Source of the error." }
+
+[registers.err_status0_b]
+offset = 0x450
+access = "r"
+width = 64
+grade = "established"
+doc = "First error status record for CPU B. Saved only when the valid bit is set. Writing the matching clear alias clears both status records for this CPU. The header says it is not reset by a soft reset."
+
+[registers.err_status0_b.fields]
+esb_error_type = { bits = [2, 0], grade = "established", doc = "Error type; the header gives no encoding in this register's description." }
+esb_proc_req_num = { bits = [5, 3], grade = "established", doc = "Processor request number, as the header names it." }
+esb_supplemental = { bits = [16, 6], grade = "established", doc = "Supplemental message field." }
+esb_cmd = { bits = [24, 17], grade = "established", doc = "Command field." }
+esb_addr = { bits = [61, 25], grade = "established", doc = "Address field." }
+esb_over_run = { bits = [62, 62], grade = "established", doc = "Overrun flag; the header gives no further description." }
+esb_valid = { bits = [63, 63], grade = "established", doc = "Record valid." }
+
+[registers.err_status0_b_clr]
+offset = 0x458
+access = "w"
+width = 64
+grade = "established"
+doc = "Write-clear alias of the first error status record for CPU B. Any write clears both the status 0 and status 1 records for this CPU."
+
+[registers.err_status0_b_clr.fields]
+escb_error_type = { bits = [2, 0], grade = "established", doc = "Error type; the header gives no encoding in this register's description." }
+escb_proc_req_num = { bits = [5, 3], grade = "established", doc = "Processor request number, as the header names it." }
+escb_supplemental = { bits = [16, 6], grade = "established", doc = "Supplemental message field." }
+escb_cmd = { bits = [24, 17], grade = "established", doc = "Command field." }
+escb_addr = { bits = [61, 25], grade = "established", doc = "Address field." }
+escb_over_run = { bits = [62, 62], grade = "established", doc = "Overrun flag; the header gives no further description." }
+escb_valid = { bits = [63, 63], grade = "established", doc = "Record valid." }
+
+[registers.err_status1_b]
+offset = 0x460
+access = "r"
+width = 64
+grade = "established"
+doc = "Second error status record for CPU B. The header says it is not reset by a soft reset."
+
+[registers.err_status1_b.fields]
+spool_count = { bits = [20, 0], grade = "established", doc = "Spool count." }
+time_out_count = { bits = [28, 21], grade = "established", doc = "Timeout counter." }
+inval_count = { bits = [38, 29], grade = "established", doc = "Invalidate counter." }
+crb_num = { bits = [41, 39], grade = "established", doc = "Coherency request buffer number, as the header names it." }
+wrb = { bits = [42, 42], grade = "established", doc = "Write buffer flag; the header gives no further description." }
+e_bits = { bits = [44, 43], grade = "established", doc = "Encoding not given." }
+t_bit = { bits = [45, 45], grade = "established", doc = "Flag; name only in the header." }
+i_bit = { bits = [46, 46], grade = "established", doc = "Flag; name only in the header." }
+h_bit = { bits = [47, 47], grade = "established", doc = "Flag; name only in the header." }
+w_bit = { bits = [48, 48], grade = "established", doc = "Flag; name only in the header." }
+a_bit = { bits = [49, 49], grade = "established", doc = "Flag; name only in the header." }
+r_bit = { bits = [50, 50], grade = "established", doc = "Flag; name only in the header." }
+v_bit = { bits = [51, 51], grade = "established", doc = "Flag; name only in the header." }
+p_bit = { bits = [52, 52], grade = "established", doc = "Flag; name only in the header." }
+source = { bits = [63, 53], grade = "established", doc = "Source of the error." }
+
+[registers.err_status1_b_clr]
+offset = 0x468
+access = "w"
+width = 64
+grade = "established"
+doc = "Write-clear alias of the second error status record for CPU B. Any write clears both status records for this CPU."
+
+[registers.err_status1_b_clr.fields]
+spool_count = { bits = [20, 0], grade = "established", doc = "Spool count." }
+time_out_count = { bits = [28, 21], grade = "established", doc = "Timeout counter." }
+inval_count = { bits = [38, 29], grade = "established", doc = "Invalidate counter." }
+crb_num = { bits = [41, 39], grade = "established", doc = "Coherency request buffer number, as the header names it." }
+wrb = { bits = [42, 42], grade = "established", doc = "Write buffer flag; the header gives no further description." }
+e_bits = { bits = [44, 43], grade = "established", doc = "Encoding not given." }
+t_bit = { bits = [45, 45], grade = "established", doc = "Flag; name only in the header." }
+i_bit = { bits = [46, 46], grade = "established", doc = "Flag; name only in the header." }
+h_bit = { bits = [47, 47], grade = "established", doc = "Flag; name only in the header." }
+w_bit = { bits = [48, 48], grade = "established", doc = "Flag; name only in the header." }
+a_bit = { bits = [49, 49], grade = "established", doc = "Flag; name only in the header." }
+r_bit = { bits = [50, 50], grade = "established", doc = "Flag; name only in the header." }
+v_bit = { bits = [51, 51], grade = "established", doc = "Flag; name only in the header." }
+p_bit = { bits = [52, 52], grade = "established", doc = "Flag; name only in the header." }
+source = { bits = [63, 53], grade = "established", doc = "Source of the error." }
+
+[registers.spool_cmp_a]
+offset = 0x470
+access = "rw"
+width = 64
+grade = "established"
+doc = "Spool compare for CPU A. The header gives the field only."
+
+[registers.spool_cmp_a.fields]
+sca_compare = { bits = [19, 0], grade = "established" }
+
+[registers.spool_cmp_b]
+offset = 0x478
+access = "rw"
+width = 64
+grade = "established"
+doc = "Spool compare for CPU B. The header gives the field only."
+
+[registers.spool_cmp_b.fields]
+scb_compare = { bits = [19, 0], grade = "established" }
+
+[registers.crb_timeout_a]
+offset = 0x480
+access = "rw"
+width = 64
+grade = "established"
+doc = "Coherency request buffer timeout. The header says a timeout can be forced by writing one bits; the two fields are named read and write."
+
+[registers.crb_timeout_a.fields]
+cta_rrb = { bits = [3, 0], grade = "established", doc = "Read request buffer timeout field." }
+cta_wrb = { bits = [11, 4], grade = "established", doc = "Write request buffer timeout field." }
+
+[registers.crb_timeout_b]
+offset = 0x488
+access = "rw"
+width = 64
+grade = "established"
+doc = "Coherency request buffer timeout. The header says a timeout can be forced by writing one bits; the two fields are named read and write."
+
+[registers.crb_timeout_b.fields]
+ctb_rrb = { bits = [3, 0], grade = "established", doc = "Read request buffer timeout field." }
+ctb_wrb = { bits = [11, 4], grade = "established", doc = "Write request buffer timeout field." }
+
+[registers.sysad_errchk_en]
+offset = 0x490
+access = "rw"
+width = 64
+grade = "established"
+doc = "Controls error checking and forwarding of system bus errors. The header does not give a reset value."
+
+[registers.sysad_errchk_en.fields]
+see_ecc_gen_en = { bits = [0, 0], grade = "established", doc = "Generate ECC." }
+see_qual_gen_en = { bits = [1, 1], grade = "established", doc = "Generate the data quality indicator." }
+see_sadp_chk_en = { bits = [2, 2], grade = "established", doc = "Check address and data parity." }
+see_cmdp_chk_en = { bits = [3, 3], grade = "established", doc = "Check command parity." }
+see_state_chk_en = { bits = [4, 4], grade = "established", doc = "Check system state." }
+see_qual_chk_en = { bits = [5, 5], grade = "established", doc = "Check the data quality indicator." }
+
+[registers.force_bad_check_bit_a]
+offset = 0x498
+access = "rw"
+width = 64
+grade = "established"
+doc = "For CPU A: when reply data arrives with the uncorrectable indicator set, the check bits sent on the system bus are inverted in each set position, and the data quality indicator is not asserted."
+
+[registers.force_bad_check_bit_a.fields]
+fbcba_bad_check_bit = { bits = [7, 0], grade = "established", doc = "One bit per check bit." }
+
+[registers.force_bad_check_bit_b]
+offset = 0x4a0
+access = "rw"
+width = 64
+grade = "established"
+doc = "For CPU B: when reply data arrives with the uncorrectable indicator set, the check bits sent on the system bus are inverted in each set position, and the data quality indicator is not asserted."
+
+[registers.force_bad_check_bit_b.fields]
+fbcbb_bad_check_bit = { bits = [7, 0], grade = "established", doc = "One bit per check bit." }
+
+[registers.nack_cnt_a]
+offset = 0x4a8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Counts CPU A's negative acknowledgements while the count is enabled. The count clears on any other reply. When a negative acknowledgement arrives with the count equal to the compare, the count clears, the processor gets an error reply instead, and the CPU A NACK bit is set."
+
+[registers.nack_cnt_a.fields]
+nca_nack_cnt = { bits = [19, 0], grade = "established", doc = "Count." }
+nca_cnt_en = { bits = [20, 20], grade = "established", doc = "Enables the count." }
+
+[registers.nack_cnt_b]
+offset = 0x4b0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Counts CPU B's negative acknowledgements while the count is enabled. The count clears on any other reply. When a negative acknowledgement arrives with the count equal to the compare, the count clears, the processor gets an error reply instead, and the CPU B NACK bit is set."
+
+[registers.nack_cnt_b.fields]
+ncb_nack_cnt = { bits = [19, 0], grade = "established", doc = "Count." }
+ncb_cnt_en = { bits = [20, 20], grade = "established", doc = "Enables the count." }
+
+[registers.nack_cmp]
+offset = 0x4b8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Compare value for both NACK counts. It affects both processors on this interface."
+
+[registers.nack_cmp.fields]
+nc_nack_cmp = { bits = [19, 0], grade = "established", doc = "Compare value." }
+
+[registers.spool_mask]
+offset = 0x4c0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Chooses which error kinds are spooled. A set bit spools that error. It affects both processors on this interface."
+
+[registers.spool_mask.fields]
+sm_access_err = { bits = [0, 0], grade = "established" }
+sm_uncached_err = { bits = [1, 1], grade = "established" }
+sm_dir_err = { bits = [2, 2], grade = "established" }
+sm_timeout_err = { bits = [3, 3], grade = "established" }
+sm_poison_err = { bits = [4, 4], grade = "established" }
+sm_nack_oflow_err = { bits = [5, 5], grade = "established" }
+
+[registers.spurious_hdr_0]
+offset = 0x4c8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Captures the header of an incoming message that matches no coherency request buffer entry while the valid bit is clear. Write zero to clear. The header says it is not reset by a soft reset."
+
+[registers.spurious_hdr_0.fields]
+sh0_prev_valid_b = { bits = [0, 0], grade = "established", doc = "CPU B's error status record was valid." }
+sh0_prev_valid_a = { bits = [1, 1], grade = "established", doc = "CPU A's error status record was valid." }
+sh0_supplemental = { bits = [16, 6], grade = "established" }
+sh0_cmd = { bits = [24, 17], grade = "established" }
+sh0_addr = { bits = [61, 25], grade = "established" }
+sh0_tail = { bits = [62, 62], grade = "established" }
+sh0_valid = { bits = [63, 63], grade = "established" }
+
+[registers.spurious_hdr_1]
+offset = 0x4d0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Second half of the spurious message capture. Write zero to clear. The header says it is not reset by a soft reset."
+
+[registers.spurious_hdr_1.fields]
+sh1_source = { bits = [63, 53], grade = "established", doc = "Source of the spurious message." }
+
+[registers.err_inject]
+offset = 0x4d8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Arms the injection of one error kind into the next outbound system bus transfer of that type. The bit clears when the error is injected. Writing does not cause a transaction. A bit stays set until a matching transfer occurs, so software can poll it. Data quality injection is not in this register."
+
+[registers.err_inject.fields]
+cmd_syscmd_par_a = { bits = [0, 0], grade = "established" }
+data_syscmd_par_a = { bits = [1, 1], grade = "established" }
+cmd_sysad_corecc_a = { bits = [2, 2], grade = "established" }
+data_sysad_corecc_a = { bits = [3, 3], grade = "established" }
+cmd_sysad_uncecc_a = { bits = [4, 4], grade = "established" }
+data_sysad_uncecc_a = { bits = [5, 5], grade = "established" }
+sysresp_par_a = { bits = [6, 6], grade = "established" }
+cmd_syscmd_par_b = { bits = [32, 32], grade = "established" }
+data_syscmd_par_b = { bits = [33, 33], grade = "established" }
+cmd_sysad_corecc_b = { bits = [34, 34], grade = "established" }
+data_sysad_corecc_b = { bits = [35, 35], grade = "established" }
+cmd_sysad_uncecc_b = { bits = [36, 36], grade = "established" }
+data_sysad_uncecc_b = { bits = [37, 37], grade = "established" }
+sysresp_par_b = { bits = [38, 38], grade = "established" }
+
+[registers.reply_level]
+offset = 0x10060
+access = "rw"
+width = 64
+grade = "established"
+doc = "Stops the processors from issuing requests while the reply FIFO holds more entries than this value. The FIFO holds 63 entries, so a value of 63 never stops the processors, and a value of 0 stops them whenever any reply waits. The register is in its own 64 KB page."
+
+[registers.reply_level.fields]
+rl_reply_level = { bits = [5, 0], grade = "established", doc = "Threshold in entries." }
