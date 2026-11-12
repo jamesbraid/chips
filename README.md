@@ -98,6 +98,7 @@ Routine readings from the kernels and PROMs:
 - [docs/ip27-kernel-bridge-routines.md](docs/ip27-kernel-bridge-routines.md): Routines of the IP27 kernel that serve the Bridge family.
 - [docs/ip27-kernel-entropy-readers.md](docs/ip27-kernel-entropy-readers.md): Kernel routines that read the Hub real-time counter for entropy (IP27 build).
 - [docs/ip27-xconn.md](docs/ip27-xconn.md): The xconn.o pairing driver of the IP27 build.
+- [docs/ip27-prom-node-numbering.md](docs/ip27-prom-node-numbering.md): IP27 PROM 6.156: the order of its writes to the Hub node number, cached-alias size, region-present and region-size fields, and what the other processors do at each write, including the slave loop and launch handshake.
 - [docs/ip30-kernel-bridge-routines.md](docs/ip30-kernel-bridge-routines.md): Bridge-family accessors and attach routines of the IP30 kernel.
 - [docs/ip30-kernel-heart-routines.md](docs/ip30-kernel-heart-routines.md): HEART error, timer and reset routines of the IP30 kernel.
 - [docs/ip30-kernel-odyssey-routines.md](docs/ip30-kernel-odyssey-routines.md): Odyssey graphics routines of the IP30 kernel.
