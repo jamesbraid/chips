@@ -79,9 +79,14 @@ boards in the same brick may run at different speeds.
 **Established** (`3399 p. 2`). The processor family is R16000 or R16000A. The datasheet gives
 no clock, and the addendum says only that the brick "supports MIPS processors" (p. 2).
 
+**Established as printed** (`007-4576-006` p. 17). System Controller Software 1.5 lists L1 firmware
+support for "R16KA 700MHz and 800MHz" parts. The release also names Origin 3900 and Origin 350
+bricks but gives no brick type for that line, so it does not establish a clock for the Cx-brick.
+
 **Unknown.** The processor clock; which of the two parts a given board carries; whether the two
 parts can be mixed in one brick; the processor revision. Route: a Cx-brick `hinv` or the ordering
-guide for the matching IRIX release.
+guide for the matching IRIX release. The C-brick clock options and their part numbers are in
+[the C-brick notes](cbrick.md).
 
 **Memory.** Established (`007-4572-001` p. 4, Table 2, and p. 13):
 
