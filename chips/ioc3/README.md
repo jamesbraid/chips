@@ -255,6 +255,15 @@ The driver holds the register block base `0xf0` (record +816) and the chip windo
 - **MII** (`ef_phyget` `0x16fc`, `ef_phyput` `0x1794`, read in full): wait while bit 11 of `0x148` is set. A read stores
   `(phy << 5) | register | 0x400` to `0x148`, waits for bit 11 clear and returns the low 16 bits of `0x14c`. A write stores the
   data to `0x150`, then `(phy << 5) | register` to `0x148`, and waits for bit 11 clear.
+- **PHY identification and register 8 (Fuel base I/O, DP83843)**: `ef_phyprobe` (`if_ef.o` `0x1098`, IP35 6.5.30, read in full) scans PHY
+  addresses 0 to 31 reading only registers 2 and 3; it forms `(reg2 << 12) | (reg3 >> 4)`, accepts `0x15f41`, `0x15f42`, `0x15f43`, `0x181441`,
+  `0x20005c0` and `0x20005c1`, and keeps the low nibble of register 3 (established). The DP83843 revision B datasheet (printed page 45)
+  lists registers `08h` to `0Fh` and `1Ah` to `1Fh` as reserved; this part has no clause-28 link-partner next-page register at 8 (the partner's
+  next-page contents appear in register 5) (established from the datasheet). It states no read value for the reserved addresses
+  (**unknown**; zero is inferred). A guest read-out of all 32 registers occurs early in a Fuel boot; its caller is unidentified. `ef_dumpphy`
+  (`if_ef.o` `0x3980`, a 32-register dump) is a candidate, reached from `ef_dump` (`0x363c`), but no named call to `ef_dump` was found
+  (inferred only). An instruction trace with program counters at each MII access would settle the caller; a read of those addresses on a real
+  DP83843 would settle the value.
 - **Run time** (offsets are from the register block, `0xf0`): `ef_intr` (`0x1e14`) reads block +0x4 and stores the same value back; `ef_fill` (`0x1964`) stores `index << 3` to block +0x20;
   `ef_transmit` (`0x2868`, returns 0, 7, 127 or 132) stores `index << 7` to block +0x44; `ef_reclaim` (`0x904`) reads block +0x40 and shifts it right 7; `ef_getcdc`
   (`0x1de8`) splits block +0x30 into its low and high 16 bits.

@@ -60,9 +60,9 @@ constant is itself the fact), **I** inferred, **U** unknown. Widths are 32-bit w
 | `0xc` | other interrupt status | 4 | rw | `ioc4_attach` writes all ones; `ioc4_dma_error_intr` writes a port's bit; `xide_intr_clear` reads and writes it | established |
 | `0x10`, `0x14` | serial, other interrupt enable set | 4 | w | `ioc4_write_ireg` | established |
 | `0x18`, `0x1c` | serial, other interrupt enable clear | 4 | w | `ioc4_write_ireg` | established |
-| `0x20` | control | 4 | rw | `ioc4_attach` writes `0xf`; `hardware_init` polls bit 7 | inferred |
+| `0x20` | control: bits 3:0 byte-bus strobe width (rw), 6:4 granted requester, 7 no serial request, 8 no ATA request, 9 ATA won (status) | 4 | rw | `ioc4_attach` writes `0xf`; `hardware_init` polls bit 7; the IP35 PROM writes `0xf`, `8`, and `1` then `0` (see "PROM accesses" below) | polled bit 7 established; nibble role inferred from the public driver's field widths |
 | `0x24` | miscellaneous control: bits 3:0 PCI bus speed (0 is 33 MHz, 1 is 66 MHz) | 4 | rw | `ioc4_attach` read-modify-write (below) | inferred (role from a shipped development header; see [docs/coverage-ioc4.md](../../docs/coverage-ioc4.md)) |
-| `0x28` | external interrupt output | 4 | w | `ioc4_eiattach` writes 0 | inferred |
+| `0x28` | external interrupt output control: bits 15:0 count, 18:16 mode (7 is toggle), 30 diag, 31 output value (public Linux layout) | 4 | rw | `ioc4_eiattach` writes 0; the IP35 PROM reads it and writes it back with bit 30 cleared (see "PROM accesses" below) | inferred |
 | `0x30`, `0x34` | GPIO control set, clear | 4 | w | `ioc4_attach` writes `0x30` to `0x30`; `ioc4_eiattach` writes `0x200` or `0xff00` to `0x30` and 2 to `0x34` | inferred |
 | `0x38` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see docs/sources/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | unknown |
 | `0x40 + 4n` | GPIO pin n | 4 | w | `ioc4_set_proto` writes 0 or 1 to a pin number kept in the port's record | inferred |
@@ -134,6 +134,26 @@ public driver as timing and the current memory address, which no IOC4 path reach
   `0x28`, and connects its handler (established). The two stores to `0x30` are on one path in sequence. Inferred: edge select
   bits and the output held low.
 
+### PROM accesses to `0x20`, `0x28`, `0x30`, `0x34`, `0x38` (established as code; roles inferred)
+
+IP35 PROM, SGI Version 6.210 built Aug 26 2004, unpacked segment loaded at `0xc00000001fc00000` (no symbols; routines named
+by effect, addresses low 32 bits). Read as instructions, not run.
+
+- `0x1fc2af84`: `0x20` <- 1, `0x20` <- 0, read `0x28`, store it back with bit 30 cleared (`lui 0x4000; not; and`), `0x20` <- `0xf`,
+  `0x38` <- 0, `0x30` <- `0x1000f0`.
+- `0x1fc4757c`: read `0x28`, clear bit 30, `0x20` <- 8, `0x38` <- 0, `0x34` <- `0xfff7f`, `0x30` <- `0x1000f0`, then the UART set-up
+  at `0x380`. `0x1fc45f0c`: read `0x28`, clear bit 30, `0x30` <- `0x1000f0`.
+- `0x1fc2c10c` (shared with IOC3): for PCI id `0x100a10a9` it stores `0xf` to `0x20`, 0 to `0x38`, `0x1000f0` to `0x30`; it makes no
+  `0x28` access for this chip.
+- The kernel never reads `0x28`: `ioc4_eiattach` stores 0 as a plain write. So the firmware needs the read to complete and the
+  write to be accepted, and tests no value. The public driver uses the register only to run toggle mode (mode 7) and read bit 31
+  for clock calibration; no firmware seen does.
+- Public layout (Linux 4.9 `ioc4.h`, `ioc4.c`; a driver's naming, not a measurement): `0x30` bits 7:0 pin direction, 15:8 edge
+  select, 20 interrupt-output enable; so `0x1000f0` sets direction for pins 4 to 7 (the transceiver-mode pins) and the enable.
+- **Unknown:** modes 0 to 6 of `0x28`; what bit 30 does (the driver calls it the timebase control; the PROM clears it, nothing
+  sets it); the value read before any write; what the 1-then-0 pulse in `0x20` does; reset values of all of these. A register
+  capture of `0x0` to `0x5c` right after PCI reset, then writes of each mode with the pin observed, would settle them.
+
 ### Serial ports (established: `hardware_init`, `ioc4_serial_attach`, `ioc4_enable_tx`)
 
 - **Layout** (`ioc4_serial_attach` `0xbdc`, read through the four ports' pointer setup): each port record keeps a pointer to its register
@@ -148,6 +168,15 @@ public driver as timing and the current memory address, which no IOC4 path reach
 - **Ring base**: `hardware_init` stores the ring's bus address as high word then low word ORed with 1, to `0x304` and `0x300` when the
   port is the first of its pair, or to `0x30c` and `0x308` for the pair that starts at port 2; the other two ports write nothing
   (the first pair's configuration entry compares with the table start, the second with the start plus 80 bytes). Established.
+- **Control word bits (public layout, Linux `ioc4_serial.c`)**: 8:0 receive high-water mark, 16 transmit timer busy, 17 hardware flow control
+  enable, 18 and 19 post a receive record on DCD or CTS change, 21 diagnostic, 27 drain receive buffer, 28 ring DMA enable, 29 pause,
+  30 pause state, 31 reset. The IP35 PROM writes `0x100201ff` (`0x1fc4554c`) and `0x000201ff` (`0x1fc455b8`) to the four control words
+  (`0x310`, `0x32c`, `0x348`, `0x364`) and `0x80000000` (`0x1fc455d4`): so bit 17 (`0x20000`) is flow control, not the RS-232/RS-422
+  choice, which is the pin pair at `0x40 + 4n` (established as code; bit meaning is the public driver's). The PROM routine at `0x1fc455b8`
+  clears DMA enable without a pause step (it zeroes the producer and consumer words first); whether it waits for pause state was not
+  checked. `hardware_init` after its reset word discards queued ring entries by copying consumer to producer and producer to consumer, so
+  software expects nothing to survive a reset. **Unknown:** whether the chip finishes an in-flight transfer when bit 28 clears, and the
+  hardware behaviour at each CTS level with flow control on.
 - **Pause and indices**: as for IOC3 (`ioc4_enable_tx` `0x22ec` stores `0x20000000` to the control register and polls bit 30).
 - **Mode select**: `ioc4_set_proto` (`0x33c4`, returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin is the byte at +0x24 of the port's configuration record, which is 4, 5, 6 and 7 for ports 0 to 3 (extracted from the `.data` of `sio_ioc4.o`; see docs/coverage-ioc4.md, "Serial transceiver select").
 - **UART registers**: line control at UART+3, divisor latch at +0 and +1, FIFO control at +2, modem control at +4, line status at +5
