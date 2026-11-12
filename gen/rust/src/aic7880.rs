@@ -1,5 +1,5 @@
 // generated from defs/aic7880.toml by defs-gen - do not edit, change the source
-// Adaptec AIC-7880 SCSI controller on the O2: host DMA register contract
+// Adaptec AIC-7880 SCSI controller on the O2: host DMA and SCB register contract
 #![allow(dead_code)]
 
 /// Host PCI address for the host DMA transfer, four byte registers at 0x88 to 0x8b. Loading it also loads SHADDR. The byte significance across the four b (inferred)
@@ -13,6 +13,11 @@ pub mod hcnt {
     pub const OFFSET: u64 = 0x8c;
     pub const COUNT: u32 = 3;
     pub const STRIDE: u64 = 1;
+}
+/// SCB page select latch. All eight bits read back as written, whether or not external SRAM is selected and however much of it is fitted, so a read-back  (inferred)
+pub mod scbptr {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x90;
 }
 /// Data FIFO control. Bits 5 and 4 enable SCSI and SCSI-block DMA, bit 3 enables host DMA, bit 2 selects the direction, bit 1 flushes the FIFO and bit 0  (inferred)
 pub mod dfcntrl {
@@ -83,4 +88,36 @@ pub mod dfcntrl {
 pub mod dfstatus {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x94;
+}
+/// SCB byte counter. Bits 6:5 read zero. With SCBAUTO clear the window offset selects the byte and the counter is not used. With SCBAUTO set the counter  (inferred)
+pub mod scbcnt {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x9a;
+    pub mod scbauto { // bits 7:7, inferred
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod scbofs { // bits 4:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x1f;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// SCB window: 32 byte positions of the page that SCBPTR selects. Sequencer accesses are byte wide. Host reads are byte wide. Host writes are byte wide i (inferred)
+pub mod scbwin {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0xa0;
+    pub const COUNT: u32 = 32;
+    pub const STRIDE: u64 = 1;
 }

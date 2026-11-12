@@ -1,10 +1,10 @@
 """generated from defs/aic7880.toml by defs-gen - do not edit, change the source
-Adaptec AIC-7880 SCSI controller on the O2: host DMA register contract"""
+Adaptec AIC-7880 SCSI controller on the O2: host DMA and SCB register contract"""
 
 UNIT = 'aic7880'
-REGISTERS = {'lhaddr': {'offset': 136, 'access': 'rw', 'width': 32, 'count': 1, 'stride': 4, 'space': None, 'reset': 'unknown', 'grade': 'inferred'}, 'hcnt': {'offset': 140, 'access': 'rw', 'width': 8, 'count': 3, 'stride': 1, 'space': None, 'reset': 'unknown', 'grade': 'inferred'}, 'dfcntrl': {'offset': 147, 'access': 'rw', 'width': 8, 'count': 1, 'stride': 1, 'space': None, 'reset': 0, 'grade': 'inferred'}, 'dfstatus': {'offset': 148, 'access': 'r', 'width': 8, 'count': 1, 'stride': 1, 'space': None, 'reset': 'unknown', 'grade': 'inferred'}}
+REGISTERS = {'lhaddr': {'offset': 136, 'access': 'rw', 'width': 32, 'count': 1, 'stride': 4, 'space': None, 'reset': 'unknown', 'grade': 'inferred'}, 'hcnt': {'offset': 140, 'access': 'rw', 'width': 8, 'count': 3, 'stride': 1, 'space': None, 'reset': 'unknown', 'grade': 'inferred'}, 'scbptr': {'offset': 144, 'access': 'rw', 'width': 8, 'count': 1, 'stride': 1, 'space': None, 'reset': 0, 'grade': 'inferred'}, 'dfcntrl': {'offset': 147, 'access': 'rw', 'width': 8, 'count': 1, 'stride': 1, 'space': None, 'reset': 0, 'grade': 'inferred'}, 'dfstatus': {'offset': 148, 'access': 'r', 'width': 8, 'count': 1, 'stride': 1, 'space': None, 'reset': 'unknown', 'grade': 'inferred'}, 'scbcnt': {'offset': 154, 'access': 'rw', 'width': 8, 'count': 1, 'stride': 1, 'space': None, 'reset': 0, 'grade': 'inferred'}, 'scbwin': {'offset': 160, 'access': 'rw', 'width': 8, 'count': 32, 'stride': 1, 'space': None, 'reset': 'unknown', 'grade': 'inferred'}}
 WORDS = {}
-FIELDS = {'lhaddr': {}, 'hcnt': {}, 'dfcntrl': {'scsien': (5, 5), 'sdmaen': (4, 4), 'hdmaen': (3, 3), 'direction': (2, 2), 'fifoflush': (1, 1), 'fiforeset': (0, 0)}, 'dfstatus': {}}
+FIELDS = {'lhaddr': {}, 'hcnt': {}, 'scbptr': {}, 'dfcntrl': {'scsien': (5, 5), 'sdmaen': (4, 4), 'hdmaen': (3, 3), 'direction': (2, 2), 'fifoflush': (1, 1), 'fiforeset': (0, 0)}, 'dfstatus': {}, 'scbcnt': {'scbauto': (7, 7), 'scbofs': (4, 0)}, 'scbwin': {}}
 ENUMS = {}
 FIELD_ENUM = {}
 CONSTANTS = {}

@@ -1,7 +1,7 @@
 unit = "aic7880"
 prefix = "AIC7880"
-title = "Adaptec AIC-7880 SCSI controller on the O2: host DMA register contract"
-doc = "The O2 onboard SCSI controller's host-DMA window: host address and count, the DMA control and FIFO status registers. Offsets and widths come from the cited Adaptec AIC-7870 data book, applied to the AIC-7880 as its sibling. Every item is inferred until an AIC-7880 book or a measurement settles it."
+title = "Adaptec AIC-7880 SCSI controller on the O2: host DMA and SCB register contract"
+doc = "The O2 onboard SCSI controller's host-DMA window, its DMA control and FIFO status registers, and the SCB page pointer, byte counter and window. Offsets and widths come from the cited Adaptec AIC-7870 data book, applied to the AIC-7880 as its sibling. Every item is inferred until an AIC-7880 book or a measurement settles it."
 from = "Adaptec AIC-7870 Data Book (sibling, applied to AIC-7880)"
 public_from = ["Adaptec AIC-7870 Data Book"]
 
@@ -47,3 +47,35 @@ width = 8
 grade = "inferred"
 from = "Adaptec AIC-7870 Data Book, PDF pp. 145-148 (printed 4-76 to 4-79); sibling"
 doc = "Data FIFO status. Reports FIFOEMP, FIFOFULL, FIFOQWDEMP, MREQPEND and HDONE. The bit positions are not in the cited extract, so no field is listed here and they stay unknown. MREQPEND is a pending need, not a PCI request in flight."
+
+[registers.scbptr]
+offset = 0x90
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 53, 63-64, 153 and 180; sibling"
+doc = "SCB page select latch. All eight bits read back as written, whether or not external SRAM is selected and however much of it is fitted, so a read-back of 0xff does not show that page 255 exists. Selects one 32-byte page for the SCB window and for SCBCNT-addressed accesses. Reset is zero as the cited book's reset description gives it, not a value read after initialisation."
+
+[registers.scbcnt]
+offset = 0x9a
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 63-64, 153-154, 176-177 and 180; sibling"
+doc = "SCB byte counter. Bits 6:5 read zero. With SCBAUTO clear the window offset selects the byte and the counter is not used. With SCBAUTO set the counter replaces the window offset, advances once per completed logical SCB byte access and wraps within the 32-byte page. Reset is zero as the cited book's reset description gives it."
+
+[registers.scbcnt.fields]
+scbauto = { bits = [7, 7], grade = "inferred", doc = "1 makes the counter address the SCB window and advance on each completed byte access; 0 leaves the window offset in control" }
+scbofs  = { bits = [4, 0], grade = "inferred", doc = "byte offset within the 32-byte page, used when SCBAUTO is clear and advanced by the counter when it is set" }
+
+[registers.scbwin]
+offset = 0xa0
+access = "rw"
+width = 8
+count = 32
+stride = 1
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 63-64, 153-154 and 176-177; sibling"
+doc = "SCB window: 32 byte positions of the page that SCBPTR selects. Sequencer accesses are byte wide. Host reads are byte wide. Host writes are byte wide in either SCBAUTO mode, and a full four-byte write is accepted only with SCBAUTO set, filling four successive positions. Host access needs a paused sequencer or the automatic access pause. Byte order of the four data bytes against the CPU is not in the cited extract and stays unknown."
