@@ -1,6 +1,24 @@
 <?xml version="1.0" ?>
 <!-- generated from defs/hub_extra.toml by defs-gen - do not edit, change the source -->
 <genxml unit="hub_extra" prefix="HUB" title="Hub block transfer engine registers and control bits outside the census">
+  <struct name="IIO_WID" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u" register="yes" offset="0x400000" access="r" reset="unknown">
+    <doc>Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the reset is unknown.</doc>
+    <field name="rev" start="28" size="4" type="uint" grade="established"/>
+    <field name="part" start="12" size="16" type="uint" grade="established"/>
+    <field name="mfg" start="1" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="IIO_ILAPR" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPR" register="yes" offset="0x400100" access="rw" reset="unknown">
+    <doc>Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. Access is assumed read and write.</doc>
+  </struct>
+  <struct name="IIO_ILAPO" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPO" register="yes" offset="0x400108" access="w" reset="unknown">
+    <doc>Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only.</doc>
+  </struct>
+  <struct name="IIO_ITTE" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="unknown">
+    <doc>Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption. Reset is unknown.</doc>
+    <field name="iospace" start="12" size="1" type="uint" grade="established"/>
+    <field name="widget" start="8" size="4" type="uint" grade="established"/>
+    <field name="slice" start="0" size="5" type="uint" grade="established"/>
+  </struct>
   <struct name="IIO_IBNA_0" size="8" grade="inferred" register="yes" offset="0x410020" access="rw" reset="unknown">
     <doc>Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The header gives no access type, so rw is assumed.</doc>
   </struct>
@@ -20,4 +38,28 @@
   <constant name="IIO_IBLS_BUSY" value="0x100000" grade="established"/>
   <constant name="IIO_IECLR_BTE0" value="0x20000" grade="inferred"/>
   <constant name="IIO_IECLR_BTE1" value="0x40000" grade="inferred"/>
+  <constant name="IIO_IIDSR_ENB" value="0x1000000" grade="established"/>
+  <constant name="IIO_IIDSR_LVL_MASK" value="0x3f" grade="established"/>
+  <constant name="IIO_IIDSR_NODE_MASK" value="0xff00" grade="established"/>
+  <constant name="IIO_IIDSR_SENT" value="0x10000000" grade="established"/>
+  <constant name="IIO_ILCSR_BM8" value="0x800" grade="established"/>
+  <constant name="IIO_ILCSR_LLP_EN" value="0x400" grade="established"/>
+  <constant name="IIO_ILCSR_MAX_BURST_MASK" value="0x3ff00000000" grade="established"/>
+  <constant name="IIO_ILCSR_MAX_RETRY_MASK" value="0x3ff0000" grade="established"/>
+  <constant name="IIO_ILCSR_NULL_TO_MASK" value="0x3f" grade="established"/>
+  <constant name="IIO_ILCSR_WARM_RESET" value="0x100" grade="established"/>
+  <constant name="IIO_ILLR_CB_CNT_MASK" value="0xffff0000" grade="established"/>
+  <constant name="IIO_ILLR_SN_CNT_MASK" value="0xffff" grade="established"/>
+  <constant name="IIO_ITTE_BASE" value="0x400160" grade="established"/>
+  <constant name="IIO_ITTE_INVALID_WIDGET" value="0x3" grade="established"/>
+  <constant name="IIO_ITTE_IOSP" value="0x1000" grade="established"/>
+  <constant name="IIO_LLP_CSR_IS_UP" value="0x2000" grade="established"/>
+  <constant name="IIO_LLP_CSR_LLP_STAT_MASK" value="0x3000" grade="established"/>
+  <constant name="IIO_WCR_DIR_CON" value="0x20000" grade="established"/>
+  <constant name="IIO_WCR_WIDGET_ID_MASK" value="0xf" grade="established"/>
+  <constant name="IIO_WID_PART_HUB" value="0xc101" grade="established"/>
+  <constant name="IIO_WSTAT_ECRAZY" value="0x100000000" grade="established"/>
+  <constant name="IIO_WSTAT_TXRETRY" value="0x200" grade="established"/>
+  <constant name="IIO_WSTAT_TXRETRY_MASK" value="0x7f0000" grade="established"/>
+  <constant name="LNK_STAT_WORKING" value="0x2" grade="inferred"/>
 </genxml>

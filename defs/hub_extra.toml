@@ -41,6 +41,55 @@ doc = "Interrupt address of engine 1. Offset and name are from the public header
 level = { bits = [22, 16], grade = "established", doc = "Interrupt level: mask 0x7f shifted to bits 22:16 in the public header." }
 node = { bits = [8, 0], grade = "established", doc = "Destination node number: mask 0x1ff in the public header." }
 
+# Hub I/O registers the census did not reach. Offsets, names and field masks are from the public
+# Linux SN0 Hub I/O header (Linux 7.2-rc7). The
+# header states no access type or reset value, so each register is graded inferred as a whole.
+[registers.iio_wid]
+offset = 0x400000
+access = "r"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+doc = "Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the reset is unknown."
+
+[registers.iio_wid.fields]
+rev = { bits = [31, 28], grade = "established", doc = "Revision number, bits 31:28, in the header's identification structure." }
+part = { bits = [27, 12], grade = "established", doc = "Widget part number, bits 27:12, in the header's identification structure. The header comment gives the Hub's value, IIO_WID_PART_HUB." }
+mfg = { bits = [11, 1], grade = "established", doc = "Manufacturer number, bits 11:1, in the header's identification structure. The header comment names a manufacturer; the name is not imported here, and the value is unknown." }
+
+[registers.iio_ilapr]
+offset = 0x400100
+access = "rw"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPR"
+doc = "Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. Access is assumed read and write."
+
+[registers.iio_ilapo]
+offset = 0x400108
+access = "w"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPO"
+doc = "Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only."
+
+# Big-window translation entries. The header numbers them 0 to 6 and says the hardware manuals
+# number them 1 to 7. Eight bytes apart. The census has an inferred name at the first offset and a
+# write-only entry at the seventh; both are left as the census states them.
+[registers.iio_itte]
+offset = 0x400160
+count = 7
+access = "rw"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+doc = "Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption. Reset is unknown."
+
+[registers.iio_itte.fields]
+slice = { bits = [4, 0], grade = "established", doc = "Slice field, bits 4:0 (IIO_ITTE_OFFSET_MASK in the public header)." }
+widget = { bits = [11, 8], grade = "established", doc = "Target widget number, bits 11:8 (IIO_ITTE_WIDGET_MASK, shift 8)." }
+iospace = { bits = [12, 12], grade = "established", doc = "I/O space bit, bit 12 (IIO_ITTE_IOSP). Set selects the widget's I/O space, clear its memory space." }
+
 [constants]
 # Control/terminate bits. The census carries the notify value (0x10) only as an inferred
 # constant. The names and the zero-fill and poison bits are from the public header.
@@ -52,3 +101,28 @@ IIO_IBLS_BUSY = { value = 0x100000, grade = "established", doc = "Busy bit of th
 # I/O error clear bits for the two engines. The public header marks both meanings with a question mark.
 IIO_IECLR_BTE0 = { value = 0x20000, grade = "inferred", doc = "Clears engine 0's latched error, per the public header's name. The header's comment on the bit is marked uncertain, so the meaning is inferred." }
 IIO_IECLR_BTE1 = { value = 0x40000, grade = "inferred", doc = "Clears engine 1's latched error, per the public header's name. The header's comment on the bit is marked uncertain, so the meaning is inferred." }
+# Hub I/O field masks. Values are the header's masks, shifted into place.
+IIO_WID_PART_HUB = { value = 0xc101, grade = "established", doc = "Widget part number the public header's comment assigns to the Hub (hub=c101)." }
+IIO_WSTAT_ECRAZY = { value = 0x100000000, grade = "established", doc = "Crazy bit of the widget status register, bit 32, named ECRAZY in the public header ('Hub gone crazy'). The header gives no behaviour for it." }
+IIO_WSTAT_TXRETRY = { value = 0x200, grade = "established", doc = "Transmit retry timeout bit of the widget status register, bit 9, from the public header's mask." }
+IIO_WSTAT_TXRETRY_MASK = { value = 0x7f0000, grade = "established", doc = "Transmit retry counter, bits 22:16: mask 0x7f at shift 16 in the public header. The same header's bit-field structure gives eight bits at 23:16, so the width is disputed inside the header and not settled here." }
+IIO_WCR_WIDGET_ID_MASK = { value = 0xf, grade = "established", doc = "The Hub's own widget number, bits 3:0 of the widget control register. The public header reads the number with this mask. The reset value is not imported." }
+IIO_WCR_DIR_CON = { value = 0x20000, grade = "established", doc = "Widget direct-connect bit, bit 17 of the widget control register, named in the public header's structure." }
+IIO_LLP_CSR_IS_UP = { value = 0x2000, grade = "established", doc = "Link-up bit, bit 13 of the link control and status register, named IS_UP in the public header. The header names the bit only; what the other values of the status field mean is not imported." }
+IIO_LLP_CSR_LLP_STAT_MASK = { value = 0x3000, grade = "established", doc = "Two-bit link status field, bits 13:12, named LLP_STAT_MASK in the public header." }
+LNK_STAT_WORKING = { value = 0x2, grade = "inferred", doc = "Value of the link status field the public header names WORKING. The name is the driver's expectation. The header names no other value of the field." }
+IIO_ILCSR_WARM_RESET = { value = 0x100, grade = "established", doc = "Warm reset bit of the link control register, bit 8, named ILCSR_WARM_RESET in the public header. The census carries the same value as an inferred constant. The header gives no behaviour for it." }
+IIO_ILCSR_LLP_EN = { value = 0x400, grade = "established", doc = "Link enable bit, bit 10 of the link control register, named llp_en in the public header's structure." }
+IIO_ILCSR_BM8 = { value = 0x800, grade = "established", doc = "Eight-bit mode bit, bit 11 of the link control register, named bm8 in the public header's structure." }
+IIO_ILCSR_MAX_BURST_MASK = { value = 0x3ff00000000, grade = "established", doc = "Maximum burst field, bits 41:32 of the link control register, from the public header's structure." }
+IIO_ILCSR_MAX_RETRY_MASK = { value = 0x3ff0000, grade = "established", doc = "Maximum retry field, bits 25:16 of the link control register, from the public header's structure." }
+IIO_ILCSR_NULL_TO_MASK = { value = 0x3f, grade = "established", doc = "Null timeout field, bits 5:0 of the link control register, from the public header's structure." }
+IIO_ILLR_CB_CNT_MASK = { value = 0xffff0000, grade = "established", doc = "Check-bit error count, bits 31:16 of the link log register, from the public header's structure." }
+IIO_ILLR_SN_CNT_MASK = { value = 0xffff, grade = "established", doc = "Sequence-number error count, bits 15:0 of the link log register, from the public header's structure." }
+IIO_IIDSR_SENT = { value = 0x10000000, grade = "established", doc = "Interrupt-sent bit, bit 28 of the interrupt destination register, from the public header's mask." }
+IIO_IIDSR_ENB = { value = 0x1000000, grade = "established", doc = "Interrupt enable bit, bit 24 of the interrupt destination register, from the public header's mask." }
+IIO_IIDSR_NODE_MASK = { value = 0xff00, grade = "established", doc = "Destination node field, bits 15:8, from the public header's mask. The reviewed tree has no bit-field structure for this register, so only the masks are imported." }
+IIO_IIDSR_LVL_MASK = { value = 0x3f, grade = "established", doc = "Interrupt number field, bits 5:0 of the interrupt destination register, from the public header's mask." }
+IIO_ITTE_BASE = { value = 0x400160, grade = "established", doc = "Offset of big-window translation entry 0, from the public header. Entry n sits at this value plus 8 times n. The census has entry 0 under an inferred name and entry 6 as a write-only register, which overlaps the header's entry 6." }
+IIO_ITTE_IOSP = { value = 0x1000, grade = "established", doc = "I/O space bit of a translation entry, bit 12, from the public header." }
+IIO_ITTE_INVALID_WIDGET = { value = 0x3, grade = "established", doc = "Widget value the public header's disable routine writes to park a translation entry." }
