@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/r5000_identity.toml by defs-gen - do not edit, change the source -->
+<genxml unit="r5000_identity" prefix="R5K" title="MIPS R5000 family processor identity, reset entries, cache geometry and TLB size" from="NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001">
+  <doc>Constants for the R5000 processor line as the NEC VR5000 user's manual and the MIPS R5000 overview describe it: the PRId and FCR0 identity words, the reset vector and the register values a cold reset and a warm entry set, the primary and secondary cache geometry, the joint TLB size and the physical and user address widths. This unit holds constants only; the CP0 and FCR31 field layouts are in the r5000_cp0 unit and the prose is in docs/r5000.md. Grades: established means the cited manual or overview states it; inferred means a value taken from public owner reports rather than a manual; unknown items are listed in the page.</doc>
+  <constant name="R5K_COLD_RANDOM" value="0x2f" grade="established"/>
+  <constant name="R5K_COLD_WIRED" value="0x0" grade="established"/>
+  <constant name="R5K_FCR0_OBSERVED" value="0x2310" grade="inferred" from="Public owner reports of O2 PRId and FCR0 words (Usenet)"/>
+  <constant name="R5K_IMP_VR5000" value="0x23" grade="established"/>
+  <constant name="R5K_PHYS_ADDR_BITS" value="0x24" grade="established"/>
+  <constant name="R5K_PRID_IMP_MASK" value="0xff00" grade="established"/>
+  <constant name="R5K_PRID_IMP_SHIFT" value="0x8" grade="established"/>
+  <constant name="R5K_PRID_OBSERVED" value="0x2321" grade="inferred" from="Public owner reports of O2 PRId and FCR0 words (Usenet)"/>
+  <constant name="R5K_PRID_REV_MASK" value="0xff" grade="established"/>
+  <constant name="R5K_PRIMARY_CACHE_BYTES" value="0x8000" grade="established"/>
+  <constant name="R5K_PRIMARY_LINE_BYTES" value="0x20" grade="established"/>
+  <constant name="R5K_PRIMARY_SETS" value="0x200" grade="established"/>
+  <constant name="R5K_PRIMARY_WAYS" value="0x2" grade="established"/>
+  <constant name="R5K_RESET_VECTOR" value="0xffffffffbfc00000" grade="established"/>
+  <constant name="R5K_SECONDARY_LINE_BYTES" value="0x20" grade="established"/>
+  <constant name="R5K_SECONDARY_WAYS" value="0x1" grade="established"/>
+  <constant name="R5K_SYSCLK_MAX_MHZ" value="0x64" grade="established"/>
+  <constant name="R5K_TLB_ENTRIES" value="0x30" grade="established"/>
+  <constant name="R5K_USER_ADDR_BITS" value="0x28" grade="established"/>
+  <constant name="R5K_WARM_STATUS_SET" value="0x500004" grade="established"/>
+</genxml>
