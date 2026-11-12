@@ -188,7 +188,7 @@ Sample-position register, analog output, position A. The upper 14 bits count fra
 
 ### Register `ust_counter`
 
-Free-running counter that the driver reads for timestamps and a liveness check: two reads 10 microseconds apart must differ by at least 3. No write to it exists. The tick period is inferred to be about 1 microsecond (the driver scales by 800 or 960 ns); reset value, wrap, and read side effects are unknown. On board mode 7 it runs from reset with no enable write.
+Free-running counter that the driver reads for timestamps and a liveness check: two reads 10 microseconds apart must differ by at least 3. No write to it exists. The tick period is inferred to be about 1 microsecond (the driver scales by 800 or 960 ns); the reset routine that runs on the PCI audio board stores 960 ns (UST_TICK_NS_FIXED) or a period computed from the Bedrock register, and the choice is unknown. Reset value, wrap, and read side effects are unknown. On board mode 7 it runs from reset with no enable write.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -200,7 +200,7 @@ Receiver and video-reference status. The driver reads it only through the status
 
 ### Register `ust_control`
 
-Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown.
+Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see docs/rad1.md).
 
 ### Register `adat_in_ctrl`
 
@@ -231,7 +231,7 @@ Analog input channel control. Start value is 0x03000000 on board mode 12 and 0x0
 
 ### Register `adat_out_ctrl`
 
-ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the driver leaves an unknown earlier value. The shadow word is written whole; the driver clears the enable at subsystem start.
+ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see docs/rad1.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -313,7 +313,7 @@ Written 0 at start on board modes 7 and 13; skipped on mode 12. Purpose unknown.
 
 ### Register `gpio_relay`
 
-General-purpose output 1. On the Octane board a vendor PROM treats it as the analog-output relay: 3 releases the mute and 2 applies it; halt writes 2 then 0. On the MediaIO card the mux routine writes 2 then 3 after its 16 shifted bits, which latches the word into the clock-selection logic (the latch strobe; effect inferred). It has no effect on any DMA channel as far as the sources show.
+General-purpose output 1. On the Octane board a vendor PROM treats it as the analog-output relay: 3 releases the mute and 2 applies it; halt writes 2 then 0. On the MediaIO card the mux routine writes 2 then 3 after its 16 shifted bits, which latches the word into the clock-selection logic (the latch strobe; effect inferred). It has no effect on any DMA channel as far as the sources show. On the PCI audio board (mode 13) a second reading of the shipped drivers finds 0 written here at start, which the reading above does not cover.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -322,7 +322,7 @@ General-purpose output 1. On the Octane board a vendor PROM treats it as the ana
 
 ### Register `gpio_data`
 
-General-purpose output 2. On the MediaIO card (mode 7) it is the serial data line of the 16-bit video-clock mux: for each of 16 bits, most significant first, the driver writes (bit | 2), then drops and raises the clock on the analog input control register (bit 27), and after all 16 bits writes 2 then 3 to gpio_relay as the latch strobe and restores this register from a shadow. Separately every 1024 status passes (about 1.024 s) the driver rewrites it as (selector | 2), flipping the selector between 0 and 1, which is the 3, 2, 3, 2 pattern seen on the bus: the selector alternates 0 and 1 between writes, bit 1 stays set, and the driver samples bit 10 of the register 0x34 mirror in the status slot between writes (what that probes is unknown). On the Octane board a vendor PROM uses it as the DAC mute: 3 mutes and 2 unmutes, and the unmute also writes 0x03000000 to the analog input control.
+General-purpose output 2. On the MediaIO card (mode 7) it is the serial data line of the 16-bit video-clock mux: for each of 16 bits, most significant first, the driver writes (bit | 2), then drops and raises the clock on the analog input control register (bit 27), and after all 16 bits writes 2 then 3 to gpio_relay as the latch strobe and restores this register from a shadow. Separately every 1024 status passes (about 1.024 s) the driver rewrites it as (selector | 2), flipping the selector between 0 and 1, which is the 3, 2, 3, 2 pattern seen on the bus: the selector alternates 0 and 1 between writes, bit 1 stays set, and the driver samples bit 10 of the register 0x34 mirror in the status slot between writes (what that probes is unknown). On the Octane board a vendor PROM uses it as the DAC mute: 3 mutes and 2 unmutes, and the unmute also writes 0x03000000 to the analog input control. On the PCI audio board (mode 13) a second reading of the shipped drivers finds 0 written here at start.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -617,6 +617,19 @@ Slot word at byte offset 0x78 of each status slot. Bits not listed are never rea
 | `aes_in_subcode` | 6 | inferred |  |
 | `adat_in_subcode` | 7 | inferred |  |
 
+### Enum `status_pointer_slot`
+
+| Label | Value | Grade | Source |
+|---|---|---|---|
+| `adat_in` | 0 | established |  |
+| `aes_in` | 8 | established |  |
+| `analog_in` | 16 | established |  |
+| `adat_in_subcode` | 24 | established |  |
+| `aes_in_subcode` | 32 | established |  |
+| `adat_out` | 40 | established |  |
+| `aes_out` | 48 | established |  |
+| `analog_out` | 56 | established |  |
+
 ## Constants
 
 | Constant | Value | Grade | Source | Description |
@@ -640,6 +653,8 @@ Slot word at byte offset 0x78 of each status slot. Bits not listed are never rea
 | `PCI_CLASS_OCTANE` | 0x0 | established | public Linux lspci capture of the onboard RAD, linux-pci-list message 20170213224512.GA8080@bhelgaas-glaptop.roam.corp.google.com (2017-02-13), bus 0 device 3 function 0 | PCI class code of the onboard RAD on the Octane board: the 24-bit class field (config offset 0x08 bits 31:8) reads zero. Revision 0xc0 is the same listing's byte (REV_OCTANE) |
 | `PCI_DEVICE` | 0x5 | established |  | PCI device id the driver registers for |
 | `PCI_VENDOR` | 0x10a9 | established |  | PCI vendor id the driver registers for |
+| `RBUF_REQUEST_BOARD12` | 0x3 | established |  | Read-response buffers the driver asks the bridge for on the Octane base board |
+| `RBUF_REQUEST_BOARD13` | 0x2 | established |  | Read-response buffers the driver asks the bridge for on the PCI audio board. Board 12 asks for three |
 | `REV_MEDIAIO` | 0x70 | inferred |  | PCI revision byte presented by the MediaIO card: board mode 7, chip revision 0. Inferred from the mode dispatch and the hinv text, not from a config read |
 | `REV_OCTANE` | 0xc0 | established |  | PCI revision byte on the Octane base board: board mode 12, chip revision 0 |
 | `REV_PCI_BOARD` | 0xd0 | inferred |  | PCI revision byte shown by the PCI audio board and Origin 3000-family base I/O: board mode 13. Inferred from hinv |
@@ -647,6 +662,8 @@ Slot word at byte offset 0x78 of each status slot. Bits not listed are never rea
 | `RING_WORDS_ANALOG` | 0x400 | established |  | Ring size in 32-bit words (4 KiB) for the analog, AES3 and subcode channels |
 | `STATUS_INTERVAL_DRIVER` | 0xfa | established |  | Interval the driver stores before starting the ring; with the multiplier it gives field 8251 |
 | `STATUS_INTERVAL_UNITS` | 0x21 | inferred |  | Multiplier from the driver's interval (250) to the interval field |
+| `STATUS_ONESHOT_POLLS` | 0x64 | established |  | Most times the driver polls the status slot's completion word after starting a one-shot transfer |
+| `STATUS_ONESHOT_POLL_US` | 0x5 | established |  | Delay in microseconds between completion-word polls |
 | `STATUS_SLOTS_MAX` | 0x80 | established |  | Most slots the driver gives the status ring; it is a power of two |
 | `STATUS_SLOT_BYTES` | 0x80 | established |  | Size of one status ring slot in host memory |
 | `STATUS_SLOT_DONE` | 0x7c | established |  | Slot byte offset of the completion word |
@@ -655,7 +672,10 @@ Slot word at byte offset 0x78 of each status slot. Bits not listed are never rea
 | `STATUS_START_CONT` | 0x40003 | established |  | Value (before the interval field) written to the status control register to run the status ring continuously |
 | `STATUS_START_ONESHOT` | 0x40001 | established |  | Value written to the status control register for a single transfer |
 | `STATUS_STOP` | 0x1fffc | established |  | Value written to the status control register to stop the status ring |
+| `UST_BEDROCK_FLAG_MASK` | 0xf000 | established |  | Mask applied to the value read from the Bedrock real-time clock control register (0x604200 in the local block) at load |
+| `UST_BEDROCK_FLAG_VALUE` | 0x4000 | established |  | Masked value that sets the driver's UST flag. Bit 14 of the Bedrock register is undefined in the local block (see docs/bedrock-local-block.md) |
 | `UST_MIN_ADVANCE` | 0x3 | established |  | The driver reads the free-running counter twice 10 microseconds apart and reports an alert if it moved by fewer than this |
+| `UST_TICK_NS_FIXED` | 0x3c0 | established |  | Tick period in nanoseconds that the reset routine stores for the counter at 0x30. The other choice is computed from the Bedrock register (see docs/rad1.md). Which choice a given machine gets is unknown |
 
 ## Test vectors
 

@@ -180,10 +180,9 @@ or the Audigy support came later with a different card. **Unknown**: the SGI mar
 
 Candidates ruled out:
 - **Tezro tower onboard audio** (007-4564-001 p. 32: the I/O daughtercard, an extension of the IO9, carries four RCA jacks, a 2.5 mm
-  speaker-power port and two 3.5 mm jacks). In the Tezro captures that list adapter IDs, a RAD board (`10a9:0005`, hinv revision 13.0) shares PCI
-  slot 1 with the IO9's IOC4 (`10a9:100a`) in 5 captures; the Audigy trio appears in a different capture. **Inferred** that the tower's
-  onboard audio is a RAD at board number 13; the guide names no chip. The existing survey page's guess that it is the `emu_dd` device is
-  withdrawn.
+  speaker-power port and two 3.5 mm jacks). In the Tezro captures that list adapter IDs, a RAD board (`10a9:0005`, hinv revision 13.0) appears in 5 captures on the option-card buses, not the IO9's; the Audigy trio appears in a
+  different capture. The tower's onboard audio is the ICE1724 (`1412:1724`), listed with the IO9 bus devices, so the RAD is not the onboard
+  part; see [rad1.md](../rad1.md). The existing survey page's guess that it is the `emu_dd` device is withdrawn.
 - **Prism** (Linux; 007-4701, 007-4772, 007-4774 not read for audio) has no IRIX driver, so it cannot explain `emu_dd`.
 - **Onyx4 and Origin 350**: the Onyx4 guide uses the "basic or professional" wording; the Origin 350 guide 007-4566-001 has no audio text at all (searched); EMU is in one Origin 350 and one Onyx 350 capture, none on Onyx4.
 - An unrelated source of "Audigy" text in the mail archive is the Windows Visual Workstation 320 family (2001 to 2003 posts) which took retail

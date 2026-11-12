@@ -53,6 +53,56 @@ pub mod enums {
             }
         }
     }
+    pub mod status_pointer_slot {
+        pub const ADAT_IN: u32 = 0; // established
+        pub const AES_IN: u32 = 8; // established
+        pub const ANALOG_IN: u32 = 16; // established
+        pub const ADAT_IN_SUBCODE: u32 = 24; // established
+        pub const AES_IN_SUBCODE: u32 = 32; // established
+        pub const ADAT_OUT: u32 = 40; // established
+        pub const AES_OUT: u32 = 48; // established
+        pub const ANALOG_OUT: u32 = 56; // established
+        #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+        pub enum Value {
+            AdatIn,
+            AesIn,
+            AnalogIn,
+            AdatInSubcode,
+            AesInSubcode,
+            AdatOut,
+            AesOut,
+            AnalogOut,
+            Other(u32),
+        }
+        impl Value {
+            pub const fn from_raw(v: u32) -> Self {
+                match v {
+                    0 => Self::AdatIn,
+                    8 => Self::AesIn,
+                    16 => Self::AnalogIn,
+                    24 => Self::AdatInSubcode,
+                    32 => Self::AesInSubcode,
+                    40 => Self::AdatOut,
+                    48 => Self::AesOut,
+                    56 => Self::AnalogOut,
+                    _ => Self::Other(v),
+                }
+            }
+            pub const fn raw(self) -> u32 {
+                match self {
+                    Self::AdatIn => 0,
+                    Self::AesIn => 8,
+                    Self::AnalogIn => 16,
+                    Self::AdatInSubcode => 24,
+                    Self::AesInSubcode => 32,
+                    Self::AdatOut => 40,
+                    Self::AesOut => 48,
+                    Self::AnalogOut => 56,
+                    Self::Other(v) => v,
+                }
+            }
+        }
+    }
 }
 
 /// Sample-position register, ADAT input, position A. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the sta (established)
@@ -350,7 +400,7 @@ pub mod sync_status {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x34;
 }
-/// Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. (inferred)
+/// Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audi (inferred)
 pub mod ust_control {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x40;
@@ -430,7 +480,7 @@ pub mod analog_in_ctrl {
         }
     }
 }
-/// ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the driver leaves an unknown earlier value. The shadow word is writt (established)
+/// ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second rea (established)
 pub mod adat_out_ctrl {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x50;
@@ -1218,6 +1268,8 @@ pub const MUX_PROBE_PASSES: u32 = 0x400; // inferred
 pub const PCI_CLASS_OCTANE: u32 = 0x0; // established
 pub const PCI_DEVICE: u32 = 0x5; // established
 pub const PCI_VENDOR: u32 = 0x10a9; // established
+pub const RBUF_REQUEST_BOARD12: u32 = 0x3; // established
+pub const RBUF_REQUEST_BOARD13: u32 = 0x2; // established
 pub const REV_MEDIAIO: u32 = 0x70; // inferred
 pub const REV_OCTANE: u32 = 0xc0; // established
 pub const REV_PCI_BOARD: u32 = 0xd0; // inferred
@@ -1225,6 +1277,8 @@ pub const RING_WORDS_ADAT: u32 = 0x1000; // established
 pub const RING_WORDS_ANALOG: u32 = 0x400; // established
 pub const STATUS_INTERVAL_DRIVER: u32 = 0xfa; // established
 pub const STATUS_INTERVAL_UNITS: u32 = 0x21; // inferred
+pub const STATUS_ONESHOT_POLLS: u32 = 0x64; // established
+pub const STATUS_ONESHOT_POLL_US: u32 = 0x5; // established
 pub const STATUS_SLOTS_MAX: u32 = 0x80; // established
 pub const STATUS_SLOT_BYTES: u32 = 0x80; // established
 pub const STATUS_SLOT_DONE: u32 = 0x7c; // established
@@ -1233,7 +1287,10 @@ pub const STATUS_SLOT_MIRROR: u32 = 0x44; // established
 pub const STATUS_START_CONT: u32 = 0x40003; // established
 pub const STATUS_START_ONESHOT: u32 = 0x40001; // established
 pub const STATUS_STOP: u32 = 0x1fffc; // established
+pub const UST_BEDROCK_FLAG_MASK: u32 = 0xf000; // established
+pub const UST_BEDROCK_FLAG_VALUE: u32 = 0x4000; // established
 pub const UST_MIN_ADVANCE: u32 = 0x3; // established
+pub const UST_TICK_NS_FIXED: u32 = 0x3c0; // established
 
 #[cfg(test)]
 mod tests {

@@ -46,7 +46,7 @@ Two guides: the tower, 007-4564-001 (2003), and the rackmount, 007-4643-003 (200
 
 | Option | Evidence | Chips and bus | Grade |
 |---|---|---|---|
-| Tower: onboard analog audio on the I/O daughtercard | 007-4564-001 p. 32: four RCA audio jacks (two in, two out), a 2.5 mm powered-speaker connector, one 3.5 mm stereo in and one out. Diagnostics test "audio and I/O daughtercard" (p. 117). The rear view labels "Line in and Line out", "MIC", "Audio jacks" (p. 7, pdf 29) | unknown bus and chips. The `emu_dd` guess is **withdrawn**: see [drivers.md](drivers.md); captures show a RAD (`10a9:0005`, revision 13.0) beside the IO9's IOC4 on Tezro, so a RAD at board 13 is the **inferred** onboard part. The Audigy (`emu_dd`) is a PCI option card | onboard audio presence: established; chip: inferred RAD |
+| Tower: onboard analog audio on the I/O daughtercard | 007-4564-001 p. 32: four RCA audio jacks (two in, two out), a 2.5 mm powered-speaker connector, one 3.5 mm stereo in and one out. Diagnostics test "audio and I/O daughtercard" (p. 117). The rear view labels "Line in and Line out", "MIC", "Audio jacks" (p. 7, pdf 29) | unknown bus and chips. The `emu_dd` guess is **withdrawn**: see [drivers.md](drivers.md); captures list the ICE1724 (`1412:1724`) with the IO9 bus devices, printed as `MAD revision 1`; a RAD 13.0 on Tezro is an option card, see [rad1.md](../rad1.md). The Audigy (`emu_dd`) is a PCI option card | onboard audio presence: established; chip: ICE1724, inferred from capture listing order |
 | Tower: "8-channel Digital Audio I/O board" | p. 42 (options list) | likely the DM8 | inferred |
 | Rackmount: "optional audio" | 007-4643-003 p. 27 block diagram labels "Optional audio"; p. 42 marks "Bus 2, slot 2 (optional audio)"; p. 34 lists "DMediaPro DM8 Audio I/O PCI option" among media boards | PCI DM8, see [dm8.md](dm8.md) | established (SGI statement) |
 | Rackmount: DM10 FireWire, DM6 video | p. 34 | PCI | listed for completeness |
@@ -86,6 +86,6 @@ revision `0xc0` is not in the driver and is not evidence here.
 ## Gaps
 
 - No capture of any DM8, Tezro or Fuel audio hinv in `-vm` form; no board part numbers other than those for the RAD boards.
-- The Tezro tower's onboard audio chip is inferred to be a RAD, not read from a document ([open-questions](../open-questions.md)).
+- The Tezro tower's onboard audio is the ICE1724 by capture listing order, not a RAD ([rad1.md](../rad1.md)); no document names the chip ([open-questions](../open-questions.md)).
 - USB audio converter chip unknown (no teardown or USB descriptors).
 - The RAD register contract is not read in full here (stub).

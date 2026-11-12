@@ -41,6 +41,16 @@ CLOCKGEN_ANALOG_IN = { value = 0, grade = "established", from = "public Linux RA
 CLOCKGEN_ANALOG_OUT = { value = 1, grade = "established", from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog output rate" }
 CLOCKGEN_AES_OUT = { value = 2, grade = "established", from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe", doc = "Clock generator that sets the AES3 output rate" }
 PCI_CLASS_OCTANE = { value = 0, grade = "established", from = "public Linux lspci capture of the onboard RAD, linux-pci-list message 20170213224512.GA8080@bhelgaas-glaptop.roam.corp.google.com (2017-02-13), bus 0 device 3 function 0", doc = "PCI class code of the onboard RAD on the Octane board: the 24-bit class field (config offset 0x08 bits 31:8) reads zero. Revision 0xc0 is the same listing's byte (REV_OCTANE)" }
+UST_TICK_NS_FIXED = { value = 960, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc) rad_reset_ust, board 13 path", doc = "Tick period in nanoseconds that the reset routine stores for the counter at 0x30. The other choice is computed from the Bedrock register (see docs/rad1.md). Which choice a given machine gets is unknown" }
+UST_BEDROCK_FLAG_MASK = { value = 0xf000, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), 64-bit load of the Bedrock real-time clock control register at load", doc = "Mask applied to the value read from the Bedrock real-time clock control register (0x604200 in the local block) at load" }
+UST_BEDROCK_FLAG_VALUE = { value = 0x4000, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), same load", doc = "Masked value that sets the driver's UST flag. Bit 14 of the Bedrock register is undefined in the local block (see docs/bedrock-local-block.md)" }
+STATUS_ONESHOT_POLLS = { value = 100, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), one-shot status routine", doc = "Most times the driver polls the status slot's completion word after starting a one-shot transfer" }
+STATUS_ONESHOT_POLL_US = { value = 5, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), one-shot status routine", doc = "Delay in microseconds between completion-word polls" }
+RBUF_REQUEST_BOARD13 = { value = 2, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), attach path for board 13", doc = "Read-response buffers the driver asks the bridge for on the PCI audio board. Board 12 asks for three" }
+RBUF_REQUEST_BOARD12 = { value = 3, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), attach path for board 12", doc = "Read-response buffers the driver asks the bridge for on the Octane base board" }
+
+[enums.status_pointer_slot]
+values = { adat_in = { value = 0x00, grade = "established" }, aes_in = { value = 0x08, grade = "established" }, analog_in = { value = 0x10, grade = "established" }, adat_in_subcode = { value = 0x18, grade = "established" }, aes_in_subcode = { value = 0x20, grade = "established" }, adat_out = { value = 0x28, grade = "established" }, aes_out = { value = 0x30, grade = "established" }, analog_out = { value = 0x38, grade = "established" } }
 
 [enums.channel_type]
 values = { analog_in = { value = 0, grade = "established" }, analog_out = { value = 1, grade = "established" }, aes_in = { value = 2, grade = "established" }, aes_out = { value = 3, grade = "established" }, adat_in = { value = 4, grade = "established" }, adat_out = { value = 5, grade = "established" }, aes_in_subcode = { value = 6, grade = "inferred" }, adat_in_subcode = { value = 7, grade = "inferred" } }
@@ -227,7 +237,7 @@ access = "r"
 width = 32
 grade = "established"
 from = "IRIX 6.5.30 IP30 rad_dd.o rad_set_ust_offset .text 0x110c-0x111c; also rad_start_dma"
-doc = "Free-running counter that the driver reads for timestamps and a liveness check: two reads 10 microseconds apart must differ by at least 3. No write to it exists. The tick period is inferred to be about 1 microsecond (the driver scales by 800 or 960 ns); reset value, wrap, and read side effects are unknown. On board mode 7 it runs from reset with no enable write."
+doc = "Free-running counter that the driver reads for timestamps and a liveness check: two reads 10 microseconds apart must differ by at least 3. No write to it exists. The tick period is inferred to be about 1 microsecond (the driver scales by 800 or 960 ns); the reset routine that runs on the PCI audio board stores 960 ns (UST_TICK_NS_FIXED) or a period computed from the Bedrock register, and the choice is unknown. Reset value, wrap, and read side effects are unknown. On board mode 7 it runs from reset with no enable write."
 
 [registers.ust_counter.fields]
 count = { bits = [31, 0], grade = "inferred", doc = "Counter value; tick period inferred, not measured" }
@@ -246,7 +256,7 @@ access = "w"
 width = 32
 grade = "inferred"
 from = "IRIX 6.5.30 IP30 rad_dd.o rad_enable_ust .text 0x1070-0x10e0 (board mode 12: 0x0e then 0x0a to enable, 0x02 to disable; modes 7 and 13 write 4 then 0)"
-doc = "Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown."
+doc = "Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see docs/rad1.md)."
 
 [registers.adat_in_ctrl]
 offset = 0x44
@@ -290,7 +300,7 @@ access = "rw"
 width = 32
 grade = "established"
 from = "IRIX 6.5.30 IP30 rad_dd.o rad_start_subsys .text 0x9b8-0x9c0; rad_start_dma"
-doc = "ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the driver leaves an unknown earlier value. The shadow word is written whole; the driver clears the enable at subsystem start."
+doc = "ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see docs/rad1.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start."
 
 [registers.adat_out_ctrl.fields]
 enable = { bits = [0, 0], grade = "established", doc = "Channel DMA enable" }
@@ -421,11 +431,11 @@ access = "w"
 width = 32
 grade = "inferred"
 from = "IRIX 6.5.30 IP30 rad_dd.o rad_halt .text 0x4f64-0x4f74 (2, then 0), rad_start_subsys mode 12 tail .text 0x1000 (3); IRIX 6.5.30 IP27 rad_dd.o rad_vl_write_MUX_SEL_MIO .text 0x6f58-0x6f6c (2, then 3)"
-doc = "General-purpose output 1. On the Octane board a vendor PROM treats it as the analog-output relay: 3 releases the mute and 2 applies it; halt writes 2 then 0. On the MediaIO card the mux routine writes 2 then 3 after its 16 shifted bits, which latches the word into the clock-selection logic (the latch strobe; effect inferred). It has no effect on any DMA channel as far as the sources show."
+doc = "General-purpose output 1. On the Octane board a vendor PROM treats it as the analog-output relay: 3 releases the mute and 2 applies it; halt writes 2 then 0. On the MediaIO card the mux routine writes 2 then 3 after its 16 shifted bits, which latches the word into the clock-selection logic (the latch strobe; effect inferred). It has no effect on any DMA channel as far as the sources show. On the PCI audio board (mode 13) a second reading of the shipped drivers finds 0 written here at start, which the reading above does not cover."
 
 [registers.gpio_relay.fields]
 bit0 = { bits = [0, 0], grade = "inferred", doc = "Written 1 to release the relay mute and to finish a mux latch, 0 at halt" }
-bit1 = { bits = [1, 1], grade = "inferred", doc = "Written 1 in the latch-start and mute values" }
+bit1 ={ bits = [1, 1], grade = "inferred", doc = "Written 1 in the latch-start and mute values" }
 
 [[registers.gpio_relay.tests]]
 value = 0x3
@@ -441,7 +451,7 @@ access = "w"
 width = 32
 grade = "inferred"
 from = "IRIX 6.5.30 IP27 rad_dd.o rad_vl_write_MUX_SEL_MIO .text 0x6f10-0x6f20 and 0x6f7c; rad_update_subsys .text 0x3150-0x318c; IRIX 6.5.30 IP30 rad_dd.o rad_update_subsys .text 0x2f80-0x2fb8, rad_start_subsys mode 12 .text 0xee4 (0x8c = 2)"
-doc = "General-purpose output 2. On the MediaIO card (mode 7) it is the serial data line of the 16-bit video-clock mux: for each of 16 bits, most significant first, the driver writes (bit | 2), then drops and raises the clock on the analog input control register (bit 27), and after all 16 bits writes 2 then 3 to gpio_relay as the latch strobe and restores this register from a shadow. Separately every 1024 status passes (about 1.024 s) the driver rewrites it as (selector | 2), flipping the selector between 0 and 1, which is the 3, 2, 3, 2 pattern seen on the bus: the selector alternates 0 and 1 between writes, bit 1 stays set, and the driver samples bit 10 of the register 0x34 mirror in the status slot between writes (what that probes is unknown). On the Octane board a vendor PROM uses it as the DAC mute: 3 mutes and 2 unmutes, and the unmute also writes 0x03000000 to the analog input control."
+doc = "General-purpose output 2. On the MediaIO card (mode 7) it is the serial data line of the 16-bit video-clock mux: for each of 16 bits, most significant first, the driver writes (bit | 2), then drops and raises the clock on the analog input control register (bit 27), and after all 16 bits writes 2 then 3 to gpio_relay as the latch strobe and restores this register from a shadow. Separately every 1024 status passes (about 1.024 s) the driver rewrites it as (selector | 2), flipping the selector between 0 and 1, which is the 3, 2, 3, 2 pattern seen on the bus: the selector alternates 0 and 1 between writes, bit 1 stays set, and the driver samples bit 10 of the register 0x34 mirror in the status slot between writes (what that probes is unknown). On the Octane board a vendor PROM uses it as the DAC mute: 3 mutes and 2 unmutes, and the unmute also writes 0x03000000 to the analog input control. On the PCI audio board (mode 13) a second reading of the shipped drivers finds 0 written here at start."
 
 [registers.gpio_data.fields]
 data = { bits = [0, 0], grade = "inferred", doc = "Serial data bit (mux shift), status-probe selector (periodic write), or DAC mute on mode 12" }

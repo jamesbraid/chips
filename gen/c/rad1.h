@@ -16,6 +16,16 @@
 #define RAD1_CHANNEL_TYPE_AES_IN_SUBCODE             6 /* inferred */
 #define RAD1_CHANNEL_TYPE_ADAT_IN_SUBCODE            7 /* inferred */
 
+/* enum status_pointer_slot */
+#define RAD1_STATUS_POINTER_SLOT_ADAT_IN             0 /* established */
+#define RAD1_STATUS_POINTER_SLOT_AES_IN              8 /* established */
+#define RAD1_STATUS_POINTER_SLOT_ANALOG_IN           16 /* established */
+#define RAD1_STATUS_POINTER_SLOT_ADAT_IN_SUBCODE     24 /* established */
+#define RAD1_STATUS_POINTER_SLOT_AES_IN_SUBCODE      32 /* established */
+#define RAD1_STATUS_POINTER_SLOT_ADAT_OUT            40 /* established */
+#define RAD1_STATUS_POINTER_SLOT_AES_OUT             48 /* established */
+#define RAD1_STATUS_POINTER_SLOT_ANALOG_OUT          56 /* established */
+
 /*
  * Sample-position register, ADAT input, position A. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.
  */
@@ -149,7 +159,7 @@
 #define RAD1_POS_ANALOG_OUT_A_UST_LATCH_INPLACE      (RAD1_POS_ANALOG_OUT_A_UST_LATCH_MASK << RAD1_POS_ANALOG_OUT_A_UST_LATCH_SHIFT)
 
 /*
- * Free-running counter that the driver reads for timestamps and a liveness check: two reads 10 microseconds apart must differ by at least 3. No write to it exists. The tick period is inferred to be about 1 microsecond (the driver scales by 800 or 960 ns); reset value, wrap, and read side effects are unknown. On board mode 7 it runs from reset with no enable write.
+ * Free-running counter that the driver reads for timestamps and a liveness check: two reads 10 microseconds apart must differ by at least 3. No write to it exists. The tick period is inferred to be about 1 microsecond (the driver scales by 800 or 960 ns); the reset routine that runs on the PCI audio board stores 960 ns (UST_TICK_NS_FIXED) or a period computed from the Bedrock register, and the choice is unknown. Reset value, wrap, and read side effects are unknown. On board mode 7 it runs from reset with no enable write.
  */
 /* ust_counter: r32, reset unknown */
 #define RAD1_UST_COUNTER_OFFSET                      0x30u /* established */
@@ -164,7 +174,7 @@
 #define RAD1_SYNC_STATUS_OFFSET                      0x34u /* inferred */
 
 /*
- * Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown.
+ * Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see docs/rad1.md).
  */
 /* ust_control: w32, reset unknown */
 #define RAD1_UST_CONTROL_OFFSET                      0x40u /* inferred */
@@ -206,7 +216,7 @@
 #define RAD1_ANALOG_IN_CTRL_ENABLE_INPLACE           (RAD1_ANALOG_IN_CTRL_ENABLE_MASK << RAD1_ANALOG_IN_CTRL_ENABLE_SHIFT)
 
 /*
- * ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the driver leaves an unknown earlier value. The shadow word is written whole; the driver clears the enable at subsystem start.
+ * ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see docs/rad1.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start.
  */
 /* adat_out_ctrl: rw32, reset unknown */
 #define RAD1_ADAT_OUT_CTRL_OFFSET                    0x50u /* established */
@@ -329,7 +339,7 @@
 #define RAD1_MODE_84_OFFSET                          0x84u /* unknown */
 
 /*
- * General-purpose output 1. On the Octane board a vendor PROM treats it as the analog-output relay: 3 releases the mute and 2 applies it; halt writes 2 then 0. On the MediaIO card the mux routine writes 2 then 3 after its 16 shifted bits, which latches the word into the clock-selection logic (the latch strobe; effect inferred). It has no effect on any DMA channel as far as the sources show.
+ * General-purpose output 1. On the Octane board a vendor PROM treats it as the analog-output relay: 3 releases the mute and 2 applies it; halt writes 2 then 0. On the MediaIO card the mux routine writes 2 then 3 after its 16 shifted bits, which latches the word into the clock-selection logic (the latch strobe; effect inferred). It has no effect on any DMA channel as far as the sources show. On the PCI audio board (mode 13) a second reading of the shipped drivers finds 0 written here at start, which the reading above does not cover.
  */
 /* gpio_relay: w32, reset unknown */
 #define RAD1_GPIO_RELAY_OFFSET                       0x88u /* inferred */
@@ -341,7 +351,7 @@
 #define RAD1_GPIO_RELAY_BIT0_INPLACE                 (RAD1_GPIO_RELAY_BIT0_MASK << RAD1_GPIO_RELAY_BIT0_SHIFT)
 
 /*
- * General-purpose output 2. On the MediaIO card (mode 7) it is the serial data line of the 16-bit video-clock mux: for each of 16 bits, most significant first, the driver writes (bit | 2), then drops and raises the clock on the analog input control register (bit 27), and after all 16 bits writes 2 then 3 to gpio_relay as the latch strobe and restores this register from a shadow. Separately every 1024 status passes (about 1.024 s) the driver rewrites it as (selector | 2), flipping the selector between 0 and 1, which is the 3, 2, 3, 2 pattern seen on the bus: the selector alternates 0 and 1 between writes, bit 1 stays set, and the driver samples bit 10 of the register 0x34 mirror in the status slot between writes (what that probes is unknown). On the Octane board a vendor PROM uses it as the DAC mute: 3 mutes and 2 unmutes, and the unmute also writes 0x03000000 to the analog input control.
+ * General-purpose output 2. On the MediaIO card (mode 7) it is the serial data line of the 16-bit video-clock mux: for each of 16 bits, most significant first, the driver writes (bit | 2), then drops and raises the clock on the analog input control register (bit 27), and after all 16 bits writes 2 then 3 to gpio_relay as the latch strobe and restores this register from a shadow. Separately every 1024 status passes (about 1.024 s) the driver rewrites it as (selector | 2), flipping the selector between 0 and 1, which is the 3, 2, 3, 2 pattern seen on the bus: the selector alternates 0 and 1 between writes, bit 1 stays set, and the driver samples bit 10 of the register 0x34 mirror in the status slot between writes (what that probes is unknown). On the Octane board a vendor PROM uses it as the DAC mute: 3 mutes and 2 unmutes, and the unmute also writes 0x03000000 to the analog input control. On the PCI audio board (mode 13) a second reading of the shipped drivers finds 0 written here at start.
  */
 /* gpio_data: w32, reset unknown */
 #define RAD1_GPIO_DATA_OFFSET                        0x8cu /* inferred */
@@ -743,6 +753,8 @@
 #define RAD1_PCI_CLASS_OCTANE                        0x0u /* established */
 #define RAD1_PCI_DEVICE                              0x5u /* established */
 #define RAD1_PCI_VENDOR                              0x10a9u /* established */
+#define RAD1_RBUF_REQUEST_BOARD12                    0x3u /* established */
+#define RAD1_RBUF_REQUEST_BOARD13                    0x2u /* established */
 #define RAD1_REV_MEDIAIO                             0x70u /* inferred */
 #define RAD1_REV_OCTANE                              0xc0u /* established */
 #define RAD1_REV_PCI_BOARD                           0xd0u /* inferred */
@@ -750,6 +762,8 @@
 #define RAD1_RING_WORDS_ANALOG                       0x400u /* established */
 #define RAD1_STATUS_INTERVAL_DRIVER                  0xfau /* established */
 #define RAD1_STATUS_INTERVAL_UNITS                   0x21u /* inferred */
+#define RAD1_STATUS_ONESHOT_POLLS                    0x64u /* established */
+#define RAD1_STATUS_ONESHOT_POLL_US                  0x5u /* established */
 #define RAD1_STATUS_SLOTS_MAX                        0x80u /* established */
 #define RAD1_STATUS_SLOT_BYTES                       0x80u /* established */
 #define RAD1_STATUS_SLOT_DONE                        0x7cu /* established */
@@ -758,6 +772,9 @@
 #define RAD1_STATUS_START_CONT                       0x40003u /* established */
 #define RAD1_STATUS_START_ONESHOT                    0x40001u /* established */
 #define RAD1_STATUS_STOP                             0x1fffcu /* established */
+#define RAD1_UST_BEDROCK_FLAG_MASK                   0xf000u /* established */
+#define RAD1_UST_BEDROCK_FLAG_VALUE                  0x4000u /* established */
 #define RAD1_UST_MIN_ADVANCE                         0x3u /* established */
+#define RAD1_UST_TICK_NS_FIXED                       0x3c0u /* established */
 
 #endif /* RAD1_GEN_H */

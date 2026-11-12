@@ -12,6 +12,16 @@
     <value name="aes_in_subcode" value="6" grade="inferred"/>
     <value name="adat_in_subcode" value="7" grade="inferred"/>
   </enum>
+  <enum name="status_pointer_slot">
+    <value name="adat_in" value="0" grade="established"/>
+    <value name="aes_in" value="8" grade="established"/>
+    <value name="analog_in" value="16" grade="established"/>
+    <value name="adat_in_subcode" value="24" grade="established"/>
+    <value name="aes_in_subcode" value="32" grade="established"/>
+    <value name="adat_out" value="40" grade="established"/>
+    <value name="aes_out" value="48" grade="established"/>
+    <value name="analog_out" value="56" grade="established"/>
+  </enum>
   <struct name="POS_ADAT_IN_A" size="4" grade="established" register="yes" offset="0x4" access="r" reset="unknown">
     <doc>Sample-position register, ADAT input, position A. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
     <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
@@ -68,14 +78,14 @@
     <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
   </struct>
   <struct name="UST_COUNTER" size="4" grade="established" register="yes" offset="0x30" access="r" reset="unknown">
-    <doc>Free-running counter that the driver reads for timestamps and a liveness check: two reads 10 microseconds apart must differ by at least 3. No write to it exists. The tick period is inferred to be about 1 microsecond (the driver scales by 800 or 960 ns); reset value, wrap, and read side effects are unknown. On board mode 7 it runs from reset with no enable write.</doc>
+    <doc>Free-running counter that the driver reads for timestamps and a liveness check: two reads 10 microseconds apart must differ by at least 3. No write to it exists. The tick period is inferred to be about 1 microsecond (the driver scales by 800 or 960 ns); the reset routine that runs on the PCI audio board stores 960 ns (UST_TICK_NS_FIXED) or a period computed from the Bedrock register, and the choice is unknown. Reset value, wrap, and read side effects are unknown. On board mode 7 it runs from reset with no enable write.</doc>
     <field name="count" start="0" size="32" type="uint" grade="inferred"/>
   </struct>
   <struct name="SYNC_STATUS" size="4" grade="inferred" register="yes" offset="0x34" access="r" reset="unknown">
     <doc>Receiver and video-reference status. The driver reads it only through the status slot copy. The bits are undecoded; use is established, meaning inferred.</doc>
   </struct>
   <struct name="UST_CONTROL" size="4" grade="inferred" register="yes" offset="0x40" access="w" reset="unknown">
-    <doc>Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown.</doc>
+    <doc>Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see docs/rad1.md).</doc>
   </struct>
   <struct name="ADAT_IN_CTRL" size="4" grade="established" register="yes" offset="0x44" access="rw" reset="unknown">
     <doc>ADAT input channel control. Start value 0xa0000008 is written unconditionally; the other bits are undecoded. The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
@@ -93,7 +103,7 @@
     <field name="enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="ADAT_OUT_CTRL" size="4" grade="established" register="yes" offset="0x50" access="rw" reset="unknown">
-    <doc>ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the driver leaves an unknown earlier value. The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
+    <doc>ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see docs/rad1.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
     <field name="enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="AES_OUT_CTRL" size="4" grade="established" register="yes" offset="0x54" access="rw" reset="unknown">
@@ -167,7 +177,7 @@
     <doc>Written 0 at start on board modes 7 and 13; skipped on mode 12. Purpose unknown.</doc>
   </struct>
   <struct name="GPIO_RELAY" size="4" grade="inferred" register="yes" offset="0x88" access="w" reset="unknown">
-    <doc>General-purpose output 1. On the Octane board a vendor PROM treats it as the analog-output relay: 3 releases the mute and 2 applies it; halt writes 2 then 0. On the MediaIO card the mux routine writes 2 then 3 after its 16 shifted bits, which latches the word into the clock-selection logic (the latch strobe; effect inferred). It has no effect on any DMA channel as far as the sources show.</doc>
+    <doc>General-purpose output 1. On the Octane board a vendor PROM treats it as the analog-output relay: 3 releases the mute and 2 applies it; halt writes 2 then 0. On the MediaIO card the mux routine writes 2 then 3 after its 16 shifted bits, which latches the word into the clock-selection logic (the latch strobe; effect inferred). It has no effect on any DMA channel as far as the sources show. On the PCI audio board (mode 13) a second reading of the shipped drivers finds 0 written here at start, which the reading above does not cover.</doc>
     <field name="bit1" start="1" size="1" type="uint" grade="inferred"/>
     <field name="bit0" start="0" size="1" type="uint" grade="inferred"/>
     <test value="0x2" kind="vector">
@@ -180,7 +190,7 @@
     </test>
   </struct>
   <struct name="GPIO_DATA" size="4" grade="inferred" register="yes" offset="0x8c" access="w" reset="unknown">
-    <doc>General-purpose output 2. On the MediaIO card (mode 7) it is the serial data line of the 16-bit video-clock mux: for each of 16 bits, most significant first, the driver writes (bit | 2), then drops and raises the clock on the analog input control register (bit 27), and after all 16 bits writes 2 then 3 to gpio_relay as the latch strobe and restores this register from a shadow. Separately every 1024 status passes (about 1.024 s) the driver rewrites it as (selector | 2), flipping the selector between 0 and 1, which is the 3, 2, 3, 2 pattern seen on the bus: the selector alternates 0 and 1 between writes, bit 1 stays set, and the driver samples bit 10 of the register 0x34 mirror in the status slot between writes (what that probes is unknown). On the Octane board a vendor PROM uses it as the DAC mute: 3 mutes and 2 unmutes, and the unmute also writes 0x03000000 to the analog input control.</doc>
+    <doc>General-purpose output 2. On the MediaIO card (mode 7) it is the serial data line of the 16-bit video-clock mux: for each of 16 bits, most significant first, the driver writes (bit | 2), then drops and raises the clock on the analog input control register (bit 27), and after all 16 bits writes 2 then 3 to gpio_relay as the latch strobe and restores this register from a shadow. Separately every 1024 status passes (about 1.024 s) the driver rewrites it as (selector | 2), flipping the selector between 0 and 1, which is the 3, 2, 3, 2 pattern seen on the bus: the selector alternates 0 and 1 between writes, bit 1 stays set, and the driver samples bit 10 of the register 0x34 mirror in the status slot between writes (what that probes is unknown). On the Octane board a vendor PROM uses it as the DAC mute: 3 mutes and 2 unmutes, and the unmute also writes 0x03000000 to the analog input control. On the PCI audio board (mode 13) a second reading of the shipped drivers finds 0 written here at start.</doc>
     <field name="const1" start="1" size="1" type="uint" grade="inferred"/>
     <field name="data" start="0" size="1" type="uint" grade="inferred"/>
     <test value="0x2" kind="vector">
@@ -392,6 +402,8 @@
   <constant name="PCI_CLASS_OCTANE" value="0x0" grade="established" from="public Linux lspci capture of the onboard RAD, linux-pci-list message 20170213224512.GA8080@bhelgaas-glaptop.roam.corp.google.com (2017-02-13), bus 0 device 3 function 0"/>
   <constant name="PCI_DEVICE" value="0x5" grade="established"/>
   <constant name="PCI_VENDOR" value="0x10a9" grade="established"/>
+  <constant name="RBUF_REQUEST_BOARD12" value="0x3" grade="established"/>
+  <constant name="RBUF_REQUEST_BOARD13" value="0x2" grade="established"/>
   <constant name="REV_MEDIAIO" value="0x70" grade="inferred"/>
   <constant name="REV_OCTANE" value="0xc0" grade="established"/>
   <constant name="REV_PCI_BOARD" value="0xd0" grade="inferred"/>
@@ -399,6 +411,8 @@
   <constant name="RING_WORDS_ANALOG" value="0x400" grade="established"/>
   <constant name="STATUS_INTERVAL_DRIVER" value="0xfa" grade="established"/>
   <constant name="STATUS_INTERVAL_UNITS" value="0x21" grade="inferred"/>
+  <constant name="STATUS_ONESHOT_POLLS" value="0x64" grade="established"/>
+  <constant name="STATUS_ONESHOT_POLL_US" value="0x5" grade="established"/>
   <constant name="STATUS_SLOTS_MAX" value="0x80" grade="established"/>
   <constant name="STATUS_SLOT_BYTES" value="0x80" grade="established"/>
   <constant name="STATUS_SLOT_DONE" value="0x7c" grade="established"/>
@@ -407,5 +421,8 @@
   <constant name="STATUS_START_CONT" value="0x40003" grade="established"/>
   <constant name="STATUS_START_ONESHOT" value="0x40001" grade="established"/>
   <constant name="STATUS_STOP" value="0x1fffc" grade="established"/>
+  <constant name="UST_BEDROCK_FLAG_MASK" value="0xf000" grade="established"/>
+  <constant name="UST_BEDROCK_FLAG_VALUE" value="0x4000" grade="established"/>
   <constant name="UST_MIN_ADVANCE" value="0x3" grade="established"/>
+  <constant name="UST_TICK_NS_FIXED" value="0x3c0" grade="established"/>
 </genxml>

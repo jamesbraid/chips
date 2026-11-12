@@ -1753,6 +1753,22 @@
   {
    "unit": "rad1",
    "kind": "constant",
+   "name": "RBUF_REQUEST_BOARD12",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
+   "name": "RBUF_REQUEST_BOARD13",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
    "name": "REV_MEDIAIO",
    "value": 112,
    "count": 1,
@@ -1805,6 +1821,22 @@
    "value": 33,
    "count": 1,
    "grade": "inferred"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
+   "name": "STATUS_ONESHOT_POLLS",
+   "value": 100,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
+   "name": "STATUS_ONESHOT_POLL_US",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
   },
   {
    "unit": "rad1",
@@ -1873,8 +1905,32 @@
   {
    "unit": "rad1",
    "kind": "constant",
+   "name": "UST_BEDROCK_FLAG_MASK",
+   "value": 61440,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
+   "name": "UST_BEDROCK_FLAG_VALUE",
+   "value": 16384,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
    "name": "UST_MIN_ADVANCE",
    "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "rad1",
+   "kind": "constant",
+   "name": "UST_TICK_NS_FIXED",
+   "value": 960,
    "count": 1,
    "grade": "established"
   }

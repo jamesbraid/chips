@@ -57,7 +57,7 @@ Audio:
 - [docs/audio/dm8.md](docs/audio/dm8.md): DMediaPro DM8 PCI audio option, not an SGI ASIC board.
 - [docs/audio/drivers.md](docs/audio/drivers.md): Audio driver objects and config lines in IRIX 6.5.30 and 6.5.22.
 - [docs/audio/survey.md](docs/audio/survey.md): Audio options of the Fuel, Tezro and Octane.
-- [docs/rad1.md](docs/rad1.md): RAD1 audio ASIC facts outside its register file (placement, PCI status, byte order, DMA request); the register contract is in [gen/docs/rad1.md](gen/docs/rad1.md).
+- [docs/rad1.md](docs/rad1.md): RAD1 audio ASIC facts outside its register file (placement, PCI status, byte order, DMA request, the PCI audio board of revision 0xd0 and its UST and analog differences, and the Tezro audio correction); the register contract is in [gen/docs/rad1.md](gen/docs/rad1.md).
 
 Kernel object scope:
 
