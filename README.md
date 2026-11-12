@@ -56,6 +56,7 @@ Crosstalk, XIO and interconnect:
 - [docs/crosstown-ktown.md](docs/crosstown-ktown.md): Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards.
 - [docs/onyx3000-graphics-topology.md](docs/onyx3000-graphics-topology.md): Onyx 3000 graphics bricks: where a G-brick pipe and a V-brick V12 sit, and the smallest configuration.
 - [docs/cxbrick.md](docs/cxbrick.md): Origin 3000 Cx-brick: node boards, memory-only nodes, the router board, XIO connectors, brick naming and what is unknown.
+- [docs/dbrick.md](docs/dbrick.md): Origin 3000 D-brick: the Fibre Channel disk enclosure, its loop attachment, its lack of an L1 and what is unknown.
 - [docs/interconnect-naming.md](docs/interconnect-naming.md): SGI interconnect naming: every name, from the deepest source.
 - [docs/xbow-family.md](docs/xbow-family.md): Crossbow (XBOW), XXBOW and PXBOW: the XIO switch family.
 
