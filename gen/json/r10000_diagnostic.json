@@ -1,0 +1,100 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/r10000_diagnostic.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_BPIDX_R10K_MASK",
+   "value": 4088,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_BPIDX_R12K_MASK",
+   "value": 16376,
+   "count": 1,
+   "grade": "established",
+   "from": "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_BPMODE_MASK",
+   "value": 196608,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_BPOP_MASK",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_BPSTATE_MASK",
+   "value": 49152,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_DBRC_BIT",
+   "value": 22,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_DBRC_MASK",
+   "value": 4194304,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_R12K_BTAC_DIS_BIT",
+   "value": 27,
+   "count": 1,
+   "grade": "established",
+   "from": "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_R12K_BTAC_DIS_MASK",
+   "value": 134217728,
+   "count": 1,
+   "grade": "established",
+   "from": "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_R12K_GHIST_ALL_BIT",
+   "value": 26,
+   "count": 1,
+   "grade": "established",
+   "from": "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237"
+  },
+  {
+   "unit": "r10000_diagnostic",
+   "kind": "constant",
+   "name": "R10KDIAG_R12K_GHIST_COUNT_MASK",
+   "value": 58720256,
+   "count": 1,
+   "grade": "established",
+   "from": "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237"
+  }
+ ]
+}

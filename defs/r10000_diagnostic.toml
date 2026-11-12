@@ -1,0 +1,28 @@
+unit = "r10000_diagnostic"
+prefix = "R10KDIAG"
+title = "R10000 family CP0 Diagnostic register (branch diagnostic): field positions"
+doc = "Constants for the CP0 register 22 Diagnostic register of the MIPS R10000 family, as the NEC VR10000 and VR12000 manual lays it out: the branch-table operation and index fields, the branch state and mode fields, the branch return cache disable, the R12000 global-history and branch-target-cache bits. The R14000 and R16000 layouts are not in any cited manual; the R12000 layout is applied to them as an inferred assumption, stated in docs/r10000_diagnostic.md."
+from = "NEC VR10000 Series 64-/32-bit Microprocessor User's Manual, U10278EJ4V0UM00, fourth edition"
+public_from = [
+  "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237",
+  "Linux arch/mips/include/asm/mipsregs.h, commit db2ddb87143519e20a95aa36c60b36107b736a58",
+  "Linux arch/mips/kernel/cpu-probe.c, commit db2ddb87143519e20a95aa36c60b36107b736a58",
+]
+
+[constants]
+R10KDIAG_BPOP_MASK = { value = 0x3, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-236", doc = "Mask for the two-bit branch-table operation field, bits 1:0 of the Diagnostic register (BPOp). Read-write." }
+
+R10KDIAG_BPIDX_R10K_MASK = { value = 0xff8, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-236", doc = "Mask for the R10000 branch-table index, bits 11:3 of the Diagnostic register (BPIdx). The manual gives the index as the virtual address bits 11:3." }
+R10KDIAG_BPIDX_R12K_MASK = { value = 0x3ff8, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237", doc = "Mask for the R12000 branch-table index, bits 13:3 of the Diagnostic register (BPIdx), widened from the R10000 field." }
+
+R10KDIAG_BPSTATE_MASK = { value = 0xc000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-236", doc = "Mask for the two-bit branch state field, bits 15:14 of the Diagnostic register (BPState). Read and written through the branch-table operation." }
+R10KDIAG_BPMODE_MASK = { value = 0x30000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-236", doc = "Mask for the two-bit branch mode field, bits 17:16 of the Diagnostic register (BPMode). Read-write, reset to 00." }
+
+R10KDIAG_DBRC_BIT = { value = 22, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-236", doc = "Bit 22 of the Diagnostic register, DBRC: set disables the branch return cache." }
+R10KDIAG_DBRC_MASK = { value = 0x400000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-236", doc = "Mask for bit 22, the branch return cache disable." }
+
+R10KDIAG_R12K_BTAC_DIS_BIT = { value = 27, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237", doc = "R12000 only: bit 27 of the Diagnostic register disables the branch target address cache. The Linux header names it R10K_DIAG_D_BTAC." }
+R10KDIAG_R12K_BTAC_DIS_MASK = { value = 0x8000000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237", doc = "Mask for bit 27, the R12000 branch target address cache disable." }
+
+R10KDIAG_R12K_GHIST_ALL_BIT = { value = 26, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237", doc = "R12000 only: bit 26 of the Diagnostic register selects all eight global-history bits. The Linux header names it R10K_DIAG_E_GHIST." }
+R10KDIAG_R12K_GHIST_COUNT_MASK = { value = 0x3800000, grade = "established", from = "NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 235-237", doc = "R12000 only: bits 25:23 give the global-history count when bit 26 is clear." }
