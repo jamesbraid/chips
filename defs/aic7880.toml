@@ -39,6 +39,7 @@ hdmaen     = { bits = [3, 3], grade = "inferred", doc = "enables transfer betwee
 direction  = { bits = [2, 2], grade = "inferred", doc = "1 moves data from memory or the FIFO toward the SCSI block; changing it needs all transfer enables clear and acknowledged" }
 fifoflush  = { bits = [1, 1], grade = "inferred", doc = "flushes the FIFO" }
 fiforeset  = { bits = [0, 0], grade = "inferred", doc = "empties valid FIFO state, resets its word pointers and loads its byte offset from the low three bits of LHADDR; self-clearing" }
+wideodd    = { bits = [6, 6], grade = "inferred", doc = "has no effect except in a wide transfer with an odd byte count; the public Linux driver labels bit 6 WIDEODD too" }
 
 [registers.dfstatus]
 offset = 0x94

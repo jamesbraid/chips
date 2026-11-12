@@ -23,6 +23,16 @@ pub mod scbptr {
 pub mod dfcntrl {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x93;
+    pub mod wideodd { // bits 6:6, inferred
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod scsien { // bits 5:5, inferred
         pub const SHIFT: u32 = 5;
         pub const MASK: u32 = 0x1;

@@ -31,6 +31,9 @@
  */
 /* dfcntrl: rw8, reset 0x0; Adaptec AIC-7870 Data Book, PDF pp. 139, 145-148 (printed 4-70, 4-76 to 4-79); sibling */
 #define AIC7880_DFCNTRL_OFFSET                       0x93u /* inferred */
+#define AIC7880_DFCNTRL_WIDEODD_SHIFT                6 /* inferred */
+#define AIC7880_DFCNTRL_WIDEODD_MASK                 0x1u
+#define AIC7880_DFCNTRL_WIDEODD_INPLACE              (AIC7880_DFCNTRL_WIDEODD_MASK << AIC7880_DFCNTRL_WIDEODD_SHIFT)
 #define AIC7880_DFCNTRL_SCSIEN_SHIFT                 5 /* inferred */
 #define AIC7880_DFCNTRL_SCSIEN_MASK                  0x1u
 #define AIC7880_DFCNTRL_SCSIEN_INPLACE               (AIC7880_DFCNTRL_SCSIEN_MASK << AIC7880_DFCNTRL_SCSIEN_SHIFT)

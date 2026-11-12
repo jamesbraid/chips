@@ -62,6 +62,15 @@
   {
    "unit": "aic7880",
    "kind": "field",
+   "name": "dfcntrl.wideodd",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 139, 145-148 (printed 4-70, 4-76 to 4-79); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
    "name": "dfcntrl.scsien",
    "hi": 5,
    "lo": 5,

@@ -13,6 +13,7 @@
   </struct>
   <struct name="DFCNTRL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 139, 145-148 (printed 4-70, 4-76 to 4-79); sibling" register="yes" offset="0x93" access="rw" reset="0x0">
     <doc>Data FIFO control. Bits 5 and 4 enable SCSI and SCSI-block DMA, bit 3 enables host DMA, bit 2 selects the direction, bit 1 flushes the FIFO and bit 0 resets it and self-clears. Cleared by PCI RST# and by the chip reset in HCNTRL. Read-back is not stated. The reset value is the cleared state the chip reset produces, not a value read after initialisation.</doc>
+    <field name="wideodd" start="6" size="1" type="uint" grade="inferred"/>
     <field name="scsien" start="5" size="1" type="uint" grade="inferred"/>
     <field name="sdmaen" start="4" size="1" type="uint" grade="inferred"/>
     <field name="hdmaen" start="3" size="1" type="uint" grade="inferred"/>
