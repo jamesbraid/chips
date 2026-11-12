@@ -1,0 +1,231 @@
+unit = "ds1685"
+prefix = "DS1685"
+title = "Dallas DS1685/DS1687 real-time clock and battery-backed RAM (Octane and Octane2 system boards)"
+doc = "The real-time clock and 242 bytes of battery-backed user RAM on the Octane and Octane2 system boards, reached through the IOC3's byte bus. The DS1687 is the same die in a package with its crystal and cell. The register contract here covers what the sources consulted state: the calendar and alarm bytes, the user RAM in its two banks, the bank-1 control and flag bytes that software polls, the extended-RAM ports and the identification bytes. Offsets are byte addresses within a bank. Register A to Register D are not listed: their bit meanings and offsets were not transcribed for this unit, and the bit positions of the bank-1 control bytes are not stated either. Grades say how each item was derived: established means the vendor datasheet text the sources quote, inferred means the public Linux or OpenBSD driver's use of the byte. None of it was measured on a board, and reset values are unknown unless a source states one."
+from = "Maxim DS1685 datasheet, document 19-5215 revision 10/12"
+public_from = ["Maxim DS1685 datasheet", "Linux rtc-ds1685 driver", "Linux ioc3 driver", "OpenBSD dsrtc driver", "OpenBSD power driver", "NetBSD ds1687 header"]
+
+[spaces.common]
+unit = "byte"
+doc = "Calendar, time and alarm bytes. Linux reads them inside its bank-1 window; the sources consulted do not say whether they also answer while bank 0 is selected."
+
+[spaces.bank0]
+unit = "byte"
+doc = "Bank 0: the user RAM window. The calendar bytes are not repeated here."
+
+[spaces.bank1]
+unit = "byte"
+doc = "Bank 1: the extended registers. Which bank answers is set through the control register A, whose bit meanings are not transcribed in this unit. Software that switches to bank 1 and does not switch back leaves the chip there, and the sources rely on that."
+
+[registers.seconds]
+offset = 0x00
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, ds1685_rtc_read_time, which reads this byte first among the time fields"
+doc = "Seconds. Binary or BCD according to the data-mode bit, which this unit does not carry."
+
+[registers.alarm_seconds]
+offset = 0x01
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, alarm read and write paths"
+doc = "Seconds alarm byte. Linux's alarm paths read and write it with the other alarm bytes; the sources consulted do not describe how the match treats a wildcard value."
+
+[registers.minutes]
+offset = 0x02
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, ds1685_rtc_read_time"
+doc = "Minutes. Same data-mode rule as seconds."
+
+[registers.alarm_minutes]
+offset = 0x03
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, alarm read and write paths"
+doc = "Minutes alarm byte."
+
+[registers.hours]
+offset = 0x04
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, ds1685_rtc_read_time and its probe, which forces 24-hour mode"
+doc = "Hours. Linux forces 24-hour mode at probe and converts the stored value first if the chip was in 12-hour mode."
+
+[registers.alarm_hours]
+offset = 0x05
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, probe conversion of both hours registers"
+doc = "Hours alarm byte. Probe converts it together with the time hours when it finds 12-hour mode."
+
+[registers.day_of_week]
+offset = 0x06
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, ds1685_rtc_read_time; OpenBSD dsrtc driver, ds1687_settime"
+doc = "Day of the week. Linux reads it on the time path and OpenBSD writes it on the set path; OpenBSD's read path does not read it."
+
+[registers.date]
+offset = 0x07
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, ds1685_rtc_read_time"
+doc = "Date of the month."
+
+[registers.month]
+offset = 0x08
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, ds1685_rtc_read_time"
+doc = "Month."
+
+[registers.year]
+offset = 0x09
+space = "common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, ds1685_rtc_read_time"
+doc = "Year within the century. The century comes from the century byte in bank 1."
+
+[registers.user_ram]
+offset = 0x0e
+space = "bank0"
+count = 114
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, ds1685_nvram_write, which treats the bank-0 bytes as one 114-byte run"
+doc = "Bank-0 user RAM, 114 bytes. The driver's write loop covers a 50-byte run from 0Eh and a 64-byte run from 40h, whose sum is 114, so the block runs from 0Eh to 7Fh. The sources do not state a layout inside it; Linux exposes it as unstructured storage."
+
+[registers.model]
+offset = 0x40
+space = "bank1"
+access = "r"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, which reads the model byte only through its sysfs attribute; the position follows the identification group in the datasheet text"
+doc = "Model byte, the first of the seven identification bytes. Probe does not read it, so only the sysfs and proc views show a wrong value."
+
+[registers.serial]
+offset = 0x41
+space = "bank1"
+count = 6
+access = "r"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Maxim DS1685 datasheet, identification group, as quoted by the sources consulted"
+doc = "Six serial-number bytes that follow the model byte. Linux exposes them through sysfs and nothing consulted checks them."
+
+[registers.serial_crc]
+offset = 0x47
+space = "bank1"
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "Maxim DS1685 datasheet, identification group, as quoted by the sources consulted"
+doc = "CRC byte over the seven identification bytes before it. The datasheet text consulted gives no polynomial, so this import cannot reproduce the check. No driver consulted validates it."
+
+[registers.century]
+offset = 0x48
+space = "bank1"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, ds1685_rtc_read_time and the probe century restriction; OpenBSD dsrtc driver, ds1687_gettime"
+doc = "Century, in the same data-mode form as the other calendar bytes. Linux computes the year as the year byte plus the century times 100."
+
+[registers.date_alarm]
+offset = 0x49
+space = "bank1"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "Maxim DS1685 datasheet, wake-up section, as quoted by the sources consulted"
+doc = "Date alarm. The wake-up alarm matches this byte together with the hours, minutes and seconds alarm bytes. Linux also writes it as the alarm date."
+
+[registers.ctrl4a]
+offset = 0x4a
+space = "bank1"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, probe and poweroff paths; OpenBSD power driver, power_intr"
+doc = "Extended control and flag byte. Only the bits named below are positioned here. Its other bits (the wake-up, RAM-clear and valid-battery flags) are read and cleared by the drivers, but their positions are not transcribed in this unit."
+
+[registers.ctrl4a.fields]
+kickstart_flag = { bits = [0, 0], grade = "inferred", from = "OpenBSD power driver and NetBSD ds1687 header, which name bit 0 of this byte as the kickstart flag", doc = "Kickstart flag. Set by a low-going transition on the kickstart pin while the system is unpowered. Linux clears it to debounce a press; OpenBSD clears it for the same reason." }
+pab = { bits = [3, 3], grade = "established", from = "Maxim DS1685 datasheet, power-control section, as quoted by the sources consulted", doc = "Power-active bit. Zero makes the power pin active low; one puts it in the high-impedance state. Linux writes one to power the machine off, and the write does not return." }
+incr = { bits = [6, 6], grade = "inferred", from = "Linux rtc-ds1685 driver, which polls this bit without a bound before every access", doc = "Increment-in-progress bit. It must read zero outside an update; Linux spins while it reads one and has no timeout." }
+
+[registers.ctrl4b]
+offset = 0x4b
+space = "bank1"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, probe and remove paths"
+doc = "Extended enable byte, holding the enables for the wake-up, RAM-clear and kickstart interrupts. Linux writes it at probe and remove. Bit positions are not transcribed in this unit."
+
+[registers.ext_ram_address]
+offset = 0x50
+space = "bank1"
+access = "w"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, extended-RAM read and write paths; the vendor text as quoted by the sources"
+doc = "Address for the extended RAM, seven bits. The address does not advance on its own, so software writes it before each byte."
+
+[registers.ext_ram_data]
+offset = 0x53
+space = "bank1"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "Linux rtc-ds1685 driver, extended-RAM read and write paths"
+doc = "Extended RAM data at the address in the address register."
+
+[constants]
+RAM_TOTAL_BYTES = { value = 242, grade = "established", from = "Maxim DS1685 datasheet, RAM-clear section, as quoted by the sources consulted", doc = "Battery-backed user RAM: the bank-0 bytes plus the extended bytes." }
+BANK0_RAM_BYTES = { value = 114, grade = "inferred", from = "Linux rtc-ds1685 driver, ds1685_nvram_write bank-0 arithmetic", doc = "Bank-0 user RAM bytes." }
+EXT_RAM_BYTES = { value = 128, grade = "inferred", from = "Linux rtc-ds1685 driver; the extended address is seven bits", doc = "Extended RAM bytes in bank 1, addressed by the seven-bit address register." }
+RAM_CLEAR_RECOVERY_MS = { value = 150, grade = "established", from = "Maxim DS1685 datasheet, RAM-clear section and electrical table, as quoted by the sources consulted", doc = "Minimum recovery time after a RAM clear, during which all accesses are locked out. Linux sleeps this long after servicing the clear." }

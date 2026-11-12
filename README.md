@@ -71,6 +71,7 @@ Chip coverage pages:
 - [docs/bedrock-processor-interface.md](docs/bedrock-processor-interface.md): Bedrock processor interface: interrupt banks and masks, real-time compares, graphics credits, error capture and what is unknown.
 - [docs/coverage-crime.md](docs/coverage-crime.md): CRIME coverage: two coverage questions graded beyond the chip page.
 - [docs/coverage-ioc3.md](docs/coverage-ioc3.md): IOC3 coverage: what the shipped software and public drivers settle.
+- [docs/ds1685.md](docs/ds1685.md): DS1685/DS1687 real-time clock and 242-byte battery-backed RAM of the Octane system board: banks, the update cycle, interrupts, kickstart and RAM clear, and what is unknown. The register contract is in `defs/ds1685.toml`.
 - [docs/dp83840.md](docs/dp83840.md): DP83840A and DP83843 Ethernet transceivers of the Origin 200 and Origin 300 I/O boards: identity, the autonegotiation restart, loopback, strap-dependent bits and what is unknown.
 - [docs/coverage-ioc4.md](docs/coverage-ioc4.md): IOC4 coverage: what shipped software and public drivers settle.
 - [docs/coverage-mace.md](docs/coverage-mace.md): MACE coverage: what software, specification and drivers settle.

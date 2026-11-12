@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/ds1685.toml by defs-gen - do not edit, change the source -->
+<genxml unit="ds1685" prefix="DS1685" title="Dallas DS1685/DS1687 real-time clock and battery-backed RAM (Octane and Octane2 system boards)" from="Maxim DS1685 datasheet, document 19-5215 revision 10/12">
+  <doc>The real-time clock and 242 bytes of battery-backed user RAM on the Octane and Octane2 system boards, reached through the IOC3's byte bus. The DS1687 is the same die in a package with its crystal and cell. The register contract here covers what the sources consulted state: the calendar and alarm bytes, the user RAM in its two banks, the bank-1 control and flag bytes that software polls, the extended-RAM ports and the identification bytes. Offsets are byte addresses within a bank. Register A to Register D are not listed: their bit meanings and offsets were not transcribed for this unit, and the bit positions of the bank-1 control bytes are not stated either. Grades say how each item was derived: established means the vendor datasheet text the sources quote, inferred means the public Linux or OpenBSD driver's use of the byte. None of it was measured on a board, and reset values are unknown unless a source states one.</doc>
+  <space name="common" unit="byte"/>
+  <space name="bank0" unit="byte"/>
+  <space name="bank1" unit="byte"/>
+  <struct name="USER_RAM" size="1" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_nvram_write, which treats the bank-0 bytes as one 114-byte run" register="yes" offset="0xe" access="rw" count="114" stride="1" space="bank0" reset="unknown">
+    <doc>Bank-0 user RAM, 114 bytes. The driver's write loop covers a 50-byte run from 0Eh and a 64-byte run from 40h, whose sum is 114, so the block runs from 0Eh to 7Fh. The sources do not state a layout inside it; Linux exposes it as unstructured storage.</doc>
+  </struct>
+  <struct name="MODEL" size="1" grade="inferred" from="Linux rtc-ds1685 driver, which reads the model byte only through its sysfs attribute; the position follows the identification group in the datasheet text" register="yes" offset="0x40" access="r" space="bank1" reset="unknown">
+    <doc>Model byte, the first of the seven identification bytes. Probe does not read it, so only the sysfs and proc views show a wrong value.</doc>
+  </struct>
+  <struct name="SERIAL" size="1" grade="inferred" from="Maxim DS1685 datasheet, identification group, as quoted by the sources consulted" register="yes" offset="0x41" access="r" count="6" stride="1" space="bank1" reset="unknown">
+    <doc>Six serial-number bytes that follow the model byte. Linux exposes them through sysfs and nothing consulted checks them.</doc>
+  </struct>
+  <struct name="SERIAL_CRC" size="1" grade="established" from="Maxim DS1685 datasheet, identification group, as quoted by the sources consulted" register="yes" offset="0x47" access="r" space="bank1" reset="unknown">
+    <doc>CRC byte over the seven identification bytes before it. The datasheet text consulted gives no polynomial, so this import cannot reproduce the check. No driver consulted validates it.</doc>
+  </struct>
+  <struct name="CENTURY" size="1" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_rtc_read_time and the probe century restriction; OpenBSD dsrtc driver, ds1687_gettime" register="yes" offset="0x48" access="rw" space="bank1" reset="unknown">
+    <doc>Century, in the same data-mode form as the other calendar bytes. Linux computes the year as the year byte plus the century times 100.</doc>
+  </struct>
+  <struct name="DATE_ALARM" size="1" grade="established" from="Maxim DS1685 datasheet, wake-up section, as quoted by the sources consulted" register="yes" offset="0x49" access="rw" space="bank1" reset="unknown">
+    <doc>Date alarm. The wake-up alarm matches this byte together with the hours, minutes and seconds alarm bytes. Linux also writes it as the alarm date.</doc>
+  </struct>
+  <struct name="CTRL4A" size="1" grade="inferred" from="Linux rtc-ds1685 driver, probe and poweroff paths; OpenBSD power driver, power_intr" register="yes" offset="0x4a" access="rw" space="bank1" reset="unknown">
+    <doc>Extended control and flag byte. Only the bits named below are positioned here. Its other bits (the wake-up, RAM-clear and valid-battery flags) are read and cleared by the drivers, but their positions are not transcribed in this unit.</doc>
+    <field name="incr" start="6" size="1" type="uint" grade="inferred" from="Linux rtc-ds1685 driver, which polls this bit without a bound before every access"/>
+    <field name="pab" start="3" size="1" type="uint" grade="established" from="Maxim DS1685 datasheet, power-control section, as quoted by the sources consulted"/>
+    <field name="kickstart_flag" start="0" size="1" type="uint" grade="inferred" from="OpenBSD power driver and NetBSD ds1687 header, which name bit 0 of this byte as the kickstart flag"/>
+  </struct>
+  <struct name="CTRL4B" size="1" grade="inferred" from="Linux rtc-ds1685 driver, probe and remove paths" register="yes" offset="0x4b" access="rw" space="bank1" reset="unknown">
+    <doc>Extended enable byte, holding the enables for the wake-up, RAM-clear and kickstart interrupts. Linux writes it at probe and remove. Bit positions are not transcribed in this unit.</doc>
+  </struct>
+  <struct name="EXT_RAM_ADDRESS" size="1" grade="inferred" from="Linux rtc-ds1685 driver, extended-RAM read and write paths; the vendor text as quoted by the sources" register="yes" offset="0x50" access="w" space="bank1" reset="unknown">
+    <doc>Address for the extended RAM, seven bits. The address does not advance on its own, so software writes it before each byte.</doc>
+  </struct>
+  <struct name="EXT_RAM_DATA" size="1" grade="inferred" from="Linux rtc-ds1685 driver, extended-RAM read and write paths" register="yes" offset="0x53" access="rw" space="bank1" reset="unknown">
+    <doc>Extended RAM data at the address in the address register.</doc>
+  </struct>
+  <struct name="SECONDS" size="1" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_rtc_read_time, which reads this byte first among the time fields" register="yes" offset="0x0" access="rw" space="common" reset="unknown">
+    <doc>Seconds. Binary or BCD according to the data-mode bit, which this unit does not carry.</doc>
+  </struct>
+  <struct name="ALARM_SECONDS" size="1" grade="inferred" from="Linux rtc-ds1685 driver, alarm read and write paths" register="yes" offset="0x1" access="rw" space="common" reset="unknown">
+    <doc>Seconds alarm byte. Linux's alarm paths read and write it with the other alarm bytes; the sources consulted do not describe how the match treats a wildcard value.</doc>
+  </struct>
+  <struct name="MINUTES" size="1" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_rtc_read_time" register="yes" offset="0x2" access="rw" space="common" reset="unknown">
+    <doc>Minutes. Same data-mode rule as seconds.</doc>
+  </struct>
+  <struct name="ALARM_MINUTES" size="1" grade="inferred" from="Linux rtc-ds1685 driver, alarm read and write paths" register="yes" offset="0x3" access="rw" space="common" reset="unknown">
+    <doc>Minutes alarm byte.</doc>
+  </struct>
+  <struct name="HOURS" size="1" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_rtc_read_time and its probe, which forces 24-hour mode" register="yes" offset="0x4" access="rw" space="common" reset="unknown">
+    <doc>Hours. Linux forces 24-hour mode at probe and converts the stored value first if the chip was in 12-hour mode.</doc>
+  </struct>
+  <struct name="ALARM_HOURS" size="1" grade="inferred" from="Linux rtc-ds1685 driver, probe conversion of both hours registers" register="yes" offset="0x5" access="rw" space="common" reset="unknown">
+    <doc>Hours alarm byte. Probe converts it together with the time hours when it finds 12-hour mode.</doc>
+  </struct>
+  <struct name="DAY_OF_WEEK" size="1" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_rtc_read_time; OpenBSD dsrtc driver, ds1687_settime" register="yes" offset="0x6" access="rw" space="common" reset="unknown">
+    <doc>Day of the week. Linux reads it on the time path and OpenBSD writes it on the set path; OpenBSD's read path does not read it.</doc>
+  </struct>
+  <struct name="DATE" size="1" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_rtc_read_time" register="yes" offset="0x7" access="rw" space="common" reset="unknown">
+    <doc>Date of the month.</doc>
+  </struct>
+  <struct name="MONTH" size="1" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_rtc_read_time" register="yes" offset="0x8" access="rw" space="common" reset="unknown">
+    <doc>Month.</doc>
+  </struct>
+  <struct name="YEAR" size="1" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_rtc_read_time" register="yes" offset="0x9" access="rw" space="common" reset="unknown">
+    <doc>Year within the century. The century comes from the century byte in bank 1.</doc>
+  </struct>
+  <constant name="BANK0_RAM_BYTES" value="0x72" grade="inferred" from="Linux rtc-ds1685 driver, ds1685_nvram_write bank-0 arithmetic"/>
+  <constant name="EXT_RAM_BYTES" value="0x80" grade="inferred" from="Linux rtc-ds1685 driver; the extended address is seven bits"/>
+  <constant name="RAM_CLEAR_RECOVERY_MS" value="0x96" grade="established" from="Maxim DS1685 datasheet, RAM-clear section and electrical table, as quoted by the sources consulted"/>
+  <constant name="RAM_TOTAL_BYTES" value="0xf2" grade="established" from="Maxim DS1685 datasheet, RAM-clear section, as quoted by the sources consulted"/>
+</genxml>
