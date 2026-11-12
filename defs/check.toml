@@ -89,6 +89,10 @@ prose_offsets = false
 group = "bridge_extra.h"
 prose_offsets = false
 
+[units.pic_extra]
+group = "pic_extra.h"
+prose_offsets = false
+
 [units.ioc3_extra]
 group = "ioc3_extra.h"
 prose_offsets = false

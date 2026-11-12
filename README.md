@@ -58,6 +58,7 @@ Kernel object scope:
 Crosstalk, XIO and interconnect:
 
 - [docs/bridge-family.md](docs/bridge-family.md): Bridge, Xbridge and PIC as Crosstalk widgets.
+- [docs/pic.md](docs/pic.md): PIC facts outside the register census: error bits and clears, empty-slot probes, the PROM diagnostic's 0x7c write, 64-bit store order, Origin 350 slot labels and force registers.
 - [docs/crosstalk-host-ends.md](docs/crosstalk-host-ends.md): Crosstalk host ends: HEART, Hub and Bedrock.
 - [docs/crosstalk-link.md](docs/crosstalk-link.md): Crosstalk (XIO): the link, its widgets and its host ends.
 - [docs/crosstalk-packets.md](docs/crosstalk-packets.md): Crosstalk packets and the link under them.

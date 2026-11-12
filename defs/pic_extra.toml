@@ -1,0 +1,16 @@
+unit = "pic_extra"
+prefix = "PIC"
+title = "PIC bits outside the census"
+from = "public SGI PIC register header (Linux IA64 SN2, GPL); public Linux and OpenBSD PIC driver flag tables; shipped IRIX 6.5.30 IP35 pcibr flag routine (static reading)"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+legacy_header = "include/pic_extra.h"
+legacy_guard = "PIC_EXTRA_H"
+
+[constants]
+INTR_PCI_MASTER_TIMEOUT = { value = 0x800, grade = "established", doc = "bit 11 of the interrupt status register (0x100) and of the error view (0x170). The view records a master timeout whether or not the enable bit is set; status records it only when bit 11 of the enable register (0x108) is also set. An unclaimed configuration cycle is the usual source (inferred, see docs/pic.md)" }
+INTR_PCIX_MASTER_TIMEOUT = { value = 0x400000000, grade = "established", doc = "bit 34 of the interrupt status register (0x100), the PCI-X master timeout. Which bit a bus in PCI-X mode sets for an unclaimed configuration cycle is not stated by any source read (unknown)" }
+INTR_RESET_MULTIPLE_CLEAR = { value = 0x40, grade = "established", doc = "bit 6 of the reset register (0x110), the multiple-error clear. Bits 8:7 and 5:0 have no PIC field. A one written at an error bit's own position clears that bit and rearms the error registers, and any write to 0x110 also clears the error view" }
+DEVICE_SWAP_DIRECT = { value = 0x80000, grade = "inferred", doc = "bit 19 of the device register (0x200 plus 8n), named swap_direct in the public PIC header. Set selects the address-preserving byte map for the 32-bit direct window; clear selects the lane-preserving map. The bit position comes from the public SN2 driver's byte-stream flag mapping onto this bit; no PIC measurement confirms the lane sense (open question in open-questions.md)" }
