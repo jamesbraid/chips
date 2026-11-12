@@ -80,3 +80,69 @@ offset = 0xac
 access = "w"
 width = 32
 grade = "established"
+
+[constants]
+# Interrupt status source bits (register 0x1c, enable 0x20 and 0x24). Port B repeats port A's nine sources 9 bits up.
+SIO_IR_SRC_A_TX_EMPTY = { value = 0x1, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port A transmit ring empty: a level, set while ring DMA runs and nothing is left to send." }
+SIO_IR_SRC_A_RX_FULL = { value = 0x2, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port A receive ring full: a level that falls once software makes room." }
+SIO_IR_SRC_A_RX_HIGH = { value = 0x4, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port A receive high-water mark reached: a level that follows the waiting count." }
+SIO_IR_SRC_A_RX_TIMER = { value = 0x8, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port A receive timer expired." }
+SIO_IR_SRC_A_CARRIER = { value = 0x10, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port A carrier-detect changed." }
+SIO_IR_SRC_A_CTS = { value = 0x20, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port A clear-to-send changed." }
+SIO_IR_SRC_A_UART = { value = 0x40, grade = "inferred", from = "public mainline Linux IOC3 header (level mask names this bit as level-following)", doc = "Port A pass-through of the 16550's own interrupt. A level: writes to it do nothing." }
+SIO_IR_SRC_A_TX_DONE = { value = 0x80, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port A explicit transmit completion." }
+SIO_IR_SRC_A_PCI_ERR = { value = 0x100, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "PCI error on port A's DMA." }
+SIO_IR_SRC_B_TX_EMPTY = { value = 0x200, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port B transmit ring empty (port A's bit moved 9 up)." }
+SIO_IR_SRC_B_RX_FULL = { value = 0x400, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port B receive ring full." }
+SIO_IR_SRC_B_RX_HIGH = { value = 0x800, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port B receive high-water mark reached." }
+SIO_IR_SRC_B_RX_TIMER = { value = 0x1000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port B receive timer expired." }
+SIO_IR_SRC_B_CARRIER = { value = 0x2000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port B carrier-detect changed." }
+SIO_IR_SRC_B_CTS = { value = 0x4000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port B clear-to-send changed." }
+SIO_IR_SRC_B_UART = { value = 0x8000, grade = "inferred", from = "public mainline Linux IOC3 header (level mask); names not re-read in this import", doc = "Port B pass-through of the 16550's own interrupt. A level: writes to it do nothing." }
+SIO_IR_SRC_B_TX_DONE = { value = 0x10000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Port B explicit transmit completion." }
+SIO_IR_SRC_B_PCI_ERR = { value = 0x20000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "PCI error on port B's DMA." }
+SIO_IR_SRC_PP_PASSTHRU = { value = 0x40000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Parallel port pass-through interrupt, bit 18. Follows its sub-block's level." }
+SIO_IR_SRC_PP_PCI_ERR = { value = 0x200000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "PCI error on the parallel port's DMA, bit 21. Bits 19 and 20 are its two DMA contexts." }
+SIO_IR_SRC_KBD = { value = 0x400000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Shared keyboard and mouse interrupt, bit 22. Latched: write one to clear." }
+SIO_IR_SRC_RT_OUT_PULSE = { value = 0x8000000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Real-time interrupt output emitted a pulse, bit 27." }
+SIO_IR_SRC_RT_IN_PULSE = { value = 0x10000000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Real-time interrupt input pulsed, bit 28." }
+
+# Interrupt output register (0x2c). Field positions from the public Linux header; the mode encodings are dual-sourced.
+INT_OUT_COUNT_MASK = { value = 0xffff, grade = "inferred", from = "public mainline Linux IOC3 header (encoding and field position); behaviour from IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6", doc = "Bits 15:0, the interval count. The hardware tick is 7.8 microseconds; the count converts as COUNT + 1 ticks." }
+INT_OUT_MODE_MASK = { value = 0x70000, grade = "inferred", from = "public mainline Linux IOC3 header (encoding and field position); behaviour from IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6", doc = "Bits 18:16, the mode field." }
+INT_OUT_MODE_LOW = { value = 0x0, grade = "inferred", from = "public mainline Linux IOC3 header (encoding and field position); behaviour from IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6", doc = "Mode field 000: drive the output low." }
+INT_OUT_MODE_HIGH = { value = 0x4, grade = "inferred", from = "public mainline Linux IOC3 header (encoding and field position); behaviour from IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6", doc = "Mode field 100: drive the output high." }
+INT_OUT_MODE_ONE_PULSE = { value = 0x5, grade = "inferred", from = "public mainline Linux IOC3 header (encoding and field position); behaviour from IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6", doc = "Mode field 101: one high pulse of three ticks (23.4 microseconds), then low." }
+INT_OUT_MODE_PULSE_TRAIN = { value = 0x6, grade = "inferred", from = "public mainline Linux IOC3 header (encoding and field position); behaviour from IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6", doc = "Mode field 110: repeated high pulses. The guide truncates the period to a multiple of 7.8 microseconds." }
+INT_OUT_MODE_SQUARE = { value = 0x7, grade = "inferred", from = "public mainline Linux IOC3 header (encoding and field position); behaviour from IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6", doc = "Mode field 111: toggle the output at each interval. The guide truncates the toggle interval to a multiple of 23.4 microseconds; a full cycle is twice the interval." }
+INT_OUT_DIAG_BIT = { value = 0x40000000, grade = "inferred", from = "public mainline Linux IOC3 header names it; no public source defines its behaviour", doc = "Bit 30, named diagnostic mode. Behaviour unknown." }
+INT_OUT_STATE_BIT = { value = 0x80000000, grade = "inferred", from = "public mainline Linux IOC3 header (field name)", doc = "Bit 31, the current output state, read back." }
+INT_OUT_PIN0_ROUTE_BIT = { value = 0x100000, grade = "inferred", from = "public mainline Linux IOC3 header (encoding and field position); behaviour from IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6", doc = "Pin-control bit 20 (register 0x34 set, 0x38 clear): routes the interrupt-output block to GPIO pin 0." }
+INT_OUT_TICK_NS = { value = 7800, grade = "inferred", from = "IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6 (secondary reading, not re-read here)", doc = "Hardware tick of the interrupt-output timer, in nanoseconds (7.8 microseconds)." }
+INT_OUT_PULSE_TICKS = { value = 3, grade = "inferred", from = "IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6 (secondary reading, not re-read here)", doc = "Ticks in one pulse: 23.4 microseconds." }
+
+# Control register (0x28) fields. Positions and the port fields follow the public Linux header.
+SIO_CR_RESET_BIT = { value = 0x1, grade = "inferred", from = "public mainline Linux IOC3 header (field name)", doc = "Bit 0: resets the SuperIO block." }
+SIO_CR_SER_A_BASE_MASK = { value = 0xfe, grade = "inferred", from = "public mainline Linux IOC3 header (field name SIO_CR_SER_A_BASE)", doc = "Bits 7:1, port A's SuperIO byte offset divided by 8. Port A's UART is at 0x178, so the field holds 0x2f." }
+SIO_CR_SER_B_BASE_MASK = { value = 0x7f00, grade = "inferred", from = "public mainline Linux IOC3 header (field name SIO_CR_SER_B_BASE)", doc = "Bits 14:8, port B's SuperIO byte offset divided by 8. Port B's UART is at 0x170, so the field holds 0x2e." }
+SIO_CR_STROBE_MASK = { value = 0x78000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; field positions not re-read in this import", doc = "Bits 18:15, the byte-bus strobe length." }
+SIO_CR_REQUESTER_MASK = { value = 0x380000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; field positions not re-read in this import", doc = "Bits 21:19, which internal master wants the PCI bus. Read-only and diagnostic." }
+SIO_CR_ARBITER_IDLE_BIT = { value = 0x400000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; field positions not re-read in this import", doc = "Bit 22, arbiter idle. Read-only and diagnostic." }
+
+# Serial port control register (0xb8 for port A, 0xd4 for port B).
+PORT_CTL_HIGH_WATER_MASK = { value = 0x1ff, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Bits 8:0, the receive high-water mark in entries." }
+PORT_CTL_FLOW_CTL_BIT = { value = 0x20000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Bit 17: hardware flow control." }
+PORT_CTL_CARRIER_REQ_BIT = { value = 0x40000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Bit 18: post a receive record when carrier detect changes." }
+PORT_CTL_CTS_REQ_BIT = { value = 0x80000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Bit 19: post a receive record when clear-to-send changes." }
+PORT_CTL_QUAD_SPEED_BIT = { value = 0x100000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Bit 20: quadruple speed." }
+PORT_CTL_RING_DMA_EN_BIT = { value = 0x10000000, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Bit 28: enables ring DMA for the port." }
+
+# GPIO pins and the MicroLAN route.
+GPCR_S_MICROLAN_ROUTE_BIT = { value = 0x200000, grade = "inferred", from = "public mainline Linux IOC3 header; names not re-read in this import", doc = "Pin-control bit 21: routes the MicroLAN engine to GPIO pin 8. Nothing on the one-wire bus works until it is set." }
+GPPR_MEANINGFUL_MASK = { value = 0x1ff, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Pin data bits 8:0. Pins 0 to 8 are the meaningful ones on Origin base I/O." }
+GPPR_LIGHTBAR_WHITE_PIN = { value = 0, grade = "inferred", from = "public mainline Linux LED and multifunction drivers (Octane system board only)", doc = "Pin 0, white lamps. Polarity not measured." }
+GPPR_LIGHTBAR_RED_PIN = { value = 1, grade = "inferred", from = "public mainline Linux LED and multifunction drivers (Octane system board only)", doc = "Pin 1, red fault lamp, active high." }
+GPPR_MICROLAN_PIN = { value = 8, grade = "inferred", from = "public Linux and OpenBSD IOC3 headers; names not re-read in this import", doc = "Pin the MicroLAN engine drives when pin-control bit 21 is set." }
+GPPR_PHY_RESET_PIN = { value = 5, grade = "inferred", from = "public mainline Linux IOC3 header (field name)", doc = "Pin 5, ethernet PHY reset." }
+GPPR_UARTB_MODESEL_PIN = { value = 6, grade = "inferred", from = "public mainline Linux IOC3 header (field name); one public OpenBSD header differs", doc = "Pin 6, selects RS-232 or RS-422 for port B." }
+GPPR_UARTA_MODESEL_PIN = { value = 7, grade = "inferred", from = "public mainline Linux IOC3 header (field name); one public OpenBSD header differs", doc = "Pin 7, selects RS-232 or RS-422 for port A." }

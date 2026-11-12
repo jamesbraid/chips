@@ -489,6 +489,75 @@ slots of `.srdata` are `spl7`, `ioc3_poll`, the `.rodata` base, `pci_ioc3_enet_v
   calls `hwgraph_fastinfo_get` on the vertex in `a0` and returns the doubleword at +24 of the record it returns.
   Established.
 
+## Hardware-side facts from the published sources
+
+These come from the public driver headers and published SGI manuals, which name the hardware contract the drivers
+expect. Each row's grade is in [defs/ioc3_extra.toml](../../defs/ioc3_extra.toml) (constants `SIO_IR_SRC_*`,
+`INT_OUT_*`, `SIO_CR_*`, `PORT_CTL_*`, `GPPR_*`, `GPCR_S_*`). None of them was re-read against its source in this pass,
+so each stays **inferred** until someone checks the named file.
+
+- **Address map inside the window.** Three alias pages give one port or one register a view without the rest of the
+  chip: `0x04000` for the interrupt-output register alone, `0x08000` for port A's DMA registers and `0x0c000` for port
+  B's. Each is 16 KB. Inside a page the seven serial registers keep the main block's order and four-byte stride. Through
+  the alias, the transmit consume index, the receive produce index and the 16550 shadow are read-only. **Inferred.**
+  No source is named for the alias layout here, so check it against the public header before relying on it.
+- **Byte-bus selects.** Four byte-wide device windows sit at `0x80000`, `0xa0000`, `0xc0000` and `0xe0000`. The
+  strobe length is set in the control register. A clock window must be accessed at byte width. On the Origin 200,
+  select 0 holds a 32 KB non-volatile RAM with a clock in its top bytes, which the published block diagram labels
+  beside the chip. **Inferred.** The Octane's clock uses selects 1 and 2 as address and data ports; see
+  [docs/ds1685.md](../../docs/ds1685.md).
+- **Interrupt sources.** Each port has nine sources, port A at bits 0 to 8 and port B at bits 9 to 17. Bits 18 to 21
+  are the parallel port: its pass-through at 18, two DMA contexts at 19 and 20, and a PCI error at 21. Bit 22 is the
+  shared keyboard and mouse. Bit 27 is the real-time output pulse and bit 28 the real-time input pulse. The bit
+  names are in `SIO_IR_SRC_*`. **Inferred.**
+- **Acknowledge rules.** Latched sources clear when software writes a one to their status bit. The level-following
+  bits do not: a port's 16550 pass-through (bits 6 and 15) and the parallel pass-through (bit 18) follow their
+  sub-block, so a write to them does nothing. The transmit-ring-empty bits (0 and 9) are levels too. **Inferred.**
+  The level mask comes from the public Linux header; the parallel driver's acknowledge order is the other evidence.
+- **Interrupt-output register `0x2c`.** Bits 15:0 hold a count, bits 18:16 the mode and bit 30 a diagnostic mode.
+  Bit 31 reads back the output state. Bit 20 of the pin-control register routes this output to GPIO pin 0. The modes
+  are: `000` drive low, `100` drive high, `101` one pulse, `110` repeated pulses, `111` toggle. Modes `001` to `011` are
+  not defined. The tick is 7.8 microseconds and a pulse is three ticks, 23.4 microseconds. The count converts as
+  count plus one. The mode behaviour comes from the SGI Device Driver Programmer's Guide (007-0911-180, chapter 6), and
+  the bit positions and mode encodings come from the public header. Both are **inferred** here. The mode behaviour is
+  described as dual-sourced, but this page has not re-read the guide.
+- **Control register `0x28` fields.** Bit 0 resets the SuperIO block. Bits 7:1 and 14:8 hold port A's and port B's
+  UART byte offsets divided by 8, so the UART bases `0x178` and `0x170` appear as `0x2f` and `0x2e`. Bits 18:15 hold the
+  byte-bus strobe length. Bits 21:19 name the internal master that wants the PCI bus, and bit 22 is the arbiter idle.
+  The last two are diagnostic and read-only. **Inferred.** The port fields are the ones the public header names
+  (`SIO_CR_SER_A_BASE`, `SIO_CR_SER_B_BASE`).
+- **Serial port control.** Bits 8:0 are the receive high-water mark. Bit 17 enables hardware flow control. Bits 18 and
+  19 ask for a receive record when carrier detect or clear-to-send changes. Bit 20 selects quadruple speed. Bit 28
+  enables ring DMA. **Inferred.** The ring-size bit and the base-address field are already above, under the ring base.
+- **GPIO pins.** Pins 0 to 8 are the meaningful ones on Origin base I/O (pin data `0x3c`, mask `0x1ff`). Pin 5 resets
+  the PHY, pin 6 selects RS-232 or RS-422 for port B and pin 7 does the same for port A. That port order agrees with
+  the existing `ioc3_set_proto` reading. Pin-control bit 21 routes the MicroLAN engine to pin 8. Nothing on the
+  one-wire bus works until bit 21 is set. **Inferred.** One public OpenBSD header gives a different pin for the
+  serial mode select, and that is the only dissent recorded.
+- **Board identities by PCI subsystem.** Mainline Linux's multifunction driver picks a population from the subsystem
+  device ID. `0xc300` is the IP27 BaseIO6G (ethernet with its one-wire master, both serial ports, a clock, PS/2). `0xc301`
+  is the IP27 MIO (both serial ports and PS/2, no ethernet, no clock). `0xc302` is the IP27 BaseIO (ethernet, both
+  serial ports, a clock, no PS/2). `0xc303` is the Origin 200 system board (ethernet, both serial ports, a clock and
+  PS/2). `0xc304` is the Octane system board (ethernet, both serial ports, PS/2, a DS1685 or DS1687 at selects 1 and 2,
+  and front-panel LEDs). `0xc305` is the four-port MENET, whose fourth IOC3 has no SuperIO block. `0xc306` is MENET4
+  (ethernet only). The IO7, IO8, IO9 and IP34 identities `0xc307` to `0xc30a` have no entry of their own and fall through
+  to the CAD DUO row (ethernet, PS/2, no serial ports, no clock). Linux never registers a parallel-port child on any
+  board, so this column does not show the parallel port. **Inferred** (read from the driver, not from the
+  hardware). IRIX does not use these identities.
+- **Octane lightbar, system-board IOC3 only (`0xc304`).** Pin 0 drives the white lamps and pin 1 the red fault lamp,
+  active high. The red polarity was seen on an owner's Octane2 in a capture this repository does not archive, so it is
+  **inferred** here. The white polarity is unmeasured. Pins 0 and 1 are outputs. The interrupt-output
+  route to pin 0 was off in that capture, so how the two interact is unknown.
+
+**Conflict left open: register `0xd0`, port A's shadow.** The source describes it as a read-only mirror of the 16550's
+status and modem lines. IRIX stores to it (`set_DTRRTS`), which the register table above grades as read-write. This
+import does not change the table. It needs a read of the register on a live board with the 16550 in a known state, or a
+closer reading of the store.
+
+Not imported: the reset values (they come from a manufacturing register table this repository does not hold), the
+ring-entry layout and the receive timer tick (no citation given), and the Ethernet block (already covered above in more
+detail).
+
 ## Against the public drivers (reported after the reading above)
 
 Sources: Linux `arch/mips/include/asm/sn/ioc3.h`, `drivers/mfd/ioc3.c`, `drivers/net/ethernet/sgi/ioc3-eth.c` and
