@@ -12,7 +12,7 @@ Counts for the 55 entries:
 - **Software now: 48.** Seven of these also carry a hardware residue.
 - **Missing source: 5.** The public trees (`linux`, `linux-2.4.37`, `linux-2.5.40`, `linux-ip30`, `linux-ia64`, `netbsd`, `openbsd`) are uninitialised submodules in this clone, and the published documents for the IOC3 and Bedrock items are not held.
 - **Missing binary: 1.** The CRIME rendering-engine entry needs a renderer or X server module that is not held. (The diagnostics `ide.IP30` and `ide.IP32` and the monitor `symmon.IP32` are held; they are stripped, so reading them is software work without symbols.)
-- **Closed: 1.** The literal-pool entry. Move its fact to the chip page and delete the entry.
+- **Closed: 1.** The literal-pool entry, answered where it belongs and no longer listed: the Bedrock window literals, the gp base and the audit that no literal is skipped are in chips/bedrock/README.md ("Window and how it is reached"), the Hub aliases in chips/hub/README.md, the PIC literal-pool masks in docs/bridge-family.md, and the scanner's gp rule in tools/README.md ("Scanner status").
 - **Hardware only as the sole route: 0.** Hardware residues sit inside seven software-now entries: CRIME write-error (the bus-level exception), MACE failure (an ISA device that never answers), IP35 reset window (the routing rule), Bedrock refused read (what the hardware latches), Bedrock pending bits 25 to 34 (what physically sets bits 29 to 34), IOC3 UART byte lane (the physical lane) and IOC3 and IOC4 reset values.
 
 Ordered software-now list. Earlier steps unlock more entries, and each step names the entries it settles.
