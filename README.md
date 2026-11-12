@@ -55,6 +55,7 @@ Crosstalk, XIO and interconnect:
 - [docs/baseio.md](docs/baseio.md): BaseIO and BaseIO-G: the XIO I/O board of the Origin 2000 and Onyx2, its PCI placement, interrupt paths, panel and one-wire identity records.
 - [docs/crosstown-ktown.md](docs/crosstown-ktown.md): Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards.
 - [docs/onyx3000-graphics-topology.md](docs/onyx3000-graphics-topology.md): Onyx 3000 graphics bricks: where a G-brick pipe and a V-brick V12 sit, and the smallest configuration.
+- [docs/gbrick.md](docs/gbrick.md): Onyx 3000 G-brick: the 18U enclosure and its slot rule, the InfiniteReality3 and InfiniteReality4 pipe board sets, raster manager counts per pipe, the N-brick's pipe connectors, the L1 and what is unknown. No register contract.
 - [docs/cxbrick.md](docs/cxbrick.md): Origin 3000 Cx-brick: node boards, memory-only nodes, the router board, XIO connectors, brick naming and what is unknown.
 - [docs/dbrick.md](docs/dbrick.md): Origin 3000 D-brick: the Fibre Channel disk enclosure, its loop attachment, its lack of an L1 and what is unknown.
 - [docs/interconnect-naming.md](docs/interconnect-naming.md): SGI interconnect naming: every name, from the deepest source.
