@@ -249,3 +249,15 @@ routine reads them, and is otherwise not part of this page.
 - `0x16080010` (`0x80010`): VC_4, first two video capture tile addresses (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 47). Established.
   Bits 31:16 hold vc_Tileaddr#1, the first tile address in the descriptor list, and bits 15:0 hold vc_Tileaddr#2, the
   second. Both reset to zero.
+
+- `0x16080014` (`0x80014`): VC_5, third and fourth video capture tile addresses (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 48). Established.
+  Bits 31:16 hold vc_Tileaddr#3 and bits 15:0 hold vc_Tileaddr#4, the third and fourth tile addresses in the descriptor list. Both reset to zero.
+
+- `0x16080018` (`0x80018`): VC_6, fifth and sixth video capture tile addresses (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 48). Established.
+  Bits 31:16 hold vc_Tileaddr#5 and bits 15:0 hold vc_Tileaddr#6, the fifth and sixth tile addresses in the descriptor list. Both reset to zero.
+
+- `0x1608001c` (`0x8001c`): VC_7, seventh and eighth video capture tile addresses (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 48). Established.
+  Bits 31:16 hold vc_Tileaddr#7 and bits 15:0 hold vc_Tileaddr#8, the seventh and eighth tile addresses in the descriptor list. Both reset to zero.
+
+- `0x16080020` (`0x80020`): VC_8, ninth and tenth video capture tile addresses (docs/sources/specs/gbe-specification.pdf, section 3.2.8, p. 48). Established.
+  Bits 31:16 hold vc_Tileaddr#9 and bits 15:0 hold vc_Tileaddr#10, the ninth and tenth tile addresses in the descriptor list. Both reset to zero. The specification marks this register write only, while the register table in the configuration lists it read and write. This entry records the specification's marking and leaves the table as it is.
