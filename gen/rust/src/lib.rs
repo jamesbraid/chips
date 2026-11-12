@@ -33,6 +33,7 @@ pub mod isp12160;
 pub mod isp2200;
 pub mod l1;
 pub mod l1_requests;
+pub mod lucent_ohci;
 pub mod mace;
 pub mod pic;
 pub mod rad1;

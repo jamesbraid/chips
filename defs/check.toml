@@ -140,3 +140,7 @@ prose_offsets = false
 [units.isp2200]
 group = "isp2200.h"
 prose_offsets = false
+
+[units.lucent_ohci]
+group = "lucent_ohci.h"
+prose_offsets = false
