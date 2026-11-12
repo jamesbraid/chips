@@ -165,9 +165,13 @@ the saved base pointers get the new number.
 
 ### 3.1 The node number: routine `0x1fc5c328` (E, read in full, 0x98 bytes)
 
-The routine is the only local store to the local block's `rev_id` found in the PROM or either kernel (the
-only other store is the remote one in 3.3; no kernel stores to it). Arguments: node number in `$4`, region size in
-`$5` (negative means leave unchanged).
+This routine is the PROM's node-number setter: it stores to the local block's `rev_id` three times, the last with the
+new number. The PROM has two other `rev_id` stores: `sd $0` of the whole word at `0x1fc67718`, in the hub
+initialisation routine `0x1fc676c8` (which also stores to other node registers; where it falls relative to the rest
+of the boot was not traced, **U**), and the remote one in 3.3. No kernel stores to it. (My first search for stores
+used only the literal-pool slot for `0x9200000001600000`; this store builds the address with `lui`/`or` and was found
+by a second search of every `lui 0x160` in the image, 23 sites, of which these two, plus reads, touch offset 0.)
+Arguments: node number in `$4`, region size in `$5` (negative means leave unchanged).
 
 1. Load the current word from `0x9200000001600000` (table word at gp-32480). Compute the new word: clear bits 39:32
    (mask `0xffffff00ffffffff`), or in `$4 << 32`; if `$5 >= 0`, also clear bits 47:46 (mask `0xffff3fffffffffff`) and
@@ -229,7 +233,10 @@ What this shows (**E** for the sequence, **I** for the readings):
 - A global barrier follows. **E.**
 - No read-back of the new number precedes the post-change delay. The first use of the new number after the store
   is the pointer-rebuild's call to the node-number getter `0x1fc6b5d0` (`0x1fc61294`), after the 20-pass and 4240-pass
-  delays and a rendezvous. Whether that getter reads the register is **U** (`0x1fc6b5d0` was not read).
+  delays and a rendezvous. The getter (read in full, 0x24 bytes) loads `0x9200000001600000` and returns bits 39:32, so
+  that call is a read-back of the register. **E.** The same getter is the PROM's source of the node number everywhere
+  else (many callers), so every later node-relative address is built from the value read back. **I** for "everywhere":
+  callers were counted, not all read.
 
 ### 3.3 Remote assignment (E for the code, U for completion)
 
@@ -256,7 +263,7 @@ Straight-line stores at `0x1fc5c1c0` to `0x1fc5c1f8` (routine around `0x1fc5bf68
 3. A two-pass loop (`0x1fc5c1d0` to `0x1fc5c1f8`): for PI0 (offset 0x18) then PI1 (0x200018), through the node alias
    `0x9200000001800000 + (node << 33)`, the same value as store 2.
 
-No `sync` and no read-back in the sequence. Each pass calls the node-number getter (`0x1fc6b5d0`) between stores.
+No `sync` and no read-back in the sequence. Each pass calls the node-number getter (`0x1fc6b5d0`) between stores; it reads `rev_id`, not a register written here.
 **E.** Whether the other processors are parked here is not shown by this page: the routine's caller was not traced
 (**U**); the barrier state of the memory-configuration step in 3.5 is the only traced one.
 
@@ -318,5 +325,5 @@ IRIX node-number reads: `get_nasid` (`0x41434`) loads local `rev_id` and returns
 | Question | Why open | Route |
 |---|---|---|
 | Whether any sequence is a requirement or an excess | no spec | a Hub or Bedrock specification; or a read-after-write test on a physical machine |
-| What `0x1fc6b5d0` and the `0x1fc163a4` core do | not read in full | read both |
+| What the `0x1fc163a4` core does (remote-register write completion) | not read in full | read it |
 | Which register holds the polled node-assignment word | stack slot, not resolved | trace the stack slot at 520($29) in the routine at `0x1fc60e00` |
