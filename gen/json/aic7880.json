@@ -142,6 +142,70 @@
   {
    "unit": "aic7880",
    "kind": "register",
+   "name": "scsirate",
+   "offset": 4,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "scsirate.wide",
+   "hi": 7,
+   "lo": 7,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "scsirate.sofs",
+   "hi": 3,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "register",
+   "name": "scsiid",
+   "offset": 5,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": 0,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 80; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "scsiid.tid",
+   "hi": 7,
+   "lo": 4,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 80; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "scsiid.oid",
+   "hi": 3,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 80; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "register",
    "name": "scsidatl",
    "offset": 6,
    "access": "rw",
@@ -189,6 +253,47 @@
    "reset": "unknown",
    "grade": "inferred",
    "from": "Adaptec AIC-7870 Data Book, PDF p. 93 (printed 4-24); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "register",
+   "name": "sblkctl",
+   "offset": 31,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "sblkctl.diagled",
+   "hi": 7,
+   "lo": 6,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "sblkctl.autoflushdis",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "sblkctl.selwide",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling"
   },
   {
    "unit": "aic7880",

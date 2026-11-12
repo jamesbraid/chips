@@ -212,3 +212,41 @@ doc = "Bit 0 is bit 8 of the sequencer RAM address, which covers the 512 instruc
 
 [registers.seqaddr1.fields]
 addr8 = { bits = [0, 0], grade = "inferred", doc = "bit 8 of the sequencer RAM address" }
+
+[registers.scsirate]
+offset = 0x04
+access = "rw"
+width = 8
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling"
+doc = "SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. Bits 6 to 4 are not in the cited pages and the reset value is not stated, so both stay unknown. Read-back is not stated."
+
+[registers.scsirate.fields]
+wide = { bits = [7, 7], grade = "inferred", doc = "WIDEXFER: sixteen-bit DATA transfer, which also needs SELWIDE set in SBLKCTL" }
+sofs = { bits = [3, 0], grade = "inferred", doc = "SOFS: synchronous offset that sets DATA timing" }
+
+[registers.scsiid]
+offset = 0x05
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 80; sibling"
+doc = "Target ID in bits 7:4 and own ID in bits 3:0. Both are four-bit fields, so the sibling addresses IDs 0 to 15 on the wide connection. Chip and PCI reset clear both nibbles. The own ID is the initiator's address during Selection Out. Public drivers commonly write own ID 7 after reset. That is software configuration, not a reset value."
+
+[registers.scsiid.fields]
+tid = { bits = [7, 4], grade = "inferred", doc = "target ID for Selection Out" }
+oid = { bits = [3, 0], grade = "inferred", doc = "own ID presented as the initiator's address during Selection Out" }
+
+[registers.sblkctl]
+offset = 0x1f
+access = "rw"
+width = 8
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling"
+doc = "Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 2 and 0 read zero. Bit 3 is not described here."
+
+[registers.sblkctl.fields]
+diagled      = { bits = [7, 6], grade = "inferred", doc = "diagnostic LED control; resets to one" }
+autoflushdis = { bits = [5, 5], grade = "inferred", doc = "resets to zero; the function is not in the cited pages" }
+selwide      = { bits = [1, 1], grade = "inferred", doc = "1 configures the wide physical connection with the upper data lines in use; 0 leaves them unused" }

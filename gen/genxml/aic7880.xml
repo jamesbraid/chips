@@ -20,6 +20,16 @@
     <field name="req" start="1" size="1" type="uint" grade="inferred"/>
     <field name="ack" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
+  <struct name="SCSIRATE" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling" register="yes" offset="0x4" access="rw" reset="unknown">
+    <doc>SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. Bits 6 to 4 are not in the cited pages and the reset value is not stated, so both stay unknown. Read-back is not stated.</doc>
+    <field name="wide" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="sofs" start="0" size="4" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="SCSIID" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 80; sibling" register="yes" offset="0x5" access="rw" reset="0x0">
+    <doc>Target ID in bits 7:4 and own ID in bits 3:0. Both are four-bit fields, so the sibling addresses IDs 0 to 15 on the wide connection. Chip and PCI reset clear both nibbles. The own ID is the initiator's address during Selection Out. Public drivers commonly write own ID 7 after reset. That is software configuration, not a reset value.</doc>
+    <field name="tid" start="4" size="4" type="uint" grade="inferred"/>
+    <field name="oid" start="0" size="4" type="uint" grade="inferred"/>
+  </struct>
   <struct name="SCSIDATL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 81 (printed 4-12); sibling" register="yes" offset="0x6" access="rw" reset="unknown">
     <doc>SCSI data latch used for automatic and manual PIO, one byte per access. The book says an access drives the SCSI ACK (as initiator) or REQ (as target) active as it happens. The value after chip reset is unknown, and valid data loads after the first REQ and ACK. The high byte in 16-bit mode is a separate register and is not described here.</doc>
   </struct>
@@ -29,6 +39,12 @@
   </struct>
   <struct name="SCSIBUSL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 93 (printed 4-24); sibling" register="yes" offset="0x12" access="r" reset="unknown">
     <doc>SCSI data bus, read directly. The book says the data is gated from the bus to the internal data bus and is not latched in the SCSI module. A read therefore sees the byte on the bus without taking the latch. Nothing in the cited pages says it acknowledges the byte, and the book ties the ACK drive to SCSIDATL accesses, so this read is taken not to acknowledge (inferred from the book's wording, not stated).</doc>
+  </struct>
+  <struct name="SBLKCTL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling" register="yes" offset="0x1f" access="rw" reset="unknown">
+    <doc>Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 2 and 0 read zero. Bit 3 is not described here.</doc>
+    <field name="diagled" start="6" size="2" type="uint" grade="inferred"/>
+    <field name="autoflushdis" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="selwide" start="1" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="SEQCTL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling" register="yes" offset="0x60" access="rw" reset="0x90">
     <doc>Sequencer control. Bit 4 selects the sequencer clock divider, bit 2 requests one single step, bit 1 resets the sequencer RAM address pointer and bit 0 gives the host access to sequencer RAM. Bit 6 disables the host pause request. Bits 7, 5 and 3 (PERRORDIS, FAILDIS and BRKADRINTEN) are in the book but are not described on this unit. The reset value is the one the book's bit table gives in parentheses, not a value read after initialisation.</doc>

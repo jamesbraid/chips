@@ -132,6 +132,56 @@ pub mod scsisig {
         }
     }
 }
+/// SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. Bits 6 to 4 are not in the cited pages  (inferred)
+pub mod scsirate {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x4;
+    pub mod wide { // bits 7:7, inferred
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sofs { // bits 3:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0xf;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Target ID in bits 7:4 and own ID in bits 3:0. Both are four-bit fields, so the sibling addresses IDs 0 to 15 on the wide connection. Chip and PCI rese (inferred)
+pub mod scsiid {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x5;
+    pub mod tid { // bits 7:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u32 = 0xf;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod oid { // bits 3:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0xf;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// SCSI data latch used for automatic and manual PIO, one byte per access. The book says an access drives the SCSI ACK (as initiator) or REQ (as target)  (inferred)
 pub mod scsidatl {
     pub const WIDTH: u32 = 8;
@@ -156,6 +206,41 @@ pub mod simode0 {
 pub mod scsibusl {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x12;
+}
+/// Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and t (inferred)
+pub mod sblkctl {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x1f;
+    pub mod diagled { // bits 7:6, inferred
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u32 = 0x3;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod autoflushdis { // bits 5:5, inferred
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod selwide { // bits 1:1, inferred
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Sequencer control. Bit 4 selects the sequencer clock divider, bit 2 requests one single step, bit 1 resets the sequencer RAM address pointer and bit 0 (inferred)
 pub mod seqctl {

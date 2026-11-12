@@ -55,6 +55,30 @@
 #define AIC7880_SCSISIG_ACK_INPLACE                  (AIC7880_SCSISIG_ACK_MASK << AIC7880_SCSISIG_ACK_SHIFT)
 
 /*
+ * SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. Bits 6 to 4 are not in the cited pages and the reset value is not stated, so both stay unknown. Read-back is not stated.
+ */
+/* scsirate: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling */
+#define AIC7880_SCSIRATE_OFFSET                      0x4u /* inferred */
+#define AIC7880_SCSIRATE_WIDE_SHIFT                  7 /* inferred */
+#define AIC7880_SCSIRATE_WIDE_MASK                   0x1u
+#define AIC7880_SCSIRATE_WIDE_INPLACE                (AIC7880_SCSIRATE_WIDE_MASK << AIC7880_SCSIRATE_WIDE_SHIFT)
+#define AIC7880_SCSIRATE_SOFS_SHIFT                  0 /* inferred */
+#define AIC7880_SCSIRATE_SOFS_MASK                   0xfu
+#define AIC7880_SCSIRATE_SOFS_INPLACE                (AIC7880_SCSIRATE_SOFS_MASK << AIC7880_SCSIRATE_SOFS_SHIFT)
+
+/*
+ * Target ID in bits 7:4 and own ID in bits 3:0. Both are four-bit fields, so the sibling addresses IDs 0 to 15 on the wide connection. Chip and PCI reset clear both nibbles. The own ID is the initiator's address during Selection Out. Public drivers commonly write own ID 7 after reset. That is software configuration, not a reset value.
+ */
+/* scsiid: rw8, reset 0x0; Adaptec AIC-7870 Data Book, PDF p. 80; sibling */
+#define AIC7880_SCSIID_OFFSET                        0x5u /* inferred */
+#define AIC7880_SCSIID_TID_SHIFT                     4 /* inferred */
+#define AIC7880_SCSIID_TID_MASK                      0xfu
+#define AIC7880_SCSIID_TID_INPLACE                   (AIC7880_SCSIID_TID_MASK << AIC7880_SCSIID_TID_SHIFT)
+#define AIC7880_SCSIID_OID_SHIFT                     0 /* inferred */
+#define AIC7880_SCSIID_OID_MASK                      0xfu
+#define AIC7880_SCSIID_OID_INPLACE                   (AIC7880_SCSIID_OID_MASK << AIC7880_SCSIID_OID_SHIFT)
+
+/*
  * SCSI data latch used for automatic and manual PIO, one byte per access. The book says an access drives the SCSI ACK (as initiator) or REQ (as target) active as it happens. The value after chip reset is unknown, and valid data loads after the first REQ and ACK. The high byte in 16-bit mode is a separate register and is not described here.
  */
 /* scsidatl: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 81 (printed 4-12); sibling */
@@ -74,6 +98,21 @@
  */
 /* scsibusl: r8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 93 (printed 4-24); sibling */
 #define AIC7880_SCSIBUSL_OFFSET                      0x12u /* inferred */
+
+/*
+ * Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 2 and 0 read zero. Bit 3 is not described here.
+ */
+/* sblkctl: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling */
+#define AIC7880_SBLKCTL_OFFSET                       0x1fu /* inferred */
+#define AIC7880_SBLKCTL_DIAGLED_SHIFT                6 /* inferred */
+#define AIC7880_SBLKCTL_DIAGLED_MASK                 0x3u
+#define AIC7880_SBLKCTL_DIAGLED_INPLACE              (AIC7880_SBLKCTL_DIAGLED_MASK << AIC7880_SBLKCTL_DIAGLED_SHIFT)
+#define AIC7880_SBLKCTL_AUTOFLUSHDIS_SHIFT           5 /* inferred */
+#define AIC7880_SBLKCTL_AUTOFLUSHDIS_MASK            0x1u
+#define AIC7880_SBLKCTL_AUTOFLUSHDIS_INPLACE         (AIC7880_SBLKCTL_AUTOFLUSHDIS_MASK << AIC7880_SBLKCTL_AUTOFLUSHDIS_SHIFT)
+#define AIC7880_SBLKCTL_SELWIDE_SHIFT                1 /* inferred */
+#define AIC7880_SBLKCTL_SELWIDE_MASK                 0x1u
+#define AIC7880_SBLKCTL_SELWIDE_INPLACE              (AIC7880_SBLKCTL_SELWIDE_MASK << AIC7880_SBLKCTL_SELWIDE_SHIFT)
 
 /*
  * Sequencer control. Bit 4 selects the sequencer clock divider, bit 2 requests one single step, bit 1 resets the sequencer RAM address pointer and bit 0 gives the host access to sequencer RAM. Bit 6 disables the host pause request. Bits 7, 5 and 3 (PERRORDIS, FAILDIS and BRKADRINTEN) are in the book but are not described on this unit. The reset value is the one the book's bit table gives in parentheses, not a value read after initialisation.
