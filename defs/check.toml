@@ -160,3 +160,7 @@ prose_offsets = false
 [units.seeq_8003]
 group = "seeq_8003.h"
 prose_offsets = false
+
+[units.router_sn1]
+group = "router_sn1.h"
+prose_offsets = false

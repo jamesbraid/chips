@@ -99,6 +99,31 @@ Conflicts and gaps:
 - The header places `RR_DEBUG_ADDR` at `0x38`; the IP27 kernel uses `0x38` for a serial-number sequence (above).
 - The IP27 router has six ports and a 16-bit port stride; the header has eight and the 11/15-bit formula.
 
+## Routing tables and remote reset mask (public header only)
+
+The census does not show these tables, and it cannot say whether the kernels reach them through computed indexes. Their positions come from the public header (`include/asm-ia64/sn/router.h` in the
+pinned `linux-2.5.40` submodule, pin `7570df5`), graded established as header positions, as for the other SN1
+units. The machine-readable form is [`defs/router_sn1.toml`](../../defs/router_sn1.toml), generated into
+[gen/docs/router_sn1.md](../../gen/docs/router_sn1.md).
+
+- **Port block (E).** The header computes the base of link `L` (1 to 8) as `((L+1) & 0xe) << 15 | ((L+1) & 1) << 11`,
+  the same expression the IP35 census inferred from the kernel.
+- **Local routing table (E for positions, U for meaning).** At the port base plus `0x200`, 128 entries of 8 bytes,
+  entry `x` at `+8x`. Each entry holds eight 3-bit fields; field `L` sits at bits `4(L-1)+2` down to `4(L-1)`, so
+  field 1 is bits 2:0 and field 8 is bits 30:28. The header gives no meaning for a field value, and bits 31 to 63
+  have no name.
+- **Global routing table (U).** At the port base plus `0x100`. The header names the base but gives neither an entry
+  count nor an entry layout.
+- **Meta routing table (U).** 16 entries (E), with no offset in the header.
+- **Remote reset mask (E for the bit, U for reset).** At the port base plus `0x18`. Bit `L-1` is the reset-allowed bit
+  for link `L`. This is the register the IP35 kernel's `router_set_fences` writes, above.
+- **Turn arithmetic (E as arithmetic).** `RR_TURN` and `RR_DISTANCE` count clockwise turns over the eight ports. They
+  are software helpers. The header does not say that the table fields hold turn counts.
+
+Open: which routine reaches the tables, what a table value selects and how a route is chosen across ports, the
+global table's size and layout, and every reset value. A dynamic capture on identified silicon would answer the
+selection question; the header cannot.
+
 ## Open
 
 See [../../docs/open-questions.md](../../docs/open-questions.md): the router register map of the IP27 chip, the routing

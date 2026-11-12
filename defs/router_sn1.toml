@@ -1,0 +1,40 @@
+unit = "router_sn1"
+prefix = "ROUTER_SN1"
+title = "SN1 network router: port block, local routing table and remote reset mask (public header positions)"
+doc = "Addresses are port-relative: a port's block starts at the base the header computes from the link number L (1 to 8), ((L+1) & 0xe) << 15 | ((L+1) & 1) << 11. Field positions, entry counts and offsets come from the public Linux 2.5.40 ia64 SN router header, so they are established as header positions, following the convention for the other SN1 units. What a header macro computes is established only as arithmetic; what the hardware does with a table value is not stated by the header and is unknown. No router specification is held, so every reset is unknown. The census of the kernels does not reach the routing tables; their layout here comes from the header alone. The prose is in chips/router/README.md."
+from = "Linux 2.5.40 ia64 SN router header (RR_LOCAL_TABLE0, RR_LOCAL_TABLE, RR_RESET_MASK, RRM_RESETOK, RTABLE_SHFT, RTABLE_MASK, MAX_ROUTER_PORTS, RR_LOCAL_ENTRIES, RR_META_ENTRIES)"
+public_from = ["Linux 2.5.40 ia64 SN router header"]
+
+[constants]
+MAX_PORTS = { value = 8, grade = "established", doc = "Ports on one router, from MAX_ROUTER_PORTS. Port and link numbers run from 1 to 8." }
+LOCAL_ENTRIES = { value = 128, grade = "established", doc = "Entries in one port's local routing table, from RR_LOCAL_ENTRIES." }
+META_ENTRIES = { value = 16, grade = "established", doc = "Entries in the meta routing table, from RR_META_ENTRIES. The header gives no offset for the meta table, so its address is unknown." }
+RTABLE_FIELD_BITS = { value = 3, grade = "established", doc = "Width of one routing-table field, from RTABLE_MASK (0x7)." }
+RTABLE_FIELD_STRIDE_BITS = { value = 4, grade = "established", doc = "Bit distance between successive routing-table fields, from RTABLE_SHFT (4 times L minus 1)." }
+
+[registers.reset_mask]
+offset = 0x18
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Remote reset mask of one port (RR_RESET_MASK, 0x18 from the port base). Bit L minus 1 is the reset-allowed bit for link L (RRM_RESETOK). The header names the bit but not what a reset does with it. The kernel code that reads it is in the router census."
+
+[registers.local_table]
+offset = 0x200
+count = 128
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Local routing table of one port: entry x sits at 0x200 plus 8 times x from the port base (RR_LOCAL_TABLE). Each 64-bit entry holds eight 3-bit fields, one per link. The header gives no meaning for a field value, and the 4-bit stride leaves bits 31 to 63 unnamed. Reset unknown."
+
+[registers.local_table.fields]
+link1 = { bits = [2, 0], grade = "established", doc = "Field for link 1, bits 2 to 0 (RTABLE_SHFT for L=1)." }
+link2 = { bits = [6, 4], grade = "established", doc = "Field for link 2, bits 6 to 4." }
+link3 = { bits = [10, 8], grade = "established", doc = "Field for link 3, bits 10 to 8." }
+link4 = { bits = [14, 12], grade = "established", doc = "Field for link 4, bits 14 to 12." }
+link5 = { bits = [18, 16], grade = "established", doc = "Field for link 5, bits 18 to 16." }
+link6 = { bits = [22, 20], grade = "established", doc = "Field for link 6, bits 22 to 20." }
+link7 = { bits = [26, 24], grade = "established", doc = "Field for link 7, bits 26 to 24." }
+link8 = { bits = [30, 28], grade = "established", doc = "Field for link 8, bits 30 to 28." }
