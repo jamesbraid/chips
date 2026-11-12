@@ -61,6 +61,7 @@ Crosstalk, XIO and interconnect:
 - [docs/crosstalk-link.md](docs/crosstalk-link.md): Crosstalk (XIO): the link, its widgets and its host ends.
 - [docs/crosstalk-packets.md](docs/crosstalk-packets.md): Crosstalk packets and the link under them.
 - [docs/baseio.md](docs/baseio.md): BaseIO and BaseIO-G: the XIO I/O board of the Origin 2000 and Onyx2, its PCI placement, interrupt paths, panel and one-wire identity records.
+- [docs/origin2000-node-configuration.md](docs/origin2000-node-configuration.md): Origin 2000 node board clock, Hub and secondary-cache configuration: the published 180 MHz and 195 MHz configurations, node PROM mixing and copy rules, and the boot-flash configuration block; it holds no register contract.
 - [docs/crosstown-ktown.md](docs/crosstown-ktown.md): Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards.
 - [docs/onyx3000-graphics-topology.md](docs/onyx3000-graphics-topology.md): Onyx 3000 graphics bricks: where a G-brick pipe and a V-brick V12 sit, and the smallest configuration.
 - [docs/gbrick.md](docs/gbrick.md): Onyx 3000 G-brick: the 18U enclosure and its slot rule, the InfiniteReality3 and InfiniteReality4 pipe board sets, raster manager counts per pipe, the N-brick's pipe connectors, the L1 and what is unknown. No register contract.
