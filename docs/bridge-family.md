@@ -36,7 +36,7 @@ unknown. Every unknown names the test that would settle it.
   IP27, IP30 and IP35 PROMs: read through the chips repo's per-chip pages, [chips/bridge/README.md](../chips/bridge/README.md)
   and [chips/pic/README.md](../chips/pic/README.md), and the routine notes
   [ip27-kernel-bridge-routines.md](ip27-kernel-bridge-routines.md) and
-  [ip30-kernel-bridge-routines.md](ip30-kernel-bridge-routines.md). Binary offsets below are those pages'.
+  [ip30-kernel-bridge-routines.md](ip30-kernel-bridge-routines.md). Binary offsets below are those pages'. The PCI windows and swap controls IRIX drives are in [bridge-pci-driver-windows.md](bridge-pci-driver-windows.md).
   The IRIX source tree was not read for this page. This page names registers and fields only in its own words or with
   a name that a manual or a public Linux or OpenBSD driver also uses; kernel symbol and PROM string names are not
   reproduced.
