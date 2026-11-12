@@ -35,6 +35,7 @@ pub mod isp12160;
 pub mod isp2200;
 pub mod l1;
 pub mod l1_requests;
+pub mod lh28f800su;
 pub mod lucent_ohci;
 pub mod mace;
 pub mod mace_extra;

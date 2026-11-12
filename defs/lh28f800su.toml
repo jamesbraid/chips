@@ -1,0 +1,76 @@
+unit = "lh28f800su"
+prefix = "LH28F800SU"
+title = "Sharp LH28F800SU 8 Mbit x16 flash: array geometry, command set, identifier and status registers"
+doc = "The 1 MiB flash part in x16 mode: block geometry, the compatible and extended command opcodes, the identifier words, the typical operation times and the status words read back through the status and extended-status commands. Grades: established means the manufacturer datasheet states the value; inferred means arithmetic on a stated value or a reading of the command table; unknown means the datasheet does not settle it. Which SGI board fits this part, and how its pins are wired, is not stated by the datasheet and is not listed here."
+from = "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+public_from = ["Sharp, LH28F800SU 8M Flash Memory"]
+
+[constants]
+LH28F800SU_ARRAY_BYTES = { value = 0x100000, grade = "established", doc = "Array size: 8 Mbit, 1 MiB, in sixteen blocks. Printed pp. 2, 4 to 7." }
+LH28F800SU_BLOCK_COUNT = { value = 16, grade = "established", doc = "Independently lockable blocks in the array. Printed p. 2." }
+LH28F800SU_BLOCK_BYTES = { value = 0x10000, grade = "inferred", doc = "Bytes per block: the array size divided by the block count, 64 KiB. Arithmetic on the two values above." }
+LH28F800SU_BLOCK_WORDS = { value = 32768, grade = "established", doc = "Words per block in x16 mode. Printed pp. 2 and 4 to 7." }
+
+LH28F800SU_CMD_READ_ARRAY = { value = 0xff, grade = "established", doc = "Write cycle that selects array output. The next read at any address returns array data. Printed p. 10." }
+LH28F800SU_CMD_IDENTIFY = { value = 0x90, grade = "established", doc = "Write cycle that selects identifier output. The next read at word address 0 or 1 returns an identifier word. Printed p. 10." }
+LH28F800SU_CMD_READ_STATUS = { value = 0x70, grade = "established", doc = "Write cycle that selects compatible status output. Printed p. 10." }
+LH28F800SU_CMD_CLEAR_STATUS = { value = 0x50, grade = "established", doc = "Write cycle with no following read. Clears CSR bits 3 to 5, GSR bit 5, and bits 5 and 2 of every BSR. It does not change the array or the stored lock bits. Printed p. 10." }
+LH28F800SU_CMD_PROGRAM = { value = 0x40, grade = "established", doc = "Word program setup. The next write cycle, at the destination word, carries the data. Printed p. 10." }
+LH28F800SU_CMD_PROGRAM_ALT = { value = 0x10, grade = "established", doc = "Second word program setup code, with the same sequence as 0x40. Printed p. 10." }
+LH28F800SU_CMD_ERASE_SETUP = { value = 0x20, grade = "established", doc = "Block erase setup. Written at any address. The address of this cycle is not used. Printed p. 10." }
+LH28F800SU_CMD_CONFIRM = { value = 0xd0, grade = "established", doc = "Erase confirm, written after 0x20 at an address in the target block. The block containing this address is the one erased. It also resumes a suspended erase. Printed p. 10." }
+LH28F800SU_CMD_SUSPEND = { value = 0xb0, grade = "established", doc = "Erase suspend. Resumed by a write of 0xd0. Printed p. 10." }
+LH28F800SU_CMD_EXT_STATUS = { value = 0x71, grade = "established", doc = "Extended status mode. The read address that follows, not this write address, selects a GSR or a BSR. Printed pp. 6, 8, 11 to 14." }
+LH28F800SU_CMD_BLOCK_LOCK = { value = 0x77, grade = "established", doc = "Block lock setup in the enhanced command set, confirmed by 0xd0. Named here for its opcode only; the lock contract is not imported. Printed pp. 6, 8, 11 to 14." }
+LH28F800SU_CMD_UPLOAD_STATUS = { value = 0x97, grade = "established", doc = "Status upload setup, confirmed by 0xd0. Copies the stored lock bits to the displayed BSR bit 6 fields. Both write addresses are not used. Printed p. 11." }
+
+LH28F800SU_ID_WORD0 = { value = 0x00b0, grade = "established", doc = "Identifier word read at word address 0 after 0x90, with all other address pins zero. Printed p. 9." }
+LH28F800SU_ID_WORD1 = { value = 0x66a8, grade = "established", doc = "Identifier word read at word address 1 after 0x90, with all other address pins zero. Printed p. 9." }
+
+LH28F800SU_WORD_PROGRAM_TYP_US = { value = 8, grade = "established", doc = "Typical word program time. The datasheet says it is a typical figure, not a guaranteed limit. Printed p. 6." }
+LH28F800SU_BLOCK_ERASE_TYP_MS = { value = 700, grade = "established", doc = "Typical block erase time, 0.7 s. The datasheet says it is a typical figure, not a guaranteed limit. Printed p. 6." }
+LH28F800SU_RP_RECOVERY_NS = { value = 400, grade = "established", doc = "Recovery interval after RP is released before the device returns to array mode. Printed reset section, pp. 4 and 7." }
+
+[enums.gsr_op]
+values = { ok_or_running = { value = 0, grade = "established" }, sleep = { value = 1, grade = "established" }, failure = { value = 2, grade = "established" }, failure_or_abort = { value = 3, grade = "established" } }
+
+[enums.bsr_op]
+values = { ok_or_running = { value = 0, grade = "established" }, failure = { value = 2, grade = "established" }, aborted = { value = 3, grade = "established" } }
+
+[words.CSR]
+width = 8
+grade = "established"
+from = "Sharp LH28F800SU 8M Flash Memory, compatible status register, printed pp. 12"
+doc = "Compatible status register, read after 0x70. Bit 7 is ready when set and busy when clear. Bits 2 to 0 are reserved."
+[words.CSR.fields]
+ready = { bits = [7, 7], grade = "established", doc = "1 when the write state machine is ready, 0 while busy." }
+erase_suspended = { bits = [6, 6], grade = "established", doc = "Erase suspended." }
+erase_error = { bits = [5, 5], grade = "established", doc = "Erase error. Bits 5 and 4 both set after an erase attempt mean an improper command sequence. Printed p. 12." }
+program_error = { bits = [4, 4], grade = "established", doc = "Program error. Printed p. 12." }
+low_vpp = { bits = [3, 3], grade = "established", doc = "Low VPP detected during an operation. Printed p. 12." }
+
+[words.GSR]
+width = 8
+grade = "established"
+from = "Sharp LH28F800SU 8M Flash Memory, global status register, printed pp. 13 to 14"
+doc = "Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 float during status reads (printed p. 4)."
+[words.GSR.fields]
+write_ready = { bits = [7, 7], grade = "established", doc = "Write state machine ready." }
+suspended = { bits = [6, 6], grade = "established", doc = "Operation suspended." }
+op_status = { bits = [5, 4], grade = "established", enum = "gsr_op", doc = "Bit 5 and bit 4 together give the operation state." }
+queue_full = { bits = [3, 3], grade = "established", doc = "Command queue full." }
+buffer_available = { bits = [2, 2], grade = "established", doc = "At least one page buffer available." }
+buffer_ready = { bits = [1, 1], grade = "established", doc = "Selected page buffer ready." }
+buffer_select = { bits = [0, 0], grade = "established", doc = "Buffer 1 selected when set." }
+
+[words.BSR]
+width = 8
+grade = "established"
+from = "Sharp LH28F800SU 8M Flash Memory, block status register, printed pp. 13 to 14"
+doc = "Block status register, one per block, read through the extended-status mode at the BSR word address of that block. Bits 1 and 0 are reserved."
+[words.BSR.fields]
+block_ready = { bits = [7, 7], grade = "established", doc = "This block's write operation is ready." }
+lock_cleared = { bits = [6, 6], grade = "established", doc = "The displayed lock is cleared when this bit is set. Every displayed lock reads locked at power-up, until the status upload has run. The displayed bit is not the stored lock bit." }
+op_status = { bits = [5, 4], grade = "established", enum = "bsr_op", doc = "Bit 5 is operation unsuccessful and bit 4 is operation aborted, read together. The value 01 is invalid." }
+queue_full = { bits = [3, 3], grade = "established", doc = "Queue full." }
+low_vpp = { bits = [2, 2], grade = "established", doc = "Low VPP detected during an operation on this block." }

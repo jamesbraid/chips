@@ -146,6 +146,7 @@ Routine readings from the kernels and PROMs:
 - [docs/ip30-flash.md](docs/ip30-flash.md): IP30 boot flash as the Bridge drives it: the shared SSRAM and flash pins, the FLASH_SELECT strap, the write enable, and what is unknown.
 - [docs/ip35-boot-flash.md](docs/ip35-boot-flash.md): IP35 boot flash: the LBOOT and RBOOT windows, the two PROM positions, the 16 MB flash as the patent describes it, and what is unknown.
 - [docs/at29c040a.md](docs/at29c040a.md): AT29C040A 512 KiB flash: the byte-load program cycle, polling, block locks and the unloaded-byte question the datasheet leaves open.
+- [docs/lh28f800su.md](docs/lh28f800su.md): Sharp LH28F800SU 1 MiB x16 flash: block geometry, pins, the command set, the identifier words, the extended and block status registers, status upload, and the reset and failure questions the datasheet leaves open. The constants and status fields are in `defs/lh28f800su.toml`.
 - [docs/o2-prom-rom.md](docs/o2-prom-rom.md): O2 system ROM: the CRIME and MACE decode of the 4 MB window, the flash alias counts, the R10000 reset fetch and the photographed AT29C040A parts.
 - [docs/instruction-readings-chips-g1.md](docs/instruction-readings-chips-g1.md), [g2](docs/instruction-readings-chips-g2.md) and [g3](docs/instruction-readings-chips-g3.md): instruction readings from hostfacts, one group, not listed entry by entry.
 
