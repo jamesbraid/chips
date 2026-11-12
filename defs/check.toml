@@ -112,3 +112,7 @@ prose_offsets = false
 [units.dm2]
 group = "dm2.h"
 prose_offsets = false
+
+[units.dp83843]
+group = "dp83843.h"
+prose_offsets = false

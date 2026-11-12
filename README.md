@@ -71,6 +71,7 @@ Chip coverage pages:
 - [docs/bedrock-processor-interface.md](docs/bedrock-processor-interface.md): Bedrock processor interface: interrupt banks and masks, real-time compares, graphics credits, error capture and what is unknown.
 - [docs/coverage-crime.md](docs/coverage-crime.md): CRIME coverage: two coverage questions graded beyond the chip page.
 - [docs/coverage-ioc3.md](docs/coverage-ioc3.md): IOC3 coverage: what the shipped software and public drivers settle.
+- [docs/dp83840.md](docs/dp83840.md): DP83840A and DP83843 Ethernet transceivers of the Origin 200 and Origin 300 I/O boards: identity, the autonegotiation restart, loopback, strap-dependent bits and what is unknown.
 - [docs/coverage-ioc4.md](docs/coverage-ioc4.md): IOC4 coverage: what shipped software and public drivers settle.
 - [docs/coverage-mace.md](docs/coverage-mace.md): MACE coverage: what software, specification and drivers settle.
 - [docs/coverage-tiocp.md](docs/coverage-tiocp.md): TIOCP coverage: what the shipped software and drivers settle.
