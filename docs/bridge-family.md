@@ -123,7 +123,7 @@ Octane, Origin 200 and Origin 2000 run the first; the Origin 350 runs the second
   (`BRIDGE_REV_A`..`BRIDGE_REV_D`). IRIX tests `revision | part << 4` against `0xc0022`, `0xc0023` and `0xc0024`.
   Captured `hinv` lines (public captures, listed in the project bridge datasheet): Octane Bridge rev 3 at widget 15,
   Origin 200 Bridge rev 4 at widget 8, other Origin 200/2000 boards rev 2 to 4.
-  - Below rev 4 the PCI I/O space window is unusable (OpenBSD `xbridge.c`: a hardware issue in the byte-swap logic).
+  - Below rev 4 the PCI I/O space window is unusable: IRIX's PIO helper fails the mapping (established, [bridge-pci-driver-windows.md](bridge-pci-driver-windows.md), "The revision word"), and OpenBSD `xbridge.c` gives a hardware issue in the byte-swap logic as the reason (not re-read here).
   - Attach clears the PCI retry count field of the bus-timeout register (bits 9:0) below rev 4 (established).
   - Below rev 3 interrupt-enable bit 28 is left clear; on exactly rev 2 the receiver check-bit error (bit 20) is armed
     and further bits are left disabled (inferred: the revision gates and the retry-count clear were read in full, the exact bit

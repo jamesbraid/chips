@@ -15,10 +15,32 @@ The helper at `pcibr.o` 0xf6c (called by `pcibr_piomap_alloc` 0x183c and `pcibr_
 | configuration, type 0 | `0x20000 + slot * 0x1000 + offset` | the range ends within the first 0x100 bytes; `0x820000` replaces `0x20000` when the soft-state bus number (soft +72) is nonzero | established, block at 0x14f8 |
 | 32-bit memory | `0x4000_0000 + PCI address` | the range ends by PCI address `0x4000_0000` | established, block at 0x12a8 |
 | 64-bit memory | `0x8000_0000 + PCI address` | upper limit from a constant at gp-32736, value not read | established offset, unknown limit, block at 0x1468 |
-| I/O | `0x1_0000_0000 + PCI address` | the range ends within 4 GiB; **and the widget revision word (soft +120, read at attach) is above `0xc0023`**, otherwise the mapping fails | established, block at 0x149c |
+| I/O | `0x1_0000_0000 + PCI address` | the range ends within 4 GiB; **and the revision word (soft +120, read at attach; see below) is above `0xc0023`**, otherwise the mapping fails with -1 | established, block at 0x149c (unix `0xa800000020043fe8`) |
 | BAR window n | as the window's memory or I/O type, after adding the base the host assigned to that register | window record from the function's record +72 + 56 n | established, 0x1024 to 0x1098 |
 
 Per-device 1 MiB or 2 MiB small windows (device 0 and 1 at 2 MiB, the rest at 1 MiB, from widget offset 0x200000, the layout the flash note in [xio-fibre-channel.md](xio-fibre-channel.md) records) are used for the first mapping of a function when the range fits and no bus-wide swap mode conflicts; the code at 0x1108 to 0x11f0 and 0x1580 to 0x15a8 chooses a window per function and rewrites that device's Device register to point it: bit 12 selected, offset bits from the PCI address, bit 13 set when byte swap is requested. Established for the register rewrite, inferred for the choice order.
+
+## The revision word and what each threshold changes
+
+`xbridge_attach` reads the widget identification register with `pcireg_id_get` and stores `((id >> 28) & 0xf) | (((id >> 12) & 0xffff) << 4)` at soft +120 (+0x78), and as the label `_pcibr_asic_rev`: `xbridge.o` 0x184 to 0x1a8, `IP30/unix` `0xa800000020042234` to `0xa800000020042254`. The word is therefore the part number in bits 19:4 and the revision in bits 3:0. The manufacturer field is not in it. A Bridge (part `0xc002`) at revision N reads `0xc0020 + N`, an XBridge (`0xd002`) reads `0xd0020 + N`. Established. The compares at `xbridge.o` 0x2bc and 0x5d0 and at `pcibr.o` 0x14a8 are the same in the 6.5.22 objects, and the two tunables below hold the same initial values in the 6.5.22 `unix.IP30` (`.sdata` `0xa8000000203db188` and `0xa8000000203db18c`). The other rows were read in 6.5.30 only.
+
+Every threshold below is a signed compare of this whole word, so on a Bridge it is a revision test, and on an XBridge it never fires, because `0xd0021` and above is above every limit. Revisions A to D are 1 to 4: the attach routine's debug name table in `xbridge.o` `.rodata` 0x1b8 to 0x1bf holds "A", "B", "C", "D" for `0xc0021` to `0xc0024` (selected at 0x2e0 to 0x31c), so the letters are established, not only inferred from Linux.
+
+| Test | Bridge revisions it hits | Effect | Where | Grade |
+|---|---|---|---|---|
+| word below `0xc0024` | A, B, C | PCI I/O window mapping fails (-1) | `pcibr.o` 0x14a8 to 0x14b4, unix `0xa800000020043fe8` | established |
+| word below `0xc0024` | A, B, C | stores `0x2000` at soft +0xa98 and +0xa9c | `xbridge.o` 0x2bc to 0x2dc, unix `0xa80000002004236c` to `0xa80000002004238c` | established (stores), unknown (role) |
+| word below `0xc0024` | A, B, C | clears bits 9:0 of the bus timeout register (`pcireg_timeout_bit_clr`, 0x3ff) | `xbridge.o` 0x448 to 0x454 and 0x8e0 | established |
+| word below `0xc0024` (the limit is `0xc0020 \| pcibr_wg_enable_rev`, initial value 4) | A, B, C | ORs bit 17 (0x20000) into soft +0x7c | `xbridge.o` 0x620 to 0x640 | established (the OR), unknown (role) |
+| word at or above `0xc0022` and below `0xc0023` (limit `0xc0020 \| pcibr_prefetch_enable_rev`, initial value 3) | B only | soft +0x7c = 0x800 | `xbridge.o` 0x604 to 0x61c | established, unknown (role) |
+| word below `0xc0022` | A only | soft +0x7c = 0x80000 (the later tests are skipped except bit 17) | `xbridge.o` 0x5dc to 0x600 | established, unknown (role) |
+| word exactly `0xc0022` | B only | `pcibr_priority_bits_set` takes 0 where every other revision takes 0x20000 | `pcibr.o` 0x3a10 to 0x3a30 | established (the compare), unknown (role) |
+
+The two tunables are the kernel's variables, so what the table shows is their initial values in the shipped image. Nothing was looked for that sets them at run time.
+
+Other sites test the revision nibble alone, as `(1 << (word & 0xf)) & mask`, with mask 2 (revision A) at `pcibr.o` 0x440, 0x474, 0x3d74, 0x64e8, 0x83f0, 0x9898, 0x99a4 and 0xcea0 and mask 6 (A or B) at 0x9a6c. They do not compare the part. Whether a part test precedes each branch, and what each one changes, was not read: unknown.
+
+There is no `pcibr_attach` in the IP30 kernel's symbol table: `xbridge_attach` is the attach routine for both parts (`xbridge_init` registers it, 0x18 to 0x40). The IP30 chain is `xbridge_attach` then the `pcibr_*` helpers above.
 
 ## Swap controls, three places
 
@@ -58,7 +80,7 @@ Established from `pcibr_dmamap_alloc` 0x20c0 and `pcibr_dmatrans_addr` 0x2e28:
 Everything below is the hardware's contract with these routines, read from their requirements; the machine-specific cage facts (widget numbers, slot counts, part identity) are in [crosstalk-link.md](crosstalk-link.md) and [xbow-family.md](xbow-family.md).
 
 - A crossbow widget whose identification word is part `0xc002` with manufacturer 54, or part `0xd002` with manufacturer 36. `xbridge_init` (`xbridge.o` 0x0) registers `xbridge_attach` for exactly those two (0x18 to 0x40); no other part number reaches it. The 3-slot Octane PCI module is on port 13 and a shoehorn takes any of the four option ports 9 to 12 ([xbow-family.md](xbow-family.md), "Which widget sits behind which port").
-- A widget revision word of at least `0xc0024`: below it the PCI I/O window does not map (above) and `xbridge_attach` applies revision workarounds (the stores at soft +0xa98 and +0xa9c; [ip30-kernel-bridge-routines.md](ip30-kernel-bridge-routines.md)).
+- For a Bridge (part `0xc002`), revision 4 or later, that is a revision word of at least `0xc0024` (see the section above). Below it the PCI I/O window does not map and `xbridge_attach` applies revision workarounds ([ip30-kernel-bridge-routines.md](ip30-kernel-bridge-routines.md)). An XBridge always passes. Memory and configuration windows do not depend on the revision.
 - Type 0 configuration cycles for device numbers the attach loop scans, slot minimum to slot maximum (soft +56 and +57; 0 to 7 for these two parts, [ip27-kernel-bridge-routines.md](ip27-kernel-bridge-routines.md)). A device number whose identity read is not all ones is treated as a present function, and its vendor and device numbers are what the connection registry matches (inferred from `pcibr_slot_info_init` 0xb768 and the registry call, not read to the last branch).
 - The memory and I/O windows of the table above, translation entries (the entry count is read from soft +112 at attach), the Device registers for slots 0 to 7, the Control swap bits, interrupt pins 0 to 7 and the write-ones BAR sizing of each function. The windows in PCI address space are the host's to assign; IRIX uses the ranges in the previous section and needs the cage's PCI bus to decode them.
 - What the module's or the shoehorn's own Bridge revision is: unknown (see [open-questions.md](open-questions.md)).

@@ -143,8 +143,8 @@ all begin with the routine's own name, apart from the three that borrow a neighb
   `pcireg_intr_dst_target_id_get` and `pcireg_intr_dst_addr_get`. It reads the interrupt enable register and writes it
   back ORed with 0x3eff7ffffe00 (`pcireg_intr_enable_get` and `pcireg_intr_enable_set`), sets the interrupt mode to 0,
   and reads the target flush register. The word at +0x7c is set by revision: 0x80000 below 0xc0022, 0x800 below a
-  limit derived from `pcibr_prefetch_enable_rev`, and bit 17 (0x20000) ORed in below a limit derived from
-  `pcibr_wg_enable_rev`. Three window maps at record +0x848, +0x858 and +0x868 are created with
+  limit of `0xc0020 | pcibr_prefetch_enable_rev` (initial value 3, so `0xc0023`; `IP30/unix` `.sdata` `0xa8000000204a74f4`), and bit 17 (0x20000) ORed in below
+  `0xc0020 | pcibr_wg_enable_rev` (initial value 4, so `0xc0024`; `0xa8000000204a74f0`). Three window maps at record +0x848, +0x858 and +0x868 are created with
   `pciio_device_win_map_new` (arguments 0x10000000 and 0x100000, then 0x100000 and
   0x4000, then 0x40000000 and 0x100000) and each is filled with `pciio_device_win_populate` (arguments 0x200000 and
   0xff00000, then 0x4000 and 0xfc000, then 0x200000 and
