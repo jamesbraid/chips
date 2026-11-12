@@ -1,0 +1,147 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/hub_ni_extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="hub_ni_extra" prefix="HUB" title="Hub network interface field layouts, port and vector fields, and register offsets outside the census" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)">
+  <enum name="ni_node_mode">
+    <value name="more_memory" value="0" grade="established"/>
+    <value name="more_nodes" value="1" grade="established"/>
+  </enum>
+  <enum name="ni_pio_request_type">
+    <value name="read" value="0" grade="established"/>
+    <value name="write" value="1" grade="established"/>
+    <value name="undefined" value="2" grade="established"/>
+    <value name="exchange" value="3" grade="established"/>
+  </enum>
+  <enum name="ni_pio_type">
+    <value name="read" value="0" grade="established"/>
+    <value name="write" value="1" grade="established"/>
+    <value name="undefined" value="2" grade="established"/>
+    <value name="exchange" value="3" grade="established"/>
+    <value name="address_error" value="4" grade="established"/>
+    <value name="command_error" value="5" grade="established"/>
+    <value name="protection_error" value="6" grade="established"/>
+    <value name="unknown" value="7" grade="established"/>
+  </enum>
+  <enum name="ni_region_size">
+    <value name="coarse" value="0" grade="established"/>
+    <value name="fine" value="1" grade="established"/>
+  </enum>
+  <enum name="ni_vchannel">
+    <value name="channel_a" value="0" grade="established"/>
+    <value name="channel_b" value="1" grade="established"/>
+    <value name="any" value="2" grade="established"/>
+  </enum>
+  <struct name="NI_RETURN_VECTOR" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x600308" access="rw" reset="unknown">
+    <doc>Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. Access is assumed read and write.</doc>
+  </struct>
+  <struct name="NI_IO_PROTECT" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x600400" access="rw" reset="unknown">
+    <doc>PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. Access is assumed read and write; the header gives neither a field layout nor a reset.</doc>
+  </struct>
+  <struct name="NI_IO_PROT_OVRRD" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x600408" access="w" reset="unknown">
+    <doc>PIO protection override, named NI_IO_PROT_OVRRD in the header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only.</doc>
+  </struct>
+  <struct name="NI_AGE_CPU0_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x600508" access="rw" reset="unknown">
+    <doc>CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
+  </struct>
+  <struct name="NI_AGE_CPU1_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x600518" access="rw" reset="unknown">
+    <doc>CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
+  </struct>
+  <struct name="NI_AGE_GBR_MEMORY" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x600520" access="rw" reset="unknown">
+    <doc>Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
+  </struct>
+  <struct name="NI_AGE_GBR_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x600528" access="rw" reset="unknown">
+    <doc>Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
+  </struct>
+  <struct name="NI_AGE_IO_MEMORY" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x600530" access="rw" reset="unknown">
+    <doc>I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
+  </struct>
+  <struct name="NI_AGE_IO_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x600538" access="rw" reset="unknown">
+    <doc>I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
+  </struct>
+  <struct name="NI_PORT_PARMS" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x608000" access="rw" reset="unknown">
+    <doc>Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header; access is assumed read and write. The fields are graded on their own.</doc>
+    <field name="null_timeout" start="10" size="6" type="uint" grade="inferred"/>
+    <field name="max_burst" start="0" size="10" type="uint" grade="established"/>
+  </struct>
+  <struct name="NI_META_ENTRY" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x638008" access="rw" count="31" stride="8" reset="unknown">
+    <doc>Meta routing table entries 1 to 31, eight bytes apart from the census entry ni_meta_table0. The header gives the stride and the count of 32 entries. Access is assumed read and write. The entry width is not stated in the header and is not imported.</doc>
+  </struct>
+  <struct name="NI_LOCAL_ENTRY" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)" register="yes" offset="0x638108" access="rw" count="15" stride="8" reset="unknown">
+    <doc>Local routing table entries 1 to 15, eight bytes apart from the census entry ni_local_table0. The header gives the stride and the count of 16 entries. Access is assumed read and write. The entry width is not stated in the header and is not imported.</doc>
+  </struct>
+  <struct name="NI_AGE_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names">
+    <doc>Layout of each of the eight ageing registers, ni_age_cpu0_memory through ni_age_io_pio. The census names two of them. The header gives the channel field its own names and no meaning for the congestion field.</doc>
+    <field name="vchannel" start="10" size="2" type="ni_vchannel" grade="established"/>
+    <field name="congestion" start="8" size="2" type="uint" grade="established"/>
+    <field name="age" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="NI_DIAG_PARMS_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NDP_* masks">
+    <doc>Layout of the diagnostic parameters register, ni_diag_parms. The header names each bit and gives no further behaviour.</doc>
+    <field name="port_timeout_reset" start="18" size="1" type="uint" grade="established"/>
+    <field name="llp_8bit_mode" start="12" size="1" type="uint" grade="established"/>
+    <field name="port_disable" start="6" size="1" type="uint" grade="established"/>
+    <field name="send_error" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="NI_GLOBAL_PARMS_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NGP_* masks and shifts">
+    <doc>Layout of the global link parameters register, ni_global_parms. The header's comment on the credit-timeout field repeats the wording of the field above it; the name used here is the mask's own name.</doc>
+    <field name="max_retry" start="48" size="10" type="uint" grade="established"/>
+    <field name="tail_timeout_wrap" start="32" size="16" type="uint" grade="established"/>
+    <field name="credit_timeout" start="16" size="4" type="uint" grade="established"/>
+    <field name="tail_timeout" start="4" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="NI_PORT_ERROR_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NPE_* masks and shifts">
+    <doc>Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name.</doc>
+    <field name="link_reset" start="37" size="1" type="uint" grade="established"/>
+    <field name="internal_error" start="36" size="1" type="uint" grade="established"/>
+    <field name="bad_message" start="35" size="1" type="uint" grade="established"/>
+    <field name="bad_destination" start="34" size="1" type="uint" grade="established"/>
+    <field name="queue_overflow" start="33" size="1" type="uint" grade="established"/>
+    <field name="credit_timeout_count" start="28" size="4" type="uint" grade="established"/>
+    <field name="tail_timeout_count" start="24" size="4" type="uint" grade="established"/>
+    <field name="retry_count" start="16" size="8" type="uint" grade="established"/>
+    <field name="check_bit_error_count" start="8" size="8" type="uint" grade="established"/>
+    <field name="sequence_error_count" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="NI_PORT_RESET_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NPR_* masks">
+    <doc>Layout of the port reset register, ni_port_reset. The register is written, not read back; the header gives no read value.</doc>
+    <field name="warm_reset" start="7" size="1" type="uint" grade="established"/>
+    <field name="link_reset" start="1" size="1" type="uint" grade="established"/>
+    <field name="local_reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="NI_PROTECTION_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NPROT_RESETOK">
+    <doc>Layout of the protection configuration register, ni_protection.</doc>
+    <field name="reset_ok" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="NI_STATUS_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NSRI_* masks and shifts">
+    <doc>Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names.</doc>
+    <field name="eightbit_mode" start="30" size="1" type="uint" grade="established"/>
+    <field name="link_up" start="29" size="1" type="uint" grade="established"/>
+    <field name="down_reason" start="28" size="1" type="uint" grade="established"/>
+    <field name="more_nodes" start="18" size="1" type="ni_node_mode" grade="established"/>
+    <field name="region_size" start="17" size="1" type="ni_region_size" grade="established"/>
+    <field name="node_id" start="8" size="9" type="uint" grade="established"/>
+    <field name="chip_rev" start="4" size="4" type="uint" grade="established"/>
+    <field name="chip_id" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="NI_VECTOR_PARMS_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NVP_* masks and shifts">
+    <doc>Layout of the vector routing parameters register, ni_vector_parms. The header's identifier mask covers bits 49:40. Other sources put the top bit of that field at 50; this layout follows the public header.</doc>
+    <field name="pio_id" start="40" size="10" type="uint" grade="established"/>
+    <field name="write_id" start="32" size="8" type="uint" grade="established"/>
+    <field name="address" start="3" size="17" type="uint" grade="established"/>
+    <field name="pio_type" start="0" size="2" type="ni_pio_request_type" grade="established"/>
+  </struct>
+  <struct name="NI_VECTOR_STATUS_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NVS_* masks and shifts">
+    <doc>Layout of the vector routing status register, ni_vector_status. The source field is ten bits in the header (60:51). Another source gives it eleven bits (61:51); this layout follows the public header.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="overrun" start="62" size="1" type="uint" grade="established"/>
+    <field name="target" start="51" size="10" type="uint" grade="established"/>
+    <field name="pio_id" start="40" size="10" type="uint" grade="established"/>
+    <field name="write_id" start="32" size="8" type="uint" grade="established"/>
+    <field name="address" start="3" size="29" type="uint" grade="established"/>
+    <field name="pio_type" start="0" size="3" type="ni_pio_type" grade="established"/>
+  </struct>
+  <constant name="NI_LOCAL_ENTRIES" value="0x10" grade="established"/>
+  <constant name="NI_META_ENTRIES" value="0x20" grade="established"/>
+  <constant name="NI_PORT_ERROR_COUNT_MAX" value="0xff" grade="established"/>
+  <constant name="NI_PORT_PARMS_DEFAULTS" value="0x1bf0" grade="inferred"/>
+  <constant name="NI_PORT_PARMS_HUB20_DEFAULTS" value="0x7f0" grade="inferred"/>
+</genxml>
