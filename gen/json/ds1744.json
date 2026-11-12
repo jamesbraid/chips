@@ -1,0 +1,35 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/ds1744.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "ds1744",
+   "kind": "register",
+   "name": "ram",
+   "offset": 0,
+   "access": "rw",
+   "width": 8,
+   "count": 32760,
+   "stride": 1,
+   "space": "chip1744",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Analog Devices/Maxim DS1744 nonvolatile timekeeping SRAM datasheet, document 19-5502, revision 6/13"
+  },
+  {
+   "unit": "ds1744",
+   "kind": "register",
+   "name": "clock",
+   "offset": 32760,
+   "access": "rw",
+   "width": 8,
+   "count": 8,
+   "stride": 1,
+   "space": "chip1744",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Analog Devices/Maxim DS1744 nonvolatile timekeeping SRAM datasheet, document 19-5502, revision 6/13"
+  }
+ ]
+}
