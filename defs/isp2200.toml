@@ -1,0 +1,531 @@
+unit = "isp2200"
+prefix = "ISP2200"
+title = "QLogic ISP2200 Fibre Channel host adapter (PCI 1077:2200), the host interface the public drivers use"
+doc = "The single-chip Fibre Channel host adapter of the Origin 3000 I-brick (PCI 1077:2200), as the public Linux, OpenBSD and NetBSD drivers use it. Grades say how each item was derived: established means at least two of the public driver trees state the value and agree; inferred means one driver states it, or a driver's own struct or use names it without a second source; unknown means the sources do not settle it. No QLogic programming manual for this part is held, so the register contract rests on driver agreement, and the reset state of every register is unknown. The mailbox opcodes and status values are what the drivers send and read, not measured chip behaviour."
+from = "public Linux qla2xxx, OpenBSD SGI qla and NetBSD isp drivers"
+public_from = ["Linux qla2xxx driver", "OpenBSD qla driver", "NetBSD isp driver", "QLogic QLA2200 hardware installation guide (FC0151103-00 D)", "pci.ids", "Origin 3000 System Architecture (108-0240-002)"]
+
+[constants.PCI_VENDOR_ID]
+value = 0x1077
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla PCI tables; pci.ids"
+doc = "QLogic's PCI vendor ID. The same vendor ID is on every QLogic part in this repository."
+
+[constants.PCI_DEVICE_ID]
+value = 0x2200
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla PCI tables; NetBSD isp PCI ID name for the 2200; pci.ids"
+doc = "PCI device ID of the ISP2200 under vendor 0x1077. pci.ids gives the marketing name QLA2200 64-bit Fibre Channel Adapter, which is not a silicon marking."
+
+[constants.PCI_BAR_IO_CONFIG_OFFSET]
+value = 0x10
+grade = "established"
+from = "Linux qla2xxx uses the first BAR as port I/O; OpenBSD qla QLA_PCI_IO_BAR; NetBSD isp IO_MAP_REG"
+doc = "Configuration-space offset of BAR0, the I/O-space BAR. Linux and OpenBSD both use it for the register window. The window is also decoded in memory space through the BAR at the next offset, and the drivers read the same registers through either."
+
+[constants.PCI_BAR_MEM_CONFIG_OFFSET]
+value = 0x14
+grade = "established"
+from = "OpenBSD qla QLA_PCI_MEM_BAR; Linux qla2xxx uses the second BAR as memory-mapped I/O"
+doc = "Configuration-space offset of BAR1, the memory-space BAR. The BAR type (32-bit or 64-bit memory) is unknown: the drivers accept either."
+
+[constants.REGISTER_WINDOW_BYTES]
+value = 0x100
+grade = "established"
+from = "Linux qla2xxx minimum I/O length; NetBSD isp PCI register size"
+doc = "Size of the register window. The last mailbox ends exactly at this size, so it is the smallest window that holds the register file."
+
+[constants.MAILBOXES_TOTAL]
+value = 24
+grade = "established"
+from = "Linux qla2xxx mailbox count; NetBSD isp header comment for the 2200"
+doc = "Number of 16-bit mailboxes. Only the first eight are used by the OpenBSD driver. Linux writes all of them on every command."
+
+[constants.ENTRY_BYTES]
+value = 64
+grade = "established"
+from = "Linux qla2xxx request entry size; OpenBSD qla queue entry size"
+doc = "Size of every request and response ring entry, in bytes. Fields are little-endian."
+
+[constants.ICB_BYTES]
+value = 96
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp initialization control block layouts"
+doc = "Size of the initialization control block that INIT FIRMWARE reads from host memory."
+
+[constants.ICB_VERSION]
+value = 1
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla initialization control block"
+doc = "Version byte at the start of the initialization control block. The drivers write 1."
+
+[constants.NVRAM_IMAGE_BYTES]
+value = 256
+grade = "established"
+from = "Linux qla2xxx NVRAM structure; OpenBSD qla NVRAM structure"
+doc = "Size of the serial EEPROM image the drivers read through the NVRAM register."
+
+[constants.RISC_CODE_ORIGIN_WORD]
+value = 0x1000
+grade = "established"
+from = "Linux qla2xxx RISC start address for the 2100 and 2200 parts; OpenBSD qla 2200 code origin"
+doc = "Word address in controller RAM where downloaded RISC code starts. Both drivers agree on it."
+
+[constants.FIRMWARE_LENGTH_WORD_INDEX]
+value = 3
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp firmware loaders"
+doc = "Index of the word in a firmware image that gives its length in words. All three loaders read it there."
+
+[constants.PRODUCT_ID_MAILBOX1]
+value = 0x4953
+grade = "established"
+from = "Linux qla2xxx product ID check; OpenBSD qla attach check"
+doc = "Mailbox 1 after a reset, read as the ASCII text IS. The drivers test it to confirm the part answers as a QLogic adapter."
+
+[constants.PRODUCT_ID_MAILBOX2]
+value = 0x5020
+grade = "established"
+from = "OpenBSD qla attach check; Linux qla2xxx product ID check, which also accepts 0"
+doc = "Mailbox 2 after a reset, read as the ASCII text followed by a space. Linux also accepts zero here. OpenBSD issues another RISC release when the value is wrong."
+
+[constants.PRODUCT_ID_MAILBOX3]
+value = 0x2020
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla product ID checks"
+doc = "Mailbox 3 after a reset, read as two spaces."
+
+[constants.ROM_VERSION_MAILBOX7]
+value = 0x0004
+grade = "inferred"
+from = "Linux qla2xxx QLA2200A RISC ROM version value, read from mailbox 7"
+doc = "Mailbox 7 after a reset, which Linux names the QLA2200A RISC ROM version. Linux limits firmware transfers to 128 bytes when it reads this value. Only that one driver reads it, so whether it tells a 2200A from a 2200 is unknown."
+
+[constants.MBOX0_BUSY]
+value = 0x0004
+grade = "established"
+from = "Linux qla2xxx and NetBSD isp poll mailbox 0 after a RISC release"
+doc = "Mailbox 0 reads this value while the RISC is held in reset or paused, and the drivers wait until it stops reading it."
+
+[constants.STATUS_COMPLETE]
+value = 0x4000
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp mailbox status names"
+doc = "Mailbox 0 status for a command that completed."
+
+[constants.STATUS_INVALID_COMMAND]
+value = 0x4001
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp mailbox status names"
+doc = "Mailbox 0 status for a command number the firmware does not accept."
+
+[constants.STATUS_HOST_INTERFACE_ERROR]
+value = 0x4002
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp mailbox status names"
+doc = "Mailbox 0 status for a command whose host DMA failed."
+
+[constants.STATUS_TEST_FAILED]
+value = 0x4003
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp mailbox status names"
+doc = "Mailbox 0 status for a failed test, such as a checksum that does not sum to zero."
+
+[constants.STATUS_COMMAND_ERROR]
+value = 0x4005
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp mailbox status names"
+doc = "Mailbox 0 status for a command that failed in the firmware."
+
+[constants.STATUS_PARAMETER_ERROR]
+value = 0x4006
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp mailbox status names"
+doc = "Mailbox 0 status for a bad parameter. The sources name the value but not which malformed input returns it."
+
+[constants.MBOX_COMPLETION_LAST]
+value = 0x7fff
+grade = "established"
+from = "Linux qla2xxx semaphore handling"
+doc = "The codes from 0x4000 to this value in mailbox 0 are command completions. The drivers test the range rather than single codes."
+
+[constants.ASYNC_EVENT_FIRST]
+value = 0x8000
+grade = "established"
+from = "Linux qla2xxx semaphore handling"
+doc = "The codes from this value to 0xBFFF in mailbox 0 are asynchronous events, delivered like a mailbox result."
+
+[constants.ASYNC_EVENT_LAST]
+value = 0xbfff
+grade = "established"
+from = "Linux qla2xxx semaphore handling"
+doc = "Last code in the asynchronous event range."
+
+[constants.ASYNC_RESET]
+value = 0x8001
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla event codes"
+doc = "Asynchronous event: the adapter reset."
+
+[constants.ASYNC_LIP]
+value = 0x8010
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla event codes"
+doc = "Asynchronous event: a loop initialization primitive occurred."
+
+[constants.ASYNC_LOOP_UP]
+value = 0x8011
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla event codes"
+doc = "Asynchronous event: the loop came up."
+
+[constants.ASYNC_LOOP_DOWN]
+value = 0x8012
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla event codes"
+doc = "Asynchronous event: the loop went down."
+
+[constants.ASYNC_PORT_DB_CHANGE]
+value = 0x8014
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla event codes"
+doc = "Asynchronous event: the port database changed."
+
+[constants.ASYNC_RSCN]
+value = 0x8015
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla event codes"
+doc = "Asynchronous event: a registered state change notification arrived."
+
+[constants.OP_NOOP]
+value = 0x0000
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp use it as a liveness check"
+doc = "No-op mailbox command. Returns the complete status."
+
+[constants.OP_LOAD_RAM_32]
+value = 0x0001
+grade = "inferred"
+from = "NetBSD isp mailbox name and mask; OpenBSD qla and Linux qla2xxx name the same number"
+doc = "Load RAM with a 32-bit host address: mailbox 1 is the RAM word address, mailboxes 2 and 3 the host address, and mailbox 4 the word count. No public driver sends it for this part."
+
+[constants.OP_EXECUTE_FIRMWARE]
+value = 0x0002
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp execute command"
+doc = "Start the RISC at a RAM address given in mailbox 1. Linux and OpenBSD check its status. NetBSD does not."
+
+[constants.OP_DUMP_RAM]
+value = 0x0003
+grade = "inferred"
+from = "NetBSD isp mailbox name and mask; no public driver sends it for this part"
+doc = "Dump RAM to host memory, the inverse of the 32-bit load. The operand layout follows the load command."
+
+[constants.OP_WRITE_RAM_WORD]
+value = 0x0004
+grade = "established"
+from = "OpenBSD qla and NetBSD isp load the whole image this way, one word per command"
+doc = "Write one word of controller RAM: mailbox 1 is the address and mailbox 2 the data."
+
+[constants.OP_READ_RAM_WORD]
+value = 0x0005
+grade = "inferred"
+from = "NetBSD isp mailbox name and mask; Linux qla2xxx rejects it on this part"
+doc = "Read one word of controller RAM: mailbox 1 is the address and mailbox 2 returns the data."
+
+[constants.OP_MAILBOX_TEST]
+value = 0x0006
+grade = "inferred"
+from = "Linux qla2xxx mailbox register test"
+doc = "Echo command. Linux writes a fixed pattern to mailboxes 1 to 7 and checks that the same values come back. It runs before the queues exist."
+
+[constants.OP_VERIFY_CHECKSUM]
+value = 0x0007
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp verify command"
+doc = "Sum a loaded firmware image in RAM. The sum over the length in the image's length word is the check the drivers make. The sum comes back in mailbox 1, and the drivers treat zero as a match."
+
+[constants.OP_ABOUT_FIRMWARE]
+value = 0x0008
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp firmware identity command"
+doc = "Return the firmware version in mailboxes 1 to 3 and the attributes word in mailbox 6."
+
+[constants.OP_LOAD_RAM_DMA]
+value = 0x0009
+grade = "inferred"
+from = "Linux qla2xxx RAM load for the 2200, sent in chunks"
+doc = "Load RAM from host memory by DMA. Mailbox 1 is the RAM word address. Mailbox 2 carries bits 31 to 16 of the low 32 bits of the host address and mailbox 3 bits 15 to 0; mailboxes 6 and 7 carry the top 32 bits, and mailbox 4 the word count. Only Linux uses it for this part."
+
+[constants.OP_LOAD_RAM_EXT]
+value = 0x000b
+grade = "inferred"
+from = "Linux qla2xxx extended RAM load"
+doc = "Load RAM by DMA, as the 0x0009 form, with RAM address bits 31 to 16 in mailbox 8. Linux selects it only when the RAM address needs more than 16 bits."
+
+[constants.OP_FIRMWARE_STATUS]
+value = 0x001f
+grade = "inferred"
+from = "OpenBSD qla ring sizing; NetBSD isp command table"
+doc = "Firmware status. OpenBSD reads the maximum number of outstanding commands from mailbox 2. Linux does not send it."
+
+[constants.OP_GET_FIRMWARE_OPTIONS]
+value = 0x0028
+grade = "inferred"
+from = "Linux qla2xxx get-options call on the 2200 before INIT FIRMWARE"
+doc = "Read the firmware options words kept by the firmware. Linux sends it before INIT FIRMWARE. What the options change is not stated."
+
+[constants.OP_SET_FIRMWARE_OPTIONS]
+value = 0x0038
+grade = "inferred"
+from = "OpenBSD qla set-options call during attach"
+doc = "Store firmware options in mailboxes 1 to 3. OpenBSD treats a refusal as a failed attach."
+
+[constants.OP_INIT_FIRMWARE]
+value = 0x0060
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp initialization command"
+doc = "Give the firmware the initialization control block by DMA. The address goes in mailboxes 2, 3, 6 and 7. The three drivers send different input masks: they differ on mailboxes 1, 4 and 5, which some of them send as zero."
+
+[constants.PCI_CONFIG_BUS_MASTER_BIT]
+value = 0x4
+grade = "established"
+from = "NetBSD isp and OpenBSD qla set the PCI command register bus-master bit; Linux enables the device"
+doc = "Bit 2 of the PCI command register. The drivers set it, and the adapter's DMA depends on it. The bit is the standard PCI definition, not a register of this chip."
+
+[constants.CMD_ENTRY_64]
+value = 0x19
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla command entry types"
+doc = "Request entry type for a command with 64-bit segment addresses. The entry carries the CDB and the first two segments. Continuations carry the rest."
+
+[constants.CMD_ENTRY_32]
+value = 0x11
+grade = "inferred"
+from = "Linux qla2xxx command entry with 32-bit segments"
+doc = "Request entry type for a command with 32-bit segment addresses. Only Linux uses it."
+
+[constants.CONT_ENTRY_32]
+value = 0x02
+grade = "inferred"
+from = "Linux qla2xxx continuation entry with 32-bit segments"
+doc = "Request continuation entry carrying further 32-bit segments. Only Linux uses it."
+
+[constants.CONT_ENTRY_64]
+value = 0x0a
+grade = "inferred"
+from = "Linux qla2xxx continuation entry with 64-bit segments"
+doc = "Request continuation entry carrying further 64-bit segments. Only Linux uses it."
+
+[constants.SEGMENT_LIST_ENTRY]
+value = 0x15
+grade = "inferred"
+from = "OpenBSD qla command entry with a pointer to a segment list"
+doc = "Request entry that points at a list of segments in host memory instead of carrying continuations. Only OpenBSD uses it."
+
+[constants.MARKER_ENTRY]
+value = 0x04
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla marker entry"
+doc = "Request entry the host posts after a loop reset, abort or LIP to resynchronise the firmware. It produces no response entry."
+
+[constants.STATUS_ENTRY]
+value = 0x03
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla status entry"
+doc = "Response entry that reports the completion of a command. The handle in it is the one the host put in the command."
+
+[constants.STATUS_CONT_ENTRY]
+value = 0x10
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla status continuation"
+doc = "Response continuation that carries sense data beyond the first 32 bytes. The two drivers disagree on how much sense data one of these holds, so the capacity is unknown."
+
+[constants.CPL_COMPLETE]
+value = 0x0000
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command that finished normally."
+
+[constants.CPL_INCOMPLETE]
+value = 0x0001
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command that did not finish. The state and status flags in the same entry say why, and their bits are unknown."
+
+[constants.CPL_DMA_ERROR]
+value = 0x0002
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command whose data DMA failed."
+
+[constants.CPL_TRANSPORT_ERROR]
+value = 0x0003
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command that failed in the transport."
+
+[constants.CPL_RESET]
+value = 0x0004
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command the adapter dropped during a reset."
+
+[constants.CPL_ABORTED]
+value = 0x0005
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of an aborted command."
+
+[constants.CPL_TIMEOUT]
+value = 0x0006
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command that timed out."
+
+[constants.CPL_DATA_OVERRUN]
+value = 0x0007
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command whose target sent more data than the host expected. The residual count gives the difference."
+
+[constants.CPL_DATA_UNDERRUN]
+value = 0x0015
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command whose target sent less data than the host expected. The residual count gives the difference."
+
+[constants.CPL_QUEUE_FULL]
+value = 0x001c
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command the target refused because its queue was full."
+
+[constants.CPL_PORT_UNAVAILABLE]
+value = 0x0028
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command sent to a port that is not available."
+
+[constants.CPL_PORT_LOGGED_OUT]
+value = 0x0029
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command sent to a port that is logged out."
+
+[constants.CPL_PORT_CONFIG_CHANGED]
+value = 0x002a
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command sent to a port whose configuration changed."
+
+[constants.CPL_PORT_BUSY]
+value = 0x002b
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla completion codes"
+doc = "Completion status of a command sent to a port that is busy."
+
+[registers.csr]
+offset = 0x06
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla register layouts; NetBSD isp register header"
+doc = "Control and status register. Writing bit 0 starts a soft reset. The drivers poll the bit until the adapter clears it. Bits 5 and 4 choose the bank that answers the banked window. Linux and NetBSD disagree on the flash bank bits, so those bits are not named here."
+
+[registers.csr.fields]
+soft_reset = { bits = [0, 0], grade = "established", doc = "Soft reset. Writing 1 starts a reset. The drivers poll until it reads 0." }
+bank = { bits = [5, 4], grade = "established", doc = "Bank behind the banked window at offsets 0x80 to 0xBF. The drivers leave it at the RISC bank. The other values select frame-buffer and diagnostic banks that no public driver uses." }
+
+[registers.icr]
+offset = 0x08
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp interrupt control use"
+doc = "Interrupt control. The drivers write 0x8008 to enable and 0 to disable. Other bits are not used by any public driver for this part."
+
+[registers.icr.fields]
+global_enable = { bits = [15, 15], grade = "established", doc = "Global interrupt enable. Drivers set it together with the RISC enable." }
+risc_enable = { bits = [3, 3], grade = "established", doc = "RISC interrupt enable. Drivers set it together with the global enable." }
+
+[registers.isr]
+offset = 0x0a
+access = "r"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp interrupt status use"
+doc = "Interrupt status. Drivers test the RISC interrupt bit first. OpenBSD also tests the pending bit before it reads the response ring."
+
+[registers.isr.fields]
+risc_pending = { bits = [3, 3], grade = "established", doc = "RISC interrupt pending. Linux tests only this bit." }
+any_pending = { bits = [15, 15], grade = "inferred", doc = "Interrupt pending. OpenBSD tests it before reading the response ring. Linux does not read it." }
+
+[registers.sema]
+offset = 0x0c
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp semaphore use"
+doc = "Semaphore. The adapter sets the lock bit when a mailbox result or asynchronous event waits for the host. The host releases it by writing 0, and the drivers release it last, after reading the mailboxes."
+
+[registers.sema.fields]
+lock = { bits = [0, 0], grade = "established", doc = "Lock. Set while mailbox or event data waits for the host. Writing 0 releases it." }
+status = { bits = [1, 1], grade = "unknown", doc = "Named status by NetBSD. No driver reads it, and what a write of 1 does is not known." }
+
+[registers.nvram]
+offset = 0x0e
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla NVRAM read sequence"
+doc = "Serial EEPROM port. The host bit-bangs the clock, chip select and data lines to read the board NVRAM."
+
+[registers.nvram.fields]
+clock = { bits = [0, 0], grade = "established", doc = "Serial clock to the EEPROM." }
+select = { bits = [1, 1], grade = "established", doc = "Chip select for the EEPROM." }
+data_to_eeprom = { bits = [2, 2], grade = "established", doc = "Data from the host to the EEPROM." }
+data_from_eeprom = { bits = [3, 3], grade = "established", doc = "Data from the EEPROM to the host." }
+
+[registers.mailbox]
+offset = 0x10
+count = 8
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla2xxx and OpenBSD qla register layouts"
+doc = "Mailboxes 0 to 7, two bytes apart. Mailbox 0 carries the command number in and the status out. Mailbox 4 is the request-queue pointer and mailbox 5 the response-queue pointer. The drivers write and read them outside any command, and a write to them does not ring the doorbell."
+
+[registers.mailbox_hi]
+offset = 0xe0
+count = 16
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "inferred"
+from = "Linux qla2xxx register layout; NetBSD isp header gives the count of 24 for the 2200"
+doc = "Mailboxes 8 to 23. The count of 24 comes from two drivers, but only Linux gives where the upper sixteen sit. Linux writes all 24 on every mailbox command, zeroing the ones the command does not use."
+
+[registers.hccr]
+offset = 0xc0
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla2xxx, OpenBSD qla and NetBSD isp host command register"
+doc = "Host command and control register. A write carries a command in bits 15 to 12. A read returns status in the bits named below. Reset values are not stated by any source."
+
+[registers.hccr.fields]
+cmd = { bits = [15, 12], grade = "established", enum = "hccr_cmd", doc = "Write: command number. Value 4 covers the words 0x4000 and 0x4001. Drivers write 0x4001, which Linux and NetBSD call disable parity pause, and OpenBSD writes 0x4000 between reset and release, which it calls mask parity while NetBSD calls it single step. What the chip does with either word is unknown." }
+risc_reset = { bits = [6, 6], grade = "inferred", doc = "Read: RISC held in reset. NetBSD names it reset in progress. Whether the bit clears by itself when a soft reset ends, or only at a release, is unknown." }
+host_int = { bits = [7, 7], grade = "established", doc = "Read: host interrupt set, the command-pending flag. Drivers wait for it to clear after a doorbell. That it clears once the firmware takes the command, without a clear-host-interrupt write, is inferred from the waits in two drivers." }
+risc_paused = { bits = [5, 5], grade = "established", doc = "Read: RISC paused. Linux treats a paused status seen during an interrupt as a fault." }
+
+[enums.hccr_cmd]
+values = { noop = { value = 0x0, grade = "established" }, reset_risc = { value = 0x1, grade = "established" }, pause_risc = { value = 0x2, grade = "established" }, release_risc = { value = 0x3, grade = "established" }, parity = { value = 0x4, grade = "established" }, set_host_int = { value = 0x5, grade = "established" }, clear_host_int = { value = 0x6, grade = "established" }, clear_risc_int = { value = 0x7, grade = "established" } }

@@ -136,3 +136,7 @@ prose_offsets = false
 [units.isp12160]
 group = "isp12160.h"
 prose_offsets = false
+
+[units.isp2200]
+group = "isp2200.h"
+prose_offsets = false
