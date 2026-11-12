@@ -2,12 +2,33 @@
 <!-- generated from defs/aic7880.toml by defs-gen - do not edit, change the source -->
 <genxml unit="aic7880" prefix="AIC7880" title="Adaptec AIC-7880 SCSI controller on the O2: host DMA and SCB register contract" from="Adaptec AIC-7870 Data Book (sibling, applied to AIC-7880)">
   <doc>The O2 onboard SCSI controller's host-DMA window, its DMA control and FIFO status registers, the SCB page pointer, byte counter and window, and the SCSI bus signal, transfer-control and PIO registers. Offsets and widths come from the cited Adaptec AIC-7870 data book, applied to the AIC-7880 as its sibling. Every item is inferred until an AIC-7880 book or a measurement settles it.</doc>
+  <struct name="SCSISEQ" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 72-73 (printed 4-3 and 4-4); sibling" register="yes" offset="0x0" access="rw" reset="0x0">
+    <doc>SCSI sequence control. Each bit enables one hardware selection or reselection sequence, or drives SCSI RESET#. A SCSI bus reset clears every bit except SCSIRSTO. The register reads back, so software can set and clear bits without a scratch copy.</doc>
+    <field name="temodeo" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="enselo" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="enseli" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="enrseli" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="enautoatno" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="enautoatni" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="enautoatnp" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="scsirsto" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
   <struct name="SXFRCTL0" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 74-75 (printed 4-5 and 4-6); sibling" register="yes" offset="0x1" access="rw" reset="unknown">
     <doc>SCSI transfer control 0, the first of two transfer-control registers. Bits 5 and 0 are not used and read zero. The two self-clearing controls, CLRSTCNT and CLRCHN, read back as zero. The reset value is not stated in the cited pages.</doc>
     <field name="dfon" start="7" size="1" type="uint" grade="inferred"/>
     <field name="clrstcnt" start="4" size="1" type="uint" grade="inferred"/>
     <field name="spioen" start="3" size="1" type="uint" grade="inferred"/>
     <field name="clrchn" start="1" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="SXFRCTL1" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 75-76 (printed 4-6 and 4-7); sibling" register="yes" offset="0x2" access="rw" reset="0x0">
+    <doc>SCSI transfer control 1. Holds the bit-bucket and wrap controls, the parity check enable, the selection timer and its interval, active negation and the termination power enable. Every bit reads zero after reset.</doc>
+    <field name="bitbucket" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="swrapen" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="enspchk" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="stimesel" start="3" size="2" type="uint" grade="inferred"/>
+    <field name="enstimer" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="actnegen" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="stpwen" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="SCSISIG" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 77-78 (printed 4-8 and 4.9); sibling" register="yes" offset="0x3" access="rw" reset="unknown">
     <doc>SCSI control signals. The read side returns the state of the bus control signals. The write side sets the initiator output levels, and its three upper bits are the phase the chip expects on the next REQ pulse. The two sides share one offset and the same bit positions. Every write-side bit is cleared by chip reset, by a SCSI bus reset and by Bus Free. The read side has no reset value in the cited pages. The book's own register description gives the read side as a stale copy of the bus, which reads as the bus state.</doc>
@@ -41,8 +62,27 @@
     <doc>SCSI interrupt mask 0. Setting a bit enables the matching SSTAT0 status to assert the SCSI interrupt. Only the bit this unit uses is listed here.</doc>
     <field name="enspiordy" start="1" size="1" type="uint" grade="inferred"/>
   </struct>
+  <struct name="SIMODE1" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 92 (printed 4-23); sibling" register="yes" offset="0x11" access="rw" reset="0x0">
+    <doc>SCSI interrupt mask 1. Each set bit lets the matching SSTAT1 status assert SCSIINT on IRQA#.</doc>
+    <field name="enseltimo" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="enatntarg" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="enscsirst" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="enphasemis" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="enbusfree" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="enscsiperr" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="enphasechg" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="enreqinit" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
   <struct name="SCSIBUSL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 93 (printed 4-24); sibling" register="yes" offset="0x12" access="r" reset="unknown">
     <doc>SCSI data bus, read directly. The book says the data is gated from the bus to the internal data bus and is not latched in the SCSI module. A read therefore sees the byte on the bus without taking the latch. Nothing in the cited pages says it acknowledges the byte, and the book ties the ACK drive to SCSIDATL accesses, so this read is taken not to acknowledge (inferred from the book's wording, not stated).</doc>
+  </struct>
+  <struct name="SHADDR" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 58-59 and 93 (printed 4-24); sibling" register="yes" offset="0x14" access="r" count="4" stride="1" reset="0x0">
+    <doc>SCSI-side host address, four bytes at 0x14 to 0x17, least significant byte first, so byte n holds address bits 8n+7 to 8n. Loaded when the host address at 0x88 to 0x8b is written and HADDLDSEL is 0. Counts up while STCNT counts down. Saved by the Save Data Pointers message. Zero after reset.</doc>
+  </struct>
+  <struct name="SELID" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 59 and 95 (printed 4-26); sibling" register="yes" offset="0x19" access="r" reset="0x0">
+    <doc>Selection and reselection ID. Holds the ID of the device that selected or reselected this controller on the last such phase.</doc>
+    <field name="selid" start="4" size="4" type="uint" grade="inferred"/>
+    <field name="onebit" start="3" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="SBLKCTL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling" register="yes" offset="0x1f" access="rw" reset="unknown">
     <doc>Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 2 and 0 read zero. Bit 3 is not described here.</doc>
@@ -65,11 +105,39 @@
     <doc>Bit 0 is bit 8 of the sequencer RAM address, which covers the 512 instruction words. Bits 7 to 1 are reserved in the book, and their read-back is not stated. RST# and CHIPRST clear the register.</doc>
     <field name="addr8" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
+  <struct name="ACCUM" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 60 and 100 (printed 4-31); sibling" register="yes" offset="0x64" access="rw" reset="0x0">
+    <doc>Accumulator: temporary holding place for sequencer ALU operations.</doc>
+  </struct>
+  <struct name="SINDEX" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 60 and 100; sibling" register="yes" offset="0x65" access="rw" reset="0x0">
+    <doc>Source index: a temporary value, or the address that the sequencer's indirect source port SINDIR reads. The sequencer increments it after each indirect transfer.</doc>
+  </struct>
+  <struct name="DINDEX" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 60 and 101; sibling" register="yes" offset="0x66" access="rw" reset="0x0">
+    <doc>Destination index: a temporary value, or the address that the sequencer's indirect destination port DINDIR writes. The sequencer increments it after each indirect transfer.</doc>
+  </struct>
+  <struct name="BRKADDR0" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 60 and 101; sibling" register="yes" offset="0x67" access="rw" reset="0x0">
+    <doc>Low eight bits of the sequencer breakpoint address. Cleared to zero by reset.</doc>
+  </struct>
+  <struct name="BRKADDR1" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 60 and 102 (printed 4-33); sibling" register="yes" offset="0x68" access="rw" reset="0x80">
+    <doc>Breakpoint disable and the top address bit. Reset to 0x80, which leaves the breakpoint disabled.</doc>
+    <field name="brkdis" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="brkaddr8" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
   <struct name="ALLONES" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 102 (printed 4-33); sibling" register="yes" offset="0x69" access="r" reset="unknown">
     <doc>Read-only port that returns 0xff to the host and to the sequencer. It is a source for logical and arithmetic functions. The book gives no write function, so a write is outside the published interface and its effect stays unknown.</doc>
   </struct>
   <struct name="ALLZEROS" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 102-103 (printed 4-33 to 4-34); sibling" register="yes" offset="0x6a" access="rw" reset="unknown">
     <doc>Read returns 0x00 and does not return an earlier write. Written as the destination NONE, the byte is discarded and no location changes. Both directions share the offset, so the write side is described here rather than as a separate register.</doc>
+  </struct>
+  <struct name="FLAGS" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 103 (printed 4-34); sibling" register="yes" offset="0x6b" access="r" reset="0x0">
+    <doc>Sequencer flags, read only.</doc>
+    <field name="zero" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="carry" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="SINDIR" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 103 (printed 4-34); sibling" register="yes" offset="0x6c" access="r" reset="unknown">
+    <doc>Sequencer-only indirect source port. A read returns the byte SINDEX addresses, then SINDEX increments. The host cannot reach this port.</doc>
+  </struct>
+  <struct name="DINDIR" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 104 (printed 4-35); sibling" register="yes" offset="0x6d" access="w" reset="unknown">
+    <doc>Sequencer-only indirect destination port. A write stores the byte at the address DINDEX holds, then DINDEX increments. The host cannot reach this port.</doc>
   </struct>
   <struct name="FUNCTION1" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 104 (printed 4-35); sibling" register="yes" offset="0x6e" access="rw" reset="unknown">
     <doc>A write stores the byte. Bits 6:4 form an octal value, and a read returns the one-hot byte with bit N set, where N is that value. The book does not define the meaning of bits 7 and 3:0, whether a write keeps them, or the reset value. Those stay unknown.</doc>
@@ -77,6 +145,20 @@
   </struct>
   <struct name="STACK" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 60 (printed 3-6) and 105 (printed 4-36); sibling" register="yes" offset="0x6f" access="r" reset="0x0">
     <doc>Read-only return-stack port. Four return entries, newest first, are read one byte at a time: the low byte of an entry, then its high byte, which carries the high address bit. Each high-byte read advances the read pointer to the next entry, so eight byte reads bring the pointer back to its start. The read value after initialisation is zero. The reset values of the individual backing words are not specified in the cited pages. The book gives no write function, so a write is outside the published interface and its effect stays unknown.</doc>
+  </struct>
+  <struct name="DSPCISTATUS" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 61 and 136 (printed 4-67); sibling" register="yes" offset="0x86" access="rw" reset="0x0">
+    <doc>Data FIFO threshold select, with a read-only view of six PCI status bits. Power-on reset forces the threshold select to zero. Writes change only bits 7 and 6.</doc>
+    <field name="dfthrsh" start="6" size="2" type="uint" grade="inferred"/>
+    <field name="pcistatus" start="0" size="6" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="HCNTRL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 61 and 137-138 (printed 4-68 and 4-69); sibling" register="yes" offset="0x87" access="rw" reset="0x5">
+    <doc>Host control. RST# or a CHIPRST write sets it to 0x05: the sequencer is requested paused and chip reset is acknowledged. A write that changes PAUSE is not complete until a read returns the written value.</doc>
+    <field name="powrdn" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="swint" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="hcntrl3" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="pause" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="inten" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="chiprst" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="LHADDR" size="4" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 139-140 (printed 4-70 to 4-71); sibling" register="yes" offset="0x88" access="rw" reset="unknown">
     <doc>Host PCI address for the host DMA transfer, four byte registers at 0x88 to 0x8b. Loading it also loads SHADDR. The byte significance across the four bytes is not in the cited extract and stays unknown. Read-back is not stated.</doc>
@@ -86,6 +168,22 @@
   </struct>
   <struct name="SCBPTR" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 53, 63-64, 153 and 180; sibling" register="yes" offset="0x90" access="rw" reset="0x0">
     <doc>SCB page select latch. All eight bits read back as written, whether or not external SRAM is selected and however much of it is fitted, so a read-back of 0xff does not show that page 255 exists. Selects one 32-byte page for the SCB window and for SCBCNT-addressed accesses. Reset is zero as the cited book's reset description gives it, not a value read after initialisation.</doc>
+  </struct>
+  <struct name="INTSTAT" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 141-142 (printed 4-72 and 4-73); sibling" register="yes" offset="0x91" access="rw" reset="0x0">
+    <doc>Interrupt status. The sequencer writes these causes, and the host reads them without pausing the sequencer. SEQINT, SCSIINT and BRKADRINT pause the sequencer at once; CMDCMPLT does not. Bits 3 to 0 clear individually through CLRINT.</doc>
+    <field name="intcode" start="4" size="4" type="uint" grade="inferred"/>
+    <field name="brkadrint" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="scsiint" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="cmdcmplt" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="seqint" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CLRINT" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 143-144 (printed 4-74 and 4-75); sibling" register="yes" offset="0x92" access="w" reset="unknown">
+    <doc>Clear interrupt, the write side of offset 0x92. A one written to a bit clears the matching INTSTAT cause; the bits self-clear, and the sequencer cannot write this register. The read side at the same offset is the ERROR register, whose causes (PCIERRSTAT, MPARERR, DPARERR, SQPARERR, ILLOPCODE) are described in the prose page.</doc>
+    <field name="clrparerr" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="clrbrkadrint" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="clrscsiint" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="clrcmdint" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="clrseqint" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="DFCNTRL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 139, 145-148 (printed 4-70, 4-76 to 4-79); sibling" register="yes" offset="0x93" access="rw" reset="0x0">
     <doc>Data FIFO control. Bits 5 and 4 enable SCSI and SCSI-block DMA, bit 3 enables host DMA, bit 2 selects the direction, bit 1 flushes the FIFO and bit 0 resets it and self-clears. Cleared by PCI RST# and by the chip reset in HCNTRL. Read-back is not stated. The reset value is the cleared state the chip reset produces, not a value read after initialisation.</doc>
@@ -101,10 +199,22 @@
     <doc>Data FIFO status. Reports FIFOEMP, FIFOFULL, FIFOQWDEMP, MREQPEND and HDONE. Only DFTHRSH, bit 2, has a listed position here; the other bit positions are not in the cited extract and stay unknown. MREQPEND is a pending need, not a PCI request in flight.</doc>
     <field name="dfthrsh" start="2" size="1" type="uint" grade="inferred"/>
   </struct>
+  <struct name="DFDAT" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 63; sibling" register="yes" offset="0x99" access="rw" reset="unknown">
+    <doc>Data FIFO port, one byte per access. A read takes one valid byte from the FIFO and a write supplies one. The book gives no reset value (init xx).</doc>
+  </struct>
   <struct name="SCBCNT" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 63-64, 153-154, 176-177 and 180; sibling" register="yes" offset="0x9a" access="rw" reset="0x0">
     <doc>SCB byte counter. Bits 6:5 read zero. With SCBAUTO clear the window offset selects the byte and the counter is not used. With SCBAUTO set the counter replaces the window offset, advances once per completed logical SCB byte access and wraps within the 32-byte page. Reset is zero as the cited book's reset description gives it.</doc>
     <field name="scbauto" start="7" size="1" type="uint" grade="inferred"/>
     <field name="scbofs" start="0" size="5" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="QINFIFO" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 69 (layout), p. 63 (lists it at M98, which the layout does not match); sibling" register="yes" offset="0x9b" access="rw" reset="0x0">
+    <doc>Queue-in FIFO. The host writes SCB IDs and the sequencer removes them. The address follows the SCB device-register layout on PDF p. 69; the register table on PDF p. 63 prints it as 0x98.</doc>
+  </struct>
+  <struct name="QINCNT" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 63 and 69; sibling" register="yes" offset="0x9c" access="r" reset="0x0">
+    <doc>Queue-in count: entries waiting in the queue-in FIFO. Zero when empty.</doc>
+  </struct>
+  <struct name="QOUTCNT" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 61; sibling" register="yes" offset="0x9e" access="r" reset="0x0">
+    <doc>Queue-out count, read by the host only. Zero when empty.</doc>
   </struct>
   <struct name="SCBWIN" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 63-64, 153-154 and 176-177; sibling" register="yes" offset="0xa0" access="rw" count="32" stride="1" reset="unknown">
     <doc>SCB window: 32 byte positions of the page that SCBPTR selects. Sequencer accesses are byte wide. Host reads are byte wide. Host writes are byte wide in either SCBAUTO mode, and a full four-byte write is accepted only with SCBAUTO set, filling four successive positions. Host access needs a paused sequencer or the automatic access pause. Byte order of the four data bytes against the CPU is not in the cited extract and stays unknown.</doc>

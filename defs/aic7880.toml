@@ -264,3 +264,257 @@ doc = "Block control. The SELWIDE bit selects the physical SCSI connection width
 diagled      = { bits = [7, 6], grade = "inferred", doc = "diagnostic LED control; resets to one" }
 autoflushdis = { bits = [5, 5], grade = "inferred", doc = "resets to zero; the function is not in the cited pages" }
 selwide      = { bits = [1, 1], grade = "inferred", doc = "1 configures the wide physical connection with the upper data lines in use; 0 leaves them unused" }
+
+[registers.scsiseq]
+offset = 0x00
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 72-73 (printed 4-3 and 4-4); sibling"
+doc = "SCSI sequence control. Each bit enables one hardware selection or reselection sequence, or drives SCSI RESET#. A SCSI bus reset clears every bit except SCSIRSTO. The register reads back, so software can set and clear bits without a scratch copy."
+
+[registers.scsiseq.fields]
+temodeo    = { bits = [7, 7], grade = "inferred", doc = "0 makes ENSELO start a selection out; 1 makes it start a reselection out" }
+enselo     = { bits = [6, 6], grade = "inferred", doc = "starts a selection (initiator) or reselection (target) sequence; SSTAT0 reports the wait for BSY" }
+enseli     = { bits = [5, 5], grade = "inferred", doc = "lets the logic answer a selection by an initiator; sets SSTAT0 SELDI and TARGET" }
+enrseli    = { bits = [4, 4], grade = "inferred", doc = "lets the logic answer a reselection by a target; sets SSTAT0 SELDI and clears TARGET" }
+enautoatno = { bits = [3, 3], grade = "inferred", doc = "asserts ATN during a selection out; ATN clears on a one written to CLRATNO or at bus free, and a zero written here does not clear it" }
+enautoatni = { bits = [2, 2], grade = "inferred", doc = "asserts ATN after a reselection; ATN clears as for ENAUTOATNO" }
+enautoatnp = { bits = [1, 1], grade = "inferred", doc = "asserts ATN on a parity error in data in, message in or status in, only with SXFRCTL1 ENSPCHK set; ATN clears as for ENAUTOATNO" }
+scsirsto   = { bits = [0, 0], grade = "inferred", doc = "drives SCSI RESET# while set; software clears it with a zero write" }
+
+[registers.sxfrctl1]
+offset = 0x02
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 75-76 (printed 4-6 and 4-7); sibling"
+doc = "SCSI transfer control 1. Holds the bit-bucket and wrap controls, the parity check enable, the selection timer and its interval, active negation and the termination power enable. Every bit reads zero after reset."
+
+[registers.sxfrctl1.fields]
+bitbucket = { bits = [7, 7], grade = "inferred", doc = "initiator mode only: read and discard bus data, or drive zeros on writes, with no stops on FIFO full or empty" }
+swrapen   = { bits = [6, 6], grade = "inferred", doc = "lets STCNT wrap past zero so a transfer can exceed 24 bits; SWRAP status is set at each wrap" }
+enspchk   = { bits = [5, 5], grade = "inferred", doc = "enables SCSI parity checking in selection, reselection and information transfer; an error sets SSTAT1 SCSIPERR" }
+stimesel  = { bits = [4, 3], grade = "inferred", doc = "selection time-out interval: 01 is 128 ms, 10 is 64 ms, 11 is 32 ms; the value for 00 is not legible in the source text and stays unknown" }
+enstimer  = { bits = [2, 2], grade = "inferred", doc = "enables the hardware selection timer; on expiry SEL is released and SSTAT1 SELTO is set; when clear, SEL stays on until the sequencer clears it" }
+actnegen  = { bits = [1, 1], grade = "inferred", doc = "enables active negation on REQ, ACK and the data outputs during information transfer" }
+stpwen    = { bits = [0, 0], grade = "inferred", doc = "drives the termination power control output to the level STPWLEVEL selects in DEVCONFIG" }
+
+[registers.shaddr]
+offset = 0x14
+access = "r"
+width = 8
+count = 4
+stride = 1
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 58-59 and 93 (printed 4-24); sibling"
+doc = "SCSI-side host address, four bytes at 0x14 to 0x17, least significant byte first, so byte n holds address bits 8n+7 to 8n. Loaded when the host address at 0x88 to 0x8b is written and HADDLDSEL is 0. Counts up while STCNT counts down. Saved by the Save Data Pointers message. Zero after reset."
+
+[registers.selid]
+offset = 0x19
+access = "r"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 59 and 95 (printed 4-26); sibling"
+doc = "Selection and reselection ID. Holds the ID of the device that selected or reselected this controller on the last such phase."
+
+[registers.selid.fields]
+selid = { bits = [7, 4], grade = "inferred", doc = "ID of the selecting or reselecting device, decoded from the bus bits" }
+onebit = { bits = [3, 3], grade = "inferred", doc = "set when one bit was on the lower eight data lines during selection; zero when two were" }
+
+[registers.simode1]
+offset = 0x11
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 92 (printed 4-23); sibling"
+doc = "SCSI interrupt mask 1. Each set bit lets the matching SSTAT1 status assert SCSIINT on IRQA#."
+
+[registers.simode1.fields]
+enseltimo  = { bits = [7, 7], grade = "inferred", doc = "SELTO status" }
+enatntarg  = { bits = [6, 6], grade = "inferred", doc = "ATNTARG status" }
+enscsirst  = { bits = [5, 5], grade = "inferred", doc = "SCSI reset status" }
+enphasemis = { bits = [4, 4], grade = "inferred", doc = "PHASEMIS status" }
+enbusfree  = { bits = [3, 3], grade = "inferred", doc = "bus-free status" }
+enscsiperr = { bits = [2, 2], grade = "inferred", doc = "latched SCSI parity error status" }
+enphasechg = { bits = [1, 1], grade = "inferred", doc = "PHASECHG status" }
+enreqinit  = { bits = [0, 0], grade = "inferred", doc = "REQINIT status" }
+
+[registers.dspcistatus]
+offset = 0x86
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 61 and 136 (printed 4-67); sibling"
+doc = "Data FIFO threshold select, with a read-only view of six PCI status bits. Power-on reset forces the threshold select to zero. Writes change only bits 7 and 6."
+
+[registers.dspcistatus.fields]
+dfthrsh = { bits = [7, 6], grade = "inferred", doc = "threshold select for the FIFO start and stop levels that DFSTATUS DFTHRSH reports" }
+pcistatus = { bits = [5, 0], grade = "inferred", doc = "live, read-only mirror of PCI status bits, named DSDPR (5, data parity reported), DSDPE (4, detected parity error), DSSSE (3, signaled system error), DSRMA (2, received master abort), DSRTA (1, received target abort) and DSSTA (0, signaled target abort); writes have no effect" }
+
+[registers.hcntrl]
+offset = 0x87
+access = "rw"
+width = 8
+reset = 0x05
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 61 and 137-138 (printed 4-68 and 4-69); sibling"
+doc = "Host control. RST# or a CHIPRST write sets it to 0x05: the sequencer is requested paused and chip reset is acknowledged. A write that changes PAUSE is not complete until a read returns the written value."
+
+[registers.hcntrl.fields]
+powrdn  = { bits = [6, 6], grade = "inferred", doc = "power down: removes the clock and SCSI inputs, suppresses IRQA# and limits device access to host registers; quiesce transfers and pause first" }
+swint   = { bits = [4, 4], grade = "inferred", doc = "software interrupt on IRQA# when INTEN, MASTEREN, a decode enable are set and POWRDN is clear; leaves INTSTAT alone" }
+hcntrl3 = { bits = [3, 3], grade = "inferred", doc = "spare bit with no assignment" }
+pause   = { bits = [2, 2], grade = "inferred", doc = "write: request a latched pause; read: pause acknowledge. Host access to normally sequencer-only registers opens once PAUSEACK is set" }
+inten   = { bits = [1, 1], grade = "inferred", doc = "lets active INTSTAT causes assert IRQA#, when the PCI command MASTEREN bit is also set" }
+chiprst = { bits = [0, 0], grade = "inferred", doc = "write 1 resets the chip as RST# does, leaving PCI configuration space alone; read: CHIPRSTACK" }
+
+[registers.intstat]
+offset = 0x91
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 141-142 (printed 4-72 and 4-73); sibling"
+doc = "Interrupt status. The sequencer writes these causes, and the host reads them without pausing the sequencer. SEQINT, SCSIINT and BRKADRINT pause the sequencer at once; CMDCMPLT does not. Bits 3 to 0 clear individually through CLRINT."
+
+[registers.intstat.fields]
+intcode   = { bits = [7, 4], grade = "inferred", doc = "code the sequencer stores in the same write that sets SEQINT; valid only while SEQINT is set" }
+brkadrint = { bits = [3, 3], grade = "inferred", doc = "breakpoint match with the breakpoint enabled, or an error: illegal opcode, sequencer RAM parity, data-path parity or memory parity" }
+scsiint   = { bits = [2, 2], grade = "inferred", doc = "SCSI reset, parity error, selection time-out or unexpected bus free, when enabled in SIMODE0 or SIMODE1" }
+cmdcmplt  = { bits = [1, 1], grade = "inferred", doc = "a command completed and its SCB ID was posted to the queue-out FIFO; the sequencer keeps running" }
+seqint    = { bits = [0, 0], grade = "inferred", doc = "the sequencer needs the driver; it stops at once, with no instruction after the write that sets it" }
+
+[registers.clrint]
+offset = 0x92
+access = "w"
+width = 8
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 143-144 (printed 4-74 and 4-75); sibling"
+doc = "Clear interrupt, the write side of offset 0x92. A one written to a bit clears the matching INTSTAT cause; the bits self-clear, and the sequencer cannot write this register. The read side at the same offset is the ERROR register, whose causes (PCIERRSTAT, MPARERR, DPARERR, SQPARERR, ILLOPCODE) are described in the prose page."
+
+[registers.clrint.fields]
+clrparerr    = { bits = [4, 4], grade = "inferred", doc = "clears the SQPARERR, MPARERR and DPARERR error causes and their latched interrupts; the PCI STATUS bits stay set" }
+clrbrkadrint = { bits = [3, 3], grade = "inferred", doc = "clears BRKADRINT; a BRKADRINT cause from a breakpoint or a sequencer error must be cleared at its source first" }
+clrscsiint   = { bits = [2, 2], grade = "inferred", doc = "clears SCSIINT" }
+clrcmdint    = { bits = [1, 1], grade = "inferred", doc = "clears CMDCMPLT" }
+clrseqint    = { bits = [0, 0], grade = "inferred", doc = "clears SEQINT" }
+
+[registers.dfdat]
+offset = 0x99
+access = "rw"
+width = 8
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 63; sibling"
+doc = "Data FIFO port, one byte per access. A read takes one valid byte from the FIFO and a write supplies one. The book gives no reset value (init xx)."
+
+[registers.qinfifo]
+offset = 0x9b
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 69 (layout), p. 63 (lists it at M98, which the layout does not match); sibling"
+doc = "Queue-in FIFO. The host writes SCB IDs and the sequencer removes them. The address follows the SCB device-register layout on PDF p. 69; the register table on PDF p. 63 prints it as 0x98."
+
+[registers.qincnt]
+offset = 0x9c
+access = "r"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 63 and 69; sibling"
+doc = "Queue-in count: entries waiting in the queue-in FIFO. Zero when empty."
+
+[registers.qoutcnt]
+offset = 0x9e
+access = "r"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 61; sibling"
+doc = "Queue-out count, read by the host only. Zero when empty."
+
+[registers.accum]
+offset = 0x64
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 60 and 100 (printed 4-31); sibling"
+doc = "Accumulator: temporary holding place for sequencer ALU operations."
+
+[registers.sindex]
+offset = 0x65
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 60 and 100; sibling"
+doc = "Source index: a temporary value, or the address that the sequencer's indirect source port SINDIR reads. The sequencer increments it after each indirect transfer."
+
+[registers.dindex]
+offset = 0x66
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 60 and 101; sibling"
+doc = "Destination index: a temporary value, or the address that the sequencer's indirect destination port DINDIR writes. The sequencer increments it after each indirect transfer."
+
+[registers.brkaddr0]
+offset = 0x67
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 60 and 101; sibling"
+doc = "Low eight bits of the sequencer breakpoint address. Cleared to zero by reset."
+
+[registers.brkaddr1]
+offset = 0x68
+access = "rw"
+width = 8
+reset = 0x80
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 60 and 102 (printed 4-33); sibling"
+doc = "Breakpoint disable and the top address bit. Reset to 0x80, which leaves the breakpoint disabled."
+
+[registers.brkaddr1.fields]
+brkdis   = { bits = [7, 7], grade = "inferred", doc = "1 disables the compare against the program counter" }
+brkaddr8 = { bits = [0, 0], grade = "inferred", doc = "bit 8 of the break address" }
+
+[registers.flags]
+offset = 0x6b
+access = "r"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 103 (printed 4-34); sibling"
+doc = "Sequencer flags, read only."
+
+[registers.flags.fields]
+zero  = { bits = [1, 1], grade = "inferred", doc = "zero flag" }
+carry = { bits = [0, 0], grade = "inferred", doc = "carry flag" }
+
+[registers.sindir]
+offset = 0x6c
+access = "r"
+width = 8
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 103 (printed 4-34); sibling"
+doc = "Sequencer-only indirect source port. A read returns the byte SINDEX addresses, then SINDEX increments. The host cannot reach this port."
+
+[registers.dindir]
+offset = 0x6d
+access = "w"
+width = 8
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 104 (printed 4-35); sibling"
+doc = "Sequencer-only indirect destination port. A write stores the byte at the address DINDEX holds, then DINDEX increments. The host cannot reach this port."
