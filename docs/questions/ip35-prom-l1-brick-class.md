@@ -42,10 +42,20 @@ Tezro with 1.0 GHz R16000 processors under PROM 6.210, posted to a public IRIX f
    are `0x8`, `0x4` or `0xc` (compares at `0x1fc68bd8`, `0x1fc68bec`, `0x1fc68c00`). So Origin 300, Fuel and the
    processor-element class never ask; class `0x2000` and class 0 do. It then loads the 64-bit register at
    `0x9200000001608008` and returns 0 without asking only when bit 61 is set and bit 62 is clear (the tests at
-   `0x1fc68c24` and `0x1fc68c38`); every other combination asks. **Unknown:** what that register is and what the
-   two bits mean. The question page [ip35-reset-window.md](ip35-reset-window.md) lists the register as written by the
-   reset code and unexplained; no routine that names it was found. Route: the Bedrock block layout around
-   `+0x1600000` and a read on running hardware.
+   `0x1fc68c24` and `0x1fc68c38`); every other combination asks. **Established (6.210 image):** the register is local-block
+   scratch 1 (+0x608008; see [ip35-prom-poll-timing.md](ip35-prom-poll-timing.md) item 6 for the public header's description of it as plain,
+   not-reset storage). The PROM zeroes it on the cold path (`0x1fc007ec`; the all-ones store beside it at `0x1fc007d4` goes to scratch 0), so
+   the test starts from zero. Every PROM store to it that was resolved by constant address leaves bits 63:61 alone: the boot-master release
+   stores `0x07f80000` (`0x1fc01278`); seven copies of one short sequence OR in bit 40 (`0x1fc02170` to `0x1fc02734`); `0x1fc65764` to `0x1fc65794` ORs in
+   bit 35; `0x1fc6a6e0` to `0x1fc6a71c` reads the register and writes it back with more bits ORed in, from bits 12 to 60: bit 12, bits 14 and
+   15 (set when a small value read from the routine's frame is 1 or 2), bit 16, bit 18, byte fields at 26:19 and 34:27, bit 36, a boolean at 42,
+   a 16-bit field at 58:43 and two bits at 60:59 (the tests that choose bits 12, 16, 18 and 36 were not traced). The 16-bit field is printed as the node number in "CPU %d on node n%d could not receive L2 interrupt." (`0x1fc65e0c`,
+   `0x1fc65eac`); that reading of the field as a node number is inferred from the text. Remote-node accesses to the same offset through
+   the PROM's node-register helpers (`0x1fc5cf3c` read; the write at `0x1fc5ce4c` combines the old value with a mask from the global-pointer
+   table, which was not resolved) were not followed. **Inferred:** with those stores and the cold-path zero, bit 61 is clear when the
+   classifier runs unless a remote write or an agent outside the PROM sets it, so the PROM asks the L1 for the classes that reach this
+   test. **Unknown:** what bits 62:61 mean and who sets them. Route: resolve the mask literal behind `0x1fc5ce4c` and the callers of `0x1fc5ce88`,
+   then a read of the register on a running system.
 3. **Established: the banners.** The PROM holds four start-up texts, in this order at 6.210 offsets 0x70318, 0x70330,
    0x70348 and 0x70360 (6.211: 0x70308, 0x70320, 0x70338, 0x70350): "SN12 2U Server.", "SN12 Graphics Blade.", "SN12
    Workstation." and "SN12 Rackmounted Workstation." There is no text for class 4 (type `0`). **Inferred:** they are the
@@ -97,5 +107,5 @@ The nested image carries its own copies at 0x10aea0 to 0x10aef0 and 0x1168c0 to 
 - **Unknown:** the type reply of a real Origin 350 and a real Tezro on the wire (the capture above is the PROM's console).
   Route: an L1 `brick` or request-3 transcript, or a verbose PROM boot of an Origin 350 (its type character in the
   "hubii_link_good" line).
-- **Unknown:** the register at `0x9200000001608008` and bits 62:61 (section 1.2).
+- **Unknown:** the meaning of bits 62:61 of `0x9200000001608008` (local-block scratch 1) and who sets them (section 1.2).
 - **Unknown:** where the banner for class 4 comes from, if it prints one.
