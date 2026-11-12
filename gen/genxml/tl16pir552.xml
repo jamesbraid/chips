@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/tl16pir552.toml by defs-gen - do not edit, change the source -->
+<genxml unit="tl16pir552" prefix="TL16PIR552" title="TI TL16PIR552 dual UART and IEEE 1284 parallel port, parallel-port register contract (Fuel and Origin 200 board part)" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)">
+  <doc>The parallel-port block of the TI TL16PIR552, the part marked on a revision B Fuel system board and on an Origin 200 system board. The registers are selected by three address bits and a chip select, and what an address holds depends on the mode in the ECR register, so each mode's view of the same address is its own space. Grades say how each item was derived: established means the TI datasheet states it, inferred means a reading of the datasheet's own list of bits or a reasoned extension, and unknown means the sources do not settle it. The UART channels are not described here. Fuel's wiring of this part to the IOC3, its address decode, its interrupt routing and its DMA connection are not established by these sources and are not listed. Reset values are unknown except where the datasheet states them.</doc>
+  <space name="ppcs" unit="byte"/>
+  <space name="ppcs_ecp" unit="byte"/>
+  <space name="ecpcs" unit="byte"/>
+  <space name="ecpcs_ecp" unit="byte"/>
+  <space name="ecpcs_cfifo" unit="byte"/>
+  <space name="ecpcs_tfifo" unit="byte"/>
+  <space name="ecpcs_cfg" unit="byte"/>
+  <enum name="cnfgb_dma_select">
+    <value name="dma3" value="3" grade="established"/>
+  </enum>
+  <enum name="cnfgb_irq_select">
+    <value name="irq7" value="1" grade="established"/>
+  </enum>
+  <enum name="ecr_mode">
+    <value name="standard" value="0" grade="established"/>
+    <value name="bidirectional" value="1" grade="established"/>
+    <value name="parallel_fifo" value="2" grade="established"/>
+    <value name="ecp" value="3" grade="established"/>
+    <value name="epp" value="4" grade="established"/>
+    <value name="reserved" value="5" grade="established"/>
+    <value name="test_fifo" value="6" grade="established"/>
+    <value name="configuration" value="7" grade="established"/>
+  </enum>
+  <struct name="CNFGB" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x1" access="r" space="ecpcs" reset="unknown">
+    <doc>Configuration register B, read only. Its IRQ-line sample bit depends on the board wiring, so its reset value is unknown.</doc>
+    <field name="compression" start="7" size="1" type="uint" grade="established"/>
+    <field name="irq_line_sample" start="6" size="1" type="uint" grade="established"/>
+    <field name="irq_select" start="3" size="3" type="cnfgb_irq_select" grade="established"/>
+    <field name="dma_select" start="0" size="3" type="cnfgb_dma_select" grade="established"/>
+  </struct>
+  <struct name="ECR" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x2" access="rw" space="ecpcs" reset="unknown">
+    <doc>Extended control register. Its top three bits select the mode, which also decides what the other chip-select offsets hold. The two low bits are read only.</doc>
+    <field name="mode" start="5" size="3" type="ecr_mode" grade="established"/>
+    <field name="ecp_fault_irq_disable" start="4" size="1" type="uint" grade="established"/>
+    <field name="dma_enable" start="3" size="1" type="uint" grade="established"/>
+    <field name="service_intr_disable" start="2" size="1" type="uint" grade="established"/>
+    <field name="fifo_full" start="1" size="1" type="uint" grade="established"/>
+    <field name="fifo_empty" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CNFGA" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x0" access="r" space="ecpcs_cfg" reset="0x1f">
+    <doc>Configuration register A, read only. It reads the constant with the implementation ID in the top nibble and the low nibble reserved and read as ones.</doc>
+    <field name="impl_id" start="4" size="4" type="uint" grade="established"/>
+    <field name="reserved_low" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PP_FIFO" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x0" access="rw" space="ecpcs_cfifo" reset="unknown">
+    <doc>Forward data FIFO that uses the standard parallel-port handshake.</doc>
+  </struct>
+  <struct name="ECP_DFIFO" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x0" access="rw" space="ecpcs_ecp" reset="unknown">
+    <doc>ECP data FIFO. A forward write enqueues data. A reverse read receives peripheral data through the ECP handshake.</doc>
+  </struct>
+  <struct name="TEST_FIFO" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x0" access="rw" space="ecpcs_tfifo" reset="unknown">
+    <doc>Test FIFO with no parallel-port protocol handshake. FIFO state stays reflected by the FULL and EMPTY bits. Overflow and underrun do not stall. Read and write counters wrap in test mode.</doc>
+  </struct>
+  <struct name="DATA" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x0" access="rw" space="ppcs" reset="unknown">
+    <doc>Parallel data port in standard and bidirectional modes. A write drives the data lines and a read returns their value. In the other modes offset 0 of this chip select is a different register; see the ECP-mode and FIFO spaces.</doc>
+  </struct>
+  <struct name="DSR" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x1" access="r" space="ppcs" reset="unknown">
+    <doc>Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. The bit positions are not stated in the sources consulted and are not listed.</doc>
+  </struct>
+  <struct name="DCR" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x2" access="rw" space="ppcs" reset="unknown">
+    <doc>Parallel control register.</doc>
+    <field name="direction" start="5" size="1" type="uint" grade="established"/>
+    <field name="irq_on_ack" start="4" size="1" type="uint" grade="established"/>
+    <field name="select_ctl" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="init_ctl" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="autofd_ctl" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="strobe_ctl" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="EPP_ADDR" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x3" access="rw" space="ppcs" reset="unknown">
+    <doc>EPP address. An access generates the EPP address strobe automatically.</doc>
+  </struct>
+  <struct name="EPP_DATA" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x4" access="rw" count="4" stride="1" space="ppcs" reset="unknown">
+    <doc>EPP data. Each of the four offsets with the high address bit set is this register. An access generates the EPP data strobe automatically.</doc>
+  </struct>
+  <struct name="ECP_AFIFO" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x0" access="w" space="ppcs_ecp" reset="unknown">
+    <doc>ECP address FIFO. A written byte enters the FIFO tagged as an ECP address.</doc>
+  </struct>
+</genxml>

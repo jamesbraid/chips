@@ -59,6 +59,7 @@ pub mod router_sn1;
 pub mod seeq_8003;
 pub mod tigon;
 pub mod tiocp;
+pub mod tl16pir552;
 pub mod vice;
 pub mod xbow;
 pub mod xbow_extra;

@@ -1,0 +1,190 @@
+unit = "tl16pir552"
+prefix = "TL16PIR552"
+title = "TI TL16PIR552 dual UART and IEEE 1284 parallel port, parallel-port register contract (Fuel and Origin 200 board part)"
+doc = "The parallel-port block of the TI TL16PIR552, the part marked on a revision B Fuel system board and on an Origin 200 system board. The registers are selected by three address bits and a chip select, and what an address holds depends on the mode in the ECR register, so each mode's view of the same address is its own space. Grades say how each item was derived: established means the TI datasheet states it, inferred means a reading of the datasheet's own list of bits or a reasoned extension, and unknown means the sources do not settle it. The UART channels are not described here. Fuel's wiring of this part to the IOC3, its address decode, its interrupt routing and its DMA connection are not established by these sources and are not listed. Reset values are unknown except where the datasheet states them."
+from = "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+public_from = ["TI TL16PIR552 datasheet, SLLS222A", "SGI Fuel Visual Workstation Hardware User's Guide, 007-4480-001"]
+
+[spaces.ppcs]
+unit = "byte"
+doc = "Parallel-port chip select (PPCS). Offsets are the three address bits. Registers here exist in every mode, or only in the standard and EPP modes; the ECP-mode view of offset 0 is its own space."
+
+[spaces.ppcs_ecp]
+unit = "byte"
+doc = "Offset 0 of the PPCS chip select in ECP mode. The same address as the standard data register in the ppcs space; the mode selects which one answers."
+
+[spaces.ecpcs]
+unit = "byte"
+doc = "ECP chip select (ECPCS) registers that exist in every mode or in the configuration mode."
+
+[spaces.ecpcs_ecp]
+unit = "byte"
+doc = "Offset 0 of the ECPCS chip select in ECP mode."
+
+[spaces.ecpcs_cfifo]
+unit = "byte"
+doc = "Offset 0 of the ECPCS chip select in parallel FIFO (CFIFO) mode."
+
+[spaces.ecpcs_tfifo]
+unit = "byte"
+doc = "Offset 0 of the ECPCS chip select in test FIFO mode."
+
+[spaces.ecpcs_cfg]
+unit = "byte"
+doc = "Offset 0 of the ECPCS chip select in configuration mode."
+
+[enums.ecr_mode]
+values = { standard = { value = 0, grade = "established" }, bidirectional = { value = 1, grade = "established" }, parallel_fifo = { value = 2, grade = "established" }, ecp = { value = 3, grade = "established" }, epp = { value = 4, grade = "established" }, reserved = { value = 5, grade = "established" }, test_fifo = { value = 6, grade = "established" }, configuration = { value = 7, grade = "established" } }
+
+[enums.cnfgb_irq_select]
+values = { irq7 = { value = 1, grade = "established" } }
+
+[enums.cnfgb_dma_select]
+values = { dma3 = { value = 3, grade = "established" } }
+
+[registers.data]
+offset = 0
+space = "ppcs"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, parallel-port register table, p. 43"
+doc = "Parallel data port in standard and bidirectional modes. A write drives the data lines and a read returns their value. In the other modes offset 0 of this chip select is a different register; see the ECP-mode and FIFO spaces."
+
+[registers.ecp_afifo]
+offset = 0
+space = "ppcs_ecp"
+access = "w"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, p. 43"
+doc = "ECP address FIFO. A written byte enters the FIFO tagged as an ECP address."
+
+[registers.dsr]
+offset = 1
+space = "ppcs"
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, p. 43"
+doc = "Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. The bit positions are not stated in the sources consulted and are not listed."
+
+[registers.dcr]
+offset = 2
+space = "ppcs"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, p. 44"
+doc = "Parallel control register."
+
+[registers.dcr.fields]
+direction = { bits = [5, 5], grade = "established", from = "TI TL16PIR552 datasheet, p. 44", doc = "Direction. Puts the data lines in high impedance (reverse) when set. It has no effect in standard mode or in the parallel FIFO mode." }
+irq_on_ack = { bits = [4, 4], grade = "established", from = "TI TL16PIR552 datasheet, p. 44", doc = "Enables an interrupt on a rising ACK." }
+select_ctl = { bits = [3, 3], grade = "inferred", from = "TI TL16PIR552 datasheet, p. 44; bit order read from the datasheet's list of the four controls, not confirmed against the PDF", doc = "Drives the SELECT control line." }
+init_ctl = { bits = [2, 2], grade = "inferred", from = "TI TL16PIR552 datasheet, p. 44; bit order read from the datasheet's list of the four controls, not confirmed against the PDF", doc = "Drives the INIT control line." }
+autofd_ctl = { bits = [1, 1], grade = "inferred", from = "TI TL16PIR552 datasheet, p. 44; bit order read from the datasheet's list of the four controls, not confirmed against the PDF", doc = "Drives the AUTOFD control line." }
+strobe_ctl = { bits = [0, 0], grade = "inferred", from = "TI TL16PIR552 datasheet, p. 44; bit order read from the datasheet's list of the four controls, not confirmed against the PDF", doc = "Drives the STROBE control line." }
+
+[registers.epp_addr]
+offset = 3
+space = "ppcs"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, pp. 43-44"
+doc = "EPP address. An access generates the EPP address strobe automatically."
+
+[registers.epp_data]
+offset = 4
+count = 4
+space = "ppcs"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, pp. 43-44"
+doc = "EPP data. Each of the four offsets with the high address bit set is this register. An access generates the EPP data strobe automatically."
+
+[registers.ecp_dfifo]
+offset = 0
+space = "ecpcs_ecp"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, pp. 43-44"
+doc = "ECP data FIFO. A forward write enqueues data. A reverse read receives peripheral data through the ECP handshake."
+
+[registers.pp_fifo]
+offset = 0
+space = "ecpcs_cfifo"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, p. 45"
+doc = "Forward data FIFO that uses the standard parallel-port handshake."
+
+[registers.test_fifo]
+offset = 0
+space = "ecpcs_tfifo"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, p. 45"
+doc = "Test FIFO with no parallel-port protocol handshake. FIFO state stays reflected by the FULL and EMPTY bits. Overflow and underrun do not stall. Read and write counters wrap in test mode."
+
+[registers.cnfga]
+offset = 0
+space = "ecpcs_cfg"
+access = "r"
+width = 8
+reset = 0x1f
+grade = "established"
+from = "TI TL16PIR552 datasheet, p. 44"
+doc = "Configuration register A, read only. It reads the constant with the implementation ID in the top nibble and the low nibble reserved and read as ones."
+
+[registers.cnfga.fields]
+impl_id = { bits = [7, 4], grade = "established", from = "TI TL16PIR552 datasheet, p. 44", doc = "Implementation ID. Reads as one." }
+reserved_low = { bits = [3, 0], grade = "established", from = "TI TL16PIR552 datasheet, p. 44", doc = "Reserved. Reads as ones." }
+
+[registers.cnfgb]
+offset = 1
+space = "ecpcs"
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, p. 44"
+doc = "Configuration register B, read only. Its IRQ-line sample bit depends on the board wiring, so its reset value is unknown."
+
+[registers.cnfgb.fields]
+compression = { bits = [7, 7], grade = "established", from = "TI TL16PIR552 datasheet, p. 44", doc = "Compression. Reads zero: compression is unsupported." }
+irq_line_sample = { bits = [6, 6], grade = "established", from = "TI TL16PIR552 datasheet, p. 44", doc = "Samples the IRQ line. The sampled value depends on the board." }
+irq_select = { bits = [5, 3], grade = "established", enum = "cnfgb_irq_select", from = "TI TL16PIR552 datasheet, p. 44", doc = "Reports the IRQ selection. Reads 001, which the datasheet names IRQ7." }
+dma_select = { bits = [2, 0], grade = "established", enum = "cnfgb_dma_select", from = "TI TL16PIR552 datasheet, p. 44", doc = "Reports the DMA channel selection. Reads 011, which the datasheet names DMA channel 3." }
+
+[registers.ecr]
+offset = 2
+space = "ecpcs"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "TI TL16PIR552 datasheet, p. 45"
+doc = "Extended control register. Its top three bits select the mode, which also decides what the other chip-select offsets hold. The two low bits are read only."
+
+[registers.ecr.fields]
+mode = { bits = [7, 5], grade = "established", enum = "ecr_mode", from = "TI TL16PIR552 datasheet, p. 45", doc = "Mode select. The value decides which register the chip-select offsets 0 and 1 answer as." }
+ecp_fault_irq_disable = { bits = [4, 4], grade = "established", from = "TI TL16PIR552 datasheet, p. 45", doc = "In ECP mode, zero enables the interrupt on a falling FAULT edge." }
+dma_enable = { bits = [3, 3], grade = "established", from = "TI TL16PIR552 datasheet, p. 45", doc = "Enables DMA." }
+service_intr_disable = { bits = [2, 2], grade = "established", from = "TI TL16PIR552 datasheet, p. 45", doc = "One disables DMA and all service interrupts." }
+fifo_full = { bits = [1, 1], grade = "established", from = "TI TL16PIR552 datasheet, p. 45", doc = "FIFO full. Read only." }
+fifo_empty = { bits = [0, 0], grade = "established", from = "TI TL16PIR552 datasheet, p. 45", doc = "FIFO empty. Read only." }
