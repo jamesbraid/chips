@@ -63,6 +63,7 @@ Chip coverage pages:
 - [docs/coverage-bedrock.md](docs/coverage-bedrock.md): Bedrock coverage: processor-interface error clear semantics.
 - [docs/bedrock-crossbar.md](docs/bedrock-crossbar.md): Bedrock internal crossbar: register block, first-error latching and what is unknown.
 - [docs/bedrock-io-interface.md](docs/bedrock-io-interface.md): Bedrock I/O interface: block transfer engines, processor and widget access gating, link control and what is unknown.
+- [docs/bedrock-local-block.md](docs/bedrock-local-block.md): Bedrock local block: node identity, access vectors, error bits, real-time clock source, scratch locks, vector I/O and what is unknown.
 - [docs/coverage-crime.md](docs/coverage-crime.md): CRIME coverage: two coverage questions graded beyond the chip page.
 - [docs/coverage-ioc3.md](docs/coverage-ioc3.md): IOC3 coverage: what the shipped software and public drivers settle.
 - [docs/coverage-ioc4.md](docs/coverage-ioc4.md): IOC4 coverage: what shipped software and public drivers settle.
