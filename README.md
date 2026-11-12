@@ -61,6 +61,7 @@ Crosstalk, XIO and interconnect:
 - [docs/crosstalk-host-ends.md](docs/crosstalk-host-ends.md): Crosstalk host ends: HEART, Hub and Bedrock.
 - [docs/crosstalk-link.md](docs/crosstalk-link.md): Crosstalk (XIO): the link, its widgets and its host ends.
 - [docs/crosstalk-packets.md](docs/crosstalk-packets.md): Crosstalk packets and the link under them.
+- [docs/pci-discovery.md](docs/pci-discovery.md): PCI discovery on the Origin 200 Bridge: the device-number map of its base I/O and option slots, the dual-slot guest at device 3, and how IRIX walks device numbers 0 to 7.
 - [docs/baseio.md](docs/baseio.md): BaseIO and BaseIO-G: the XIO I/O board of the Origin 2000 and Onyx2, its PCI placement, interrupt paths, panel and one-wire identity records.
 - [docs/origin2000-node-configuration.md](docs/origin2000-node-configuration.md): Origin 2000 node board clock, Hub and secondary-cache configuration: the published 180 MHz and 195 MHz configurations, node PROM mixing and copy rules, and the boot-flash configuration block; it holds no register contract.
 - [docs/crosstown-ktown.md](docs/crosstown-ktown.md): Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards.
