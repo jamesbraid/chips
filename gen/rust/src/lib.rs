@@ -19,6 +19,7 @@ pub mod heart_extra;
 pub mod hpc3_enet;
 pub mod hub;
 pub mod hub_extra;
+pub mod hub_md_extra;
 pub mod ice1724;
 pub mod ioc3;
 pub mod ioc3_extra;
