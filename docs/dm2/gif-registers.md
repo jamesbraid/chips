@@ -166,6 +166,31 @@ pipe is **I** (names, not a traced data path). The names `IDMA_OV` (output video
 | `0x820` | `0x800824` | `XTHD_PACK_MISC_SEL` | not touched by the library or the kernel; diagnostic only (T) | T mask `0x5` (bits 2 and 0) | name and mask E; role U |
 | `0x1010` to `0x1038` | `0x801014` ... | unpacker: `VERSION_SEL` (`0x1010`), `MISC_SEL` (`0x1018`, mask `0xffd`), `IDMA_DATA0/1_SEL` (`0x1020`, `0x1028`), `OVFIFO_TEST_PATTERN0/1_SEL` (`0x1030`, `0x1038`) | diagnostic only | mask 0 on all but `MISC` means T does not test read-back (read-only, or reading has an effect) | names E; roles U |
 
+### 4.1a Packer and unpacker blocks (library, `xhdSendPIO`)
+
+**E** (L `0x4087e0`, 0xb30 bytes with the HDOC routine of 4.3 as its tail; the call is `xhdSendPIO(handle, pipe, flag)` and `xhdInit` calls it once for each pipe, with `flag` 0). Values are the 32-bit words stored.
+`v` is `0x1000` for pipe 1 and `0x1200` for pipe 0.
+
+| Pipe | Window offset (R) | Value | Name where T has one |
+|---|---|---|---|
+| 1 (packer block) | `0x800844` (`0x840`) | `v` = `0x1000` | |
+| 1 | `0x80084c` (`0x848`) | `0x1000` | |
+| 1 | `0x800854` (`0x850`) | `0xd00` | |
+| 1 | `0x800814` (`0x810`) | `0x1f0008` | |
+| 1 | `0x800824` (`0x820`) | `1` | `XTHD_PACK_MISC_SEL` (mask `0x5`) |
+| 1 | `0x800804` (`0x800`) | `0x1f0008` | |
+| 1 | `0x80080c` (`0x808`) | `0x1f0008` | |
+| 0 (unpacker block) | `0x801044` (`0x1040`) | `v` = `0x1200` | |
+| 0 | `0x801004` (`0x1000`) | `0x160008` | |
+| 0 | `0x80104c` (`0x1048`) | `0xd00` | |
+| 0 | `0x80100c` (`0x1008`) | `0x32001f` | |
+| 0 | `0x80101c` (`0x1018`) | `0x0fffe0f9 \| (flag << 28)` | `XTHD_UNPACK_MISC_SEL` (mask `0xffd`) |
+
+The pairing of pipe 1 with the packer block (video in, board to host) and pipe 0 with the unpacker block (host to board) follows the pipes'
+directions in the [DMA part](dma.md) and the names (**I**). The formats chosen at run time by file name (`packer_*.xla`, `unpacker_*.xla`) are
+what changes pixel packing; these constants do not depend on the packing. Roles of every bit are **U**: `0x0fffe0f9` has bits outside the diagnostic's `0xffd` mask,
+so those bits are either not storage or not tested.
+
 Library-side use of the core file: none. `xhdSetPids`, `xhdIsPipeBusy`, `xhdDoTransfer`, `xhdSendBuffer`, `xhdEndTransfer` and
 the path open/close routines go through the DMA and event ioctls, not through register writes (the only register writes in
 `xhdOpenPath` are the CLINK reset pair, section 4.5).
