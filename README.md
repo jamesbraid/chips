@@ -48,6 +48,7 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
 - [docs/r12000a_variant.md](docs/r12000a_variant.md): the NEC VR12000A's differences from the R12000: the SysClkDiv, SCClkDiv and HSTL mode fields, and the 9-bit read-only syndrome in CP0 register 25 control 0, with what is unknown. The constants are in [gen/docs/r12000a_variant.md](gen/docs/r12000a_variant.md).
 - [docs/ixbrick.md](docs/ixbrick.md): the Origin 3000 and Onyx 3000 IX-brick I/O enclosure: slots and bus rules, the IO9 card, drives, USB card, power and management, PIC wiring as drawn, and what is unknown. It holds no register facts.
 - [docs/pxbrick.md](docs/pxbrick.md): the Origin 3000 and Onyx 3000 PX-brick PCI-X I/O enclosure: the enclosure size and its conflicting figures, the PIC wiring as drawn, the L1 `ioport` output, bus and slot rules, the L1 brick-type constants and what is unknown. It holds no register facts.
+- [docs/xbrick.md](docs/xbrick.md): the Origin 3000 and Onyx 3000 X-brick XIO enclosure: the XBridge port roles, the slot and connector wiring as drawn and its conflicts, the Crosstown2 rates, the supported XIO boards, the L1 and its firmware personality, and what is unknown. It holds no register facts.
 - [docs/pbrick.md](docs/pbrick.md): the Origin 3000 and Onyx 3000 P-brick I/O enclosure: slot and bus layout, the three XBridge chips as drawn, the widget-to-bus map, host routing, power and L1 identity, and what is unknown. It holds no register facts.
 - `chips/<chip>/census/`: register-access censuses per chip, produced by [tools/](tools/).
 
