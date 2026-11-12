@@ -2,11 +2,11 @@ table	rows	out_of_scope	understood	understood_with_open	understood_distinct	temp
 binaries	3092	0	625	0	625	3	4	168	2295	0	20.2	20.3	25.8	20.2							0				
 functions	6836	91457	1285	203	1009	3699	3792	1660	99	0	18.8	74.3	98.6	18.8			85.0	20	2026-11-02		0	0	18	0	
 functions (distinct names)	2570	21681	668	157	664	1832	1842	27	33	0	26.0	97.7	98.7	26.0							0				
-mmio	87	0	28	0	28	0	4	55	0	0	32.2	36.8	100.0	32.2	23						0				
+mmio	87	0	62	2	60	0	0	25	0	0	71.3	71.3	100.0	71.3	23						0				
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 ioctls	6	0	6	0	1	0	0	0	0	0	100.0	100.0	100.0	100.0							0				
 ucode	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0						0	0				
-spec-registers	174	0	159	10	158	0	0	5	10	0	91.4	91.4	94.3	91.4							0				
+spec-registers	174	0	174	16	173	0	0	0	0	0	100.0	100.0	100.0	100.0							0				
 input root manifest	928																								500055fe4acccbc9256d61eb7716475b355bdd721167f32bf1c18b9c15f2372d
 functions in IP27/unix	1022	12462	315	89	315	75	84	623	0	0	30.8	39.0	100.0	30.8							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				

@@ -17,23 +17,23 @@ CRIME 1.5	6-12	150	CRIME	0x228	Bank 4 Control	1	0	64		0	understood	chips/crime/R
 CRIME 1.5	6-12	150	CRIME	0x230	Bank 5 Control	1	0	64		0	understood	chips/crime/README.md#graded-register-table	Graded register table
 CRIME 1.5	6-12	150	CRIME	0x238	Bank 6 Control	1	0	64		0	understood	chips/crime/README.md#graded-register-table	Graded register table
 CRIME 1.5	6-12	150	CRIME	0x240	Bank 7 Control	1	0	64		0	understood	chips/crime/README.md#graded-register-table	Graded register table
-CRIME 1.5	6-12	150	CRIME	0x248	Refresh Counter	1	0	64		0	undocumented		
+CRIME 1.5	6-12	150	CRIME	0x248	Refresh Counter	1	0	64		0	understood	chips/crime/README.md#graded-register-table	Graded register table
 CRIME 1.5	6-12	150	CRIME	0x250	Memory Error Status	1	0	64		1	understood	chips/crime/README.md#graded-register-table	Graded register table
 CRIME 1.5	6-12	150	CRIME	0x258	Memory Error Address	1	0	64		1	understood	chips/crime/README.md#graded-register-table	Graded register table
 CRIME 1.5	6-12	150	CRIME	0x260	ECC Syndrome Bits	1	0	64		1	understood	chips/crime/README.md#graded-register-table	Graded register table
 CRIME 1.5	6-12	150	CRIME	0x268	ECC Generated Check Bits	1	0	64		1	understood	chips/crime/README.md#graded-register-table	Graded register table
 CRIME 1.5	6-12	150	CRIME	0x270	ECC Replacement Check Bits	1	0	64		0	understood	chips/crime/README.md#graded-register-table	Graded register table
-CRIME 1.5	5-7	113	CRIME	0x4048	CPU Error Status	1	0	64		0	named-only	docs/coverage-crime.md#cpu-error-status-on-a-crime-15-where-it-lives	CPU error status on a CRIME 1.5: where it lives
-CRIME 1.5	7-1	163	RE	0x0	IntfBuf.data[128]	128	8	64	R/W	0	named-only	docs/coverage-ioc4.md#serial-transceiver-select-established	Serial transceiver select (established)
-CRIME 1.5	7-1	164	RE	0x200	IntfBuf.addr[128]	128	8	64	R/W	0	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
-CRIME 1.5	7-1	164	RE	0x400	IntfBuf.ctl	1	0	32	W	0	named-only	chips/bridge/README.md#widget-block-the-registers-every-xio-widget-carries-offsets-0x0-to-0x70	Widget block (the registers every XIO widget carries, offsets 0x0 to 0x70)
-CRIME 1.5	7-2	164	RE	0x1000	TLB.fbA[64]	64	8	64	R/W	0	undocumented		
-CRIME 1.5	7-2	164	RE	0x1200	TLB.fbB[64]	64	8	64	R/W	0	undocumented		
-CRIME 1.5	7-2	164	RE	0x1400	TLB.fbC[64]	64	8	64	R/W	0	undocumented		
+CRIME 1.5	5-7	113	CRIME	0x4048	CPU Error Status	1	0	64		0	understood	chips/crime/README.md#graded-register-table	Graded register table
+CRIME 1.5	7-1	163	RE	0x0	IntfBuf.data[128]	128	8	64	R/W	0	understood	chips/crime/README.md#interface-buffer-registers	Interface buffer registers
+CRIME 1.5	7-1	164	RE	0x200	IntfBuf.addr[128]	128	8	64	R/W	0	understood	chips/crime/README.md#interface-buffer-registers	Interface buffer registers
+CRIME 1.5	7-1	164	RE	0x400	IntfBuf.ctl	1	0	32	W	0	understood	chips/crime/README.md#interface-buffer-registers	Interface buffer registers
+CRIME 1.5	7-2	164	RE	0x1000	TLB.fbA[64]	64	8	64	R/W	0	understood	chips/crime/README.md#tlb-pages	TLB pages
+CRIME 1.5	7-2	164	RE	0x1200	TLB.fbB[64]	64	8	64	R/W	0	understood	chips/crime/README.md#tlb-pages	TLB pages
+CRIME 1.5	7-2	164	RE	0x1400	TLB.fbC[64]	64	8	64	R/W	0	understood	chips/crime/README.md#tlb-pages	TLB pages
 CRIME 1.5	7-2	164	RE	0x1600	TLB.tex[28]	28	8	64	R/W	0	understood	chips/crime/README.md#tlb-pages	TLB pages
 CRIME 1.5	7-2	164	RE	0x16e0	TLB.cid[4]	4	8	64	R/W	0	understood	chips/crime/README.md#tlb-pages	TLB pages
-CRIME 1.5	7-2	164	RE	0x1700	TLB.linearA[16]	16	8	64	R/W	0	undocumented		
-CRIME 1.5	7-2	164	RE	0x1780	TLB.linearB[16]	16	8	64	R/W	0	undocumented		
+CRIME 1.5	7-2	164	RE	0x1700	TLB.linearA[16]	16	8	64	R/W	0	understood	chips/crime/README.md#tlb-pages	TLB pages
+CRIME 1.5	7-2	164	RE	0x1780	TLB.linearB[16]	16	8	64	R/W	0	understood	chips/crime/README.md#tlb-pages	TLB pages
 CRIME 1.5	7-3	165	RE	0x2000	BufMode.src	1	0	32	R/W	0	understood	chips/crime/README.md#buffer-clip-and-draw-mode	Buffer, clip and draw mode
 CRIME 1.5	7-3	165	RE	0x2008	BufMode.dst	1	0	32	R/W	0	understood	chips/crime/README.md#buffer-clip-and-draw-mode	Buffer, clip and draw mode
 CRIME 1.5	7-3	165	RE	0x2010	ClipMode	1	0	32	R/W	0	understood	chips/crime/README.md#buffer-clip-and-draw-mode	Buffer, clip and draw mode
@@ -119,7 +119,7 @@ CRIME 1.5	7-15	183	RE	0x3030	MTE.dst0	1	0	32	W	0	understood	chips/crime/README.m
 CRIME 1.5	7-15	183	RE	0x3038	MTE.dst1	1	0	32	W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
 CRIME 1.5	7-15	184	RE	0x3040	MTE.srcYStep	1	0	32	R/W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
 CRIME 1.5	7-15	184	RE	0x3048	MTE.dstYStep	1	0	32	R/W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
-CRIME 1.5	7-15	184	RE	0x3070	MTE.null	1	0	32	W	0	named-only	docs/ip27-kernel-bridge-routines.md#routines-of-the-ip27-kernel-that-serve-the-bridge-family	Routines of the IP27 kernel that serve the Bridge family
+CRIME 1.5	7-15	184	RE	0x3070	MTE.null	1	0	32	W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
 CRIME 1.5	7-15	184	RE	0x3078	MTE.ﬂush	1	0	32	W	0	understood	chips/crime/README.md#memory-transfer-engine-registers	Memory transfer engine registers
 GBE rev 1.1	3.2	36	GBE	0x0	CTRLSTAT	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
 GBE rev 1.1	3.2	36	GBE	0x4	DOTCLK	1	0	32	R/W	1	understood	chips/gbe/README.md#early-stop-routine-early_gbe_stop-ip32-kernelo	Early stop routine (`early_gbe_stop`, IP32 `kernel.o`)
@@ -169,7 +169,7 @@ GBE rev 1.1	3.2	47	GBE	0x80004	VC_1	1	0	32	R/W	0	understood	chips/gbe/README.md#
 GBE rev 1.1	3.2	47	GBE	0x80008	VC_2	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
 GBE rev 1.1	3.2	47	GBE	0x8000c	VC_3	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
 GBE rev 1.1	3.2	47	GBE	0x80010	VC_4	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
-GBE rev 1.1	3.2	48	GBE	0x80014	VC_5	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	48	GBE	0x80018	VC_6	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	48	GBE	0x8001c	VC_7	1	0	32	R/W	0	undocumented		
-GBE rev 1.1	3.2	48	GBE	0x80020	VC_8	1	0	32	R/W	0	undocumented		
+GBE rev 1.1	3.2	48	GBE	0x80014	VC_5	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	48	GBE	0x80018	VC_6	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	48	GBE	0x8001c	VC_7	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
+GBE rev 1.1	3.2	48	GBE	0x80020	VC_8	1	0	32	R/W	0	understood	chips/gbe/README.md#display-register-map-published-specification	Display register map (published specification)
