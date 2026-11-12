@@ -9,7 +9,7 @@ Each entry names a routine in the IP27 boot-set kernel object and its address. T
   **Inferred.** A wrapper around `bte_copy` (0x14708) that passes the fixed value 0x110 as its fourth argument. A non-zero result from `bte_copy` branches to the `cmn_err` report at 0x14738 with level 0xc and the copy result as an argument. The meaning of 0x110 is not established.
 
 - `bte_poison_range` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x14748
-  **Inferred.** Works over a range by calling `poison_state_alter_range` (0x14798, 0x14840) and `bte_copy` (0x147e8, flag 0x110, length 0x4000). The globals `disable_bte_poison_range` and `disable_bte` gate the copy, and `bte_copy` is retried on a zero result (0x147fc). What the poison state is, and the meaning of 0x4000, are not established.
+  **Inferred.** Works over a range by calling `poison_state_alter_range` (0x14798, 0x14840) and `bte_copy` (0x147e8, passing the constants 0x110 in `a3` and 0x4000 in `a4`). The globals `disable_bte_poison_range` and `disable_bte` gate the copy, and `bte_copy` is retried on a zero result (0x147fc). What the poison state is, and the meaning of 0x110 and 0x4000, are not established.
 
 - `bte_disable` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x14858
   **Inferred.** The body is three instructions with no loads, stores or calls, and its return value is not computed from anything in the facts. It is probably a stub. Which disable it performs is not established by these facts.

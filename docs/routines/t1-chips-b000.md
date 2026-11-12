@@ -39,7 +39,7 @@ Each entry names a routine in an IP27 boot-set object and its address. The state
   A restart path that loops over nodes up to `maxnodes`, calls `ni_reset_port` per port, optionally powers off through `sysctlr_power_off`, then resets through `elsc_init` and `elsc_system_reset`. It falls back to `printf` when the reset returns a negative value. The two `us_delay` calls use constants 0xf4240 and 0x2dc6c0; if the unit is microseconds these are one and three seconds, but the unit is not shown.
 
 - `memory_iscalias` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x11f28 (64 bytes). Grade: inferred.
-  It reads the doubleword at 0x9200000001000028 and, when that word is zero, compares `v1` with `a1` as unsigned values. It returns 0 or 1. It looks like a predicate on an alias state, but the field the word holds is not established.
+  It reads the doubleword at 0x9200000001000028 and, when that word is nonzero, compares `v1` with `a1` as unsigned values. It returns 0 or 1. It looks like a predicate on an alias state, but the field the word holds is not established.
 
 - `page_local_calias` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x11f88 (60 bytes). Grade: inferred.
   The same shape as `memory_iscalias`, reading 0x9200000001000028 and returning 0 or 1 from an unsigned compare of `a3` and `v1`. It is most likely the page-local form of the same check. That relation is inferred from the matching structure.

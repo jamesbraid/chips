@@ -63,7 +63,7 @@ Each entry names a routine in an IP27 boot-set object and its address. The state
   **Inferred.** It finds the master node with `master_node_get` at 0x104ec, raises the interrupt level with `splhi` at 0x10528, and calls `hub_setup_prb` at 0x105e8 with the constants 3 and 2. It restores the level with `splx` at 0x105f0. The `assfail` calls at 0x1065c and 0x10678 use line 0x562. The meaning of the PRB setup arguments is not identified.
 
 - `memory_iscalias` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x11f28
-  **Inferred.** It loads the doubleword at the fixed address 0x9200000001000028 at 0x11f30 and returns 0 or 1 at 0x11f60. It is a yes/no test on a boot-time register value. The alias condition the name refers to is not visible in the facts.
+  **Inferred.** It loads the doubleword at the fixed address 0x9200000001000028 at 0x11f30 and returns 0 or 1 at 0x11f60. It looks like a yes/no test on that word. The alias condition the name refers to is not visible in the facts.
 
 - `bte_avail` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x12f9c
   **Inferred.** A 12-byte routine with no loads, stores or calls in the rendered facts. It returns a value in `v0` at 0x12fa0 that the facts do not show. The name suggests a query for whether the block transfer engine is usable, but nothing here confirms that.

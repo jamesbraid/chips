@@ -91,10 +91,14 @@ are inferred unless the facts settle the role. Where the facts leave a sub-fact 
   meanings are not stated in the facts.
 
 - `mutex_lock` in `IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)` at 0x760
-  **Inferred.** The metered blocking lock. It gets the meter from `wchanmeter` (0x778), attempts the
-  `compare_and_swap_ptr` on the lock word (0x79c), and on failure updates the meter with `ll`/`sc` on
-  `meter+0x28` (0x7c4, 0x858) and stores to `+0x30`, `+0x40`, `+0x48`, `+0x50`, `+0x5c`, `+0x60` and `+0x68`.
-  It then calls `mutex_wait` (0x874) with its own arguments and returns 0 or 1 at 0x844.
+  **Inferred.** The metered blocking lock. It gets the meter from `wchanmeter` (0x778) and calls `compare_and_swap_ptr`
+  on the lock word (0x79c). The two outcomes of that call take different paths. When it returns nonzero and the meter is
+  not null, the routine increments `meter+0x28` with an `ll`/`sc` pair (0x7c4), stores to `+0x30`, `+0x40`, `+0x48`,
+  `+0x50`, `+0x60` and `+0x70`, and also to `+0x68` and `+0x5c` when the compare at 0x828 falls through, then returns.
+  When it returns zero, the routine increments `meter+0x28` again if the meter is not null (0x858) and then calls
+  `mutex_wait` (0x874) with its own arguments. The value returned at 0x844 is the `compare_and_swap_ptr` result, the
+  `mutex_wait` result or a value the facts leave unresolved, not a fixed 0 or 1. Which outcome means the lock was taken,
+  and what the meter fields hold, are not established.
 
 - `mutex_wake_r` in `IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)` at 0x13c8
   **Inferred.** A 684-byte wake routine for a mutex. It takes the nested bit lock at the record offset 132 of

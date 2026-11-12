@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	address_unknown	input
 binaries	3092	0	625	0	625	3	4	169	2294	0	20.2	20.3	25.8	20.2							0				
-functions	6836	91457	1287	203	1011	3699	3790	1660	99	0	18.8	74.3	98.6	18.8			85.0	20	2026-11-02		0	0	18	0	
-functions (distinct names)	2570	21681	668	157	664	1832	1842	27	33	0	26.0	97.7	98.7	26.0							0				
+functions	6836	91457	1284	203	1009	3699	3793	1660	99	0	18.8	74.3	98.6	18.8			85.0	20	2026-11-02		0	0	18	0	
+functions (distinct names)	2570	21681	667	157	663	1832	1843	27	33	0	26.0	97.7	98.7	26.0							0				
 mmio	87	0	62	2	60	0	0	25	0	0	71.3	71.3	100.0	71.3	23						0				
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 ioctls	6	0	6	0	1	0	0	0	0	0	100.0	100.0	100.0	100.0							0				
@@ -273,7 +273,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/kbd.o	0	42	0	0	0	0	0	0	0	0	0.0	0.0	0.0
 functions in IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_di.o)	0	134	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP27/usr/cpu/sysgen/IP27boot/kdsp.a(kdsp_events.o)	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP27/usr/cpu/sysgen/IP27boot/kdsp.a(audutil.o)	0	94	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
-functions in IP27/usr/cpu/sysgen/IP27boot/kernel.o	347	1014	150	19	150	186	197	0	0	0	43.2	100.0	100.0	43.2							0	0	0	0	
+functions in IP27/usr/cpu/sysgen/IP27boot/kernel.o	347	1014	149	19	149	186	198	0	0	0	42.9	100.0	100.0	42.9							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/keyboard.a(pckbd.o)	0	14	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP27/usr/cpu/sysgen/IP27boot/kitchen_sync.o	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP27/usr/cpu/sysgen/IP27boot/klidbg.o	0	19	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
@@ -287,7 +287,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/kmem_debug.a(kern_mbuf.o)	0	42	0	0	0	0
 functions in IP27/usr/cpu/sysgen/IP27boot/ksync.a(mutex.o)	2	56	2	0	2	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/ksync.a(sema.o)	7	91	7	0	7	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/ksync.a(mrlock.o)	0	8	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
-functions in IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	3	60	2	0	2	0	1	0	0	0	66.7	100.0	100.0	66.7							0	0	0	0	
+functions in IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mutex.o)	3	60	1	0	1	0	2	0	0	0	33.3	100.0	100.0	33.3							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(sema.o)	11	99	10	0	10	0	1	0	0	0	90.9	100.0	100.0	90.9							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/ksync_metered.a(mrlock.o)	0	5	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP27/usr/cpu/sysgen/IP27boot/ksync_named.a(mutex.o)	2	59	2	0	2	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
@@ -2505,7 +2505,7 @@ functions in IP35/usr/cpu/sysgen/IP35boot/kmem_debug.a(kern_mbuf.o)	0	42	0	0	0	0
 functions in IP35/usr/cpu/sysgen/IP35boot/ksync.a(mutex.o)	2	56	2	0	2	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/ksync.a(sema.o)	7	91	7	0	7	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/ksync.a(mrlock.o)	0	8	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
-functions in IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	3	60	2	0	2	0	1	0	0	0	66.7	100.0	100.0	66.7							0	0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mutex.o)	3	60	1	0	1	0	2	0	0	0	33.3	100.0	100.0	33.3							0	0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(sema.o)	11	99	6	0	6	0	2	3	0	0	54.5	72.7	100.0	54.5							0	0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/ksync_metered.a(mrlock.o)	0	5	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP35/usr/cpu/sysgen/IP35boot/ksync_named.a(mutex.o)	2	59	2	0	2	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
