@@ -247,3 +247,4 @@ mailbox protocol and the board bus map.
 - [VBOB control messages](dm2/vbob.md)
 - [FPGA info table and load protocol](dm2/fpga-load.md)
 - [DMA start path: map RAM entries, pipe control writes, start, completion, errors](dm2/dma.md)
+- [Video interrupts and the status ring](dm2/interrupts-status.md)
