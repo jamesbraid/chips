@@ -822,6 +822,7 @@ pub const HUB_MD_DIR_WAIT: u32 = 0x5; // established
 pub const HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS: u64 = 0x1e7fbc3fffffff; // inferred
 pub const HUB_MD_MEM_BANKS_M_MODE: u32 = 0x8; // established
 pub const HUB_MD_MEM_BANKS_N_MODE: u32 = 0x4; // established
+pub const HUB_MD_MLAN_CTL_ACCESS_BYTES: u32 = 0x8; // established
 pub const HUB_MD_MLAN_CTL_RESET_DEFAULTS: u64 = 0x18b100000; // inferred
 pub const HUB_MD_MOQ_SIZE_RESET_DEFAULTS: u32 = 0x3212; // inferred
 pub const HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS: u32 = 0x400; // inferred

@@ -65,11 +65,11 @@ from = "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*
 doc = "Layout of the one-wire (Microlan) control register."
 
 [words.MD_MLAN_CTL_FORMAT.fields]
-phi1 = { bits = [33, 27], grade = "established", doc = "Seven-bit field at 33:27 (mask 0x7f shifted 27), named MLAN_PHI1 in the header." }
-phi0 = { bits = [26, 20], grade = "inferred", doc = "Seven-bit field named MLAN_PHI0. The header's mask for it is 0x7f shifted by 27, the same place as PHI1, which contradicts its shift constant of 20. The position 26:20 is taken from the shift constant and is inferred." }
-pulse = { bits = [19, 10], grade = "established", doc = "Ten-bit pulse field at 19:10 (mask 0x3ff shifted 10)." }
-sample = { bits = [9, 2], grade = "established", doc = "Eight-bit sample field at 9:2 (mask 0xff shifted 2)." }
-done = { bits = [1, 1], grade = "established", doc = "Done bit, bit 1, named MLAN_DONE in the header." }
+phi1 = { bits = [33, 27], grade = "established", doc = "Seven-bit field at 33:27 (mask 0x7f shifted 27), named MLAN_PHI1 in the header. What the field shapes is not stated by the header or by any held source, so its timing meaning is unknown." }
+phi0 = { bits = [26, 20], grade = "inferred", doc = "Seven-bit field named MLAN_PHI0. The header's mask for it is 0x7f shifted by 27, the same place as PHI1, which contradicts its shift constant of 20. The position 26:20 is taken from the shift constant and is inferred. What the field shapes is not stated by the header or by any held source, so its timing meaning is unknown." }
+pulse = { bits = [19, 10], grade = "established", doc = "Ten-bit pulse field at 19:10 (mask 0x3ff shifted 10). The header gives no time unit, so the real pulse width is unknown." }
+sample = { bits = [9, 2], grade = "established", doc = "Eight-bit sample field at 9:2 (mask 0xff shifted 2). The header gives no time unit or reference point, so the real sample offset is unknown." }
+done = { bits = [1, 1], grade = "established", doc = "Done bit, bit 1, named MLAN_DONE in the header. The header's reset constant sets only the two phase fields, so the done bit's reset value is unknown; no held source settles it, so neither value should be assumed." }
 rd_data = { bits = [0, 0], grade = "established", doc = "Read-data bit, bit 0, named MLAN_RD_DATA in the header." }
 
 [words.MD_SLOTID_USTAT_FORMAT]
@@ -205,6 +205,7 @@ HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS = { value = 0x1e7fbc3fffffff, grade = "infer
 HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS = { value = 0x400, grade = "inferred", doc = "Default value of the refresh control register, from the header's default constant. Not a reset read." }
 HUB_MD_MOQ_SIZE_RESET_DEFAULTS = { value = 0x3212, grade = "inferred", doc = "Default value of the outgoing queue size register, from the header's default constant. Not a reset read." }
 HUB_MD_MLAN_CTL_RESET_DEFAULTS = { value = 0x18b100000, grade = "inferred", doc = "Default value of the one-wire control register: the two phase fields at 0x31 each, from the header's default constant. Not a reset read." }
+HUB_MD_MLAN_CTL_ACCESS_BYTES = { value = 8, grade = "established", doc = "Access size in bytes of the one-wire control register in the shipped IRIX kernel accessor: its loads and stores there are doubleword (census context). Bit 33 belongs to the upper phase field, so a 32-bit access cannot write the whole register; that consequence follows from the field layout, not from a trace." }
 
 # Memory bank granule. A bank index is the address bits above bit 28 (the header's shift for 512 MB).
 HUB_MD_BANK_SHIFT = { value = 29, grade = "established", doc = "Log2 of the 512 MB bank granule, per the header's MD_BANK_SHFT." }

@@ -62,10 +62,35 @@ register stays unknown and the header's default constants are graded inferred.
 - **DIMM initialisation.** Both registers have a four-bit select at 35:32 and a twelve-bit mode field
   at 11:0.
 
+## One-wire control in the IRIX kernel
+
+The IRIX kernel's one-wire accessor at `0x6a4d0` drives the control register at `0x2000a8`
+(see [gen/docs/hub.md](../gen/docs/hub.md)). Its reads and writes are eight bytes wide (established,
+census context). The write is built from shifted fields and stored in one doubleword. The reads then
+loop until bit 1 is set (established, census context, the loop at `0x6a564` to `0x6a5a4`). Bit 1
+is the done bit and bit 0 is the sampled level. Two consequences follow:
+
+- Starting a slot has to clear the done bit, or a poll could not tell the new slot from the last
+  one. This is inferred from the loop, not read from a trace.
+- The done bit's reset value is unknown. The header's reset constant sets only the two phase fields,
+  and no held source sets the done bit. A test should check that the done bit reads clear after a
+  start, not what it holds out of reset.
+
+On the wire, the header and this repository's sources give no electrical description. For a
+one-wire line with a pull-up, an idle line reads high. A bit slot with no part attached would then
+sample one. This is inferred from the general one-wire convention, not from a document cited for
+this part.
+
+The part on the bus is not identified by any held source. Its family code, its identity read and
+whether it is an add-only memory are unknown. One-wire parts on other chips are neighbouring rows
+and are not evidence for this bus.
+
 ## What stays open
 
 - The access type and reset value of every register in this unit. The census reads most of them and
   the header states neither.
+- The reset value of the one-wire done bit, the physical meaning of the one-wire phase, pulse and
+  sample fields, and the part class on the one-wire bus.
 - The meaning of bit 30 of the memory configuration, the DIMM 0 select values and the timing fields
   beyond their names.
 - The meaning of the candidate initiator and node fields, which overlap in the header.

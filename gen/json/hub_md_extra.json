@@ -919,6 +919,15 @@
   {
    "unit": "hub_md_extra",
    "kind": "constant",
+   "name": "HUB_MD_MLAN_CTL_ACCESS_BYTES",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
    "name": "HUB_MD_MLAN_CTL_RESET_DEFAULTS",
    "value": 6628048896,
    "count": 1,

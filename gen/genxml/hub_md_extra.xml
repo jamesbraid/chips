@@ -132,6 +132,7 @@
   <constant name="HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS" value="0x1e7fbc3fffffff" grade="inferred"/>
   <constant name="HUB_MD_MEM_BANKS_M_MODE" value="0x8" grade="established"/>
   <constant name="HUB_MD_MEM_BANKS_N_MODE" value="0x4" grade="established"/>
+  <constant name="HUB_MD_MLAN_CTL_ACCESS_BYTES" value="0x8" grade="established"/>
   <constant name="HUB_MD_MLAN_CTL_RESET_DEFAULTS" value="0x18b100000" grade="inferred"/>
   <constant name="HUB_MD_MOQ_SIZE_RESET_DEFAULTS" value="0x3212" grade="inferred"/>
   <constant name="HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS" value="0x400" grade="inferred"/>

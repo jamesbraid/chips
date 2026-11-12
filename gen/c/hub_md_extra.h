@@ -329,6 +329,7 @@
 #define HUB_HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS      0x1e7fbc3fffffffull /* inferred */
 #define HUB_HUB_MD_MEM_BANKS_M_MODE                  0x8u /* established */
 #define HUB_HUB_MD_MEM_BANKS_N_MODE                  0x4u /* established */
+#define HUB_HUB_MD_MLAN_CTL_ACCESS_BYTES             0x8u /* established */
 #define HUB_HUB_MD_MLAN_CTL_RESET_DEFAULTS           0x18b100000ull /* inferred */
 #define HUB_HUB_MD_MOQ_SIZE_RESET_DEFAULTS           0x3212u /* inferred */
 #define HUB_HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS    0x400u /* inferred */
