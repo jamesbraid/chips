@@ -84,6 +84,7 @@ Chip coverage pages:
 - [docs/dp83840.md](docs/dp83840.md): DP83840A and DP83843 Ethernet transceivers of the Origin 200 and Origin 300 I/O boards: identity, the autonegotiation restart, loopback, strap-dependent bits and what is unknown.
 - [docs/ics1890.md](docs/ics1890.md): ICS1890 Ethernet transceiver of the Octane and Octane2 base I/O board: identifier registers, the MII address and what is unknown. The register contract is in `defs/ics1890.toml`.
 - [docs/coverage-ioc4.md](docs/coverage-ioc4.md): IOC4 coverage: what shipped software and public drivers settle.
+- [docs/ioc4-serial-dma.md](docs/ioc4-serial-dma.md): IOC4 serial ring DMA: ring pointers, the receive timer, the port shadow bits and what is unknown. The field masks are in `defs/ioc4_extra.toml`.
 - [docs/coverage-mace.md](docs/coverage-mace.md): MACE coverage: what software, specification and drivers settle.
 - [docs/coverage-tiocp.md](docs/coverage-tiocp.md): TIOCP coverage: what the shipped software and drivers settle.
 - [docs/coverage-vice.md](docs/coverage-vice.md): VICE coverage: the O2's video imaging and compression engine.

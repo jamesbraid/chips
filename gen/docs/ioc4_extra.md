@@ -41,5 +41,15 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `ATA_DMA_LIST_HIGH` | 0x148 | inferred |  | index 2; written by the packet-DMA start routine |
 | `ATA_DMA_LIST_LOW` | 0x144 | inferred |  | index 1; written by the packet-DMA start routine |
 | `ATA_DMA_TIMING` | 0x140 | inferred |  | width 4 byte(s); index 0; name from the public driver only |
+| `SERIAL_RING_PTR_B_9_3` | 0x3f8 | inferred |  | Active bits of a producer or consumer index on a 1 KB serial ring of 8-byte entries. The 4 KB ring mask is 0xff8 (the ring bits 11:3 in the register table). |
+| `SERIAL_RX_TIMER_COUNT_B_27_16` | 0xfff0000 | inferred |  | Current count of the receive timer, bits 27:16 of the RX timer register. The public driver defines the field and does not read it. |
+| `SERIAL_RX_TIMER_RELOAD_B_11_0` | 0xfff | inferred |  | Reload count of the receive timer, bits 11:0 of the RX timer register. The IOC3 receive-timeout routine caps its stored count at 4095, the same twelve bits. |
+| `SERIAL_SHADOW_CTS_V_100000` | 0x100000 | inferred |  | Clear-to-send line level, bit 20 of the port shadow register. |
+| `SERIAL_SHADOW_DCD_V_800000` | 0x800000 | inferred |  | Carrier-detect line level, bit 23 of the port shadow register. |
+| `SERIAL_SHADOW_DCTS_V_10000` | 0x10000 | inferred |  | Clear-to-send changed, bit 16 of the port shadow register. |
+| `SERIAL_SHADOW_DDCD_V_80000` | 0x80000 | inferred |  | Carrier-detect changed, bit 19 of the port shadow register. |
+| `SERIAL_SHADOW_OUTPUTS_B_28_24` | 0x1f000000 | inferred |  | Modem outputs and loopback, bits 28:24 of the port shadow register. The public driver names DTR, RTS, OUT1, OUT2 and loopback in this field and does not give the position of each one. |
+| `SERIAL_SHADOW_RX_FLAGS_B_7_0` | 0xff | inferred |  | Low byte of the port shadow register: receive data and line-status flags. |
+| `SERIAL_SRCIR_TIMER_ARM_V_80000000` | 0x80000000 | inferred |  | Bit 31 of the RX consumer write. The public driver calls it the timer-arm bit. Whether the readback reflects it is not established. |
 | `SIO_CR_CMD_PULSE` | 0xf | established |  | value stored at attach; that bits 3:0 are a strobe field is [I] |
 | `SIO_CR_SIO_DIAG_IDLE` | 0x80 | established |  | bit 7, polled until set; name [I] |

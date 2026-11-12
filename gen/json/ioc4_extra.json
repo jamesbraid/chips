@@ -170,6 +170,86 @@
   {
    "unit": "ioc4_extra",
    "kind": "constant",
+   "name": "SERIAL_RING_PTR_B_9_3",
+   "value": 1016,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_RX_TIMER_COUNT_B_27_16",
+   "value": 268369920,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_RX_TIMER_RELOAD_B_11_0",
+   "value": 4095,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_CTS_V_100000",
+   "value": 1048576,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_DCD_V_800000",
+   "value": 8388608,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_DCTS_V_10000",
+   "value": 65536,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_DDCD_V_80000",
+   "value": 524288,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_OUTPUTS_B_28_24",
+   "value": 520093696,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_RX_FLAGS_B_7_0",
+   "value": 255,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SRCIR_TIMER_ARM_V_80000000",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
    "name": "SIO_CR_CMD_PULSE",
    "value": 15,
    "count": 1,

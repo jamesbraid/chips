@@ -23,6 +23,16 @@
   <constant name="ATA_DMA_LIST_HIGH" value="0x148" grade="inferred"/>
   <constant name="ATA_DMA_LIST_LOW" value="0x144" grade="inferred"/>
   <constant name="ATA_DMA_TIMING" value="0x140" grade="inferred"/>
+  <constant name="SERIAL_RING_PTR_B_9_3" value="0x3f8" grade="inferred"/>
+  <constant name="SERIAL_RX_TIMER_COUNT_B_27_16" value="0xfff0000" grade="inferred"/>
+  <constant name="SERIAL_RX_TIMER_RELOAD_B_11_0" value="0xfff" grade="inferred"/>
+  <constant name="SERIAL_SHADOW_CTS_V_100000" value="0x100000" grade="inferred"/>
+  <constant name="SERIAL_SHADOW_DCD_V_800000" value="0x800000" grade="inferred"/>
+  <constant name="SERIAL_SHADOW_DCTS_V_10000" value="0x10000" grade="inferred"/>
+  <constant name="SERIAL_SHADOW_DDCD_V_80000" value="0x80000" grade="inferred"/>
+  <constant name="SERIAL_SHADOW_OUTPUTS_B_28_24" value="0x1f000000" grade="inferred"/>
+  <constant name="SERIAL_SHADOW_RX_FLAGS_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="SERIAL_SRCIR_TIMER_ARM_V_80000000" value="0x80000000" grade="inferred"/>
   <constant name="SIO_CR_CMD_PULSE" value="0xf" grade="established"/>
   <constant name="SIO_CR_SIO_DIAG_IDLE" value="0x80" grade="established"/>
 </genxml>

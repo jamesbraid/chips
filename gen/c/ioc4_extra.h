@@ -32,6 +32,16 @@
 #define IOC4_ATA_DMA_LIST_HIGH                       0x148u /* inferred */
 #define IOC4_ATA_DMA_LIST_LOW                        0x144u /* inferred */
 #define IOC4_ATA_DMA_TIMING                          0x140u /* inferred */
+#define IOC4_SERIAL_RING_PTR_B_9_3                   0x3f8u /* inferred */
+#define IOC4_SERIAL_RX_TIMER_COUNT_B_27_16           0xfff0000u /* inferred */
+#define IOC4_SERIAL_RX_TIMER_RELOAD_B_11_0           0xfffu /* inferred */
+#define IOC4_SERIAL_SHADOW_CTS_V_100000              0x100000u /* inferred */
+#define IOC4_SERIAL_SHADOW_DCD_V_800000              0x800000u /* inferred */
+#define IOC4_SERIAL_SHADOW_DCTS_V_10000              0x10000u /* inferred */
+#define IOC4_SERIAL_SHADOW_DDCD_V_80000              0x80000u /* inferred */
+#define IOC4_SERIAL_SHADOW_OUTPUTS_B_28_24           0x1f000000u /* inferred */
+#define IOC4_SERIAL_SHADOW_RX_FLAGS_B_7_0            0xffu /* inferred */
+#define IOC4_SERIAL_SRCIR_TIMER_ARM_V_80000000       0x80000000u /* inferred */
 #define IOC4_SIO_CR_CMD_PULSE                        0xfu /* established */
 #define IOC4_SIO_CR_SIO_DIAG_IDLE                    0x80u /* established */
 
