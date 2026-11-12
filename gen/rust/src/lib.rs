@@ -40,6 +40,7 @@ pub mod mace;
 pub mod mace_extra;
 pub mod pic;
 pub mod pic_extra;
+pub mod r10000_fpu;
 pub mod r10000_identity;
 pub mod rad1;
 pub mod router_origin2000;

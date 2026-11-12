@@ -1,0 +1,10 @@
+unit = "r10000_fpu"
+prefix = "R10K"
+title = "R10000 family floating-point control register cause bits"
+doc = "Constants for the floating-point control register (FCSR, the NEC manual's FSR) of the MIPS R10000 family, for the Cause E bit that reports an unimplemented operation. The FS and rounding fields are not here: their bit positions were not read for this unit. This unit holds constants only; the rule that sets E is in docs/r10000_fpu.md. Grades: established means the processor manual states it; inferred means a reasoned reading of the manual; unknown items are listed in the page."
+from = "NEC VR10000 user's manual, U10278EJ4V0UM00"
+public_from = ["NEC VR10000 Series user's manual, U10278EJ4V0UM00, fourth edition, printed pages 282-284"]
+
+[constants]
+R10K_FCSR_CAUSE_E_BIT = { value = 17, grade = "established", from = "NEC VR10000 user's manual, U10278EJ4V0UM00, printed page 283", doc = "Bit 17 of the floating-point control register, the Cause E bit for an unimplemented operation. The Cause field is bits 17:12, and E is its first listed bit. E has no enable bit and is always enabled." }
+R10K_FCSR_CAUSE_E_MASK = { value = 0x20000, grade = "established", from = "NEC VR10000 user's manual, U10278EJ4V0UM00, printed page 283", doc = "Mask for the Cause E bit, bit 17 of the floating-point control register." }
