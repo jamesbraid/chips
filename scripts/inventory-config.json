@@ -3359,5 +3359,9 @@
     "(?!(?:_cpuclkper100ticks|_ip32_disable_serial_dma|_ip32_restore_serial_dma|_ticksper1024inst|clockAccess|configurePort|cpu_get_memsize|cpu_powerdown|cpu_rtcinit|cpu_scandevs|cpuclkper100ticks|crm_deadloop|crm_hardreset|crm_softreset|exception|flashEnable|init_pci|ip32_set_cpuled|kl_get_num_cpus|kl_hinv|kl_inv_find|led_off|led_on|mace_errputc|mace_n16c550_install|md_add|md_alloc|md_dealloc|md_init|resetClock|sn0_getcpuid|ticksper1024inst|usecwait|wbflush)$).+"
    ]
   }
+ ],
+ "review_required": [
+  "docs/routines/t1-*.md",
+  "docs/routines/t2-*.md"
  ]
 }
