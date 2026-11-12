@@ -1,0 +1,278 @@
+unit = "isp1040"
+prefix = "ISP1040"
+title = "QLogic ISP1040 family SCSI host adapter (PCI 1077:1020), register and mailbox contract"
+doc = "The single-channel QLogic SCSI host adapter on the BaseIO and BaseIO-G boards (PCI 1077:1020), as the public drivers use it. Grades say how each item was derived: established means the public driver file or the published standard states it, and inferred means agreeing driver code, a driver's own default, or a reading of the drivers' use of a value. No QLogic programming manual for this part is held here, so the register contract rests on driver agreement, and the reset state of every register is unknown unless a row says otherwise. The bus-reset and selection timing values are the driver's requests, not measured chip behaviour."
+from = "public Linux qla1280, OpenBSD qlw and NetBSD isp drivers (pins in docs/sources/INDEX.md)"
+public_from = ["Linux qla1280", "OpenBSD qlw", "NetBSD isp", "ANSI X3.131-1994 SCSI-2"]
+
+[registers.id_l]
+offset = 0x00
+access = "r"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla1280 driver header device register layout"
+doc = "Low half of the identity word. The reset value is not stated by any source."
+
+[registers.id_h]
+offset = 0x02
+access = "r"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla1280 driver header device register layout"
+doc = "High half of the identity word. The reset value is not stated by any source."
+
+[registers.cfg_0]
+offset = 0x04
+access = "r"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla1280 driver header device register layout; qla1280 driver hardware revision test"
+doc = "Configuration 0. Its low four bits hold the hardware revision. Linux compares that revision with the 1040A value only, to decide whether to set the FIFO threshold. Linux does not use it to name the part."
+
+[registers.cfg_0.fields]
+hw_revision = { bits = [3, 0], grade = "established", doc = "Hardware revision mask; Linux compares it with the 1040A value" }
+
+[registers.cfg_1]
+offset = 0x06
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla1280 driver header device register layout"
+doc = "Configuration 1: FIFO threshold and bus burst enable, written by the drivers at start-up."
+
+[registers.ictrl]
+offset = 0x08
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla1280 driver header device register layout and its use in qla1280 driver"
+doc = "Bus interface control. It holds the soft reset bit, the interrupt enables and the flash BIOS controls."
+
+[registers.ictrl.fields]
+soft_reset = { bits = [0, 0], grade = "inferred", doc = "Soft reset of the adapter. Linux sets it and then polls until it reads clear" }
+int_enable = { bits = [1, 1], grade = "inferred", doc = "Interrupt enable. Linux sets it at start-up" }
+risc_int_enable = { bits = [2, 2], grade = "inferred", doc = "RISC interrupt enable. Linux sets it with the interrupt enable" }
+flash_enable = { bits = [8, 8], grade = "inferred", doc = "Flash BIOS read and write enable. Named by Linux only" }
+flash_upper = { bits = [9, 9], grade = "inferred", doc = "Upper flash bank select. Named by Linux only" }
+
+[registers.istatus]
+offset = 0x0a
+access = "r"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla1280 driver header device register layout"
+doc = "Interface status. Its bit meanings are not described here; the reset value is unknown."
+
+[registers.semaphore]
+offset = 0x0c
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla1280 driver header device register layout"
+doc = "Semaphore register. Linux names it; its use is not described here."
+
+[registers.nvram]
+offset = 0x0e
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla1280 driver header device register layout"
+doc = "Serial NVRAM interface register. Linux names its clock, select, data-out and data-in bits."
+
+[registers.flash_data]
+offset = 0x10
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "inferred"
+from = "Linux qla1280 driver header and OpenBSD qlw driver header, both naming the flash data word"
+doc = "Flash BIOS data. Linux and OpenBSD both name it for this part. The NetBSD driver assigns the same offset to request-queue pointers for a later chip generation, so the naming rests on two drivers and is not confirmed by a manual."
+
+[registers.flash_address]
+offset = 0x12
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "inferred"
+from = "Linux qla1280 driver header and OpenBSD qlw driver header, both naming the flash address word"
+doc = "Flash BIOS address. The same naming and the same two-driver footing as the flash data word."
+
+[registers.mailbox]
+offset = 0x70
+count = 8
+access = "rw"
+width = 16
+reset = "unknown"
+grade = "established"
+from = "Linux qla1280 driver header device register layout (mailbox 0 at 0x70); OpenBSD QLW_MBOX_BASE_PCI"
+doc = "Eight 16-bit mailbox registers, mailboxes 0 to 7 at 0x70 to 0x7e. Mailbox 0 carries the opcode of each command. The other mailboxes carry its operands and results, and their meaning is given per opcode below."
+
+[constants.OP_BUS_RESET]
+value = 0x18
+grade = "established"
+from = "Linux qla1280 driver header MBC_BUS_RESET; NetBSD isp driver header MBOX_BUS_RESET; OpenBSD qlw driver header QLW_MBOX_BUS_RESET"
+doc = "Reset one SCSI bus. Mailbox 1 carries a delay and mailbox 2 the bus number. The delay's unit is inferred to be seconds: Linux sleeps for that many seconds after the command completes, and OpenBSD delays for the same count. NetBSD raises any value below 2 to 2. Whether the firmware starts no SCSI activity on that bus for the delay is inferred from the Linux and OpenBSD drivers waiting it out before they issue commands; no firmware document states it."
+
+[constants.OP_SET_RETRY_COUNT]
+value = 0x32
+grade = "established"
+from = "Linux qla1280 driver header MBC_SET_RETRY_COUNT and qla1280 driver; NetBSD mailbox table mask 0xc7"
+doc = "Set the selection retry count and delay. Mailbox 1 is the count and mailbox 2 the delay for bus 0; mailboxes 6 and 7 carry the same pair for bus 1. Whether the firmware retries a failed selection itself, and how many attempts a count gives, is unknown; NetBSD sets the count to zero because it wants selection failures reported at once, which implies that a non-zero count makes the firmware retry on its own."
+
+[constants.OP_SET_SELECTION_TIMEOUT]
+value = 0x31
+grade = "established"
+from = "Linux qla1280 driver header MBC_SET_SELECTION_TIMEOUT and qla1280 driver; NetBSD mailbox table mask 0x07; OpenBSD qlw driver"
+doc = "Set the selection timeout. Mailbox 1 carries bus 0's value and mailbox 2 bus 1's value. A one-bus part uses only mailbox 1; the drivers leave mailbox 2 unspecified then, so a guest must not read it back as a bus-1 value. The unit is not stated by any driver. Inferred milliseconds: the drivers' default, 250, is the SCSI-2 recommended selection time-out, and the SCSI-2 row below uses the same unit."
+
+[constants.OP_GET_TARGET_PARAMS]
+value = 0x28
+grade = "established"
+from = "Linux qla1280 driver header MBC_GET_TARGET_PARAMETERS and qla1280 driver; NetBSD mailbox table mask 0x03 in and 0x4f out; OpenBSD qlw driver"
+doc = "Read a target's negotiated transfer parameters. Mailbox 1 names the target: Linux puts the target in the high byte and sets bit 7 for bus 1. The results come back in mailboxes 0 to 3 and 6, by NetBSD's output mask. Which field each of those mailboxes carries is inferred from the set-target-parameters layout, not stated by a driver."
+
+[constants.OP_SET_TARGET_PARAMS]
+value = 0x38
+grade = "established"
+from = "Linux qla1280 driver header MBC_SET_TARGET_PARAMETERS; NetBSD isp driver header MBOX_SET_TARGET_PARAMS; NetBSD mailbox table mask 0x4f"
+doc = "Set a target's transfer parameters. Named here because the read-back opcode uses the same layout. The field meanings are not repeated in this unit."
+
+[constants.OP_SET_RESET_DELAY_PARAMS]
+value = 0x3a
+grade = "established"
+from = "Linux qla1280 driver header MBC_SET_RESET_DELAY_PARAMETERS; NetBSD isp driver header MBOX_SET_RESET_DELAY_PARAMS; NetBSD mailbox table mask 0x07"
+doc = "Set the SCSI bus-reset delay parameters as a configuration write. Its operand layout is not stated by any source here; the entry is named so that a host sending it is recognised."
+
+[constants.OP_LOAD_RAM_64]
+value = 0x09
+grade = "inferred"
+from = "Linux qla1280 driver header MBC_LOAD_RAM_A64_ROM; qla1280 driver selects it for 64-bit DMA builds"
+doc = "Load RAM with 64-bit DMA addresses. Linux picks this opcode, not the 32-bit load, when its build uses 64-bit DMA addresses."
+
+[constants.OP_DUMP_RAM_64]
+value = 0x0a
+grade = "inferred"
+from = "Linux qla1280 driver header MBC_DUMP_RAM_A64_ROM; qla1280 driver selects it for 64-bit DMA builds"
+doc = "Dump RAM with 64-bit DMA addresses. The pair of the 64-bit load opcode above."
+
+[constants.STATUS_COMP_INCOMPLETE]
+value = 0x0001
+grade = "established"
+from = "Linux qla1280 driver header CS_INCOMPLETE; NetBSD isp driver header RQCS_INCOMPLETE; OpenBSD qlw driver header QLW_IOCB_STATUS_INCOMPLETE"
+doc = "Completion status incomplete. For a selection that found no device the state flags below say how far the command got."
+
+[constants.STATUS_COMP_RESET]
+value = 0x0004
+grade = "established"
+from = "Linux qla1280 driver header CS_RESET; NetBSD isp driver header RQCS_RESET_OCCURRED; OpenBSD qlw driver header QLW_IOCB_STATUS_RESET"
+doc = "Completion status reset: a bus reset destroyed the command. All three drivers handle it as a destroyed command and report it as a reset. Whether the firmware sends it for a command that had not yet been selected is inferred, not stated."
+
+[constants.STATUS_ENTRY_COMP_STATUS_OFFSET]
+value = 0x0a
+grade = "established"
+from = "Linux qla1280 driver header struct response; OpenBSD qlw driver header struct qlw_iocb_status"
+doc = "Byte offset of the 16-bit completion status in a status entry. The entry's header is four bytes."
+
+[constants.STATUS_ENTRY_STATE_FLAGS_OFFSET]
+value = 0x0c
+grade = "established"
+from = "Linux qla1280 driver header struct response; OpenBSD qlw driver header struct qlw_iocb_status"
+doc = "Byte offset of the 16-bit state flags in a status entry."
+
+[constants.STATUS_ENTRY_STATUS_FLAGS_OFFSET]
+value = 0x0e
+grade = "established"
+from = "Linux qla1280 driver header struct response; OpenBSD qlw driver header struct qlw_iocb_status"
+doc = "Byte offset of the 16-bit status flags in a status entry."
+
+[constants.STATUS_ENTRY_SENSE_LENGTH_OFFSET]
+value = 0x12
+grade = "established"
+from = "Linux qla1280 driver header struct response (req_sense_length); OpenBSD qlw driver header struct qlw_iocb_status (sense_len)"
+doc = "Byte offset of the 16-bit sense length. Linux reads it to decide how many sense bytes to trust."
+
+[constants.STATE_GOT_BUS]
+value = 0x0100
+grade = "established"
+from = "Linux qla1280 driver header SF_GOT_BUS; NetBSD isp driver header RQSF_GOT_BUS; OpenBSD qlw driver header QLW_STATE_GOT_BUS"
+doc = "State flag: the command reached the bus."
+
+[constants.STATE_GOT_TARGET]
+value = 0x0200
+grade = "established"
+from = "Linux qla1280 driver header SF_GOT_TARGET and qla1280 driver; NetBSD isp driver header RQSF_GOT_TARGET and isp driver; OpenBSD qlw driver header QLW_STATE_GOT_TARGET"
+doc = "State flag: the target answered selection. For an incomplete completion with this bit clear, Linux reports DID_BAD_TARGET when got-bus is set and DID_NO_CONNECT when it is clear, and NetBSD reports a selection timeout. A command to an absent target therefore completes incomplete with got-bus set and got-target clear."
+
+[constants.STATE_GOT_SENSE]
+value = 0x2000
+grade = "inferred"
+from = "Linux qla1280 driver header SF_GOT_SENSE; NetBSD isp driver header RQSF_GOT_SENSE"
+doc = "State flag: sense data came back. Named by two drivers; the condition under which firmware sets it is not stated by any source here."
+
+[constants.STATUS_FLAG_SELECTION_TIMEOUT]
+value = 0x0040
+grade = "inferred"
+from = "NetBSD isp driver header RQSTF_TIMEOUT, read by the NetBSD driver for a transport error only"
+doc = "Status flag: a timeout. Only the NetBSD header names it, and that driver reads it for a transport error rather than for a missing target. Whether the firmware sets it for an absent target is not established by any source held here."
+
+[constants.ASYNC_BUS_RESET]
+value = 0x8001
+grade = "established"
+from = "Linux qla1280 driver header MBA_BUS_RESET and qla1280 driver; NetBSD isp driver header ASYNC_BUS_RESET"
+doc = "Asynchronous event: a bus reset. Linux reads the bus number from bit 0 of mailbox 6. The event shows that a reset happened; whether the firmware posts it for a reset the host itself requested is unknown."
+
+[constants.PCI_REV_1040]
+value = 2
+grade = "inferred"
+from = "OpenBSD qlw PCI attach revision table"
+doc = "PCI revision ID that OpenBSD maps to the plain ISP1040 (read with PCI_REVISION of the class word). OpenBSD sets the clock to 60 MHz for revision two and above."
+
+[constants.PCI_REV_1040A]
+value = 3
+grade = "inferred"
+from = "OpenBSD qlw PCI attach revision table"
+doc = "PCI revision ID that OpenBSD maps to the ISP1040A. OpenBSD clears the FIFO setting on this part, which it calls busted."
+
+[constants.PCI_REV_1040B]
+value = 4
+grade = "inferred"
+from = "OpenBSD qlw PCI attach revision table"
+doc = "PCI revision ID that OpenBSD maps to the ISP1040B."
+
+[constants.PCI_REV_1040C]
+value = 5
+grade = "inferred"
+from = "OpenBSD qlw PCI attach revision table, which also maps every higher value to the 1040C"
+doc = "PCI revision ID that OpenBSD maps to the ISP1040C. OpenBSD's table is the only source here for this mapping. The revision-two label on SGI inventory output names a letter and version, not this byte: if OpenBSD's table is right, that label cannot be the PCI revision, since revision two maps to the plain ISP1040 there."
+
+[constants.BUSES]
+value = 1
+grade = "inferred"
+from = "OpenBSD qlw PCI attach sets one bus for each ISP1040 revision"
+doc = "SCSI channels per chip. The ISP1040 has one; the two-channel part is a different chip."
+
+[constants.SCSI2_SELECTION_TIMEOUT_MS]
+value = 250
+grade = "established"
+from = "ANSI X3.131-1994 (SCSI-2) timing table, selection time-out delay, recommended; public copy read"
+doc = "SCSI-2 recommended selection time-out delay: how long a device should wait for a BSY response before starting its time-out procedure. The standard calls this a recommended period, not a requirement. The drivers' 250 default matches this value."
+
+[constants.SCSI2_SELECTION_ABORT_US]
+value = 200
+grade = "established"
+from = "ANSI X3.131-1994 (SCSI-2) timing table, selection abort time; public copy read"
+doc = "SCSI-2 selection abort time, in microseconds: the maximum time a target or initiator takes from being selected to asserting BSY, so that it does not assert BSY after a selection was aborted. This is not the selection time-out."
+
+[constants.DRIVER_SELECTION_TIMEOUT_DEFAULT]
+value = 250
+grade = "inferred"
+from = "Linux qla1280 driver nvram defaults; NetBSD isp driver defaults; OpenBSD qlw driver defaults"
+doc = "The value every driver uses when the NVRAM is not valid, and programs with the selection-timeout command. It is the driver's own default, not a chip default: no source states what the chip uses when it is never programmed."

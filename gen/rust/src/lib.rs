@@ -28,6 +28,7 @@ pub mod ioc3;
 pub mod ioc3_extra;
 pub mod ioc4;
 pub mod ioc4_extra;
+pub mod isp1040;
 pub mod l1;
 pub mod l1_requests;
 pub mod mace;
