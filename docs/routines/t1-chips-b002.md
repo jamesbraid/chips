@@ -86,11 +86,11 @@ Each entry below describes one routine from its rendered instruction facts: the 
   Grade: inferred.
   It is the instruction bus error exception vector, and its shape matches `VEC_dbe`. It reads 0xffffffffaff50000 and updates a table entry through it, reads 0xffffffffb8000000 and the halfword at 0xffffffffffffc3a0, and stores a doubleword to a0+0x140. It jumps to `VEC_trap` at 0x1be58, and the facts do not show what differs from `VEC_dbe`.
 
-- `_mraccess` in `IP30/usr/cpu/sysgen/ksync_metered.a(sema.o)` at 0x3890 (n64).
+- `_mraccess` in `IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)` at 0x3890 (n64).
   Grade: inferred.
   It is the metered access path for a kernel synchronisation object. It calls `wchanmeter` on `syncinfo`, then either `mr_access` or `mrmeter_getentry`, and when metering applies it records a class 5 entry with `mrmeter_entry`. The time it passes is the doubleword at 0xffffffffaff20000, and the meaning of class 5 is inferred from the callee names.
 
-- `_mrupdate` in `IP30/usr/cpu/sysgen/ksync_metered.a(sema.o)` at 0x39cc (n64).
+- `_mrupdate` in `IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)` at 0x39cc (n64).
   Grade: inferred.
   It is the update counterpart of `_mraccess`. It calls `wchanmeter` on `syncinfo` and `mr_update`, then records a class 6 entry through `mrmeter_entry` at 0x3a94. Its return value is either the result of `mr_update` or an unresolved value, and the names are the main evidence for what it measures.
 
