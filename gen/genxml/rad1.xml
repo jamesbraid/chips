@@ -1,0 +1,407 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/rad1.toml by defs-gen - do not edit, change the source -->
+<genxml unit="rad1" prefix="RAD1" title="SGI RAD digital audio ASIC (PCI 10a9:0005) register contract">
+  <doc>Register file of the RAD audio ASIC seen on the Octane base board (PCI revision 0xc0) and on the Onyx2 and Origin 2000 MediaIO card (revision 0x70). Offsets are in PCI BAR0, which the shipped driver maps as 0x2000 bytes. The shipped drivers touch the chip only with aligned 32-bit accesses, except the subcode buffers (64-bit) and one 64-bit write to the clock register. Grades say how the layout was derived from software; none of it is a silicon measurement, and reset values are unknown unless stated. Board variants are called modes after the PCI revision's high nibble: 7 for MediaIO, 12 (0xc) for the Octane base board, 13 (0xd) for the PCI audio board; the three modes write a different subset of the registers at start. Interrupts: the shipped drivers connect no data or status interrupt (they poll a completion word in host memory and read position registers), and register only a PCI error handler. Whether the silicon can raise one is unknown. DMA: a descriptor RAM of 12-byte entries, a per-channel working descriptor, and a host-memory status ring that mirrors the position registers; see the DMA items below.</doc>
+  <enum name="channel_type">
+    <value name="analog_in" value="0" grade="established"/>
+    <value name="analog_out" value="1" grade="established"/>
+    <value name="aes_in" value="2" grade="established"/>
+    <value name="aes_out" value="3" grade="established"/>
+    <value name="adat_in" value="4" grade="established"/>
+    <value name="adat_out" value="5" grade="established"/>
+    <value name="aes_in_subcode" value="6" grade="inferred"/>
+    <value name="adat_in_subcode" value="7" grade="inferred"/>
+  </enum>
+  <struct name="POS_ADAT_IN_A" size="4" grade="established" register="yes" offset="0x4" access="r" reset="unknown">
+    <doc>Sample-position register, ADAT input, position A. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_ADAT_IN_B" size="4" grade="established" register="yes" offset="0x8" access="r" reset="unknown">
+    <doc>Sample-position register, ADAT input, position B; also the ADAT-input subcode channel's position (read at shift 4). The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_AES_IN_A" size="4" grade="established" register="yes" offset="0xc" access="r" reset="unknown">
+    <doc>Sample-position register, AES3 input, position A. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_AES_IN_B" size="4" grade="established" register="yes" offset="0x10" access="r" reset="unknown">
+    <doc>Sample-position register, AES3 input, position B; also the AES3-input subcode channel's position (read at shift 4). The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_ANALOG_IN_A" size="4" grade="established" register="yes" offset="0x14" access="r" reset="unknown">
+    <doc>Sample-position register, analog input, position A. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_ANALOG_B" size="4" grade="established" register="yes" offset="0x18" access="r" reset="unknown">
+    <doc>Sample-position register, analog input position B in bits 31:18; the analog output reads bits 17:4 of this same register as its position B. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_ADAT_OUT_A" size="4" grade="established" register="yes" offset="0x1c" access="r" reset="unknown">
+    <doc>Sample-position register, ADAT output, position A. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_ADAT_OUT_B" size="4" grade="established" register="yes" offset="0x20" access="r" reset="unknown">
+    <doc>Sample-position register, ADAT output, position B. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_AES_OUT_A" size="4" grade="established" register="yes" offset="0x24" access="r" reset="unknown">
+    <doc>Sample-position register, AES3 output, position A. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_AES_OUT_B" size="4" grade="established" register="yes" offset="0x28" access="r" reset="unknown">
+    <doc>Sample-position register, AES3 output, position B. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="POS_ANALOG_OUT_A" size="4" grade="established" register="yes" offset="0x2c" access="r" reset="unknown">
+    <doc>Sample-position register, analog output, position A. The upper 14 bits count frames and advance only while the channel's DMA runs. A copy sits in the status slot at offset + 0x40. Channel roles follow the shipped driver's per-channel tables; the table entries are established, the role names inferred from the direction flags and interface objects.</doc>
+    <field name="frame_count" start="18" size="14" type="uint" grade="established"/>
+    <field name="ust_latch" start="0" size="18" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="UST_COUNTER" size="4" grade="established" register="yes" offset="0x30" access="r" reset="unknown">
+    <doc>Free-running counter that the driver reads for timestamps and a liveness check: two reads 10 microseconds apart must differ by at least 3. No write to it exists. The tick period is inferred to be about 1 microsecond (the driver scales by 800 or 960 ns); reset value, wrap, and read side effects are unknown. On board mode 7 it runs from reset with no enable write.</doc>
+    <field name="count" start="0" size="32" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="SYNC_STATUS" size="4" grade="inferred" register="yes" offset="0x34" access="r" reset="unknown">
+    <doc>Receiver and video-reference status. The driver reads it only through the status slot copy. The bits are undecoded; use is established, meaning inferred.</doc>
+  </struct>
+  <struct name="UST_CONTROL" size="4" grade="inferred" register="yes" offset="0x40" access="w" reset="unknown">
+    <doc>Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown.</doc>
+  </struct>
+  <struct name="ADAT_IN_CTRL" size="4" grade="established" register="yes" offset="0x44" access="rw" reset="unknown">
+    <doc>ADAT input channel control. Start value 0xa0000008 is written unconditionally; the other bits are undecoded. The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
+    <field name="subcode_enable" start="2" size="1" type="uint" grade="established"/>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="AES_IN_CTRL" size="4" grade="established" register="yes" offset="0x48" access="rw" reset="unknown">
+    <doc>AES3 input channel control. Start value 0x10. The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
+    <field name="subcode_enable" start="2" size="1" type="uint" grade="established"/>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ANALOG_IN_CTRL" size="4" grade="established" register="yes" offset="0x4c" access="rw" reset="unknown">
+    <doc>Analog input channel control. Start value is 0x03000000 on board mode 12 and 0x05000000 on modes 7 and 13. On mode 7 bit 27 is also the serial clock of the video-clock mux interface: the driver clears it and sets it once per shifted bit, preserving the enable bit.</doc>
+    <field name="mux_clock" start="27" size="1" type="uint" grade="established"/>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ADAT_OUT_CTRL" size="4" grade="established" register="yes" offset="0x50" access="rw" reset="unknown">
+    <doc>ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the driver leaves an unknown earlier value. The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="AES_OUT_CTRL" size="4" grade="established" register="yes" offset="0x54" access="rw" reset="unknown">
+    <doc>AES3 output channel control. Start value 0x40000000 on modes 7 and 12 and 0 on mode 13. The driver sets bits 2 and 3 as output metadata flags without starting audio. Linux pairs 0x40000000 with clock generator 2. The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
+    <field name="metadata_flags" start="2" size="2" type="uint" grade="inferred"/>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ANALOG_OUT_CTRL" size="4" grade="established" register="yes" offset="0x58" access="rw" reset="unknown">
+    <doc>Analog output channel control. Idle value 0x20000000, running 0x20000001. Software treats bit 0 as the start and the Octane PROM as busy: it waits for the bit to read clear after a one-shot transfer, so hardware clears it when the last descriptor ends. A stop routine reads the register back twice after clearing the enable.</doc>
+    <field name="clock_gen2" start="30" size="1" type="uint" grade="inferred"/>
+    <field name="clock_gen1" start="29" size="1" type="uint" grade="inferred"/>
+    <field name="line_mux" start="25" size="1" type="uint" grade="unknown"/>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x20000001" kind="vector">
+      <expect field="enable" value="1"/>
+      <expect field="clock_gen1" value="1"/>
+      <expect field="clock_gen2" value="0"/>
+    </test>
+  </struct>
+  <struct name="STATUS_CTRL" size="4" grade="established" register="yes" offset="0x5c" access="w" reset="unknown">
+    <doc>Starts and stops the status ring. One shot is 0x40001, continuous is the interval field plus 0x40003, stop is 0x1fffc. Bit meanings beyond the grade of each field are undecoded.</doc>
+    <field name="go" start="18" size="1" type="uint" grade="unknown"/>
+    <field name="interval" start="2" size="15" type="uint" grade="inferred"/>
+    <field name="continuous" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="start" start="0" size="1" type="uint" grade="inferred"/>
+    <test value="0x480ef" kind="vector">
+      <expect field="start" value="1"/>
+      <expect field="continuous" value="1"/>
+      <expect field="interval" value="8251"/>
+      <expect field="go" value="1"/>
+    </test>
+  </struct>
+  <struct name="OUTPUT_MISC" size="4" grade="inferred" register="yes" offset="0x70" access="w" reset="unknown">
+    <doc>Output control shadow. Bring-up value 0x1500; halt ORs bit 8. A vendor PROM writes 0x480. Write-and-shadow: the drivers never read it back.</doc>
+    <field name="mute" start="8" size="1" type="uint" grade="inferred"/>
+    <field name="subcode_enable" start="6" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CONFIG_74" size="4" grade="unknown" register="yes" offset="0x74" access="w" reset="unknown">
+    <doc>Written 0x08000010 once at start on every board mode. Purpose unknown.</doc>
+  </struct>
+  <struct name="CONFIG_78" size="4" grade="unknown" register="yes" offset="0x78" access="w" reset="unknown">
+    <doc>Written 0x00fac688 once at start on every board mode. Purpose unknown.</doc>
+  </struct>
+  <struct name="GAIN" size="4" grade="established" register="yes" offset="0x7c" access="w" reset="unknown">
+    <doc>On analog-capable boards: four gain bytes, each the driver's dB value plus 0x48, with 0 meaning mute; the whole shadow is written on each change. Start value 0xd6d6d6d6. On the PCI board (mode 13) the register instead carries the video-clock mux word.</doc>
+    <field name="out_right" start="24" size="8" type="uint" grade="established"/>
+    <field name="out_left" start="16" size="8" type="uint" grade="established"/>
+    <field name="in_right" start="8" size="8" type="uint" grade="established"/>
+    <field name="in_left" start="0" size="8" type="uint" grade="established"/>
+    <test value="0xd6d6d6d6" kind="vector">
+      <expect field="in_left" value="214"/>
+      <expect field="in_right" value="214"/>
+      <expect field="out_left" value="214"/>
+      <expect field="out_right" value="214"/>
+    </test>
+  </struct>
+  <struct name="CENTRAL_CTRL" size="4" grade="inferred" register="yes" offset="0x80" access="w" reset="unknown">
+    <doc>Block reset and receiver control, written whole from a shadow. At start the driver writes 0xffffffff, 0xffe3cffe, 0xffe3c0fe, 0xffe24070, then 0xffe20000, with 1 ms delays in between, so a set bit is read as holding a block in reset. Linux brackets each clock-generator load with 0xffe20000 | (0x100 &lt;&lt; n) before and 0xffe20000 after. Whole-register meaning is inferred; the bits below are the ones the drivers name by use.</doc>
+    <field name="analog_out_if_reset" start="14" size="1" type="uint" grade="inferred"/>
+    <field name="clockgen_reset" start="8" size="4" type="uint" grade="inferred"/>
+    <field name="adat_rx_resync" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="adat_rx_enable" start="6" size="1" type="uint" grade="inferred"/>
+    <test value="0xffe20000" kind="vector">
+      <expect field="adat_rx_enable" value="0"/>
+      <expect field="adat_rx_resync" value="0"/>
+      <expect field="clockgen_reset" value="0"/>
+      <expect field="analog_out_if_reset" value="0"/>
+    </test>
+  </struct>
+  <struct name="MODE_84" size="4" grade="unknown" register="yes" offset="0x84" access="w" reset="unknown">
+    <doc>Written 0 at start on board modes 7 and 13; skipped on mode 12. Purpose unknown.</doc>
+  </struct>
+  <struct name="GPIO_RELAY" size="4" grade="inferred" register="yes" offset="0x88" access="w" reset="unknown">
+    <doc>General-purpose output 1. On the Octane board a vendor PROM treats it as the analog-output relay: 3 releases the mute and 2 applies it; halt writes 2 then 0. On the MediaIO card the mux routine writes 2 then 3 after its 16 shifted bits, which latches the word into the clock-selection logic (the latch strobe; effect inferred). It has no effect on any DMA channel as far as the sources show.</doc>
+    <field name="bit1" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="bit0" start="0" size="1" type="uint" grade="inferred"/>
+    <test value="0x2" kind="vector">
+      <expect field="bit0" value="0"/>
+      <expect field="bit1" value="1"/>
+    </test>
+    <test value="0x3" kind="vector">
+      <expect field="bit0" value="1"/>
+      <expect field="bit1" value="1"/>
+    </test>
+  </struct>
+  <struct name="GPIO_DATA" size="4" grade="inferred" register="yes" offset="0x8c" access="w" reset="unknown">
+    <doc>General-purpose output 2. On the MediaIO card (mode 7) it is the serial data line of the 16-bit video-clock mux: for each of 16 bits, most significant first, the driver writes (bit | 2), then drops and raises the clock on the analog input control register (bit 27), and after all 16 bits writes 2 then 3 to gpio_relay as the latch strobe and restores this register from a shadow. Separately every 1024 status passes (about 1.024 s) the driver rewrites it as (selector | 2), flipping the selector between 0 and 1, which is the 3, 2, 3, 2 pattern seen on the bus: the selector alternates 0 and 1 between writes, bit 1 stays set, and the driver samples bit 10 of the register 0x34 mirror in the status slot between writes (what that probes is unknown). On the Octane board a vendor PROM uses it as the DAC mute: 3 mutes and 2 unmutes, and the unmute also writes 0x03000000 to the analog input control.</doc>
+    <field name="const1" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="data" start="0" size="1" type="uint" grade="inferred"/>
+    <test value="0x2" kind="vector">
+      <expect field="data" value="0"/>
+      <expect field="const1" value="1"/>
+    </test>
+    <test value="0x3" kind="vector">
+      <expect field="data" value="1"/>
+      <expect field="const1" value="1"/>
+    </test>
+  </struct>
+  <struct name="ANALOG_OUT_MODE" size="4" grade="established" register="yes" offset="0x90" access="w" reset="unknown">
+    <doc>Analog-output level or mode. Written 2 on board modes 7 and 12, 0 on mode 13, and 2 or 3 when the output's interface parameter selects it. What the settings select is unknown.</doc>
+  </struct>
+  <struct name="CLOCKGEN_LOAD" size="4" grade="established" register="yes" offset="0xa0" access="w" reset="unknown">
+    <doc>Loads one clock generator: set select bit 28 + n and the integer divisor minus one in the low bits. Rate = master / (divisor + remainder / denominator), with the remainder in clockgen_frac. A 64-bit store to this offset appears in one setup path. Bring-up value 0x02000001 loads no generator (bit 25 is set in such words; meaning unknown). Linux writes flag bits 10:9 as 0x600 or 0x200 and the Octane PROM 0x400; their effect is unknown.</doc>
+    <field name="select" start="28" size="4" type="uint" grade="established"/>
+    <field name="flags" start="9" size="2" type="uint" grade="unknown"/>
+    <field name="divisor_minus_1" start="0" size="9" type="uint" grade="inferred"/>
+    <test value="0x20000603" kind="vector">
+      <expect field="divisor_minus_1" value="3"/>
+      <expect field="flags" value="3"/>
+      <expect field="select" value="2"/>
+    </test>
+  </struct>
+  <struct name="CLOCKGEN_FRAC" size="4" grade="established" register="yes" offset="0xa4" access="w" reset="unknown">
+    <doc>Fractional part of the clock divisor: the remainder in bits 31:16 and 0x10000 minus the denominator in bits 15:0.</doc>
+    <field name="remainder" start="16" size="16" type="uint" grade="established"/>
+    <field name="denominator_complement" start="0" size="16" type="uint" grade="established"/>
+    <test value="0x34ff6d" kind="vector">
+      <expect field="remainder" value="52"/>
+      <expect field="denominator_complement" value="65389"/>
+    </test>
+  </struct>
+  <struct name="CLOCKGEN_MASTER_3" size="4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xa8" access="w" reset="unknown">
+    <doc>Master clock select of clock generator 3, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.</doc>
+    <field name="master_192k" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CLOCKGEN_MASTER_2" size="4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xac" access="w" reset="unknown">
+    <doc>Master clock select of clock generator 2, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.</doc>
+    <field name="master_192k" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CLOCKGEN_MASTER_1" size="4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xb0" access="w" reset="unknown">
+    <doc>Master clock select of clock generator 1, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.</doc>
+    <field name="master_192k" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CLOCKGEN_MASTER_0" size="4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xb4" access="w" reset="unknown">
+    <doc>Master clock select of clock generator 0, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.</doc>
+    <field name="master_192k" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CONFIG_B8" size="4" grade="unknown" register="yes" offset="0xb8" access="w" reset="unknown">
+    <doc>Written once at start on every board mode with a 32-bit mask of all ones except bits 30 and 29. Purpose unknown.</doc>
+  </struct>
+  <struct name="CONFIG_BC" size="4" grade="unknown" register="yes" offset="0xbc" access="w" reset="unknown">
+    <doc>Written with the same all-ones-but-bits-30:29 mask as config_b8, immediately after it. Purpose unknown.</doc>
+  </struct>
+  <struct name="DESC_LO" size="4" grade="established" register="yes" offset="0x400" access="rw" count="16" stride="12" reset="unknown">
+    <doc>Descriptor RAM, low 32 bits of the buffer's PCI address of each entry; 16 entries of 12 bytes from 0x400 (lowest address, highest address, control). Entry n of data channel type n holds the descriptor the channel's working registers link to for the next lap; the status ring's descriptor is inferred to be entry 15. Whether the RAM is shared by every channel's engine, and what a write to a live entry does, are unknown: no shipped software does it.</doc>
+  </struct>
+  <struct name="DESC_HI" size="4" grade="established" register="yes" offset="0x404" access="rw" count="16" stride="12" reset="unknown">
+    <doc>Descriptor RAM, high 32 bits of the buffer's PCI address of each entry; 16 entries of 12 bytes from 0x400 (lowest address, highest address, control). Entry n of data channel type n holds the descriptor the channel's working registers link to for the next lap; the status ring's descriptor is inferred to be entry 15. Whether the RAM is shared by every channel's engine, and what a write to a live entry does, are unknown: no shipped software does it.</doc>
+  </struct>
+  <struct name="DESC_CTRL" size="4" grade="established" register="yes" offset="0x408" access="rw" count="16" stride="12" reset="unknown">
+    <doc>Descriptor RAM, control word, see DESC_WORD of each entry; 16 entries of 12 bytes from 0x400 (lowest address, highest address, control). Entry n of data channel type n holds the descriptor the channel's working registers link to for the next lap; the status ring's descriptor is inferred to be entry 15. Whether the RAM is shared by every channel's engine, and what a write to a live entry does, are unknown: no shipped software does it.</doc>
+  </struct>
+  <struct name="WORK_ADAT_IN_LO" size="4" grade="established" register="yes" offset="0x4c0" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 4 (adat_in), address low: the descriptor now running. The driver writes the same value to the channel's descriptor RAM entry.</doc>
+  </struct>
+  <struct name="WORK_ADAT_IN_CTRL" size="4" grade="established" register="yes" offset="0x4c4" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 4 (adat_in), control word (DESC_WORD). The upper field counts toward zero while the channel runs, which the Linux driver reads as progress.</doc>
+  </struct>
+  <struct name="WORK_AES_IN_LO" size="4" grade="established" register="yes" offset="0x4c8" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 2 (aes_in), address low: the descriptor now running. The driver writes the same value to the channel's descriptor RAM entry.</doc>
+  </struct>
+  <struct name="WORK_AES_IN_CTRL" size="4" grade="established" register="yes" offset="0x4cc" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 2 (aes_in), control word (DESC_WORD). The upper field counts toward zero while the channel runs, which the Linux driver reads as progress.</doc>
+  </struct>
+  <struct name="WORK_ANALOG_IN_LO" size="4" grade="established" register="yes" offset="0x4d0" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 0 (analog_in), address low: the descriptor now running. The driver writes the same value to the channel's descriptor RAM entry.</doc>
+  </struct>
+  <struct name="WORK_ANALOG_IN_CTRL" size="4" grade="established" register="yes" offset="0x4d4" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 0 (analog_in), control word (DESC_WORD). The upper field counts toward zero while the channel runs, which the Linux driver reads as progress.</doc>
+  </struct>
+  <struct name="WORK_ADAT_IN_SUB_LO" size="4" grade="established" register="yes" offset="0x4d8" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 7 (adat_in_sub), address low: the descriptor now running. The driver writes the same value to the channel's descriptor RAM entry.</doc>
+  </struct>
+  <struct name="WORK_ADAT_IN_SUB_CTRL" size="4" grade="established" register="yes" offset="0x4dc" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 7 (adat_in_sub), control word (DESC_WORD). The upper field counts toward zero while the channel runs, which the Linux driver reads as progress.</doc>
+  </struct>
+  <struct name="WORK_AES_IN_SUB_LO" size="4" grade="established" register="yes" offset="0x4e0" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 6 (aes_in_sub), address low: the descriptor now running. The driver writes the same value to the channel's descriptor RAM entry.</doc>
+  </struct>
+  <struct name="WORK_AES_IN_SUB_CTRL" size="4" grade="established" register="yes" offset="0x4e4" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 6 (aes_in_sub), control word (DESC_WORD). The upper field counts toward zero while the channel runs, which the Linux driver reads as progress.</doc>
+  </struct>
+  <struct name="WORK_ADAT_OUT_LO" size="4" grade="established" register="yes" offset="0x4e8" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 5 (adat_out), address low: the descriptor now running. The driver writes the same value to the channel's descriptor RAM entry.</doc>
+  </struct>
+  <struct name="WORK_ADAT_OUT_CTRL" size="4" grade="established" register="yes" offset="0x4ec" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 5 (adat_out), control word (DESC_WORD). The upper field counts toward zero while the channel runs, which the Linux driver reads as progress.</doc>
+  </struct>
+  <struct name="WORK_AES_OUT_LO" size="4" grade="established" register="yes" offset="0x4f0" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 3 (aes_out), address low: the descriptor now running. The driver writes the same value to the channel's descriptor RAM entry.</doc>
+  </struct>
+  <struct name="WORK_AES_OUT_CTRL" size="4" grade="established" register="yes" offset="0x4f4" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 3 (aes_out), control word (DESC_WORD). The upper field counts toward zero while the channel runs, which the Linux driver reads as progress.</doc>
+  </struct>
+  <struct name="WORK_ANALOG_OUT_LO" size="4" grade="established" register="yes" offset="0x4f8" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 1 (analog_out), address low: the descriptor now running. The driver writes the same value to the channel's descriptor RAM entry.</doc>
+  </struct>
+  <struct name="WORK_ANALOG_OUT_CTRL" size="4" grade="established" register="yes" offset="0x4fc" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 1 (analog_out), control word (DESC_WORD). The upper field counts toward zero while the channel runs, which the Linux driver reads as progress.</doc>
+  </struct>
+  <struct name="STATUS_LO" size="4" grade="established" register="yes" offset="0x500" access="rw" reset="unknown">
+    <doc>Status ring, base PCI address low. A one-shot transfer uses the same registers with the limit set to 0xfffffffc.</doc>
+  </struct>
+  <struct name="STATUS_LIMIT" size="4" grade="established" register="yes" offset="0x504" access="rw" reset="unknown">
+    <doc>Status ring limit and wrap: the driver writes 0x78 minus slot count times 0x80, and 0xfffffffc for one shot. Field layout undecoded.</doc>
+  </struct>
+  <struct name="WORK_ADAT_IN_HI" size="4" grade="established" register="yes" offset="0x508" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 4 (adat_in), address high.</doc>
+  </struct>
+  <struct name="WORK_AES_IN_HI" size="4" grade="established" register="yes" offset="0x50c" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 2 (aes_in), address high.</doc>
+  </struct>
+  <struct name="WORK_ANALOG_IN_HI" size="4" grade="established" register="yes" offset="0x510" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 0 (analog_in), address high.</doc>
+  </struct>
+  <struct name="WORK_ADAT_IN_SUB_HI" size="4" grade="established" register="yes" offset="0x514" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 7 (adat_in_sub), address high.</doc>
+  </struct>
+  <struct name="WORK_AES_IN_SUB_HI" size="4" grade="established" register="yes" offset="0x518" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 6 (aes_in_sub), address high.</doc>
+  </struct>
+  <struct name="WORK_ADAT_OUT_HI" size="4" grade="established" register="yes" offset="0x51c" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 5 (adat_out), address high.</doc>
+  </struct>
+  <struct name="WORK_AES_OUT_HI" size="4" grade="established" register="yes" offset="0x520" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 3 (aes_out), address high.</doc>
+  </struct>
+  <struct name="WORK_ANALOG_OUT_HI" size="4" grade="established" register="yes" offset="0x524" access="rw" reset="unknown">
+    <doc>Working descriptor of channel type 1 (analog_out), address high.</doc>
+  </struct>
+  <struct name="STATUS_HI" size="4" grade="established" register="yes" offset="0x528" access="rw" reset="unknown">
+    <doc>Status ring, base PCI address high.</doc>
+  </struct>
+  <struct name="ADAT_OUT_SUBCODE_A" size="8" grade="established" register="yes" offset="0x1000" access="rw" count="15" stride="8" reset="unknown">
+    <doc>ADAT output subcode buffer A: 15 doublewords written with 64-bit stores. Physical packing is unknown. The ADAT-output writer also clears one doubleword inside these ranges that belongs to the neighbouring buffer; do not infer a cross-buffer effect from that.</doc>
+  </struct>
+  <struct name="ADAT_OUT_SUBCODE_B" size="8" grade="established" register="yes" offset="0x1080" access="rw" count="15" stride="8" reset="unknown">
+    <doc>ADAT output subcode buffer B: 15 doublewords written with 64-bit stores. Physical packing is unknown. The ADAT-output writer also clears one doubleword inside these ranges that belongs to the neighbouring buffer; do not infer a cross-buffer effect from that.</doc>
+  </struct>
+  <struct name="AES_OUT_SUBCODE_A" size="8" grade="established" register="yes" offset="0x1100" access="rw" count="16" stride="8" reset="unknown">
+    <doc>AES3 output subcode buffer A: 16 doublewords written with 64-bit stores. Physical packing is unknown. The ADAT-output writer also clears one doubleword inside these ranges that belongs to the neighbouring buffer; do not infer a cross-buffer effect from that.</doc>
+  </struct>
+  <struct name="AES_OUT_SUBCODE_B" size="8" grade="established" register="yes" offset="0x1180" access="rw" count="16" stride="8" reset="unknown">
+    <doc>AES3 output subcode buffer B: 16 doublewords written with 64-bit stores. Physical packing is unknown. The ADAT-output writer also clears one doubleword inside these ranges that belongs to the neighbouring buffer; do not infer a cross-buffer effect from that.</doc>
+  </struct>
+  <struct name="AES_OUT_SUBCODE_EXTRA_A" size="8" grade="established" register="yes" offset="0x1200" access="rw" count="2" stride="8" reset="unknown">
+    <doc>extra AES3 subcode doublewords of buffer A: 2 doublewords written with 64-bit stores. Physical packing is unknown. The ADAT-output writer also clears one doubleword inside these ranges that belongs to the neighbouring buffer; do not infer a cross-buffer effect from that.</doc>
+  </struct>
+  <struct name="AES_OUT_SUBCODE_EXTRA_B" size="8" grade="established" register="yes" offset="0x1210" access="rw" count="2" stride="8" reset="unknown">
+    <doc>extra AES3 subcode doublewords of buffer B: 2 doublewords written with 64-bit stores. Physical packing is unknown. The ADAT-output writer also clears one doubleword inside these ranges that belongs to the neighbouring buffer; do not infer a cross-buffer effect from that.</doc>
+  </struct>
+  <struct name="DESC_WORD" size="4" grade="inferred">
+    <doc>Control word of a descriptor, in the RAM entry and in the working descriptor of a channel. The driver builds it as ((tag &amp; 0xf) &lt;&lt; 3) + (-length_units &lt;&lt; 7), so bits 2:0 are zero in every driver-written word.</doc>
+    <field name="length_units" start="7" size="25" type="uint" grade="established"/>
+    <field name="next_index" start="3" size="4" type="uint" grade="inferred"/>
+    <field name="end_of_descriptor" start="2" size="1" type="uint" grade="inferred"/>
+    <test value="0xfffff008" kind="vector">
+      <expect field="end_of_descriptor" value="0"/>
+      <expect field="next_index" value="1"/>
+      <expect field="length_units" value="33554400"/>
+    </test>
+  </struct>
+  <struct name="PCI_REVISION" size="1" grade="established">
+    <doc>Low byte of PCI config offset 8. The driver reads the dword and splits this byte.</doc>
+    <field name="board_mode" start="4" size="4" type="uint" grade="established"/>
+    <field name="chip_rev" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="STATUS_DONE" size="4" grade="established">
+    <doc>Slot word at byte offset 0x7c. The driver clears it before a transfer and waits for the engine to set bit 31.</doc>
+    <field name="done" start="31" size="1" type="uint" grade="established"/>
+    <field name="aes_rate_code" start="24" size="3" type="uint" grade="established"/>
+    <field name="aes_no_input" start="19" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="STATUS_FLAGS" size="4" grade="inferred">
+    <doc>Slot word at byte offset 0x78 of each status slot. Bits not listed are never read by the driver.</doc>
+    <field name="video_event_b" start="8" size="1" type="uint" grade="inferred"/>
+    <field name="video_event_a" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="adat_present" start="6" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <constant name="BAR0_SIZE" value="0x2000" grade="inferred"/>
+  <constant name="CLOCKGEN_COUNT" value="0x4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31)"/>
+  <constant name="DESC_ENTRIES" value="0x10" grade="inferred"/>
+  <constant name="DESC_ENTRY_BYTES" value="0xc" grade="established"/>
+  <constant name="DESC_STATUS_ENTRY" value="0xf" grade="inferred"/>
+  <constant name="DMA_UNIT_BYTES" value="0x80" grade="established"/>
+  <constant name="GAIN_BIAS" value="0x48" grade="established"/>
+  <constant name="GAIN_BRINGUP" value="0xd6d6d6d6" grade="established"/>
+  <constant name="MODE_MEDIAIO" value="0x7" grade="established"/>
+  <constant name="MODE_OCTANE" value="0xc" grade="established"/>
+  <constant name="MODE_PCI_BOARD" value="0xd" grade="established"/>
+  <constant name="MUX_BITS" value="0x10" grade="established"/>
+  <constant name="MUX_PROBE_PASSES" value="0x400" grade="inferred"/>
+  <constant name="PCI_DEVICE" value="0x5" grade="established"/>
+  <constant name="PCI_VENDOR" value="0x10a9" grade="established"/>
+  <constant name="REV_MEDIAIO" value="0x70" grade="inferred"/>
+  <constant name="REV_OCTANE" value="0xc0" grade="established"/>
+  <constant name="REV_PCI_BOARD" value="0xd0" grade="inferred"/>
+  <constant name="RING_WORDS_ADAT" value="0x1000" grade="established"/>
+  <constant name="RING_WORDS_ANALOG" value="0x400" grade="established"/>
+  <constant name="STATUS_INTERVAL_DRIVER" value="0xfa" grade="established"/>
+  <constant name="STATUS_INTERVAL_UNITS" value="0x21" grade="inferred"/>
+  <constant name="STATUS_SLOTS_MAX" value="0x80" grade="established"/>
+  <constant name="STATUS_SLOT_BYTES" value="0x80" grade="established"/>
+  <constant name="STATUS_SLOT_DONE" value="0x7c" grade="established"/>
+  <constant name="STATUS_SLOT_FLAGS" value="0x78" grade="established"/>
+  <constant name="STATUS_SLOT_MIRROR" value="0x44" grade="established"/>
+  <constant name="STATUS_START_CONT" value="0x40003" grade="established"/>
+  <constant name="STATUS_START_ONESHOT" value="0x40001" grade="established"/>
+  <constant name="STATUS_STOP" value="0x1fffc" grade="established"/>
+  <constant name="UST_MIN_ADVANCE" value="0x3" grade="established"/>
+</genxml>

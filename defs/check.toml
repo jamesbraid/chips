@@ -104,3 +104,7 @@ prose_offsets = false
 [units.ice1724]
 group = "ice1724.h"
 prose_offsets = false
+
+[units.rad1]
+group = "rad1.h"
+prose_offsets = false

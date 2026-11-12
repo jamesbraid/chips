@@ -15,6 +15,7 @@ pub mod l1;
 pub mod l1_requests;
 pub mod mace;
 pub mod pic;
+pub mod rad1;
 pub mod router_origin2000;
 pub mod router_origin3000;
 pub mod router_origin3000_extra;
