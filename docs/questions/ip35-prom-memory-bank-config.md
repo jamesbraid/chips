@@ -59,19 +59,21 @@ were not consulted for any fact here.
    that halfword (probably the selector it wrote above) was not traced: **inferred**, route: find the PROM store
    to component offset +58.
 
-5. **Sizing one bank: the probe. Established for the loops, inferred for the return mapping.**
+5. **Sizing one bank: the probe. Established (re-read in full for the return mapping).**
    Routine 0x1fc2d18c (0x398 bytes) takes a bank base address (bits 32:30 of it, `a0 >> 30 & 7`, pick the software
    bank: 1 GB per bank, eight banks per node) and an output pointer.
    - It first reads two per-bank override strings from the PROM's saved settings, one character per software bank
-     (the character minus '0' is an override; one string is for the directory type, one for the size). When the
-     size override is present the probe skips the hardware measurement and uses the digit as the size code, and says so
-     on the console (0x1fc2d250 is the lookup, 0x1fc2d4e0 the message).
+     (the character minus '0' is an override; one string is for the directory type, one for the size). When both
+     overrides are present the probe skips the hardware measurement and uses the digit as the size code (a lone size override
+     does not skip it; see the tail below). The console warnings for the two variables are printed only when the bank base is 0
+     (the branches at 0x1fc2d1e8 and 0x1fc2d25c to 0x1fc2d4d8 and 0x1fc2d4fc); 0x1fc2d250 is the size lookup.
    - Without an override it works on the memory controller's directory carriers (address transform: node bits
-     39:33 kept, address bits shifted right 3 and masked, the carrier window 0x9000000100000408) and not on the data
+     39:33 kept, address bits shifted right 3 and masked, the carrier window 0x90000001c0000408, built from the constants at 0x1fc2d2c0 to 0x1fc2d2f4) and not on the data
      RAM. Phase 1 writes sixteen 64-bit patterns at 64 MB spacing, descending from base + 960 MB to base; the
      pattern for the sample at offset X MB is the 16-bit value (X xor 0x5a5a) replicated four times; each write is
-     read back at once and compared under a mask (the full word, or the low 32 bits when the bank's directory type is
-     "standard"). Any mismatch ends the probe with 0 (the bank is treated as empty).
+     read back at once and compared under a mask. Established (0x1fc2d2ac to 0x1fc2d2f8): the mask is one of two 32-bit lane masks, `0x0000ffff0000ffff`
+     when bit 30 of the bank base is clear and `0xffff0000ffff0000` when it is set; it does not depend on the directory type, and no phase
+     compares the whole word under it. Any mismatch ends the probe with 0 (the bank is treated as empty).
    - Phase 2 then tests five offsets in turn, 0, 64, 128, 256 and 512 MB (the count i = 0 to 4 gives offset
      32 MB shifted left i, i = 0 being offset 0), reading the carrier for that offset and comparing it with the
      pattern phase 1 wrote at the **same** offset. A bank that is smaller than an offset has the high address bits
@@ -79,11 +81,24 @@ were not consulted for any fact here.
      the read-back is the lower pattern and the compare fails. The loop stops at the first failing i; if all five pass
      it ends with 5.
    - So the count that comes out is 0 for an empty bank, 1 for a bank of 64 MB or less, 2 for 128 MB, 3 for 256 MB,
-     4 for 512 MB and 5 for 1 GB: the size is 32 MB shifted left by the count. **Inferred**: that this count is
-     what the routine returns as the size code. The loop shape, spacing, offsets and patterns are established; the
-     final routing of the count to the return value goes through the override and directory-type flags
-     (0x1fc2d370 to 0x1fc2d3f8) and was read but not reduced to a single expression. Route: run the routine over a
-     scripted memory image with each of 64, 128, 256, 512 MB and 1 GB banks and read the return value.
+     4 for 512 MB and 5 for 1 GB: the size is 32 MB shifted left by the count. **Established** (the whole routine
+     read, 0x1fc2d18c to 0x1fc2d4f8): the loop shape, spacing, offsets and patterns, and the routing below.
+   - The tail (0x1fc2d370 to 0x1fc2d3f8) reduces to two flags and a count. A phase 2 compare that matches the whole 64-bit pattern at every
+     tested offset marks the bank type 1 (the "Premium" setting named below); one that matches only under the lane mask marks it 0; a bank
+     whose offsets mix the two, or that fails phase 1, gets type -1 and count 0 (0x1fc2d4c0, 0x1fc2d4cc, 0x1fc2d368). The count is the
+     number of offsets that passed before the first failure, 5 when all did. The two override strings are read first (0x1fc2d1a8 to
+     0x1fc2d27c): the character for the bank in `MemCfgPremium` (promlog variable, text at 0x1fc7ae38) gives override type 0 for '0', 1 for '1',
+     -1 for any other character, and -2 when the variable is absent; the character in `MemCfgBankSize` (0x1fc7ae90) gives the override
+     size code (character minus '0'), or none when the variable is absent or the character is '/'.
+   - With both variables present the routine skips the measurement: it returns the size digit and stores the override type through its output
+     pointer (0x1fc2d28c, 0x1fc2d3fc), even when the type is -1. Otherwise it measures, then returns
+     `(type == -1) ? 0 : (size override if present, else count)` and stores `type` through the output pointer, where `type` is the override
+     type when the variable is present and the measured type when it is not (0x1fc2d380 to 0x1fc2d3f8). A size override alone therefore still
+     runs the measurement, because its effect is only on the returned code. So an un-overridden bank returns 0 for an empty or
+     inconsistent bank and 1, 2, 3, 4, 5 for 64 MB or less, 128, 256, 512 MB and 1 GB, and reports type 1, 0 or -1. The routine then
+     zeroes the sixteen pattern locations and reads sixteen locations back (0x1fc2d39c to 0x1fc2d3f4) before it returns. What type 1 and
+     type 0 mean physically is **inferred** from the variable's name only (premium and standard directory); the text of the console warnings is
+     "directory types taken from MemCfgPremium promlog variable" and "memory sizes taken from MemCfgBankSize promlog variable".
    - Nothing in this routine singles out 256 MB: a 256 MB bank gives count 3 like any other size.
 
 6. **The 256 MB message. Established that the text and its code exist; unknown where the code is raised.**

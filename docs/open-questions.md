@@ -231,12 +231,11 @@ Corrections found while tagging. These are not fixed here.
   [docs/questions/ip35-prom-memory-bank-config.md](questions/ip35-prom-memory-bank-config.md) item 6). The size probe
   itself does not single out 256 MB. Next: find stores of a computed progress code in the memory-configuration
   and node-class code, and evaluate them for a 256 MB size code.
-- **IP35 PROM size probe: return mapping and the bank-0 swap guard.** *[route: software now]* The probe at 0x1fc2d18c
-  counts how many of five power-of-two offsets read back their own pattern; the routing of that count to the
-  return value through the override and directory-type flags (0x1fc2d370 to 0x1fc2d3f8), and the test ahead of the
-  three bank-select stores (0x1fc65aa4, 0x1fc65b38, 0x1fc65b4c), are not reduced to one expression
-  ([docs/questions/ip35-prom-memory-bank-config.md](questions/ip35-prom-memory-bank-config.md) items 3 and 5).
-  Next: run the routine over a scripted carrier image with 64 MB to 1 GB banks; trace the branch ahead of 0x1fc65aa4.
+- **IP35 PROM size probe: the bank-0 swap guard.** *[route: software now]* The probe at 0x1fc2d18c is read in full and its return mapping is
+  answered ([docs/questions/ip35-prom-memory-bank-config.md](questions/ip35-prom-memory-bank-config.md) item 5: count of passed offsets,
+  zeroed for an inconsistent bank, replaced by the size override when `MemCfgBankSize` names one). Open: the test ahead of the three
+  bank-select stores (0x1fc65aa4, 0x1fc65b38, 0x1fc65b4c), item 3 of the same page.
+  Next: trace the branch ahead of 0x1fc65aa4.
 - **IP35 PROM: pending bank 0 bits 12 to 17 and the progress doublewords at 0x100000c0.** *[route: software now for
   the users; hardware residue for the meaning]* The PROM tests and clears bank 0 bits 12 + slot, 14 + slot and
   16 + slot, and stores progress codes at physical 0x100000c0 + 8 x slice; neither the bits' source nor the
