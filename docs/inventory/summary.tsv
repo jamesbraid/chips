@@ -1,6 +1,6 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	address_unknown	input
 binaries	3092	0	625	0	625	3	4	168	2295	0	20.2	20.3	25.8	20.2							0				
-functions	6836	91457	1266	186	990	3699	3787	1684	99	0	18.5	73.9	98.6	18.5			85.0	20	2026-11-02		0	0	18	0	
+functions	6836	91457	1285	203	1009	3699	3792	1660	99	0	18.8	74.3	98.6	18.8			85.0	20	2026-11-02		0	0	18	0	
 functions (distinct names)	2570	21681	668	157	664	1832	1842	27	33	0	26.0	97.7	98.7	26.0							0				
 mmio	87	0	28	0	28	0	4	55	0	0	32.2	36.8	100.0	32.2	23						0				
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
@@ -576,7 +576,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/os.a(xthread.o)	1	14	1	0	1	0	0	0	0	0	1
 functions in IP27/usr/cpu/sysgen/IP27boot/os.a(xthread_table.o)	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP27/usr/cpu/sysgen/IP27boot/partition.o	70	0	0	0	0	70	70	0	0	0	0.0	100.0	100.0	0.0							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciba.o	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
-functions in IP27/usr/cpu/sysgen/IP27boot/pcibr.o	259	0	22	4	22	150	171	66	0	0	8.5	74.5	100.0	8.5							0	0	0	0	
+functions in IP27/usr/cpu/sysgen/IP27boot/pcibr.o	259	0	41	21	41	150	176	42	0	0	15.8	83.8	100.0	15.8							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciio.o	108	0	0	0	0	108	108	0	0	0	0.0	100.0	100.0	0.0							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciio_ppb.o	18	0	0	0	0	18	18	0	0	0	0.0	100.0	100.0	0.0							0	0	0	0	
 functions in IP27/usr/cpu/sysgen/IP27boot/pciiox.o	2	0	2	0	2	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
