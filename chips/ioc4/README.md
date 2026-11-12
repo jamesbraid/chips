@@ -93,6 +93,13 @@ public driver as timing and the current memory address, which no IOC4 path reach
 - `ioc4_attach` (returns 0 or -1) clears every enable (`ioc4_write_ireg(record, 0xffffffff, 1, type)` for both types) and then writes all ones to `0x8`
   and `0xc` (the acknowledge pattern, inferred as for IOC3).
 - `ioc4_pending_intrs` (`0x14c`) reads `0x8`, `0xc`, `0x10` and `0x14`; read for its accesses only.
+- Serial pass-through bits (inferred, OpenBSD): the OpenBSD driver enables only four bits in the serial interrupt word, one per port,
+  for the port's own 16550 interrupt: `0x40` (port 0), `0x4000` (port 1), `0x400000` (port 2) and `0x40000000` (port 3). The
+  `SIO_IR_SRC_UART_n` constants in `defs/ioc4_extra.toml` name them. The OpenBSD driver is the only source. That it writes them through
+  the serial enable pair (`0x10` set, `0x18` clear) is inferred, not read from the driver.
+- Keyboard and mouse interrupt (established by the public driver's acknowledge sequence): bit 6 (`0x40`) of the other-interrupt word is
+  the keyboard and mouse source. The driver masks and acknowledges it through that word. IOC3 raises the same interrupt from a different
+  parent source (bit 22), so the IOC3 parent wiring does not carry over. Constant `OTHER_IR_KBM`.
 - `ioc4_dma_error_intr` (`sio_ioc4.o` `0x734`, read in full) writes the port's mask word to `0xc` first, reads `0x0`, and if bit 0 is set
   prints the port and address (bits 31:6 of the low word with the high word as bits 63:32; the port character is `'1'` plus twice
   the value in bits 4:2, and bit 1 picks the word RX or TX printed after it, inferred from the order of the two strings) and, when bit 5 is
@@ -150,6 +157,8 @@ by effect, addresses low 32 bits). Read as instructions, not run.
   for clock calibration; no firmware seen does.
 - Public layout (Linux 4.9 `ioc4.h`, `ioc4.c`; a driver's naming, not a measurement): `0x30` bits 7:0 pin direction, 15:8 edge
   select, 20 interrupt-output enable; so `0x1000f0` sets direction for pins 4 to 7 (the transceiver-mode pins) and the enable.
+  The public Linux driver puts the external interrupt output on pin 0 (inferred, from its name for the pin). The PROM value leaves pin 0's
+  direction bit clear, so the PROM does not set pin 0 up that way.
 - **Unknown:** modes 0 to 6 of `0x28`; what bit 30 does (the driver calls it the timebase control; the PROM clears it, nothing
   sets it); the value read before any write; what the 1-then-0 pulse in `0x20` does; reset values of all of these. A register
   capture of `0x0` to `0x5c` right after PCI reset, then writes of each mode with the pin observed, would settle them.
@@ -211,6 +220,11 @@ Established.
   - `xide_pktDMA_complete`, this chip's path: write 2 to index 7 and poll bit 1 clear up to 100 times; read index 7 (byte), index 5 and index 6 (both read as 32-bit words and masked to 16 bits by the halfword accessor); print them and their bits 4:1; return 16 (an error code) when index 7 bit 4 is set or the byte at controller +271 (the latch `xide_intr_clear` sets on a memory error) is nonzero; otherwise return 0. The only other effect is a warning, printed when index 6 plus 8 (the whole values) is below index 5, and skipped when both values have zero in their low 9 bits (whole-value compare, then the return 0 is the same either way). Return values for the other vendor's path are not read here.
   - Roles (inferred; no spec and no string names them): 1 and 2 are the low and high halves of the transfer's bus address (what the start writes there); 8 is the bus address of the 128-byte table (what the start stores from +388 after clearing the table at +392); 7 is a control and status byte, written 2 to clear or abort, 1 or 5 to start (bit 2 is set for one transfer direction), with bit 1 busy while it clears, and bits 3 and 4 tested before a new transfer, bit 4 an error; 5 and 6 are counters (their low 9 bits are what the completion compares).
     Indices 0, 3 and 4 are not accessed on this chip by any `ide.o` routine; the other vendor's path writes 0, 2, 3 and 4 of the same base with its own meaning, which does not carry over.
+- Public Linux IDE driver (software expectation, inferred): the driver names the word at `0x148` inconsistently. Its index table calls it
+  the high descriptor pointer, while its C structure calls it the low one. The driver never reads or writes it, so the name is not a
+  fact about the chip. A PROM repeat of the write-one-then-read test would show whether that word holds anything.
+- The same driver uses 16-byte physical-region descriptors and writes a completion word to memory. The IRIX packet path above uses a
+  128-byte table instead. Whether the two describe the same format is not established (inferred).
 
 ### Keyboard and mouse (established)
 
@@ -218,6 +232,25 @@ Established.
 bit 1 (port 1) to clear; `pckm_restart` (`0x2298`) ORs bit 18 or 19 into it, stores the value back, reads and stores it back again. The
 receive words are `0x204` (port 0) and `0x208` (port 1), the transmit words `0x20c` and `0x210`, by the displacements `pckm_pollcmd`
 adds. Same structure and constants as IOC3's `0x9c` to `0xac`, at `0x200` to `0x210`.
+
+Control word bits named by the public driver (public-driver naming, not measured; the constants are in `defs/ioc4_extra.toml`):
+
+- Bits 0 and 1 are keyboard and auxiliary transmit pending (established). The driver waits for each to clear before the next write.
+- Bits 4 and 5 are keyboard and auxiliary data line state, and bits 8 and 9 are keyboard and auxiliary clock line state (established as
+  names; the bit order follows the order of the names, not a second source).
+- Bits 3:2 (line control of the last write) and 15:14 (state-machine idle) are names only. No public driver writes or reads them
+  (inferred).
+- Whether any of these bits is read-only on the chip is unknown. Nothing public shows a write to them has no effect.
+
+### Connectors (established from the product guides; which device is attached is unknown)
+
+- The PS/2 daughtercard exists only on a base compute module (007-4566-001 pages 120 and 222).
+- Tezro: the I/O daughtercard, "an extension of the IO9 board", provides two PS/2 ports for keyboard and mouse (Tezro guide 007-4564-001,
+  page 32).
+- Onyx 350: the standard system components list a four-connector USB keyboard and mouse PCI card (007-4632-001, pages 8 and 29). USB
+  is the default keyboard connection there; PS/2 is listed for existing infrastructure. That card is not an IOC4.
+- None of these guides maps connector order to the keyboard and auxiliary controller ports, and none measures the wiring. Which
+  controller port drives which connector is unknown.
 
 ## Routines in the IP35 `ioc4.o` build
 
@@ -329,3 +362,6 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 - **Ports 1 to 3 GPIO pins** are 5, 6 and 7 (extracted; docs/coverage-ioc4.md). The other words of the 0x28-byte per-port record (nine words before the pin byte) are not read.
 - **`ioc4_error_handler` and `ioc4_intr`/`ioc4_intrd`** are read for their accesses only.
 - **Interrupt dispatch**: which `sio_ir` and `other_ir` bits each handler claims is not read.
+- **Keyboard and mouse control bits 2, 3, 14 and 15**: names only (see Keyboard and mouse). Their behaviour is not settled by any source here.
+- **Serial pass-through bits**: the register that holds them is inferred, not read from the driver. A published register description
+  or a driver that writes them would settle it.

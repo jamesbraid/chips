@@ -32,6 +32,15 @@
 #define IOC4_ATA_DMA_LIST_HIGH                       0x148u /* inferred */
 #define IOC4_ATA_DMA_LIST_LOW                        0x144u /* inferred */
 #define IOC4_ATA_DMA_TIMING                          0x140u /* inferred */
+#define IOC4_KM_CSR_AUX_CLOCK_LINE                   0x200u /* established */
+#define IOC4_KM_CSR_AUX_DATA_LINE                    0x20u /* established */
+#define IOC4_KM_CSR_AUX_WRITE_PENDING                0x2u /* established */
+#define IOC4_KM_CSR_IDLE_B_15_14                     0xc000u /* inferred */
+#define IOC4_KM_CSR_KBD_CLOCK_LINE                   0x100u /* established */
+#define IOC4_KM_CSR_KBD_DATA_LINE                    0x10u /* established */
+#define IOC4_KM_CSR_KBD_WRITE_PENDING                0x1u /* established */
+#define IOC4_KM_CSR_LAST_WRITE_LINE_B_3_2            0xcu /* inferred */
+#define IOC4_OTHER_IR_KBM                            0x40u /* established */
 #define IOC4_SERIAL_RING_PTR_B_9_3                   0x3f8u /* inferred */
 #define IOC4_SERIAL_RX_TIMER_COUNT_B_27_16           0xfff0000u /* inferred */
 #define IOC4_SERIAL_RX_TIMER_RELOAD_B_11_0           0xfffu /* inferred */
@@ -44,5 +53,9 @@
 #define IOC4_SERIAL_SRCIR_TIMER_ARM_V_80000000       0x80000000u /* inferred */
 #define IOC4_SIO_CR_CMD_PULSE                        0xfu /* established */
 #define IOC4_SIO_CR_SIO_DIAG_IDLE                    0x80u /* established */
+#define IOC4_SIO_IR_SRC_UART_0                       0x40u /* inferred */
+#define IOC4_SIO_IR_SRC_UART_1                       0x4000u /* inferred */
+#define IOC4_SIO_IR_SRC_UART_2                       0x400000u /* inferred */
+#define IOC4_SIO_IR_SRC_UART_3                       0x40000000u /* inferred */
 
 #endif /* IOC4_GEN_H */
