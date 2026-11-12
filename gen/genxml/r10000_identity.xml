@@ -12,7 +12,10 @@
   <constant name="R10K_PRID_IMP_MASK" value="0xff00" grade="established" from="Linux 6.6 MIPS processor identity definitions"/>
   <constant name="R10K_PRID_IMP_SHIFT" value="0x8" grade="established" from="Linux 6.6 MIPS processor identity definitions"/>
   <constant name="R10K_PRID_REV_MASK" value="0xff" grade="established" from="Linux 6.6 MIPS processor identity definitions"/>
+  <constant name="R10K_R16000_DISPLAY_MAJOR_OFFSET" value="0x2" grade="inferred"/>
+  <constant name="R10K_R16000_PRID_1GHZ" value="0xf50" grade="inferred"/>
   <constant name="R10K_R16000_REV_MAJOR_MIN" value="0x3" grade="established" from="Linux 6.6 MIPS CPU probe"/>
+  <constant name="R10K_R16000_TLB_ENTRIES" value="0x40" grade="inferred"/>
   <constant name="R10K_SCACHE_LINE_BASE_BYTES" value="0x40" grade="established" from="Linux 6.6 MIPS R4K cache setup"/>
   <constant name="R10K_SCACHE_SIZE_UNIT" value="0x80000" grade="established" from="Linux 6.6 MIPS R4K cache setup"/>
   <constant name="R10K_SCACHE_WAYS" value="0x2" grade="established" from="Linux 6.6 MIPS R4K cache setup"/>

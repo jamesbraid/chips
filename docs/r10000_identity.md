@@ -15,7 +15,7 @@ The processor manuals (NEC VR10000 and VR12000, MIPS R10000) are the usual owner
 
 - The implementation byte is bits 15:8. The R10000 is `0x09`, the R12000 is `0x0e`, and the R14000 and R16000 both use `0x0f`. Established (Linux `cpu.h`).
 - The revision byte is bits 7:0, read as a major and a minor nibble. Established (Linux `PRID_REV_MASK`).
-- Under implementation `0x0f`, a revision whose major nibble is 3 or more is an R16000. A major of 2 or less is an R14000. Established (Linux `cpu-probe.c`). So a revision `3.0` word reads as an R16000, and `2.4` reads as an R14000.
+- Under implementation `0x0f`, a revision whose major nibble is 3 or more is an R16000. A major of 2 or less is an R14000. Established (Linux `cpu-probe.c`). So a revision `3.0` word reads as an R16000, and `2.4` reads as an R14000. These are raw words. OpenBSD prints an R16000 revision with two subtracted from the major nibble, so a printed R16000 revision is not a raw word; see [docs/r16000.md](r16000.md).
 - The driver's name table uses only the implementation byte and this revision rule. It has no separate name for any "A" part. Established for Linux. Whether IRIX or the system firmware prints a different name was not checked here.
 
 Bits 31:16 of PRId are outside the fields these sources test, and this page says nothing about them.
@@ -44,6 +44,6 @@ The driver applies these fields to the R16000 with no separate case. That is a s
 
 - **Which revision each part and clock prints.** The revision list per part comes from public `hinv` postings, which this page did not collect by message identifier. Settled by citing the postings with their message identifiers.
 - **Whether the R12000 revision 3 parts have a secondary-cache syndrome field in performance control 0, and whether any system software reads it.** Not checked. Settled by the processor manual section for those revisions and by reading the IRIX kernel's cache-error path.
-- **Floating-point word for the R16000 and for parts other than the one O2 print.** No capture of an R16000 FPU word was checked. Settled by a Linux or BSD boot line that prints the FPU revision from a raw read on that part.
+- **Floating-point word for the R16000 and for parts other than the one O2 print.** No raw R16000 FPU word was read. Printed FPU names and revisions for the 1.0 GHz R16000 are in [docs/r16000.md](r16000.md); they come from firmware display data, and the two prints disagree. Settled by a Linux or BSD boot line that prints the FPU revision from a raw read on that part.
 - **Config fields other than SS and SB** (the clock-ratio fields, K0, and the mode bits). No Linux or BSD print of them was checked. Settled by a raw Config read or a boot line that prints it, per part.
 - **Refused uncached stores, CACHE operation differences, TLB register widths and partial-word loads per part.** The R10000 manual covers the R10000. The other parts are not covered here. Settled by the owning processor manual for each part, or by a register readback on the part.

@@ -16,7 +16,10 @@
 #define R10K_R10K_PRID_IMP_MASK                      0xff00u /* established */
 #define R10K_R10K_PRID_IMP_SHIFT                     0x8u /* established */
 #define R10K_R10K_PRID_REV_MASK                      0xffu /* established */
+#define R10K_R10K_R16000_DISPLAY_MAJOR_OFFSET        0x2u /* inferred */
+#define R10K_R10K_R16000_PRID_1GHZ                   0xf50u /* inferred */
 #define R10K_R10K_R16000_REV_MAJOR_MIN               0x3u /* established */
+#define R10K_R10K_R16000_TLB_ENTRIES                 0x40u /* inferred */
 #define R10K_R10K_SCACHE_LINE_BASE_BYTES             0x40u /* established */
 #define R10K_R10K_SCACHE_SIZE_UNIT                   0x80000u /* established */
 #define R10K_R10K_SCACHE_WAYS                        0x2u /* established */
