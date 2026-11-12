@@ -61,8 +61,8 @@ offset = 0x24
 access = "rw"
 width = 32
 grade = "established"
-doc = "Widget control (the diagnostic calls it the XG control register). The init routine stores widget id, interrupt target and a constant, then ORs the XG error interrupt enable; the error handler clears the enable first and nothing sets it again. The low nibble comes from the widget's own number and bits 25:22 from the interrupt target widget, both inferred from the helper names. Bits 14 and 9 are written as constants and are unexplained."
-fields = { widget_number = { bits = [3, 0], grade = "inferred" }, const_bit9 = { bits = [9, 9], grade = "unknown" }, const_bit14 = { bits = [14, 14], grade = "unknown" }, xg_error_int_enable = { bits = [17, 17], grade = "established", doc = "role established from the handler's own disable and the diagnostic's messages; that nothing else lives in the bit is inferred" }, int_target = { bits = [25, 22], grade = "inferred" } }
+doc = "Widget control (the diagnostic calls it the XG control register). The init routine stores widget id, interrupt target and a constant, then ORs the XG error interrupt enable; the error handler clears the enable first and nothing sets it again. The low nibble comes from the widget's own number and bits 25:22 from the target widget of the XG error interrupt object, both inferred from the helper names. The same target value is also stored in the interrupt destination upper word, bits 19:16. Because the map RAM entry carries no widget field and this is the only other place a target widget is stored, bits 25:22 are the inferred home of the target widget for the board's own DMA requests; nothing in the shipped software states it. Bits 14 and 9 are written as constants and are unexplained. The only routine that sets bit 17 is the XG init routine, which runs at attach and again from the board-reset ioctl; the error handler and the detach routine clear it."
+fields = { widget_number = { bits = [3, 0], grade = "inferred" }, const_bit9 = { bits = [9, 9], grade = "unknown" }, const_bit14 = { bits = [14, 14], grade = "unknown" }, xg_error_int_enable = { bits = [17, 17], grade = "established", doc = "role established from the handler's own disable and the diagnostic's messages; that nothing else lives in the bit is inferred" }, int_target = { bits = [25, 22], grade = "inferred", doc = "target widget of the interrupt object (established store); that it also selects the DMA target widget is inferred" } }
 tests = [{ value = 0x4200, kind = "vector", expect = { const_bit9 = 1, const_bit14 = 1, xg_error_int_enable = 0 } }]
 
 [registers.int_dest_hi]
@@ -70,7 +70,7 @@ offset = 0x34
 access = "w"
 width = 32
 grade = "established"
-doc = "Interrupt destination, upper: address bits 47:32 in the low half and the target id above them, from the interrupt object the kernel allocated for the XG error interrupt. Store established; field names inferred."
+doc = "Interrupt destination, upper: address bits 47:32 in the low half and the target widget id above them, from the interrupt object the kernel allocated for the XG error interrupt. The driver asserts that the two video interrupt objects have the same address and target as the error interrupt, so one destination serves all three. Store established; field names inferred."
 fields = { addr_hi = { bits = [15, 0], grade = "inferred" }, target_id = { bits = [19, 16], grade = "inferred" } }
 
 [registers.int_dest_lo]
@@ -80,6 +80,13 @@ width = 32
 grade = "established"
 doc = "Interrupt destination, lower: the low 32 bits of the interrupt address."
 fields = { addr_lo = { bits = [31, 0], grade = "established" } }
+
+[registers.xg_req_timeout]
+offset = 0x2c
+access = "w"
+width = 32
+grade = "established"
+doc = "Request timeout, the odd word of common-block slot 0x28. The only access in the shipped software is a store of 0 in the routine the XG init routine calls just before it enables the error interrupt (after reading the error cause word, printing a message if it is non-zero, and before writing the cause word back). Never read. The store is established; the role (the common block's request timeout, here left disabled or at its minimum) is inferred from the slot's role in the common widget block."
 
 [registers.xg_int_vectors]
 offset = 0x5c
@@ -241,7 +248,7 @@ offset = 0x800084
 access = "r"
 width = 32
 grade = "established"
-doc = "GIF identification (register number 0x80), read at attach: the upper 24 bits must be the ASCII text GIF; the low byte is the GIF version, which the driver prints. Any other value fails attach."
+doc = "GIF identification (register number 0x80). Read once, by the GIF initialisation routine, which runs only from the board-reset ioctl when its argument has bit 1 clear (the media library issues it after all eight FPGAs are loaded), not at attach; the routine first requires the board-alive flag and the GIF DONE bit in the programming register. The upper 24 bits must be the ASCII text GIF; the low byte is the GIF version, which the driver prints at debug level 3 or above. Any other value fails that ioctl with the message that the GIF version is invalid."
 fields = { magic = { bits = [31, 8], grade = "established" }, version = { bits = [7, 0], grade = "established" } }
 tests = [{ value = 0x47494600, kind = "example", expect = { magic = 0x474946, version = 0 } }]
 
@@ -811,7 +818,7 @@ offset = 0x803864
 access = "rw"
 width = 32
 grade = "established"
-doc = "CLINK pattern-generator divider, low (register number 0x3860, the diagnostic's PGEN_LO_SEL). The library writes CLINK_PGEN_LO_INIT when configuring the on-board 50 MHz clock. Role inferred."
+doc = "CLINK pattern-generator divider, low (register number 0x3860, the diagnostic's PGEN_LO_SEL). The library writes CLINK_PGEN_LO_INIT when configuring the on-board 50 MHz clock, but only when the environment variable _XTDIGVID_NO_VBOB_SUPPORT is set (the diagnostic build of the initialisation path); in normal operation it is never written. Role inferred."
 fields = { divider_lo = { bits = [15, 0], grade = "inferred" } }
 
 [registers.clink_pgen_hi]
@@ -819,7 +826,7 @@ offset = 0x80386c
 access = "rw"
 width = 32
 grade = "established"
-doc = "CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT. Role inferred."
+doc = "CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT, under the same environment-variable condition as the low register. Role inferred."
 fields = { divider_hi = { bits = [7, 0], grade = "inferred" } }
 
 [registers.clink_ksync_sel]

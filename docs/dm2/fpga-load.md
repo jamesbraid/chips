@@ -243,18 +243,16 @@ stops at the first failing load and returns -1 (no later FPGA is attempted, no r
 
 After all eight loads `xhdInit` issues the reset ioctl (`0x6864760b`) with the argument 3 once after the GIF
 load and with the argument 4 once after the last load (L 0x4079d4 to 0x4079f8 and 0x407ebc to 0x407ee4;
-failure messages "xthdInitHW: couldn't reset board" and "xthdInitHW: couldn't reset local bus"). In K30 the
-handler for an argument without bit 1 (`andi 2`) calls `xtdigvid_init_gif(board, arg & 4 != 0)` (K30 text
-0xe424 to 0xe428 and 0x10200 to 0x10218); an argument with bit 1 set branches elsewhere (K30 0xb208), which was
-not read. `xtdigvid_init_gif` (K30 0x599c) calls `xtdigvid_verify_gif_loaded`
+failure messages "xthdInitHW: couldn't reset board" and "xthdInitHW: couldn't reset local bus"). The
+handler for the reset ioctl is read in full in section 6.1: an argument without bit 1 calls `xtdigvid_init_gif(board, (arg & 4) != 0)`
+(K30 text 0xe424 to 0xe428 and 0x10200 to 0x10218); an argument with bit 1 set skips it. `xtdigvid_init_gif` (K30 0x599c) calls `xtdigvid_verify_gif_loaded`
 (K30 0x5974: load `0x120000`, DONE bit 0 must be 1, else the message "GIF FPGA not loaded") and then loads
 `0x800084` and requires its upper 24 bits to equal `0x474946` ("GIF"), as the scoping datasheet records.
 The same `verify_gif_loaded` body (load of `0x120000`, `andi 1`) exists in K27 and K35.
 
-- **I.** That the library's argument-4 reset reaches this path. The ioctl-number-to-handler step goes
-  through the jump table of `xtdigvid_ioctl` (K30 0xac88, 23240 bytes), which was not decoded; the match
-  rests on the matching message strings and on `andi 2` and `andi 4` tests in the one block that calls
-  `xtdigvid_init_gif`.
+- **E (settled in section 6.1).** The library's argument-4 reset reaches this path: the jump table of `xtdigvid_ioctl` (K30 0xac88) was
+  decoded, entry 10 (command `0x6864760b`) is the handler at K30 `0xc268`, and its `andi 2` and `andi 4` tests are the ones that
+  call `xtdigvid_init_gif`. The argument-3 reset after the GIF load does not reach it.
 - **E.** The kernel also has its own byte-write ioctl, `0x6864760e` (K30 `xtdigvid_eval_ioctl` text
   0x10750 + 0x34 to 0x10818): eight rounds of three stores of `byte | 0x200` then three stores of
   `byte | 0x300` to `0x120000`, no reads. L contains no use of `0x6864760e` (no `ori` or `addiu` of that value in
@@ -357,9 +355,10 @@ giving `hdoc_hd.xla.mcs`, when the middle number is 1653 and the last is below 3
 `hdoc_hd_fast.xla.mcs`) when the middle number is 1653 and the last is 3 or more, or when the middle number is
 anything else (L 0x407af8 to 0x407b08, 0x407c4c to 0x407c5c). The commit path repeats the same test with the
 value kept in the board record (`lh` at record offsets 1796 and 1798, L 0x40aa44 and 0x40afd0), choosing
-`hdoc_sd%s.xla` or `hdoc_hd%s.xla` by the format's definition. **I** that these two fields are the part's
-middle and last numbers: the dash positions are read from the code's offsets (+4, +9) only. Which numbers a
-real board returns is **U** here; the scoping datasheet's two captures list `030-1653-002` (rev G and H).
+`hdoc_sd%s.xla` or `hdoc_hd%s.xla` by the format's definition. That these two fields are the part's
+middle and last numbers is **E** (section 13: the extractor returns the value of the `Part` key, 12 characters for `030-1653-002`, and
+`strtol` is applied at value offsets +4 and +9). Which numbers a real board returns is **U** here; the scoping datasheet's two captures list
+`030-1653-002` (rev G and H; the letters are the `Revision:` field, which this code never reads).
 
 **Packer and unpacker names.** `hdPackingTable` (L 0x41eab0, 240 bytes) holds 15 rows by 4 columns of
 string pointers, row selected from `hdImagePackingEnums` (L 0x41e880, 15 values) and column from
@@ -400,6 +399,33 @@ others in the order above, reset ioctl (argument 4), then the library's `xhdSend
 calls that reset the CLINK FPGA (the word `0x38e0` stored 1 then 0, failure text "Failed to reset clink"). **E**
 for the order; the later setup is outside this page.
 
+## 6.1 The board-reset ioctl `0x6864760b`, read in full (K30)
+
+Command number to handler: `xtdigvid_ioctl` (K30 `0xac88`) subtracts `0x68647601` and indexes a table of 8-byte text offsets at `.rodata +
+0x1a38` (the `lui 0x979b / ori 0x89ff` add at `0xae6c`, range check below 32). Entry 10 holds `0xc268`; entry 14 (`0x6864760f`,
+get-NIC) holds `0xc0c4`. **E.** The argument is a word in the ioctl structure; the bits, in the order the handler tests them
+(K30 addresses; K27 and K35 have the same shape):
+
+| Step | Condition | Action | Evidence |
+|---|---|---|---|
+| 1 | arg & 5 non-zero | for both pipes, store 0 to the pipe record's video-control shadow (`pipe + 0xa0c`, 4-byte store) | `0xc5a8` to `0xc5d8` |
+| 2 | arg bit 0 clear | skip to step 6 | `0xc5e4` |
+| 3 | bit 0 set | if the GIF is loaded (`xtdigvid_verify_gif_loaded` returns 0, DONE bit of `0x120000`), for both pipes: store 0 to the DMA control shadow (`pipe + 0xa08`) and 0 to the pipe's DMA control register (`0x800014` pipe 0, `0x80003c` pipe 1), `sync`. If the GIF is not loaded this step is skipped | `0xc72c` to `0xc798` |
+| 4 | bit 0 set | for both pipes: zero `pipe + 0x838`, `+0x834` and `+0xa08` | `0xd650` to `0xd674` |
+| 5 | bit 0 set | `xwidget_reset(widget)` (the kernel's widget reset service) then `xtdigvid_init_xg(board)`; failure returns -1 | `0xd7d0`, `0xd7f0` |
+| 5a | bit 0 set | `xtdigvid_invalidate_mapram(board, 0x8000, 0)`: every map-RAM entry invalid; failure returns -1 | `0xe3ec` to `0xe414` |
+| 6 | arg bit 1 clear | `xtdigvid_init_gif(board, (arg & 4) != 0)`; failure returns -1 | `0xe424` to `0xe428`, `0x10200` to `0x1021c` |
+
+So the two calls the library makes (`xhdInit`, section 6 above) do different things. **Argument 3** (bits 0 and 1), after the GIF load:
+clear the pipes' shadows, zero both DMA control registers, reset the widget, re-run the XG init (section 11), invalidate the whole map RAM;
+no GIF initialisation. **Argument 4** (bit 2), after all eight loads: clear the video-control shadows and run the GIF initialisation with
+the re-initialise flag set (it then also stores 0 to `0x800004`, K30 `0x709c`). Bit 0 of the argument is therefore "reset the XG widget
+and the map RAM", bit 1 "skip the GIF initialisation", bit 2 "re-initialise the GIF's own state". **U (hardware):** what the widget
+reset does to the XG block and to the already-configured FPGAs. The sequence the library uses requires the GIF to stay configured
+across it (the seven other loads that follow check the GIF DONE bit), which is **I** evidence that the widget reset does not unconfigure
+the FPGAs; and requires the XG block to be rewritten after it (`xtdigvid_init_xg` rewrites control, both interrupt destination words and
+the vectors, the water marks and the request timeout, and expects the cause word to read 0, section 12.1).
+
 ## 9. Unknowns and what settles each
 
 | Unknown | Grade | What settles it |
@@ -409,7 +435,7 @@ for the order; the later setup is outside this page.
 | Real time per `0x6c` store, and so the real wait lengths | U | Needs the Crosstalk write latency of the board; software evidence gives only the store counts. The code needs no minimum time unless the hardware gives INIT late: the INIT poll allows 1000 reads after 8800 stores |
 | FPGA parts and families | I | Header structure of the images (section 7). The public Xilinx configuration documents, read after, would settle the family; the part number needs the owner's guide or the board |
 | READY bit meaning (bit 7 of the 0x800004-offset ports) and whether OXCC and IXCC (kind 2) ever report it | U | Library code never reads it for kind 2. Settled by the receiving logic or a capture |
-| Whether the reset ioctl argument 4 is the call that reaches `xtdigvid_init_gif` | I | Decode the jump table of `xtdigvid_ioctl` (K30 0xac88) and match `0x6864760b` to its arm |
+| ~~Whether the reset ioctl argument 4 is the call that reaches `xtdigvid_init_gif`~~ | E | settled: section 6.1 |
 | `diag_*`, `ixcc_2`, `oxcc_2` consumers | U | Read the diagnostic programs of the same install set (`usr/diags/ml_xtdigvid/bin`) |
 | Whether `hdoc_hd_fast` or `hdoc_hd` goes with a real board's part number | I | A board capture of the `Part` field; the scoping datasheet's captures list only `030-1653-002` |
 | Behaviour of a failed load on the board (what the board does if INIT never comes) | U | Library prints and returns -1; nothing reads the board afterward. Needs a capture |
@@ -434,3 +460,109 @@ Found while reading the routines in full; the scoping datasheet itself is not ed
 - Its section 9 row for `xthd_fpga_info` is settled by section 1 of this page.
 - It says delays are "in the unit of the library's delay helper, microseconds by **I**". The helper stores
   to the error-cause register; see section 2.
+
+## 11. Attach and first-use order, with addresses (K30; the GIF ident is not read at attach)
+
+**Answer.** The IRIX driver does **not** read the GIF identification at attach. Attach makes no access to the GIF register window at all
+(E: a scan of `lui` with `0x80`, `0x88` and `0x12` in K30 finds those constants only in `xtdigvid_init_gif`, `xtdigvid_configure_raster`,
+`xtdigvid_dma`, `xtdigvid_dma_abort`, `xtdigvid_siglost_abort`, `xtdigvid_post_event`, `xtdigvid_init_ust`, `xtdigvid_deinit_board`,
+`xtdigvid_eval_ioctl`, `xtdigvid_ioctl`, the map-RAM helpers and `xtdigvid_verify_gif_loaded`; none in `xtdigvid_attach`,
+`xtdigvid_init_board` or `xtdigvid_init_xg`). The only load of `0x800084` in each object is inside `xtdigvid_init_gif` (K27 `0x6134`,
+K30 `0x5c48`, K35 `0x5b40`; the only displacement-132 load in any of them), and `xtdigvid_init_gif` has a single caller, the board-reset
+ioctl (K27 `0x106f0`, K30 `0x10204`, K35 `0x10134`; section 6.1). That ioctl is issued by the library only after it has loaded the GIF.
+
+Sequence from registration to the ident check (K30 addresses):
+
+1. `xtdigvid_reg` (`0x0`): `xwidget_driver_register(0xc102, 682, "xtdigvid_", 0)` for part `0xc102`, manufacturer 682 (scoping datasheet section 1).
+2. `xtdigvid_attach` (`0x3bc`): `kmem_zalloc(0x14860)` (`0x430`); two guard words `0x6d616731` at `+0` and `0x6d616732` at `+0x14858`
+   (`0x464`, `0x474`); widget vertex at `+4` (`0x480`); call `xtdigvid_init_board` (`0x47c`); on failure `kmem_free` and return -1.
+3. `xtdigvid_init_board` (`0x884`):
+   - `xtalk_piomap_alloc(widget, 0, 0, 0x1000000)` (`0x8cc`) and `xtalk_piomap_addr` (`0x918`); window pointer to board `+0x18` (`0x934`).
+   - Config word `0x64` is loaded only when the debug level is above 0, to print "mapram %dk" (`0x9a8`). Not otherwise read.
+   - One-wire NIC: `nic_info_get(nic_access_mcr32, window + 0x9c, buf)` (`0xa20`), `strstr(buf, "Name:XT-DIGVID")` (`0xa44`); a miss goes to
+     the `page A data not available` test (`0x14e0` and `0x1b3c`) which accepts the board with the message "board is XT-DIGVID (NIC reading
+     WAR)"; otherwise attach fails.
+   - Status word `0x0c` bit 5 test, "400MB/s XIO slot" message (`0xa7c`).
+   - Per pipe (two): status page `kvpalloc`, a DMA map for 2048 bytes (`0xb40`), four 16 MiB slot maps (`0xbf4`), semaphores, mutexes and
+     spin locks (`0xc4c` to `0xd74`), a history buffer.
+   - Three interrupt objects allocated and connected: XG error handler (`0x12a4`), video 0 and video 1 handlers (`0x1318`, `0x1368`).
+   - `xtdigvid_init_xg` (`0x1488`; the XG register writes are listed in section 12), which sets the board-alive flag (`board + 0x28`, `0x58d4`).
+   - `xtdigvid_invalidate_mapram(board, 0x8000, 0)` (`0x17a0`): the whole map RAM invalid.
+   - Xbow arbitration bit, if `xtdigvid_xbow_arb_reg_enable` (`0x1a14` onward).
+4. Back in `xtdigvid_attach`: `xtdigvid_vertex_create` for the character device (`0x528`), then `nic_vertex_info_set` with the same accessor
+   at `window + 0x9c` (`0x5e8`), which makes the `_nic` attribute text that the get-NIC ioctl later returns. So the one-wire exchange runs twice at attach.
+5. The library, `xhdInit` (L `0x407880`): get-NIC ioctl (`0x4078f4`, `0x6864760f`); parse `Part` (section 13); load the GIF through
+   `0x120000` (`0x407954`); reset ioctl, argument 3 (`0x4079d4`); the seven other FPGAs; reset ioctl, argument 4 (`0x407ec0`).
+6. Kernel, argument 4: `xtdigvid_init_gif` (`0x599c`, from `0x10204`). In order: the board-alive flag (`board + 0x28`, set by step 3;
+   else "malfunction: board not alive", `0x5c08` to `0x7238`); `xtdigvid_verify_gif_loaded` (`0x5c1c`, `0x5974`: DONE, bit 0 of `0x120000`;
+   else "malfunction: GIF FPGA not loaded", `0x726c`); **load `0x800084`** (`0x5c48`, `lw v0,132(v0)` on window + `0x800000`); the upper 24
+   bits must equal `0x474946` (`0x5c4c` to `0x5c58`; else "malfunction: invalid GIF version", `0x729c`); version byte printed only at debug
+   level 3 or above (`0x5c78` to `0x5c80`, `0x7208`); then per-pipe map RAM and ring set-up, DMA control shadows, `xtdigvid_init_ust`
+   (`0x7078`), and, when the re-initialise flag is set, the store of 0 to `0x800004` (`0x709c`). A failure in any of the three checks
+   makes the ioctl return -1, which the library reports as "xthdInitHW: couldn't reset local bus".
+- **U.** What a read of `0x800084` returns before the GIF is configured. Nothing reads it then. Settled by a capture.
+
+## 12. After a reset or a reload: what is rewritten
+
+Three kinds of reset exist in the software. For each, the table says what the shipped code writes afterwards. Whether the reset itself
+clears the block is hardware behaviour that software cannot see; the grades say so.
+
+| Reset | What follows (E unless marked) | What the shipped software never does after it |
+|---|---|---|
+| **Widget reset** (reset ioctl bit 0, section 6.1; no other caller) | `xtdigvid_init_xg` rewrites, in order: control `0x24` = widget number, target and `0x4200` (`0x575c`); read-back of `0x24` (`0x577c`); destination lower `0x3c` (`0x5784`) and upper `0x34` (`0x57a8`); vectors `0x5c` (`0x5860`); the check routine at `0x5534` (reads `0x6c`, prints if non-zero "XG ERR_STAT==0x%x after reset.", stores 0 to `0x2c`, writes `0x6c` back); control `0x24` \|= `0x20000` (`0x5880`); water-mark `0x74` read-modify-write that keeps the two 6-bit fields and forces the rest (`0x588c` to `0x58c8`); board-alive flag. Then the whole map RAM is invalidated, and the GIF-side words are only re-initialised if bit 1 is clear. **I** that the reset returns the XG block to power-on values: the driver rewrites every register it uses and expects the cause word to read 0, and the water-mark code keeps two fields from the value it reads rather than writing them (so hardware supplies those). | It never reads back control, destination or vectors to check them. |
+| **GIF re-initialisation** (reset ioctl bit 1 clear, argument 4) | stores 0 to `0x800004` (re-initialise flag only); per pipe: 0 to the pipe control register, status ring re-mapped (guard entries, ring map entry), ring-pointer word `0x800064`/`0x800074` = 0, ring cleared, host tail = 0, initial control shadow `0xa040` (pipe 1) or `0xea040` (pipe 0) stored, UST word `0x80008c` = 0 (`0xa060`). | It never reads any of these back. |
+| **FPGA program pulse** (library `xthd_program_xilinx`, section 4) | see below | |
+| **CLINK UART reset** (`0x8038e4` = 1 then 0, L `0x407f1c`, `0x407f60`) | nothing in the normal path, at `xhdInit` (L `0x407f1c`, `0x407f60`) or at `xhdOpenPath` (L `0x409be0`, `0x409bf4`). Only when the environment variable `_XTDIGVID_NO_VBOB_SUPPORT` is set does `xhdInit` go on to write the pattern-generator pair `0x803864` = `0xc3f7` and `0x80386c` = `0x25` (L `0x407fe8`, `0x4081b4`). | The CLINK block is not rewritten after the pulse, so no register of it is needed again; **U** whether the pulse clears any of them (the receive words, the transmit message). |
+
+**FPGA reload (E for the writes, I for the effect).** Does the program pulse on `0x80000c` (select, then select with bit 7 low, then bit 7
+high) clear the register block of the FPGA it selects? Software evidence: after every reload in `xhdCommitPathControls` the library rewrites
+the registers it uses in that block, and it never relies on a value surviving the reload. The pairs (L addresses):
+
+- VIF (n = 6, calls at `0x40a544`, `0x40a948`): VIF control (`0x40a698`), dmux (`0x40a784`), f0 and f1 active-video (`0x40a8e8`, `0x40aaf4`),
+  lines per frame (`0x40ad98`).
+- PACKER (n = 1, `0x40a59c`) and UNPACKER (n = 2, `0x40a9a0`): on success the new packing is cached and the code joins the path at `0x40a420`
+  and `0x40a830`, which call `xhdSendPIO(handle, pipe, flag)`: the whole block of [gif-registers.md](gif-registers.md) section 4.1a is
+  re-sent. The cached packing is compared first and the reload is skipped when it has not changed (`0x40a3f8` to `0x40a414`); `xhdSendPIO` is
+  called on both paths (a local flag is 1 after a reload and 0 otherwise).
+- HDOC (n = 5, `0x40aa68`, `0x40ae58`): the status word, format and timing registers are rewritten (gif-registers.md section 4.3), with the
+  hold-off bit 24 in the status register around the sequence.
+- Each reload is preceded by a call to `xhdIsPipeBusy` for the pipe (L `0x40a518`, `0x40a58c`, `0x40a918`, `0x40a990`, `0x40aa34`); the code read does not
+  test its result.
+- The two colour converters (n = 3, 4) and the CLINK FPGA are never reloaded after initialisation (no call among the six reload sites).
+
+**I:** a reload resets the block to the configuration's power-up state, so the library rewrites everything. **U:** the power-up values
+(no reset value of any GIF register is known); whether the select pulse alone, without a download, clears anything; whether the other
+FPGAs' blocks survive a reload of one. Settled by: register captures from a running board before and after a reload (a physical test), or the
+FPGA configurations themselves.
+
+## 13. The NIC record text and the revision
+
+What the board's one-wire part returns, and what each shipped component reads from it.
+
+- **Text (E for the builder, I that this board's part uses the same layout).** The kernel builds the `_nic` text from the part's two
+  32-byte pages as `Part:<part>;Name:<name>;Serial:<serial>;Revision:<rev>;Group:<hh>;Capability:<hhhhhhhh>;Variety:<hh>;Laser:<hex>;`,
+  with the revision taken from page B bytes 6 to 9 (four characters); the generic reader's layout is in
+  [questions/v12-nic.md](../questions/v12-nic.md). That the DM2's part is read by that same code is E at the accessor level
+  (`nic_info_get` with `nic_access_mcr32`) and I for the memory layout, because this driver supplies only the accessor. Captured text
+  shows part `030-1653-002` and revision letters `G` and `H` (scoping datasheet section 1).
+- **Kernel driver (E).** It reads no revision. It searches the text for `Name:XT-DIGVID` (K30 `0xa44`), or for `page A data not available`
+  (the reader's own text when page A is invalid), which it accepts as a known board ("NIC reading WAR"). The strings `Revision` and `Part:` do not
+  occur in any of the three kernel objects; `Name:XT-DIGVID`, `page A data not available` and the message strings do.
+- **Library (E).** `xhdInit` fetches the text with get-NIC (a 1024-byte buffer) and calls the extractor at L `0x408680` once, with the key
+  `Part` (`.srdata`, L `0x4203e8`). The extractor finds the key followed by `:`, copies up to 31 characters of the value up to the next `;`,
+  and then `strtol(value + 4, 0, 10)` and `strtol(value + 9, 0, 10)` give the middle and last dash groups: 1653 and 2 for `030-1653-002`
+  (parser L `0x4085f0` to `0x40867c`; values stored as halfwords in the path state at `+1798` and `+1796`). No other key (`Name`, `Serial`,
+  `Revision`) is looked up. A missing `Part` leaves both groups 0, which selects the `_fast` HDOC image and the "not 1653" branch of the status-word
+  rule. **The "revision" of the HDOC rules is the last dash group (the assembly number 002), not the `Revision:` letter.** The rule:
+  image `hdoc_hd.xla` when the middle group is 1653 and the last is below 3, `hdoc_hd_fast.xla` otherwise; status bit 17 cleared on a board with
+  middle 1653 and last 3 or more (gif-registers.md section 4.3).
+- **Diagnostics (E).** `xtdigvidtst` (T, `main`, `0x10003664` to `0x10003788`) fetches the same text and searches it for `Part:030-1653-`, taking `strtol`
+  of what follows (default `"001"` when absent, string at `0x100191a8`), then for `Revision:`, taking the first character after it (default `"A"`,
+  `0x100191ac`). Both are stored in globals that no other instruction in the program reads (each GOT slot, `-32292` and `-32288`, is referenced
+  once). The scripts `xtdigvid_hinv` and `xtdigvid_confidence` expect the order `Part:..;..Name:..;..Serial:..;..Revision:..;Group`, print
+  `<Name> (part number <Part> <Revision>), serial number <Serial>` and list the board only if the name is `XT-DIGVID`.
+- **What the DM2 must therefore return (E for what is checked).** A text containing `Name:XT-DIGVID`; a `Part:` value of the form
+  `030-1653-00N` with decimal groups at offsets 4 and 9 (the library); `Revision:` any text (nothing validates it; the diagnostic's
+  default is `A`, captures show a letter). Nothing checks the serial.
+- **U.** Which revision letters and which part strings real boards carry beyond the three captures; whether a different assembly number or a DM3's
+  `030-1927-003` changes any behaviour (the library treats a middle group other than 1653 as the `_fast` case). Settled by more captures.

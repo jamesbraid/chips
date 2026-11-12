@@ -23,6 +23,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `widget_id` | 0x4 | r | 32 |  |  | unknown | established | shipped diagnostic tables |
 | `widget_status` | 0xc | r | 32 |  |  | unknown | established | shipped kernel driver and media library readings |
 | `widget_control` | 0x24 | rw | 32 |  |  | unknown | established | shipped kernel driver and media library readings |
+| `xg_req_timeout` | 0x2c | w | 32 |  |  | unknown | established | shipped kernel driver and media library readings |
 | `int_dest_hi` | 0x34 | w | 32 |  |  | unknown | established | shipped kernel driver and media library readings |
 | `int_dest_lo` | 0x3c | w | 32 |  |  | unknown | established | shipped kernel driver and media library readings |
 | `xg_int_vectors` | 0x5c | w | 32 |  |  | unknown | established | shipped kernel driver and media library readings |
@@ -135,19 +136,23 @@ Widget status. The kernel reads it once at attach and tests bit 5 only: when set
 
 ### Register `widget_control`
 
-Widget control (the diagnostic calls it the XG control register). The init routine stores widget id, interrupt target and a constant, then ORs the XG error interrupt enable; the error handler clears the enable first and nothing sets it again. The low nibble comes from the widget's own number and bits 25:22 from the interrupt target widget, both inferred from the helper names. Bits 14 and 9 are written as constants and are unexplained.
+Widget control (the diagnostic calls it the XG control register). The init routine stores widget id, interrupt target and a constant, then ORs the XG error interrupt enable; the error handler clears the enable first and nothing sets it again. The low nibble comes from the widget's own number and bits 25:22 from the target widget of the XG error interrupt object, both inferred from the helper names. The same target value is also stored in the interrupt destination upper word, bits 19:16. Because the map RAM entry carries no widget field and this is the only other place a target widget is stored, bits 25:22 are the inferred home of the target widget for the board's own DMA requests; nothing in the shipped software states it. Bits 14 and 9 are written as constants and are unexplained. The only routine that sets bit 17 is the XG init routine, which runs at attach and again from the board-reset ioctl; the error handler and the detach routine clear it.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 25:22 | `int_target` | inferred |  | shipped kernel driver and media library readings |  |
+| 25:22 | `int_target` | inferred |  | shipped kernel driver and media library readings | target widget of the interrupt object (established store); that it also selects the DMA target widget is inferred |
 | 17 | `xg_error_int_enable` | established |  | shipped kernel driver and media library readings | role established from the handler's own disable and the diagnostic's messages; that nothing else lives in the bit is inferred |
 | 14 | `const_bit14` | unknown |  | shipped kernel driver and media library readings |  |
 | 9 | `const_bit9` | unknown |  | shipped kernel driver and media library readings |  |
 | 3:0 | `widget_number` | inferred |  | shipped kernel driver and media library readings |  |
 
+### Register `xg_req_timeout`
+
+Request timeout, the odd word of common-block slot 0x28. The only access in the shipped software is a store of 0 in the routine the XG init routine calls just before it enables the error interrupt (after reading the error cause word, printing a message if it is non-zero, and before writing the cause word back). Never read. The store is established; the role (the common block's request timeout, here left disabled or at its minimum) is inferred from the slot's role in the common widget block.
+
 ### Register `int_dest_hi`
 
-Interrupt destination, upper: address bits 47:32 in the low half and the target id above them, from the interrupt object the kernel allocated for the XG error interrupt. Store established; field names inferred.
+Interrupt destination, upper: address bits 47:32 in the low half and the target widget id above them, from the interrupt object the kernel allocated for the XG error interrupt. The driver asserts that the two video interrupt objects have the same address and target as the error interrupt, so one destination serves all three. Store established; field names inferred.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -363,7 +368,7 @@ Pipe 0 per-pipe word (register number 0x78), stored 0 at DMA start. Meaning unkn
 
 ### Register `gif_ident`
 
-GIF identification (register number 0x80), read at attach: the upper 24 bits must be the ASCII text GIF; the low byte is the GIF version, which the driver prints. Any other value fails attach.
+GIF identification (register number 0x80). Read once, by the GIF initialisation routine, which runs only from the board-reset ioctl when its argument has bit 1 clear (the media library issues it after all eight FPGAs are loaded), not at attach; the routine first requires the board-alive flag and the GIF DONE bit in the programming register. The upper 24 bits must be the ASCII text GIF; the low byte is the GIF version, which the driver prints at debug level 3 or above. Any other value fails that ioctl with the message that the GIF version is invalid.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -632,7 +637,7 @@ Array of 12 registers, stride 8.
 
 ### Register `clink_pgen_lo`
 
-CLINK pattern-generator divider, low (register number 0x3860, the diagnostic's PGEN_LO_SEL). The library writes CLINK_PGEN_LO_INIT when configuring the on-board 50 MHz clock. Role inferred.
+CLINK pattern-generator divider, low (register number 0x3860, the diagnostic's PGEN_LO_SEL). The library writes CLINK_PGEN_LO_INIT when configuring the on-board 50 MHz clock, but only when the environment variable _XTDIGVID_NO_VBOB_SUPPORT is set (the diagnostic build of the initialisation path); in normal operation it is never written. Role inferred.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -640,7 +645,7 @@ CLINK pattern-generator divider, low (register number 0x3860, the diagnostic's P
 
 ### Register `clink_pgen_hi`
 
-CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT. Role inferred.
+CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT, under the same environment-variable condition as the low register. Role inferred.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|

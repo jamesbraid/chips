@@ -63,6 +63,7 @@ What the words mean beyond the stores:
 - **I.** `v` is the address the kernel's crosstalk DMA mapping returns for each page (section 4, step 5), so bits 27:2 hold address bits 39:14
   of the system DMA address. The routine never adds a widget or attribute field, and 26 bits is all that is kept. Whether the hardware reads bits 1:0
   or the top bits as page attributes is **U**: nothing reads an entry back.
+- **E.** The whole map RAM is also invalidated: `xtdigvid_invalidate_mapram(board, 0x8000, 0)` at attach (K30 `0x17a0`) and in the board-reset ioctl ([fpga-load.md](fpga-load.md) section 6.1, `0xe3ec`), so every entry reads "invalid" until a buffer is mapped. What an access to an invalid entry does is in [interrupts-status.md](interrupts-status.md) section 12.1.
 - **I.** Bit 28 marks "invalid" and the counter below it is only the run length left; the XG error cause bit 13 "map RAM invalid" (scoping page, section 5)
   is the observable effect, with the entry address in the register at `0x94`. Which bit pattern the hardware tests is **U**.
 - **E.** Entries are written as one big-endian 32-bit PIO store each, with no byte swapping in the driver. The byte order the board's logic applies to that store is **U**:
@@ -109,7 +110,8 @@ The pairing of "in" with VIF (video in, `0x80180c`) and "out" with HDOC (`0x8020
   `!(pipe->gif_dma_control_shadow & (XTHD_GIF_IDMA_CONTROL_DMA_VALID_MASK | XTHD_GIF_IDMA_CONTROL_DMA_ABORT_MASK))`, compiled as `lw 0xa08; andi 0x1f; bne` (0x255ac to 0x255b4). The shadow therefore never holds them: the driver ORs them into a value it writes and never into the shadow.
   The valid bits are one per slot because the single-slot write is `(1 << slot) | shadow | 0x10000` (0x2a350, 0x2a378 to 0x2a380).
 - **I.** Bit 16 (`0x10000`, kept in `pipe + 0xa74`) is the interrupt enable: it is stored as 0x10000 at "PIPE_RESET" (0x16c64), written into the control word at "INTR_ENABLE" (0x16e50 to 0x16e58), and zeroed (0xa74 cleared, then the bare shadow written) at the end together with a software event (0x1add4 to 0x1ae0c). The trace names say so. The XG's own interrupt enable is a different bit (control, bit 17, scoping page).
-- **I.** The valid bits are write-one-to-set latches, not a level held in the register: the "programming both valid bits" path writes two words in a row, each with exactly one valid bit, and the only way both slots end up armed is if the first survives the second write. Nothing reads the control word back, so this is the single inference the start protocol rests on. Reset value, readback and the behaviour of writing 0 to a valid bit are **U**; a register capture of a running board is the only route, and that is a physical test under the repository's agreement rule, or the entry can be recorded as "model-author choice".
+- **I.** The valid bits are write-one-to-set latches, not a level held in the register: the "programming both valid bits" path writes two words in a row, each with exactly one valid bit, and the only way both slots end up armed is if the first survives the second write. Nothing reads the control word back, so this is the single inference the start protocol rests on. Reset value, readback and the behaviour of writing 0 to a valid bit are **U**; a register capture of a running board is the only route, and that is a physical test under the repository's agreement rule.
+- What the board posts after an abort write, and what the latches do afterwards, is in [interrupts-status.md](interrupts-status.md) section 12.2.
 - Other bits of the shadow (`0x1000`, `0x400`, `0x200` and the initial `0xea040` / `0xa040`) are set by `xtdigvid_configure_raster` with load-linked/store-conditional updates and are outside this routine. The abort bit written elsewhere is `shadow | 0x10` (`xtdigvid_dma_abort`, 0x14bcc), without bit 16.
 
 ## 4. Sequence
@@ -183,7 +185,7 @@ Hardware error causes reach the XG error handler instead (scoping page, section 
 ## 7. Build differences (E)
 
 - O27, O35 and O30 have identical stores, call sequences and sync ordering except one site. The "dma: video abort" block (section 4, termination step 3) stores `shadow | 0x10` to the pipe's control register and syncs in O27 (0x2234c) and O35 (0x21de4), and not in O30 (0x21e30). O30 has 10 sync sites in the symbol, the others 11, and one `ori 0x3c` fewer.
-- **U.** Whether this is a deliberate platform difference (a workaround for the Octane2's XIO path, or a defect on the Origin builds) is not stated; it is the only observable difference in the DMA start path between boards, and a model that runs the IP30 driver will never see the abort write from `xtdigvid_dma`. `xtdigvid_dma_abort` stores the same `shadow | 0x10` in all three builds (O30 0x14bcc), so the abort bit is still reachable on IP30.
+- **U.** Whether this is a deliberate platform difference (a workaround for the Octane2's XIO path, or a defect on the Origin builds) is not stated; it is the only observable difference in the DMA start path between boards, and the IP30 driver never issues the abort write from `xtdigvid_dma`. `xtdigvid_dma_abort` stores the same `shadow | 0x10` in all three builds (O30 0x14bcc), so the abort bit is still reachable on IP30.
 - The CPU-id load in the trace code differs (O30 `-15456`, O27 `-15328`); not a board effect.
 
 ## 8. Corrections to the scoping page
@@ -197,9 +199,9 @@ Hardware error causes reach the XG error handler instead (scoping page, section 
 
 | Unknown | What settles it |
 |---|---|
-| Whether the valid bits latch, reset value and readback of the control register | no shipped code reads it. A capture of a board's control word, or a model-author decision recorded as such |
+| Whether the valid bits latch, reset value and readback of the control register | no shipped code reads it. A capture of a board's control word |
 | Meaning of `0x6c/0x7c` and `0x64/0x74` | the interrupt service routine's use of `pipe+0x838` and the status-ring code; software route in the same object |
-| Meaning of bits 1:0 and 31:30 of a map-RAM entry, and what hardware tests for "invalid" | no software reads an entry back. Only a hardware capture or a model-author choice |
+| Meaning of bits 1:0 and 31:30 of a map-RAM entry, and what hardware tests for "invalid" | no software reads an entry back. Only a hardware capture |
 | Byte order the board applies to a map-RAM store | same |
 | Roles of the three raster flag halfwords at `pipe+0xa50`, `+0xa52`, `+0xa5e` | `xtdigvid_configure_raster` (0x72cc) and the ML module's raster setup in `libdigvid.so` |
 | Whether the IP30 build's missing abort store is deliberate | the diagnostics programs, or a boot of both drivers; no shipped text states it |

@@ -56,9 +56,15 @@ control word at `0x24` with a read-modify-write followed by `sync` (0x3d55c-0x3d
 record the cause with two 64-bit compare-and-swaps from zero, at board + 0xadb8 and board + 0xa50, value `(cause << 32) | 1` (0x3d57c, 0x3d5a4); if the cause is nonzero, **write the value read back
 to `0x6c`** and `sync` (0x3d5bc-0x3d5c0); then print one message per set cause bit (the bit list is in the scoping datasheet
 section 5). E for the sequence. **I** that `0x6c` is write-one-to-clear, because the handler writes back exactly the bits it read
-and nothing else. The handler never sets control bit 17 again; the re-enable site is **U** here (scoping datasheet says the
-handler re-enables nothing; a reset path is the likely place). Settled by: searching the object for other stores to control `0x24`
-with bit 17.
+and nothing else. The handler never sets control bit 17 again. **E (settled):** the only code that sets it is `xtdigvid_init_xg` (K30 `0x5880`,
+`lw` at `0x5874`, `or` with `0x20000`, `sw`, `sync`), which runs at attach (call from `xtdigvid_init_board` at `0x1488`) and from
+the board-reset ioctl when its argument has bit 0 set (call at `0xd7e4`, after the kernel's widget reset service; see
+[fpga-load.md](fpga-load.md) section 6.1). A scan of all stores with displacement 36 in K27, K30 and K35 finds the window writers
+only in `xtdigvid_init_xg` (two stores), `xtdigvid_deinit_board` (clears the bit at detach: K30 `0x24d4` to `0x24ec`) and this
+handler; the other hits are stores into the per-pipe records. So after one XG error interrupt the error interrupt stays masked until
+the board is reset with that ioctl or re-attached; the media library issues it once, at initialisation (argument 3). Errors that follow
+are not reported until then (**I**: the bit's role as the interrupt enable is E; that masked errors are lost rather than queued is
+the usual meaning of a cleared enable, nothing here proves it).
 
 ## 3. The ring: size, location and base programming
 
@@ -284,6 +290,16 @@ and K30, a difference this pass did not explain.
   record.
 - Scoping datasheet section 4: "a ring pointer the interrupt routine advances" is the host's tail index, not a hardware pointer.
 
+## 10a. Further corrections to the scoping datasheet and the draft pages
+
+- Scoping datasheet section 2 and the GIF page section 3: the request timeout register `0x2c` is written (0 once, in the routine called
+  from the XG init routine); the earlier statement that no common-block slot beyond `0x20`, `0x30`, `0x38`, `0x58` is touched was wrong
+  for slot `0x28`. See [gif-registers.md](gif-registers.md) section 3.
+- Scoping datasheet section 2 (`0x800084`): the GIF identification is not read at attach. It is read by `xtdigvid_init_gif`, which the
+  board-reset ioctl calls ([fpga-load.md](fpga-load.md) section 11).
+- Scoping datasheet section 2 (control): "the error handler ... re-enables nothing" is true of the handler; the re-enable is in the
+  XG init routine (section 2 above).
+
 ## 11. Unknowns, with what settles each
 
 | Unknown | Settled by |
@@ -294,11 +310,76 @@ and K30, a difference this pass did not explain.
 | Meaning of F (bit 1) and FIF (bit 6) | the GIF configuration; the driver's use is the only evidence |
 | Meaning and trigger of CURRENT_VALID_0 and _1 | the GIF configuration; the dump names them and nothing tests them |
 | Whether the interrupt packet needs any register acknowledge | a transaction capture; the driver writes none |
-| XG control bit 17 re-enable site | scan the object for other stores to control `0x24` |
+| ~~XG control bit 17 re-enable site~~ | settled in section 2: `xtdigvid_init_xg` only |
 | Event 256's name; event 128's poster | the library's event table and a scan of libdigvid for the 128 literal |
 | Pipe fields +0x830, +0xa50 to +0xa5e, payload of event 0x100 | reading the DMA start routine and `xtdigvid_dma_abort` (the scoping datasheet's separate open item) |
 | Where the abort bit in the DMA control shadow is set | reading `xtdigvid_dma_abort` (0x14484) |
 | Watchdog unit | the clock tick rate of the host kernel on the target build |
 
-Nothing here needs a physical system for a model whose purpose is to satisfy this driver: the ring, its map RAM addresses, the tail
-protocol, the flag table and the CLINK window words are all E. The board-side producer is the part a model has to choose.
+Nothing here needs a physical system to describe what the shipped driver does: the ring, its map RAM addresses, the tail
+protocol, the flag table and the CLINK window words are all E. How the board produces the ring entries is not visible to software.
+
+## 12. Invalid map-RAM entry, abort, and what the driver needs the board to post
+
+This section answers two questions the other pages left open. Everything is read from K30 (K27 and K35 have the same structure;
+the abort store differs as noted in dma.md section 7). The driver tells us what it expects; it cannot tell us what the board does, so
+the hardware half of each answer is graded **U** with the route that would settle it.
+
+### 12.1 A transfer that reaches an invalid map-RAM entry
+
+- **E.** The driver makes invalid entries on purpose: one guard entry before and one after every mapped buffer, one on each side of the
+  two status-ring pages (dma.md section 2), and an invalidation of all `0x8000` entries at attach (`xtdigvid_invalidate_mapram(board,
+  0x8000, 0)`, K30 `0x17a0`, `li a1,0x8000` at `0x1724`) and in the board-reset ioctl when its argument has bit 0 set (`0xe3ec`,
+  `li a1,0x8000` at `0xe410`). `0x8000` entries is the 32K-entry map RAM of configuration type 0; the size code read from `0x64` is not
+  used to bound it (that register is read only for a debug-level print, K30 `0x9a8`).
+- **E.** The only reporter the driver has for an access to an invalid entry is XG error cause bit 13, "map RAM invalid", with the offending
+  entry address (20 bits) in register `0x94` (K30 `0x3d9a0` to `0x3d9d4`). Section 2 above gives the handler: it masks the error
+  interrupt, records `(cause << 32) | 1` in both pipes' error words (board `+0xa50` and `+0xadb8`), writes the cause back to `0x6c`, and
+  prints. It posts no event, wakes nobody, releases no slot semaphore and touches no GIF register and no ring.
+- **E.** The recorded error word has an effect only when `xtdigvid_dma` ends: it reads and clears the word, and bit 0 set makes the ioctl
+  return errno 5 (dma.md section 6). So an invalid-entry error is reported to the application after the fact, by the ioctl's return.
+- **E.** Nothing in the driver tests cause bit 13 to decide whether a slot finished. A slot is finished only by ring flags DONE_n or
+  ABORTED_n (section 6.1). The code has no branch that assumes a DONE_n for a slot whose transfer hit an invalid entry.
+- **U (hardware).** Whether the board sets DONE_n, ABORTED_n or nothing for that slot; and so whether a video interrupt (a ring entry) is
+  also raised. What the software shows is only the XG error path: **I** that the board raises the XG error interrupt (the cause bit has its
+  own message and address register, the enable is control bit 17, and no other path reports it). The input pipe is covered if no
+  completion ever arrives: `xtdigvid_dma` arms a 200-tick timer on the first input buffer (dma.md section 4 step 6) that runs
+  `xtdigvid_dma_abort`, which prints "no input dma complete interrupts received" or "no input field interrupts received" and, on one of
+  its paths, writes the abort bit (section 12.2). The output pipe arms no timer.
+- Settled by: the XG and GIF logic (the FPGA configuration), or a capture of the ring and of `0x6c` after a transfer is aimed at an
+  unmapped page. Either is a physical test under the repository's agreement rule.
+
+### 12.2 Abort
+
+- **E (the write).** To abort, the driver stores `gif_dma_control_shadow | 0x10` (bit 4) to the pipe's DMA control register (window
+  `0x800014` for pipe 0, `0x80003c` for pipe 1), followed by `sync`. Writers: `xtdigvid_dma_abort` in all three builds (K30 `0x14bb0` to
+  `0x14bd4`; it is the timer routine named above), and the
+  self-abort in the cleanup of `xtdigvid_dma` in K27 (`0x2234c`) and K35 (`0x21de4`) only. `xtdigvid_siglost_abort` rewrites the shadow
+  without the bit (interrupts section 8). The value written has the slot-valid bits 3:0 clear and bit 16 clear, because the shadow
+  never holds bits 4:0 (the assertion at K30 `0x255ac`) and bit 16 is kept apart in `pipe + 0xa74` (dma.md section 3.1).
+- **E (what the driver expects back).** The ring flags that report an abort are ABORTED_0 to ABORTED_3, bits 12 to 15 of the flag word
+  (section 6). The service routine consumes DONE_n and ABORTED_n in the same loop, in slot order from the completion counter `pipe +
+  0x838` (section 6.1 step 3): for each ABORTED_n it prints "dma_abort intr" at debug level 3, posts event 32
+  (TRANSFER_ERROR(BUFFERS_ABORTED)) and calls the completion routine, which stores `(status & 4) | 2` in the slot status and releases the
+  slot semaphore. So the entry the driver needs is an ordinary 0x80-byte ring entry with VALID and ABORTED_n set for slot n, where n is the
+  next slot in arming order.
+- **I.** After an abort write the board posts ABORTED_n for every slot that is armed and not yet complete, in arming order, instead of
+  DONE_n. Reasoning: the end of `xtdigvid_dma` drains every slot with `psema` on the slot semaphore, with no timeout (K30 `0x18454`;
+  an interrupted wait prints "Interrupted during dma, waiting..." and retries after a 200000 microsecond delay, `0x19544` to `0x19570`), and the
+  only code that releases a slot semaphore is the completion routine (`vsema` at `0x320fc`), which only the DONE_n and ABORTED_n flags
+  reach. If the board posted nothing for an armed slot, the ioctl could not return after the abort. **U:** whether it posts one entry per
+  armed slot or only for the slots it has started; whether an already-posted DONE_n is replaced.
+- **I.** The driver does not rely on the board's slot counter surviving an abort: every `xtdigvid_dma` call begins with PIPE_RESET, which
+  stores 0 to `0x80006c` (pipe 1) or `0x80007c` (pipe 0) and zeroes `pipe + 0x834`, `+0x838` and `+0x83c` (dma.md section 4 step 6).
+  That the board's own completion-order counter restarts at slot 0 after that store is inferred (dma.md); the pair of resets would be
+  needed if an abort could leave the board and the host out of step.
+- **Latches after an abort: U.** The driver never writes a value with bit 4 set and then a value with bit 4 clear in a way that
+  distinguishes a strobe from a level: the abort store is followed, after the drain, by the end-of-stream store of the bare shadow
+  (`0x1ae04`, bits 4:0 and 16 clear) and by the next stream's first valid-bit store (bit 4 clear again). A level abort bit would
+  be cleared by either; a strobe needs nothing. The same holds for the valid bits 3:0 (dma.md section 3.1 already reads them as
+  write-one-to-set latches, **I**). One tension to carry: bit 16 is clear in the abort store, in the end-of-stream store and in the
+  reset stores, yet the ABORTED_n entries and their interrupts must still arrive after the abort store for the drain to finish; so
+  either bit 16 does not gate ring posting and interrupts, or it is also a set-only latch. Which is **U**.
+- Settled by: the GIF FPGA configuration, or register captures of the control word before and after an abort write on a running pipe
+  (a physical test).
+

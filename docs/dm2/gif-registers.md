@@ -3,7 +3,7 @@
 Status: **scoping draft, not independently reviewed.** Part of the DM2 contract set that hangs off
 [xio-dmediapro-dm2.md](../xio-dmediapro-dm2.md) (its section 2 lists what the kernel driver touches; its section 9 sized
 this item). Labels follow [AGENTS.md](../../AGENTS.md): **E** established (read in full from a shipped binary),
-**I** inferred (reasoning given), **U** unknown (route to settle it given). No emulator behaviour is described here.
+**I** inferred (reasoning given), **U** unknown (route to settle it given). Only the hardware and the shipped software's use of it are described here.
 
 ## 1. Sources and method
 
@@ -63,16 +63,62 @@ The registers below are in the first 256 bytes of the window. Offsets are the od
 |---|---|---|---|---|
 | `0x04` | `0x00` | identification | read by the diagnostic only (`hdtv_xgid`, T `0x1000ab00`): prints revision `>>28`, part `>>12 & 0xffff`, manufacturer `>>1 & 0x7ff`. The kernel never reads it | E (field split); the part value `0xc102` and manufacturer `682` come from the registration call, not from this register, so the readback value is **U** |
 | `0x0c` | `0x08` | status | kernel reads it once at attach (K30 `0xa7c`, `lw a5,12(a5)`) and tests bit 5 (`sll a5,a5,26; bltz`): set means the XIO link is the slower 400 MB/s kind and the driver prints "400MB/s XIO slot -- may degrade performance. Prefer 800MB/s." No other bit is read | E (test); U (what the bit encodes; the message says link speed) |
-| `0x24` | `0x20` | control (the diagnostic names it `XG_XT_CTRL`, from its messages "Writing 0x%08x to XG_XT_CTRL.(Disable interrupt)" and "(Enable interrupt)") | `xtdigvid_init_xg` (K30 `0x55c0`) writes `(own widget id & 0xf) \| (interrupt target id << 22 & 0x3c00000) \| 0x4200`, then after the interrupt setup ORs `0x20000`. The XG error handler (`0x3d180`) clears `0x20000` first (`lui v1,2; nor; and; sw` at `0x3d54c` to `0x3d574`) and never sets it again. `hdtv_xgram` in T clears and then sets `0x20000` around its map-RAM test | E (stores); the low nibble is the widget's own number (the value comes from `xwidget_info_id_get`), bits 25:22 the interrupt target widget (from `xtalk_intr_target_get`): I from the helper names; bit 17 is the XG error interrupt enable: E for the role (the handler's own disable and the diagnostic's message), I that nothing else is in the bit; bits 14 and 9 (`0x4200`) are written constant and unexplained: U |
+| `0x24` | `0x20` | control (the diagnostic names it `XG_XT_CTRL`, from its messages "Writing 0x%08x to XG_XT_CTRL.(Disable interrupt)" and "(Enable interrupt)") | `xtdigvid_init_xg` (K30 `0x55c0`) writes `(own widget id & 0xf) \| (interrupt target id << 22 & 0x3c00000) \| 0x4200`, then after the interrupt setup ORs `0x20000`. The XG error handler (`0x3d180`) clears `0x20000` first (`lui v1,2; nor; and; sw` at `0x3d54c` to `0x3d574`) and never sets it again; the only setter in the kernel is `xtdigvid_init_xg` (`0x5880`), which runs at attach (from `xtdigvid_init_board`, call at `0x1488`) and again from the board-reset ioctl ([fpga-load.md](fpga-load.md) section 6.1). `hdtv_xgram` in T clears and then sets `0x20000` around its map-RAM test | E (stores); the low nibble is the widget's own number (the value comes from `xwidget_info_id_get`), bits 25:22 the interrupt target widget (from `xtalk_intr_target_get`): I from the helper names; bit 17 is the XG error interrupt enable: E for the role (the handler's own disable and the diagnostic's message), I that nothing else is in the bit; bits 14 and 9 (`0x4200`) are written constant and unexplained: U |
 | `0x34` | `0x30` | interrupt destination, upper | `(addr >> 32 & 0xffff) \| (target id << 16 & 0xf0000)`, from the interrupt object the kernel allocated for the XG error interrupt | E (store); I (field names) |
 | `0x3c` | `0x38` | interrupt destination, lower | low 32 bits of the interrupt address | E (store) |
 | `0x5c` | `0x58` | XG interrupt vectors | `vector(gv 0) \| vector(gv 1) << 9 \| vector(error) << 18 \| 0x20100` (bytes 7:0, 16:9, 25:18; constant bits 17 and 8) | E (store). Note the common block calls slot `0x58` the auxiliary error command word or arbitration reload; in the XG it holds interrupt vectors, so that slot's common role does not apply here: E for the XG use, I that it is a deliberate divergence (no read of it exists) |
 
-Other common-block slots (`0x10`/`0x18` error address, `0x28` request timeout, `0x40` error command, `0x48` LLP configuration,
-`0x50` target flush) are never touched by any of the three kernel objects, the library or the diagnostic. They are **U** for
-the XG (settle: a capture of a real board's block, which is a physical test under the repository's agreement rule; the model
-author may otherwise choose).
+Of the other common-block slots (`0x10`/`0x18` error address, `0x28` request timeout, `0x40` error command, `0x48` LLP configuration,
+`0x50` target flush), exactly one is touched: the request timeout, whose register is the odd word `0x2c` (section 3.0). It is
+stored 0 once, by the routine the XG init routine calls just before it enables the error interrupt (K30 `0x5534`, store at `0x5550`;
+K27 `0x548c`, store `0x54a8`; K35 `0x5438`, store `0x5454`). That routine reads the error cause word `0x6c`, prints
+`%v: XG ERR_STAT==0x%x after reset.` through `cmn_err` (level 4) when it is non-zero, stores 0 to `0x2c`, then reads `0x6c` again and
+writes the value back (the same write-back the error handler uses) (E, read in full). Nothing reads `0x2c`. The other four slots
+are never touched by the three kernel objects, the library or the diagnostic. For them the register address is **I**
+(section 3.0) and the contents **U** for the XG (settle: a capture of a real board's block, which is a physical test under the
+repository's agreement rule).
 
+### 3.0 Which word of a slot (settled)
+
+Question: are the common-block registers at the slot bases (`0x10`, `0x18`, `0x28`, `0x40`, `0x48`, `0x50`) or at the odd words
+(`0x14`, `0x1c`, `0x2c`, `0x44`, `0x4c`, `0x54`)? Answer: **the odd words**; the slot bases are never addressed.
+
+- **E.** Every access to the first 256 bytes of the window in the three kernel objects is a 32-bit `lw` or `sw` at an offset that is 4
+  modulo 8. The list, from a scan of every load and store through the window base (the 64-bit pointer at board record `+0x18`) with
+  a displacement below `0x100`, each hit then read in context: loads at `0x0c` (status, K30 `0xa7c`), `0x24` (K30 `0x577c`, `0x5874`,
+  `0x3d55c`, `0x24d4`), `0x64` (`0x9a8`, debug-gated print only), `0x6c` (`0x3d3f4`, `0x5538`, `0x555c`), `0x74` (`0x588c`),
+  `0x94` (`0x3d9a0`, `0x3d9d4`); stores at `0x24` (`0x575c`, `0x5880`, `0x3d574`, `0x24ec`), `0x2c` (`0x5550`), `0x34` (`0x57a8`),
+  `0x3c` (`0x5784`), `0x5c` (`0x5860`), `0x6c` (`0x3d5bc`, `0x5560`), `0x74` (`0x58c8`); and the one-wire accessor handed the
+  address `0x9c` (`0x9f0`, `0x5e0`). K27 and K35 give the same set of offsets and widths at shifted addresses (the scan output is identical in the three objects apart from the addresses).
+  No byte, halfword or doubleword access to the window exists in any of the three objects (the one halfword store the scan
+  reports, in `xtdigvid_poll`, writes a poll-event structure, not the window).
+- **E.** The library and the diagnostic reach these words only through the 32-bit read and write ioctls and pass the offsets
+  unchanged: the library's delay helper stores to `0x6c` (L `0x4164f0`); the diagnostic's `hdXgPioRead32` and `hdXgPioWrite32`
+  (T `0x1000e540`, `0x1000e5f0`) hand the caller's offset to the ioctl unmodified and their callers pass `0x24`, `0x64` and `0x6c`
+  (T `hdtv_xgram` `0x1000d03c`, `0x1000d0d4`, `0x1000d104`, `0x1000d130`).
+- **I.** The six slots the shipped software never reaches follow the same rule (error address upper `0x14`, lower `0x1c`, request timeout
+  `0x2c`, error command `0x44`, LLP configuration `0x4c`, target flush `0x54`). The reasoning is the uniform layout of the block
+  (every register the software does reach, in slots `0x00`, `0x08`, `0x20`, `0x28`, `0x30`, `0x38`, `0x58`, is its slot's odd word),
+  plus the common-block description in [crosstalk-link.md](../crosstalk-link.md) section 3.3. Settled for the six by a transaction
+  capture or the XG specification.
+- The scoping datasheet's list of slot bases is the slot list, not a register list. Register offsets are slot base plus 4.
+
+### 3.0a Target widget for interrupt and DMA packets
+
+- **E (store), I (role).** The target widget of an interrupt packet is held in bits 19:16 of the interrupt destination upper word
+  `0x34`. `xtdigvid_init_xg` (K30 `0x55c0`) takes the target of the XG error interrupt object with `xtalk_intr_target_get` (call at
+  `0x5660`), keeps the low byte, and stores `(target << 16) & 0xf0000 | (address >> 32) & 0xffff` to `0x34` (`0x5774` to `0x57a8`),
+  and the low 32 address bits to `0x3c` (`0x5784`). It asserts (`0x56a4` to `0x5734`) that the two video interrupt objects have
+  the same address and target, so one destination serves the error interrupt and both video interrupts.
+- **E (store), I (role).** The same target value is also stored in bits 25:22 of the control word `0x24`: `(target << 22) & 0x3c00000`
+  ORed with the widget's own number in bits 3:0 and the constant `0x4200` (`0x573c` to `0x575c`). That is the only other place a target
+  widget is stored anywhere in the software.
+- **I.** DMA packets: the map RAM entry (dma.md section 2) holds only address bits 39:14, no widget field, and the driver writes no
+  other target register, so the target widget of the board's own DMA requests can only come from control bits 25:22 (or be hardwired,
+  or be implied by the address). The shipped software never states it. On every machine the DMA target and the interrupt target are the
+  same widget in practice (the Octane's HEART at widget 8 for both), so no software evidence can separate the two roles. U: whether
+  control bits 25:22 steer DMA. Settled by: the XG specification, a Crosstalk transaction capture of the first DMA request, or a
+  second machine type whose interrupt and DMA targets differ.
 ### 3.1 XG-specific registers (offsets `0x5c` to `0xa0`)
 
 | Offset | Name | Access seen | Contents | Grade |
@@ -218,7 +264,7 @@ status register again in `xhdCommitPathControls` (`0x40ac24`, `0x40b07c`).
 
 | R | Name (T) | Mask (T) | Library formula | Fields | Grade |
 |---|---|---|---|---|---|
-| `0x2000` | `XTHD_HDOC_STATUS_SEL` | `0x3ffffff` | read-modify-write with bit 24 set before the other HDOC registers are written, cleared after (L `0x408c00` to `0x408c4c`, `0x409238` to `0x409254`). `xhdCommitPathControls` builds the word from pipe flags: `(a<<17 & 0x20000) \| (b<<12 & 0x1000) \| (c<<11 & 0x800) \| (d<<10 & 0x400) \| (e & 3) \| (f<<5 & 0x60) \| (g<<7 & 0x380) \| const`, `const = 0xc8008` or `0x2c8008` by a path flag (L `0x40abd0` to `0x40ac20`), and finally ORs `0x20000` (`0x40b060`), except that on a board whose NIC part number is 1653 (`li a3,1653` against `1798(s0)`) with revision field `1796(s0)` of 3 or more (`slti a2,a2,3`) bit 17 is cleared instead (L `0x40b050` to `0x40b268`). The same part and revision test picks the HDOC image: `hdoc_hd%s.xla` / `hdoc_sd%s.xla` get the suffix `_fast` unless the part is 1653 and the revision is below 3 (L `0x407b00` to `0x407c5c`, `0x40ae38` to `0x40b0bc`) | 26 bits. Bit 24 is a hold-off during programming, bit 17 is set last | E (formula, the 24 hold, the 17 final, the 1653 / revision rule); I (that `1796(s0)` is the board revision parsed from the NIC, `1798(s0)` the part number; both come from the `GET_NIC` ioctl result); U (field meanings) |
+| `0x2000` | `XTHD_HDOC_STATUS_SEL` | `0x3ffffff` | read-modify-write with bit 24 set before the other HDOC registers are written, cleared after (L `0x408c00` to `0x408c4c`, `0x409238` to `0x409254`). `xhdCommitPathControls` builds the word from pipe flags: `(a<<17 & 0x20000) \| (b<<12 & 0x1000) \| (c<<11 & 0x800) \| (d<<10 & 0x400) \| (e & 3) \| (f<<5 & 0x60) \| (g<<7 & 0x380) \| const`, `const = 0xc8008` or `0x2c8008` by a path flag (L `0x40abd0` to `0x40ac20`), and finally ORs `0x20000` (`0x40b060`), except that on a board whose NIC part number is 1653 (`li a3,1653` against `1798(s0)`) with revision field `1796(s0)` of 3 or more (`slti a2,a2,3`) bit 17 is cleared instead (L `0x40b050` to `0x40b268`). The same part and revision test picks the HDOC image: `hdoc_hd%s.xla` / `hdoc_sd%s.xla` get the suffix `_fast` unless the part is 1653 and the revision is below 3 (L `0x407b00` to `0x407c5c`, `0x40ae38` to `0x40b0bc`) | 26 bits. Bit 24 is a hold-off during programming, bit 17 is set last | E (formula, the 24 hold, the 17 final, the 1653 / revision rule); E (the two fields are the last and middle dash groups of the NIC `Part` field, parsed by `xhdInit` at L `0x4085f0`: `1798(s0)` is 1653 and `1796(s0)` is 2 for `030-1653-002`; the "revision" of this rule is that assembly dash number, not the `Revision:` letter, see [fpga-load.md](fpga-load.md) section 13); U (field meanings) |
 | `0x2008` | `XTHD_HDOC_ENABLE_SEL` | `0x1` | kernel stores the pipe's second shadow here (`0x80200c`, K30 `0x2249c`, `0x29fc4`); abort clears bit 0 | 1 bit | E; I |
 | `0x2010` | format | `0x7fffff` | `(lines_total - 1) << 12 & 0x7ff000 \| (samples_per_line - 1) & 0xfff`, from format row words 6 and 7 (1125 lines, 2200 samples for 1080i/59.94) | 11 + 12 bits | E |
 | `0x2018` | xcc_rden | `0xffffff` | `(active_width + 41) & 0xfff \| 0x29000` | 12 bits plus constant bits 17, 15, 12 | E (formula); U |
@@ -249,7 +295,7 @@ formulas above use were checked.
 
 ### 4.4 XCC blocks (input colour converter `0x2800`, output `0x3000`), two images
 
-**E, and important for a model:** the XCC block has two register layouts, selected by which FPGA image is loaded.
+**E, and easy to miss:** the XCC block has two register layouts, selected by which FPGA image is loaded.
 
 - The library loads `ixcc.mcs` and `oxcc.mcs` (the strings `ixcc%s` and `oxcc%s` with an empty suffix, L `xhdInit` `0x407e44` and `0x407bc8`;
   the library is built with `-DPROGRAMABLE_XCC`, visible in its compile line). Its register map is the "programmable" one below.
@@ -299,8 +345,8 @@ control `{2, 4, 1}` for component 0, 1, 2, then 8192 writes of the 32-bit entry 
 
 | R | Name | Access | Fields | Grade |
 |---|---|---|---|---|
-| `0x3860` | `XTHD_CLINK_PGEN_LO_SEL`, mask `0xffff` | `xhdInit` writes `0xc3f7` right after printing "Configuring Clink to generate on-board 50Mhz clock" (L `0x407fe8`) | 16-bit pattern-generator divider (low) | E (value); I (role) |
-| `0x3868` | `PGEN_HI_SEL`, mask `0xff` | written 37 (`0x25`, L `0x4081b4`) | 8 bits, high part | E; I |
+| `0x3860` | `XTHD_CLINK_PGEN_LO_SEL`, mask `0xffff` | `xhdInit` writes `0xc3f7` right after printing "Configuring Clink to generate on-board 50Mhz clock" (L `0x407fe8`), **only when `getenv("_XTDIGVID_NO_VBOB_SUPPORT")` is non-null** (L `0x407f9c` to `0x407fa8`; the string at L `0x418680`, followed by the notice "Running diag version of libdigvid with no vbob support!!"); in normal operation the register is never written | 16-bit pattern-generator divider (low) | E (value); I (role) |
+| `0x3868` | `PGEN_HI_SEL`, mask `0xff` | written 37 (`0x25`, L `0x4081b4`), under the same environment-variable condition | 8 bits, high part | E; I |
 | `0x3870` | `KSYNC_SEL`, mask `0x1ff` | diagnostic only | | name, mask E |
 | `0x38e0` | `UART_RESET_SEL`, mask `0x1` | `xhdInit` writes 1 then 0 ("Failed to reset clink", L `0x407f1c`, `0x407f60`); `xhdOpenPath` does the same pair (L `0x409bec`, `0x409c00`) | bit 0 = reset the CLINK UART | E (name from T, accesses from L) |
 | `0x3800` to `0x3858` | 12 halfword registers | an ioctl case in `xtdigvid_ioctl` (K30 `0xbaf4` to `0xbb40`) copies 12 halfwords from the user argument into `R = 0x3800 + 8*i` (`li v0,14336; ori t0,0x4; or; sw` per halfword) | 24 bytes of a CLINK transmit message (inferred from the next store) | E (stores); I (role) |
@@ -349,8 +395,7 @@ widths. That agreement is the evidence for the "E (formula and width)" labels ab
 - **U for hardware reset values, for every register in this document.** Software never reads a register before writing it, except
   the three read-modify-write cases (`0x74`, HDOC status, HDOC resync) and the identification words. The values software writes at
   initialisation are chosen by the driver and say nothing about reset: the pipe controls get `0xea040` / `0xa040`, the CLINK reset pair is 1 then 0, the
-  XG control gets its constant `0x4200`. Settled only by a capture from a board after power-on, under the physical-test agreement, or by choosing
-  values in the model and saying so.
+  XG control gets its constant `0x4200`. Settled only by a capture from a board after power-on, under the physical-test agreement.
 - **Read behaviour.** The identification (`0x80`) is read-only and constant in its top 24 bits (E). The XG cause register is
   read, then written back (section 3.1). Every other register is either written without being read back (production) or only
   read back by the diagnostic under the pattern test (storage). **I** that the video-control and DMA words in a pipe are
@@ -370,8 +415,8 @@ The "about 40" in the scoping datasheet was an undercount because the diagnostic
 
 | Unknown | Size | What settles it |
 |---|---|---|
-| Hardware meaning of every control bit (video controls, HDOC status fields, VIF control bits) | about 100 bits | the Owner's Guide block descriptions (M1 in the scoping datasheet) and the bitstream's behaviour; a model that does not run the FPGAs needs only the formulas above and the data path |
-| XG revision and ID readback, status bit 5, reset values, bit 24 of `0x6c`, bits 14 and 9 of control | a handful | a physical capture; or record as chosen by the model author |
+| Hardware meaning of every control bit (video controls, HDOC status fields, VIF control bits) | about 100 bits | the Owner's Guide block descriptions (M1 in the scoping datasheet) and the bitstream's behaviour |
+| XG revision and ID readback, status bit 5, reset values, bit 24 of `0x6c`, bits 14 and 9 of control | a handful | a physical capture |
 | The NIC bit protocol at `0x9c` | one register | read `nic_access_mcr32` and its callers in the same kernel object; software-only |
 | Control values and index behaviour of the LUT registers | 2 registers | `xhdLUTCompute` body and the diagnostic's `hdtv_ilut` |
 | Format-table row words 8 and 20 and the `flag` selector | table of 14 rows | the `libdigvid` timing structures (`xhdVerifyPathConfig` at L `0x40e420`) |

@@ -46,7 +46,7 @@
 #define DM2_WIDGET_STATUS_LINK_SLOW_INPLACE          (DM2_WIDGET_STATUS_LINK_SLOW_MASK << DM2_WIDGET_STATUS_LINK_SLOW_SHIFT)
 
 /*
- * Widget control (the diagnostic calls it the XG control register). The init routine stores widget id, interrupt target and a constant, then ORs the XG error interrupt enable; the error handler clears the enable first and nothing sets it again. The low nibble comes from the widget's own number and bits 25:22 from the interrupt target widget, both inferred from the helper names. Bits 14 and 9 are written as constants and are unexplained.
+ * Widget control (the diagnostic calls it the XG control register). The init routine stores widget id, interrupt target and a constant, then ORs the XG error interrupt enable; the error handler clears the enable first and nothing sets it again. The low nibble comes from the widget's own number and bits 25:22 from the target widget of the XG error interrupt object, both inferred from the helper names. The same target value is also stored in the interrupt destination upper word, bits 19:16. Because the map RAM entry carries no widget field and this is the only other place a target widget is stored, bits 25:22 are the inferred home of the target widget for the board's own DMA requests; nothing in the shipped software states it. Bits 14 and 9 are written as constants and are unexplained. The only routine that sets bit 17 is the XG init routine, which runs at attach and again from the board-reset ioctl; the error handler and the detach routine clear it.
  */
 /* widget_control: rw32, reset unknown; shipped kernel driver and media library readings */
 #define DM2_WIDGET_CONTROL_OFFSET                    0x24u /* established */
@@ -67,7 +67,13 @@
 #define DM2_WIDGET_CONTROL_WIDGET_NUMBER_INPLACE     (DM2_WIDGET_CONTROL_WIDGET_NUMBER_MASK << DM2_WIDGET_CONTROL_WIDGET_NUMBER_SHIFT)
 
 /*
- * Interrupt destination, upper: address bits 47:32 in the low half and the target id above them, from the interrupt object the kernel allocated for the XG error interrupt. Store established; field names inferred.
+ * Request timeout, the odd word of common-block slot 0x28. The only access in the shipped software is a store of 0 in the routine the XG init routine calls just before it enables the error interrupt (after reading the error cause word, printing a message if it is non-zero, and before writing the cause word back). Never read. The store is established; the role (the common block's request timeout, here left disabled or at its minimum) is inferred from the slot's role in the common widget block.
+ */
+/* xg_req_timeout: w32, reset unknown; shipped kernel driver and media library readings */
+#define DM2_XG_REQ_TIMEOUT_OFFSET                    0x2cu /* established */
+
+/*
+ * Interrupt destination, upper: address bits 47:32 in the low half and the target widget id above them, from the interrupt object the kernel allocated for the XG error interrupt. The driver asserts that the two video interrupt objects have the same address and target as the error interrupt, so one destination serves all three. Store established; field names inferred.
  */
 /* int_dest_hi: w32, reset unknown; shipped kernel driver and media library readings */
 #define DM2_INT_DEST_HI_OFFSET                       0x34u /* established */
@@ -440,7 +446,7 @@
 #define DM2_PIPE0_RESET_WORD_OFFSET                  0x80007cu /* established */
 
 /*
- * GIF identification (register number 0x80), read at attach: the upper 24 bits must be the ASCII text GIF; the low byte is the GIF version, which the driver prints. Any other value fails attach.
+ * GIF identification (register number 0x80). Read once, by the GIF initialisation routine, which runs only from the board-reset ioctl when its argument has bit 1 clear (the media library issues it after all eight FPGAs are loaded), not at attach; the routine first requires the board-alive flag and the GIF DONE bit in the programming register. The upper 24 bits must be the ASCII text GIF; the low byte is the GIF version, which the driver prints at debug level 3 or above. Any other value fails that ioctl with the message that the GIF version is invalid.
  */
 /* gif_ident: r32, reset unknown; shipped kernel driver and media library readings */
 #define DM2_GIF_IDENT_OFFSET                         0x800084u /* established */
@@ -824,7 +830,7 @@
 #define DM2_CLINK_TX_MESSAGE_HALFWORD_INPLACE        (DM2_CLINK_TX_MESSAGE_HALFWORD_MASK << DM2_CLINK_TX_MESSAGE_HALFWORD_SHIFT)
 
 /*
- * CLINK pattern-generator divider, low (register number 0x3860, the diagnostic's PGEN_LO_SEL). The library writes CLINK_PGEN_LO_INIT when configuring the on-board 50 MHz clock. Role inferred.
+ * CLINK pattern-generator divider, low (register number 0x3860, the diagnostic's PGEN_LO_SEL). The library writes CLINK_PGEN_LO_INIT when configuring the on-board 50 MHz clock, but only when the environment variable _XTDIGVID_NO_VBOB_SUPPORT is set (the diagnostic build of the initialisation path); in normal operation it is never written. Role inferred.
  */
 /* clink_pgen_lo: rw32, reset unknown; shipped kernel driver and media library readings */
 #define DM2_CLINK_PGEN_LO_OFFSET                     0x803864u /* established */
@@ -833,7 +839,7 @@
 #define DM2_CLINK_PGEN_LO_DIVIDER_LO_INPLACE         (DM2_CLINK_PGEN_LO_DIVIDER_LO_MASK << DM2_CLINK_PGEN_LO_DIVIDER_LO_SHIFT)
 
 /*
- * CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT. Role inferred.
+ * CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT, under the same environment-variable condition as the low register. Role inferred.
  */
 /* clink_pgen_hi: rw32, reset unknown; shipped kernel driver and media library readings */
 #define DM2_CLINK_PGEN_HI_OFFSET                     0x80386cu /* established */

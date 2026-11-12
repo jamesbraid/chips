@@ -129,6 +129,20 @@
   {
    "unit": "dm2",
    "kind": "register",
+   "name": "xg_req_timeout",
+   "offset": 44,
+   "access": "w",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "shipped kernel driver and media library readings"
+  },
+  {
+   "unit": "dm2",
+   "kind": "register",
    "name": "int_dest_hi",
    "offset": 52,
    "access": "w",

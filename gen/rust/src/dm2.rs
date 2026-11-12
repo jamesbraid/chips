@@ -200,7 +200,12 @@ pub mod widget_control {
         }
     }
 }
-/// Interrupt destination, upper: address bits 47:32 in the low half and the target id above them, from the interrupt object the kernel allocated for the  (established)
+/// Request timeout, the odd word of common-block slot 0x28. The only access in the shipped software is a store of 0 in the routine the XG init routine ca (established)
+pub mod xg_req_timeout {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x2c;
+}
+/// Interrupt destination, upper: address bits 47:32 in the low half and the target widget id above them, from the interrupt object the kernel allocated f (established)
 pub mod int_dest_hi {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x34;
@@ -1121,7 +1126,7 @@ pub mod pipe0_reset_word {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x80007c;
 }
-/// GIF identification (register number 0x80), read at attach: the upper 24 bits must be the ASCII text GIF; the low byte is the GIF version, which the dr (established)
+/// GIF identification (register number 0x80). Read once, by the GIF initialisation routine, which runs only from the board-reset ioctl when its argument  (established)
 pub mod gif_ident {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x800084;
@@ -1818,7 +1823,7 @@ pub mod clink_pgen_lo {
         }
     }
 }
-/// CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT. Role inferred. (established)
+/// CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT, under the same environment-variabl (established)
 pub mod clink_pgen_hi {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x80386c;
