@@ -29,6 +29,7 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
 - [docs/xio-fibre-channel.md](docs/xio-fibre-channel.md): the XIO Fibre Channel board (AIC-1160) and its `fcadp` driver contract.
 - [docs/xio-dmediapro-dm2.md](docs/xio-dmediapro-dm2.md): scoping datasheet for the DMediaPro DM2 (XT-DIGVID) XIO video board and, at lower depth, DIVO.
 - [docs/isp1040.md](docs/isp1040.md): QLogic ISP1040 SCSI adapter on the BaseIO: identity and revision, mailbox commands, status entries and what the public drivers leave open; the register contract is in [gen/docs/isp1040.md](gen/docs/isp1040.md).
+- [docs/isp12160.md](docs/isp12160.md): QLogic ISP12160 dual-channel SCSI adapter on the Origin 300 IO-8 and Origin 350 IO9 boards: identity, bus count, mailbox opcodes the shipped programs send, and what is unknown; the constants are in [gen/docs/isp12160.md](gen/docs/isp12160.md).
 - `chips/<chip>/census/`: register-access censuses per chip, produced by [tools/](tools/).
 
 ### Every document under docs/
