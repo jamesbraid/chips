@@ -108,6 +108,15 @@ doc = "A write stores the byte. Bits 6:4 form an octal value, and a read returns
 [registers.function1.fields]
 select = { bits = [6, 4], grade = "inferred", doc = "octal value; a read returns 1 << select" }
 
+[registers.stack]
+offset = 0x6f
+access = "r"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 60 (printed 3-6) and 105 (printed 4-36); sibling"
+doc = "Read-only return-stack port. Four return entries, newest first, are read one byte at a time: the low byte of an entry, then its high byte, which carries the high address bit. Each high-byte read advances the read pointer to the next entry, so eight byte reads bring the pointer back to its start. The read value after initialisation is zero. The reset values of the individual backing words are not specified in the cited pages. The book gives no write function, so a write is outside the published interface and its effect stays unknown."
+
 [registers.sxfrctl0]
 offset = 0x01
 access = "rw"

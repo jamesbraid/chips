@@ -257,6 +257,11 @@ pub mod function1 {
         }
     }
 }
+/// Read-only return-stack port. Four return entries, newest first, are read one byte at a time: the low byte of an entry, then its high byte, which carri (inferred)
+pub mod stack {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x6f;
+}
 /// Host PCI address for the host DMA transfer, four byte registers at 0x88 to 0x8b. Loading it also loads SHADDR. The byte significance across the four b (inferred)
 pub mod lhaddr {
     pub const WIDTH: u32 = 32;

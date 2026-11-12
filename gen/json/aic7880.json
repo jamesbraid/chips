@@ -340,6 +340,20 @@
   {
    "unit": "aic7880",
    "kind": "register",
+   "name": "stack",
+   "offset": 111,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": 0,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 60 (printed 3-6) and 105 (printed 4-36); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "register",
    "name": "lhaddr",
    "offset": 136,
    "access": "rw",

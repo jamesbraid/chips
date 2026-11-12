@@ -133,6 +133,12 @@
 #define AIC7880_FUNCTION1_SELECT_INPLACE             (AIC7880_FUNCTION1_SELECT_MASK << AIC7880_FUNCTION1_SELECT_SHIFT)
 
 /*
+ * Read-only return-stack port. Four return entries, newest first, are read one byte at a time: the low byte of an entry, then its high byte, which carries the high address bit. Each high-byte read advances the read pointer to the next entry, so eight byte reads bring the pointer back to its start. The read value after initialisation is zero. The reset values of the individual backing words are not specified in the cited pages. The book gives no write function, so a write is outside the published interface and its effect stays unknown.
+ */
+/* stack: r8, reset 0x0; Adaptec AIC-7870 Data Book, PDF pp. 60 (printed 3-6) and 105 (printed 4-36); sibling */
+#define AIC7880_STACK_OFFSET                         0x6fu /* inferred */
+
+/*
  * Host PCI address for the host DMA transfer, four byte registers at 0x88 to 0x8b. Loading it also loads SHADDR. The byte significance across the four bytes is not in the cited extract and stays unknown. Read-back is not stated.
  */
 /* lhaddr: rw32, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 139-140 (printed 4-70 to 4-71); sibling */
