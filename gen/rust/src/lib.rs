@@ -3,6 +3,7 @@ pub mod bedrock;
 pub mod bedrock_extra;
 pub mod bridge;
 pub mod bridge_extra;
+pub mod dm2;
 pub mod heart;
 pub mod heart_extra;
 pub mod hub;

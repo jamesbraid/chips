@@ -1,0 +1,1076 @@
+unit = "dm2"
+prefix = "DM2"
+title = "DMediaPro DM2 (XT-DIGVID) XIO video board: widget window, XG block, FPGA load, GIF register file and word layouts"
+doc = """\
+Register and word contract of the DM2 board's 16 MiB widget window, as the shipped kernel driver, the user-space media module and the board's diagnostic use it. \
+Every offset is a byte offset from the window base and every register is a 32-bit word. \
+Grades follow the contract pages: established means the access was read in full from a shipped binary, inferred means the item is reasoned from names or shape, unknown means nothing shipped settles it. \
+Where a position or formula is established and only the role is inferred, the item is graded established and its doc says what is inferred. \
+The GIF register file (window base plus 0x800000) is a file of 64-bit slots at an 8-byte stride. Software only ever reaches the odd (low) 32-bit word of a slot, at slot base plus 4, so every GIF register here is listed as 0x800000 + R + 4, where R is the register number (the slot offset) that the library and the diagnostic use. \
+The input and output colour-converter blocks have two register layouts, one per FPGA image, and the two are not unified: they live in separate address spaces, xcc_prog (the images the media module loads) and xcc_diag (the images only the diagnostic loads). \
+No reset value of any register is known. Nothing here describes emulator behaviour."""
+from = "shipped kernel driver and media library readings"
+public_from = ["shipped kernel driver and media library readings", "shipped diagnostic tables"]
+
+[c]
+offset_macro = "suffix"
+
+[spaces.xcc_prog]
+unit = "byte"
+doc = "Colour-converter registers as the library programs them, for the ixcc and oxcc images it loads."
+
+[spaces.xcc_diag]
+unit = "byte"
+doc = "Colour-converter registers as the diagnostic's table names them, for the ixcc_2 and oxcc_2 images only the diagnostic loads."
+
+[enums.xg_mapram_type]
+doc = "XG configuration word, map-RAM type code: the diagnostic indexes a three-string table with it."
+values = { k32x36 = { value = 0, grade = "established", doc = "32K by 36 bits" }, k64x18 = { value = 1, grade = "established", doc = "64K by 18 bits" }, k128x9 = { value = 2, grade = "established", doc = "128K by 9 bits" }, invalid = { value = 3, grade = "established", doc = "the diagnostic prints that the type is invalid" } }
+
+[enums.fpga_kind]
+doc = "Programming routine set an FPGA info record selects."
+values = { others_handshaked = { value = 0, grade = "established", doc = "start, byte and stop routines of the seven FPGAs behind the GIF; each byte goes to the data port after a READY poll" }, gif = { value = 1, grade = "established", doc = "the GIF FPGA, programmed bit-serially through the programming register" }, others_blind = { value = 2, grade = "established", doc = "as kind 0 for start and stop, but each byte is one blind store to the status port with no READY poll (the two colour-converter FPGAs)" } }
+
+[enums.vbob_pipe]
+doc = "Pipe byte of a VBOB message frame."
+values = { output = { value = 0, grade = "established", doc = "the driver's out pipe; the cable it names is inferred (cable A, transmit)" }, input = { value = 1, grade = "established", doc = "the driver's in pipe; the cable it names is inferred (cable B, receive)" } }
+
+# ---------------------------------------------------------------------------
+# Standard widget block and the XG block, at the window base
+# ---------------------------------------------------------------------------
+
+[registers.widget_id]
+offset = 0x04
+access = "r"
+width = 32
+grade = "established"
+doc = "Widget identification, read by the diagnostic only; the kernel never reads it. The field split is established; the readback value is unknown (the part and manufacturer the driver registers with are not read from this register)."
+from = "shipped diagnostic tables"
+fields = { revision = { bits = [31, 28], grade = "established" }, part = { bits = [27, 12], grade = "established" }, manufacturer = { bits = [11, 1], grade = "established" } }
+
+[registers.widget_status]
+offset = 0x0c
+access = "r"
+width = 32
+grade = "established"
+doc = "Widget status. The kernel reads it once at attach and tests bit 5 only: when set it prints that the XIO slot is the slower 400 MB/s kind. The test is established; what the bit encodes is unknown (the message says link speed)."
+fields = { link_slow = { bits = [5, 5], grade = "established" } }
+
+[registers.widget_control]
+offset = 0x24
+access = "rw"
+width = 32
+grade = "established"
+doc = "Widget control (the diagnostic calls it the XG control register). The init routine stores widget id, interrupt target and a constant, then ORs the XG error interrupt enable; the error handler clears the enable first and nothing sets it again. The low nibble comes from the widget's own number and bits 25:22 from the interrupt target widget, both inferred from the helper names. Bits 14 and 9 are written as constants and are unexplained."
+fields = { widget_number = { bits = [3, 0], grade = "inferred" }, const_bit9 = { bits = [9, 9], grade = "unknown" }, const_bit14 = { bits = [14, 14], grade = "unknown" }, xg_error_int_enable = { bits = [17, 17], grade = "established", doc = "role established from the handler's own disable and the diagnostic's messages; that nothing else lives in the bit is inferred" }, int_target = { bits = [25, 22], grade = "inferred" } }
+tests = [{ value = 0x4200, kind = "vector", expect = { const_bit9 = 1, const_bit14 = 1, xg_error_int_enable = 0 } }]
+
+[registers.int_dest_hi]
+offset = 0x34
+access = "w"
+width = 32
+grade = "established"
+doc = "Interrupt destination, upper: address bits 47:32 in the low half and the target id above them, from the interrupt object the kernel allocated for the XG error interrupt. Store established; field names inferred."
+fields = { addr_hi = { bits = [15, 0], grade = "inferred" }, target_id = { bits = [19, 16], grade = "inferred" } }
+
+[registers.int_dest_lo]
+offset = 0x3c
+access = "w"
+width = 32
+grade = "established"
+doc = "Interrupt destination, lower: the low 32 bits of the interrupt address."
+fields = { addr_lo = { bits = [31, 0], grade = "established" } }
+
+[registers.xg_int_vectors]
+offset = 0x5c
+access = "w"
+width = 32
+grade = "established"
+doc = "XG interrupt vectors. In the common widget block this slot is an error command word; in the XG it holds interrupt vectors, so the common role does not apply (established for the XG use, inferred that the divergence is deliberate; no read exists). Bits 17 and 8 are ORed in as constants and are inferred to be per-source enables, which one is which is unknown."
+fields = { gv0_vector = { bits = [7, 0], grade = "established" }, const_bit8 = { bits = [8, 8], grade = "inferred" }, gv1_vector = { bits = [16, 9], grade = "established" }, const_bit17 = { bits = [17, 17], grade = "inferred" }, error_vector = { bits = [25, 18], grade = "established" } }
+
+[registers.xg_config]
+offset = 0x64
+access = "r"
+width = 32
+grade = "established"
+doc = "XG configuration, read at attach and by the diagnostic; read-only from software. The subsystem field must read 1. The map-RAM size code is printed by the kernel as the code times 32 kilobytes; the table from size code to real size is unknown. The type code indexes a three-string table (order established)."
+fields = { subsystem = { bits = [2, 0], grade = "established" }, mapram_size_code = { bits = [5, 3], grade = "established" }, mapram_type = { bits = [7, 6], grade = "established", enum = "xg_mapram_type" } }
+
+[registers.xg_error_cause]
+offset = 0x6c
+access = "rw"
+width = 32
+grade = "established"
+doc = "XG error cause, one bit per error. The error handler reads it, writes the same value back before decoding, and prints one message per set bit. That the write-back is write-one-to-clear is inferred. Bit 22 is tested twice in the shipped handler and prints both a cache-line and a double-word underflow message; bit 24 is never tested. The intended assignment of bit 24 (graphics double-word credit underflow) is inferred; the diagnostic writes 0 here. Bit 31 has no test in the handler's shift sequence."
+fields = { guava_overlap = { bits = [0, 0], grade = "established" }, guava_pio_data_resp_overflow = { bits = [1, 1], grade = "established" }, guava_pio_cmd_resp_overflow = { bits = [2, 2], grade = "established" }, guava_valid_when_idle = { bits = [3, 3], grade = "established" }, guava_bad_command = { bits = [4, 4], grade = "established" }, guava_bad_interrupt = { bits = [5, 5], grade = "established" }, xtalk_address = { bits = [6, 6], grade = "established" }, xtalk_bad_command = { bits = [7, 7], grade = "established" }, xtalk_read_req_timeout = { bits = [8, 8], grade = "established" }, xtalk_response = { bits = [9, 9], grade = "established" }, xtalk_request = { bits = [10, 10], grade = "established" }, gfx_fifo_overflow = { bits = [11, 11], grade = "established" }, mapram_parity = { bits = [12, 12], grade = "established", doc = "the handler prints the address read from the map-RAM error address register" }, mapram_invalid = { bits = [13, 13], grade = "established", doc = "the handler prints the address read from the map-RAM error address register" }, guava_bus_cmd_parity = { bits = [14, 14], grade = "established" }, guava_bus_data_parity = { bits = [15, 15], grade = "established" }, guava_bus_parity = { bits = [16, 16], grade = "established" }, xtalk_req_credit_overflow = { bits = [17, 17], grade = "established" }, xtalk_req_credit_underflow = { bits = [18, 18], grade = "established" }, xtalk_resp_credit_overflow = { bits = [19, 19], grade = "established" }, xtalk_resp_credit_underflow = { bits = [20, 20], grade = "established" }, gfx_cacheline_credit_overflow = { bits = [21, 21], grade = "established" }, gfx_cacheline_credit_underflow = { bits = [22, 22], grade = "established", doc = "the handler also prints the double-word underflow message when this bit is set" }, gfx_dword_credit_overflow = { bits = [23, 23], grade = "established" }, gfx_dword_credit_underflow = { bits = [24, 24], grade = "inferred", doc = "never tested by the shipped handler; the assignment comes from the sequence of messages" }, cmd_fifo_overflow = { bits = [25, 25], grade = "established" }, odma_fifo_overflow = { bits = [26, 26], grade = "established" }, idma_resp_size = { bits = [27, 27], grade = "established" }, idma_resp_invalid_tag = { bits = [28, 28], grade = "established" }, guava_write_too_few = { bits = [29, 29], grade = "established" }, xtalk_write_full_fifo = { bits = [30, 30], grade = "established" }, bit31_untested = { bits = [31, 31], grade = "unknown", doc = "no test seen in the handler's shift sequence; a direct sign test on the raw word was not looked for" } }
+
+[registers.xg_water_mark]
+offset = 0x74
+access = "rw"
+width = 32
+grade = "established"
+doc = "High/low water mark (the diagnostic's name). The init routine keeps the two 6-bit fields from the current value, forces bits 15:0 to a constant and bits 31:28 to 0. The diagnostic stores bits 27:0 as plain storage. What high and low mean (presumably graphics FIFO thresholds) is inferred. This is the XG register at window offset 0x74, not the pipe 0 per-pipe word whose window offset is 0x800074."
+fields = { fixed_low = { bits = [15, 0], grade = "established", doc = "forced to a constant by the init routine" }, mark_a = { bits = [21, 16], grade = "inferred" }, mark_b = { bits = [27, 22], grade = "inferred" }, forced_zero = { bits = [31, 28], grade = "established" } }
+tests = [{ value = 0x3f40, kind = "vector", expect = { fixed_low = 0x3f40, mark_a = 0, mark_b = 0, forced_zero = 0 } }]
+
+[registers.xg_mapram_err_addr]
+offset = 0x94
+access = "r"
+width = 32
+grade = "established"
+doc = "Offending map-RAM entry address, read after a map-RAM parity or invalid error and printed as five hex digits. Read-only is inferred."
+fields = { entry_addr = { bits = [19, 0], grade = "established" } }
+
+[registers.xg_nic]
+offset = 0x9c
+access = "rw"
+width = 32
+grade = "established"
+doc = "Board identity one-wire register, read through the shared one-wire accessor. The offset and accessor are established; the bit protocol is not in the driver object (unknown). The diagnostic stores bits 15:2 as plain storage; bits 1:0 are inferred to be the one-wire pulse and sample bits."
+fields = { onewire = { bits = [1, 0], grade = "inferred" }, storage = { bits = [15, 2], grade = "established", from = "shipped diagnostic tables" } }
+
+[registers.fpga_prog]
+offset = 0x120000
+access = "rw"
+width = 32
+grade = "established"
+doc = "GIF FPGA programming and status register. Read layout (this register): DONE and INIT for each FPGA in adjacent bit pairs. The message calls the GIF INIT bit INIT_L, active low, so it reads 1 when the pin is not asserted. The pairs run in the order GIF, packer, unpacker, input colour converter, output colour converter, VIF, HDOC, CLINK, which is not the order of the library's FPGA numbers. Names are inferred. The write layout is the word FPGA_PROG_WRITE."
+fields = { gif_done = { bits = [0, 0], grade = "established" }, gif_init = { bits = [1, 1], grade = "established" }, packer_done = { bits = [2, 2], grade = "established" }, packer_init = { bits = [3, 3], grade = "established" }, unpacker_done = { bits = [4, 4], grade = "established" }, unpacker_init = { bits = [5, 5], grade = "established" }, ixcc_done = { bits = [6, 6], grade = "established" }, ixcc_init = { bits = [7, 7], grade = "established" }, oxcc_done = { bits = [8, 8], grade = "established" }, oxcc_init = { bits = [9, 9], grade = "established" }, vif_done = { bits = [10, 10], grade = "established" }, vif_init = { bits = [11, 11], grade = "established" }, hdoc_done = { bits = [12, 12], grade = "established" }, hdoc_init = { bits = [13, 13], grade = "established" }, clink_done = { bits = [14, 14], grade = "established" }, clink_init = { bits = [15, 15], grade = "established" } }
+
+# ---------------------------------------------------------------------------
+# GIF register file: core, DMA pipes, identification
+# ---------------------------------------------------------------------------
+
+[registers.gif_reset]
+offset = 0x800004
+access = "rw"
+width = 32
+grade = "established"
+doc = "GIF reset/enable word (register number 0x00). The init routine stores 0 when asked to reinitialise; the FPGA load path polls for a value of 0x80. The meaning of the bits is unknown."
+
+[registers.gif_prog_control]
+offset = 0x80000c
+access = "rw"
+width = 32
+grade = "established"
+doc = "Per-FPGA programming control (register number 0x08), for the seven FPGAs behind the GIF. The select word is one-hot and bit 7 is a strobe level (idle high, pulsed low around each download); the code shows only the values and the pulse shape, so the names are inferred."
+fields = { fpga_select = { bits = [6, 0], grade = "inferred" }, prog_strobe = { bits = [7, 7], grade = "inferred" } }
+
+[registers.pipe_dma_control]
+offset = 0x800014
+access = "rw"
+width = 32
+count = 2
+stride = 0x28
+grade = "established"
+doc = "Per-pipe DMA control word, indexed by pipe (pipe 0 at register number 0x10, pipe 1 at 0x38). The driver keeps a shadow and rewrites the whole word. Bits 3:0 are per-slot valid latches and bit 4 is abort; both are ORed into the written value and never kept in the shadow (established from the driver's own assertion). Bit 16 is the pipe interrupt enable (inferred from trace names). Bits 12, 10 and 9 are set and cleared by the raster configuration; their roles are inferred. The valid bits are inferred to be write-one-to-set latches. The initial shadow is 0xea040 for pipe 0 and 0xa040 for pipe 1. The diagnostic stores bits 14:5 (and 20:17 on pipe 0). The diagnostic calls pipe 0 the IDMA engine and pipe 1 the ODMA engine; the contract pages assign pipe 0 to video out (HDOC side) and pipe 1 to video in (VIF side), which is inferred."
+fields = { slot_valid = { bits = [3, 0], grade = "established" }, abort = { bits = [4, 4], grade = "established" }, cfg_bit9 = { bits = [9, 9], grade = "inferred" }, cfg_bit10 = { bits = [10, 10], grade = "inferred" }, cfg_bit12 = { bits = [12, 12], grade = "inferred" }, int_enable = { bits = [16, 16], grade = "inferred" } }
+tests = [{ value = 0xea040, kind = "vector", expect = { slot_valid = 0, abort = 0, cfg_bit9 = 0, cfg_bit10 = 0, cfg_bit12 = 0, int_enable = 0 } }, { value = 0xa040, kind = "vector", expect = { slot_valid = 0, abort = 0, cfg_bit9 = 0, cfg_bit10 = 0, cfg_bit12 = 0, int_enable = 0 } }]
+
+[registers.pipe_start_addr1]
+offset = 0x80001c
+access = "rw"
+width = 32
+count = 2
+stride = 0x28
+grade = "established"
+doc = "Per-pipe raster start address 1 (register numbers 0x18 and 0x40). The value must be below 16 MiB (the driver rejects larger ones). The diagnostic does not store the low 3 bits, so 8-byte alignment is inferred."
+fields = { start_addr = { bits = [23, 0], grade = "established" } }
+
+[registers.pipe_start_addr2]
+offset = 0x800024
+access = "rw"
+width = 32
+count = 2
+stride = 0x28
+grade = "established"
+doc = "Per-pipe raster start address 2 (register numbers 0x20 and 0x48), same range test as start address 1. Alignment is inferred."
+fields = { start_addr = { bits = [23, 0], grade = "established" } }
+
+[registers.pipe_vid_control]
+offset = 0x80002c
+access = "rw"
+width = 32
+count = 2
+stride = 0x28
+grade = "established"
+doc = "Per-pipe video control (register numbers 0x28 and 0x50; the diagnostic's IDMA_OV and ODMA_IV). Formula and width are established, exactly the 26 bits the diagnostic stores; what the two counts and flags mean in the video path is unknown. Bits 11:0 come from a 16-bit field of the pipe record, bits 23:12 from a 12-bit argument of the raster configuration, bit 24 is set when one 16-bit pipe field is zero and bit 25 when another is nonzero."
+fields = { count_lo = { bits = [11, 0], grade = "established" }, count_hi = { bits = [23, 12], grade = "established" }, flag_zero = { bits = [24, 24], grade = "established" }, flag_nonzero = { bits = [25, 25], grade = "established" } }
+
+[registers.pipe_vid_control2]
+offset = 0x800034
+access = "rw"
+width = 32
+count = 2
+stride = 0x28
+grade = "established"
+doc = "Per-pipe video control 2 (register numbers 0x30 and 0x58): the low 12 bits of an argument. Meaning unknown."
+fields = { value = { bits = [11, 0], grade = "established" } }
+
+[registers.pipe1_ring_ptr_reset]
+offset = 0x800064
+access = "w"
+width = 32
+grade = "inferred"
+doc = "Pipe 1 per-pipe word (register number 0x60), stored 0 when the pipe's status buffer is set up and by the clink-timeout path. The stores and the pipe assignment (pipe 1 owns this offset, pipe 0 owns 0x800074) are established; that it resets the board's status-ring write index is inferred. The host never reads it."
+
+[registers.pipe1_reset_word]
+offset = 0x80006c
+access = "w"
+width = 32
+grade = "established"
+doc = "Pipe 1 per-pipe word (register number 0x68), stored 0 at DMA start. Meaning unknown."
+
+[registers.pipe0_ring_ptr_reset]
+offset = 0x800074
+access = "w"
+width = 32
+grade = "inferred"
+doc = "Pipe 0 per-pipe word (register number 0x70), stored 0 when the pipe's status buffer is set up and by the clink-timeout path. The stores and the pipe assignment (pipe 0 owns this offset, pipe 1 owns 0x800064) are established; that it resets the board's status-ring write index is inferred. The host never reads it. Not to be confused with the XG water-mark register at window offset 0x74."
+
+[registers.pipe0_reset_word]
+offset = 0x80007c
+access = "w"
+width = 32
+grade = "established"
+doc = "Pipe 0 per-pipe word (register number 0x78), stored 0 at DMA start. Meaning unknown."
+
+[registers.gif_ident]
+offset = 0x800084
+access = "r"
+width = 32
+grade = "established"
+doc = "GIF identification (register number 0x80), read at attach: the upper 24 bits must be the ASCII text GIF; the low byte is the GIF version, which the driver prints. Any other value fails attach."
+fields = { magic = { bits = [31, 8], grade = "established" }, version = { bits = [7, 0], grade = "established" } }
+tests = [{ value = 0x47494600, kind = "example", expect = { magic = 0x474946, version = 0 } }]
+
+[registers.ust_msc_counter]
+offset = 0x80008c
+access = "rw"
+width = 32
+grade = "inferred"
+doc = "Register number 0x88, stored 0 by the UST initialisation just before the host UST is sampled. The store is established; that it is the board's own UST/MSC counter is inferred from the pattern and the driver's message."
+
+# ---------------------------------------------------------------------------
+# Packer (block at register number 0x800) and unpacker (0x1000)
+# ---------------------------------------------------------------------------
+
+[registers.pack_r0800]
+offset = 0x800804
+access = "rw"
+width = 32
+grade = "established"
+doc = "Packer register number 0x800. The library's per-pipe init stores a constant (see PACK_INIT_R0800). Roles unknown."
+
+[registers.pack_r0808]
+offset = 0x80080c
+access = "rw"
+width = 32
+grade = "established"
+doc = "Packer register number 0x808. Init constant PACK_INIT_R0808. Roles unknown."
+
+[registers.pack_r0810]
+offset = 0x800814
+access = "rw"
+width = 32
+grade = "established"
+doc = "Packer register number 0x810. Init constant PACK_INIT_R0810. Roles unknown."
+
+[registers.pack_misc_sel]
+offset = 0x800824
+access = "rw"
+width = 32
+grade = "established"
+doc = "Packer miscellaneous select (register number 0x820, the diagnostic's PACK_MISC_SEL). Name and storage mask (bits 2 and 0) are established; the library stores 1 during init. Role unknown."
+from = "shipped diagnostic tables"
+fields = { storage_bit0 = { bits = [0, 0], grade = "established" }, storage_bit2 = { bits = [2, 2], grade = "established" } }
+
+[registers.pack_r0840]
+offset = 0x800844
+access = "rw"
+width = 32
+grade = "established"
+doc = "Packer register number 0x840. Init value is 0x1000 for pipe 1 (PACK_INIT_R0840). Roles unknown."
+
+[registers.pack_r0848]
+offset = 0x80084c
+access = "rw"
+width = 32
+grade = "established"
+doc = "Packer register number 0x848. Init constant PACK_INIT_R0848. Roles unknown."
+
+[registers.pack_r0850]
+offset = 0x800854
+access = "rw"
+width = 32
+grade = "established"
+doc = "Packer register number 0x850. Init constant PACK_INIT_R0850. Roles unknown."
+
+[registers.unpack_r1000]
+offset = 0x801004
+access = "rw"
+width = 32
+grade = "established"
+doc = "Unpacker register number 0x1000. Init constant UNPACK_INIT_R1000. Roles unknown."
+
+[registers.unpack_r1008]
+offset = 0x80100c
+access = "rw"
+width = 32
+grade = "established"
+doc = "Unpacker register number 0x1008. Init constant UNPACK_INIT_R1008. Roles unknown."
+
+[registers.unpack_version_sel]
+offset = 0x801014
+access = "rw"
+width = 32
+grade = "established"
+doc = "Unpacker VERSION_SEL (register number 0x1010). Name only; the diagnostic's storage mask is 0, which means not tested rather than read-only. Role unknown."
+from = "shipped diagnostic tables"
+
+[registers.unpack_misc_sel]
+offset = 0x80101c
+access = "rw"
+width = 32
+grade = "established"
+doc = "Unpacker MISC_SEL (register number 0x1018). The library stores 0x0fffe0f9 with a flag shifted into bit 28 (UNPACK_INIT_MISC_BASE); the diagnostic's storage mask is bits 11:2 and 0. Bits of the library constant outside that mask are either not storage or not tested. Roles unknown."
+fields = { diag_storage_hi = { bits = [11, 2], grade = "established", from = "shipped diagnostic tables" }, diag_storage_lo = { bits = [0, 0], grade = "established", from = "shipped diagnostic tables" }, flag28 = { bits = [28, 28], grade = "inferred", doc = "the library ORs the second output of its timing mapper here; inferred to mean standard-definition timing" } }
+
+[registers.unpack_idma_data_sel]
+offset = 0x801024
+access = "rw"
+width = 32
+count = 2
+stride = 8
+grade = "established"
+doc = "Unpacker IDMA_DATA0_SEL and IDMA_DATA1_SEL (register numbers 0x1020 and 0x1028). Names only; diagnostic mask 0. Roles unknown."
+from = "shipped diagnostic tables"
+
+[registers.unpack_ovfifo_test_pattern_sel]
+offset = 0x801034
+access = "rw"
+width = 32
+count = 2
+stride = 8
+grade = "established"
+doc = "Unpacker OVFIFO_TEST_PATTERN0_SEL and OVFIFO_TEST_PATTERN1_SEL (register numbers 0x1030 and 0x1038). Names only; diagnostic mask 0. Roles unknown."
+from = "shipped diagnostic tables"
+
+[registers.unpack_r1040]
+offset = 0x801044
+access = "rw"
+width = 32
+grade = "established"
+doc = "Unpacker register number 0x1040. Init value is 0x1200 for pipe 0 (UNPACK_INIT_R1040). Roles unknown."
+
+[registers.unpack_r1048]
+offset = 0x80104c
+access = "rw"
+width = 32
+grade = "established"
+doc = "Unpacker register number 0x1048. Init constant UNPACK_INIT_R1048. Roles unknown."
+
+# ---------------------------------------------------------------------------
+# Video input formatter (VIF), block at register number 0x1800
+# ---------------------------------------------------------------------------
+
+[registers.vif_control]
+offset = 0x801804
+access = "rw"
+width = 32
+grade = "established"
+doc = "VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test."
+fields = { bit0 = { bits = [0, 0], grade = "established" }, mode_sel = { bits = [5, 4], grade = "established" }, sd_flag = { bits = [6, 6], grade = "established" }, const_7 = { bits = [10, 8], grade = "established" }, row_word1 = { bits = [11, 11], grade = "established" }, nonzero_test = { bits = [12, 12], grade = "established" } }
+
+[registers.vif_enable]
+offset = 0x80180c
+access = "rw"
+width = 32
+grade = "established"
+doc = "VIF enable (register number 0x1808, the diagnostic's ENABLE_SEL); the kernel stores the pipe's second shadow word here and abort clears bit 0. The store is established; that bit 0 is the enable is inferred. This is the in-pipe (pipe 1) video enable; the pairing is inferred from trace names."
+fields = { enable = { bits = [0, 0], grade = "inferred" }, bit1 = { bits = [1, 1], grade = "unknown" } }
+
+[registers.vif_scratch]
+offset = 0x801814
+access = "rw"
+width = 32
+grade = "inferred"
+doc = "Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write; the library does not use it."
+from = "shipped diagnostic tables"
+
+[registers.vif_dmux]
+offset = 0x80182c
+access = "rw"
+width = 32
+grade = "established"
+doc = "VIF DMUX register (register number 0x1828, the diagnostic's DMUX_REG_SEL). Bits 2:0 are a small selector (0 on the path read), bits 4:3 a two-bit mode (2 or 3, from the format class), bit 5 is set when a path field equals 10 and bit 7 is set except in one special path case. Formula established; meaning unknown."
+fields = { selector = { bits = [2, 0], grade = "established" }, mode = { bits = [4, 3], grade = "established" }, path_is_10 = { bits = [5, 5], grade = "established" }, bit7 = { bits = [7, 7], grade = "established" } }
+
+[registers.vif_f0_actvid]
+offset = 0x801884
+access = "rw"
+width = 32
+grade = "established"
+doc = "VIF field 0 active video (register number 0x1880): two 11-bit line numbers computed from the format row's line count and the path's start offsets. What each line is, is unknown."
+fields = { line0 = { bits = [10, 0], grade = "established" }, line1 = { bits = [21, 11], grade = "established" } }
+
+[registers.vif_f1_actvid]
+offset = 0x80188c
+access = "rw"
+width = 32
+grade = "established"
+doc = "VIF field 1 active video (register number 0x1888): same layout as field 0."
+fields = { line0 = { bits = [10, 0], grade = "established" }, line1 = { bits = [21, 11], grade = "established" } }
+
+[registers.vif_lines_per_frame]
+offset = 0x801894
+access = "rw"
+width = 32
+grade = "established"
+doc = "VIF lines per frame (register number 0x1890): the format row's total line count minus 1 (1124 for the 1125-line HD rows)."
+
+# ---------------------------------------------------------------------------
+# HDOC, block at register number 0x2000. Names and masks are the diagnostic's.
+# ---------------------------------------------------------------------------
+
+[registers.hdoc_status]
+offset = 0x802004
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC status (register number 0x2000). The library sets bit 24 as a hold-off before writing the other HDOC registers and clears it after; the final value is built from pipe flags and ORs bit 17 last, except that on a board whose NIC part number is 1653 with revision 3 or later bit 17 is cleared instead (the inferred reading of which NIC fields hold part and revision comes from the GET_NIC ioctl result). The constant part is 0xc8008, or 0x2c8008 by a path flag. Formula established; field meanings unknown. 26 bits."
+fields = { sel_1_0 = { bits = [1, 0], grade = "established" }, sel_6_5 = { bits = [6, 5], grade = "established" }, sel_9_7 = { bits = [9, 7], grade = "established" }, flag10 = { bits = [10, 10], grade = "established" }, flag11 = { bits = [11, 11], grade = "established" }, flag12 = { bits = [12, 12], grade = "established" }, flag17 = { bits = [17, 17], grade = "established", doc = "set last; cleared instead on the one board-revision case above" }, hold_off = { bits = [24, 24], grade = "established" } }
+
+[registers.hdoc_enable]
+offset = 0x80200c
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC enable (register number 0x2008, the diagnostic's ENABLE_SEL); the kernel stores the pipe's second shadow here and abort clears bit 0. The out-pipe (pipe 0) video enable; the pairing is inferred."
+fields = { enable = { bits = [0, 0], grade = "inferred" } }
+
+[registers.hdoc_format]
+offset = 0x802014
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC format (register number 0x2010): total lines minus 1 and samples per line minus 1, from format-row words (1125 lines and 2200 samples for 1080i at 59.94)."
+fields = { samples_minus_1 = { bits = [11, 0], grade = "established" }, lines_minus_1 = { bits = [22, 12], grade = "established" } }
+
+[registers.hdoc_xcc_rden]
+offset = 0x80201c
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC xcc_rden (register number 0x2018): active width plus 41 in the low 12 bits, with constant bits 17, 15 and 12 (0x29000). Formula established; meaning unknown."
+fields = { width_plus_41 = { bits = [11, 0], grade = "established" } }
+
+[registers.hdoc_trs_hblank]
+offset = 0x802024
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC trs_hblank (register number 0x2020): two 12-bit fields; the high one is active width plus 4 (standard-definition timing) or 8, the low one is 2 or 4 by the same flag. Formula established; meaning unknown."
+fields = { mode = { bits = [11, 0], grade = "established" }, hblank_end = { bits = [23, 12], grade = "established" } }
+
+[registers.hdoc_line_regs]
+offset = 0x80202c
+access = "rw"
+width = 32
+count = 5
+stride = 8
+grade = "established"
+doc = "Five HDOC registers with one layout, in order: actvid_fld0, trs_vblank_fld0, actvid_fld1, trs_vblank_fld1, field (register numbers 0x2028 to 0x2048). Two 11-bit line numbers computed from the format row and the path. The last register is forced to 0 when the first and second operands are equal. Formula established; meaning unknown. 22 bits each."
+fields = { line0 = { bits = [10, 0], grade = "established" }, line1 = { bits = [21, 11], grade = "established" } }
+
+[registers.hdoc_xcc_rden2]
+offset = 0x802054
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC xcc_rden2 (register number 0x2050): two 12-bit fields. Normally the first is active width plus 41 and the second is 41; when the path's geometry equals the full raster both are samples per line minus 41."
+fields = { width_field = { bits = [11, 0], grade = "established" }, blank_field = { bits = [23, 12], grade = "established" } }
+
+[registers.hdoc_vitc_sel]
+offset = 0x80205c
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC VITC_SEL (register number 0x2058). Name and 23-bit mask only; not written by the library."
+from = "shipped diagnostic tables"
+
+[registers.hdoc_resync]
+offset = 0x802064
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC resync (register number 0x2060). The library reads it at init and hands the two fields to the kernel as the resync value, and writes the pair back from the resync routine."
+fields = { sample = { bits = [11, 0], grade = "established" }, line = { bits = [22, 12], grade = "established" } }
+
+[registers.hdoc_resync_wndw]
+offset = 0x80206c
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC resync window (register number 0x2068): the resync position moved by 7 samples with carry into the line count and a wrap at the line total. Window semantics are inferred from the name."
+fields = { sample = { bits = [11, 0], grade = "established" }, line = { bits = [22, 12], grade = "established" } }
+
+[registers.hdoc_data_rden]
+offset = 0x802074
+access = "rw"
+width = 32
+grade = "established"
+doc = "HDOC data_rden (register number 0x2070): active width plus 1 or 2 in the low 12 bits and 0x1000 or 0x2000 in bits 13:12, chosen by the standard-definition flag."
+fields = { end = { bits = [11, 0], grade = "established" }, mode = { bits = [13, 12], grade = "established" } }
+
+[registers.hdoc_fifo_wen_sel]
+offset = 0x80207c
+access = "rw"
+width = 32
+count = 2
+stride = 8
+grade = "established"
+doc = "HDOC FIFOA_WEN_SEL and FIFOB_WEN_SEL (register numbers 0x2078 and 0x2080). Names and 24-bit masks only; not written by the library."
+from = "shipped diagnostic tables"
+
+[registers.hdoc_diag_regs]
+offset = 0x8020b4
+access = "rw"
+width = 32
+count = 8
+stride = 8
+grade = "inferred"
+doc = "Eight diagnostic-only registers, register numbers 0x20b0 to 0x20e8. The diagnostic names, in order, LFIFO_TEST_PATTEN, OXCC_DATA_HI, OXCC_DATA_LO, LFIFO_DATA, VIF_LB_TEST_PATTERN_LO, VIF_LB_TEST_PATTERN_HI, DEFAULT_Y (0x20e0) and DEFAULT_C (0x20e8). Only the last two numbers are tied to names; the assignment of the others to slots follows the listing order and is inferred. Roles unknown. Diagnostic mask 0."
+from = "shipped diagnostic tables"
+
+# ---------------------------------------------------------------------------
+# Colour converters. Layout 1: the images the library loads (xcc_prog).
+# ---------------------------------------------------------------------------
+
+[registers.ixcc_prog_lut_control]
+offset = 0x802804
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Input colour-converter LUT control (block base, register number 0x2800). Per component the library writes 8, then 2, 4 or 1 for component 0, 1 or 2, then 8192 data writes, then 0. The sequence is established; the meaning of the control values is unknown."
+
+[registers.ixcc_prog_lut_data]
+offset = 0x80280c
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Input colour-converter LUT data (register number 0x2808). Each of the 8192 entries per component is one 32-bit store carrying no index; whether the entry index auto-increments is unknown."
+
+[registers.ixcc_prog_offset]
+offset = 0x802814
+access = "rw"
+width = 32
+space = "xcc_prog"
+count = 4
+stride = 8
+grade = "established"
+doc = "Input colour-converter red, green, blue and alpha offsets (register numbers 0x2810, 0x2818, 0x2820, 0x2828): format-table row words 10 to 13, as unsplit 32-bit values."
+
+[registers.ixcc_prog_misc]
+offset = 0x802834
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Input colour converter misc (register number 0x2830): bit 0 is set when the path's conversion mode is zero and bit 8 is the mode's bit 0 shifted up. Formula established; meaning unknown."
+fields = { mode_zero = { bits = [0, 0], grade = "established" }, mode_bit0 = { bits = [8, 8], grade = "established" } }
+
+[registers.ixcc_prog_alpha]
+offset = 0x80283c
+access = "rw"
+width = 32
+space = "xcc_prog"
+count = 2
+stride = 8
+grade = "established"
+doc = "Input colour converter alpha pair (register numbers 0x2838 and 0x2840, one failure message): the first is 4 when the standard-definition flag is set, else the path mode; the second is 0 when the table row index equals a path field, else 3 or the path mode. Offsets established; meaning unknown."
+
+[registers.ixcc_prog_coeflo]
+offset = 0x80284c
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Input colour converter coefficient, low 16 bits (register number 0x2848). Written before the high bit and the index."
+fields = { value = { bits = [15, 0], grade = "established" } }
+
+[registers.ixcc_prog_coefhi]
+offset = 0x802854
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Input colour converter coefficient, bit 16 (register number 0x2850)."
+fields = { bit16 = { bits = [0, 0], grade = "established" } }
+
+[registers.ixcc_prog_coefind]
+offset = 0x80285c
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Input colour converter coefficient index (register number 0x2858), 5 bits, written after the low and high parts. That it latches the coefficient is inferred from the order. Ten coefficients come from a per-format table: words 0 to 8 go to indices 16, 20, 24, 17, 21, 25, 18, 22, 26 (a transposed 3 by 3 matrix, inferred) and word 9 to index 28; then seven filter taps go to indices 0 to 6."
+fields = { index = { bits = [4, 0], grade = "established" } }
+
+[registers.oxcc_prog_lut_control]
+offset = 0x803004
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Output colour-converter LUT control (block base, register number 0x3000); same sequence as the input block."
+
+[registers.oxcc_prog_lut_data]
+offset = 0x80300c
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Output colour-converter LUT data (register number 0x3008); same behaviour as the input block."
+
+[registers.oxcc_prog_offset_lo]
+offset = 0x803014
+access = "rw"
+width = 32
+space = "xcc_prog"
+count = 3
+stride = 16
+grade = "established"
+doc = "Output colour converter red, green and blue offsets, low 16 bits (register numbers 0x3010, 0x3020, 0x3030), from format-table row words 10 to 12. Each is followed by a register holding bit 16 of the same offset."
+fields = { value = { bits = [15, 0], grade = "established" } }
+
+[registers.oxcc_prog_offset_bit16]
+offset = 0x80301c
+access = "rw"
+width = 32
+space = "xcc_prog"
+count = 3
+stride = 16
+grade = "established"
+doc = "Output colour converter red, green and blue offsets, bit 16 (register numbers 0x3018, 0x3028, 0x3038)."
+fields = { bit16 = { bits = [0, 0], grade = "established" } }
+
+[registers.oxcc_prog_around]
+offset = 0x803044
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Output colour converter around (register number 0x3040): format-table row word 13."
+
+[registers.oxcc_prog_pack8]
+offset = 0x80304c
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Output colour converter pack8 (register number 0x3048): 1 when the component size is 8 bits."
+
+[registers.oxcc_prog_dec]
+offset = 0x803054
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Output colour converter dec (register number 0x3050): 0, or 3 or the pipe mode, chosen by the path. Offset established; formula unknown."
+
+[registers.oxcc_prog_coeflo]
+offset = 0x80305c
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Output colour converter coefficient, low 16 bits (register number 0x3058)."
+fields = { value = { bits = [15, 0], grade = "established" } }
+
+[registers.oxcc_prog_coefhi]
+offset = 0x803064
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Output colour converter coefficient, bit 16 (register number 0x3060)."
+fields = { bit16 = { bits = [0, 0], grade = "established" } }
+
+[registers.oxcc_prog_coefind]
+offset = 0x80306c
+access = "rw"
+width = 32
+space = "xcc_prog"
+grade = "established"
+doc = "Output colour converter coefficient index (register number 0x3068), 5 bits, written after the low and high parts."
+fields = { index = { bits = [4, 0], grade = "established" } }
+
+# ---------------------------------------------------------------------------
+# Colour converters. Layout 2: the images only the diagnostic loads (xcc_diag).
+# Not unified with layout 1: the same offsets mean different registers.
+# ---------------------------------------------------------------------------
+
+[registers.ixcc_diag_control0]
+offset = 0x802804
+access = "rw"
+width = 32
+space = "xcc_diag"
+grade = "established"
+doc = "Diagnostic layout, input block CONTROL0 (register number 0x2800), 9 storage bits. The layout goes with the second input image, which only the diagnostic loads; which layout belongs to which image is read from who loads it, not from the bitstreams (inferred)."
+from = "shipped diagnostic tables"
+fields = { storage = { bits = [8, 0], grade = "established" } }
+
+[registers.ixcc_diag_control1]
+offset = 0x80280c
+access = "rw"
+width = 32
+space = "xcc_diag"
+grade = "established"
+doc = "Diagnostic layout, input block CONTROL1 (register number 0x2808), 8 storage bits."
+from = "shipped diagnostic tables"
+fields = { storage = { bits = [7, 0], grade = "established" } }
+
+[registers.ixcc_diag_lut_control]
+offset = 0x802814
+access = "rw"
+width = 32
+space = "xcc_diag"
+grade = "established"
+doc = "Diagnostic layout, input block LUT_CONTROL (register number 0x2810), 5 storage bits."
+from = "shipped diagnostic tables"
+fields = { storage = { bits = [4, 0], grade = "established" } }
+
+[registers.ixcc_diag_lut_data]
+offset = 0x80281c
+access = "rw"
+width = 32
+space = "xcc_diag"
+grade = "established"
+doc = "Diagnostic layout, input block LUT_DATA (register number 0x2818). Diagnostic mask 0: not tested rather than read-only."
+from = "shipped diagnostic tables"
+
+[registers.oxcc_diag_control0]
+offset = 0x803004
+access = "rw"
+width = 32
+space = "xcc_diag"
+grade = "established"
+doc = "Diagnostic layout, output block control (register number 0x3000), 9 storage bits."
+from = "shipped diagnostic tables"
+fields = { storage = { bits = [8, 0], grade = "established" } }
+
+[registers.oxcc_diag_control1]
+offset = 0x80300c
+access = "rw"
+width = 32
+space = "xcc_diag"
+grade = "established"
+doc = "Diagnostic layout, output block register number 0x3008, 10 storage bits."
+from = "shipped diagnostic tables"
+fields = { storage = { bits = [9, 0], grade = "established" } }
+
+[registers.oxcc_diag_lut_control]
+offset = 0x803014
+access = "rw"
+width = 32
+space = "xcc_diag"
+grade = "established"
+doc = "Diagnostic layout, output block register number 0x3010, 5 storage bits."
+from = "shipped diagnostic tables"
+fields = { storage = { bits = [4, 0], grade = "established" } }
+
+[registers.oxcc_diag_lut_data]
+offset = 0x80301c
+access = "rw"
+width = 32
+space = "xcc_diag"
+grade = "established"
+doc = "Diagnostic layout, output block register number 0x3018. Diagnostic mask 0: not tested rather than read-only."
+from = "shipped diagnostic tables"
+
+# ---------------------------------------------------------------------------
+# CLINK, block at register number 0x3800
+# ---------------------------------------------------------------------------
+
+[registers.clink_tx_message]
+offset = 0x803804
+access = "w"
+width = 32
+count = 12
+stride = 8
+grade = "established"
+doc = "CLINK transmit message: twelve halfword registers (register numbers 0x3800 to 0x3858) that the send ioctl fills from the 24-byte VBOB message, byte 2k in the high half and byte 2k+1 in the low half, before ringing the doorbell. Stores established; that it is a transmit buffer is inferred from the next store."
+fields = { halfword = { bits = [15, 0], grade = "established" } }
+
+[registers.clink_pgen_lo]
+offset = 0x803864
+access = "rw"
+width = 32
+grade = "established"
+doc = "CLINK pattern-generator divider, low (register number 0x3860, the diagnostic's PGEN_LO_SEL). The library writes CLINK_PGEN_LO_INIT when configuring the on-board 50 MHz clock. Role inferred."
+fields = { divider_lo = { bits = [15, 0], grade = "inferred" } }
+
+[registers.clink_pgen_hi]
+offset = 0x80386c
+access = "rw"
+width = 32
+grade = "established"
+doc = "CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT. Role inferred."
+fields = { divider_hi = { bits = [7, 0], grade = "inferred" } }
+
+[registers.clink_ksync_sel]
+offset = 0x803874
+access = "rw"
+width = 32
+grade = "established"
+doc = "CLINK KSYNC_SEL (register number 0x3870). Name and 9-bit mask only; not written by the library."
+from = "shipped diagnostic tables"
+fields = { storage = { bits = [8, 0], grade = "established" } }
+
+[registers.clink_rx_message]
+offset = 0x803884
+access = "r"
+width = 32
+count = 12
+stride = 8
+grade = "established"
+doc = "CLINK receive message: twelve halfword registers (register numbers 0x3880 to 0x38d8) the status-ring service routine reads when a message-received flag is set, keeping bits 15:0 of each as a high and a low byte."
+fields = { halfword = { bits = [15, 0], grade = "established" } }
+
+[registers.clink_uart_reset]
+offset = 0x8038e4
+access = "rw"
+width = 32
+grade = "established"
+doc = "CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when a path opens. Name from the diagnostic, accesses from the library."
+fields = { reset = { bits = [0, 0], grade = "established" } }
+
+[registers.clink_tx_doorbell]
+offset = 0x8038ec
+access = "w"
+width = 32
+grade = "established"
+doc = "CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag."
+fields = { ring = { bits = [0, 0], grade = "established" } }
+
+[registers.clink_rx_release]
+offset = 0x8038f4
+access = "w"
+width = 32
+grade = "established"
+doc = "CLINK receive release (register number 0x38f0): the service routine stores 1 after copying a received frame; the event post routine stores a register value to the same word in two places whose value was not traced (unknown)."
+fields = { release = { bits = [0, 0], grade = "established" } }
+
+# ---------------------------------------------------------------------------
+# Words
+# ---------------------------------------------------------------------------
+
+[words.MAPRAM_ENTRY]
+width = 32
+grade = "established"
+doc = "A valid map-RAM page-table entry, one 32-bit word per 16 KiB page of the board's own DMA address space, stored by the driver as one big-endian PIO store. Written value is the page number's low 26 bits shifted left by 2, ORed with the valid bit. Whether the hardware reads bits 1:0 or the top bits as attributes, and the byte order its logic applies to the store, are unknown: nothing reads an entry back."
+[words.MAPRAM_ENTRY.fields]
+valid = { bits = [29, 29], grade = "established", doc = "1 in every valid entry" }
+invalid = { bits = [28, 28], grade = "established", doc = "0 in valid entries" }
+ppn = { bits = [27, 2], grade = "established", doc = "system DMA address bits 39:14, the low 26 bits of the page number the driver's DMA mapping returns (that those are address bits 39:14 is inferred)" }
+[[words.MAPRAM_ENTRY.tests]]
+value = 0x20000004
+kind = "example"
+expect = { valid = 1, invalid = 0, ppn = 1 }
+
+[words.MAPRAM_ENTRY_INVALIDATED]
+width = 32
+grade = "established"
+doc = "An invalidated map-RAM entry: bit 28 set and a run-length counter below it. The driver writes n consecutive entries, the i-th as the invalid bit with the value n minus 1 minus i, so a single invalidated page is exactly the invalid bit alone. That bit 28 is what the hardware tests, and that the counter is only a run length, is inferred; the effect is the map-RAM-invalid error cause with the entry address in the map-RAM error address register."
+[words.MAPRAM_ENTRY_INVALIDATED.fields]
+invalid = { bits = [28, 28], grade = "established" }
+run_left = { bits = [27, 0], grade = "inferred" }
+[[words.MAPRAM_ENTRY_INVALIDATED.tests]]
+value = 0x10000000
+kind = "vector"
+expect = { invalid = 1, run_left = 0 }
+
+[words.FPGA_PROG_WRITE]
+width = 32
+grade = "established"
+doc = "Write layout of the GIF programming register: an 8-bit data byte, a clock in bit 8 and a strobe in bit 9 that is high in the idle and active-data states. Each image byte of the GIF load is stored eight times unshifted, once with the clock low and once high. Values and tests established; the names are inferred. The kernel's own byte-load case stores a byte ORed with the clock-low and clock-high patterns the same way."
+[words.FPGA_PROG_WRITE.fields]
+data = { bits = [7, 0], grade = "established" }
+clock = { bits = [8, 8], grade = "inferred" }
+strobe = { bits = [9, 9], grade = "inferred" }
+[[words.FPGA_PROG_WRITE.tests]]
+value = 0x300
+kind = "vector"
+expect = { data = 0, clock = 1, strobe = 1 }
+[[words.FPGA_PROG_WRITE.tests]]
+value = 0x200
+kind = "vector"
+expect = { data = 0, clock = 0, strobe = 1 }
+[[words.FPGA_PROG_WRITE.tests]]
+value = 0x100
+kind = "vector"
+expect = { data = 0, clock = 1, strobe = 0 }
+
+[words.FPGA_INFO_KIND]
+width = 32
+grade = "established"
+doc = "Word at +4 of a 28-byte FPGA info record (all fields are big-endian 32-bit words): the kind, which selects the start, byte and stop routines."
+[words.FPGA_INFO_KIND.fields]
+kind = { bits = [1, 0], grade = "established", enum = "fpga_kind" }
+
+[words.RING_ENTRY_W0]
+width = 32
+grade = "established"
+doc = "Word 0 of a 0x80-byte status-ring entry. The service routine treats bits 23:0 as a device media stream counter (MSC) and extends it to 64 bits, detecting a wrap by an unsigned compare with the previous value. The code only works if bits 31:24 read as zero (inferred; the driver does not check). The name MSC is inferred from the driver's own strings."
+[words.RING_ENTRY_W0.fields]
+msc = { bits = [23, 0], grade = "inferred" }
+reserved_zero = { bits = [31, 24], grade = "inferred" }
+
+[words.RING_ENTRY_FLAGS]
+width = 32
+grade = "established"
+doc = "Word 1 of a status-ring entry, the flag word. Bit numbers and names come from the driver's own 20-entry flag-name table (established); what each bit means in hardware terms is inferred from its name. Pipe 0 is the out pipe (video interrupt 1), pipe 1 the in pipe (video interrupt 0). The host clears VALID first, then handles the completion bits slot by slot in order, then the field-interrupt bit, the error bits while DMA is enabled, and the two link bits. Bits 20 to 31 have no table entry and no test."
+[words.RING_ENTRY_FLAGS.fields]
+valid = { bits = [0, 0], grade = "established", doc = "entry present; cleared by the host before anything else" }
+f = { bits = [1, 1], grade = "established", doc = "passed to the completion routine as a boolean" }
+input_off = { bits = [2, 2], grade = "established", doc = "pipe 1 only: with in_change, the input signal went away" }
+trs_error = { bits = [3, 3], grade = "established", doc = "pipe 1 only: logged, not counted as an error" }
+overflow = { bits = [4, 4], grade = "established", doc = "pipe 0: a transfer error; pipe 1: a sequence-lost message with no event posted" }
+in_change = { bits = [5, 5], grade = "established", doc = "pipe 1 only: input state changed" }
+fif = { bits = [6, 6], grade = "established", doc = "with the field interrupt bit: the device's view of field parity, compared against the driver's field counter" }
+f_intr = { bits = [7, 7], grade = "established", doc = "field interrupt: counters, host timestamp, watchdog re-arm, timestamp event" }
+done = { bits = [11, 8], grade = "established", doc = "DMA slot 0 to 3 completion, one bit per slot" }
+aborted = { bits = [15, 12], grade = "established", doc = "DMA slot 0 to 3 aborted, one bit per slot" }
+current_valid = { bits = [17, 16], grade = "inferred", doc = "named by the driver's table but never tested by the service routine" }
+clink_xmit_done = { bits = [18, 18], grade = "established", doc = "VBOB message acknowledge" }
+clink_rcv_done = { bits = [19, 19], grade = "established", doc = "VBOB message received; raises the receive event" }
+[[words.RING_ENTRY_FLAGS.tests]]
+value = 0x40001
+kind = "example"
+expect = { valid = 1, clink_xmit_done = 1, clink_rcv_done = 0 }
+
+[words.VBOB_MSG_HEADER]
+width = 32
+grade = "established"
+doc = "First four bytes of the 24-byte VBOB control message frame, in wire order from the high byte: count of bytes that follow, pipe, register id with bit 7 set for a write, then the first data byte. Byte layout established from every message builder in the library; names are inferred. The same 24 bytes are carried as twelve halfwords in the CLINK transmit and receive registers. Which pipe's ring carries a receive flag is unknown."
+[words.VBOB_MSG_HEADER.fields]
+count = { bits = [31, 24], grade = "established", doc = "count of bytes that follow (last used index)" }
+pipe = { bits = [23, 16], grade = "established", enum = "vbob_pipe", doc = "equals the ioctl pipe word in every caller; that it selects a cable is inferred" }
+write = { bits = [15, 15], grade = "established", doc = "set for a write message" }
+reg_id = { bits = [14, 8], grade = "established" }
+data0 = { bits = [7, 0], grade = "inferred" }
+[[words.VBOB_MSG_HEADER.tests]]
+value = 0x04012000
+kind = "example"
+expect = { count = 4, pipe = 1, write = 0, reg_id = 0x20 }
+
+# ---------------------------------------------------------------------------
+# Constants: register-file blocks, FPGA info table, library init values
+# ---------------------------------------------------------------------------
+
+[constants]
+GIF_SLOT_STRIDE = { value = 8, grade = "established", doc = "the GIF register file is 64-bit slots at an 8-byte stride; software reaches only the odd (low) 32-bit word, at slot base plus 4" }
+GIF_FILE_BASE = { value = 0x800000, grade = "established", doc = "window offset of the GIF register file; a register number R sits at this base plus R plus 4" }
+FPGA_DATA_PORT_ADD = { value = 0x80000, grade = "established", doc = "added to a per-FPGA status port window offset to reach its data port (status ports are 0x800004 ORed with the port offset, data ports 0x880004 ORed with it); the contract page calls this setting bit 23, but the difference between the two bases is bit 19 of the window offset" }
+GIF_BLOCK_SIZE = { value = 0x800, grade = "established", doc = "each of the 8 per-FPGA blocks of the GIF register file spans 2 KiB of register numbers; every register found sits inside its block", from = "shipped diagnostic tables" }
+GIF_BLOCK_CORE = { value = 0, grade = "established", doc = "register number base of the GIF core and pipe registers" }
+GIF_BLOCK_PACKER = { value = 0x800, grade = "established", doc = "register number base of the packer FPGA block" }
+GIF_BLOCK_UNPACKER = { value = 0x1000, grade = "established", doc = "register number base of the unpacker FPGA block" }
+GIF_BLOCK_VIF = { value = 0x1800, grade = "established", doc = "register number base of the video input formatter FPGA block" }
+GIF_BLOCK_HDOC = { value = 0x2000, grade = "established", doc = "register number base of the HDOC FPGA block" }
+GIF_BLOCK_IXCC = { value = 0x2800, grade = "established", doc = "register number base of the input colour-converter FPGA block" }
+GIF_BLOCK_OXCC = { value = 0x3000, grade = "established", doc = "register number base of the output colour-converter FPGA block" }
+GIF_BLOCK_CLINK = { value = 0x3800, grade = "established", doc = "register number base of the CLINK FPGA block" }
+FPGA_INFO_RECORD_SIZE = { value = 0x1c, grade = "established", doc = "size of one FPGA info record: seven big-endian 32-bit words (name pointer, kind, image size, select word, port offset, DONE mask, INIT mask)", from = "shipped media library readings" }
+FPGA_INFO_RECORDS = { value = 8, grade = "established", doc = "records in the info table, indexed by the FPGA number the load routine takes (0 to 7)", from = "shipped media library readings" }
+FPGA_INFO_OFF_NAME = { value = 0, grade = "established", doc = "byte offset in an FPGA info record: pointer to the name string, used in the load failure messages" }
+FPGA_INFO_OFF_KIND = { value = 4, grade = "established", doc = "byte offset in an FPGA info record: kind word: 0, 1 or 2, selecting the start, byte and stop routines" }
+FPGA_INFO_OFF_IMAGE_SIZE = { value = 8, grade = "established", doc = "byte offset in an FPGA info record: image size in bytes" }
+FPGA_INFO_OFF_SELECT = { value = 12, grade = "established", doc = "byte offset in an FPGA info record: select word stored at the per-FPGA programming control register" }
+FPGA_INFO_OFF_PORT_OFFSET = { value = 16, grade = "established", doc = "byte offset in an FPGA info record: port offset ORed into the status and data port offsets" }
+FPGA_INFO_OFF_DONE_MASK = { value = 20, grade = "established", doc = "byte offset in an FPGA info record: DONE mask tested in the programming register read" }
+FPGA_INFO_OFF_INIT_MASK = { value = 24, grade = "established", doc = "byte offset in an FPGA info record: INIT mask tested in the programming register read" }
+FPGA_GIF_NUMBER = { value = 0, grade = "established", doc = "FPGA number (info table index) of the gif FPGA" }
+FPGA_GIF_KIND = { value = 1, grade = "established", doc = "kind word of the gif record" }
+FPGA_GIF_IMAGE_SIZE = { value = 0x2bc21, grade = "established", doc = "image size in bytes of the gif record; the exact byte total the image file must contain (kind 2 skips the length check)" }
+FPGA_GIF_SELECT = { value = 0, grade = "established", doc = "select word of the gif record (a one-hot FPGA choice is inferred)" }
+FPGA_GIF_PORT_OFFSET = { value = 0, grade = "established", doc = "port offset of the gif record, the register number base of its block" }
+FPGA_GIF_DONE_MASK = { value = 1, grade = "established", doc = "DONE mask of the gif record, tested in the word read from the programming register" }
+FPGA_GIF_INIT_MASK = { value = 2, grade = "established", doc = "INIT mask of the gif record, tested in the word read from the programming register" }
+FPGA_PACK_NUMBER = { value = 1, grade = "established", doc = "FPGA number (info table index) of the pack FPGA" }
+FPGA_PACK_KIND = { value = 0, grade = "established", doc = "kind word of the pack record" }
+FPGA_PACK_IMAGE_SIZE = { value = 0x19682, grade = "established", doc = "image size in bytes of the pack record; the exact byte total the image file must contain (kind 2 skips the length check)" }
+FPGA_PACK_SELECT = { value = 1, grade = "inferred", doc = "select word of the pack record (a one-hot FPGA choice is inferred)" }
+FPGA_PACK_PORT_OFFSET = { value = 0x800, grade = "established", doc = "port offset of the pack record, the register number base of its block" }
+FPGA_PACK_DONE_MASK = { value = 4, grade = "established", doc = "DONE mask of the pack record, tested in the word read from the programming register" }
+FPGA_PACK_INIT_MASK = { value = 8, grade = "established", doc = "INIT mask of the pack record, tested in the word read from the programming register" }
+FPGA_UNPACK_NUMBER = { value = 2, grade = "established", doc = "FPGA number (info table index) of the unpack FPGA" }
+FPGA_UNPACK_KIND = { value = 0, grade = "established", doc = "kind word of the unpack record" }
+FPGA_UNPACK_IMAGE_SIZE = { value = 0x19682, grade = "established", doc = "image size in bytes of the unpack record; the exact byte total the image file must contain (kind 2 skips the length check)" }
+FPGA_UNPACK_SELECT = { value = 2, grade = "inferred", doc = "select word of the unpack record (a one-hot FPGA choice is inferred)" }
+FPGA_UNPACK_PORT_OFFSET = { value = 0x1000, grade = "established", doc = "port offset of the unpack record, the register number base of its block" }
+FPGA_UNPACK_DONE_MASK = { value = 0x10, grade = "established", doc = "DONE mask of the unpack record, tested in the word read from the programming register" }
+FPGA_UNPACK_INIT_MASK = { value = 0x20, grade = "established", doc = "INIT mask of the unpack record, tested in the word read from the programming register" }
+FPGA_OXCC_NUMBER = { value = 3, grade = "established", doc = "FPGA number (info table index) of the oxcc FPGA" }
+FPGA_OXCC_KIND = { value = 2, grade = "established", doc = "kind word of the oxcc record" }
+FPGA_OXCC_IMAGE_SIZE = { value = 0x4db30, grade = "established", doc = "image size in bytes of the oxcc record; the exact byte total the image file must contain (kind 2 skips the length check)" }
+FPGA_OXCC_SELECT = { value = 0x20, grade = "inferred", doc = "select word of the oxcc record (a one-hot FPGA choice is inferred)" }
+FPGA_OXCC_PORT_OFFSET = { value = 0x3000, grade = "established", doc = "port offset of the oxcc record, the register number base of its block" }
+FPGA_OXCC_DONE_MASK = { value = 0x100, grade = "established", doc = "DONE mask of the oxcc record, tested in the word read from the programming register" }
+FPGA_OXCC_INIT_MASK = { value = 0x200, grade = "established", doc = "INIT mask of the oxcc record, tested in the word read from the programming register" }
+FPGA_IXCC_NUMBER = { value = 4, grade = "established", doc = "FPGA number (info table index) of the ixcc FPGA" }
+FPGA_IXCC_KIND = { value = 2, grade = "established", doc = "kind word of the ixcc record" }
+FPGA_IXCC_IMAGE_SIZE = { value = 0x4db30, grade = "established", doc = "image size in bytes of the ixcc record; the exact byte total the image file must contain (kind 2 skips the length check)" }
+FPGA_IXCC_SELECT = { value = 0x10, grade = "inferred", doc = "select word of the ixcc record (a one-hot FPGA choice is inferred)" }
+FPGA_IXCC_PORT_OFFSET = { value = 0x2800, grade = "established", doc = "port offset of the ixcc record, the register number base of its block" }
+FPGA_IXCC_DONE_MASK = { value = 0x40, grade = "established", doc = "DONE mask of the ixcc record, tested in the word read from the programming register" }
+FPGA_IXCC_INIT_MASK = { value = 0x80, grade = "established", doc = "INIT mask of the ixcc record, tested in the word read from the programming register" }
+FPGA_HDOC_NUMBER = { value = 5, grade = "established", doc = "FPGA number (info table index) of the hdoc FPGA" }
+FPGA_HDOC_KIND = { value = 0, grade = "established", doc = "kind word of the hdoc record" }
+FPGA_HDOC_IMAGE_SIZE = { value = 0x19682, grade = "established", doc = "image size in bytes of the hdoc record; the exact byte total the image file must contain (kind 2 skips the length check)" }
+FPGA_HDOC_SELECT = { value = 8, grade = "inferred", doc = "select word of the hdoc record (a one-hot FPGA choice is inferred)" }
+FPGA_HDOC_PORT_OFFSET = { value = 0x2000, grade = "established", doc = "port offset of the hdoc record, the register number base of its block" }
+FPGA_HDOC_DONE_MASK = { value = 0x1000, grade = "established", doc = "DONE mask of the hdoc record, tested in the word read from the programming register" }
+FPGA_HDOC_INIT_MASK = { value = 0x2000, grade = "established", doc = "INIT mask of the hdoc record, tested in the word read from the programming register" }
+FPGA_VIF_NUMBER = { value = 6, grade = "established", doc = "FPGA number (info table index) of the vif FPGA" }
+FPGA_VIF_KIND = { value = 0, grade = "established", doc = "kind word of the vif record" }
+FPGA_VIF_IMAGE_SIZE = { value = 0x19682, grade = "established", doc = "image size in bytes of the vif record; the exact byte total the image file must contain (kind 2 skips the length check)" }
+FPGA_VIF_SELECT = { value = 4, grade = "inferred", doc = "select word of the vif record (a one-hot FPGA choice is inferred)" }
+FPGA_VIF_PORT_OFFSET = { value = 0x1800, grade = "established", doc = "port offset of the vif record, the register number base of its block" }
+FPGA_VIF_DONE_MASK = { value = 0x400, grade = "established", doc = "DONE mask of the vif record, tested in the word read from the programming register" }
+FPGA_VIF_INIT_MASK = { value = 0x800, grade = "established", doc = "INIT mask of the vif record, tested in the word read from the programming register" }
+FPGA_CLINK_NUMBER = { value = 7, grade = "established", doc = "FPGA number (info table index) of the clink FPGA" }
+FPGA_CLINK_KIND = { value = 0, grade = "established", doc = "kind word of the clink record" }
+FPGA_CLINK_IMAGE_SIZE = { value = 0x8a64, grade = "established", doc = "image size in bytes of the clink record; the exact byte total the image file must contain (kind 2 skips the length check)" }
+FPGA_CLINK_SELECT = { value = 0x40, grade = "inferred", doc = "select word of the clink record (a one-hot FPGA choice is inferred)" }
+FPGA_CLINK_PORT_OFFSET = { value = 0x3800, grade = "established", doc = "port offset of the clink record, the register number base of its block" }
+FPGA_CLINK_DONE_MASK = { value = 0x4000, grade = "established", doc = "DONE mask of the clink record, tested in the word read from the programming register" }
+FPGA_CLINK_INIT_MASK = { value = 0x8000, grade = "established", doc = "INIT mask of the clink record, tested in the word read from the programming register" }
+PACK_INIT_R0800 = { value = 0x1f0008, grade = "established", doc = "value the library stores at init: packer register number 0x800, pipe 1 init. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+PACK_INIT_R0808 = { value = 0x1f0008, grade = "established", doc = "value the library stores at init: packer register number 0x808, pipe 1 init. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+PACK_INIT_R0810 = { value = 0x1f0008, grade = "established", doc = "value the library stores at init: packer register number 0x810, pipe 1 init. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+PACK_INIT_R0840 = { value = 0x1000, grade = "established", doc = "value the library stores at init: packer register number 0x840, pipe 1 init (the library's pipe 1 value). The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+PACK_INIT_R0848 = { value = 0x1000, grade = "established", doc = "value the library stores at init: packer register number 0x848, pipe 1 init. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+PACK_INIT_R0850 = { value = 0xd00, grade = "established", doc = "value the library stores at init: packer register number 0x850, pipe 1 init. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+UNPACK_INIT_R1000 = { value = 0x160008, grade = "established", doc = "value the library stores at init: unpacker register number 0x1000, pipe 0 init. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+UNPACK_INIT_R1008 = { value = 0x32001f, grade = "established", doc = "value the library stores at init: unpacker register number 0x1008, pipe 0 init. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+UNPACK_INIT_R1040 = { value = 0x1200, grade = "established", doc = "value the library stores at init: unpacker register number 0x1040, pipe 0 init. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+UNPACK_INIT_R1048 = { value = 0xd00, grade = "established", doc = "value the library stores at init: unpacker register number 0x1048, pipe 0 init. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+UNPACK_INIT_MISC_BASE = { value = 0xfffe0f9, grade = "established", doc = "value the library stores at init: unpacker MISC_SEL init, ORed with a flag shifted left by 28. The pairing of pipe 1 with the packer and pipe 0 with the unpacker is inferred from the pipes' directions; the bit roles are unknown" }
+CLINK_PGEN_LO_INIT = { value = 0xc3f7, grade = "established", doc = "value written to the pattern-generator low register when the library configures the on-board 50 MHz clock; role inferred" }
+CLINK_PGEN_HI_INIT = { value = 0x25, grade = "established", doc = "value written to the pattern-generator high register (37); role inferred" }
+PIPE_DMA_CONTROL_INIT_PIPE0 = { value = 0xea040, grade = "established", doc = "initial DMA control shadow of pipe 0" }
+PIPE_DMA_CONTROL_INIT_PIPE1 = { value = 0xa040, grade = "established", doc = "initial DMA control shadow of pipe 1" }
+MAPRAM_BASE = { value = 0x100000, grade = "established", doc = "window offset of the map RAM; the entry for a board DMA address is at this base plus 4 times (address >> 14)" }
+MAPRAM_PAGE_SHIFT = { value = 0xe, grade = "established", doc = "a board DMA address is a 16 KiB page index into the flat map-RAM table" }
+MAPRAM_SLOT_PAGES_MAX = { value = 0x400, grade = "established", doc = "largest page count of one DMA slot mapping; a larger transfer is rejected (16 MiB)" }
+RING_ENTRY_BYTES = { value = 0x80, grade = "established", doc = "size of one status-ring entry; only words 0 and 1 are read by shipped software, the remaining bytes are unknown" }
+RING_ENTRIES = { value = 0x10, grade = "established", doc = "entries per pipe status ring (2048 bytes); the host index is masked with 0xf" }
+RING_DMA_ADDR_PIPE0 = { value = 0x8000000, grade = "established", doc = "fixed board DMA address of pipe 0's status ring; no register carries it and the map RAM places it (that the board has the address built in is inferred)" }
+RING_DMA_ADDR_PIPE1 = { value = 0x9000000, grade = "established", doc = "fixed board DMA address of pipe 1's status ring" }
+VBOB_MSG_BYTES = { value = 0x18, grade = "established", doc = "size of a VBOB control message frame; carried as twelve halfwords" }
+VBOB_TX_TIMEOUT_TICKS = { value = 0xfa, grade = "established", doc = "clock ticks the send ioctl waits for the transmit-done flag after the doorbell; the real time depends on the tick rate (inferred)" }

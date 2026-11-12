@@ -1,0 +1,682 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/dm2.toml by defs-gen - do not edit, change the source -->
+<genxml unit="dm2" prefix="DM2" title="DMediaPro DM2 (XT-DIGVID) XIO video board: widget window, XG block, FPGA load, GIF register file and word layouts" from="shipped kernel driver and media library readings">
+  <doc>Register and word contract of the DM2 board's 16 MiB widget window, as the shipped kernel driver, the user-space media module and the board's diagnostic use it. Every offset is a byte offset from the window base and every register is a 32-bit word. Grades follow the contract pages: established means the access was read in full from a shipped binary, inferred means the item is reasoned from names or shape, unknown means nothing shipped settles it. Where a position or formula is established and only the role is inferred, the item is graded established and its doc says what is inferred. The GIF register file (window base plus 0x800000) is a file of 64-bit slots at an 8-byte stride. Software only ever reaches the odd (low) 32-bit word of a slot, at slot base plus 4, so every GIF register here is listed as 0x800000 + R + 4, where R is the register number (the slot offset) that the library and the diagnostic use. The input and output colour-converter blocks have two register layouts, one per FPGA image, and the two are not unified: they live in separate address spaces, xcc_prog (the images the media module loads) and xcc_diag (the images only the diagnostic loads). No reset value of any register is known. Nothing here describes emulator behaviour.</doc>
+  <space name="xcc_prog" unit="byte"/>
+  <space name="xcc_diag" unit="byte"/>
+  <enum name="fpga_kind">
+    <value name="others_handshaked" value="0" grade="established"/>
+    <value name="gif" value="1" grade="established"/>
+    <value name="others_blind" value="2" grade="established"/>
+  </enum>
+  <enum name="vbob_pipe">
+    <value name="output" value="0" grade="established"/>
+    <value name="input" value="1" grade="established"/>
+  </enum>
+  <enum name="xg_mapram_type">
+    <value name="k32x36" value="0" grade="established"/>
+    <value name="k64x18" value="1" grade="established"/>
+    <value name="k128x9" value="2" grade="established"/>
+    <value name="invalid" value="3" grade="established"/>
+  </enum>
+  <struct name="WIDGET_ID" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x4" access="r" reset="unknown">
+    <doc>Widget identification, read by the diagnostic only; the kernel never reads it. The field split is established; the readback value is unknown (the part and manufacturer the driver registers with are not read from this register).</doc>
+    <field name="revision" start="28" size="4" type="uint" grade="established"/>
+    <field name="part" start="12" size="16" type="uint" grade="established"/>
+    <field name="manufacturer" start="1" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="WIDGET_STATUS" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0xc" access="r" reset="unknown">
+    <doc>Widget status. The kernel reads it once at attach and tests bit 5 only: when set it prints that the XIO slot is the slower 400 MB/s kind. The test is established; what the bit encodes is unknown (the message says link speed).</doc>
+    <field name="link_slow" start="5" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="WIDGET_CONTROL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x24" access="rw" reset="unknown">
+    <doc>Widget control (the diagnostic calls it the XG control register). The init routine stores widget id, interrupt target and a constant, then ORs the XG error interrupt enable; the error handler clears the enable first and nothing sets it again. The low nibble comes from the widget's own number and bits 25:22 from the interrupt target widget, both inferred from the helper names. Bits 14 and 9 are written as constants and are unexplained.</doc>
+    <field name="int_target" start="22" size="4" type="uint" grade="inferred"/>
+    <field name="xg_error_int_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="const_bit14" start="14" size="1" type="uint" grade="unknown"/>
+    <field name="const_bit9" start="9" size="1" type="uint" grade="unknown"/>
+    <field name="widget_number" start="0" size="4" type="uint" grade="inferred"/>
+    <test value="0x4200" kind="vector">
+      <expect field="const_bit9" value="1"/>
+      <expect field="const_bit14" value="1"/>
+      <expect field="xg_error_int_enable" value="0"/>
+    </test>
+  </struct>
+  <struct name="INT_DEST_HI" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x34" access="w" reset="unknown">
+    <doc>Interrupt destination, upper: address bits 47:32 in the low half and the target id above them, from the interrupt object the kernel allocated for the XG error interrupt. Store established; field names inferred.</doc>
+    <field name="target_id" start="16" size="4" type="uint" grade="inferred"/>
+    <field name="addr_hi" start="0" size="16" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="INT_DEST_LO" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x3c" access="w" reset="unknown">
+    <doc>Interrupt destination, lower: the low 32 bits of the interrupt address.</doc>
+    <field name="addr_lo" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="XG_INT_VECTORS" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x5c" access="w" reset="unknown">
+    <doc>XG interrupt vectors. In the common widget block this slot is an error command word; in the XG it holds interrupt vectors, so the common role does not apply (established for the XG use, inferred that the divergence is deliberate; no read exists). Bits 17 and 8 are ORed in as constants and are inferred to be per-source enables, which one is which is unknown.</doc>
+    <field name="error_vector" start="18" size="8" type="uint" grade="established"/>
+    <field name="const_bit17" start="17" size="1" type="uint" grade="inferred"/>
+    <field name="gv1_vector" start="9" size="8" type="uint" grade="established"/>
+    <field name="const_bit8" start="8" size="1" type="uint" grade="inferred"/>
+    <field name="gv0_vector" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="XG_CONFIG" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x64" access="r" reset="unknown">
+    <doc>XG configuration, read at attach and by the diagnostic; read-only from software. The subsystem field must read 1. The map-RAM size code is printed by the kernel as the code times 32 kilobytes; the table from size code to real size is unknown. The type code indexes a three-string table (order established).</doc>
+    <field name="mapram_type" start="6" size="2" type="xg_mapram_type" grade="established"/>
+    <field name="mapram_size_code" start="3" size="3" type="uint" grade="established"/>
+    <field name="subsystem" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="XG_ERROR_CAUSE" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x6c" access="rw" reset="unknown">
+    <doc>XG error cause, one bit per error. The error handler reads it, writes the same value back before decoding, and prints one message per set bit. That the write-back is write-one-to-clear is inferred. Bit 22 is tested twice in the shipped handler and prints both a cache-line and a double-word underflow message; bit 24 is never tested. The intended assignment of bit 24 (graphics double-word credit underflow) is inferred; the diagnostic writes 0 here. Bit 31 has no test in the handler's shift sequence.</doc>
+    <field name="bit31_untested" start="31" size="1" type="uint" grade="unknown"/>
+    <field name="xtalk_write_full_fifo" start="30" size="1" type="uint" grade="established"/>
+    <field name="guava_write_too_few" start="29" size="1" type="uint" grade="established"/>
+    <field name="idma_resp_invalid_tag" start="28" size="1" type="uint" grade="established"/>
+    <field name="idma_resp_size" start="27" size="1" type="uint" grade="established"/>
+    <field name="odma_fifo_overflow" start="26" size="1" type="uint" grade="established"/>
+    <field name="cmd_fifo_overflow" start="25" size="1" type="uint" grade="established"/>
+    <field name="gfx_dword_credit_underflow" start="24" size="1" type="uint" grade="inferred"/>
+    <field name="gfx_dword_credit_overflow" start="23" size="1" type="uint" grade="established"/>
+    <field name="gfx_cacheline_credit_underflow" start="22" size="1" type="uint" grade="established"/>
+    <field name="gfx_cacheline_credit_overflow" start="21" size="1" type="uint" grade="established"/>
+    <field name="xtalk_resp_credit_underflow" start="20" size="1" type="uint" grade="established"/>
+    <field name="xtalk_resp_credit_overflow" start="19" size="1" type="uint" grade="established"/>
+    <field name="xtalk_req_credit_underflow" start="18" size="1" type="uint" grade="established"/>
+    <field name="xtalk_req_credit_overflow" start="17" size="1" type="uint" grade="established"/>
+    <field name="guava_bus_parity" start="16" size="1" type="uint" grade="established"/>
+    <field name="guava_bus_data_parity" start="15" size="1" type="uint" grade="established"/>
+    <field name="guava_bus_cmd_parity" start="14" size="1" type="uint" grade="established"/>
+    <field name="mapram_invalid" start="13" size="1" type="uint" grade="established"/>
+    <field name="mapram_parity" start="12" size="1" type="uint" grade="established"/>
+    <field name="gfx_fifo_overflow" start="11" size="1" type="uint" grade="established"/>
+    <field name="xtalk_request" start="10" size="1" type="uint" grade="established"/>
+    <field name="xtalk_response" start="9" size="1" type="uint" grade="established"/>
+    <field name="xtalk_read_req_timeout" start="8" size="1" type="uint" grade="established"/>
+    <field name="xtalk_bad_command" start="7" size="1" type="uint" grade="established"/>
+    <field name="xtalk_address" start="6" size="1" type="uint" grade="established"/>
+    <field name="guava_bad_interrupt" start="5" size="1" type="uint" grade="established"/>
+    <field name="guava_bad_command" start="4" size="1" type="uint" grade="established"/>
+    <field name="guava_valid_when_idle" start="3" size="1" type="uint" grade="established"/>
+    <field name="guava_pio_cmd_resp_overflow" start="2" size="1" type="uint" grade="established"/>
+    <field name="guava_pio_data_resp_overflow" start="1" size="1" type="uint" grade="established"/>
+    <field name="guava_overlap" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="XG_WATER_MARK" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x74" access="rw" reset="unknown">
+    <doc>High/low water mark (the diagnostic's name). The init routine keeps the two 6-bit fields from the current value, forces bits 15:0 to a constant and bits 31:28 to 0. The diagnostic stores bits 27:0 as plain storage. What high and low mean (presumably graphics FIFO thresholds) is inferred. This is the XG register at window offset 0x74, not the pipe 0 per-pipe word whose window offset is 0x800074.</doc>
+    <field name="forced_zero" start="28" size="4" type="uint" grade="established"/>
+    <field name="mark_b" start="22" size="6" type="uint" grade="inferred"/>
+    <field name="mark_a" start="16" size="6" type="uint" grade="inferred"/>
+    <field name="fixed_low" start="0" size="16" type="uint" grade="established"/>
+    <test value="0x3f40" kind="vector">
+      <expect field="fixed_low" value="16192"/>
+      <expect field="mark_a" value="0"/>
+      <expect field="mark_b" value="0"/>
+      <expect field="forced_zero" value="0"/>
+    </test>
+  </struct>
+  <struct name="XG_MAPRAM_ERR_ADDR" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x94" access="r" reset="unknown">
+    <doc>Offending map-RAM entry address, read after a map-RAM parity or invalid error and printed as five hex digits. Read-only is inferred.</doc>
+    <field name="entry_addr" start="0" size="20" type="uint" grade="established"/>
+  </struct>
+  <struct name="XG_NIC" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x9c" access="rw" reset="unknown">
+    <doc>Board identity one-wire register, read through the shared one-wire accessor. The offset and accessor are established; the bit protocol is not in the driver object (unknown). The diagnostic stores bits 15:2 as plain storage; bits 1:0 are inferred to be the one-wire pulse and sample bits.</doc>
+    <field name="storage" start="2" size="14" type="uint" grade="established" from="shipped diagnostic tables"/>
+    <field name="onewire" start="0" size="2" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="FPGA_PROG" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x120000" access="rw" reset="unknown">
+    <doc>GIF FPGA programming and status register. Read layout (this register): DONE and INIT for each FPGA in adjacent bit pairs. The message calls the GIF INIT bit INIT_L, active low, so it reads 1 when the pin is not asserted. The pairs run in the order GIF, packer, unpacker, input colour converter, output colour converter, VIF, HDOC, CLINK, which is not the order of the library's FPGA numbers. Names are inferred. The write layout is the word FPGA_PROG_WRITE.</doc>
+    <field name="clink_init" start="15" size="1" type="uint" grade="established"/>
+    <field name="clink_done" start="14" size="1" type="uint" grade="established"/>
+    <field name="hdoc_init" start="13" size="1" type="uint" grade="established"/>
+    <field name="hdoc_done" start="12" size="1" type="uint" grade="established"/>
+    <field name="vif_init" start="11" size="1" type="uint" grade="established"/>
+    <field name="vif_done" start="10" size="1" type="uint" grade="established"/>
+    <field name="oxcc_init" start="9" size="1" type="uint" grade="established"/>
+    <field name="oxcc_done" start="8" size="1" type="uint" grade="established"/>
+    <field name="ixcc_init" start="7" size="1" type="uint" grade="established"/>
+    <field name="ixcc_done" start="6" size="1" type="uint" grade="established"/>
+    <field name="unpacker_init" start="5" size="1" type="uint" grade="established"/>
+    <field name="unpacker_done" start="4" size="1" type="uint" grade="established"/>
+    <field name="packer_init" start="3" size="1" type="uint" grade="established"/>
+    <field name="packer_done" start="2" size="1" type="uint" grade="established"/>
+    <field name="gif_init" start="1" size="1" type="uint" grade="established"/>
+    <field name="gif_done" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GIF_RESET" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x800004" access="rw" reset="unknown">
+    <doc>GIF reset/enable word (register number 0x00). The init routine stores 0 when asked to reinitialise; the FPGA load path polls for a value of 0x80. The meaning of the bits is unknown.</doc>
+  </struct>
+  <struct name="GIF_PROG_CONTROL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80000c" access="rw" reset="unknown">
+    <doc>Per-FPGA programming control (register number 0x08), for the seven FPGAs behind the GIF. The select word is one-hot and bit 7 is a strobe level (idle high, pulsed low around each download); the code shows only the values and the pulse shape, so the names are inferred.</doc>
+    <field name="prog_strobe" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="fpga_select" start="0" size="7" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="PIPE_DMA_CONTROL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x800014" access="rw" count="2" stride="40" reset="unknown">
+    <doc>Per-pipe DMA control word, indexed by pipe (pipe 0 at register number 0x10, pipe 1 at 0x38). The driver keeps a shadow and rewrites the whole word. Bits 3:0 are per-slot valid latches and bit 4 is abort; both are ORed into the written value and never kept in the shadow (established from the driver's own assertion). Bit 16 is the pipe interrupt enable (inferred from trace names). Bits 12, 10 and 9 are set and cleared by the raster configuration; their roles are inferred. The valid bits are inferred to be write-one-to-set latches. The initial shadow is 0xea040 for pipe 0 and 0xa040 for pipe 1. The diagnostic stores bits 14:5 (and 20:17 on pipe 0). The diagnostic calls pipe 0 the IDMA engine and pipe 1 the ODMA engine; the contract pages assign pipe 0 to video out (HDOC side) and pipe 1 to video in (VIF side), which is inferred.</doc>
+    <field name="int_enable" start="16" size="1" type="uint" grade="inferred"/>
+    <field name="cfg_bit12" start="12" size="1" type="uint" grade="inferred"/>
+    <field name="cfg_bit10" start="10" size="1" type="uint" grade="inferred"/>
+    <field name="cfg_bit9" start="9" size="1" type="uint" grade="inferred"/>
+    <field name="abort" start="4" size="1" type="uint" grade="established"/>
+    <field name="slot_valid" start="0" size="4" type="uint" grade="established"/>
+    <test value="0xa040" kind="vector">
+      <expect field="slot_valid" value="0"/>
+      <expect field="abort" value="0"/>
+      <expect field="cfg_bit9" value="0"/>
+      <expect field="cfg_bit10" value="0"/>
+      <expect field="cfg_bit12" value="0"/>
+      <expect field="int_enable" value="0"/>
+    </test>
+    <test value="0xea040" kind="vector">
+      <expect field="slot_valid" value="0"/>
+      <expect field="abort" value="0"/>
+      <expect field="cfg_bit9" value="0"/>
+      <expect field="cfg_bit10" value="0"/>
+      <expect field="cfg_bit12" value="0"/>
+      <expect field="int_enable" value="0"/>
+    </test>
+  </struct>
+  <struct name="PIPE_START_ADDR1" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80001c" access="rw" count="2" stride="40" reset="unknown">
+    <doc>Per-pipe raster start address 1 (register numbers 0x18 and 0x40). The value must be below 16 MiB (the driver rejects larger ones). The diagnostic does not store the low 3 bits, so 8-byte alignment is inferred.</doc>
+    <field name="start_addr" start="0" size="24" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIPE_START_ADDR2" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x800024" access="rw" count="2" stride="40" reset="unknown">
+    <doc>Per-pipe raster start address 2 (register numbers 0x20 and 0x48), same range test as start address 1. Alignment is inferred.</doc>
+    <field name="start_addr" start="0" size="24" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIPE_VID_CONTROL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80002c" access="rw" count="2" stride="40" reset="unknown">
+    <doc>Per-pipe video control (register numbers 0x28 and 0x50; the diagnostic's IDMA_OV and ODMA_IV). Formula and width are established, exactly the 26 bits the diagnostic stores; what the two counts and flags mean in the video path is unknown. Bits 11:0 come from a 16-bit field of the pipe record, bits 23:12 from a 12-bit argument of the raster configuration, bit 24 is set when one 16-bit pipe field is zero and bit 25 when another is nonzero.</doc>
+    <field name="flag_nonzero" start="25" size="1" type="uint" grade="established"/>
+    <field name="flag_zero" start="24" size="1" type="uint" grade="established"/>
+    <field name="count_hi" start="12" size="12" type="uint" grade="established"/>
+    <field name="count_lo" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIPE_VID_CONTROL2" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x800034" access="rw" count="2" stride="40" reset="unknown">
+    <doc>Per-pipe video control 2 (register numbers 0x30 and 0x58): the low 12 bits of an argument. Meaning unknown.</doc>
+    <field name="value" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIPE1_RING_PTR_RESET" size="4" grade="inferred" from="shipped kernel driver and media library readings" register="yes" offset="0x800064" access="w" reset="unknown">
+    <doc>Pipe 1 per-pipe word (register number 0x60), stored 0 when the pipe's status buffer is set up and by the clink-timeout path. The stores and the pipe assignment (pipe 1 owns this offset, pipe 0 owns 0x800074) are established; that it resets the board's status-ring write index is inferred. The host never reads it.</doc>
+  </struct>
+  <struct name="PIPE1_RESET_WORD" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80006c" access="w" reset="unknown">
+    <doc>Pipe 1 per-pipe word (register number 0x68), stored 0 at DMA start. Meaning unknown.</doc>
+  </struct>
+  <struct name="PIPE0_RING_PTR_RESET" size="4" grade="inferred" from="shipped kernel driver and media library readings" register="yes" offset="0x800074" access="w" reset="unknown">
+    <doc>Pipe 0 per-pipe word (register number 0x70), stored 0 when the pipe's status buffer is set up and by the clink-timeout path. The stores and the pipe assignment (pipe 0 owns this offset, pipe 1 owns 0x800064) are established; that it resets the board's status-ring write index is inferred. The host never reads it. Not to be confused with the XG water-mark register at window offset 0x74.</doc>
+  </struct>
+  <struct name="PIPE0_RESET_WORD" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80007c" access="w" reset="unknown">
+    <doc>Pipe 0 per-pipe word (register number 0x78), stored 0 at DMA start. Meaning unknown.</doc>
+  </struct>
+  <struct name="GIF_IDENT" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x800084" access="r" reset="unknown">
+    <doc>GIF identification (register number 0x80), read at attach: the upper 24 bits must be the ASCII text GIF; the low byte is the GIF version, which the driver prints. Any other value fails attach.</doc>
+    <field name="magic" start="8" size="24" type="uint" grade="established"/>
+    <field name="version" start="0" size="8" type="uint" grade="established"/>
+    <test value="0x47494600" kind="example">
+      <expect field="magic" value="4671814"/>
+      <expect field="version" value="0"/>
+    </test>
+  </struct>
+  <struct name="UST_MSC_COUNTER" size="4" grade="inferred" from="shipped kernel driver and media library readings" register="yes" offset="0x80008c" access="rw" reset="unknown">
+    <doc>Register number 0x88, stored 0 by the UST initialisation just before the host UST is sampled. The store is established; that it is the board's own UST/MSC counter is inferred from the pattern and the driver's message.</doc>
+  </struct>
+  <struct name="PACK_R0800" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x800804" access="rw" reset="unknown">
+    <doc>Packer register number 0x800. The library's per-pipe init stores a constant (see PACK_INIT_R0800). Roles unknown.</doc>
+  </struct>
+  <struct name="PACK_R0808" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80080c" access="rw" reset="unknown">
+    <doc>Packer register number 0x808. Init constant PACK_INIT_R0808. Roles unknown.</doc>
+  </struct>
+  <struct name="PACK_R0810" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x800814" access="rw" reset="unknown">
+    <doc>Packer register number 0x810. Init constant PACK_INIT_R0810. Roles unknown.</doc>
+  </struct>
+  <struct name="PACK_MISC_SEL" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x800824" access="rw" reset="unknown">
+    <doc>Packer miscellaneous select (register number 0x820, the diagnostic's PACK_MISC_SEL). Name and storage mask (bits 2 and 0) are established; the library stores 1 during init. Role unknown.</doc>
+    <field name="storage_bit2" start="2" size="1" type="uint" grade="established"/>
+    <field name="storage_bit0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PACK_R0840" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x800844" access="rw" reset="unknown">
+    <doc>Packer register number 0x840. Init value is 0x1000 for pipe 1 (PACK_INIT_R0840). Roles unknown.</doc>
+  </struct>
+  <struct name="PACK_R0848" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80084c" access="rw" reset="unknown">
+    <doc>Packer register number 0x848. Init constant PACK_INIT_R0848. Roles unknown.</doc>
+  </struct>
+  <struct name="PACK_R0850" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x800854" access="rw" reset="unknown">
+    <doc>Packer register number 0x850. Init constant PACK_INIT_R0850. Roles unknown.</doc>
+  </struct>
+  <struct name="UNPACK_R1000" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x801004" access="rw" reset="unknown">
+    <doc>Unpacker register number 0x1000. Init constant UNPACK_INIT_R1000. Roles unknown.</doc>
+  </struct>
+  <struct name="UNPACK_R1008" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80100c" access="rw" reset="unknown">
+    <doc>Unpacker register number 0x1008. Init constant UNPACK_INIT_R1008. Roles unknown.</doc>
+  </struct>
+  <struct name="UNPACK_VERSION_SEL" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x801014" access="rw" reset="unknown">
+    <doc>Unpacker VERSION_SEL (register number 0x1010). Name only; the diagnostic's storage mask is 0, which means not tested rather than read-only. Role unknown.</doc>
+  </struct>
+  <struct name="UNPACK_MISC_SEL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80101c" access="rw" reset="unknown">
+    <doc>Unpacker MISC_SEL (register number 0x1018). The library stores 0x0fffe0f9 with a flag shifted into bit 28 (UNPACK_INIT_MISC_BASE); the diagnostic's storage mask is bits 11:2 and 0. Bits of the library constant outside that mask are either not storage or not tested. Roles unknown.</doc>
+    <field name="flag28" start="28" size="1" type="uint" grade="inferred"/>
+    <field name="diag_storage_hi" start="2" size="10" type="uint" grade="established" from="shipped diagnostic tables"/>
+    <field name="diag_storage_lo" start="0" size="1" type="uint" grade="established" from="shipped diagnostic tables"/>
+  </struct>
+  <struct name="UNPACK_IDMA_DATA_SEL" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x801024" access="rw" count="2" stride="8" reset="unknown">
+    <doc>Unpacker IDMA_DATA0_SEL and IDMA_DATA1_SEL (register numbers 0x1020 and 0x1028). Names only; diagnostic mask 0. Roles unknown.</doc>
+  </struct>
+  <struct name="UNPACK_OVFIFO_TEST_PATTERN_SEL" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x801034" access="rw" count="2" stride="8" reset="unknown">
+    <doc>Unpacker OVFIFO_TEST_PATTERN0_SEL and OVFIFO_TEST_PATTERN1_SEL (register numbers 0x1030 and 0x1038). Names only; diagnostic mask 0. Roles unknown.</doc>
+  </struct>
+  <struct name="UNPACK_R1040" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x801044" access="rw" reset="unknown">
+    <doc>Unpacker register number 0x1040. Init value is 0x1200 for pipe 0 (UNPACK_INIT_R1040). Roles unknown.</doc>
+  </struct>
+  <struct name="UNPACK_R1048" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80104c" access="rw" reset="unknown">
+    <doc>Unpacker register number 0x1048. Init constant UNPACK_INIT_R1048. Roles unknown.</doc>
+  </struct>
+  <struct name="VIF_CONTROL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x801804" access="rw" reset="unknown">
+    <doc>VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test.</doc>
+    <field name="nonzero_test" start="12" size="1" type="uint" grade="established"/>
+    <field name="row_word1" start="11" size="1" type="uint" grade="established"/>
+    <field name="const_7" start="8" size="3" type="uint" grade="established"/>
+    <field name="sd_flag" start="6" size="1" type="uint" grade="established"/>
+    <field name="mode_sel" start="4" size="2" type="uint" grade="established"/>
+    <field name="bit0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="VIF_ENABLE" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80180c" access="rw" reset="unknown">
+    <doc>VIF enable (register number 0x1808, the diagnostic's ENABLE_SEL); the kernel stores the pipe's second shadow word here and abort clears bit 0. The store is established; that bit 0 is the enable is inferred. This is the in-pipe (pipe 1) video enable; the pairing is inferred from trace names.</doc>
+    <field name="bit1" start="1" size="1" type="uint" grade="unknown"/>
+    <field name="enable" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="VIF_SCRATCH" size="4" grade="inferred" from="shipped diagnostic tables" register="yes" offset="0x801814" access="rw" reset="unknown">
+    <doc>Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write; the library does not use it.</doc>
+  </struct>
+  <struct name="VIF_DMUX" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80182c" access="rw" reset="unknown">
+    <doc>VIF DMUX register (register number 0x1828, the diagnostic's DMUX_REG_SEL). Bits 2:0 are a small selector (0 on the path read), bits 4:3 a two-bit mode (2 or 3, from the format class), bit 5 is set when a path field equals 10 and bit 7 is set except in one special path case. Formula established; meaning unknown.</doc>
+    <field name="bit7" start="7" size="1" type="uint" grade="established"/>
+    <field name="path_is_10" start="5" size="1" type="uint" grade="established"/>
+    <field name="mode" start="3" size="2" type="uint" grade="established"/>
+    <field name="selector" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="VIF_F0_ACTVID" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x801884" access="rw" reset="unknown">
+    <doc>VIF field 0 active video (register number 0x1880): two 11-bit line numbers computed from the format row's line count and the path's start offsets. What each line is, is unknown.</doc>
+    <field name="line1" start="11" size="11" type="uint" grade="established"/>
+    <field name="line0" start="0" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="VIF_F1_ACTVID" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80188c" access="rw" reset="unknown">
+    <doc>VIF field 1 active video (register number 0x1888): same layout as field 0.</doc>
+    <field name="line1" start="11" size="11" type="uint" grade="established"/>
+    <field name="line0" start="0" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="VIF_LINES_PER_FRAME" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x801894" access="rw" reset="unknown">
+    <doc>VIF lines per frame (register number 0x1890): the format row's total line count minus 1 (1124 for the 1125-line HD rows).</doc>
+  </struct>
+  <struct name="HDOC_STATUS" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802004" access="rw" reset="unknown">
+    <doc>HDOC status (register number 0x2000). The library sets bit 24 as a hold-off before writing the other HDOC registers and clears it after; the final value is built from pipe flags and ORs bit 17 last, except that on a board whose NIC part number is 1653 with revision 3 or later bit 17 is cleared instead (the inferred reading of which NIC fields hold part and revision comes from the GET_NIC ioctl result). The constant part is 0xc8008, or 0x2c8008 by a path flag. Formula established; field meanings unknown. 26 bits.</doc>
+    <field name="hold_off" start="24" size="1" type="uint" grade="established"/>
+    <field name="flag17" start="17" size="1" type="uint" grade="established"/>
+    <field name="flag12" start="12" size="1" type="uint" grade="established"/>
+    <field name="flag11" start="11" size="1" type="uint" grade="established"/>
+    <field name="flag10" start="10" size="1" type="uint" grade="established"/>
+    <field name="sel_9_7" start="7" size="3" type="uint" grade="established"/>
+    <field name="sel_6_5" start="5" size="2" type="uint" grade="established"/>
+    <field name="sel_1_0" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="HDOC_ENABLE" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80200c" access="rw" reset="unknown">
+    <doc>HDOC enable (register number 0x2008, the diagnostic's ENABLE_SEL); the kernel stores the pipe's second shadow here and abort clears bit 0. The out-pipe (pipe 0) video enable; the pairing is inferred.</doc>
+    <field name="enable" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="HDOC_FORMAT" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802014" access="rw" reset="unknown">
+    <doc>HDOC format (register number 0x2010): total lines minus 1 and samples per line minus 1, from format-row words (1125 lines and 2200 samples for 1080i at 59.94).</doc>
+    <field name="lines_minus_1" start="12" size="11" type="uint" grade="established"/>
+    <field name="samples_minus_1" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="HDOC_XCC_RDEN" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80201c" access="rw" reset="unknown">
+    <doc>HDOC xcc_rden (register number 0x2018): active width plus 41 in the low 12 bits, with constant bits 17, 15 and 12 (0x29000). Formula established; meaning unknown.</doc>
+    <field name="width_plus_41" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="HDOC_TRS_HBLANK" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802024" access="rw" reset="unknown">
+    <doc>HDOC trs_hblank (register number 0x2020): two 12-bit fields; the high one is active width plus 4 (standard-definition timing) or 8, the low one is 2 or 4 by the same flag. Formula established; meaning unknown.</doc>
+    <field name="hblank_end" start="12" size="12" type="uint" grade="established"/>
+    <field name="mode" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="HDOC_LINE_REGS" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80202c" access="rw" count="5" stride="8" reset="unknown">
+    <doc>Five HDOC registers with one layout, in order: actvid_fld0, trs_vblank_fld0, actvid_fld1, trs_vblank_fld1, field (register numbers 0x2028 to 0x2048). Two 11-bit line numbers computed from the format row and the path. The last register is forced to 0 when the first and second operands are equal. Formula established; meaning unknown. 22 bits each.</doc>
+    <field name="line1" start="11" size="11" type="uint" grade="established"/>
+    <field name="line0" start="0" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="HDOC_XCC_RDEN2" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802054" access="rw" reset="unknown">
+    <doc>HDOC xcc_rden2 (register number 0x2050): two 12-bit fields. Normally the first is active width plus 41 and the second is 41; when the path's geometry equals the full raster both are samples per line minus 41.</doc>
+    <field name="blank_field" start="12" size="12" type="uint" grade="established"/>
+    <field name="width_field" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="HDOC_VITC_SEL" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x80205c" access="rw" reset="unknown">
+    <doc>HDOC VITC_SEL (register number 0x2058). Name and 23-bit mask only; not written by the library.</doc>
+  </struct>
+  <struct name="HDOC_RESYNC" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802064" access="rw" reset="unknown">
+    <doc>HDOC resync (register number 0x2060). The library reads it at init and hands the two fields to the kernel as the resync value, and writes the pair back from the resync routine.</doc>
+    <field name="line" start="12" size="11" type="uint" grade="established"/>
+    <field name="sample" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="HDOC_RESYNC_WNDW" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80206c" access="rw" reset="unknown">
+    <doc>HDOC resync window (register number 0x2068): the resync position moved by 7 samples with carry into the line count and a wrap at the line total. Window semantics are inferred from the name.</doc>
+    <field name="line" start="12" size="11" type="uint" grade="established"/>
+    <field name="sample" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="HDOC_DATA_RDEN" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802074" access="rw" reset="unknown">
+    <doc>HDOC data_rden (register number 0x2070): active width plus 1 or 2 in the low 12 bits and 0x1000 or 0x2000 in bits 13:12, chosen by the standard-definition flag.</doc>
+    <field name="mode" start="12" size="2" type="uint" grade="established"/>
+    <field name="end" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="HDOC_FIFO_WEN_SEL" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x80207c" access="rw" count="2" stride="8" reset="unknown">
+    <doc>HDOC FIFOA_WEN_SEL and FIFOB_WEN_SEL (register numbers 0x2078 and 0x2080). Names and 24-bit masks only; not written by the library.</doc>
+  </struct>
+  <struct name="HDOC_DIAG_REGS" size="4" grade="inferred" from="shipped diagnostic tables" register="yes" offset="0x8020b4" access="rw" count="8" stride="8" reset="unknown">
+    <doc>Eight diagnostic-only registers, register numbers 0x20b0 to 0x20e8. The diagnostic names, in order, LFIFO_TEST_PATTEN, OXCC_DATA_HI, OXCC_DATA_LO, LFIFO_DATA, VIF_LB_TEST_PATTERN_LO, VIF_LB_TEST_PATTERN_HI, DEFAULT_Y (0x20e0) and DEFAULT_C (0x20e8). Only the last two numbers are tied to names; the assignment of the others to slots follows the listing order and is inferred. Roles unknown. Diagnostic mask 0.</doc>
+  </struct>
+  <struct name="CLINK_TX_MESSAGE" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x803804" access="w" count="12" stride="8" reset="unknown">
+    <doc>CLINK transmit message: twelve halfword registers (register numbers 0x3800 to 0x3858) that the send ioctl fills from the 24-byte VBOB message, byte 2k in the high half and byte 2k+1 in the low half, before ringing the doorbell. Stores established; that it is a transmit buffer is inferred from the next store.</doc>
+    <field name="halfword" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="CLINK_PGEN_LO" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x803864" access="rw" reset="unknown">
+    <doc>CLINK pattern-generator divider, low (register number 0x3860, the diagnostic's PGEN_LO_SEL). The library writes CLINK_PGEN_LO_INIT when configuring the on-board 50 MHz clock. Role inferred.</doc>
+    <field name="divider_lo" start="0" size="16" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CLINK_PGEN_HI" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80386c" access="rw" reset="unknown">
+    <doc>CLINK pattern-generator divider, high (register number 0x3868, PGEN_HI_SEL). The library writes CLINK_PGEN_HI_INIT. Role inferred.</doc>
+    <field name="divider_hi" start="0" size="8" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CLINK_KSYNC_SEL" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x803874" access="rw" reset="unknown">
+    <doc>CLINK KSYNC_SEL (register number 0x3870). Name and 9-bit mask only; not written by the library.</doc>
+    <field name="storage" start="0" size="9" type="uint" grade="established"/>
+  </struct>
+  <struct name="CLINK_RX_MESSAGE" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x803884" access="r" count="12" stride="8" reset="unknown">
+    <doc>CLINK receive message: twelve halfword registers (register numbers 0x3880 to 0x38d8) the status-ring service routine reads when a message-received flag is set, keeping bits 15:0 of each as a high and a low byte.</doc>
+    <field name="halfword" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="CLINK_UART_RESET" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x8038e4" access="rw" reset="unknown">
+    <doc>CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when a path opens. Name from the diagnostic, accesses from the library.</doc>
+    <field name="reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CLINK_TX_DOORBELL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x8038ec" access="w" reset="unknown">
+    <doc>CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag.</doc>
+    <field name="ring" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CLINK_RX_RELEASE" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x8038f4" access="w" reset="unknown">
+    <doc>CLINK receive release (register number 0x38f0): the service routine stores 1 after copying a received frame; the event post routine stores a register value to the same word in two places whose value was not traced (unknown).</doc>
+    <field name="release" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="IXCC_DIAG_CONTROL0" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x802804" access="rw" space="xcc_diag" reset="unknown">
+    <doc>Diagnostic layout, input block CONTROL0 (register number 0x2800), 9 storage bits. The layout goes with the second input image, which only the diagnostic loads; which layout belongs to which image is read from who loads it, not from the bitstreams (inferred).</doc>
+    <field name="storage" start="0" size="9" type="uint" grade="established"/>
+  </struct>
+  <struct name="IXCC_DIAG_CONTROL1" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x80280c" access="rw" space="xcc_diag" reset="unknown">
+    <doc>Diagnostic layout, input block CONTROL1 (register number 0x2808), 8 storage bits.</doc>
+    <field name="storage" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="IXCC_DIAG_LUT_CONTROL" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x802814" access="rw" space="xcc_diag" reset="unknown">
+    <doc>Diagnostic layout, input block LUT_CONTROL (register number 0x2810), 5 storage bits.</doc>
+    <field name="storage" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="IXCC_DIAG_LUT_DATA" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x80281c" access="rw" space="xcc_diag" reset="unknown">
+    <doc>Diagnostic layout, input block LUT_DATA (register number 0x2818). Diagnostic mask 0: not tested rather than read-only.</doc>
+  </struct>
+  <struct name="OXCC_DIAG_CONTROL0" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x803004" access="rw" space="xcc_diag" reset="unknown">
+    <doc>Diagnostic layout, output block control (register number 0x3000), 9 storage bits.</doc>
+    <field name="storage" start="0" size="9" type="uint" grade="established"/>
+  </struct>
+  <struct name="OXCC_DIAG_CONTROL1" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x80300c" access="rw" space="xcc_diag" reset="unknown">
+    <doc>Diagnostic layout, output block register number 0x3008, 10 storage bits.</doc>
+    <field name="storage" start="0" size="10" type="uint" grade="established"/>
+  </struct>
+  <struct name="OXCC_DIAG_LUT_CONTROL" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x803014" access="rw" space="xcc_diag" reset="unknown">
+    <doc>Diagnostic layout, output block register number 0x3010, 5 storage bits.</doc>
+    <field name="storage" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="OXCC_DIAG_LUT_DATA" size="4" grade="established" from="shipped diagnostic tables" register="yes" offset="0x80301c" access="rw" space="xcc_diag" reset="unknown">
+    <doc>Diagnostic layout, output block register number 0x3018. Diagnostic mask 0: not tested rather than read-only.</doc>
+  </struct>
+  <struct name="IXCC_PROG_LUT_CONTROL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802804" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Input colour-converter LUT control (block base, register number 0x2800). Per component the library writes 8, then 2, 4 or 1 for component 0, 1 or 2, then 8192 data writes, then 0. The sequence is established; the meaning of the control values is unknown.</doc>
+  </struct>
+  <struct name="IXCC_PROG_LUT_DATA" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80280c" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Input colour-converter LUT data (register number 0x2808). Each of the 8192 entries per component is one 32-bit store carrying no index; whether the entry index auto-increments is unknown.</doc>
+  </struct>
+  <struct name="IXCC_PROG_OFFSET" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802814" access="rw" count="4" stride="8" space="xcc_prog" reset="unknown">
+    <doc>Input colour-converter red, green, blue and alpha offsets (register numbers 0x2810, 0x2818, 0x2820, 0x2828): format-table row words 10 to 13, as unsplit 32-bit values.</doc>
+  </struct>
+  <struct name="IXCC_PROG_MISC" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802834" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Input colour converter misc (register number 0x2830): bit 0 is set when the path's conversion mode is zero and bit 8 is the mode's bit 0 shifted up. Formula established; meaning unknown.</doc>
+    <field name="mode_bit0" start="8" size="1" type="uint" grade="established"/>
+    <field name="mode_zero" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="IXCC_PROG_ALPHA" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80283c" access="rw" count="2" stride="8" space="xcc_prog" reset="unknown">
+    <doc>Input colour converter alpha pair (register numbers 0x2838 and 0x2840, one failure message): the first is 4 when the standard-definition flag is set, else the path mode; the second is 0 when the table row index equals a path field, else 3 or the path mode. Offsets established; meaning unknown.</doc>
+  </struct>
+  <struct name="IXCC_PROG_COEFLO" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80284c" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Input colour converter coefficient, low 16 bits (register number 0x2848). Written before the high bit and the index.</doc>
+    <field name="value" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="IXCC_PROG_COEFHI" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x802854" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Input colour converter coefficient, bit 16 (register number 0x2850).</doc>
+    <field name="bit16" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="IXCC_PROG_COEFIND" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80285c" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Input colour converter coefficient index (register number 0x2858), 5 bits, written after the low and high parts. That it latches the coefficient is inferred from the order. Ten coefficients come from a per-format table: words 0 to 8 go to indices 16, 20, 24, 17, 21, 25, 18, 22, 26 (a transposed 3 by 3 matrix, inferred) and word 9 to index 28; then seven filter taps go to indices 0 to 6.</doc>
+    <field name="index" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="OXCC_PROG_LUT_CONTROL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x803004" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Output colour-converter LUT control (block base, register number 0x3000); same sequence as the input block.</doc>
+  </struct>
+  <struct name="OXCC_PROG_LUT_DATA" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80300c" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Output colour-converter LUT data (register number 0x3008); same behaviour as the input block.</doc>
+  </struct>
+  <struct name="OXCC_PROG_OFFSET_LO" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x803014" access="rw" count="3" stride="16" space="xcc_prog" reset="unknown">
+    <doc>Output colour converter red, green and blue offsets, low 16 bits (register numbers 0x3010, 0x3020, 0x3030), from format-table row words 10 to 12. Each is followed by a register holding bit 16 of the same offset.</doc>
+    <field name="value" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="OXCC_PROG_OFFSET_BIT16" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80301c" access="rw" count="3" stride="16" space="xcc_prog" reset="unknown">
+    <doc>Output colour converter red, green and blue offsets, bit 16 (register numbers 0x3018, 0x3028, 0x3038).</doc>
+    <field name="bit16" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="OXCC_PROG_AROUND" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x803044" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Output colour converter around (register number 0x3040): format-table row word 13.</doc>
+  </struct>
+  <struct name="OXCC_PROG_PACK8" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80304c" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Output colour converter pack8 (register number 0x3048): 1 when the component size is 8 bits.</doc>
+  </struct>
+  <struct name="OXCC_PROG_DEC" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x803054" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Output colour converter dec (register number 0x3050): 0, or 3 or the pipe mode, chosen by the path. Offset established; formula unknown.</doc>
+  </struct>
+  <struct name="OXCC_PROG_COEFLO" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80305c" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Output colour converter coefficient, low 16 bits (register number 0x3058).</doc>
+    <field name="value" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="OXCC_PROG_COEFHI" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x803064" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Output colour converter coefficient, bit 16 (register number 0x3060).</doc>
+    <field name="bit16" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="OXCC_PROG_COEFIND" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80306c" access="rw" space="xcc_prog" reset="unknown">
+    <doc>Output colour converter coefficient index (register number 0x3068), 5 bits, written after the low and high parts.</doc>
+    <field name="index" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="FPGA_INFO_KIND" size="4" grade="established" from="shipped kernel driver and media library readings">
+    <doc>Word at +4 of a 28-byte FPGA info record (all fields are big-endian 32-bit words): the kind, which selects the start, byte and stop routines.</doc>
+    <field name="kind" start="0" size="2" type="fpga_kind" grade="established"/>
+  </struct>
+  <struct name="FPGA_PROG_WRITE" size="4" grade="established" from="shipped kernel driver and media library readings">
+    <doc>Write layout of the GIF programming register: an 8-bit data byte, a clock in bit 8 and a strobe in bit 9 that is high in the idle and active-data states. Each image byte of the GIF load is stored eight times unshifted, once with the clock low and once high. Values and tests established; the names are inferred. The kernel's own byte-load case stores a byte ORed with the clock-low and clock-high patterns the same way.</doc>
+    <field name="strobe" start="9" size="1" type="uint" grade="inferred"/>
+    <field name="clock" start="8" size="1" type="uint" grade="inferred"/>
+    <field name="data" start="0" size="8" type="uint" grade="established"/>
+    <test value="0x100" kind="vector">
+      <expect field="data" value="0"/>
+      <expect field="clock" value="1"/>
+      <expect field="strobe" value="0"/>
+    </test>
+    <test value="0x200" kind="vector">
+      <expect field="data" value="0"/>
+      <expect field="clock" value="0"/>
+      <expect field="strobe" value="1"/>
+    </test>
+    <test value="0x300" kind="vector">
+      <expect field="data" value="0"/>
+      <expect field="clock" value="1"/>
+      <expect field="strobe" value="1"/>
+    </test>
+  </struct>
+  <struct name="MAPRAM_ENTRY" size="4" grade="established" from="shipped kernel driver and media library readings">
+    <doc>A valid map-RAM page-table entry, one 32-bit word per 16 KiB page of the board's own DMA address space, stored by the driver as one big-endian PIO store. Written value is the page number's low 26 bits shifted left by 2, ORed with the valid bit. Whether the hardware reads bits 1:0 or the top bits as attributes, and the byte order its logic applies to the store, are unknown: nothing reads an entry back.</doc>
+    <field name="valid" start="29" size="1" type="uint" grade="established"/>
+    <field name="invalid" start="28" size="1" type="uint" grade="established"/>
+    <field name="ppn" start="2" size="26" type="uint" grade="established"/>
+    <test value="0x20000004" kind="example">
+      <expect field="valid" value="1"/>
+      <expect field="invalid" value="0"/>
+      <expect field="ppn" value="1"/>
+    </test>
+  </struct>
+  <struct name="MAPRAM_ENTRY_INVALIDATED" size="4" grade="established" from="shipped kernel driver and media library readings">
+    <doc>An invalidated map-RAM entry: bit 28 set and a run-length counter below it. The driver writes n consecutive entries, the i-th as the invalid bit with the value n minus 1 minus i, so a single invalidated page is exactly the invalid bit alone. That bit 28 is what the hardware tests, and that the counter is only a run length, is inferred; the effect is the map-RAM-invalid error cause with the entry address in the map-RAM error address register.</doc>
+    <field name="invalid" start="28" size="1" type="uint" grade="established"/>
+    <field name="run_left" start="0" size="28" type="uint" grade="inferred"/>
+    <test value="0x10000000" kind="vector">
+      <expect field="invalid" value="1"/>
+      <expect field="run_left" value="0"/>
+    </test>
+  </struct>
+  <struct name="RING_ENTRY_FLAGS" size="4" grade="established" from="shipped kernel driver and media library readings">
+    <doc>Word 1 of a status-ring entry, the flag word. Bit numbers and names come from the driver's own 20-entry flag-name table (established); what each bit means in hardware terms is inferred from its name. Pipe 0 is the out pipe (video interrupt 1), pipe 1 the in pipe (video interrupt 0). The host clears VALID first, then handles the completion bits slot by slot in order, then the field-interrupt bit, the error bits while DMA is enabled, and the two link bits. Bits 20 to 31 have no table entry and no test.</doc>
+    <field name="clink_rcv_done" start="19" size="1" type="uint" grade="established"/>
+    <field name="clink_xmit_done" start="18" size="1" type="uint" grade="established"/>
+    <field name="current_valid" start="16" size="2" type="uint" grade="inferred"/>
+    <field name="aborted" start="12" size="4" type="uint" grade="established"/>
+    <field name="done" start="8" size="4" type="uint" grade="established"/>
+    <field name="f_intr" start="7" size="1" type="uint" grade="established"/>
+    <field name="fif" start="6" size="1" type="uint" grade="established"/>
+    <field name="in_change" start="5" size="1" type="uint" grade="established"/>
+    <field name="overflow" start="4" size="1" type="uint" grade="established"/>
+    <field name="trs_error" start="3" size="1" type="uint" grade="established"/>
+    <field name="input_off" start="2" size="1" type="uint" grade="established"/>
+    <field name="f" start="1" size="1" type="uint" grade="established"/>
+    <field name="valid" start="0" size="1" type="uint" grade="established"/>
+    <test value="0x40001" kind="example">
+      <expect field="valid" value="1"/>
+      <expect field="clink_xmit_done" value="1"/>
+      <expect field="clink_rcv_done" value="0"/>
+    </test>
+  </struct>
+  <struct name="RING_ENTRY_W0" size="4" grade="established" from="shipped kernel driver and media library readings">
+    <doc>Word 0 of a 0x80-byte status-ring entry. The service routine treats bits 23:0 as a device media stream counter (MSC) and extends it to 64 bits, detecting a wrap by an unsigned compare with the previous value. The code only works if bits 31:24 read as zero (inferred; the driver does not check). The name MSC is inferred from the driver's own strings.</doc>
+    <field name="reserved_zero" start="24" size="8" type="uint" grade="inferred"/>
+    <field name="msc" start="0" size="24" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="VBOB_MSG_HEADER" size="4" grade="established" from="shipped kernel driver and media library readings">
+    <doc>First four bytes of the 24-byte VBOB control message frame, in wire order from the high byte: count of bytes that follow, pipe, register id with bit 7 set for a write, then the first data byte. Byte layout established from every message builder in the library; names are inferred. The same 24 bytes are carried as twelve halfwords in the CLINK transmit and receive registers. Which pipe's ring carries a receive flag is unknown.</doc>
+    <field name="count" start="24" size="8" type="uint" grade="established"/>
+    <field name="pipe" start="16" size="8" type="vbob_pipe" grade="established"/>
+    <field name="write" start="15" size="1" type="uint" grade="established"/>
+    <field name="reg_id" start="8" size="7" type="uint" grade="established"/>
+    <field name="data0" start="0" size="8" type="uint" grade="inferred"/>
+    <test value="0x4012000" kind="example">
+      <expect field="count" value="4"/>
+      <expect field="pipe" value="1"/>
+      <expect field="write" value="0"/>
+      <expect field="reg_id" value="32"/>
+    </test>
+  </struct>
+  <constant name="CLINK_PGEN_HI_INIT" value="0x25" grade="established"/>
+  <constant name="CLINK_PGEN_LO_INIT" value="0xc3f7" grade="established"/>
+  <constant name="FPGA_CLINK_DONE_MASK" value="0x4000" grade="established"/>
+  <constant name="FPGA_CLINK_IMAGE_SIZE" value="0x8a64" grade="established"/>
+  <constant name="FPGA_CLINK_INIT_MASK" value="0x8000" grade="established"/>
+  <constant name="FPGA_CLINK_KIND" value="0x0" grade="established"/>
+  <constant name="FPGA_CLINK_NUMBER" value="0x7" grade="established"/>
+  <constant name="FPGA_CLINK_PORT_OFFSET" value="0x3800" grade="established"/>
+  <constant name="FPGA_CLINK_SELECT" value="0x40" grade="inferred"/>
+  <constant name="FPGA_DATA_PORT_ADD" value="0x80000" grade="established"/>
+  <constant name="FPGA_GIF_DONE_MASK" value="0x1" grade="established"/>
+  <constant name="FPGA_GIF_IMAGE_SIZE" value="0x2bc21" grade="established"/>
+  <constant name="FPGA_GIF_INIT_MASK" value="0x2" grade="established"/>
+  <constant name="FPGA_GIF_KIND" value="0x1" grade="established"/>
+  <constant name="FPGA_GIF_NUMBER" value="0x0" grade="established"/>
+  <constant name="FPGA_GIF_PORT_OFFSET" value="0x0" grade="established"/>
+  <constant name="FPGA_GIF_SELECT" value="0x0" grade="established"/>
+  <constant name="FPGA_HDOC_DONE_MASK" value="0x1000" grade="established"/>
+  <constant name="FPGA_HDOC_IMAGE_SIZE" value="0x19682" grade="established"/>
+  <constant name="FPGA_HDOC_INIT_MASK" value="0x2000" grade="established"/>
+  <constant name="FPGA_HDOC_KIND" value="0x0" grade="established"/>
+  <constant name="FPGA_HDOC_NUMBER" value="0x5" grade="established"/>
+  <constant name="FPGA_HDOC_PORT_OFFSET" value="0x2000" grade="established"/>
+  <constant name="FPGA_HDOC_SELECT" value="0x8" grade="inferred"/>
+  <constant name="FPGA_INFO_OFF_DONE_MASK" value="0x14" grade="established"/>
+  <constant name="FPGA_INFO_OFF_IMAGE_SIZE" value="0x8" grade="established"/>
+  <constant name="FPGA_INFO_OFF_INIT_MASK" value="0x18" grade="established"/>
+  <constant name="FPGA_INFO_OFF_KIND" value="0x4" grade="established"/>
+  <constant name="FPGA_INFO_OFF_NAME" value="0x0" grade="established"/>
+  <constant name="FPGA_INFO_OFF_PORT_OFFSET" value="0x10" grade="established"/>
+  <constant name="FPGA_INFO_OFF_SELECT" value="0xc" grade="established"/>
+  <constant name="FPGA_INFO_RECORDS" value="0x8" grade="established"/>
+  <constant name="FPGA_INFO_RECORD_SIZE" value="0x1c" grade="established"/>
+  <constant name="FPGA_IXCC_DONE_MASK" value="0x40" grade="established"/>
+  <constant name="FPGA_IXCC_IMAGE_SIZE" value="0x4db30" grade="established"/>
+  <constant name="FPGA_IXCC_INIT_MASK" value="0x80" grade="established"/>
+  <constant name="FPGA_IXCC_KIND" value="0x2" grade="established"/>
+  <constant name="FPGA_IXCC_NUMBER" value="0x4" grade="established"/>
+  <constant name="FPGA_IXCC_PORT_OFFSET" value="0x2800" grade="established"/>
+  <constant name="FPGA_IXCC_SELECT" value="0x10" grade="inferred"/>
+  <constant name="FPGA_OXCC_DONE_MASK" value="0x100" grade="established"/>
+  <constant name="FPGA_OXCC_IMAGE_SIZE" value="0x4db30" grade="established"/>
+  <constant name="FPGA_OXCC_INIT_MASK" value="0x200" grade="established"/>
+  <constant name="FPGA_OXCC_KIND" value="0x2" grade="established"/>
+  <constant name="FPGA_OXCC_NUMBER" value="0x3" grade="established"/>
+  <constant name="FPGA_OXCC_PORT_OFFSET" value="0x3000" grade="established"/>
+  <constant name="FPGA_OXCC_SELECT" value="0x20" grade="inferred"/>
+  <constant name="FPGA_PACK_DONE_MASK" value="0x4" grade="established"/>
+  <constant name="FPGA_PACK_IMAGE_SIZE" value="0x19682" grade="established"/>
+  <constant name="FPGA_PACK_INIT_MASK" value="0x8" grade="established"/>
+  <constant name="FPGA_PACK_KIND" value="0x0" grade="established"/>
+  <constant name="FPGA_PACK_NUMBER" value="0x1" grade="established"/>
+  <constant name="FPGA_PACK_PORT_OFFSET" value="0x800" grade="established"/>
+  <constant name="FPGA_PACK_SELECT" value="0x1" grade="inferred"/>
+  <constant name="FPGA_UNPACK_DONE_MASK" value="0x10" grade="established"/>
+  <constant name="FPGA_UNPACK_IMAGE_SIZE" value="0x19682" grade="established"/>
+  <constant name="FPGA_UNPACK_INIT_MASK" value="0x20" grade="established"/>
+  <constant name="FPGA_UNPACK_KIND" value="0x0" grade="established"/>
+  <constant name="FPGA_UNPACK_NUMBER" value="0x2" grade="established"/>
+  <constant name="FPGA_UNPACK_PORT_OFFSET" value="0x1000" grade="established"/>
+  <constant name="FPGA_UNPACK_SELECT" value="0x2" grade="inferred"/>
+  <constant name="FPGA_VIF_DONE_MASK" value="0x400" grade="established"/>
+  <constant name="FPGA_VIF_IMAGE_SIZE" value="0x19682" grade="established"/>
+  <constant name="FPGA_VIF_INIT_MASK" value="0x800" grade="established"/>
+  <constant name="FPGA_VIF_KIND" value="0x0" grade="established"/>
+  <constant name="FPGA_VIF_NUMBER" value="0x6" grade="established"/>
+  <constant name="FPGA_VIF_PORT_OFFSET" value="0x1800" grade="established"/>
+  <constant name="FPGA_VIF_SELECT" value="0x4" grade="inferred"/>
+  <constant name="GIF_BLOCK_CLINK" value="0x3800" grade="established"/>
+  <constant name="GIF_BLOCK_CORE" value="0x0" grade="established"/>
+  <constant name="GIF_BLOCK_HDOC" value="0x2000" grade="established"/>
+  <constant name="GIF_BLOCK_IXCC" value="0x2800" grade="established"/>
+  <constant name="GIF_BLOCK_OXCC" value="0x3000" grade="established"/>
+  <constant name="GIF_BLOCK_PACKER" value="0x800" grade="established"/>
+  <constant name="GIF_BLOCK_SIZE" value="0x800" grade="established" from="shipped diagnostic tables"/>
+  <constant name="GIF_BLOCK_UNPACKER" value="0x1000" grade="established"/>
+  <constant name="GIF_BLOCK_VIF" value="0x1800" grade="established"/>
+  <constant name="GIF_FILE_BASE" value="0x800000" grade="established"/>
+  <constant name="GIF_SLOT_STRIDE" value="0x8" grade="established"/>
+  <constant name="MAPRAM_BASE" value="0x100000" grade="established"/>
+  <constant name="MAPRAM_PAGE_SHIFT" value="0xe" grade="established"/>
+  <constant name="MAPRAM_SLOT_PAGES_MAX" value="0x400" grade="established"/>
+  <constant name="PACK_INIT_R0800" value="0x1f0008" grade="established"/>
+  <constant name="PACK_INIT_R0808" value="0x1f0008" grade="established"/>
+  <constant name="PACK_INIT_R0810" value="0x1f0008" grade="established"/>
+  <constant name="PACK_INIT_R0840" value="0x1000" grade="established"/>
+  <constant name="PACK_INIT_R0848" value="0x1000" grade="established"/>
+  <constant name="PACK_INIT_R0850" value="0xd00" grade="established"/>
+  <constant name="PIPE_DMA_CONTROL_INIT_PIPE0" value="0xea040" grade="established"/>
+  <constant name="PIPE_DMA_CONTROL_INIT_PIPE1" value="0xa040" grade="established"/>
+  <constant name="RING_DMA_ADDR_PIPE0" value="0x8000000" grade="established"/>
+  <constant name="RING_DMA_ADDR_PIPE1" value="0x9000000" grade="established"/>
+  <constant name="RING_ENTRIES" value="0x10" grade="established"/>
+  <constant name="RING_ENTRY_BYTES" value="0x80" grade="established"/>
+  <constant name="UNPACK_INIT_MISC_BASE" value="0xfffe0f9" grade="established"/>
+  <constant name="UNPACK_INIT_R1000" value="0x160008" grade="established"/>
+  <constant name="UNPACK_INIT_R1008" value="0x32001f" grade="established"/>
+  <constant name="UNPACK_INIT_R1040" value="0x1200" grade="established"/>
+  <constant name="UNPACK_INIT_R1048" value="0xd00" grade="established"/>
+  <constant name="VBOB_MSG_BYTES" value="0x18" grade="established"/>
+  <constant name="VBOB_TX_TIMEOUT_TICKS" value="0xfa" grade="established"/>
+</genxml>
