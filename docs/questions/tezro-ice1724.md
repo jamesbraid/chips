@@ -53,8 +53,7 @@ number as the slot of each function it registers, which is why the listing print
 
 ## Answers to five open questions (2026-11-11)
 
-Five questions about the driver's path to the chip. Where an answer rests on a run of the driver against an
-emulated chip, that run shows model behaviour, not hardware evidence. Sources: `mad_dd.o` as above, re-disassembled with relocations for this section;
+Five questions about the driver's path to the chip. No answer rests on a run of the driver. Sources: `mad_dd.o` as above, re-disassembled with relocations for this section;
 IC Ensemble *ICE1724 (Envy24HT)* preliminary Rev. 0.91, 11/05/01 ("ICE DS"); TI *PCI2050 PCI-to-PCI Bridge Data Manual*
 SCPS053B ("TI DS", the PCI2050B manual agrees on these registers); the public Linux `sound/pci/ice1712` driver (Linux 7.2-rc7).
 

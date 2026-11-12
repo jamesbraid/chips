@@ -11,9 +11,9 @@ Method: disassembly of the shipped IP35 PROM image (SGI Version 6.210, built Aug
 [ip35-reset-window.md](ip35-reset-window.md): physical 0x1fc0xxxx, offset into the unpacked segment = address -
 0x1fc00000. The PROM has no symbols, so routines are named here by what they do. Constants were folded by hand
 from the global pointer table (gp = 0xc00000001fd6f740, set at 0x1fc01920; table words are read from segment
-offset gp + displacement). Nothing was run. The behavior that prompted the question (a processor reading the
-scratch register thousands of times while the other interface had not published) was seen in a model run, not on
-hardware; it was used only to choose what to read.
+offset gp + displacement). Nothing was run. The question is why a processor would read the
+scratch register thousands of times while the other interface had not published; no hardware observation of that
+is held, and the question only chose what to read.
 
 Offsets used, from the local register view (0x1000000 is processor interface 0, "PI"): PI+0x20 reads the
 processor's slice number, 0 to 3 (A, B on the first interface, C, D on the second; the routine at 0x1fc6b530);
@@ -67,7 +67,7 @@ The pointer table holds these as 0x9200000001400150 (scratch 0, table word at se
    Grade: **established** for loops, exit conditions and the two numeric bounds (the routines were read to their
    returns). **Inferred**: that PI+0xa0 bits 48 and 49 are the second-bank pending bits the 0x170/0x171 stores
    set (from the layout of the modify word the interrupt code uses: bit 8 set, bit 6 bank, bits 5:0 number); the
-   counter unit; that the model run's repeated reads belong to the loop at 0x1fc4461c (same register pair, same
+   counter unit; that repeated reads of that register pair while the other interface has not published belong to the loop at 0x1fc4461c (same register pair, same
    partner-present condition; no program counter was traced). **Settling test:** on any engine that runs the
    unmodified PROM, log each processor's program counter with every read of scratch 0 and PI+0xa0, with one
    interface's first processor held for longer than 2000 counter units; the prediction is that the other

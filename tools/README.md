@@ -16,8 +16,8 @@ root (`retools/tools/chips/scan.py tools/configs/bridge.json ...`). The configs 
 | 5 report | `report.py` | `chips/*/census/CHIP/census.md` |
 | 6 definitions | `gen_headers.py` (repo root), then `retools/tools/defs/defs-gen` | `defs/CHIP.toml`, then `gen/` and the forwarding headers in `include/` |
 
-`run.sh CONFIG DATASHEET_REPO MODEL_CHECKOUT [REF]` runs all of it (the comparison needs the emulator's
-datasheets and model source; without them run stages 1, 2 and 4b by hand). `setup-clone.sh` prepares a clone and `re-run` runs a command in the toolchain container
+`run.sh CONFIG DATASHEET_REPO MODEL_CHECKOUT [REF]` runs all of it (the comparison needs the datasheets
+and model source it compares against; without them run stages 1, 2 and 4b by hand). `setup-clone.sh` prepares a clone and `re-run` runs a command in the toolchain container
 (see the README).
 
 How the scan works: a forward data-flow over each function's basic blocks, keeping the distinct states that

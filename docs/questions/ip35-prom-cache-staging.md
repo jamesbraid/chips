@@ -43,7 +43,7 @@ registers, so a purpose-built interpreter was shorter than hooking it (the Unico
 | Cached fetch | primary hit if a way is Valid and its tag equals PA[39:12]; else a secondary hit if a way is non-Invalid and its tag equals PA[39:18], refilling the primary block from the secondary data; else a system read | inferred from 4.1 to 4.3 (the manual describes the organisation, not the fetch algorithm in these words) |
 
 Not modelled: predecode bits, parity and ECC checking, the virtual-index and subset checks, cache-error exceptions,
-the serialisation rules for CACHE (the model runs operations in program order).
+the serialisation rules for CACHE (the simulator runs operations in program order).
 
 ## What the routine does, in cache terms
 
@@ -327,7 +327,7 @@ ranges the eight call sites stage that have no class in the table (data words in
 (0x1fc04980 to 0x1fc04f3f) funct 09 16 24 26 2b 2f 3a 3e and ops 04 05 07 0b 0c 11; 0x1fc027e8 none; 0x1fc03490
 funct 24 26 27 2d 3a 3e and ops 04 05 0c 0e 3f; 0x1fc036dc funct 26 27 2d 3a 3e and ops 04 05 0c 0e 3f; 0x1fc0394c funct 24 2d
 3a and op 05; copy: funct 24 and ops 04 05 3f; verify: funct 2d and ops 04 05 3f (`beq` 04 and `bne` 05 are among them).
-These classes are undecodable from this PROM; they are not needed if the model keeps the architectural word.
+These classes are undecodable from this PROM; they are not needed if an implementation keeps the architectural word.
 
 **3. The simulator's hit path.** The simulator returned `TagLo` as the instruction word on every primary hit
 (`e['w'][wi] & 0xffffffff`) and kept TagHi's four bits unused. That is correct only for the routine it ran: it models
@@ -348,7 +348,7 @@ sampled opcodes and a model cannot derive it from the manual, which says only th
 
 ## Pass one in order, and what it needs from the primary instruction cache
 
-Answers to a model trace in which the routine's primary-I way 1 ends up holding zero words (352 Index Store Data (I)
+Answers how the routine's primary-I way 1 can end up holding zero words (352 Index Store Data (I)
 operations of zero, covering 0x1fc04980 to 0x1fc04eff, then Index Store Tag (I) on sets 38 to 60 with TagLo 0x01fc0444).
 All from the code and the simulator's operation log (word order `lo-hi`, copy call at 0x1fc05950); "needs" statements follow from the code.
 
@@ -369,7 +369,7 @@ secondary slot (0x1fc04abc, 0x1fc04ac0, before the loop). Pass one, per 8-byte p
 
 So the 352 Index Store Data (I) are the readback-then-store copies, and the tags come last. The data is never "filled with zero and
 later overwritten": what the copies store is the data. If the Index Load Data (I) at 0x1fc04d40 and 0x1fc04d48 return
-zero, the 352 stores are zero and the tags then make them Valid, which reproduces the trace's state exactly. I confirmed
+zero, the 352 stores are zero and the tags then make them Valid, which gives exactly that state. I confirmed
 it by forcing both loads to zero in the simulator: 352 stores, 352 zero, 22 way-1 line tags on sets 38 to 59 with TagLo
 0x01fc0444. Normally 320 of the 352 are nonzero (the other 32 are nop words of the code).
 
@@ -417,17 +417,17 @@ readbacks, not a design: the copy only works if the Index Load Data (I) readback
    encoding and whether an Invalid way is preferred unstated; nothing there contradicts the PROM's reading.
 3. **Predecode (unspecified).** Index Load Data (I) returns 36 bits per instruction, four more than the word, and
    Index Store Data (I) writes them back unchanged (10.17, 10.20). The extra bits are not defined in the manual; the
-   routine copies them without looking at them, so the architectural word is unaffected. The model keeps them zero.
+   routine copies them without looking at them, so the architectural word is unaffected. The simulator keeps them zero.
 4. **Check bits (unspecified).** The ECC code of the secondary data array is not in the manual. The routine computes
    its own check word from a ten-entry mask table at 0x1fc04f80 and the primary parity bit travels from Load to Store
-   through ECC[0]. A real refill would check them; the model does not, so a wrong check word would be a cache error
+   through ECC[0]. A real refill would check them; the simulator does not, so a wrong check word would be a cache error
    on silicon and is invisible here.
 5. **Tag parity and the bogus way (unspecified).** The routine sets the state-parity and computes the tag parity for the
-   target lines, and sets 0x4c in the bogus way. The model ignores parity.
-6. **Mapped window and KSEG1 (assumed).** The model serves the 0xc00000001fc0xxxx window (TLB entry 62) and KSEG1 from
+   target lines, and sets 0x4c in the bogus way. The simulator ignores parity.
+6. **Mapped window and KSEG1 (assumed).** The simulator serves the 0xc00000001fc0xxxx window (TLB entry 62) and KSEG1 from
    the flash. That is the reset-window page's conclusion, not something this simulation tests.
 
-## Implication for an emulator
+## Implication for an implementation of the hardware
 
 At all eight call sites, an approximation "cached (algorithm 3) fetches of 0x1fc0xxxx read the flash" returns
 byte-identical words to what the real caches would supply: 0 differences in every fetch of the staged ranges (673,733 on the copy and verify paths, and 80 + 112 + 128 + 32 words

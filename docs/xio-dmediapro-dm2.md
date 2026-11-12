@@ -200,7 +200,7 @@ The "firmware" is **eight Xilinx FPGA configurations**, not code for a CPU. E fo
 | Status entry layout beyond the flag word; flag bit order | 0x80 bytes per entry, one word known | the interrupt service routine and `xtdv_log_intrs` table, read bit by bit |
 | `xthd_fpga_info` records (masks, sizes, order) | 8 records, 224 bytes | dump the table from the library data section |
 | VBOB message formats and replies | about 12 message kinds in 24-byte frames; the reply side is not read | the library's `xhd*` functions and the `vbob_config` tool |
-| XG revision, widget ID register readback, reset values, what bit 5 of status means | a handful of words | no shipped software reads them. Settled only by a capture of a board's status and ID words, which is a physical test and needs the agreement procedure in the repository rules; or recorded as "chosen by the model author" |
+| XG revision, widget ID register readback, reset values, what bit 5 of status means | a handful of words | no shipped software reads them. Settled only by a capture of a board's status and ID words, which is a physical test and needs the agreement procedure in the repository rules; or recorded as "chosen by the implementer" |
 | FPGA parts, bitstream internals | 8 bitstreams | not needed to model software-visible behaviour; settled by reading the bitstream headers only if a model wanted to run them |
 | Video timing, UST generation, LUT behaviour, packing and colour-space maths | n/a (data path) | a model that does not run the FPGAs must implement the packings and conversions the ML module selects; their definitions are in the owner's guides |
 
@@ -210,7 +210,7 @@ The "firmware" is **eight Xilinx FPGA configurations**, not code for a CPU. E fo
 the XG control/interrupt/error contract, the map-RAM page table, the GIF identity and its programming handshake, the seven-FPGA download path, the two-pipe status-ring and interrupt
 structure, and the shape of the VBOB control channel. What is not yet known is bounded and sits in code already in hand (sections 4 and 9: the DMA start and interrupt routines, about 120 KB
 of object code, and about 15 library functions). Nothing in the DM2 stack runs on an on-board CPU: the "firmware" is FPGA configuration that the software downloads and never
-interprets, so a model has no firmware to source. Two things remain beyond software evidence: the widget revision and reset values, and the VBOB-side behaviour beyond the messages the library sends. Both are decisions for the model author
+interprets, so an implementation has no firmware to source. Two things remain beyond software evidence: the widget revision and reset values, and the VBOB-side behaviour beyond the messages the library sends. Both are decisions for the implementer
 (documented as chosen, not as measured).
 
 **DIVO on Onyx2 (fallback): reachable but not cheaper.** See section 11.
@@ -248,6 +248,6 @@ mailbox protocol and the board bus map.
 - [FPGA info table and load protocol](dm2/fpga-load.md)
 - [DMA start path: map RAM entries, pipe control writes, start, completion, errors](dm2/dma.md)
 - [Video interrupts and the status ring](dm2/interrupts-status.md)
-- ioctl dispatch: every command, argument block and return code (kudzu repository, docs/dm2-ioctl.md)
+- ioctl dispatch: every command, argument block and return code (the kudzu repository, `docs/dm2-ioctl.md`)
 - [GIF FPGA registers, XG register block and the widget block](dm2/gif-registers.md)
-- Discreet's DM2 module against SGI's 1.1.3ml build (stonewire repository, docs/dm2-flame-libdigvid.md)
+- Discreet's DM2 module against SGI's 1.1.3ml build (the stonewire repository, `docs/dm2-flame-libdigvid.md`)

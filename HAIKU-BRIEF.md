@@ -9,7 +9,7 @@ IRIX source tree and do not open any document store other than this repository a
 
 **Spec-backed** (Bridge, XBridge, Xbow, CRIME, MACE, GBE, VICE). The chip has a published specification
 (docs/specs.md). The census lists every offset the code touches, then compares it with the specification's
-register map, with the emulator's datasheet if you were given one, and with the emulator's model if you were
+register map, with a datasheet if you were given one, and with a model implementation if you were
 given one. Output classes per register: in the spec / absent from it / the spec contradicts the datasheet;
 modelled and specified / modelled but guessed or deferred / unmodelled. Your job is the task list: registers
 touched but missing from the datasheet or the model, and datasheet entries the spec contradicts.
