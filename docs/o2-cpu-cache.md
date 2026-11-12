@@ -301,9 +301,45 @@ Data fields (**established**, NEC ISUM pp. 29–30; NEC UM pp. 273, 282–283, 8
 - **Unknown**: the primary I tag address width. NEC UM Table 9-2 (p. 191) lists 27 bits. The tag register format (NEC UM p. 279, Figure 14-28) has 28, made of a 24-bit PTag0 and a 4-bit PTag1.
 - **Unknown**: the revision of the R10000 that the manuals describe. They do not tie this behaviour to a revision.
 
+## Coherent block reads and external coherence
+
+These rules cover the processor side of coherent (algorithm 4 and 5) traffic. Each was checked against the R10000
+manual's printed pages. They describe the processor, not what the system interface agent does with a request.
+
+- **Established** (R10000 manual p. 128): a data response to a coherent block read shared, or to a noncoherent block
+  read, may carry Shared, CleanExclusive or DirtyExclusive. A response to a coherent block read exclusive, or to an
+  upgrade, may carry only CleanExclusive or DirtyExclusive. Block data is supplied in subblock order, starting at the
+  quadword-aligned address of the request.
+- **Established** (p. 142, Table 6-27): the processor's response to an external request, when no internal conflict
+  exists. The state response is the former state encoded on SysState[1:0] (Invalid 0, Shared 1, CleanExclusive 2,
+  DirtyExclusive 3). Every row returns that former state.
+
+  | Former state | Intervention shared | Intervention exclusive | Invalidate |
+  | --- | --- | --- | --- |
+  | Invalid | Invalid, no data | Invalid, no data | Invalid, no data |
+  | Shared | Shared, no data | Invalid, no data | Invalid, no data |
+  | CleanExclusive | Shared, no data | Invalid, no data | Invalid, no data (the manual says this should not occur normally) |
+  | DirtyExclusive | Shared, data required, returned as Shared | Invalid, data required, returned as DirtyExclusive | Invalid, no data |
+
+  The manual's footnote says the processor's data response to a shared intervention on a DirtyExclusive block must be
+  written back to memory by the external agent.
+- **Established** (p. 143, Table 6-28): the processor's resolution when an external request hits a block with a
+  request pending issue, meaning buffered but not yet on the system interface:
+  - Pending coherent block read: an intervention (shared or exclusive) or an invalidate is serviced with Invalid. The
+    processor stalls the read until the external request gets its completion response.
+  - Pending upgrade: an intervention or invalidate is serviced with Shared. After the external completion response,
+    the processor internally NACKs the pending upgrade.
+  - Pending block write: an intervention (shared or exclusive) returns DirtyExclusive, and the write becomes a
+    DirtyExclusive data response. An invalidate returns DirtyExclusive and deletes the pending write.
+  - Pending eliminate: any intervention or invalidate returns Shared or CleanExclusive, and deletes the eliminate. A
+    DirtyExclusive eliminate reports CleanExclusive.
+- **Established** (p. 163): a soft reset initializes the external interface state, but leaves the general-purpose,
+  CP0 and CP1 registers and both cache levels unchanged. The cache clocks are not affected. Normal operation
+  resumes only after a cold reset.
+
 ## Not covered here
 
 The victim the replacement logic picks under speculative fetch, the timing of replacement, the cache contents after
-reset, partial stores, `PREF`, the soft-reset behaviour of the caches and the exact result of mixed alias accesses
-are not described here. The open items are listed in
+cold reset, partial stores, `PREF`, and the exact result of mixed alias accesses are not described here. Requests
+that carry NACK or ERR responses, processor reset-mode inputs and instruction-fetch coherence are not covered yet. The open items are listed in
 [open-questions.md](open-questions.md).
