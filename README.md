@@ -67,6 +67,7 @@ Crosstalk, XIO and interconnect:
 - [docs/gbrick.md](docs/gbrick.md): Onyx 3000 G-brick: the 18U enclosure and its slot rule, the InfiniteReality3 and InfiniteReality4 pipe board sets, raster manager counts per pipe, the N-brick's pipe connectors, the L1 and what is unknown. No register contract.
 - [docs/cxbrick.md](docs/cxbrick.md): Origin 3000 Cx-brick: node boards, memory-only nodes, the router board, XIO connectors, brick naming and what is unknown.
 - [docs/dbrick.md](docs/dbrick.md): Origin 3000 D-brick: the Fibre Channel disk enclosure, its loop attachment, its lack of an L1 and what is unknown.
+- [docs/origin300-numalink-module.md](docs/origin300-numalink-module.md): Origin 300 NUMAlink module (router enclosure): base and PCI expansion population, power, the port 1, 6, 7 and 8 restriction, router board identity and what is unknown. No register contract.
 - [docs/interconnect-naming.md](docs/interconnect-naming.md): SGI interconnect naming: every name, from the deepest source.
 - [docs/xbow-family.md](docs/xbow-family.md): Crossbow (XBOW), XXBOW and PXBOW: the XIO switch family.
 
