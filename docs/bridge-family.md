@@ -237,7 +237,9 @@ Octane, Origin 200 and Origin 2000 run the first; the Origin 350 runs the second
     Software only zeroes them (established); their meaning is unknown.
   - The device registers (`0x200`+8n, four used) exist (IRIX accessors, OpenBSD `PIC_DEVIO_OFFS`), although a Linux
     comment says PIC "removed the device registers and windows". Treat the Linux comment as wrong or describing the
-    PCI-X standard rather than silicon: unknown, test below.
+    PCI-X standard rather than silicon: unknown, test below. The Linux SN2 PIC resource mapper programs four short
+    windows per head (next bullet), so a second public driver uses these registers. That is a software expectation, not
+    a silicon result.
   - Response buffer fields use a different packing: valid bit 3, virtual channel bits 2:1, device pair bit 0 (slots
     0 to 3 only), against Bridge/Xbridge valid bit 3, virtual channel bit 2, device pair bits 1:0. established, IRIX response-buffer allocation code.
   - Configuration: device 0 of the type-0 window is the PIC itself; the four slots sit at windows 1 to 4 (Linux `pic.h`
@@ -254,6 +256,13 @@ Octane, Origin 200 and Origin 2000 run the first; the Origin 350 runs the second
   for mixed widths and for the device swap bit is unknown. Test: a byte and halfword read and write through an
   ordinary adapter's window and through an IOC4 window on an Origin 350 or Tezro, comparing the bytes that land in
   the device with the XOR rule.
+- **Short device-I/O windows (software expectation, inferred).** The public OpenBSD IP35 register header and the Linux
+  SN2 PIC resource mapper both describe four short windows on each PIC head, each programmed independently. The Linux
+  mapper aligns each window's PCI base to the window's size and masks memory-space addresses to bits 29:0. The public
+  headers name four per-window fields: base, memory or I/O select, programmed-I/O swap, and target size. These sources
+  give no bit positions for them, so none are stated here. They say what the public consumers assume about the
+  windows. No held PIC specification confirms them, and nothing here gives a reset value. The exact file names and
+  source revisions are not carried into this page.
 - **Revision 1 workarounds (reasons unknown).** Only the request-timeout write of `0x750` was disassembled and confirmed
   (established); the rest are inferred, read from IRIX code but not re-disassembled when this page was last audited. Request timeout `0x750`; interrupt-enable bits 39 and 9 cleared;
   response-buffer registers set to `0x000f000f`; a force-interrupt programmed-I/O flush for certain
@@ -369,6 +378,7 @@ The PIC `0xb0` row is unknown: the IRIX parity-error accessor reads `0xb0` on a 
 | Bridge rev 2 enable-mask workaround reasons | error behaviour | the errata sheet for revision B, or a rev 2 capture with bit 20 set |
 | PIC `0xb0` parity or one-wire | register meaning | read `0xb0` twice on a PIC with an ATE parity error forced and not forced |
 | PIC device registers and windows | Linux comment contradicts the IRIX accessor and OpenBSD | read `0x200` and `0x240` on a PIC |
+| PIC short-window target size, and whether one programmed-I/O transfer is split into several PCI cycles | the public headers name a target-size field, but no held source says what the chip does with each value, or whether a wide or misaligned transfer is cut up on the PCI side | a bus capture of one programmed-I/O read and one write through each window for each target-size value on a PIC. No source gives this test; it is proposed here |
 | Address `0x30000` (interrupt acknowledge) read or write | undocumented use | read the word on an Origin 300 or Octane |
 | Whether the second PIC head is a separate widget or an offset in the same widget | OpenBSD's prose and code describe it loosely | walk the widget table on an Origin 350 |
 | Registers between `0x2a0` and `0x10000` on Xbridge | specification and software silent | read the range; expected only address-error behaviour |
