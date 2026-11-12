@@ -353,6 +353,14 @@ response-buffer registers at `0x280` and `0x288` (see "Bridge block") if that po
   even and odd response-buffer registers, since the Bridge register inventory records `0x280` and `0x288` as the response buffer
   registers that `pcibr_alloc_all_rrbs` indexes by 0 and 1 and the stores are 4 bytes past them. The byte at `0xffffffffffffc523` is
   the one `cpuprom_map` in `hubspc.o` tests; what sets it is unknown, and the route is the stores to that address in the kernel.
+- `menet_vmc` (IP27 kernel, IRIX 6.5.30; the object it sits in is not recorded in this import) takes the Bridge vertex and
+  matches the prefix `030-0873-`, the MENET board. It sets the subdevice word to `0x31` for PCI devices 0 to 2 and `0x01` for
+  device 3, and declares second slots 4 to 7 for devices 0 to 3. Established from the disassembly the source records; not
+  re-read here. The board is on [the MENET page](../../docs/menet.md).
+- `sn00_vmc` (IP27 kernel, IRIX 6.5.30; object not recorded in this import) matches the five Origin 200 system-board prefixes
+  `030-1025-`, `030-1244-`, `030-1291-`, `030-1308-` and `030-1389-`. It sets device 2's subdevice word to `0xff` and declares
+  the second slot at device 3, the dual-slot guest described on [the PCI discovery page](../../docs/pci-discovery.md).
+  Established from the disassembly the source records; not re-read here.
 - `pciiox_init` (`IP27/usr/cpu/sysgen/IP27boot/pciiox.o` at 0x0, 32 bytes)
   calls `nic_vmc_add` once with the callback `pciiox_vmc` and the prefix `030-1062-`. Established.
 - `pciiox_vmc` (`IP27/usr/cpu/sysgen/IP27boot/pciiox.o` at 0x20, 80 bytes)

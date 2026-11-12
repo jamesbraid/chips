@@ -75,6 +75,7 @@ Crosstalk, XIO and interconnect:
 - [docs/crosstalk-packets.md](docs/crosstalk-packets.md): Crosstalk packets and the link under them.
 - [docs/pci-discovery.md](docs/pci-discovery.md): PCI discovery on the Origin 200 Bridge: the device-number map of its base I/O and option slots, the dual-slot guest at device 3, and how IRIX walks device numbers 0 to 7.
 - [docs/baseio.md](docs/baseio.md): BaseIO and BaseIO-G: the XIO I/O board of the Origin 2000 and Onyx2, its PCI placement, interrupt paths, panel and one-wire identity records.
+- [docs/menet.md](docs/menet.md): MENET (030-0873), the four-port Fast Ethernet and asynchronous serial XIO board: its four IOC3s, the subdevice words and second slots IRIX gives them, interrupt pins, board record and what is unknown.
 - [docs/origin2000-node-configuration.md](docs/origin2000-node-configuration.md): Origin 2000 node board clock, Hub and secondary-cache configuration: the published 180 MHz and 195 MHz configurations, node PROM mixing and copy rules, and the boot-flash configuration block; it holds no register contract.
 - [docs/crosstown-ktown.md](docs/crosstown-ktown.md): Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards.
 - [docs/onyx3000-graphics-topology.md](docs/onyx3000-graphics-topology.md): Onyx 3000 graphics bricks: where a G-brick pipe and a V-brick V12 sit, and the smallest configuration.
@@ -110,6 +111,7 @@ Chip coverage pages:
 - [docs/coverage-crime.md](docs/coverage-crime.md): CRIME coverage: two coverage questions graded beyond the chip page.
 - [docs/coverage-ioc3.md](docs/coverage-ioc3.md): IOC3 coverage: what the shipped software and public drivers settle.
 - [docs/cad-duo-pci-card.md](docs/cad-duo-pci-card.md): Cad Duo PCI card (030-1155-002), an IOC3 option board with Ethernet and PS/2 and no serial ports: its board record, the one-wire parts it likely carries, the interrupt line its keyboard uses, and what is unknown.
+- [docs/dual-serial-pci-card.md](docs/dual-serial-pci-card.md): Dual-serial PCI card (030-1657), an IOC3 option board with serial A and B and no Ethernet: its enable word, interrupt line, how the PROM recognises it, and what is unknown.
 - [docs/ds1685.md](docs/ds1685.md): DS1685/DS1687 real-time clock and 242-byte battery-backed RAM of the Octane system board: banks, the update cycle, interrupts, kickstart and RAM clear, and what is unknown. The register contract is in `defs/ds1685.toml`.
 - [docs/ds1742.md](docs/ds1742.md): DS1742W 2 KiB battery-backed RAM and clock of the Fuel L1: package and pins, the clock bytes, the read freeze, what the Fuel board evidence supports and what is unknown. The register contract is in `defs/ds1742.toml`.
 - [docs/ip34-system-timekeeper.md](docs/ip34-system-timekeeper.md): Fuel system Timekeeper (IP34): the separate clock and PROM-variable assembly the owner reports support, the driver's byte map and year base for the system clock, and what is unknown. Prose only: the fitted part is unidentified, so it has no `defs/` unit.
