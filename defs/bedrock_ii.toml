@@ -1,0 +1,315 @@
+unit = "bedrock_ii"
+prefix = "BEDROCK_II"
+title = "Bedrock I/O interface (II) registers: field layouts, block transfer engines and reset values"
+doc = "Offsets are hub-relative: the I/O interface is the block that starts 4 MiB into the node's register space. Field layouts come from the public Linux 2.5.40 SN1 headers, so they are established as header positions. Behaviour the headers describe only in comments is inferred. Reset values are unknown unless a header states one. Access directions the headers do not state are recorded as they are used by the public consumers. Where the header and a consumer disagree the field is listed with the disagreement in its doc."
+from = "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+public_from = ["Linux 2.5.40", "Linux ia64", "OpenBSD", "Origin 3000 System Architecture", "Origin 300 field diagnostics", "IRIX 6.5.30 kernel disassembly", "stock IP35 PROM 6.210 disassembly", "Bridge ASIC Specification"]
+
+[c]
+offset_macro = "bare"
+
+[constants]
+PART_BEDROCK = { value = 0xc110, grade = "inferred", doc = "Crosstalk part the SN1 header assigns to the Bedrock. The same value is named Bedrock in OpenBSD's device table. No consumer tests it and no read on silicon is recorded." }
+MANUFACTURER_BEDROCK = { value = 0x36, grade = "inferred", doc = "Manufacturer field value for Bedrock in the OpenBSD device table and in mainline Linux's widget table. Read on silicon unknown." }
+PI0_INTERRUPT_PENDING_MODIFY = { value = 0x1800090, grade = "established", doc = "Hard-coded target of an II interrupt packet from PI select 0, at this offset in PI0's register space on the named node (the header's interrupt-destination logic)." }
+PI1_INTERRUPT_PENDING_MODIFY = { value = 0x1a00090, grade = "established", doc = "Hard-coded target of an II interrupt packet from PI select 1, at this offset in PI1's register space on the named node (the header's interrupt-destination logic)." }
+
+[registers.widget_id]
+offset = 0x400000
+access = "r"
+width = 64
+grade = "established"
+doc = "Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Reset unknown: it follows the local revision register."
+
+[registers.widget_id.fields]
+manufacturer = { bits = [11, 1], grade = "established" }
+part = { bits = [27, 12], grade = "established" }
+revision = { bits = [31, 28], grade = "established" }
+
+[registers.link_control]
+offset = 0x400128
+access = "rw"
+width = 64
+grade = "established"
+doc = "Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text."
+
+[registers.link_control.fields]
+null_timeout = { bits = [5, 0], grade = "established" }
+warm_reset = { bits = [8, 8], grade = "established" }
+link_enable = { bits = [10, 10], grade = "established" }
+eight_bit_mode = { bits = [11, 11], grade = "established" }
+link_status = { bits = [13, 12], grade = "established", doc = "Bit 13 is link up. The meaning of the two-bit field's other values is unknown." }
+remote_power = { bits = [14, 14], grade = "inferred", doc = "Named by the header only; no text describes it." }
+max_retry = { bits = [25, 16], grade = "established" }
+data_available_select = { bits = [27, 26], grade = "established" }
+max_burst = { bits = [41, 32], grade = "established" }
+
+[registers.local_access_protection]
+offset = 0x400100
+access = "rw"
+width = 64
+grade = "established"
+reset = 0xffffffffffffffff
+doc = "One enable bit per processor region. The header states the reset value: every region is permitted. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias."
+
+[registers.local_access_protection.fields]
+region_enable = { bits = [63, 0], grade = "established", doc = "One bit per region." }
+
+[registers.protection_override]
+offset = 0x400108
+access = "w"
+width = 64
+grade = "inferred"
+doc = "Writing the 64-bit ASCII key the SN1 tree names sets the writer's own region bit in local access protection. A write through the local alias does nothing. The header union gives a nine-bit field while its description says a 64-bit key, a self-contradiction. No public consumer writes the register."
+
+[registers.outbound_widget_access]
+offset = 0x400110
+access = "rw"
+width = 64
+grade = "established"
+doc = "Qualifies every PIO and graphics write the Bedrock launches toward a widget. Reset unknown. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it, writes zero and restores it around PIO request-buffer programming."
+
+[registers.outbound_widget_access.fields]
+widget_0 = { bits = [0, 0], grade = "established" }
+widgets_8_to_f = { bits = [15, 8], grade = "established", doc = "One bit per widget, widget 8 at bit 8 through widget 15 at bit 15." }
+
+[registers.inbound_widget_access]
+offset = 0x400118
+access = "rw"
+width = 64
+grade = "established"
+doc = "Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. Reset unknown. The stock PROM enables widget 0 and widgets 8 to F. IRIX and the Itanium port read it only. The header's text also exempts incoming replies from the mask."
+
+[registers.inbound_widget_access.fields]
+widget_0 = { bits = [0, 0], grade = "established" }
+widgets_8_to_f = { bits = [15, 8], grade = "established" }
+
+[registers.inbound_device_error_mask]
+offset = 0x400120
+access = "rw"
+width = 64
+grade = "established"
+doc = "Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when its device bit and the widget's inbound bit are both set. The header says the bits are set by writing a one. IRIX clears a device by writing back the old value with the device bit cleared, which under write-one-to-set clears nothing. Which behaviour the hardware has is unknown. Hardware clears a bit itself when an error requires the device to be shut out. Reset unknown."
+
+[registers.inbound_device_error_mask.fields]
+widget_8 = { bits = [7, 0], grade = "established" }
+widget_9 = { bits = [15, 8], grade = "established" }
+widget_10 = { bits = [23, 16], grade = "established" }
+widget_11 = { bits = [31, 24], grade = "established" }
+widget_12 = { bits = [39, 32], grade = "established" }
+widget_13 = { bits = [47, 40], grade = "established" }
+widget_14 = { bits = [55, 48], grade = "established" }
+widget_15 = { bits = [63, 56], grade = "established" }
+
+[registers.interrupt_destination]
+offset = 0x400138
+access = "rw"
+width = 64
+grade = "established"
+doc = "Destination of every II-detected non-BTE error interrupt. The header's struct puts the node at bits 16:9 and the PI select at bit 8; its companion macros put the node at 15:8. The struct governs: the Itanium consumer writes through it. The PI register address is hard-coded per PI select (see the PI0 and PI1 constants)."
+
+[registers.interrupt_destination.fields]
+level = { bits = [6, 0], grade = "established" }
+pi_select = { bits = [8, 8], grade = "established" }
+node = { bits = [16, 9], grade = "established" }
+enable = { bits = [24, 24], grade = "inferred", doc = "Set at init by the Itanium consumer. The meaning is inferred from its name." }
+sent = { bits = [28, 28], grade = "inferred", doc = "Cleared by the Itanium handler and by its error clear. The meaning is inferred." }
+forwarded_pi0 = { bits = [32, 32], grade = "established", doc = "Forwarded-interrupt pending for PI0." }
+forwarded_pi1 = { bits = [33, 33], grade = "established", doc = "Forwarded-interrupt pending for PI1." }
+
+[registers.misc_error_mask]
+offset = 0x4001e8
+access = "rw"
+width = 64
+grade = "inferred"
+reset = 0x111
+doc = "Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit."
+
+[registers.misc_error_mask.fields]
+widget_0_enable = { bits = [0, 0], grade = "established" }
+bte_0_enable = { bits = [4, 4], grade = "established" }
+bte_1_enable = { bits = [8, 8], grade = "established" }
+clear_precise = { bits = [12, 12], grade = "established" }
+
+[registers.error_clear]
+offset = 0x4001f8
+access = "w"
+width = 64
+grade = "established"
+doc = "Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero. Reset unknown."
+
+[registers.error_clear.fields]
+request_buffer_0 = { bits = [0, 0], grade = "established" }
+request_buffers_8_to_f = { bits = [15, 8], grade = "established" }
+crazy = { bits = [16, 16], grade = "established" }
+bte_0 = { bits = [17, 17], grade = "established" }
+bte_1 = { bits = [18, 18], grade = "established" }
+internal = { bits = [28, 28], grade = "established" }
+spurious_read_header = { bits = [29, 29], grade = "established" }
+forwarded_pi0 = { bits = [30, 30], grade = "established" }
+forwarded_pi1 = { bits = [31, 31], grade = "established" }
+
+[registers.pio_request_buffer_w0]
+offset = 0x400198
+access = "rw"
+width = 64
+grade = "established"
+doc = "Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. Reset unknown; the Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected."
+
+[registers.pio_request_buffer_w0.fields]
+credits = { bits = [7, 0], grade = "established" }
+nack_counter_a = { bits = [21, 8], grade = "established" }
+nack_counter_b = { bits = [37, 24], grade = "established" }
+mode = { bits = [41, 40], grade = "established" }
+fire_and_forget = { bits = [42, 42], grade = "established" }
+overflow_count = { bits = [47, 43], grade = "established" }
+error = { bits = [48, 48], grade = "established" }
+read_timeout = { bits = [49, 49], grade = "established" }
+spurious_write = { bits = [50, 50], grade = "established" }
+spurious_read = { bits = [51, 51], grade = "established" }
+multiple_errors = { bits = [63, 63], grade = "established" }
+
+[registers.pio_request_buffer_w8]
+offset = 0x4001a0
+count = 8
+access = "rw"
+width = 64
+grade = "established"
+doc = "PIO request buffers for widgets 8 to F, eight registers at a stride of eight bytes; the first is widget 8. Same layout as the widget 0 entry."
+
+[registers.pio_request_buffer_w8.fields]
+credits = { bits = [7, 0], grade = "established" }
+nack_counter_a = { bits = [21, 8], grade = "established" }
+nack_counter_b = { bits = [37, 24], grade = "established" }
+mode = { bits = [41, 40], grade = "established" }
+fire_and_forget = { bits = [42, 42], grade = "established" }
+overflow_count = { bits = [47, 43], grade = "established" }
+error = { bits = [48, 48], grade = "established" }
+read_timeout = { bits = [49, 49], grade = "established" }
+spurious_write = { bits = [50, 50], grade = "established" }
+spurious_read = { bits = [51, 51], grade = "established" }
+multiple_errors = { bits = [63, 63], grade = "established" }
+
+[registers.pio_read_address]
+offset = 0x400308
+count = 8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Outstanding-read table that the read-response timeout works on. Access direction is not stated by the header. No consumer is recorded."
+
+[registers.pio_read_address.fields]
+valid = { bits = [63, 63], grade = "established" }
+timeout_count = { bits = [62, 58], grade = "established" }
+widget = { bits = [57, 54], grade = "established" }
+source = { bits = [51, 44], grade = "established" }
+initiator = { bits = [43, 41], grade = "established" }
+address = { bits = [40, 3], grade = "established" }
+
+[registers.request_buffer_management]
+offset = 0x4003a8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Request buffer management. The header warns that writing it while the buffers are not quiescent can have catastrophic side effects. The Itanium probe writes a count of 0xf and nothing else."
+
+[registers.request_buffer_management.fields]
+spurious_message = { bits = [0, 0], grade = "established" }
+read_header = { bits = [1, 1], grade = "established" }
+count = { bits = [7, 4], grade = "established" }
+clear_pending_bit_12 = { bits = [12, 12], grade = "established", doc = "The header's name is clear pending; this is the first of two clear-pending bits." }
+clear_pending_bit_13 = { bits = [13, 13], grade = "established", doc = "The second of the two clear-pending bits." }
+flow_control_count = { bits = [19, 16], grade = "established" }
+valid_bits = { bits = [34, 20], grade = "established" }
+marks = { bits = [49, 35], grade = "established" }
+precise = { bits = [52, 52], grade = "established" }
+
+[registers.request_buffer_control]
+offset = 0x4003b0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Software control of the request buffers. It has priority over crosstalk and BTE requests. The header names the commands nop, wake, timeout, eject and flush; their numeric codes are not given in the header and are unknown."
+
+[registers.request_buffer_control.fields]
+entry = { bits = [3, 0], grade = "established" }
+command = { bits = [15, 8], grade = "established", doc = "Command code. The header names nop, wake, timeout, eject and flush; the codes are unknown." }
+pending = { bits = [16, 16], grade = "established" }
+
+[registers.bte_length_status]
+offset = 0x410000
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end. Reset unknown."
+
+[registers.bte_length_status.fields]
+length_lines = { bits = [15, 0], grade = "established", doc = "Length in 128-byte cache lines." }
+error = { bits = [16, 16], grade = "established" }
+busy = { bits = [20, 20], grade = "established" }
+
+[registers.bte_source]
+offset = 0x410008
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Source physical address of the transfer. Low seven bits are zero (128-byte lines). After a transfer the register reads the address one line past the last line moved, or the failed line after a data error; hardware behaviour here is unknown."
+
+[registers.bte_source.fields]
+address = { bits = [39, 7], grade = "established" }
+
+[registers.bte_destination]
+offset = 0x410010
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Destination physical address of the transfer. Same layout and end-of-transfer behaviour as the source register."
+
+[registers.bte_destination.fields]
+address = { bits = [39, 7], grade = "established" }
+
+[registers.bte_control]
+offset = 0x410018
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Writing this register starts the transfer. Reading it terminates any transfer in progress, and stopping one engine can disturb the other. The header states this protocol; the start-on-write and terminate-on-read behaviour is inferred from the header's comments, and whether busy is observable after a start is unknown."
+
+[registers.bte_control.fields]
+zero_fill = { bits = [0, 0], grade = "established", doc = "Zero-fill the destination instead of copying from the source." }
+notify = { bits = [4, 4], grade = "established", doc = "Write the final length-status word to the notification address on completion." }
+poison = { bits = [8, 8], grade = "established", doc = "Poison behaviour. Its effect is not described in any public source." }
+
+[registers.bte_notification_address]
+offset = 0x410020
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Address that receives the completion write-invalidate. The Itanium consumer sets its line to all ones before the start and expects the final length-status value to be deposited there."
+
+[registers.bte_notification_address.fields]
+address = { bits = [39, 7], grade = "established" }
+
+[registers.bte_interrupt_address]
+offset = 0x410028
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Where the engine's completion interrupt goes. No public consumer programs it. The PROM's hub check does."
+
+[registers.bte_interrupt_address.fields]
+pi_select = { bits = [0, 0], grade = "established" }
+node = { bits = [8, 1], grade = "established" }
+level = { bits = [22, 16], grade = "established" }
