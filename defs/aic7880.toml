@@ -1,0 +1,49 @@
+unit = "aic7880"
+prefix = "AIC7880"
+title = "Adaptec AIC-7880 SCSI controller on the O2: host DMA register contract"
+doc = "The O2 onboard SCSI controller's host-DMA window: host address and count, the DMA control and FIFO status registers. Offsets and widths come from the cited Adaptec AIC-7870 data book, applied to the AIC-7880 as its sibling. Every item is inferred until an AIC-7880 book or a measurement settles it."
+from = "Adaptec AIC-7870 Data Book (sibling, applied to AIC-7880)"
+public_from = ["Adaptec AIC-7870 Data Book"]
+
+[registers.lhaddr]
+offset = 0x88
+access = "rw"
+width = 32
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 139-140 (printed 4-70 to 4-71); sibling"
+doc = "Host PCI address for the host DMA transfer, four byte registers at 0x88 to 0x8b. Loading it also loads SHADDR. The byte significance across the four bytes is not in the cited extract and stays unknown. Read-back is not stated."
+
+[registers.hcnt]
+offset = 0x8c
+access = "rw"
+width = 8
+count = 3
+stride = 1
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 139-140 (printed 4-70 to 4-71); sibling"
+doc = "24-bit host transfer count in three byte registers at 0x8c to 0x8e. A zero count inhibits host PCI requests. Loading a nonzero count clears HDONE. The byte significance across the three bytes is not in the cited extract and stays unknown. Read-back is not stated."
+
+[registers.dfcntrl]
+offset = 0x93
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 139, 145-148 (printed 4-70, 4-76 to 4-79); sibling"
+doc = "Data FIFO control. Bits 5 and 4 enable SCSI and SCSI-block DMA, bit 3 enables host DMA, bit 2 selects the direction, bit 1 flushes the FIFO and bit 0 resets it and self-clears. Cleared by PCI RST# and by the chip reset in HCNTRL. Read-back is not stated. The reset value is the cleared state the chip reset produces, not a value read after initialisation."
+
+[registers.dfcntrl.fields]
+scsien     = { bits = [5, 5], grade = "inferred", doc = "enables transfer between the SCSI bus and the SCSI FIFO" }
+sdmaen     = { bits = [4, 4], grade = "inferred", doc = "enables transfer between the SCSI block and the data FIFO" }
+hdmaen     = { bits = [3, 3], grade = "inferred", doc = "enables transfer between the data FIFO and PCI memory; clearing it halts host requests and is acknowledged before the registers are reloaded" }
+direction  = { bits = [2, 2], grade = "inferred", doc = "1 moves data from memory or the FIFO toward the SCSI block; changing it needs all transfer enables clear and acknowledged" }
+fifoflush  = { bits = [1, 1], grade = "inferred", doc = "flushes the FIFO" }
+fiforeset  = { bits = [0, 0], grade = "inferred", doc = "empties valid FIFO state, resets its word pointers and loads its byte offset from the low three bits of LHADDR; self-clearing" }
+
+[registers.dfstatus]
+offset = 0x94
+access = "r"
+width = 8
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF pp. 145-148 (printed 4-76 to 4-79); sibling"
+doc = "Data FIFO status. Reports FIFOEMP, FIFOFULL, FIFOQWDEMP, MREQPEND and HDONE. The bit positions are not in the cited extract, so no field is listed here and they stay unknown. MREQPEND is a pending need, not a PCI request in flight."

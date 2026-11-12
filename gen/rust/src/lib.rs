@@ -1,4 +1,5 @@
 // generated from defs/ by defs-gen - do not edit, change the source
+pub mod aic7880;
 pub mod bedrock;
 pub mod bedrock_extra;
 pub mod bedrock_ii;

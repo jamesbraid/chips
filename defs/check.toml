@@ -144,3 +144,7 @@ prose_offsets = false
 [units.lucent_ohci]
 group = "lucent_ohci.h"
 prose_offsets = false
+
+[units.aic7880]
+group = "aic7880.h"
+prose_offsets = false

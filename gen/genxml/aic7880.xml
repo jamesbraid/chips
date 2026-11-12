@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/aic7880.toml by defs-gen - do not edit, change the source -->
+<genxml unit="aic7880" prefix="AIC7880" title="Adaptec AIC-7880 SCSI controller on the O2: host DMA register contract" from="Adaptec AIC-7870 Data Book (sibling, applied to AIC-7880)">
+  <doc>The O2 onboard SCSI controller's host-DMA window: host address and count, the DMA control and FIFO status registers. Offsets and widths come from the cited Adaptec AIC-7870 data book, applied to the AIC-7880 as its sibling. Every item is inferred until an AIC-7880 book or a measurement settles it.</doc>
+  <struct name="LHADDR" size="4" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 139-140 (printed 4-70 to 4-71); sibling" register="yes" offset="0x88" access="rw" reset="unknown">
+    <doc>Host PCI address for the host DMA transfer, four byte registers at 0x88 to 0x8b. Loading it also loads SHADDR. The byte significance across the four bytes is not in the cited extract and stays unknown. Read-back is not stated.</doc>
+  </struct>
+  <struct name="HCNT" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 139-140 (printed 4-70 to 4-71); sibling" register="yes" offset="0x8c" access="rw" count="3" stride="1" reset="unknown">
+    <doc>24-bit host transfer count in three byte registers at 0x8c to 0x8e. A zero count inhibits host PCI requests. Loading a nonzero count clears HDONE. The byte significance across the three bytes is not in the cited extract and stays unknown. Read-back is not stated.</doc>
+  </struct>
+  <struct name="DFCNTRL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 139, 145-148 (printed 4-70, 4-76 to 4-79); sibling" register="yes" offset="0x93" access="rw" reset="0x0">
+    <doc>Data FIFO control. Bits 5 and 4 enable SCSI and SCSI-block DMA, bit 3 enables host DMA, bit 2 selects the direction, bit 1 flushes the FIFO and bit 0 resets it and self-clears. Cleared by PCI RST# and by the chip reset in HCNTRL. Read-back is not stated. The reset value is the cleared state the chip reset produces, not a value read after initialisation.</doc>
+    <field name="scsien" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="sdmaen" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="hdmaen" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="direction" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="fifoflush" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="fiforeset" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="DFSTATUS" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 145-148 (printed 4-76 to 4-79); sibling" register="yes" offset="0x94" access="r" reset="unknown">
+    <doc>Data FIFO status. Reports FIFOEMP, FIFOFULL, FIFOQWDEMP, MREQPEND and HDONE. The bit positions are not in the cited extract, so no field is listed here and they stay unknown. MREQPEND is a pending need, not a PCI request in flight.</doc>
+  </struct>
+</genxml>
