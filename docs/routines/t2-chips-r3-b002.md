@@ -27,7 +27,7 @@ Each entry names a routine in the IP27 boot-set kernel object and its address. T
   Reviewed: 2026-11-12 (sonnet)
 
 - `hub_intr_disconnect` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x22f74
-  **Inferred.** Reads a halfword at +0x24, a doubleword at +0x18 and a word at +0x28 of its first argument. It calls `intr_disconnect_level` (0x22f9c) with the halfword and the word at +0x28. If the doubleword at +0x18 is non-zero it calls an indirect target (0x22fc8). The word at +0x2c is written at 0x22fb8. The routine returns -5 at 0x22fc0. The facts do not name the indirect target.
+  **Inferred.** Reads a halfword at +0x24, a doubleword at +0x18 and a word at +0x28 of its first argument. If the doubleword at +0x18 is non-zero, it branches (0x22f94) to an indirect call (0x22fc8) whose target the facts do not name. Otherwise it calls `intr_disconnect_level` (0x22f9c) with the halfword and the word at +0x28, loads and stores the word at +0x2c (0x22fa4, 0x22fb8) and returns -5 at 0x22fc0. The facts do not settle what the fields mean.
   Reviewed: 2026-11-12 (sonnet)
 
 - `hub_intr_cpu_get` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x22fd8
@@ -47,7 +47,7 @@ Each entry names a routine in the IP27 boot-set kernel object and its address. T
   Reviewed: 2026-11-12 (sonnet)
 
 - `hub_check_window_equiv` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x230c8
-  **Inferred.** Calls `hub_check_is_widget0` (0x230d8) on its first argument set and again (0x230e8) on its second argument, and returns 0 or 1. Each result is tested with a branch (0x230e0, 0x230f0). A later comparison at 0x23114 compares two values the facts do not resolve.
+  **Inferred.** Calls `hub_check_is_widget0` (0x230d8) with its argument registers unchanged and branches on the result (0x230e0). Only when that result is non-zero does it call `hub_check_is_widget0` again (0x230e8) with its second argument, and it branches on that result (0x230f0). It returns 0 or 1. A later comparison at 0x23114 compares two values the facts do not resolve.
   Reviewed: 2026-11-12 (sonnet)
 
 - `hub_check_pci_equiv` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x23130
@@ -99,5 +99,5 @@ Each entry names a routine in the IP27 boot-set kernel object and its address. T
   Reviewed: 2026-11-12 (sonnet)
 
 - `nmi_dump` in `IP27/usr/cpu/sysgen/IP27boot/kernel.o` at 0x2a730
-  **Inferred.** Handles a non-maskable interrupt dump. An atomic add on a counter (`atomicAddInt`, 0x2a744) decides whether the CPU continues to `cont_nmi_dump` (0x2a780). A loop calls `tlbgetent` (0x2a7e4) for TLB indices up to 0x40, and the CPU whose id matches `nmi_helper_cpu` calls `dumpsys_helper` (0x2a85c). The facts show the sequence but not its full protocol.
+  **Inferred.** Role (from name): a non-maskable interrupt dump. An atomic add on a counter (`atomicAddInt`, 0x2a744) is compared with 1 (0x2a750); on the equal path the code calls `cont_nmi_dump` (0x2a780). A loop calls `tlbgetent` (0x2a7e4) until a value equals 0x40 (0x2a7f4). A branch at 0x2a81c loops back while the CPU id differs from `nmi_helper_cpu`, and `dumpsys_helper` is called at 0x2a85c with the CPU id and `nmi_helper_cpu`. The facts show the sequence but not its full protocol.
   Reviewed: 2026-11-12 (sonnet)
