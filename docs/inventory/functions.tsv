@@ -15838,7 +15838,7 @@ IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x14f4	108	elsc_powe
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1560	104	elsc_system_reset	dwarf+symtab	508ff24a2297		out:6	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x15c8	104	elsc_power_cycle	dwarf+symtab	79a2c3172157		out:6	named-only	docs/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1630	132	elsc_dip_switches	dwarf+symtab	32548874592c		out:6	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x16b4	148	nic_access	dwarf+symtab	f6785106ca2d		out:6	named-only		
+IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x16b4	148	nic_access	dwarf+symtab	f6785106ca2d		out:6	named-only	gen/c/router_origin2000.h:21	
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1748	128	elsc_nic_get	dwarf+symtab	c5a290205e0a		out:6	named-only		
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x17c8	176	_elsc_hbt	dwarf+symtab	246a52810838		out:6	named-only	docs/routines/t2-chips-r3-b002.md#tier-2-reading-round-3-batch-2-of-chips-routine-role-statements	Tier-2 reading, round 3 batch 2 of chips: routine role statements
 IP27/usr/cpu/sysgen/IP27boot/elsc.o	kernel-object	n64	.text	0x1878	36	_elscuart_probe	dwarf+symtab	1280546ef94f		out:6	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts

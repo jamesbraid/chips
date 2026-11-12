@@ -9,7 +9,11 @@
    "chips/*/notes/*.md"
   ],
   "headers": [
-   "include/*.h"
+   "gen/c/*.h",
+   "include/crime.h",
+   "include/gbe.h",
+   "include/router_ip27.h",
+   "include/router_ip35.h"
   ],
   "tables": [],
   "index": [
@@ -158,7 +162,7 @@
    "physical": "0x01000000",
    "docs": [
     "chips/hub/README.md",
-    "include/hub.h"
+    "gen/c/hub.h"
    ]
   },
   {
@@ -167,7 +171,7 @@
    "physical": "0x0ff00000",
    "docs": [
     "chips/heart/README.md",
-    "include/heart.h"
+    "gen/c/heart.h"
    ]
   }
  ],
