@@ -68,6 +68,7 @@ Crosstalk, XIO and interconnect:
 - [docs/cbrick.md](docs/cbrick.md): Origin 3000 C-brick (partial): the R16000 PIMM clock options and the L1's USB channel, with the manual citations and what is unknown.
 - [docs/powerbay.md](docs/powerbay.md): Origin 3000 power bay: the 3 U supply unit, its `pbay` command set and ICMB link, the retained 5,888-byte controller image, and what is unknown. It holds no register contract.
 - [docs/cxbrick.md](docs/cxbrick.md): Origin 3000 Cx-brick: node boards, memory-only nodes, the router board, XIO connectors, brick naming and what is unknown.
+- [docs/origin3000-nasid-numbering.md](docs/origin3000-nasid-numbering.md): Origin 3000 NASID numbering: how the IP35 PROM computes hub node numbers from the router graph, its offset and coarse-mode rules, what IRIX does with them and what is unknown. No register contract.
 - [docs/dbrick.md](docs/dbrick.md): Origin 3000 D-brick: the Fibre Channel disk enclosure, its loop attachment, its lack of an L1 and what is unknown.
 - [docs/origin300-numalink-module.md](docs/origin300-numalink-module.md): Origin 300 NUMAlink module (router enclosure): base and PCI expansion population, power, the port 1, 6, 7 and 8 restriction, router board identity and what is unknown. No register contract.
 - [docs/origin300-pci-expansion-module.md](docs/origin300-pci-expansion-module.md): Origin 300 PCI expansion module: the direct NI cable, the BIC's Bedrock and three XBridge chips, the widget-to-bus map, the XBridge and Super Bridge modes, the PCI data width and what is unknown. No register contract.

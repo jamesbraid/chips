@@ -242,7 +242,8 @@ connectors: XIO-2 is *n*+1, XIO-1 is *n*, XIO-3 is *n*+3 and XIO-0 is *n*+2. So 
 default console node, is not the lowest NASID.
 
 **Unknown.** The NASID base *n*, and the order when fewer than four boards are fitted. Route: a
-PROM trace over a multi-node brick, checked against a real capture.
+PROM trace over a multi-node brick, checked against a real capture. The PROM's NASID calculation and
+what IRIX does with the numbers are in [origin3000-nasid-numbering.md](origin3000-nasid-numbering.md).
 
 **Unknown.** How the PROM names a node inside a module, and what a real Cx-brick L1 answers for
 its node and router links. The Origin 350 and Origin 300 inventories print one node per module,
