@@ -90,8 +90,7 @@ All of this is E from `xtdigvid_init_gif` (K30 0x5f70-0x6190, 0x6540-0x6900) and
   index so the next record lands in entry 0; the driver never writes any other value and never reads it. The scoping datasheet's
   earlier listing (`0x800064`, `0x800074` "cleared when the status buffer is set up") is consistent. Pipe 0 owns `0x800074` and
   pipe 1 owns `0x800064`, as the reset path in `IP30boot/xtdigvid.o` 0xbfe4 shows (`movz t8,ra,t9` with `ra = 0x800064`,
-  `t8 = 0x800074`, `t9 = pipe < 1`). The [VBOB note](vbob.md) still gives `0x800064` for pipe 0, which this reading contradicts
-  (see section 10).
+  `t8 = 0x800074`, `t9 = pipe < 1`). The [VBOB note](vbob.md) (step 5 of the send path) gives the same assignment.
 - **Reset path trigger.** The same three actions (register zero, ring zero, tail zero) run when a VBOB message times out with
   its acknowledge still outstanding (the "reset sdma ring ptr" path, E from the string at that site; see the [VBOB note](vbob.md)).
 
@@ -284,10 +283,6 @@ and K30, a difference this pass did not explain.
 - Scoping datasheet sections 3 and 4: "the interrupt reads a device UST/MSC from the record" is half right; only the MSC (24 bits) is in the
   record.
 - Scoping datasheet section 4: "a ring pointer the interrupt routine advances" is the host's tail index, not a hardware pointer.
-- [VBOB note](vbob.md), step 5 of the send path: it says the reset register is `0x800064` for pipe 0 and `0x800074` for pipe 1. K30 init
-  (0x6184-0x6194) and the reset path (0xbfd4-0xbfe4) both choose `0x800074` for pipe 0 and `0x800064` for pipe 1. K27 and K35 contain the
-  same constants but their selector was not read. The pipe index is the same one that selects `0x800014`/`0x80003c` and the data window
-  addresses, so the disagreement is not a naming mix-up.
 
 ## 11. Unknowns, with what settles each
 

@@ -975,7 +975,7 @@ expect = { count = 4, pipe = 1, write = 0, reg_id = 0x20 }
 [constants]
 GIF_SLOT_STRIDE = { value = 8, grade = "established", doc = "the GIF register file is 64-bit slots at an 8-byte stride; software reaches only the odd (low) 32-bit word, at slot base plus 4" }
 GIF_FILE_BASE = { value = 0x800000, grade = "established", doc = "window offset of the GIF register file; a register number R sits at this base plus R plus 4" }
-FPGA_DATA_PORT_ADD = { value = 0x80000, grade = "established", doc = "added to a per-FPGA status port window offset to reach its data port (status ports are 0x800004 ORed with the port offset, data ports 0x880004 ORed with it); the contract page calls this setting bit 23, but the difference between the two bases is bit 19 of the window offset" }
+FPGA_DATA_PORT_ADD = { value = 0x80000, grade = "established", doc = "added to a per-FPGA status port window offset to reach its data port (status ports are 0x800004 ORed with the port offset, data ports 0x880004 ORed with it); the two bases differ only in bit 19 of the window offset (0x80000), which is this value" }
 GIF_BLOCK_SIZE = { value = 0x800, grade = "established", doc = "each of the 8 per-FPGA blocks of the GIF register file spans 2 KiB of register numbers; every register found sits inside its block", from = "shipped diagnostic tables" }
 GIF_BLOCK_CORE = { value = 0, grade = "established", doc = "register number base of the GIF core and pipe registers" }
 GIF_BLOCK_PACKER = { value = 0x800, grade = "established", doc = "register number base of the packer FPGA block" }
