@@ -116,3 +116,7 @@ prose_offsets = false
 [units.dp83843]
 group = "dp83843.h"
 prose_offsets = false
+
+[units.hpc3_enet]
+group = "hpc3_enet.h"
+prose_offsets = false

@@ -75,6 +75,7 @@ Chip coverage pages:
 - [docs/ds1685.md](docs/ds1685.md): DS1685/DS1687 real-time clock and 242-byte battery-backed RAM of the Octane system board: banks, the update cycle, interrupts, kickstart and RAM clear, and what is unknown. The register contract is in `defs/ds1685.toml`.
 - [docs/ds1742.md](docs/ds1742.md): DS1742W 2 KiB battery-backed RAM and clock of the Fuel L1: package and pins, the clock bytes, the read freeze, what the Fuel board evidence supports and what is unknown. The register contract is in `defs/ds1742.toml`.
 - [docs/ds1744.md](docs/ds1744.md): DS1744 32 KiB battery-backed SRAM and clock: package and interface, the clock bytes, the battery flag, the read freeze, and the IO9 board questions that are unknown. The register contract is in `defs/ds1744.toml`.
+- [docs/hpc3-ethernet.md](docs/hpc3-ethernet.md): HPC3 Ethernet DMA channels of the Indy: the interrupt, reset and descriptor rules, the receive and transmit channel behaviour, the IRIX recovery path and what is unknown. The register contract is in `defs/hpc3_enet.toml`.
 - [docs/dp83840.md](docs/dp83840.md): DP83840A and DP83843 Ethernet transceivers of the Origin 200 and Origin 300 I/O boards: identity, the autonegotiation restart, loopback, strap-dependent bits and what is unknown.
 - [docs/coverage-ioc4.md](docs/coverage-ioc4.md): IOC4 coverage: what shipped software and public drivers settle.
 - [docs/coverage-mace.md](docs/coverage-mace.md): MACE coverage: what software, specification and drivers settle.

@@ -291,3 +291,15 @@ Corrections found while tagging. These are not fixed here.
 
 - **N-brick: which G-brick pipe sits on which N-brick pipe connector pair.** *[route: hardware residue]* The graphics guide shows one N-brick serving three G-bricks with one pipe each and two pipes in each of two G-bricks, and says nothing on whether C-brick *n* serves pipe *n* ([docs/gbrick.md](docs/gbrick.md), cabling). Next: the cabling record of an N-brick system, from a `hinv -vm` listing with the pipe widgets.
 
+
+- **HPC3 Ethernet: the width of the receive descriptor write-back.** *[route: hardware residue]* The specification does not say whether HPC3 writes back all of word 1 or only its low half, and no driver depends on it ([docs/hpc3-ethernet.md](docs/hpc3-ethernet.md), receive channel). Next: a hardware read of a descriptor's high flag bits before and after a stored frame.
+
+- **HPC3 Ethernet: the update rule of the receive current descriptor pointer, and why IRIX writes it at initialisation.** *[route: hardware residue]* The IRIX driver writes and reads the pointer at offset `0x18000`, which the specification does not list. Its update rule is inferred only ([docs/hpc3-ethernet.md](docs/hpc3-ethernet.md), current descriptor pointer). Next: a read of the pointer after a stop at end of chain and after a SEEQ overflow stop, on hardware.
+
+- **HPC3 Ethernet: the update rules of the transmit pointers at offsets `0x1a000` and `0x1a004`.** *[route: hardware residue]* The IRIX driver reads both to find the packet in progress and the previous packet. Nothing in the sources says what updates them ([docs/hpc3-ethernet.md](docs/hpc3-ethernet.md), transmit channel). Next: reads during and after a two-frame transmit, on hardware.
+
+- **HPC3 Ethernet: the status of a lost frame while the receive channel is stopped, and whether the FIFO drains.** *[route: hardware residue]* Whether HPC3 keeps reading the SEEQ FIFO while the channel is inactive, and whether each lost frame raises overflow status ([docs/hpc3-ethernet.md](docs/hpc3-ethernet.md), no descriptor available). Next: a read of the receive control register after flooding a stopped channel, on hardware.
+
+- **HPC3 Ethernet: how receive buffer overflow is cleared.** *[route: hardware residue]* The specification gives two methods (a write of one, and a read of the control register) and NetBSD names an unexplained reset bit ([docs/hpc3-ethernet.md](docs/hpc3-ethernet.md), unknowns). Next: a hardware test of each method on a frame longer than its buffer.
+
+- **HPC3 Ethernet: the IRIX 6.5.22 driver.** *[route: missing binary]* Only the 6.5 base-release Ethernet driver object was read. The 6.5.22 IP22 overlay is not in a fresh clone of this repository. Next: extract the object from the overlay and compare its interrupt handler with the base release ([docs/hpc3-ethernet.md](docs/hpc3-ethernet.md), sources).

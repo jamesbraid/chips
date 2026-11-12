@@ -1,0 +1,698 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/hpc3_enet.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "rx_cbp",
+   "offset": 81920,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 33 (address map) and p. 39 (field definitions)"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "rx_nbdp",
+   "offset": 81924,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33 and 39"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "rx_bc",
+   "offset": 86016,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33 and 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_bc.eox",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 39"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_bc.xie",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 39"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_bc.count",
+   "hi": 13,
+   "lo": 0,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33 and 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "rx_cntl",
+   "offset": 86020,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_cntl.rbo",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_cntl.ch_active_mask",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_cntl.ch_active",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_cntl.endian",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_cntl.status_7",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_cntl.status_6",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "rx_cntl.status",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 39-40"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "rx_gio",
+   "offset": 86024,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33 and 39"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "rx_dev",
+   "offset": 86028,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33 and 39"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "enet_reset",
+   "offset": 86036,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 41"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "enet_reset.loopback",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 41"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "enet_reset.clrint",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 41"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "enet_reset.ch_reset",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 41"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "dmacfg",
+   "offset": 86040,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "dmacfg.fix_timeout",
+   "hi": 17,
+   "lo": 16,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "dmacfg.fix_intr",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "dmacfg.fix_eop",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "dmacfg.fix_rxdc",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "dmacfg.wr_ctrl",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "dmacfg.d3",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "dmacfg.d2",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "dmacfg.d1",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "piocfg",
+   "offset": 86044,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "piocfg.fifo_ram_test",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "piocfg.p3",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "piocfg.p2",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "piocfg.p1",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 41-42"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "tx_cbp",
+   "offset": 90112,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 34 (address map, read) and p. 43 (field text, read and write)"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "tx_nbdp",
+   "offset": 90116,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33 and 43"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "tx_bc",
+   "offset": 94208,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33, 43"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_bc.eox",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33, 43"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_bc.eoxp",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33, 43"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_bc.xie",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33, 43"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_bc.eox_sampled",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 43"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_bc.count",
+   "hi": 13,
+   "lo": 0,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33, 43"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "tx_cntl",
+   "offset": 94212,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 44"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_cntl.ch_active_mask",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 44"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_cntl.ch_active",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 44"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_cntl.endian",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 44"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_cntl.status_7_5",
+   "hi": 7,
+   "lo": 5,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 44"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_cntl.status_4",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 44"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "tx_cntl.status",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 44"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "tx_gio",
+   "offset": 94216,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33 and 43"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "tx_dev",
+   "offset": 94220,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 33 and 43"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "rx_cur_desc",
+   "offset": 98304,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX 6.5 base-release Ethernet driver object (initialisation and interrupt handler). Not in the HPC3 specification."
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "tx_first_cur",
+   "offset": 106496,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX 6.5 base-release Ethernet driver object (transmit path and interrupt handler). Not in the HPC3 specification."
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "register",
+   "name": "tx_first_prev",
+   "offset": 106500,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "hpc3",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX 6.5 base-release Ethernet driver object (transmit path and interrupt handler). Not in the HPC3 specification."
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "word",
+   "name": "RX_DESC_CTL",
+   "width": 32,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "RX_DESC_CTL.eox",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "RX_DESC_CTL.eoxp",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "RX_DESC_CTL.xie",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "RX_DESC_CTL.own",
+   "hi": 14,
+   "lo": 14,
+   "grade": "inferred",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "RX_DESC_CTL.count",
+   "hi": 13,
+   "lo": 0,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "word",
+   "name": "TX_DESC_CTL",
+   "width": 32,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7, 13-14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "TX_DESC_CTL.eox",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7, 13-14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "TX_DESC_CTL.eoxp",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7, 13-14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "TX_DESC_CTL.xie",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7, 13-14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "TX_DESC_CTL.ipg",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7, 13-14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "TX_DESC_CTL.txd",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7, 13-14"
+  },
+  {
+   "unit": "hpc3_enet",
+   "kind": "field",
+   "name": "TX_DESC_CTL.count",
+   "hi": 13,
+   "lo": 0,
+   "grade": "established",
+   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7, 13-14"
+  }
+ ]
+}
