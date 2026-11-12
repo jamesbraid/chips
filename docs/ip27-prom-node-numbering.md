@@ -294,3 +294,74 @@ The global pointer is 0xc00000001fce5028; `ld $r,-N($28)` reads the pool entry a
 reached as pool base 0x1fc5dfe8 plus a 16-bit offset (for example `daddiu $4,$17,736` at 0x1fc4d6cc is 0x1fc5e2c8,
 "Distributing NASIDs"). Hub accessors are the local alias 0x9200000001000000 + offset, built by `lui 0x9200`,
 `dsll 16`, `ori 0x100`, `dsll 16`.
+
+## Reboot reset type (IP27 kernel restart path, and what PROM 6.156 reads to tell a restart from a power-on)
+
+Added to answer: when IRIX reboots an IP27 node, what reset does the kernel issue, is there a soft-reset path in the
+PROM that skips memory, directory or node-number work, and what does the PROM read to tell the cases apart. The IP35
+counterpart, with the full argument, is in [ip35-prom-md-config.md](ip35-prom-md-config.md) "Reboot reset type". Labels as
+above. Sources are the two IP27 kernels in the table at the top (linked, with symbols) and PROM 6.156.
+
+**Kernel path (E for every link; instruction-for-instruction identical in 6.5.22 and 6.5.30 after masking branch
+targets and global-pointer displacements, and the same shape as the IP35 kernels).** 6.5.30 addresses first, 6.5.22 in
+brackets:
+
+1. `uadmin` 0xc000000000249a14 (0xc000000000248cf0), command 1, or command 2 after its shutdown calls, calls
+   `phost_reboot` 0xc00000000026528c (0xc000000000264144), which calls `mdboot` 0xc0000000001ff034 (0xc0000000001fa4f0)
+   with the function code. `mdboot` stops the other CPUs (`cpuaction`) and calls `prom_autoboot` 0xc000000000019498 for
+   function 1, or `prom_reboot` 0xc0000000001ff66c (0xc0000000001fab28) for 0, 2, 3 and 9 (pointers in the global pointer
+   table at gp-7440 and gp-7432). `prom_reboot` calls `prom_reinit` 0xc0000000000194b4 (no power-off branch on IP27;
+   the IP35 one has it) unless the machine is panicking. Which user program passes which function code is **U** (no
+   `reboot`, `halt` or `init` binary in the held roots; the System V names are I).
+2. `prom_reinit` calls `he_arcs_restart` 0xc000000000029978 (0xc0000000000296c4) and `prom_autoboot` calls `he_arcs_reboot`
+   0xc000000000029998 (0xc0000000000296e4). Neither calls an ARCS vector. Both enter the routine at 0xc000000000029814
+   (0xc000000000029560) with 0x0ead0030 (restart) or 0x0ead0040 (reboot).
+3. That routine: ORs 0x100 into the value when `panic_level` (0xc0000000014cba20) is zero; for every node below `maxnodes`
+   stores the value to **0x9200000001800418 + (nasid << 32)** (pool word gp-24584, displacement 1048); waits 1,000,000
+   counts; if `reboot_on_panic` (0xc0000000014cb024, value -1 in the image, so normally not 2) equals 2 sends the L1
+   system reset (`elsc_system_reset` 0xc000000000099e4c) and on a negative result falls back to the store below;
+   otherwise on the master CPU (`master_procid` 0xc0000000014cb980) with `power_off_flag` (0xc0000000014d4350) zero
+   calls `ni_reset_port` 0xc00000000001d760, which stores **0x81 to 0x9200000001600008** (pool word gp-24512), and with the
+   flag set calls `sysctlr_power_off`. Other CPUs wait in 3,000,000-count delays.
+
+   0x81 is bits 7 and 0 of the network interface's reset register; chips/hub names bit 7 "warm reset" and bit 0 "whole
+   Hub reset" ([hub-network-interface.md](hub-network-interface.md)), so the kernel's default restart is a whole-Hub reset
+   with a warm reset on the link (names I, address and value E). The IP35 equivalent stores 1 to +0x1680010 and 6 to
+   +0x1680008.
+4. Whether that reset reaches the R10000 as a hard reset (Status.SR clear) or as its soft-reset input is **U**. It is **I**
+   that SR is clear: the marker below is read only on the cold path (item 6), and an SR restart would stop in the monitor.
+
+**PROM 6.156 (`firmware/ip27prom.img`, payload as above), what it reads:**
+
+5. Soft reset and NMI: the reset vector (0x1fc00000 jumps to 0x1fc00800) parks Status in CP0 register 17 (0x1fc00818),
+   tests bits 20 and 19 together (0x1fc00858 to 0x1fc00860: both set falls through to an NMI sequence at 0x1fc00868),
+   then bit 20 alone (0x1fc00c20 to 0x1fc00c28). **SR set without NMI goes to 0x1fc02334**, a soft-reset path: a progress
+   store, the exception report with the text "Taking over pod mode" (0x1fc74875, call at 0x1fc02410) and the monitor entry
+   (0x1fc050c8). In the stretch read, 0x1fc02334 to 0x1fc02530, there is no store to the Hub's node-number register, to
+   PI_CALIAS_SIZE, to the region registers or to a memory-controller register, and no call to the memory or directory
+   initialisation: **so the soft-reset path skips memory init, directory init and node numbering by not reaching them**
+   (E for that stretch, U for what the monitor then does, since the monitor ELF was not read). SR clear (power-on, or
+   NMI alone) is the cold path (LED 0x5f at 0x1fc00c60), where everything in this page happens.
+6. The kernel marker, first read: **0x1fc012c8**, on the cold path, loads the doubleword at **0x9200000001000418** (PI +0x418,
+   named PI_ERR_STACK_ADDR_A in [chips/hub/README.md](../chips/hub/README.md); the name is I), compares bits 27:16 with
+   0x0ead (0x1fc012d0 to 0x1fc012dc) and tests bit 8 (0x1fc012e4). Both true: jump to 0x1fc015f0, which skips the routine
+   under progress code 4 (call at the 0x1fc012f0 path) and goes to the routines under codes 0xa and 0xb (E for the jump,
+   I that the skipped routine is a cache self-test; same shape as the IP35 PROM).
+7. The marker, second read: the main routine at 0x1fc58fe4 reads the same register again through pool word gp-0x7548, after
+   zeroing PI +0x420 (0x1fc58fe0), stores the value in CP0 register 17 (0x1fc58fec), and with bits 27:16 = 0x0ead and bit 8
+   set (0x1fc58ff8, 0x1fc58ffc, 0x1fc5a260) calls 0x1fc573dc with 2 (sets boot-flag bits 49:48 to 0b01), then prints
+   "*** Skipping diags as requested by kernel" (0x1fc594cc) and sets the diagnostic level to 2, "None" (0x1fc594d0). E. The
+   PROM does not clear PI +0x418 there; it later overwrites it with the error-stack address at 0x1fc5128c (E for the store;
+   that this ends the marker is I). Bits 7:0 (0x30, 0x40) are not examined.
+8. Nothing else: no read of a Hub reset-cause or NMI register, no launch word and no promlog variable that distinguishes
+   a restart was found (I: the main routine was not classified load by load). The memory-initialisation call in the
+   main routine (0x1fc59a18 into 0x1fc55738, with the diagnostic level as argument) is guarded by the election result
+   at 0x1fc585a8, not by the marker, and the node-number writes described above are guarded by the election as
+   well (I): so a kernel restart repeats memory configuration, directory initialisation and node numbering, with
+   diagnostics set to None. The monitor's restart command at 0x1fc53470 to 0x1fc53484 writes 0x0ead0030 (masked into
+   CP0 register 17), and the routine at 0x1fc479ac stores CP0 register 17 into +0x1800418 of every node (0x1fc479d0): that
+   is the monitor's own way to leave the marker for the next start (E for the stores, U for the command that calls them).
+
+The marker as written by the kernel and read by the PROM is the same word in the IP35 pair of images, at local-block
++0x8010 (see the IP35 page). Neither PROM was run.
+

@@ -57,8 +57,8 @@ travels with it. Its bit meanings are U apart from the premium/standard text.
 | R | 0x1fc2d754 | same routine, exit | All lanes | Word as read at entry \| 7<<56 | Restores whatever lane and swap fields the word held before the scan (E) | Probe cleanup |
 | D | 0x1fc6647c | memory configuration routine 0x1fc660b8 | All lanes | (word as read before the scan & 0xffffffff00000000) \| 1<<61 \| (1<<60 if `MemCfgRCD3`) \| 7<<56 \| for each lane l: 5<<(8l+4) \| 3<<8l \| (1<<(8l+3) if the scan character for the lane is `1`) | All eight banks enabled at code 5 (1 GB each); swap bits as before (E). Bank base = bank number << 30 | Test layout for the size probe (E for the code shape; the intent I). Documented in [ip35-prom-memory-bank-config.md](questions/ip35-prom-memory-bank-config.md) item 7 |
 | F | 0x1fc666a8 | same routine, after the eight size probes (0x1fc66578) | All lanes | Same upper bits as D; lower 32 bits rebuilt from zero: for each bank with a nonzero measured size code, its enable bit, the code in bits 8l+7 : 8l+4 (the smaller of the pair's two codes when they differ, with a console line "sizes differ"), and bit 8l+3 from the scan character | The final bank map (E). A bank whose probe gave 0 and which the scan found empty is disabled | Final layout. This is the layout the memory test and the kernel see |
-| X | 0x1fc54f14 | disable-one routine 0x1fc54ebc, called at 0x1fc65638 from 0x1fc655d8 | One bank b, once per bank named in the failed-bank string | (word & ~(1 << (8(b>>1)+(b&1)))) \| 7<<56 | Clears that bank's enable bit; size code and other lanes untouched (E) | Final layout: removes a bank that failed the memory test (E). Zero stores on a boot where nothing failed |
-| W | 0x1fc56e28 | swap writer 0x1fc56d94, called at 0x1fc65aa4 (S=3), 0x1fc65b38 (S=1), 0x1fc65b4c (S=2) | No enable or size bit; bits 33:32 only | (word & 0xfffffffcffffffff) \| S<<32 \| 7<<56 | Permutes address bits 31:30 by S (I for the chip, E for the kernel's use of it) | Final layout: only when bank 0 is not enabled or failed its test and the first of banks 1, 2, 3 that is enabled and passed is bank S. If none exists the routine prints "no usable memory present for low address" and "Freezing node" and no store is made. Zero stores on a boot where bank 0 is good |
+| X | 0x1fc54f14 | disable-one routine 0x1fc54ebc, called at 0x1fc65638 from 0x1fc655d8 | One bank b, once per bank named in the disabled-bank string (the promlog variable `DisableMemMask`, read at 0x1fc6a864, plus any bank the quick bank test at 0x1fc659b8 rejects) | (word & ~(1 << (8(b>>1)+(b&1)))) \| 7<<56 | Clears that bank's enable bit; size code and other lanes untouched (E) | Final layout: removes a bank the variable or the quick test names (E). Zero stores when the variable is empty and every bank passes |
+| W | 0x1fc56e28 | swap writer 0x1fc56d94, called at 0x1fc65aa4 (S=3), 0x1fc65b38 (S=1), 0x1fc65b4c (S=2) | No enable or size bit; bits 33:32 only | (word & 0xfffffffcffffffff) \| S<<32 \| 7<<56 | Permutes address bits 31:30 by S (I for the chip, E for the kernel's use of it) | Final layout: only when bank 0 is not enabled or is in the disabled-bank string, and the first of banks 1, 2, 3 that is enabled and not in the string is bank S. If none exists the routine prints "no usable memory present for low address" and "Freezing node" and no store is made. Zero stores on a boot where bank 0 is good |
 | P | 0x1fc57c20 | per-node routine 0x1fc578ec | All lanes and the swap field | (word & 0xfffffffc00000000) \| 0x27<<56 | All banks disabled, swap cleared (E) | Memory-less node: taken when a word read at 0x9000000034000000 (node window) has class 0xc000 in bits 15:12 (the field's meaning is U). Reached only from the monitor commands, see "Reachability" |
 
 Stores to the directory configuration register that accompany these (E for the sites, U for what the bits do):
@@ -130,16 +130,124 @@ The PROM has one reset-type test: at the reset vector it parks the old Status re
   read (0x1fc01bac to 0x1fc01ed4, E); how it continues afterwards is U. A monitor `reconf` or `memtest` would run the
   per-node routine 0x1fc578ec (stores S, R, D, F again per node, or P).
 - NMI (both bits): falls to 0x1fc0046c, an NMI sequence; its memory stores were not traced (U).
-- No "memory already configured" flag, warm-boot flag or promlog test was found that skips the memory step: the only
+- No "memory already configured" flag or promlog test was found that skips the memory step (the one restart marker the
+  PROM reads skips two start-up routines and sets the diagnostic level to None only, see "Reboot reset type"): the only
   guard on the call at 0x1fc6a3a4 is the election (E for the straight-line guard; the many forward branches of the main
   routine between 0x1fc69a00 and 0x1fc6a3a4 go to error and monitor labels or rejoin, but were not each followed, so
   I). The variables `MemCfgPremium`, `MemCfgBankSize` and `MemCfgRCD3` change probe results (see the earlier page) but
   do not skip the scan or the stores: the scan routine has no such test (E).
 
-Whether an IRIX warm reboot reaches the cold path (a Bedrock reset) or the soft-reset path (Status.SR) is a property
-of the kernel's restart code, not of this image. The network-port reset that restarts a node (bit 2 of +0x1680008,
-see [open-questions.md](open-questions.md), "IP35 network port reset") is a Bedrock reset (I); whether the L1 or the
-processor path is used for `reboot` and `init 6` is **U** here.
+What the kernel's restart code does, and the one marker the PROM reads on a restart, are in "Reboot reset type"
+below. Result: the kernel's restart ends in a Bedrock reset, the PROM runs its cold path, and the memory stores above
+all happen again (E for the PROM, I for Status.SR being clear on that path).
+
+## Reboot reset type
+
+Kernels read: IRIX 6.5.30 `unix.IP35` (sha256 `412a1aae553a348376bc30cacbaf65044de1745d30222f02ec5f88297dcb1dfa`) and
+IRIX 6.5.22 `unix.IP35` (`87563dbc0cbc35c590348f9ec12863884fc857f6ae3a991b803aa2a71dca791c`), both linked with symbols,
+disassembled with objdump. Addresses are 6.5.30 link addresses; 6.5.22 addresses are in the last table. PROM addresses
+are the 6.210 addresses used above. The routines in the two kernels match instruction for instruction after masking
+branch targets and global-pointer displacements (E for `mdboot`, `prom_reboot` and the restart routine; the only
+differences are one extra instruction at the start of the 6.5.22 restart routine's range and one load order in
+`prom_reboot`). The kernel names `he_arcs_restart` and `he_arcs_reboot` are misleading: neither calls an ARCS firmware
+vector (E, routines read in full).
+
+### 1. What the kernel does on reboot
+
+The chain, each link read in full (E):
+
+1. `uadmin` (0xc0000000002f95bc). Command value 2 first calls two virtual-host operations (shutdown work, message 43),
+   then falls into the same code as command 1; command 1 calls `phost_reboot` (0xc000000000314ff8) with the function code
+   from the second argument. Commands 4, 8 and 256 do other things (remount and similar, not followed). Which user
+   program passes which command and function code (`reboot`, `init 6`, `halt`) is **U**: no `reboot`, `halt`, `init`
+   or `shutdown` binary is in the held roots, so the mapping rests on the usual System V names (function 0 halt,
+   1 boot, 2 interactive boot, 3 standalone boot, 9 power off; I).
+2. `phost_reboot` calls `mdboot` (0xc0000000002af460) with that function code. `mdboot` takes a lock, runs every routine
+   of the shutdown callback table (0xc0000000015400f8), interrupts every other CPU with `cpuaction` to run a stop routine
+   (0xc0000000002af6bc), waits for them, and on the master CPU's record calls a final routine chosen by function code:
+
+   | Function code | Final routine (from the global pointer table, gp-8000 and gp-7992) | Console text |
+   |---|---|---|
+   | 1 (boot) | `prom_autoboot` 0xc0000000000404c0 | none |
+   | 0 (halt) | `prom_reboot` 0xc0000000002afa98 | none |
+   | 2 | `prom_reboot` | "Sorry, no interactive reboot." |
+   | 3 | `prom_reboot` | "Sorry, no standalone exec." |
+   | 9 | `prom_reboot`, and the power-off flag set to 1 | none |
+
+3. `prom_autoboot` calls `he_arcs_reboot` (0xc0000000000413d8). `prom_reboot` calls `prom_reinit` (0xc0000000000404dc)
+   unless the machine is panicking. `prom_reinit` powers the machine off through the L1 (`elsc_pwr_off`) if a power-off
+   request was received, otherwise calls `he_arcs_restart` (0xc0000000000413b8). In a panic `prom_reboot` consults the
+   kernel option `rebound` and, if it is not `y`, prints "[Press reset to restart the machine.]" and waits for a reset
+   (E).
+4. `he_arcs_restart` and `he_arcs_reboot` enter one common routine at 0xc000000000041240 with the value **0x0ead0030**
+   (restart) or **0x0ead0040** (reboot). That routine (E):
+   - ORs 0x100 into the value when the `panic_level` word is zero (0xc00000000163d424);
+   - for every node up to `maxnodes` stores the 64-bit value to node-alias **+0x1e08010** (gp table word
+     0x9200000001e10000 at gp+2200, displacement -0x7ff0, node number shifted left 33). That is local-block offset
+     +0x8010, which the PROM reads (item 3);
+   - waits 1,000,000 counts (`us_delay`);
+   - if `reboot_on_panic` (0xc00000000163c76c) equals 2, opens the L1 and sends the system-reset request
+     (`elsc_system_reset`, 0xc0000000000cfdc4); on failure it prints "MSC Reset command failed. Doing warm reset" and
+     does the network reset below. The word's value in the image is -1, so this branch is not the default (E for the
+     image value, I that it is unchanged at run time);
+   - otherwise, on the master CPU (`master_procid`, 0xc00000000163d380): if the power-off flag is zero, calls
+     `ni_reset_port` (0xc000000000041534), which stores **1 to 0x9200000001680010** and then **6 to
+     0x9200000001680008** (the local-form network interface registers at +0x1680010 and +0x1680008; table words at
+     gp+2208 and gp+2216); if the power-off flag is set it calls `sc_power_down_all` (L1) instead. Every other CPU, and
+     the master after the call, loop in 3,000,000-count delays until the reset takes effect.
+5. The values: the public header comments name +0x680010 "NI_RESET_ENABLE" (bit 0 "let the link layer reset the
+   Bedrock") and +0x680008 "NI_PORT_RESET" (bit 1 "send warm reset", bit 2 "reset local Bedrock"), per
+   [chips/bedrock/README.md](../chips/bedrock/README.md) "Network port reset" (names are I). So the kernel's default
+   restart is a local Bedrock reset plus a warm reset over the link.
+
+No store to a processor's Status, no jump to the PROM's reset vector and no call through the ARCS firmware vector is
+made by the restart routine (E: the whole routine and `mdboot` were read). The kernel does **not** itself produce
+Status.SR (soft reset): SR is a processor pin state, and the only thing the routine does to the hardware is the Bedrock
+reset above. Whether that reset reaches the processor as a hard reset (SR clear) or asserts the processor's soft-reset
+input is **U** from the binaries. It is **I** that SR is clear on this path: the marker the PROM reads (item 3) is read
+only on the cold path that the SR test selects (reset vector 0x1fc00c2c lies on the cold path after the 0x1fc00458
+test), and a kernel restart that arrived as SR would instead enter "Taking over pod mode" and stop at the monitor.
+
+### 2. What the PROM does about memory when the marker is present
+
+Nothing different (E for the call sites; I for completeness). The memory step (0x1fc6a3a4, 0x1fc6a8a0, 0x1fc6a8d8) has
+only the master-election guard whether or not the marker is set, so the 11 stores above happen again. What the marker
+changes is in item 3.
+
+### 3. How the PROM tells a kernel restart from a power-on, and a soft reset from a hard one
+
+| Test | Where | What it reads | Effect | Grade |
+|---|---|---|---|---|
+| Soft reset and NMI | reset vector, 0x1fc00458 to 0x1fc00464 and 0x1fc0064c | old CP0 Status parked in CP0 register 17 (0x1fc00418); bit 20 (SR) and bit 19 (NMI) | Neither bit or NMI alone: cold path. SR alone: soft-reset path 0x1fc01bac ("Soft reset received", "Taking over pod mode", monitor). Both: NMI sequence 0x1fc0046c | E ([ip35-prom-reset-barrier.md](questions/ip35-prom-reset-barrier.md) item 1, re-read) |
+| Kernel restart marker, first read | 0x1fc00c2c (cold path, after the flash-timing step) | doubleword at 0x9200000001608010 (local block +0x8010, the register the kernel wrote through +0x1e08010). Bits 27:16 compared with 0x0ead (mask 0x0fff0000 at 0x1fc00c34, compare at 0x1fc00c3c to 0x1fc00c40); bit 8 tested (0x1fc00c48) | Both true: jump to 0x1fc00f14, which skips the routines at 0x1fc02b54 and 0x1fc02d30 (progress codes 4 and 5, each with a failure exit to the monitor) and runs the ones under codes 0xa to 0xc. Otherwise it runs both. That the skipped pair are the cache self-tests is I (from [ip35-reset-window.md](questions/ip35-reset-window.md)'s cache-test row); the skip itself is E | E |
+| Kernel restart marker, second read | 0x1fc69d80, in the main routine before "Configuring memory" | same doubleword | Saves it, writes back (value & 0xf000000f) at 0x1fc69da4, i.e. consumes the marker. If bits 27:16 are 0x0ead and bit 8 is set (0x1fc6ae80, 0x1fc6ae8c): sets a flag (stack word 0x68), calls 0x1fc67b90 with 2 (boot-flag bits 49:48 set to 0b01), and later prints "*** Skipping diags as requested by kernel" and sets the diagnostic level to 2 ("None") at 0x1fc6a440 and 0x1fc6a448 | E |
+| Bits 7:0 of the marker (0x30 restart or 0x40 reboot) | none | not read by either site | The PROM does not distinguish restart from reboot by this word (E for the two sites; a third reader was not found by a scan of every `ori ... 0x8010`) | E / I |
+| Cold-path write | 0x1fc00804 to 0x1fc00828 | same doubleword, low 3 bits set to 7 | Done on every cold start before the marker is read; does not touch bits 27:16 or 8 | E |
+| Reset-cause or NMI register of the Bedrock, promlog variable, launch word | none found | | No read of a Bedrock reset-cause register or a variable that distinguishes a warm start was found on the boot path (the variable names the main routine reads are `DisableMemMask`, `MemCfg*`, `GlobalMaster`, `OverrideNIC` and similar; none is a reset indicator) | I (not every load of the main routine was classified) |
+
+So the PROM's two inputs are the processor's Status.SR and NMI and the kernel marker in local-block +0x8010. The marker
+is only written by the kernel (restart routine, item 1) and, in the PROM, by the monitor's own restart command at
+0x1fc620ac to 0x1fc620c0, which composes 0x0ead0030 into CP0 register 17 instead (E for the code; what reads it is U).
+The disk-autoboot path that follows is unchanged: the marker carries no memory or node-numbering behaviour (I).
+
+### Build and address table
+
+| Item | 6.5.30 `unix.IP35` | 6.5.22 `unix.IP35` |
+|---|---|---|
+| `uadmin` | 0xc0000000002f95bc | 0xc0000000002bff94 |
+| `phost_reboot` | 0xc000000000314ff8 | 0xc0000000002db580 |
+| `mdboot` | 0xc0000000002af460 | 0xc000000000271314 |
+| `prom_reboot` | 0xc0000000002afa98 | 0xc00000000027194c |
+| `prom_autoboot`, `prom_reinit` | 0xc0000000000404c0, 0xc0000000000404dc | same |
+| `he_arcs_restart`, `he_arcs_reboot` | 0xc0000000000413b8, 0xc0000000000413d8 | 0xc000000000041188, 0xc0000000000411a8 |
+| common restart routine | 0xc000000000041240 | 0xc000000000041010 |
+| `ni_reset_port` | 0xc000000000041534 | 0xc000000000041304 |
+| `elsc_system_reset` | 0xc0000000000cfdc4 | 0xc0000000000d212c |
+| `reboot_on_panic`, `power_off_flag`, `panic_level` | 0xc00000000163c76c, 0xc000000001646510, 0xc00000000163d424 | 0xc000000001592ee8, 0xc00000000159c440, 0xc000000001593af4 |
+
+The PROM sites above are the same in 6.211 except that code after the reset vector moved by 8 bytes (reset-vector read
+0x1fc00c2c unchanged; main-routine read 0x1fc69d80 becomes 0x1fc69d78; marker consumed at 0x1fc69d9c; 6.211 contains
+the same "Skipping diags" string) (E for the reset vector, the string and the read; I for the shifted addresses).
 
 ## What the PROM alone cannot settle
 
@@ -147,9 +255,9 @@ processor path is used for `reboot` and `init 6` is **U** here.
   word before the scan stores, so the reset value is only visible in a hardware read of the word before the PROM runs.
 - Whether the single-bank scan layouts are visible to anything other than the DIMM interface read that follows each one
   (a data access in that window would see them). Settled by the DIMM interface block (+0x1fa0000) register contract.
-- Which reset an IRIX warm reboot produces (cold path or soft reset). Settled by the kernel's restart routine for
-  this board and, if that goes to the L1, the L1 firmware's reset command; or by a console capture of a warm reboot
-  showing "Configuring memory" and "Testing/Initializing memory" again.
+- Whether a Bedrock local reset leaves Status.SR clear at the processor (see "Reboot reset type", item 1). Settled by
+  a console capture of a kernel-initiated reboot showing "Configuring memory" again, or by the Bedrock reset
+  documentation, which is not held.
 - The meaning of bits 61, 60 and 58:56 of the word, and of the directory register's bits 1:0 (U).
 - The routine at 0x1fc2d928 and the monitor commands' callers (reachability at boot).
 
