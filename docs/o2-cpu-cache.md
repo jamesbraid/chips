@@ -69,6 +69,29 @@ cache facts describe the processor, not a board.
 - **Established** (p. 56): a cached access does not probe the uncached buffer.
 - **Established** (pp. 188, 287): a CACHE operation on an address whose algorithm is 2 has undefined behaviour.
 
+- **Established** (R10000 manual p. 53, Table 4-1): the 3-bit cache algorithm field has one encoding wherever it
+  is read: the TLB EntryLo fields, CP0 Config K0 for kseg0 and VA[61:59] for xkphys. Value 2 is uncached, 3 is
+  cacheable noncoherent, 4 is cacheable coherent exclusive, 5 is cacheable coherent exclusive on write and 7 is
+  uncached accelerated. Values 0, 1 and 6 are reserved.
+- **Established** (p. 54): under algorithm 5 a load that misses the secondary cache issues a coherent block read
+  shared, so an external agent with a cache may keep a copy in Shared state. A store that hits a Shared block
+  issues an upgrade that tells external caches to invalidate. Algorithm 4 issues a block read exclusive on a load
+  miss instead.
+- **Established** (pp. 239–240): EntryLo0 and EntryLo1 carry the physical frame number (physical bits 33:6), the
+  cache algorithm, a valid bit and the uncached attribute in bits 63:62. The global bit G is kept once per TLB
+  entry, written from bit 0 of both halves on a TLB write. It makes the lookup ignore the ASID only when it is set
+  in both EntryLo0 and EntryLo1. The manual's field table describes bit 2 (D) with the valid-bit text, so this
+  page does not use bit 2.
+- **Established** (p. 242, Table 14-6): PageMask 0 selects 4 KiB pages and 0x6000 selects 16 KiB pages. The manual
+  leaves the TLB undefined for other MASK values outside its table.
+- **Established** (p. 56): an uncached load followed by a SYNC instruction guarantees that all cache accesses,
+  uncached accesses and uncached accelerated accesses have been globally performed. This is an ordering guarantee.
+  It does not say that the load flushes or invalidates any cache line.
+- **Inferred** (pp. 54, 56): an uncached access goes to the system interface without probing this processor's own
+  primary or secondary caches, because the manual says uncached accesses bypass both caches. The manual does not
+  say what happens to a dirty cached copy of the same physical address, so the mixed-access result stays unknown
+  (see Aliases).
+
 ## Writeback path
 
 - **Established** (pp. 48, 51, 189): a cached store can leave the newest data in the primary or secondary cache
