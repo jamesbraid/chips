@@ -300,8 +300,20 @@ open.
      Crossbow's number is a run-time level in that block, **inferred** to be 65 on a processor where only the II error took one first,
      and the vector field carries that level (inferred: the Hub's interrupt level is the packet's data byte).
    - IP35 (Bedrock): `xbow_attach` makes the same request. The IP35 allocator (`kernel.o` 0x22800; its flag handling at 0x22874 to 0x22888
-     and 0x229ac to 0x229cc read) maps descriptor flag bit 0 to the same flag word 4 and otherwise 8 or 0 (established). The IP35 level search
-     it calls (`intr_heuristic`, 980 bytes here against 572 on IP27) was not compared with the IP27 one, so the level number is **unknown**.
+     and 0x229ac to 0x229cc read) maps descriptor flag bit 0 to the same flag word 4 and otherwise 8 or 0 (established). It calls
+     `intr_heuristic` (`kernel.o` 0x1fc84, 980 bytes against 572 on IP27) with the request level -1 (any) and that flag word. The extra
+     length is processor choice, not the level search: it takes the target from the descriptor (`intr_target_from_desc`, call at 0x1fd00) or the
+     master node (`master_node_get`, 0x1fd9c) or neighbouring nodes (`physmem_select_neighbor_node`, 0x1fed4), and `intr_bit_reserve_test`
+     (0x1fbdc) chooses a processor of the node when none is given (`intr_cpu_choose_from_node`) before the reservation. The level itself comes from
+     `do_intr_reserve_level` (0x1eea8, 564 bytes, read in full; **established**): with flag value 4 set, or a requested level of 64 or more,
+     it works in the second block of 64 levels (a level below 64 with the flag clear uses the first block). A request of -1 takes the first slot
+     of that block, counting up from 0, whose in-use bit (bit 0 of the word at +0x122c in the 48-byte slot record) is clear, sets the bit and
+     returns the slot index plus 64; it returns -1 when all 64 are in use. That is the same rule as on IP27, so the Crossbow's level is the
+     first free level of 64 to 127 on the target processor. `hubii_eint_init` (call at 0x17f9c) makes the identical request (no descriptor,
+     level -1, flag word 4) for the II error interrupt. **Inferred**: the Crossbow gets 65 when the II error interrupt took 64 on the same
+     processor and nothing else holds a level in 65 to 124 there. The processor choice for the two requests was not shown to agree, and the
+     levels the hardwired reservation loop (`intr_reserve_hardwired`, called from `per_hub_init`) takes were not resolved. Levels 125 and 126
+     are connected by constant (`install_eccintr` call at 0x2c544, `hubni_eint_init` call at 0x18108).
    Which processor interrupt level the vector reaches belongs to those chips' pages.
 4. **How a processor's 4-byte access reaches a double-word-only register file. (inferred.)** See the width note above.
    Route: the processor-interface censuses of the node controller and HEART.
