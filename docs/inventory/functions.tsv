@@ -81691,7 +81691,7 @@ IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x27b8	88	xide_finish
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x2810	152	xide_complete_a_req	dwarf+symtab	789a8f3fd83e		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x28a8	76	xide_test_co_for_free	dwarf+symtab	1dcb54701c62		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x28f4	136	xide_return_co_tag	dwarf+symtab	9038a3d073cd		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x297c	360	xide_return_co_resources	dwarf+symtab	f8dbab37b3e6		out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x297c	360	xide_return_co_resources	dwarf+symtab	f8dbab37b3e6		out:11	named-only	docs/coverage-ioc4.md#the-ata-dma-block-0x140--4n-roles-now-established-by-a-public-driver-a-header-and-the-code-agree	The ATA DMA block `0x140 + 4n` (roles now established by a public driver; a header and the code agree)
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x2ae4	288	xide_remove_co	dwarf+symtab	d6fdd5d2ad19		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x2c04	272	xide_get_requestsense	dwarf+symtab	e7359a6d2e04		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x2d14	28	xide_requestsense_done	dwarf+symtab	cf61f5b5f238		out:11	undocumented		
@@ -81706,7 +81706,7 @@ IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x3920	1476	xide_pioc
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x3ee4	116	xide_unalloc_lun	dwarf+symtab	285abff9c5f7		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x3f58	296	xide_xidentifyDev	dwarf+symtab	08c7bd318845		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x4080	640	xide_setMode	dwarf+symtab	442701d2e999		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x4300	724	xide_alloc_cmd_object	dwarf+symtab	c0b7c0fb6d51		out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x4300	724	xide_alloc_cmd_object	dwarf+symtab	c0b7c0fb6d51		out:11	named-only	docs/coverage-ioc4.md#the-ata-dma-block-0x140--4n-roles-now-established-by-a-public-driver-a-header-and-the-code-agree	The ATA DMA block `0x140 + 4n` (roles now established by a public driver; a header and the code agree)
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x45d4	912	xide_info	dwarf+symtab	ad8d8be33f28		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x4964	28	xide_done	dwarf+symtab	48711e976c9c		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x4980	628	xide_command	dwarf+symtab	9bd13eb5c12d		out:11	undocumented		
@@ -81725,7 +81725,7 @@ IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x6848	1660	xide_star
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x6ec4	1404	xide_fix_mode_cmd_rcv	dwarf+symtab	98fb0e6d8e7d		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x7440	180	xide_get_capacity	dwarf+symtab	5650024ec637		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x74f4	28	xide_capacity_done	dwarf+symtab	cf61f5b5f238		out:11	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x7510	2304	xide_fix_mode_cmd_xmt	dwarf+symtab	df246e2139ca		out:11	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x7510	2304	xide_fix_mode_cmd_xmt	dwarf+symtab	df246e2139ca		out:11	named-only	docs/coverage-ioc4.md#the-ata-dma-block-0x140--4n-roles-now-established-by-a-public-driver-a-header-and-the-code-agree	The ATA DMA block `0x140 + 4n` (roles now established by a public driver; a header and the code agree)
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x7e10	268	xide_queue_scsireq_top	dwarf+symtab	3bc35227979a		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x7f1c	380	xide_alloc	dwarf+symtab	88b5ade885ef		out:11	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/ide.o	kernel-object	n64	.text	0x8098	252	xide_free	dwarf+symtab	4e4aad7f64b2		out:11	undocumented		
