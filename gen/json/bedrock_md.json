@@ -1,0 +1,2380 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/bedrock_md.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "current_cell",
+   "offset": 7864320,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "current_cell.region_bits",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "memory_config",
+   "offset": 7864328,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.rcd_rp_config",
+   "hi": 61,
+   "lo": 60,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.timing_high",
+   "hi": 58,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.timing_low",
+   "hi": 53,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.ignore_cpu_protection",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.ignore_io_protection",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.io_protection_enable",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.cell_protection_enable",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.bank_select",
+   "hi": 33,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos3_size",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos3_size.empty",
+   "value": 0,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos3_size.mb64",
+   "value": 1,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos3_size.mb128",
+   "value": 2,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos3_size.mb256",
+   "value": 3,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos3_size.mb512",
+   "value": 4,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos3_size.gb1",
+   "value": 5,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos3_width",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos3_enables",
+   "hi": 25,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos2_size",
+   "hi": 23,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos2_size.empty",
+   "value": 0,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos2_size.mb64",
+   "value": 1,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos2_size.mb128",
+   "value": 2,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos2_size.mb256",
+   "value": 3,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos2_size.mb512",
+   "value": 4,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos2_size.gb1",
+   "value": 5,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos2_width",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos2_enables",
+   "hi": 17,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos1_size",
+   "hi": 15,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos1_size.empty",
+   "value": 0,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos1_size.mb64",
+   "value": 1,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos1_size.mb128",
+   "value": 2,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos1_size.mb256",
+   "value": 3,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos1_size.mb512",
+   "value": 4,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos1_size.gb1",
+   "value": 5,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos1_width",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos1_enables",
+   "hi": 9,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos0_size",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos0_size.empty",
+   "value": 0,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos0_size.mb64",
+   "value": 1,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos0_size.mb128",
+   "value": 2,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos0_size.mb256",
+   "value": 3,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos0_size.mb512",
+   "value": 4,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "memory_config.pos0_size.gb1",
+   "value": 5,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos0_width",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "memory_config.pos0_enables",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "arbitration_control",
+   "offset": 7864336,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "arbitration_control.write_guarantee",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "arbitration_control.reply_guarantee",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "migration_config",
+   "offset": 7864344,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "migration_config.enable",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "migration_config.node_mask",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "migration_config.interval",
+   "hi": 9,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "fetchop_cache_status0",
+   "offset": 7864352,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "fetchop_cache_status0.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "fetchop_cache_status0.address",
+   "hi": 32,
+   "lo": 6,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "fetchop_cache_status1",
+   "offset": 7864360,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "fetchop_cache_status1.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "fetchop_cache_status1.address",
+   "hi": 32,
+   "lo": 6,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "misc_error0",
+   "offset": 7864384,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "misc_error1",
+   "offset": 7864392,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "misc_error1_clr",
+   "offset": 7864408,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "outgoing_reply_queue_size",
+   "offset": 7864416,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 6781891001453568,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "outgoing_reply_queue_size.third_data_queue",
+   "hi": 52,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "outgoing_reply_queue_size.pi1_data_queue",
+   "hi": 44,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "outgoing_reply_queue_size.pi0_data_queue",
+   "hi": 36,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "outgoing_reply_queue_size.third_header_queue",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "outgoing_reply_queue_size.pi1_header_queue",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "outgoing_reply_queue_size.pi0_header_queue",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "perf_select0",
+   "offset": 7929856,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select0.interrupt",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select0.command",
+   "hi": 59,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select0.channel",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select0.source",
+   "hi": 14,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select0.activity",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select0.mode",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "perf_select1",
+   "offset": 7929864,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select1.interrupt",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select1.command",
+   "hi": 59,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select1.channel",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select1.source",
+   "hi": 14,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select1.activity",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_select1.mode",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "perf_counter0",
+   "offset": 7929872,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_counter0.count",
+   "hi": 40,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "perf_counter1",
+   "offset": 7929880,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "perf_counter1.count",
+   "hi": 40,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "refresh_control",
+   "offset": 7995392,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "refresh_control.enable",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "refresh_control.live_counter",
+   "hi": 23,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "refresh_control.threshold",
+   "hi": 11,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "junk_bus_timing",
+   "offset": 7995400,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "junk_bus_timing.synergy_enable",
+   "hi": 47,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "junk_bus_timing.synergy_setup_hold",
+   "hi": 39,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "junk_bus_timing.uart_enable",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "junk_bus_timing.uart_setup_hold",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "junk_bus_timing.flash_enable",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "junk_bus_timing.flash_setup_hold",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "led0",
+   "offset": 7995408,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "led0.data",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "led1",
+   "offset": 7995416,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "led1.data",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "led2",
+   "offset": 7995424,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "led2.data",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "led3",
+   "offset": 7995432,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "led3.data",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "self_test_control",
+   "offset": 7995440,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_control.dimm",
+   "hi": 6,
+   "lo": 5,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_control.bank",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_control.reset",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_control.stop",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_control.start",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "self_test_data",
+   "offset": 7995448,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_data.write_control",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_data.cycle_control",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_data.byte_control",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_data.nibble_control",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_data.initial_pattern",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "self_test_error_addr",
+   "offset": 7995456,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_error_addr.directory_error",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_error_addr.memory_error",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_error_addr.row",
+   "hi": 46,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_error_addr.memory_column",
+   "hi": 30,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_error_addr.directory_column",
+   "hi": 14,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "self_test_status",
+   "offset": 7995464,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_status.done",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "self_test_status.passed",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "issue_debug_select",
+   "offset": 7995488,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "issue_debug_select.selection",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "dir_config",
+   "offset": 8126464,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_config.ignore_dir_ecc",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_config.premium",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "dir_error",
+   "offset": 8126480,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.uncorrectable_valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.protection_double_valid",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.correctable_valid",
+   "hi": 61,
+   "lo": 61,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.protection_correctable_valid",
+   "hi": 60,
+   "lo": 60,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.uncorrectable_overrun",
+   "hi": 59,
+   "lo": 59,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.protection_double_overrun",
+   "hi": 58,
+   "lo": 58,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.correctable_overrun",
+   "hi": 57,
+   "lo": 57,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.protection_correctable_overrun",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.protection_index",
+   "hi": 54,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.bad_protection",
+   "hi": 51,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.syndrome",
+   "hi": 46,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_error.hub_special_address",
+   "hi": 32,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "dir_error_clr",
+   "offset": 8126488,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "protocol_error",
+   "offset": 8126496,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "protocol_error_clr",
+   "offset": 8126504,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "mig_candidate",
+   "offset": 8126512,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate.local",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate.threshold_type",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate.overrun",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate.initiator",
+   "hi": 31,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate.page_address",
+   "hi": 20,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "mig_candidate_clr",
+   "offset": 8126520,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate_clr.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate_clr.local",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate_clr.threshold_type",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate_clr.overrun",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate_clr.initiator",
+   "hi": 31,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_candidate_clr.page_address",
+   "hi": 20,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "mig_diff_thresh",
+   "offset": 8126528,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_diff_thresh.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_diff_thresh.saturation_action",
+   "hi": 37,
+   "lo": 35,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_diff_thresh.threshold_action",
+   "hi": 34,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_diff_thresh.threshold",
+   "hi": 14,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "mig_value_thresh",
+   "offset": 8126536,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_value_thresh.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_value_thresh.local_interrupt_enable",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_value_thresh.saturation_action",
+   "hi": 37,
+   "lo": 35,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_value_thresh.threshold_action",
+   "hi": 34,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mig_value_thresh.threshold",
+   "hi": 14,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "outgoing_request_queue_size",
+   "offset": 8126544,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 67372032,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "outgoing_request_queue_size.third_request_queue",
+   "hi": 26,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "outgoing_request_queue_size.pi1_request_queue",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "outgoing_request_queue_size.pi0_request_queue",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "selftest_dir_error_data",
+   "offset": 8126552,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "selftest_dir_error_data.word",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "dir_debug_select",
+   "offset": 8126560,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "dir_debug_select.selection",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "mb_ecc_config",
+   "offset": 8257536,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mb_ecc_config.ignore_data_ecc",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "mem_error",
+   "offset": 8257552,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mem_error.differing_address",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mem_error.read_uncorrectable_flags",
+   "hi": 61,
+   "lo": 60,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mem_error.write_uncorrectable_flags",
+   "hi": 57,
+   "lo": 56,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mem_error.read_correctable_flags",
+   "hi": 53,
+   "lo": 52,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mem_error.syndrome",
+   "hi": 47,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mem_error.address",
+   "hi": 32,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "mem_error_clr",
+   "offset": 8257560,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "selftest_mem_error_data0",
+   "offset": 8257568,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "selftest_mem_error_data0.word",
+   "hi": 35,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "selftest_mem_error_data1",
+   "offset": 8257576,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "selftest_mem_error_data1.word",
+   "hi": 35,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "selftest_mem_error_data2",
+   "offset": 8257584,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "selftest_mem_error_data2.word",
+   "hi": 35,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "selftest_mem_error_data3",
+   "offset": 8257592,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "selftest_mem_error_data3.word",
+   "hi": 35,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "register",
+   "name": "mem_debug_select",
+   "offset": 8257600,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "mem_debug_select.selection",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "word",
+   "name": "DIR_ENTRY_POINTER",
+   "width": 64,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "DIR_ENTRY_POINTER.first_pointer_high",
+   "hi": 24,
+   "lo": 22,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "DIR_ENTRY_POINTER.first_pointer",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "DIR_ENTRY_POINTER.state",
+   "hi": 4,
+   "lo": 2,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_POINTER.state.exclusive",
+   "value": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_POINTER.state.busy_shared",
+   "value": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_POINTER.state.busy_exclusive",
+   "value": 5,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_POINTER.state.wait",
+   "value": 6,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_POINTER.state.poisoned",
+   "value": 7,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "DIR_ENTRY_POINTER.format",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_POINTER.format.unowned",
+   "value": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_POINTER.format.pointer",
+   "value": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_POINTER.format.shared_fine",
+   "value": 2,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_POINTER.format.shared_coarse",
+   "value": 3,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "word",
+   "name": "DIR_ENTRY_SHARED_FINE",
+   "width": 64,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "DIR_ENTRY_SHARED_FINE.first_vector_high",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "DIR_ENTRY_SHARED_FINE.first_tag_high",
+   "hi": 23,
+   "lo": 22,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "DIR_ENTRY_SHARED_FINE.first_vector",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "DIR_ENTRY_SHARED_FINE.first_tag",
+   "hi": 4,
+   "lo": 2,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "field",
+   "name": "DIR_ENTRY_SHARED_FINE.format",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_SHARED_FINE.format.unowned",
+   "value": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_SHARED_FINE.format.pointer",
+   "value": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_SHARED_FINE.format.shared_fine",
+   "value": 2,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "enum_value",
+   "name": "DIR_ENTRY_SHARED_FINE.format.shared_coarse",
+   "value": 3,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "DIMM_POSITIONS",
+   "value": 4,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "DIR_BACKDOOR_EIGHTHS",
+   "value": 7,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "DIR_LINE_BYTES",
+   "value": 128,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "DIR_WORD_STRIDE",
+   "value": 16,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "ECC_BACKDOOR_EIGHTHS",
+   "value": 5,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "INTR_CORRECTABLE_MEM_BIT",
+   "value": 61,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "INTR_UNCORRECTABLE_MEM_BIT",
+   "value": 24,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "PAGE_COUNTER_OFFSET",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "PHYSICAL_BANKS_PER_DIMM",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "PROTECTION_ENTRY_OFFSET",
+   "value": 1032,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "PTR_DEVICE_MASK",
+   "value": 7,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "PTR_NODE_SHIFT",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "REFRESH_CYCLES_PER_4096",
+   "value": 3125,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "REFRESH_INTERVAL_BOOK_NS",
+   "value": 8000,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "SCRUB_BACKDOOR_EIGHTHS",
+   "value": 4,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "SOFTWARE_BANKS",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  },
+  {
+   "unit": "bedrock_md",
+   "kind": "constant",
+   "name": "SOFTWARE_BANK_BYTES",
+   "value": 1073741824,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 memory-directory register header"
+  }
+ ]
+}

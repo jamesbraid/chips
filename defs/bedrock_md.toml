@@ -1,0 +1,586 @@
+unit = "bedrock_md"
+prefix = "BEDROCK_MD"
+title = "Bedrock memory and directory (MD) registers: field layouts, reset statements, error records and backdoor carriers"
+doc = "The memory and directory unit starts 7.5 MiB into the node's register space and holds the registers from the current-cell vector through the debug selector. Field positions, access widths and reset statements come from the public Linux 2.5.40 SN1 memory-directory header and its companion, so they are established as header facts. Where the companion header is marked as partly carried over from an earlier machine, its claims are graded inferred. Behaviour the header gives only in comments is graded as the comment's own claim, and behaviour it leaves open is unknown. No Bedrock specification is held, so no reset value is established where the header is silent. Diagnostic and PROM code tables are software expectations and graded inferred."
+from = "Linux 2.5.40 SN1 memory-directory register header"
+public_from = ["Linux 2.5.40", "Linux v2.5.0", "Origin 3000", "Laudon", "NEC VR10000", "MIPS R10000"]
+
+[c]
+offset_macro = "bare"
+
+[enums.size_code]
+values = { empty = { value = 0, grade = "inferred", doc = "Empty bank. The companion header gives the size codes; the register header gives only the 64 MB times power-of-two rule." }, mb64 = { value = 1, grade = "inferred", doc = "64 MB." }, mb128 = { value = 2, grade = "inferred", doc = "128 MB." }, mb256 = { value = 3, grade = "inferred", doc = "256 MB." }, mb512 = { value = 4, grade = "inferred", doc = "512 MB." }, gb1 = { value = 5, grade = "inferred", doc = "1 GB, the size of a whole software bank." } }
+
+[enums.dir_format]
+values = { unowned = { value = 0, grade = "established" }, pointer = { value = 1, grade = "established" }, shared_fine = { value = 2, grade = "established", doc = "Shared format with per-interface vector bits in the standard flavor." }, shared_coarse = { value = 3, grade = "established", doc = "Coarse shared vector in the standard flavor; the sparse shared form in the premium flavor." } }
+
+[enums.dir_pointer_state]
+values = { exclusive = { value = 0, grade = "established" }, busy_shared = { value = 4, grade = "established" }, busy_exclusive = { value = 5, grade = "established" }, wait = { value = 6, grade = "established" }, poisoned = { value = 7, grade = "established" } }
+
+[constants]
+SOFTWARE_BANKS = { value = 8, grade = "established", doc = "Software banks per node. Software bank n sits at node offset n gigabytes." }
+SOFTWARE_BANK_BYTES = { value = 0x40000000, grade = "established", doc = "Size of one software bank: 1 GB." }
+DIMM_POSITIONS = { value = 4, grade = "established", doc = "DIMM bank positions per node, in two pairs." }
+PHYSICAL_BANKS_PER_DIMM = { value = 2, grade = "established", doc = "Physical banks in each DIMM position." }
+DIR_LINE_BYTES = { value = 128, grade = "established", doc = "Memory cache line covered by one directory word, from the public SN1 address header." }
+DIR_WORD_STRIDE = { value = 16, grade = "established", doc = "Stride of directory words in the directory backdoor: one 64-bit word per 16 bytes of backdoor space, one per 128-byte line." }
+DIR_BACKDOOR_EIGHTHS = { value = 7, grade = "established", doc = "The directory backdoor starts at seven eighths of the node's Hub special space, per the public SN1 address header." }
+ECC_BACKDOOR_EIGHTHS = { value = 5, grade = "established", doc = "The memory ECC entry backdoor starts at five eighths of the node's Hub special space, per the public SN1 address header." }
+SCRUB_BACKDOOR_EIGHTHS = { value = 4, grade = "established", doc = "The ECC scrub carrier starts at four eighths of the node's Hub special space, per the public SN1 address header. The header names it and says nothing more." }
+PAGE_COUNTER_OFFSET = { value = 8, grade = "established", doc = "Offset of the page-counter entry from the directory word, per the public SN1 address header. The counter's fields are not given." }
+PROTECTION_ENTRY_OFFSET = { value = 0x408, grade = "established", doc = "Offset of the protection entry from the directory base, per the public SN1 address header. Its meaning is not given." }
+REFRESH_CYCLES_PER_4096 = { value = 3125, grade = "established", doc = "Threshold in Bedrock clocks that the header's comment gives for 4096 refreshes per 64 ms. The header gives this as the comment's own arithmetic." }
+REFRESH_INTERVAL_BOOK_NS = { value = 8000, grade = "established", doc = "The Origin 3000 architecture book says the interface refreshes the DIMMs about every 8 microseconds. This disagrees with the 3125-cycle threshold, which is about 15.6 microseconds at 200 MHz. The clock rate is inferred, and the conflict is unresolved." }
+INTR_CORRECTABLE_MEM_BIT = { value = 61, grade = "established", doc = "Level-1 interrupt bit that the public interrupt tables give for a correctable memory or directory error. The line that raises it on Bedrock is inferred." }
+INTR_UNCORRECTABLE_MEM_BIT = { value = 24, grade = "established", doc = "Error-interrupt pending bit that the processor-interface header assigns to memory and directory errors (the header comment says it must be cleared in the MD unit). The line that raises it on Bedrock is inferred." }
+PTR_NODE_SHIFT = { value = 3, grade = "established", doc = "A directory pointer carries the node number above three device bits." }
+PTR_DEVICE_MASK = { value = 7, grade = "established", doc = "Mask of the three device bits in a directory pointer. Device bit 1 marks an I/O owner; a processor's slice is device bit 0 plus device bit 2 shifted down." }
+
+[registers.current_cell]
+offset = 0x780000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Access-rights vector. A region whose bit is set is inside the cell and uses the directory's local-access protection instead of per-region protection. The same vector sets the access rights for the Hub special spaces: set gives read and write, clear gives read only, except the local and remote register windows, which are inaccessible when the bit is clear. The header attributes region size to the network interface, while the local block's revision register holds it. Reset unknown: the header states no value."
+
+[registers.current_cell.fields]
+region_bits = { bits = [63, 0], grade = "established", doc = "One bit per region." }
+
+[registers.memory_config]
+offset = 0x780008
+access = "rw"
+width = 64
+grade = "established"
+doc = "Memory configuration. Each DIMM position d has a byte at bits 8d+7 to 8d holding two bank enables, a DRAM width bit and a size code. Addresses beyond a configured size return errors. The header says software must ask the system controller whether a DIMM is x4 or x8/x16 before it sets the width. The header says the register survives a soft reset. Reset unknown."
+
+[registers.memory_config.fields]
+pos0_enables = { bits = [1, 0], grade = "established", doc = "Bank enables for DIMM position 0, one bit per physical bank." }
+pos0_width = { bits = [3, 3], grade = "established", doc = "DRAM width for DIMM position 0. The header gives no encoding." }
+pos0_size = { bits = [7, 4], grade = "established", enum = "size_code", doc = "Size code for DIMM position 0." }
+pos1_enables = { bits = [9, 8], grade = "established", doc = "Bank enables for DIMM position 1." }
+pos1_width = { bits = [11, 11], grade = "established", doc = "DRAM width for DIMM position 1." }
+pos1_size = { bits = [15, 12], grade = "established", enum = "size_code", doc = "Size code for DIMM position 1." }
+pos2_enables = { bits = [17, 16], grade = "established", doc = "Bank enables for DIMM position 2." }
+pos2_width = { bits = [19, 19], grade = "established", doc = "DRAM width for DIMM position 2." }
+pos2_size = { bits = [23, 20], grade = "established", enum = "size_code", doc = "Size code for DIMM position 2." }
+pos3_enables = { bits = [25, 24], grade = "established", doc = "Bank enables for DIMM position 3." }
+pos3_width = { bits = [27, 27], grade = "established", doc = "DRAM width for DIMM position 3." }
+pos3_size = { bits = [31, 28], grade = "established", enum = "size_code", doc = "Size code for DIMM position 3." }
+bank_select = { bits = [33, 32], grade = "established", doc = "Bank-select field. Locational banks map to software banks by exclusive-or with this field." }
+cell_protection_enable = { bits = [44, 44], grade = "established", doc = "Cell protection enable." }
+io_protection_enable = { bits = [45, 45], grade = "established", doc = "I/O protection enable." }
+ignore_io_protection = { bits = [46, 46], grade = "established", doc = "Ignore I/O protection." }
+ignore_cpu_protection = { bits = [47, 47], grade = "established", doc = "Ignore CPU protection." }
+timing_low = { bits = [53, 48], grade = "established", doc = "Timing field, low group." }
+timing_high = { bits = [58, 56], grade = "established", doc = "Timing field, high group. The companion header calls it write-only with a default of 7; that claim is inferred from the partly carried-over companion." }
+rcd_rp_config = { bits = [61, 60], grade = "established", doc = "Register-control and row-precharge configuration bits. The header gives no encoding." }
+
+[registers.misc_error0]
+offset = 0x780040
+access = "r"
+width = 64
+grade = "established"
+doc = "Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here. Reset unknown."
+
+[registers.misc_error1]
+offset = 0x780048
+access = "r"
+width = 64
+grade = "established"
+doc = "Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here. Reset unknown."
+
+[registers.misc_error1_clr]
+offset = 0x780058
+access = "r"
+width = 64
+grade = "established"
+doc = "Clear alias of miscellaneous error word 1. The header names it a clear register without saying whether a read or a write clears it. The one consumer reads and discards the value. The clearing mechanism is unknown."
+
+[registers.outgoing_reply_queue_size]
+offset = 0x780060
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0018_1818_0c0c_0c00
+doc = "Reply-queue credit sizes, all read-only fields. The header gives 12 header entries and 24 data entries as the defaults for each queue. A write resets the credit counters to these defaults."
+
+[registers.outgoing_reply_queue_size.fields]
+pi0_header_queue = { bits = [11, 8], grade = "established", doc = "Header-queue size for processor interface 0. Default 12." }
+pi1_header_queue = { bits = [19, 16], grade = "established", doc = "Header-queue size for processor interface 1. Default 12." }
+third_header_queue = { bits = [27, 24], grade = "established", doc = "Header-queue size for the third queue. Default 12." }
+pi0_data_queue = { bits = [36, 32], grade = "established", doc = "Data-queue size for processor interface 0. Default 24." }
+pi1_data_queue = { bits = [44, 40], grade = "established", doc = "Data-queue size for processor interface 1. Default 24." }
+third_data_queue = { bits = [52, 48], grade = "established", doc = "Data-queue size for the third queue. Default 24." }
+
+[registers.perf_select0]
+offset = 0x790000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 0 selection. Complete event encodings and interrupt cadence are not given by the header. Reset unknown."
+
+[registers.perf_select0.fields]
+mode = { bits = [1, 0], grade = "established", doc = "Counting mode." }
+activity = { bits = [7, 4], grade = "established", doc = "Activity selector." }
+source = { bits = [14, 8], grade = "established", doc = "Event source selector." }
+channel = { bits = [19, 16], grade = "established", doc = "Channel selector." }
+command = { bits = [59, 20], grade = "established", doc = "Command field." }
+interrupt = { bits = [63, 63], grade = "established", doc = "Interrupt enable." }
+
+[registers.perf_select1]
+offset = 0x790008
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 1 selection, with the same layout as counter 0. Reset unknown."
+
+[registers.perf_select1.fields]
+mode = { bits = [1, 0], grade = "established", doc = "Counting mode." }
+activity = { bits = [7, 4], grade = "established", doc = "Activity selector." }
+source = { bits = [14, 8], grade = "established", doc = "Event source selector." }
+channel = { bits = [19, 16], grade = "established", doc = "Channel selector." }
+command = { bits = [59, 20], grade = "established", doc = "Command field." }
+interrupt = { bits = [63, 63], grade = "established", doc = "Interrupt enable." }
+
+[registers.perf_counter0]
+offset = 0x790010
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 0. The header describes a 41-bit count; the events that advance it are not given. The Itanium console code and the boot firmware of this machine class both use the word as a lock word by setting and clearing bits, which the header does not sanction. That use is a software expectation, inferred. Reset unknown."
+
+[registers.perf_counter0.fields]
+count = { bits = [40, 0], grade = "established", doc = "41-bit count." }
+
+[registers.perf_counter1]
+offset = 0x790018
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 1. The same 41-bit count layout as counter 0. Reset unknown."
+
+[registers.perf_counter1.fields]
+count = { bits = [40, 0], grade = "established", doc = "41-bit count." }
+
+[registers.arbitration_control]
+offset = 0x780010
+access = "rw"
+width = 64
+grade = "established"
+doc = "Arbitration control. The arbitration timing is not specified by the header. Reset unknown."
+
+[registers.arbitration_control.fields]
+reply_guarantee = { bits = [3, 0], grade = "established", doc = "Reply guarantee field." }
+write_guarantee = { bits = [7, 4], grade = "established", doc = "Write guarantee field." }
+
+[registers.migration_config]
+offset = 0x780018
+access = "rw"
+width = 64
+grade = "established"
+doc = "Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. Reset unknown; the software that uses the migration interface never touches this register, so who sets the enable bit is unknown."
+
+[registers.migration_config.fields]
+interval = { bits = [9, 0], grade = "established", doc = "Migration interval. Units not given." }
+node_mask = { bits = [23, 16], grade = "established", doc = "Node mask." }
+enable = { bits = [32, 32], grade = "established", doc = "Migration enable." }
+
+[registers.fetchop_cache_status0]
+offset = 0x780020
+access = "r"
+width = 64
+grade = "established"
+doc = "Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given. Reset unknown."
+
+[registers.fetchop_cache_status0.fields]
+address = { bits = [32, 6], grade = "established", doc = "Address of the captured entry." }
+valid = { bits = [63, 63], grade = "established", doc = "Entry valid." }
+
+[registers.fetchop_cache_status1]
+offset = 0x780028
+access = "r"
+width = 64
+grade = "established"
+doc = "Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0. Reset unknown."
+
+[registers.fetchop_cache_status1.fields]
+address = { bits = [32, 6], grade = "established", doc = "Address of the captured entry." }
+valid = { bits = [63, 63], grade = "established", doc = "Entry valid." }
+
+[registers.refresh_control]
+offset = 0x7a0000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Refresh control. Once the memory configuration holds the DIMM information, the hardware refreshes every bank. If a refresh window expires with banks unrefreshed, all other traffic halts until they are refreshed. The enable bit is cleared on reset because the first DIMM operation must be a mode-register write. The enable and threshold survive a soft reset. The live counter's reset is unknown."
+
+[registers.refresh_control.fields]
+threshold = { bits = [11, 0], grade = "established", doc = "Refresh threshold in Bedrock clocks." }
+live_counter = { bits = [23, 12], grade = "established", doc = "Live refresh counter." }
+enable = { bits = [63, 63], grade = "established", doc = "Refresh enable. Reads 0 after reset." }
+
+[registers.junk_bus_timing]
+offset = 0x7a0008
+access = "rw"
+width = 64
+grade = "established"
+doc = "Junk-bus timing for the flash PROM, the L1 UART and a device the Linux header names Synergy. The header names the timing fields; it does not place the Synergy device on any board. This is the only register in any unit that names the UART and the flash PROM. Reset unknown."
+
+[registers.junk_bus_timing.fields]
+flash_setup_hold = { bits = [7, 0], grade = "established", doc = "Flash PROM setup and hold time." }
+flash_enable = { bits = [15, 8], grade = "established", doc = "Flash PROM enable time." }
+uart_setup_hold = { bits = [23, 16], grade = "established", doc = "UART setup and hold time." }
+uart_enable = { bits = [31, 24], grade = "established", doc = "UART enable time." }
+synergy_setup_hold = { bits = [39, 32], grade = "established", doc = "Synergy setup and hold time, as the header names it." }
+synergy_enable = { bits = [47, 40], grade = "established", doc = "Synergy enable time, as the header names it." }
+
+[registers.led0]
+offset = 0x7a0010
+access = "r"
+width = 64
+grade = "established"
+doc = "Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated. Reset unknown."
+
+[registers.led0.fields]
+data = { bits = [7, 0], grade = "established", doc = "LED bank value." }
+
+[registers.led1]
+offset = 0x7a0018
+access = "r"
+width = 64
+grade = "established"
+doc = "Reads the value on LED bank 1. Otherwise as LED bank 0."
+
+[registers.led1.fields]
+data = { bits = [7, 0], grade = "established", doc = "LED bank value." }
+
+[registers.led2]
+offset = 0x7a0020
+access = "r"
+width = 64
+grade = "established"
+doc = "Reads the value on LED bank 2. Otherwise as LED bank 0."
+
+[registers.led2.fields]
+data = { bits = [7, 0], grade = "established", doc = "LED bank value." }
+
+[registers.led3]
+offset = 0x7a0028
+access = "r"
+width = 64
+grade = "established"
+doc = "Reads the value on LED bank 3. Otherwise as LED bank 0."
+
+[registers.led3.fields]
+data = { bits = [7, 0], grade = "established", doc = "LED bank value." }
+
+[registers.self_test_control]
+offset = 0x7a0030
+access = "rw"
+width = 64
+grade = "established"
+doc = "Self-test control. Command precedence, self-clearing behaviour, the algorithm and the duration are unresolved. A retained write cannot qualify a completed test."
+
+[registers.self_test_control.fields]
+start = { bits = [0, 0], grade = "established", doc = "Start the test." }
+stop = { bits = [1, 1], grade = "established", doc = "Stop the test." }
+reset = { bits = [2, 2], grade = "established", doc = "Reset the self-test engine." }
+bank = { bits = [4, 4], grade = "established", doc = "Bank selector within the DIMM." }
+dimm = { bits = [6, 5], grade = "established", doc = "DIMM selector." }
+
+[registers.self_test_data]
+offset = 0x7a0038
+access = "rw"
+width = 64
+grade = "established"
+doc = "Self-test data and pattern control. The header gives the control names, not their full transformation rules."
+
+[registers.self_test_data.fields]
+initial_pattern = { bits = [3, 0], grade = "established", doc = "Initial pattern." }
+nibble_control = { bits = [4, 4], grade = "established", doc = "Nibble control." }
+byte_control = { bits = [5, 5], grade = "established", doc = "Byte control." }
+cycle_control = { bits = [6, 6], grade = "established", doc = "Cycle control." }
+write_control = { bits = [7, 7], grade = "established", doc = "Write control." }
+
+[registers.self_test_error_addr]
+offset = 0x7a0040
+access = "r"
+width = 64
+grade = "established"
+doc = "Self-test error address: the failing column and row, and which block failed. Guest writes and the clearing mechanism are unresolved."
+
+[registers.self_test_error_addr.fields]
+directory_column = { bits = [14, 0], grade = "established", doc = "Directory column of the failing address." }
+memory_column = { bits = [30, 16], grade = "established", doc = "Memory column of the failing address." }
+row = { bits = [46, 32], grade = "established", doc = "Row of the failing address." }
+memory_error = { bits = [48, 48], grade = "established", doc = "Memory block failed." }
+directory_error = { bits = [49, 49], grade = "established", doc = "Directory block failed." }
+
+[registers.self_test_status]
+offset = 0x7a0048
+access = "r"
+width = 64
+grade = "established"
+doc = "Self-test status. Reports the result of the test. Neither bit is meaningful until the test has run to completion."
+
+[registers.self_test_status.fields]
+passed = { bits = [0, 0], grade = "established", doc = "Test passed." }
+done = { bits = [1, 1], grade = "established", doc = "Test complete." }
+
+[registers.issue_debug_select]
+offset = 0x7a0060
+access = "rw"
+width = 64
+grade = "established"
+doc = "Issue-block debug selector. The prose gives three bits while both endian layouts declare two. The width conflict is open. The meanings of the selections are not given."
+
+[registers.issue_debug_select.fields]
+selection = { bits = [1, 0], grade = "established", doc = "Debug selection; width unresolved, see the register note." }
+
+[registers.dir_config]
+offset = 0x7c0000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset. Reset unknown."
+
+[registers.dir_config.fields]
+premium = { bits = [0, 0], grade = "established", doc = "Premium directory format: 64-bit words. Clear selects the standard format with 32-bit words." }
+ignore_dir_ecc = { bits = [1, 1], grade = "established", doc = "Ignore directory ECC." }
+
+[registers.dir_error]
+offset = 0x7c0010
+access = "r"
+width = 64
+grade = "established"
+doc = "Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable. Reset unknown; the header gives no value."
+
+[registers.dir_error.fields]
+uncorrectable_valid = { bits = [63, 63], grade = "established", doc = "Uncorrectable directory error recorded." }
+protection_double_valid = { bits = [62, 62], grade = "established", doc = "Double-bit access-protection error recorded." }
+correctable_valid = { bits = [61, 61], grade = "established", doc = "Correctable directory error recorded." }
+protection_correctable_valid = { bits = [60, 60], grade = "established", doc = "Correctable access-protection error recorded." }
+uncorrectable_overrun = { bits = [59, 59], grade = "established", doc = "An uncorrectable error arrived while one was recorded." }
+protection_double_overrun = { bits = [58, 58], grade = "established", doc = "Overrun for the double-bit access-protection kind." }
+correctable_overrun = { bits = [57, 57], grade = "established", doc = "Overrun for the correctable directory kind." }
+protection_correctable_overrun = { bits = [56, 56], grade = "established", doc = "Overrun for the correctable access-protection kind." }
+protection_index = { bits = [54, 52], grade = "established", doc = "Protection index. Protection kinds only." }
+bad_protection = { bits = [51, 48], grade = "established", doc = "Bad protection value. Protection kinds only." }
+syndrome = { bits = [46, 40], grade = "established", doc = "Seven-bit syndrome of the latched error." }
+hub_special_address = { bits = [32, 3], grade = "established", doc = "Hub special address of the offending directory entry." }
+
+[registers.dir_error_clr]
+offset = 0x7c0018
+access = "r"
+width = 64
+grade = "established"
+doc = "Clear alias of the directory error record. The header repeats the base register's text and names no mechanism. Read-to-clear is the consumer's expectation, not a stated rule."
+
+[registers.protocol_error]
+offset = 0x7c0020
+access = "r"
+width = 64
+grade = "established"
+doc = "Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here. Reset unknown."
+
+[registers.protocol_error_clr]
+offset = 0x7c0028
+access = "r"
+width = 64
+grade = "established"
+doc = "Clear alias of the protocol error record. The mechanism is not stated."
+
+[registers.mig_candidate]
+offset = 0x7c0030
+access = "r"
+width = 64
+grade = "established"
+doc = "Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown."
+
+[registers.mig_candidate.fields]
+page_address = { bits = [20, 0], grade = "established", doc = "Page address." }
+initiator = { bits = [31, 21], grade = "established", doc = "Requesting initiator." }
+overrun = { bits = [32, 32], grade = "established", doc = "Overrun." }
+threshold_type = { bits = [33, 33], grade = "established", doc = "Threshold type that raised the candidate. Which register raises which type is unknown." }
+local = { bits = [34, 34], grade = "established", doc = "Local flag." }
+valid = { bits = [63, 63], grade = "established", doc = "Candidate valid." }
+
+[registers.mig_candidate_clr]
+offset = 0x7c0038
+access = "r"
+width = 64
+grade = "established"
+doc = "Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so."
+
+[registers.mig_candidate_clr.fields]
+page_address = { bits = [20, 0], grade = "established", doc = "Page address." }
+initiator = { bits = [31, 21], grade = "established", doc = "Requesting initiator." }
+overrun = { bits = [32, 32], grade = "established", doc = "Overrun." }
+threshold_type = { bits = [33, 33], grade = "established", doc = "Threshold type." }
+local = { bits = [34, 34], grade = "established", doc = "Local flag." }
+valid = { bits = [63, 63], grade = "established", doc = "Candidate valid." }
+
+[registers.mig_diff_thresh]
+offset = 0x7c0040
+access = "rw"
+width = 64
+grade = "established"
+doc = "Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown."
+
+[registers.mig_diff_thresh.fields]
+threshold = { bits = [14, 0], grade = "established", doc = "Threshold." }
+threshold_action = { bits = [34, 32], grade = "established", doc = "Threshold action. Encoding unknown." }
+saturation_action = { bits = [37, 35], grade = "established", doc = "Saturation action. Encoding unknown." }
+valid = { bits = [63, 63], grade = "established", doc = "Threshold valid." }
+
+[registers.mig_value_thresh]
+offset = 0x7c0048
+access = "rw"
+width = 64
+grade = "established"
+doc = "Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown."
+
+[registers.mig_value_thresh.fields]
+threshold = { bits = [14, 0], grade = "established", doc = "Threshold." }
+threshold_action = { bits = [34, 32], grade = "established", doc = "Threshold action. Encoding unknown." }
+saturation_action = { bits = [37, 35], grade = "established", doc = "Saturation action. Encoding unknown." }
+local_interrupt_enable = { bits = [62, 62], grade = "established", doc = "Local interrupt enable." }
+valid = { bits = [63, 63], grade = "established", doc = "Threshold valid." }
+
+[registers.outgoing_request_queue_size]
+offset = 0x7c0050
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0000_0000_0404_0400
+doc = "Outgoing request-queue size. Each field defaults to four and has a maximum of four. A header occupies one entry. Writes above four and the side effects of resizing are not specified."
+
+[registers.outgoing_request_queue_size.fields]
+pi0_request_queue = { bits = [10, 8], grade = "established", doc = "Request queue for processor interface 0. Default 4, maximum 4." }
+pi1_request_queue = { bits = [18, 16], grade = "established", doc = "Request queue for processor interface 1. Default 4, maximum 4." }
+third_request_queue = { bits = [26, 24], grade = "established", doc = "Third request queue. Default 4, maximum 4." }
+
+[registers.selftest_dir_error_data]
+offset = 0x7c0058
+access = "r"
+width = 64
+grade = "established"
+doc = "Failing directory word captured by the self-test. Guest writes are not established."
+
+[registers.selftest_dir_error_data.fields]
+word = { bits = [31, 0], grade = "established", doc = "Failing directory word." }
+
+[registers.dir_debug_select]
+offset = 0x7c0060
+access = "rw"
+width = 64
+grade = "established"
+doc = "Directory-block debug selector. The meanings of the selections come from a separate design specification that is not held."
+
+[registers.dir_debug_select.fields]
+selection = { bits = [1, 0], grade = "established", doc = "Debug selection." }
+
+[registers.mb_ecc_config]
+offset = 0x7e0000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Memory-block ECC configuration. Bit 0 ignores data ECC. Reset unknown."
+
+[registers.mb_ecc_config.fields]
+ignore_data_ecc = { bits = [0, 0], grade = "established", doc = "Ignore data ECC." }
+
+[registers.mem_error]
+offset = 0x7e0010
+access = "r"
+width = 64
+grade = "established"
+doc = "Memory error record: an address, a syndrome and a valid and overrun flag pair for each of three kinds. The address and syndrome belong to the earliest error of the highest priority: uncorrectable read above uncorrectable write above correctable read. Bit 63 is set when uncorrectable errors reached different cache lines. The header's flag summary gives the order of each pair's bits only in one place, so the pair order is inferred. Reset unknown."
+
+[registers.mem_error.fields]
+differing_address = { bits = [63, 63], grade = "established", doc = "Uncorrectable errors reached different cache lines." }
+read_uncorrectable_flags = { bits = [61, 60], grade = "inferred", doc = "Overrun and valid flags for the read-uncorrectable kind, in that order (61 overrun, 60 valid). The order is inferred from the register line; the memory diagnostic's own wait names bits 54 to 52 for the read-correctable kind, which conflicts with the summary." }
+write_uncorrectable_flags = { bits = [57, 56], grade = "inferred", doc = "Overrun and valid flags for the write-uncorrectable kind. The order is inferred as for the read kind. No consumer produces this kind." }
+read_correctable_flags = { bits = [53, 52], grade = "inferred", doc = "Overrun and valid flags for the read-correctable kind. The order is inferred as for the read-uncorrectable kind." }
+syndrome = { bits = [47, 40], grade = "established", doc = "Eight-bit syndrome of the latched error." }
+address = { bits = [32, 3], grade = "established", doc = "Thirty-bit doubleword address of the latched error, with the low three bits dropped." }
+
+[registers.mem_error_clr]
+offset = 0x7e0018
+access = "r"
+width = 64
+grade = "established"
+doc = "Clear alias of the memory error record. The header repeats the base register's text and names no mechanism. Read-to-clear is the consumer's expectation, not a stated rule."
+
+[registers.selftest_mem_error_data0]
+offset = 0x7e0020
+access = "r"
+width = 64
+grade = "established"
+doc = "Self-test captured memory data, quarter 0 of the failing line."
+
+[registers.selftest_mem_error_data0.fields]
+word = { bits = [35, 0], grade = "established", doc = "Captured data." }
+
+[registers.selftest_mem_error_data1]
+offset = 0x7e0028
+access = "r"
+width = 64
+grade = "established"
+doc = "Self-test captured memory data, quarter 1 of the failing line."
+
+[registers.selftest_mem_error_data1.fields]
+word = { bits = [35, 0], grade = "established", doc = "Captured data." }
+
+[registers.selftest_mem_error_data2]
+offset = 0x7e0030
+access = "r"
+width = 64
+grade = "established"
+doc = "Self-test captured memory data, quarter 2 of the failing line."
+
+[registers.selftest_mem_error_data2.fields]
+word = { bits = [35, 0], grade = "established", doc = "Captured data." }
+
+[registers.selftest_mem_error_data3]
+offset = 0x7e0038
+access = "r"
+width = 64
+grade = "established"
+doc = "Self-test captured memory data, quarter 3 of the failing line."
+
+[registers.selftest_mem_error_data3.fields]
+word = { bits = [35, 0], grade = "established", doc = "Captured data." }
+
+[registers.mem_debug_select]
+offset = 0x7e0040
+access = "rw"
+width = 64
+grade = "established"
+doc = "Memory-block debug selector. The meaning of the selection requires the separate design specification."
+
+[registers.mem_debug_select.fields]
+selection = { bits = [0, 0], grade = "established", doc = "Debug selection." }
+
+[words.DIR_ENTRY_POINTER]
+width = 64
+grade = "established"
+from = "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+doc = "Directory word in the pointer format. Bits 1:0 hold the format, which is the same in both flavors. In a premium word bits 24:22 extend the pointer to ten bits."
+[words.DIR_ENTRY_POINTER.fields]
+format = { bits = [1, 0], grade = "established", enum = "dir_format", doc = "Format. Pointer format is 1." }
+state = { bits = [4, 2], grade = "established", enum = "dir_pointer_state", doc = "Pointer-format state." }
+first_pointer = { bits = [15, 8], grade = "established", doc = "First pointer: node above three device bits, see PTR_NODE_SHIFT." }
+first_pointer_high = { bits = [24, 22], grade = "established", doc = "Premium only: pointer bits 10:8." }
+
+[words.DIR_ENTRY_SHARED_FINE]
+width = 64
+grade = "established"
+from = "Linux 2.5.40 SN1 memory-directory header, directory word layout"
+doc = "Directory word in the shared-fine format. In this format a vector bit stands for one processor interface, not one processor."
+[words.DIR_ENTRY_SHARED_FINE.fields]
+format = { bits = [1, 0], grade = "established", enum = "dir_format", doc = "Format. Shared fine is 2." }
+first_tag = { bits = [4, 2], grade = "established", doc = "First tag." }
+first_vector = { bits = [15, 8], grade = "established", doc = "First vector." }
+first_tag_high = { bits = [23, 22], grade = "established", doc = "Premium only: extends the first tag." }
+first_vector_high = { bits = [31, 24], grade = "established", doc = "Premium only: extends the first vector." }

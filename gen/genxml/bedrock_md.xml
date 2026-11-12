@@ -1,0 +1,326 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/bedrock_md.toml by defs-gen - do not edit, change the source -->
+<genxml unit="bedrock_md" prefix="BEDROCK_MD" title="Bedrock memory and directory (MD) registers: field layouts, reset statements, error records and backdoor carriers" from="Linux 2.5.40 SN1 memory-directory register header">
+  <doc>The memory and directory unit starts 7.5 MiB into the node's register space and holds the registers from the current-cell vector through the debug selector. Field positions, access widths and reset statements come from the public Linux 2.5.40 SN1 memory-directory header and its companion, so they are established as header facts. Where the companion header is marked as partly carried over from an earlier machine, its claims are graded inferred. Behaviour the header gives only in comments is graded as the comment's own claim, and behaviour it leaves open is unknown. No Bedrock specification is held, so no reset value is established where the header is silent. Diagnostic and PROM code tables are software expectations and graded inferred.</doc>
+  <enum name="dir_format">
+    <value name="unowned" value="0" grade="established"/>
+    <value name="pointer" value="1" grade="established"/>
+    <value name="shared_fine" value="2" grade="established"/>
+    <value name="shared_coarse" value="3" grade="established"/>
+  </enum>
+  <enum name="dir_pointer_state">
+    <value name="exclusive" value="0" grade="established"/>
+    <value name="busy_shared" value="4" grade="established"/>
+    <value name="busy_exclusive" value="5" grade="established"/>
+    <value name="wait" value="6" grade="established"/>
+    <value name="poisoned" value="7" grade="established"/>
+  </enum>
+  <enum name="size_code">
+    <value name="empty" value="0" grade="inferred"/>
+    <value name="mb64" value="1" grade="inferred"/>
+    <value name="mb128" value="2" grade="inferred"/>
+    <value name="mb256" value="3" grade="inferred"/>
+    <value name="mb512" value="4" grade="inferred"/>
+    <value name="gb1" value="5" grade="inferred"/>
+  </enum>
+  <struct name="CURRENT_CELL" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780000" access="rw" reset="unknown">
+    <doc>Access-rights vector. A region whose bit is set is inside the cell and uses the directory's local-access protection instead of per-region protection. The same vector sets the access rights for the Hub special spaces: set gives read and write, clear gives read only, except the local and remote register windows, which are inaccessible when the bit is clear. The header attributes region size to the network interface, while the local block's revision register holds it. Reset unknown: the header states no value.</doc>
+    <field name="region_bits" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="MEMORY_CONFIG" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780008" access="rw" reset="unknown">
+    <doc>Memory configuration. Each DIMM position d has a byte at bits 8d+7 to 8d holding two bank enables, a DRAM width bit and a size code. Addresses beyond a configured size return errors. The header says software must ask the system controller whether a DIMM is x4 or x8/x16 before it sets the width. The header says the register survives a soft reset. Reset unknown.</doc>
+    <field name="rcd_rp_config" start="60" size="2" type="uint" grade="established"/>
+    <field name="timing_high" start="56" size="3" type="uint" grade="established"/>
+    <field name="timing_low" start="48" size="6" type="uint" grade="established"/>
+    <field name="ignore_cpu_protection" start="47" size="1" type="uint" grade="established"/>
+    <field name="ignore_io_protection" start="46" size="1" type="uint" grade="established"/>
+    <field name="io_protection_enable" start="45" size="1" type="uint" grade="established"/>
+    <field name="cell_protection_enable" start="44" size="1" type="uint" grade="established"/>
+    <field name="bank_select" start="32" size="2" type="uint" grade="established"/>
+    <field name="pos3_size" start="28" size="4" type="size_code" grade="established"/>
+    <field name="pos3_width" start="27" size="1" type="uint" grade="established"/>
+    <field name="pos3_enables" start="24" size="2" type="uint" grade="established"/>
+    <field name="pos2_size" start="20" size="4" type="size_code" grade="established"/>
+    <field name="pos2_width" start="19" size="1" type="uint" grade="established"/>
+    <field name="pos2_enables" start="16" size="2" type="uint" grade="established"/>
+    <field name="pos1_size" start="12" size="4" type="size_code" grade="established"/>
+    <field name="pos1_width" start="11" size="1" type="uint" grade="established"/>
+    <field name="pos1_enables" start="8" size="2" type="uint" grade="established"/>
+    <field name="pos0_size" start="4" size="4" type="size_code" grade="established"/>
+    <field name="pos0_width" start="3" size="1" type="uint" grade="established"/>
+    <field name="pos0_enables" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="ARBITRATION_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780010" access="rw" reset="unknown">
+    <doc>Arbitration control. The arbitration timing is not specified by the header. Reset unknown.</doc>
+    <field name="write_guarantee" start="4" size="4" type="uint" grade="established"/>
+    <field name="reply_guarantee" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="MIGRATION_CONFIG" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780018" access="rw" reset="unknown">
+    <doc>Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. Reset unknown; the software that uses the migration interface never touches this register, so who sets the enable bit is unknown.</doc>
+    <field name="enable" start="32" size="1" type="uint" grade="established"/>
+    <field name="node_mask" start="16" size="8" type="uint" grade="established"/>
+    <field name="interval" start="0" size="10" type="uint" grade="established"/>
+  </struct>
+  <struct name="FETCHOP_CACHE_STATUS0" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780020" access="r" reset="unknown">
+    <doc>Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given. Reset unknown.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="address" start="6" size="27" type="uint" grade="established"/>
+  </struct>
+  <struct name="FETCHOP_CACHE_STATUS1" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780028" access="r" reset="unknown">
+    <doc>Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0. Reset unknown.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="address" start="6" size="27" type="uint" grade="established"/>
+  </struct>
+  <struct name="MISC_ERROR0" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780040" access="r" reset="unknown">
+    <doc>Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here. Reset unknown.</doc>
+  </struct>
+  <struct name="MISC_ERROR1" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780048" access="r" reset="unknown">
+    <doc>Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here. Reset unknown.</doc>
+  </struct>
+  <struct name="MISC_ERROR1_CLR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780058" access="r" reset="unknown">
+    <doc>Clear alias of miscellaneous error word 1. The header names it a clear register without saying whether a read or a write clears it. The one consumer reads and discards the value. The clearing mechanism is unknown.</doc>
+  </struct>
+  <struct name="OUTGOING_REPLY_QUEUE_SIZE" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x780060" access="rw" reset="0x1818180c0c0c00">
+    <doc>Reply-queue credit sizes, all read-only fields. The header gives 12 header entries and 24 data entries as the defaults for each queue. A write resets the credit counters to these defaults.</doc>
+    <field name="third_data_queue" start="48" size="5" type="uint" grade="established"/>
+    <field name="pi1_data_queue" start="40" size="5" type="uint" grade="established"/>
+    <field name="pi0_data_queue" start="32" size="5" type="uint" grade="established"/>
+    <field name="third_header_queue" start="24" size="4" type="uint" grade="established"/>
+    <field name="pi1_header_queue" start="16" size="4" type="uint" grade="established"/>
+    <field name="pi0_header_queue" start="8" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_SELECT0" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x790000" access="rw" reset="unknown">
+    <doc>Performance counter 0 selection. Complete event encodings and interrupt cadence are not given by the header. Reset unknown.</doc>
+    <field name="interrupt" start="63" size="1" type="uint" grade="established"/>
+    <field name="command" start="20" size="40" type="uint" grade="established"/>
+    <field name="channel" start="16" size="4" type="uint" grade="established"/>
+    <field name="source" start="8" size="7" type="uint" grade="established"/>
+    <field name="activity" start="4" size="4" type="uint" grade="established"/>
+    <field name="mode" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_SELECT1" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x790008" access="rw" reset="unknown">
+    <doc>Performance counter 1 selection, with the same layout as counter 0. Reset unknown.</doc>
+    <field name="interrupt" start="63" size="1" type="uint" grade="established"/>
+    <field name="command" start="20" size="40" type="uint" grade="established"/>
+    <field name="channel" start="16" size="4" type="uint" grade="established"/>
+    <field name="source" start="8" size="7" type="uint" grade="established"/>
+    <field name="activity" start="4" size="4" type="uint" grade="established"/>
+    <field name="mode" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_COUNTER0" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x790010" access="rw" reset="unknown">
+    <doc>Performance counter 0. The header describes a 41-bit count; the events that advance it are not given. The Itanium console code and the boot firmware of this machine class both use the word as a lock word by setting and clearing bits, which the header does not sanction. That use is a software expectation, inferred. Reset unknown.</doc>
+    <field name="count" start="0" size="41" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_COUNTER1" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x790018" access="rw" reset="unknown">
+    <doc>Performance counter 1. The same 41-bit count layout as counter 0. Reset unknown.</doc>
+    <field name="count" start="0" size="41" type="uint" grade="established"/>
+  </struct>
+  <struct name="REFRESH_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0000" access="rw" reset="unknown">
+    <doc>Refresh control. Once the memory configuration holds the DIMM information, the hardware refreshes every bank. If a refresh window expires with banks unrefreshed, all other traffic halts until they are refreshed. The enable bit is cleared on reset because the first DIMM operation must be a mode-register write. The enable and threshold survive a soft reset. The live counter's reset is unknown.</doc>
+    <field name="enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="live_counter" start="12" size="12" type="uint" grade="established"/>
+    <field name="threshold" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="JUNK_BUS_TIMING" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0008" access="rw" reset="unknown">
+    <doc>Junk-bus timing for the flash PROM, the L1 UART and a device the Linux header names Synergy. The header names the timing fields; it does not place the Synergy device on any board. This is the only register in any unit that names the UART and the flash PROM. Reset unknown.</doc>
+    <field name="synergy_enable" start="40" size="8" type="uint" grade="established"/>
+    <field name="synergy_setup_hold" start="32" size="8" type="uint" grade="established"/>
+    <field name="uart_enable" start="24" size="8" type="uint" grade="established"/>
+    <field name="uart_setup_hold" start="16" size="8" type="uint" grade="established"/>
+    <field name="flash_enable" start="8" size="8" type="uint" grade="established"/>
+    <field name="flash_setup_hold" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LED0" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0010" access="r" reset="unknown">
+    <doc>Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated. Reset unknown.</doc>
+    <field name="data" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LED1" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0018" access="r" reset="unknown">
+    <doc>Reads the value on LED bank 1. Otherwise as LED bank 0.</doc>
+    <field name="data" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LED2" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0020" access="r" reset="unknown">
+    <doc>Reads the value on LED bank 2. Otherwise as LED bank 0.</doc>
+    <field name="data" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LED3" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0028" access="r" reset="unknown">
+    <doc>Reads the value on LED bank 3. Otherwise as LED bank 0.</doc>
+    <field name="data" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELF_TEST_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0030" access="rw" reset="unknown">
+    <doc>Self-test control. Command precedence, self-clearing behaviour, the algorithm and the duration are unresolved. A retained write cannot qualify a completed test.</doc>
+    <field name="dimm" start="5" size="2" type="uint" grade="established"/>
+    <field name="bank" start="4" size="1" type="uint" grade="established"/>
+    <field name="reset" start="2" size="1" type="uint" grade="established"/>
+    <field name="stop" start="1" size="1" type="uint" grade="established"/>
+    <field name="start" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELF_TEST_DATA" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0038" access="rw" reset="unknown">
+    <doc>Self-test data and pattern control. The header gives the control names, not their full transformation rules.</doc>
+    <field name="write_control" start="7" size="1" type="uint" grade="established"/>
+    <field name="cycle_control" start="6" size="1" type="uint" grade="established"/>
+    <field name="byte_control" start="5" size="1" type="uint" grade="established"/>
+    <field name="nibble_control" start="4" size="1" type="uint" grade="established"/>
+    <field name="initial_pattern" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELF_TEST_ERROR_ADDR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0040" access="r" reset="unknown">
+    <doc>Self-test error address: the failing column and row, and which block failed. Guest writes and the clearing mechanism are unresolved.</doc>
+    <field name="directory_error" start="49" size="1" type="uint" grade="established"/>
+    <field name="memory_error" start="48" size="1" type="uint" grade="established"/>
+    <field name="row" start="32" size="15" type="uint" grade="established"/>
+    <field name="memory_column" start="16" size="15" type="uint" grade="established"/>
+    <field name="directory_column" start="0" size="15" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELF_TEST_STATUS" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0048" access="r" reset="unknown">
+    <doc>Self-test status. Reports the result of the test. Neither bit is meaningful until the test has run to completion.</doc>
+    <field name="done" start="1" size="1" type="uint" grade="established"/>
+    <field name="passed" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ISSUE_DEBUG_SELECT" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7a0060" access="rw" reset="unknown">
+    <doc>Issue-block debug selector. The prose gives three bits while both endian layouts declare two. The width conflict is open. The meanings of the selections are not given.</doc>
+    <field name="selection" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="DIR_CONFIG" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0000" access="rw" reset="unknown">
+    <doc>Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset. Reset unknown.</doc>
+    <field name="ignore_dir_ecc" start="1" size="1" type="uint" grade="established"/>
+    <field name="premium" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="DIR_ERROR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0010" access="r" reset="unknown">
+    <doc>Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable. Reset unknown; the header gives no value.</doc>
+    <field name="uncorrectable_valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="protection_double_valid" start="62" size="1" type="uint" grade="established"/>
+    <field name="correctable_valid" start="61" size="1" type="uint" grade="established"/>
+    <field name="protection_correctable_valid" start="60" size="1" type="uint" grade="established"/>
+    <field name="uncorrectable_overrun" start="59" size="1" type="uint" grade="established"/>
+    <field name="protection_double_overrun" start="58" size="1" type="uint" grade="established"/>
+    <field name="correctable_overrun" start="57" size="1" type="uint" grade="established"/>
+    <field name="protection_correctable_overrun" start="56" size="1" type="uint" grade="established"/>
+    <field name="protection_index" start="52" size="3" type="uint" grade="established"/>
+    <field name="bad_protection" start="48" size="4" type="uint" grade="established"/>
+    <field name="syndrome" start="40" size="7" type="uint" grade="established"/>
+    <field name="hub_special_address" start="3" size="30" type="uint" grade="established"/>
+  </struct>
+  <struct name="DIR_ERROR_CLR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0018" access="r" reset="unknown">
+    <doc>Clear alias of the directory error record. The header repeats the base register's text and names no mechanism. Read-to-clear is the consumer's expectation, not a stated rule.</doc>
+  </struct>
+  <struct name="PROTOCOL_ERROR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0020" access="r" reset="unknown">
+    <doc>Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here. Reset unknown.</doc>
+  </struct>
+  <struct name="PROTOCOL_ERROR_CLR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0028" access="r" reset="unknown">
+    <doc>Clear alias of the protocol error record. The mechanism is not stated.</doc>
+  </struct>
+  <struct name="MIG_CANDIDATE" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0030" access="r" reset="unknown">
+    <doc>Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="local" start="34" size="1" type="uint" grade="established"/>
+    <field name="threshold_type" start="33" size="1" type="uint" grade="established"/>
+    <field name="overrun" start="32" size="1" type="uint" grade="established"/>
+    <field name="initiator" start="21" size="11" type="uint" grade="established"/>
+    <field name="page_address" start="0" size="21" type="uint" grade="established"/>
+  </struct>
+  <struct name="MIG_CANDIDATE_CLR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0038" access="r" reset="unknown">
+    <doc>Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="local" start="34" size="1" type="uint" grade="established"/>
+    <field name="threshold_type" start="33" size="1" type="uint" grade="established"/>
+    <field name="overrun" start="32" size="1" type="uint" grade="established"/>
+    <field name="initiator" start="21" size="11" type="uint" grade="established"/>
+    <field name="page_address" start="0" size="21" type="uint" grade="established"/>
+  </struct>
+  <struct name="MIG_DIFF_THRESH" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0040" access="rw" reset="unknown">
+    <doc>Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="saturation_action" start="35" size="3" type="uint" grade="established"/>
+    <field name="threshold_action" start="32" size="3" type="uint" grade="established"/>
+    <field name="threshold" start="0" size="15" type="uint" grade="established"/>
+  </struct>
+  <struct name="MIG_VALUE_THRESH" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0048" access="rw" reset="unknown">
+    <doc>Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="local_interrupt_enable" start="62" size="1" type="uint" grade="established"/>
+    <field name="saturation_action" start="35" size="3" type="uint" grade="established"/>
+    <field name="threshold_action" start="32" size="3" type="uint" grade="established"/>
+    <field name="threshold" start="0" size="15" type="uint" grade="established"/>
+  </struct>
+  <struct name="OUTGOING_REQUEST_QUEUE_SIZE" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0050" access="rw" reset="0x4040400">
+    <doc>Outgoing request-queue size. Each field defaults to four and has a maximum of four. A header occupies one entry. Writes above four and the side effects of resizing are not specified.</doc>
+    <field name="third_request_queue" start="24" size="3" type="uint" grade="established"/>
+    <field name="pi1_request_queue" start="16" size="3" type="uint" grade="established"/>
+    <field name="pi0_request_queue" start="8" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELFTEST_DIR_ERROR_DATA" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0058" access="r" reset="unknown">
+    <doc>Failing directory word captured by the self-test. Guest writes are not established.</doc>
+    <field name="word" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="DIR_DEBUG_SELECT" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0060" access="rw" reset="unknown">
+    <doc>Directory-block debug selector. The meanings of the selections come from a separate design specification that is not held.</doc>
+    <field name="selection" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="MB_ECC_CONFIG" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7e0000" access="rw" reset="unknown">
+    <doc>Memory-block ECC configuration. Bit 0 ignores data ECC. Reset unknown.</doc>
+    <field name="ignore_data_ecc" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="MEM_ERROR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7e0010" access="r" reset="unknown">
+    <doc>Memory error record: an address, a syndrome and a valid and overrun flag pair for each of three kinds. The address and syndrome belong to the earliest error of the highest priority: uncorrectable read above uncorrectable write above correctable read. Bit 63 is set when uncorrectable errors reached different cache lines. The header's flag summary gives the order of each pair's bits only in one place, so the pair order is inferred. Reset unknown.</doc>
+    <field name="differing_address" start="63" size="1" type="uint" grade="established"/>
+    <field name="read_uncorrectable_flags" start="60" size="2" type="uint" grade="inferred"/>
+    <field name="write_uncorrectable_flags" start="56" size="2" type="uint" grade="inferred"/>
+    <field name="read_correctable_flags" start="52" size="2" type="uint" grade="inferred"/>
+    <field name="syndrome" start="40" size="8" type="uint" grade="established"/>
+    <field name="address" start="3" size="30" type="uint" grade="established"/>
+  </struct>
+  <struct name="MEM_ERROR_CLR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7e0018" access="r" reset="unknown">
+    <doc>Clear alias of the memory error record. The header repeats the base register's text and names no mechanism. Read-to-clear is the consumer's expectation, not a stated rule.</doc>
+  </struct>
+  <struct name="SELFTEST_MEM_ERROR_DATA0" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7e0020" access="r" reset="unknown">
+    <doc>Self-test captured memory data, quarter 0 of the failing line.</doc>
+    <field name="word" start="0" size="36" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELFTEST_MEM_ERROR_DATA1" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7e0028" access="r" reset="unknown">
+    <doc>Self-test captured memory data, quarter 1 of the failing line.</doc>
+    <field name="word" start="0" size="36" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELFTEST_MEM_ERROR_DATA2" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7e0030" access="r" reset="unknown">
+    <doc>Self-test captured memory data, quarter 2 of the failing line.</doc>
+    <field name="word" start="0" size="36" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELFTEST_MEM_ERROR_DATA3" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7e0038" access="r" reset="unknown">
+    <doc>Self-test captured memory data, quarter 3 of the failing line.</doc>
+    <field name="word" start="0" size="36" type="uint" grade="established"/>
+  </struct>
+  <struct name="MEM_DEBUG_SELECT" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7e0040" access="rw" reset="unknown">
+    <doc>Memory-block debug selector. The meaning of the selection requires the separate design specification.</doc>
+    <field name="selection" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="DIR_ENTRY_POINTER" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory header, directory word layout">
+    <doc>Directory word in the pointer format. Bits 1:0 hold the format, which is the same in both flavors. In a premium word bits 24:22 extend the pointer to ten bits.</doc>
+    <field name="first_pointer_high" start="22" size="3" type="uint" grade="established"/>
+    <field name="first_pointer" start="8" size="8" type="uint" grade="established"/>
+    <field name="state" start="2" size="3" type="dir_pointer_state" grade="established"/>
+    <field name="format" start="0" size="2" type="dir_format" grade="established"/>
+  </struct>
+  <struct name="DIR_ENTRY_SHARED_FINE" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory header, directory word layout">
+    <doc>Directory word in the shared-fine format. In this format a vector bit stands for one processor interface, not one processor.</doc>
+    <field name="first_vector_high" start="24" size="8" type="uint" grade="established"/>
+    <field name="first_tag_high" start="22" size="2" type="uint" grade="established"/>
+    <field name="first_vector" start="8" size="8" type="uint" grade="established"/>
+    <field name="first_tag" start="2" size="3" type="uint" grade="established"/>
+    <field name="format" start="0" size="2" type="dir_format" grade="established"/>
+  </struct>
+  <constant name="DIMM_POSITIONS" value="0x4" grade="established"/>
+  <constant name="DIR_BACKDOOR_EIGHTHS" value="0x7" grade="established"/>
+  <constant name="DIR_LINE_BYTES" value="0x80" grade="established"/>
+  <constant name="DIR_WORD_STRIDE" value="0x10" grade="established"/>
+  <constant name="ECC_BACKDOOR_EIGHTHS" value="0x5" grade="established"/>
+  <constant name="INTR_CORRECTABLE_MEM_BIT" value="0x3d" grade="established"/>
+  <constant name="INTR_UNCORRECTABLE_MEM_BIT" value="0x18" grade="established"/>
+  <constant name="PAGE_COUNTER_OFFSET" value="0x8" grade="established"/>
+  <constant name="PHYSICAL_BANKS_PER_DIMM" value="0x2" grade="established"/>
+  <constant name="PROTECTION_ENTRY_OFFSET" value="0x408" grade="established"/>
+  <constant name="PTR_DEVICE_MASK" value="0x7" grade="established"/>
+  <constant name="PTR_NODE_SHIFT" value="0x3" grade="established"/>
+  <constant name="REFRESH_CYCLES_PER_4096" value="0xc35" grade="established"/>
+  <constant name="REFRESH_INTERVAL_BOOK_NS" value="0x1f40" grade="established"/>
+  <constant name="SCRUB_BACKDOOR_EIGHTHS" value="0x4" grade="established"/>
+  <constant name="SOFTWARE_BANKS" value="0x8" grade="established"/>
+  <constant name="SOFTWARE_BANK_BYTES" value="0x40000000" grade="established"/>
+</genxml>
