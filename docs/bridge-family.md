@@ -243,6 +243,17 @@ Octane, Origin 200 and Origin 2000 run the first; the Origin 350 runs the second
   - Configuration: device 0 of the type-0 window is the PIC itself; the four slots sit at windows 1 to 4 (Linux `pic.h`
     table; OpenBSD `xbridge.c`: "device slots are offset by one"). The other slot-indexed registers are not offset.
   - No direct I/O window (OpenBSD `XF_NO_DIRECT_IO`).
+- **Programmed-I/O byte lanes (inferred).** The OpenBSD PIC attach gives ordinary PCI adapters bus accessors that
+  XOR the low address bits for narrow access: byte accesses use address XOR 3, halfword accesses XOR 2. The same
+  correction is the Bridge rule above for 1- and 2-byte widths, here applied in software rather than by the chip. The
+  accessors do not byte-swap the value. IOC4 keeps the native XBow accessors, which use the requested address as given,
+  so no XOR applies to it. IOC3 and RAD1 get their own accessors; the driver note does not state their byte rule. The
+  mapping functions keep the offset within the short Device-I/O windows and the large PCI memory windows. Source: the
+  public OpenBSD SGI driver at commit `2df91d80c104636deeef8124252ddd5951b55fbf`. These are software expectations
+  of the driver, not a PIC transaction table from a held specification. What the PIC does for 64-bit data phases,
+  for mixed widths and for the device swap bit is unknown. Test: a byte and halfword read and write through an
+  ordinary adapter's window and through an IOC4 window on an Origin 350 or Tezro, comparing the bytes that land in
+  the device with the XOR rule.
 - **Revision 1 workarounds (reasons unknown).** Only the request-timeout write of `0x750` was disassembled and confirmed
   (established); the rest are inferred, read from IRIX code but not re-disassembled when this page was last audited. Request timeout `0x750`; interrupt-enable bits 39 and 9 cleared;
   response-buffer registers set to `0x000f000f`; a force-interrupt programmed-I/O flush for certain
