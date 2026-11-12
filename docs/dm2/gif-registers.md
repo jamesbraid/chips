@@ -129,6 +129,14 @@ prints, resolved through the string offsets in the branch blocks.
 Window offset = `0x800000 + R + 4`. "Who" gives the first writer or reader. The "Fields" column is what the software formula shows;
 bits not mentioned are never set by software. "Mask" is the read/write mask from table T (section 6) where T lists the register.
 
+### 4.0 Block layout
+
+**E** (from the offsets in 4.1 to 4.5 and the diagnostic's table): the GIF register file is divided into 2 KiB blocks, one per
+FPGA behind the GIF, at register number `0x800 * n`: GIF core and pipes `0x000`, packer `0x800`, unpacker `0x1000`, VIF `0x1800`, HDOC `0x2000`,
+input XCC `0x2800`, output XCC `0x3000`, CLINK `0x3800`. Every register found sits inside its block. The order of the blocks is not the
+order of the library's FPGA programming numbers (packer 1, unpacker 2, output XCC 3, input XCC 4, HDOC 5, VIF 6, CLINK 7), so the block
+base cannot be computed from the programming number (**E** for the mismatch).
+
 ### 4.1 Core file and DMA pipes (kernel side)
 
 Two pipes. **Pipe 0** uses the registers at `0x10`..`0x30`, **pipe 1** those at `0x38`..`0x58`; the kernel selects them by pipe
