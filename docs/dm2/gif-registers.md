@@ -288,10 +288,16 @@ number (0 to 28) to a row of the format table and stores 1 through its second ar
 the mapping; **I** for the name, from the two row names). The row index the formulas use is that function's return value. The pipe's timing
 number is `1092(s0)`; the default 10 in the delay slot at `0x409ee0` is used when `1732(s0)` is zero.
 
-The format table the formulas read is the 88-byte-row table at L `0x41c6d0` (rows 2, 3, 6 to 13 populated; rows 2, 3, 9 to 11 carry
-`VL_TIMING_*` names). Row words: 1 progressive flag, 2 active width, 3 active lines, 6 total lines, 7 total samples per line,
-8 (1 or 4), 9 first line of field 1, 10 and 12 line offsets (-1 on progressive rows), 20 the "k" selector. Only the words the
-formulas above use were checked.
+The format table the formulas read is the 88-byte-row table at L `0x41c6d0` (30 rows; rows 2, 3 and 6 to 28 are populated, and the rows
+the library reaches by name carry `VL_TIMING_*` strings; the row number is the return value of `mlToVlTiming`, which equals the ML number for 525, 625
+and ML 9 to 16 and differs for ML 17, 18, 21, 25, 26 and 27, see the [VBOB note](vbob.md) section 2). The row layout and member names come from the
+debug build's DWARF (`libdigvid.so` under `mlmodule/debug`, struct `xthdTimingEntry_t`; E for the names, offsets and the match to L's rows): word 0 `timing`
+(name string pointer), 1 `progressive`, 2 `width`, 3 `height` (one field's lines for an interlaced row), 4 and 5 `frame_rate` (a double), 6 `lines_per_frame`,
+7 `samples_per_line`, 8 `f_zero_line` (first line of field 0; 1 or 4), 9 `f_one_line` (first line of field 1, which is the second field in time; -1 on progressive
+rows), 10 `v_zero_f1`, 11 `v_one_f1`, 12 `v_zero_f2`, 13 `v_one_f2` (first and last-plus-one active line of each field; -1 on progressive rows for the field-2 pair),
+14 and 15 `sampling_rate` (a double, MHz), 16 `dominance`, 17 `interlace_mode`, 18 `VITC_max`, 19 `VITC_min`, 20 `format` (the "k" selector above). In the
+formulas above "field 1" is the library's zero-based field 0 or field 1 as the member names say: word 9 is the line where the second field starts. Only the
+words the formulas above use were checked here.
 
 ### 4.4 XCC blocks (input colour converter `0x2800`, output `0x3000`), two images
 
@@ -419,5 +425,5 @@ The "about 40" in the scoping datasheet was an undercount because the diagnostic
 | XG revision and ID readback, status bit 5, reset values, bit 24 of `0x6c`, bits 14 and 9 of control | a handful | a physical capture |
 | The NIC bit protocol at `0x9c` | one register | read `nic_access_mcr32` and its callers in the same kernel object; software-only |
 | Control values and index behaviour of the LUT registers | 2 registers | `xhdLUTCompute` body and the diagnostic's `hdtv_ilut` |
-| Format-table row words 8 and 20 and the `flag` selector | table of 14 rows | the `libdigvid` timing structures (`xhdVerifyPathConfig` at L `0x40e420`) |
+| Hardware meaning of format-table row words 8 (`f_zero_line`) and 20 (`format`) and of the `flag` selector (names are the library's, from its debug-build DWARF) | table of 14 rows | the guide's formatter description, or the VIF and HDOC netlists |
 | Whether the kernel ioctl read path (`0x7601`) applies the same 12 MiB and alignment limits as the write | one handler | read the `0x7601` case in `xtdigvid_ioctl` (K30 `0xaf44` carries the same `0xc00000` test, but the command dispatch to it was not traced) |
