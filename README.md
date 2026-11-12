@@ -110,9 +110,13 @@ Published sources and specifications:
                        notes/ (working notes). Chips: hub bedrock heart xbow bridge pic tiocp router scan l1
                        ioc3 ioc4 crime mace gbe vice. bridge/ also holds the XBridge census; router/ is a
                        call-argument census (retools/tools/chips/callargs.py): the router has no memory window.
-    include/<chip>.h   generated register headers (retools/tools/chips/gen_headers.py); chips_check.c compiles them together
-    include/*_extra.h, l1_requests.h   hand-written companions for established facts the census cannot reach
-                       (PROM stores, specification pages, request codes); gen_headers.py never writes them
+    defs/              the hardware facts, in TOML: <chip>.toml per chip (written from the census by
+                       retools/tools/chips/gen_headers.py), bridge.xbridge.toml (XBridge as an overlay on Bridge),
+                       and the hand-written units for facts the census cannot reach (*_extra, l1_requests, xio_fc,
+                       ice1724: PROM stores, specification pages, request codes); check.toml holds the check settings
+    gen/               generated from defs/ by retools/tools/defs/defs-gen, never hand-edited: c/ headers, rust/ crate,
+                       py/, json/, genxml/, and docs/, the reference page for each unit
+    include/<chip>.h   forwarding headers that include gen/c/<unit>.h under the old macro names; also generated
     ip27/ ip30/ ip32/ ip35/   per board: relative symlinks into root/ (boot objects, members, kernel,
                        PROM, ide, symmon, sash)
     docs/              specs.md, published-sources.md, open-questions.md, coverage.md, inventory/ (tables),
