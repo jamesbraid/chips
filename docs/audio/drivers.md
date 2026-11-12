@@ -24,7 +24,7 @@ inventory type the driver registers with class 10 (audio) and the one `hinv` swi
 | `usbaudio_dd.o` | any USB audio-class device (class 1, subclass 1 or 2); also a HID handler for the control buttons | USB interface class 1, subclass 1 or 2 (`usb_audio_event_handler` `0x0`) | IP35 only / IP35 only | IP35: yes (6.5.22 `audio.sm`) | `USB audio revision %d.%d, number %d` | 6 | Fuel USB Digital Audio Converter (007-4530-001); Griffin iMic per a Usenet post |
 | `a3_dd.o` | MACE audio block and its codec | no PCI: fixed MACE window `0xbf300000` (`a3_probe` `0x0`) | IP32 only / IP32 only | IP32: unknown (tree not held) | `version A3 revision %d` | 4 | O2 (13 of 13 O2 captures) |
 | A2 driver (HAL2) | HAL2 audio chip | no object held | IP22 family (not held) | unknown | `version A2 revision %d.%d.%d` | 3 | Indy, Indigo2 (captures) |
-| `indigo_dd`, `hdsp` | older Indigo and Hollywood DSP audio | no object held; master files only | unknown | unknown | generic `revision %d` and others | 0, 1, 2 | Indigo, Personal IRIS (captures) |
+| `indigo_dd`, `hdsp` | older Indigo and Hollywood DSP audio (hardware: [hollywood-dsp.md](hollywood-dsp.md)) | no object held; master files only | unknown | unknown | generic `revision %d` and others | 0, 1, 2 | Indigo, Personal IRIS (captures) |
 | `kdsp.a` | shared audio framework all of the above link against | n/a | every build | yes (`audio.sm` line `USE: kdsp`) | n/a | n/a | n/a |
 
 ## How `hinv` prints audio (established)
