@@ -7,6 +7,27 @@
 
 
 /*
+ * Read-only port that returns 0xff to the host and to the sequencer. It is a source for logical and arithmetic functions. The book gives no write function, so a write is outside the published interface and its effect stays unknown.
+ */
+/* allones: r8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 102 (printed 4-33); sibling */
+#define AIC7880_ALLONES_OFFSET                       0x69u /* inferred */
+
+/*
+ * Read returns 0x00 and does not return an earlier write. Written as the destination NONE, the byte is discarded and no location changes. Both directions share the offset, so the write side is described here rather than as a separate register.
+ */
+/* allzeros: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 102-103 (printed 4-33 to 4-34); sibling */
+#define AIC7880_ALLZEROS_OFFSET                      0x6au /* inferred */
+
+/*
+ * A write stores the byte. Bits 6:4 form an octal value, and a read returns the one-hot byte with bit N set, where N is that value. The book does not define the meaning of bits 7 and 3:0, whether a write keeps them, or the reset value. Those stay unknown.
+ */
+/* function1: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 104 (printed 4-35); sibling */
+#define AIC7880_FUNCTION1_OFFSET                     0x6eu /* inferred */
+#define AIC7880_FUNCTION1_SELECT_SHIFT               4 /* inferred */
+#define AIC7880_FUNCTION1_SELECT_MASK                0x7u
+#define AIC7880_FUNCTION1_SELECT_INPLACE             (AIC7880_FUNCTION1_SELECT_MASK << AIC7880_FUNCTION1_SELECT_SHIFT)
+
+/*
  * Host PCI address for the host DMA transfer, four byte registers at 0x88 to 0x8b. Loading it also loads SHADDR. The byte significance across the four bytes is not in the cited extract and stays unknown. Read-back is not stated.
  */
 /* lhaddr: rw32, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 139-140 (printed 4-70 to 4-71); sibling */

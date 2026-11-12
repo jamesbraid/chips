@@ -2,6 +2,31 @@
 // Adaptec AIC-7880 SCSI controller on the O2: host DMA and SCB register contract
 #![allow(dead_code)]
 
+/// Read-only port that returns 0xff to the host and to the sequencer. It is a source for logical and arithmetic functions. The book gives no write functi (inferred)
+pub mod allones {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x69;
+}
+/// Read returns 0x00 and does not return an earlier write. Written as the destination NONE, the byte is discarded and no location changes. Both direction (inferred)
+pub mod allzeros {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x6a;
+}
+/// A write stores the byte. Bits 6:4 form an octal value, and a read returns the one-hot byte with bit N set, where N is that value. The book does not de (inferred)
+pub mod function1 {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x6e;
+    pub mod select { // bits 6:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u32 = 0x7;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Host PCI address for the host DMA transfer, four byte registers at 0x88 to 0x8b. Loading it also loads SHADDR. The byte significance across the four b (inferred)
 pub mod lhaddr {
     pub const WIDTH: u32 = 32;
