@@ -284,8 +284,8 @@ not read, so they are silent on the sense.
 
 So: the IOC4 is an IOC3-style chip, numbering bytes big-endian across the lanes inside the chip. **Unknown:** the chip's
 register-level behaviour (no specification held), and the Itanium host's own lane presentation (that it puts byte 0
-on lane 7:0 is inferred from the host being little-endian, not read). A bit-19 flip in anything that also models the
-IOC4 therefore has to flip the IOC4's own byte order with it, exactly as for the IOC3 behind a Bridge.
+on lane 7:0 is inferred from the host being little-endian, not read). A bit-19 flip on the PIC therefore also flips the
+IOC4's own byte order, exactly as for the IOC3 behind a Bridge.
 
 ## Reset expectations
 

@@ -441,12 +441,10 @@ vendor driver's flag routine and what public software sets; no PIC specification
   IRIX IOC4 driver does not.
 - **IOC4 on a PIC numbers its bytes big-endian across the lanes (inferred from public SGI Linux, established per fact).**
   See chips/ioc4/README.md, "IOC4 behind a PIC". With bit 19 clear on a big-endian host that is what the chip needs;
-  a model that flips the PIC's bit-19 sense must flip the IOC4's own byte order with it, as for the IOC3 behind a Bridge.
-- **Consequence for a model.** Hardware-visible rule (inferred for PIC): for 32-bit direct DMA
+  the IOC4's own byte order follows the PIC's bit-19 sense, as for the IOC3 behind a Bridge.
+- **Consequence of bit 19.** Hardware-visible rule (inferred for PIC): for 32-bit direct DMA
   with bit 19 **set**, a byte written at PCI byte lane `k` of an aligned word lands at the lowest-address-plus-`k`
-  byte; with bit 19 **clear** it lands at `k ^ 3`. A model that represents memory as bytes by address needs the
-  correction when the bit is **clear**, not when it is set. A model that applies a "swap" operation when the bit is
-  set is the inverse of that unless its operation is defined as the lane-preserving map.
+  byte; with bit 19 **clear** it lands at `k ^ 3`.
 - **Unknown, and the one route that settles it for PIC.** No held document or captured run measures a PIC's 32-bit
   direct transfer at either bit value. A physical read is the only remaining route: see the proposal in
   `docs/open-questions.md` (PIC direct-window lane sense).
@@ -501,7 +499,7 @@ did not follow, so none of these sites were in the census. Read in full, 0xc0000
 - With mode bit 0x40 clear, another path reads +0x2c, +0x24, +0x204, +0x20c, +0x214 and +0x21c (all `lw`) and
   writes +0x24 (`sw`). These are census sites; the path was not read in full (unknown meaning).
 
-## Against the emulator's datasheet (reported after the reading above)
+## Against the PIC datasheet (reported after the reading above)
 
 The datasheet lists ranges for the PIC map, not slots. IRIX touches six slots the ranges do not cover as
 registers (+0x90, +0xa0, +0xb0, +0xc0, +0xc8, +0xd8) and the external translation RAM window +0x80000; the

@@ -51,10 +51,10 @@ number as the slot of each function it registers, which is why the listing print
 - `mad_start_dma` `0xe48`: `bzero(buf, [rec+0x220] << 2)` then `size = [rec+0x220] - 1` to `MT+0x14` (word),
   `MT+0x24` and `MT+0x44` (halfword, address xor 2).
 
-## Answers to the emulation questions (2026-11-11)
+## Answers to five open questions (2026-11-11)
 
-Five questions came from a team running a model of this path. Their observations are model behaviour (a running guest on
-an emulated chip), not hardware evidence. Sources: `mad_dd.o` as above, re-disassembled with relocations for this section;
+Five questions about the driver's path to the chip. Where an answer rests on a run of the driver against an
+emulated chip, that run shows model behaviour, not hardware evidence. Sources: `mad_dd.o` as above, re-disassembled with relocations for this section;
 IC Ensemble *ICE1724 (Envy24HT)* preliminary Rev. 0.91, 11/05/01 ("ICE DS"); TI *PCI2050 PCI-to-PCI Bridge Data Manual*
 SCPS053B ("TI DS", the PCI2050B manual agrees on these registers); the public Linux `sound/pci/ice1712` driver (Linux 7.2-rc7).
 
@@ -68,8 +68,7 @@ SCPS053B ("TI DS", the PCI2050B manual agrees on these registers); the public Li
    register (bits 22:0 defined) and p. 4-3 allows byte, word or dword CCS access; the MT14 count uses bits 18:0 (p. 4-19).
    The datasheet map has nothing at CCS `0x1b` or MT `0x17`, and states neither the write effect nor the read value.
    The reasoning for "ignored" is that an unassigned lane has no storage to update, and a write of zero is the
-   reset value of any register that might sit there, so no outcome differs for this driver. A model should accept the write
-   and drop it, and keep it observable in a log. Read value of those bytes: **unknown**. The driver was not searched
+   reset value of any register that might sit there, so no outcome differs for this driver. Read value of those bytes: **unknown**. The driver was not searched
    exhaustively for reads of CCS18 or MT14 as words; the position code reads MT10, MT24 and MT40. Would settle it: a
    measurement on a real part, or a datasheet revision that defines the lanes.
 2. **BARs 2 and 3 (config `0x18`, `0x1c`) size-probed.** **Inferred**: both read back 0 after an all-ones write, as
@@ -87,11 +86,10 @@ SCPS053B ("TI DS", the PCI2050B manual agrees on these registers); the public Li
    AK4381 front and an AK4355 surround converter on GPIO chip selects and an AK5380 input, which is the shape the
    IRIX path programs. That identifies what the 3630 recipe drives; it does not show that a Tezro carries a 3630 part, and no
    public list, capture or Tezro document held here gives the Tezro's subsystem ID or EEPROM. The 17 front and 33 surround
-   frames seen at attach are what the driver's 3630 recipe sends, so they say the model presented `3630` (or the driver
-   took that path), not what the board holds. **Unknown**; the DM8 board uses the same path, which is the only
+   frames seen at attach are what the driver's 3630 recipe sends, so they show the 3630 path was taken (by the driver,
+   or because the device reported `3630`), not what the board holds. **Unknown**; the DM8 board uses the same path, which is the only
    board where it is known to run. Would settle it: a config dump of `0x00`..`0x3f` and the 19 EEPROM bytes from a real
-   Tezro (not to be requested from owners; wait for a published capture), or a board photograph. Until then a model must
-   state its choice of subsystem ID as a model choice.
+   Tezro (not to be requested from owners; wait for a published capture), or a board photograph.
 4. **D3hot to D0.** **Established** (vendor text): ICE DS p. 3-7 says a transition from D3hot to D0 "will generate an
    internal reset (incl. PCI config. space)", and that D0 is the state after power-up or internal reset. So the reset covers
    both the registers and the configuration header, and the header returns to its defaults, including the BAR base
@@ -109,7 +107,7 @@ SCPS053B ("TI DS", the PCI2050B manual agrees on these registers); the public Li
    (Table 3-1, p. 3-2) and then says the remaining commands address memory, I/O or configuration, without
    claiming it for the part. So a 64-bit prefetchable window is **not supported on the evidence held (inferred)**; the
    registers store a value, and whether the bridge forwards above 4 GiB is **unknown**. The IRIX bridge driver reads `0x24`
-   back to test 64-bit support (see above), so a model with those bits at 0 steers it to the 32-bit path. Would settle it:
+   back to test 64-bit support (see above), so bits read as 0 steer it to the 32-bit path. Would settle it:
    a read of real bridge registers, or an errata sheet.
 
 ## Unknown
