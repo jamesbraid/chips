@@ -245,3 +245,4 @@ mailbox protocol and the board bus map.
 ## Contract parts
 
 - [VBOB control messages](dm2/vbob.md)
+- [FPGA info table and load protocol](dm2/fpga-load.md)
