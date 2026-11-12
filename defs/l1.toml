@@ -1,0 +1,90 @@
+# Written by retools/tools/chips/gen_headers.py from chips/l1/census/. Do not edit: fix the census or its config and rerun.
+unit = "l1"
+prefix = "L1"
+title = "L1 system controller UART path (node-local window), Origin 3000 family"
+doc = "Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout."
+from = "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+public_from = ["census:"]
+
+[c]
+legacy_header = "include/l1.h"
+legacy_guard = "L1_H"
+offset_macro = "bare"
+
+# ---- registers (8-byte slots)
+[registers.uart_data]
+offset = 0x80
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 13 sites, 4 routines"
+
+[registers.uart_ier]
+offset = 0x88
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 3 routines"
+
+[registers.uart_fcr_iir]
+offset = 0x90
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 3 routines"
+
+[registers.uart_lcr]
+offset = 0x98
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 3 routines"
+
+[registers.uart_mcr]
+offset = 0xa0
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.uart_lsr]
+offset = 0xa8
+access = "r"
+width = 64
+grade = "established"
+from = "census: 66 sites, 6 routines"
+
+# ---- arrays and windows (offset is the array base)
+[registers.uart_intr_clear]
+offset = 0x800090
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.uart_intr_pending]
+offset = 0x800098
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[constants]
+UART_DATA_B_7_0 = { value = 0xff, grade = "inferred" }
+UART_DATA_V_44 = { value = 0x44, grade = "inferred" }
+UART_DATA_V_7E = { value = 0x7e, grade = "inferred" }
+UART_FCR_IIR_B_1 = { value = 0x2, grade = "inferred" }
+UART_FCR_IIR_B_2 = { value = 0x4, grade = "inferred" }
+UART_FCR_IIR_B_2_1 = { value = 0x6, grade = "inferred" }
+UART_FCR_IIR_B_7_0 = { value = 0xff, grade = "inferred" }
+UART_FCR_IIR_V_7 = { value = 0x7, grade = "inferred" }
+UART_IER_B_7_0 = { value = 0xff, grade = "inferred" }
+UART_INTR_PENDING_B_4 = { value = 0x10, grade = "inferred" }
+UART_LCR_B_7_0 = { value = 0xff, grade = "inferred" }
+UART_LSR_B_0 = { value = 0x1, grade = "inferred" }
+UART_LSR_B_15_0 = { value = 0xffff, grade = "inferred" }
+UART_LSR_B_3_2 = { value = 0xc, grade = "inferred" }
+UART_LSR_B_3_2_0 = { value = 0xd, grade = "inferred" }
+UART_LSR_B_5 = { value = 0x20, grade = "inferred" }
+UART_LSR_B_6 = { value = 0x40, grade = "inferred" }
+UART_LSR_B_7_0 = { value = 0xff, grade = "inferred" }

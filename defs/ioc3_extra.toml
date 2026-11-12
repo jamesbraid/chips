@@ -1,0 +1,82 @@
+unit = "ioc3_extra"
+prefix = "IOC3"
+title = "IOC3 registers outside the census"
+from = "shipped Origin 2000 kernel one-wire, parallel-port and keyboard routines, read in full"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+legacy_header = "include/ioc3_extra.h"
+legacy_guard = "IOC3_EXTRA_H"
+
+[registers.one_wire_ctl]
+offset = 0x30
+access = "rw"
+width = 32
+grade = "established"
+
+[registers.plp_a_addr_hi]
+offset = 0x80
+access = "rw"
+width = 32
+grade = "established"
+
+[registers.plp_a_addr_lo]
+offset = 0x84
+access = "rw"
+width = 32
+grade = "established"
+
+[registers.plp_a_count]
+offset = 0x88
+access = "rw"
+width = 32
+grade = "established"
+
+[registers.plp_ctl]
+offset = 0x8c
+access = "rw"
+width = 32
+grade = "established"
+
+[registers.plp_b_addr_hi]
+offset = 0x90
+access = "rw"
+width = 32
+grade = "established"
+
+[registers.plp_b_addr_lo]
+offset = 0x94
+access = "rw"
+width = 32
+grade = "established"
+
+[registers.plp_b_count]
+offset = 0x98
+access = "rw"
+width = 32
+grade = "established"
+
+[registers.km_rx_kbd]
+offset = 0xa0
+access = "r"
+width = 32
+grade = "established"
+
+[registers.km_rx_mouse]
+offset = 0xa4
+access = "r"
+width = 32
+grade = "established"
+
+[registers.km_tx_kbd]
+offset = 0xa8
+access = "w"
+width = 32
+grade = "established"
+
+[registers.km_tx_mouse]
+offset = 0xac
+access = "w"
+width = 32
+grade = "established"

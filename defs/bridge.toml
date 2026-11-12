@@ -1,0 +1,269 @@
+# Written by retools/tools/chips/gen_headers.py from chips/bridge/census/. Do not edit: fix the census or its config and rerun.
+unit = "bridge"
+prefix = "BRIDGE"
+title = "Bridge (XIO-to-PCI bridge), Origin 2000 and Octane"
+doc = "Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout. Views: the offset is the 8-byte slot address. \"4 at slot+4\" is a 32-bit load or store at that address plus 4, the low word of the slot on a big-endian machine; a 64-bit access to the slot address reaches the same register."
+from = "census: loads and stores in the shipped binaries; names from the public Linux Bridge register header and the public OpenBSD XBridge register header names by offset, else the shipped accessor name; every name is inferred (config register_names)"
+public_from = ["census:"]
+
+[c]
+legacy_header = "include/bridge.h"
+legacy_guard = "BRIDGE_H"
+offset_macro = "bare"
+
+# ---- registers (8-byte slots)
+[registers.wid_id]
+offset = 0x0
+access = "r"
+width = 32
+grade = "established"
+from = "census: 15 sites, 3 routines"
+
+[registers.wid_stat]
+offset = 0x8
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.wid_err_upper]
+offset = 0x10
+access = "r"
+width = 32
+grade = "established"
+from = "census: 7 sites, 3 routines"
+
+[registers.wid_err_lower]
+offset = 0x18
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.wid_control]
+offset = 0x20
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 87 sites, 5 routines"
+
+[registers.wid_req_timeout]
+offset = 0x28
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 6 sites, 2 routines"
+
+[registers.wid_int_upper]
+offset = 0x30
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 39 sites, 7 routines"
+
+[registers.wid_int_lower]
+offset = 0x38
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 15 sites, 5 routines"
+
+[registers.wid_err_cmdword]
+offset = 0x40
+access = "r"
+width = 32
+grade = "established"
+from = "census: 5 sites, 3 routines"
+
+[registers.wid_llp]
+offset = 0x48
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 15 sites, 2 routines"
+
+[registers.wid_tflush]
+offset = 0x50
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.wid_aux_err]
+offset = 0x58
+access = "r"
+width = 32
+grade = "established"
+from = "census: 5 sites, 3 routines"
+
+[registers.wid_resp_upper]
+offset = 0x60
+access = "r"
+width = 32
+grade = "established"
+from = "census: 14 sites, 6 routines"
+
+[registers.wid_resp_lower]
+offset = 0x68
+access = "r"
+width = 32
+grade = "established"
+from = "census: 8 sites, 4 routines"
+
+[registers.dir_map]
+offset = 0x80
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 42 sites, 6 routines"
+
+[registers.ram_perr_or_map_fault]
+offset = 0x90
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.arb]
+offset = 0xa0
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 18 sites, 4 routines"
+
+[registers.bus_timeout]
+offset = 0xc0
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 18 sites, 4 routines"
+
+[registers.pci_cfg]
+offset = 0xc8
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 6 sites, 2 routines"
+
+[registers.pci_err_upper]
+offset = 0xd0
+access = "r"
+width = 32
+grade = "established"
+from = "census: 8 sites, 4 routines"
+
+[registers.pci_err_lower]
+offset = 0xd8
+access = "r"
+width = 32
+grade = "established"
+from = "census: 8 sites, 4 routines"
+
+[registers.int_status]
+offset = 0x100
+access = "r"
+width = 32
+grade = "established"
+from = "census: 15 sites, 13 routines"
+
+[registers.int_enable]
+offset = 0x108
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 18 sites, 4 routines"
+
+[registers.int_rst_stat]
+offset = 0x110
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 9 sites, 2 routines"
+
+[registers.int_mode]
+offset = 0x118
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 18 sites, 4 routines"
+
+[registers.int_device]
+offset = 0x120
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 18 sites, 4 routines"
+
+[registers.int_host_err]
+offset = 0x128
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 6 sites, 2 routines"
+
+[registers.int_addr]
+offset = 0x130
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 36 sites, 6 routines"
+
+[registers.device]
+offset = 0x200
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 18 sites, 4 routines"
+
+[registers.wr_req_buf]
+offset = 0x240
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.rrb_map]
+offset = 0x280
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 30 sites, 4 routines"
+
+[registers.resp_status]
+offset = 0x290
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.resp_clear]
+offset = 0x298
+access = "w"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+# ---- arrays and windows (offset is the array base)
+[registers.int_ate_ram]
+offset = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 2 routines"
+
+[registers.ext_ate_ram]
+offset = 0x80000
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 24 sites, 2 routines"
+
+[constants]
+INT_ADDR_B_10_0 = { value = 0x7ff, grade = "inferred" }
+INT_ADDR_B_7_0 = { value = 0xff, grade = "inferred" }
+INT_STATUS_B_5 = { value = 0x20, grade = "inferred" }
+INT_STATUS_B_6 = { value = 0x40, grade = "inferred" }
+RRB_MAP_B_10_0 = { value = 0x7ff, grade = "inferred" }
+WID_ID_B_10_0 = { value = 0x7ff, grade = "inferred" }
+WID_ID_B_15_0 = { value = 0xffff, grade = "inferred" }
+WID_INT_UPPER_B_5_0 = { value = 0x3f, grade = "inferred" }

@@ -1,0 +1,435 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/hub.toml by defs-gen - do not edit, change the source -->
+<genxml unit="hub" prefix="HUB" title="Hub (Origin 2000 node controller)" from="census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)">
+  <doc>Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout.</doc>
+  <struct name="PI_REGION_PRESENT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x18" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_CPU_NUM" size="8" grade="established" from="census: 136 sites, 20 routines" register="yes" offset="0x20" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_CALIAS_SIZE" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x28" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_MAX_CRB_TIMEOUT" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x30" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_CRB_SFACTOR" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x38" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_CPU_PRESENT_A" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x40" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_CPU_PRESENT_B" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x48" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_CPU_ENABLE_A" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x50" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_CPU_ENABLE_B" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x58" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_NMI_A" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x70" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_INT_PEND_MOD" size="8" grade="established" from="census: 9 sites, 8 routines" register="yes" offset="0x90" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_INT_PEND0" size="8" grade="established" from="census: 11 sites, 8 routines" register="yes" offset="0x98" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_INT_PEND1" size="8" grade="established" from="census: 5 sites, 4 routines" register="yes" offset="0xa0" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_INT_MASK0_A" size="8" grade="established" from="census: 4 sites, 4 routines" register="yes" offset="0xa8" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_INT_MASK1_A" size="8" grade="established" from="census: 4 sites, 4 routines" register="yes" offset="0xb0" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_INT_MASK0_B" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xb8" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_INT_MASK1_B" size="8" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0xc0" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_RT_COMPARE_A" size="8" grade="established" from="census: 25 sites, 6 routines" register="yes" offset="0x108" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_RT_COMPARE_B" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x110" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_PROFILE_COMPARE" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x118" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_RT_PEND_A" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x120" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_RT_PEND_B" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x128" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_PROF_PEND_A" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x130" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_PROF_PEND_B" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x138" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_RT_EN_A" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x140" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_RT_EN_B" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x148" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_PROF_EN_A" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x150" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_PROF_EN_B" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x158" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_RT_LOCAL_CTRL" size="8" grade="established" from="census: 6 sites, 1 routines" register="yes" offset="0x160" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_GFX_INT_CMP_A" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x320" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_GFX_INT_CMP_B" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x348" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_INT_PEND" size="8" grade="established" from="census: 13 sites, 5 routines" register="yes" offset="0x400" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_INT_MASK_A" size="8" grade="established" from="census: 5 sites, 2 routines" register="yes" offset="0x408" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_INT_MASK_B" size="8" grade="established" from="census: 5 sites, 2 routines" register="yes" offset="0x410" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_STACK_ADDR_A" size="8" grade="established" from="census: 4 sites, 3 routines" register="yes" offset="0x418" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_STACK_ADDR_B" size="8" grade="established" from="census: 7 sites, 3 routines" register="yes" offset="0x420" access="rw" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_STACK_SIZE" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x428" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_STATUS0_A" size="8" grade="established" from="census: 5 sites, 4 routines" register="yes" offset="0x430" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_STATUS1_A" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x440" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_STATUS1_A_RCLR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x448" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_STATUS0_B" size="8" grade="established" from="census: 5 sites, 4 routines" register="yes" offset="0x450" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_STATUS1_B" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x460" access="r" reset="unknown">
+  </struct>
+  <struct name="PI_ERR_STATUS1_B_RCLR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x468" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_HARDRESET_BIT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x20068" access="w" reset="unknown">
+  </struct>
+  <struct name="PI_RT_COUNT" size="8" grade="established" from="census: 161 sites, 80 routines" register="yes" offset="0x30100" access="rw" reset="unknown">
+  </struct>
+  <struct name="MD_MEMORY_CONFIG" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x200018" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_REFRESH_CONTROL" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x200020" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_FANDOP_CAC_STAT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x200028" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_MIG_DIFF_THRESH" size="8" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x200030" access="rw" reset="unknown">
+  </struct>
+  <struct name="MD_MIG_VALUE_THRESH" size="8" grade="established" from="census: 10 sites, 5 routines" register="yes" offset="0x200038" access="rw" reset="unknown">
+  </struct>
+  <struct name="MD_MIG_CANDIDATE_CLR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x200048" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_DIR_ERROR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x200050" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_DIR_ERROR_CLR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x200058" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_PROTOCOL_ERROR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x200060" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_PROTOCOL_ERROR_CLR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x200068" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_MEM_ERROR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x200070" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_MEM_ERROR_CLR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x200078" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_MISC_ERROR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x200080" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_MISC_ERROR_CLR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x200088" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_MOQ_SIZE" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x2000a0" access="w" reset="unknown">
+  </struct>
+  <struct name="MD_MLAN_CTL" size="8" grade="established" from="census: 6 sites, 1 routines" register="yes" offset="0x2000a8" access="rw" reset="unknown">
+  </struct>
+  <struct name="PER_HUB_INIT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x2000c8" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_IFDR_FIX_VALUE" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x2000d0" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_IFDR_FIX_VALUE_2000D8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x2000d8" access="r" reset="unknown">
+  </struct>
+  <struct name="PER_HUB_INIT_2000E0" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x2000e0" access="rw" reset="unknown">
+  </struct>
+  <struct name="MD_PERF_SEL" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x210000" access="w" reset="unknown">
+  </struct>
+  <struct name="MD_PERF_CNT0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x210010" access="w" reset="unknown">
+  </struct>
+  <struct name="MD_UREG0_0" size="8" grade="established" from="census: 6 sites, 2 routines" register="yes" offset="0x220000" access="w" reset="unknown">
+  </struct>
+  <struct name="MD_UREG0_1" size="8" grade="established" from="census: 9 sites, 2 routines" register="yes" offset="0x220008" access="w" reset="unknown">
+  </struct>
+  <struct name="MD_SLOTID_USTAT" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x220048" access="r" reset="unknown">
+  </struct>
+  <struct name="MD_LED0" size="8" grade="established" from="census: 4 sites, 1 routines" register="yes" offset="0x220050" access="w" reset="unknown">
+  </struct>
+  <struct name="MD_UREG1_0" size="8" grade="established" from="census: 38 sites, 9 routines" register="yes" offset="0x220080" access="w" reset="unknown">
+  </struct>
+  <struct name="IIO_WSTAT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x400008" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_WCR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x400020" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IOWA" size="8" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x400110" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_IIWA" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x400118" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IIDEM" size="8" grade="established" from="census: 5 sites, 3 routines" register="yes" offset="0x400120" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_ILCSR" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x400128" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_ILLR" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x400130" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_IIDSR" size="8" grade="established" from="census: 12 sites, 5 routines" register="yes" offset="0x400138" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_IGFX_0" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x400140" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_PIOMAP_ALLOC" size="8" grade="established" from="census: 5 sites, 4 routines" register="yes" offset="0x400160" access="rw" reset="unknown">
+  </struct>
+  <struct name="MLRESET" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x400190" access="w" reset="unknown">
+  </struct>
+  <struct name="IIO_IOPRB_0" size="8" grade="established" from="census: 7 sites, 4 routines" register="yes" offset="0x400198" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_IMEM" size="8" grade="established" from="census: 4 sites, 3 routines" register="yes" offset="0x4001e8" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_IECLR" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x4001f8" access="w" reset="unknown">
+  </struct>
+  <struct name="IIO_IBCN" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x400200" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_DEVENABLE" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x4002c8" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_PRTE_0" size="8" grade="established" from="census: 4 sites, 1 routines" register="yes" offset="0x400308" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_IPDR" size="8" grade="established" from="census: 5 sites, 2 routines" register="yes" offset="0x400388" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_ICDR" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x400390" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_IFDR" size="8" grade="established" from="census: 8 sites, 3 routines" register="yes" offset="0x400398" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_ICMR" size="8" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x4003a8" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_ICCR" size="8" grade="established" from="census: 7 sites, 1 routines" register="yes" offset="0x4003b0" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_ICTO" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x4003b8" access="w" reset="unknown">
+  </struct>
+  <struct name="IIO_ICTP" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x4003c0" access="w" reset="unknown">
+  </struct>
+  <struct name="IIO_ICRB0_A" size="8" grade="established" from="census: 14 sites, 9 routines" register="yes" offset="0x400400" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_ICRB0_B" size="8" grade="established" from="census: 11 sites, 6 routines" register="yes" offset="0x400408" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_ICRB0_C" size="8" grade="established" from="census: 6 sites, 5 routines" register="yes" offset="0x400410" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_ICRB0_D" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x400418" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_ICRB1_B" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x400428" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IBLS_0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x410000" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IBSA_0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x410008" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IBDA_0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x410010" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IBCT_0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x410018" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IBLS_1" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x420000" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IBSA_1" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x420008" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IBDA_1" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x420010" access="r" reset="unknown">
+  </struct>
+  <struct name="IIO_IBCT_1" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x420018" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_IBNA_1" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x420020" access="w" reset="unknown">
+  </struct>
+  <struct name="IIO_IPCR" size="8" grade="established" from="census: 4 sites, 2 routines" register="yes" offset="0x430000" access="rw" reset="unknown">
+  </struct>
+  <struct name="IIO_IPPR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x430008" access="r" reset="unknown">
+  </struct>
+  <struct name="NI_STATUS_REV_ID" size="8" grade="established" from="census: 18 sites, 16 routines" register="yes" offset="0x600000" access="r" reset="unknown">
+  </struct>
+  <struct name="NI_PORT_RESET" size="8" grade="established" from="census: 6 sites, 6 routines" register="yes" offset="0x600008" access="w" reset="unknown">
+  </struct>
+  <struct name="NI_PROTECTION" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x600010" access="r" reset="unknown">
+  </struct>
+  <struct name="NI_GLOBAL_PARMS" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x600018" access="rw" reset="unknown">
+  </struct>
+  <struct name="NI_SCRATCH_REG0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x600100" access="w" reset="unknown">
+  </struct>
+  <struct name="NI_SCRATCH_REG1" size="8" grade="established" from="census: 14 sites, 2 routines" register="yes" offset="0x600108" access="rw" reset="unknown">
+  </struct>
+  <struct name="NI_DIAG_PARMS" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x600110" access="rw" reset="unknown">
+  </struct>
+  <struct name="NI_VECTOR_PARMS" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x600200" access="w" reset="unknown">
+  </struct>
+  <struct name="NI_VECTOR" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x600208" access="w" reset="unknown">
+  </struct>
+  <struct name="NI_VECTOR_DATA" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x600210" access="w" reset="unknown">
+  </struct>
+  <struct name="NI_VECTOR_STATUS" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x600300" access="r" reset="unknown">
+  </struct>
+  <struct name="NI_VECTOR_READ_DATA" size="8" grade="established" from="census: 4 sites, 2 routines" register="yes" offset="0x600310" access="rw" reset="unknown">
+  </struct>
+  <struct name="NI_VECTOR_CLEAR" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x600380" access="r" reset="unknown">
+  </struct>
+  <struct name="NI_AGE_CPU0_MEMORY" size="8" grade="established" from="census: 9 sites, 3 routines" register="yes" offset="0x600500" access="rw" reset="unknown">
+  </struct>
+  <struct name="NI_AGE_CPU1_MEMORY" size="8" grade="established" from="census: 9 sites, 3 routines" register="yes" offset="0x600510" access="rw" reset="unknown">
+  </struct>
+  <struct name="NI_PORT_ERROR" size="8" grade="established" from="census: 4 sites, 4 routines" register="yes" offset="0x608008" access="r" reset="unknown">
+  </struct>
+  <struct name="NI_PORT_ERROR_CLEAR" size="8" grade="established" from="census: 10 sites, 4 routines" register="yes" offset="0x608088" access="r" reset="unknown">
+  </struct>
+  <struct name="NI_META_TABLE0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x638000" access="w" reset="unknown">
+  </struct>
+  <struct name="NI_LOCAL_TABLE0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x638100" access="w" reset="unknown">
+  </struct>
+  <constant name="HUB_IFDR_FIX_VALUE_2000D8_B_6_0" value="0x7f" grade="inferred"/>
+  <constant name="HUB_IFDR_FIX_VALUE_B_6_0" value="0x7f" grade="inferred"/>
+  <constant name="HUB_PIOMAP_ALLOC_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="HUB_PIOMAP_ALLOC_B_4_0" value="0x1f" grade="inferred"/>
+  <constant name="HUB_PIOMAP_ALLOC_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="HUB_PIOMAP_ALLOC_V_300" value="0x300" grade="inferred"/>
+  <constant name="IIO_IBCN_V_2" value="0x2" grade="inferred"/>
+  <constant name="IIO_IBCT_1_V_10" value="0x10" grade="inferred"/>
+  <constant name="IIO_IBLS_1_V_1" value="0x1" grade="inferred"/>
+  <constant name="IIO_IBLS_1_V_100000" value="0x100000" grade="inferred"/>
+  <constant name="IIO_ICDR_B_4" value="0x10" grade="inferred"/>
+  <constant name="IIO_ICDR_V_10" value="0x10" grade="inferred"/>
+  <constant name="IIO_ICMR_V_40" value="0x40" grade="inferred"/>
+  <constant name="IIO_ICRB0_A_B_0" value="0x1" grade="inferred"/>
+  <constant name="IIO_ICRB0_A_B_2_0" value="0x7" grade="inferred"/>
+  <constant name="IIO_ICRB0_A_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="IIO_ICRB0_A_B_4_0" value="0x1f" grade="inferred"/>
+  <constant name="IIO_ICRB0_B_B_1_0" value="0x3" grade="inferred"/>
+  <constant name="IIO_ICRB0_B_B_4_0" value="0x1f" grade="inferred"/>
+  <constant name="IIO_ICTO_V_FF" value="0xff" grade="inferred"/>
+  <constant name="IIO_ICTP_V_1000" value="0x1000" grade="inferred"/>
+  <constant name="IIO_IECLR_V_20000" value="0x20000" grade="inferred"/>
+  <constant name="IIO_IECLR_V_FF0000" value="0xff0000" grade="inferred"/>
+  <constant name="IIO_IECLR_V_FFFF" value="0xffff" grade="inferred"/>
+  <constant name="IIO_IFDR_B_6_0" value="0x7f" grade="inferred"/>
+  <constant name="IIO_IIDSR_V_1000000" value="0x1000000" grade="inferred"/>
+  <constant name="IIO_ILCSR_B_1" value="0x2" grade="inferred"/>
+  <constant name="IIO_ILCSR_B_13" value="0x2000" grade="inferred"/>
+  <constant name="IIO_ILCSR_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="IIO_ILCSR_V_100" value="0x100" grade="inferred"/>
+  <constant name="IIO_ILLR_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="IIO_IMEM_B_0" value="0x1" grade="inferred"/>
+  <constant name="IIO_IMEM_B_4" value="0x10" grade="inferred"/>
+  <constant name="IIO_IMEM_B_4_0" value="0x11" grade="inferred"/>
+  <constant name="IIO_IMEM_B_8" value="0x100" grade="inferred"/>
+  <constant name="IIO_IMEM_V_101" value="0x101" grade="inferred"/>
+  <constant name="IIO_IPDR_B_4" value="0x10" grade="inferred"/>
+  <constant name="IIO_IPDR_V_10" value="0x10" grade="inferred"/>
+  <constant name="IIO_PRTE_0_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="IIO_WCR_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="MD_LED0_V_1" value="0x1" grade="inferred"/>
+  <constant name="MD_LED0_V_2" value="0x2" grade="inferred"/>
+  <constant name="MD_LED0_V_23" value="0x23" grade="inferred"/>
+  <constant name="MD_LED0_V_2A" value="0x2a" grade="inferred"/>
+  <constant name="MD_LED0_V_2B" value="0x2b" grade="inferred"/>
+  <constant name="MD_LED0_V_3" value="0x3" grade="inferred"/>
+  <constant name="MD_LED0_V_31" value="0x31" grade="inferred"/>
+  <constant name="MD_LED0_V_35" value="0x35" grade="inferred"/>
+  <constant name="MD_LED0_V_36" value="0x36" grade="inferred"/>
+  <constant name="MD_LED0_V_3F" value="0x3f" grade="inferred"/>
+  <constant name="MD_LED0_V_4" value="0x4" grade="inferred"/>
+  <constant name="MD_LED0_V_46" value="0x46" grade="inferred"/>
+  <constant name="MD_LED0_V_47" value="0x47" grade="inferred"/>
+  <constant name="MD_LED0_V_48" value="0x48" grade="inferred"/>
+  <constant name="MD_LED0_V_5" value="0x5" grade="inferred"/>
+  <constant name="MD_LED0_V_5D" value="0x5d" grade="inferred"/>
+  <constant name="MD_LED0_V_81" value="0x81" grade="inferred"/>
+  <constant name="MD_LED0_V_83" value="0x83" grade="inferred"/>
+  <constant name="MD_LED0_V_84" value="0x84" grade="inferred"/>
+  <constant name="MD_LED0_V_9" value="0x9" grade="inferred"/>
+  <constant name="MD_LED0_V_97" value="0x97" grade="inferred"/>
+  <constant name="MD_LED0_V_A" value="0xa" grade="inferred"/>
+  <constant name="MD_LED0_V_A6" value="0xa6" grade="inferred"/>
+  <constant name="MD_LED0_V_B" value="0xb" grade="inferred"/>
+  <constant name="MD_LED0_V_B4" value="0xb4" grade="inferred"/>
+  <constant name="MD_LED0_V_C" value="0xc" grade="inferred"/>
+  <constant name="MD_LED0_V_CF" value="0xcf" grade="inferred"/>
+  <constant name="MD_LED0_V_F" value="0xf" grade="inferred"/>
+  <constant name="MD_LED0_V_F3" value="0xf3" grade="inferred"/>
+  <constant name="MD_LED0_V_FC" value="0xfc" grade="inferred"/>
+  <constant name="MD_MEMORY_CONFIG_B_1_0" value="0x3" grade="inferred"/>
+  <constant name="MD_MEM_ERROR_CLR_B_0" value="0x1" grade="inferred"/>
+  <constant name="MD_MISC_ERROR_CLR_B_9_0" value="0x3ff" grade="inferred"/>
+  <constant name="MD_MLAN_CTL_B_0" value="0x1" grade="inferred"/>
+  <constant name="MD_MLAN_CTL_B_1" value="0x2" grade="inferred"/>
+  <constant name="MD_REFRESH_CONTROL_B_11_0" value="0xfff" grade="inferred"/>
+  <constant name="MD_SLOTID_USTAT_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="MD_SLOTID_USTAT_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="MD_UREG0_0_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="MD_UREG0_0_V_1" value="0x1" grade="inferred"/>
+  <constant name="MD_UREG0_0_V_1C" value="0x1c" grade="inferred"/>
+  <constant name="MD_UREG0_0_V_7F" value="0x7f" grade="inferred"/>
+  <constant name="MD_UREG0_0_V_8" value="0x8" grade="inferred"/>
+  <constant name="MD_UREG0_0_V_FE" value="0xfe" grade="inferred"/>
+  <constant name="MD_UREG0_1_B_0" value="0x1" grade="inferred"/>
+  <constant name="MD_UREG0_1_B_3" value="0x8" grade="inferred"/>
+  <constant name="MD_UREG0_1_B_4_2_1" value="0x16" grade="inferred"/>
+  <constant name="MD_UREG0_1_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="MD_UREG0_1_V_45" value="0x45" grade="inferred"/>
+  <constant name="MD_UREG0_1_V_80" value="0x80" grade="inferred"/>
+  <constant name="MD_UREG0_1_V_A0" value="0xa0" grade="inferred"/>
+  <constant name="MD_UREG0_1_V_C0" value="0xc0" grade="inferred"/>
+  <constant name="MD_UREG0_1_V_C5" value="0xc5" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_1" value="0x1" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_2" value="0x2" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_23" value="0x23" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_2A" value="0x2a" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_2B" value="0x2b" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_3" value="0x3" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_31" value="0x31" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_35" value="0x35" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_36" value="0x36" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_3F" value="0x3f" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_4" value="0x4" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_46" value="0x46" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_47" value="0x47" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_48" value="0x48" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_5" value="0x5" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_5D" value="0x5d" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_81" value="0x81" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_83" value="0x83" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_84" value="0x84" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_97" value="0x97" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_A" value="0xa" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_A6" value="0xa6" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_B" value="0xb" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_B4" value="0xb4" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_C" value="0xc" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_CF" value="0xcf" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_F" value="0xf" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_F3" value="0xf3" grade="inferred"/>
+  <constant name="MD_UREG1_0_V_FC" value="0xfc" grade="inferred"/>
+  <constant name="NI_PORT_ERROR_CLEAR_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="NI_PORT_RESET_V_2" value="0x2" grade="inferred"/>
+  <constant name="NI_PORT_RESET_V_81" value="0x81" grade="inferred"/>
+  <constant name="NI_STATUS_REV_ID_B_0" value="0x1" grade="inferred"/>
+  <constant name="NI_STATUS_REV_ID_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="NI_STATUS_REV_ID_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="NI_STATUS_REV_ID_B_8_0" value="0x1ff" grade="inferred"/>
+  <constant name="PER_HUB_INIT_2000E0_V_100" value="0x100" grade="inferred"/>
+  <constant name="PI_CALIAS_SIZE_V_1" value="0x1" grade="inferred"/>
+  <constant name="PI_CALIAS_SIZE_V_2" value="0x2" grade="inferred"/>
+  <constant name="PI_ERR_INT_PEND_V_FF0000" value="0xff0000" grade="inferred"/>
+  <constant name="PI_ERR_INT_PEND_V_FFFF" value="0xffff" grade="inferred"/>
+  <constant name="PI_ERR_STACK_ADDR_A_B_8" value="0x100" grade="inferred"/>
+  <constant name="PI_INT_PEND1_B_0" value="0x1" grade="inferred"/>
+  <constant name="PI_INT_PEND_MOD_V_100" value="0x100" grade="inferred"/>
+  <constant name="PI_INT_PEND_MOD_V_40" value="0x40" grade="inferred"/>
+  <constant name="PI_INT_PEND_MOD_V_69" value="0x69" grade="inferred"/>
+  <constant name="PI_INT_PEND_MOD_V_6B" value="0x6b" grade="inferred"/>
+  <constant name="PI_INT_PEND_MOD_V_7" value="0x7" grade="inferred"/>
+  <constant name="PI_INT_PEND_MOD_V_76" value="0x76" grade="inferred"/>
+  <constant name="PI_PROF_EN_B_V_1" value="0x1" grade="inferred"/>
+  <constant name="PI_REGION_PRESENT_V_1" value="0x1" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_1" value="0x1" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_2" value="0x2" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_2A" value="0x2a" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_2B" value="0x2b" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_3" value="0x3" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_35" value="0x35" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_36" value="0x36" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_4" value="0x4" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_5" value="0x5" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_5D" value="0x5d" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_5E" value="0x5e" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_5F" value="0x5f" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_60" value="0x60" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_81" value="0x81" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_83" value="0x83" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_84" value="0x84" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_A" value="0xa" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_A6" value="0xa6" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_B" value="0xb" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_B4" value="0xb4" grade="inferred"/>
+  <constant name="PI_RT_COMPARE_A_V_C" value="0xc" grade="inferred"/>
+  <constant name="PI_RT_COUNT_B_11_0" value="0xfff" grade="inferred"/>
+  <constant name="PI_RT_EN_A_V_1" value="0x1" grade="inferred"/>
+  <constant name="PI_RT_LOCAL_CTRL_V_10000" value="0x10000" grade="inferred"/>
+</genxml>

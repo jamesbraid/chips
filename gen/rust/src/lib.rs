@@ -1,0 +1,26 @@
+// generated from defs/ by defs-gen - do not edit, change the source
+pub mod bedrock;
+pub mod bedrock_extra;
+pub mod bridge;
+pub mod bridge_extra;
+pub mod heart;
+pub mod heart_extra;
+pub mod hub;
+pub mod ice1724;
+pub mod ioc3;
+pub mod ioc3_extra;
+pub mod ioc4;
+pub mod ioc4_extra;
+pub mod l1;
+pub mod l1_requests;
+pub mod mace;
+pub mod pic;
+pub mod router_origin2000;
+pub mod router_origin3000;
+pub mod router_origin3000_extra;
+pub mod tiocp;
+pub mod vice;
+pub mod xbow;
+pub mod xbow_extra;
+pub mod xbridge;
+pub mod xio_fc;

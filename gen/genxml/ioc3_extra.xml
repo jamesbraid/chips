@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/ioc3_extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="ioc3_extra" prefix="IOC3" title="IOC3 registers outside the census">
+  <struct name="ONE_WIRE_CTL" size="4" grade="established" register="yes" offset="0x30" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_A_ADDR_HI" size="4" grade="established" register="yes" offset="0x80" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_A_ADDR_LO" size="4" grade="established" register="yes" offset="0x84" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_A_COUNT" size="4" grade="established" register="yes" offset="0x88" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_CTL" size="4" grade="established" register="yes" offset="0x8c" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_B_ADDR_HI" size="4" grade="established" register="yes" offset="0x90" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_B_ADDR_LO" size="4" grade="established" register="yes" offset="0x94" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_B_COUNT" size="4" grade="established" register="yes" offset="0x98" access="rw" reset="unknown">
+  </struct>
+  <struct name="KM_RX_KBD" size="4" grade="established" register="yes" offset="0xa0" access="r" reset="unknown">
+  </struct>
+  <struct name="KM_RX_MOUSE" size="4" grade="established" register="yes" offset="0xa4" access="r" reset="unknown">
+  </struct>
+  <struct name="KM_TX_KBD" size="4" grade="established" register="yes" offset="0xa8" access="w" reset="unknown">
+  </struct>
+  <struct name="KM_TX_MOUSE" size="4" grade="established" register="yes" offset="0xac" access="w" reset="unknown">
+  </struct>
+</genxml>

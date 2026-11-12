@@ -1,0 +1,102 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/xbow.toml by defs-gen - do not edit, change the source -->
+<genxml unit="xbow" prefix="XBOW" title="Xbow (crossbar)" from="census: loads and stores in the shipped binaries; names from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code">
+  <doc>Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout. Views: the offset is the 8-byte slot address. "4 at slot+4" is a 32-bit load or store at that address plus 4, the low word of the slot on a big-endian machine; a 64-bit access to the slot address reaches the same register.</doc>
+  <struct name="XB_ID" size="4" grade="established" from="census: 21 sites, 7 routines" register="yes" offset="0x0" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_STAT" size="4" grade="established" from="census: 8 sites, 4 routines" register="yes" offset="0x8" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_ERR_UPPER" size="4" grade="established" from="census: 10 sites, 4 routines" register="yes" offset="0x10" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_ERR_LOWER" size="4" grade="established" from="census: 10 sites, 4 routines" register="yes" offset="0x18" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_CTRL" size="4" grade="established" from="census: 9 sites, 3 routines" register="yes" offset="0x20" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_PKT_TO" size="4" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x28" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_INT_UPPER" size="4" grade="established" from="census: 6 sites, 2 routines" register="yes" offset="0x30" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_INT_LOWER" size="4" grade="established" from="census: 6 sites, 2 routines" register="yes" offset="0x38" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_ERR_CMDWORD" size="4" grade="established" from="census: 14 sites, 4 routines" register="yes" offset="0x40" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_LLP_CTRL" size="4" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x48" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_STAT_CLR" size="4" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x50" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_ARB_RELOAD" size="4" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x58" access="r" reset="unknown">
+  </struct>
+  <struct name="RESERVED" size="4" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x80" access="rw" reset="unknown">
+  </struct>
+  <struct name="RESERVED_88" size="4" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x88" access="rw" reset="unknown">
+  </struct>
+  <struct name="RESERVED_90" size="4" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x90" access="rw" reset="unknown">
+  </struct>
+  <struct name="RESERVED_98" size="4" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x98" access="rw" reset="unknown">
+  </struct>
+  <struct name="RESERVED_A0" size="4" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xa0" access="rw" reset="unknown">
+  </struct>
+  <struct name="RESERVED_A8" size="4" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xa8" access="rw" reset="unknown">
+  </struct>
+  <struct name="RESERVED_B0" size="4" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xb0" access="rw" reset="unknown">
+  </struct>
+  <struct name="RESERVED_B8" size="4" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xb8" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_CTRL" size="4" grade="established" from="census: 9 sites, 1 routines" register="yes" offset="0x108" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_STAT" size="4" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x110" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_ARB_UPPER" size="4" grade="established" from="census: 15 sites, 5 routines" register="yes" offset="0x118" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_ARB_LOWER" size="4" grade="established" from="census: 15 sites, 5 routines" register="yes" offset="0x120" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_STAT_CLR" size="4" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x128" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_RESET" size="4" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0x130" access="w" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_AUX_STAT" size="4" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0x138" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_CTRL_148" size="4" grade="established" from="census: 9 sites, 1 routines" register="yes" offset="0x148" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_STAT_150" size="4" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x150" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_STAT_CLR_168" size="4" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x168" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_AUX_STAT_178" size="4" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0x178" access="r" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_ARB_UPPER_198" size="4" grade="established" from="census: 4 sites, 1 routines" register="yes" offset="0x198" access="rw" reset="unknown">
+  </struct>
+  <struct name="XB_LINK_ARB_UPPER_1D8" size="4" grade="established" from="census: 4 sites, 1 routines" register="yes" offset="0x1d8" access="rw" reset="unknown">
+  </struct>
+  <constant name="RESERVED_V_FF" value="0xff" grade="inferred"/>
+  <constant name="XB_CTRL_20_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="XB_CTRL_20_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="XB_CTRL_20_V_24" value="0x24" grade="inferred"/>
+  <constant name="XB_CTRL_20_V_80000000" value="0x80000000" grade="inferred"/>
+  <constant name="XB_CTRL_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="XB_CTRL_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="XB_CTRL_V_24" value="0x24" grade="inferred"/>
+  <constant name="XB_CTRL_V_80000000" value="0x80000000" grade="inferred"/>
+  <constant name="XB_ID_0_B_10_0" value="0x7ff" grade="inferred"/>
+  <constant name="XB_ID_0_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="XB_ID_0_B_2_0" value="0x7" grade="inferred"/>
+  <constant name="XB_ID_B_10_0" value="0x7ff" grade="inferred"/>
+  <constant name="XB_ID_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="XB_ID_B_2_0" value="0x7" grade="inferred"/>
+  <constant name="XB_INT_UPPER_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="XB_LINK_ARB_UPPER_1D8_V_9" value="0x9" grade="inferred"/>
+  <constant name="XB_LINK_AUX_STAT_138_B_5" value="0x20" grade="inferred"/>
+  <constant name="XB_LINK_AUX_STAT_138_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="XB_LINK_AUX_STAT_178_B_5" value="0x20" grade="inferred"/>
+  <constant name="XB_LINK_AUX_STAT_B_5" value="0x20" grade="inferred"/>
+  <constant name="XB_LINK_AUX_STAT_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="XB_LINK_CTRL_108_B_3" value="0x8" grade="inferred"/>
+  <constant name="XB_LINK_CTRL_108_V_80000" value="0x80000" grade="inferred"/>
+  <constant name="XB_LINK_CTRL_148_B_3" value="0x8" grade="inferred"/>
+  <constant name="XB_LINK_CTRL_B_3" value="0x8" grade="inferred"/>
+  <constant name="XB_LINK_CTRL_V_80000" value="0x80000" grade="inferred"/>
+  <constant name="XB_STAT_8_B_5_2" value="0x24" grade="inferred"/>
+  <constant name="XB_STAT_8_B_9_6" value="0x3c0" grade="inferred"/>
+  <constant name="XB_STAT_B_5_2" value="0x24" grade="inferred"/>
+  <constant name="XB_STAT_B_9_6" value="0x3c0" grade="inferred"/>
+</genxml>

@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/ioc4_extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="ioc4_extra" prefix="IOC4" title="IOC4 registers outside the census">
+  <struct name="KM_RX_KBD" size="4" grade="established" register="yes" offset="0x204" access="r" reset="unknown">
+  </struct>
+  <struct name="KM_RX_MOUSE" size="4" grade="established" register="yes" offset="0x208" access="r" reset="unknown">
+  </struct>
+  <struct name="KM_TX_KBD" size="4" grade="established" register="yes" offset="0x20c" access="w" reset="unknown">
+  </struct>
+  <struct name="KM_TX_MOUSE" size="4" grade="established" register="yes" offset="0x210" access="w" reset="unknown">
+  </struct>
+  <constant name="ATA_DMA_CONTROL" value="0x15c" grade="established"/>
+  <constant name="ATA_DMA_CONTROL_ACTIVE" value="0x8" grade="established"/>
+  <constant name="ATA_DMA_CONTROL_DIR_TO_MEMORY" value="0x4" grade="inferred"/>
+  <constant name="ATA_DMA_CONTROL_ERROR" value="0x10" grade="established"/>
+  <constant name="ATA_DMA_CONTROL_START" value="0x1" grade="established"/>
+  <constant name="ATA_DMA_CONTROL_STOP" value="0x2" grade="established"/>
+  <constant name="ATA_DMA_COUNT_DEVICE" value="0x154" grade="inferred"/>
+  <constant name="ATA_DMA_COUNT_MEMORY" value="0x158" grade="inferred"/>
+  <constant name="ATA_DMA_CURRENT_HIGH" value="0x150" grade="unknown"/>
+  <constant name="ATA_DMA_CURRENT_LOW" value="0x14c" grade="unknown"/>
+  <constant name="ATA_DMA_END_AREA" value="0x160" grade="inferred"/>
+  <constant name="ATA_DMA_LIST_HIGH" value="0x148" grade="inferred"/>
+  <constant name="ATA_DMA_LIST_LOW" value="0x144" grade="inferred"/>
+  <constant name="ATA_DMA_TIMING" value="0x140" grade="inferred"/>
+  <constant name="SIO_CR_CMD_PULSE" value="0xf" grade="established"/>
+  <constant name="SIO_CR_SIO_DIAG_IDLE" value="0x80" grade="established"/>
+</genxml>

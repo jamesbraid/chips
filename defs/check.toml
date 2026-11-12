@@ -1,0 +1,106 @@
+[project]
+name = "chips"
+
+[checks]
+address_bits = 32
+max_reg_offset = 4294967295
+
+[units.bedrock]
+group = "bedrock.h"
+prose_offsets = false
+
+[units.bridge]
+group = "bridge.h"
+prose_offsets = false
+
+[units.heart]
+group = "heart.h"
+prose_offsets = false
+
+[units.hub]
+group = "hub.h"
+prose_offsets = false
+
+[units.ioc3]
+group = "ioc3.h"
+prose_offsets = false
+
+[units.ioc4]
+group = "ioc4.h"
+prose_offsets = false
+
+[units.l1]
+group = "l1.h"
+prose_offsets = false
+
+[units.mace]
+group = "mace.h"
+prose_offsets = false
+
+[units.pic]
+group = "pic.h"
+prose_offsets = false
+
+[units.router_origin2000]
+group = "router_origin2000.h"
+prose_offsets = false
+
+[units.router_origin3000]
+group = "router_origin3000.h"
+prose_offsets = false
+
+[units.tiocp]
+group = "tiocp.h"
+prose_offsets = false
+
+[units.vice]
+group = "vice.h"
+prose_offsets = false
+
+[units.xbow]
+group = "xbow.h"
+prose_offsets = false
+
+[units.xbridge]
+group = "xbridge.h"
+prose_offsets = false
+
+[units.heart_extra]
+group = "heart_extra.h"
+prose_offsets = false
+
+[units.xbow_extra]
+group = "xbow_extra.h"
+prose_offsets = false
+
+[units.bedrock_extra]
+group = "bedrock_extra.h"
+prose_offsets = false
+
+[units.bridge_extra]
+group = "bridge_extra.h"
+prose_offsets = false
+
+[units.ioc3_extra]
+group = "ioc3_extra.h"
+prose_offsets = false
+
+[units.ioc4_extra]
+group = "ioc4_extra.h"
+prose_offsets = false
+
+[units.router_origin3000_extra]
+group = "router_origin3000_extra.h"
+prose_offsets = false
+
+[units.l1_requests]
+group = "l1_requests.h"
+prose_offsets = false
+
+[units.xio_fc]
+group = "xio_fc.h"
+prose_offsets = false
+
+[units.ice1724]
+group = "ice1724.h"
+prose_offsets = false

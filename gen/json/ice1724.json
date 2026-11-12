@@ -1,0 +1,231 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/ice1724.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_AC97_CONF",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_GPIO_DATA",
+   "value": 20,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_GPIO_DATA_HI",
+   "value": 30,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_GPIO_DIR",
+   "value": 24,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_GPIO_MASK",
+   "value": 22,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_GPIO_MASK_HI",
+   "value": 31,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_I2C_BYTE_ADDR",
+   "value": 17,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_I2C_CTRL",
+   "value": 19,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_I2C_DATA",
+   "value": 18,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_I2C_DEV_ADDR",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_I2S_FEATURES",
+   "value": 6,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_IRQ_MASK",
+   "value": 1,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_IRQ_STATUS",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_SPDIF_CONF",
+   "value": 7,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "CCS_SYSCONF",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_BURST",
+   "value": 25,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_CAPTURE_ADDR",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_CAPTURE_SIZE",
+   "value": 36,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_CONVERTER_RESET",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_DMA_CONTROL",
+   "value": 24,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_DMA_INT_MASK",
+   "value": 3,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_IRQ_STATUS",
+   "value": 0,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_MCLK_128X",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_PLAYBACK_ADDR",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_PLAYBACK_SIZE",
+   "value": 20,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_RATE",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_SPDIF_OUT_ADDR",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ice1724",
+   "kind": "constant",
+   "name": "MT_SPDIF_OUT_SIZE",
+   "value": 68,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

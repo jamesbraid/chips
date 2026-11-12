@@ -1,0 +1,281 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/l1.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "l1",
+   "kind": "register",
+   "name": "uart_data",
+   "offset": 128,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 13 sites, 4 routines"
+  },
+  {
+   "unit": "l1",
+   "kind": "register",
+   "name": "uart_ier",
+   "offset": 136,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 6 sites, 3 routines"
+  },
+  {
+   "unit": "l1",
+   "kind": "register",
+   "name": "uart_fcr_iir",
+   "offset": 144,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 6 sites, 3 routines"
+  },
+  {
+   "unit": "l1",
+   "kind": "register",
+   "name": "uart_lcr",
+   "offset": 152,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 6 sites, 3 routines"
+  },
+  {
+   "unit": "l1",
+   "kind": "register",
+   "name": "uart_mcr",
+   "offset": 160,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines"
+  },
+  {
+   "unit": "l1",
+   "kind": "register",
+   "name": "uart_lsr",
+   "offset": 168,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 66 sites, 6 routines"
+  },
+  {
+   "unit": "l1",
+   "kind": "register",
+   "name": "uart_intr_clear",
+   "offset": 8388752,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines"
+  },
+  {
+   "unit": "l1",
+   "kind": "register",
+   "name": "uart_intr_pending",
+   "offset": 8388760,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 2 sites, 1 routines"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_DATA_B_7_0",
+   "value": 255,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_DATA_V_44",
+   "value": 68,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_DATA_V_7E",
+   "value": 126,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_FCR_IIR_B_1",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_FCR_IIR_B_2",
+   "value": 4,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_FCR_IIR_B_2_1",
+   "value": 6,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_FCR_IIR_B_7_0",
+   "value": 255,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_FCR_IIR_V_7",
+   "value": 7,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_IER_B_7_0",
+   "value": 255,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_INTR_PENDING_B_4",
+   "value": 16,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_LCR_B_7_0",
+   "value": 255,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_LSR_B_0",
+   "value": 1,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_LSR_B_15_0",
+   "value": 65535,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_LSR_B_3_2",
+   "value": 12,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_LSR_B_3_2_0",
+   "value": 13,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_LSR_B_5",
+   "value": 32,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_LSR_B_6",
+   "value": 64,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  },
+  {
+   "unit": "l1",
+   "kind": "constant",
+   "name": "UART_LSR_B_7_0",
+   "value": 255,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the register role the L1 UART routines give it: a 16550-style register file with an 8-byte stride (a hypothesis the line-status, interrupt-identity and divisor-latch tests in the code support), or for 0x800090 and 0x800098 the place the interrupt poll tests and clears (role inferred)"
+  }
+ ]
+}

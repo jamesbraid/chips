@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/heart_extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="heart_extra" prefix="HEART" title="HEART registers outside the census">
+  <struct name="SDRAM_MODE" size="8" grade="established" register="yes" offset="0x8" access="w" reset="unknown">
+  </struct>
+  <struct name="MEM_REF" size="8" grade="established" register="yes" offset="0x10" access="w" reset="unknown">
+  </struct>
+  <constant name="WIDGET_ERR_LOWER" value="0x78" grade="established"/>
+  <constant name="WIDGET_ERR_TYPE" value="0x60" grade="established"/>
+  <constant name="WIDGET_ERR_UPPER" value="0x70" grade="established"/>
+  <constant name="WIDGET_RD_TIMEOUT_LATCH" value="0x90" grade="established"/>
+  <constant name="WIDGET_REQ_TIMEOUT" value="0x28" grade="established"/>
+</genxml>

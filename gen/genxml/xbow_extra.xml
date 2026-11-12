@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/xbow_extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="xbow_extra" prefix="XBOW" title="Xbow registers outside the census">
+  <struct name="PERF_A" size="4" grade="established" register="yes" offset="0x60" access="rw" reset="unknown">
+  </struct>
+  <struct name="PERF_B" size="4" grade="established" register="yes" offset="0x68" access="rw" reset="unknown">
+  </struct>
+  <constant name="FENCE_LINK_8" value="0x80" grade="inferred"/>
+  <constant name="FENCE_LINK_9" value="0x88" grade="inferred"/>
+  <constant name="FENCE_LINK_A" value="0x90" grade="inferred"/>
+  <constant name="FENCE_LINK_B" value="0x98" grade="inferred"/>
+  <constant name="FENCE_LINK_C" value="0xa0" grade="inferred"/>
+  <constant name="FENCE_LINK_D" value="0xa8" grade="inferred"/>
+  <constant name="FENCE_LINK_E" value="0xb0" grade="inferred"/>
+  <constant name="FENCE_LINK_F" value="0xb8" grade="inferred"/>
+  <constant name="FENCE_WIDGET_0" value="0x78" grade="inferred"/>
+  <constant name="FLUSH_LINK_8" value="0x100" grade="established"/>
+  <constant name="FLUSH_LINK_9" value="0x140" grade="established"/>
+  <constant name="FLUSH_LINK_A" value="0x180" grade="established"/>
+  <constant name="FLUSH_LINK_B" value="0x1c0" grade="established"/>
+  <constant name="FLUSH_LINK_C" value="0x200" grade="established"/>
+  <constant name="FLUSH_LINK_D" value="0x240" grade="established"/>
+  <constant name="FLUSH_LINK_E" value="0x280" grade="established"/>
+  <constant name="FLUSH_LINK_F" value="0x2c0" grade="established"/>
+  <constant name="ID_MFR_MASK" value="0xffe" grade="established"/>
+  <constant name="ID_PART_MASK" value="0xffff000" grade="established"/>
+  <constant name="ID_REV_MASK" value="0xf0000000" grade="established"/>
+  <constant name="PART_PXBOW" value="0xd100" grade="established"/>
+  <constant name="PART_XBOW" value="0x0" grade="established"/>
+  <constant name="PART_XXBOW" value="0xd000" grade="established"/>
+  <constant name="PERF_A_B_19_0" value="0xfffff" grade="established"/>
+  <constant name="PERF_A_B_22_20" value="0x700000" grade="established"/>
+  <constant name="PERF_B_B_19_0" value="0xfffff" grade="established"/>
+  <constant name="PERF_B_B_22_20" value="0x700000" grade="established"/>
+  <constant name="RESOURCE_LOCK" value="0xc0" grade="inferred"/>
+  <constant name="RESOURCE_LOCK_CLEAR" value="0xc8" grade="inferred"/>
+  <constant name="REV_CODE_1" value="0x1" grade="established"/>
+  <constant name="REV_CODE_2" value="0x2" grade="established"/>
+  <constant name="REV_CODE_3" value="0x3" grade="established"/>
+  <constant name="REV_CODE_4" value="0x4" grade="established"/>
+  <constant name="REV_CODE_5" value="0x5" grade="established"/>
+</genxml>

@@ -1,0 +1,1617 @@
+# Written by retools/tools/chips/gen_headers.py from chips/bedrock/census/. Do not edit: fix the census or its config and rerun.
+unit = "bedrock"
+prefix = "BEDROCK"
+title = "Bedrock (node controller), Origin 3000 family"
+doc = "Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout. Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000 above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the node-indexed alias (the code adds the node number << 33); the same register is at offset - 0x800000 in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local alias, where the code reads its neighbours (0x680108 to 0x680120) directly."
+from = "census: loads and stores in the shipped binaries; names from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names)"
+public_from = ["census:"]
+
+[c]
+legacy_header = "include/bedrock.h"
+legacy_guard = "BEDROCK_H"
+offset_macro = "bare"
+
+[c.aliases]
+BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD = "BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD"
+BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD_B_0 = "BEDROCK_SUB_20250_B_0"
+BEDROCK_HUB_ERROR_INIT = "BEDROCK_REG_800040"
+BEDROCK_HUB_ERROR_INIT_800048 = "BEDROCK_REG_800048"
+BEDROCK_NIC_GET_PHASE_BITS = "BEDROCK_BOOT_SPACE_NIC_GET_PHASE_BITS"
+BEDROCK_PART_DISCOVERY_681000 = "BEDROCK_PART_DISCOVERY"
+BEDROCK_PART_DISCOVERY_682000_IDX = "BEDROCK_PART_DISCOVERY_682000"
+
+[spaces.bedrock_boot_space]
+doc = "Registers reached through the boot-space window."
+
+# ---- PROCESSOR_INTERFACE_LIKE: low window: interrupt send, clocks, error masks, time counter [I, routine-name prefixes]
+[registers.handle_cac_buserr]
+offset = 0x18
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_1bcf0]
+offset = 0x20
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 115 sites, 24 routines"
+
+[registers.memory_iscalias]
+offset = 0x28
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.reg_000040]
+offset = 0x40
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.sub_20ee0]
+offset = 0x90
+access = "w"
+width = 64
+grade = "established"
+from = "census: 9 sites, 7 routines"
+
+[registers.sub_200f0]
+offset = 0x98
+access = "r"
+width = 64
+grade = "established"
+from = "census: 12 sites, 7 routines"
+
+[registers.sub_20250]
+offset = 0xa0
+access = "r"
+width = 64
+grade = "established"
+from = "census: 5 sites, 3 routines"
+
+[registers.reg_000108]
+offset = 0x108
+access = "w"
+width = 64
+grade = "established"
+from = "census: 24 sites, 2 routines"
+
+[registers.startkgclock]
+offset = 0x118
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.acktmoclock]
+offset = 0x120
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.acktmoclock_128]
+offset = 0x128
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.ackkgclock]
+offset = 0x130
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.ackkgclock_138]
+offset = 0x138
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.startkgclock_150]
+offset = 0x150
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.startkgclock_158]
+offset = 0x158
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.hubpi_eint_handler]
+offset = 0x400
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 14 sites, 4 routines"
+
+[registers.err_int_block_mask]
+offset = 0x408
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 10 sites, 6 routines"
+
+[registers.err_int_block_mask_410]
+offset = 0x410
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 10 sites, 6 routines"
+
+[registers.hubpi_spool_get_next]
+offset = 0x418
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hubpi_spool_get_next_420]
+offset = 0x420
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.hubpi_spool_get_next_430]
+offset = 0x430
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hubpi_spool_get_next_440]
+offset = 0x440
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hubpi_spool_get_next_448]
+offset = 0x448
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hubpi_spool_get_next_450]
+offset = 0x450
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hubpi_spool_get_next_460]
+offset = 0x460
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hubpi_spool_get_next_468]
+offset = 0x468
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hubpi_eint_handler_4c8]
+offset = 0x4c8
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.hubpi_eint_handler_4d0]
+offset = 0x4d0
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.restore_hub_err]
+offset = 0x30100
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 103 sites, 56 routines"
+
+# ---- registers
+[registers.reg_400110]
+offset = 0x400110
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.reg_400128]
+offset = 0x400128
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.ii_llp_error_monitor]
+offset = 0x400130
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.sub_3d1d8]
+offset = 0x4001f8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 4 sites, 2 routines"
+
+# ---- NETWORK_INTERFACE_LIKE: ports, router tables, a counter [I, routine-name prefixes]
+[registers.sub_1bcf0_600000]
+offset = 0x600000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 16 sites, 13 routines"
+
+[registers.sub_1bcf0_604020]
+offset = 0x604020
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_1bcf0_604028]
+offset = 0x604028
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_28e3c]
+offset = 0x604200
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 67 sites, 36 routines"
+
+[registers.reg_608000]
+offset = 0x608000
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.reg_608008]
+offset = 0x608008
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 17 sites, 5 routines"
+
+[registers.reg_608010]
+offset = 0x608010
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.sub_11984]
+offset = 0x680000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.sub_10c0]
+offset = 0x680008
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.sub_10c0_680010]
+offset = 0x680010
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.sub_18a24]
+offset = 0x680108
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_18a24_680110]
+offset = 0x680110
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_18a24_680118]
+offset = 0x680118
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.ni_llp_error_monitor]
+offset = 0x680120
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_discovery]
+offset = 0x681000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.part_discovery_681008]
+offset = 0x681008
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_discovery_681010]
+offset = 0x681010
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_discovery_681018]
+offset = 0x681018
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_discovery_682000]
+offset = 0x682000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_discovery_682008]
+offset = 0x682008
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_1bcf0_780000]
+offset = 0x780000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.mdir_xlate_addr_mem]
+offset = 0x780008
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.reg_790010]
+offset = 0x790010
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.reg_7a0000]
+offset = 0x7a0000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.reg_7a0008]
+offset = 0x7a0008
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.doacvec]
+offset = 0x7a0038
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.reg_7c0018]
+offset = 0x7c0018
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.reg_7e0018]
+offset = 0x7e0018
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+# ---- PROCESSOR_INTERFACE_ALIAS: second alias: dump and error routines [I, routine-name prefixes]
+[registers.intr_dumpvec]
+offset = 0x800000
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 19 sites, 16 routines"
+
+[registers.part_init_node]
+offset = 0x800010
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_terminate]
+offset = 0x800018
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 8 sites, 5 routines"
+
+[registers.save_hub_err]
+offset = 0x800020
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.mlreset]
+offset = 0x800028
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.per_hub_init]
+offset = 0x800038
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.reg_800040]
+offset = 0x800040
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.reg_800048]
+offset = 0x800048
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_800050]
+offset = 0x800050
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_800058]
+offset = 0x800058
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_1bcf0_800090]
+offset = 0x800090
+access = "w"
+width = 64
+grade = "established"
+from = "census: 9 sites, 8 routines"
+
+[registers.brl1_intr_poll]
+offset = 0x800098
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 2 routines"
+
+[registers.sub_18a24_8000a0]
+offset = 0x8000a0
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.intr_clear_all]
+offset = 0x8000a8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.intr_clear_all_8000b0]
+offset = 0x8000b0
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.intr_clear_all_8000b8]
+offset = 0x8000b8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.do_intr_block_bit]
+offset = 0x8000c0
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 2 routines"
+
+[registers.part_activate]
+offset = 0x8000c8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.part_activate_8000d0]
+offset = 0x8000d0
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.part_init_node_8000e8]
+offset = 0x8000e8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_8000f0]
+offset = 0x8000f0
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.set_timer_intr]
+offset = 0x800108
+access = "w"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.set_timer_intr_800110]
+offset = 0x800110
+access = "w"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.hub_rtc_init]
+offset = 0x800140
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_rtc_init_800148]
+offset = 0x800148
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_rtc_init_800150]
+offset = 0x800150
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_rtc_init_800158]
+offset = 0x800158
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_3ec6c]
+offset = 0x800400
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 2 routines"
+
+[registers.hub_error_init_800408]
+offset = 0x800408
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 1 routines"
+
+[registers.hub_error_init_800410]
+offset = 0x800410
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 1 routines"
+
+[registers.hub_error_init_800418]
+offset = 0x800418
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_800420]
+offset = 0x800420
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.show_hub_pi_err]
+offset = 0x800428
+access = "r"
+width = 64
+grade = "established"
+from = "census: 6 sites, 3 routines"
+
+[registers.hub_error_clear]
+offset = 0x800438
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_800448]
+offset = 0x800448
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_clear_800458]
+offset = 0x800458
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_800468]
+offset = 0x800468
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_clear_8004c8]
+offset = 0x8004c8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_clear_8004d0]
+offset = 0x8004d0
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_init_node_a00000]
+offset = 0xa00000
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_init_node_a00010]
+offset = 0xa00010
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.mlreset_a00018]
+offset = 0xa00018
+access = "w"
+width = 64
+grade = "established"
+from = "census: 5 sites, 5 routines"
+
+[registers.mlreset_a00028]
+offset = 0xa00028
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.per_hub_init_a00038]
+offset = 0xa00038
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_a00040]
+offset = 0xa00040
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.hub_error_init_a00048]
+offset = 0xa00048
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.hub_error_init_a00050]
+offset = 0xa00050
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_a00058]
+offset = 0xa00058
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_1bcf0_a00090]
+offset = 0xa00090
+access = "w"
+width = 64
+grade = "established"
+from = "census: 7 sites, 6 routines"
+
+[registers.intr_connect_level]
+offset = 0xa00098
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.intr_clear_all_a000a8]
+offset = 0xa000a8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.intr_clear_all_a000b0]
+offset = 0xa000b0
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.intr_clear_all_a000b8]
+offset = 0xa000b8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.do_intr_block_bit_a000c0]
+offset = 0xa000c0
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 2 routines"
+
+[registers.part_init_node_a000e8]
+offset = 0xa000e8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_a000f0]
+offset = 0xa000f0
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.set_timer_intr_a00108]
+offset = 0xa00108
+access = "w"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.set_timer_intr_a00110]
+offset = 0xa00110
+access = "w"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.hub_rtc_init_a00140]
+offset = 0xa00140
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_rtc_init_a00148]
+offset = 0xa00148
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_rtc_init_a00150]
+offset = 0xa00150
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_rtc_init_a00158]
+offset = 0xa00158
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_3ec6c_a00400]
+offset = 0xa00400
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 2 routines"
+
+[registers.hub_error_init_a00408]
+offset = 0xa00408
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 1 routines"
+
+[registers.hub_error_init_a00410]
+offset = 0xa00410
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 1 routines"
+
+[registers.hub_error_init_a00418]
+offset = 0xa00418
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_a00420]
+offset = 0xa00420
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.show_hub_pi_err_a00428]
+offset = 0xa00428
+access = "r"
+width = 64
+grade = "established"
+from = "census: 4 sites, 2 routines"
+
+[registers.hub_error_clear_a00438]
+offset = 0xa00438
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_a00448]
+offset = 0xa00448
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_clear_a00458]
+offset = 0xa00458
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_init_a00468]
+offset = 0xa00468
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_clear_a004c8]
+offset = 0xa004c8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_clear_a004d0]
+offset = 0xa004d0
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.md_perf_start_count]
+offset = 0xa10000
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+# ---- IO_INTERFACE_LIKE: widget, crossbar-buffer and error registers [I, routine-name prefixes]
+[registers.hubii_check_widget_disabled]
+offset = 0xc00008
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.hub_widget_id]
+offset = 0xc00020
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.hub_set_piomode]
+offset = 0xc00110
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 3 routines"
+
+[registers.hub_device_inquiry]
+offset = 0xc00118
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.hub_widgetdev_enable]
+offset = 0xc00120
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 3 routines"
+
+[registers.hubii_eint_init]
+offset = 0xc00128
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 5 routines"
+
+[registers.capture_hub_stats]
+offset = 0xc00130
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 2 routines"
+
+[registers.hub_error_clear_c00138]
+offset = 0xc00138
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 7 sites, 4 routines"
+
+[registers.hub_piomap_alloc]
+offset = 0xc00160
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 4 routines"
+
+[registers.mlreset_c00190]
+offset = 0xc00190
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_clear_c00198]
+offset = 0xc00198
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 7 sites, 4 routines"
+
+[registers.bte_error_handler]
+offset = 0xc001e8
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 4 sites, 3 routines"
+
+[registers.bte_error_handler_c001f8]
+offset = 0xc001f8
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 4 routines"
+
+[registers.sub_3dbbc]
+offset = 0xc00200
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 3 routines"
+
+[registers.bte_error_handler_c00220]
+offset = 0xc00220
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.bte_error_handler_c00228]
+offset = 0xc00228
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_devenable]
+offset = 0xc002c8
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_widget_reset]
+offset = 0xc00308
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.hub_widget_reset_c00388]
+offset = 0xc00388
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 2 routines"
+
+[registers.hubiio_crb_free]
+offset = 0xc00390
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.per_hub_init_c003a8]
+offset = 0xc003a8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.bte_crb_error_handler]
+offset = 0xc003b0
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 7 sites, 1 routines"
+
+[registers.per_hub_init_c003b8]
+offset = 0xc003b8
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.per_hub_init_c003c0]
+offset = 0xc003c0
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.hubiio_crb_free_c00400]
+offset = 0xc00400
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 8 sites, 6 routines"
+
+[registers.hubiio_crb_error_handler]
+offset = 0xc00408
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.hubiio_crb_error_handler_c00410]
+offset = 0xc00410
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.dump_crb]
+offset = 0xc00418
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.io_perf_start_count]
+offset = 0xc30000
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 4 sites, 2 routines"
+
+[registers.io_perf_start_count_c30008]
+offset = 0xc30008
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+# ---- LOCAL_BLOCK_LIKE: chip revision, partition, vector, network state [I, routine-name prefixes]
+[registers.get_hub_chiprev]
+offset = 0xe00000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_init_node_e04000]
+offset = 0xe04000
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_init_node_e04010]
+offset = 0xe04010
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.part_init_node_e04020]
+offset = 0xe04020
+access = "w"
+width = 64
+grade = "established"
+from = "census: 4 sites, 4 routines"
+
+[registers.nic_access_hub]
+offset = 0xe04030
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 1 routines"
+
+[registers.bte_error_handler_e04040]
+offset = 0xe04040
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_clear_e04048]
+offset = 0xe04048
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.hub_error_clear_e04050]
+offset = 0xe04050
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.bte_error_handler_e04058]
+offset = 0xe04058
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.bte_error_handler_e04060]
+offset = 0xe04060
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_10c0_e08010]
+offset = 0xe08010
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.vector_write_node]
+offset = 0xe0c000
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 2 routines"
+
+[registers.vector_write_node_e0c008]
+offset = 0xe0c008
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.vector_write_node_e0c010]
+offset = 0xe0c010
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.vector_write_node_e0c020]
+offset = 0xe0c020
+access = "r"
+width = 64
+grade = "established"
+from = "census: 4 sites, 2 routines"
+
+[registers.vector_read_node]
+offset = 0xe0c030
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.vector_write_node_e0c038]
+offset = 0xe0c038
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.ni_port_down_reset]
+offset = 0xe80000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 4 sites, 3 routines"
+
+[registers.sub_18a24_e80010]
+offset = 0xe80010
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 2 routines"
+
+[registers.sub_18a24_e80100]
+offset = 0xe80100
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 8 sites, 4 routines"
+
+[registers.sub_18a24_e80120]
+offset = 0xe80120
+access = "r"
+width = 64
+grade = "established"
+from = "census: 13 sites, 6 routines"
+
+# ---- MEMORY_DIRECTORY_LIKE: memory and directory [I, routine-name prefixes]
+[registers.hub_error_clear_f00120]
+offset = 0xf00120
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.memory_read_accessible]
+offset = 0xf80000
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.part_init_node_f80008]
+offset = 0xf80008
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 4 sites, 3 routines"
+
+[registers.fetchop_flush]
+offset = 0xf80020
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.fetchop_flush_f80028]
+offset = 0xf80028
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.log_md_errors]
+offset = 0xf80040
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.hub_error_clear_f80058]
+offset = 0xf80058
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.cpuprom_map]
+offset = 0xfa0008
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.per_hub_init_fa0038]
+offset = 0xfa0038
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.show_dir_state]
+offset = 0xfc0000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 30 sites, 18 routines"
+
+[registers.memerror_sbe_intr]
+offset = 0xfc0010
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.memerror_sbe_intr_fc0018]
+offset = 0xfc0018
+access = "r"
+width = 64
+grade = "established"
+from = "census: 4 sites, 3 routines"
+
+[registers.hub_error_clear_fc0028]
+offset = 0xfc0028
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+
+[registers.migr_effthreshold_diff]
+offset = 0xfc0040
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.sub_1242c]
+offset = 0xfc0050
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.memerror_sbe_intr_fe0010]
+offset = 0xfe0010
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.memerror_sbe_intr_fe0018]
+offset = 0xfe0018
+access = "r"
+width = 64
+grade = "established"
+from = "census: 5 sites, 3 routines"
+
+# ---- boot-space: accesses through a separate address-space window, not registers of this ASIC; offsets are from the window base [E]
+[registers.boot_space_off_000064]
+offset = 0x64
+access = "r"
+width = 32
+grade = "established"
+from = "census: 2 sites, 1 routines"
+space = "bedrock_boot_space"
+
+[registers.boot_space_nic_get_phase_bits]
+offset = 0x78
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+space = "bedrock_boot_space"
+
+[registers.boot_space_off_000080]
+offset = 0x80
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+space = "bedrock_boot_space"
+
+[registers.boot_space_off_00008c]
+offset = 0x8c
+access = "r"
+width = 32
+grade = "established"
+from = "census: 1 sites, 1 routines"
+space = "bedrock_boot_space"
+
+[registers.boot_space_off_00009c]
+offset = 0x9c
+access = "r"
+width = 32
+grade = "established"
+from = "census: 1 sites, 1 routines"
+space = "bedrock_boot_space"
+
+[registers.boot_space_cpuprom_detailed_inventory_info_add]
+offset = 0xa0
+access = "r"
+width = 32
+grade = "established"
+from = "census: 2 sites, 2 routines"
+space = "bedrock_boot_space"
+
+[registers.boot_space_cpuprom_detailed_inventory_info_add_a4]
+offset = 0xa4
+access = "r"
+width = 32
+grade = "established"
+from = "census: 2 sites, 2 routines"
+space = "bedrock_boot_space"
+
+[constants]
+BOOT_SPACE_OFF_000064_B_15_0 = { value = 0xffff, grade = "inferred" }
+BOOT_SPACE_OFF_000064_B_8_0 = { value = 0x1ff, grade = "inferred" }
+BRL1_INTR_POLL_B_4 = { value = 0x10, grade = "inferred" }
+BTE_CRB_ERROR_HANDLER_V_800 = { value = 0x800, grade = "inferred" }
+BTE_ERROR_HANDLER_B_0 = { value = 0x1, grade = "inferred" }
+BTE_ERROR_HANDLER_B_4 = { value = 0x10, grade = "inferred" }
+BTE_ERROR_HANDLER_B_4_0 = { value = 0x11, grade = "inferred" }
+BTE_ERROR_HANDLER_B_8 = { value = 0x100, grade = "inferred" }
+BTE_ERROR_HANDLER_C001F8_V_FF0000 = { value = 0xff0000, grade = "inferred" }
+BTE_ERROR_HANDLER_C001F8_V_FFFF = { value = 0xffff, grade = "inferred" }
+BTE_ERROR_HANDLER_V_101 = { value = 0x101, grade = "inferred" }
+CAPTURE_HUB_STATS_B_15_0 = { value = 0xffff, grade = "inferred" }
+DOACVEC_B_0 = { value = 0x1, grade = "inferred" }
+GET_HUB_CHIPREV_B_3_0 = { value = 0xf, grade = "inferred" }
+HUBIIO_CRB_ERROR_HANDLER_B_1_0 = { value = 0x3, grade = "inferred" }
+HUBIIO_CRB_FREE_B_4 = { value = 0x10, grade = "inferred" }
+HUBIIO_CRB_FREE_C00400_B_0 = { value = 0x1, grade = "inferred" }
+HUBIIO_CRB_FREE_C00400_B_2_0 = { value = 0x7, grade = "inferred" }
+HUBIIO_CRB_FREE_C00400_B_3_0 = { value = 0xf, grade = "inferred" }
+HUBIIO_CRB_FREE_C00400_B_4_0 = { value = 0x1f, grade = "inferred" }
+HUBIIO_CRB_FREE_V_10 = { value = 0x10, grade = "inferred" }
+HUBII_EINT_INIT_B_1 = { value = 0x2, grade = "inferred" }
+HUBII_EINT_INIT_B_10_0 = { value = 0x7ff, grade = "inferred" }
+HUBII_EINT_INIT_B_13 = { value = 0x2000, grade = "inferred" }
+HUBPI_EINT_HANDLER_4C8_B_7_0 = { value = 0xff, grade = "inferred" }
+HUB_ERROR_CLEAR_C00138_V_1000000 = { value = 0x1000000, grade = "inferred" }
+HUB_PIOMAP_ALLOC_B_3_0 = { value = 0xf, grade = "inferred" }
+HUB_PIOMAP_ALLOC_B_4_0 = { value = 0x1f, grade = "inferred" }
+HUB_PIOMAP_ALLOC_B_7_0 = { value = 0xff, grade = "inferred" }
+HUB_PIOMAP_ALLOC_V_300 = { value = 0x300, grade = "inferred" }
+HUB_WIDGET_ID_B_3_0 = { value = 0xf, grade = "inferred" }
+HUB_WIDGET_RESET_B_7_0 = { value = 0xff, grade = "inferred" }
+HUB_WIDGET_RESET_C00388_B_4 = { value = 0x10, grade = "inferred" }
+II_LLP_ERROR_MONITOR_B_15_0 = { value = 0xffff, grade = "inferred" }
+MDIR_XLATE_ADDR_MEM_B_1_0 = { value = 0x3, grade = "inferred" }
+MEMERROR_SBE_INTR_FE0018_B_0 = { value = 0x1, grade = "inferred" }
+MEMORY_ISCALIAS_V_1 = { value = 0x1, grade = "inferred" }
+NIC_ACCESS_HUB_B_0 = { value = 0x1, grade = "inferred" }
+NIC_ACCESS_HUB_B_1 = { value = 0x2, grade = "inferred" }
+NI_LLP_ERROR_MONITOR_B_3_0 = { value = 0xf, grade = "inferred" }
+NI_PORT_DOWN_RESET_B_1 = { value = 0x2, grade = "inferred" }
+NI_PORT_DOWN_RESET_B_2_1 = { value = 0x6, grade = "inferred" }
+PER_HUB_INIT_C003A8_V_F0 = { value = 0xf0, grade = "inferred" }
+PER_HUB_INIT_C003B8_V_FF = { value = 0xff, grade = "inferred" }
+PER_HUB_INIT_V_200000 = { value = 0x200000, grade = "inferred" }
+REG_000108_V_1 = { value = 0x1, grade = "inferred" }
+REG_000108_V_2 = { value = 0x2, grade = "inferred" }
+REG_000108_V_2A = { value = 0x2a, grade = "inferred" }
+REG_000108_V_2B = { value = 0x2b, grade = "inferred" }
+REG_000108_V_3 = { value = 0x3, grade = "inferred" }
+REG_000108_V_35 = { value = 0x35, grade = "inferred" }
+REG_000108_V_36 = { value = 0x36, grade = "inferred" }
+REG_000108_V_4 = { value = 0x4, grade = "inferred" }
+REG_000108_V_5 = { value = 0x5, grade = "inferred" }
+REG_000108_V_5D = { value = 0x5d, grade = "inferred" }
+REG_000108_V_5E = { value = 0x5e, grade = "inferred" }
+REG_000108_V_5F = { value = 0x5f, grade = "inferred" }
+REG_000108_V_60 = { value = 0x60, grade = "inferred" }
+REG_000108_V_81 = { value = 0x81, grade = "inferred" }
+REG_000108_V_83 = { value = 0x83, grade = "inferred" }
+REG_000108_V_84 = { value = 0x84, grade = "inferred" }
+REG_000108_V_A = { value = 0xa, grade = "inferred" }
+REG_000108_V_B = { value = 0xb, grade = "inferred" }
+REG_000108_V_B4 = { value = 0xb4, grade = "inferred" }
+REG_000108_V_C = { value = 0xc, grade = "inferred" }
+REG_000108_V_E = { value = 0xe, grade = "inferred" }
+REG_000108_V_F = { value = 0xf, grade = "inferred" }
+REG_400110_V_FF01 = { value = 0xff01, grade = "inferred" }
+REG_400128_B_13 = { value = 0x2000, grade = "inferred" }
+REG_400128_V_100 = { value = 0x100, grade = "inferred" }
+REG_608008_V_7F80000 = { value = 0x7f80000, grade = "inferred" }
+REG_608010_B_8 = { value = 0x100, grade = "inferred" }
+REG_608010_V_7 = { value = 0x7, grade = "inferred" }
+REG_7A0000_B_11_0 = { value = 0xfff, grade = "inferred" }
+SHOW_DIR_STATE_B_0 = { value = 0x1, grade = "inferred" }
+SUB_10C0_680010_V_1 = { value = 0x1, grade = "inferred" }
+SUB_11984_B_0 = { value = 0x1, grade = "inferred" }
+SUB_18A24_E80120_B_7_0 = { value = 0xff, grade = "inferred" }
+SUB_1BCF0_600000_B_1_0 = { value = 0x3, grade = "inferred" }
+SUB_1BCF0_600000_B_6_0 = { value = 0x7f, grade = "inferred" }
+SUB_1BCF0_600000_B_7_0 = { value = 0xff, grade = "inferred" }
+SUB_1BCF0_800090_V_100 = { value = 0x100, grade = "inferred" }
+SUB_1BCF0_800090_V_64 = { value = 0x64, grade = "inferred" }
+SUB_1BCF0_A00090_V_100 = { value = 0x100, grade = "inferred" }
+SUB_1BCF0_A00090_V_64 = { value = 0x64, grade = "inferred" }
+SUB_1BCF0_B_0 = { value = 0x1, grade = "inferred" }
+SUB_1BCF0_B_1 = { value = 0x2, grade = "inferred" }
+SUB_1BCF0_V_CAFE = { value = 0xcafe, grade = "inferred" }
+SUB_20250_B_0 = { value = 0x1, grade = "inferred" }
+SUB_20EE0_B_0 = { value = 0x1, grade = "inferred" }
+SUB_20EE0_V_40 = { value = 0x40, grade = "inferred" }
+SUB_20EE0_V_64 = { value = 0x64, grade = "inferred" }
+SUB_20EE0_V_6B = { value = 0x6b, grade = "inferred" }
+SUB_20EE0_V_7 = { value = 0x7, grade = "inferred" }
+SUB_28E3C_B_13_4 = { value = 0x3ff0, grade = "inferred" }
+SUB_28E3C_B_9_0 = { value = 0x3ff, grade = "inferred" }
+SUB_3D1D8_V_1 = { value = 0x1, grade = "inferred" }
+SUB_3D1D8_V_10000 = { value = 0x10000, grade = "inferred" }
+SUB_3D1D8_V_20000 = { value = 0x20000, grade = "inferred" }

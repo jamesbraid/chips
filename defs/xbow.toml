@@ -1,0 +1,289 @@
+# Written by retools/tools/chips/gen_headers.py from chips/xbow/census/. Do not edit: fix the census or its config and rerun.
+unit = "xbow"
+prefix = "XBOW"
+title = "Xbow (crossbar)"
+doc = "Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout. Views: the offset is the 8-byte slot address. \"4 at slot+4\" is a 32-bit load or store at that address plus 4, the low word of the slot on a big-endian machine; a 64-bit access to the slot address reaches the same register."
+from = "census: loads and stores in the shipped binaries; names from the Crossbow ASIC Specification revision 12.0 register name (Hwreg column), applied by the census join after the offsets were read from the code"
+public_from = ["census:"]
+
+[c]
+legacy_header = "include/xbow.h"
+legacy_guard = "XBOW_H"
+offset_macro = "bare"
+
+[c.aliases]
+XBOW_XB_CTRL_20 = "XBOW_XB_CTRL"
+XBOW_XB_ERR_CMDWORD_40 = "XBOW_XB_ERR_CMDWORD"
+XBOW_XB_ERR_LOWER_18 = "XBOW_XB_ERR_LOWER"
+XBOW_XB_ERR_UPPER_10 = "XBOW_XB_ERR_UPPER"
+XBOW_XB_ID_0 = "XBOW_XB_ID"
+XBOW_XB_LINK_AUX_STAT_138 = "XBOW_XB_LINK_AUX_STAT"
+XBOW_XB_LINK_CTRL_108 = "XBOW_XB_LINK_CTRL"
+XBOW_XB_LINK_STAT_110 = "XBOW_XB_LINK_STAT"
+XBOW_XB_LINK_STAT_CLR_128 = "XBOW_XB_LINK_STAT_CLR"
+XBOW_XB_STAT_8 = "XBOW_XB_STAT"
+
+# ---- registers (8-byte slots)
+[registers.xb_id]
+offset = 0x0
+access = "r"
+width = 32
+grade = "established"
+from = "census: 21 sites, 7 routines"
+
+[registers.xb_stat]
+offset = 0x8
+access = "r"
+width = 32
+grade = "established"
+from = "census: 8 sites, 4 routines"
+
+[registers.xb_err_upper]
+offset = 0x10
+access = "r"
+width = 32
+grade = "established"
+from = "census: 10 sites, 4 routines"
+
+[registers.xb_err_lower]
+offset = 0x18
+access = "r"
+width = 32
+grade = "established"
+from = "census: 10 sites, 4 routines"
+
+[registers.xb_ctrl]
+offset = 0x20
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 9 sites, 3 routines"
+
+[registers.xb_pkt_to]
+offset = 0x28
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.xb_int_upper]
+offset = 0x30
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 6 sites, 2 routines"
+
+[registers.xb_int_lower]
+offset = 0x38
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 6 sites, 2 routines"
+
+[registers.xb_err_cmdword]
+offset = 0x40
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 14 sites, 4 routines"
+
+[registers.xb_llp_ctrl]
+offset = 0x48
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.xb_stat_clr]
+offset = 0x50
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.xb_arb_reload]
+offset = 0x58
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.reserved]
+offset = 0x80
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.reserved_88]
+offset = 0x88
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.reserved_90]
+offset = 0x90
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.reserved_98]
+offset = 0x98
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.reserved_a0]
+offset = 0xa0
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.reserved_a8]
+offset = 0xa8
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.reserved_b0]
+offset = 0xb0
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.reserved_b8]
+offset = 0xb8
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.xb_link_ctrl]
+offset = 0x108
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 9 sites, 1 routines"
+
+[registers.xb_link_stat]
+offset = 0x110
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.xb_link_arb_upper]
+offset = 0x118
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 15 sites, 5 routines"
+
+[registers.xb_link_arb_lower]
+offset = 0x120
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 15 sites, 5 routines"
+
+[registers.xb_link_stat_clr]
+offset = 0x128
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.xb_link_reset]
+offset = 0x130
+access = "w"
+width = 32
+grade = "established"
+from = "census: 6 sites, 4 routines"
+
+[registers.xb_link_aux_stat]
+offset = 0x138
+access = "r"
+width = 32
+grade = "established"
+from = "census: 6 sites, 4 routines"
+
+[registers.xb_link_ctrl_148]
+offset = 0x148
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 9 sites, 1 routines"
+
+[registers.xb_link_stat_150]
+offset = 0x150
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.xb_link_stat_clr_168]
+offset = 0x168
+access = "r"
+width = 32
+grade = "established"
+from = "census: 3 sites, 1 routines"
+
+[registers.xb_link_aux_stat_178]
+offset = 0x178
+access = "r"
+width = 32
+grade = "established"
+from = "census: 6 sites, 4 routines"
+
+[registers.xb_link_arb_upper_198]
+offset = 0x198
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 4 sites, 1 routines"
+
+[registers.xb_link_arb_upper_1d8]
+offset = 0x1d8
+access = "rw"
+width = 32
+grade = "established"
+from = "census: 4 sites, 1 routines"
+
+[constants]
+RESERVED_V_FF = { value = 0xff, grade = "inferred" }
+XB_CTRL_20_B_3_0 = { value = 0xf, grade = "inferred" }
+XB_CTRL_20_B_7_0 = { value = 0xff, grade = "inferred" }
+XB_CTRL_20_V_24 = { value = 0x24, grade = "inferred" }
+XB_CTRL_20_V_80000000 = { value = 0x80000000, grade = "inferred" }
+XB_CTRL_B_3_0 = { value = 0xf, grade = "inferred" }
+XB_CTRL_B_7_0 = { value = 0xff, grade = "inferred" }
+XB_CTRL_V_24 = { value = 0x24, grade = "inferred" }
+XB_CTRL_V_80000000 = { value = 0x80000000, grade = "inferred" }
+XB_ID_0_B_10_0 = { value = 0x7ff, grade = "inferred" }
+XB_ID_0_B_15_0 = { value = 0xffff, grade = "inferred" }
+XB_ID_0_B_2_0 = { value = 0x7, grade = "inferred" }
+XB_ID_B_10_0 = { value = 0x7ff, grade = "inferred" }
+XB_ID_B_15_0 = { value = 0xffff, grade = "inferred" }
+XB_ID_B_2_0 = { value = 0x7, grade = "inferred" }
+XB_INT_UPPER_B_15_0 = { value = 0xffff, grade = "inferred" }
+XB_LINK_ARB_UPPER_1D8_V_9 = { value = 0x9, grade = "inferred" }
+XB_LINK_AUX_STAT_138_B_5 = { value = 0x20, grade = "inferred" }
+XB_LINK_AUX_STAT_138_B_7_0 = { value = 0xff, grade = "inferred" }
+XB_LINK_AUX_STAT_178_B_5 = { value = 0x20, grade = "inferred" }
+XB_LINK_AUX_STAT_B_5 = { value = 0x20, grade = "inferred" }
+XB_LINK_AUX_STAT_B_7_0 = { value = 0xff, grade = "inferred" }
+XB_LINK_CTRL_108_B_3 = { value = 0x8, grade = "inferred" }
+XB_LINK_CTRL_108_V_80000 = { value = 0x80000, grade = "inferred" }
+XB_LINK_CTRL_148_B_3 = { value = 0x8, grade = "inferred" }
+XB_LINK_CTRL_B_3 = { value = 0x8, grade = "inferred" }
+XB_LINK_CTRL_V_80000 = { value = 0x80000, grade = "inferred" }
+XB_STAT_8_B_5_2 = { value = 0x24, grade = "inferred" }
+XB_STAT_8_B_9_6 = { value = 0x3c0, grade = "inferred" }
+XB_STAT_B_5_2 = { value = 0x24, grade = "inferred" }
+XB_STAT_B_9_6 = { value = 0x3c0, grade = "inferred" }

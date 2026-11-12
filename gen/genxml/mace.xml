@@ -1,0 +1,295 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/mace.toml by defs-gen - do not edit, change the source -->
+<genxml unit="mace" prefix="MACE" title="MACE (O2 I/O ASIC)" from="census: loads and stores in the shipped binaries; names from the MACE I/O ASIC Specification, chip revision 2.0, register title (applied by the census join after the offsets were read from the code)">
+  <doc>Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout. Views: the offset is the 8-byte slot address. "4 at slot+4" is a 32-bit load or store at that address plus 4, the low word of the slot on a big-endian machine; a 64-bit access to the slot address reaches the same register.</doc>
+  <struct name="PCI_ERR_ADDR" size="4" grade="established" from="census: 5 sites, 4 routines" register="yes" offset="0x80000" access="rw" reset="unknown">
+  </struct>
+  <struct name="PCI_ERR_FLAGS" size="4" grade="established" from="census: 32 sites, 17 routines" register="yes" offset="0x80004" access="rw" reset="unknown">
+  </struct>
+  <struct name="PCI_CONTROL" size="4" grade="established" from="census: 9 sites, 5 routines" register="yes" offset="0x80008" access="rw" reset="unknown">
+  </struct>
+  <struct name="PCI_FLUSH_REV" size="4" grade="established" from="census: 4 sites, 4 routines" register="yes" offset="0x8000c" access="rw" reset="unknown">
+  </struct>
+  <struct name="PCI_CONFIG_ADDR" size="4" grade="established" from="census: 15 sites, 6 routines" register="yes" offset="0x80cf8" access="w" reset="unknown">
+  </struct>
+  <struct name="PCI_CONFIG_DATA" size="4" grade="established" from="census: 25 sites, 6 routines" register="yes" offset="0x80cfc" access="rw" reset="unknown">
+  </struct>
+  <struct name="VOUT_VHW_CFG" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x200058" access="r" reset="unknown">
+  </struct>
+  <struct name="ETH_MAC_CONTROL" size="4" grade="established" from="census: 5 sites, 3 routines" register="yes" offset="0x280000" access="rw" reset="unknown">
+  </struct>
+  <struct name="ETH_RX_FIFO" size="1" grade="established" from="census: 7 sites, 1 routines" register="yes" offset="0x280040" access="r" reset="unknown">
+  </struct>
+  <struct name="ETH_INTERNAL_RAM" size="4" grade="established" from="census: 5 sites, 1 routines" register="yes" offset="0x280100" access="rw" reset="unknown">
+  </struct>
+  <struct name="AUD_CONTROL" size="8" grade="established" from="census: 12 sites, 7 routines" register="yes" offset="0x300000" access="rw" reset="unknown">
+  </struct>
+  <struct name="AUD_CODEC_CNTL" size="8" grade="established" from="census: 4 sites, 4 routines" register="yes" offset="0x300008" access="rw" reset="unknown">
+  </struct>
+  <struct name="AUD_CODEC_MASK" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x300010" access="rw" reset="unknown">
+  </struct>
+  <struct name="AUD_CODEC_READ" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x300018" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH1_CNTL" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300020" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH1_READ" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300028" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH1_WRITE" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300030" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH1_DEPTH" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300038" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH2_CNTL" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300040" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH2_READ" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300048" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH2_WRITE" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300050" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH2_DEPTH" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300058" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH3_CNTL" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300060" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH3_READ" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300068" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH3_WRITE" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300070" access="r" reset="unknown">
+  </struct>
+  <struct name="AUD_CH3_DEPTH" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x300078" access="r" reset="unknown">
+  </struct>
+  <struct name="PIOFLUSH" size="4" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x304018" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RING_BASE" size="8" grade="established" from="census: 9 sites, 6 routines" register="yes" offset="0x310000" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_MISC" size="8" grade="established" from="census: 30 sites, 14 routines" register="yes" offset="0x310008" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_INT_STAT" size="8" grade="established" from="census: 9 sites, 7 routines" register="yes" offset="0x310010" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_INT_MASK" size="8" grade="established" from="census: 24 sites, 12 routines" register="yes" offset="0x310018" access="rw" reset="unknown">
+  </struct>
+  <struct name="PAR_CNTL_STAT" size="8" grade="established" from="census: 23 sites, 6 routines" register="yes" offset="0x314010" access="rw" reset="unknown">
+  </struct>
+  <struct name="PAR_DIAG" size="8" grade="established" from="census: 5 sites, 2 routines" register="yes" offset="0x314018" access="r" reset="unknown">
+  </struct>
+  <struct name="S1_TX_CNTL" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x318000" access="rw" reset="unknown">
+  </struct>
+  <struct name="S1_RX_CNTL" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x318020" access="rw" reset="unknown">
+  </struct>
+  <struct name="S2_TX_CNTL" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x31c000" access="rw" reset="unknown">
+  </struct>
+  <struct name="S2_RX_CNTL" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x31c020" access="rw" reset="unknown">
+  </struct>
+  <struct name="I2C_CONTROL" size="8" grade="established" from="census: 13 sites, 4 routines" register="yes" offset="0x330010" access="rw" reset="unknown">
+  </struct>
+  <struct name="I2C_DATA" size="8" grade="established" from="census: 5 sites, 1 routines" register="yes" offset="0x330018" access="rw" reset="unknown">
+  </struct>
+  <struct name="TMR_UST" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x340000" access="r" reset="unknown">
+  </struct>
+  <struct name="TMR_COMPARE1" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x340008" access="r" reset="unknown">
+  </struct>
+  <struct name="TMR_COMPARE2" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x340010" access="r" reset="unknown">
+  </struct>
+  <struct name="TMR_COMPARE3" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x340018" access="r" reset="unknown">
+  </struct>
+  <struct name="TMR_AIN" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x340020" access="r" reset="unknown">
+  </struct>
+  <struct name="TMR_AOUT1" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x340028" access="r" reset="unknown">
+  </struct>
+  <struct name="TMR_AOUT2" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x340030" access="r" reset="unknown">
+  </struct>
+  <struct name="ISA_PARALLEL" size="1" grade="established" from="census: 18 sites, 6 routines" register="yes" offset="0x380000" access="w" reset="unknown">
+  </struct>
+  <struct name="ISA_PARALLEL_380100" size="1" grade="established" from="census: 27 sites, 9 routines" register="yes" offset="0x380100" access="r" reset="unknown">
+  </struct>
+  <struct name="ISA_PARALLEL_380200" size="1" grade="established" from="census: 59 sites, 10 routines" register="yes" offset="0x380200" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_PARALLEL_380300" size="1" grade="established" from="census: 46 sites, 7 routines" register="yes" offset="0x380300" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_PARALLEL_380400" size="1" grade="established" from="census: 41 sites, 6 routines" register="yes" offset="0x380400" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_ECP1284" size="1" grade="established" from="census: 46 sites, 10 routines" register="yes" offset="0x388200" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC" size="1" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x3a0000" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0100" size="1" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x3a0100" access="w" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0200" size="1" grade="established" from="census: 7 sites, 4 routines" register="yes" offset="0x3a0200" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0300" size="1" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x3a0300" access="w" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0400" size="1" grade="established" from="census: 7 sites, 4 routines" register="yes" offset="0x3a0400" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0500" size="1" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x3a0500" access="w" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0600" size="1" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x3a0600" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0700" size="1" grade="established" from="census: 7 sites, 4 routines" register="yes" offset="0x3a0700" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0800" size="1" grade="established" from="census: 7 sites, 4 routines" register="yes" offset="0x3a0800" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0900" size="1" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x3a0900" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0A00" size="1" grade="established" from="census: 86 sites, 24 routines" register="yes" offset="0x3a0a00" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0B00" size="1" grade="established" from="census: 22 sites, 5 routines" register="yes" offset="0x3a0b00" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0C00" size="1" grade="established" from="census: 4 sites, 4 routines" register="yes" offset="0x3a0c00" access="r" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A0E00" size="1" grade="established" from="census: 5 sites, 3 routines" register="yes" offset="0x3a0e00" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A4800" size="1" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x3a4800" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A4900" size="1" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x3a4900" access="w" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A4A00" size="1" grade="established" from="census: 34 sites, 10 routines" register="yes" offset="0x3a4a00" access="rw" reset="unknown">
+  </struct>
+  <struct name="ISA_RTC_3A4B00" size="1" grade="established" from="census: 28 sites, 6 routines" register="yes" offset="0x3a4b00" access="rw" reset="unknown">
+  </struct>
+  <constant name="AUD_CODEC_CNTL_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="AUD_CODEC_CNTL_V_10000" value="0x10000" grade="inferred"/>
+  <constant name="AUD_CODEC_READ_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="AUD_CONTROL_B_1" value="0x2" grade="inferred"/>
+  <constant name="AUD_CONTROL_B_11_5" value="0xfe0" grade="inferred"/>
+  <constant name="AUD_CONTROL_V_1" value="0x1" grade="inferred"/>
+  <constant name="ETH_MAC_CONTROL_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ETH_MAC_CONTROL_V_1" value="0x1" grade="inferred"/>
+  <constant name="I2C_CONTROL_B_0" value="0x1" grade="inferred"/>
+  <constant name="I2C_CONTROL_V_1" value="0x1" grade="inferred"/>
+  <constant name="I2C_CONTROL_V_3" value="0x3" grade="inferred"/>
+  <constant name="ISA_ECP1284_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_ECP1284_V_10" value="0x10" grade="inferred"/>
+  <constant name="ISA_ECP1284_V_40" value="0x40" grade="inferred"/>
+  <constant name="ISA_ECP1284_V_60" value="0x60" grade="inferred"/>
+  <constant name="ISA_ECP1284_V_8" value="0x8" grade="inferred"/>
+  <constant name="ISA_ECP1284_V_80" value="0x80" grade="inferred"/>
+  <constant name="ISA_ECP1284_V_C0" value="0xc0" grade="inferred"/>
+  <constant name="ISA_INT_MASK_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_INT_MASK_V_100" value="0x100" grade="inferred"/>
+  <constant name="ISA_INT_MASK_V_18" value="0x18" grade="inferred"/>
+  <constant name="ISA_INT_MASK_V_A00" value="0xa00" grade="inferred"/>
+  <constant name="ISA_INT_STAT_B_1" value="0x2" grade="inferred"/>
+  <constant name="ISA_INT_STAT_B_8" value="0x100" grade="inferred"/>
+  <constant name="ISA_MISC_B_1" value="0x2" grade="inferred"/>
+  <constant name="ISA_MISC_B_4" value="0x10" grade="inferred"/>
+  <constant name="ISA_MISC_B_5_4" value="0x30" grade="inferred"/>
+  <constant name="ISA_MISC_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_MISC_V_1" value="0x1" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_3" value="0x8" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_4" value="0x10" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_5" value="0x20" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_6" value="0x40" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_6_3" value="0x48" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_7" value="0x80" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_7_3" value="0xf8" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_7_4" value="0xf0" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_7_5_4" value="0xb0" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380100_B_7_6_3" value="0xc8" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_B_6" value="0x40" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_B_6_3" value="0x78" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_B_7_5_4" value="0xb0" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_B_7_6_3" value="0xc8" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_V_1" value="0x1" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_V_2" value="0x2" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_V_20" value="0x20" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_V_4" value="0x4" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_V_5" value="0x5" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_V_7" value="0x7" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_V_8" value="0x8" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_V_D" value="0xd" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380200_V_E" value="0xe" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380300_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380300_V_1" value="0x1" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380300_V_2" value="0x2" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380300_V_3" value="0x3" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380300_V_6" value="0x6" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380300_V_8" value="0x8" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380300_V_9" value="0x9" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380300_V_A" value="0xa" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380400_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380400_V_1A" value="0x1a" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380400_V_2" value="0x2" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380400_V_42" value="0x42" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380400_V_5" value="0x5" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380400_V_8" value="0x8" grade="inferred"/>
+  <constant name="ISA_PARALLEL_380400_V_9" value="0x9" grade="inferred"/>
+  <constant name="ISA_PARALLEL_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_100" value="0x100" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_2" value="0x2" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_4" value="0x4" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_5" value="0x5" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_55" value="0x55" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_78" value="0x78" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_87" value="0x87" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_AA" value="0xaa" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_FE" value="0xfe" grade="inferred"/>
+  <constant name="ISA_PARALLEL_V_FF" value="0xff" grade="inferred"/>
+  <constant name="ISA_RING_BASE_B_4" value="0x10" grade="inferred"/>
+  <constant name="ISA_RING_BASE_V_0" value="0x0" grade="inferred"/>
+  <constant name="ISA_RTC_3A0100_V_C0" value="0xc0" grade="inferred"/>
+  <constant name="ISA_RTC_3A0200_B_4_0" value="0x1f" grade="inferred"/>
+  <constant name="ISA_RTC_3A0200_B_5_0" value="0x3f" grade="inferred"/>
+  <constant name="ISA_RTC_3A0300_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_RTC_3A0400_B_4_0" value="0x1f" grade="inferred"/>
+  <constant name="ISA_RTC_3A0400_B_5_0" value="0x3f" grade="inferred"/>
+  <constant name="ISA_RTC_3A0400_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_RTC_3A0500_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_RTC_3A0600_B_2_0" value="0x7" grade="inferred"/>
+  <constant name="ISA_RTC_3A0700_B_2_0" value="0x7" grade="inferred"/>
+  <constant name="ISA_RTC_3A0700_B_4_0" value="0x1f" grade="inferred"/>
+  <constant name="ISA_RTC_3A0700_B_5_0" value="0x3f" grade="inferred"/>
+  <constant name="ISA_RTC_3A0800_B_2_0" value="0x7" grade="inferred"/>
+  <constant name="ISA_RTC_3A0800_B_4_0" value="0x1f" grade="inferred"/>
+  <constant name="ISA_RTC_3A0900_B_2_0" value="0x7" grade="inferred"/>
+  <constant name="ISA_RTC_3A0A00_B_15_5_3_0" value="0xffef" grade="inferred"/>
+  <constant name="ISA_RTC_3A0A00_B_15_7_5_0" value="0xffbf" grade="inferred"/>
+  <constant name="ISA_RTC_3A0A00_B_4" value="0x10" grade="inferred"/>
+  <constant name="ISA_RTC_3A0A00_B_6_5" value="0x60" grade="inferred"/>
+  <constant name="ISA_RTC_3A0A00_B_7" value="0x80" grade="inferred"/>
+  <constant name="ISA_RTC_3A0A00_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_RTC_3A0A00_V_10" value="0x10" grade="inferred"/>
+  <constant name="ISA_RTC_3A0A00_V_20" value="0x20" grade="inferred"/>
+  <constant name="ISA_RTC_3A0A00_V_30" value="0x30" grade="inferred"/>
+  <constant name="ISA_RTC_3A0B00_B_15_3_1_0" value="0xfffb" grade="inferred"/>
+  <constant name="ISA_RTC_3A0B00_B_15_8_6_0" value="0xff7f" grade="inferred"/>
+  <constant name="ISA_RTC_3A0B00_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_RTC_3A0B00_V_2" value="0x2" grade="inferred"/>
+  <constant name="ISA_RTC_3A0B00_V_80" value="0x80" grade="inferred"/>
+  <constant name="ISA_RTC_3A0B00_V_82" value="0x82" grade="inferred"/>
+  <constant name="ISA_RTC_3A0C00_B_7" value="0x80" grade="inferred"/>
+  <constant name="ISA_RTC_3A0E00_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_RTC_3A0E00_V_1" value="0x1" grade="inferred"/>
+  <constant name="ISA_RTC_3A4900_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_RTC_3A4A00_B_0" value="0x1" grade="inferred"/>
+  <constant name="ISA_RTC_3A4A00_B_15_2" value="0xfffc" grade="inferred"/>
+  <constant name="ISA_RTC_3A4A00_B_1_0" value="0x3" grade="inferred"/>
+  <constant name="ISA_RTC_3A4A00_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_RTC_3A4A00_V_8" value="0x8" grade="inferred"/>
+  <constant name="ISA_RTC_3A4B00_B_15_2_0" value="0xfffd" grade="inferred"/>
+  <constant name="ISA_RTC_3A4B00_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="ISA_RTC_3A4B00_V_2" value="0x2" grade="inferred"/>
+  <constant name="ISA_RTC_3A4B00_V_81" value="0x81" grade="inferred"/>
+  <constant name="ISA_RTC_3A4B00_V_83" value="0x83" grade="inferred"/>
+  <constant name="ISA_RTC_3A4B00_V_9" value="0x9" grade="inferred"/>
+  <constant name="ISA_RTC_B_5_0" value="0x3f" grade="inferred"/>
+  <constant name="PAR_CNTL_STAT_B_0" value="0x1" grade="inferred"/>
+  <constant name="PAR_CNTL_STAT_V_1" value="0x1" grade="inferred"/>
+  <constant name="PAR_CNTL_STAT_V_2" value="0x2" grade="inferred"/>
+  <constant name="PAR_CNTL_STAT_V_4" value="0x4" grade="inferred"/>
+  <constant name="PAR_DIAG_B_0" value="0x1" grade="inferred"/>
+  <constant name="PAR_DIAG_B_1" value="0x2" grade="inferred"/>
+  <constant name="PAR_DIAG_B_11_0" value="0xfff" grade="inferred"/>
+  <constant name="PCI_CONFIG_ADDR_B_7_2" value="0xfc" grade="inferred"/>
+  <constant name="PCI_CONFIG_ADDR_V_4" value="0x4" grade="inferred"/>
+  <constant name="PCI_CONFIG_ADDR_V_8" value="0x8" grade="inferred"/>
+  <constant name="PCI_CONFIG_ADDR_V_C" value="0xc" grade="inferred"/>
+  <constant name="PCI_CONFIG_DATA_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="PCI_CONFIG_DATA_V_3020" value="0x3020" grade="inferred"/>
+  <constant name="PCI_CONFIG_DATA_V_6" value="0x6" grade="inferred"/>
+  <constant name="PCI_CONTROL_B_11" value="0x800" grade="inferred"/>
+  <constant name="PCI_CONTROL_V_503" value="0x503" grade="inferred"/>
+  <constant name="PCI_CONTROL_V_85FF" value="0x85ff" grade="inferred"/>
+  <constant name="PCI_CONTROL_V_8DFF" value="0x8dff" grade="inferred"/>
+  <constant name="PCI_CONTROL_V_FE000000" value="0xfe000000" grade="inferred"/>
+  <constant name="PCI_CONTROL_V_FF000000" value="0xff000000" grade="inferred"/>
+  <constant name="PCI_FLUSH_REV_V_1" value="0x1" grade="inferred"/>
+  <constant name="VOUT_VHW_CFG_B_3_0" value="0xf" grade="inferred"/>
+</genxml>

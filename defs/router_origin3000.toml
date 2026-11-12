@@ -1,0 +1,74 @@
+# Written by retools/tools/chips/gen_headers.py from chips/router_origin3000/census/. Do not edit: fix the census or its config and rerun.
+unit = "router_origin3000"
+prefix = "ROUTER_ORIGIN3000"
+title = "network router as the Origin 3000 kernel reaches it (register numbers of a vector access)"
+doc = "Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout."
+from = "census: loads and stores in the shipped binaries; names from the register names of the public Linux router header, matched by offset (comparison names: the offsets, widths and roles were read from the shipped routines first)"
+public_from = ["census:"]
+
+[c]
+legacy_header = "include/router_origin3000.h"
+legacy_guard = "ROUTER_ORIGIN3000_H"
+offset_macro = "bare"
+
+[c.aliases]
+ROUTER_ORIGIN3000_PORT_HISTOGRAM0 = "ROUTER_ORIGIN3000_GLOBAL_PARMS0"
+ROUTER_ORIGIN3000_PORT_HISTOGRAM1 = "ROUTER_ORIGIN3000_GLOBAL_PARMS1"
+ROUTER_ORIGIN3000_PORT_PARMS = "ROUTER_ORIGIN3000_STATUS_REV_ID"
+
+# ---- registers (8-byte slots)
+[registers.status_rev_id]
+offset = 0x0
+access = "r"
+width = 64
+grade = "established"
+from = "census: 4 sites, 4 routines"
+
+[registers.port_status_error]
+offset = 0x8
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.prot_conf]
+offset = 0x10
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.port_reset_mask]
+offset = 0x18
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.global_parms0]
+offset = 0x20
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.global_parms1]
+offset = 0x28
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+
+[registers.port_error_clear]
+offset = 0x88
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+
+[registers.jbus0_0]
+offset = 0x200
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"

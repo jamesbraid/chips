@@ -1,0 +1,24 @@
+unit = "bridge_extra"
+prefix = "BRIDGE"
+title = "Bridge-family registers and bits outside the census"
+from = "Bridge ASIC specification rev 4.0 (3/27/97); Xbridge ASIC specification rev 0.5; shipped Origin 2000 and Origin 3000 generation device-flag routines, names agree with the public Linux Bridge header"
+
+[c]
+legacy_header = "include/bridge_extra.h"
+legacy_guard = "BRIDGE_EXTRA_H"
+
+[constants]
+DEVICE_BARRIER = { value = 0x8000, grade = "established", doc = "bit 15; meaning [I]" }
+DEVICE_PRECISE = { value = 0x20000, grade = "established", doc = "bit 17, precise exception; meaning [I]" }
+DEVICE_PREFETCH = { value = 0x40000, grade = "established", doc = "bit 18; meaning [I]" }
+DEVICE_REALTIME = { value = 0x200000, grade = "established", doc = "bit 21, written only on a revision 2 Bridge by the priority routine; meaning [I]" }
+DEVICE_SIZE_64 = { value = 0x400000, grade = "established", doc = "bit 22, 64-bit device size; dropped from the set mask when the chip is the PIC; meaning [I]" }
+DEVICE_SWAP_PAIR = { value = 0x180000, grade = "established", doc = "bits 20:19, the PMU and direct byte-swap bits, cleared when the two endian arguments are equal and set otherwise; meaning [I]" }
+DEVICE_WRITE_GATHER_EN = { value = 0x1800000, grade = "established", doc = "bits 24 and 23 together: PMU and direct write-gather enables; one flag pair controls both" }
+TEST_PIN_CONTROL = { value = 0x70, grade = "established", doc = "access rw; resets to 0 in the specification" }
+TEST_PIN_CONTROL_DATA_OUT = { value = 0xf00, grade = "established", doc = "Bridge: bits 11:8, test data out" }
+TEST_PIN_CONTROL_SELECT0 = { value = 0x3, grade = "established", doc = "Bridge: bits 1:0, pin-function select, two bits" }
+TEST_PIN_CONTROL_SELECT1 = { value = 0xc, grade = "established", doc = "Bridge: bits 3:2" }
+TEST_PIN_CONTROL_SELECT2 = { value = 0x30, grade = "established", doc = "Bridge: bits 5:4" }
+TEST_PIN_CONTROL_SELECT3 = { value = 0xc0, grade = "established", doc = "Bridge: bits 7:6" }
+XBRIDGE_TEST_PIN_CONTROL_DATA_OUT = { value = 0xff0000, grade = "established", macro = "XBRIDGE_TEST_PIN_CONTROL_DATA_OUT", doc = "Xbridge: bits 23:16, an 8-bit data field; the Xbridge specification also widens the selects to eight, whose positions this header does not give ([U])" }

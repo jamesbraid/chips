@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/bridge_extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="bridge_extra" prefix="BRIDGE" title="Bridge-family registers and bits outside the census">
+  <constant name="DEVICE_BARRIER" value="0x8000" grade="established"/>
+  <constant name="DEVICE_PRECISE" value="0x20000" grade="established"/>
+  <constant name="DEVICE_PREFETCH" value="0x40000" grade="established"/>
+  <constant name="DEVICE_REALTIME" value="0x200000" grade="established"/>
+  <constant name="DEVICE_SIZE_64" value="0x400000" grade="established"/>
+  <constant name="DEVICE_SWAP_PAIR" value="0x180000" grade="established"/>
+  <constant name="DEVICE_WRITE_GATHER_EN" value="0x1800000" grade="established"/>
+  <constant name="TEST_PIN_CONTROL" value="0x70" grade="established"/>
+  <constant name="TEST_PIN_CONTROL_DATA_OUT" value="0xf00" grade="established"/>
+  <constant name="TEST_PIN_CONTROL_SELECT0" value="0x3" grade="established"/>
+  <constant name="TEST_PIN_CONTROL_SELECT1" value="0xc" grade="established"/>
+  <constant name="TEST_PIN_CONTROL_SELECT2" value="0x30" grade="established"/>
+  <constant name="TEST_PIN_CONTROL_SELECT3" value="0xc0" grade="established"/>
+  <constant name="XBRIDGE_TEST_PIN_CONTROL_DATA_OUT" value="0xff0000" grade="established"/>
+</genxml>

@@ -1,0 +1,29 @@
+unit = "heart_extra"
+prefix = "HEART"
+title = "HEART registers outside the census"
+from = "shipped Octane PROM memory set-up; HEART widget face from the monitor decode table and the public Linux and OpenBSD headers"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+legacy_header = "include/heart_extra.h"
+legacy_guard = "HEART_EXTRA_H"
+
+[registers.sdram_mode]
+offset = 0x8
+access = "w"
+width = 64
+grade = "established"
+
+[registers.mem_ref]
+offset = 0x10
+access = "w"
+width = 64
+grade = "established"
+
+[constants]
+WIDGET_ERR_LOWER = { value = 0x78, grade = "established", doc = "failed PIO latch, lower: address 31:0" }
+WIDGET_ERR_TYPE = { value = 0x60, grade = "established", doc = "widget error type; bit names [E] from the monitor table; kernel writes back the value it read, clear rule [I]; bits 0 and 10, 11 meaning [U]" }
+WIDGET_ERR_UPPER = { value = 0x70, grade = "established", doc = "failed PIO latch, upper: bits 7:0 address 39:32, 23:22 processor, 15 read/write flag (sense [I]); cleared with the error type [I]" }
+WIDGET_RD_TIMEOUT_LATCH = { value = 0x90, grade = "established", doc = "PIO read-timeout latch: bits 19:18 processor, 15:12 widget port, 11:0 address bits 23:12" }
+WIDGET_REQ_TIMEOUT = { value = 0x28, grade = "established", doc = "value 0x28 (40) read from one Octane2 by its owner, the 32-bit value in the low half of the slot; kernel stores of 40000 and 128 reach it through a pointer and the destination is [I]; tick unit [U]: settle by a timed uncached read of an unclaimed widget address at two programmed values (hardware)" }

@@ -1,0 +1,85 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/router_origin3000_extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "router_origin3000_extra",
+   "kind": "register",
+   "name": "jbus1_0",
+   "offset": 576,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "router_origin3000_extra",
+   "kind": "register",
+   "name": "jbus1_1",
+   "offset": 584,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "router_origin3000_extra",
+   "kind": "register",
+   "name": "jbus1_2",
+   "offset": 592,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "router_origin3000_extra",
+   "kind": "register",
+   "name": "jbus1_3",
+   "offset": 600,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "router_origin3000_extra",
+   "kind": "register",
+   "name": "jbus1_4",
+   "offset": 608,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "router_origin3000_extra",
+   "kind": "register",
+   "name": "jbus1_5",
+   "offset": 616,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  }
+ ]
+}

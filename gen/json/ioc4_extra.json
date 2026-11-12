@@ -1,0 +1,187 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/ioc4_extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
+   "name": "km_rx_kbd",
+   "offset": 516,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
+   "name": "km_rx_mouse",
+   "offset": 520,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
+   "name": "km_tx_kbd",
+   "offset": 524,
+   "access": "w",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
+   "name": "km_tx_mouse",
+   "offset": 528,
+   "access": "w",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL",
+   "value": 348,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_ACTIVE",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_DIR_TO_MEMORY",
+   "value": 4,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_ERROR",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_START",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_STOP",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_COUNT_DEVICE",
+   "value": 340,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_COUNT_MEMORY",
+   "value": 344,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CURRENT_HIGH",
+   "value": 336,
+   "count": 1,
+   "grade": "unknown"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CURRENT_LOW",
+   "value": 332,
+   "count": 1,
+   "grade": "unknown"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_END_AREA",
+   "value": 352,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_LIST_HIGH",
+   "value": 328,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_LIST_LOW",
+   "value": 324,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_TIMING",
+   "value": 320,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_CR_CMD_PULSE",
+   "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_CR_SIO_DIAG_IDLE",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

@@ -1,0 +1,46 @@
+unit = "router_origin3000_extra"
+prefix = "ROUTER_ORIGIN3000"
+title = "Network router registers outside the census (Origin 3000 kernel)"
+from = "shipped Origin 3000 brick-controller UART routines; names from the public Linux router header"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+legacy_header = "include/router_origin3000_extra.h"
+legacy_guard = "ROUTER_ORIGIN3000_EXTRA_H"
+
+[registers.jbus1_0]
+offset = 0x240
+access = "rw"
+width = 64
+grade = "established"
+
+[registers.jbus1_1]
+offset = 0x248
+access = "rw"
+width = 64
+grade = "established"
+
+[registers.jbus1_2]
+offset = 0x250
+access = "rw"
+width = 64
+grade = "established"
+
+[registers.jbus1_3]
+offset = 0x258
+access = "rw"
+width = 64
+grade = "established"
+
+[registers.jbus1_4]
+offset = 0x260
+access = "rw"
+width = 64
+grade = "established"
+
+[registers.jbus1_5]
+offset = 0x268
+access = "rw"
+width = 64
+grade = "established"

@@ -1,0 +1,73 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/heart_extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "heart_extra",
+   "kind": "register",
+   "name": "sdram_mode",
+   "offset": 8,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "heart_extra",
+   "kind": "register",
+   "name": "mem_ref",
+   "offset": 16,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "heart_extra",
+   "kind": "constant",
+   "name": "WIDGET_ERR_LOWER",
+   "value": 120,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "heart_extra",
+   "kind": "constant",
+   "name": "WIDGET_ERR_TYPE",
+   "value": 96,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "heart_extra",
+   "kind": "constant",
+   "name": "WIDGET_ERR_UPPER",
+   "value": 112,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "heart_extra",
+   "kind": "constant",
+   "name": "WIDGET_RD_TIMEOUT_LATCH",
+   "value": 144,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "heart_extra",
+   "kind": "constant",
+   "name": "WIDGET_REQ_TIMEOUT",
+   "value": 40,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

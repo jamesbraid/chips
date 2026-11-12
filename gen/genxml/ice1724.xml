@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/ice1724.toml by defs-gen - do not edit, change the source -->
+<genxml unit="ice1724" prefix="ICE1724" title="VIA/IC Ensemble ICE1724 (Envy24HT) PCI audio controller registers">
+  <constant name="CCS_AC97_CONF" value="0x5" grade="established"/>
+  <constant name="CCS_GPIO_DATA" value="0x14" grade="established"/>
+  <constant name="CCS_GPIO_DATA_HI" value="0x1e" grade="established"/>
+  <constant name="CCS_GPIO_DIR" value="0x18" grade="established"/>
+  <constant name="CCS_GPIO_MASK" value="0x16" grade="established"/>
+  <constant name="CCS_GPIO_MASK_HI" value="0x1f" grade="established"/>
+  <constant name="CCS_I2C_BYTE_ADDR" value="0x11" grade="established"/>
+  <constant name="CCS_I2C_CTRL" value="0x13" grade="established"/>
+  <constant name="CCS_I2C_DATA" value="0x12" grade="established"/>
+  <constant name="CCS_I2C_DEV_ADDR" value="0x10" grade="established"/>
+  <constant name="CCS_I2S_FEATURES" value="0x6" grade="established"/>
+  <constant name="CCS_IRQ_MASK" value="0x1" grade="inferred"/>
+  <constant name="CCS_IRQ_STATUS" value="0x2" grade="inferred"/>
+  <constant name="CCS_SPDIF_CONF" value="0x7" grade="established"/>
+  <constant name="CCS_SYSCONF" value="0x4" grade="established"/>
+  <constant name="MT_BURST" value="0x19" grade="established"/>
+  <constant name="MT_CAPTURE_ADDR" value="0x20" grade="established"/>
+  <constant name="MT_CAPTURE_SIZE" value="0x24" grade="established"/>
+  <constant name="MT_CONVERTER_RESET" value="0x5" grade="established"/>
+  <constant name="MT_DMA_CONTROL" value="0x18" grade="established"/>
+  <constant name="MT_DMA_INT_MASK" value="0x3" grade="inferred"/>
+  <constant name="MT_IRQ_STATUS" value="0x0" grade="inferred"/>
+  <constant name="MT_MCLK_128X" value="0x2" grade="established"/>
+  <constant name="MT_PLAYBACK_ADDR" value="0x10" grade="established"/>
+  <constant name="MT_PLAYBACK_SIZE" value="0x14" grade="established"/>
+  <constant name="MT_RATE" value="0x1" grade="established"/>
+  <constant name="MT_SPDIF_OUT_ADDR" value="0x40" grade="established"/>
+  <constant name="MT_SPDIF_OUT_SIZE" value="0x44" grade="established"/>
+</genxml>

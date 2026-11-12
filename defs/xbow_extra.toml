@@ -1,0 +1,58 @@
+unit = "xbow_extra"
+prefix = "XBOW"
+title = "Xbow registers outside the census"
+from = "shipped kernel counter routines; Crossbow ASIC specification rev 12.0 register map; shipped crossbar driver tables; one measurement on an Octane2 after its PROM ran"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+legacy_header = "include/xbow_extra.h"
+legacy_guard = "XBOW_EXTRA_H"
+
+[registers.perf_a]
+offset = 0x60
+access = "rw"
+width = 32
+grade = "established"
+
+[registers.perf_b]
+offset = 0x68
+access = "rw"
+width = 32
+grade = "established"
+
+[constants]
+FENCE_LINK_8 = { value = 0x80, grade = "inferred", doc = "offsets 0x80 to 0xb8 step 8 are the reset fences for links 8 to F; xbow.h carries the same slots as XBOW_RESERVED_* with write sites [E]" }
+FENCE_LINK_9 = { value = 0x88, grade = "inferred", doc = "as above" }
+FENCE_LINK_A = { value = 0x90, grade = "inferred", doc = "as above" }
+FENCE_LINK_B = { value = 0x98, grade = "inferred", doc = "as above" }
+FENCE_LINK_C = { value = 0xa0, grade = "inferred", doc = "as above" }
+FENCE_LINK_D = { value = 0xa8, grade = "inferred", doc = "as above" }
+FENCE_LINK_E = { value = 0xb0, grade = "inferred", doc = "as above" }
+FENCE_LINK_F = { value = 0xb8, grade = "inferred", doc = "as above" }
+FENCE_WIDGET_0 = { value = 0x78, grade = "inferred", doc = "existence and read value 0xf7 measured on one Octane2 [E as an observation only]; role inferred; reset value [U]" }
+FLUSH_LINK_8 = { value = 0x100, grade = "established", doc = "offset and read-only access from the specification; width 4 byte(s) [I]" }
+FLUSH_LINK_9 = { value = 0x140, grade = "established", doc = "offset and read-only access from the specification; width 4 byte(s) [I]" }
+FLUSH_LINK_A = { value = 0x180, grade = "established", doc = "offset and read-only access from the specification; width 4 byte(s) [I]" }
+FLUSH_LINK_B = { value = 0x1c0, grade = "established", doc = "offset and read-only access from the specification; width 4 byte(s) [I]" }
+FLUSH_LINK_C = { value = 0x200, grade = "established", doc = "offset and read-only access from the specification; width 4 byte(s) [I]" }
+FLUSH_LINK_D = { value = 0x240, grade = "established", doc = "offset and read-only access from the specification; width 4 byte(s) [I]" }
+FLUSH_LINK_E = { value = 0x280, grade = "established", doc = "offset and read-only access from the specification; width 4 byte(s) [I]" }
+FLUSH_LINK_F = { value = 0x2c0, grade = "established", doc = "offset and read-only access from the specification; width 4 byte(s) [I]" }
+ID_MFR_MASK = { value = 0xffe, grade = "established", doc = "manufacturer field, bits 11:1" }
+ID_PART_MASK = { value = 0xffff000, grade = "established", doc = "part field, bits 27:12" }
+ID_REV_MASK = { value = 0xf0000000, grade = "established", doc = "revision field, bits 31:28" }
+PART_PXBOW = { value = 0xd100, grade = "established", doc = "part value in the same three sources; \"the crossbar face of the PIC\" is [I]" }
+PART_XBOW = { value = 0x0, grade = "established", doc = "Crossbow; manufacturer 0" }
+PART_XXBOW = { value = 0xd000, grade = "established", doc = "part value in the shipped crossbar header, the public Linux crossbar probe file and OpenBSD; \"the crossbar of the Xbridge\" is [I] (Linux comment only)" }
+PERF_A_B_19_0 = { value = 0xfffff, grade = "established", doc = "count field" }
+PERF_A_B_22_20 = { value = 0x700000, grade = "established", doc = "link select field" }
+PERF_B_B_19_0 = { value = 0xfffff, grade = "established", doc = "count field" }
+PERF_B_B_22_20 = { value = 0x700000, grade = "established", doc = "link select field" }
+RESOURCE_LOCK = { value = 0xc0, grade = "inferred", doc = "read value 0 measured on one Octane2 after the PROM ran; acquire and release behaviour [I]; reset value [U]" }
+RESOURCE_LOCK_CLEAR = { value = 0xc8, grade = "inferred", doc = "lock clear, as above" }
+REV_CODE_1 = { value = 0x1, grade = "established", doc = "header name 1.0" }
+REV_CODE_2 = { value = 0x2, grade = "established", doc = "header name 1.1; no name-table entry in the kernel object. Origin 300 and Fuel captures print revision 2 beside part 0xd000 [E]" }
+REV_CODE_3 = { value = 0x3, grade = "established", doc = "header name 1.2. Origin 350 captures print \"XBOW Rev 3\" [E]; which part that unit reports is [I] (captures do not print it)" }
+REV_CODE_4 = { value = 0x4, grade = "established", doc = "header name 1.3" }
+REV_CODE_5 = { value = 0x5, grade = "established", doc = "header name 2.0; the Octane2 PROM labels it 1.4" }
