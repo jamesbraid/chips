@@ -53,6 +53,7 @@ pub mod rad1;
 pub mod router_origin2000;
 pub mod router_origin3000;
 pub mod router_origin3000_extra;
+pub mod router_origin3000_rbrick;
 pub mod tiocp;
 pub mod vice;
 pub mod xbow;

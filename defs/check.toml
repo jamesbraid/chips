@@ -105,6 +105,10 @@ prose_offsets = false
 group = "router_origin3000_extra.h"
 prose_offsets = false
 
+[units.router_origin3000_rbrick]
+group = "router_origin3000_rbrick.h"
+prose_offsets = false
+
 [units.l1_requests]
 group = "l1_requests.h"
 prose_offsets = false
