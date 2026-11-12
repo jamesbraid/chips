@@ -5,6 +5,8 @@
   </struct>
   <struct name="PERF_B" size="4" grade="established" register="yes" offset="0x68" access="rw" reset="unknown">
   </struct>
+  <struct name="LINK_F_ARB_UPPER" size="4" grade="inferred" register="yes" offset="0x2d8" access="rw" reset="unknown">
+  </struct>
   <constant name="FENCE_LINK_8" value="0x80" grade="inferred"/>
   <constant name="FENCE_LINK_9" value="0x88" grade="inferred"/>
   <constant name="FENCE_LINK_A" value="0x90" grade="inferred"/>
@@ -32,6 +34,7 @@
   <constant name="PERF_A_B_22_20" value="0x700000" grade="established"/>
   <constant name="PERF_B_B_19_0" value="0xfffff" grade="established"/>
   <constant name="PERF_B_B_22_20" value="0x700000" grade="established"/>
+  <constant name="PROM_CROSSBAR_LOCK_BIT" value="0x2" grade="inferred"/>
   <constant name="RESOURCE_LOCK" value="0xc0" grade="inferred"/>
   <constant name="RESOURCE_LOCK_CLEAR" value="0xc8" grade="inferred"/>
   <constant name="REV_CODE_1" value="0x1" grade="established"/>

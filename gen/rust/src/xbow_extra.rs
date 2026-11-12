@@ -12,6 +12,11 @@ pub mod perf_b {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x68;
 }
+/// (inferred)
+pub mod link_f_arb_upper {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x2d8;
+}
 pub const FENCE_LINK_8: u32 = 0x80; // inferred
 pub const FENCE_LINK_9: u32 = 0x88; // inferred
 pub const FENCE_LINK_A: u32 = 0x90; // inferred
@@ -39,6 +44,7 @@ pub const PERF_A_B_19_0: u32 = 0xfffff; // established
 pub const PERF_A_B_22_20: u32 = 0x700000; // established
 pub const PERF_B_B_19_0: u32 = 0xfffff; // established
 pub const PERF_B_B_22_20: u32 = 0x700000; // established
+pub const PROM_CROSSBAR_LOCK_BIT: u32 = 0x2; // inferred
 pub const RESOURCE_LOCK: u32 = 0xc0; // inferred
 pub const RESOURCE_LOCK_CLEAR: u32 = 0xc8; // inferred
 pub const REV_CODE_1: u32 = 0x1; // established

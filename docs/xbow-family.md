@@ -196,6 +196,74 @@ lock. No register offset is specific to part `0xd100` in any consumer read (the 
 two `pxbow` rows, slots `0x0` and `0x138`). **Unknown**; test: a register dump of widget 0
 from an Origin 350 PROM monitor, reading the reserved range `0x78..0xc8` and every link set.
 
+### IP53 integrated crossbar: what the PROM checks
+
+This subsection covers the crossbar at widget 0 of an IP53-family node (Tezro, Origin 350,
+Onyx 350). It records what the stock IP35 PROM (6.210) and the IRIX 6.5.30 IP35 kernel do
+with its revision and its error address registers. The PROM and kernel readings come from
+disassembly of those two binaries and carry no vendor source. The one passing PROM run is a
+public capture. Addresses are PROM or kernel image addresses.
+
+**Revision.** Real IP53 inventories print the crossbar as revision 3 ("ASIC XBOW Rev 3").
+Nothing read here changes behaviour between revision 3 and revision 5 for part `0xd100`:
+
+| Consumer | Use of the revision | Effect for part `0xd100` | Grade |
+|---|---|---|---|
+| Widget discovery, PROM and kernel | None. The link F waiver keys on the part, and in the kernel also on manufacturer 0. | None | established |
+| Kernel crossbar attach | Forms part `<< 4 \| revision`; warns only when that is below 2 | None | established |
+| PROM link credits | For parts `0xd000` and `0xd100` adds 5 to the revision, then writes the Hub's destination credits as 4 when the sum is 3 or more, else 3 | Always 4 | established |
+| PROM crossbar check | Below 5 only for part 0 | None: the integrated branch applies to any revision | established |
+| Reset fences and lock (offsets `0x7c` to `0xcc`) | Scan by immediate offset found no 32-bit access in the kernel crossbar object, and none on the widget-0 base in the PROM range scanned | None found | established for the ranges scanned; a register-indexed loop would not show in such a scan |
+
+So the revision input does not change any guest-visible path read here. Whether PXBOW
+silicon has the fences and lock stays **unknown**, and no path read here reaches them.
+
+**The PROM's register check.** The PROM runs this check for parts 0, `0xd000` and `0xd100`.
+The steps are in order; offsets are the eight-byte slot offsets, and the PROM issues 32-bit
+accesses at slot + 4.
+
+1. Write `0x5a5a5a5a` to interrupt destination lower and `0xa5a5a5a5` to interrupt destination
+   upper. Lower must read back unchanged. Upper must read `0xa50da5a5` outside bits 23:20.
+   Then write 0 to both. (Inferred from the PROM's comparison; the register layout is above.)
+2. Write `0xdeadbeef` to error address lower (`0x18`), which is read-only, on purpose.
+3. Read the clearing alias (`0x50`). Bit 5, register access error, must be set. Otherwise the
+   PROM prints "Register access violation not detected".
+4. Read status (`0x08`). On an integrated crossbar, status shifted right by 6 must equal the
+   Hub's own widget number, which is bits 3:0 of the Hub's widget control (`0xa` on a Tezro).
+   Bits 31:10 must be 0. Otherwise it prints "Status Register Clear on Read not working!".
+5. Point interrupt destination at the processor interface and write control `0x20`, which
+   enables the register-access interrupt. Write 0 to error address upper (`0x10`), also
+   read-only. Status bit 5 must then be set, and processor-interface pending 0 bit 16 must be
+   set. Otherwise it prints "Interrupt did not reach PI_INT_PEND0".
+6. Read the clearing alias, then write 0 to both interrupt destination registers and to control.
+
+The PROM takes a crossbar lock before step 1: bit 1 of link `0xf`'s arbitration-upper word
+(offset `0x2d8`, `PROM_CROSSBAR_LOCK_BIT` in `defs/xbow_extra.toml`). It polls up to 500 times,
+50 microseconds apart, for the bit to clear, and prints "Xbow lock timeout" if it does not.
+It then sets the bit, and prints "Failed to lock xbow" if the bit does not read back set. The
+routine has an exception path that prints "Took an exception" and fails the check. That the
+exception path guards these accesses is inferred. The stores and reads of the bit are
+established as PROM code; that the bit works as a lock is inferred.
+
+**A real deskside Tezro passes the check (established, public capture).** The verbose PROM
+capture of a four-processor Tezro (IRIXNet "Tezro IO9/Configuration Oddities", July 2022, PROM
+6.210) prints "Running xbow_sanity diag (Xbow address = 0x9200000000000000)" with none of the
+failure lines above. What that shows:
+
+| Fact | Grade |
+|---|---|
+| A 32-bit store to `0x10` and to `0x18` sets the register access error bit, visible through the clearing alias. | established |
+| With control bit 5 set, that error delivers the crossbar interrupt to its programmed destination, setting processor-interface pending 0 bit 16. | established |
+| Status either reads the requester's widget (`0xa`) in bits 9:6 with bits 31:10 clear, or reads 0 on the part-0 branch. | established |
+| The integrated branch ran, so bits 9:6 hold `0xa`. The part at widget 0 is one of the three accepted parts, and the Tezro crossbar is inferred to be `0xd100`. | inferred |
+| The stores completed without a returned error. No exception line appears, but that the exception path guards these stores is inferred. | inferred |
+| `0x10` and `0x18` are implemented error registers, not reserved addresses. The check passes for a write to a read-only register and to a reserved address alike. | unknown |
+
+**Error address registers in the kernel.** IRIX 6.5.30's crossbar driver reads error address
+upper and lower in its crossbar error interrupt handler, its widget error handler and its
+register dump. It never writes them (established). What PXBOW latches there for a real failed
+packet is **unknown**: no consumer read here checks the value.
+
 ## 4. Register map
 
 The identification, status, control, interrupt, error and per-link registers are common to

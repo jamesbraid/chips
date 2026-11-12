@@ -21,6 +21,12 @@ access = "rw"
 width = 32
 grade = "established"
 
+[registers.link_f_arb_upper]
+offset = 0x2d8
+access = "rw"
+width = 32
+grade = "inferred"
+
 [constants]
 FENCE_LINK_8 = { value = 0x80, grade = "inferred", doc = "offsets 0x80 to 0xb8 step 8 are the reset fences for links 8 to F; xbow.h carries the same slots as XBOW_RESERVED_* with write sites [E]" }
 FENCE_LINK_9 = { value = 0x88, grade = "inferred", doc = "as above" }
@@ -49,6 +55,7 @@ PERF_A_B_19_0 = { value = 0xfffff, grade = "established", doc = "count field" }
 PERF_A_B_22_20 = { value = 0x700000, grade = "established", doc = "link select field" }
 PERF_B_B_19_0 = { value = 0xfffff, grade = "established", doc = "count field" }
 PERF_B_B_22_20 = { value = 0x700000, grade = "established", doc = "link select field" }
+PROM_CROSSBAR_LOCK_BIT = { value = 0x2, grade = "inferred", doc = "bit 1 of the link F arbitration-upper word, the crossbar lock the stock PROM takes on every revision; the PROM uses it as a lock, not as bandwidth" }
 RESOURCE_LOCK = { value = 0xc0, grade = "inferred", doc = "read value 0 measured on one Octane2 after the PROM ran; acquire and release behaviour [I]; reset value [U]" }
 RESOURCE_LOCK_CLEAR = { value = 0xc8, grade = "inferred", doc = "lock clear, as above" }
 REV_CODE_1 = { value = 0x1, grade = "established", doc = "header name 1.0" }

@@ -31,6 +31,19 @@
   },
   {
    "unit": "xbow_extra",
+   "kind": "register",
+   "name": "link_f_arb_upper",
+   "offset": 728,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "xbow_extra",
    "kind": "constant",
    "name": "FENCE_LINK_8",
    "value": 128,
@@ -244,6 +257,14 @@
    "value": 7340032,
    "count": 1,
    "grade": "established"
+  },
+  {
+   "unit": "xbow_extra",
+   "kind": "constant",
+   "name": "PROM_CROSSBAR_LOCK_BIT",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred"
   },
   {
    "unit": "xbow_extra",

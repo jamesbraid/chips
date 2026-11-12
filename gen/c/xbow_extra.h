@@ -12,6 +12,9 @@
 /* perf_b: rw32, reset unknown */
 #define XBOW_PERF_B                                  0x000068 /* established */
 
+/* link_f_arb_upper: rw32, reset unknown */
+#define XBOW_LINK_F_ARB_UPPER                        0x0002d8 /* inferred */
+
 #define XBOW_FENCE_LINK_8                            0x80u /* inferred */
 #define XBOW_FENCE_LINK_9                            0x88u /* inferred */
 #define XBOW_FENCE_LINK_A                            0x90u /* inferred */
@@ -39,6 +42,7 @@
 #define XBOW_PERF_A_B_22_20                          0x700000u /* established */
 #define XBOW_PERF_B_B_19_0                           0xfffffu /* established */
 #define XBOW_PERF_B_B_22_20                          0x700000u /* established */
+#define XBOW_PROM_CROSSBAR_LOCK_BIT                  0x2u /* inferred */
 #define XBOW_RESOURCE_LOCK                           0xc0u /* inferred */
 #define XBOW_RESOURCE_LOCK_CLEAR                     0xc8u /* inferred */
 #define XBOW_REV_CODE_1                              0x1u /* established */

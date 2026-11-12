@@ -12,10 +12,13 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 |---|---|---|---|---|---|---|---|---|
 | `perf_a` | 0x60 | rw | 32 |  |  | unknown | established |  |
 | `perf_b` | 0x68 | rw | 32 |  |  | unknown | established |  |
+| `link_f_arb_upper` | 0x2d8 | rw | 32 |  |  | unknown | inferred |  |
 
 ### Register `perf_a`
 
 ### Register `perf_b`
+
+### Register `link_f_arb_upper`
 
 ## Constants
 
@@ -48,6 +51,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `PERF_A_B_22_20` | 0x700000 | established |  | link select field |
 | `PERF_B_B_19_0` | 0xfffff | established |  | count field |
 | `PERF_B_B_22_20` | 0x700000 | established |  | link select field |
+| `PROM_CROSSBAR_LOCK_BIT` | 0x2 | inferred |  | bit 1 of the link F arbitration-upper word, the crossbar lock the stock PROM takes on every revision; the PROM uses it as a lock, not as bandwidth |
 | `RESOURCE_LOCK` | 0xc0 | inferred |  | read value 0 measured on one Octane2 after the PROM ran; acquire and release behaviour [I]; reset value [U] |
 | `RESOURCE_LOCK_CLEAR` | 0xc8 | inferred |  | lock clear, as above |
 | `REV_CODE_1` | 0x1 | established |  | header name 1.0 |
