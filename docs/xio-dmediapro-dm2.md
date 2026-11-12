@@ -241,3 +241,7 @@ mailbox protocol and the board bus map.
 - No hinv program, no `libvl` device-dependent source other than the shipped `DIVO.so` strings, and no Discreet binaries were read here.
 - The inventory tables of this repository were not regenerated: the new binaries are outside the configured scope.
 - XTHD and the DM3 (Onyx 350/Tezro) objects were not compared with DM2; the 030-1927-003 capture suggests the same driver.
+
+## Contract parts
+
+- [VBOB control messages](dm2/vbob.md)
