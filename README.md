@@ -35,6 +35,7 @@ ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
 - [docs/isp2200.md](docs/isp2200.md): QLogic ISP2200 Fibre Channel host adapter on the Origin 3000 I-brick: identity, register window, reset and RISC control, mailbox commands, rings and interrupts, and what is unknown; the register contract is in [gen/docs/isp2200.md](gen/docs/isp2200.md).
 - [docs/o2-cpu-cache.md](docs/o2-cpu-cache.md): the R10000's primary instruction and data caches and secondary cache as the O2 uses them (geometry, cache algorithms, instruction-cache diagnostics, CACHE operations and their writeback rules, aliases) and CRIME 1.5's noncoherent processor interface, with what is unknown. It holds no register contract.
 - [docs/ixbrick.md](docs/ixbrick.md): the Origin 3000 and Onyx 3000 IX-brick I/O enclosure: slots and bus rules, the IO9 card, drives, USB card, power and management, PIC wiring as drawn, and what is unknown. It holds no register facts.
+- [docs/pbrick.md](docs/pbrick.md): the Origin 3000 and Onyx 3000 P-brick I/O enclosure: slot and bus layout, the three XBridge chips as drawn, the widget-to-bus map, host routing, power and L1 identity, and what is unknown. It holds no register facts.
 - `chips/<chip>/census/`: register-access censuses per chip, produced by [tools/](tools/).
 
 ### Every document under docs/
