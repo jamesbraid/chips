@@ -76,6 +76,7 @@ Crosstalk, XIO and interconnect:
 - [docs/pci-discovery.md](docs/pci-discovery.md): PCI discovery on the Origin 200 Bridge: the device-number map of its base I/O and option slots, the dual-slot guest at device 3, and how IRIX walks device numbers 0 to 7.
 - [docs/baseio.md](docs/baseio.md): BaseIO and BaseIO-G: the XIO I/O board of the Origin 2000 and Onyx2, its PCI placement, interrupt paths, panel and one-wire identity records.
 - [docs/menet.md](docs/menet.md): MENET (030-0873), the four-port Fast Ethernet and asynchronous serial XIO board: its four IOC3s, the subdevice words and second slots IRIX gives them, interrupt pins, board record and what is unknown.
+- [docs/mscsi.md](docs/mscsi.md): MSCSI (030-0872, 030-1243, 030-1281), the four-channel SCSI XIO board: one Bridge and four ISP1040 controllers, its listed revisions and placements, the bus-type evidence and what is unknown.
 - [docs/origin2000-node-configuration.md](docs/origin2000-node-configuration.md): Origin 2000 node board clock, Hub and secondary-cache configuration: the published 180 MHz and 195 MHz configurations, node PROM mixing and copy rules, and the boot-flash configuration block; it holds no register contract.
 - [docs/crosstown-ktown.md](docs/crosstown-ktown.md): Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards.
 - [docs/onyx3000-graphics-topology.md](docs/onyx3000-graphics-topology.md): Onyx 3000 graphics bricks: where a G-brick pipe and a V-brick V12 sit, and the smallest configuration.
