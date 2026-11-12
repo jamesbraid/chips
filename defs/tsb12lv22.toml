@@ -1,0 +1,472 @@
+unit = "tsb12lv22"
+prefix = "TSB12LV22"
+title = "TI TSB12LV22 PCI-to-IEEE 1394 OHCI 1.00 link controller (I-brick IO7), the register facts the held sources establish"
+doc = "The PCI-to-1394 link controller on the Origin 3000 and Onyx 3000 I-brick IO7 board (PCI 104c:8009, IEEE 1394 OHCI 1.00 register interface). Grades say how each item was derived: established means the TI datasheet (SLLS290, July 1998) states it; inferred means a software expectation taken from shipped IRIX or PROM code, or a reading that the datasheet does not state outright; unknown means no source held here settles the value. The reset values of most registers are unknown: the datasheet leaves them unspecified or gives them only in part. Software expectations are what the shipped programs require, not measured chip behaviour, and no PHY, bus or DMA behaviour is part of this unit."
+from = "TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)"
+public_from = ["TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998", "IEEE 1394 Open Host Controller Interface Specification, Release 1.1, 6 January 2000", "Linux drivers/firewire (ohci.c, core.h)", "I-brick PROM 1394 probe (disassembly)", "IRIX 1394 driver for the I-brick (disassembly)"]
+
+[constants.PCI_VENDOR_ID]
+value = 0x104c
+grade = "established"
+from = "TI SLLS290, p. 1 and PCI configuration"
+doc = "PCI vendor ID of Texas Instruments."
+
+[constants.PCI_DEVICE_ID]
+value = 0x8009
+grade = "established"
+from = "TI SLLS290, p. 1 and PCI configuration"
+doc = "PCI device ID of the TSB12LV22 link controller."
+
+[constants.PCI_REVISION]
+value = 0x01
+grade = "established"
+from = "TI SLLS290, table 6"
+doc = "Revision ID the datasheet gives for this part. The PCI revision byte is what the IRIX inventory prints as the unit version; see the software expectations in the prose page."
+
+[constants.PHY_CLOCK_HZ]
+value = 49152000
+grade = "established"
+from = "TI SLLS290, p. 1 and p. 6"
+doc = "Clock the attached PHY supplies to the link controller, 49.152 MHz."
+
+[constants.CYCLE_TIMER_CLOCK_HZ]
+value = 24576000
+grade = "established"
+from = "TI SLLS290, table 42, p. 33"
+doc = "Clock the cycle timer counts at, 24.576 MHz. The offset field counts it modulo 3072."
+
+[constants.SELF_ID_BUFFER_ALIGN]
+value = 2048
+grade = "established"
+from = "TI SLLS290, p. 26"
+doc = "Alignment in bytes of the self-ID buffer pointer. Its low 11 bits read as zero."
+
+[constants.ISO_CHANNELS]
+value = 64
+grade = "established"
+from = "TI SLLS290, pp. 26-27, tables 32-33"
+doc = "Isochronous channels the receive channel masks represent, one bit each across the low and high mask words."
+
+[constants.MAX_REC_DEFAULT]
+value = 10
+grade = "established"
+from = "TI SLLS290, pp. 22-23, table 26"
+doc = "Hardware default of the max_rec field of BusOptions, which encodes a 2048-byte maximum receive packet. It survives SoftReset."
+
+[constants.BUS_ID_TEXT]
+value = 0x31333934
+grade = "established"
+from = "TI SLLS290, p. 22"
+doc = "Constant BusID value. It is the ASCII text 1394 in big-endian byte order."
+
+[registers.version]
+offset = 0x000
+access = "r"
+width = 32
+reset = 0x00010000
+grade = "established"
+from = "TI SLLS290, pp. 19-20, table 21"
+doc = "OHCI version. Major version 1 is in bits 23:16 and minor version 0 in bits 7:0, so this is OHCI 1.00. Bit 24 reports whether a configuration ROM is present, sampled from ROM detection. The reset value shown is for the no-ROM case."
+
+[registers.version.fields]
+major = { bits = [23, 16], grade = "established", doc = "Major version, 1" }
+minor = { bits = [7, 0], grade = "established", doc = "Minor version, 0" }
+rom_present = { bits = [24, 24], grade = "established", doc = "Configuration ROM present, sampled from ROM detection" }
+
+[registers.guid_rom]
+offset = 0x004
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 20, table 22"
+doc = "GUID ROM access. Writing the address-reset bit resets the ROM read address, and the bit clears itself. Writing the read-start bit starts a read, and the byte read appears in the read-data field. The data is unspecified at reset and the command bits read as zero."
+
+[registers.guid_rom.fields]
+address_reset = { bits = [31, 31], grade = "established", doc = "Self-clearing address reset" }
+read_start = { bits = [25, 25], grade = "established", doc = "Start a GUID ROM read" }
+read_data = { bits = [23, 16], grade = "established", doc = "Hardware read-data byte, unspecified at reset" }
+
+[registers.retry_counts]
+offset = 0x008
+access = "rw"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, pp. 20-21, table 23"
+doc = "Retry counts. Three read-write count fields are defined. The outbound dual-phase retry fields read as zero. The datasheet summary does not name the three count fields, so the field names here are positional."
+
+[registers.retry_counts.fields]
+count_11_8 = { bits = [11, 8], grade = "established", doc = "Read-write retry count, bits 11:8" }
+count_7_4 = { bits = [7, 4], grade = "established", doc = "Read-write retry count, bits 7:4" }
+count_3_0 = { bits = [3, 0], grade = "established", doc = "Read-write retry count, bits 3:0" }
+dual_phase_retry = { bits = [31, 16], grade = "established", doc = "Outbound dual-phase retry fields, read as zero" }
+
+[registers.csr_data]
+offset = 0x00c
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 21-22, table 24"
+doc = "CSR data word for serial bus register transfers. Unspecified at reset."
+
+[registers.csr_compare]
+offset = 0x010
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 21-22, table 24"
+doc = "CSR compare word. Unspecified at reset."
+
+[registers.csr_control]
+offset = 0x014
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 21-22, table 24"
+doc = "CSR control. Writing clears the done bit, which the controller sets on completion. The resource select is unspecified at reset, and the done bit is set at reset."
+
+[registers.csr_control.fields]
+resource_select = { bits = [1, 0], grade = "established", doc = "Resource select, unspecified at reset" }
+done = { bits = [31, 31], grade = "established", doc = "Clears on a write and sets on completion" }
+
+[registers.config_rom_header]
+offset = 0x018
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 22, table 25"
+doc = "Configuration ROM header. The upper 16 bits read as zero at reset. The low 16 bits hold the CRC, which is unspecified without a ROM."
+
+[registers.bus_id]
+offset = 0x01c
+access = "r"
+width = 32
+reset = 0x31333934
+grade = "established"
+from = "TI SLLS290, p. 22"
+doc = "Constant BusID. The value is the ASCII text 1394."
+
+[registers.bus_options]
+offset = 0x020
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 22-23, table 26"
+doc = "Bus options. Bits 31:27, 23:16, 15:12 and 7:6 are writable. Link speed reads as 2. Bit 27 resets to zero. The max_rec field survives SoftReset with its hardware default of 2048 bytes. Other bits have unspecified reset values."
+
+[registers.bus_options.fields]
+link_speed = { bits = [2, 0], grade = "established", doc = "Reads as 2, the 400 Mbit/s code" }
+max_rec = { bits = [15, 12], grade = "established", doc = "Maximum receive packet size code. The hardware default is 10, meaning 2048 bytes, and SoftReset preserves it" }
+
+[registers.guid_hi]
+offset = 0x024
+access = "rw"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, p. 23"
+doc = "GUID high word. It reads as zero before a ROM load. Without a ROM each GUID register can be written once and then locks, and that lock state is separate from the register's value."
+
+[registers.guid_lo]
+offset = 0x028
+access = "rw"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, p. 23"
+doc = "GUID low word. The write-once rule for the high word applies here too."
+
+[registers.config_rom_map]
+offset = 0x034
+access = "rw"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, p. 24, table 27"
+doc = "Configuration ROM mapping address. Bits 31:10 are read-write and reset to zero."
+
+[registers.posted_write_error]
+offset = 0x038
+count = 2
+access = "r"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 24, tables 28-29"
+doc = "Posted-write error address and source reporting, read and updated by the controller, at the offset and four bytes above it. The datasheet summary gives the pair as one address and source record and does not split it per word. Unspecified at reset."
+
+[registers.vendor_specific_id]
+offset = 0x040
+access = "r"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, p. 25"
+doc = "OHCI vendor-specific identifier. Read only, reads zero."
+
+[registers.hc_control]
+offset = 0x050
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 25, table 30"
+doc = "HCControl. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 30 and 18 are unspecified at reset and the other defined bits reset to zero."
+
+[registers.hc_control.fields]
+data_swap = { bits = [30, 30], grade = "established", doc = "Data byte-swap control, the same control the OHCI 1.1 text calls noByteSwapData. Its reset value is unspecified" }
+program_phy_enable = { bits = [23, 23], grade = "established", doc = "Software-clearable permission to program the PHY" }
+aphy_enhance_enable = { bits = [22, 22], grade = "established", doc = "PHY enhancement enable, needed with the 1394a acceleration bit in PCI configuration" }
+lps = { bits = [19, 19], grade = "established", doc = "Link power status. Set it before PHY and link communication" }
+posted_write_enable = { bits = [18, 18], grade = "established", doc = "Posted writes. Changes only while linkEnable is zero" }
+link_enable = { bits = [17, 17], grade = "established", doc = "Clearing it disconnects the controller at once: no packet is received, processed or sent" }
+soft_reset = { bits = [16, 16], grade = "established", doc = "Controller SoftReset. Stays set during reset and clears on completion" }
+
+[registers.self_id_buffer]
+offset = 0x064
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 26"
+doc = "Self-ID buffer pointer. The address is 2 KiB aligned, so its low 11 bits read as zero. The address is unspecified at reset."
+
+[registers.self_id_buffer.fields]
+address = { bits = [31, 11], grade = "established", doc = "Buffer base address, read-write" }
+
+[registers.self_id_count]
+offset = 0x068
+access = "r"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 26, table 31"
+doc = "Self-ID count. The error and generation fields are unspecified at reset and the size field resets to zero. The controller updates the fields on bus events."
+
+[registers.self_id_count.fields]
+error = { bits = [31, 31], grade = "established", doc = "Self-ID error" }
+generation = { bits = [23, 16], grade = "established", doc = "Bus generation the self-ID data belongs to" }
+size = { bits = [10, 2], grade = "established", doc = "Self-ID buffer size in quadlets, the header included" }
+
+[registers.recv_channel_mask_lo]
+offset = 0x070
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 26-27, tables 32-33"
+doc = "Receive channel mask, channels 0 to 31. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset."
+
+[registers.recv_channel_mask_hi]
+offset = 0x078
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 26-27, tables 32-33"
+doc = "Receive channel mask, channels 32 to 63. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset."
+
+[registers.int_event]
+offset = 0x080
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 27-29, table 34"
+doc = "Interrupt events. The set and clear addresses form a pair, the clear address four bytes above the set address. Reads of the clear register return the event bits ANDed with the mask. Implemented event bits are unspecified at reset. Bits 7 and 6 are derived summaries and are not independent latches. Bit 30 is vendor-defined and its meaning is not given. Bit 18 is undefined for OHCI 1.00 and must read zero."
+
+[registers.int_event.fields]
+iso_recv_summary = { bits = [7, 7], grade = "established", doc = "OR of the isochronous receive event and mask. Software writes to it have no effect" }
+iso_xmit_summary = { bits = [6, 6], grade = "established", doc = "OR of the isochronous transmit event and mask. Software writes to it have no effect" }
+phy_reg_received = { bits = [19, 19], grade = "inferred", doc = "PHY register transfer received. Bit number from the IRIX 1394 driver (disassembly), which clears it after a PHY register read" }
+bus_reset = { bits = [17, 17], grade = "inferred", doc = "Bus reset event. Bit number from the I-brick PROM and IRIX 1394 code (disassembly); the datasheet's bus reset effect is established" }
+self_id_complete = { bits = [16, 16], grade = "inferred", doc = "Self-ID complete. Bit number from the I-brick PROM 1394 probe (disassembly); the datasheet's bus reset effect is established" }
+
+[registers.int_mask]
+offset = 0x088
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 27-29, tables 34-35"
+doc = "Interrupt mask. The set and clear addresses form a pair, the clear address four bytes above the set address. Reading either address of the pair returns the mask. Pending event state stays separate from the mask, and the interrupt output must be recomputed when the mask changes. Implemented mask bits are unspecified at reset."
+
+[registers.int_mask.fields]
+master_int_enable = { bits = [31, 31], grade = "established", doc = "Enables external interrupt delivery on INTA" }
+
+[registers.iso_xmit_event]
+offset = 0x090
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 18-19, 29, table 36"
+doc = "Isochronous transmit event, one bit per context. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 7:0 are defined. The low byte is unspecified at reset and the upper bits read as zero."
+
+[registers.iso_xmit_event.fields]
+contexts = { bits = [7, 0], grade = "established", doc = "One event bit per isochronous transmit context" }
+
+[registers.iso_xmit_mask]
+offset = 0x098
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 18-19, 29, table 36"
+doc = "Isochronous transmit mask. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 7:0 are defined. The low byte is unspecified at reset and the upper bits read as zero."
+
+[registers.iso_xmit_mask.fields]
+contexts = { bits = [7, 0], grade = "established", doc = "One mask bit per isochronous transmit context" }
+
+[registers.iso_recv_event]
+offset = 0x0a0
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 30, table 37"
+doc = "Isochronous receive event. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 3:0 are defined, one per context. The low nibble is unspecified at reset and the upper bits read as zero. The datasheet summary does not state the context count, so four contexts is inferred from the bit count."
+
+[registers.iso_recv_event.fields]
+contexts = { bits = [3, 0], grade = "inferred", doc = "One event bit per isochronous receive context. The count of four is inferred from the defined bits" }
+
+[registers.iso_recv_mask]
+offset = 0x0a8
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 30, table 37"
+doc = "Isochronous receive mask. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 3:0 are defined. The low nibble is unspecified at reset and the upper bits read as zero."
+
+[registers.iso_recv_mask.fields]
+contexts = { bits = [3, 0], grade = "inferred", doc = "One mask bit per isochronous receive context. The count of four is inferred from the defined bits" }
+
+[registers.fairness_control]
+offset = 0x0dc
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, pp. 30-31, table 38"
+doc = "Optional fairness control. The low byte is a read-only priority-request limit that resets to zero. The upper bits are unspecified at reset."
+
+[registers.fairness_control.fields]
+priority_request_limit = { bits = [7, 0], grade = "established", doc = "Read-only priority-request limit, resets to zero" }
+
+[registers.link_control]
+offset = 0x0e0
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 31, table 39"
+doc = "Link control. The set and clear addresses form a pair, the clear address four bytes above the set address. The defined bits are unspecified at reset and the other bits in the datasheet's diagram reset to zero."
+
+[registers.link_control.fields]
+cycle_source = { bits = [22, 22], grade = "established", doc = "Cycle source" }
+cycle_master = { bits = [21, 21], grade = "established", doc = "Cycle master" }
+cycle_timer_enable = { bits = [20, 20], grade = "established", doc = "Cycle timer enable" }
+rcv_phy_packets = { bits = [10, 10], grade = "established", doc = "Receive PHY packets" }
+rcv_self_id_packets = { bits = [9, 9], grade = "established", doc = "Receive self-ID packets" }
+
+[registers.node_id]
+offset = 0x0e8
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 32, table 40"
+doc = "Node ID. Validity, root and cable-power status are read and updated by the controller and reset to zero. The bus number resets to all ones. The physical node number is unspecified at reset. The datasheet names a cable-power status bit but its position is not in the summary, so it is not listed as a field."
+
+[registers.node_id.fields]
+id_valid = { bits = [31, 31], grade = "established", doc = "Node ID valid, read and updated, reset zero" }
+root = { bits = [30, 30], grade = "established", doc = "This node is root, read and updated, reset zero" }
+bus_number = { bits = [15, 6], grade = "established", doc = "Bus number, read-write, resets to all ones" }
+node_number = { bits = [5, 0], grade = "established", doc = "Physical node number, read and updated, unspecified at reset" }
+
+[registers.phy_control]
+offset = 0x0ec
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 32, table 41"
+doc = "PHY access. A PHY read and a PHY write are mutually exclusive. Command bits read as zero at reset. Data and status fields are largely unspecified at reset. A PHY register transfer received from the PHY sets rdDone and the PHY-register-received event."
+
+[registers.phy_control.fields]
+rd_done = { bits = [31, 31], grade = "established", doc = "PHY read complete, set when a read finishes" }
+rd_addr = { bits = [27, 24], grade = "established", doc = "PHY register address of the completed read" }
+rd_data = { bits = [23, 16], grade = "established", doc = "PHY register data returned by a read" }
+rd_reg = { bits = [15, 15], grade = "established", doc = "PHY register read request" }
+wr_reg = { bits = [14, 14], grade = "established", doc = "PHY register write request" }
+reg_addr = { bits = [11, 8], grade = "established", doc = "PHY register address for a request" }
+wr_data = { bits = [7, 0], grade = "established", doc = "PHY register data for a write" }
+
+[registers.cycle_timer]
+offset = 0x0f0
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "TI SLLS290, p. 33, table 42"
+doc = "Cycle timer. Unspecified at reset. The counter fields count seconds, cycles and offset ticks at 24.576 MHz."
+
+[registers.cycle_timer.fields]
+seconds = { bits = [31, 25], grade = "established", doc = "Seconds, modulo 128" }
+count = { bits = [24, 12], grade = "established", doc = "Cycle count, modulo 8000" }
+offset = { bits = [11, 0], grade = "established", doc = "Offset ticks at 24.576 MHz, modulo 3072" }
+
+[registers.async_filter_hi]
+offset = 0x100
+access = "rw"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, pp. 33-34, tables 43-44"
+doc = "Asynchronous request source filter, upper node mask. The set and clear addresses form a pair, the clear address four bytes above the set address. Bit 31 enables requests from nonlocal buses."
+
+[registers.async_filter_hi.fields]
+nonlocal_enable = { bits = [31, 31], grade = "established", doc = "Accept asynchronous requests from nonlocal buses" }
+
+[registers.async_filter_lo]
+offset = 0x108
+access = "rw"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, pp. 33-34, tables 43-44"
+doc = "Asynchronous request source filter, lower node mask. The set and clear addresses form a pair, the clear address four bytes above the set address."
+
+[registers.phys_filter_hi]
+offset = 0x110
+access = "rw"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, pp. 34-35, tables 45-46"
+doc = "Physical request source filter, upper node mask. The set and clear addresses form a pair, the clear address four bytes above the set address. The filter applies after the asynchronous filter, and a rejected physical request falls through to asynchronous receive."
+
+[registers.phys_filter_lo]
+offset = 0x118
+access = "rw"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, pp. 34-35, tables 45-46"
+doc = "Physical request source filter, lower node mask. The set and clear addresses form a pair, the clear address four bytes above the set address."
+
+[registers.phys_upper_bound]
+offset = 0x120
+access = "r"
+width = 32
+reset = 0x0
+grade = "established"
+from = "TI SLLS290, p. 35"
+doc = "Physical upper bound. It is optional and this part does not implement it, so it reads as zero."
