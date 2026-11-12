@@ -1,0 +1,88 @@
+unit = "tigon"
+prefix = "TIGON"
+title = "Alteon Tigon PCI/Gigabit Ethernet controller (SGI IRIS Gigabit Ethernet board)"
+doc = "Offsets are byte offsets in the chip's PCI memory window, as the manual's register tables give them. Fields are the bit positions the register descriptions name. Grades say how each item was derived: established means read in the Alteon Tigon/PCI Ethernet Controller manual, revision 1.04; inferred means a public driver's use or a reading the manual does not state. Reset values come only from the manual's reset statements. Nothing here was measured on a board. The prose and the sources the register rules rest on are in docs/tigon.md."
+from = "Alteon Networks, Tigon/PCI Ethernet Controller, revision 1.04, part 020016, August 1997"
+public_from = ["Alteon Tigon/PCI Ethernet Controller manual"]
+
+# ---- registers
+
+[registers.misc_host_ctl]
+offset = 0x040
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "Alteon manual, Table 28 and section 9.5.1, printed p. 73"
+doc = "Miscellaneous Host Control. The read-write bits sit in the low byte, so a host that writes a byte-wide No Swap value can copy that byte into every lane. The manual gives no reset value for this register."
+
+[registers.misc_host_ctl.fields]
+gate_array_revision = { bits = [31, 28], grade = "established", from = "Alteon manual, Table 28, printed p. 73", doc = "Read-only. Three for the Chip Express release, four for the LSI gate array release, five for the LSI standard cell release. The field names gate-array releases only; it does not number the Tigon revision." }
+mask_pci_interrupt = { bits = [6, 6], grade = "established", from = "Alteon manual, Table 28, printed p. 73", doc = "Masks the PCI interrupt output. Present from Tigon revision 5. Clear it and any pending interrupt is raised." }
+endian_word_swap = { bits = [5, 5], grade = "established", from = "Alteon manual, Table 28, printed p. 73", doc = "Enables endian word swapping for accesses through the target interface." }
+endian_byte_swap = { bits = [4, 4], grade = "established", from = "Alteon manual, Table 28, printed p. 73", doc = "Enables endian byte swapping for accesses through the target interface." }
+hard_reset = { bits = [3, 3], grade = "established", from = "Alteon manual, Table 28, printed p. 73", doc = "Forces a full hardware reset of everything except the PCI configuration registers (offsets 0x00 to 0x3f) and the PCI State register." }
+clear_interrupt = { bits = [1, 1], grade = "established", from = "Alteon manual, Table 28, printed p. 73", doc = "Write-only. Writing one clears the host PCI interrupt IntA." }
+interrupt_state = { bits = [0, 0], grade = "established", from = "Alteon manual, Table 28, printed p. 73", doc = "Read-only. Reflects the state of the PCI IntA pin." }
+
+[registers.pci_state]
+offset = 0x05c
+access = "rw"
+width = 32
+reset = 0x00000000
+grade = "established"
+from = "Alteon manual, Table 31 and section 9.5.7, printed p. 77"
+doc = "PCI State. All bits are zero at reset. The Miscellaneous Host Control reset does not change this register. Bit 20 and the bits under it are the ones the host-bus rules turn on."
+
+[registers.pci_state.fields]
+default_pci_write_command = { bits = [31, 28], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Command used for all PCI write transactions. The manual says it should normally be initialized to seven." }
+default_pci_read_command = { bits = [27, 24], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Command used for PCI reads of fewer than three words. The manual says it should normally be initialized to six." }
+assert_all_pbe_on_writes = { bits = [23, 23], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "During DMA writes, drives all byte enables, which forces doubleword alignment without adjusting the channel addresses and lengths. Present from Tigon revision 5." }
+pci_rom_retry = { bits = [22, 22], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Forces PCI retry for accesses to the ROM region when the region is enabled. Present from Tigon revision 5." }
+pci_rom_desired = { bits = [21, 21], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Makes the PCI ROM Base Address register visible to the host. Present from Tigon revision 5." }
+bus_32bit = { bits = [20, 20], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "One when on a 32-bit PCI bus, zero for a 64-bit bus. From Tigon revision 5, a write of one forces true 32-bit operation even when the host offered 64-bit. Setting it on a real 64-bit bus causes PCI problems." }
+pci_66mhz_bus = { bits = [19, 19], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Read-only. One when the bus runs between 33 and 66 MHz, zero for 33 MHz or less. Before Tigon revision 5 this bit behaved like bit 18, for the write DMA channel only." }
+no_word_swap_dma = { bits = [18, 18], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Disables word swapping for all DMA transactions. Before Tigon revision 5 it affected only the read DMA channel." }
+use_mem_read_multiple = { bits = [17, 17], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Uses the Memory Read Multiple PCI command in place of Memory Read Line for DMA reads." }
+dma_write_max = { bits = [7, 5], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Forces termination of PCI write operations at a byte boundary. Encodings in order: disable, 4 or 8 (one bus width), 16, 32, 64, 128, 256, 1k. Encoding five is 128 bytes." }
+dma_read_max = { bits = [4, 2], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Forces termination of PCI read operations at a byte boundary, with the same encodings as the write field. Encoding five is 128 bytes." }
+force_reset = { bits = [0, 0], grade = "established", from = "Alteon manual, Table 31, printed p. 77", doc = "Write-only and self-clearing. Forces an immediate reset of the PCI interface and loses its state." }
+
+[registers.dma_write_state]
+offset = 0x0a0
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "Alteon manual, Table 20 and section 9.6.4, printed p. 84"
+doc = "DMA Write State, the state of the write channel that moves data from the card to the host. The manual gives no reset value."
+
+[registers.dma_write_state.fields]
+dma_active = { bits = [2, 2], grade = "established", from = "Alteon manual, section 9.6.4, printed p. 84", doc = "Starts the channel. The hardware clears the bit when the DMA finishes." }
+dma_no_swap = { bits = [1, 1], grade = "established", from = "Alteon manual, section 9.6.4, printed p. 84", doc = "Disables the endian byte swap on data sent to the PCI bus. The swap is normally applied in groups of four bytes. The table's field text says data 'from the PCI bus', which the section's text contradicts for the write channel; the section text is followed here." }
+force_32bit_pci = { bits = [3, 3], grade = "established", from = "Alteon manual, section 9.6.4, printed p. 84", doc = "Forces PCI operation as if on a 32-bit bus." }
+dma_reset = { bits = [0, 0], grade = "established", from = "Alteon manual, section 9.6.4, printed p. 84", doc = "Write-only. Clears the write FIFO and the write DMA." }
+
+[registers.dma_read_state]
+offset = 0x0b0
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "Alteon manual, Table 20 and section 9.6.3, printed p. 82"
+doc = "DMA Read State, the state of the read channel that moves data from the host to the card. The manual gives no reset value."
+
+[registers.dma_read_state.fields]
+dma_active = { bits = [2, 2], grade = "established", from = "Alteon manual, section 9.6.3, printed p. 82", doc = "Starts the channel. The hardware clears the bit when the DMA finishes." }
+dma_no_swap = { bits = [1, 1], grade = "established", from = "Alteon manual, section 9.6.3, printed p. 82", doc = "Disables the endian byte swap on data received from the PCI bus. The swap is normally applied in groups of four bytes." }
+force_32bit_pci = { bits = [3, 3], grade = "established", from = "Alteon manual, section 9.6.3, printed p. 82", doc = "Forces PCI operation as if on a 32-bit bus." }
+dma_reset = { bits = [0, 0], grade = "established", from = "Alteon manual, section 9.6.3, printed p. 82", doc = "Write-only. Clears the read FIFO and the read DMA." }
+
+[registers.mailbox_0_upper]
+offset = 0x504
+access = "w"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "Alteon manual, section 2.7, printed pp. 20 to 21, and Table 19, printed p. 62"
+doc = "Upper half of mailbox 0. The mailbox area holds 32 eight-byte locations. A write to the upper half of any one raises an event to the internal processor, naming the location. Writing mailbox 0 also deasserts the PCI interrupt pin at once, so a host can clear the interrupt and pass a message in one write. The upper half of mailbox n is eight bytes after the upper half of mailbox n minus one."

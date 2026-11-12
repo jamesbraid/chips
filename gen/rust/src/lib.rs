@@ -57,6 +57,7 @@ pub mod router_origin3000_extra;
 pub mod router_origin3000_rbrick;
 pub mod router_sn1;
 pub mod seeq_8003;
+pub mod tigon;
 pub mod tiocp;
 pub mod vice;
 pub mod xbow;
