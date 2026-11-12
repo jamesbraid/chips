@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	address_unknown	input
 binaries	3092	0	625	0	625	3	4	169	2294	0	20.2	20.3	25.8	20.2							0				
-functions	6836	91457	1139	188	880	3699	3941	1657	99	0	16.7	74.3	98.6	16.7			85.0	20	2026-11-02		0	0	18	0	
-functions (distinct names)	2570	21681	638	157	634	1832	1872	27	33	0	24.8	97.7	98.7	24.8							0				
+functions	6836	91457	1163	188	899	3699	3917	1657	99	0	17.0	74.3	98.6	17.0			85.0	20	2026-11-02		0	0	18	0	
+functions (distinct names)	2570	21681	644	154	640	1832	1866	27	33	0	25.1	97.7	98.7	25.1							0				
 mmio	87	0	62	2	60	0	0	25	0	0	71.3	71.3	100.0	71.3	23						0				
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 ioctls	6	0	6	0	1	0	0	0	0	0	100.0	100.0	100.0	100.0							0				
@@ -869,7 +869,7 @@ functions in IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_snapshot.o)	0	58	0	0	0	0	0	0
 functions in IP27/usr/cpu/sysgen/IP27boot/xvm.a(xvm_irix_snapshot.o)	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP27/usr/cpu/sysgen/IP27boot/xvmidbg.o	0	40	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP27/usr/cpu/sysgen/IP27boot/zero.o	0	8	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
-functions in IP30/unix	732	12355	194	24	193	82	92	446	0	0	26.5	39.1	100.0	26.5							0	0	6	0	
+functions in IP30/unix	732	12355	199	24	198	82	87	446	0	0	27.2	39.1	100.0	27.2							0	0	6	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/acl.a(acl.o)	0	16	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/asidbg.a(asidbg.o)	0	38	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/autofs.a(auto_subr.o)	0	20	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
@@ -1014,7 +1014,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(chardlocks.o)	0	19	0	0	0	0
 functions in IP30/usr/cpu/sysgen/IP30boot/hardlocks.a(llsclocks.o)	0	22	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(chardlocks.o)	0	19	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/hardlocks_statistics.a(llsclocks.o)	0	22	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
-functions in IP30/usr/cpu/sysgen/IP30boot/heart.o	67	0	52	0	50	11	13	2	0	0	77.6	97.0	100.0	77.6							0	0	0	0	
+functions in IP30/usr/cpu/sysgen/IP30boot/heart.o	67	0	53	0	51	11	12	2	0	0	79.1	97.0	100.0	79.1							0	0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/hitachi.o	0	9	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/hwgfs.a(hwgvnops.o)	0	21	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/idbg.o	1	297	0	0	0	0	0	1	0	0	0.0	0.0	100.0	0.0							0	0	0	0	
@@ -1068,7 +1068,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/kbd.o	0	42	0	0	0	0	0	0	0	0	0.0	0.0	0.0
 functions in IP30/usr/cpu/sysgen/IP30boot/kdsp.a(kdsp_di.o)	0	134	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/kdsp.a(kdsp_events.o)	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/kdsp.a(audutil.o)	0	94	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
-functions in IP30/usr/cpu/sysgen/IP30boot/kernel.o	59	667	1	0	1	14	33	25	0	0	1.7	57.6	100.0	1.7							0	0	6	0	
+functions in IP30/usr/cpu/sysgen/IP30boot/kernel.o	59	667	16	0	16	14	18	25	0	0	27.1	57.6	100.0	27.1							0	0	6	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/keyboard.a(pckbd.o)	0	14	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/kitchen_sync.o	0	10	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/klog.o	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
@@ -1082,7 +1082,7 @@ functions in IP30/usr/cpu/sysgen/IP30boot/ksync.a(mutex.o)	2	56	2	0	2	0	0	0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync.a(sema.o)	7	91	6	0	6	0	1	0	0	0	85.7	100.0	100.0	85.7							0	0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync.a(mrlock.o)	0	8	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mutex.o)	3	60	0	0	0	0	0	3	0	0	0.0	0.0	100.0	0.0							0	0	0	0	
-functions in IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	11	99	4	0	4	0	2	5	0	0	36.4	54.5	100.0	36.4							0	0	0	0	
+functions in IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	11	99	6	0	6	0	0	5	0	0	54.5	54.5	100.0	54.5							0	0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(mrlock.o)	0	5	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(mutex.o)	2	59	2	0	2	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
 functions in IP30/usr/cpu/sysgen/IP30boot/ksync_named.a(sema.o)	7	94	7	0	7	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
@@ -1781,7 +1781,7 @@ functions in IP32/usr/cpu/sysgen/IP32boot/kbd.o	0	42	0	0	0	0	0	0	0	0	0.0	0.0	0.0
 functions in IP32/usr/cpu/sysgen/IP32boot/kdsp.a(kdsp_di.o)	0	132	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP32/usr/cpu/sysgen/IP32boot/kdsp.a(kdsp_events.o)	0	25	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP32/usr/cpu/sysgen/IP32boot/kdsp.a(audutil.o)	0	94	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
-functions in IP32/usr/cpu/sysgen/IP32boot/kernel.o	70	741	42	33	42	25	27	1	0	0	60.0	98.6	100.0	60.0							0	0	3	0	
+functions in IP32/usr/cpu/sysgen/IP32boot/kernel.o	70	741	43	33	43	25	26	1	0	0	61.4	98.6	100.0	61.4							0	0	3	0	
 functions in IP32/usr/cpu/sysgen/IP32boot/keyboard.a(pckbd.o)	0	14	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP32/usr/cpu/sysgen/IP32boot/klog.o	0	7	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP32/usr/cpu/sysgen/IP32boot/kmem.a(kern_heap.o)	0	37	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				

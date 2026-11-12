@@ -257,7 +257,7 @@ IP27/unix	kernel	n64	.text	0xc000000000023614	60	get_updated_ust_i	dwarf+symtab	
 IP27/unix	kernel	n64	.text	0xc000000000023650	40	nano_to_ust	dwarf+symtab	4e47e9e64203		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000023678	32	ust_init	dwarf+symtab	4b8742b167eb		out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc0000000000236a0	36	update_ust	dwarf+symtab	e18dd4ddbe7c		in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP27/unix	kernel	n64	.text	0xc0000000000236d0	432	ecc_exception	dwarf+symtab	ea2cd5d8a7dd		out:5	undocumented		
+IP27/unix	kernel	n64	.text	0xc0000000000236d0	432	ecc_exception	dwarf+symtab	ea2cd5d8a7dd		out:5	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP27/unix	kernel	n64	.text	0xc000000000023880	472	ip27log_setup	dwarf+symtab	a369f6ce9757		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000023a58	328	ip27log_setenv	dwarf+symtab	cb6fc8ca3127		out:5	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/unix	kernel	n64	.text	0xc000000000023ba0	220	ip27log_getenv	dwarf+symtab	2f70bec4cc35		out:5	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -1139,7 +1139,7 @@ IP27/unix	kernel	n64	.text	0xc00000000004d484	4	elpg_overlay_counting_utlbmiss	s
 IP27/unix	kernel	n64	.text	0xc00000000004d484	4	utlbmiss_prolog_patch	dwarf+symtab	1546b233eb9f	shared-address	out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004d488	32	utlbmissj	dwarf+symtab	8e6a3cc2e11b		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004d4a8	8	eutlbmissj	symtab	af5570f5a181		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000004d4b0	88	_ecc_errorvec	dwarf+symtab	d389ddcbd794		out:5	named-only		
+IP27/unix	kernel	n64	.text	0xc00000000004d4b0	88	_ecc_errorvec	dwarf+symtab	d389ddcbd794		out:5	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP27/unix	kernel	n64	.text	0xc00000000004d508	8	_ecc_end	symtab	af5570f5a181		out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc00000000004d510	8	VEC_addrerr	dwarf+symtab	94ad74e6003f		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000004d520	68	VEC_tlbmiss	dwarf+symtab	a4a0776e0b54		out:5	undocumented		
@@ -1350,7 +1350,7 @@ IP27/unix	kernel	n64	.text	0xc00000000005b980	88	md_perf_start_count	dwarf+symta
 IP27/unix	kernel	n64	.text	0xc00000000005b9d8	24	md_perf_stop_count	dwarf+symtab	bbedb9b4281b		in	understood	chips/hub/README.md#small-wrappers-and-one-register-routines	Small wrappers and one-register routines
 IP27/unix	kernel	n64	.text	0xc00000000005b9f0	212	md_perf_update_count	dwarf+symtab	a6f064931c1f		in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc00000000005bac4	208	md_perf_multiplex	dwarf+symtab	3e40c46412ac		in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP27/unix	kernel	n64	.text	0xc00000000005bba0	36	VEC_ibe	dwarf+symtab	090ae59a18d3		out:5	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP27/unix	kernel	n64	.text	0xc00000000005bba0	36	VEC_ibe	dwarf+symtab	090ae59a18d3		out:5	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP27/unix	kernel	n64	.text	0xc00000000005bbc4	8	pio_geth	dwarf+symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000005bbcc	8	dma_geth	dwarf+symtab	87506497337c		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000005bbd4	8	piomap_init	dwarf+symtab	87506497337c		out:5	undocumented		
@@ -18692,7 +18692,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xa494	60	get_upda
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xa4d0	40	nano_to_ust	dwarf+symtab	4e47e9e64203		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xa4f8	32	ust_init	dwarf+symtab	f2f5d7631a33		out:7	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xa520	36	update_ust	dwarf+symtab	2ff810d08162		in	understood	docs/routines/t2-chips-r3-b000.md#tier-2-reading-round-3-batch-0-of-chips-routine-role-statements	Tier-2 reading, round 3, batch 0 of chips: routine role statements
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xa550	432	ecc_exception	dwarf+symtab	bb724eddc9f2		out:7	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xa550	432	ecc_exception	dwarf+symtab	bb724eddc9f2		out:7	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xa700	472	ip27log_setup	dwarf+symtab	ca6849c2ce55		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xa8d8	328	ip27log_setenv	dwarf+symtab	dac826d6a3a9		out:7	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0xaa20	220	ip27log_getenv	dwarf+symtab	44e23c061eca		out:7	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -19574,7 +19574,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34304	4	elpg_ove
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34304	4	utlbmiss_prolog_patch	dwarf+symtab	1546b233eb9f	shared-address	out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34308	32	utlbmissj	dwarf+symtab	59e7addb5e06		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34328	8	eutlbmissj	symtab	af5570f5a181		out:7	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34330	88	_ecc_errorvec	dwarf+symtab	7f1e39a15b5d		out:7	named-only		
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34330	88	_ecc_errorvec	dwarf+symtab	7f1e39a15b5d		out:7	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34388	8	_ecc_end	symtab	af5570f5a181		out:7	named-only		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x34390	8	VEC_addrerr	dwarf+symtab	6cc16abd70ee		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x343a0	68	VEC_tlbmiss	dwarf+symtab	1503c13cfd26		out:7	undocumented		
@@ -19785,7 +19785,7 @@ IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42800	88	md_perf
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42858	24	md_perf_stop_count	dwarf+symtab	dd6780d501f5		in	located	docs/routines/t2-chips-r4-b001.md#tier-2-reading-batch-1-of-chips-routine-role-entries	Tier-2 reading, batch 1 of chips: routine role entries
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42870	212	md_perf_update_count	dwarf+symtab	66eae6280dc8		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42944	208	md_perf_multiplex	dwarf+symtab	104f36d3fab9		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42a20	36	VEC_ibe	dwarf+symtab	a192c023ce80		out:7	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42a20	36	VEC_ibe	dwarf+symtab	a192c023ce80		out:7	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42a44	8	pio_geth	dwarf+symtab	87506497337c		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42a4c	8	dma_geth	dwarf+symtab	87506497337c		out:7	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/kernel.o	kernel-object	n64	.text	0x42a54	8	piomap_init	dwarf+symtab	87506497337c		out:7	undocumented		
@@ -32325,13 +32325,13 @@ IP30/unix	kernel	n64	.text	0xa800000020011320	8	dummyret0_func	dwarf+symtab	8750
 IP30/unix	kernel	n64	.text	0xa800000020011320	8	heart_need_flush	symtab	87506497337c	shared-address	in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020011320	8	is_vme_space	symtab	87506497337c	shared-address	out:8	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020011320	8	vme_adapter	symtab	87506497337c	shared-address	out:8	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP30/unix	kernel	n64	.text	0xa800000020011328	12	_get_timestamp	dwarf+symtab	d603fc5cc21b		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
-IP30/unix	kernel	n64	.text	0xa800000020011334	12	getcpuid	dwarf+symtab	07676ff112e0		in	understood	docs/routines/t1-chips-b004.md#routine-roles-from-the-chips-kernel-binaries-set-4	Routine roles from the chips kernel binaries, set 4
+IP30/unix	kernel	n64	.text	0xa800000020011328	12	_get_timestamp	dwarf+symtab	d603fc5cc21b		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/unix	kernel	n64	.text	0xa800000020011334	12	getcpuid	dwarf+symtab	07676ff112e0		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/unix	kernel	n64	.text	0xa800000020011340	212	nmi_dump	dwarf+symtab	55bae0b7dcb9		in	understood	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/unix	kernel	n64	.text	0xa800000020011414	32	getcachesz	dwarf+symtab	8d2d001b2026		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020011434	220	bootstrap	dwarf+symtab	5774c289a46b		out:8	named-only		
 IP30/unix	kernel	n64	.text	0xa800000020011580	112	ffintr64	dwarf+symtab	f87ab3823796		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP30/unix	kernel	n64	.text	0xa8000000200115f0	52	_ticksper1024inst	dwarf+symtab	80be604b7e1e		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/unix	kernel	n64	.text	0xa8000000200115f0	52	_ticksper1024inst	dwarf+symtab	80be604b7e1e		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/unix	kernel	n64	.text	0xa800000020011640	60	us_delay	dwarf+symtab	98ceb80b8363		out:8	named-only	docs/hw-explanations-chips-w1.md#hardware-facing-routine-explanations-crime-and-the-ip32-kernel-wave-1	Hardware-facing routine explanations, CRIME and the IP32 kernel, wave 1
 IP30/unix	kernel	n64	.text	0xa80000002001167c	48	heart_intr_low	dwarf+symtab	ccbe778e8f1c		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa800000020011684	12	heart_intr_med	symtab	8425478afcac		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
@@ -32366,7 +32366,7 @@ IP30/unix	kernel	n64	.text	0xa800000020012870	28	reset_leds	dwarf+symtab	a95d355
 IP30/unix	kernel	n64	.text	0xa80000002001288c	28	sys_setled	dwarf+symtab	ec58991314ea		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa8000000200128a8	348	dobootduty	dwarf	6945e6cc28e8		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020012a04	48	cpu_disable	dwarf	60cb5dcc562e		in	named-only	docs/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP30/unix	kernel	n64	.text	0xa800000020012a34	32	cpu_exists	dwarf	3151317b3d13		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/unix	kernel	n64	.text	0xa800000020012a34	32	cpu_exists	dwarf	3151317b3d13		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/unix	kernel	n64	.text	0xa800000020012a54	20	cpu_enabled	dwarf+symtab	463fded8373b		out:8	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa800000020012a68	980	allowboot	dwarf+symtab	adb8aefe526b		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa800000020012e3c	424	cboot	dwarf+symtab	516575dc8b75		out:8	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -32621,7 +32621,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001a33c	60	get_updated_ust_i	dwarf+symtab	
 IP30/unix	kernel	n64	.text	0xa80000002001a378	40	nano_to_ust	dwarf+symtab	d138d3146d3e		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001a3a0	32	ust_init	dwarf+symtab	c34c33d0dcf8		out:8	named-only		
 IP30/unix	kernel	n64	.text	0xa80000002001a3c0	20	update_ust	dwarf+symtab	b9e2b8ccd048		in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP30/unix	kernel	n64	.text	0xa80000002001a3e0	460	ecc_exception	dwarf+symtab	d50b198586d4		out:8	undocumented		
+IP30/unix	kernel	n64	.text	0xa80000002001a3e0	460	ecc_exception	dwarf+symtab	d50b198586d4		out:8	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/unix	kernel	n64	.text	0xa80000002001a600	8	ULIsystrap_j	dwarf+symtab	dde623316228		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001a680	380	systrap	dwarf+symtab	d9cbba6f4da7		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001a7fc	32	VEC_syscall	dwarf+symtab	0161eff7b072		out:8	undocumented		
@@ -32737,7 +32737,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001c158	12	set_lladdr	dwarf+symtab	9a846dc
 IP30/unix	kernel	n64	.text	0xa80000002001c164	12	do_sync_instruction	dwarf+symtab	0fc560405654		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c170	40	siron	dwarf+symtab	465f138331e6		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c198	44	siroff	dwarf+symtab	b8f75fd62e1e		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002001c1c4	32	flushbus	dwarf+symtab	ef6ea10b90dc		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/unix	kernel	n64	.text	0xa80000002001c1c4	32	flushbus	dwarf+symtab	ef6ea10b90dc		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/unix	kernel	n64	.text	0xa80000002001c1e4	8	wbflush	dwarf+symtab	78aa5094d5ec		out:8	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa80000002001c1ec	8	ip26_enable_ucmem	dwarf+symtab	78aa5094d5ec	shared-address	out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c1ec	20	ip26_return_ucmem	symtab	4bb71562d901	shared-address	out:8	undocumented		
@@ -32749,7 +32749,7 @@ IP30/unix	kernel	n64	.text	0xa80000002001c494	332	wbadaddr	dwarf+symtab	f981998e
 IP30/unix	kernel	n64	.text	0xa80000002001c5e0	360	wbadaddr_val	dwarf+symtab	830caef903d7		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001c748	312	earlybadaddr	dwarf+symtab	05df890ca12a		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa80000002001c880	136	wbadmemaddr	dwarf+symtab	82f9137c0c14		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP30/unix	kernel	n64	.text	0xa80000002001c908	92	baerror	dwarf+symtab	66e4e51225b1		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/unix	kernel	n64	.text	0xa80000002001c908	92	baerror	dwarf+symtab	66e4e51225b1		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/unix	kernel	n64	.text	0xa80000002001c964	96	earlybaerror	dwarf+symtab	c66268cf7682		in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/unix	kernel	n64	.text	0xa80000002001c9d0	12	VEC_breakpoint	dwarf+symtab	1c3f5b008867		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002001c9d8	4	kernelbp	symtab	cd09e81bee54		out:8	undocumented		
@@ -32882,7 +32882,7 @@ IP30/unix	kernel	n64	.text	0xa800000020023b04	160	idle_err	dwarf+symtab	f328f63f
 IP30/unix	kernel	n64	.text	0xa800000020023ba4	28	dobuserre	dwarf+symtab	dc9ecd975938		out:8	named-only	chips/bedrock/README.md#register-walk-of-the-crash-dump-dump_hub_registers-ip35-kernel	Register walk of the crash dump (`dump_hub_registers`, IP35 kernel)
 IP30/unix	kernel	n64	.text	0xa800000020023bc0	28	dobuserr	dwarf+symtab	b61e7b325313		out:8	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa800000020023bdc	132	hem_add_dimm	dwarf	588563288bcf		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa800000020023c60	212	hem_add_sync	dwarf	c6788589b395		out:8	undocumented		
+IP30/unix	kernel	n64	.text	0xa800000020023c60	212	hem_add_sync	dwarf	c6788589b395		out:8	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/unix	kernel	n64	.text	0xa800000020023d34	576	hem_add_ioe	dwarf	3deb7f46176c		out:8	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/unix	kernel	n64	.text	0xa800000020023f74	9460	dobuserr_common	dwarf+symtab	167299a5aec6		in	understood	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/unix	kernel	n64	.text	0xa800000020026468	144	tlb_to_phys	dwarf	5b3222b87c35		out:8	undocumented		
@@ -48390,7 +48390,7 @@ IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x13d0	28	heart_pro
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x13ec	284	heart_paddr_to_port	dwarf+symtab	985d51392a50		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1508	244	heart_error_refine	dwarf+symtab	dabeeb825f82		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x15fc	52	heart_error_handler	dwarf+symtab	85b4624c57bc		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
-IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1630	364	heart_intr	dwarf+symtab	45785f15be8c		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x1630	364	heart_intr	dwarf+symtab	45785f15be8c		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x179c	8	heart_error_devenable	dwarf+symtab	87506497337c		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x17a4	52	heart_intrd	dwarf+symtab	6f516433413a		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
 IP30/usr/cpu/sysgen/IP30boot/heart.o	kernel-object	n64	.text	0x17d8	124	heart_intrd_start	dwarf+symtab	ccf492317136		in	understood	chips/heart/README.md#routines-in-the-ip30-hearto-build	Routines in the IP30 `heart.o` build
@@ -49996,13 +49996,13 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	dummyret0
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	heart_need_flush	symtab	87506497337c	shared-address	in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	is_vme_space	symtab	87506497337c	shared-address	out:9	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a0	8	vme_adapter	symtab	87506497337c	shared-address	out:9	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a8	12	_get_timestamp	dwarf+symtab	d603fc5cc21b		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11b4	12	getcpuid	dwarf+symtab	07676ff112e0		in	understood	docs/routines/t1-chips-b004.md#routine-roles-from-the-chips-kernel-binaries-set-4	Routine roles from the chips kernel binaries, set 4
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11a8	12	_get_timestamp	dwarf+symtab	d603fc5cc21b		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11b4	12	getcpuid	dwarf+symtab	07676ff112e0		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x11c0	212	nmi_dump	dwarf+symtab	18cdc4d29921		in	named-only	docs/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1294	32	getcachesz	dwarf+symtab	8d2d001b2026		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x12b4	220	bootstrap	dwarf+symtab	9a994094fcc8		out:9	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1400	112	ffintr64	dwarf+symtab	f87ab3823796		out:9	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1470	52	_ticksper1024inst	dwarf+symtab	80be604b7e1e		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1470	52	_ticksper1024inst	dwarf+symtab	80be604b7e1e		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x14c0	60	us_delay	dwarf+symtab	98ceb80b8363		out:9	named-only	docs/hw-explanations-chips-w1.md#hardware-facing-routine-explanations-crime-and-the-ip32-kernel-wave-1	Hardware-facing routine explanations, CRIME and the IP32 kernel, wave 1
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x14fc	48	heart_intr_low	dwarf+symtab	1461f2de98a0		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1504	12	heart_intr_med	symtab	c18618d65ffc		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -50036,8 +50036,8 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2690	96	set_leds
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x26f0	28	reset_leds	dwarf+symtab	7817ac548105		out:9	named-only	chips/mace/README.md#other-rows	Other rows
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x270c	28	sys_setled	dwarf+symtab	a86de4a9d7a4		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2728	348	dobootduty	dwarf	d4aeee827e3f		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2884	48	cpu_disable	dwarf	a902ef13a125		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28b4	32	cpu_exists	dwarf	3151317b3d13		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2884	48	cpu_disable	dwarf	a902ef13a125		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28b4	32	cpu_exists	dwarf	3151317b3d13		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28d4	20	cpu_enabled	dwarf+symtab	4b82f3c90019		out:9	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x28e8	980	allowboot	dwarf+symtab	346df109e278		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x2cbc	424	cboot	dwarf+symtab	9c532ced7935		out:9	named-only	chips/hub/README.md#routines-of-the-ip27-kernel-ip27unix	Routines of the IP27 kernel (`IP27/unix`)
@@ -50056,7 +50056,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x33e0	340	ip30_ch
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3534	340	ip30_early_piotrans_addr	dwarf	cdebabf88b45		in	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3688	548	init_all_devices	dwarf+symtab	bc27230d4631		out:9	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x38ac	28	sendintr	dwarf+symtab	0aa68a818cd4		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x38c8	140	debug_stop_all_cpus	dwarf+symtab	09b9c330cac9		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x38c8	140	debug_stop_all_cpus	dwarf+symtab	09b9c330cac9		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x3954	120	tsfastick_maint	dwarf	0b9156534829		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x39cc	28	pokesoftclk	dwarf+symtab	7c97d765735d		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x39e8	48	ip30_intr_maint	dwarf+symtab	c78cb27a3af0		out:9	undocumented		
@@ -50104,7 +50104,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x5a90	424	migrate
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x5c38	124	settimetrim	dwarf+symtab	c65f45857588		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x5cb4	8	gettimetrim	dwarf+symtab	7451bb35e09d		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x5cbc	500	doadjtime	dwarf+symtab	abb01f51e93d		out:9	named-only	chips/bedrock/README.md#register-inventory-accesses-in-the-ip35-kernel-and-boot-directory-objects	Register inventory (accesses in the IP35 kernel and boot-directory objects)
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x5eb0	548	__nanotime	dwarf	65f02178caa2		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x5eb0	548	__nanotime	dwarf	65f02178caa2		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x60d4	368	nanotime_syscall	dwarf+symtab	ba9db8da72a6		in	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6244	228	nanotime	dwarf+symtab	786eb02ab1ba		in	named-only	docs/ip30-kernel-support-routines.md#machine-independent-kernel-routines-of-the-ip30-build-read-for-completeness	Machine-independent kernel routines of the IP30 build read for completeness
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x6328	68	irix5_microtime	dwarf+symtab	f42d82ff91d7		out:9	undocumented		
@@ -50292,7 +50292,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xa1bc	60	get_upda
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xa1f8	40	nano_to_ust	dwarf+symtab	d138d3146d3e		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xa220	32	ust_init	dwarf+symtab	a514dfa3eb00		out:9	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xa240	20	update_ust	dwarf+symtab	8f655a7d1a29		in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xa260	460	ecc_exception	dwarf+symtab	e043259b5d42		out:9	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xa260	460	ecc_exception	dwarf+symtab	e043259b5d42		out:9	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xa480	8	ULIsystrap_j	dwarf+symtab	ef9020c98b58		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xa500	380	systrap	dwarf+symtab	49b8330f0f57		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xa67c	32	VEC_syscall	dwarf+symtab	0dccd5448c5c		out:9	undocumented		
@@ -50408,19 +50408,19 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbfd8	12	set_llad
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbfe4	12	do_sync_instruction	dwarf+symtab	0fc560405654		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xbff0	40	siron	dwarf+symtab	465f138331e6		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc018	44	siroff	dwarf+symtab	b8f75fd62e1e		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc044	32	flushbus	dwarf+symtab	ef6ea10b90dc		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc044	32	flushbus	dwarf+symtab	ef6ea10b90dc		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc064	8	wbflush	dwarf+symtab	78aa5094d5ec		out:9	named-only	chips/crime/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	8	ip26_enable_ucmem	dwarf+symtab	78aa5094d5ec	shared-address	out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	20	ip26_return_ucmem	symtab	4bb71562d901	shared-address	out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	20	ip28_enable_ucmem	symtab	4bb71562d901	shared-address	out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc06c	20	ip28_return_ucmem	symtab	4bb71562d901	shared-address	out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc080	296	badaddr	dwarf+symtab	2788dda857c8		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc1a8	364	badaddr_val	dwarf+symtab	1a90a5d77287		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc314	332	wbadaddr	dwarf+symtab	a6a1188d0847		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc080	296	badaddr	dwarf+symtab	2788dda857c8		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc1a8	364	badaddr_val	dwarf+symtab	1a90a5d77287		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc314	332	wbadaddr	dwarf+symtab	a6a1188d0847		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc460	360	wbadaddr_val	dwarf+symtab	dfb7c35a1676		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc5c8	312	earlybadaddr	dwarf+symtab	588b98ff86e8		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc5c8	312	earlybadaddr	dwarf+symtab	588b98ff86e8		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc700	136	wbadmemaddr	dwarf+symtab	9cc7f4ccc2ff		in	named-only		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc788	92	baerror	dwarf+symtab	66e4e51225b1		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc788	92	baerror	dwarf+symtab	66e4e51225b1		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc7e4	96	earlybaerror	dwarf+symtab	6379e44e03ee		in	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc850	12	VEC_breakpoint	dwarf+symtab	3614e4802762		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xc858	4	kernelbp	symtab	cd09e81bee54		out:9	undocumented		
@@ -50474,7 +50474,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdb84	4	elpg_over
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdb84	4	utlbmiss_prolog_patch	dwarf+symtab	fc2233899786	shared-address	out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdb88	32	utlbmissj	dwarf+symtab	59e7addb5e06		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdba8	8	eutlbmissj	symtab	af5570f5a181		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdbb0	104	_ecc_errorvec	dwarf+symtab	cd7fffd4cb81		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdbb0	104	_ecc_errorvec	dwarf+symtab	cd7fffd4cb81		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc18	24	_ecc_end	symtab	3d30d72cf42a	shared-address	in	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc18	24	get_mem_conf	dwarf	3d30d72cf42a	shared-address	out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0xdc30	36	bank_addrlo	dwarf	3c3721cae68b		out:9	undocumented		
@@ -50553,7 +50553,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x13984	160	idle_e
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x13a24	28	dobuserre	dwarf+symtab	f79b5991cbaf		out:9	named-only	chips/bedrock/README.md#register-walk-of-the-crash-dump-dump_hub_registers-ip35-kernel	Register walk of the crash dump (`dump_hub_registers`, IP35 kernel)
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x13a40	28	dobuserr	dwarf+symtab	1c3c43e5854e		out:9	named-only	docs/ip30-kernel-heart-routines.md#heart-error-timer-and-reset-routines-of-the-ip30-kernel	HEART error, timer and reset routines of the IP30 kernel
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x13a5c	132	hem_add_dimm	dwarf	f59303ae9824		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x13ae0	212	hem_add_sync	dwarf	245c2722246e		out:9	undocumented		
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x13ae0	212	hem_add_sync	dwarf	245c2722246e		out:9	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x13bb4	576	hem_add_ioe	dwarf	f7f554eb0bb8		out:9	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x13df4	9460	dobuserr_common	dwarf+symtab	0683e8f6ecce		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x162e8	144	tlb_to_phys	dwarf	11ba70e1e898		out:9	undocumented		
@@ -50561,7 +50561,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16380	8	_dummy_p
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16380	16	first_address	symtab	2415714719d8	shared-address	out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16390	812	fpunit_fpload_s	dwarf+symtab	cff17d6b510e		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x166bc	280	renorm_d	dwarf+symtab	ca4d54236661		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x167e0	88	VEC_dbe	dwarf+symtab	8a61e43b6a1d		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x167e0	88	VEC_dbe	dwarf+symtab	8a61e43b6a1d		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16838	204	renorm_s	dwarf+symtab	4243e23df2e3		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16910	12	_get_count	dwarf+symtab	88b3839417d9	shared-address	out:9	named-only		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x16910	12	get_r4k_counter	symtab	88b3839417d9	shared-address	out:9	named-only		
@@ -50651,7 +50651,7 @@ IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1bdd0	8	readadap
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1bdd8	8	pio_mapalloc	dwarf+symtab	87506497337c		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1bde0	8	pio_mapaddr	dwarf+symtab	87506497337c		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1bde8	8	pio_mapfree	dwarf+symtab	78aa5094d5ec		out:9	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1bdf0	112	VEC_ibe	dwarf+symtab	280f9c33a5dc		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1bdf0	112	VEC_ibe	dwarf+symtab	280f9c33a5dc		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1be60	8	btool_size	dwarf+symtab	87506497337c		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1be68	8	btool_getinfo	dwarf+symtab	627e969afad0		out:9	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/kernel.o	kernel-object	n64	.text	0x1be70	8	btool_reinit	dwarf+symtab	78aa5094d5ec		out:9	undocumented		
@@ -51214,10 +51214,10 @@ IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x3
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x331c	128	mrdq	dwarf+symtab	a1391a21d80e		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x339c	600	mrvsema	dwarf+symtab	c0973f2be95e		out:3	named-only	docs/routines/t2-chips-r4-b001.md#tier-2-reading-batch-1-of-chips-routine-role-entries	Tier-2 reading, batch 1 of chips: routine role entries
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x35f4	668	mr_dqacc	dwarf+symtab	a5a003a24ca4		out:3	undocumented		
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x3890	252	_mraccess	dwarf+symtab	fde1ccfc1791		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x3890	252	_mraccess	dwarf+symtab	fde1ccfc1791		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x398c	32	mraccessf	dwarf+symtab	580df943ff4b		in	understood	docs/routines/t2-chips-r4-b001.md#tier-2-reading-batch-1-of-chips-routine-role-entries	Tier-2 reading, batch 1 of chips: routine role entries
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x39ac	32	mrupdatef	dwarf+symtab	580df943ff4b		in	understood	docs/routines/t2-chips-r4-b001.md#tier-2-reading-batch-1-of-chips-routine-role-entries	Tier-2 reading, batch 1 of chips: routine role entries
-IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x39cc	236	_mrupdate	dwarf+symtab	6d59843f7591		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x39cc	236	_mrupdate	dwarf+symtab	6d59843f7591		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x3ab8	164	mrtryaccess	dwarf+symtab	061364eec5f9		out:3	undocumented		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x3b5c	156	mrtryupdate	dwarf+symtab	ef6c068bc56b		in	named-only		
 IP30/usr/cpu/sysgen/IP30boot/ksync_metered.a(sema.o)	kernel-object	n64	.text	0x3bf8	340	mrunlock	dwarf+symtab	d5b8746f39e0		in	named-only	docs/binaries-scope-kernel-objects.md#ip35-build-network-streams-and-cluster-objects-scope-rule-2	IP35 build: network, STREAMS and cluster objects (scope rule 2)
@@ -66207,7 +66207,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x4164	40	nano_to_
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x418c	36	ust_init	dwarf+symtab	106424f27f33		out:10	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x41b0	160	fill_ust_highbits	dwarf+symtab	2e8d2cce3af5		out:10	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x4250	64	update_ust	dwarf+symtab	a75a44a943e3		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x4290	476	ecc_exception	dwarf+symtab	9a76902eb8ad		out:10	undocumented		
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x4290	476	ecc_exception	dwarf+symtab	9a76902eb8ad		out:10	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x4468	4	eccword	symtab	df3f619804a9		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x446c	384	r10k_ecc_exception	dwarf+symtab	6e2149c47267		out:10	undocumented		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x45ec	52	ecc_cacheOp	dwarf+funcnames	88e907935605		out:10	named-only	docs/routines/t1-chips-b001.md#tier-1-routine-roles-chips-batch-1	Tier-1 routine roles, chips batch 1
@@ -66294,7 +66294,7 @@ IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x81e4	216	add_cpu
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x82bc	268	init_sysid	dwarf+symtab	2a61486e82df		out:10	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x83c8	316	setup_ip32_flags	dwarf+funcnames	1e233f1fa920		out:10	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8504	564	early_gbe_stop	dwarf+symtab	e911ead8ba71		in	understood	docs/hw-explanations-chips-w1.md#hardware-facing-routine-explanations-crime-and-the-ip32-kernel-wave-1	Hardware-facing routine explanations, CRIME and the IP32 kernel, wave 1
-IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8738	672	mlreset	dwarf+symtab	9034f85615ef		in	located	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
+IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8738	672	mlreset	dwarf+symtab	9034f85615ef		in	understood	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x89d8	88	timestamp_init	dwarf+symtab	4b9b771fe735		out:10	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8a30	440	init_all_devices	dwarf+symtab	0687c468fe37		out:10	named-only		
 IP32/usr/cpu/sysgen/IP32boot/kernel.o	kernel-object	n32	.text	0x8be8	200	allowboot	dwarf+symtab	29ed372df219		out:10	undocumented		
@@ -83597,7 +83597,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xa58c	60	get_upda
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xa5c8	40	nano_to_ust	dwarf+symtab	0b2fd793f2b4		out:12	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xa5f0	100	ust_init	dwarf+symtab	9644d232cdcb		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xa660	36	update_ust	dwarf+symtab	2ff810d08162		out:12	understood	docs/routines/t2-chips-r3-b000.md#tier-2-reading-round-3-batch-0-of-chips-routine-role-statements	Tier-2 reading, round 3, batch 0 of chips: routine role statements
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xa690	432	ecc_exception	dwarf+symtab	a802727f4b9f		out:12	undocumented		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xa690	432	ecc_exception	dwarf+symtab	a802727f4b9f		out:12	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xa840	476	ip27log_setup	dwarf+symtab	2bc77c210990		out:12	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xaa1c	336	ip27log_setenv	dwarf+symtab	c83884a4f17a		out:12	named-only	chips/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0xab6c	220	ip27log_getenv	dwarf+symtab	d653555b2ce6		out:12	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -84341,7 +84341,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e290	4	elpg_ove
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e290	4	utlbmiss_prolog_patch	dwarf+symtab	4756b6381442	shared-address	out:12	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e294	32	utlbmissj	dwarf+symtab	59e7addb5e06		out:12	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e2b4	12	eutlbmissj	symtab	15ec7bf0b507		out:12	undocumented		
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e2c0	88	_ecc_errorvec	dwarf+symtab	05262da04530		out:12	named-only		
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e2c0	88	_ecc_errorvec	dwarf+symtab	05262da04530		out:12	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e318	36	_ecc_end	symtab	cd988059adf8	shared-address	out:12	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e318	36	get_nvreg	dwarf+symtab	cd988059adf8	shared-address	out:12	named-only		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x2e33c	128	set_nvreg	dwarf+symtab	e524051e91bd		out:12	undocumented		
@@ -84631,7 +84631,7 @@ IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x43794	88	md_perf
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x437ec	24	md_perf_stop_count	dwarf+symtab	226f1f0c158d		in	named-only	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x43804	212	md_perf_update_count	dwarf+symtab	cbbca55c8d60		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x438d8	212	md_perf_multiplex	dwarf+symtab	5dad28f42670		in	located	docs/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x439b0	36	VEC_ibe	dwarf+symtab	c31ec3874640		out:12	named-only	chips/crime/README.md#graded-register-table	Graded register table
+IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x439b0	36	VEC_ibe	dwarf+symtab	c31ec3874640		out:12	named-only	docs/routines/t1-chips-b002.md#routine-role-statements-chips-batch-2	Routine role statements, chips batch 2
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x439d4	8	pio_geth	dwarf+symtab	87506497337c		out:12	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x439dc	8	dma_geth	dwarf+symtab	87506497337c		out:12	undocumented		
 IP35/usr/cpu/sysgen/IP35boot/kernel.o	kernel-object	n64	.text	0x439e4	8	piomap_init	dwarf+symtab	87506497337c		out:12	undocumented		
