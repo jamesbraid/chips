@@ -130,6 +130,154 @@ cache facts describe the processor, not a board.
 - **Unknown**: whether the MACE PCI-side DMA path has any snooping, buffering or ordering that changes this
   view. Route: a MACE DMA description that gives its buffering and translation rules, and a measured transfer.
 
+## Index operations in detail
+
+Pages marked NEC below are from two NEC manuals, cited by printed page:
+
+- NEC, *VR10000 Series 64-/32-bit Microprocessor User's Manual*, fourth edition, March 2001, U10278EJ4V0UM00 (NEC UM).
+- NEC, *VR5000, VR10000 64-bit Microprocessor Instruction User's Manual*, first edition, August 2000, U12754EJ1V0UMJ1 (NEC ISUM). The UM defers the CACHE encodings and per-operation text to this manual.
+
+Every R10000 value here comes from the R10000 column of the ISUM table. The facts describe the R10000 as those manuals do. R12000 behaviour needs separate evidence.
+
+### Encoding (established)
+
+- `CACHE op, offset(base)` has major opcode `101111`, base register in bits 25:21, `op` in bits 20:16 and a signed 16-bit offset. The operand is `GPR[base]` plus the sign-extended offset, translated through the TLB (NEC ISUM pp. 70–72).
+- `op[1:0]` selects the cache: `00` primary instruction, `01` primary data, `11` secondary. `10` is undefined on the R10000. `op[4:2]` selects the operation. Unlisted encodings are undefined (NEC ISUM pp. 16–17, 70).
+- The R10000 does not implement Create Dirty Exclusive, Hit Writeback, Fill (I), Flash, Page Invalidate or the Hit Set Virtual variants (NEC ISUM p. 16).
+
+| `op` | Primary I | Primary D | Secondary |
+| ---: | --- | --- | --- |
+| `0x00` | Index Invalidate | | |
+| `0x01` | | Index Writeback Invalidate | |
+| `0x03` | | | Index Writeback Invalidate |
+| `0x04` | Index Load Tag | | |
+| `0x05` | | Index Load Tag | |
+| `0x07` | | | Index Load Tag |
+| `0x08` | Index Store Tag | | |
+| `0x09` | | Index Store Tag | |
+| `0x0b` | | | Index Store Tag |
+| `0x10` | Hit Invalidate | | |
+| `0x11` | | Hit Invalidate | |
+| `0x13` | | | Hit Invalidate |
+| `0x14` | Cache Barrier | | |
+| `0x15` | | Hit Writeback Invalidate | |
+| `0x17` | | | Hit Writeback Invalidate |
+| `0x18` | Index Load Data | | |
+| `0x19` | | Index Load Data | |
+| `0x1b` | | | Index Load Data |
+| `0x1c` | Index Store Data | | |
+| `0x1d` | | Index Store Data | |
+| `0x1f` | | | Index Store Data |
+
+Table: established (NEC ISUM pp. 16–17, 70).
+
+### Exceptions and ordering (established)
+
+- The CACHE instruction needs usable CP0. Bit 0 of the operand is the way select for index operations, so it is not checked for alignment (NEC ISUM pp. 71–72). The alignment wording for the other low bits is open; see the Unknown under mapped addresses above.
+- CACHE instructions execute serially. No later load or store issues speculatively until the CACHE instruction graduates, and earlier memory traffic, including writebacks, must have completed. Instruction fetch is not serialized (NEC ISUM p. 16).
+- Uncorrectable-error protection is suppressed during Index Load and Index Store Tag and Data operations (NEC UM p. 189).
+
+### Geometry and index source
+
+- **Established** (NEC UM pp. 61–67): all three caches are two-way set associative and write-back. Each primary cache is indexed by virtual address and tagged by physical address. The primary instruction index is VA[13:6] and the primary data index is VA[13:5]. The way is VA[0].
+- **Established** (NEC ISUM pp. 71–72, NEC UM p. 67): the secondary cache is 512 KiB to 16 MiB in powers of two, set by SCSize. Its block is 64 or 128 bytes, set by SCBlkSize. For a cache of 2^N bytes with 2^B-byte blocks, the set is PA[N-2:B] and the way is PA[0]. A 512 KiB cache with 64-byte blocks is indexed by PA[17:6].
+- **Unknown** (NEC UM pp. 81, 86, 91, 276): the UM's secondary read and write text gives the index as PA(23:6), which is 18 bits and fits no allowed cache size. The CacheErr format on p. 276 gives SIdx as PA[22:6], which is 17 bits and fits a 16 MiB cache. The way-prediction table index on p. 81 matches the formula only up to 1 MiB. The formula above is the one the ISUM supports. The UM also writes VA(0) and VA(3) where the ISUM writes PA[0] and PA[3]. Translation does not change those bits, because they lie below the page size.
+
+### Mapped operands: which address gives the index
+
+- **Established** (NEC ISUM pp. 70, 72): every CACHE operand, index or hit, is translated like a data address first. Unmapped operands (kseg0, kseg1, xkphys) take their physical address from the virtual address. For a primary index operation the translation still happens and can raise an exception, but the physical address is not used.
+- **Established** (NEC ISUM pp. 14–15, 71): the primary index comes from the virtual address. The secondary index comes from the physical address, PA[N-2:B], and for Index Load and Store Data (S) the quadword (PA[B-1:4]) and doubleword (PA[3]) come from it too. The generic sentence on ISUM p. 72, that the virtual address indexes any index operation, does not override these specific statements for the secondary cache. The secondary cache is physically indexed (NEC UM p. 67).
+- **Inferred** (from the points above): a mapped secondary index operation reaches the set given by the physical frame, not the virtual page number. Two virtual addresses mapped to one frame reach one secondary line. Two addresses with equal VA[N-2:B] but frames that differ in index bits reach different lines. The primary set depends only on virtual bits, so VA[13:12] can differ from the frame's PA[13:12]. That is why the secondary tag records VA[13:12] as its virtual index.
+- **Unknown** (NEC ISUM pp. 15, 72): the BadVAddr, Context and EntryHi values after a CACHE operation raises a TLB exception. Neither manual gives them for CACHE operations.
+
+### Tag and data formats
+
+Tag fields (**established**, NEC UM pp. 279–281, Figures 14-28 to 14-30, pp. 194–196; NEC ISUM pp. 20–25). Index Store Tag writes every listed field from the registers, including the parity, ECC, LRU and MRU bits. Index Load Tag fills these fields and sets every other bit of TagLo and TagHi to zero.
+
+| Cache | TagLo | TagHi |
+| --- | --- | --- |
+| Primary I | [31:8] PA[35:12], [6] state (1 valid), [3] LRU, [2] state parity, [0] tag parity | [3:0] PA[39:36] |
+| Primary D | [31:8] PA[35:12], [7:6] state, [3] LRU, [2] state parity, [1] secondary way, [0] tag parity | [3:0] PA[39:36], [31:29] state modifier |
+| Secondary | [31:14] PA[35:18], [11:10] state, [8:7] virtual index, [6:0] tag ECC | [3:0] PA[39:36], [31] MRU |
+
+- **Established** (NEC UM pp. 192, 279–280, Table 14-24): the primary D state modifier in TagHi[31:29] is `001` normal, `010` written and inconsistent with the secondary cache, or `100` refilling. With the refill bit set, the state values mean refill or upgrade states. With the modifier clear, the state is `0` invalid, `1` shared, `2` clean exclusive or `3` dirty exclusive.
+- **Established** (NEC UM p. 67, Table 5-4): the secondary state is `0` invalid, `1` shared, `2` clean exclusive or `3` dirty exclusive. A secondary line is valid in every state but 0.
+- **Established** (NEC UM pp. 66–67, 195–196): the secondary tag array holds the full 22-bit physical tag PA[39:18], even when the cache is above 512 KiB and some of those bits are redundant. The 26-bit SCTag holds that tag, a 2-bit virtual index PIdx and the 2-bit state. Seven ECC bits accompany it in the CACHE mapping. The virtual index is VA[13:12] of the access that filled the line, written at refill.
+- **Established** (NEC UM p. 280, Figure 14-29; NEC ISUM p. 24): the primary D tag's TagLo[1] holds the secondary way that the line's writeback uses. That use is **inferred** from the manual's silence.
+
+Data fields (**established**, NEC ISUM pp. 29–30; NEC UM pp. 273, 282–283, 86, 91):
+
+| Operation | Address selects | Register contents |
+| --- | --- | --- |
+| Index Load/Store Data (I) | word VA[13:2], way VA[0] | Inst[31:0] in TagLo, Inst[35:32] in TagHi[3:0], parity in ECC[0] |
+| Index Load/Store Data (D) | word VA[13:2], way VA[0] | data word in TagLo, byte parity in ECC[3:0] |
+| Index Load/Store Data (S) | quadword and way, with the doubleword chosen by PA[3] | doubleword bits 63:32 in TagHi, bits 31:0 in TagLo, check bits in ECC[9:0] |
+
+- Every Index Store Data leaves the tag array and the LRU or MRU bit unchanged. Index Store Data (I) bypasses predecode. Index Load Data suppresses parity and ECC checks. ECC[9] is the quadword's even parity bit and ECC[8:0] are the nine check bits (NEC UM p. 273).
+- **Established** (NEC UM p. 91, NEC ISUM p. 30): Index Store Data (S) writes a whole quadword. The doubleword chosen by PA[3] comes from TagHi:TagLo, the other doubleword is written as zero, and ECC[9:0] is stored as given without generating or checking anything. Two Index Store Data (S) operations to the two doublewords of one quadword leave only the second doubleword's data.
+- **Established** (NEC UM Figure 14-33, p. 283): TagHi holds doubleword bits 63:32 and TagLo bits 31:0. Which half of a refilled primary line a word load returns is **unknown** (see Not settled).
+
+### Index operations on existing lines
+
+- **Established** (NEC ISUM pp. 18–19, 25, 27): Index Invalidate (I) clears the I state bit and state parity of the selected way and leaves LRU alone. Index Writeback Invalidate (D) invalidates the selected D way, resets its state modifier and secondary-way field, and writes an inconsistent line back to the secondary cache.
+- **Established** (NEC ISUM pp. 18–19): Index Writeback Invalidate (S) reads the selected secondary tag. If its state is Invalid, nothing else happens. Otherwise it invalidates the matching primary I and D subset lines, writes back inconsistent D lines first, sets the state to Invalid, writes the tag with the operand's PA and VA[13:12], and generates the ECC. A dirty-exclusive block goes to the system interface. Other valid states send a tag-invalidation notice. The MRU bit points away from the invalidated way.
+- **Established** (NEC ISUM pp. 27–28): Hit Invalidate (S) and Hit Writeback Invalidate (S) search both ways. On a hit they do the same subset and state actions, and only Hit Writeback Invalidate writes back. On a hit they set Status.CH, and on a miss they clear it.
+- **Established** (NEC ISUM p. 27): Hit Invalidate (I) and Hit Invalidate (D) invalidate a matching line in the named primary cache only.
+- **Inferred** (from the silence of NEC ISUM p. 25): Index Store Tag (S) and Index Store Data (S) purge nothing. A primary line stays valid over a valid secondary line that Index Store Tag (S) has changed, so it can hold data the secondary line no longer describes.
+
+### Staging: how operations build a line
+
+- **Established** (NEC ISUM pp. 18–30, 71; NEC UM p. 91): each Index Store Tag writes one way of one set, and each Index Store Data writes one unit.
+  - Primary I: one tag operation per way and set, and one Index Store Data (I) per 36-bit word. A 64-byte block takes 1 tag and 16 data operations.
+  - Primary D: one tag and one Index Store Data (D) per 32-bit word. A 32-byte block takes 1 tag and 8 data operations.
+  - Secondary: one tag and one Index Store Data (S) per quadword. A 64-byte block takes 4 data operations and a 128-byte block takes 8. Each one fills one doubleword, so a 64-byte block has 4 of its 8 doublewords filled, and a 128-byte block has 8 of 16.
+- **Inferred**: Index Store Tag writes no data and Index Store Data writes no tag, so a staged line can be built in either order. Data written to an Invalid line is not visible to any access until a tag operation makes the line valid.
+- **Inferred**: Index Store Data (I) and (D) are the only index operations that stage a full block of nonzero words. A primary hit then does not read the secondary cache. A staged instruction line holds at most two nonzero 32-bit words per quadword, since Index Store Data (S) zero-fills the other half.
+- **Inferred**: Index Store Tag does not enforce the subset rule in either direction.
+- **Inferred**: two operands that give the same set and way overwrite each other. Staging N blocks takes N tag operations at distinct set and way pairs. Do not stage one tag in both ways of a set. The manual makes a double hit undefined for hit operations (NEC ISUM p. 15) and does not say what an ordinary access does.
+
+### Inclusion: the secondary cache as parent
+
+- **Established** (NEC ISUM p. 17): invalidating a secondary block invalidates its primary subset blocks.
+- **Established** (NEC ISUM pp. 18, 27–28, 72; NEC UM pp. 47, 50): Index Writeback Invalidate (S), Hit Invalidate (S) and Hit Writeback Invalidate (S) invalidate the secondary block and every primary I and D line that is a subset of it. The primary state diagrams show Hit Invalidate and Index Writeback Invalidate (S) taking a valid line to Invalid.
+- **Established** (NEC UM p. 67, pp. 47, 50): the hardware also enforces the subset rule on other paths. A virtual-index mismatch on a secondary access purges the primary locations implemented in hardware, and subset enforcement is an internally initiated state transition.
+- **Inferred**: a primary line is a subset when its physical block lies inside the secondary block. A 128-byte secondary block holds two I blocks and four D blocks. A 64-byte one holds one I block and two D blocks. A primary line outside the block is untouched. The manual says "each subset block" and gives no address range.
+- **Established** (NEC ISUM pp. 18–19): Index Writeback Invalidate (S) uses the stored tag, not the operand's PA, to find the primary lines. A primary I line is invalidated when its tag equals the secondary tag and it is Valid. A primary D line is invalidated when its tag matches and it is not Invalid. An inconsistent dirty D line is written back to the secondary cache first.
+- **Established** (NEC ISUM pp. 27–28): a hit operation acts only when the operand's PA matches a valid secondary tag in one of the two ways. On a miss it purges nothing, even if a primary line holds that PA. On a hit it purges the subset primary lines.
+- **Established** (NEC ISUM pp. 19, 27–28): the hit operations find the primary lines through PIdx, TagLo[8:7]. The UM pages read do not say this for hit operations. A primary line at an index other than PIdx can therefore survive them.
+
+### Later cached accesses
+
+- **Established** (NEC UM pp. 82, 87–88): a cached access that misses both primary caches looks up both secondary ways. A way with a matching tag and a valid state is a hit, and the data comes from the secondary data array. If the hit way is not the one the MRU bit predicted, the processor reads that way and updates MRU. Only a miss in both ways reads the system interface. The MRU bit and the way chosen at staging therefore change timing, not the hit result.
+- **Established** (NEC UM pp. 87–88, 193–196): a primary D miss refills 8 words (32 bytes) from the secondary cache. A primary I miss refills 16 words (64 bytes), one quadword at a time, and each quadword is read through the secondary data check.
+- **Inferred** (conditions for a hit at the staged address):
+  1. The staged state is valid (1, 2 or 3). State 0 misses.
+  2. TagLo[31:14] and TagHi[3:0] equal PA[35:18] and PA[39:36] of the access. For a cache above 512 KiB the redundant tag bits must match as well (NEC UM p. 83).
+  3. The access uses a cached algorithm. CACHE on an uncached address is undefined.
+  4. No conflicting valid primary copy exists. A primary hit returns primary data and never consults the secondary cache, and Index Store Tag (S) does not purge primary lines.
+  5. TagLo[8:7] equals VA[13:12] of the access. Otherwise hardware purges primary lines at the recorded index (NEC UM p. 67, established as a purge). Whether the access then continues is **unknown**.
+- **Inferred** (from the separate arrays, NEC UM pp. 61–64): a line in the primary I cache serves fetches only, and a line in the primary D cache serves data accesses only. The manuals do not discuss a load hitting a primary I line.
+
+### Primary instruction-cache refill
+
+- **Established** (NEC UM pp. 47, 62, 88, Figure 4-2): a cached fetch that misses the primary I cache and hits a secondary line refills the 64-byte block from the secondary cache. The refilled line is Valid and is tagged with the fetch's physical address. Index Load Tag (I) reads it as described under Tag and data formats.
+- **Inferred**: the block goes into the set given by VA[13:6] of the fetch, which the index operations and the cache geometry imply. The manual does not state this for refills.
+- **Unknown** (NEC UM p. 62): the manual gives least-recently-used replacement but does not say whether an Invalid way is preferred, or how the LRU bit updates. Which way a refill takes when one way is Invalid, or when both are valid, is therefore not settled. The tag parity, state parity and LRU bits of a refilled line are not specified by these pages.
+
+### Check bits and error behaviour
+
+- **Established** (NEC UM pp. 91, 194, 196; NEC ISUM pp. 25, 30): an ordinary secondary write generates the ECC and parity. Index Store Data (S) stores ECC[9:0] unchanged, and Index Store Tag (S) stores TagLo[6:0] as the tag ECC unchanged. Neither operation checks anything.
+- **Established** (NEC UM pp. 194, 196): with SCCorEn set, every secondary data read passes through the corrector. A correctable error is fixed, and an uncorrectable one posts a Cache Error. With SCCorEn clear, the ECC[9] parity is checked first, and only a parity error sends the read through the corrector. The secondary tag read always checks its ECC. A correctable tag error is fixed in place, and an uncorrectable one posts a Cache Error (NEC UM p. 196).
+- **Established** (NEC UM p. 189): Status.DE suppresses posting of uncorrectable errors and their CacheErr update. Cache hits are not inhibited, and the bad data is used.
+- **Inferred**: a staging sequence must supply ECC[9:0] that is valid for its data, or a later cached access can post a Cache Error. With SCCorEn clear, ECC[9] must be the even parity of the 128 data bits. An all-zero quadword needs all-zero check bits. The tag ECC must match the staged tag, state and virtual index. The tag ECC matrix is Table 9-6 on NEC UM p. 196. Its text extraction is damaged, so read it from the page image.
+- **Unknown**: what a read of a secondary quadword that was never written returns, and whether its check bits are valid. The arrays hold power-on contents.
+
+### Not settled
+
+- **Unknown**: the order in which the two doublewords of a secondary quadword appear in a refilled primary line, that is, which of TagHi and TagLo a word load at the lower address returns. Neither manual says. A PROM routine's staging does not settle it either (see [docs/questions/ip35-prom-cache-staging.md](questions/ip35-prom-cache-staging.md)). Route: stage one word in TagHi and another in TagLo of one doubleword, then read the lower address with a cached word load on an R10000 under a stated plan.
+- **Unknown**: the primary I tag address width. NEC UM Table 9-2 (p. 191) lists 27 bits. The tag register format (NEC UM p. 279, Figure 14-28) has 28, made of a 24-bit PTag0 and a 4-bit PTag1.
+- **Unknown**: the revision of the R10000 that the manuals describe. They do not tie this behaviour to a revision.
+
 ## Not covered here
 
 The victim the replacement logic picks under speculative fetch, the timing of replacement, the cache contents after
