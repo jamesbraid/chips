@@ -1,0 +1,263 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/r14000_perf_counters.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CNT_BITS",
+   "value": 32,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CNT_OVERFLOW_BIT",
+   "value": 31,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CP0_REG",
+   "value": 25,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CTL_EVENT_MASK",
+   "value": 992,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CTL_EVENT_SHIFT",
+   "value": 5,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CTL_EXL",
+   "value": 1,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CTL_IE",
+   "value": 16,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CTL_K",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CTL_S",
+   "value": 4,
+   "count": 1,
+   "grade": "unknown"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_CTL_U",
+   "value": 8,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_CYCLES",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_DECODED_INSTR",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_FAILED_SC",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_MISPREDICT",
+   "value": 24,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_PREFETCH_EXEC",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_RETIRED_FP",
+   "value": 21,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_RETIRED_INSTR",
+   "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_SCACHE_ECC_CORRECTABLE",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_TLB_MISS",
+   "value": 23,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_EV_UNIMPLEMENTED",
+   "value": 14,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_PAIR0_CNT_SEL",
+   "value": 1,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_PAIR0_CTL_SEL",
+   "value": 0,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_PAIR1_CNT_SEL",
+   "value": 3,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_PAIR1_CTL_SEL",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_PAIR2_CNT_SEL",
+   "value": 5,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_PAIR2_CTL_SEL",
+   "value": 4,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_PAIR3_CNT_SEL",
+   "value": 7,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_PAIR3_CTL_SEL",
+   "value": 6,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_PAIRS",
+   "value": 4,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_R12K_CTL0_TRIGGER_MASK",
+   "value": 98304,
+   "count": 1,
+   "grade": "unknown"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_R12K_CTL3_LEVEL_BIT",
+   "value": 32768,
+   "count": 1,
+   "grade": "unknown"
+  },
+  {
+   "unit": "r14000_perf_counters",
+   "kind": "constant",
+   "name": "R14KPC_R12K_CTL_COND_MASK",
+   "value": 31744,
+   "count": 1,
+   "grade": "unknown"
+  }
+ ]
+}
