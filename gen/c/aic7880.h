@@ -7,6 +7,75 @@
 
 
 /*
+ * SCSI transfer control 0, the first of two transfer-control registers. Bits 5 and 0 are not used and read zero. The two self-clearing controls, CLRSTCNT and CLRCHN, read back as zero. The reset value is not stated in the cited pages.
+ */
+/* sxfrctl0: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 74-75 (printed 4-5 and 4-6); sibling */
+#define AIC7880_SXFRCTL0_OFFSET                      0x1u /* inferred */
+#define AIC7880_SXFRCTL0_DFON_SHIFT                  7 /* inferred */
+#define AIC7880_SXFRCTL0_DFON_MASK                   0x1u
+#define AIC7880_SXFRCTL0_DFON_INPLACE                (AIC7880_SXFRCTL0_DFON_MASK << AIC7880_SXFRCTL0_DFON_SHIFT)
+#define AIC7880_SXFRCTL0_CLRSTCNT_SHIFT              4 /* inferred */
+#define AIC7880_SXFRCTL0_CLRSTCNT_MASK               0x1u
+#define AIC7880_SXFRCTL0_CLRSTCNT_INPLACE            (AIC7880_SXFRCTL0_CLRSTCNT_MASK << AIC7880_SXFRCTL0_CLRSTCNT_SHIFT)
+#define AIC7880_SXFRCTL0_SPIOEN_SHIFT                3 /* inferred */
+#define AIC7880_SXFRCTL0_SPIOEN_MASK                 0x1u
+#define AIC7880_SXFRCTL0_SPIOEN_INPLACE              (AIC7880_SXFRCTL0_SPIOEN_MASK << AIC7880_SXFRCTL0_SPIOEN_SHIFT)
+#define AIC7880_SXFRCTL0_CLRCHN_SHIFT                1 /* inferred */
+#define AIC7880_SXFRCTL0_CLRCHN_MASK                 0x1u
+#define AIC7880_SXFRCTL0_CLRCHN_INPLACE              (AIC7880_SXFRCTL0_CLRCHN_MASK << AIC7880_SXFRCTL0_CLRCHN_SHIFT)
+
+/*
+ * SCSI control signals. The read side returns the state of the bus control signals. The write side sets the initiator output levels, and its three upper bits are the phase the chip expects on the next REQ pulse. The two sides share one offset and the same bit positions. Every write-side bit is cleared by chip reset, by a SCSI bus reset and by Bus Free. The read side has no reset value in the cited pages. The book's own register description gives the read side as a stale copy of the bus, which reads as the bus state.
+ */
+/* scsisig: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 77-78 (printed 4-8 and 4.9); sibling */
+#define AIC7880_SCSISIG_OFFSET                       0x3u /* inferred */
+#define AIC7880_SCSISIG_CD_SHIFT                     7 /* inferred */
+#define AIC7880_SCSISIG_CD_MASK                      0x1u
+#define AIC7880_SCSISIG_CD_INPLACE                   (AIC7880_SCSISIG_CD_MASK << AIC7880_SCSISIG_CD_SHIFT)
+#define AIC7880_SCSISIG_IO_SHIFT                     6 /* inferred */
+#define AIC7880_SCSISIG_IO_MASK                      0x1u
+#define AIC7880_SCSISIG_IO_INPLACE                   (AIC7880_SCSISIG_IO_MASK << AIC7880_SCSISIG_IO_SHIFT)
+#define AIC7880_SCSISIG_MSG_SHIFT                    5 /* inferred */
+#define AIC7880_SCSISIG_MSG_MASK                     0x1u
+#define AIC7880_SCSISIG_MSG_INPLACE                  (AIC7880_SCSISIG_MSG_MASK << AIC7880_SCSISIG_MSG_SHIFT)
+#define AIC7880_SCSISIG_ATN_SHIFT                    4 /* inferred */
+#define AIC7880_SCSISIG_ATN_MASK                     0x1u
+#define AIC7880_SCSISIG_ATN_INPLACE                  (AIC7880_SCSISIG_ATN_MASK << AIC7880_SCSISIG_ATN_SHIFT)
+#define AIC7880_SCSISIG_SEL_SHIFT                    3 /* inferred */
+#define AIC7880_SCSISIG_SEL_MASK                     0x1u
+#define AIC7880_SCSISIG_SEL_INPLACE                  (AIC7880_SCSISIG_SEL_MASK << AIC7880_SCSISIG_SEL_SHIFT)
+#define AIC7880_SCSISIG_BSY_SHIFT                    2 /* inferred */
+#define AIC7880_SCSISIG_BSY_MASK                     0x1u
+#define AIC7880_SCSISIG_BSY_INPLACE                  (AIC7880_SCSISIG_BSY_MASK << AIC7880_SCSISIG_BSY_SHIFT)
+#define AIC7880_SCSISIG_REQ_SHIFT                    1 /* inferred */
+#define AIC7880_SCSISIG_REQ_MASK                     0x1u
+#define AIC7880_SCSISIG_REQ_INPLACE                  (AIC7880_SCSISIG_REQ_MASK << AIC7880_SCSISIG_REQ_SHIFT)
+#define AIC7880_SCSISIG_ACK_SHIFT                    0 /* inferred */
+#define AIC7880_SCSISIG_ACK_MASK                     0x1u
+#define AIC7880_SCSISIG_ACK_INPLACE                  (AIC7880_SCSISIG_ACK_MASK << AIC7880_SCSISIG_ACK_SHIFT)
+
+/*
+ * SCSI data latch used for automatic and manual PIO, one byte per access. The book says an access drives the SCSI ACK (as initiator) or REQ (as target) active as it happens. The value after chip reset is unknown, and valid data loads after the first REQ and ACK. The high byte in 16-bit mode is a separate register and is not described here.
+ */
+/* scsidatl: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 81 (printed 4-12); sibling */
+#define AIC7880_SCSIDATL_OFFSET                      0x6u /* inferred */
+
+/*
+ * SCSI interrupt mask 0. Setting a bit enables the matching SSTAT0 status to assert the SCSI interrupt. Only the bit this unit uses is listed here.
+ */
+/* simode0: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 91 (printed 4-22); sibling */
+#define AIC7880_SIMODE0_OFFSET                       0x10u /* inferred */
+#define AIC7880_SIMODE0_ENSPIORDY_SHIFT              1 /* inferred */
+#define AIC7880_SIMODE0_ENSPIORDY_MASK               0x1u
+#define AIC7880_SIMODE0_ENSPIORDY_INPLACE            (AIC7880_SIMODE0_ENSPIORDY_MASK << AIC7880_SIMODE0_ENSPIORDY_SHIFT)
+
+/*
+ * SCSI data bus, read directly. The book says the data is gated from the bus to the internal data bus and is not latched in the SCSI module. A read therefore sees the byte on the bus without taking the latch. Nothing in the cited pages says it acknowledges the byte, and the book ties the ACK drive to SCSIDATL accesses, so this read is taken not to acknowledge (inferred from the book's wording, not stated).
+ */
+/* scsibusl: r8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 93 (printed 4-24); sibling */
+#define AIC7880_SCSIBUSL_OFFSET                      0x12u /* inferred */
+
+/*
  * Read-only port that returns 0xff to the host and to the sequencer. It is a source for logical and arithmetic functions. The book gives no write function, so a write is outside the published interface and its effect stays unknown.
  */
 /* allones: r8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 102 (printed 4-33); sibling */
