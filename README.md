@@ -114,6 +114,7 @@ Routine readings from the kernels and PROMs:
 - [docs/ip30-kernel-xbow-routines.md](docs/ip30-kernel-xbow-routines.md): Xbow routines of the IP30 kernel.
 - [docs/ip30-flash.md](docs/ip30-flash.md): IP30 boot flash as the Bridge drives it: the shared SSRAM and flash pins, the FLASH_SELECT strap, the write enable, and what is unknown.
 - [docs/ip35-boot-flash.md](docs/ip35-boot-flash.md): IP35 boot flash: the LBOOT and RBOOT windows, the two PROM positions, the 16 MB flash as the patent describes it, and what is unknown.
+- [docs/at29c040a.md](docs/at29c040a.md): AT29C040A 512 KiB flash: the byte-load program cycle, polling, block locks and the unloaded-byte question the datasheet leaves open.
 - [docs/instruction-readings-chips-g1.md](docs/instruction-readings-chips-g1.md), [g2](docs/instruction-readings-chips-g2.md) and [g3](docs/instruction-readings-chips-g3.md): instruction readings from hostfacts, one group, not listed entry by entry.
 
 Open questions, one page each:

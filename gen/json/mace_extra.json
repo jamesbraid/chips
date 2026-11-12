@@ -1,0 +1,15 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/mace_extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "mace_extra",
+   "kind": "constant",
+   "name": "ISA_MISC_FLASH_WRITE_ENABLE",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

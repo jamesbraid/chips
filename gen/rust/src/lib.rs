@@ -36,6 +36,7 @@ pub mod l1;
 pub mod l1_requests;
 pub mod lucent_ohci;
 pub mod mace;
+pub mod mace_extra;
 pub mod pic;
 pub mod rad1;
 pub mod router_origin2000;
