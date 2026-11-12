@@ -1,0 +1,26 @@
+unit = "r10000_identity"
+prefix = "R10K"
+title = "R10000 family processor identity and secondary-cache configuration fields"
+doc = "Constants for the MIPS R10000 processor family as the public Linux kernel identifies it: the implementation and revision fields of the PRId register, the revision split that separates the R16000 from the R14000, and the Config fields that set the secondary cache size and line. This unit holds constants only; the processor's register layouts are in docs/r10000_identity.md. Grades: established means a public driver file says it; inferred means a reasoned reading; unknown items are listed in the page."
+from = "Linux v6.6 MIPS headers and CPU driver"
+public_from = ["Linux v6.6 MIPS headers and CPU driver", "Linux 6.6 MIPS processor identity definitions", "Linux 6.6 MIPS Config register definitions", "Linux 6.6 MIPS CPU probe", "Linux 6.6 MIPS R4K cache setup"]
+
+[constants]
+R10K_PRID_IMP_SHIFT = { value = 8, grade = "established", from = "Linux 6.6 MIPS processor identity definitions", doc = "The implementation byte of PRId is bits 15:8. The revision byte is bits 7:0." }
+R10K_PRID_IMP_MASK = { value = 0xff00, grade = "established", from = "Linux 6.6 MIPS processor identity definitions", doc = "Mask for the implementation byte of PRId, bits 15:8." }
+R10K_PRID_REV_MASK = { value = 0x00ff, grade = "established", from = "Linux 6.6 MIPS processor identity definitions", doc = "Mask for the revision byte of PRId, bits 7:0, printed as major and minor nibbles." }
+
+R10K_IMP_R10000 = { value = 0x09, grade = "established", from = "Linux 6.6 MIPS processor identity definitions", doc = "Implementation byte of the R10000. The driver's R10000 case covers this value." }
+R10K_IMP_R12000 = { value = 0x0e, grade = "established", from = "Linux 6.6 MIPS processor identity definitions", doc = "Implementation byte of the R12000. The driver's R12000 case covers this value." }
+R10K_IMP_R14000 = { value = 0x0f, grade = "established", from = "Linux 6.6 MIPS processor identity definitions", doc = "Implementation byte shared by the R14000 and the R16000. The driver's comment says the two share the value; the revision split below tells them apart." }
+
+R10K_R16000_REV_MAJOR_MIN = { value = 3, grade = "established", from = "Linux 6.6 MIPS CPU probe", doc = "For implementation 0x0f, a revision whose major nibble is 3 or more is an R16000. The driver's test is major nibble greater than 2. Revisions 1.x and 2.x are R14000 by the same test." }
+
+R10K_CONF_SB_BIT = { value = 13, grade = "established", from = "Linux 6.6 MIPS Config register definitions", doc = "Config bit 13, the secondary cache line-size bit. Clear selects 64-byte lines and set selects 128-byte lines." }
+R10K_CONF_SB_MASK = { value = 0x2000, grade = "established", from = "Linux 6.6 MIPS Config register definitions", doc = "Mask for Config bit 13, the secondary cache line-size bit." }
+R10K_CONF_SS_SHIFT = { value = 16, grade = "established", from = "Linux 6.6 MIPS Config register definitions", doc = "Lowest bit of the three-bit Config secondary cache size field, bits 18:16." }
+R10K_CONF_SS_MASK = { value = 0x70000, grade = "established", from = "Linux 6.6 MIPS Config register definitions", doc = "Mask for the three-bit Config secondary cache size field, bits 18:16." }
+
+R10K_SCACHE_SIZE_UNIT = { value = 0x80000, grade = "established", from = "Linux 6.6 MIPS R4K cache setup", doc = "The driver's secondary cache size: this unit shifted left by the Config SS field. SS 0 is 512 KB, SS 1 is 1 MB, SS 2 is 2 MB, SS 3 is 4 MB and so on." }
+R10K_SCACHE_LINE_BASE_BYTES = { value = 64, grade = "established", from = "Linux 6.6 MIPS R4K cache setup", doc = "The driver's secondary cache line size: 64 bytes shifted left by Config bit 13 (SB). SB 0 gives 64 bytes and SB 1 gives 128 bytes." }
+R10K_SCACHE_WAYS = { value = 2, grade = "established", from = "Linux 6.6 MIPS R4K cache setup", doc = "The driver's secondary cache associativity for every R10000-family part: two ways." }

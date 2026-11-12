@@ -1,0 +1,133 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/r10000_identity.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_CONF_SB_BIT",
+   "value": 13,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS Config register definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_CONF_SB_MASK",
+   "value": 8192,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS Config register definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_CONF_SS_MASK",
+   "value": 458752,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS Config register definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_CONF_SS_SHIFT",
+   "value": 16,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS Config register definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_IMP_R10000",
+   "value": 9,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS processor identity definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_IMP_R12000",
+   "value": 14,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS processor identity definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_IMP_R14000",
+   "value": 15,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS processor identity definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_PRID_IMP_MASK",
+   "value": 65280,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS processor identity definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_PRID_IMP_SHIFT",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS processor identity definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_PRID_REV_MASK",
+   "value": 255,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS processor identity definitions"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_R16000_REV_MAJOR_MIN",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS CPU probe"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_SCACHE_LINE_BASE_BYTES",
+   "value": 64,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS R4K cache setup"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_SCACHE_SIZE_UNIT",
+   "value": 524288,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS R4K cache setup"
+  },
+  {
+   "unit": "r10000_identity",
+   "kind": "constant",
+   "name": "R10K_SCACHE_WAYS",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 6.6 MIPS R4K cache setup"
+  }
+ ]
+}
