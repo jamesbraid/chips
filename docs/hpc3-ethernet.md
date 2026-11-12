@@ -237,7 +237,7 @@ the IRIX driver uses the same stride (HPC3 spec p. 33 for the address map; the p
 - The SCSI and PBUS channels of the same HPC3.
 - The second HPC3 of the Challenge M and Indigo2 expansion, and the HPC1-based GIO card that the same drivers handle at
   other offsets.
-- The SEEQ Ethernet controller itself. Its registers and receive status layout are not in this repository.
+- The SEEQ Ethernet controller itself. Its registers, banks and transmit and receive rules are in the [SEEQ sheet](seeq-8003.md).
 
 ## Unknowns
 

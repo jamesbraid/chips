@@ -354,3 +354,9 @@ Corrections found while tagging. These are not fixed here.
 - **R-brick: which serial-number comparison the stock L1 runs.** *[route: missing binary]* Unknown: neighbour or L2 comparison, and what a single isolated R-brick does. Next: power-on with blank, mismatched and disabled serials, with and without an L2 ([docs/rbrick.md](docs/rbrick.md)).
 - **R-brick: what the router-type setting changes.** *[route: missing source]* Unknown: the effect of ordinary, meta and repeat on the ASIC or the PROM path. Next: router status captured after each type is set, on a matching brick, at reset ([docs/rbrick.md](docs/rbrick.md)).
 - **R-brick: height and the second router in the 8-to-16-processor bundles.** *[route: missing source]* Unknown: whether the brick is 3.35 or 3.50 in high, and whether a bundle's second router is required. Next: a measured brick, and the bundle's own cabling guide ([docs/rbrick.md](docs/rbrick.md)).
+
+## SEEQ 8003 and 80C03 (added with docs/seeq-8003.md)
+
+- **SEEQ 80C03: the 80C03 data sheet.** *[route: missing source]* The 80C03 additions (banks, collision counters, control, gap, configuration) rest on public drivers and are inferred. Next: a copy of the 80C03 data sheet, or a read of the part marking on an Indy board ([docs/seeq-8003.md](docs/seeq-8003.md), which part and 80C03 additions).
+
+- **SEEQ 80C03: the encoding of the inter-packet gap register, and whether the transmit command needs `0xf0`.** *[route: hardware residue]* HPC3 and the drivers write a gap byte to bank 2 register 2, and its encoding is not given. OpenBSD writes `0xf0` to the transmit command before selecting a bank, and its next write overwrites it, so no driver needs it. Next: a capture of the IRIX driver's gap writes against the frame spacing on a wire, and a test of a feature a driver enables only after `0xf0` ([docs/seeq-8003.md](docs/seeq-8003.md), unknowns).

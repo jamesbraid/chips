@@ -1,0 +1,593 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/seeq_8003.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "station_address",
+   "offset": 0,
+   "access": "w",
+   "width": 8,
+   "count": 6,
+   "stride": 1,
+   "space": "bank0",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-5"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "multicast_hash_low",
+   "offset": 0,
+   "access": "w",
+   "width": 8,
+   "count": 6,
+   "stride": 1,
+   "space": "bank1",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header (80C03 bank layout); Linux SEEQ driver header; IRIX driver use"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "multicast_hash_high",
+   "offset": 0,
+   "access": "w",
+   "width": 8,
+   "count": 2,
+   "stride": 1,
+   "space": "bank2",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header (80C03 bank layout); Linux SEEQ driver header; IRIX driver use"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "inter_packet_gap",
+   "offset": 2,
+   "access": "w",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "bank2",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "HPC3 Chip Specification, revision 1.4, p. 14 (SEEQ extended register x02); IRIX driver use; Linux SEEQ driver header; NetBSD SEEQ register header"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "control",
+   "offset": 3,
+   "access": "w",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "bank2",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "control.no_carrier_flag_enable",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "control.receive_short_frames",
+   "hi": 4,
+   "lo": 4,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "control.multicast_hash_enable",
+   "hi": 3,
+   "lo": 3,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "control.sqe_flag_enable",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "control.total_collision_count_enable",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "control.tx_collision_count_enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "configuration",
+   "offset": 4,
+   "access": "w",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "bank2",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header only"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "rx_command",
+   "offset": 6,
+   "access": "w",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "cmd",
+   "reset": 0,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_command.match_mode",
+   "hi": 7,
+   "lo": 6,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "enum_value",
+   "name": "rx_command.match_mode.receiver_off",
+   "value": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "enum_value",
+   "name": "rx_command.match_mode.all_frames",
+   "value": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "enum_value",
+   "name": "rx_command.match_mode.station_and_broadcast",
+   "value": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "enum_value",
+   "name": "rx_command.match_mode.station_broadcast_and_multicast",
+   "value": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_command.int_good_frame",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_command.int_end_of_frame",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_command.int_short_frame",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_command.int_dribble_error",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_command.int_crc_error",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_command.int_overflow",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "tx_command",
+   "offset": 7,
+   "access": "w",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "cmd",
+   "reset": 0,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_command.bank",
+   "hi": 6,
+   "lo": 5,
+   "grade": "inferred",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "enum_value",
+   "name": "tx_command.bank.bank0",
+   "value": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "enum_value",
+   "name": "tx_command.bank.bank1",
+   "value": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "enum_value",
+   "name": "tx_command.bank.bank2",
+   "value": 2,
+   "grade": "inferred"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_command.int_success",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_command.int_sixteen_collisions",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_command.int_collision",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_command.int_underflow",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "tx_collisions_low",
+   "offset": 0,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "rd",
+   "reset": 0,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver, IRIX driver use"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "tx_collisions_high",
+   "offset": 1,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "rd",
+   "reset": 0,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header, Linux SEEQ driver header, IRIX driver use"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_collisions_high.count_bits_10_8",
+   "hi": 2,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header, Linux SEEQ driver header, IRIX driver use"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "total_collisions_low",
+   "offset": 2,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "rd",
+   "reset": 0,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "total_collisions_high",
+   "offset": 3,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "rd",
+   "reset": 0,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "test_read",
+   "offset": 4,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "rd",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header (80C03 read table)"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "sqe_and_carrier",
+   "offset": 5,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "rd",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header (80C03 read table); Linux SEEQ driver header"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "sqe_and_carrier.no_carrier_flag",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header (80C03 read table); Linux SEEQ driver header"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "sqe_and_carrier.sqe_flag",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "NetBSD SEEQ register header (80C03 read table); Linux SEEQ driver header"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "rx_status",
+   "offset": 6,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "rd",
+   "reset": 128,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_status.old_new",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_status.good_frame",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_status.end_of_frame",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_status.short_frame",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_status.dribble_error",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_status.crc_error",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "rx_status.overflow",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "register",
+   "name": "tx_status",
+   "offset": 7,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "rd",
+   "reset": 128,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_status.old_new",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_status.success",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_status.sixteen_collisions",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_status.collision",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "field",
+   "name": "tx_status.underflow",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "constant",
+   "name": "FIFO_DEPTH",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "seeq_8003",
+   "kind": "constant",
+   "name": "SERVICE_INTERVAL_NS",
+   "value": 800,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

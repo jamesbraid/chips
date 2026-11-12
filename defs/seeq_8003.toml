@@ -1,0 +1,246 @@
+unit = "seeq_8003"
+prefix = "SEEQ_8003"
+title = "SEEQ 8003 and 80C03 Ethernet data link controller (Indy)"
+doc = "The SEEQ EDLC behind the Indy's HPC3: its eight byte-wide registers, the bank-selected writes and the collision counters of the 80C03 additions, and the receive and transmit command and status bytes. Offsets are byte offsets within the chip, selected by A2 to A0; behind HPC3, register n sits at 4n from the SEEQ window. Grades say how each item was derived: established means read in the SEEQ 8003 data sheet; inferred means the 80C03 additions, which rest on public drivers because the 80C03 data sheet is not held, or a driver's use of a register; unknown means the sources do not settle it. Nothing here was measured on a board. The receive and transmit DMA channels are in the HPC3 unit, and the prose is in docs/seeq-8003.md."
+from = "SEEQ 8003 EDLC Ethernet Data Link Controller data sheet, MD400024/B (November 1989)"
+public_from = ["SEEQ 8003 EDLC data sheet", "Linux", "NetBSD", "OpenBSD", "IRIX", "HPC3 Chip Specification"]
+
+[spaces.bank0]
+unit = "byte"
+doc = "Writes to registers 0 to 5 in bank 0, which hold the station address. The plain 8003 has no banks and always writes here."
+
+[spaces.bank1]
+unit = "byte"
+doc = "Writes to registers 0 to 5 while transmit command bits 6:5 select bank 1 (80C03)."
+
+[spaces.bank2]
+unit = "byte"
+doc = "Writes to registers 0 to 4 while transmit command bits 6:5 select bank 2 (80C03)."
+
+[spaces.cmd]
+unit = "byte"
+doc = "Writes to registers 6 and 7: the receive and transmit command bytes. These are not banked."
+
+[spaces.rd]
+unit = "byte"
+doc = "Reads. Registers 6 and 7 are the receive and transmit status. Registers 0 to 5 read back the 80C03 counters and flags; the plain 8003 has no read there. Whether bank selection changes these reads is unknown."
+
+[enums.receive_match]
+values = { receiver_off = { value = 0, grade = "established" }, all_frames = { value = 1, grade = "established" }, station_and_broadcast = { value = 2, grade = "established" }, station_broadcast_and_multicast = { value = 3, grade = "established" } }
+
+[enums.bank_select]
+values = { bank0 = { value = 0, grade = "inferred" }, bank1 = { value = 1, grade = "inferred" }, bank2 = { value = 2, grade = "inferred" } }
+
+[registers.station_address]
+offset = 0x00
+space = "bank0"
+access = "w"
+width = 8
+count = 6
+reset = "unknown"
+grade = "established"
+from = "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-5"
+doc = "Station address bytes 0 to 5, one per register. Byte 0 bit 0 is the first bit on the wire. The data sheet's reset list does not name the station address registers, so their reset value is unknown."
+
+[registers.multicast_hash_low]
+offset = 0x00
+space = "bank1"
+access = "w"
+width = 8
+count = 6
+reset = "unknown"
+grade = "inferred"
+from = "NetBSD SEEQ register header (80C03 bank layout); Linux SEEQ driver header; IRIX driver use"
+doc = "Multicast hash bytes 0 to 5, written with bank 1 selected. Used with the multicast hash filter enable in the control register."
+
+[registers.multicast_hash_high]
+offset = 0x00
+space = "bank2"
+access = "w"
+width = 8
+count = 2
+reset = "unknown"
+grade = "inferred"
+from = "NetBSD SEEQ register header (80C03 bank layout); Linux SEEQ driver header; IRIX driver use"
+doc = "Multicast hash bytes 6 and 7, written at bank 2 registers 0 and 1."
+
+[registers.inter_packet_gap]
+offset = 0x02
+space = "bank2"
+access = "w"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "HPC3 Chip Specification, revision 1.4, p. 14 (SEEQ extended register x02); IRIX driver use; Linux SEEQ driver header; NetBSD SEEQ register header"
+doc = "Inter-packet gap byte. HPC3 writes each transmit descriptor's gap here when its write-control bit is set. The sources read it as the gap, but the encoding of the byte is unknown. The IRIX driver computes it from a tunable, Linux writes zero, and NetBSD's header calls the register reserved and writes zero."
+
+[registers.control]
+offset = 0x03
+space = "bank2"
+access = "w"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit"
+doc = "Counter, flag and filter control. Writing a zero and then a one to a counter or flag enable clears the counter or flag. The sources do not give the register's reset value."
+
+[registers.control.fields]
+tx_collision_count_enable = { bits = [0, 0], grade = "inferred", doc = "Enables and, on the 0 to 1 edge, clears the transmit collision counter." }
+total_collision_count_enable = { bits = [1, 1], grade = "inferred", doc = "Enables and, on the 0 to 1 edge, clears the total collision counter." }
+sqe_flag_enable = { bits = [2, 2], grade = "inferred", doc = "Enables and, on the 0 to 1 edge, clears the SQE flag." }
+multicast_hash_enable = { bits = [3, 3], grade = "inferred", doc = "Enables the multicast hash filter." }
+receive_short_frames = { bits = [4, 4], grade = "inferred", doc = "Receives short frames." }
+no_carrier_flag_enable = { bits = [5, 5], grade = "inferred", doc = "Enables and, on the 0 to 1 edge, clears the no-carrier flag." }
+
+[registers.configuration]
+offset = 0x04
+space = "bank2"
+access = "w"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "NetBSD SEEQ register header only"
+doc = "80C03 configuration: auto-pad, no preamble, do not receive own frames, no CRC, AutoDUPLEX, CRC to FIFO and fast discard, as NetBSD's header names them. The bit positions are not stated in the sources. No Indy driver writes it; OpenBSD's write is compiled out."
+
+[registers.tx_collisions_low]
+offset = 0x00
+space = "rd"
+access = "r"
+width = 8
+reset = 0x00
+grade = "inferred"
+from = "NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver, IRIX driver use"
+doc = "Transmit collision counter, low byte. With bits 2 to 0 of register 1 it forms an 11-bit count. Reading it after reset with no frames sent gives zero, which the drivers use to tell the 80C03 from the 8003."
+
+[registers.tx_collisions_high]
+offset = 0x01
+space = "rd"
+access = "r"
+width = 8
+reset = 0x00
+grade = "inferred"
+from = "NetBSD SEEQ register header, Linux SEEQ driver header, IRIX driver use"
+doc = "Transmit collision counter, high bits. Only bits 2 to 0 are described; the other bits are unknown."
+
+[registers.tx_collisions_high.fields]
+count_bits_10_8 = { bits = [2, 0], grade = "inferred", doc = "Bits 10 to 8 of the transmit collision counter." }
+
+[registers.total_collisions_low]
+offset = 0x02
+space = "rd"
+access = "r"
+width = 8
+reset = 0x00
+grade = "inferred"
+from = "NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver"
+doc = "Total collision counter, low byte. The sources do not give the counter's full width."
+
+[registers.total_collisions_high]
+offset = 0x03
+space = "rd"
+access = "r"
+width = 8
+reset = 0x00
+grade = "inferred"
+from = "NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver"
+doc = "Total collision counter, high bits. The width and bit layout are not stated: unknown."
+
+[registers.test_read]
+offset = 0x04
+space = "rd"
+access = "r"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "NetBSD SEEQ register header (80C03 read table)"
+doc = "Test register. The sources say do not use it."
+
+[registers.sqe_and_carrier]
+offset = 0x05
+space = "rd"
+access = "r"
+width = 8
+reset = "unknown"
+grade = "inferred"
+from = "NetBSD SEEQ register header (80C03 read table); Linux SEEQ driver header"
+doc = "Collision-test and carrier flags."
+
+[registers.sqe_and_carrier.fields]
+sqe_flag = { bits = [0, 0], grade = "inferred", doc = "SQE flag." }
+no_carrier_flag = { bits = [1, 1], grade = "inferred", doc = "No-carrier flag." }
+
+[registers.rx_status]
+offset = 0x06
+space = "rd"
+access = "r"
+width = 8
+reset = 0x80
+grade = "established"
+from = "SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7"
+doc = "Receive status for the frame of interest. Reading it clears the receive interrupt. Bit 7 is old/new. Old/new is set on a read or on reset, and cleared when status is loaded for a frame of interest. While it is zero the register is write-protected, and a frame that arrives before it is read is discarded and its status is not loaded."
+
+[registers.rx_status.fields]
+overflow = { bits = [0, 0], grade = "established", doc = "Receive FIFO overflow." }
+crc_error = { bits = [1, 1], grade = "established", doc = "CRC error." }
+dribble_error = { bits = [2, 2], grade = "established", doc = "Dribble error." }
+short_frame = { bits = [3, 3], grade = "established", doc = "Short frame." }
+end_of_frame = { bits = [4, 4], grade = "established", doc = "End of frame. Set for any frame type except overflow." }
+good_frame = { bits = [5, 5], grade = "established", doc = "Good frame." }
+old_new = { bits = [7, 7], grade = "established", doc = "Old/new: one when the status is new and may be read, zero while it is write-protected." }
+
+[registers.tx_status]
+offset = 0x07
+space = "rd"
+access = "r"
+width = 8
+reset = 0x80
+grade = "established"
+from = "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6"
+doc = "Transmit status. Reading it clears the transmit interrupt. Bit 7 is old/new: set on each read and on reset, and cleared when new status is loaded at the end of each transmission or retransmission attempt."
+
+[registers.tx_status.fields]
+underflow = { bits = [0, 0], grade = "established", doc = "Underflow: the transmit stopped on an empty FIFO." }
+collision = { bits = [1, 1], grade = "established", doc = "Collision." }
+sixteen_collisions = { bits = [2, 2], grade = "established", doc = "Sixteen collisions in a row; the frame was given up." }
+success = { bits = [3, 3], grade = "established", doc = "Transmitted without error." }
+old_new = { bits = [7, 7], grade = "established", doc = "Old/new, as above." }
+
+[registers.rx_command]
+offset = 0x06
+space = "cmd"
+access = "w"
+width = 8
+reset = 0x00
+grade = "established"
+from = "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7"
+doc = "Receive command. Reset clears it. Bits 5 to 0 enable interrupts for each receive condition. Bit 0 also makes overflow frames frames of interest. Bits 7 and 6 set the match mode."
+
+[registers.rx_command.fields]
+int_overflow = { bits = [0, 0], grade = "established", doc = "Interrupt on overflow; makes overflow frames frames of interest." }
+int_crc_error = { bits = [1, 1], grade = "established", doc = "Interrupt on CRC error." }
+int_dribble_error = { bits = [2, 2], grade = "established", doc = "Interrupt on dribble error." }
+int_short_frame = { bits = [3, 3], grade = "established", doc = "Interrupt on short frame." }
+int_end_of_frame = { bits = [4, 4], grade = "established", doc = "Interrupt on end of frame, for any frame except overflow." }
+int_good_frame = { bits = [5, 5], grade = "established", doc = "Interrupt on good frame." }
+match_mode = { bits = [7, 6], grade = "established", enum = "receive_match", doc = "Address match mode." }
+
+[registers.tx_command]
+offset = 0x07
+space = "cmd"
+access = "w"
+width = 8
+reset = 0x00
+grade = "established"
+from = "SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions"
+doc = "Transmit command. Reset clears it. Bits 3 to 0 enable interrupts for each transmit condition. Bits 6 and 5 select the register bank for writes to registers 0 to 5 on the 80C03."
+
+[registers.tx_command.fields]
+int_underflow = { bits = [0, 0], grade = "established", doc = "Interrupt on underflow." }
+int_collision = { bits = [1, 1], grade = "established", doc = "Interrupt on collision." }
+int_sixteen_collisions = { bits = [2, 2], grade = "established", doc = "Interrupt on sixteen collisions." }
+int_success = { bits = [3, 3], grade = "established", doc = "Interrupt on successful transmit." }
+bank = { bits = [6, 5], grade = "inferred", enum = "bank_select", doc = "Register bank for writes to registers 0 to 5 (80C03). The value 3 is not described: unknown." }
+
+[constants]
+FIFO_DEPTH = { value = 16, grade = "established" }
+SERVICE_INTERVAL_NS = { value = 800, grade = "established" }
