@@ -18,7 +18,7 @@ Proprietary IRIX binaries are not tracked; copy them from your own IRIX install 
 ignored `root/` directory as [IRIX_FILES.md](IRIX_FILES.md) describes.
 
 - [AGENTS.md](AGENTS.md): the rules, the labels, the working procedure and the rules for reading MIPS code.
-- [HAIKU-BRIEF.md](HAIKU-BRIEF.md): how to run a census and write entries, for a cheap worker.
+- [READING-BRIEF.md](READING-BRIEF.md): how to run a census and write entries, for a cheap worker.
 - [IRIX_FILES.md](IRIX_FILES.md): the shipped files the repository reads (not committed).
 - [docs/specs.md](docs/specs.md): the published specifications held here, with coverage.
 - [docs/published-sources.md](docs/published-sources.md): public drivers and other sources.
@@ -106,7 +106,7 @@ Published sources and specifications:
 
 ## Layout
 
-    AGENTS.md  HAIKU-BRIEF.md  IRIX_FILES.md  LICENSE  README.md
+    AGENTS.md  READING-BRIEF.md  IRIX_FILES.md  LICENSE  README.md
     chips/<chip>/      one directory per chip: README.md (the page), census/ (machine-made tables),
                        notes/ (working notes). Chips: hub bedrock heart xbow bridge pic tiocp router scan l1
                        ioc3 ioc4 crime mace gbe vice. bridge/ also holds the XBridge census; router/ is a

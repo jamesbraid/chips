@@ -59,7 +59,7 @@ A chip row is done when every inventory row in its area is `understood` (label, 
 a derivation specific to the item) or `no-software-dependency`. `docs/inventory/README.md` has the exact
 grading rules, including the template cap, the scope filter and the unverified label. An independent audit
 samples `understood` rows and re-derives them from the binaries; the result goes in
-`docs/inventory/audits.tsv` (written by hand; the audit procedure is in HAIKU-BRIEF.md).
+`docs/inventory/audits.tsv` (written by hand; the audit procedure is in READING-BRIEF.md).
 
 ## Reading MIPS code from the shipped binaries
 
