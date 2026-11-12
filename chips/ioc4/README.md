@@ -325,7 +325,7 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 - **`0x24`**: the role is inferred (bus speed field). Open: why the clear is gated on revision 79 and what values above 1 mean.
 - **ATA DMA block**: roles are established by the Linux driver and the IRIX accesses agree ([docs/coverage-ioc4.md](../../docs/coverage-ioc4.md));
   index 8 is the end-of-transfer flag area, not a second table. Open: whether IRIX waits on that area, and the request's list layout.
-- **ATA error line**: `xide_intr_clear` compares the masked error address with 8 where the driver's table puts ATA at 8 in a field that masks to `0x10`.
+- **ATA error line**: the interrupt service is read in full (the `xide_intr_clear` entry above): mask 3 on the other-interrupt word, bit 1 the memory error, and the `(low word & 0x1e) == 8` test only selects a debug line. What is left is that the compare value 8 differs from where the public driver's table puts the ATA master (a field that masks to `0x10`). The two request words at +0xa4 and +0xa8 are the leading and trailing byte counts of a block-size rewrite ([docs/coverage-ioc4.md](../../docs/coverage-ioc4.md)).
 - **Ports 1 to 3 GPIO pins** are 5, 6 and 7 (extracted; docs/coverage-ioc4.md). The other words of the 0x28-byte per-port record (nine words before the pin byte) are not read.
 - **`ioc4_error_handler` and `ioc4_intr`/`ioc4_intrd`** are read for their accesses only.
 - **Interrupt dispatch**: which `sio_ir` and `other_ir` bits each handler claims is not read.

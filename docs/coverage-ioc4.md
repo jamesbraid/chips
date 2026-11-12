@@ -60,8 +60,21 @@ matches the Linux driver's wait for the engine to write ones there. The unit of 
 16 bytes: a 64-bit bus address, then a 64-bit word whose low bits are the byte count, both stored with 64-bit stores in the
 CPU's big-endian order, so no software byte swap. The builder walks the address list and appends one entry per element; for a
 request whose word at +0xa8 (before the elements) or +0xa4 (after them) is positive it adds an extra entry whose address is
-the controller record's word at +0x160 and whose count is that request word (`xide_getmap` 0x568c and 0x56e4); what those
-words stand for (padding to a boundary is the likely reading) is inferred. Afterwards it sets bit 31 (`0x80000000`) of the second word of the
+the controller record's word at +0x160 and whose count is that request word (`xide_getmap` 0x568c and 0x56e4).
+
+**What the two request words hold: established** (`xide_fix_mode_cmd_xmt`, `IP35boot/ide.o` 0x7510, read from the arithmetic at 0x7950 to
+0x7a3c and 0x7cb0 to 0x7cc4; the shipped debug text says the path serves a CDROM or DVDROM). On the arm that prints "READ/WRITE 10 cmd received" (the
+opcode test that selects it was not read), when the device block is larger than the sector the host counts in (block size at +0x50, sector size
+at +0x5c of one record, block over sector `fp`), the routine rewrites the command's logical block address and count into device blocks: the new address is the
+old one divided by `fp`, the new count is `ceil((old address mod fp + old count) / fp)`, and the two remainders are kept as the text's
+"lba_begin_offset" (old address mod fp) and "lba_end_offset" ((begin offset + count) mod fp). The word at request +0xa4 is the sector size times the
+begin offset, in bytes, and the word at +0xa8 is the sector size times `fp` minus the end offset, in bytes, or zero when the end offset is
+zero; so they are the unwanted bytes at the start and at the end of the first and last device block, and `xide_getmap` turns each nonzero
+one into a list entry that points at the end-of-transfer area. The routine stores 0 to +0xa8 when the end offset is zero but does not write +0xa4 when
+the begin offset is zero, so that word keeps the zero it was given at allocation (stores at `xide_return_co_resources` 0x2a5c and `xide_alloc_cmd_object` 0x457c). **Unknown**: which of the two
+entries comes first in transfer order. The earlier reading puts +0xa8 first and +0xa4 last, but the leading bytes are the begin offset (+0xa4),
+and the list is walked from its end in places (`xide_getmap` 0x53d4 starts at the base plus 16 times the count minus 16), so the order was not
+reconciled here. Route: follow the entry stores in `xide_getmap` from 0x5350 to 0x56f8 against the walk direction. Afterwards it sets bit 31 (`0x80000000`) of the second word of the
 last entry (`xide_getmap` 0x54ac to 0x54c8), which is the Linux end-of-list bit. The count word carries no other flag in this
 code.
 
