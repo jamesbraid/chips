@@ -9,7 +9,7 @@ data manual SCPS053B.
 
 Two Tezro captures list the bridge and `1412:1724` (both at "PCI slot 2"): one `hinv -mv` with a PCI serial board at
 `xtalk/15/pci-x/1/2` (so bus 1 device 2 is taken and bus 0 device 2 is the bridge), one `hinv -vm`. A third bus
-must hold the controller; the only bridge is the PCI2050. `ppb_device_init` (`0x530`) passes the secondary-bus device
+must hold the controller; the only bridge is the PCI2050. The PCI2050 is single-function, so it occupies device 2 of IO9 bus 0 alone, and device 2 on its secondary bus is selected by `S_AD18` (see [tezro-ti-bridge.md](tezro-ti-bridge.md)). `ppb_device_init` (`0x530`) passes the secondary-bus device
 number as the slot of each function it registers, which is why the listing prints 2. Confirming captures:
 `ls /hw/module/*/IXbrick/xtalk/15/pci-x/0/2/`, `hinv -mvv`, a config dump of the bridge (`0x00`..`0x4f`).
 

@@ -119,6 +119,33 @@ seven Origin 350 and Onyx 350 postings with an IO9 board line); the Tezro guides
 | Bridge variant (PCI2050 or PCI2050B), raw class and revision bytes | unknown |
 | Head 0 of the IO9 PIC is in PCI-X mode | unknown (implied if item 4 is right) |
 
+## What the TI manual fixes, and two driver steps not yet recorded
+
+Page numbers are the ones the import source gives for TI DS; they were not re-checked against the PDF in this pass.
+
+- **Device number to IDSEL. Established (TI DS Table 3-2, p. 3-4).** Device `n` on the secondary bus is selected by
+  asserting `S_AD(16+n)` as IDSEL, for `n` = 0 to 15. Device 2 is `S_AD18`. Which board routes that line is still unknown.
+- **Type 1 forwarding. Established (TI DS p. 3-3).** The bridge claims type 1 configuration cycles for bus numbers from
+  its secondary to its subordinate number, and converts them to type 0 when the bus number equals its secondary number.
+- **Single function. Established (TI DS p. 4-6).** Header type `01h`, so the bridge fills its own device number on the
+  parent bus alone; device 2 of IO9 bus 0 cannot hold another function.
+- **Class code. Established as a vendor statement (TI DS p. 4-5).** Class `0604h`, programming interface `00h`. This
+  supports the `060400h` value in item 1 above; the raw config bytes are still unpublished.
+- **Interrupts. Established (TI DS pp. 4-14, 4-15).** The part has no interrupt pin of its own (Interrupt pin reads 0)
+  and does not route interrupts. Any INTA route from the controller is set by the board, not by the bridge.
+- **Secondary masters and PCI mode. Established (TI DS; page not recorded in the import source).** The part arbitrates
+  nine secondary-bus masters through an internal arbiter, and the manual describes conventional PCI only, with no
+  PCI-X support. An IO9 head behind it therefore cannot run the bridged path in PCI-X mode (inferred for the head).
+- **Window granularity in the IRIX bridge driver. Established as driver code, not as chip behaviour.** After the scan
+  the driver rounds the bridge's I/O window to 4 KiB and its memory and prefetchable windows to 1 MiB before writing
+  the base and limit registers.
+- **Function probing in the IRIX bridge driver. Established as driver code.** For each responding device the driver
+  reads the header-type byte at offset `0x0e`. Bit 7 set means probe functions 0 to 7 (each read of the vendor ID at
+  `function << 8`); bit 7 clear means function 0 only. Header types other than 0 and 1 print an error and are skipped.
+- **The bridge's own command register. Not written by the driver (established as driver code); the enabling value is
+  inferred.** Forwarding of I/O, memory and bus-master cycles on the bridge must already be enabled by the host adapter's
+  common attach. That was not read in the driver object.
+
 ## What would settle the unknowns
 
 No owned machine can answer these: the only SGI systems on hand are an Origin 350 and an Octane2, and neither carries

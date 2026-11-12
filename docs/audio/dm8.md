@@ -113,7 +113,7 @@ and the controller's clock and DMA rules. Applied to this board:
 | Unknown | Route |
 |---|---|
 | The DM8's own PCI config (sub-vendor, sub-device, revision) and EEPROM image | none in software; any published `lspci -vv`/EEPROM dump of a DM8; a hinv `-vm` capture of a DM8 would give the revision only |
-| ICE1724 DMA size unit: the datasheet counts dwords, the IRIX driver's size is recorded as a frame count | Re-read the size computation in `mad_start_dma` against the datasheet's dword units; a measured buffer wrap on a DM8 |
+| ICE1724 DMA size unit (resolved in the ICE1724 notes): the playback count is dwords less one, as the datasheet says and as the driver's zeroing call implies. Left open here: a measured buffer wrap on a DM8 would confirm it | A measured buffer wrap on a DM8 |
 | ICE1724 soft-reset effect on this chip (the sibling part's datasheet differs) | A measurement on a DM8; no published source for this chip |
 | Converter register field meanings | AKM AK4381 and AK4355 datasheets (public) |
 | SGI part number, and whether SGI changed anything | SGI parts lists, or a board photograph |
