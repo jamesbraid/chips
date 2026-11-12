@@ -100,6 +100,7 @@ Routine readings from the kernels and PROMs:
 - [docs/ip30-kernel-odyssey-routines.md](docs/ip30-kernel-odyssey-routines.md): Odyssey graphics routines of the IP30 kernel.
 - [docs/ip30-kernel-support-routines.md](docs/ip30-kernel-support-routines.md): Machine-independent kernel routines of the IP30 build read for completeness.
 - [docs/ip30-kernel-xbow-routines.md](docs/ip30-kernel-xbow-routines.md): Xbow routines of the IP30 kernel.
+- [docs/ip30-flash.md](docs/ip30-flash.md): IP30 boot flash as the Bridge drives it: the shared SSRAM and flash pins, the FLASH_SELECT strap, the write enable, and what is unknown.
 - [docs/instruction-readings-chips-g1.md](docs/instruction-readings-chips-g1.md), [g2](docs/instruction-readings-chips-g2.md) and [g3](docs/instruction-readings-chips-g3.md): instruction readings from hostfacts, one group, not listed entry by entry.
 
 Open questions, one page each:

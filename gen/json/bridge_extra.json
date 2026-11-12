@@ -6,6 +6,14 @@
   {
    "unit": "bridge_extra",
    "kind": "constant",
+   "name": "CONTROL_FLASH_WR_EN",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
    "name": "CONTROL_RST_PIN_N",
    "value": 251658240,
    "count": 1,
@@ -88,6 +96,14 @@
    "kind": "constant",
    "name": "INT_STATUS_INVALID_ADDRESS",
    "value": 16777216,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "STATUS_FLASH_SELECT",
+   "value": 64,
    "count": 1,
    "grade": "established"
   },

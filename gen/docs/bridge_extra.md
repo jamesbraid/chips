@@ -10,6 +10,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
+| `CONTROL_FLASH_WR_EN` | 0x80000000 | established |  | bit 31, flash write enable; reset 0. Set to allow writes to the flash. Clear, a write to the flash is an error and is not completed; the specification does not say what the requester receives. Specification section 3.2.5, table 11, printed page 21 |
 | `CONTROL_RST_PIN_N` | 0xf000000 | established |  | bits 27:24, the four software reset pins RST_PIN_N(3:0); reset 0xf, every pin released. Writing 1 drives a pin high (released) and 0 drives it low (asserted). Bit n driving the n-th PCI bus reset output is inferred: the specification gives no bit-to-pin table. Which device each pin reaches is board wiring and unknown |
 | `CONTROL_WIDGET_NUMBER` | 0xf | established |  | bits 3:0, the crosstalk widget number this chip answers at; reset 0xf, the specification's not-yet-assigned value. Firmware writes the assigned number |
 | `DEVICE_BARRIER` | 0x8000 | established |  | bit 15; meaning [I] |
@@ -21,6 +22,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `DEVICE_SWAP_PROGRAMMED` | 0x2000 | established |  | bit 13, byte swap for accesses that reach the device through its programmed-I/O window; reset clear. With it clear, the device window byte lanes follow the swap-clear rule (see bridge-family.md) |
 | `DEVICE_WRITE_GATHER_EN` | 0x1800000 | established |  | bits 24 and 23 together: PMU and direct write-gather enables; one flag pair controls both |
 | `INT_STATUS_INVALID_ADDRESS` | 0x1000000 | established |  | bit 24, address invalid for this widget. Whether this error also fills the error address registers is not stated by the specification (unknown) |
+| `STATUS_FLASH_SELECT` | 0x40 | established |  | bit 6 of the status register (offset 0x08), read only, reset undefined. A hard-wired strap: 0 makes chip select 0 and 1 makes chip select 1 serve the flash at address 0xc00000. The strap pin is FLASH_SELECT, specification section 2.1.4, table 4, printed page 13; the register bit is section 3.2.2, table 8, printed page 20 |
 | `TEST_PIN_CONTROL` | 0x70 | established |  | access rw; resets to 0 in the specification |
 | `TEST_PIN_CONTROL_DATA_OUT` | 0xf00 | established |  | Bridge: bits 11:8, test data out |
 | `TEST_PIN_CONTROL_SELECT0` | 0x3 | established |  | Bridge: bits 1:0, pin-function select, two bits |
