@@ -76,6 +76,42 @@
 #define AIC7880_SCSIBUSL_OFFSET                      0x12u /* inferred */
 
 /*
+ * Sequencer control. Bit 4 selects the sequencer clock divider, bit 2 requests one single step, bit 1 resets the sequencer RAM address pointer and bit 0 gives the host access to sequencer RAM. Bit 6 disables the host pause request. Bits 7, 5 and 3 (PERRORDIS, FAILDIS and BRKADRINTEN) are in the book but are not described on this unit. The reset value is the one the book's bit table gives in parentheses, not a value read after initialisation.
+ */
+/* seqctl: rw8, reset 0x90; Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling */
+#define AIC7880_SEQCTL_OFFSET                        0x60u /* inferred */
+#define AIC7880_SEQCTL_PAUSEDIS_SHIFT                6 /* inferred */
+#define AIC7880_SEQCTL_PAUSEDIS_MASK                 0x1u
+#define AIC7880_SEQCTL_PAUSEDIS_INPLACE              (AIC7880_SEQCTL_PAUSEDIS_MASK << AIC7880_SEQCTL_PAUSEDIS_SHIFT)
+#define AIC7880_SEQCTL_FASTMODE_SHIFT                4 /* inferred */
+#define AIC7880_SEQCTL_FASTMODE_MASK                 0x1u
+#define AIC7880_SEQCTL_FASTMODE_INPLACE              (AIC7880_SEQCTL_FASTMODE_MASK << AIC7880_SEQCTL_FASTMODE_SHIFT)
+#define AIC7880_SEQCTL_STEP_SHIFT                    2 /* inferred */
+#define AIC7880_SEQCTL_STEP_MASK                     0x1u
+#define AIC7880_SEQCTL_STEP_INPLACE                  (AIC7880_SEQCTL_STEP_MASK << AIC7880_SEQCTL_STEP_SHIFT)
+#define AIC7880_SEQCTL_SEQRESET_SHIFT                1 /* inferred */
+#define AIC7880_SEQCTL_SEQRESET_MASK                 0x1u
+#define AIC7880_SEQCTL_SEQRESET_INPLACE              (AIC7880_SEQCTL_SEQRESET_MASK << AIC7880_SEQCTL_SEQRESET_SHIFT)
+#define AIC7880_SEQCTL_LOADRAM_SHIFT                 0 /* inferred */
+#define AIC7880_SEQCTL_LOADRAM_MASK                  0x1u
+#define AIC7880_SEQCTL_LOADRAM_INPLACE               (AIC7880_SEQCTL_LOADRAM_MASK << AIC7880_SEQCTL_LOADRAM_SHIFT)
+
+/*
+ * Low eight bits of the sequencer RAM address that executes on the next clock edge. The driver writes it while the sequencer is paused to change where execution resumes, and uses it as the start address when loading sequencer RAM. While loading, the address steps up after every fourth byte. A write to SEQADDR[1:0] clears that byte index. RST# and CHIPRST clear the address to zero.
+ */
+/* seqaddr0: rw8, reset 0x0; Adaptec AIC-7870 Data Book, PDF p. 99 (printed 4-30); sibling */
+#define AIC7880_SEQADDR0_OFFSET                      0x62u /* inferred */
+
+/*
+ * Bit 0 is bit 8 of the sequencer RAM address, which covers the 512 instruction words. Bits 7 to 1 are reserved in the book, and their read-back is not stated. RST# and CHIPRST clear the register.
+ */
+/* seqaddr1: rw8, reset 0x0; Adaptec AIC-7870 Data Book, PDF p. 99 (printed 4-30); sibling */
+#define AIC7880_SEQADDR1_OFFSET                      0x63u /* inferred */
+#define AIC7880_SEQADDR1_ADDR8_SHIFT                 0 /* inferred */
+#define AIC7880_SEQADDR1_ADDR8_MASK                  0x1u
+#define AIC7880_SEQADDR1_ADDR8_INPLACE               (AIC7880_SEQADDR1_ADDR8_MASK << AIC7880_SEQADDR1_ADDR8_SHIFT)
+
+/*
  * Read-only port that returns 0xff to the host and to the sequencer. It is a source for logical and arithmetic functions. The book gives no write function, so a write is outside the published interface and its effect stays unknown.
  */
 /* allones: r8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 102 (printed 4-33); sibling */

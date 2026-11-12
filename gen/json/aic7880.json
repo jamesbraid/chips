@@ -193,6 +193,102 @@
   {
    "unit": "aic7880",
    "kind": "register",
+   "name": "seqctl",
+   "offset": 96,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": 144,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "seqctl.pausedis",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "seqctl.fastmode",
+   "hi": 4,
+   "lo": 4,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "seqctl.step",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "seqctl.seqreset",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "seqctl.loadram",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "register",
+   "name": "seqaddr0",
+   "offset": 98,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": 0,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 99 (printed 4-30); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "register",
+   "name": "seqaddr1",
+   "offset": 99,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": 0,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 99 (printed 4-30); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "seqaddr1.addr8",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF p. 99 (printed 4-30); sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "register",
    "name": "allones",
    "offset": 105,
    "access": "r",

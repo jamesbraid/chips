@@ -166,3 +166,40 @@ doc = "SCSI interrupt mask 0. Setting a bit enables the matching SSTAT0 status t
 
 [registers.simode0.fields]
 enspiordy = { bits = [1, 1], grade = "inferred", doc = "enables the SPIORDY status in SSTAT0 to assert the SCSI interrupt" }
+
+[registers.seqctl]
+offset = 0x60
+access = "rw"
+width = 8
+reset = 0x90
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling"
+doc = "Sequencer control. Bit 4 selects the sequencer clock divider, bit 2 requests one single step, bit 1 resets the sequencer RAM address pointer and bit 0 gives the host access to sequencer RAM. Bit 6 disables the host pause request. Bits 7, 5 and 3 (PERRORDIS, FAILDIS and BRKADRINTEN) are in the book but are not described on this unit. The reset value is the one the book's bit table gives in parentheses, not a value read after initialisation."
+
+[registers.seqctl.fields]
+pausedis = { bits = [6, 6], grade = "inferred", doc = "set disables the host PAUSE request. SCSI interrupts, illegal opcode interrupts and sequencer RAM parity error interrupts clear it, and host software may not write it" }
+fastmode = { bits = [4, 4], grade = "inferred", doc = "1 divides the input clock by four to give the sequencer clock; 0 divides it by five" }
+step = { bits = [2, 2], grade = "inferred", doc = "1 runs one instruction and pauses the sequencer again. It stays set until software clears it, and each further single step clears PAUSE in HCNTRL once more" }
+seqreset = { bits = [1, 1], grade = "inferred", doc = "resets the sequencer RAM address pointer to zero. Self-clearing. The sequencer must be paused before it is set" }
+loadram = { bits = [0, 0], grade = "inferred", doc = "1 lets the host read or write sequencer RAM through SEQRAM. Clear it for normal operation, and clear it before switching between reads and writes" }
+
+[registers.seqaddr0]
+offset = 0x62
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 99 (printed 4-30); sibling"
+doc = "Low eight bits of the sequencer RAM address that executes on the next clock edge. The driver writes it while the sequencer is paused to change where execution resumes, and uses it as the start address when loading sequencer RAM. While loading, the address steps up after every fourth byte. A write to SEQADDR[1:0] clears that byte index. RST# and CHIPRST clear the address to zero."
+
+[registers.seqaddr1]
+offset = 0x63
+access = "rw"
+width = 8
+reset = 0x0
+grade = "inferred"
+from = "Adaptec AIC-7870 Data Book, PDF p. 99 (printed 4-30); sibling"
+doc = "Bit 0 is bit 8 of the sequencer RAM address, which covers the 512 instruction words. Bits 7 to 1 are reserved in the book, and their read-back is not stated. RST# and CHIPRST clear the register."
+
+[registers.seqaddr1.fields]
+addr8 = { bits = [0, 0], grade = "inferred", doc = "bit 8 of the sequencer RAM address" }

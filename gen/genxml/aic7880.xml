@@ -30,6 +30,21 @@
   <struct name="SCSIBUSL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 93 (printed 4-24); sibling" register="yes" offset="0x12" access="r" reset="unknown">
     <doc>SCSI data bus, read directly. The book says the data is gated from the bus to the internal data bus and is not latched in the SCSI module. A read therefore sees the byte on the bus without taking the latch. Nothing in the cited pages says it acknowledges the byte, and the book ties the ACK drive to SCSIDATL accesses, so this read is taken not to acknowledge (inferred from the book's wording, not stated).</doc>
   </struct>
+  <struct name="SEQCTL" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 98 (printed 4-29); sibling" register="yes" offset="0x60" access="rw" reset="0x90">
+    <doc>Sequencer control. Bit 4 selects the sequencer clock divider, bit 2 requests one single step, bit 1 resets the sequencer RAM address pointer and bit 0 gives the host access to sequencer RAM. Bit 6 disables the host pause request. Bits 7, 5 and 3 (PERRORDIS, FAILDIS and BRKADRINTEN) are in the book but are not described on this unit. The reset value is the one the book's bit table gives in parentheses, not a value read after initialisation.</doc>
+    <field name="pausedis" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="fastmode" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="step" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="seqreset" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="loadram" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="SEQADDR0" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 99 (printed 4-30); sibling" register="yes" offset="0x62" access="rw" reset="0x0">
+    <doc>Low eight bits of the sequencer RAM address that executes on the next clock edge. The driver writes it while the sequencer is paused to change where execution resumes, and uses it as the start address when loading sequencer RAM. While loading, the address steps up after every fourth byte. A write to SEQADDR[1:0] clears that byte index. RST# and CHIPRST clear the address to zero.</doc>
+  </struct>
+  <struct name="SEQADDR1" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 99 (printed 4-30); sibling" register="yes" offset="0x63" access="rw" reset="0x0">
+    <doc>Bit 0 is bit 8 of the sequencer RAM address, which covers the 512 instruction words. Bits 7 to 1 are reserved in the book, and their read-back is not stated. RST# and CHIPRST clear the register.</doc>
+    <field name="addr8" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
   <struct name="ALLONES" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF p. 102 (printed 4-33); sibling" register="yes" offset="0x69" access="r" reset="unknown">
     <doc>Read-only port that returns 0xff to the host and to the sequencer. It is a source for logical and arithmetic functions. The book gives no write function, so a write is outside the published interface and its effect stays unknown.</doc>
   </struct>

@@ -157,6 +157,81 @@ pub mod scsibusl {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x12;
 }
+/// Sequencer control. Bit 4 selects the sequencer clock divider, bit 2 requests one single step, bit 1 resets the sequencer RAM address pointer and bit 0 (inferred)
+pub mod seqctl {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x60;
+    pub mod pausedis { // bits 6:6, inferred
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod fastmode { // bits 4:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod step { // bits 2:2, inferred
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod seqreset { // bits 1:1, inferred
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod loadram { // bits 0:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Low eight bits of the sequencer RAM address that executes on the next clock edge. The driver writes it while the sequencer is paused to change where e (inferred)
+pub mod seqaddr0 {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x62;
+}
+/// Bit 0 is bit 8 of the sequencer RAM address, which covers the 512 instruction words. Bits 7 to 1 are reserved in the book, and their read-back is not  (inferred)
+pub mod seqaddr1 {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x63;
+    pub mod addr8 { // bits 0:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Read-only port that returns 0xff to the host and to the sequencer. It is a source for logical and arithmetic functions. The book gives no write functi (inferred)
 pub mod allones {
     pub const WIDTH: u32 = 8;
