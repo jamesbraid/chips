@@ -1,6 +1,7 @@
 // generated from defs/ by defs-gen - do not edit, change the source
 pub mod bedrock;
 pub mod bedrock_extra;
+pub mod bedrock_xb;
 pub mod bridge;
 pub mod bridge_extra;
 pub mod dm2;
