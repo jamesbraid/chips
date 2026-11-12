@@ -1,0 +1,126 @@
+{
+ "schema": "defs-flat/1",
+ "source": "defs/hub_extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ibna_0",
+   "offset": 4259872,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ibia_0",
+   "offset": 4259880,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibia_0.level",
+   "hi": 22,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibia_0.node",
+   "hi": 8,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ibia_1",
+   "offset": 4325416,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibia_1.level",
+   "hi": 22,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibia_1.node",
+   "hi": 8,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IBCT_NOTIFY",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IBCT_POISON",
+   "value": 256,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IBCT_ZFIL_MODE",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IBLS_BUSY",
+   "value": 1048576,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IECLR_BTE0",
+   "value": 131072,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IECLR_BTE1",
+   "value": 262144,
+   "count": 1,
+   "grade": "inferred"
+  }
+ ]
+}

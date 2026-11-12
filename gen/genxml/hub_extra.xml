@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<!-- generated from defs/hub_extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="hub_extra" prefix="HUB" title="Hub block transfer engine registers and control bits outside the census">
+  <struct name="IIO_IBNA_0" size="8" grade="inferred" register="yes" offset="0x410020" access="rw" reset="unknown">
+    <doc>Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The header gives no access type, so rw is assumed.</doc>
+  </struct>
+  <struct name="IIO_IBIA_0" size="8" grade="inferred" register="yes" offset="0x410028" access="rw" reset="unknown">
+    <doc>Interrupt address of engine 0. Offset and name are from the public header. The header gives no access type, so rw is assumed.</doc>
+    <field name="level" start="16" size="7" type="uint" grade="established"/>
+    <field name="node" start="0" size="9" type="uint" grade="established"/>
+  </struct>
+  <struct name="IIO_IBIA_1" size="8" grade="inferred" register="yes" offset="0x420028" access="rw" reset="unknown">
+    <doc>Interrupt address of engine 1. Offset and name are from the public header. The header gives no access type, so rw is assumed.</doc>
+    <field name="level" start="16" size="7" type="uint" grade="established"/>
+    <field name="node" start="0" size="9" type="uint" grade="established"/>
+  </struct>
+  <constant name="IIO_IBCT_NOTIFY" value="0x10" grade="established"/>
+  <constant name="IIO_IBCT_POISON" value="0x100" grade="established"/>
+  <constant name="IIO_IBCT_ZFIL_MODE" value="0x1" grade="established"/>
+  <constant name="IIO_IBLS_BUSY" value="0x100000" grade="established"/>
+  <constant name="IIO_IECLR_BTE0" value="0x20000" grade="inferred"/>
+  <constant name="IIO_IECLR_BTE1" value="0x40000" grade="inferred"/>
+</genxml>

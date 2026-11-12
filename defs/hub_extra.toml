@@ -1,0 +1,54 @@
+unit = "hub_extra"
+prefix = "HUB"
+title = "Hub block transfer engine registers and control bits outside the census"
+from = "public Linux mainline SN0 Hub I/O register header under arch/mips/include/asm/sn/sn0, tag v6.12 (names, offsets and masks); Origin and Onyx2 Theory of Operations 007-3439-002 rev 002, page 50, for the poison status"
+public_from = ["census:", "public Linux SN0 Hub I/O header"]
+
+[c]
+offset_macro = "bare"
+legacy_header = "include/hub_extra.h"
+legacy_guard = "HUB_EXTRA_H"
+
+# The census has no entry for these slots. Offsets and names come from the public
+# header. The header states no access type, so the access is an assumption and the
+# register is graded inferred as a whole.
+[registers.iio_ibna_0]
+offset = 0x410020
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The header gives no access type, so rw is assumed."
+
+[registers.iio_ibia_0]
+offset = 0x410028
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Interrupt address of engine 0. Offset and name are from the public header. The header gives no access type, so rw is assumed."
+
+[registers.iio_ibia_0.fields]
+level = { bits = [22, 16], grade = "established", doc = "Interrupt level: mask 0x7f shifted to bits 22:16 in the public header." }
+node = { bits = [8, 0], grade = "established", doc = "Destination node number: mask 0x1ff in the public header." }
+
+[registers.iio_ibia_1]
+offset = 0x420028
+access = "rw"
+width = 64
+grade = "inferred"
+doc = "Interrupt address of engine 1. Offset and name are from the public header. The header gives no access type, so rw is assumed."
+
+[registers.iio_ibia_1.fields]
+level = { bits = [22, 16], grade = "established", doc = "Interrupt level: mask 0x7f shifted to bits 22:16 in the public header." }
+node = { bits = [8, 0], grade = "established", doc = "Destination node number: mask 0x1ff in the public header." }
+
+[constants]
+# Control/terminate bits. The census carries the notify value (0x10) only as an inferred
+# constant. The names and the zero-fill and poison bits are from the public header.
+IIO_IBCT_ZFIL_MODE = { value = 0x1, grade = "established", doc = "Zero-fill mode bit of the control/terminate register, named ZFIL_MODE in the public header. The header gives no behaviour for it." }
+IIO_IBCT_NOTIFY = { value = 0x10, grade = "established", doc = "Notify bit of the control/terminate register, named NOTIFY in the public header. The census has the same value as an inferred constant." }
+IIO_IBCT_POISON = { value = 0x100, grade = "established", doc = "Poison bit of the control/terminate register, named POISON in the public header. The Theory of Operations calls directory poisoning a proposed feature, so its effect on shipped hardware is unknown." }
+# Length/status busy bit. The census carries the same value as an inferred constant.
+IIO_IBLS_BUSY = { value = 0x100000, grade = "established", doc = "Busy bit of the length/status register, named IBLS_BUSY in the public header." }
+# I/O error clear bits for the two engines. The public header marks both meanings with a question mark.
+IIO_IECLR_BTE0 = { value = 0x20000, grade = "inferred", doc = "Clears engine 0's latched error, per the public header's name. The header's comment on the bit is marked uncertain, so the meaning is inferred." }
+IIO_IECLR_BTE1 = { value = 0x40000, grade = "inferred", doc = "Clears engine 1's latched error, per the public header's name. The header's comment on the bit is marked uncertain, so the meaning is inferred." }
