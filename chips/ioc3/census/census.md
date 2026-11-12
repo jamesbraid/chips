@@ -31,13 +31,13 @@ Datasheet checkout `` (datasheets, spec transcriptions); model at `?` (model sou
 
 ## Summary
 
-- **760 access sites** resolved to a window offset, folded into **65 register rows** (one per variant and 8-byte slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
+- **760 access sites** resolved to a window offset, folded into **65 register rows** (one per variant and register slot). Sites are summed over the images; the two kernels carry the same accessor code, so most sites appear once per kernel.
 
 | variant | rows | sites | model: handled+specified | model: handled, guessed or LOG_UNIMP | model: unhandled / out of scope | not in datasheet | not in spec | spec conflict |
 |---|---|---|---|---|---|---|---|---|
 | ? | 65 | 760 | 0 | 0 | 0 | 0 | 0 | 0 |
 
-`?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). This census compares only with the published specification: no emulator datasheet or model is read, so the datasheet and model columns carry no information.
+`?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). This census compares only with the published specification: no datasheet or register model is read, so the datasheet and model columns carry no information.
 
 Site basis: 758 direct, 2 returned-pointer.
 

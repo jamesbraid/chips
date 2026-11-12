@@ -31,7 +31,7 @@ Datasheet checkout `` (datasheets, spec transcriptions); model at `?` (model sou
 |---|---|---|---|---|---|---|---|---|
 | bedrock | 208 | 894 | 0 | 0 | 0 | 0 | 0 | 0 |
 
-`?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). This census compares only with the published specification: no emulator datasheet or model is read, so the datasheet and model columns carry no information.
+`?` is an access whose path names no chip variant (the identification-word read every driver does before it knows which chip it holds). This census compares only with the published specification: no datasheet or register model is read, so the datasheet and model columns carry no information.
 
 Site basis: 905 image-hint.
 
