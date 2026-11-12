@@ -1526,6 +1526,15 @@
   {
    "unit": "dm2",
    "kind": "field",
+   "name": "vif_control.err_clear",
+   "hi": 7,
+   "lo": 7,
+   "grade": "inferred",
+   "from": "shipped kernel driver and media library readings"
+  },
+  {
+   "unit": "dm2",
+   "kind": "field",
    "name": "vif_control.sd_flag",
    "hi": 6,
    "lo": 6,
@@ -1593,6 +1602,15 @@
    "stride": 4,
    "space": null,
    "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped diagnostic tables"
+  },
+  {
+   "unit": "dm2",
+   "kind": "field",
+   "name": "vif_scratch.err_flag",
+   "hi": 5,
+   "lo": 5,
    "grade": "inferred",
    "from": "shipped diagnostic tables"
   },

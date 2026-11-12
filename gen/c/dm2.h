@@ -573,7 +573,7 @@
 #define DM2_UNPACK_R1048_OFFSET                      0x80104cu /* established */
 
 /*
- * VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test.
+ * VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bit 7 is 0 in the formula (the debug-build library pulses it high then low at the start of an input transfer, which is inferred to clear a sticky error flag in register 0x1810), bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test.
  */
 /* vif_control: rw32, reset unknown; shipped kernel driver and media library readings */
 #define DM2_VIF_CONTROL_OFFSET                       0x801804u /* established */
@@ -586,6 +586,9 @@
 #define DM2_VIF_CONTROL_CONST_7_SHIFT                8 /* established */
 #define DM2_VIF_CONTROL_CONST_7_MASK                 0x7u
 #define DM2_VIF_CONTROL_CONST_7_INPLACE              (DM2_VIF_CONTROL_CONST_7_MASK << DM2_VIF_CONTROL_CONST_7_SHIFT)
+#define DM2_VIF_CONTROL_ERR_CLEAR_SHIFT              7 /* inferred */
+#define DM2_VIF_CONTROL_ERR_CLEAR_MASK               0x1u
+#define DM2_VIF_CONTROL_ERR_CLEAR_INPLACE            (DM2_VIF_CONTROL_ERR_CLEAR_MASK << DM2_VIF_CONTROL_ERR_CLEAR_SHIFT)
 #define DM2_VIF_CONTROL_SD_FLAG_SHIFT                6 /* established */
 #define DM2_VIF_CONTROL_SD_FLAG_MASK                 0x1u
 #define DM2_VIF_CONTROL_SD_FLAG_INPLACE              (DM2_VIF_CONTROL_SD_FLAG_MASK << DM2_VIF_CONTROL_SD_FLAG_SHIFT)
@@ -609,10 +612,13 @@
 #define DM2_VIF_ENABLE_ENABLE_INPLACE                (DM2_VIF_ENABLE_ENABLE_MASK << DM2_VIF_ENABLE_ENABLE_SHIFT)
 
 /*
- * Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write; the library does not use it.
+ * Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write. The release library never touches it; the debug build of the library reads it at the start of an input transfer and tests bit 5, pulsing bit 7 of the VIF control (register number 0x1800) high then low when it is set, and reads it again 27 ms later. That bit 5 is a sticky input-error flag cleared by that pulse is inferred.
  */
 /* vif_scratch: rw32, reset unknown; shipped diagnostic tables */
 #define DM2_VIF_SCRATCH_OFFSET                       0x801814u /* inferred */
+#define DM2_VIF_SCRATCH_ERR_FLAG_SHIFT               5 /* inferred */
+#define DM2_VIF_SCRATCH_ERR_FLAG_MASK                0x1u
+#define DM2_VIF_SCRATCH_ERR_FLAG_INPLACE             (DM2_VIF_SCRATCH_ERR_FLAG_MASK << DM2_VIF_SCRATCH_ERR_FLAG_SHIFT)
 
 /*
  * VIF DMUX register (register number 0x1828, the diagnostic's DMUX_REG_SEL). Bits 2:0 are a small selector (0 on the path read), bits 4:3 a two-bit mode (2 or 3, from the format class), bit 5 is set when a path field equals 10 and bit 7 is set except in one special path case. Formula established; meaning unknown.
@@ -868,7 +874,7 @@
 #define DM2_CLINK_RX_MESSAGE_HALFWORD_INPLACE        (DM2_CLINK_RX_MESSAGE_HALFWORD_MASK << DM2_CLINK_RX_MESSAGE_HALFWORD_SHIFT)
 
 /*
- * CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when a path opens. Name from the diagnostic, accesses from the library.
+ * CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when an input path opens while the output pipe is idle. Name from the diagnostic, accesses from the library.
  */
 /* clink_uart_reset: rw32, reset unknown; shipped kernel driver and media library readings */
 #define DM2_CLINK_UART_RESET_OFFSET                  0x8038e4u /* established */
@@ -877,7 +883,7 @@
 #define DM2_CLINK_UART_RESET_RESET_INPLACE           (DM2_CLINK_UART_RESET_RESET_MASK << DM2_CLINK_UART_RESET_RESET_SHIFT)
 
 /*
- * CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag.
+ * CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag. The lock, the outstanding-ack halfword and the wait variable are board-wide (one send at a time for both pipes), so the flag may come on either pipe's ring.
  */
 /* clink_tx_doorbell: w32, reset unknown; shipped kernel driver and media library readings */
 #define DM2_CLINK_TX_DOORBELL_OFFSET                 0x8038ecu /* established */

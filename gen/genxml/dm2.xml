@@ -271,10 +271,11 @@
     <doc>Unpacker register number 0x1048. Init constant UNPACK_INIT_R1048. Roles unknown.</doc>
   </struct>
   <struct name="VIF_CONTROL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x801804" access="rw" reset="unknown">
-    <doc>VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test.</doc>
+    <doc>VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bit 7 is 0 in the formula (the debug-build library pulses it high then low at the start of an input transfer, which is inferred to clear a sticky error flag in register 0x1810), bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test.</doc>
     <field name="nonzero_test" start="12" size="1" type="uint" grade="established"/>
     <field name="row_word1" start="11" size="1" type="uint" grade="established"/>
     <field name="const_7" start="8" size="3" type="uint" grade="established"/>
+    <field name="err_clear" start="7" size="1" type="uint" grade="inferred"/>
     <field name="sd_flag" start="6" size="1" type="uint" grade="established"/>
     <field name="mode_sel" start="4" size="2" type="uint" grade="established"/>
     <field name="bit0" start="0" size="1" type="uint" grade="established"/>
@@ -285,7 +286,8 @@
     <field name="enable" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="VIF_SCRATCH" size="4" grade="inferred" from="shipped diagnostic tables" register="yes" offset="0x801814" access="rw" reset="unknown">
-    <doc>Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write; the library does not use it.</doc>
+    <doc>Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write. The release library never touches it; the debug build of the library reads it at the start of an input transfer and tests bit 5, pulsing bit 7 of the VIF control (register number 0x1800) high then low when it is set, and reads it again 27 ms later. That bit 5 is a sticky input-error flag cleared by that pulse is inferred.</doc>
+    <field name="err_flag" start="5" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="VIF_DMUX" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x80182c" access="rw" reset="unknown">
     <doc>VIF DMUX register (register number 0x1828, the diagnostic's DMUX_REG_SEL). Bits 2:0 are a small selector (0 on the path read), bits 4:3 a two-bit mode (2 or 3, from the format class), bit 5 is set when a path field equals 10 and bit 7 is set except in one special path case. Formula established; meaning unknown.</doc>
@@ -391,11 +393,11 @@
     <field name="halfword" start="0" size="16" type="uint" grade="established"/>
   </struct>
   <struct name="CLINK_UART_RESET" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x8038e4" access="rw" reset="unknown">
-    <doc>CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when a path opens. Name from the diagnostic, accesses from the library.</doc>
+    <doc>CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when an input path opens while the output pipe is idle. Name from the diagnostic, accesses from the library.</doc>
     <field name="reset" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="CLINK_TX_DOORBELL" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x8038ec" access="w" reset="unknown">
-    <doc>CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag.</doc>
+    <doc>CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag. The lock, the outstanding-ack halfword and the wait variable are board-wide (one send at a time for both pipes), so the flag may come on either pipe's ring.</doc>
     <field name="ring" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="CLINK_RX_RELEASE" size="4" grade="established" from="shipped kernel driver and media library readings" register="yes" offset="0x8038f4" access="w" reset="unknown">

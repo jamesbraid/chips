@@ -387,8 +387,8 @@ offset = 0x801804
 access = "rw"
 width = 32
 grade = "established"
-doc = "VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test."
-fields = { bit0 = { bits = [0, 0], grade = "established" }, mode_sel = { bits = [5, 4], grade = "established" }, sd_flag = { bits = [6, 6], grade = "established" }, const_7 = { bits = [10, 8], grade = "established" }, row_word1 = { bits = [11, 11], grade = "established" }, nonzero_test = { bits = [12, 12], grade = "established" } }
+doc = "VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bit 7 is 0 in the formula (the debug-build library pulses it high then low at the start of an input transfer, which is inferred to clear a sticky error flag in register 0x1810), bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test."
+fields = { bit0 = { bits = [0, 0], grade = "established" }, mode_sel = { bits = [5, 4], grade = "established" }, sd_flag = { bits = [6, 6], grade = "established" }, err_clear = { bits = [7, 7], grade = "inferred" }, const_7 = { bits = [10, 8], grade = "established" }, row_word1 = { bits = [11, 11], grade = "established" }, nonzero_test = { bits = [12, 12], grade = "established" } }
 
 [registers.vif_enable]
 offset = 0x80180c
@@ -403,8 +403,9 @@ offset = 0x801814
 access = "rw"
 width = 32
 grade = "inferred"
-doc = "Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write; the library does not use it."
+doc = "Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write. The release library never touches it; the debug build of the library reads it at the start of an input transfer and tests bit 5, pulsing bit 7 of the VIF control (register number 0x1800) high then low when it is set, and reads it again 27 ms later. That bit 5 is a sticky input-error flag cleared by that pulse is inferred."
 from = "shipped diagnostic tables"
+fields = { err_flag = { bits = [5, 5], grade = "inferred" } }
 
 [registers.vif_dmux]
 offset = 0x80182c
@@ -853,7 +854,7 @@ offset = 0x8038e4
 access = "rw"
 width = 32
 grade = "established"
-doc = "CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when a path opens. Name from the diagnostic, accesses from the library."
+doc = "CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when an input path opens while the output pipe is idle. Name from the diagnostic, accesses from the library."
 fields = { reset = { bits = [0, 0], grade = "established" } }
 
 [registers.clink_tx_doorbell]
@@ -861,7 +862,7 @@ offset = 0x8038ec
 access = "w"
 width = 32
 grade = "established"
-doc = "CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag."
+doc = "CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag. The lock, the outstanding-ack halfword and the wait variable are board-wide (one send at a time for both pipes), so the flag may come on either pipe's ring."
 fields = { ring = { bits = [0, 0], grade = "established" } }
 
 [registers.clink_rx_release]
@@ -966,7 +967,7 @@ grade = "established"
 doc = "First four bytes of the 24-byte VBOB control message frame, in wire order from the high byte: count of bytes that follow, pipe, register id with bit 7 set for a write, then the first data byte. Byte layout established from every message builder in the library; names are inferred. The same 24 bytes are carried as twelve halfwords in the CLINK transmit and receive registers. Which pipe's ring carries a receive flag is unknown."
 [words.VBOB_MSG_HEADER.fields]
 count = { bits = [31, 24], grade = "established", doc = "count of bytes that follow (last used index)" }
-pipe = { bits = [23, 16], grade = "established", enum = "vbob_pipe", doc = "equals the ioctl pipe word in every caller; that it selects a cable is inferred" }
+pipe = { bits = [23, 16], grade = "established", enum = "vbob_pipe", doc = "equals the ioctl pipe word in every caller (a get passes it as the pipe word); the driver rejects a value above 1; that it selects a cable is inferred" }
 write = { bits = [15, 15], grade = "established", doc = "set for a write message" }
 reg_id = { bits = [14, 8], grade = "established" }
 data0 = { bits = [7, 0], grade = "inferred" }

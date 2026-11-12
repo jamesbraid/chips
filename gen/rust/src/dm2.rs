@@ -1319,6 +1319,16 @@ pub mod vif_control {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod err_clear { // bits 7:7, inferred
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod sd_flag { // bits 6:6, established
         pub const SHIFT: u32 = 6;
         pub const MASK: u32 = 0x1;
@@ -1375,10 +1385,20 @@ pub mod vif_enable {
         }
     }
 }
-/// Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write; the libra (inferred)
+/// Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write. The relea (inferred)
 pub mod vif_scratch {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x801814;
+    pub mod err_flag { // bits 5:5, inferred
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// VIF DMUX register (register number 0x1828, the diagnostic's DMUX_REG_SEL). Bits 2:0 are a small selector (0 on the path read), bits 4:3 a two-bit mode (established)
 pub mod vif_dmux {
@@ -1870,7 +1890,7 @@ pub mod clink_rx_message {
         }
     }
 }
-/// CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when a path opens. Name from the diagnostic, access (established)
+/// CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when an input path opens while the output pipe is i (established)
 pub mod clink_uart_reset {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x8038e4;

@@ -456,13 +456,14 @@ Unpacker register number 0x1048. Init constant UNPACK_INIT_R1048. Roles unknown.
 
 ### Register `vif_control`
 
-VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test.
+VIF control (register number 0x1800, the diagnostic's CONTROL_SEL). Formula and width (14 bits) are established, matching the diagnostic's storage mask; the meaning of any bit is unknown. Bit 0 is 0 on the path the library reads, bits 5:4 are one of two bits chosen by a standard-definition flag, bit 6 is that flag, bit 7 is 0 in the formula (the debug-build library pulses it high then low at the start of an input transfer, which is inferred to clear a sticky error flag in register 0x1810), bits 10:8 are always 7, bit 11 comes from a format-table word and bit 12 is a nonzero test.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 12 | `nonzero_test` | established |  | shipped kernel driver and media library readings |  |
 | 11 | `row_word1` | established |  | shipped kernel driver and media library readings |  |
 | 10:8 | `const_7` | established |  | shipped kernel driver and media library readings |  |
+| 7 | `err_clear` | inferred |  | shipped kernel driver and media library readings |  |
 | 6 | `sd_flag` | established |  | shipped kernel driver and media library readings |  |
 | 5:4 | `mode_sel` | established |  | shipped kernel driver and media library readings |  |
 | 0 | `bit0` | established |  | shipped kernel driver and media library readings |  |
@@ -478,7 +479,11 @@ VIF enable (register number 0x1808, the diagnostic's ENABLE_SEL); the kernel sto
 
 ### Register `vif_scratch`
 
-Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write; the library does not use it.
+Register number 0x1810. The diagnostic writes it between every write and read-back of the other VIF registers, a bus-hold or clearing write. The release library never touches it; the debug build of the library reads it at the start of an input transfer and tests bit 5, pulsing bit 7 of the VIF control (register number 0x1800) high then low when it is set, and reads it again 27 ms later. That bit 5 is a sticky input-error flag cleared by that pulse is inferred.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 5 | `err_flag` | inferred |  | shipped diagnostic tables |  |
 
 ### Register `vif_dmux`
 
@@ -671,7 +676,7 @@ Array of 12 registers, stride 8.
 
 ### Register `clink_uart_reset`
 
-CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when a path opens. Name from the diagnostic, accesses from the library.
+CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 then 0 at init and when an input path opens while the output pipe is idle. Name from the diagnostic, accesses from the library.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -679,7 +684,7 @@ CLINK UART reset (register number 0x38e0, UART_RESET_SEL): the library writes 1 
 
 ### Register `clink_tx_doorbell`
 
-CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag.
+CLINK transmit doorbell (register number 0x38e8): the send ioctl stores 1 after filling the transmit message and arms a 250-tick timeout; the board answers with the transmit-done status flag. The lock, the outstanding-ack halfword and the wait variable are board-wide (one send at a time for both pipes), so the flag may come on either pipe's ring.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -951,7 +956,7 @@ First four bytes of the 24-byte VBOB control message frame, in wire order from t
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 31:24 | `count` | established |  | shipped kernel driver and media library readings | count of bytes that follow (last used index) |
-| 23:16 | `pipe` | established | vbob_pipe (output=0, input=1) | shipped kernel driver and media library readings | equals the ioctl pipe word in every caller; that it selects a cable is inferred |
+| 23:16 | `pipe` | established | vbob_pipe (output=0, input=1) | shipped kernel driver and media library readings | equals the ioctl pipe word in every caller (a get passes it as the pipe word); the driver rejects a value above 1; that it selects a cable is inferred |
 | 15 | `write` | established |  | shipped kernel driver and media library readings | set for a write message |
 | 14:8 | `reg_id` | established |  | shipped kernel driver and media library readings |  |
 | 7:0 | `data0` | inferred |  | shipped kernel driver and media library readings |  |
