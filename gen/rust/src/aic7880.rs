@@ -187,6 +187,21 @@ pub mod scsidatl {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x6;
 }
+/// Write-only SCSI interrupt clears. Only CLRATNO, bit 6, is listed here; the bit positions of the other clears (CLRREQINIT, CLRPHASECHG, CLRBUSFREE) are (inferred)
+pub mod clrsint1 {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0xc;
+    pub mod clratno { // bits 6:6, inferred
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// SCSI interrupt mask 0. Setting a bit enables the matching SSTAT0 status to assert the SCSI interrupt. Only the bit this unit uses is listed here. (inferred)
 pub mod simode0 {
     pub const WIDTH: u32 = 8;
@@ -439,10 +454,20 @@ pub mod dfcntrl {
         }
     }
 }
-/// Data FIFO status. Reports FIFOEMP, FIFOFULL, FIFOQWDEMP, MREQPEND and HDONE. The bit positions are not in the cited extract, so no field is listed her (inferred)
+/// Data FIFO status. Reports FIFOEMP, FIFOFULL, FIFOQWDEMP, MREQPEND and HDONE. Only DFTHRSH, bit 2, has a listed position here; the other bit positions  (inferred)
 pub mod dfstatus {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x94;
+    pub mod dfthrsh { // bits 2:2, inferred
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// SCB byte counter. Bits 6:5 read zero. With SCBAUTO clear the window offset selects the byte and the counter is not used. With SCBAUTO set the counter  (inferred)
 pub mod scbcnt {

@@ -85,6 +85,15 @@
 #define AIC7880_SCSIDATL_OFFSET                      0x6u /* inferred */
 
 /*
+ * Write-only SCSI interrupt clears. Only CLRATNO, bit 6, is listed here; the bit positions of the other clears (CLRREQINIT, CLRPHASECHG, CLRBUSFREE) are not in the cited extract. Writing one to CLRATNO clears the initiator ATN output set through SCSISIGO. Read-back is not stated.
+ */
+/* clrsint1: w8, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 78 and 86; sibling; Linux aic7xxx.reg (db2ddb87143519e20a95aa36c60b36107b736a58) */
+#define AIC7880_CLRSINT1_OFFSET                      0xcu /* inferred */
+#define AIC7880_CLRSINT1_CLRATNO_SHIFT               6 /* inferred */
+#define AIC7880_CLRSINT1_CLRATNO_MASK                0x1u
+#define AIC7880_CLRSINT1_CLRATNO_INPLACE             (AIC7880_CLRSINT1_CLRATNO_MASK << AIC7880_CLRSINT1_CLRATNO_SHIFT)
+
+/*
  * SCSI interrupt mask 0. Setting a bit enables the matching SSTAT0 status to assert the SCSI interrupt. Only the bit this unit uses is listed here.
  */
 /* simode0: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF p. 91 (printed 4-22); sibling */
@@ -225,10 +234,13 @@
 #define AIC7880_DFCNTRL_FIFORESET_INPLACE            (AIC7880_DFCNTRL_FIFORESET_MASK << AIC7880_DFCNTRL_FIFORESET_SHIFT)
 
 /*
- * Data FIFO status. Reports FIFOEMP, FIFOFULL, FIFOQWDEMP, MREQPEND and HDONE. The bit positions are not in the cited extract, so no field is listed here and they stay unknown. MREQPEND is a pending need, not a PCI request in flight.
+ * Data FIFO status. Reports FIFOEMP, FIFOFULL, FIFOQWDEMP, MREQPEND and HDONE. Only DFTHRSH, bit 2, has a listed position here; the other bit positions are not in the cited extract and stay unknown. MREQPEND is a pending need, not a PCI request in flight.
  */
 /* dfstatus: r8, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 145-148 (printed 4-76 to 4-79); sibling */
 #define AIC7880_DFSTATUS_OFFSET                      0x94u /* inferred */
+#define AIC7880_DFSTATUS_DFTHRSH_SHIFT               2 /* inferred */
+#define AIC7880_DFSTATUS_DFTHRSH_MASK                0x1u
+#define AIC7880_DFSTATUS_DFTHRSH_INPLACE             (AIC7880_DFSTATUS_DFTHRSH_MASK << AIC7880_DFSTATUS_DFTHRSH_SHIFT)
 
 /*
  * SCB byte counter. Bits 6:5 read zero. With SCBAUTO clear the window offset selects the byte and the counter is not used. With SCBAUTO set the counter replaces the window offset, advances once per completed logical SCB byte access and wraps within the 32-byte page. Reset is zero as the cited book's reset description gives it.
