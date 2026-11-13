@@ -9,7 +9,7 @@ processor and router brick is in [the Cx-brick notes](cxbrick.md).
 Each fact carries one label. **Established** means a published manual states it, with the
 citation. **Inferred** means reasoned from established facts. **Unknown** means not settled, with
 the route that would settle it. The manual citations below were carried from a review of the
-published manuals; they were not re-read against the page images while writing this page.
+published manuals; each was re-read against the retained text of the manual in a later verification pass.
 
 ## Processor clock options
 

@@ -3,8 +3,8 @@
 The power bay is the rack unit that holds the supplies for the Origin 3000 and Onyx 3000 bricks.
 Its controller is the L1 of the rack's brick, reached over the ICMB link. This page records what
 the published SGI manuals say about the bay, what the retained IRIX 6.5.30 firmware set holds for
-it, and what is unknown. It holds no register contract. Its citations were carried from a review
-of the published manuals; they were not re-read against the page images while writing this page.
+it, and what is unknown. It holds no register contract. Its manual citations were re-read against
+the retained text of each manual in a later verification pass.
 
 Each fact carries one label. **Established** means a published manual, or a shipped binary read
 directly, states it, with the citation. **Inferred** means reasoned from established facts.
@@ -12,12 +12,16 @@ directly, states it, with the citation. **Inferred** means reasoned from establi
 
 ## Physical unit and supplies
 
-**Established as printed** (`007-4364-003` p. 5). The power bay is a 3 U unit with two to six power
-supplies.
+**Established as printed** (`007-4240-002` pp. 12, 202, 207). The power bay is a 3 U unit. A bay
+holds up to six 950 W supplies (p. 202), and at least two must be present (p. 207). The owner's
+guide also says each bay contains three or four supplies (p. 207), so the count in a given rack
+follows the bricks it feeds.
 
-**Established as printed** (`007-4364-003` p. 5; `007-4364-006` pp. 8, 13). The bay is managed
-through an L1 with `pbay` commands. The listed commands cover status, supplies, DC ports, FRUs,
-reset, environment and `serial`. The bay has firmware and an ICMB card.
+**Established as printed** (`007-3938-005` pp. 99 to 101; `007-4364-003` p. 5; `007-4364-006` pp. 8,
+13). The bay is managed through an L1 with `pbay` commands. The L1 command guide lists status,
+firmware version, supplies, DC ports, FRUs, reset, environment, init and `serial`. The update
+guides add `pbay env` and `pbay init` (003 p. 5), `pbay serial` (006 p. 8) and issuing `pbay` through
+the L2 (006 p. 13). The bay has firmware and an ICMB card.
 
 **Established as printed** (`007-4364-007` p. 7). A later L1 guide extends the `pbay` commands to
 PE-bricks.
@@ -38,10 +42,14 @@ captured exchange on that port, or a photograph of the L2 rear panel with its ca
 
 ## Retained firmware image
 
-**Established** (retained IRIX 6.5.30 firmware set, read directly). The set holds a power-bay
-controller image of 5,888 bytes beside the L1 and L2 images. The L1 has a command that sends
-power-bay commands, and a task that flashes that image. The image is not in this repository, so
-a reader cannot re-check the size here.
+**Established** (`007-3938-005` pp. 99 to 101). The L1 has a command that sends power-bay
+commands.
+
+**Unknown** (regraded in the verification pass). An earlier version said the retained IRIX 6.5.30
+firmware set holds a power-bay controller image of 5,888 bytes beside the L1 and L2 images, and
+that the L1 has a task that flashes it. The image is not in this repository, and the set that
+this pass could read (`root/`) has no power-bay image, so neither the size nor the flash task could
+be re-checked. Route: re-read the full firmware set the claim came from.
 
 **Inferred, not independently checked.** The image is MCS-51-family code. The basis is the
 register-save sequence at its interrupt entry points, which lies after a text header. No second
