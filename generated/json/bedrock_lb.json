@@ -15,7 +15,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -24,7 +24,7 @@
    "hi": 47,
    "lo": 46,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -32,7 +32,7 @@
    "name": "rev_id.region_size.fine",
    "value": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -40,7 +40,7 @@
    "name": "rev_id.region_size.coarse",
    "value": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -48,7 +48,7 @@
    "name": "rev_id.region_size.nmode",
    "value": 2,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -56,7 +56,7 @@
    "name": "rev_id.region_size.invalid",
    "value": 3,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -65,7 +65,7 @@
    "hi": 39,
    "lo": 32,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -74,7 +74,7 @@
    "hi": 31,
    "lo": 28,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -83,7 +83,7 @@
    "hi": 27,
    "lo": 12,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -92,7 +92,7 @@
    "hi": 11,
    "lo": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -106,7 +106,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -115,7 +115,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -129,7 +129,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -143,7 +143,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -152,7 +152,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -166,7 +166,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -175,7 +175,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -189,7 +189,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -198,7 +198,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -212,7 +212,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -221,7 +221,7 @@
    "hi": 63,
    "lo": 63,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -230,7 +230,7 @@
    "hi": 55,
    "lo": 48,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -239,7 +239,7 @@
    "hi": 47,
    "lo": 47,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -248,7 +248,7 @@
    "hi": 39,
    "lo": 32,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -257,7 +257,7 @@
    "hi": 31,
    "lo": 31,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -266,7 +266,7 @@
    "hi": 23,
    "lo": 16,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -275,7 +275,7 @@
    "hi": 15,
    "lo": 15,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -284,7 +284,7 @@
    "hi": 7,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -298,7 +298,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -307,7 +307,7 @@
    "hi": 33,
    "lo": 27,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -316,7 +316,7 @@
    "hi": 26,
    "lo": 20,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -325,7 +325,7 @@
    "hi": 19,
    "lo": 10,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -334,7 +334,7 @@
    "hi": 9,
    "lo": 2,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -343,7 +343,7 @@
    "hi": 1,
    "lo": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -352,7 +352,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -366,7 +366,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -375,7 +375,7 @@
    "hi": 10,
    "lo": 10,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -384,7 +384,7 @@
    "hi": 9,
    "lo": 9,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -393,7 +393,7 @@
    "hi": 8,
    "lo": 8,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -402,7 +402,7 @@
    "hi": 7,
    "lo": 7,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -411,7 +411,7 @@
    "hi": 6,
    "lo": 6,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -420,7 +420,7 @@
    "hi": 5,
    "lo": 5,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -429,7 +429,7 @@
    "hi": 4,
    "lo": 4,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -438,7 +438,7 @@
    "hi": 3,
    "lo": 3,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -447,7 +447,7 @@
    "hi": 2,
    "lo": 2,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -456,7 +456,7 @@
    "hi": 1,
    "lo": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -465,7 +465,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -479,7 +479,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -488,7 +488,7 @@
    "hi": 10,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -502,7 +502,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -511,7 +511,7 @@
    "hi": 44,
    "lo": 44,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -520,7 +520,7 @@
    "hi": 40,
    "lo": 40,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -529,7 +529,7 @@
    "hi": 35,
    "lo": 32,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -538,7 +538,7 @@
    "hi": 30,
    "lo": 20,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -547,7 +547,7 @@
    "hi": 18,
    "lo": 8,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -556,7 +556,7 @@
    "hi": 6,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -570,7 +570,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -579,7 +579,7 @@
    "hi": 37,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -593,7 +593,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -602,7 +602,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -616,7 +616,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -625,7 +625,7 @@
    "hi": 5,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -639,7 +639,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -648,7 +648,7 @@
    "hi": 31,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -662,7 +662,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -671,7 +671,7 @@
    "hi": 32,
    "lo": 32,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -680,7 +680,7 @@
    "hi": 28,
    "lo": 28,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -689,7 +689,7 @@
    "hi": 25,
    "lo": 16,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -698,7 +698,7 @@
    "hi": 13,
    "lo": 4,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -707,7 +707,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -721,7 +721,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -730,7 +730,7 @@
    "hi": 57,
    "lo": 48,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -739,7 +739,7 @@
    "hi": 45,
    "lo": 36,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -748,7 +748,7 @@
    "hi": 33,
    "lo": 24,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -757,7 +757,7 @@
    "hi": 20,
    "lo": 20,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -766,7 +766,7 @@
    "hi": 19,
    "lo": 8,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -775,7 +775,7 @@
    "hi": 4,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -789,7 +789,7 @@
    "space": null,
    "reset": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -798,7 +798,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -812,7 +812,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -821,7 +821,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -835,7 +835,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -844,7 +844,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -858,7 +858,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -867,7 +867,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -881,7 +881,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -890,7 +890,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -904,7 +904,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -913,7 +913,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -927,7 +927,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -936,7 +936,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -950,7 +950,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -959,7 +959,7 @@
    "hi": 63,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -973,7 +973,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -982,7 +982,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -996,7 +996,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1005,7 +1005,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1019,7 +1019,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1028,7 +1028,7 @@
    "hi": 63,
    "lo": 63,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1037,7 +1037,7 @@
    "hi": 50,
    "lo": 40,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1046,7 +1046,7 @@
    "hi": 39,
    "lo": 32,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1055,7 +1055,7 @@
    "hi": 23,
    "lo": 3,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1064,7 +1064,7 @@
    "hi": 1,
    "lo": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1072,7 +1072,7 @@
    "name": "vector_parms.type.read",
    "value": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1080,7 +1080,7 @@
    "name": "vector_parms.type.write",
    "value": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1088,7 +1088,7 @@
    "name": "vector_parms.type.undefined",
    "value": 2,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1096,7 +1096,7 @@
    "name": "vector_parms.type.exchange",
    "value": 3,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1110,7 +1110,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1124,7 +1124,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1138,7 +1138,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1147,7 +1147,7 @@
    "hi": 63,
    "lo": 63,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1156,7 +1156,7 @@
    "hi": 62,
    "lo": 62,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1165,7 +1165,7 @@
    "hi": 61,
    "lo": 51,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1174,7 +1174,7 @@
    "hi": 50,
    "lo": 40,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1183,7 +1183,7 @@
    "hi": 39,
    "lo": 32,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1192,7 +1192,7 @@
    "hi": 23,
    "lo": 3,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1201,7 +1201,7 @@
    "hi": 2,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1209,7 +1209,7 @@
    "name": "vector_status.type_or_error.read",
    "value": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1217,7 +1217,7 @@
    "name": "vector_status.type_or_error.write",
    "value": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1225,7 +1225,7 @@
    "name": "vector_status.type_or_error.undefined",
    "value": 2,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1233,7 +1233,7 @@
    "name": "vector_status.type_or_error.exchange",
    "value": 3,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1241,7 +1241,7 @@
    "name": "vector_status.type_or_error.address_error",
    "value": 4,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1249,7 +1249,7 @@
    "name": "vector_status.type_or_error.command_error",
    "value": 5,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1257,7 +1257,7 @@
    "name": "vector_status.type_or_error.protection_error",
    "value": 6,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1265,7 +1265,7 @@
    "name": "vector_status.type_or_error.unknown_error",
    "value": 7,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1279,7 +1279,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1293,7 +1293,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1307,7 +1307,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1316,7 +1316,7 @@
    "hi": 63,
    "lo": 63,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1325,7 +1325,7 @@
    "hi": 62,
    "lo": 62,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1334,7 +1334,7 @@
    "hi": 61,
    "lo": 51,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1343,7 +1343,7 @@
    "hi": 50,
    "lo": 40,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1352,7 +1352,7 @@
    "hi": 39,
    "lo": 32,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1361,7 +1361,7 @@
    "hi": 23,
    "lo": 3,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1370,7 +1370,7 @@
    "hi": 2,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1378,7 +1378,7 @@
    "name": "vector_status_clear.type_or_error.read",
    "value": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1386,7 +1386,7 @@
    "name": "vector_status_clear.type_or_error.write",
    "value": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1394,7 +1394,7 @@
    "name": "vector_status_clear.type_or_error.undefined",
    "value": 2,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1402,7 +1402,7 @@
    "name": "vector_status_clear.type_or_error.exchange",
    "value": 3,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1410,7 +1410,7 @@
    "name": "vector_status_clear.type_or_error.address_error",
    "value": 4,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1418,7 +1418,7 @@
    "name": "vector_status_clear.type_or_error.command_error",
    "value": 5,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1426,7 +1426,7 @@
    "name": "vector_status_clear.type_or_error.protection_error",
    "value": 6,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1434,7 +1434,7 @@
    "name": "vector_status_clear.type_or_error.unknown_error",
    "value": 7,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1443,7 +1443,7 @@
    "value": 12306,
    "count": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1452,7 +1452,7 @@
    "value": 55,
    "count": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1461,7 +1461,7 @@
    "value": 1,
    "count": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1470,7 +1470,7 @@
    "value": 2,
    "count": 1,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
   {
    "unit": "bedrock_lb",
@@ -1479,7 +1479,7 @@
    "value": 1250,
    "count": 1,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 local-block register headers; public Linux ia64 L1 driver for the lock use"
+   "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   }
  ]
 }

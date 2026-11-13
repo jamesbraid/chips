@@ -79,7 +79,7 @@ what the sources state, not about silicon.
   to 2 have these aliases.
 - Scratch 3 and 4 have read-set-if-zero aliases. A read returns the old value and sets the bit when it was zero, so one
   read is a test-and-set.
-- The public Linux ia64 L1 driver takes its hub-wide lock with the scratch 3 read-set-if-zero alias and releases it by
+- The public Linux 2.5.40 ia64 L1 driver (arch/ia64/sn/io/l1.c, lines 214-215) takes its hub-wide lock with the scratch 3 read-set-if-zero alias and releases it by
   writing zero to scratch 3. In the public Linux ia64 and SN1 header trees, no other reader of the scratch registers
   was found.
 
