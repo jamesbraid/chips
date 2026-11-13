@@ -24,10 +24,10 @@
   <constant name="ATA_DMA_LIST_LOW" value="0x144" grade="inferred"/>
   <constant name="ATA_DMA_TIMING" value="0x140" grade="inferred"/>
   <constant name="KM_CSR_AUX_CLOCK_LINE" value="0x200" grade="established"/>
-  <constant name="KM_CSR_AUX_DATA_LINE" value="0x20" grade="established"/>
+  <constant name="KM_CSR_AUX_DATA_LINE" value="0x100" grade="established"/>
   <constant name="KM_CSR_AUX_WRITE_PENDING" value="0x2" grade="established"/>
   <constant name="KM_CSR_IDLE_B_15_14" value="0xc000" grade="inferred"/>
-  <constant name="KM_CSR_KBD_CLOCK_LINE" value="0x100" grade="established"/>
+  <constant name="KM_CSR_KBD_CLOCK_LINE" value="0x20" grade="established"/>
   <constant name="KM_CSR_KBD_DATA_LINE" value="0x10" grade="established"/>
   <constant name="KM_CSR_KBD_WRITE_PENDING" value="0x1" grade="established"/>
   <constant name="KM_CSR_LAST_WRITE_LINE_B_3_2" value="0xc" grade="inferred"/>

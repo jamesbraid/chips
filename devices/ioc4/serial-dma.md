@@ -8,9 +8,12 @@ are in `devices/ioc4/registers-extra.toml`.
 
 Grades are established, inferred and unknown. The public driver is a driver
 author's naming of the registers, not a measurement, so its field layouts are
-inferred. Sources are the Linux IOC4 header `include/linux/ioc4.h` and the serial
-driver `drivers/tty/serial/ioc4_serial.c` at commit
-`c9bace5bce3ea330dec7696e4bf54b2f48b5cba8`.
+inferred. The source is the Linux serial driver `drivers/tty/serial/ioc4_serial.c`
+at the `references/code/linux-5.3` pin (`4d856f72c10e`), which holds all the masks
+below (the driver was removed from later Linux trees, so the newest pin has no
+copy). The commit named in earlier versions, `c9bace5bce3e`, is not a submodule
+here and was not checked. The IOC3 comparison below reads `include/asm/sn/ioc3.h` in
+the same pin.
 
 ## Ring pointers
 
@@ -42,15 +45,25 @@ gives these fields. All are inferred.
 
 | Bits | Meaning |
 |---|---|
-| 7:0 | receive data and line-status flags |
+| 0 | data ready |
+| 1 | overrun error |
+| 2 | parity error |
+| 3 | framing error |
+| 4 | break |
+| 5 | transmit holding register empty |
+| 6 | transmit shift register empty |
+| 7 | error character in the receive FIFO |
 | 16 | clear-to-send changed (DCTS) |
 | 19 | carrier-detect changed (DDCD) |
 | 20 | clear-to-send level (CTS) |
 | 23 | carrier-detect level (DCD) |
-| 28:24 | modem outputs and loopback: DTR, RTS, OUT1, OUT2 and loopback |
+| 24 | DTR |
+| 25 | RTS |
+| 26 | OUT1 |
+| 27 | OUT2 |
+| 28 | loopback |
 
-The driver names the five output bits as one field and does not say which bit is
-which. Treat their positions as unknown.
+The driver gives each position (`ioc4_serial.c` lines 219-235).
 
 ## Modem-valid receive slots
 

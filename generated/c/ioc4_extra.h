@@ -33,10 +33,10 @@
 #define IOC4_ATA_DMA_LIST_LOW                        0x144u /* inferred */
 #define IOC4_ATA_DMA_TIMING                          0x140u /* inferred */
 #define IOC4_KM_CSR_AUX_CLOCK_LINE                   0x200u /* established */
-#define IOC4_KM_CSR_AUX_DATA_LINE                    0x20u /* established */
+#define IOC4_KM_CSR_AUX_DATA_LINE                    0x100u /* established */
 #define IOC4_KM_CSR_AUX_WRITE_PENDING                0x2u /* established */
 #define IOC4_KM_CSR_IDLE_B_15_14                     0xc000u /* inferred */
-#define IOC4_KM_CSR_KBD_CLOCK_LINE                   0x100u /* established */
+#define IOC4_KM_CSR_KBD_CLOCK_LINE                   0x20u /* established */
 #define IOC4_KM_CSR_KBD_DATA_LINE                    0x10u /* established */
 #define IOC4_KM_CSR_KBD_WRITE_PENDING                0x1u /* established */
 #define IOC4_KM_CSR_LAST_WRITE_LINE_B_3_2            0xcu /* inferred */

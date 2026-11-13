@@ -41,12 +41,12 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `ATA_DMA_LIST_HIGH` | 0x148 | inferred |  | index 2; written by the packet-DMA start routine |
 | `ATA_DMA_LIST_LOW` | 0x144 | inferred |  | index 1; written by the packet-DMA start routine |
 | `ATA_DMA_TIMING` | 0x140 | inferred |  | width 4 byte(s); index 0; name from the public driver only |
-| `KM_CSR_AUX_CLOCK_LINE` | 0x200 | established |  | Bit 9: auxiliary clock line state. See KM_CSR_KBD_DATA_LINE for the bit-order caveat. |
-| `KM_CSR_AUX_DATA_LINE` | 0x20 | established |  | Bit 5: auxiliary data line state. See KM_CSR_KBD_DATA_LINE for the bit-order caveat. |
+| `KM_CSR_AUX_CLOCK_LINE` | 0x200 | established |  | Bit 9: auxiliary (mouse) clock line state (OpenBSD IOC3_KBC_STATUS_AUX_CLOCK, Linux KM_CSR_M_CLK). |
+| `KM_CSR_AUX_DATA_LINE` | 0x100 | established |  | Bit 8: auxiliary (mouse) data line state (OpenBSD IOC3_KBC_STATUS_AUX_DATA, Linux KM_CSR_M_DATA). An earlier version placed this at bit 5; both public headers put bit 5 on the keyboard clock line. |
 | `KM_CSR_AUX_WRITE_PENDING` | 0x2 | established |  | Bit 1: auxiliary (mouse) transmit pending. Same rule as bit 0. |
 | `KM_CSR_IDLE_B_15_14` | 0xc000 | inferred |  | Bits 15:14: state-machine idle flags, by name only. No driver relies on them. |
-| `KM_CSR_KBD_CLOCK_LINE` | 0x100 | established |  | Bit 8: keyboard clock line state. See KM_CSR_KBD_DATA_LINE for the bit-order caveat. |
-| `KM_CSR_KBD_DATA_LINE` | 0x10 | established |  | Bit 4: keyboard data line state. The public driver names it as a status bit. The bit order of the four line-state bits follows the order of the driver's names, not a second source. |
+| `KM_CSR_KBD_CLOCK_LINE` | 0x20 | established |  | Bit 5: keyboard clock line state (OpenBSD IOC3_KBC_STATUS_KBD_CLOCK, Linux KM_CSR_K_CLK). An earlier version placed this at bit 8; both public headers put bit 8 on the auxiliary data line. |
+| `KM_CSR_KBD_DATA_LINE` | 0x10 | established |  | Bit 4: keyboard data line state. Both public drivers name it as a status bit (OpenBSD IOC3_KBC_STATUS_KBD_DATA, Linux KM_CSR_K_DATA). |
 | `KM_CSR_KBD_WRITE_PENDING` | 0x1 | established |  | Bit 0 of the keyboard and mouse control word: keyboard transmit pending. A written byte stays pending until the transmit completes. |
 | `KM_CSR_LAST_WRITE_LINE_B_3_2` | 0xc | inferred |  | Bits 3:2: line control of the last write, by name only. Whether the chip sets or clears them is unknown. |
 | `OTHER_IR_KBM` | 0x40 | established |  | Bit 6 of the other-interrupt word: the keyboard and mouse interrupt source. The driver masks and acknowledges it through the same word. IOC3 raises its keyboard and mouse interrupt from a different parent source (bit 22), so IOC3 parent wiring does not carry over. |
@@ -57,8 +57,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `SERIAL_SHADOW_DCD_V_800000` | 0x800000 | inferred |  | Carrier-detect line level, bit 23 of the port shadow register. |
 | `SERIAL_SHADOW_DCTS_V_10000` | 0x10000 | inferred |  | Clear-to-send changed, bit 16 of the port shadow register. |
 | `SERIAL_SHADOW_DDCD_V_80000` | 0x80000 | inferred |  | Carrier-detect changed, bit 19 of the port shadow register. |
-| `SERIAL_SHADOW_OUTPUTS_B_28_24` | 0x1f000000 | inferred |  | Modem outputs and loopback, bits 28:24 of the port shadow register. The public driver names DTR, RTS, OUT1, OUT2 and loopback in this field and does not give the position of each one. |
-| `SERIAL_SHADOW_RX_FLAGS_B_7_0` | 0xff | inferred |  | Low byte of the port shadow register: receive data and line-status flags. |
+| `SERIAL_SHADOW_OUTPUTS_B_28_24` | 0x1f000000 | inferred |  | Modem outputs and loopback, bits 28:24 of the port shadow register. The public driver gives each position: bit 24 DTR, bit 25 RTS, bit 26 OUT1, bit 27 OUT2, bit 28 loopback. |
+| `SERIAL_SHADOW_RX_FLAGS_B_7_0` | 0xff | inferred |  | Low byte of the port shadow register: bit 0 data ready, 1 overrun, 2 parity error, 3 framing error, 4 break, 5 transmit holding register empty, 6 transmit shift register empty, 7 error character in the receive FIFO. |
 | `SERIAL_SRCIR_TIMER_ARM_V_80000000` | 0x80000000 | inferred |  | Bit 31 of the RX consumer write. The public driver calls it the timer-arm bit. Whether the readback reflects it is not established. |
 | `SIO_CR_CMD_PULSE` | 0xf | established |  | value stored at attach; that bits 3:0 are a strobe field is [I] |
 | `SIO_CR_SIO_DIAG_IDLE` | 0x80 | established |  | bit 7, polled until set; name [I] |

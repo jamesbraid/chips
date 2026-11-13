@@ -95,10 +95,12 @@ public driver as timing and the current memory address, which no IOC4 path reach
 - `ioc4_pending_intrs` (`0x14c`) reads `0x8`, `0xc`, `0x10` and `0x14`; read for its accesses only.
 - Serial pass-through bits (inferred, OpenBSD): the OpenBSD driver enables only four bits in the serial interrupt word, one per port,
   for the port's own 16550 interrupt: `0x40` (port 0), `0x4000` (port 1), `0x400000` (port 2) and `0x40000000` (port 3). The
-  `SIO_IR_SRC_UART_n` constants in `devices/ioc4/registers-extra.toml` name them. The OpenBSD driver is the only source. That it writes them through
-  the serial enable pair (`0x10` set, `0x18` clear) is inferred, not read from the driver.
-- Keyboard and mouse interrupt (established by the public driver's acknowledge sequence): bit 6 (`0x40`) of the other-interrupt word is
-  the keyboard and mouse source. The driver masks and acknowledges it through that word. IOC3 raises the same interrupt from a different
+  `SIO_IR_SRC_UART_n` constants in `devices/ioc4/registers-extra.toml` name them. The OpenBSD driver is the only source
+  (`sys/arch/sgi/pci/iofreg.h` lines 51-54, `iof.c` lines 220-300). It enables them through the serial enable-set word at `0x10`
+  (`IOC4_SIO_IES`), disables them through the enable-clear word at `0x18` (`IOC4_SIO_IEC`) and acknowledges through `0x8` (`IOC4_SIO_IR`),
+  as the driver's code reads.
+- Keyboard and mouse interrupt (established by the OpenBSD driver, `iofreg.h` line 58 and `iof.c` lines 220-300): bit 6 (`0x40`) of the
+  other-interrupt word is the keyboard and mouse source. The driver masks and acknowledges it through that word. IOC3 raises the same interrupt from a different
   parent source (bit 22), so the IOC3 parent wiring does not carry over. Constant `OTHER_IR_KBM`.
 - `ioc4_dma_error_intr` (`sio_ioc4.o` `0x734`, read in full) writes the port's mask word to `0xc` first, reads `0x0`, and if bit 0 is set
   prints the port and address (bits 31:6 of the low word with the high word as bits 63:32; the port character is `'1'` plus twice
@@ -236,10 +238,12 @@ adds. Same structure and constants as IOC3's `0x9c` to `0xac`, at `0x200` to `0x
 Control word bits named by the public driver (public-driver naming, not measured; the constants are in `devices/ioc4/registers-extra.toml`):
 
 - Bits 0 and 1 are keyboard and auxiliary transmit pending (established). The driver waits for each to clear before the next write.
-- Bits 4 and 5 are keyboard and auxiliary data line state, and bits 8 and 9 are keyboard and auxiliary clock line state (established as
-  names; the bit order follows the order of the names, not a second source).
-- Bits 3:2 (line control of the last write) and 15:14 (state-machine idle) are names only. No public driver writes or reads them
-  (inferred).
+- Bit 4 is keyboard data line state, bit 5 keyboard clock line state, bit 8 auxiliary data line state and bit 9 auxiliary clock line state
+  (established as names by two public headers: OpenBSD `sys/arch/sgi/dev/iockbcreg.h` lines 24-31, shared by IOC3 and IOC4, and Linux
+  `arch/mips/include/asm/sn/ioc3.h` lines 274-287, IOC3). An earlier version of this page and of the defs had the auxiliary data and keyboard
+  clock bits swapped.
+- Bits 3:2 (line control of the last write) and 15:14 (state-machine idle) are names only, in the Linux IOC3 header (`ioc3.h` lines 277-278
+  and 289-290). No public driver writes or reads them (inferred).
 - Whether any of these bits is read-only on the chip is unknown. Nothing public shows a write to them has no effect.
 
 ### Connectors (established from the product guides; which device is attached is unknown)
@@ -248,7 +252,8 @@ Control word bits named by the public driver (public-driver naming, not measured
 - Tezro: the I/O daughtercard, "an extension of the IO9 board", provides two PS/2 ports for keyboard and mouse (Tezro guide 007-4564-001,
   page 32).
 - Onyx 350: the standard system components list a four-connector USB keyboard and mouse PCI card (007-4632-001, pages 8 and 29). USB
-  is the default keyboard connection there; PS/2 is listed for existing infrastructure. That card is not an IOC4.
+  is the default keyboard connection there; PS/2 is listed for existing infrastructure. That card is not an IOC4. The same guide
+  (page 29) says the base modules also come with two PS/2 ports, so the PS/2 pair exists there as well.
 - None of these guides maps connector order to the keyboard and auxiliary controller ports, and none measures the wiring. Which
   controller port drives which connector is unknown.
 
@@ -363,5 +368,5 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 - **`ioc4_error_handler` and `ioc4_intr`/`ioc4_intrd`** are read for their accesses only.
 - **Interrupt dispatch**: which `sio_ir` and `other_ir` bits each handler claims is not read.
 - **Keyboard and mouse control bits 2, 3, 14 and 15**: names only (see Keyboard and mouse). Their behaviour is not settled by any source here.
-- **Serial pass-through bits**: the register that holds them is inferred, not read from the driver. A published register description
-  or a driver that writes them would settle it.
+- **Serial pass-through bits**: the OpenBSD driver names the register word as the serial enable pair. That the chip treats them as UART
+  passthrough interrupts is the driver's comment only. A published register description would settle it.

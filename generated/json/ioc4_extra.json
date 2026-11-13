@@ -179,7 +179,7 @@
    "unit": "ioc4_extra",
    "kind": "constant",
    "name": "KM_CSR_AUX_DATA_LINE",
-   "value": 32,
+   "value": 256,
    "count": 1,
    "grade": "established"
   },
@@ -203,7 +203,7 @@
    "unit": "ioc4_extra",
    "kind": "constant",
    "name": "KM_CSR_KBD_CLOCK_LINE",
-   "value": 256,
+   "value": 32,
    "count": 1,
    "grade": "established"
   },
