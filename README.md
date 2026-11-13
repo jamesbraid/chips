@@ -205,7 +205,7 @@ Published sources and specifications:
     retools/           submodule (sgi-retools): the shared tools in retools/tools/, the census tools in
                        retools/tools/chips/, the Ghidra scripts in retools/ghidra/
     ghidra/            this workspace's Ghidra processors, import and type scripts
-    m2c spimdisasm linux linux-ia64 linux-2.5.40 linux-2.4.37 linux-ip30 netbsd openbsd gxemul mame arcboot
+    references/code/   m2c spimdisasm linux linux-5.3 linux-2.5.40 linux-2.4.37 linux-ip30 netbsd openbsd gxemul mame arcboot:
                        public submodules, pinned and shallow (init only what you need; docs/sources/INDEX.md)
     root/              the filled IRIX tree and spec text; ignored, never committed
 

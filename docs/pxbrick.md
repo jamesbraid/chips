@@ -34,7 +34,7 @@ reading of software expectations, a sibling platform or a driver constant), **un
   and 2-31, Figure 2-24, for the predecessor's port labels.
 - **IX:** SGI, *IX-Brick Addendum*, `007-4604-001`, Figure 2 on p. 4, for the shared drawing.
 - **Linux:** public IA-64 SN headers and drivers in the Linux tree. The value checks below were
-  read at torvalds/linux commit `4d856f72c10e`, the commit chips pins as `linux-ia64`.
+  read at torvalds/linux commit `4d856f72c10e`, the commit chips pins as `linux-5.3`.
   Items marked as not re-read cite an older Linux revision that was not checked here.
 
 ## Enclosure

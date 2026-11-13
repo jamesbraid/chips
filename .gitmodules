@@ -1,50 +1,50 @@
-[submodule "m2c"]
-	path = m2c
+[submodule "references/code/m2c"]
+	path = references/code/m2c
 	url = https://github.com/techomancer/m2c.git
 	branch = irixn32
 	shallow = true
-[submodule "spimdisasm"]
-	path = spimdisasm
+[submodule "references/code/spimdisasm"]
+	path = references/code/spimdisasm
 	url = https://github.com/Decompollaborate/spimdisasm.git
 	shallow = true
-[submodule "linux"]
-	path = linux
+[submodule "references/code/linux"]
+	path = references/code/linux
 	url = https://github.com/torvalds/linux.git
 	shallow = true
-[submodule "linux-ia64"]
-	path = linux-ia64
+[submodule "references/code/linux-5.3"]
+	path = references/code/linux-5.3
 	url = https://github.com/torvalds/linux.git
 	shallow = true
-[submodule "linux-2.5.40"]
-	path = linux-2.5.40
+[submodule "references/code/linux-2.5.40"]
+	path = references/code/linux-2.5.40
 	url = https://git.kernel.org/pub/scm/linux/kernel/git/history/history.git
 	shallow = true
-[submodule "linux-2.4.37"]
-	path = linux-2.4.37
+[submodule "references/code/linux-2.4.37"]
+	path = references/code/linux-2.4.37
 	url = https://github.com/xtreamerdev/linux-mips.git
 	shallow = true
-[submodule "linux-ip30"]
-	path = linux-ip30
+[submodule "references/code/linux-ip30"]
+	path = references/code/linux-ip30
 	url = https://github.com/jaaron/linux-mips-ip30.git
 	shallow = true
-[submodule "netbsd"]
-	path = netbsd
+[submodule "references/code/netbsd"]
+	path = references/code/netbsd
 	url = https://github.com/NetBSD/src.git
 	shallow = true
-[submodule "openbsd"]
-	path = openbsd
+[submodule "references/code/openbsd"]
+	path = references/code/openbsd
 	url = https://github.com/openbsd/src.git
 	shallow = true
-[submodule "gxemul"]
-	path = gxemul
+[submodule "references/code/gxemul"]
+	path = references/code/gxemul
 	url = https://github.com/retroprom/gxemul.git
 	shallow = true
-[submodule "mame"]
-	path = mame
+[submodule "references/code/mame"]
+	path = references/code/mame
 	url = https://github.com/mamedev/mame.git
 	shallow = true
-[submodule "arcboot"]
-	path = arcboot
+[submodule "references/code/arcboot"]
+	path = references/code/arcboot
 	url = https://github.com/agx/arcboot.git
 	shallow = true
 [submodule "retools"]
