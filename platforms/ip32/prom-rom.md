@@ -12,7 +12,7 @@ Sources:
 - SGI, *MACE I/O ASIC Specification*, chip revision 2.0 (July 16, 1996), section 5.5 on printed page 133. Read from the
   [retained copy](../../references/documents/specs/mace-specification.pdf).
 - MIPS, *R10000 Microprocessor User's Manual*, version 2.0 (October 10, 1996), printed pages 323, 332 and 336. The
-  manual is not retained in this repository. These entries are transcribed and not yet checked against the PDF.
+  manual is not retained in this repository. The pages were checked against the manual's PDF (printed page = PDF page minus 30).
 - Atmel, *AT29C040A* datasheet, revision `0333I-FLASH-05/02`. Used for the photographed parts below. See
   [at29c040a.md](../../devices/at29c040a/README.md) for its status.
 

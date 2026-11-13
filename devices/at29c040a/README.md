@@ -1,6 +1,6 @@
 # AT29C040A: byte-load program cycle, polling and block locks
 
-Status: transcribed from the published Atmel datasheet. Not yet checked against the PDF. Chips holds no
+Status: transcribed from the published Atmel datasheet and checked against the PDF (SHA-256 `7ab4ab1a1f0ab72b9b868464a53df8dea64dbeadda2d56a676d6beef7e7c92a7`, the digikey-hosted copy). Every page citation below was checked. Chips holds no
 register contract for this part. Two published O2 board photographs show it at U203 (inferred; see
 [o2-prom-rom.md](../../platforms/ip32/prom-rom.md)). The base board note in [baseio.md](../baseio/README.md) records an AMD AM29LV800B
 on a different board instead.
@@ -48,8 +48,7 @@ would settle it.
 ## Software data protection (established, transcribed)
 
 - Enable: before a sector load, write `0xaa` to `0x5555`, `0x55` to `0x2aaa` and `0xa0` to `0x5555`, using
-  address bits A14 to A0. Once enabled, protection survives power transitions. The page of this prefix is not
-  recorded in this import. Page 3 says a protected write without the command sequence still polls and leaves
+  address bits A14 to A0. Once enabled, protection survives power transitions. The prefix is drawn on page 10. Page 3 says a protected write without the command sequence still polls and leaves
   the data unchanged.
 - Disable: write `0xaa` to `0x5555`, `0x55` to `0x2aaa`, `0x80` to `0x5555`, `0xaa` to `0x5555`, `0x55` to
   `0x2aaa` and `0x20` to `0x5555`, then a sector load (p. 10).
