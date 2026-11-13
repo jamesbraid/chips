@@ -39,7 +39,7 @@ The paper labels a 42-bit data field in its header figure. Its prose reserves 23
 
 ## Histogram selectors
 
-Each port has a histogram of four buckets. A port selector picks what the buckets count. Prestor's thesis gives these definitions (printed p. 81, PDF p. 82).
+Each port has a histogram of four buckets. A port selector picks what the buckets count. Prestor's thesis gives these definitions (printed p. 81, PDF p. 82, Table 5.4), in the order link utilisation, DAMQ, age, without selector numbers. The selector numbers come from the public Linux SN header `router.h` (linux-2.5.40, lines 352 to 354: `RPPARM_HISTSEL_AGE` 0, `_UTIL` 1, `_DAMQ` 2).
 
 | Selector | Bucket 0 | Bucket 1 | Bucket 2 | Bucket 3 |
 |---|---|---|---|---|
@@ -58,7 +58,7 @@ unknown.
 
 | Fact | Grade | Source |
 |---|---|---|
-| Part `030-0841-002` is the standard Router board for IP27 modules. | established | SGI parts catalogue HMM-408-B, p. 29 |
+| Part `030-0841-002` is a Router board ("PCA Origin 2000 Router 8P" in the catalogue); IP27 is the machine it is used with by inference from the catalogue's "for use with IP31" note on the next part. | established | SGI parts catalogue HMM-408-B, p. 29 |
 | Part `030-0841-003` is the later Router board specified for IP31 machines. | established | SGI parts catalogue HMM-408-B, p. 29 |
 | The board's one-wire record name is `ROUTER-IR1`. `hinv -m` prints the hyphen on `030-0841-002`. One capture shows revision G. | established | one `hinv -m` capture of an IP31 Origin 2000 with two `030-0841-002` Routers, comp.sys.sgi.hardware, 4 December 2001 |
 | On `030-0841-003` the record reads `ROUTER_IR1`, revisions B, C or D, group `0xff`, capability `0xffffffff`, variety `0xff`. | established | three public rack captures: Origin 2400 (posted 2007-11-08 and 2016-11-20) and Onyx2 (posted 2007-12-03) |
