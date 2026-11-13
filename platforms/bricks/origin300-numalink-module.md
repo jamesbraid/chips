@@ -16,12 +16,12 @@ from established facts. **Unknown** means not settled, with the route that would
   printed page where the citation carries them.
 - **Origin 300 PCI expansion guides `007-4499-001` and `007-4499-002`**, cited as
   `007-4499-00N p. N`. Both editions give the same port restriction.
-- **One public inventory of an Origin 300 rack**, and a later update to it. It reports software
+- **One public hinv listing posted to a forum thread**, from a rack of Origin 350 / Onyx 350 compute
+  modules (IP53 node boards) with a router at `/hw/module/001r06/router`. It reports software
   inventory fields, so it is used for identity only and is described here without the unit's
-  identifiers.
+  identifiers. It is not a listing of an Origin 300 system.
 
-No copy of these guides is held in this repository. The page numbers below are as the source
-material cites them, and they have not been rechecked against the printed guides.
+The guide page numbers below were rechecked against the published PDFs: the printed and PDF page numbers pair as stated, and each cited statement is on its page.
 
 ## Population
 
@@ -67,16 +67,19 @@ These are physical functions. They say nothing about register or packet encoding
 
 ## Router board identity
 
-**Established** (public inventory). The router board is part `030-1634-003`, board revision `-A`.
-The inventory's hardware graph lists it as the router under a rack module.
+**Established for an Origin 350 / Onyx 350 rack** (public hinv listing). The router board in that rack
+is part `030-1634-003`, board revision `-A`. The listing's hardware graph shows it as the router under
+a rack module. The same part number also appears in an Origin 3000-class hinv listing, so it names a
+router board used in more than one product. That the Origin 300's NUMAlink module carries this part
+is **inferred**: no Origin 300 listing is held.
 
 **Established** (`007-4498-002 p. 131`, figure A-9). The figure draws an enclosure with an
 R-Brick label. The label does not settle the board part, the chip part or the revision.
 
-**Conflict, unknown.** The same inventory reports the router's software revision as 1 with five
-active ports. A later update reports six active ports. The board revision, the software-reported
-router revision and the raw silicon revision are separate fields, and the inventory does not show
-how they correspond.
+**Conflict, unknown.** The Origin 350 / Onyx 350 listing reports the router's software revision as 1
+with active ports 1 to 6. A report of five active ports was not found in the held listing, so the
+five-port figure is left unverified. The board revision, the software-reported router revision and
+the raw silicon revision are separate fields, and the listing does not show how they correspond.
 
 The scan guide `108-0263-004` carries a confidential, internal-use legend. It is not used here.
 
@@ -84,7 +87,7 @@ The scan guide `108-0263-004` carries a confidential, internal-use legend. It is
 
 | Open item | Evidence that would settle it |
 |---|---|
-| The router chip's part and revision, and whether the software revision 1 and the five and six active port counts describe that chip | A public board specification, or a photograph of the board with readable chip markings |
+| The router chip's part and revision, and whether the software revision 1 and the six active ports describe that chip | A public board specification, or a photograph of the board with readable chip markings |
 | Whether the software revision maps to the silicon revision | A published capture tied to that board, with the router identity and revision registers identified separately |
 | Controller board parts and the L1's USB branch connection | An existing matching controller inventory or a published schematic |
 | USB protocol, the physical L1 personality, reset state and error behaviour | Not in the published guides, which give external controller and connector topology only |
