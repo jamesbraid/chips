@@ -33,7 +33,7 @@ macros, so the header does not show that the same layout applies to other nodes.
 | The memory directory unit supports a 16 MB flash PROM for boot code and for system configuration and error information. The text says "two 8 MB parts". | established | US 6,751,698 B1 (Bedrock), the memory-system description |
 | The flash is reached through the LBOOT and RBOOT spaces of the HSPEC space. | established | US 6,751,698 B1, the boot-prom access passage |
 | Before chip IDs are set up, the processor interface sends LBOOT accesses on node 0 to the local memory directory unit. After chip IDs exist, RBOOT can reach any node's PROM. | established | US 6,751,698 B1, the same passage |
-| Mapping: HSPEC address 0 corresponds to PROM address 0, and HSPEC address 8 to PROM address 1, an 8-byte stride in HSPEC. The patent does not call this compression and does not explain it. | established (patent text); the mechanism is unknown | US 6,751,698 B1, the address-mapping passage |
+| Reads: HSPEC address maps one to one to PROM address within the given space, and every read size (doubleword, word, half-word, byte) is supported. Writes: HSPEC address maps eight to one to PROM address, so HSPEC address 0 is PROM address 0 and HSPEC address 8 is PROM address 1, an 8-byte stride in HSPEC. The patent does not explain the write mapping. An earlier version of this row applied the 8-byte stride to all accesses; the patent gives it for writes only. | established (patent text); the mechanism is unknown | US 6,751,698 B1, the flash PROM passage under Memory System |
 | Whether ordinary reads keep their address inside the selected window (wrapping, masking, or bounds checks) is not described. | unknown | the patent gives no statement |
 
 The two 8 MB parts are the patent's own words. The public header's two PROM positions on 32 MB
@@ -55,7 +55,7 @@ boundaries agree with two selections; the patent does not say which part sits at
 - Whether ordinary reads wrap or mask an address that runs past the selected window.
 - The write width the flash accepts: byte writes (memory directory unit text) or 16-bit writes
   (junk-bus text).
-- What the 8-byte HSPEC stride means in hardware, beyond the patent's description.
+- What the 8-byte HSPEC stride for writes means in hardware, beyond the patent's description.
 - The command set the flash answers to, and the board's wiring from the flash to the memory
   directory unit.
 
@@ -70,5 +70,5 @@ in this repository.
   payload `554924380189a03a512156af2faa38344902f251b49fd5c80c253c23ecaff27b`, described in
   [ip35-prom-md-config.md](prom-md-config.md)). They are not stated here until that
   disassembly is done.
-- The store compression factor and the per-position command state. Neither appears in the
-  patent text read here.
+- The per-position command state. It does not appear in the patent text. The write stride is
+  eight HSPEC bytes per PROM byte (see the table above).
