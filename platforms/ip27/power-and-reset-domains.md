@@ -1,6 +1,6 @@
 # SN0 power domains and reset reach
 
-**Status:** draft. The power-domain facts below come from the published owner's and diagnostic guides listed under Sources. The reset-entry facts for the R10000 are taken from the processor manual's reset description and were not re-read in this pass. The register facts for the Hub are on their own pages and are only linked here.
+**Status:** draft. The power-domain facts below come from the published owner's and diagnostic guides listed under Sources. The reset-entry facts for the R10000 are taken from the processor manual's exception chapter, printed pages 336 to 339. The register facts for the Hub are on their own pages and are only linked here.
 
 This page covers which parts of an Origin 200 or Origin 2000 sit in which power domain, what each reset reaches, and what the processor sees afterwards. It is the cross-device view. Each register and command has its own page: the Hub pages, the [Router](../../devices/router_origin2000/README.md), the [Crossbow](../../devices/xbow/family.md), the [timekeeper](../../devices/ds1744/README.md) and the [L1 and ELSC census](../../devices/l1/README.md).
 
@@ -14,7 +14,7 @@ Grades: **established** is stated by a cited manual. **inferred** follows from e
 - Origin2000 Rackmount Owner's Guide, 007-3456-003, printed pages 82, 83 and 112 to 116 (cited as rack guide).
 - Origin2000 Deskside Owner's Guide, 007-3453-002, printed pages 64 to 68 (cited as deskside guide).
 - Origin2000 and Onyx2 Diagnostic Roadmap, 108-0164-002, Appendix A, PDF pages 45 and 46, and Appendix F.1.3, printed page F-5 (cited as Roadmap).
-- MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 337 to 339 (cited as R10000 manual). **Not re-read in this pass.** The Library search needed to re-read these pages could not reach its backends, so these entries are only as good as the earlier reading.
+- MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 336 to 339 and 163 to 164 (cited as R10000 manual).
 
 ## Power domains
 
@@ -43,8 +43,9 @@ Grades: **established** is stated by a cited manual. **inferred** follows from e
 
 ### GIGAchannel expansion cabinet
 
-- The cabinet has its own master switch and controller. Its switched domain (Crossbow, Bridge, XIO and PCI slots, and the blower) turns on only when the attached module turns on, and the module's front power switch turns it off too. A blower failure shuts down the cabinet and the CPU modules. **established** (007-3708-002; the page number was not re-checked).
-- For power sequencing, the cabinet's switched domain belongs to the attached module's domain. How the module signals the cabinet is **inferred** to travel on the XIO cables.
+- The cabinet has its own master power switch and front power switch (O200 guide, page 98). The guide turns the master switches on in the order GIGAchannel chassis, slave module, master module (page 101). A blower failure shuts down the whole server, the chassis and the CPU modules (page 32). **established**.
+- **Unknown** (regraded in the verification pass). An earlier version said the cabinet's switched domain (Crossbow, Bridge, XIO and PCI slots, and the blower) turns on only when the attached module turns on, and that the module's front power switch turns it off. No page of the O200 guide says so. Route: the Origin200 and Origin200 GIGAchannel Maintenance Guide, or a power-sequence capture.
+- For power sequencing, whether the cabinet's switched domain belongs to the attached module's domain, and how the module would signal the cabinet over the XIO cables, is **unknown** for the same reason.
 
 ### Standby and Hub warnings
 
@@ -57,8 +58,8 @@ The table puts together facts from the Hub and CPU pages in chips. Read the link
 | Kind | Initiator | Reaches | Processor entry | Preserved | Grade |
 |---|---|---|---|---|---|
 | AC cycle | Master switch or breaker | The whole module, controller included | Cold | Management NVRAM and timekeeper | Established (O200 guide, pages 98, 106, 107) |
-| Module reset | Controller `rst` command, or the front reset button | Every node board in the module | Unknown: cold or soft | Controller state; memory inferred | Reach established for nodes (rack guide, page 112; Roadmap command table). The processor entry is unknown. |
-| Module NMI | Controller `nmi` command, the front NMI button, or the watchdog's second stage | Every processor in the module | NMI | Memory, Hub state and controller state, except the processor registers listed below | Established for reach (rack guide, page 112) |
+| Module reset | Controller `rst` command, or the front reset button | Every node board in the module | Unknown: cold or soft | Controller state; memory inferred | The rack guide says the reset button "initiates a system-wide reset" (page 112; the text is shared with the deskside guide, page 64). The processor entry is unknown. |
+| Module NMI | Controller `nmi` command, the front NMI button, or the watchdog's second stage | Every processor in the module | NMI | Memory, Hub state and controller state, except the processor registers listed below | Established that the button reaches all Node boards in the system (rack guide, page 112); that the reach stops at the module is inferred |
 | Hub port reset, bit 0 | A write to the Hub's port reset register | This Hub's node | Cold (inferred) | Memory | See [hub-network-interface](../../devices/hub_ni/README.md) for the register |
 | Hub port reset, bit 7 with bit 0 | The same write, as the IRIX and Linux reboot paths make it | Every node reachable without crossing a fence | Cold (inferred) | As bit 0 on each node | Inferred |
 | Hub port reset, bit 1 | The same register | One CrayLink between this Hub and its peer | None | Everything programmed | Inferred |
@@ -66,7 +67,7 @@ The table puts together facts from the Hub and CPU pages in chips. Read the link
 | Hub soft reset | The Hub's soft reset register | Both processors on the node | Soft (inferred from the register name) | Unknown | Established that it resets both processors (see [hub-processor-interface](../../devices/hub_pi/README.md)) |
 | Hub per-processor NMI | The Hub's processor NMI registers | One processor | NMI | All | Established for the trigger (see [hub-processor-interface](../../devices/hub_pi/README.md)) |
 
-### Processor entry kinds (R10000 manual, not re-read)
+### Processor entry kinds (R10000 manual, printed pp. 336 to 339)
 
 The R10000 has three entries, selected by the Status register:
 
@@ -79,7 +80,7 @@ The R5000 family has the same three entries and the same vector. Its details are
 ### Module reset
 
 - **Timing.** The controller answers `rst`, waits about 1 s, then pulses reset for 100 ms. A second `rst` during the wait restarts the wait. **Unknown** for this page: the controller command set comes from the module controller, not from a published manual held here, so the timing is not settled by anything cited.
-- **Reach.** Every node in the module. The rack guide says "all node cards in this module" and the Roadmap command table has no command that selects one node. **established** for nodes. On the Origin 2000 the front reset button resets the whole system and needs the key in Diagnostic position (rack guide, page 112).
+- **Reach.** The rack guide says the reset button "initiates a system-wide reset" and needs the key in Diagnostic position (page 112). That module reset reaches every node in the module is **established** only as far as that sentence goes. An earlier version quoted "all node cards in this module"; no such wording appears in the guide. That no command selects one node is **inferred** from the Roadmap command table.
 - **Routers, Crossbows and XIO boards.** Whether the module reset line reaches them is **unknown**. A midplane schematic or a register read before and after reset would settle it. Software does not depend on it: the processor's reset path sends its own warm reset down the XIO link.
 - **Processor entry.** Whether the reset line gives a cold or a soft entry is **unknown**. The O200 guide says the reset button reboots and skips the automatic power-on diagnostic tests (page 97). That fits either entry. A trace of processor Status at the reset vector after a module reset would settle it.
 - **Memory.** Inferred preserved, because no power is removed. Whether the reset line interrupts refresh is **unknown**.
@@ -87,7 +88,7 @@ The R5000 family has the same three entries and the same vector. Its details are
 ### NMI
 
 - **Sources.** The controller's NMI command, the front NMI button, and the watchdog's second stage. On the Origin 2000 the button needs the key in Diagnostic position (rack guide, page 112). The Origin 200 has no keyswitch (O200 guide, pages 96 and 97).
-- **Reach.** All node boards in the module (rack guide, page 112). **established**.
+- **Reach.** All Node boards in the system (rack guide, page 112: the NMI switch "issues a reset signal to all Node boards in the system"). **established**.
 - **Processor entry.** NMI: `SR` and `NMI` set, state preserved (R10000 manual). That the module NMI line drives each processor directly, not through a Hub register, is **inferred**.
 
 ### Hub network-interface port reset
