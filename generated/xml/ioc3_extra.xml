@@ -35,7 +35,7 @@
     <field name="nic_enable" start="21" size="1" type="uint" grade="inferred"/>
   </struct>
   <constant name="GPCR_S_MICROLAN_ROUTE_BIT" value="0x200000" grade="inferred"/>
-  <constant name="GPCR_S_NIC_ENABLE_WORD" value="0x200000" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+  <constant name="GPCR_S_NIC_ENABLE_WORD" value="0x200000" grade="inferred"/>
   <constant name="GPPR_LIGHTBAR_RED_PIN" value="0x1" grade="inferred"/>
   <constant name="GPPR_LIGHTBAR_WHITE_PIN" value="0x0" grade="inferred"/>
   <constant name="GPPR_MEANINGFUL_MASK" value="0x1ff" grade="inferred"/>

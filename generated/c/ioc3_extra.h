@@ -67,7 +67,7 @@
 #define IOC3_GPCR_S_FORMAT_NIC_ENABLE_INPLACE        (IOC3_GPCR_S_FORMAT_NIC_ENABLE_MASK << IOC3_GPCR_S_FORMAT_NIC_ENABLE_SHIFT)
 
 #define IOC3_GPCR_S_MICROLAN_ROUTE_BIT               0x200000u /* inferred */
-#define IOC3_GPCR_S_NIC_ENABLE_WORD                  0x200000u /* established */
+#define IOC3_GPCR_S_NIC_ENABLE_WORD                  0x200000u /* inferred */
 #define IOC3_GPPR_LIGHTBAR_RED_PIN                   0x1u /* inferred */
 #define IOC3_GPPR_LIGHTBAR_WHITE_PIN                 0x0u /* inferred */
 #define IOC3_GPPR_MEANINGFUL_MASK                    0x1ffu /* inferred */

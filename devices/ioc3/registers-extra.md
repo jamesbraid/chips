@@ -75,7 +75,7 @@ Layout of the general-purpose control set alias, gpcr_s (offset 0x34), as the sh
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
 | `GPCR_S_MICROLAN_ROUTE_BIT` | 0x200000 | inferred |  | Pin-control bit 21: routes the MicroLAN engine to GPIO pin 8. Nothing on the one-wire bus works until it is set. |
-| `GPCR_S_NIC_ENABLE_WORD` | 0x200000 | established | shipped IRIX kernel binaries, per kudzu docs/nic.md | The value the one-wire routine stores to gpcr_s. |
+| `GPCR_S_NIC_ENABLE_WORD` | 0x200000 | inferred |  | The value the one-wire routine stores to gpcr_s. |
 | `GPPR_LIGHTBAR_RED_PIN` | 0x1 | inferred |  | Pin 1, red fault lamp, active high. |
 | `GPPR_LIGHTBAR_WHITE_PIN` | 0x0 | inferred |  | Pin 0, white lamps. Polarity not measured. |
 | `GPPR_MEANINGFUL_MASK` | 0x1ff | inferred |  | Pin data bits 8:0. Pins 0 to 8 are the meaningful ones on Origin base I/O. |

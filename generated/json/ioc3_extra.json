@@ -226,8 +226,7 @@
    "name": "GPCR_S_NIC_ENABLE_WORD",
    "value": 2097152,
    "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/nic.md"
+   "grade": "inferred"
   },
   {
    "unit": "ioc3_extra",

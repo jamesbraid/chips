@@ -117,7 +117,7 @@ pub mod gpcr_s_format {
     }
 }
 pub const GPCR_S_MICROLAN_ROUTE_BIT: u32 = 0x200000; // inferred
-pub const GPCR_S_NIC_ENABLE_WORD: u32 = 0x200000; // established
+pub const GPCR_S_NIC_ENABLE_WORD: u32 = 0x200000; // inferred
 pub const GPPR_LIGHTBAR_RED_PIN: u32 = 0x1; // inferred
 pub const GPPR_LIGHTBAR_WHITE_PIN: u32 = 0x0; // inferred
 pub const GPPR_MEANINGFUL_MASK: u32 = 0x1ff; // inferred

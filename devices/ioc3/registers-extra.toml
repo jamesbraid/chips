@@ -117,8 +117,8 @@ INT_OUT_MODE_SQUARE = { value = 0x7, grade = "inferred", from = "public mainline
 INT_OUT_DIAG_BIT = { value = 0x40000000, grade = "inferred", from = "public mainline Linux IOC3 header names it; no public source defines its behaviour", doc = "Bit 30, named diagnostic mode. Behaviour unknown." }
 INT_OUT_STATE_BIT = { value = 0x80000000, grade = "inferred", from = "public mainline Linux IOC3 header (field name)", doc = "Bit 31, the current output state, read back." }
 INT_OUT_PIN0_ROUTE_BIT = { value = 0x100000, grade = "inferred", from = "public mainline Linux IOC3 header (encoding and field position); behaviour from IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6", doc = "Pin-control bit 20 (register 0x34 set, 0x38 clear): routes the interrupt-output block to GPIO pin 0." }
-INT_OUT_TICK_NS = { value = 7800, grade = "inferred", from = "IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6 (secondary reading, not re-read here)", doc = "Hardware tick of the interrupt-output timer, in nanoseconds (7.8 microseconds)." }
-INT_OUT_PULSE_TICKS = { value = 3, grade = "inferred", from = "IRIX Device Driver Programmer's Guide 007-0911-180, ch. 6 (secondary reading, not re-read here)", doc = "Ticks in one pulse: 23.4 microseconds." }
+INT_OUT_TICK_NS = { value = 7800, grade = "inferred", from = "Linux arch/mips/include/asm/sn/ioc3.h (INT_OUT_NS_PER_TICK is 30 ns times 260; the Device Driver Programmer's Guide 007-0911-180, ch. 6 was a secondary reading, not re-read here)", doc = "Hardware tick of the interrupt-output timer, in nanoseconds (7.8 microseconds)." }
+INT_OUT_PULSE_TICKS = { value = 3, grade = "inferred", from = "Linux arch/mips/include/asm/sn/ioc3.h (INT_OUT_TICKS_PER_PULSE); the Device Driver Programmer's Guide 007-0911-180, ch. 6 was a secondary reading, not re-read here", doc = "Ticks in one pulse: 23.4 microseconds." }
 
 # Control register (0x28) fields. Positions and the port fields follow the public Linux header.
 SIO_CR_RESET_BIT = { value = 0x1, grade = "inferred", from = "public mainline Linux IOC3 header (field name)", doc = "Bit 0: resets the SuperIO block." }
@@ -145,7 +145,7 @@ GPPR_MICROLAN_PIN = { value = 8, grade = "inferred", from = "public Linux and Op
 GPPR_PHY_RESET_PIN = { value = 5, grade = "inferred", from = "public mainline Linux IOC3 header (field name)", doc = "Pin 5, ethernet PHY reset." }
 GPPR_UARTB_MODESEL_PIN = { value = 6, grade = "inferred", from = "public mainline Linux IOC3 header (field name); one public OpenBSD header differs", doc = "Pin 6, selects RS-232 or RS-422 for port B." }
 GPPR_UARTA_MODESEL_PIN = { value = 7, grade = "inferred", from = "public mainline Linux IOC3 header (field name); one public OpenBSD header differs", doc = "Pin 7, selects RS-232 or RS-422 for port A." }
-GPCR_S_NIC_ENABLE_WORD = { value = 0x200000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/nic.md", doc = "The value the one-wire routine stores to gpcr_s." }
+GPCR_S_NIC_ENABLE_WORD = { value = 0x200000, grade = "inferred", from = "Linux arch/mips/include/asm/sn/ioc3.h: GPCR_MLAN_EN is 0x00200000, enabling the one-wire control register on pin 8. That the IRIX one-wire routine stores exactly this word to gpcr_s was not re-read from the kernel binary", doc = "The value the one-wire routine stores to gpcr_s." }
 
 [registers.one_wire_ctl.fields]
 pulse = { bits = [10, 10], grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/nic.md", doc = "lowest bit of the pulse width field" }

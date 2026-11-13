@@ -493,14 +493,13 @@ slots of `.srdata` are `spl7`, `ioc3_poll`, the `.rodata` base, `pci_ioc3_enet_v
 
 These come from the public driver headers and published SGI manuals, which name the hardware contract the drivers
 expect. Each row's grade is in [devices/ioc3/registers-extra.toml](registers-extra.toml) (constants `SIO_IR_SRC_*`,
-`INT_OUT_*`, `SIO_CR_*`, `PORT_CTL_*`, `GPPR_*`, `GPCR_S_*`). None of them was re-read against its source in this pass,
-so each stays **inferred** until someone checks the named file.
+`INT_OUT_*`, `SIO_CR_*`, `PORT_CTL_*`, `GPPR_*`, `GPCR_S_*`). A verification pass re-read the Linux header `arch/mips/include/asm/sn/ioc3.h`, the multifunction driver `drivers/mfd/ioc3.c`, the LED driver and OpenBSD `sys/arch/sgi/pci/ioc.c` at the pinned commits. The interrupt source bits, the interrupt-output register fields and tick, the control register fields, the serial port control bits, the GPIO pins and the subsystem-ID table below match those files. Each stays **inferred**, because a driver is a software expectation. The items below that name no public file, and the manual-sourced items, were not confirmed.
 
 - **Address map inside the window.** Three alias pages give one port or one register a view without the rest of the
   chip: `0x04000` for the interrupt-output register alone, `0x08000` for port A's DMA registers and `0x0c000` for port
   B's. Each is 16 KB. Inside a page the seven serial registers keep the main block's order and four-byte stride. Through
-  the alias, the transmit consume index, the receive produce index and the 16550 shadow are read-only. **Inferred.**
-  No source is named for the alias layout here, so check it against the public header before relying on it.
+  the alias, the transmit consume index, the receive produce index and the 16550 shadow are read-only. **Unknown.**
+  Neither the Linux header nor the OpenBSD header names these alias pages, and no held source does, so the alias layout is not established here. A read of the IOC3 specification or of the IRIX driver's use of the alias window would settle it.
 - **Byte-bus selects.** Four byte-wide device windows sit at `0x80000`, `0xa0000`, `0xc0000` and `0xe0000`. The
   strobe length is set in the control register. A clock window must be accessed at byte width. On the Origin 200,
   select 0 holds a 32 KB non-volatile RAM with a clock in its top bytes, which the published block diagram labels
@@ -518,9 +517,7 @@ so each stays **inferred** until someone checks the named file.
   Bit 31 reads back the output state. Bit 20 of the pin-control register routes this output to GPIO pin 0. The modes
   are: `000` drive low, `100` drive high, `101` one pulse, `110` repeated pulses, `111` toggle. Modes `001` to `011` are
   not defined. The tick is 7.8 microseconds and a pulse is three ticks, 23.4 microseconds. The count converts as
-  count plus one. The mode behaviour comes from the SGI Device Driver Programmer's Guide (007-0911-180, chapter 6), and
-  the bit positions and mode encodings come from the public header. Both are **inferred** here. The mode behaviour is
-  described as dual-sourced, but this page has not re-read the guide.
+  count plus one. The tick, the pulse length and the count conversion are in the Linux header (`INT_OUT_NS_PER_TICK`, `INT_OUT_TICKS_PER_PULSE`, `INT_OUT_COUNT_TO_US`), as are the bit positions and mode encodings. All are **inferred** here. The mode behaviour as the Device Driver Programmer's Guide (007-0911-180, chapter 6) describes it was not re-read.
 - **Control register `0x28` fields.** Bit 0 resets the SuperIO block. Bits 7:1 and 14:8 hold port A's and port B's
   UART byte offsets divided by 8, so the UART bases `0x178` and `0x170` appear as `0x2f` and `0x2e`. Bits 18:15 hold the
   byte-bus strobe length. Bits 21:19 name the internal master that wants the PCI bus, and bit 22 is the arbiter idle.
