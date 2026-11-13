@@ -11,8 +11,9 @@ do not settle it, with the route that would. No fact here was measured on a boar
 ## Sources
 
 - **Analog Devices/Maxim DS1744 nonvolatile timekeeping SRAM datasheet**, document 19-5502, revision
-  6/13, 16 pages. The page and table references below are not recorded in this import; the document
-  was not opened for this import.
+  6/13, 16 pages. A later verification pass re-read it in full. Page numbers are the datasheet's own
+  "n of 16" numbers: the package and pin list are on pages 1 to 3, the clock reads on page 4 and the register
+  map (Table 2) on page 6.
 
 ## Package and interface (established)
 
@@ -24,25 +25,28 @@ do not settle it, with the route that would. No fact here was measured on a boar
 
 ## Clock and calendar (established, with a gap)
 
-- The clock occupies the top eight bytes of the chip. The defs entry records those positions only.
-  The byte order and bit meanings are not given here, and this import did not read the chip's register
-  page for them.
-- The day register carries a battery voltage-level flag in bit 7, `BF`. The register table lists it.
-  The byte offset of the day register is not in this import's sources.
+- The clock occupies the top eight bytes of the chip (page 1, page 3). The defs entry records those
+  positions only. Table 2 (page 6) gives the order: `0x7ff8` century with the read bit `R` in bit 6 and
+  the write bit `W` in bit 7, `0x7ff9` seconds with the oscillator stop bit `OSC` in bit 7, `0x7ffa` minutes,
+  `0x7ffb` hours, `0x7ffc` day, `0x7ffd` date, `0x7ffe` month, `0x7fff` year. The values are BCD in 24-hour form
+  (page 3).
+- The day register, at `0x7ffc`, carries a battery voltage-level flag in bit 7, `BF`, and a frequency test
+  bit `FT` in bit 6 (Table 2, page 6).
 - The valid date range and leap-year rule are in the calendar section of the specification. They are
   not transcribed here.
 
 ## Retention and reset (established)
 
-- The specification advertises more than ten years of operation without external power, from the
-  battery.
+- The specification advertises over ten years of operation without external power (page 1), and gives the life expectancy as 10 years at 25 C with the oscillator running (page 7), from the
+  battery. The part ships with its lithium source disconnected, and the source is enabled when `VCC`
+  first rises above the power-fail point (page 7).
 - The part carries no factory image, checksum, serial number or initial calendar value. The reset
   state of the clock and RAM is therefore unknown.
 
 ## Read freeze (established)
 
 - The read freeze bit `R` must stay clear for at least 500 microseconds to guarantee that the visible
-  image refreshes, and the image then catches up within one second.
+  image refreshes, and the image then catches up within one second (page 4).
 
 ## IO9 board (unknown)
 
