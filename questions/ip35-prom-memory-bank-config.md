@@ -19,7 +19,7 @@ were not consulted for any fact here.
 1. **The word, and where the PROM reaches it. Established.**
    The PROM reads and writes the configuration word at node-alias offset +0x1f80008: table word
    0x9200000001f80000 (segment offset 0x1679d8) plus the node number shifted left 33, plus 8
-   (routines 0x1fc56e2c and 0x1fc56d94 below). This is the same word the [Bedrock page](../chips/bedrock/README.md)
+   (routines 0x1fc56e2c and 0x1fc56d94 below). This is the same word the [Bedrock page](../devices/bedrock/README.md)
    lists at +0x1f80000 to +0x1f80008; the local-form address is +0x780008 (the kernel's own load of that local form,
    table word 0x9200000001780008, is in item 4).
 

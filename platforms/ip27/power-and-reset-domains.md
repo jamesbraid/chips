@@ -2,7 +2,7 @@
 
 **Status:** draft. The power-domain facts below come from the published owner's and diagnostic guides listed under Sources. The reset-entry facts for the R10000 are taken from the processor manual's reset description and were not re-read in this pass. The register facts for the Hub are on their own pages and are only linked here.
 
-This page covers which parts of an Origin 200 or Origin 2000 sit in which power domain, what each reset reaches, and what the processor sees afterwards. It is the cross-device view. Each register and command has its own page: the Hub pages, the [Router](../../devices/router_origin2000/README.md), the [Crossbow](../../devices/xbow/family.md), the [timekeeper](../../devices/ds1744/README.md) and the [L1 and ELSC census](../../chips/l1/README.md).
+This page covers which parts of an Origin 200 or Origin 2000 sit in which power domain, what each reset reaches, and what the processor sees afterwards. It is the cross-device view. Each register and command has its own page: the Hub pages, the [Router](../../devices/router_origin2000/README.md), the [Crossbow](../../devices/xbow/family.md), the [timekeeper](../../devices/ds1744/README.md) and the [L1 and ELSC census](../../devices/l1/README.md).
 
 Terms: a *module* is one Origin 200 tower or one Origin 2000 midplane chassis. The *controller* is the module system controller (ELSC). A *node* is one Hub with its processors and memory.
 

@@ -98,7 +98,7 @@ IP35 object directory is held, and the update guides 007-3897-022 to -030 do not
   steppings of the Audigy family (3 for the original, 4 for Audigy 2). **Established** (arithmetic) and **inferred** (the stepping names).
 
 **`rad_dd.o` (IP27, IP30, IP32, IP35, both releases).** `rad_init` registers `10a9:0005`; `rad_create_subsys` reads config `0x08` (4 bytes)
-and registers type 5; the hinv revision is board number (bits 7:4) and chip revision (bits 3:0), see [chips/rad](../../chips/rad/README.md).
+and registers type 5; the hinv revision is board number (bits 7:4) and chip revision (bits 3:0), see [devices/rad1](../../devices/rad1/README.md).
 Captures show board numbers 12 (Octane and Octane2), 7 (Onyx2 and Origin 2000 base I/O) and 13 (below). **Established** (code and captures).
 
 **`mad_dd.o` (IP27, IP30, IP35).** `mad_init` registers `1412:1724`; `mad_create_subsys` reads config byte `0x08` and the half-word at `0x2e`
@@ -196,7 +196,7 @@ and `audio.sm` of any 6.5.23 to 6.5.30 IP35 install; a `hinv -vm` of a factory-b
 
 - survey.md: the `emu_dd` candidate for the Tezro tower onboard audio is withdrawn (above); the Audigy is a PCI option card.
 - survey.md: the Fuel DM8 post is no longer the only evidence: 13 of 36 Fuel captures show MAD revision 1.
-- survey.md and chips/rad: the PCI Digital Audio Board hinv example (007-3502-003 p. 11) reads revision 12.0, but real captures of a RAD in a
+- survey.md and devices/rad1: the PCI Digital Audio Board hinv example (007-3502-003 p. 11) reads revision 12.0, but real captures of a RAD in a
   PCI slot (O2, one Origin 2000, the IP35 machines) read 13.0, and 12.0 is the Octane and Octane2 onboard part. The sentence that the Octane's
   onboard controller "is the same part the PCI board uses (hinv revision 12.0)" is **contradicted** for the board number; the PCI ID and driver
   are shared.

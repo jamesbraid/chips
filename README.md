@@ -1,10 +1,22 @@
 # SGI system ASICs: register-level reverse engineering
 
+## Start here
+
+- Writing a decoder, a model or any other tool that needs the register layouts: take the register maps from [generated/c](generated/c) (C headers) and
+  [generated/rust](generated/rust) (a Rust crate); [generated/python](generated/python), [generated/json](generated/json)
+  and [generated/xml](generated/xml) carry the same facts. Never edit them: they come from the register maps.
+- Understanding one chip, board or card: read `devices/<unit>/`. `README.md` says how the hardware works, with no
+  assumption about the operating system; `registers.toml` is the hand-edited register map and `registers.md` its
+  generated, browsable table. Machines and their boot and PROM behaviour are in [platforms/](platforms/).
+- How IRIX drives a part: [software/](software/), which links back to the device pages.
+- What is covered, and what is not settled: [evidence/coverage.md](evidence/coverage.md), and
+  [questions/](questions/) for the open questions with what would settle each.
+
 What each system ASIC of the SGI Origin, Onyx, Octane, Fuel, Tezro and O2 machines does, read from the shipped IRIX 6.5.30
 kernels, drivers, diagnostics and PROM images, checked against the published specifications and the public
 Linux and OpenBSD drivers. Software only: no hardware is needed or assumed.
 
-Chips covered (one page each in [chips/](chips/)): Hub (PI, MD, IO, NI), Bedrock, HEART, Xbow,
+Chips covered (one directory each in [devices/](devices/)): Hub (PI, MD, IO, NI), Bedrock, HEART, Xbow,
 Bridge and XBridge, PIC, TIOCP (only if a product carries it), the network router, the router scan-chain tunnel, the L1 and ELSC system
 controllers (host-visible side), IOC3, IOC4, CRIME, MACE, GBE, VICE (presence), and the audio parts of the DMediaPro DM8
 (ICE1724 and its converters, [devices/dm8/README.md](devices/dm8/README.md)), with stubs for the RAD and EMU10K2 audio
@@ -51,9 +63,9 @@ ignored `root/` directory as [evidence/irix-files.md](evidence/irix-files.md) de
 - [platforms/bricks/pxbrick.md](platforms/bricks/pxbrick.md): the Origin 3000 and Onyx 3000 PX-brick PCI-X I/O enclosure: the enclosure size and its conflicting figures, the PIC wiring as drawn, the L1 `ioport` output, bus and slot rules, the L1 brick-type constants and what is unknown. It holds no register facts.
 - [platforms/bricks/xbrick.md](platforms/bricks/xbrick.md): the Origin 3000 and Onyx 3000 X-brick XIO enclosure: the XBridge port roles, the slot and connector wiring as drawn and its conflicts, the Crosstown2 rates, the supported XIO boards, the L1 and its firmware personality, and what is unknown. It holds no register facts.
 - [platforms/bricks/pbrick.md](platforms/bricks/pbrick.md): the Origin 3000 and Onyx 3000 P-brick I/O enclosure: slot and bus layout, the three XBridge chips as drawn, the widget-to-bus map, host routing, power and L1 identity, and what is unknown. It holds no register facts.
-- `chips/<chip>/census/`: register-access censuses per chip, produced by [tools/](tools/).
+- `devices/<chip>/census/`: register-access censuses per chip, produced by [tools/](tools/).
 
-### Every document under docs/
+### Every document
 
 Generated tables under `evidence/inventory/` and the generated block of `evidence/coverage.md` are listed above, not here.
 
@@ -184,35 +196,34 @@ Published sources and specifications:
 ## Layout
 
     AGENTS.md  LICENSE  README.md
-    chips/<chip>/      one directory per chip: README.md (the page), census/ (machine-made tables),
-                       notes/ (working notes). Chips: hub bedrock heart xbow bridge pic tiocp router scan l1
-                       ioc3 ioc4 crime mace gbe vice. bridge/ also holds the XBridge census; router/ is a
-                       call-argument census (retools/tools/chips/callargs.py): the router has no memory window.
-    devices/<unit>/    registers.toml per chip (written from the census by retools/tools/chips/gen_headers.py),
-                       registers.xbridge.toml (XBridge as an overlay on Bridge), and the hand-written
-                       registers-extra.toml, l1_requests (in formats/), xio_fc and ice1724 for facts the census
-                       cannot reach (PROM stores, specification pages, request codes); registers.md is the generated
-                       reference page for each unit
-    generated/         generated from the register maps by retools/tools/defs/defs-gen, never hand-edited: c/ headers,
-                       rust/ crate, python/, json/, xml/
-    include/<chip>.h   forwarding headers that include generated/c/<unit>.h under the old macro names; also generated
-    ip27/ ip30/ ip32/ ip35/   per board: relative symlinks into root/ (boot objects, members, kernel,
-                       PROM, ide, symmon, sash)
-    platforms/<board>/ the boards: topology, address map, boot and PROM (ip27, ip30, ip32, ip34, ip35, bricks)
+    devices/<unit>/    one directory per chip, board or card. README.md is the page (entries with labels), census/
+                       the machine-made tables (hub bedrock heart xbow bridge pic tiocp router scan l1 ioc3 ioc4
+                       crime mace gbe vice; bridge/ also holds the XBridge census; router/ is a call-argument census,
+                       retools/tools/chips/callargs.py, because the router has no memory window). registers.toml is
+                       the register map: written from the census by retools/tools/chips/gen_headers.py for the census
+                       units, with registers.xbridge.toml (XBridge as an overlay on Bridge) and the hand-written
+                       registers-extra.toml, xio_fc and ice1724 for facts the census cannot reach (PROM stores,
+                       specification pages). registers.md is the generated reference page; helpers.h holds C helpers.
+    formats/<name>/    software data structures with a definition file: format.toml (l1_requests)
+    platforms/<board>/ the machines: topology, address map, boot and PROM (ip27, ip30, ip32, ip34, ip35, bricks).
+                       ip27 to ip35 also hold relative symlinks into root/ (boot objects, members, kernel, PROM,
+                       ide, symmon, sash)
     software/kernel/   how the IRIX kernels drive the parts, by build
+    generated/         generated from the register maps by retools/tools/defs/defs-gen, never hand-edited: c/ headers,
+                       rust/ crate, python/, json/, xml/; include/<unit>.h forwarding headers are the transition
+                       names for the old macros
     questions/         open questions, one page each, with what would settle it
     evidence/          coverage.md, inventory/ (tables), routines/ (routine readings), the instruction readings and
-                       the other audits
-    references/        documents/ (specs.md, published-sources.md, the index of public sources and the committed
-                       specification PDFs) and code/ (the third-party submodules, below)
-    tools/             configs/ (one census config per chip), setup-clone.sh (the bootstrap stub) and config/
+                       the other audits, irix-files.md and reading-brief.md
+    references/        documents/ (specs.md, published-sources.md, INDEX.md and the committed specification PDFs)
+                       and code/ (m2c spimdisasm linux linux-5.3 linux-2.5.40 linux-2.4.37 linux-ip30 netbsd openbsd
+                       gxemul mame arcboot: public submodules, pinned and shallow, init only what you need)
+    tools/             configs/ (one census config per chip), setup-clone.sh (the bootstrap stub), config/
                        (inventory-config.json, inventory-siblings.json, inventory-root.sha256, defs-check.toml and
-                       the allow-lists the checks read)
+                       the allow-lists the checks read) and ghidra/ (this workspace's Ghidra processors, import and
+                       type scripts)
     retools/           submodule (sgi-retools): the shared tools in retools/tools/, the census tools in
                        retools/tools/chips/, the Ghidra scripts in retools/ghidra/
-    ghidra/            this workspace's Ghidra processors, import and type scripts
-    references/code/   m2c spimdisasm linux linux-5.3 linux-2.5.40 linux-2.4.37 linux-ip30 netbsd openbsd gxemul mame arcboot:
-                       public submodules, pinned and shallow (init only what you need; references/documents/INDEX.md)
     root/              the filled IRIX tree and spec text; ignored, never committed
 
 Graphics inputs (libGLcore, X modules, OpenGL sources) and graphics-only tables are not part of this
@@ -241,7 +252,7 @@ To reproduce a cited result:
   `retools/tools/re-run python3 retools/tools/NAME.py ...` from the repository root.
 - The shared tooling (container definitions, wrappers, Ghidra scripts, the inventory, fact sheet and claim checker, and the device extractors) is the `retools/` submodule (sgi-retools). Run its tools by their submodule path from the repository root (`retools/tools/NAME`, device tools under `retools/tools/chips/`); they find this workspace from the current directory. There are no local links into it, so a change to a shared tool is made in retools and the pin here moves with a commit. The optional Ghidra image is built from `retools/tools/Containerfile.ghidra` by
   `retools/tools/re-run --ghidra COMMAND`, and `retools/tools/re-run --ghidra-export OBJECT` writes decompiled C and
-  function-similarity output as JSON (see `ghidra/README.md`); nothing else needs it. `retools/tools/README-analysis.md`
+  function-similarity output as JSON (see `tools/ghidra/README.md`); nothing else needs it. `retools/tools/README-analysis.md`
   describes the `.mdebug` importer and the kernel table extractors.
 
 ## Clone and query
@@ -251,7 +262,7 @@ To reproduce a cited result:
     retools/tools/chips/disasm.sh tools/configs/pic.json             # stage 1, in the container
     python3 retools/tools/chips/scan.py tools/configs/bridge.json --base "$PWD" --out work/bridge
 
-Questions are answered from `chips/<chip>/census/` (the TSV tables), `chips/<chip>/README.md` (entries with
+Questions are answered from `devices/<chip>/census/` (the TSV tables), `devices/<chip>/README.md` (entries with
 labels) and `grep -r` over `root/spec/*.txt` (text of the specifications, not committed).
 
 Licence: BSD-3-Clause, see [LICENSE](LICENSE). The scripts descend from gr4's

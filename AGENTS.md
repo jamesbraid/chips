@@ -36,8 +36,8 @@ report agreement or disagreement, never to supply a fact.
 
 ## Where things go
 
-- `chips/<chip>/README.md`: one page per chip. Register entries with labels. Chips with no entry yet say so.
-- `chips/<chip>/census/`: machine-made census tables (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`).
+- `devices/<chip>/README.md`: one page per chip. Register entries with labels. Chips with no entry yet say so.
+- `devices/<chip>/census/`: machine-made census tables (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`).
   Never edit by hand; fix the tool or the config and rerun.
 - `devices/<unit>/registers.toml` and `formats/<name>/format.toml`: the source of hardware facts, in TOML (format and
   tools: `retools/tools/defs/README.md`). The census units (`devices/<chip>/registers.toml`,
@@ -49,6 +49,10 @@ report agreement or disagreement, never to supply a fact.
   stale tree). `devices/<unit>/registers.md` is the reference page for each unit, the published view of the facts.
   `include/*.h` are forwarding headers that keep the old macro names; they are generated too. After any register map
   change run `defs-gen`, then `defs-check --build`.
+- `platforms/<board>/`: one machine's topology, address map, boot and PROM; bricks are in `platforms/bricks/`.
+  `software/kernel/`: how the IRIX kernels drive a part, linking back to its `devices/` page. `questions/`: one page
+  per open question, with what would settle it. `references/documents/`: the specification index and published
+  sources; `references/code/`: the public source trees, as submodules.
 - `evidence/inventory/` and `evidence/coverage.md`: written by `retools/tools/inventory.py`. Never edit by hand.
 - `tools/`: the census configs (`tools/configs/`, one per chip, marked spec-backed or no-spec) and the bootstrap
   stub; `tools/config/`: the inventory configuration, the pinned manifests and the allow-lists the checks read.
@@ -105,7 +109,7 @@ samples `understood` rows and re-derives them from the binaries; the result goes
 1. Fill `root/` (evidence/irix-files.md) and run `retools/tools/inventory.py` to see the rows.
 2. Write the chip's census config (`tools/configs/<chip>.json`): the images, the seeds that tell the scanner
    which functions receive the chip's window pointer, the chip-type compares, and the literal-pool settings.
-3. `retools/tools/chips/run.sh tools/configs/<chip>.json` (see tools/README.md) and read `chips/<chip>/census/census.md`.
-4. Take each register to an entry in `chips/<chip>/README.md` using `fields.tsv` and `context.tsv` as the
+3. `retools/tools/chips/run.sh tools/configs/<chip>.json` (see tools/README.md) and read `devices/<chip>/census/census.md`.
+4. Take each register to an entry in `devices/<chip>/README.md` using `fields.tsv` and `context.tsv` as the
    starting evidence, then read the function in full before labelling anything established.
 5. Regenerate the inventory in the same commit as the finding.

@@ -1,7 +1,7 @@
 # IOC3 coverage
 
 What the shipped software and the public drivers settle about the IOC3, and what stays open. The register inventory and
-per-routine readings are on [the chip page](../../chips/ioc3/README.md); this page grades the coverage questions that were
+per-routine readings are on [the chip page](README.md); this page grades the coverage questions that were
 open. Labels follow [AGENTS.md](../../AGENTS.md): **established**, **inferred**, **unknown**.
 
 Sources: IRIX 6.5.30 IP35 objects `ioc3.o`, `if_ef.o`, `ecpplp.o` (all routines cited were read in full unless a line says
@@ -48,7 +48,7 @@ in Linux, and the parallel-port control and status registers come in the opposit
   set and clear it otherwise. The IOC3 attach (`IP35boot/ioc3.o` 0x3bc and 0x3f8) maps spaces 7 and 8 (the device window is space 8) with flag word 0, so
   the routine clears bit 13 for the IOC3 window; no other routine in either kernel, including the bit-by-bit device
   register routines `pcibr_device_flags_set`, `pcibr_priority_bits_set` and `pcibr_endian_set` (see
-  chips/bridge/README.md), writes it. A request with flag bit 12 clear also refuses to share a device window whose shadow
+  devices/bridge/README.md), writes it. A request with flag bit 12 clear also refuses to share a device window whose shadow
   has bit 13 set, so the two kinds of mapping never mix in one slot.
 - **Consequence for the swapped-path inference above: the IRIX kernel itself does not turn the device swap bit on for the
   IOC3.** What is still unknown is why IRIX's byte offsets are the exclusive-or-3 mirror of Linux's if the swap bit is

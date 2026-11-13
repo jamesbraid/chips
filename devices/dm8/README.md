@@ -18,10 +18,10 @@ Revolution 7.1 under an SGI name" **inferred** (strong). The evidence, in order 
 4. **Established.** The code that follows for that match is the public Revolution 7.1 hardware recipe: GPIO bit-banged serial
    control of two converters on chip selects 5 and 6 with chip addresses 1 and 3, a mute line on GPIO 22, an I2C EEPROM at `0xa0`.
    The function names carry the vendor's board name: `mad_init_revolution` (`0x2b2c`) and the table `mad_revo_logtolin`
-   (`0x1fa8`). Detail: [chips/ice1724](../../chips/ice1724/README.md).
+   (`0x1fa8`). Detail: [devices/ice1724](../ice1724/README.md).
 5. **Inferred.** Converters: AKM AK4381 (chip 1, front pair) and AK4355 (chip 2, six channels) match the public driver's
-   programming of that board (see [ak4381](../../chips/ak4381/README.md), [ak4355](../../chips/ak4355/README.md)); the
-   input converter AK5380 is named only in secondary reviews of the retail card ([ak5380](../../chips/ak5380/README.md)).
+   programming of that board (see [ak4381](../ak4381/README.md), [ak4355](../ak4355/README.md)); the
+   input converter AK5380 is named only in secondary reviews of the retail card ([ak5380](../ak5380/README.md)).
 
 What is **not** established: the actual DM8 board's EEPROM and PCI config contents (no capture), whether SGI changed any
 component, and the SGI manufacturing part number (none found in the SGI documents read). If the DM8's sub-device ID were not
@@ -58,7 +58,7 @@ Machine support, graded separately:
 
 ## What the IRIX driver expects (`mad_dd.o`, IP35 build)
 
-Register-level tables and byte-lane rule: [chips/ice1724](../../chips/ice1724/README.md). Summary, all **established** unless marked:
+Register-level tables and byte-lane rule: [devices/ice1724](../ice1724/README.md). Summary, all **established** unless marked:
 
 - **Probe.** `1412:1724`; attach at `mad_attach` (`0x14c`) maps BAR0 32 bytes and BAR1 128 bytes, sets latency timer all ones,
   PCI priority 1, then `mad_create_subsys`.
@@ -94,7 +94,7 @@ Register-level tables and byte-lane rule: [chips/ice1724](../../chips/ice1724/RE
 
 ## Checks against the controller datasheet
 
-The preliminary ICE1724 datasheet ([chip page](../../chips/ice1724/README.md#vendor-datasheet-facts)) settles the register layout
+The preliminary ICE1724 datasheet ([chip page](../ice1724/README.md#vendor-datasheet-facts)) settles the register layout
 and the controller's clock and DMA rules. Applied to this board:
 
 - **Inferred.** The DM8 uses the Envy24HT, not the Envy24PT. The PT part is limited to 96 kHz and 16 GPIO in the public driver's

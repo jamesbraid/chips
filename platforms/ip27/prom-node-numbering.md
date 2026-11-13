@@ -15,7 +15,7 @@ with addresses, follow.
 
 Kernel-side writers of the same registers are not repeated here: see the kudzu repository's
 `docs/numa-text-replication.md` (commit f003531), which reads the IRIX 6.5.22 and 6.5.30 kernels for
-them. Register names and the register census are in [chips/hub/README.md](../../chips/hub/README.md) and
+them. Register names and the register census are in [devices/hub/README.md](../../devices/hub/README.md) and
 [hub-processor-interface.md](../../devices/hub_pi/README.md), [hub-network-interface.md](../../devices/hub_ni/README.md).
 
 ## Labels
@@ -48,7 +48,7 @@ it (**U**; route: unpack it with `promgen64.py` and repeat the reads listed unde
 
 The PROM reaches the Hub through the local alias `0x9200000001000000 + offset` (each processor's own PI bank)
 and through vector reads and writes routed by the network (see below). Offsets
-and names are those of [chips/hub/README.md](../../chips/hub/README.md); the names come from the public header and
+and names are those of [devices/hub/README.md](../../devices/hub/README.md); the names come from the public header and
 are **I**.
 
 | Offset | Name | What the PROM does with it |
@@ -91,11 +91,11 @@ whether processor B leaves reset at the same moment as A is **U**.
 | 8 | 0x1fc25b28 | same routine as step 7 | the number typed | the monitor's node-ID command, user driven | I (call site only) |
 
 Not written by the PROM, as far as found (**I**; three searches: the census sites in
-[chips/hub/census/](../../chips/hub/census/census-sites.tsv), every load of the literal-pool entries for the local and node-addressed Hub
+[devices/hub/census/](../../devices/hub/census/census-sites.tsv), every load of the literal-pool entries for the local and node-addressed Hub
 aliases, and every remote-write call site's offset argument): **PI_REGION_PRESENT** (PI 0x18). The only calls
 with a small offset of 24 (0x18) are at 0x1fc4daa8 and 0x1fc4db38 and are guarded by the table entry's
 type being a router (2), so they address a router register, not PI 0x18. The kernel writes it
-([chips/hub/README.md](../../chips/hub/README.md), `mlreset`); see the kudzu page. The inflated monitor ELF may
+([devices/hub/README.md](../../devices/hub/README.md), `mlreset`); see the kudzu page. The inflated monitor ELF may
 also write it (**U**).
 
 What the node number comes from, **U** in general and **E** for one case: the number for each Hub is computed
@@ -324,7 +324,7 @@ brackets:
    calls `ni_reset_port` 0xc00000000001d760, which stores **0x81 to 0x9200000001600008** (pool word gp-24512), and with the
    flag set calls `sysctlr_power_off`. Other CPUs wait in 3,000,000-count delays.
 
-   0x81 is bits 7 and 0 of the network interface's reset register; chips/hub names bit 7 "warm reset" and bit 0 "whole
+   0x81 is bits 7 and 0 of the network interface's reset register; devices/hub names bit 7 "warm reset" and bit 0 "whole
    Hub reset" ([hub-network-interface.md](../../devices/hub_ni/README.md)), so the kernel's default restart is a whole-Hub reset
    with a warm reset on the link (names I, address and value E). The IP35 equivalent stores 1 to +0x1680010 and 6 to
    +0x1680008.
@@ -343,7 +343,7 @@ brackets:
    (E for that stretch, U for what the monitor then does, since the monitor ELF was not read). SR clear (power-on, or
    NMI alone) is the cold path (LED 0x5f at 0x1fc00c60), where everything in this page happens.
 6. The kernel marker, first read: **0x1fc012c8**, on the cold path, loads the doubleword at **0x9200000001000418** (PI +0x418,
-   named PI_ERR_STACK_ADDR_A in [chips/hub/README.md](../../chips/hub/README.md); the name is I), compares bits 27:16 with
+   named PI_ERR_STACK_ADDR_A in [devices/hub/README.md](../../devices/hub/README.md); the name is I), compares bits 27:16 with
    0x0ead (0x1fc012d0 to 0x1fc012dc) and tests bit 8 (0x1fc012e4). Both true: jump to 0x1fc015f0, which skips the routine
    under progress code 4 (call at the 0x1fc012f0 path) and goes to the routines under codes 0xa and 0xb (E for the jump,
    I that the skipped routine is a cache self-test; same shape as the IP35 PROM).

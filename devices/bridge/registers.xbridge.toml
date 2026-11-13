@@ -1,4 +1,4 @@
-# Written by retools/tools/chips/gen_headers.py from chips/xbridge/census/. Do not edit: fix the census or its config and rerun. It patches devices/bridge/registers.toml.
+# Written by retools/tools/chips/gen_headers.py from devices/bridge/census/. Do not edit: fix the census or its config and rerun. It patches devices/bridge/registers.toml.
 
 remove = ["constants.INT_STATUS_B_5", "constants.INT_STATUS_B_6"]
 

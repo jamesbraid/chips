@@ -55,7 +55,7 @@ interrupt enable and reset registers.
 
 CRIME's CPU error status (`0x48`) carries a VICE group. In the three-bit layout bit 1 is "Write parity error"; in the
 ten-bit layout (CRIME revision 0 only) bits 8:5 are illegal instruction, SysAD parity error, SysCMD parity error and
-invalid address ([CRIME page](../../chips/crime/README.md#error-registers-established-decode)). The VICE error address
+invalid address ([CRIME page](../crime/README.md#error-registers-established-decode)). The VICE error address
 register at CRIME `0x58` is saved by the bus-error path and passed to `vice_err`. In this build `vice_err`
 (`kernel.o` `0x1d554`, two instructions) is a return of 0: **the 6.5.30 IP32 kernel does nothing with a VICE error beyond
 printing it.** Established (the whole routine is read).

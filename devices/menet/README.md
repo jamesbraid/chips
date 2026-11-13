@@ -3,8 +3,8 @@
 The MENET (part 030-0873) is an XIO board for the Origin 2000 and Onyx2. It carries one Bridge and four IOC3s
 on the Bridge's PCI bus: four Ethernet interfaces and six asynchronous serial ports. The PROM types it as board
 type `0x23`, the Ethernet type, which the [Crosstown page](../crosstown-ktown/README.md) lists with the other classifier
-prefixes. The Bridge and IOC3 contracts are on [the Bridge page](../../chips/bridge/README.md) and
-[the IOC3 page](../../chips/ioc3/README.md). This page holds the board's composition, the IRIX words it sets, its
+prefixes. The Bridge and IOC3 contracts are on [the Bridge page](../bridge/README.md) and
+[the IOC3 page](../ioc3/README.md). This page holds the board's composition, the IRIX words it sets, its
 interrupt wiring and its identity record.
 
 Status: draft, imported from published sources. The IRIX routine facts come from a disassembly the source
@@ -33,7 +33,7 @@ no held source settles it.
 
 The IRIX 6.5.30 IP27 kernel routine `menet_vmc` is the Bridge-record callback for the prefix `030-0873-`. It
 sets the subdevice word for each IOC3 and declares a second slot for each of devices 0 to 3. The word's bits are
-the ones the [IOC3 page](../../chips/ioc3/README.md) and the [BaseIO page](../baseio/README.md#subdevice-enable-word-irix)
+the ones the [IOC3 page](../ioc3/README.md) and the [BaseIO page](../baseio/README.md#subdevice-enable-word-irix)
 list: bit 0 Ethernet, bit 3 keyboard and mouse, bits 4 and 5 serial A and B.
 
 | PCI device | Word | Functions | Second slot (SuperIO interrupt) | Grade |
@@ -74,7 +74,7 @@ functions hang on `pci/4`, so the example and the device numbers agree. No real 
 ## Other software's view
 
 - **Linux** takes each chip's subsystem identity from the Bridge record, as `0xc305` for devices 0 to 2 and `0xc306`
-  for device 3. The subsystem list is on [the IOC3 page](../../chips/ioc3/README.md). **Inferred**, from the driver.
+  for device 3. The subsystem list is on [the IOC3 page](../ioc3/README.md). **Inferred**, from the driver.
   The value the chip itself returns at configuration offset `0x2c` is **unknown**.
 - **OpenBSD** looks for a DS2505-family record on each IOC3's own one-wire bus and tests it for `030-0873-`. **Inferred**
   for the driver's behaviour. Whether a real MENET carries such a record on its IOC3 buses is **unknown**. IRIX never
@@ -96,7 +96,7 @@ functions hang on `pci/4`, so the example and the device numbers agree. No real 
   an Origin 2000 `hinv -v` under IRIX 6.5.4m with one board (comp.sys.sgi.admin, 23 August 1999); an Onyx2 deskside
   `hinv -m` (comp.sys.sgi.hardware, 5 June 2004); an Octane `hinv` with a MENET (comp.sys.sgi.hardware, 16 October
   2006); an SGI engineer's statement that GIGAchannel XIO slots take MENET boards (comp.sys.sgi.admin, 18 June 2001).
-- IRIX 6.5.30 IP27 kernel: `menet_vmc`, `ioc3_attach` and `ioc3_intb_needed`, as the [IOC3 page](../../chips/ioc3/README.md)
-  and [the Bridge page](../../chips/bridge/README.md) record them. Re-read before relying on it.
+- IRIX 6.5.30 IP27 kernel: `menet_vmc`, `ioc3_attach` and `ioc3_intb_needed`, as the [IOC3 page](../ioc3/README.md)
+  and [the Bridge page](../bridge/README.md) record them. Re-read before relying on it.
 - Linux `arch/mips/pci/pci-xtalk-bridge.c` and `drivers/mfd/ioc3.c`; OpenBSD `sys/arch/sgi/pci/ioc.c`. Software
   expectations only.

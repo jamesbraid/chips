@@ -1,7 +1,7 @@
 # IOC4 coverage
 
 What the shipped software and the public drivers settle about the IOC4, and what stays open. Register tables and the
-per-routine readings are on [the chip page](../../chips/ioc4/README.md); this page grades the coverage questions that were
+per-routine readings are on [the chip page](README.md); this page grades the coverage questions that were
 open. Labels follow [AGENTS.md](../../AGENTS.md): **established**, **inferred**, **unknown**.
 
 Sources: IRIX 6.5.30 IP35 objects `ioc4.o`, `sio_ioc4.o` (a member of `sduart.a`) and `ide.o`, read in full where a

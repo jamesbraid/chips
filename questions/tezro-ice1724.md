@@ -1,6 +1,6 @@
 # Tezro: the ICE1724 behind the TI bridge, and how IRIX attaches it
 
-Extends [tezro-ti-bridge.md](tezro-ti-bridge.md) and [chips/ice1724](../chips/ice1724/README.md).
+Extends [tezro-ti-bridge.md](tezro-ti-bridge.md) and [devices/ice1724](../devices/ice1724/README.md).
 Sources: IRIX 6.5.30 IP35 objects `mad_dd.o` (SHA-256 `905a72a7...1518`), `pciio_ppb.o` (`aadca7cf...1632`),
 `pcibr.o` and `pciio.o`, read as instruction listings (nothing run); published `hinv` captures; the TI PCI2050
 data manual SCPS053B.

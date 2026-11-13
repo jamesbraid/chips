@@ -1,4 +1,4 @@
-# Written by retools/tools/chips/gen_headers.py from chips/ioc4/census/. Do not edit: fix the census or its config and rerun.
+# Written by retools/tools/chips/gen_headers.py from devices/ioc4/census/. Do not edit: fix the census or its config and rerun.
 unit = "ioc4"
 prefix = "IOC4"
 title = "IOC4 (PCI I/O controller, later)"

@@ -118,7 +118,7 @@ memory BAR needs:
 
 Worked example from this arithmetic: a BAR at PCI address `0x0800_0000` reached as window 0 gives widget offset
 `0x4000_0000 + 0x0800_0000 = 0x4800_0000`, and `+0x40` gives `0x4800_0040`. `heart_addr_xio_to_phys` on widget 13 then gives physical
-`0xe_c800_0040` (the large window, see [the HEART page](../../chips/heart/README.md#processor-pio-windows-and-the-latches-read-after-a-failed-access-irix-6513f)).
+`0xe_c800_0040` (the large window, see [the HEART page](../../devices/heart/README.md#processor-pio-windows-and-the-latches-read-after-a-failed-access-irix-6513f)).
 The `0xe` is bits 35:32 of the address: bit 35 plus widget bits 3:1, not the widget number.
 
 ### What the PIO error path reads from the Bridge
@@ -127,7 +127,7 @@ After a failed access the kernel reaches `pcibr_pioerror` (`0xa800000020082158`)
 **32-bit `lw` at slot + 4**, the odd (low) word of the big-endian doubleword slot; there is no `ld`, and no `lw` at the even
 (upper) word of a slot. Established, whole routines read.
 
-| Slot | Register (see [Bridge registers](../../chips/bridge/README.md)) | Instruction and address |
+| Slot | Register (see [Bridge registers](../../devices/bridge/README.md)) | Instruction and address |
 |---|---|---|
 | `0x100` | interrupt status | `lw` `+0x104`: `pcibr_pioerror` at `0xa80000002008330c` (then `andi 0x8800` and a call to `pcibr_error_dump`); `pcibr_error_dump` `0xa800000020081350` at `0x…8135c`; the helper at `0x…818ac` at `0x…818b0` and `0x…818cc`; `pcibr_error_intr_handler` `0xa800000020081a10` at `0x…81a34` |
 | `0xd0` | PCI bus error address, upper | `lw` `+0xd4`: `pcibr_error_dump` at `0x…81648` and `0x…81654`; the helper at `0x…818c8`; `pcibr_error_extract` `0xa8000000200820c8` at `0x…82118` |

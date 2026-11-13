@@ -148,4 +148,4 @@ Three points here are not:
   reply encoding, how USB enumerates it, and whether a Crosstown2 cable carries management signals for
   a pipe. How the G-brick L1 is managed in an Onyx 3200 with no L2 is also **unknown**.
 
-The common L1 protocol is in [chips/l1/README.md](../../chips/l1/README.md).
+The common L1 protocol is in [devices/l1/README.md](../../devices/l1/README.md).

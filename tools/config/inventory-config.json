@@ -12,15 +12,14 @@
    "questions/README.md",
    "references/documents/specs.md",
    "references/documents/published-sources.md",
-   "chips/*/README.md",
-   "chips/*/notes/*.md"
+   "devices/*/notes/*.md"
   ],
   "headers": [
    "generated/c/*.h",
-   "include/crime.h",
-   "include/gbe.h",
-   "include/router_ip27.h",
-   "include/router_ip35.h"
+   "devices/crime/crime.h",
+   "devices/gbe/gbe.h",
+   "devices/router/router_ip27.h",
+   "devices/router/router_ip35.h"
   ],
   "tables": [],
   "index": [
@@ -196,7 +195,7 @@
    "size": "0x800000",
    "physical": "0x01000000",
    "docs": [
-    "chips/hub/README.md",
+    "devices/hub/README.md",
     "generated/c/hub.h"
    ]
   },
@@ -205,7 +204,7 @@
    "size": "0x100000",
    "physical": "0x0ff00000",
    "docs": [
-    "chips/heart/README.md",
+    "devices/heart/README.md",
     "generated/c/heart.h"
    ]
   }
@@ -284,7 +283,7 @@
    "translate": false,
    "computed": true,
    "label": "constant address",
-   "why": "local Hub register file, the PI, MD, II and NI blocks at offsets 0x000000 to 0x7fffff from the local alias 0x9200000001000000 (chips/hub/README.md, Addresses)",
+   "why": "local Hub register file, the PI, MD, II and NI blocks at offsets 0x000000 to 0x7fffff from the local alias 0x9200000001000000 (devices/hub/README.md, Addresses)",
    "binaries": [
     "IP27/*",
     "firmware/ip27prom.img"
@@ -298,7 +297,7 @@
    "translate": false,
    "computed": true,
    "label": "constant address",
-   "why": "HEART register block (PIU) at physical 0x0ff00000, through the 32-bit uncached window 0xaff00000 that lui-built kernel addresses sign-extend to (chips/heart/README.md, Addresses)",
+   "why": "HEART register block (PIU) at physical 0x0ff00000, through the 32-bit uncached window 0xaff00000 that lui-built kernel addresses sign-extend to (devices/heart/README.md, Addresses)",
    "binaries": [
     "IP30/*",
     "firmware/IP30prom.bin",
@@ -314,7 +313,7 @@
    "translate": false,
    "computed": true,
    "label": "constant address",
-   "why": "HEART register block (PIU) at physical 0x0ff00000 through the 64-bit uncached window 0x9000000000000000 | 0x0ff00000 (chips/heart/README.md, Addresses)",
+   "why": "HEART register block (PIU) at physical 0x0ff00000 through the 64-bit uncached window 0x9000000000000000 | 0x0ff00000 (devices/heart/README.md, Addresses)",
    "binaries": [
     "IP30/*",
     "firmware/IP30prom.bin",
@@ -327,7 +326,7 @@
  "tokens": {
   "window": "CRIME",
   "docs": [
-   "chips/crime/README.md"
+   "devices/crime/README.md"
   ],
   "sources": []
  },
@@ -336,8 +335,8 @@
   "ranges": [],
   "min_decimal": 1000000000,
   "docs": [
-   "chips/crime/README.md",
-   "chips/hub/README.md"
+   "devices/crime/README.md",
+   "devices/hub/README.md"
   ],
   "dispatchers": [
    {

@@ -1,7 +1,7 @@
 # MACE coverage
 
 What the shipped software, the published specification and the public drivers settle about the MACE (the O2's I/O
-ASIC), and what stays open. Register tables and routine readings are on [the chip page](../../chips/mace/README.md); this
+ASIC), and what stays open. Register tables and routine readings are on [the chip page](README.md); this
 page grades the coverage questions that were open. Labels follow [AGENTS.md](../../AGENTS.md): **established**,
 **inferred**, **unknown**.
 

@@ -20,7 +20,7 @@ The block runs from `0x700000` to `0x700190`, 36 registers, each 64 bits wide (t
   memory input queue, the NI and I/O and LB queues), with one error-clear register per record at `+0x100`.
 - The first-error register (`0x700090`), its clear (`0x700190`), and two debug selects (`0x700098`, `0x7000a0`).
 
-The census dump table (see [chips/bedrock/README.md](../../chips/bedrock/README.md)) covers this block as one row,
+The census dump table (see [devices/bedrock/README.md](../bedrock/README.md)) covers this block as one row,
 `0x700000` to `0x7000a0`, with 21 names. The clear registers and the first-error clear sit outside that row.
 
 The header gives no access direction for most registers. The defs unit records the control and error registers as

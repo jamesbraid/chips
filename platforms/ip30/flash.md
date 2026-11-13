@@ -38,7 +38,7 @@ The file is a scan with no text layer; the pages cited were read as images.
 ## Conflict: bit 31 on the IP30 Bridge
 
 The IRIX kernel's `pcibr_map` sets control bit 31 and `pcibr_unmap` clears it (the widget control row in
-`chips/bridge/README.md`). The specification names bit 31 as the flash write enable. Either the kernel
+`devices/bridge/README.md`). The specification names bit 31 as the flash write enable. Either the kernel
 toggles flash writes around device mapping, or the bit means something else in the chip revision the
 IP30 board carries. The sources read here do not decide which. Settling it needs the kernel's
 `pcibr_map` call sites read in full, or a published revision of the Bridge specification that

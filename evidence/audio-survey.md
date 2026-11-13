@@ -12,9 +12,9 @@ Read from the object files in `root/<build>/usr/cpu/sysgen/<build>boot/` (symbol
 
 | Object | Builds | PCI probe or bus | Hinv text | Established? | Page |
 |---|---|---|---|---|---|
-| `mad_dd.o` | IP27, IP30, IP35 | PCI `1412:1724` (`mad_init`, IP35 `0x0`) | `version MAD revision %d, number %d` | probe established | [chips/ice1724](../chips/ice1724/README.md) |
-| `rad_dd.o` | IP27, IP30, IP32, IP35 | PCI `10a9:0005` (`rad_init`, IP35 `0x5110`) | `version RAD revision %d.%d, number %d` | probe established | [chips/rad](../chips/rad/README.md) |
-| `emu_dd.o` | IP35 only, 6.5.30 (absent in 6.5.22) | PCI `1102:0004` (`emu_init`, `0x0`) | `version EMU revision %02X, number %d` | probe established | [chips/emu10k2](../chips/emu10k2/README.md) |
+| `mad_dd.o` | IP27, IP30, IP35 | PCI `1412:1724` (`mad_init`, IP35 `0x0`) | `version MAD revision %d, number %d` | probe established | [devices/ice1724](../devices/ice1724/README.md) |
+| `rad_dd.o` | IP27, IP30, IP32, IP35 | PCI `10a9:0005` (`rad_init`, IP35 `0x5110`) | `version RAD revision %d.%d, number %d` | probe established | [devices/rad1](../devices/rad1/README.md) |
+| `emu_dd.o` | IP35 only, 6.5.30 (absent in 6.5.22) | PCI `1102:0004` (`emu_init`, `0x0`) | `version EMU revision %02X, number %d` | probe established | [devices/emu10k2](../devices/emu10k2/README.md) |
 | `usbaudio_dd.o` | IP35 only (not in IP30, IP27, IP32) | USB audio class, no PCI | `USB audio revision %d.%d, number %d` | strings established | this page |
 | `a3_dd.o` | IP32 only | MACE audio, not PCI | `version A3 revision %d` | out of scope (O2) | none |
 
@@ -69,7 +69,7 @@ which product is not read here). The `emu_dd` link to the Tezro tower's onboard 
 
 The Octane's onboard controller identity (PCI `10a9:0005`, revision `0xc0`, board 12) is the same PCI ID the PCI board uses; the board number
 is not the same: captures of a RAD in a PCI slot read 13.0 (drivers.md), and the 12.0 in 007-3502-003 is an Octane-class value: `rad_attach` takes the board number from bits 7:4 of the PCI revision and gives board 12 a different PCI
-priority ([chips/rad](../chips/rad/README.md)); **established** as driver behaviour. That the Octane onboard device is
+priority ([devices/rad1](../devices/rad1/README.md)); **established** as driver behaviour. That the Octane onboard device is
 revision `0xc0` is not in the driver and is not evidence here.
 
 ## Not audio but found while following the DM thread

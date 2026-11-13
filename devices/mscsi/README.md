@@ -4,7 +4,7 @@ The MSCSI is an XIO board for the Origin 2000 and Onyx2, and for the GIGAchannel
 Bridge and four QLogic ISP1040 SCSI controllers on the Bridge's PCI bus. The PROM types it as board type `0x22`, the
 SCSI type, which the [Crosstown page](../crosstown-ktown/README.md#prom-classification-of-the-origin-200-crosstown-board) lists
 with the other classifier prefixes. The controller contract is on [the ISP1040 page](../isp1040/README.md) and the Bridge
-contract is on [the Bridge page](../../chips/bridge/README.md). This page holds the board's composition, its listed
+contract is on [the Bridge page](../bridge/README.md). This page holds the board's composition, its listed
 revisions and placements, what IRIX prints for it and what is unknown.
 
 Status: draft, imported from published sources. The IRIX kernel strings are read as strings only; the routine that
@@ -38,7 +38,7 @@ means no held source settles it.
 | Fact | Value | Grade and evidence |
 |---|---|---|
 | Bridge revision on the Origin 2000 board | Revision 3 | established: the same listing prints `ASIC BRIDGE Rev 3, (widget 14)` |
-| Bridge revision on the rev M boards | Revision 4 | inferred. The 2016 listing prints `Revision 4` on the board line, and this page reads that number as the Bridge revision, as [the Bridge page](../../chips/bridge/README.md) reads the board-line number for other boards. The board line does not name the Bridge, so the reading is not checked against a Bridge line on that board |
+| Bridge revision on the rev M boards | Revision 4 | inferred. The 2016 listing prints `Revision 4` on the board line, and this page reads that number as the Bridge revision, as [the Bridge page](../bridge/README.md) reads the board-line number for other boards. The board line does not name the Bridge, so the reading is not checked against a Bridge line on that board |
 | The wiki's Origin 200 boards | Revision 3 on the board line | inferred as the Bridge revision, on the same reading. No Bridge line for those boards is quoted |
 
 ## Controller labels
@@ -76,4 +76,4 @@ read as that byte here. What each controller's revision byte is: **unknown**.
 - The IRIX 6.5.30 IP27 kernel: the three part prefixes and the `Probing MSCSI/A` and `Probing MSCSI/B` messages, read as
   strings only.
 - The PROM classifier table in [the Crosstown page](../crosstown-ktown/README.md), which is established by disassembly of the IP27 PROM 6.156.
-- Existing reviewed contracts: [ISP1040](../isp1040/README.md), [Bridge](../../chips/bridge/README.md) and [BaseIO](../baseio/README.md).
+- Existing reviewed contracts: [ISP1040](../isp1040/README.md), [Bridge](../bridge/README.md) and [BaseIO](../baseio/README.md).

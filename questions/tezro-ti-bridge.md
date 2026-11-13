@@ -34,7 +34,7 @@ seven Origin 350 and Onyx 350 postings with an IO9 board line); the Tezro guides
    - Every one of the 14 callers of the config-address builder (`0x1fc47b04`) goes through a builder that has
      fields for widget, head, device and function only. It forms the type-0 window (`+0x20000`, or `+0x820000` for head
      1, plus device << 12 plus function << 8) and has no bus-number field. No `lui 2`/`lui 0x82` plus `0x8000` pair (the
-     type-1 window at `+0x28000`, see [bridge](../chips/bridge/README.md)) exists in the text of either the outer
+     type-1 window at `+0x28000`, see [bridge](../devices/bridge/README.md)) exists in the text of either the outer
      image or the nested monitor.
    - The PROM does know the part by ID in one place only: the configuration-space diagnostic (`0x1fc424d4` to
      `0x1fc42d90`, name table at `0x84ad0` to `0x84bb0`) lists it as a bridge by name and checks only its command/status
@@ -60,7 +60,7 @@ seven Origin 350 and Onyx 350 postings with an IO9 board line); the Tezro guides
      next one 17. **Inferred** (static read, not executed; the primary-bus input comes from the PCI host's own info).
    - Gate: `ppb_scan` refuses to initialise anything behind a bridge whose host bus is not multi-master (it prints a
      warning naming the host slot and the tunable `pciio_multimaster_override`; `0x23c` to `0x28c`). The PIC bus-info
-     routine in `pcibr.o` reports multi-master only for PCI-X mode (see [ioc4](../chips/ioc4/README.md)). So any
+     routine in `pcibr.o` reports multi-master only for PCI-X mode (see [ioc4](../devices/ioc4/README.md)). So any
      device found behind the bridge implies head 0 of the IO9 PIC runs in PCI-X mode or the tunable is set.
      **Inferred**; the head's mode is not in any capture.
    - The pcibr object has the matching support: type-1 address and counter accessors (`pcireg_type1_cfg_addr`,

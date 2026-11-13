@@ -30,9 +30,9 @@ and `hubni.h` / `hubni_next.h` (SN1 headers); OpenBSD `sys/arch/sgi/sgi/ip27_mac
    (the local node) or from 0x9000000034000000 plus the node number shifted left 33 (an explicit node). The
    two pool words are at 0xc00000001fd677d0 and 0xc00000001fd677b8 in the outer segment. The two addresses
    differ only in address bit 29, the local-versus-node-addressed alias, as for the other register windows in
-   [Bedrock](../chips/bedrock/README.md#window-and-how-it-is-reached). The register sits at offset
+   [Bedrock](../devices/bedrock/README.md#window-and-how-it-is-reached). The register sits at offset
    0x4000000 of the node's local register space, far above the blocks the
-   [Bedrock census](../chips/bedrock/README.md) lists (they end at 0x7e0040); no census block covers it. Agreement: OpenBSD reads the same address as register 0 of the first of two "synergy" blocks
+   [Bedrock census](../devices/bedrock/README.md) lists (they end at 0x7e0040); no census block covers it. Agreement: OpenBSD reads the same address as register 0 of the first of two "synergy" blocks
    (`HSPEC_SYNERGY0` = 0x04000000), through the remote alias, and calls it a 16-bit identification register.
 2. **Established: which bits software examines.** Every load site found masks the word with 0xf000 and
    compares the result with a class value. The exceptions are one routine in each segment (outer 0x1fc1f3a0,
@@ -190,7 +190,7 @@ and `hubni.h` / `hubni_next.h` (SN1 headers); OpenBSD `sys/arch/sgi/sgi/ip27_mac
 - **Address-translation entries 512 to 1023.** The kernel's translation-entry allocator draws from a node-owned
   resource map first and falls back to a second one; the entry count that decides which map frees an entry is
   the halfword at +0x70 of the bridge state record, which the attach routine sets to 128 or 1024 by bridge type
-  ([bridge page](../chips/bridge/README.md)). Established: the allocate and free routines (`pcibr_ate_alloc`,
+  ([bridge page](../devices/bridge/README.md)). Established: the allocate and free routines (`pcibr_ate_alloc`,
   `pcibr_ate_free`) make no distinction between indices 512 to 1023 and 0 to 511, and the attach routine
   zeroes all of them. Other users of the entries were not searched. Whether silicon returns written values
   from them is the question the bridge page already marks open for the read view.

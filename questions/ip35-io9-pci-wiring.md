@@ -55,9 +55,9 @@ read beyond those string offsets. Register names for the Ethernet controller are
 | TI bridge (104c:ac28) at widget 15 pci id 2 on a Tezro, window 2 | printed presence established (five Tezro postings); window mapping inferred; the cause of its absence on Origin 350 unknown | an IRIX `/hw` listing of `pci-x/0/2/` on a Tezro (see [tezro-ti-bridge.md](tezro-ti-bridge.md): the PROM scan cannot show devices behind the bridge) |
 | BCM5701 PCI revision 0x15 (chip id 0x105) on a Tezro | inferred, same board family | the same capture on a Tezro |
 | INTB and INTD wiring on the board | unknown | no software on this board uses them for these parts; a board schematic would settle it |
-| Why the IOC4 reports PCI bus speed through register 0x24 | see [../../chips/ioc4/README.md](../chips/ioc4/README.md) | the PIC control register's speed field on the IO9 bus, read by the PROM or IRIX at attach |
+| Why the IOC4 reports PCI bus speed through register 0x24 | see [../../chips/ioc4/README.md](../devices/ioc4/README.md) | the PIC control register's speed field on the IO9 bus, read by the PROM or IRIX at attach |
 | What the PROM's Ethernet and NIC diagnostics do ("BCOM_570X_GIGE", "GIGE570X", "nic_eaddr" strings at 6.210 offsets 0x84ba0, 0x881c8, 0x88e70) | unknown | read the routines that reference those strings; they sit in a data region beyond the text this pass read |
 
 Sources. SGI IP35 PROM 6.210 and 6.211 as above; IRIX 6.5.30 `pcibr.o`, `if_tg.o`; OpenBSD/sgi Origin 350 support
 announcement and 4.6-current boot output (October 2009, OpenBSD `misc` list); public OpenBSD
-`sys/arch/sgi/xbow/xbridge.c` for the PIC-at-device-0 numbering, as used in [../../chips/pic/README.md](../chips/pic/README.md).
+`sys/arch/sgi/xbow/xbridge.c` for the PIC-at-device-0 numbering, as used in [../../chips/pic/README.md](../devices/pic/README.md).

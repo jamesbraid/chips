@@ -5,7 +5,7 @@ them apart, the register set software drives, and how a port comes up. It is a
 hardware description of the switch only; the host ends (HEART, Hub, Bedrock), the
 widgets behind the ports, and the shared widget register block are covered in
 [crosstalk-link.md](../crosstalk/README.md), and the per-register evidence is in
-[`chips/xbow/README.md`](../../chips/xbow/README.md) and its census.
+[`devices/xbow/README.md`](README.md) and its census.
 
 Labels follow [AGENTS.md](../../AGENTS.md): **established** (a binary read in full, a
 published page, or a public driver file), **inferred** (reasoned; the reasoning is
@@ -188,7 +188,7 @@ established is software behaviour only:
   address registers, then the clearing alias, then the status read-back) run for part
   `0xd100` and require the widget 0 status read to return the requester's widget number
   in bits 9:6 on an integrated crossbar. Established as PROM behaviour; the register-level
-  detail is in [`chips/xbow/README.md`](../../chips/xbow/README.md).
+  detail is in [`devices/xbow/README.md`](README.md).
 
 Not established: whether PXBOW is a separate die, a section of the PIC, or a reused
 Crossbow core; whether it has all eight link controllers; whether it has the fences and

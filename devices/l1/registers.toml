@@ -1,4 +1,4 @@
-# Written by retools/tools/chips/gen_headers.py from chips/l1/census/. Do not edit: fix the census or its config and rerun.
+# Written by retools/tools/chips/gen_headers.py from devices/l1/census/. Do not edit: fix the census or its config and rerun.
 unit = "l1"
 prefix = "L1"
 title = "L1 system controller UART path (node-local window), Origin 3000 family"

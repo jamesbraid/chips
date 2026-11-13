@@ -2,7 +2,7 @@
 
 The Cad Duo is an SGI option board, part 030-1155-002. It is a PCI card with its own IOC3, which gives it one Ethernet
 interface and one PS/2 keyboard and mouse pair, and no serial ports. The chip's side of the card is on the
-[IOC3 page](../../chips/ioc3/README.md): the `CAD DUO` population, the `030-1155-` callback that sets subdevice mask
+[IOC3 page](../ioc3/README.md): the `CAD DUO` population, the `030-1155-` callback that sets subdevice mask
 `0x09`, and the absence of serial ports are all established there from IRIX and the public drivers. This page holds
 what that page does not.
 

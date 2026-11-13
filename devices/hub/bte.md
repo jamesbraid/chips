@@ -3,7 +3,7 @@
 The Origin 2000 Hub (SN0) has two block transfer engines, BTE 0 and BTE 1, in its I/O section.
 Each copies or zero-fills a range of node memory in 128-byte cache lines without the processor
 touching the data. The register map and the decode of the length/status word are in
-[chips/hub/README.md](../../chips/hub/README.md) and the generated reference
+[devices/hub/README.md](README.md) and the generated reference
 [devices/hub/registers.md](registers.md). The Bedrock (SN1) engines are a separate page,
 [bedrock-io-interface.md](../bedrock_ii/README.md).
 

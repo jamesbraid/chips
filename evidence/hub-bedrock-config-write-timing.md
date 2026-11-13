@@ -108,7 +108,7 @@ immediately after a cache flush) and that path does the hardware work:
 4. The loop `0x26370` to `0x263ac`, once per compact node, with the base `0x9200000001800000` plus the node's number
    shifted left 32 (node alias): `sd` of `region_mask | 1` to offset 0x18 (`0x2638c`), `sd` of 2 to offset 0x28
    (`0x26394`), `sd` of 0 to `0x1c00000 + 0x190`, which is I/O offset 0x400190, entry 6 of the big-window table
-   ([../chips/hub/README.md](../chips/hub/README.md), `0x400190`) (`0x26398`). The three stores are consecutive; no
+   ([../chips/hub/README.md](../devices/hub/README.md), `0x400190`) (`0x26398`). The three stores are consecutive; no
    instruction in the loop other than table loads reads anything from the node. 6.5.22 has the same loop at `0x26138`,
    `0x26140`, `0x26144`.
 5. After the loop: `spinlock_init`, `iograph_early_init`, `mem_init`, `hubdev_init` (`0x263cc` to `0x26404`); no
@@ -126,7 +126,7 @@ hold a probed node, with bit 0 forced on (**E**: `ori $13,$13,0x1` at `0x26388`)
 Not found: any read-back of `PI_REGION_PRESENT`, `PI_CALIAS_SIZE` or the I/O entry after the stores, in `mlreset` or
 in the routines it calls before it returns. The only readers of the registers in the
 kernel are `memory_iscalias` and `page_local_calias` (read 0x28), `handle_cac_buserr` (read 0x18), and the directory
-routines (read 0x200018) (census, [../chips/hub/README.md](../chips/hub/README.md)); none of them is a verify of a
+routines (read 0x200018) (census, [../chips/hub/README.md](../devices/hub/README.md)); none of them is a verify of a
 store. **E.**
 
 Single processor? **I.** `mlsetup` is the boot processor's early setup. I did not trace when the kernel releases the

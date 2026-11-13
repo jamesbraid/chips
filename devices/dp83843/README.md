@@ -23,7 +23,7 @@ would settle it.
   not re-checked for this import. A page cited a few pages off is the first thing to check.
 - **OpenBSD sgi mailing list, "Origin 300 with NUMA link"**, Maurice Janssen, 2014-02-12.
   The post quotes a boot log from a real Origin 300. The same post is already a source for
-  the [IOC3 page](../../chips/ioc3/README.md), which carries the Origin 300 supplement.
+  the [IOC3 page](../ioc3/README.md), which carries the Origin 300 supplement.
 - **OpenBSD MII device table** (`sys/dev/mii/miidevs`), for the model numbers of the National
   Semiconductor PHYs. The `openbsd` submodule is not checked out in this repository, so
   those numbers were not re-read here. Every fact that depends on them is marked inferred.
@@ -40,7 +40,7 @@ would settle it.
   so the same OUI decodes to `0x5C10` for the DP83843 and to `0x5C0x` for the DP83840 family.
   This relies on the OpenBSD model constants, which are not re-read here.
 - **The IRIX probe accepts this identity.** `ef_phyprobe`, described in the
-  [IOC3 page](../../chips/ioc3/README.md), accepts the two values `0x20005c0` and `0x20005c1`, which are PHYIDR1 followed by PHYIDR2
+  [IOC3 page](../ioc3/README.md), accepts the two values `0x20005c0` and `0x20005c1`, which are PHYIDR1 followed by PHYIDR2
   with its revision nibble dropped. Those are the model-0 and model-1 identities, so the probe takes the
   DP83843 as well as the DP83840 family. Inferred from the bit mapping of the probe's
   established accept list.

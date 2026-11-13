@@ -151,7 +151,7 @@ dispatch on, so it is the best stable key for a name.
 | 0xc002 | 0x036 | Bridge | H; O | established |
 | 0xd002 | 0x024 | Xbridge | H (6.5.30 only); O | established |
 | 0xd102 / 0xd112 | 0x024 | PIC, bus 0 / bus 1 | H (6.5.30 only); O gives the second id | established (0xd102); inferred (0xd112) |
-| 0xe000 / 0xe010 | 0x024 | TIOCP, head 0 / head 1 | C `chips/tiocp/README.md` (the IP35 kernel's bridge accessors branch on both, manufacturer 36 decimal); O | inferred (not re-read here; the TIOCP page holds the reading) |
+| 0xe000 / 0xe010 | 0x024 | TIOCP, head 0 / head 1 | C `devices/tiocp/README.md` (the IP35 kernel's bridge accessors branch on both, manufacturer 36 decimal); O | inferred (not re-read here; the TIOCP page holds the reading) |
 | 0xe020 | 0x024 | TIOCA | L `arch/ia64/include/asm/sn/tioca.h`; O | inferred |
 | 0xce00 | not read | TIOCE | L `arch/ia64/include/asm/sn/tioce.h`, `tiocx.h` | inferred |
 | 0xc101 | 0x036 (O) | Hub | H | inferred |
@@ -385,7 +385,7 @@ package marking.
   PCI-X buses; the figure labels PIC ports) and p78 (PX-brick, same chip, "can
   connect an InfiniteReality graphics pipe to a CR-brick"). K: the IP35 kernel
   has a PIC driver object, a PIC register-dump debug routine and a PIC asic-type
-  value. O `xbowdevs` and `xbridge.c`. C `chips/pic/README.md`. The shipped
+  value. O `xbowdevs` and `xbridge.c`. C `devices/pic/README.md`. The shipped
   header refers to an SGI "PIC manual"; it was not found in the Library.
 - **Grade.** Established as SGI's own name and as a part number. **Not
   Xbridge.** Two-widget structure: established (O); adjacency of the widget
@@ -395,7 +395,7 @@ package marking.
 
 - **What.** TIO is the Altix-generation I/O ASIC family. TIOCP is the PCI-X
   bridge variant (same register layout as PIC in the IRIX accessors, C
-  `chips/tiocp/README.md`); TIOCA an AGP bridge (L); TIOCE a variant Linux
+  `devices/tiocp/README.md`); TIOCA an AGP bridge (L); TIOCE a variant Linux
   names "CE", with two ports and address translation entries (L `tioce.h`). L's
   address comments call TIO's address space "coretalk"; how that relates to
   Crosstalk is unknown.
@@ -407,7 +407,7 @@ package marking.
     IP30, IP32 and IP35 has a TIOCP value; the PCI bridge drivers include a
     TIOCP header; the IP35 kernel's debug name table has TIO-prefixed
     widget-setup functions. H has the TIOCP type as the last ASIC type; C
-    `chips/tiocp/README.md` (the accessors branch on part 0xe000 and 0xe010,
+    `devices/tiocp/README.md` (the accessors branch on part 0xe000 and 0xe010,
     manufacturer 36).
   - L `arch/ia64/include/asm/sn/{tioca,tioce,tiocp,tio,tiocx}.h`,
     `arch/ia64/sn/pci/tioc{a,e}_provider.c`; O `xbowdevs` (comment: TIO

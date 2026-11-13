@@ -1,4 +1,4 @@
-# Written by retools/tools/chips/gen_headers.py from chips/bridge/census/. Do not edit: fix the census or its config and rerun.
+# Written by retools/tools/chips/gen_headers.py from devices/bridge/census/. Do not edit: fix the census or its config and rerun.
 unit = "bridge"
 prefix = "BRIDGE"
 title = "Bridge (XIO-to-PCI bridge), Origin 2000 and Octane"

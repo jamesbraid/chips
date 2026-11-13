@@ -2,7 +2,7 @@
 
 # SN1 network router: port block, local routing table and remote reset mask (public header positions)
 
-Addresses are port-relative: a port's block starts at the base the header computes from the link number L (1 to 8), ((L+1) & 0xe) << 15 | ((L+1) & 1) << 11. Field positions, entry counts and offsets come from the public Linux 2.5.40 ia64 SN router header, so they are established as header positions, following the convention for the other SN1 units. What a header macro computes is established only as arithmetic; what the hardware does with a table value is not stated by the header and is unknown. No router specification is held, so every reset is unknown. The census of the kernels does not reach the routing tables; their layout here comes from the header alone. The prose is in chips/router/README.md.
+Addresses are port-relative: a port's block starts at the base the header computes from the link number L (1 to 8), ((L+1) & 0xe) << 15 | ((L+1) & 1) << 11. Field positions, entry counts and offsets come from the public Linux 2.5.40 ia64 SN router header, so they are established as header positions, following the convention for the other SN1 units. What a header macro computes is established only as arithmetic; what the hardware does with a table value is not stated by the header and is unknown. No router specification is held, so every reset is unknown. The census of the kernels does not reach the routing tables; their layout here comes from the header alone. The prose is in devices/router/README.md.
 
 Unit `router_sn1`, macro prefix `ROUTER_SN1`.
 Default source: Linux 2.5.40 ia64 SN router header (RR_LOCAL_TABLE0, RR_LOCAL_TABLE, RR_RESET_MASK, RRM_RESETOK, RTABLE_SHFT, RTABLE_MASK, MAX_ROUTER_PORTS, RR_LOCAL_ENTRIES, RR_META_ENTRIES).

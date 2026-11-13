@@ -2,7 +2,7 @@
 
 Routines of `IP30/unix` (the linked IRIX 6.5 kernel for the Octane; addresses are virtual addresses) that reach the
 crossbar's per-link register blocks. A link block is 0x40 bytes and the registers below are the 32-bit words at the offsets
-the [Xbow page](../../../chips/xbow/README.md) lists. A bare number such as `-15456` addresses the process page below zero.
+the [Xbow page](../../../devices/xbow/README.md) lists. A bare number such as `-15456` addresses the process page below zero.
 
 - `xbow_reset_link` (`IP30/unix` `0xa80000002003d430`, 236 bytes, frame 48 bytes)
   resets one crossbar link and waits for it to come back, returning 0 when it did and -1 when a timed wait ran out. The

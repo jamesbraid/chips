@@ -3,7 +3,7 @@
 Status: **research draft, not independently reviewed.** The board is an XIO board, not an ASIC, so this page
 holds no register contract of its own. It records the board's composition, PCI placement, interrupt wiring,
 panel connectors and the one-wire identity records that IRIX reads, and it says which of those facts the
-[IOC3 page](../../chips/ioc3/README.md) and the [Bridge page](../../chips/bridge/README.md) already hold.
+[IOC3 page](../ioc3/README.md) and the [Bridge page](../bridge/README.md) already hold.
 
 A BaseIO connects to a Crossbow through a Bridge. A 32-bit PCI bus behind the Bridge carries one IOC3 and two
 SCSI controllers. The BaseIO-G, the Onyx2 variant, adds a MediaIO daughtercard (MIO) with a second IOC3 and a
@@ -53,7 +53,7 @@ is the device number the IP30 driver registers for its own PCI audio board. It i
 page does not change it.
 
 The owner's `hinv` does not show a PCI function for the genlock card, so the listing does not say whether that
-unit had one fitted. The listing shows no function at slot 4. The [IOC3 page](../../chips/ioc3/README.md) covers
+unit had one fitted. The listing shows no function at slot 4. The [IOC3 page](../ioc3/README.md) covers
 the chip's own functions behind each slot.
 
 ## Chips on the board
@@ -129,7 +129,7 @@ Bit 6 appears only in the MediaIO value and is an unconfirmed candidate for the 
 The word comes from the board's one-wire identity [8]:
 
 - `0xbf` for the standard BaseIO's IOC3 at PCI device 2 (`0xb7` without the keyboard and mouse option). The
-  [Bridge page](../../chips/bridge/README.md) records the same two values as they reach the subdevice routine.
+  [Bridge page](../bridge/README.md) records the same two values as they reach the subdevice routine.
 - `0x7a` for the MediaIO's IOC3 at PCI device 6, when the one-wire identity carries the `030-0880` part number.
   So device 6 does not get Ethernet, and IRIX attaches serial, keyboard and mouse there.
 - A separate override writes `0x91` when the IOC3's hardware-graph name contains a particular string. That string

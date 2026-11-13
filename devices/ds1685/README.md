@@ -29,7 +29,7 @@ not settled, with the route that would settle it. No fact here was measured on a
 - **NetBSD `sys/dev/ic/ds1687reg.h`**, a third transcription of the register map, used as a cross-check
   on names and region sizes.
 - **chips pages**: [bridge-family.md](../bridge/family.md) (Octane Bridge interrupt pin 6) and
-  [coverage-mace.md](../mace/coverage.md) and [mace/README.md](../../chips/mace/README.md) (the calendar clock on
+  [coverage-mace.md](../mace/coverage.md) and [mace/README.md](../mace/README.md) (the calendar clock on
   the O2's MACE, a directly mapped part of the same family).
 
 The driver facts above are as the earlier summary recorded them. None of the trees was reopened for

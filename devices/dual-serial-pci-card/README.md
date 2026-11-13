@@ -2,7 +2,7 @@
 
 SGI's dual-serial PCI card carries one IOC3 wired for serial ports A and B and nothing else. It is the PCI
 counterpart of the serial pair on the [BaseIO](../baseio/README.md), with no Ethernet, keyboard or clock. The
-[IOC3 page](../../chips/ioc3/README.md) holds the routines that set its subdevice word and choose its interrupt line.
+[IOC3 page](../ioc3/README.md) holds the routines that set its subdevice word and choose its interrupt line.
 This page holds the rest.
 
 Status: draft, imported from published sources. The routine facts come from a disassembly the source record cites.
@@ -16,9 +16,9 @@ means no held source settles it.
 
 | Fact | Grade | Evidence |
 |---|---|---|
-| IRIX enables serial A and B and nothing else: subdevice word `0x30` for prefixes `030-1657-` and `030-1664-` | established | `pci_ioc3_sio_vmc`, registered by `ioc3_init` in IRIX 6.5.30 IP27 `ioc3.o`; see [the IOC3 page](../../chips/ioc3/README.md) |
+| IRIX enables serial A and B and nothing else: subdevice word `0x30` for prefixes `030-1657-` and `030-1664-` | established | `pci_ioc3_sio_vmc`, registered by `ioc3_init` in IRIX 6.5.30 IP27 `ioc3.o`; see [the IOC3 page](../ioc3/README.md) |
 | OpenBSD enables the same two ports for the same prefixes | inferred | OpenBSD `sys/arch/sgi/pci/ioc.c` entry for `030-1657-` and `030-1664-`; a public driver's expectation |
-| The interrupt line is B (line 2) of the card's slot when the chip has no Ethernet and its own record holds either prefix. Any other chip without Ethernet takes line A | established | `ioc3_attach`; the rule is stated on [the IOC3 page](../../chips/ioc3/README.md) |
+| The interrupt line is B (line 2) of the card's slot when the chip has no Ethernet and its own record holds either prefix. Any other chip without Ethernet takes line A | established | `ioc3_attach`; the rule is stated on [the IOC3 page](../ioc3/README.md) |
 | Line B reaches Bridge pin `slot ^ 4` | established for IRIX's `pcibr_intr_bits`, as [the IP35 IO9 note](../../questions/ip35-io9-pci-wiring.md) records. The card's own wiring is unknown | the Bridge's line-B rule |
 | The PROM recognises the card by its prefix alone. Its record is found by a substring search of the formatted record text | established | the PROM routine at image address `0x1fc3f410`, which enables the chip's one-wire port, reads its record and searches it for either prefix (the search itself is at `0x1fc41e5c`) |
 | The PROM never picks the card as its console IOC3 | established | the console-IOC3 search at `0x1fc374bc` skips the card's set-up path at `0x1fc27bdc`. Another caller skips the IOC3 set-up at `0x1fc27ae0`, and a third leaves the chip out of the IOC3 components it builds at `0x1fc3f1a8` |
@@ -41,7 +41,7 @@ dash number, revision and name reach only the text that `hinv -mv` prints.
 ## Sources
 
 - IRIX 6.5.30 IP27 kernel, `ioc3.o`: `ioc3_init`, `pci_ioc3_sio_vmc`, `ioc3_attach` and `ioc3_intb_needed`. Read as
-  the [IOC3 page](../../chips/ioc3/README.md) records them.
+  the [IOC3 page](../ioc3/README.md) records them.
 - IP27 PROM payload shipped with IRIX 6.5.30: the one-wire record routine and its three callers.
 - Stock list: comp.sys.sgi.marketplace, 26 January 2004, part 030-1657-003.
 - OpenBSD `sys/arch/sgi/pci/ioc.c`, a public driver. Software expectation only.

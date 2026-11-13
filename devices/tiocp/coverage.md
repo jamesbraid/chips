@@ -1,7 +1,7 @@
 # TIOCP coverage
 
 What the shipped software and the public drivers settle about the TIOCP, the PCI-X bridge of the later (Altix-class)
-SN generation. Register-level facts live on [the chip page](../../chips/tiocp/README.md); this page grades each coverage
+SN generation. Register-level facts live on [the chip page](README.md); this page grades each coverage
 question and says what would settle the rest. Labels follow [AGENTS.md](../../AGENTS.md): **established**, **inferred**,
 **unknown**.
 

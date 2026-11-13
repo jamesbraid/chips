@@ -38,8 +38,8 @@ a discriminating test. A fact that no shipped binary, published document or publ
 supports is left **unknown**.
 
 **Sources, short forms.**
-- *Census*: the `chips` repository entries for each chip ([HEART](../../chips/heart/README.md),
-  [Hub](../../chips/hub/README.md), [Bedrock](../../chips/bedrock/README.md)), read from the IRIX
+- *Census*: the `chips` repository entries for each chip ([HEART](../heart/README.md),
+  [Hub](../hub/README.md), [Bedrock](../bedrock/README.md)), read from the IRIX
   6.5.30 kernels, IP30/IP27/IP35 PROMs and the IP30 diagnostic and monitor.
 - *Linux*: `arch/mips/include/asm/sgi/heart.h`, `asm/sn/sn0/{hubio,hubpi,addrs}.h`,
   `arch/mips/sgi-ip27/{ip27-xtalk,ip27-init}.c`, `sgi-ip30/ip30-xtalk.c`; the IP35 tree's
@@ -143,7 +143,7 @@ ranges, each naming the widget in the address:
 | Space (software name) | Physical range | Window per widget | Evidence |
 |---|---|---|---|
 | Main | `0x1000_0000 + w * 0x0100_0000` | 16 MB | **Established**: OpenBSD `ip30_widget_short`, Linux `ip30-xtalk.c`; kernel pointers at `0xb8000000` for widget 8 (Census) |
-| Large | `0x8_0000_0000 + w * 0x8000_0000` | 2 GB | **Established** as the IRIX contract: `heart_addr_xio_to_phys` returns it for any range ending past 16 MB and within 2 GB, and `heart_paddr_to_port` decodes it back, in 6.5.13f, 6.5.22 and 6.5.30 ([HEART](../../chips/heart/README.md#processor-pio-windows-and-the-latches-read-after-a-failed-access-irix-6513f)). What the silicon decodes is **unknown**, not measured |
+| Large | `0x8_0000_0000 + w * 0x8000_0000` | 2 GB | **Established** as the IRIX contract: `heart_addr_xio_to_phys` returns it for any range ending past 16 MB and within 2 GB, and `heart_paddr_to_port` decodes it back, in 6.5.13f, 6.5.22 and 6.5.30 ([HEART](../heart/README.md#processor-pio-windows-and-the-latches-read-after-a-failed-access-irix-6513f)). What the silicon decodes is **unknown**, not measured |
 | Huge | `w * 0x10_0000_0000`, w = 1..15 | 64 GB | **Established** for use: OpenBSD `ip30_widget_long`; the range is **inferred** from that use |
 
 - Widget 0 has no Huge window, because `0 << 36` is low memory. OpenBSD maps whole widget

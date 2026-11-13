@@ -1,4 +1,4 @@
-# Written by retools/tools/chips/gen_headers.py from chips/xbow/census/. Do not edit: fix the census or its config and rerun.
+# Written by retools/tools/chips/gen_headers.py from devices/xbow/census/. Do not edit: fix the census or its config and rerun.
 unit = "xbow"
 prefix = "XBOW"
 title = "Xbow (crossbar)"

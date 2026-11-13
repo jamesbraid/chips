@@ -1,4 +1,4 @@
-# Written by retools/tools/chips/gen_headers.py from chips/pic/census/. Do not edit: fix the census or its config and rerun.
+# Written by retools/tools/chips/gen_headers.py from devices/pic/census/. Do not edit: fix the census or its config and rerun.
 unit = "pic"
 prefix = "PIC"
 title = "PIC (dual-head PCI-X bridge), Origin 3000 family"

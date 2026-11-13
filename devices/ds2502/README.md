@@ -5,7 +5,7 @@ The Maxim DS2502 is a 1-Wire add-only memory: a factory-lasered 64-bit ROM (fami
 address from a firmware variable, and two sources tie a one-wire identity part to the O2's I/O ASIC. Which part a
 physical O2 carries, and what it holds, is not settled. The part's constants are in `devices/ds2502/registers.toml`, and the
 generated reference is `devices/ds2502/registers.md`. The MACE register bits that drive and sample its line are in
-`devices/mace/registers-extra.toml` and on [the MACE chip page](../../chips/mace/README.md). This page holds what those units do not.
+`devices/mace/registers-extra.toml` and on [the MACE chip page](../mace/README.md). This page holds what those units do not.
 
 Each fact carries one label. **Established** means the manufacturer datasheet or the MACE specification states it, as
 the source records it. **Inferred** means arithmetic on an established fact, or a public driver's reading of how

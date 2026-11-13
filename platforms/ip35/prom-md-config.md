@@ -197,7 +197,7 @@ The chain, each link read in full (E):
      the master after the call, loop in 3,000,000-count delays until the reset takes effect.
 5. The values: the public header comments name +0x680010 "NI_RESET_ENABLE" (bit 0 "let the link layer reset the
    Bedrock") and +0x680008 "NI_PORT_RESET" (bit 1 "send warm reset", bit 2 "reset local Bedrock"), per
-   [chips/bedrock/README.md](../../chips/bedrock/README.md) "Network port reset" (names are I). So the kernel's default
+   [devices/bedrock/README.md](../../devices/bedrock/README.md) "Network port reset" (names are I). So the kernel's default
    restart is a local Bedrock reset plus a warm reset over the link.
 
 No store to a processor's Status, no jump to the PROM's reset vector and no call through the ARCS firmware vector is

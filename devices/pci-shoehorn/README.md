@@ -3,7 +3,7 @@
 The PCI shoehorn is an SGI XIO option board with one Bridge and one PCI slot. It is a separate product from the
 three-slot PCI shoebox ([pci-shoebox.md](../pci-shoebox/README.md)) and from the Octane PCI module
 ([octane-pci-module.md](../octane-pci-module/README.md)). The Bridge's register contract is in
-[bridge-family.md](../bridge/family.md) and on [the Bridge page](../../chips/bridge/README.md). This page covers the
+[bridge-family.md](../bridge/family.md) and on [the Bridge page](../bridge/README.md). This page covers the
 board: its identity, where it fits, its slot, its interrupt wiring as software expects it, what the PROM and IRIX
 print for it, and what is unknown.
 

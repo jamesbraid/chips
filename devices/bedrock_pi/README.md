@@ -4,7 +4,7 @@ The processor interface is the Bedrock unit a processor touches first and most. 
 each facing two processor slots, A and B. Each one holds the interrupt pending banks and per-processor masks, the
 real-time counter and its compares, the region and cached-alias controls, the protection registers, the graphics credit
 registers and the error capture for its two processors. The census of the shipped kernels names both interfaces and both
-slots by the strings the PROM and kernel print (see [chips/bedrock/README.md](../../chips/bedrock/README.md)).
+slots by the strings the PROM and kernel print (see [devices/bedrock/README.md](../bedrock/README.md)).
 
 Register layouts, with a grade on each field, are in [devices/bedrock_pi/registers.toml](registers.toml). The generated
 reference is [devices/bedrock_pi/registers.md](registers.md). Offsets in this page and in the reference are inside one

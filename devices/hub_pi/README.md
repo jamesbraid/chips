@@ -2,7 +2,7 @@
 
 The processor interface (PI) is the Hub block that faces the node's two processors. Its offsets sit
 below `0x200000` in the Hub register space, and the second processor's set repeats the first at the
-pairing offsets the header gives. The census in [chips/hub/README.md](../../chips/hub/README.md) reaches
+pairing offsets the header gives. The census in [devices/hub/README.md](../hub/README.md) reaches
 the interrupt, real-time counter, error and timer registers. The register list with grades is in
 [devices/hub_pi/registers-extra.md](registers-extra.md) and [devices/hub/registers.md](../hub/registers.md).
 This page covers what the public Linux SN0 processor-interface header adds, and what stays open.
@@ -32,7 +32,7 @@ each entry.
   processor's set is `0x28` above the other's. The interrupt compare at `0x320` and `0x348` is already in
   devices/hub/registers.toml. The header names the counters and gives no field layout beyond the page enable.
 - **Clear-on-read aliases** of error status 0 at `0x438` and `0x458`. The header's comment says a read clears
-  the register. The kernel's use of the status 1 alias is recorded in chips/hub/README.md and is not reconciled here.
+  the register. The kernel's use of the status 1 alias is recorded in devices/hub/README.md and is not reconciled here.
 - **Spool compare, CRB timeout, forced check bits and negative-acknowledge** registers at `0x470` to `0x4b8`.
 
 The layouts the header gives for registers the census names are these:
@@ -62,7 +62,7 @@ board, and it reads the counter only as a reference. That is a software expectat
 measurement.
 
 The census gives a consistent but not independent check. The IP27 kernel stores the counter plus 1250 as the
-profiling compare (chips/hub/README.md). At 1.25 MHz that is one millisecond.
+profiling compare (devices/hub/README.md). At 1.25 MHz that is one millisecond.
 
 What is **unknown** is whether the counter's rate comes from the clock control register on this chip. The
 Bedrock layout, a later chip, describes that relation, and a sibling chip is a hypothesis only. On the
@@ -80,7 +80,7 @@ behaviour on a live pipe.
 
 ## Interrupt delivery
 
-The census in chips/hub/README.md has the bank-to-level table, the levels the kernel connects and the
+The census in devices/hub/README.md has the bank-to-level table, the levels the kernel connects and the
 dispatcher. This import adds only the Cause bit positions above. How a line behaves when its pending bits
 change is not given by the header and is not stated here.
 
@@ -103,7 +103,7 @@ change is not given by the header and is not stated here.
   maximum count on each, if the rate follows the clock.
 - **Graphics credit semantics** and the page address field: see the graphics section.
 - **Sense of the interrupt-modify write.** Bit 8 of the value written to offset `0x90` is the set or clear
-  choice in the shipped firmware's posting code. The census in chips/hub/README.md says the sense is not
+  choice in the shipped firmware's posting code. The census in devices/hub/README.md says the sense is not
   read. Reading that store in the firmware image would settle it.
 - **Access types** of every register in [devices/hub_pi/registers-extra.toml](registers-extra.toml): assumed in
   each entry, unknown until a live read or a specification.

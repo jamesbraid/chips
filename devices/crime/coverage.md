@@ -1,6 +1,6 @@
 # CRIME coverage
 
-The CRIME's register tables and routine readings are on [the chip page](../../chips/crime/README.md). This page grades two
+The CRIME's register tables and routine readings are on [the chip page](README.md). This page grades two
 coverage questions the shipped software and the public drivers can answer, and says what stays open. Labels follow
 [AGENTS.md](../../AGENTS.md): **established**, **inferred**, **unknown**.
 

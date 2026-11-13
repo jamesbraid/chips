@@ -1,7 +1,7 @@
 # HEART error, timer and reset routines of the IP30 kernel
 
 Read from `IP30/unix` (the linked IRIX 6.5 kernel for the Octane; addresses are virtual addresses). The HEART register
-offsets below are the ones the [HEART page](../../../chips/heart/README.md) lists; the kernel reaches the chip through the uncached
+offsets below are the ones the [HEART page](../../../devices/heart/README.md) lists; the kernel reaches the chip through the uncached
 window at 0xffffffffaff00000 (so MODE is 0xffffffffaff00000, CAUSE 0xffffffffaff10040) and the widget slot of HEART itself at
 0x9000000018000000. A bare number such as `-15456` addresses the process page below zero: the halfword there is the number of
 the processor running the code.

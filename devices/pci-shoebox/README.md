@@ -3,7 +3,7 @@
 The PCI shoebox is an XIO board for the Origin 2000 and Onyx2. It takes one XIO slot and gives three PCI slots,
 built around one Bridge. The PROM types it as board type `0x26`, the PCI shoebox type, through the `030-1062-`
 prefix ([the Crosstown page](../crosstown-ktown/README.md#prom-classification-of-the-origin-200-crosstown-board)). The Bridge
-contract is on [the Bridge page](../../chips/bridge/README.md), and the PROM's `pciiox` routine that registers the
+contract is on [the Bridge page](../bridge/README.md), and the PROM's `pciiox` routine that registers the
 prefix is in the same page's kernel-routine section.
 
 The Octane's three-slot PCI card cage is a different assembly. It has its own Crossbow port and its own IRIX name.
@@ -19,7 +19,7 @@ states it; **inferred** means a reasoned reading; **unknown** means no held sour
 | Property | Grade | Evidence |
 |---|---|---|
 | One XIO slot becomes three PCI slots, built around one Bridge | established | SGI 007-3456-003, *Origin2000 Rackmount Owner's Guide*, "PCI Carrier Assembly" and Figure 2-11 (printed page 34). Cited from the import source; this import did not re-read the page. |
-| The PROM types the board as `0x26` through the `030-1062-` prefix | established | [the Crosstown page](../crosstown-ktown/README.md#prom-classification-of-the-origin-200-crosstown-board); the IP27 `pciiox_init` routine registers the same prefix ([the Bridge page](../../chips/bridge/README.md)) |
+| The PROM types the board as `0x26` through the `030-1062-` prefix | established | [the Crosstown page](../crosstown-ktown/README.md#prom-classification-of-the-origin-200-crosstown-board); the IP27 `pciiox_init` routine registers the same prefix ([the Bridge page](../bridge/README.md)) |
 | Part `030-1062-002` is the Origin 2000 PCI cardcage, named `PCI_XIO` | inferred | third-party part list only. The community PCA table transcribes it (see [the Crosstown page](../crosstown-ktown/README.md#prom-classification-of-the-origin-200-crosstown-board)). The import source calls this "SGI's part-number table", but no SGI primary part list was held here. |
 | SGI's manual calls the Origin 2000 board at `io2/pci_xio` the "PCI shoebox" | established | SGI 007-0911-180, *IRIX Device Driver Programmer's Guide*, printed page 83, Example 4-1: the comment reads "Path assumes O2000/Onyx2 PCI shoebox installed in first CPU module" above `/hw/module/1/slot/io2/pci_xio/pci/2/base/0`. Cited from the import source; not re-read in this import. |
 | The IP27 kernel's board list names PCI shoebox for `IP27_BRD_PCI1` and PCI shoehorn for `IP27_BRD_PCI3` | software expectation | OpenBSD `sys/arch/sgi/include/mnode.h` comments. The shoehorn is a separate product; see [the interconnect naming page](../../evidence/interconnect-naming.md) for the names. |

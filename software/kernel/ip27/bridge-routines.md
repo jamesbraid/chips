@@ -1,7 +1,7 @@
 # Routines of the IP27 kernel that serve the Bridge family
 
 Read in full from the linked IRIX 6.5.30 IP27 kernel (`IP27/unix`); addresses are the kernel's own. The routines are the Bridge-family attach path and register accessors,
-which choose among Bridge, XBridge, PIC and TIOCP at run time as described in [chips/bridge/README.md](../../../chips/bridge/README.md).
+which choose among Bridge, XBridge, PIC and TIOCP at run time as described in [devices/bridge/README.md](../../../devices/bridge/README.md).
 
 - `xbridge_attach` (`IP27/unix` at 0xc0000000000703ac,
   2592 bytes) attaches a Bridge or XBridge on a Crosstalk widget and builds the driver's per-chip record; `a0` is the widget vertex. It returns 0 after a complete attach and -1 when the chip is an original Bridge not in PCI mode. It prints the debug lines "pcibr_attach" and "pcibr_attach: bridge=0x%lx"
@@ -30,7 +30,7 @@ which choose among Bridge, XBridge, PIC and TIOCP at run time as described in [c
   the record fields, from their later users and the debug strings.
 - `pcibr_open` (`IP27/unix` at 0xc0000000000713b0)
   occupies 52 bytes. It is a capability check with the same 13 words as `xbow_open`, which is described in
-  [chips/xbow](../../../chips/xbow/README.md).
+  [devices/xbow](../../../devices/xbow/README.md).
   Both call `cap_able_cred` at 0xc000000000287350.
   It moves its fourth argument into `a0` as the credential.
   It sets `a1` to the mask 0x2000000000, which is 1 shifted left by 37.

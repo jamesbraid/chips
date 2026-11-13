@@ -4,7 +4,7 @@ The memory and directory unit is the Bedrock's memory controller and coherence d
 into the node's register space, from the current-cell vector through the memory debug selector. Its register
 layouts, with a grade on each field, are in [devices/bedrock_md/registers.toml](registers.toml); the generated
 reference is [devices/bedrock_md/registers.md](registers.md). The register names and offsets are in the
-[chip page](../../chips/bedrock/README.md), which this page extends and does not repeat.
+[chip page](../bedrock/README.md), which this page extends and does not repeat.
 
 No Bedrock specification is held. Field positions, access widths and the reset statements come from the public
 Linux 2.5.40 SN1 memory-directory header and its companion. The public Linux v2.5.0 SN1 address header gives the
@@ -205,7 +205,7 @@ The IRIX 6.5.10 to 6.5.16 IP35 kernel reads the migration candidate through its 
 thresholds with bit 63 set. Software stores a down-counted difference threshold, `0x7fff` minus the desired
 difference, and inferred from that the hardware compares against a down-counted value. Which reading is right is
 unknown. The candidate's page field, initiator and valid bit are established as header facts. The clear alias
-removes the candidate only by inference. The [chip page](../../chips/bedrock/README.md) covers the IRIX side of the
+removes the candidate only by inference. The [chip page](../bedrock/README.md) covers the IRIX side of the
 same sequence.
 
 ## Refresh

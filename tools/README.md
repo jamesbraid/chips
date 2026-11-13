@@ -13,7 +13,7 @@ root (`retools/tools/chips/scan.py tools/configs/bridge.json ...`). The configs 
 | 3 reference | `ref.py` | `ref.json` (datasheet, specification, model entries), spec-backed only |
 | 4 join | `join.py` | `CHIP-census.tsv`, `-census-sites.tsv`, `-census-windows.tsv` |
 | 4b fields | `fields.py` | `CHIP-fields.tsv`, `CHIP-context.tsv` |
-| 5 report | `report.py` | `chips/*/census/CHIP/census.md` |
+| 5 report | `report.py` | `devices/*/census/CHIP/census.md` |
 | 6 definitions | `retools/tools/chips/gen_headers.py`, then `retools/tools/defs/defs-gen` | `devices/CHIP/registers.toml`, then `generated/` and the forwarding headers in `include/` |
 
 `run.sh CONFIG DATASHEET_REPO MODEL_CHECKOUT [REF]` runs all of it (the comparison needs the datasheets

@@ -1,7 +1,7 @@
 # IOC4 serial ring DMA
 
 The IOC4 serial ports move their data through rings in memory. The chip page
-([chips/ioc4/README.md](../../chips/ioc4/README.md)) covers the register map and the
+([devices/ioc4/README.md](README.md)) covers the register map and the
 driver's port set-up. This page adds what the public Linux driver and the IOC3
 notes say about the ring engine the two chips share. The field names and masks
 are in `devices/ioc4/registers-extra.toml`.
@@ -26,7 +26,7 @@ driver `drivers/tty/serial/ioc4_serial.c` at commit
   bits 27:16. (inferred) The driver defines the current-count field and does not
   read it.
 - The IOC3 receive-timeout routine stores at most 4095 in its timer register
-  ([chips/ioc3/README.md](../../chips/ioc3/README.md)). That is the same twelve-bit
+  ([devices/ioc3/README.md](../ioc3/README.md)). That is the same twelve-bit
   reload field, so the two chips' timers agree on width.
 - Setting bit 31 of the RX consumer write is the timer-arm write. (inferred, from
   the driver's name for the bit) Whether the chip reads the bit back is not
