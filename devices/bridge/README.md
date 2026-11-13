@@ -9,7 +9,7 @@ see "What the census does not reach"). The public Linux drivers (`arch/mips/incl
 `xbridgereg.h` and `xbridge.c` are compared afterwards (section "Against the public drivers") and never supply a fact.
 Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`,
 `census-windows.tsv`), config [`tools/configs/bridge.json`](../../tools/configs/bridge.json), headers
-[`include/bridge.h`](../../include/bridge.h) and [`include/xbridge.h`](../../include/xbridge.h).
+[`generated/c/bridge.h`](../../generated/c/bridge.h) and [`generated/c/xbridge.h`](../../generated/c/xbridge.h).
 
 Bridge and XBridge are the XIO-to-PCI bridges of the Origin 2000 family and the Octane. IRIX drives them with one
 driver: the accessor routines `pcireg_*` serve four chips (Bridge, XBridge, PIC, TIOCP) and choose among them at run
@@ -71,7 +71,7 @@ accessor in the IP27 `unix` and, for four accessors where the chips differ, run 
 (`retools/tools/chips/run_routine.py`) over the IP35 copy of the accessors (a harness stop is a panic path or a stub read, not told
 apart). Grade is of the role and fields: **E** established (the accessor and its callers read in full, or an arithmetic
 the code performs), **I** inferred (role from an accessor name or a PROM string, no field arithmetic read), **U**
-unknown. Names are the public names used in `include/bridge.h`, except where an IRIX accessor name is quoted.
+unknown. Names are the public names used in `generated/c/bridge.h`, except where an IRIX accessor name is quoted.
 
 Two views to keep apart. The widget identification word (slot `0x0`) is the 32-bit load at `+0x4`, which software that
 numbers bytes of the window calls "byte 4": `pcireg_control_get` loads it with `lw` at displacement 4 of the raw window
@@ -210,7 +210,7 @@ device-register bit or pair of bits:
 
 The bit positions agree with the device-register constants in Linux 6.1 `arch/mips/include/asm/pci/bridge.h`. Per-row grade: every row is
 established for the flag-bit-to-register-bit mapping (the mask the routine builds) and inferred for the hardware meaning in the third
-column, which is the public header's name; the bit numbers are in `include/bridge_extra.h`. Two
+column, which is the public header's name; the bit numbers are in `generated/c/bridge_extra.h`. Two
 conditions apply. The 64-bit request (flag bit 26) is dropped from the set mask when the record's chip type
 (halfword at +114) is 2, which is the PIC. No other flag bit is tested (bits 0 to 15, 24, 25 and 28 up are
 ignored). The routine returns 1 on every path. The only direct caller in the 6.5.30 IP27 and IP35 kernel sets is

@@ -6,8 +6,6 @@ public_from = ["census:", "public Linux SN0 Hub I/O header"]
 
 [c]
 offset_macro = "bare"
-legacy_header = "include/hub_extra.h"
-legacy_guard = "HUB_EXTRA_H"
 
 # The census has no entry for these slots. Offsets and names come from the public
 # header. The header states no access type, so the access is an assumption and the

@@ -6,8 +6,6 @@ public_from = ["census:"]
 
 [c]
 offset_macro = "bare"
-legacy_header = "include/pic_extra.h"
-legacy_guard = "PIC_EXTRA_H"
 
 [constants]
 INTR_PCI_MASTER_TIMEOUT = { value = 0x800, grade = "established", doc = "bit 11 of the interrupt status register (0x100) and of the error view (0x170). The view records a master timeout whether or not the enable bit is set; status records it only when bit 11 of the enable register (0x108) is also set. An unclaimed configuration cycle is the usual source (inferred, see devices/pic/facts-outside-census.md)" }

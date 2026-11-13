@@ -6,8 +6,6 @@ public_from = ["census:"]
 
 [c]
 offset_macro = "bare"
-legacy_header = "include/router_origin3000_extra.h"
-legacy_guard = "ROUTER_ORIGIN3000_EXTRA_H"
 
 [registers.jbus1_0]
 offset = 0x240

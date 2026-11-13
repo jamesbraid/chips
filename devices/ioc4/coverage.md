@@ -94,7 +94,7 @@ header, which agree with each other. Per-bit grade, re-read in this pass in the 
 through the index 7 accessor at two places on the branch for this part, each followed by index 7 reads, and `xide_pktDMA_complete` stores 2 and reads index 7; that
 the poll runs at most 100 times and the polled bit is bit 1 were taken from the earlier reading and not re-derived. Bit 0 (start) is
 established by the earlier full reading (a single store of start ORed with the direction bit, computed from a record halfword) and the
-combined value was not re-derived here; the names are inferred from the public driver (`include/ioc4_extra.h` carries them). The direction convention (what IRIX's flag means for a read or a write) rests on
+combined value was not re-derived here; the names are inferred from the public driver (`generated/c/ioc4_extra.h` carries them). The direction convention (what IRIX's flag means for a read or a write) rests on
 the Linux driver's comments and was not independently derived from the IRIX request structure: **inferred**.
 
 ### Interrupt and error words

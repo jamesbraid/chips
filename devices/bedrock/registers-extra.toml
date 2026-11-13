@@ -6,8 +6,6 @@ public_from = ["census:", "shipped IRIX"]
 
 [c]
 offset_macro = "bare"
-legacy_header = "include/bedrock_extra.h"
-legacy_guard = "BEDROCK_EXTRA_H"
 
 [registers.ii_widget_status]
 offset = 0x400008

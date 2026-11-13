@@ -3,10 +3,6 @@ prefix = "XIO_FC"
 title = "XIO Fibre Channel adapter (Adaptec AIC-1160 board), command and register contract"
 from = "shipped XIO Fibre Channel adapter driver objects, read directly; no public programming manual exists"
 
-[c]
-legacy_header = "include/xio_fc.h"
-legacy_guard = "XIO_FC_H"
-
 [constants]
 BANK_CODE_STEP = { value = 0x11, grade = "established", doc = "bank n is selected by writing n * 0x11: 0x00, 0x11, 0x22, 0x33, 0x44, 0x55 are written as immediates; 0x66 and 0x77 only by the RAM test, which steps through all eight codes; whether the two nibbles select banks separately is [U]" }
 CLOCK_STATUS_DIV_1 = { value = 0xbe, grade = "established", doc = "accepted result; divisor names [I]" }

@@ -9,7 +9,7 @@ objects `kernel.o`, `mace.o`, `pcimh.o`, `ecplp.o`, `a3_dd.o`, `mvp.o`, `rad_dd.
 `sgimips` MACE driver are compared afterwards (sections "Against the published specification" and "Against the
 public drivers") and never supply a fact.
 Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`),
-config [`tools/configs/mace.json`](../../tools/configs/mace.json), header [`include/mace.h`](../../include/mace.h).
+config [`tools/configs/mace.json`](../../tools/configs/mace.json), header [`generated/c/mace.h`](../../generated/c/mace.h).
 
 MACE is the O2 I/O ASIC. It sits behind CRIME and holds a 4 MB register window at physical `0x1f000000`, split in
 eight 512 KB blocks (specification table 91): a reserved block, the PCI host bridge (`0x80000`), three video

@@ -6,8 +6,6 @@ public_from = ["census:", "OpenBSD"]
 
 [c]
 offset_macro = "bare"
-legacy_header = "include/heart_extra.h"
-legacy_guard = "HEART_EXTRA_H"
 
 [registers.sdram_mode]
 offset = 0x8

@@ -6,8 +6,6 @@ public_from = ["census:", "shipped IRIX"]
 
 [c]
 offset_macro = "bare"
-legacy_header = "include/ioc3_extra.h"
-legacy_guard = "IOC3_EXTRA_H"
 
 [registers.one_wire_ctl]
 offset = 0x30

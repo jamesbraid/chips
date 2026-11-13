@@ -6,8 +6,6 @@ public_from = ["census:"]
 
 [c]
 offset_macro = "bare"
-legacy_header = "include/xbow_extra.h"
-legacy_guard = "XBOW_EXTRA_H"
 
 [registers.perf_a]
 offset = 0x60

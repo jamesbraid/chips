@@ -57,11 +57,11 @@ Access widths: every access in this table is a 64-bit doubleword except where li
 inferred from the prefixes of the routine names that touch it (`hub_`, `hubii_`/`hubiio_`, `md_`/`mdir_`,
 `ni_`, `bte_`, `intr_`, `part_`, `nic_`); unknown otherwise.
 
-**Grade of the table.** Established: each offset, width, access direction and site count (a load or store in the cited routine reaches that offset with that width; the generated `include/bedrock.h` carries the same label). Inferred: every name, the role column and the block membership, from routine-name prefixes. Unknown wherever the role column says so.
+**Grade of the table.** Established: each offset, width, access direction and site count (a load or store in the cited routine reaches that offset with that width; the generated `generated/c/bedrock.h` carries the same label). Inferred: every name, the role column and the block membership, from routine-name prefixes. Unknown wherever the role column says so.
 
 | register | widths | access | sites | accessors and callers (names from the binary) | field evidence | role (inferred from the names) |
 |---|---|---|---:|---|---|---|
-| `+0x1000018` | 8 | r | 1 | `handle_cac_buserr` | the routine shifts 1 left by the faulting address's region number (`nasid_to_region` of address bits 47:33, sign-extended from 15 bits) and ANDs the result with this register; a nonzero result sends the error to `nasid_to_partid` and `partition_handle_error`, a zero result (when the mode is not 3) logs an error line | established for that access pattern (IP35 `kernel.o`, sha256 `2e847fdcadfdb958f84acf54ac91325980a0bfcce282f89b6df70da1043b47c4`, load at 0x1d9b4, re-read); inferred that it is a per-region bitmask (one bit per region, the shipped partition logic's input); the register is in `include/bedrock_extra.h` |
+| `+0x1000018` | 8 | r | 1 | `handle_cac_buserr` | the routine shifts 1 left by the faulting address's region number (`nasid_to_region` of address bits 47:33, sign-extended from 15 bits) and ANDs the result with this register; a nonzero result sends the error to `nasid_to_partid` and `partition_handle_error`, a zero result (when the mode is not 3) logs an error line | established for that access pattern (IP35 `kernel.o`, sha256 `2e847fdcadfdb958f84acf54ac91325980a0bfcce282f89b6df70da1043b47c4`, load at 0x1d9b4, re-read); inferred that it is a per-region bitmask (one bit per region, the shipped partition logic's input); the register is in `generated/c/bedrock_extra.h` |
 | `+0x1000020` | 8 | r | 10 | `sub_1bcf0`, `get_slice`, `getcpuid`, `save_cache_error`, `hubpi_eint_handler`, `klsave_spool_registers` (+2) | load mask 0 (2 sites); load shift shift 0 (4 sites); load shift shift 1 (1 sites) | unknown unless the names say: see the entry |
 | `+0x1000028` | 8 | r | 2 | `memory_iscalias`, `page_local_calias` | load shift shift 0 (2 sites) | unknown unless the names say: see the entry |
 | `+0x1000078` | 8 | r | 1 | `nic_get_phase_bits` |  | unknown unless the names say: see the entry |
@@ -216,7 +216,7 @@ The same register can appear under three offsets, and none of them is a conflict
 
 - **Local and node-indexed aliases.** The kernel reaches a hub register through the local alias (`+0x1000000` plus the
   hub register offset, with the node implied) or through the node-indexed alias (`+0x1800000` plus the hub register
-  offset, with the node number shifted left 33 added). `include/bedrock.h` keeps bits 23:0 only, so a node-indexed
+  offset, with the node number shifted left 33 added). `generated/c/bedrock.h` keeps bits 23:0 only, so a node-indexed
   register is listed 0x800000 above its local-alias offset and the `+0x1000000` base is not shown. Established for the
   window literals and the shift (`check_ni_errors_nasid` in the IP35 `unix`, `0xc000000000058ba4`); the equivalence of
   the two alias offsets is inferred from the two pairs of accesses below.
@@ -259,7 +259,7 @@ rows in `census.tsv` (offsets `0x64`, `0x78`, `0x80`, `0x8c`, `0x9c`, `0xa0`, `0
 them merges with a register row. The register rows that remain are what the `0x92...` window reaches: the `0x98` row is
 8 bytes wide (its one 4-byte access was the boot-space `lwu` at `0xc00000001fc00b8c`), and the `0xa0` row is the register
 read by `sub_20250` and `chkdebug`. The rows `0x60`, `0x80`, `0x88` and `0x78` no longer exist as register rows.
-`include/bedrock.h` carries the boot-space rows in their own section, prefixed `BEDROCK_BOOT_SPACE_`, and the two
+`generated/c/bedrock.h` carries the boot-space rows in their own section, prefixed `BEDROCK_BOOT_SPACE_`, and the two
 register-row names that were really boot-space reads (`BEDROCK_NIC_GET_PHASE_BITS` at `0x78` and
 `BEDROCK_CPUPROM_DETAILED_INVENTORY_INFO_ADD` at `0xa0`, with its `_B_0` mask) stay as deprecated aliases of the boot-space
 defines (the config's `deprecated_defines`). The `header_skip` entries are gone: the three boot-space-only slots now have

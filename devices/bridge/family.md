@@ -89,8 +89,8 @@ The device-side registers (`0x80` direct map, `0x90` map fault or SSRAM parity, 
 Can, `0xc0` bus timeout, `0xc8` type-1 configuration counter, `0xd0`/`0xd8` PCI error address, `0x100` to `0x1c8`
 interrupt block, `0x200`+8n device, `0x240`+8n write-buffer flush, `0x280`/`0x288` response buffers, `0x290`/`0x298`
 response status and clear) exist at the same offsets in all three chips. The row-by-row grades are in the two
-chips pages and the generated headers [include/bridge.h](../../include/bridge.h), [include/xbridge.h](../../include/xbridge.h)
-and [include/pic.h](../../include/pic.h).
+chips pages and the generated headers [generated/c/bridge.h](../../generated/c/bridge.h), [generated/c/xbridge.h](../../generated/c/xbridge.h)
+and [generated/c/pic.h](../../generated/c/pic.h).
 
 ## How software tells them apart
 

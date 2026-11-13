@@ -7,8 +7,6 @@ from = "census: loads and stores in the shipped binaries; names from the public 
 public_from = ["census:"]
 
 [c]
-legacy_header = "include/ioc3.h"
-legacy_guard = "IOC3_H"
 offset_macro = "bare"
 
 # ---- registers (8-byte slots)

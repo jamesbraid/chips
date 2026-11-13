@@ -6,8 +6,6 @@ public_from = ["census:"]
 
 [c]
 offset_macro = "bare"
-legacy_header = "include/ioc4_extra.h"
-legacy_guard = "IOC4_EXTRA_H"
 
 [registers.km_rx_kbd]
 offset = 0x204

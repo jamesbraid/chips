@@ -14,7 +14,7 @@ root (`retools/tools/chips/scan.py tools/configs/bridge.json ...`). The configs 
 | 4 join | `join.py` | `CHIP-census.tsv`, `-census-sites.tsv`, `-census-windows.tsv` |
 | 4b fields | `fields.py` | `CHIP-fields.tsv`, `CHIP-context.tsv` |
 | 5 report | `report.py` | `devices/*/census/CHIP/census.md` |
-| 6 definitions | `retools/tools/chips/gen_headers.py`, then `retools/tools/defs/defs-gen` | `devices/CHIP/registers.toml`, then `generated/` and the forwarding headers in `include/` |
+| 6 definitions | `retools/tools/chips/gen_headers.py`, then `retools/tools/defs/defs-gen` | `devices/CHIP/registers.toml`, then `generated/` |
 
 `run.sh CONFIG DATASHEET_REPO MODEL_CHECKOUT [REF]` runs all of it (the comparison needs the datasheets
 and model source it compares against; without them run stages 1, 2 and 4b by hand). `setup-clone.sh` prepares a clone and `re-run` runs a command in the toolchain container

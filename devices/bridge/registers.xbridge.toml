@@ -6,7 +6,7 @@ remove = ["constants.INT_STATUS_B_5", "constants.INT_STATUS_B_6"]
 unit = "xbridge"
 prefix = "XBRIDGE"
 title = "XBridge (XIO-to-PCI bridge, later), Origin 2000 and Octane"
-c = { legacy_header = "include/xbridge.h", legacy_guard = "XBRIDGE_H", offset_macro = "bare" }
+c = { offset_macro = "bare" }
 
 [patch."registers.wid_id"]
 from = "census: 14 sites, 3 routines"

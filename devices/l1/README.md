@@ -16,7 +16,7 @@ Census: [census/](census/census.md) (`census.tsv`, `census-sites.tsv`, `fields.t
 `router-uart-sites.tsv` for the router path; `command-sites.tsv`, `command-values.tsv` for the request codes and
 `task-sites.tsv` for the task byte), configs
 [`l1.json`](../../tools/configs/l1.json), [`l1-commands.json`](../../tools/configs/l1-commands.json),
-[`l1-tasks.json`](../../tools/configs/l1-tasks.json), header [`include/l1.h`](../../include/l1.h).
+[`l1-tasks.json`](../../tools/configs/l1-tasks.json), header [`generated/c/l1.h`](../../generated/c/l1.h).
 
 ## What this census covers, and what it does not
 

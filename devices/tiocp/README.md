@@ -9,7 +9,7 @@ Status: no entries. The census of the shared Bridge-family accessors already lis
 when the chip type is 3 or the part number is `0xe000` or `0xe010`: the `tiocp` rows of
 [../pic/census/census.tsv](../pic/census/census.tsv) (43 offsets, 163 access sites). The tool config
 [`tools/configs/tiocp.json`](../../tools/configs/tiocp.json) is the older stub and runs no census of its own; the header
-[`include/tiocp.h`](../../include/tiocp.h) is generated from those same rows.
+[`generated/c/tiocp.h`](../../generated/c/tiocp.h) is generated from those same rows.
 
 ## What the binaries say about the TIO and TIOCP (established)
 

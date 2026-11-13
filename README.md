@@ -210,8 +210,7 @@ Published sources and specifications:
                        ide, symmon, sash)
     software/kernel/   how the IRIX kernels drive the parts, by build
     generated/         generated from the register maps by retools/tools/defs/defs-gen, never hand-edited: c/ headers,
-                       rust/ crate, python/, json/, xml/; include/<unit>.h forwarding headers are the transition
-                       names for the old macros
+                       rust/ crate, python/, json/, xml/
     questions/         open questions, one page each, with what would settle it
     evidence/          coverage.md, inventory/ (tables), routines/ (routine readings), the instruction readings and
                        the other audits, irix-files.md and reading-brief.md

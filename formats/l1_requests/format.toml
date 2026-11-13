@@ -3,10 +3,6 @@ prefix = "L1"
 title = "request codes the Origin 3000 kernel sends to the brick controller"
 from = "shipped Origin 3000 kernel routines that send each request code to the brick controller"
 
-[c]
-legacy_header = "include/l1_requests.h"
-legacy_guard = "L1_REQUESTS_H"
-
 [constants]
 REQ_ELSC_CONS_NODE = { value = 0x1003, grade = "established", doc = "sent by elsc_cons_node; role [I]" }
 REQ_ELSC_CONS_SUBCH = { value = 0x1002, grade = "established", doc = "sent by elsc_cons_subch; role [I]" }

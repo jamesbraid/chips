@@ -7,8 +7,6 @@ from = "census: loads and stores in the shipped binaries; names from the registe
 public_from = ["census:"]
 
 [c]
-legacy_header = "include/router_origin2000.h"
-legacy_guard = "ROUTER_ORIGIN2000_H"
 offset_macro = "bare"
 
 [c.aliases]

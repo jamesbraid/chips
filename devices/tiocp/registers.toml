@@ -7,8 +7,6 @@ from = "census: loads and stores in the shipped binaries; names from the shipped
 public_from = ["census:"]
 
 [c]
-legacy_header = "include/tiocp.h"
-legacy_guard = "TIOCP_H"
 offset_macro = "bare"
 
 # ---- registers (8-byte slots)

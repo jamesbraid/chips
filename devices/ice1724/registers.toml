@@ -3,10 +3,6 @@ prefix = "ICE1724"
 title = "VIA/IC Ensemble ICE1724 (Envy24HT) PCI audio controller registers"
 from = "shipped DMediaPro DM8 audio driver object; roles from the public Linux ICE1724 driver names"
 
-[c]
-legacy_header = "include/ice1724.h"
-legacy_guard = "ICE1724_H"
-
 [constants]
 CCS_AC97_CONF = { value = 0x5, grade = "established", doc = "byte; read (bit 7 sets the per-device I2S converter flag) and written from EEPROM byte 7; role [I]" }
 CCS_GPIO_DATA = { value = 0x14, grade = "established", doc = "16-bit; GPIO data bits 15:0, read and written; role [I]" }

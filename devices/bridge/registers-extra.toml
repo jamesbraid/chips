@@ -4,10 +4,6 @@ title = "Bridge-family registers and bits outside the census"
 from = "Bridge ASIC specification rev 4.0 (3/27/97); Xbridge ASIC specification rev 0.5; shipped Origin 2000 and Origin 3000 generation device-flag routines, names agree with the public Linux Bridge header"
 public_from = ["shipped IRIX"]
 
-[c]
-legacy_header = "include/bridge_extra.h"
-legacy_guard = "BRIDGE_EXTRA_H"
-
 [constants]
 CONTROL_FLASH_WR_EN = { value = 0x80000000, grade = "established", doc = "bit 31, flash write enable; reset 0. Set to allow writes to the flash. Clear, a write to the flash is an error and is not completed; the specification does not say what the requester receives. Specification section 3.2.5, table 11, printed page 21" }
 CONTROL_RST_PIN_N = { value = 0xf000000, grade = "established", doc = "bits 27:24, the four software reset pins RST_PIN_N(3:0); reset 0xf, every pin released. Writing 1 drives a pin high (released) and 0 drives it low (asserted). Bit n driving the n-th PCI bus reset output is inferred: the specification gives no bit-to-pin table. Which device each pin reaches is board wiring and unknown" }

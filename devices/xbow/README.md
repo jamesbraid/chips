@@ -7,7 +7,7 @@ routines of the IP27 and IP35 `kernel.o`, and the IP27, IP30, IP35 and I/O-board
 compared afterwards (section "Against the published specification") and never supplies a fact.
 Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`,
 `census-windows.tsv`), config [`tools/configs/xbow.json`](../../tools/configs/xbow.json), header
-[`include/xbow.h`](../../include/xbow.h).
+[`generated/c/xbow.h`](../../generated/c/xbow.h).
 
 The crossbar is widget 0 of the XIO fabric. Its ports are numbered 8 to 15 ("links"; widgets 1 to 7 are not ports).
 **Every register access in every scanned routine is a 32-bit `lw` or `sw` at the slot offset plus 4**: the registers

@@ -7,8 +7,6 @@ from = "census: loads and stores in the shipped binaries; names from the MACE I/
 public_from = ["census:"]
 
 [c]
-legacy_header = "include/mace.h"
-legacy_guard = "MACE_H"
 offset_macro = "bare"
 
 # ---- PCI host bridge

@@ -13,7 +13,7 @@ agreement and conflict, never to supply a fact; the register names used here are
 the code reached (see "Against the public drivers").
 
 Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`), config
-[`tools/configs/ioc3.json`](../../tools/configs/ioc3.json), header [`include/ioc3.h`](../../include/ioc3.h). IOC4, the
+[`tools/configs/ioc3.json`](../../tools/configs/ioc3.json), header [`generated/c/ioc3.h`](../../generated/c/ioc3.h). IOC4, the
 later chip of the same family, is in [../ioc4/README.md](../ioc4/README.md).
 
 ## What this census covers, and what it does not
@@ -32,7 +32,7 @@ later chip of the same family, is in [../ioc4/README.md](../ioc4/README.md).
 - Census rerun (2026-11-10): `ecpplp.o` is now seeded (its routines load the window pointer from their own record, `ld` at
   record +24, like the attach routines), so the parallel-port DMA registers `0x80` to `0x98` and the parallel-port data
   control and extended control bytes (`0x20152`, `0x2015a`) are census rows and generated defines; the other IOC3 rows
-  gain their `ecpplp.o` sites. Still not census-visible, and carried by `include/ioc3_extra.h`: one-wire `0x30`, where
+  gain their `ecpplp.o` sites. Still not census-visible, and carried by `generated/c/ioc3_extra.h`: one-wire `0x30`, where
   `nic_access_mcr32` (`nic.o`) receives the register address as an argument, so no window pointer reaches its accesses and
   seeding it with `0x30` would assume the answer (the routine is shared with the Hub and Bridge drivers); and keyboard and
   mouse `0xa0` to `0xac`, where `pckm_pollcmd` (`ioc3_pckm.o`) stores through a per-port pointer chosen at run time.

@@ -7,7 +7,7 @@ comes from two shipped files: the IRIX 6.5.30 IP27 kernel (`unix`, linked, with 
 (`ip27prom.img`, a promgen64 container, no symbols). The public Linux SN0 headers (`arch/mips/include/asm/sn/sn0/hubpi.h`,
 `hubmd.h`, `hubio.h`, `hubni.h`, `addrs.h`) supply the register names, matched by offset after the census, and were
 compared afterwards (see the last section). Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`,
-`census-sites.tsv`), config [`tools/configs/hub.json`](../../tools/configs/hub.json), header [`include/hub.h`](../../include/hub.h).
+`census-sites.tsv`), config [`tools/configs/hub.json`](../../tools/configs/hub.json), header [`generated/c/hub.h`](../../generated/c/hub.h).
 
 ## Addresses (established)
 

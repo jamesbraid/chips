@@ -47,8 +47,7 @@ report agreement or disagreement, never to supply a fact.
   `tools/config/defs-check.toml` holds the check settings.
 - `generated/`: generated from the register maps by `retools/tools/defs/defs-gen`, never edited by hand (CI fails on a
   stale tree). `devices/<unit>/registers.md` is the reference page for each unit, the published view of the facts.
-  `include/*.h` are forwarding headers that keep the old macro names; they are generated too. After any register map
-  change run `defs-gen`, then `defs-check --build`.
+  Consumers include `generated/c/<unit>.h`. After any register map change run `defs-gen`, then `defs-check --build`.
 - `platforms/<board>/`: one machine's topology, address map, boot and PROM; bricks are in `platforms/bricks/`.
   `software/kernel/`: how the IRIX kernels drive a part, linking back to its `devices/` page. `questions/`: one page
   per open question, with what would settle it. `references/documents/`: the specification index and published
