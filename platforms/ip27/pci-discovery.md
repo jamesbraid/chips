@@ -98,6 +98,8 @@ These are listed in [open questions](../../questions/README.md) with routes:
 
 ## Sources
 
+Verification note: [1] was re-read in the published guide and matches, including Figure 1-6, which draws the three option slots at the rear of the system labelled 7, 6 and 5. The Usenet posts and forum listings in [2] to [7] were not reachable when this page was checked, so each "observed" grade that rests only on them is unverified until the message is read again.
+
 [1] Origin200 Owner's Guide, 007-3415-003, chapter 1, "PCI Backplane and Expansion Slots", printed page 12
     ("The slots provide PCI IDs 5, 6, and 7") and Figure 1-6, "PCI Backplane and Slot IDs", printed page 13.
     The same sentence is in 007-3415-002. **Established.**
