@@ -7,7 +7,7 @@
 
 
 /*
- * Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown.
+ * Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown. The shipped IRIX Origin 300/350 kernels test bits 1:0 as the link state, and bits 2:1 equal to 2 (remote power set, link up clear) start a link-reset wait.
  */
 /* port_status: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_STATUS                       0x680000 /* established */
@@ -22,7 +22,7 @@
 #define BEDROCK_NI_PORT_STATUS_STATUS_BIT0_INPLACE   (BEDROCK_NI_PORT_STATUS_STATUS_BIT0_MASK << BEDROCK_NI_PORT_STATUS_STATUS_BIT0_SHIFT)
 
 /*
- * Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link and bit 2 resets the local Bedrock. What the peer does with a link reset is not stated. Reset unknown.
+ * Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link and bit 2 resets the local Bedrock. What the peer does with a link reset is not stated. Reset unknown. The shipped IRIX Origin 300/350 kernels write the value 6 (port reset and local reset).
  */
 /* port_reset: w64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_RESET                        0x680008 /* established */
@@ -37,7 +37,7 @@
 #define BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_INPLACE (BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_MASK << BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_SHIFT)
 
 /*
- * Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown.
+ * Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown. The shipped IRIX Origin 300/350 kernels write 1; bit 0 is the one that matters.
  */
 /* reset_enable: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_RESET_ENABLE                      0x680010 /* established */
@@ -163,7 +163,7 @@
 #define BEDROCK_NI_CHANNEL_AGE_REQUEST_INJECT_AGE_INPLACE (BEDROCK_NI_CHANNEL_AGE_REQUEST_INJECT_AGE_MASK << BEDROCK_NI_CHANNEL_AGE_REQUEST_INJECT_AGE_SHIFT)
 
 /*
- * Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown.
+ * Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown. The shipped IRIX Origin 300/350 kernels test the latched error bits 52:24 (NI_ERROR_LATCHED_HI and NI_ERROR_LATCHED_LO) and treat bit 52 with the reset enable word zero as a link reset caused by another partition. That the chip latches the bit when a reset is refused is unknown.
  */
 /* port_errors: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_ERRORS                       0x680100 /* established */
@@ -202,7 +202,7 @@
 #define BEDROCK_NI_PORT_ERRORS_SN_ERROR_COUNT_INPLACE (BEDROCK_NI_PORT_ERRORS_SN_ERROR_COUNT_MASK << BEDROCK_NI_PORT_ERRORS_SN_ERROR_COUNT_SHIFT)
 
 /*
- * First half of the header of an erroring packet, as the header's union lays it out. The header's comment says it holds the captured header. Reset unknown.
+ * First half of the header of an erroring packet, as the header's union lays it out. The header's comment says it holds the captured header. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown.
  */
 /* port_header_a: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_HEADER_A                     0x680108 /* established */
@@ -229,7 +229,7 @@
 #define BEDROCK_NI_PORT_HEADER_A_PHA_V_INPLACE       (BEDROCK_NI_PORT_HEADER_A_PHA_V_MASK << BEDROCK_NI_PORT_HEADER_A_PHA_V_SHIFT)
 
 /*
- * Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown.
+ * Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown.
  */
 /* port_header_b: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_HEADER_B                     0x680110 /* established */
@@ -247,7 +247,7 @@
 #define BEDROCK_NI_PORT_HEADER_B_PHB_SUPPLEMENTAL_INPLACE (BEDROCK_NI_PORT_HEADER_B_PHB_SUPPLEMENTAL_MASK << BEDROCK_NI_PORT_HEADER_B_PHB_SUPPLEMENTAL_SHIFT)
 
 /*
- * Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides.
+ * Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown.
  */
 /* port_sideband: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_SIDEBAND                     0x680118 /* established */
@@ -283,7 +283,7 @@
 #define BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_INPLACE    (BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_MASK << BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_SHIFT)
 
 /*
- * The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown.
+ * The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown. The shipped IRIX Origin 300/350 kernels read this word, then store zero to port_errors. Whether the read clears anything is unknown.
  */
 /* port_error_clear: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_ERROR_CLEAR                  0x680120 /* established */
@@ -347,6 +347,9 @@
 #define BEDROCK_NI_GLOBAL_TABLE_NEXT_EXIT_PORT_MASK  0xfull
 #define BEDROCK_NI_GLOBAL_TABLE_NEXT_EXIT_PORT_INPLACE (BEDROCK_NI_GLOBAL_TABLE_NEXT_EXIT_PORT_MASK << BEDROCK_NI_GLOBAL_TABLE_NEXT_EXIT_PORT_SHIFT)
 
+#define BEDROCK_NI_NI_ERROR_LATCHED_HI               0x34u /* established */
+#define BEDROCK_NI_NI_ERROR_LATCHED_LO               0x18u /* established */
+#define BEDROCK_NI_NI_ERROR_LINK_RESET_BIT           0x34u /* established */
 #define BEDROCK_NI_PORT_PARMS_HEADER_DEFAULT         0x7a3ff1bf0ull /* inferred */
 
 #endif /* BEDROCK_NI_GEN_H */

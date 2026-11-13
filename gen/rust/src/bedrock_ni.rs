@@ -592,7 +592,7 @@ pub mod port_header_a {
         }
     }
 }
-/// Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown. (established)
+/// Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown. The shipped IRIX Origin 300/350 kernels read it thr (established)
 pub mod port_header_b {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x680110;
@@ -909,4 +909,7 @@ pub mod global_table {
         }
     }
 }
+pub const NI_ERROR_LATCHED_HI: u32 = 0x34; // established
+pub const NI_ERROR_LATCHED_LO: u32 = 0x18; // established
+pub const NI_ERROR_LINK_RESET_BIT: u32 = 0x34; // established
 pub const PORT_PARMS_HEADER_DEFAULT: u64 = 0x7a3ff1bf0; // inferred

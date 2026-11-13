@@ -33,5 +33,7 @@
   <constant name="MEM_BANK_CONFIG_B_58_56" value="0x700000000000000" grade="established"/>
   <constant name="MEM_BANK_CONFIG_LANE_ENABLE" value="0x3" grade="established"/>
   <constant name="MEM_BANK_CONFIG_LANE_SIZE" value="0xf0" grade="established"/>
+  <constant name="NIC_ACCESS_HUB_PHYS_LOW" value="0x1e04030" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+  <constant name="NODE_SHIFT" value="0x21" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"/>
   <constant name="PI_ERROR_SPOOL_SIZE_BASE" value="0x1000" grade="established"/>
 </genxml>

@@ -112,7 +112,7 @@
     <field name="reset_ok" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="NI_STATUS_FORMAT" size="8" grade="established" from="public Linux SN0 Hub network interface header: NSRI_* masks and shifts">
-    <doc>Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names.</doc>
+    <doc>Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The shipped IRIX Origin 200/2000 kernel reads the low 32 bits of this register and takes the node number from bits 16:8.</doc>
     <field name="eightbit_mode" start="30" size="1" type="uint" grade="established"/>
     <field name="link_up" start="29" size="1" type="uint" grade="established"/>
     <field name="down_reason" start="28" size="1" type="uint" grade="established"/>

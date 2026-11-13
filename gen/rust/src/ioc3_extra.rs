@@ -2,10 +2,50 @@
 // IOC3 registers outside the census
 #![allow(dead_code)]
 
-/// (established)
+/// The 32-bit microlan control register the shipped IRIX one-wire access routine drives: it writes the pulse width shifted left 10 ORed with the sample t (established)
 pub mod one_wire_ctl {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x30;
+    pub mod pulse { // bits 10:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sample { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod done { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod result { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// (established)
 pub mod plp_a_addr_hi {
@@ -62,7 +102,22 @@ pub mod km_tx_mouse {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0xac;
 }
+/// Layout of the general-purpose control set alias, gpcr_s (offset 0x34), as the shipped IRIX one-wire routine writes it. Before reading the address part (inferred)
+pub mod gpcr_s_format {
+    pub const WIDTH: u32 = 32;
+    pub mod nic_enable { // bits 21:21, inferred
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 pub const GPCR_S_MICROLAN_ROUTE_BIT: u32 = 0x200000; // inferred
+pub const GPCR_S_NIC_ENABLE_WORD: u32 = 0x200000; // established
 pub const GPPR_LIGHTBAR_RED_PIN: u32 = 0x1; // inferred
 pub const GPPR_LIGHTBAR_WHITE_PIN: u32 = 0x0; // inferred
 pub const GPPR_MEANINGFUL_MASK: u32 = 0x1ff; // inferred

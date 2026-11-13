@@ -387,6 +387,24 @@
   },
   {
    "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "MD_MIG_CANDIDATE_FORMAT.node",
+   "hi": 28,
+   "lo": 20,
+   "grade": "inferred",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "MD_MIG_CANDIDATE_FORMAT.page",
+   "hi": 17,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+  },
+  {
+   "unit": "hub_md_extra",
    "kind": "word",
    "name": "MD_MIG_THRESH_FORMAT",
    "width": 64,
@@ -946,6 +964,42 @@
   {
    "unit": "hub_md_extra",
    "kind": "constant",
+   "name": "HUB_MD_REFCNT_COUNT_MASK_PREMIUM",
+   "value": 524287,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
+   "name": "HUB_MD_REFCNT_COUNT_MASK_STANDARD",
+   "value": 2047,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
+   "name": "HUB_MD_REFCNT_COUNT_SHIFT",
+   "value": 5,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
+   "name": "HUB_MD_REFCNT_NODE_STRIDE",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
    "name": "HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS",
    "value": 1024,
    "count": 1,
@@ -1050,6 +1104,15 @@
    "count": 1,
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
+   "name": "HUB_MD_WINDOW_BASE",
+   "value": 27262976,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
   }
  ]
 }

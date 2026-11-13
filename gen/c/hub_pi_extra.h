@@ -277,6 +277,18 @@
 #define HUB_PI_NACK_CMP_OFFSET                       0x4b8u /* inferred */
 
 /*
+ * Layout of the interrupt pending modify register, pi_int_pend_mod, as the shipped IRIX kernel writes it: a set bit and a 7-bit interrupt level. The kernel only writes the register. A processor whose slice number has bit 1 set reaches it at PI_INT_PEND_MOD_ALT_OFFSET in place of 0x90.
+ */
+/* word PI_INT_PEND_MOD_FORMAT: 64 bits; shipped IRIX kernel binaries, per kudzu docs/interrupts.md */
+#define HUB_PI_INT_PEND_MOD_FORMAT_WIDTH             64 /* inferred */
+#define HUB_PI_INT_PEND_MOD_FORMAT_SET_SHIFT         8 /* inferred */
+#define HUB_PI_INT_PEND_MOD_FORMAT_SET_MASK          0x1ull
+#define HUB_PI_INT_PEND_MOD_FORMAT_SET_INPLACE       (HUB_PI_INT_PEND_MOD_FORMAT_SET_MASK << HUB_PI_INT_PEND_MOD_FORMAT_SET_SHIFT)
+#define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_SHIFT       0 /* established */
+#define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_MASK        0x7full
+#define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_INPLACE     (HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_MASK << HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_SHIFT)
+
+/*
  * Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it.
  */
 /* word PI_RT_LOCAL_CTRL_FORMAT: 64 bits; public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions */
@@ -319,5 +331,9 @@
 #define HUB_PI_CALIAS_SIZE_64M                       0xfu /* established */
 #define HUB_PI_CALIAS_SIZE_8K                        0x2u /* established */
 #define HUB_PI_CALIAS_SIZE_8M                        0xcu /* established */
+#define HUB_PI_INT_PEND_MOD_ALT_OFFSET               0x200090u /* established */
+#define HUB_PI_LOCAL_WINDOW_BASE                     0x1000000u /* established */
+#define HUB_PI_NODE_SHIFT                            0x20u /* established */
+#define HUB_PI_NODE_WINDOW_BASE                      0x1800000u /* established */
 
 #endif /* HUB_GEN_H */

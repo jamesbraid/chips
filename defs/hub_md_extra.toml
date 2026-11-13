@@ -2,7 +2,7 @@ unit = "hub_md_extra"
 prefix = "HUB"
 title = "Hub memory and directory register layouts and constants outside the census"
 from = "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
-public_from = ["public Linux SN0 Hub memory/directory header"]
+public_from = ["public Linux SN0 Hub memory/directory header", "shipped IRIX"]
 
 # The census has the offsets of the memory and directory registers at 0x200000 to 0x2000a8 and
 # 0x210000 to 0x210038, and their access sites. It has no field layouts. These word layouts
@@ -152,7 +152,8 @@ bad_data = { bits = [1, 0], grade = "established", doc = "Bad data field, bits 1
 width = 64
 grade = "established"
 from = "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
-doc = "Layout of the page migration difference and value thresholds. The two registers share this layout."
+doc = "Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting the valid bit (bit 63) and clears the bit to disarm it while a candidate is handled."
+notes = "The kernel reading graded the value field of mig_diff_thresh and the whole of mig_value_thresh inferred and called mig_value_thresh's access inferred; the census and the public header place the offsets, access and field established, so they are kept as stated here."
 
 [words.MD_MIG_THRESH_FORMAT.fields]
 valid = { bits = [63, 63], grade = "established", doc = "Threshold enable bit." }
@@ -162,12 +163,14 @@ value = { bits = [19, 0], grade = "established", doc = "Threshold value, twenty 
 width = 64
 grade = "established"
 from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks"
-doc = "Layout of the page migration candidate. The header's initiator and node-number masks overlap at bits 28:20, so only the single-bit fields are imported here."
+doc = "Layout of the page migration candidate. The header's initiator and node-number masks overlap at bits 28:20, so only the single-bit fields are imported here. The shipped IRIX kernel reads only the read-to-clear alias (md_mig_candidate_clr), in a loop until the valid bit is clear, and takes the node and page fields below from it. That a read consumes the candidate is inferred from the register name and the loop. Nothing in the kernel accesses the candidate register itself, which sits one doubleword below the alias."
 
 [words.MD_MIG_CANDIDATE_FORMAT.fields]
 valid = { bits = [63, 63], grade = "established", doc = "Candidate valid bit." }
 type = { bits = [30, 30], grade = "established", doc = "Candidate type bit, named MD_MIG_CANDIDATE_TYPE in the header. Its meaning is not stated there." }
 overrun = { bits = [29, 29], grade = "established", doc = "Candidate overrun bit." }
+node = { bits = [28, 20], grade = "inferred", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Node number of the requester as the kernel reads it, nine bits at 28:20. The header's initiator mask overlaps these bits; the kernel's use is what is recorded." }
+page = { bits = [17, 0], grade = "inferred", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Page index within the node, eighteen bits at 17:0, as the kernel reads it." }
 
 [words.MD_DIMM_INIT_FORMAT]
 width = 64
@@ -240,3 +243,8 @@ HUB_MD_DIR_BUSY_SHARED = { value = 0x3, grade = "established", doc = "Directory 
 HUB_MD_DIR_BUSY_EXCL = { value = 0x4, grade = "established", doc = "Directory state busy exclusive, from the header's state constants." }
 HUB_MD_DIR_WAIT = { value = 0x5, grade = "established", doc = "Directory state wait, from the header's state constants." }
 HUB_MD_DIR_UNOWNED = { value = 0x7, grade = "established", doc = "Directory state unowned, from the header's state constants." }
+HUB_MD_REFCNT_COUNT_MASK_PREMIUM = { value = 0x7ffff, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Nineteen-bit reference count mask, premium memory; which memory is premium is inferred." }
+HUB_MD_REFCNT_COUNT_MASK_STANDARD = { value = 0x7ff, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Eleven-bit reference count mask, standard memory." }
+HUB_MD_REFCNT_COUNT_SHIFT = { value = 5, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Bit position of the count in a node's reference word." }
+HUB_MD_REFCNT_NODE_STRIDE = { value = 8, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Bytes between the words of consecutive nodes for one page." }
+HUB_MD_WINDOW_BASE = { value = 0x1a00000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Physical base of the memory and directory block for node 0." }

@@ -164,7 +164,7 @@ Layout of the protection configuration register, ni_protection.
 
 ### Word `NI_STATUS_FORMAT`
 
-Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names.
+Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The shipped IRIX Origin 200/2000 kernel reads the low 32 bits of this register and takes the node number from bits 16:8.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|

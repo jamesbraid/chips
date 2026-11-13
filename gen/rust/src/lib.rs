@@ -42,6 +42,7 @@ pub mod mace_extra;
 pub mod pic;
 pub mod pic_extra;
 pub mod r10000_config;
+pub mod r10000_cp0;
 pub mod r10000_diagnostic;
 pub mod r10000_fpu;
 pub mod r10000_identity;

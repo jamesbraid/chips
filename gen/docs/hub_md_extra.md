@@ -91,17 +91,19 @@ Layout of the memory error latch, from the header's structure.
 
 ### Word `MD_MIG_CANDIDATE_FORMAT`
 
-Layout of the page migration candidate. The header's initiator and node-number masks overlap at bits 28:20, so only the single-bit fields are imported here.
+Layout of the page migration candidate. The header's initiator and node-number masks overlap at bits 28:20, so only the single-bit fields are imported here. The shipped IRIX kernel reads only the read-to-clear alias (md_mig_candidate_clr), in a loop until the valid bit is clear, and takes the node and page fields below from it. That a read consumes the candidate is inferred from the register name and the loop. Nothing in the kernel accesses the candidate register itself, which sits one doubleword below the alias.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 63 | `valid` | established |  | public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks | Candidate valid bit. |
 | 30 | `type` | established |  | public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks | Candidate type bit, named MD_MIG_CANDIDATE_TYPE in the header. Its meaning is not stated there. |
 | 29 | `overrun` | established |  | public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks | Candidate overrun bit. |
+| 28:20 | `node` | inferred |  | shipped IRIX kernel binaries, per kudzu docs/page-migration.md | Node number of the requester as the kernel reads it, nine bits at 28:20. The header's initiator mask overlaps these bits; the kernel's use is what is recorded. |
+| 17:0 | `page` | inferred |  | shipped IRIX kernel binaries, per kudzu docs/page-migration.md | Page index within the node, eighteen bits at 17:0, as the kernel reads it. |
 
 ### Word `MD_MIG_THRESH_FORMAT`
 
-Layout of the page migration difference and value thresholds. The two registers share this layout.
+Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting the valid bit (bit 63) and clears the bit to disarm it while a candidate is handled.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -220,6 +222,10 @@ Layout of the slot identity and status register. The header also defines an SN00
 | `HUB_MD_MLAN_CTL_ACCESS_BYTES` | 0x8 | established | public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants) | Access size in bytes of the one-wire control register in the shipped IRIX kernel accessor: its loads and stores there are doubleword (census context). Bit 33 belongs to the upper phase field, so a 32-bit access cannot write the whole register; that consequence follows from the field layout, not from a trace. |
 | `HUB_MD_MLAN_CTL_RESET_DEFAULTS` | 0x18b100000 | inferred | public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants) | Default value of the one-wire control register: the two phase fields at 0x31 each, from the header's default constant. Not a reset read. |
 | `HUB_MD_MOQ_SIZE_RESET_DEFAULTS` | 0x3212 | inferred | public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants) | Default value of the outgoing queue size register, from the header's default constant. Not a reset read. |
+| `HUB_MD_REFCNT_COUNT_MASK_PREMIUM` | 0x7ffff | established | shipped IRIX kernel binaries, per kudzu docs/page-migration.md | Nineteen-bit reference count mask, premium memory; which memory is premium is inferred. |
+| `HUB_MD_REFCNT_COUNT_MASK_STANDARD` | 0x7ff | established | shipped IRIX kernel binaries, per kudzu docs/page-migration.md | Eleven-bit reference count mask, standard memory. |
+| `HUB_MD_REFCNT_COUNT_SHIFT` | 0x5 | established | shipped IRIX kernel binaries, per kudzu docs/page-migration.md | Bit position of the count in a node's reference word. |
+| `HUB_MD_REFCNT_NODE_STRIDE` | 0x8 | established | shipped IRIX kernel binaries, per kudzu docs/page-migration.md | Bytes between the words of consecutive nodes for one page. |
 | `HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS` | 0x400 | inferred | public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants) | Default value of the refresh control register, from the header's default constant. Not a reset read. |
 | `HUB_MD_SIZE_128MB` | 0x5 | established | public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants) | Bank code 5: 128 MB. Valid in the memory configuration register, per the header comment. |
 | `HUB_MD_SIZE_16MB` | 0x2 | established | public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants) | Bank code 2: 16 MB. |
@@ -232,3 +238,4 @@ Layout of the slot identity and status register. The header also defines an SN00
 | `HUB_MD_SIZE_64MB` | 0x4 | established | public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants) | Bank code 4: 64 MB. Valid in the memory configuration register, per the header comment. |
 | `HUB_MD_SIZE_8MB` | 0x1 | established | public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants) | Bank code 1: 8 MB. |
 | `HUB_MD_SIZE_EMPTY` | 0x0 | established | public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants) | Bank code 0: empty. Valid in the memory configuration register, per the header comment. |
+| `HUB_MD_WINDOW_BASE` | 0x1a00000 | established | shipped IRIX kernel binaries, per kudzu docs/page-migration.md | Physical base of the memory and directory block for node 0. |

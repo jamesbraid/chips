@@ -3,7 +3,7 @@ prefix = "BEDROCK_II"
 title = "Bedrock I/O interface (II) registers: field layouts, block transfer engines and reset values"
 doc = "Offsets are hub-relative: the I/O interface is the block that starts 4 MiB into the node's register space. Field layouts come from the public Linux 2.5.40 SN1 headers, so they are established as header positions. Behaviour the headers describe only in comments is inferred. Reset values are unknown unless a header states one. Access directions the headers do not state are recorded as they are used by the public consumers. Where the header and a consumer disagree the field is listed with the disagreement in its doc."
 from = "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
-public_from = ["Linux 2.5.40", "Linux ia64", "OpenBSD", "Origin 3000 System Architecture", "Origin 300 field diagnostics", "IRIX 6.5.30 kernel disassembly", "stock IP35 PROM 6.210 disassembly", "Bridge ASIC Specification"]
+public_from = ["Linux 2.5.40", "Linux ia64", "OpenBSD", "Origin 3000 System Architecture", "Origin 300 field diagnostics", "IRIX 6.5.30 kernel disassembly", "stock IP35 PROM 6.210 disassembly", "Bridge ASIC Specification", "shipped IRIX"]
 
 [c]
 offset_macro = "bare"
@@ -13,6 +13,9 @@ PART_BEDROCK = { value = 0xc110, grade = "inferred", doc = "Crosstalk part the S
 MANUFACTURER_BEDROCK = { value = 0x36, grade = "inferred", doc = "Manufacturer field value for Bedrock in the OpenBSD device table and in mainline Linux's widget table. Read on silicon unknown." }
 PI0_INTERRUPT_PENDING_MODIFY = { value = 0x1800090, grade = "established", doc = "Hard-coded target of an II interrupt packet from PI select 0, at this offset in PI0's register space on the named node (the header's interrupt-destination logic)." }
 PI1_INTERRUPT_PENDING_MODIFY = { value = 0x1a00090, grade = "established", doc = "Hard-coded target of an II interrupt packet from PI select 1, at this offset in PI1's register space on the named node (the header's interrupt-destination logic)." }
+WIDGET_PART_C104 = { value = 0xc104, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Widget part number the Origin 300/350 kernels compare by value, read from the widget identification word; compared in both releases read and in no Origin 200/2000 kernel; role unknown." }
+WIDGET_PART_C105 = { value = 0xc105, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Widget part number, compared like C104; the kernel's per-widget set-up takes the same programmed-I/O mode call for both as for its graphics parts; no driver registers either part." }
+II_WINDOW_BASE = { value = 0x1c00000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Physical base of this block's window for node 0." }
 
 [registers.widget_id]
 offset = 0x400000
@@ -31,7 +34,7 @@ offset = 0x400128
 access = "rw"
 width = 64
 grade = "established"
-doc = "Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text."
+doc = "Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text. The shipped IRIX Origin 300/350 early widget probe tests bit 13 and, with it clear, reports the part, revision and manufacturer as -1 without touching the widget. That the bit means link up is inferred from how the I/O error interrupt set-up uses it."
 
 [registers.link_control.fields]
 null_timeout = { bits = [5, 0], grade = "established" }
@@ -123,7 +126,8 @@ access = "rw"
 width = 64
 grade = "inferred"
 reset = 0x111
-doc = "Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit."
+doc = "Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit. The shipped IRIX Origin 300/350 error path reads this register and goes on to the widget error handler only when bit 4 or bit 0 is set; the role of the two bits there is unknown."
+notes = "The kernel reading named this register flags and called both bits role unknown; the header's names (widget_0_enable at bit 0, bte_0_enable at bit 4) are kept."
 
 [registers.misc_error_mask.fields]
 widget_0_enable = { bits = [0, 0], grade = "established" }
@@ -313,3 +317,47 @@ doc = "Where the engine's completion interrupt goes. No public consumer programs
 pi_select = { bits = [0, 0], grade = "established" }
 node = { bits = [8, 1], grade = "established" }
 level = { bits = [22, 16], grade = "established" }
+
+[registers.crb_a]
+offset = 0x400400
+access = "r"
+width = 64
+count = 15
+stride = 0x20
+grade = "established"
+from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+doc = "First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i; the shipped IRIX Origin 300/350 I/O error scan reads all fifteen entries in order."
+
+[registers.crb_a.fields]
+bit55 = { bits = [55, 55], grade = "established", doc = "with the bit set the type selects the handling case; with it clear bit49 and bit51 are tested" }
+type = { bits = [54, 52], grade = "established", doc = "error type, 0 to 7; with bit55 set it picks one of eight handling cases" }
+bit51 = { bits = [51, 51], grade = "established", doc = "reported as an uncorrectable data error on data from the network; tested only when bit55 is clear" }
+bit50 = { bits = [50, 50], grade = "established", doc = "the scan skips the entry unless this bit is set" }
+bit49 = { bits = [49, 49], grade = "established", doc = "reported as a crosstalk packet that arrived with its error bit set; tested only when bit55 is clear" }
+bit0 = { bits = [0, 0], grade = "established", doc = "selects which of two forms of the error record the scan builds for a block-transfer error; role unknown" }
+
+[registers.crb_b]
+offset = 0x400408
+access = "r"
+width = 64
+count = 15
+stride = 0x20
+grade = "established"
+from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+
+[registers.crb_b.fields]
+engine_alt = { bits = [58, 58], grade = "established", doc = "selects the block-transfer engine when crb_c bit48 is set" }
+sub = { bits = [42, 41], grade = "established", doc = "see kind" }
+kind = { bits = [32, 30], grade = "established", doc = "with the value 1 or 5 and sub 1 or 2, the entry is treated as a block-transfer-engine error; bit 32 alone also selects the engine when crb_c bit48 is clear" }
+
+[registers.crb_c]
+offset = 0x400410
+access = "r"
+width = 64
+count = 15
+stride = 0x20
+grade = "established"
+from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+
+[registers.crb_c.fields]
+bit48 = { bits = [48, 48], grade = "established", doc = "with the bit set the entry is treated as a block-transfer-engine error" }

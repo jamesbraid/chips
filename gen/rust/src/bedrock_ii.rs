@@ -931,6 +931,127 @@ pub mod request_buffer_control {
         }
     }
 }
+/// First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i; the ship (established)
+pub mod crb_a {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400400;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
+    pub mod bit55 { // bits 55:55, established
+        pub const SHIFT: u32 = 55;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod r#type { // bits 54:52, established
+        pub const SHIFT: u32 = 52;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit51 { // bits 51:51, established
+        pub const SHIFT: u32 = 51;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit50 { // bits 50:50, established
+        pub const SHIFT: u32 = 50;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit49 { // bits 49:49, established
+        pub const SHIFT: u32 = 49;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit0 { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// (established)
+pub mod crb_b {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400408;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
+    pub mod engine_alt { // bits 58:58, established
+        pub const SHIFT: u32 = 58;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sub { // bits 42:41, established
+        pub const SHIFT: u32 = 41;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod kind { // bits 32:30, established
+        pub const SHIFT: u32 = 30;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// (established)
+pub mod crb_c {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400410;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
+    pub mod bit48 { // bits 48:48, established
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded (established)
 pub mod bte_length_status {
     pub const WIDTH: u32 = 64;
@@ -1093,7 +1214,10 @@ pub mod bte_interrupt_address {
         }
     }
 }
+pub const II_WINDOW_BASE: u32 = 0x1c00000; // established
 pub const MANUFACTURER_BEDROCK: u32 = 0x36; // inferred
 pub const PART_BEDROCK: u32 = 0xc110; // inferred
 pub const PI0_INTERRUPT_PENDING_MODIFY: u32 = 0x1800090; // established
 pub const PI1_INTERRUPT_PENDING_MODIFY: u32 = 0x1a00090; // established
+pub const WIDGET_PART_C104: u32 = 0xc104; // established
+pub const WIDGET_PART_C105: u32 = 0xc105; // established

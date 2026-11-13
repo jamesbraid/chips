@@ -2,7 +2,7 @@ unit = "hub_pi_extra"
 prefix = "HUB"
 title = "Hub processor interface registers, bit layouts and constants outside the census"
 from = "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
-public_from = ["public Linux SN0 Hub processor-interface header"]
+public_from = ["public Linux SN0 Hub processor-interface header", "shipped IRIX"]
 
 # The census has the offsets the shipped kernel and PROM touch in the processor interface, and
 # their names come from the public header by offset. The registers here are the processor
@@ -349,3 +349,18 @@ PI_CALIAS_SIZE_8M = { value = 12, grade = "established", doc = "Cached-alias siz
 PI_CALIAS_SIZE_16M = { value = 13, grade = "established", doc = "Cached-alias size code 13: 16 MB, per the header." }
 PI_CALIAS_SIZE_32M = { value = 14, grade = "established", doc = "Cached-alias size code 14: 32 MB, per the header." }
 PI_CALIAS_SIZE_64M = { value = 15, grade = "established", doc = "Cached-alias size code 15: 64 MB, per the header." }
+PI_INT_PEND_MOD_ALT_OFFSET = { value = 0x200090, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md", doc = "A processor whose slice number has bit 1 set reaches int_pend_mod at this offset in place of 0x90." }
+PI_LOCAL_WINDOW_BASE = { value = 0x1000000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md", doc = "Physical base of the processor's own hub window; no node shift." }
+PI_NODE_WINDOW_BASE = { value = 0x1800000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md", doc = "Physical base of a named node's window." }
+PI_NODE_SHIFT = { value = 0x20, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md", doc = "Physical node number shift of the Origin 200/2000 hub." }
+
+[words.PI_INT_PEND_MOD_FORMAT]
+width = 64
+grade = "inferred"
+from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+doc = "Layout of the interrupt pending modify register, pi_int_pend_mod, as the shipped IRIX kernel writes it: a set bit and a 7-bit interrupt level. The kernel only writes the register. A processor whose slice number has bit 1 set reaches it at PI_INT_PEND_MOD_ALT_OFFSET in place of 0x90."
+notes = "The Origin 300 hub's version of this register (bedrock_pi int_pend_mod) splits the same low seven bits into a register select (bit 6) and a bit select (5:0) and names bit 8 ipm_value. The two layouts agree on the bit ranges; they differ only in how finely the level is named. Kept the finer Origin 300 names there and the kernel's single level field here."
+
+[words.PI_INT_PEND_MOD_FORMAT.fields]
+set = { bits = [8, 8], grade = "inferred", doc = "set the level (1) or clear it (0); the role is read from how the kernel builds the word" }
+level = { bits = [6, 0], grade = "established", doc = "interrupt level number, 0 to 127" }

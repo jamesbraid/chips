@@ -209,7 +209,7 @@
     <doc>Clear alias of the protocol error record. The mechanism is not stated.</doc>
   </struct>
   <struct name="MIG_CANDIDATE" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0030" access="r" reset="unknown">
-    <doc>Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown.</doc>
+    <doc>Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.</doc>
     <field name="valid" start="63" size="1" type="uint" grade="established"/>
     <field name="local" start="34" size="1" type="uint" grade="established"/>
     <field name="threshold_type" start="33" size="1" type="uint" grade="established"/>
@@ -218,7 +218,7 @@
     <field name="page_address" start="0" size="21" type="uint" grade="established"/>
   </struct>
   <struct name="MIG_CANDIDATE_CLR" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0038" access="r" reset="unknown">
-    <doc>Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so.</doc>
+    <doc>Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so. No shipped IRIX Origin 300/350 kernel accesses this register.</doc>
     <field name="valid" start="63" size="1" type="uint" grade="established"/>
     <field name="local" start="34" size="1" type="uint" grade="established"/>
     <field name="threshold_type" start="33" size="1" type="uint" grade="established"/>
@@ -227,14 +227,14 @@
     <field name="page_address" start="0" size="21" type="uint" grade="established"/>
   </struct>
   <struct name="MIG_DIFF_THRESH" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0040" access="rw" reset="unknown">
-    <doc>Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown.</doc>
+    <doc>Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm.</doc>
     <field name="valid" start="63" size="1" type="uint" grade="established"/>
     <field name="saturation_action" start="35" size="3" type="uint" grade="established"/>
     <field name="threshold_action" start="32" size="3" type="uint" grade="established"/>
     <field name="threshold" start="0" size="15" type="uint" grade="established"/>
   </struct>
   <struct name="MIG_VALUE_THRESH" size="8" grade="established" from="Linux 2.5.40 SN1 memory-directory register header" register="yes" offset="0x7c0048" access="rw" reset="unknown">
-    <doc>Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown.</doc>
+    <doc>Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.</doc>
     <field name="valid" start="63" size="1" type="uint" grade="established"/>
     <field name="local_interrupt_enable" start="62" size="1" type="uint" grade="established"/>
     <field name="saturation_action" start="35" size="3" type="uint" grade="established"/>
@@ -313,6 +313,8 @@
   <constant name="ECC_BACKDOOR_EIGHTHS" value="0x5" grade="established"/>
   <constant name="INTR_CORRECTABLE_MEM_BIT" value="0x3d" grade="established"/>
   <constant name="INTR_UNCORRECTABLE_MEM_BIT" value="0x18" grade="established"/>
+  <constant name="MD_WINDOW_BASE_UNITS" value="0x1fc" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
+  <constant name="MD_WINDOW_BASE_UNIT_SHIFT" value="0x10" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
   <constant name="PAGE_COUNTER_OFFSET" value="0x8" grade="established"/>
   <constant name="PHYSICAL_BANKS_PER_DIMM" value="0x2" grade="established"/>
   <constant name="PROTECTION_ENTRY_OFFSET" value="0x408" grade="established"/>

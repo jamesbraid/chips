@@ -493,7 +493,7 @@
 #define BEDROCK_MD_PROTOCOL_ERROR_CLR                0x7c0028 /* established */
 
 /*
- * Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown.
+ * Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
  */
 /* mig_candidate: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MIG_CANDIDATE                     0x7c0030 /* established */
@@ -517,7 +517,7 @@
 #define BEDROCK_MD_MIG_CANDIDATE_PAGE_ADDRESS_INPLACE (BEDROCK_MD_MIG_CANDIDATE_PAGE_ADDRESS_MASK << BEDROCK_MD_MIG_CANDIDATE_PAGE_ADDRESS_SHIFT)
 
 /*
- * Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so.
+ * Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so. No shipped IRIX Origin 300/350 kernel accesses this register.
  */
 /* mig_candidate_clr: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MIG_CANDIDATE_CLR                 0x7c0038 /* established */
@@ -541,7 +541,7 @@
 #define BEDROCK_MD_MIG_CANDIDATE_CLR_PAGE_ADDRESS_INPLACE (BEDROCK_MD_MIG_CANDIDATE_CLR_PAGE_ADDRESS_MASK << BEDROCK_MD_MIG_CANDIDATE_CLR_PAGE_ADDRESS_SHIFT)
 
 /*
- * Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown.
+ * Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm.
  */
 /* mig_diff_thresh: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MIG_DIFF_THRESH                   0x7c0040 /* established */
@@ -559,7 +559,7 @@
 #define BEDROCK_MD_MIG_DIFF_THRESH_THRESHOLD_INPLACE (BEDROCK_MD_MIG_DIFF_THRESH_THRESHOLD_MASK << BEDROCK_MD_MIG_DIFF_THRESH_THRESHOLD_SHIFT)
 
 /*
- * Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown.
+ * Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
  */
 /* mig_value_thresh: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MIG_VALUE_THRESH                  0x7c0048 /* established */
@@ -742,6 +742,8 @@
 #define BEDROCK_MD_ECC_BACKDOOR_EIGHTHS              0x5u /* established */
 #define BEDROCK_MD_INTR_CORRECTABLE_MEM_BIT          0x3du /* established */
 #define BEDROCK_MD_INTR_UNCORRECTABLE_MEM_BIT        0x18u /* established */
+#define BEDROCK_MD_MD_WINDOW_BASE_UNITS              0x1fcu /* established */
+#define BEDROCK_MD_MD_WINDOW_BASE_UNIT_SHIFT         0x10u /* established */
 #define BEDROCK_MD_PAGE_COUNTER_OFFSET               0x8u /* established */
 #define BEDROCK_MD_PHYSICAL_BANKS_PER_DIMM           0x2u /* established */
 #define BEDROCK_MD_PROTECTION_ENTRY_OFFSET           0x408u /* established */

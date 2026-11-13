@@ -91,7 +91,7 @@
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_8_INPLACE (BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_8_MASK << BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_8_SHIFT)
 
 /*
- * Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text.
+ * Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text. The shipped IRIX Origin 300/350 early widget probe tests bit 13 and, with it clear, reports the part, revision and manufacturer as -1 without touching the widget. That the bit means link up is inferred from how the I/O error interrupt set-up uses it.
  */
 /* link_control: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_LINK_CONTROL                      0x400128 /* established */
@@ -231,7 +231,7 @@
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_CREDITS_INPLACE (BEDROCK_II_PIO_REQUEST_BUFFER_W8_CREDITS_MASK << BEDROCK_II_PIO_REQUEST_BUFFER_W8_CREDITS_SHIFT)
 
 /*
- * Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit.
+ * Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit. The shipped IRIX Origin 300/350 error path reads this register and goes on to the widget error handler only when bit 4 or bit 0 is set; the role of the two bits there is unknown.
  */
 /* misc_error_mask: rw64, reset 0x111; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_MISC_ERROR_MASK                   0x4001e8 /* inferred */
@@ -356,6 +356,54 @@
 #define BEDROCK_II_REQUEST_BUFFER_CONTROL_ENTRY_INPLACE (BEDROCK_II_REQUEST_BUFFER_CONTROL_ENTRY_MASK << BEDROCK_II_REQUEST_BUFFER_CONTROL_ENTRY_SHIFT)
 
 /*
+ * First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i; the shipped IRIX Origin 300/350 I/O error scan reads all fifteen entries in order.
+ */
+/* crb_a: r64, reset unknown; shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md */
+#define BEDROCK_II_CRB_A                             0x400400 /* established */
+#define BEDROCK_II_CRB_A_COUNT                       15
+#define BEDROCK_II_CRB_A_STRIDE                      32
+#define BEDROCK_II_CRB_A_BIT55_SHIFT                 55 /* established */
+#define BEDROCK_II_CRB_A_BIT55_MASK                  0x1ull
+#define BEDROCK_II_CRB_A_BIT55_INPLACE               (BEDROCK_II_CRB_A_BIT55_MASK << BEDROCK_II_CRB_A_BIT55_SHIFT)
+#define BEDROCK_II_CRB_A_TYPE_SHIFT                  52 /* established */
+#define BEDROCK_II_CRB_A_TYPE_MASK                   0x7ull
+#define BEDROCK_II_CRB_A_TYPE_INPLACE                (BEDROCK_II_CRB_A_TYPE_MASK << BEDROCK_II_CRB_A_TYPE_SHIFT)
+#define BEDROCK_II_CRB_A_BIT51_SHIFT                 51 /* established */
+#define BEDROCK_II_CRB_A_BIT51_MASK                  0x1ull
+#define BEDROCK_II_CRB_A_BIT51_INPLACE               (BEDROCK_II_CRB_A_BIT51_MASK << BEDROCK_II_CRB_A_BIT51_SHIFT)
+#define BEDROCK_II_CRB_A_BIT50_SHIFT                 50 /* established */
+#define BEDROCK_II_CRB_A_BIT50_MASK                  0x1ull
+#define BEDROCK_II_CRB_A_BIT50_INPLACE               (BEDROCK_II_CRB_A_BIT50_MASK << BEDROCK_II_CRB_A_BIT50_SHIFT)
+#define BEDROCK_II_CRB_A_BIT49_SHIFT                 49 /* established */
+#define BEDROCK_II_CRB_A_BIT49_MASK                  0x1ull
+#define BEDROCK_II_CRB_A_BIT49_INPLACE               (BEDROCK_II_CRB_A_BIT49_MASK << BEDROCK_II_CRB_A_BIT49_SHIFT)
+#define BEDROCK_II_CRB_A_BIT0_SHIFT                  0 /* established */
+#define BEDROCK_II_CRB_A_BIT0_MASK                   0x1ull
+#define BEDROCK_II_CRB_A_BIT0_INPLACE                (BEDROCK_II_CRB_A_BIT0_MASK << BEDROCK_II_CRB_A_BIT0_SHIFT)
+
+/* crb_b: r64, reset unknown; shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md */
+#define BEDROCK_II_CRB_B                             0x400408 /* established */
+#define BEDROCK_II_CRB_B_COUNT                       15
+#define BEDROCK_II_CRB_B_STRIDE                      32
+#define BEDROCK_II_CRB_B_ENGINE_ALT_SHIFT            58 /* established */
+#define BEDROCK_II_CRB_B_ENGINE_ALT_MASK             0x1ull
+#define BEDROCK_II_CRB_B_ENGINE_ALT_INPLACE          (BEDROCK_II_CRB_B_ENGINE_ALT_MASK << BEDROCK_II_CRB_B_ENGINE_ALT_SHIFT)
+#define BEDROCK_II_CRB_B_SUB_SHIFT                   41 /* established */
+#define BEDROCK_II_CRB_B_SUB_MASK                    0x3ull
+#define BEDROCK_II_CRB_B_SUB_INPLACE                 (BEDROCK_II_CRB_B_SUB_MASK << BEDROCK_II_CRB_B_SUB_SHIFT)
+#define BEDROCK_II_CRB_B_KIND_SHIFT                  30 /* established */
+#define BEDROCK_II_CRB_B_KIND_MASK                   0x7ull
+#define BEDROCK_II_CRB_B_KIND_INPLACE                (BEDROCK_II_CRB_B_KIND_MASK << BEDROCK_II_CRB_B_KIND_SHIFT)
+
+/* crb_c: r64, reset unknown; shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md */
+#define BEDROCK_II_CRB_C                             0x400410 /* established */
+#define BEDROCK_II_CRB_C_COUNT                       15
+#define BEDROCK_II_CRB_C_STRIDE                      32
+#define BEDROCK_II_CRB_C_BIT48_SHIFT                 48 /* established */
+#define BEDROCK_II_CRB_C_BIT48_MASK                  0x1ull
+#define BEDROCK_II_CRB_C_BIT48_INPLACE               (BEDROCK_II_CRB_C_BIT48_MASK << BEDROCK_II_CRB_C_BIT48_SHIFT)
+
+/*
  * One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end. Reset unknown.
  */
 /* bte_length_status: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
@@ -439,9 +487,12 @@
 #define BEDROCK_II_BTE_INTERRUPT_ADDRESS_PI_SELECT_MASK 0x1ull
 #define BEDROCK_II_BTE_INTERRUPT_ADDRESS_PI_SELECT_INPLACE (BEDROCK_II_BTE_INTERRUPT_ADDRESS_PI_SELECT_MASK << BEDROCK_II_BTE_INTERRUPT_ADDRESS_PI_SELECT_SHIFT)
 
+#define BEDROCK_II_II_WINDOW_BASE                    0x1c00000u /* established */
 #define BEDROCK_II_MANUFACTURER_BEDROCK              0x36u /* inferred */
 #define BEDROCK_II_PART_BEDROCK                      0xc110u /* inferred */
 #define BEDROCK_II_PI0_INTERRUPT_PENDING_MODIFY      0x1800090u /* established */
 #define BEDROCK_II_PI1_INTERRUPT_PENDING_MODIFY      0x1a00090u /* established */
+#define BEDROCK_II_WIDGET_PART_C104                  0xc104u /* established */
+#define BEDROCK_II_WIDGET_PART_C105                  0xc105u /* established */
 
 #endif /* BEDROCK_II_GEN_H */

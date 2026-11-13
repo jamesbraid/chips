@@ -2,6 +2,11 @@
 <!-- generated from defs/ioc3_extra.toml by defs-gen - do not edit, change the source -->
 <genxml unit="ioc3_extra" prefix="IOC3" title="IOC3 registers outside the census">
   <struct name="ONE_WIRE_CTL" size="4" grade="established" register="yes" offset="0x30" access="rw" reset="unknown">
+    <doc>The 32-bit microlan control register the shipped IRIX one-wire access routine drives: it writes the pulse width shifted left 10 ORed with the sample time shifted left 2, polls bit 1 (done) with no limit, and returns bit 0 (the sampled line level). Only the lowest bit of the pulse and sample fields is recorded as a position.</doc>
+    <field name="pulse" start="10" size="1" type="uint" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+    <field name="sample" start="2" size="1" type="uint" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+    <field name="done" start="1" size="1" type="uint" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+    <field name="result" start="0" size="1" type="uint" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
   </struct>
   <struct name="PLP_A_ADDR_HI" size="4" grade="established" register="yes" offset="0x80" access="rw" reset="unknown">
   </struct>
@@ -25,7 +30,12 @@
   </struct>
   <struct name="KM_TX_MOUSE" size="4" grade="established" register="yes" offset="0xac" access="w" reset="unknown">
   </struct>
+  <struct name="GPCR_S_FORMAT" size="4" grade="inferred" from="shipped IRIX kernel binaries, per kudzu docs/nic.md">
+    <doc>Layout of the general-purpose control set alias, gpcr_s (offset 0x34), as the shipped IRIX one-wire routine writes it. Before reading the address part the routine stores 0x200000 to the register address its caller passes, when that address is not null; with a null address it prints that it is bypassing the enable and goes on. The word is written whole, so bit 21 is the only bit the routine sets. That the store enables the one-wire path to the part is read from the routine's own message, and that a set alias leaves other bits alone is inferred from its name.</doc>
+    <field name="nic_enable" start="21" size="1" type="uint" grade="inferred"/>
+  </struct>
   <constant name="GPCR_S_MICROLAN_ROUTE_BIT" value="0x200000" grade="inferred"/>
+  <constant name="GPCR_S_NIC_ENABLE_WORD" value="0x200000" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
   <constant name="GPPR_LIGHTBAR_RED_PIN" value="0x1" grade="inferred"/>
   <constant name="GPPR_LIGHTBAR_WHITE_PIN" value="0x0" grade="inferred"/>
   <constant name="GPPR_MEANINGFUL_MASK" value="0x1ff" grade="inferred"/>

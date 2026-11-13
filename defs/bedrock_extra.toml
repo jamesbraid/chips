@@ -2,7 +2,7 @@ unit = "bedrock_extra"
 prefix = "BEDROCK"
 title = "Hub and Bedrock network-controller registers outside the census"
 from = "shipped Origin 350 generation kernel I/O error handlers; published SN1 register header for the two timeout registers"
-public_from = ["census:"]
+public_from = ["census:", "shipped IRIX"]
 
 [c]
 offset_macro = "bare"
@@ -67,3 +67,5 @@ MEM_BANK_CONFIG_B_58_56 = { value = 0x700000000000000, grade = "established", do
 MEM_BANK_CONFIG_LANE_ENABLE = { value = 0x3, grade = "established", doc = "per lane, bits 1:0 enable the lane's two banks, one bit each; bits 3:2 are not read by the decode routine [U]" }
 MEM_BANK_CONFIG_LANE_SIZE = { value = 0xf0, grade = "established", doc = "per lane, bits 7:4: one size code shared by both banks of the lane" }
 PI_ERROR_SPOOL_SIZE_BASE = { value = 0x1000, grade = "established", doc = "bytes for a value of 1" }
+NODE_SHIFT = { value = 0x21, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Physical node number shift of the Origin 300/350 hub, as the kernel's memory-directory, I/O and one-wire code all apply it." }
+NIC_ACCESS_HUB_PHYS_LOW = { value = 0x1e04030, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/nic.md", doc = "Physical address of the one-wire access register (nic_access_hub) for node 0." }

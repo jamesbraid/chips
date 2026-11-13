@@ -238,7 +238,17 @@ Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives 
 
 | Word | Width | Grade | Source |
 |---|---|---|---|
+| `PI_INT_PEND_MOD_FORMAT` | 64 | inferred | shipped IRIX kernel binaries, per kudzu docs/interrupts.md |
 | `PI_RT_LOCAL_CTRL_FORMAT` | 64 | established | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions |
+
+### Word `PI_INT_PEND_MOD_FORMAT`
+
+Layout of the interrupt pending modify register, pi_int_pend_mod, as the shipped IRIX kernel writes it: a set bit and a 7-bit interrupt level. The kernel only writes the register. A processor whose slice number has bit 1 set reaches it at PI_INT_PEND_MOD_ALT_OFFSET in place of 0x90.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 8 | `set` | inferred |  | shipped IRIX kernel binaries, per kudzu docs/interrupts.md | set the level (1) or clear it (0); the role is read from how the kernel builds the word |
+| 6:0 | `level` | established |  | shipped IRIX kernel binaries, per kudzu docs/interrupts.md | interrupt level number, 0 to 127 |
 
 ### Word `PI_RT_LOCAL_CTRL_FORMAT`
 
@@ -278,3 +288,7 @@ Layout of the real-time counter local control register, the register the census 
 | `PI_CALIAS_SIZE_64M` | 0xf | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cached-alias size code 15: 64 MB, per the header. |
 | `PI_CALIAS_SIZE_8K` | 0x2 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cached-alias size code 2: 8 KB, per the header. |
 | `PI_CALIAS_SIZE_8M` | 0xc | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cached-alias size code 12: 8 MB, per the header. |
+| `PI_INT_PEND_MOD_ALT_OFFSET` | 0x200090 | established | shipped IRIX kernel binaries, per kudzu docs/interrupts.md | A processor whose slice number has bit 1 set reaches int_pend_mod at this offset in place of 0x90. |
+| `PI_LOCAL_WINDOW_BASE` | 0x1000000 | established | shipped IRIX kernel binaries, per kudzu docs/interrupts.md | Physical base of the processor's own hub window; no node shift. |
+| `PI_NODE_SHIFT` | 0x20 | established | shipped IRIX kernel binaries, per kudzu docs/interrupts.md | Physical node number shift of the Origin 200/2000 hub. |
+| `PI_NODE_WINDOW_BASE` | 0x1800000 | established | shipped IRIX kernel binaries, per kudzu docs/interrupts.md | Physical base of a named node's window. |

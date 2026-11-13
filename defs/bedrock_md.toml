@@ -3,7 +3,7 @@ prefix = "BEDROCK_MD"
 title = "Bedrock memory and directory (MD) registers: field layouts, reset statements, error records and backdoor carriers"
 doc = "The memory and directory unit starts 7.5 MiB into the node's register space and holds the registers from the current-cell vector through the debug selector. Field positions, access widths and reset statements come from the public Linux 2.5.40 SN1 memory-directory header and its companion, so they are established as header facts. Where the companion header is marked as partly carried over from an earlier machine, its claims are graded inferred. Behaviour the header gives only in comments is graded as the comment's own claim, and behaviour it leaves open is unknown. No Bedrock specification is held, so no reset value is established where the header is silent. Diagnostic and PROM code tables are software expectations and graded inferred."
 from = "Linux 2.5.40 SN1 memory-directory register header"
-public_from = ["Linux 2.5.40", "Linux v2.5.0", "Origin 3000", "Laudon", "NEC VR10000", "MIPS R10000"]
+public_from = ["Linux 2.5.40", "Linux v2.5.0", "Origin 3000", "Laudon", "NEC VR10000", "MIPS R10000", "shipped IRIX"]
 
 [c]
 offset_macro = "bare"
@@ -35,6 +35,8 @@ INTR_CORRECTABLE_MEM_BIT = { value = 61, grade = "established", doc = "Level-1 i
 INTR_UNCORRECTABLE_MEM_BIT = { value = 24, grade = "established", doc = "Error-interrupt pending bit that the processor-interface header assigns to memory and directory errors (the header comment says it must be cleared in the MD unit). The line that raises it on Bedrock is inferred." }
 PTR_NODE_SHIFT = { value = 3, grade = "established", doc = "A directory pointer carries the node number above three device bits." }
 PTR_DEVICE_MASK = { value = 7, grade = "established", doc = "Mask of the three device bits in a directory pointer. Device bit 1 marks an I/O owner; a processor's slice is device bit 0 plus device bit 2 shifted down." }
+MD_WINDOW_BASE_UNITS = { value = 0x1fc, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Physical base of the memory and directory block for node 0, in units of 1 << MD_WINDOW_BASE_UNIT_SHIFT bytes; split because the full value is also a boot-region address the publish check refuses." }
+MD_WINDOW_BASE_UNIT_SHIFT = { value = 0x10, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Shift for MD_WINDOW_BASE_UNITS." }
 
 [registers.current_cell]
 offset = 0x780000
@@ -179,6 +181,7 @@ access = "rw"
 width = 64
 grade = "established"
 doc = "Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. Reset unknown; the software that uses the migration interface never touches this register, so who sets the enable bit is unknown."
+notes = "The kernel reading derived this offset by subtracting the public header's block base and graded it inferred; the header's own offset is established here and agrees."
 
 [registers.migration_config.fields]
 interval = { bits = [9, 0], grade = "established", doc = "Migration interval. Units not given." }
@@ -395,7 +398,7 @@ offset = 0x7c0030
 access = "r"
 width = 64
 grade = "established"
-doc = "Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown."
+doc = "Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register."
 
 [registers.mig_candidate.fields]
 page_address = { bits = [20, 0], grade = "established", doc = "Page address." }
@@ -410,7 +413,7 @@ offset = 0x7c0038
 access = "r"
 width = 64
 grade = "established"
-doc = "Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so."
+doc = "Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so. No shipped IRIX Origin 300/350 kernel accesses this register."
 
 [registers.mig_candidate_clr.fields]
 page_address = { bits = [20, 0], grade = "established", doc = "Page address." }
@@ -425,7 +428,8 @@ offset = 0x7c0040
 access = "rw"
 width = 64
 grade = "established"
-doc = "Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown."
+doc = "Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm."
+notes = "The kernel reading graded the threshold field inferred and the access write-only; the header places the field and read and write access, which are kept. The kernel's use is the narrower fact."
 
 [registers.mig_diff_thresh.fields]
 threshold = { bits = [14, 0], grade = "established", doc = "Threshold." }
@@ -438,7 +442,7 @@ offset = 0x7c0048
 access = "rw"
 width = 64
 grade = "established"
-doc = "Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown."
+doc = "Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register."
 
 [registers.mig_value_thresh.fields]
 threshold = { bits = [14, 0], grade = "established", doc = "Threshold." }

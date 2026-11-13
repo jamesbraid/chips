@@ -348,7 +348,7 @@ Clear alias of the protocol error record. The mechanism is not stated.
 
 ### Register `mig_candidate`
 
-Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown.
+Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -361,7 +361,7 @@ Page-migration candidate. On overrun the newest candidate replaces the earlier o
 
 ### Register `mig_candidate_clr`
 
-Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so.
+Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so. No shipped IRIX Origin 300/350 kernel accesses this register.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -374,7 +374,7 @@ Clear alias of the migration candidate. Software reads only this alias and never
 
 ### Register `mig_diff_thresh`
 
-Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown.
+Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -385,7 +385,7 @@ Page-migration difference threshold. A valid threshold is reached when the diffe
 
 ### Register `mig_value_thresh`
 
-Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown.
+Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -559,6 +559,8 @@ Directory word in the shared-fine format. In this format a vector bit stands for
 | `ECC_BACKDOOR_EIGHTHS` | 0x5 | established | Linux 2.5.40 SN1 memory-directory register header | The memory ECC entry backdoor starts at five eighths of the node's Hub special space, per the public SN1 address header. |
 | `INTR_CORRECTABLE_MEM_BIT` | 0x3d | established | Linux 2.5.40 SN1 memory-directory register header | Level-1 interrupt bit that the public interrupt tables give for a correctable memory or directory error. The line that raises it on Bedrock is inferred. |
 | `INTR_UNCORRECTABLE_MEM_BIT` | 0x18 | established | Linux 2.5.40 SN1 memory-directory register header | Error-interrupt pending bit that the processor-interface header assigns to memory and directory errors (the header comment says it must be cleared in the MD unit). The line that raises it on Bedrock is inferred. |
+| `MD_WINDOW_BASE_UNITS` | 0x1fc | established | shipped IRIX kernel binaries, per kudzu docs/page-migration.md | Physical base of the memory and directory block for node 0, in units of 1 << MD_WINDOW_BASE_UNIT_SHIFT bytes; split because the full value is also a boot-region address the publish check refuses. |
+| `MD_WINDOW_BASE_UNIT_SHIFT` | 0x10 | established | shipped IRIX kernel binaries, per kudzu docs/page-migration.md | Shift for MD_WINDOW_BASE_UNITS. |
 | `PAGE_COUNTER_OFFSET` | 0x8 | established | Linux 2.5.40 SN1 memory-directory register header | Offset of the page-counter entry from the directory word, per the public SN1 address header. The counter's fields are not given. |
 | `PHYSICAL_BANKS_PER_DIMM` | 0x2 | established | Linux 2.5.40 SN1 memory-directory register header | Physical banks in each DIMM position. |
 | `PROTECTION_ENTRY_OFFSET` | 0x408 | established | Linux 2.5.40 SN1 memory-directory register header | Offset of the protection entry from the directory base, per the public SN1 address header. Its meaning is not given. |

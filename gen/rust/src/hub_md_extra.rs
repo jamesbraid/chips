@@ -401,8 +401,28 @@ pub mod md_mig_candidate_format {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod node { // bits 28:20, inferred
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x1ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod page { // bits 17:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3ffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Layout of the page migration difference and value thresholds. The two registers share this layout. (established)
+/// Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting (established)
 pub mod md_mig_thresh_format {
     pub const WIDTH: u32 = 64;
     pub mod valid { // bits 63:63, established
@@ -825,6 +845,10 @@ pub const HUB_MD_MEM_BANKS_N_MODE: u32 = 0x4; // established
 pub const HUB_MD_MLAN_CTL_ACCESS_BYTES: u32 = 0x8; // established
 pub const HUB_MD_MLAN_CTL_RESET_DEFAULTS: u64 = 0x18b100000; // inferred
 pub const HUB_MD_MOQ_SIZE_RESET_DEFAULTS: u32 = 0x3212; // inferred
+pub const HUB_MD_REFCNT_COUNT_MASK_PREMIUM: u32 = 0x7ffff; // established
+pub const HUB_MD_REFCNT_COUNT_MASK_STANDARD: u32 = 0x7ff; // established
+pub const HUB_MD_REFCNT_COUNT_SHIFT: u32 = 0x5; // established
+pub const HUB_MD_REFCNT_NODE_STRIDE: u32 = 0x8; // established
 pub const HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS: u32 = 0x400; // inferred
 pub const HUB_MD_SIZE_128MB: u32 = 0x5; // established
 pub const HUB_MD_SIZE_16MB: u32 = 0x2; // established
@@ -837,3 +861,4 @@ pub const HUB_MD_SIZE_512MB: u32 = 0x7; // established
 pub const HUB_MD_SIZE_64MB: u32 = 0x4; // established
 pub const HUB_MD_SIZE_8MB: u32 = 0x1; // established
 pub const HUB_MD_SIZE_EMPTY: u32 = 0x0; // established
+pub const HUB_MD_WINDOW_BASE: u32 = 0x1a00000; // established

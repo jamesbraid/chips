@@ -2,6 +2,7 @@ unit = "bridge_extra"
 prefix = "BRIDGE"
 title = "Bridge-family registers and bits outside the census"
 from = "Bridge ASIC specification rev 4.0 (3/27/97); Xbridge ASIC specification rev 0.5; shipped Origin 2000 and Origin 3000 generation device-flag routines, names agree with the public Linux Bridge header"
+public_from = ["shipped IRIX"]
 
 [c]
 legacy_header = "include/bridge_extra.h"
@@ -28,3 +29,31 @@ TEST_PIN_CONTROL_SELECT1 = { value = 0xc, grade = "established", doc = "Bridge: 
 TEST_PIN_CONTROL_SELECT2 = { value = 0x30, grade = "established", doc = "Bridge: bits 5:4" }
 TEST_PIN_CONTROL_SELECT3 = { value = 0xc0, grade = "established", doc = "Bridge: bits 7:6" }
 XBRIDGE_TEST_PIN_CONTROL_DATA_OUT = { value = 0xff0000, grade = "established", macro = "XBRIDGE_TEST_PIN_CONTROL_DATA_OUT", doc = "Xbridge: bits 23:16, an 8-bit data field; the Xbridge specification also widens the selects to eight, whose positions this header does not give ([U])" }
+CFG_FUNC_SHIFT = { value = 8, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "function shifted left by this" }
+CFG_SLOTS_32 = { value = 8, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "slots 0 to 7 on the 32-bit layout" }
+CFG_SLOT_BIAS_64 = { value = 1, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "on the 64-bit layouts the slot is incremented before use; the accepted range is then 1 to 4" }
+CFG_SLOT_SHIFT = { value = 0xc, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "configuration address is window plus slot shifted left by this" }
+CFG_WINDOW32_OFFSET = { value = 0x20000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "added on the 32-bit layout only, with the register offset first rounded down to a multiple of four" }
+INTR_ADDR32_HI = { value = 0x11, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "the 32-bit layout replaces bits 17:8 of the word" }
+INTR_ADDR32_LO = { value = 8, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md" }
+INTR_ADDR32_OFFSET = { value = 0x134, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "first interrupt address register, 32-bit layout; a 32-bit word at slot offset 4 of int_addr" }
+INTR_ADDR32_SRC_HI = { value = 0x2f, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "the 32-bit layout keeps source address bits 47:38" }
+INTR_ADDR32_SRC_LO = { value = 0x26, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md" }
+INTR_ADDR64_OFFSET = { value = 0x130, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "first interrupt address register, 64-bit layouts; its low 48 bits hold the address" }
+INTR_COUNT = { value = 8, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "interrupt numbers 0 to 7" }
+INTR_STRIDE = { value = 8, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "byte stride of the interrupt address registers on every layout" }
+WID_OFFSET = { value = 4, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md", doc = "byte offset of the widget identification word in the window" }
+WINDOW_BIT_A = { value = 0x3f, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md" }
+WINDOW_BIT_B = { value = 0x3c, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md" }
+WINDOW_BIT_C = { value = 0x39, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md" }
+
+[words.WID_ID_FORMAT]
+width = 32
+grade = "established"
+from = "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+doc = "The widget identification word as the shipped IRIX kernel reads it for the Bridge family. The kernel reads the 32-bit word at byte offset 4 of the widget window (WID_OFFSET), the low half of the slot that the census lists as wid_id at the slot address. It tells the layout apart by the part field."
+notes = "The kernel reading named the part values layout32, layout32b, layout64b, layout64bx, layout64a and layout64ax after the register layout each selects, and called the 11-bit field field11. The labels here follow the products the census and docs/crosstalk-link.md assign to those values, and the field name follows bedrock_ii widget_id; the values and bit ranges are unchanged."
+
+[words.WID_ID_FORMAT.fields]
+part = { bits = [27, 12], grade = "established", doc = "Crosstalk part number. The kernel selects the register layout from it.", enums = { bridge = { value = 49154, grade = "established", doc = "0xc002, the 32-bit slot layout (kernel layout32)" }, xbridge = { value = 53250, grade = "established", doc = "0xd002, a second 32-bit slot layout (kernel layout32b)" }, pic_bus0 = { value = 53506, grade = "established", doc = "0xd102, a 64-bit layout (kernel layout64b)" }, pic_bus1 = { value = 53522, grade = "established", doc = "0xd112, the same 64-bit layout, second bus (kernel layout64bx)" }, tiocp_a = { value = 57344, grade = "established", doc = "0xe000, a second 64-bit layout (kernel layout64a)" }, tiocp_b = { value = 57360, grade = "established", doc = "0xe010, the same layout, second variant (kernel layout64ax)" } } }
+manufacturer = { bits = [11, 1], grade = "established", doc = "Manufacturer number. The kernel compares it with 0x24 (36) and 0x36 (54).", enums = { mfr_36 = { value = 36, grade = "established", doc = "0x24" }, mfr_54 = { value = 54, grade = "established", doc = "0x36" } } }

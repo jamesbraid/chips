@@ -2,7 +2,7 @@ unit = "ioc3_extra"
 prefix = "IOC3"
 title = "IOC3 registers outside the census"
 from = "shipped Origin 2000 kernel one-wire, parallel-port and keyboard routines, read in full"
-public_from = ["census:"]
+public_from = ["census:", "shipped IRIX"]
 
 [c]
 offset_macro = "bare"
@@ -14,6 +14,7 @@ offset = 0x30
 access = "rw"
 width = 32
 grade = "established"
+doc = "The 32-bit microlan control register the shipped IRIX one-wire access routine drives: it writes the pulse width shifted left 10 ORed with the sample time shifted left 2, polls bit 1 (done) with no limit, and returns bit 0 (the sampled line level). Only the lowest bit of the pulse and sample fields is recorded as a position."
 
 [registers.plp_a_addr_hi]
 offset = 0x80
@@ -146,3 +147,19 @@ GPPR_MICROLAN_PIN = { value = 8, grade = "inferred", from = "public Linux and Op
 GPPR_PHY_RESET_PIN = { value = 5, grade = "inferred", from = "public mainline Linux IOC3 header (field name)", doc = "Pin 5, ethernet PHY reset." }
 GPPR_UARTB_MODESEL_PIN = { value = 6, grade = "inferred", from = "public mainline Linux IOC3 header (field name); one public OpenBSD header differs", doc = "Pin 6, selects RS-232 or RS-422 for port B." }
 GPPR_UARTA_MODESEL_PIN = { value = 7, grade = "inferred", from = "public mainline Linux IOC3 header (field name); one public OpenBSD header differs", doc = "Pin 7, selects RS-232 or RS-422 for port A." }
+GPCR_S_NIC_ENABLE_WORD = { value = 0x200000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/nic.md", doc = "The value the one-wire routine stores to gpcr_s." }
+
+[registers.one_wire_ctl.fields]
+pulse = { bits = [10, 10], grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/nic.md", doc = "lowest bit of the pulse width field" }
+sample = { bits = [2, 2], grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/nic.md", doc = "lowest bit of the sample time field" }
+done = { bits = [1, 1], grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/nic.md", doc = "set when the operation has finished" }
+result = { bits = [0, 0], grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/nic.md", doc = "sampled line level" }
+
+[words.GPCR_S_FORMAT]
+width = 32
+grade = "inferred"
+from = "shipped IRIX kernel binaries, per kudzu docs/nic.md"
+doc = "Layout of the general-purpose control set alias, gpcr_s (offset 0x34), as the shipped IRIX one-wire routine writes it. Before reading the address part the routine stores 0x200000 to the register address its caller passes, when that address is not null; with a null address it prints that it is bypassing the enable and goes on. The word is written whole, so bit 21 is the only bit the routine sets. That the store enables the one-wire path to the part is read from the routine's own message, and that a set alias leaves other bits alone is inferred from its name."
+
+[words.GPCR_S_FORMAT.fields]
+nic_enable = { bits = [21, 21], grade = "inferred" }

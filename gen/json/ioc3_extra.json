@@ -18,6 +18,42 @@
   },
   {
    "unit": "ioc3_extra",
+   "kind": "field",
+   "name": "one_wire_ctl.pulse",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/nic.md"
+  },
+  {
+   "unit": "ioc3_extra",
+   "kind": "field",
+   "name": "one_wire_ctl.sample",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/nic.md"
+  },
+  {
+   "unit": "ioc3_extra",
+   "kind": "field",
+   "name": "one_wire_ctl.done",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/nic.md"
+  },
+  {
+   "unit": "ioc3_extra",
+   "kind": "field",
+   "name": "one_wire_ctl.result",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/nic.md"
+  },
+  {
+   "unit": "ioc3_extra",
    "kind": "register",
    "name": "plp_a_addr_hi",
    "offset": 128,
@@ -161,11 +197,37 @@
   },
   {
    "unit": "ioc3_extra",
+   "kind": "word",
+   "name": "GPCR_S_FORMAT",
+   "width": 32,
+   "grade": "inferred",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/nic.md"
+  },
+  {
+   "unit": "ioc3_extra",
+   "kind": "field",
+   "name": "GPCR_S_FORMAT.nic_enable",
+   "hi": 21,
+   "lo": 21,
+   "grade": "inferred",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/nic.md"
+  },
+  {
+   "unit": "ioc3_extra",
    "kind": "constant",
    "name": "GPCR_S_MICROLAN_ROUTE_BIT",
    "value": 2097152,
    "count": 1,
    "grade": "inferred"
+  },
+  {
+   "unit": "ioc3_extra",
+   "kind": "constant",
+   "name": "GPCR_S_NIC_ENABLE_WORD",
+   "value": 2097152,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/nic.md"
   },
   {
    "unit": "ioc3_extra",

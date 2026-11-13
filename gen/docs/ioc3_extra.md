@@ -25,6 +25,15 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `one_wire_ctl`
 
+The 32-bit microlan control register the shipped IRIX one-wire access routine drives: it writes the pulse width shifted left 10 ORed with the sample time shifted left 2, polls bit 1 (done) with no limit, and returns bit 0 (the sampled line level). Only the lowest bit of the pulse and sample fields is recorded as a position.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 10 | `pulse` | established |  | shipped IRIX kernel binaries, per kudzu docs/nic.md | lowest bit of the pulse width field |
+| 2 | `sample` | established |  | shipped IRIX kernel binaries, per kudzu docs/nic.md | lowest bit of the sample time field |
+| 1 | `done` | established |  | shipped IRIX kernel binaries, per kudzu docs/nic.md | set when the operation has finished |
+| 0 | `result` | established |  | shipped IRIX kernel binaries, per kudzu docs/nic.md | sampled line level |
+
 ### Register `plp_a_addr_hi`
 
 ### Register `plp_a_addr_lo`
@@ -47,11 +56,26 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `km_tx_mouse`
 
+## Words
+
+| Word | Width | Grade | Source |
+|---|---|---|---|
+| `GPCR_S_FORMAT` | 32 | inferred | shipped IRIX kernel binaries, per kudzu docs/nic.md |
+
+### Word `GPCR_S_FORMAT`
+
+Layout of the general-purpose control set alias, gpcr_s (offset 0x34), as the shipped IRIX one-wire routine writes it. Before reading the address part the routine stores 0x200000 to the register address its caller passes, when that address is not null; with a null address it prints that it is bypassing the enable and goes on. The word is written whole, so bit 21 is the only bit the routine sets. That the store enables the one-wire path to the part is read from the routine's own message, and that a set alias leaves other bits alone is inferred from its name.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 21 | `nic_enable` | inferred |  | shipped IRIX kernel binaries, per kudzu docs/nic.md |  |
+
 ## Constants
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
 | `GPCR_S_MICROLAN_ROUTE_BIT` | 0x200000 | inferred |  | Pin-control bit 21: routes the MicroLAN engine to GPIO pin 8. Nothing on the one-wire bus works until it is set. |
+| `GPCR_S_NIC_ENABLE_WORD` | 0x200000 | established | shipped IRIX kernel binaries, per kudzu docs/nic.md | The value the one-wire routine stores to gpcr_s. |
 | `GPPR_LIGHTBAR_RED_PIN` | 0x1 | inferred |  | Pin 1, red fault lamp, active high. |
 | `GPPR_LIGHTBAR_WHITE_PIN` | 0x0 | inferred |  | Pin 0, white lamps. Polarity not measured. |
 | `GPPR_MEANINGFUL_MASK` | 0x1ff | inferred |  | Pin data bits 8:0. Pins 0 to 8 are the meaningful ones on Origin base I/O. |

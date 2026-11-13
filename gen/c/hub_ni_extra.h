@@ -229,7 +229,7 @@
 #define HUB_NI_PROTECTION_FORMAT_RESET_OK_INPLACE    (HUB_NI_PROTECTION_FORMAT_RESET_OK_MASK << HUB_NI_PROTECTION_FORMAT_RESET_OK_SHIFT)
 
 /*
- * Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names.
+ * Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The shipped IRIX Origin 200/2000 kernel reads the low 32 bits of this register and takes the node number from bits 16:8.
  */
 /* word NI_STATUS_FORMAT: 64 bits; public Linux SN0 Hub network interface header: NSRI_* masks and shifts */
 #define HUB_NI_STATUS_FORMAT_WIDTH                   64 /* established */

@@ -53,4 +53,6 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `MEM_BANK_CONFIG_B_58_56` | 0x700000000000000 | established |  | the same write ORs in 7 here; meaning [U]: settle by a published Bedrock register list (none held) or the same routine's callers' use of the result |
 | `MEM_BANK_CONFIG_LANE_ENABLE` | 0x3 | established |  | per lane, bits 1:0 enable the lane's two banks, one bit each; bits 3:2 are not read by the decode routine [U] |
 | `MEM_BANK_CONFIG_LANE_SIZE` | 0xf0 | established |  | per lane, bits 7:4: one size code shared by both banks of the lane |
+| `NIC_ACCESS_HUB_PHYS_LOW` | 0x1e04030 | established | shipped IRIX kernel binaries, per kudzu docs/nic.md | Physical address of the one-wire access register (nic_access_hub) for node 0. |
+| `NODE_SHIFT` | 0x21 | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | Physical node number shift of the Origin 300/350 hub, as the kernel's memory-directory, I/O and one-wire code all apply it. |
 | `PI_ERROR_SPOOL_SIZE_BASE` | 0x1000 | established |  | bytes for a value of 1 |

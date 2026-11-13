@@ -44,6 +44,8 @@
 #define BEDROCK_MEM_BANK_CONFIG_B_58_56              0x700000000000000ull /* established */
 #define BEDROCK_MEM_BANK_CONFIG_LANE_ENABLE          0x3u /* established */
 #define BEDROCK_MEM_BANK_CONFIG_LANE_SIZE            0xf0u /* established */
+#define BEDROCK_NIC_ACCESS_HUB_PHYS_LOW              0x1e04030u /* established */
+#define BEDROCK_NODE_SHIFT                           0x21u /* established */
 #define BEDROCK_PI_ERROR_SPOOL_SIZE_BASE             0x1000u /* established */
 
 #endif /* BEDROCK_GEN_H */

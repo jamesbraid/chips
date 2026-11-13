@@ -660,6 +660,32 @@
   {
    "unit": "hub_pi_extra",
    "kind": "word",
+   "name": "PI_INT_PEND_MOD_FORMAT",
+   "width": 64,
+   "grade": "inferred",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "PI_INT_PEND_MOD_FORMAT.set",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "PI_INT_PEND_MOD_FORMAT.level",
+   "hi": 6,
+   "lo": 0,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "word",
    "name": "PI_RT_LOCAL_CTRL_FORMAT",
    "width": 64,
    "grade": "established",
@@ -907,6 +933,42 @@
    "count": 1,
    "grade": "established",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_INT_PEND_MOD_ALT_OFFSET",
+   "value": 2097296,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_LOCAL_WINDOW_BASE",
+   "value": 16777216,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_NODE_SHIFT",
+   "value": 32,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_NODE_WINDOW_BASE",
+   "value": 25165824,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
   }
  ]
 }

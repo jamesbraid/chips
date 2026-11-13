@@ -244,6 +244,24 @@
   {
    "unit": "bedrock_extra",
    "kind": "constant",
+   "name": "NIC_ACCESS_HUB_PHYS_LOW",
+   "value": 31473712,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/nic.md"
+  },
+  {
+   "unit": "bedrock_extra",
+   "kind": "constant",
+   "name": "NODE_SHIFT",
+   "value": 33,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_extra",
+   "kind": "constant",
    "name": "PI_ERROR_SPOOL_SIZE_BASE",
    "value": 4096,
    "count": 1,

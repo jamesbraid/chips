@@ -3,20 +3,23 @@ prefix = "BEDROCK_NI"
 title = "Bedrock network interface (NI) registers: field layouts, port error bits and routing tables"
 doc = "Offsets are in the node's local alias, the same offsets the census names in defs/bedrock.toml. Register names, offsets, widths and field positions come from the public Linux 2.5.40 SN1 register headers, read directly from that tag, so they are established as header facts. Behaviour the headers give only in their comments is inferred. No Bedrock specification is held. The headers state no reset value, so every reset is unknown, except one software default the headers name without a source."
 from = "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
-public_from = ["Linux 2.5.40"]
+public_from = ["Linux 2.5.40", "shipped IRIX"]
 
 [c]
 offset_macro = "bare"
 
 [constants]
 PORT_PARMS_HEADER_DEFAULT = { value = 0x7a3ff1bf0, grade = "inferred", doc = "Value the header's reset-defaults macro builds for the port parameters: virtual-channel errors 0xf, first error enabled, maximum retry 0x3ff, null timeout 6, maximum burst 0x3f0. The header names it as the reset default and gives no source for it, so it is a header claim, not a hardware reset value." }
+NI_ERROR_LATCHED_HI = { value = 0x34, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Top bit of the range of latched error bits the kernel tests in port_errors." }
+NI_ERROR_LATCHED_LO = { value = 0x18, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Bottom bit of that range." }
+NI_ERROR_LINK_RESET_BIT = { value = 0x34, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Link reset caused by another partition, with the reset enable word zero; that the chip latches it when a reset is refused is unknown." }
 
 [registers.port_status]
 offset = 0x680000
 access = "r"
 width = 64
 grade = "established"
-doc = "Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown."
+doc = "Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown. The shipped IRIX Origin 300/350 kernels test bits 1:0 as the link state, and bits 2:1 equal to 2 (remote power set, link up clear) start a link-reset wait."
 
 [registers.port_status.fields]
 status_bit0 = { bits = [0, 0], grade = "unknown", doc = "Low bit of the two-bit port status. The header gives no meaning for it." }
@@ -28,7 +31,7 @@ offset = 0x680008
 access = "w"
 width = 64
 grade = "established"
-doc = "Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link and bit 2 resets the local Bedrock. What the peer does with a link reset is not stated. Reset unknown."
+doc = "Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link and bit 2 resets the local Bedrock. What the peer does with a link reset is not stated. Reset unknown. The shipped IRIX Origin 300/350 kernels write the value 6 (port reset and local reset)."
 
 [registers.port_reset.fields]
 link_reset_out = { bits = [0, 0], grade = "established", doc = "Link reset sent out. Header comment: sends a link reset." }
@@ -40,7 +43,7 @@ offset = 0x680010
 access = "rw"
 width = 64
 grade = "established"
-doc = "Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown."
+doc = "Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown. The shipped IRIX Origin 300/350 kernels write 1; bit 0 is the one that matters."
 
 [registers.reset_enable.fields]
 reset_ok = { bits = [0, 0], grade = "inferred", doc = "Lets the link reset the Bedrock. The header comment says so; whether it gates the local reset bit is unknown." }
@@ -124,7 +127,7 @@ offset = 0x680100
 access = "r"
 width = 64
 grade = "established"
-doc = "Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown."
+doc = "Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown. The shipped IRIX Origin 300/350 kernels test the latched error bits 52:24 (NI_ERROR_LATCHED_HI and NI_ERROR_LATCHED_LO) and treat bit 52 with the reset enable word zero as a link reset caused by another partition. That the chip latches the bit when a reset is refused is unknown."
 
 [registers.port_errors.fields]
 sn_error_count = { bits = [7, 0], grade = "established", doc = "Sequence-number error count, eight bits." }
@@ -144,7 +147,7 @@ offset = 0x680108
 access = "r"
 width = 64
 grade = "established"
-doc = "First half of the header of an erroring packet, as the header's union lays it out. The header's comment says it holds the captured header. Reset unknown."
+doc = "First half of the header of an erroring packet, as the header's union lays it out. The header's comment says it holds the captured header. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown."
 
 [registers.port_header_a.fields]
 pha_v = { bits = [0, 0], grade = "established", doc = "Valid bit." }
@@ -160,7 +163,7 @@ offset = 0x680110
 access = "r"
 width = 64
 grade = "established"
-doc = "Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown."
+doc = "Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown."
 
 [registers.port_header_b.fields]
 phb_supplemental = { bits = [10, 0], grade = "established" }
@@ -173,7 +176,7 @@ offset = 0x680118
 access = "r"
 width = 64
 grade = "established"
-doc = "Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides."
+doc = "Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown."
 
 [registers.port_sideband.fields]
 sideband = { bits = [7, 0], grade = "established" }
@@ -192,7 +195,7 @@ offset = 0x680120
 access = "r"
 width = 64
 grade = "established"
-doc = "The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown."
+doc = "The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown. The shipped IRIX Origin 300/350 kernels read this word, then store zero to port_errors. Whether the read clears anything is unknown."
 
 [registers.port_error_clear.fields]
 pec_sn_error_count = { bits = [7, 0], grade = "established" }

@@ -136,7 +136,7 @@
 #define HUB_MD_MEM_ERROR_FORMAT_CE_OVR_INPLACE       (HUB_MD_MEM_ERROR_FORMAT_CE_OVR_MASK << HUB_MD_MEM_ERROR_FORMAT_CE_OVR_SHIFT)
 
 /*
- * Layout of the page migration candidate. The header's initiator and node-number masks overlap at bits 28:20, so only the single-bit fields are imported here.
+ * Layout of the page migration candidate. The header's initiator and node-number masks overlap at bits 28:20, so only the single-bit fields are imported here. The shipped IRIX kernel reads only the read-to-clear alias (md_mig_candidate_clr), in a loop until the valid bit is clear, and takes the node and page fields below from it. That a read consumes the candidate is inferred from the register name and the loop. Nothing in the kernel accesses the candidate register itself, which sits one doubleword below the alias.
  */
 /* word MD_MIG_CANDIDATE_FORMAT: 64 bits; public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks */
 #define HUB_MD_MIG_CANDIDATE_FORMAT_WIDTH            64 /* established */
@@ -149,9 +149,15 @@
 #define HUB_MD_MIG_CANDIDATE_FORMAT_OVERRUN_SHIFT    29 /* established */
 #define HUB_MD_MIG_CANDIDATE_FORMAT_OVERRUN_MASK     0x1ull
 #define HUB_MD_MIG_CANDIDATE_FORMAT_OVERRUN_INPLACE  (HUB_MD_MIG_CANDIDATE_FORMAT_OVERRUN_MASK << HUB_MD_MIG_CANDIDATE_FORMAT_OVERRUN_SHIFT)
+#define HUB_MD_MIG_CANDIDATE_FORMAT_NODE_SHIFT       20 /* inferred */
+#define HUB_MD_MIG_CANDIDATE_FORMAT_NODE_MASK        0x1ffull
+#define HUB_MD_MIG_CANDIDATE_FORMAT_NODE_INPLACE     (HUB_MD_MIG_CANDIDATE_FORMAT_NODE_MASK << HUB_MD_MIG_CANDIDATE_FORMAT_NODE_SHIFT)
+#define HUB_MD_MIG_CANDIDATE_FORMAT_PAGE_SHIFT       0 /* inferred */
+#define HUB_MD_MIG_CANDIDATE_FORMAT_PAGE_MASK        0x3ffffull
+#define HUB_MD_MIG_CANDIDATE_FORMAT_PAGE_INPLACE     (HUB_MD_MIG_CANDIDATE_FORMAT_PAGE_MASK << HUB_MD_MIG_CANDIDATE_FORMAT_PAGE_SHIFT)
 
 /*
- * Layout of the page migration difference and value thresholds. The two registers share this layout.
+ * Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting the valid bit (bit 63) and clears the bit to disarm it while a candidate is handled.
  */
 /* word MD_MIG_THRESH_FORMAT: 64 bits; public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks */
 #define HUB_MD_MIG_THRESH_FORMAT_WIDTH               64 /* established */
@@ -332,6 +338,10 @@
 #define HUB_HUB_MD_MLAN_CTL_ACCESS_BYTES             0x8u /* established */
 #define HUB_HUB_MD_MLAN_CTL_RESET_DEFAULTS           0x18b100000ull /* inferred */
 #define HUB_HUB_MD_MOQ_SIZE_RESET_DEFAULTS           0x3212u /* inferred */
+#define HUB_HUB_MD_REFCNT_COUNT_MASK_PREMIUM         0x7ffffu /* established */
+#define HUB_HUB_MD_REFCNT_COUNT_MASK_STANDARD        0x7ffu /* established */
+#define HUB_HUB_MD_REFCNT_COUNT_SHIFT                0x5u /* established */
+#define HUB_HUB_MD_REFCNT_NODE_STRIDE                0x8u /* established */
 #define HUB_HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS    0x400u /* inferred */
 #define HUB_HUB_MD_SIZE_128MB                        0x5u /* established */
 #define HUB_HUB_MD_SIZE_16MB                         0x2u /* established */
@@ -344,5 +354,6 @@
 #define HUB_HUB_MD_SIZE_64MB                         0x4u /* established */
 #define HUB_HUB_MD_SIZE_8MB                          0x1u /* established */
 #define HUB_HUB_MD_SIZE_EMPTY                        0x0u /* established */
+#define HUB_HUB_MD_WINDOW_BASE                       0x1a00000u /* established */
 
 #endif /* HUB_GEN_H */

@@ -28,6 +28,9 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pio_read_address` | 0x400308 | rw | 64 | 8 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `request_buffer_management` | 0x4003a8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `request_buffer_control` | 0x4003b0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `crb_a` | 0x400400 | r | 64 | 15 |  | unknown | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md |
+| `crb_b` | 0x400408 | r | 64 | 15 |  | unknown | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md |
+| `crb_c` | 0x400410 | r | 64 | 15 |  | unknown | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md |
 | `bte_length_status` | 0x410000 | rw | 64 | 2 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_source` | 0x410008 | rw | 64 | 2 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_destination` | 0x410010 | rw | 64 | 2 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
@@ -92,7 +95,7 @@ Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when
 
 ### Register `link_control`
 
-Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text.
+Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text. The shipped IRIX Origin 300/350 early widget probe tests bit 13 and, with it clear, reports the part, revision and manufacturer as -1 without touching the widget. That the bit means link up is inferred from how the I/O error interrupt set-up uses it.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -160,7 +163,7 @@ Array of 8 registers, stride 8.
 
 ### Register `misc_error_mask`
 
-Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit.
+Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit. The shipped IRIX Origin 300/350 error path reads this register and goes on to the widget error handler only when bit 4 or bit 0 is set; the role of the two bits there is unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -225,6 +228,39 @@ Software control of the request buffers. It has priority over crosstalk and BTE 
 | 16 | `pending` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 15:8 | `command` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Command code. The header names nop, wake, timeout, eject and flush; the codes are unknown. |
 | 3:0 | `entry` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
+
+### Register `crb_a`
+
+First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i; the shipped IRIX Origin 300/350 I/O error scan reads all fifteen entries in order.
+
+Array of 15 registers, stride 32.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 55 | `bit55` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | with the bit set the type selects the handling case; with it clear bit49 and bit51 are tested |
+| 54:52 | `type` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | error type, 0 to 7; with bit55 set it picks one of eight handling cases |
+| 51 | `bit51` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | reported as an uncorrectable data error on data from the network; tested only when bit55 is clear |
+| 50 | `bit50` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | the scan skips the entry unless this bit is set |
+| 49 | `bit49` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | reported as a crosstalk packet that arrived with its error bit set; tested only when bit55 is clear |
+| 0 | `bit0` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | selects which of two forms of the error record the scan builds for a block-transfer error; role unknown |
+
+### Register `crb_b`
+
+Array of 15 registers, stride 32.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 58 | `engine_alt` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | selects the block-transfer engine when crb_c bit48 is set |
+| 42:41 | `sub` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | see kind |
+| 32:30 | `kind` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | with the value 1 or 5 and sub 1 or 2, the entry is treated as a block-transfer-engine error; bit 32 alone also selects the engine when crb_c bit48 is clear |
+
+### Register `crb_c`
+
+Array of 15 registers, stride 32.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 48 | `bit48` | established |  | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | with the bit set the entry is treated as a block-transfer-engine error |
 
 ### Register `bte_length_status`
 
@@ -296,7 +332,10 @@ Array of 2 registers, stride 65536.
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
+| `II_WINDOW_BASE` | 0x1c00000 | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | Physical base of this block's window for node 0. |
 | `MANUFACTURER_BEDROCK` | 0x36 | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Manufacturer field value for Bedrock in the OpenBSD device table and in mainline Linux's widget table. Read on silicon unknown. |
 | `PART_BEDROCK` | 0xc110 | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Crosstalk part the SN1 header assigns to the Bedrock. The same value is named Bedrock in OpenBSD's device table. No consumer tests it and no read on silicon is recorded. |
 | `PI0_INTERRUPT_PENDING_MODIFY` | 0x1800090 | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Hard-coded target of an II interrupt packet from PI select 0, at this offset in PI0's register space on the named node (the header's interrupt-destination logic). |
 | `PI1_INTERRUPT_PENDING_MODIFY` | 0x1a00090 | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Hard-coded target of an II interrupt packet from PI select 1, at this offset in PI1's register space on the named node (the header's interrupt-destination logic). |
+| `WIDGET_PART_C104` | 0xc104 | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | Widget part number the Origin 300/350 kernels compare by value, read from the widget identification word; compared in both releases read and in no Origin 200/2000 kernel; role unknown. |
+| `WIDGET_PART_C105` | 0xc105 | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | Widget part number, compared like C104; the kernel's per-widget set-up takes the same programmed-I/O mode call for both as for its graphics parts; no driver registers either part. |
