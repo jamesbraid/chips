@@ -53,7 +53,7 @@ low_vpp = { bits = [3, 3], grade = "established", doc = "Low VPP detected during
 width = 8
 grade = "established"
 from = "Sharp LH28F800SU 8M Flash Memory, global status register, printed pp. 13 to 14"
-doc = "Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 float during status reads (printed p. 4)."
+doc = "Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 are not used for status register reads (printed p. 4)."
 [words.GSR.fields]
 write_ready = { bits = [7, 7], grade = "established", doc = "Write state machine ready." }
 suspended = { bits = [6, 6], grade = "established", doc = "Operation suspended." }

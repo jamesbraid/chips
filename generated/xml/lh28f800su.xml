@@ -30,7 +30,7 @@
     <field name="low_vpp" start="3" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="GSR" size="1" grade="established" from="Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)">
-    <doc>Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 float during status reads (printed p. 4).</doc>
+    <doc>Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 are not used for status register reads (printed p. 4).</doc>
     <field name="write_ready" start="7" size="1" type="uint" grade="established"/>
     <field name="suspended" start="6" size="1" type="uint" grade="established"/>
     <field name="op_status" start="4" size="2" type="gsr_op" grade="established"/>

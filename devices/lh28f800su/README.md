@@ -1,8 +1,8 @@
 # LH28F800SU: x16 flash command set, status and pins
 
 Status: transcribed from the published Sharp datasheet, *LH28F800SU 8M Flash Memory*, SMT96107
-(May 1996), printed pages 1 to 14. Page numbers are printed pages, which match the PDF pages. This import did not
-re-check the PDF. No source examined here ties this part to any SGI board, so the board that carries it and its
+(May 1996), printed pages 1 to 14. Page numbers are printed pages, which match the PDF pages. Every claim below
+was re-read against the published PDF. No source examined here ties this part to any SGI board, so the board that carries it and its
 pin wiring are unknown. The constants, command opcodes and status fields are in `devices/lh28f800su/registers.toml`, and the
 generated reference is `devices/lh28f800su/registers.md`. The 512 KiB part that O2 boards carry is on the
 [AT29C040A page](../at29c040a/README.md), and the AMD AM29LV800B named in the base board note is in [baseio.md](../baseio/README.md).
@@ -18,18 +18,19 @@ arithmetic on a stated value. **Unknown** means the datasheet does not settle it
 ## Pins
 
 - Both `CE0` and `CE1` must be low to select the chip. `OE` low enables output. A rising edge of `WE` latches an
-  address and a command or data. (established; the page of this pin description is not recorded in this import)
-- `RP` low aborts current and pending work, enters deep power-down and floats the data outputs (p. 4).
+  address and a command or data. (p. 4, established)
+- `RP` low aborts current and pending work and enters deep power-down (p. 4). The Deep Power-Down row of the
+  bus-operations table puts `DQ0` to `DQ15` in high-Z (p. 9).
 - `WP` low protects each block whose nonvolatile lock bit is set. `WP` high permits program and erase in every block
   regardless of those bits (pp. 4 to 5, 9).
-- `VPP` must be at its 5 V programming level for program, erase and lock operations (pp. 4 to 5, 9). The datasheet's
-  tolerance for that level is not recorded here.
+- `VPP` must be at its 5 V programming level for program, erase and lock operations (pp. 5, 9). The pin description
+  gives the level as 5.0 V ±0.5 V (p. 5).
 - `RY/BY` is open drain. In its default level mode it pulls low while the write state machine is busy, and it
   releases when the device is ready, erase is suspended, or the part is in deep power-down. It stays active
   whatever `CE` and `OE` do, unless a pin-disable command changes its configuration (pp. 4, 9). That command is not
   imported here.
 - `DQ0` to `DQ7` carry commands and status. `DQ8` to `DQ15` carry high array and identifier data in x16 mode and
-  float during status reads (p. 4).
+  are not used for status register reads (p. 4).
 
 ## Command set (p. 10)
 
@@ -118,5 +119,5 @@ arithmetic on a stated value. **Unknown** means the datasheet does not settle it
 - Page-buffer writes, queued operations, sleep, abort and device-information upload. Their contracts are not in
   this unit.
 - The pin-disable command for `RY/BY`.
-- The `VPP` tolerance and the supply current of the programming level.
+- The supply current of the programming level.
 - Which board uses this part, and the wiring of its chip select, byte lanes, `WP`, `VPP` and `RP`. (unknown)

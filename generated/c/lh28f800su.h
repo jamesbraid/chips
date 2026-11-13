@@ -60,7 +60,7 @@
 #define LH28F800SU_CSR_LOW_VPP_INPLACE               (LH28F800SU_CSR_LOW_VPP_MASK << LH28F800SU_CSR_LOW_VPP_SHIFT)
 
 /*
- * Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 float during status reads (printed p. 4).
+ * Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 are not used for status register reads (printed p. 4).
  */
 /* word GSR: 8 bits; Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) */
 #define LH28F800SU_GSR_WIDTH                         8 /* established */

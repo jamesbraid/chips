@@ -178,7 +178,7 @@ pub mod csr {
         }
     }
 }
-/// Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 float duri (established)
+/// Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 are not us (established)
 pub mod gsr {
     pub const WIDTH: u32 = 8;
     pub mod write_ready { // bits 7:7, established

@@ -43,7 +43,7 @@ Compatible status register, read after 0x70. Bit 7 is ready when set and busy wh
 
 ### Word `GSR`
 
-Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 float during status reads (printed p. 4).
+Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 are not used for status register reads (printed p. 4).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
