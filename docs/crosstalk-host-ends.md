@@ -143,7 +143,7 @@ ranges, each naming the widget in the address:
 | Space (software name) | Physical range | Window per widget | Evidence |
 |---|---|---|---|
 | Main | `0x1000_0000 + w * 0x0100_0000` | 16 MB | **Established**: OpenBSD `ip30_widget_short`, Linux `ip30-xtalk.c`; kernel pointers at `0xb8000000` for widget 8 (Census) |
-| Large | `0x8_0000_0000 + w * 0x8000_0000` | 2 GB | Unknown |
+| Large | `0x8_0000_0000 + w * 0x8000_0000` | 2 GB | **Established** as the IRIX contract: `heart_addr_xio_to_phys` returns it for any range ending past 16 MB and within 2 GB, and `heart_paddr_to_port` decodes it back, in 6.5.13f, 6.5.22 and 6.5.30 ([HEART](../chips/heart/README.md#processor-pio-windows-and-the-latches-read-after-a-failed-access-irix-6513f)). What the silicon decodes is **unknown**, not measured |
 | Huge | `w * 0x10_0000_0000`, w = 1..15 | 64 GB | **Established** for use: OpenBSD `ip30_widget_long`; the range is **inferred** from that use |
 
 - Widget 0 has no Huge window, because `0 << 36` is low memory. OpenBSD maps whole widget
@@ -569,7 +569,7 @@ Against [crosstalk-link.md](crosstalk-link.md) (commit `3cb44f3`):
 | 2 | HEART request-timeout tick | Timed uncached read to an unclaimed widget address at two programmed values; derive the unit from the latency |
 | 3 | HEART cold-reset values of the widget block | Single owner reads of each slot `+0x10`..`+0x50` before PROM init |
 | 4 | HEART widget control (`+0x20`) role and whether the shipped PROM writes it | Read the PROM bring-up routine for a store at `+0x20`; a read after PROM start (see 2.6) |
-| 5 | HEART large-window use and size | Binary search of IP30 kernel/PROM for `0x8_0000_0000`-range literals; currently unknown |
+| 5 | HEART large-window silicon decode | Software use and size are settled (the kernel builds it; see 2.2). Hardware decode: a PIO read through the large window on an Octane against the same offset through the 16 MB window |
 | 6 | Hub manufacturer number | Read local `0x400000` on a Hub; sibling IDs (Bridge `0x36`, XBridge `0x24`) do not decide |
 | 7 | Hub widget-control reset and writer | Read `0x400020` before any firmware write; trace the PROM's first write |
 | 8 | Units of Hub/Bedrock timeouts (`0x4003b8`, `0x4003c0`, PI `0x30`, `0x38`, `0x4001f0`) | Program two values and time a forced timeout, or find the unit in a Hub/Bedrock specification |

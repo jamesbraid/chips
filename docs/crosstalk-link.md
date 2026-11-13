@@ -332,7 +332,7 @@ and the offset travels unchanged. A host reaches widget space differently:
   Linux).
 - **HEART** has no programmable translation. Fixed decodes name the widget in the
   physical address: 16 MB per widget from `0x1000_0000`, 2 GB per widget from
-  `0x8_0000_0000` (unknown; settling test: a HEART or Hub specification page for the large window, or an OpenBSD/Linux use of it, none seen), and 64 GB per widget at widget number times
+  `0x8_0000_0000` (established as what the IRIX kernel builds for ranges past 16 MB and within 2 GB; what the silicon decodes is unknown, no HEART specification page or measurement), and 64 GB per widget at widget number times
   `0x10_0000_0000`, with none for widget 0. SGI's Octane report names none of these;
   the names are IRIX and OpenBSD software names. Established for the 16 MB and 64 GB
   ranges.

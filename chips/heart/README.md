@@ -495,6 +495,74 @@ issued, including delay slots, which run before the branch or call they belong t
 - `heart_dmalist_drain` (`IP30/usr/cpu/sysgen/IP30boot/heart.o` at `0xf5c`, 8 bytes, read in full, established): `jr
   ra` at `0xf5c` followed by a nop at `0xf60`.
 
+## Processor PIO windows and the latches read after a failed access (IRIX 6.5.13f)
+
+Evidence: the IRIX 6.5.13f IP30 kernel, a linked ELF with symbols (`/unix` of an Octane installation, 9,300,696 bytes, SHA-256
+`5ab52e7574ef157af434805d7251ee731691eea4a8f090da8b44b419aa348bcc`). Addresses are virtual addresses in that image. The 6.5.22 and 6.5.30 `unix.IP30` hold the same
+`heart_addr_xio_to_phys` (at `0xa800000020034f20` and `0xa80000002003f1ec`; the operations are identical, only register
+allocation differs). Established means the whole routine was read.
+
+### How the kernel turns a widget offset into a processor physical address
+
+`heart_addr_xio_to_phys` (`0xa800000020077be4`) takes a widget number `w`, an offset `o` inside the widget's address space and a
+length `n`, and forms `end = o + n`. If `o` has any of bits 63:60 set, it takes those four bits as the widget number and clears
+bits 63:48 of `o` first (who passes such an offset was not traced). Then, by `end`:
+
+| `end` | Physical address returned | Window | Grade |
+|---|---|---|---|
+| up to `0x100_0000` | `0x1000_0000 + w * 2^24 + o` | 16 MiB per widget | established |
+| above that, up to `2^31` | `2^35 + w * 2^31 + o`: bit 35 set, widget in bits 34:31, offset in bits 30:0 | 2 GiB per widget ("large") | established |
+| above that, up to `2^36` | `w * 2^36 + o`: widget in bits 39:36 | 64 GiB per widget ("huge") | established |
+| above `2^36` | 0, the failure return | | established |
+
+The routine reads no register: it is arithmetic on `w`. The caller gets `w` from the widget registry entry
+(`xwidget_info_id_get`), not from a HEART or Crossbow register. `heart_addr_xio_to_kva` (`0xa800000020077c84`) ORs
+`0x9000_0000_0000_0000` into a nonzero result, the 64-bit uncached window. The window follows the range, not the offset alone: a
+mapping of 4 KiB at offset `0x48000040` and a mapping of 128 MiB at `0x48000000` both land in the large window.
+
+Worked example, widget 13 (the Octane PCI cage port), widget offset `0x48000040`, any length whose end is below `2^31`:
+`0x8_0000_0000 + 13 * 0x8000_0000 = 0xe_8000_0000`, plus `0x4800_0040` gives `0xe_c800_0040`. The digit `e` is bits 35:32, not the
+widget number: bit 35 is the window marker and bits 34:32 are the top three bits of the widget number. The widget's low bit is
+bit 31 (the top bit of `0xc800_0040`), and offset bit 30 follows it.
+
+`heart_paddr_to_port` (`0xa8000000200785f8`) is the inverse the error path uses. Physical addresses `0x1000_0000` to
+`0x1fff_ffff` give port `(pa - 0x1000_0000) >> 24` and offset `pa & 0xff_ffff`; `2^35` to `2^36 - 1` give port `(pa - 2^35) >> 31`
+and offset `pa & 0x7fff_ffff`; `2^36` to `2^40 - 1` give port `pa >> 36` and offset `pa & (2^36 - 1)`. Below `0x4000` it returns
+0xfe with the offset equal to the address, and every other address returns 0xff. Established; the two directions agree.
+
+What the silicon decodes: unknown for the large window. No published manual held gives HEART's PIO decode, and no measurement
+exists. What is established is the software contract: all three IRIX builds use the large window for any widget mapping whose end
+is past 16 MiB and within 2 GiB, which includes every Bridge PCI memory-space mapping (those widget offsets start at
+`0x4000_0000`, see [bridge-pci-driver-windows.md](../../docs/bridge-pci-driver-windows.md)), and decode it back in
+`heart_paddr_to_port`. An Octane that runs those kernels therefore decodes it (inferred, not measured). A public source supports
+the neighbouring 64 GiB window: the Linux IP30 patches place the BaseIO Bridge's PCI resources at `0xf0_8000_0000` and up (widget
+15 times `2^36` plus the Bridge's `0x8000_0000` 64-bit memory window; mail message-id
+`20170224183803.GB15547@bhelgaas-glaptop.roam.corp.google.com`).
+
+### Latches the kernel reads and writes as 8-byte quantities
+
+The offsets `0x40`, `0x60`, `0x88`, `0x90` and `0xa8` name registers in two blocks. The processor-interface block is at physical
+`0x0ff0_0000` (kseg1 `0xaff0_0000`). The widget block of HEART as widget 8 is at `0x1800_0000` (kseg1 `0xb800_0000`; the kernel's
+small-data pointers hold `0x9000_0000_1800_0000` plus the offset).
+
+| Offset | Block | Register | Access, routine and address | Effect | Grade |
+|---|---|---|---|---|---|
+| `0x88` | processor interface | BERR_ADDR | `ld` in `dobuserr_common` (`0xa800000020017884`) at `0xa8000000200179b4`, address built by `lui 0xaff0; ori 0x88` | Bus error address, bits 39:0, copied into the per-processor error record and compared with the faulting address | established |
+| `0x90` | processor interface | BERR_MISC | `ld` in `dobuserr_common` at `0xa8000000200179a0` | Processor number in bits 22:21, stored in the same record | established |
+| `0xa8` | processor interface | PIU_ERR | `ld` in `dobuserr_common` at `0xa80000002001798c` | Latch for an access error on a processor-interface register: processor in bits 21:20, register offset in bits 19:3 | established for the read, role inferred |
+| `0x10040` | processor interface | CAUSE | `ld` in `dobuserr_common` at `0xa80000002001797c`; in `badaddr` (`0xa80000002000f020`) `ld` at `0xa80000002000f050`, `sd` of the same value at `0xa80000002000f054`, `ld` again at `0xa80000002000f11c` | Error cause bits; bit 16 (widget error) is tested after a probe; the store back is how the probe clears the bits (write-one-to-clear inferred) | established for the accesses |
+| `0x40` | widget 8 | WID_ERR_CMDWORD | `sd` of zero in `badaddr` at `0xa80000002000f03c`, before the probed access | Clears the failing-request command word so a later read shows only the probe's own failure | established for the store, role inferred |
+| `0x60` | widget 8 | WID_ERR_TYPE | `ld` in `dobuserr_common` at `0xa8000000200179c4`; in `badaddr`, `ld` at `0xa80000002000f038` before and `sd` of that value at `0xa80000002000f044` after the probe | Error type bits (PIO write timeout bit 2, read timeout bit 3, and so on); the write-back clears the bits that were set | established for the accesses, clear semantics inferred |
+| `0x70`, `0x78` | widget 8 | WID_PIO_ERR_UPPER, WID_PIO_ERR_LOWER | `ld` in `dobuserr_common` at `0xa800000020017a34` and `0xa800000020017a40` | Latched failing processor store: address bits 39:32 and processor in bits 23:22; address bits 31:0 | established |
+| `0x90` | widget 8 | WID_PIO_RTO_ADDR | `ld` in `dobuserr_common` at `0xa800000020017a28` | Latched read timeout: processor in bits 19:18, widget port in bits 15:12, address bits 23:12 | established |
+
+The offset alone does not name the block: `0x90` is BERR_MISC in the processor-interface block and WID_PIO_RTO_ADDR in the widget
+block, and `dobuserr_common` reads both. It also reads WID_ERR_CMDWORD, WID_ERR_UPPER and WID_ERR_LOWER as 32-bit words at `+0x44`,
+`+0x14` and `+0x1c` (`lw` at `0xa8000000200179d0`, `0xa8000000200179ec`and`0xa800000020017a08`), and MEM_ERR and BAD_MEM as `ld` at `0xa800000020017a54`
+and `0xa800000020017a68`. `badaddr` stores zero to WID_ERR_CMDWORD, reads WID_ERR_TYPE, does one `ld` from widget offset 0 into register zero,
+writes the saved WID_ERR_TYPE back, reads and writes back CAUSE, does the probed access, issues a sync, and branches to `baerror`
+(`0xa80000002000f728`) if CP0 Cause bit 14 (IP6) is pending or CAUSE bit 16 is set.
+
 ## Open
 
 Graded entries. "Established" lines are read from the files above; "inferred" lines say what they rest on. Each

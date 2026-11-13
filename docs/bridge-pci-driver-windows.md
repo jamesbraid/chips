@@ -14,7 +14,7 @@ The helper at `pcibr.o` 0xf6c (called by `pcibr_piomap_alloc` 0x183c and `pcibr_
 |---|---|---|---|
 | configuration, type 0 | `0x20000 + slot * 0x1000 + offset` | the range ends within the first 0x100 bytes; `0x820000` replaces `0x20000` when the soft-state bus number (soft +72) is nonzero | established, block at 0x14f8 |
 | 32-bit memory | `0x4000_0000 + PCI address` | the range ends by PCI address `0x4000_0000` | established, block at 0x12a8 |
-| 64-bit memory | `0x8000_0000 + PCI address` | upper limit from a constant at gp-32736, value not read | established offset, unknown limit, block at 0x1468 |
+| 64-bit memory | `0x8000_0000 + PCI address` | upper limit from a constant at gp-32736, value not read | established offset, unknown limit in 6.5.30 (the 6.5.13f kernel reads its limit as `0x4000_0000` on address plus size, see the IP30 section below), block at 0x1468 |
 | I/O | `0x1_0000_0000 + PCI address` | the range ends within 4 GiB; **and the revision word (soft +120, read at attach; see below) is above `0xc0023`**, otherwise the mapping fails with -1 | established, block at 0x149c (unix `0xa800000020043fe8`) |
 | BAR window n | as the window's memory or I/O type, after adding the base the host assigned to that register | window record from the function's record +72 + 56 n | established, 0x1024 to 0x1098 |
 
@@ -85,6 +85,72 @@ Everything below is the hardware's contract with these routines, read from their
 - The memory and I/O windows of the table above, translation entries (the entry count is read from soft +112 at attach), the Device registers for slots 0 to 7, the Control swap bits, interrupt pins 0 to 7 and the write-ones BAR sizing of each function. The windows in PCI address space are the host's to assign; IRIX uses the ranges in the previous section and needs the cage's PCI bus to decode them.
 - Configuration cycles for functions above 0 and for bridged buses, as the routines address them (6.5.30 `IP30boot/pcibr.o`; identical instructions in the IP27 object and in both releases). A type 0 access to function `f` of device `d` is a read or write at widget offset `0x20000 + d * 0x1000 + f * 0x100 + (register & ~3)`, `d` from 0 to 7 (`pcireg_type0_cfg_addr` 0x173cc, block 0x174bc to 0x174fc; an out-of-range device number fails an assertion). The kernel probes functions 1 to 7 of a device only when function 0's header type has bit 7 set, and treats a function as absent when the access faults or the vendor halfword reads 0xffff (kudzu pcibr-multifunction-scan (kudzu repository, docs/pcibr-multifunction-scan.md)). A type 1 access to a bus above 0 first stores `bus << 16 | device << 11` in the 32-bit word at widget offset 0xcc (`pcireg_type1_cntr_set` 0x120d8, store at 0x1219c for bridge types 0 and 1; a different bridge type, number 3, takes a 64-bit store at 0xc8, 0x121b8, and the type 2 block at 0x121d0 was not read) and then accesses `0x28000 + function * 0x100 + (register & ~3)` (`pcireg_type1_cfg_addr` 0x1767c, block 0x17740 to 0x1776c). Established for the arithmetic and the store; the register's name and effect are the type 1 configuration counter of [bridge-family.md](bridge-family.md), inferred.
 - What the module's or the shoehorn's own Bridge revision is: unknown (see [open-questions.md](open-questions.md)).
+
+## IP30: from a Bridge widget offset to a processor address, and the registers read after a failed PIO (IRIX 6.5.13f)
+
+Evidence: the IRIX 6.5.13f IP30 kernel, a linked ELF with symbols (SHA-256 `5ab52e7574ef157af434805d7251ee731691eea4a8f090da8b44b419aa348bcc`),
+read at the virtual addresses given. This kernel has `pcibr_*` routines and no `xbridge_attach`; the PCI window helper below is the
+same arithmetic as the helper at `pcibr.o` 0xf6c in 6.5.30 (matching structure and call sites, so the identification is inferred).
+
+### The chain, in call order
+
+All calls are direct. No Crossbow routine is in the chain (the kernel's symbol table has no `xbow_*` PIO routine), and no step reads a
+HEART or Crossbow register: the address is arithmetic on the widget number.
+
+| Step | Routine and address | What it does | Grade |
+|---|---|---|---|
+| user mapping | `usrpci_map` `0xa8000000200863b0` | for resolved space codes 2, 4, 5 and 6 calls `pciio_piomap_alloc` (`0x…864cc`), then `pciio_piomap_addr`; for codes 7 and 8 calls `pciio_piotrans_addr` (`0x…865d4`, `0x…86604`); then `v_mapphys` (`0x…8651c`) with the kernel virtual address it got | established for the calls; what code 8 means (BAR window 0) inferred from the window code below |
+| generic PCI layer | `pciio_piomap_alloc` `0xa8000000200870ec`, `pciio_piomap_addr` `0xa800000020087124`, `pciio_piotrans_addr` `0xa800000020087168` | each calls the `pcibr_` routine of the same name; `pciio_piomap_addr` also stores the address it returns in the map at `+0x20` | established |
+| Bridge layer | `pcibr_piomap_alloc` `0xa80000002007c834` (helper call at `0x…7c8bc`), `pcibr_piotrans_addr` `0xa80000002007ca9c` (helper call at `0x…7cb08`), `pcibr_piomap_addr` `0xa80000002007ca54` | convert a PCI space, address and length to a widget offset with the helper at `0xa80000002007c280`, then call the crosstalk layer | established |
+| crosstalk layer | `xtalk_piomap_alloc` `0xa800000020073194`, `xtalk_piotrans_addr` `0xa800000020073204`, `xtalk_piomap_addr` `0xa8000000200731cc` | each is a bare call to the `heart_` routine of the same name | established |
+| HEART layer | `heart_piomap_alloc` `0xa800000020077cbc`, `heart_piotrans_addr` `0xa800000020077d90`, `heart_piomap_addr` `0xa800000020077d74` | widget number from the registry (`0x…77aa4`), then `heart_addr_xio_to_kva` `0x…77c84` and `heart_addr_xio_to_phys` `0x…77be4`; `heart_piomap_addr` adds `offset - map base` to the map's kernel address | established |
+
+The window helper at `0xa80000002007c280` (no symbol; objdump places it at `pcibr_write_gather_flush+0x48`) for the cases a PCI
+memory BAR needs:
+
+| Space code | Widget offset | Limit | Grade |
+|---|---|---|---|
+| 4 or 5 (memory) | `0x4000_0000 + PCI address` (`0x…7c590`) | address plus length at most `0x4000_0000` (`0x…7c574` to `0x…7c588`) | established |
+| 6 (64-bit memory) | `0x8000_0000 + PCI address` (`0x…7c6b0`) | address plus length at most `0x4000_0000`: the check adds `0x7fff_ffff` and compares with the word `0xbfff_ffff` read from the small-data area at `0xa8000000203da930` (`0x…7c684` to `0x…7c6a4`) | established |
+| 2 (I/O) | `0x1_0000_0000 + PCI address` (`0x…7c700`) | at most `2^32`; refused when the revision word at soft state `+0x54` is not above `0xc0023` (`0x…7c6c4` to `0x…7c6d0`) | established |
+| 7 (configuration) | `0x20000 + slot * 0x1000 + address` (`0x…7c748` to `0x…7c754`) | address plus length at most `0x100` | established |
+| 8 to 13 (BAR window n) | the window record (type word at `+0x40`, base at `+0x48`, size at `+0x50`) gives a memory or I/O type, the base is added to the offset, and the plain-space case above runs (`0x…7c5d4` to `0x…7c61c`) | offset plus length within the window's size | established |
+
+Worked example from this arithmetic: a BAR at PCI address `0x0800_0000` reached as window 0 gives widget offset
+`0x4000_0000 + 0x0800_0000 = 0x4800_0000`, and `+0x40` gives `0x4800_0040`. `heart_addr_xio_to_phys` on widget 13 then gives physical
+`0xe_c800_0040` (the large window, see [the HEART page](../chips/heart/README.md#processor-pio-windows-and-the-latches-read-after-a-failed-access-irix-6513f)).
+The `0xe` is bits 35:32 of the address: bit 35 plus widget bits 3:1, not the widget number.
+
+### What the PIO error path reads from the Bridge
+
+After a failed access the kernel reaches `pcibr_pioerror` (`0xa800000020082158`). Every Bridge register access in the routines below is a
+**32-bit `lw` at slot + 4**, the odd (low) word of the big-endian doubleword slot; there is no `ld`, and no `lw` at the even
+(upper) word of a slot. Established, whole routines read.
+
+| Slot | Register (see [Bridge registers](../chips/bridge/README.md)) | Instruction and address |
+|---|---|---|
+| `0x100` | interrupt status | `lw` `+0x104`: `pcibr_pioerror` at `0xa80000002008330c` (then `andi 0x8800` and a call to `pcibr_error_dump`); `pcibr_error_dump` `0xa800000020081350` at `0x…8135c`; the helper at `0x…818ac` at `0x…818b0` and `0x…818cc`; `pcibr_error_intr_handler` `0xa800000020081a10` at `0x…81a34` |
+| `0xd0` | PCI bus error address, upper | `lw` `+0xd4`: `pcibr_error_dump` at `0x…81648` and `0x…81654`; the helper at `0x…818c8`; `pcibr_error_extract` `0xa8000000200820c8` at `0x…82118` |
+| `0xd8` | PCI bus error address, lower | `lw` `+0xdc`: `pcibr_error_dump` at `0x…8164c` and `0x…81650`; the helper at `0x…818c4`; `pcibr_error_extract` at `0x…82114` |
+
+The dump forms the 64-bit address as the `+0xd4` word shifted left 32 over the zero-extended `+0xdc` word (`dsll32`/`dsrl32` at
+`0x…81658` to `0x…81664`). The same routines also read, all as `lw` at slot + 4: the identification word (`+0x04`), widget error
+address words (`+0x14`, `+0x1c`), error command word (`+0x44`), `+0x5c`, response buffer words (`+0x64`, `+0x6c`), `+0x94`, `+0x10c` (read and
+written back) and `+0x17c`.
+
+Slots `0x28`, `0x30` and `0x38` are not read by the PIO error path in this kernel: no `lw`, `lwu` or `ld` at `+0x2c`, `+0x34` or `+0x3c` in
+the PCI routines from `0xa80000002007b000` to `0xa8000000200860c8` except in two small interrupt-routing helpers.
+`pcibr_clearwidint` (`0xa800000020080fd8`) stores zero at `+0x34` and `+0x3c` (`sw` at `0x…80fd8` and `0x…80fe0`), and `pcibr_setwidint`
+(`0xa800000020080fe4`) reads `+0x34` and `+0x3c` (`lw` at `0x…8102c` and `0x…81044`) and writes them back (`sw` at `0x…81058` and
+`0x…81060`). Neither has a direct caller; the kernel keeps `pcibr_setwidint`'s address in a small-data table beside the error
+handler pointers (at `0xa8000000203dbb90`), so how it is reached was not traced (unknown). Nothing in the range touches `+0x2c`.
+
+What a real Bridge returns for a 32-bit read of the upper word of a register slot: the Bridge ASIC specification revision 4.0 (register
+address map, Table 6, PDF pages 30 to 32, read through a page transcription, not re-read from the page image) says every register is on
+data bits 31:0 of its doubleword and is reachable only by a doubleword packet with the data enables `0x0f` set, and that any other
+packet type raises an address error exception. A `lw` at slot + 4 is that access. A `lw` at slot + 0 would enable bytes 7:4, not
+`0x0f`, so by the specification it is an address error, not a read of zero. Established as the specification's statement; the
+processor-visible effect (bus error versus returned data) was not observed and no shipped code issues such a read (unknown).
 
 ## Open
 
