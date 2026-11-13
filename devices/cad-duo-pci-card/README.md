@@ -29,8 +29,8 @@ expectation (IRIX or a public driver) or arithmetic on one. **Unknown** means no
 
 - **Inferred.** The card's keyboard and mouse interrupt leaves the card on PCI pin INTB. OpenBSD's IOC3 driver takes
   an add-in IOC3's SuperIO interrupt from INTB and an on-board IOC3's from INTD. That fits the BaseIO page, which puts
-  the system-board IOC3's SuperIO sources on pin D. Source: OpenBSD `sys/arch/sgi/pci/ioc.c` at `2df91d80c104`, a
-  software expectation. The file was not re-read for this page.
+  the system-board IOC3's SuperIO sources on pin D. Source: OpenBSD `sys/arch/sgi/pci/ioc.c` at the `references/code/openbsd` pin (`7011342f6a72`), lines 406-422: the super-I/O interrupt uses pin D when the IOC3 is on board and pin B otherwise, when the Ethernet interrupt takes pin A. A
+  software expectation. The earlier commit `2df91d80c104` was not re-read.
 - **Derived from an established routine.** IRIX's `ioc3_intb_needed` returns 1 for any subdevice mask with a bit
   outside bits 0 and 2 (see the IOC3 page). Mask `0x09` has bit 3 set, so IRIX asks for the second interrupt line.
 - **Unknown.** Which Bridge input a card's INTB reaches. Software that treats INTB as Bridge input `slot ^ 4` is
