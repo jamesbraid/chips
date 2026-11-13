@@ -239,11 +239,11 @@ accesses at slot + 4.
 
 The PROM takes a crossbar lock before step 1: bit 1 of link `0xf`'s arbitration-upper word
 (offset `0x2d8`, `PROM_CROSSBAR_LOCK_BIT` in `devices/xbow/registers-extra.toml`). It polls up to 500 times,
-50 microseconds apart, for the bit to clear, and prints "Xbow lock timeout" if it does not.
+50 microseconds apart (these two constants were not re-derived when the page was verified), for the bit to clear, and prints "Xbow lock timeout" if it does not.
 It then sets the bit, and prints "Failed to lock xbow" if the bit does not read back set. The
 routine has an exception path that prints "Took an exception" and fails the check. That the
-exception path guards these accesses is inferred. The stores and reads of the bit are
-established as PROM code; that the bit works as a lock is inferred.
+exception path guards these accesses is inferred. The sequence of writes and read-backs in steps 1 to 5 was re-read in the 6.210 PROM image
+(the 32-bit stores of `0x5a5a5a5a`, `0xa5a5a5a5` and `0xdeadbeef`, the `0x20` test of the clearing alias, the status shift and the `0x20` control write). The stores and reads of the lock bit and the polling constants were not re-derived in that pass; that the bit works as a lock is inferred.
 
 **A real deskside Tezro passes the check (established, public capture).** The verbose PROM
 capture of a four-processor Tezro (IRIXNet "Tezro IO9/Configuration Oddities", July 2022, PROM
