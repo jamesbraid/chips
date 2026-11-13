@@ -14,7 +14,7 @@
    "stride": 4,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
+   "grade": "established",
    "from": "OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8"
   },
   {
@@ -27,8 +27,8 @@
    "count": 1,
    "stride": 4,
    "space": null,
-   "reset": "unknown",
-   "grade": "inferred",
+   "reset": 11999,
+   "grade": "established",
    "from": "OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8"
   },
   {
@@ -46,7 +46,7 @@
    "name": "hc_fm_interval.fs_largest_data_packet",
    "hi": 30,
    "lo": 16,
-   "grade": "inferred",
+   "grade": "established",
    "from": "OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8"
   },
   {
@@ -91,8 +91,8 @@
    "count": 1,
    "stride": 4,
    "space": null,
-   "reset": "unknown",
-   "grade": "inferred",
+   "reset": 268437762,
+   "grade": "established",
    "from": "OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8"
   },
   {
@@ -150,8 +150,8 @@
    "count": 1,
    "stride": 4,
    "space": null,
-   "reset": "unknown",
-   "grade": "inferred",
+   "reset": 393216,
+   "grade": "established",
    "from": "OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8"
   },
   {

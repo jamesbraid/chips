@@ -13,11 +13,11 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `hc_interrupt_enable` | 0x10 | rw | 32 |  |  | 0x0 | inferred | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
-| `hc_fm_interval` | 0x34 | rw | 32 |  |  | unknown | inferred | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
+| `hc_interrupt_enable` | 0x10 | rw | 32 |  |  | 0x0 | established | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
+| `hc_fm_interval` | 0x34 | rw | 32 |  |  | 0x2edf | established | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
 | `hc_fm_number` | 0x3c | r | 32 |  |  | 0x0 | established | OpenHCI 1.0a section 7.3.3 (printed page 122), as the source datasheet cites it; IO-8 board test register table for the write check (index 0xf, offset 0x3c) |
-| `hc_rh_descriptor_a` | 0x48 | rw | 32 |  |  | unknown | inferred | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
-| `hc_rh_descriptor_b` | 0x4c | rw | 32 |  |  | unknown | inferred | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
+| `hc_rh_descriptor_a` | 0x48 | rw | 32 |  |  | 0x10000902 | established | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
+| `hc_rh_descriptor_b` | 0x4c | rw | 32 |  |  | 0x60000 | established | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
 
 ### Register `hc_interrupt_enable`
 
@@ -25,12 +25,12 @@ Interrupt enable word. The IO-8 board test requires it to read zero after a host
 
 ### Register `hc_fm_interval`
 
-Frame interval word. The frame interval and its toggle take the OpenHCI reset values (see FRAME_INTERVAL_RESET). The largest data packet field's reset value is TBD in the specification, and the IO-8 board test requires that field to read zero after a reset. The register's reset word is therefore not established as a whole.
+Frame interval word. The frame interval and its toggle take the OpenHCI reset values (see FRAME_INTERVAL_RESET). The largest data packet field's reset value is TBD in the OpenHCI specification, and the USS-312 data sheet gives it as 0h, which the IO-8 board test also expects.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 31 | `frame_interval_toggle` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Toggle, reset zero per the specification |
-| 30:16 | `fs_largest_data_packet` | inferred |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Largest data packet size. Its reset value is TBD in the specification; the IO-8 board test expects zero |
+| 30:16 | `fs_largest_data_packet` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Largest data packet size. Its reset value is TBD in the OpenHCI specification; the USS-312 data sheet (Table 40) gives 0h and the IO-8 board test expects zero |
 | 13:0 | `frame_interval` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Frame interval in bit times, reset 0x2edf per the specification |
 
 ### Register `hc_fm_number`

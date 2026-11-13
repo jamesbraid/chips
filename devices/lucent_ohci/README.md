@@ -13,8 +13,7 @@ The IO-8 board test in the stock PROM diagnostics gives what the board's own che
 test is a software expectation. It shows what the diagnostic demands, not what the part does, so every fact taken only
 from it is inferred.
 
-The OpenHCI register offsets used here are the word indexes the board test names in its messages, multiplied by four.
-This import did not re-read the OpenHCI register-map page itself. The offsets are therefore graded inferred.
+The register offsets used here are confirmed by the USS-312 data sheet's register tables (Tables 31, 40, 42, 45 and 46 give offsets 10h, 34h, 3Ch, 48h and 4Ch) and match the word indexes the board test names in its messages, multiplied by four.
 
 ## Identity and PCI configuration
 
@@ -32,8 +31,8 @@ configuration-space read of the function just after PCI reset would settle it.
   command register. That is a software expectation. The test's mask table narrows the masks of four fields, and which
   bits the part keeps there is unknown.
 - **Frame interval.** The specification gives the frame interval field and the toggle the reset values `0x2edf` and zero.
-  It marks the largest data packet size field TBD, leaving it to the part. The board test requires that field to read
-  zero after a reset, so the whole word's reset is not established.
+  It marks the largest data packet size field TBD, leaving it to the part. The USS-312 data sheet (Table 40) gives that field
+  a reset of zero, so the word resets to `0x00002edf`. The board test also requires zero.
 - **Frame number.** The specification makes this register read-only to the driver, written only by the controller, with
   reset zero. The board test writes `0xffff` to it while the controller is not operational and again during a USB reset,
   and requires the read-back under mask `0x0000ffff`. The board test's register table gives the full 16-bit field that
@@ -42,7 +41,7 @@ configuration-space read of the function just after PCI reset would settle it.
   is unknown.
 - **Root hub descriptor A.** The specification makes the power-switching and over-current fields, and the
   power-on-to-power-good time, driver-written. The board test writes zero and reads them back under mask `0x03001b00`.
-  The power-on value is in the USS-312 datasheet; it is not copied into this import.
+  The USS-312 datasheet (Table 45) gives the reset value: two downstream ports, power switching mode set, over-current protection mode set, power-on to power-good time `0x10`, which makes the word `0x10000902`.
 - **Root hub descriptor B.** The device-removable and port-power-control fields are driver-written, one bit per port
   starting at bit 1 of each half. A hardware reset does not reset the root hub, per the specification. The board
   test's USBRESET check requires the port bits to survive a USBRESET followed by a controller reset. The specification's
@@ -75,10 +74,8 @@ any published document, so they are held here only as the inferred expectations 
 - The reset word of the PCI Command and Status registers.
 - Whether the IO-8 firmware writes the subsystem identity fields, and the subsystem values a fitted part reports.
 - The BAR size this function reports.
-- The reset value of the largest data packet field in the frame interval register.
 - What a driver write to the frame number register does while the controller is operational.
 - Which bits of the four fields the board test's narrower masks cover the part keeps.
 - Whether USBRESET keeps the root hub descriptor B port bits, which the specification's prose argues against.
-- The power-on value of root hub descriptor A.
 - Whether the Fuel system board carries this part too, as one source states. No capture held here shows it.
 - Whether the two-port count holds on every board that carries the part.

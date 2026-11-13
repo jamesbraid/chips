@@ -2,12 +2,12 @@
 // AT&T/Lucent 11C1:5802 two-port OHCI USB host controller (Origin 300 IO-8), the register and identity facts the held sources establish
 #![allow(dead_code)]
 
-/// Interrupt enable word. The IO-8 board test requires it to read zero after a host-controller reset issued through the command register, and it prints a (inferred)
+/// Interrupt enable word. The IO-8 board test requires it to read zero after a host-controller reset issued through the command register, and it prints a (established)
 pub mod hc_interrupt_enable {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x10;
 }
-/// Frame interval word. The frame interval and its toggle take the OpenHCI reset values (see FRAME_INTERVAL_RESET). The largest data packet field's reset (inferred)
+/// Frame interval word. The frame interval and its toggle take the OpenHCI reset values (see FRAME_INTERVAL_RESET). The largest data packet field's reset (established)
 pub mod hc_fm_interval {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x34;
@@ -21,7 +21,7 @@ pub mod hc_fm_interval {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod fs_largest_data_packet { // bits 30:16, inferred
+    pub mod fs_largest_data_packet { // bits 30:16, established
         pub const SHIFT: u32 = 16;
         pub const MASK: u32 = 0x7fff;
         pub const fn get(v: u32) -> u32 {
@@ -57,7 +57,7 @@ pub mod hc_fm_number {
         }
     }
 }
-/// Root hub descriptor A. The specification makes the power-switching and over-current fields and the power-on-to-power-good time driver-written, so the  (inferred)
+/// Root hub descriptor A. The specification makes the power-switching and over-current fields and the power-on-to-power-good time driver-written, so the  (established)
 pub mod hc_rh_descriptor_a {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x48;
@@ -112,7 +112,7 @@ pub mod hc_rh_descriptor_a {
         }
     }
 }
-/// Root hub descriptor B. The specification gives the device-removable and port-power-control fields as driver written, one bit per port starting at bit  (inferred)
+/// Root hub descriptor B. The specification gives the device-removable and port-power-control fields as driver written, one bit per port starting at bit  (established)
 pub mod hc_rh_descriptor_b {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x4c;
