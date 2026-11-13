@@ -8,7 +8,7 @@ Crosstalk identity, the Ktown2 board and the cabling from a C-brick are in
 [onyx3000-graphics-topology.md](onyx3000-graphics-topology.md) and [crosstown-ktown.md](crosstown-ktown.md),
 and are not repeated here.
 
-No register of the G-brick or its Ktown2 is named in any source read, so `defs/` has no unit for it.
+No register of the G-brick or its Ktown2 is named in any source read, so `devices/` has no register map for it.
 
 Each fact carries one label. **Established** means the cited page states it, or the cited capture
 shows it, for that capture only. **Inferred** means it follows from cited pages, and none of them says

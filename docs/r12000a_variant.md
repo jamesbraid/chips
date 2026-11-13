@@ -1,6 +1,6 @@
 # R12000A variant: mode fields and the secondary-error syndrome
 
-This page covers what the NEC VR12000A user's manual says differs from the R12000: three boot-mode fields, the HSTL output mode, and a 9-bit syndrome register that the variant puts in CP0 register 25. The constants are in [defs/r12000a_variant.toml](../defs/r12000a_variant.toml), generated to [gen/docs/r12000a_variant.md](../gen/docs/r12000a_variant.md). Nothing here was read from silicon or from a running machine.
+This page covers what the NEC VR12000A user's manual says differs from the R12000: three boot-mode fields, the HSTL output mode, and a 9-bit syndrome register that the variant puts in CP0 register 25. The constants are in [devices/r12000a_variant/registers.toml](../devices/r12000a_variant/registers.toml), generated to [devices/r12000a_variant/registers.md](../devices/r12000a_variant/registers.md). Nothing here was read from silicon or from a running machine.
 
 ## Source and grades
 

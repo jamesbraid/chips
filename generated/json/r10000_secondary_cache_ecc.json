@@ -1,0 +1,79 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/r10000_secondary_cache_ecc/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "r10000_secondary_cache_ecc",
+   "kind": "constant",
+   "name": "R10K_CACHEERR_D_MASK",
+   "value": 201326592,
+   "count": 1,
+   "grade": "established",
+   "from": "MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 274-276"
+  },
+  {
+   "unit": "r10000_secondary_cache_ecc",
+   "kind": "constant",
+   "name": "R10K_CACHEERR_D_SHIFT",
+   "value": 26,
+   "count": 1,
+   "grade": "established",
+   "from": "MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 274-276"
+  },
+  {
+   "unit": "r10000_secondary_cache_ecc",
+   "kind": "constant",
+   "name": "R10K_CACHEERR_SIDX_MASK",
+   "value": 8388544,
+   "count": 1,
+   "grade": "established",
+   "from": "MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 274-276"
+  },
+  {
+   "unit": "r10000_secondary_cache_ecc",
+   "kind": "constant",
+   "name": "R10K_CACHEERR_SIDX_SHIFT",
+   "value": 6,
+   "count": 1,
+   "grade": "established",
+   "from": "MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 274-276"
+  },
+  {
+   "unit": "r10000_secondary_cache_ecc",
+   "kind": "constant",
+   "name": "R10K_CACHEERR_TA_MASK",
+   "value": 50331648,
+   "count": 1,
+   "grade": "established",
+   "from": "MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 274-276"
+  },
+  {
+   "unit": "r10000_secondary_cache_ecc",
+   "kind": "constant",
+   "name": "R10K_CACHEERR_TA_SHIFT",
+   "value": 24,
+   "count": 1,
+   "grade": "established",
+   "from": "MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 274-276"
+  },
+  {
+   "unit": "r10000_secondary_cache_ecc",
+   "kind": "constant",
+   "name": "R10K_CACHEERR_UNIT_SECONDARY",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 274-276"
+  },
+  {
+   "unit": "r10000_secondary_cache_ecc",
+   "kind": "constant",
+   "name": "R10K_CACHEERR_UNIT_SHIFT",
+   "value": 30,
+   "count": 1,
+   "grade": "established",
+   "from": "MIPS R10000 Microprocessor User's Manual, version 2.0, 007-2490-001, printed pages 274-276"
+  }
+ ]
+}

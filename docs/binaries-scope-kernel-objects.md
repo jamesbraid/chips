@@ -1535,7 +1535,7 @@ The IPv6 stack of this build is in its own `ipv6.a` archive, with no byte-identi
 ## Scope questions
 
 Each object below is listed under the rule shown, but its imports or routine names match a class the scope text keeps.
-These are questions for the scope list; nothing here changes `scripts/inventory-config.json`.
+These are questions for the scope list; nothing here changes `tools/config/inventory-config.json`.
 
 - `fru.a` (sn0_fru_analysis.o, sn0_fru_node.o, sn0_fru_io.o) is listed under rule 3, the core rule. The function-scope
   text keeps objects that report errors for the Hub, Xbow, Bridge and router. These routines cover the Hub

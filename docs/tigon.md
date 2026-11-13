@@ -3,7 +3,7 @@
 The Alteon Tigon/PCI is the Ethernet controller on SGI's IRIS Gigabit Ethernet board. This page holds
 its PCI data-width rules, the bus-width flag in its PCI State register, the byte-swap rules of its
 host DMA channels, the board's bus capability, and what is unknown. The register offsets and bit
-fields are in the generated contract, [gen/docs/tigon.md](../gen/docs/tigon.md), from `defs/tigon.toml`.
+fields are in the generated contract, [devices/tigon/registers.md](../devices/tigon/registers.md), from `devices/tigon/registers.toml`.
 
 Each fact carries a label as in the rest of this repository. **Established** means a published
 manual or specification states it, with the citation. **Inferred** means reasoned from established

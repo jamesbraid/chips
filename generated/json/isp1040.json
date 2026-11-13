@@ -1,0 +1,456 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/isp1040/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "id_l",
+   "offset": 0,
+   "access": "r",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "id_h",
+   "offset": 2,
+   "access": "r",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "cfg_0",
+   "offset": 4,
+   "access": "r",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout; qla1280 driver hardware revision test"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "field",
+   "name": "cfg_0.hw_revision",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout; qla1280 driver hardware revision test"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "cfg_1",
+   "offset": 6,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "ictrl",
+   "offset": 8,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout and its use in qla1280 driver"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "field",
+   "name": "ictrl.flash_upper",
+   "hi": 9,
+   "lo": 9,
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header device register layout and its use in qla1280 driver"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "field",
+   "name": "ictrl.flash_enable",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header device register layout and its use in qla1280 driver"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "field",
+   "name": "ictrl.risc_int_enable",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header device register layout and its use in qla1280 driver"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "field",
+   "name": "ictrl.int_enable",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header device register layout and its use in qla1280 driver"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "field",
+   "name": "ictrl.soft_reset",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header device register layout and its use in qla1280 driver"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "istatus",
+   "offset": 10,
+   "access": "r",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "semaphore",
+   "offset": 12,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "nvram",
+   "offset": 14,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "flash_data",
+   "offset": 16,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header and OpenBSD qlw driver header, both naming the flash data word"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "flash_address",
+   "offset": 18,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header and OpenBSD qlw driver header, both naming the flash address word"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "register",
+   "name": "mailbox",
+   "offset": 112,
+   "access": "rw",
+   "width": 16,
+   "count": 8,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux qla1280 driver header device register layout (mailbox 0 at 0x70); OpenBSD QLW_MBOX_BASE_PCI"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "ASYNC_BUS_RESET",
+   "value": 32769,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header MBA_BUS_RESET and qla1280 driver; NetBSD isp driver header ASYNC_BUS_RESET"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "BUSES",
+   "value": 1,
+   "count": 1,
+   "grade": "inferred",
+   "from": "OpenBSD qlw PCI attach sets one bus for each ISP1040 revision"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "DRIVER_SELECTION_TIMEOUT_DEFAULT",
+   "value": 250,
+   "count": 1,
+   "grade": "inferred",
+   "from": "Linux qla1280 driver nvram defaults; NetBSD isp driver defaults; OpenBSD qlw driver defaults"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "OP_BUS_RESET",
+   "value": 24,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header MBC_BUS_RESET; NetBSD isp driver header MBOX_BUS_RESET; OpenBSD qlw driver header QLW_MBOX_BUS_RESET"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "OP_DUMP_RAM_64",
+   "value": 10,
+   "count": 1,
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header MBC_DUMP_RAM_A64_ROM; qla1280 driver selects it for 64-bit DMA builds"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "OP_GET_TARGET_PARAMS",
+   "value": 40,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header MBC_GET_TARGET_PARAMETERS and qla1280 driver; NetBSD mailbox table mask 0x03 in and 0x4f out; OpenBSD qlw driver"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "OP_LOAD_RAM_64",
+   "value": 9,
+   "count": 1,
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header MBC_LOAD_RAM_A64_ROM; qla1280 driver selects it for 64-bit DMA builds"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "OP_SET_RESET_DELAY_PARAMS",
+   "value": 58,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header MBC_SET_RESET_DELAY_PARAMETERS; NetBSD isp driver header MBOX_SET_RESET_DELAY_PARAMS; NetBSD mailbox table mask 0x07"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "OP_SET_RETRY_COUNT",
+   "value": 50,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header MBC_SET_RETRY_COUNT and qla1280 driver; NetBSD mailbox table mask 0xc7"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "OP_SET_SELECTION_TIMEOUT",
+   "value": 49,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header MBC_SET_SELECTION_TIMEOUT and qla1280 driver; NetBSD mailbox table mask 0x07; OpenBSD qlw driver"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "OP_SET_TARGET_PARAMS",
+   "value": 56,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header MBC_SET_TARGET_PARAMETERS; NetBSD isp driver header MBOX_SET_TARGET_PARAMS; NetBSD mailbox table mask 0x4f"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "PCI_REV_1040",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred",
+   "from": "OpenBSD qlw PCI attach revision table"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "PCI_REV_1040A",
+   "value": 3,
+   "count": 1,
+   "grade": "inferred",
+   "from": "OpenBSD qlw PCI attach revision table"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "PCI_REV_1040B",
+   "value": 4,
+   "count": 1,
+   "grade": "inferred",
+   "from": "OpenBSD qlw PCI attach revision table"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "PCI_REV_1040C",
+   "value": 5,
+   "count": 1,
+   "grade": "inferred",
+   "from": "OpenBSD qlw PCI attach revision table, which also maps every higher value to the 1040C"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "SCSI2_SELECTION_ABORT_US",
+   "value": 200,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "SCSI2_SELECTION_TIMEOUT_MS",
+   "value": 250,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATE_GOT_BUS",
+   "value": 256,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header SF_GOT_BUS; NetBSD isp driver header RQSF_GOT_BUS; OpenBSD qlw driver header QLW_STATE_GOT_BUS"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATE_GOT_SENSE",
+   "value": 8192,
+   "count": 1,
+   "grade": "inferred",
+   "from": "Linux qla1280 driver header SF_GOT_SENSE; NetBSD isp driver header RQSF_GOT_SENSE"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATE_GOT_TARGET",
+   "value": 512,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header SF_GOT_TARGET and qla1280 driver; NetBSD isp driver header RQSF_GOT_TARGET and isp driver; OpenBSD qlw driver header QLW_STATE_GOT_TARGET"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATUS_COMP_INCOMPLETE",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header CS_INCOMPLETE; NetBSD isp driver header RQCS_INCOMPLETE; OpenBSD qlw driver header QLW_IOCB_STATUS_INCOMPLETE"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATUS_COMP_RESET",
+   "value": 4,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header CS_RESET; NetBSD isp driver header RQCS_RESET_OCCURRED; OpenBSD qlw driver header QLW_IOCB_STATUS_RESET"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATUS_ENTRY_COMP_STATUS_OFFSET",
+   "value": 10,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header struct response; OpenBSD qlw driver header struct qlw_iocb_status"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATUS_ENTRY_SENSE_LENGTH_OFFSET",
+   "value": 18,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header struct response (req_sense_length); OpenBSD qlw driver header struct qlw_iocb_status (sense_len)"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATUS_ENTRY_STATE_FLAGS_OFFSET",
+   "value": 12,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header struct response; OpenBSD qlw driver header struct qlw_iocb_status"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATUS_ENTRY_STATUS_FLAGS_OFFSET",
+   "value": 14,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux qla1280 driver header struct response; OpenBSD qlw driver header struct qlw_iocb_status"
+  },
+  {
+   "unit": "isp1040",
+   "kind": "constant",
+   "name": "STATUS_FLAG_SELECTION_TIMEOUT",
+   "value": 64,
+   "count": 1,
+   "grade": "inferred",
+   "from": "NetBSD isp driver header RQSTF_TIMEOUT, read by the NetBSD driver for a transport error only"
+  }
+ ]
+}

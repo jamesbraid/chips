@@ -5,7 +5,7 @@ three XBridge chips and two Crosstown2 host ports. This page covers what the enc
 bus and slot layout, chip wiring as drawn, the guest's widget and bus numbering, host routing,
 power, the L1 identity and what is unknown. It holds no register facts, so there is no generated
 contract for it. The XBridge registers are in [bridge-family.md](bridge-family.md) and
-`defs/bridge.xbridge.toml`. The Crosstown2 port and its speeds are in
+`devices/bridge/registers.xbridge.toml`. The Crosstown2 port and its speeds are in
 [crosstown-ktown.md](crosstown-ktown.md), and the host interface card's presence is recorded there
 too.
 

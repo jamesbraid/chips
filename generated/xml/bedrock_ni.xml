@@ -1,0 +1,137 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/bedrock_ni/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="bedrock_ni" prefix="BEDROCK_NI" title="Bedrock network interface (NI) registers: field layouts, port error bits and routing tables" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts">
+  <doc>Offsets are in the node's local alias, the same offsets the census names in devices/bedrock/registers.toml. Register names, offsets, widths and field positions come from the public Linux 2.5.40 SN1 register headers, read directly from that tag, so they are established as header facts. Behaviour the headers give only in their comments is inferred. No Bedrock specification is held. The headers state no reset value, so every reset is unknown, except one software default the headers name without a source.</doc>
+  <struct name="PORT_STATUS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680000" access="r" reset="unknown">
+    <doc>Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown. The shipped IRIX Origin 300/350 kernels test bits 1:0 as the link state, and bits 2:1 equal to 2 (remote power set, link up clear) start a link-reset wait.</doc>
+    <field name="remote_power" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="link_up" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="status_bit0" start="0" size="1" type="uint" grade="unknown"/>
+  </struct>
+  <struct name="PORT_RESET" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680008" access="w" reset="unknown">
+    <doc>Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link and bit 2 resets the local Bedrock. What the peer does with a link reset is not stated. Reset unknown. The shipped IRIX Origin 300/350 kernels write the value 6 (port reset and local reset).</doc>
+    <field name="local_reset" start="2" size="1" type="uint" grade="established"/>
+    <field name="port_reset" start="1" size="1" type="uint" grade="established"/>
+    <field name="link_reset_out" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="RESET_ENABLE" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680010" access="rw" reset="unknown">
+    <doc>Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown. The shipped IRIX Origin 300/350 kernels write 1; bit 0 is the one that matters.</doc>
+    <field name="reset_ok" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="DIAG_PARMS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680018" access="rw" reset="unknown">
+    <doc>Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them. Reset unknown.</doc>
+    <field name="send_err_off" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="port_disable" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="send_data_error" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CHANNEL_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680020" access="rw" reset="unknown">
+    <doc>Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies. Reset unknown.</doc>
+    <field name="send_vch_sel" start="8" size="1" type="uint" grade="established"/>
+    <field name="vch_vector_reply" start="7" size="1" type="uint" grade="established"/>
+    <field name="vch_nine_reply" start="6" size="1" type="uint" grade="established"/>
+    <field name="vch_two_reply" start="5" size="1" type="uint" grade="established"/>
+    <field name="vch_one_reply" start="4" size="1" type="uint" grade="established"/>
+    <field name="vch_vector_request" start="3" size="1" type="uint" grade="established"/>
+    <field name="vch_nine_request" start="2" size="1" type="uint" grade="established"/>
+    <field name="vch_two_request" start="1" size="1" type="uint" grade="established"/>
+    <field name="vch_one_request" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CHANNEL_TEST" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680028" access="rw" reset="unknown">
+    <doc>Access to the link test logic: seed, mask, data, valid, error and flit fields, plus clear and error-capture controls. The header gives the field layout only. Reset unknown.</doc>
+    <field name="test_errcapture" start="54" size="1" type="uint" grade="established"/>
+    <field name="test_clear" start="53" size="1" type="uint" grade="established"/>
+    <field name="test_flit" start="50" size="3" type="uint" grade="established"/>
+    <field name="test_cberr" start="49" size="1" type="uint" grade="established"/>
+    <field name="test_valid" start="48" size="1" type="uint" grade="established"/>
+    <field name="test_data" start="28" size="20" type="uint" grade="established"/>
+    <field name="test_mask" start="20" size="8" type="uint" grade="established"/>
+    <field name="test_seed" start="0" size="20" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PARMS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680030" access="rw" reset="unknown">
+    <doc>Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above. Reset unknown.</doc>
+    <field name="vch_err_enable" start="31" size="4" type="uint" grade="established"/>
+    <field name="squash_err_enable" start="30" size="1" type="uint" grade="established"/>
+    <field name="first_err_enable" start="29" size="1" type="uint" grade="established"/>
+    <field name="d_avail_sel" start="26" size="2" type="uint" grade="established"/>
+    <field name="max_retry" start="16" size="10" type="uint" grade="established"/>
+    <field name="null_timeout" start="10" size="6" type="uint" grade="established"/>
+    <field name="max_burst" start="0" size="10" type="uint" grade="established"/>
+  </struct>
+  <struct name="CHANNEL_AGE" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680038" access="rw" reset="unknown">
+    <doc>Age at which request and reply packets enter the fabric. The header's comment says a higher reply age gives replies fixed priority over requests under saturation (inferred from the comment). Reset unknown.</doc>
+    <field name="reply_inject_age" start="8" size="8" type="uint" grade="established"/>
+    <field name="request_inject_age" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_ERRORS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680100" access="r" reset="unknown">
+    <doc>Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown. The shipped IRIX Origin 300/350 kernels test the latched error bits 52:24 (NI_ERROR_LATCHED_HI and NI_ERROR_LATCHED_LO) and treat bit 52 with the reset enable word zero as a link reset caused by another partition. That the chip latches the bit when a reset is refused is unknown.</doc>
+    <field name="link_reset_in" start="52" size="1" type="uint" grade="established"/>
+    <field name="internal_long" start="48" size="4" type="uint" grade="established"/>
+    <field name="internal_short" start="44" size="4" type="uint" grade="established"/>
+    <field name="external_bad_header" start="40" size="4" type="uint" grade="established"/>
+    <field name="external_long" start="36" size="4" type="uint" grade="established"/>
+    <field name="external_short" start="32" size="4" type="uint" grade="established"/>
+    <field name="fifo_overflow" start="28" size="4" type="uint" grade="established"/>
+    <field name="tail_timeout" start="24" size="4" type="uint" grade="established"/>
+    <field name="retry_count" start="16" size="8" type="uint" grade="established"/>
+    <field name="cb_error_count" start="8" size="8" type="uint" grade="established"/>
+    <field name="sn_error_count" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_HEADER_A" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680108" access="r" reset="unknown">
+    <doc>First half of the header of an erroring packet, as the header's union lays it out. The header's comment says it holds the captured header. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown.</doc>
+    <field name="pha_address_b" start="35" size="27" type="uint" grade="established"/>
+    <field name="pha_prexsel" start="32" size="3" type="uint" grade="established"/>
+    <field name="pha_command" start="24" size="8" type="uint" grade="established"/>
+    <field name="pha_destination" start="13" size="8" type="uint" grade="established"/>
+    <field name="pha_direction" start="9" size="4" type="uint" grade="established"/>
+    <field name="pha_age" start="1" size="8" type="uint" grade="established"/>
+    <field name="pha_v" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_HEADER_B" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680110" access="r" reset="unknown">
+    <doc>Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown.</doc>
+    <field name="phb_address_c" start="38" size="8" type="uint" grade="established"/>
+    <field name="phb_address_a" start="35" size="3" type="uint" grade="established"/>
+    <field name="phb_source" start="16" size="11" type="uint" grade="established"/>
+    <field name="phb_supplemental" start="0" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_SIDEBAND" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680118" access="r" reset="unknown">
+    <doc>Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown.</doc>
+    <field name="vch_active" start="16" size="4" type="uint" grade="established"/>
+    <field name="send_error" start="15" size="1" type="uint" grade="established"/>
+    <field name="cb_status" start="14" size="1" type="uint" grade="established"/>
+    <field name="sn_status" start="13" size="1" type="uint" grade="established"/>
+    <field name="squash" start="12" size="1" type="uint" grade="established"/>
+    <field name="bad_message" start="11" size="1" type="uint" grade="established"/>
+    <field name="rcv_error" start="10" size="1" type="uint" grade="established"/>
+    <field name="bad_prexsel" start="9" size="1" type="uint" grade="established"/>
+    <field name="bad_dest" start="8" size="1" type="uint" grade="established"/>
+    <field name="sideband" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_ERROR_CLEAR" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x680120" access="r" reset="unknown">
+    <doc>The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown. The shipped IRIX Origin 300/350 kernels read this word, then store zero to port_errors. Whether the read clears anything is unknown.</doc>
+    <field name="pec_link_reset_in" start="52" size="1" type="uint" grade="established"/>
+    <field name="pec_internal_long" start="48" size="4" type="uint" grade="established"/>
+    <field name="pec_internal_short" start="44" size="4" type="uint" grade="established"/>
+    <field name="pec_external_bad_header" start="40" size="4" type="uint" grade="established"/>
+    <field name="pec_external_long" start="36" size="4" type="uint" grade="established"/>
+    <field name="pec_external_short" start="32" size="4" type="uint" grade="established"/>
+    <field name="pec_fifo_overflow" start="28" size="4" type="uint" grade="established"/>
+    <field name="pec_tail_timeout" start="24" size="4" type="uint" grade="established"/>
+    <field name="pec_retry_count" start="16" size="8" type="uint" grade="established"/>
+    <field name="pec_cb_error_count" start="8" size="8" type="uint" grade="established"/>
+    <field name="pec_sn_error_count" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LOCAL_TABLE" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x681000" access="rw" count="128" stride="8" reset="unknown">
+    <doc>Next-hop table for a local destination, one entry per 7-bit local destination at a stride of eight bytes; entry 0 is at the base. The header names the table and gives no access direction. Reset unknown.</doc>
+    <field name="next_vch_lsb" start="4" size="1" type="uint" grade="established"/>
+    <field name="next_exit_port" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="GLOBAL_TABLE" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x682000" access="rw" reset="unknown">
+    <doc>Next-hop table for the one-bit meta destination. The header names the table and gives no access direction. Reset unknown.</doc>
+    <field name="next_vch_lsb" start="4" size="1" type="uint" grade="established"/>
+    <field name="next_exit_port" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <constant name="NI_ERROR_LATCHED_HI" value="0x34" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"/>
+  <constant name="NI_ERROR_LATCHED_LO" value="0x18" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"/>
+  <constant name="NI_ERROR_LINK_RESET_BIT" value="0x34" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"/>
+  <constant name="PORT_PARMS_HEADER_DEFAULT" value="0x7a3ff1bf0" grade="inferred"/>
+</genxml>

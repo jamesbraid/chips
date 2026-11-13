@@ -1,0 +1,6 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/vice/registers.toml",
+ "profile": "public",
+ "rows": []
+}

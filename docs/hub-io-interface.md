@@ -4,11 +4,11 @@ The Hub's I/O interface is its port onto Crosstalk (XIO). It is the block at off
 in the Hub register space: the widget face, the protection registers, the link control, the
 interrupt destination and the big-window translation entries. The census of the shipped kernel
 reaches most of these offsets. The register list and the reset-value status are in
-[gen/docs/hub.md](../gen/docs/hub.md). This page covers what the public Linux SN0 Hub I/O header
+[devices/hub/registers.md](../devices/hub/registers.md). This page covers what the public Linux SN0 Hub I/O header
 adds, and what stays open.
 
 The fields below come from the public Linux SN0 Hub I/O header, Linux 7.2-rc7, as machine-readable
-constants in [defs/hub_extra.toml](../defs/hub_extra.toml). The header gives names, offsets and
+constants in [devices/hub/registers-extra.toml](../devices/hub/registers-extra.toml). The header gives names, offsets and
 masks. It gives no access types and no reset values, so every reset here is unknown.
 
 ## Added from the public header

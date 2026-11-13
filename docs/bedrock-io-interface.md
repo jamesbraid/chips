@@ -2,8 +2,8 @@
 
 The I/O interface is the Bedrock's crosstalk port: the unit a crossbar or XBridge talks to, and the unit that
 processor programmed I/O to widgets leaves through. It also holds the two block transfer engines (BTEs). Its
-register layouts, with a grade on each field, are in [defs/bedrock_ii.toml](../defs/bedrock_ii.toml); the
-generated reference is [gen/docs/bedrock_ii.md](../gen/docs/bedrock_ii.md). The chip-level context is in
+register layouts, with a grade on each field, are in [devices/bedrock_ii/registers.toml](../devices/bedrock_ii/registers.toml); the
+generated reference is [devices/bedrock_ii/registers.md](../devices/bedrock_ii/registers.md). The chip-level context is in
 [crosstalk-host-ends.md](crosstalk-host-ends.md), and the internal crossbar is in [bedrock-crossbar.md](bedrock-crossbar.md).
 
 No Bedrock specification is held. The sources are the SN1 register headers in the public Linux 2.5.40 tree, the

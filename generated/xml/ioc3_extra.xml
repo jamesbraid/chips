@@ -1,0 +1,93 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/ioc3/registers-extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="ioc3_extra" prefix="IOC3" title="IOC3 registers outside the census">
+  <struct name="ONE_WIRE_CTL" size="4" grade="established" register="yes" offset="0x30" access="rw" reset="unknown">
+    <doc>The 32-bit microlan control register the shipped IRIX one-wire access routine drives: it writes the pulse width shifted left 10 ORed with the sample time shifted left 2, polls bit 1 (done) with no limit, and returns bit 0 (the sampled line level). Only the lowest bit of the pulse and sample fields is recorded as a position.</doc>
+    <field name="pulse" start="10" size="1" type="uint" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+    <field name="sample" start="2" size="1" type="uint" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+    <field name="done" start="1" size="1" type="uint" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+    <field name="result" start="0" size="1" type="uint" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+  </struct>
+  <struct name="PLP_A_ADDR_HI" size="4" grade="established" register="yes" offset="0x80" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_A_ADDR_LO" size="4" grade="established" register="yes" offset="0x84" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_A_COUNT" size="4" grade="established" register="yes" offset="0x88" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_CTL" size="4" grade="established" register="yes" offset="0x8c" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_B_ADDR_HI" size="4" grade="established" register="yes" offset="0x90" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_B_ADDR_LO" size="4" grade="established" register="yes" offset="0x94" access="rw" reset="unknown">
+  </struct>
+  <struct name="PLP_B_COUNT" size="4" grade="established" register="yes" offset="0x98" access="rw" reset="unknown">
+  </struct>
+  <struct name="KM_RX_KBD" size="4" grade="established" register="yes" offset="0xa0" access="r" reset="unknown">
+  </struct>
+  <struct name="KM_RX_MOUSE" size="4" grade="established" register="yes" offset="0xa4" access="r" reset="unknown">
+  </struct>
+  <struct name="KM_TX_KBD" size="4" grade="established" register="yes" offset="0xa8" access="w" reset="unknown">
+  </struct>
+  <struct name="KM_TX_MOUSE" size="4" grade="established" register="yes" offset="0xac" access="w" reset="unknown">
+  </struct>
+  <struct name="GPCR_S_FORMAT" size="4" grade="inferred" from="shipped IRIX kernel binaries, per kudzu docs/nic.md">
+    <doc>Layout of the general-purpose control set alias, gpcr_s (offset 0x34), as the shipped IRIX one-wire routine writes it. Before reading the address part the routine stores 0x200000 to the register address its caller passes, when that address is not null; with a null address it prints that it is bypassing the enable and goes on. The word is written whole, so bit 21 is the only bit the routine sets. That the store enables the one-wire path to the part is read from the routine's own message, and that a set alias leaves other bits alone is inferred from its name.</doc>
+    <field name="nic_enable" start="21" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <constant name="GPCR_S_MICROLAN_ROUTE_BIT" value="0x200000" grade="inferred"/>
+  <constant name="GPCR_S_NIC_ENABLE_WORD" value="0x200000" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/nic.md"/>
+  <constant name="GPPR_LIGHTBAR_RED_PIN" value="0x1" grade="inferred"/>
+  <constant name="GPPR_LIGHTBAR_WHITE_PIN" value="0x0" grade="inferred"/>
+  <constant name="GPPR_MEANINGFUL_MASK" value="0x1ff" grade="inferred"/>
+  <constant name="GPPR_MICROLAN_PIN" value="0x8" grade="inferred"/>
+  <constant name="GPPR_PHY_RESET_PIN" value="0x5" grade="inferred"/>
+  <constant name="GPPR_UARTA_MODESEL_PIN" value="0x7" grade="inferred"/>
+  <constant name="GPPR_UARTB_MODESEL_PIN" value="0x6" grade="inferred"/>
+  <constant name="INT_OUT_COUNT_MASK" value="0xffff" grade="inferred"/>
+  <constant name="INT_OUT_DIAG_BIT" value="0x40000000" grade="inferred"/>
+  <constant name="INT_OUT_MODE_HIGH" value="0x4" grade="inferred"/>
+  <constant name="INT_OUT_MODE_LOW" value="0x0" grade="inferred"/>
+  <constant name="INT_OUT_MODE_MASK" value="0x70000" grade="inferred"/>
+  <constant name="INT_OUT_MODE_ONE_PULSE" value="0x5" grade="inferred"/>
+  <constant name="INT_OUT_MODE_PULSE_TRAIN" value="0x6" grade="inferred"/>
+  <constant name="INT_OUT_MODE_SQUARE" value="0x7" grade="inferred"/>
+  <constant name="INT_OUT_PIN0_ROUTE_BIT" value="0x100000" grade="inferred"/>
+  <constant name="INT_OUT_PULSE_TICKS" value="0x3" grade="inferred"/>
+  <constant name="INT_OUT_STATE_BIT" value="0x80000000" grade="inferred"/>
+  <constant name="INT_OUT_TICK_NS" value="0x1e78" grade="inferred"/>
+  <constant name="PORT_CTL_CARRIER_REQ_BIT" value="0x40000" grade="inferred"/>
+  <constant name="PORT_CTL_CTS_REQ_BIT" value="0x80000" grade="inferred"/>
+  <constant name="PORT_CTL_FLOW_CTL_BIT" value="0x20000" grade="inferred"/>
+  <constant name="PORT_CTL_HIGH_WATER_MASK" value="0x1ff" grade="inferred"/>
+  <constant name="PORT_CTL_QUAD_SPEED_BIT" value="0x100000" grade="inferred"/>
+  <constant name="PORT_CTL_RING_DMA_EN_BIT" value="0x10000000" grade="inferred"/>
+  <constant name="SIO_CR_ARBITER_IDLE_BIT" value="0x400000" grade="inferred"/>
+  <constant name="SIO_CR_REQUESTER_MASK" value="0x380000" grade="inferred"/>
+  <constant name="SIO_CR_RESET_BIT" value="0x1" grade="inferred"/>
+  <constant name="SIO_CR_SER_A_BASE_MASK" value="0xfe" grade="inferred"/>
+  <constant name="SIO_CR_SER_B_BASE_MASK" value="0x7f00" grade="inferred"/>
+  <constant name="SIO_CR_STROBE_MASK" value="0x78000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_A_CARRIER" value="0x10" grade="inferred"/>
+  <constant name="SIO_IR_SRC_A_CTS" value="0x20" grade="inferred"/>
+  <constant name="SIO_IR_SRC_A_PCI_ERR" value="0x100" grade="inferred"/>
+  <constant name="SIO_IR_SRC_A_RX_FULL" value="0x2" grade="inferred"/>
+  <constant name="SIO_IR_SRC_A_RX_HIGH" value="0x4" grade="inferred"/>
+  <constant name="SIO_IR_SRC_A_RX_TIMER" value="0x8" grade="inferred"/>
+  <constant name="SIO_IR_SRC_A_TX_DONE" value="0x80" grade="inferred"/>
+  <constant name="SIO_IR_SRC_A_TX_EMPTY" value="0x1" grade="inferred"/>
+  <constant name="SIO_IR_SRC_A_UART" value="0x40" grade="inferred"/>
+  <constant name="SIO_IR_SRC_B_CARRIER" value="0x2000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_B_CTS" value="0x4000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_B_PCI_ERR" value="0x20000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_B_RX_FULL" value="0x400" grade="inferred"/>
+  <constant name="SIO_IR_SRC_B_RX_HIGH" value="0x800" grade="inferred"/>
+  <constant name="SIO_IR_SRC_B_RX_TIMER" value="0x1000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_B_TX_DONE" value="0x10000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_B_TX_EMPTY" value="0x200" grade="inferred"/>
+  <constant name="SIO_IR_SRC_B_UART" value="0x8000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_KBD" value="0x400000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_PP_PASSTHRU" value="0x40000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_PP_PCI_ERR" value="0x200000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_RT_IN_PULSE" value="0x10000000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_RT_OUT_PULSE" value="0x8000000" grade="inferred"/>
+</genxml>

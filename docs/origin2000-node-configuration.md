@@ -5,7 +5,7 @@ secondary-cache size from configuration data stored in the node board's boot fla
 This page covers the published configurations, the rules SGI gives for mixing and
 copying node PROMs, and the layout of that configuration data in the shipped PROM
 image. It holds no register contract: the Hub registers are in
-[gen/docs/hub.md](../gen/docs/hub.md) and the PROM's own behaviour is in
+[devices/hub/registers.md](../devices/hub/registers.md) and the PROM's own behaviour is in
 [ip27-prom-node-numbering.md](ip27-prom-node-numbering.md).
 
 Each fact carries its grade. The grades follow the repository's rules: established

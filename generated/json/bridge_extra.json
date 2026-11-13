@@ -1,0 +1,402 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/bridge/registers-extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "bridge_extra",
+   "kind": "word",
+   "name": "WID_ID_FORMAT",
+   "width": 32,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "field",
+   "name": "WID_ID_FORMAT.part",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "enum_value",
+   "name": "WID_ID_FORMAT.part.bridge",
+   "value": 49154,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "enum_value",
+   "name": "WID_ID_FORMAT.part.xbridge",
+   "value": 53250,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "enum_value",
+   "name": "WID_ID_FORMAT.part.pic_bus0",
+   "value": 53506,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "enum_value",
+   "name": "WID_ID_FORMAT.part.pic_bus1",
+   "value": 53522,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "enum_value",
+   "name": "WID_ID_FORMAT.part.tiocp_a",
+   "value": 57344,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "enum_value",
+   "name": "WID_ID_FORMAT.part.tiocp_b",
+   "value": 57360,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "field",
+   "name": "WID_ID_FORMAT.manufacturer",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "enum_value",
+   "name": "WID_ID_FORMAT.manufacturer.mfr_36",
+   "value": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "enum_value",
+   "name": "WID_ID_FORMAT.manufacturer.mfr_54",
+   "value": 54,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "CFG_FUNC_SHIFT",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "CFG_SLOTS_32",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "CFG_SLOT_BIAS_64",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "CFG_SLOT_SHIFT",
+   "value": 12,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "CFG_WINDOW32_OFFSET",
+   "value": 131072,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "CONTROL_FLASH_WR_EN",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "CONTROL_RST_PIN_N",
+   "value": 251658240,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "CONTROL_WIDGET_NUMBER",
+   "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "DEVICE_BARRIER",
+   "value": 32768,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "DEVICE_PRECISE",
+   "value": 131072,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "DEVICE_PREFETCH",
+   "value": 262144,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "DEVICE_REALTIME",
+   "value": 2097152,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "DEVICE_SIZE_64",
+   "value": 4194304,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "DEVICE_SWAP_PAIR",
+   "value": 1572864,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "DEVICE_SWAP_PROGRAMMED",
+   "value": 8192,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "DEVICE_WRITE_GATHER_EN",
+   "value": 25165824,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INTR_ADDR32_HI",
+   "value": 17,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INTR_ADDR32_LO",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INTR_ADDR32_OFFSET",
+   "value": 308,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INTR_ADDR32_SRC_HI",
+   "value": 47,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INTR_ADDR32_SRC_LO",
+   "value": 38,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INTR_ADDR64_OFFSET",
+   "value": 304,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INTR_COUNT",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INTR_STRIDE",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "INT_STATUS_INVALID_ADDRESS",
+   "value": 16777216,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "STATUS_FLASH_SELECT",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "TEST_PIN_CONTROL",
+   "value": 112,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "TEST_PIN_CONTROL_DATA_OUT",
+   "value": 3840,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "TEST_PIN_CONTROL_SELECT0",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "TEST_PIN_CONTROL_SELECT1",
+   "value": 12,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "TEST_PIN_CONTROL_SELECT2",
+   "value": 48,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "TEST_PIN_CONTROL_SELECT3",
+   "value": 192,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "WID_OFFSET",
+   "value": 4,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "WINDOW_BIT_A",
+   "value": 63,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "WINDOW_BIT_B",
+   "value": 60,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "WINDOW_BIT_C",
+   "value": 57,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md"
+  },
+  {
+   "unit": "bridge_extra",
+   "kind": "constant",
+   "name": "XBRIDGE_TEST_PIN_CONTROL_DATA_OUT",
+   "value": 16711680,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

@@ -1,0 +1,371 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/ioc4/registers-extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
+   "name": "km_rx_kbd",
+   "offset": 516,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
+   "name": "km_rx_mouse",
+   "offset": 520,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
+   "name": "km_tx_kbd",
+   "offset": 524,
+   "access": "w",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
+   "name": "km_tx_mouse",
+   "offset": 528,
+   "access": "w",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL",
+   "value": 348,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_ACTIVE",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_DIR_TO_MEMORY",
+   "value": 4,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_ERROR",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_START",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CONTROL_STOP",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_COUNT_DEVICE",
+   "value": 340,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_COUNT_MEMORY",
+   "value": 344,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CURRENT_HIGH",
+   "value": 336,
+   "count": 1,
+   "grade": "unknown"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_CURRENT_LOW",
+   "value": 332,
+   "count": 1,
+   "grade": "unknown"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_END_AREA",
+   "value": 352,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_LIST_HIGH",
+   "value": 328,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_LIST_LOW",
+   "value": 324,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "ATA_DMA_TIMING",
+   "value": 320,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "KM_CSR_AUX_CLOCK_LINE",
+   "value": 512,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "KM_CSR_AUX_DATA_LINE",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "KM_CSR_AUX_WRITE_PENDING",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "KM_CSR_IDLE_B_15_14",
+   "value": 49152,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "KM_CSR_KBD_CLOCK_LINE",
+   "value": 256,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "KM_CSR_KBD_DATA_LINE",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "KM_CSR_KBD_WRITE_PENDING",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "KM_CSR_LAST_WRITE_LINE_B_3_2",
+   "value": 12,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "OTHER_IR_KBM",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_RING_PTR_B_9_3",
+   "value": 1016,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_RX_TIMER_COUNT_B_27_16",
+   "value": 268369920,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_RX_TIMER_RELOAD_B_11_0",
+   "value": 4095,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_CTS_V_100000",
+   "value": 1048576,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_DCD_V_800000",
+   "value": 8388608,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_DCTS_V_10000",
+   "value": 65536,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_DDCD_V_80000",
+   "value": 524288,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_OUTPUTS_B_28_24",
+   "value": 520093696,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SHADOW_RX_FLAGS_B_7_0",
+   "value": 255,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SERIAL_SRCIR_TIMER_ARM_V_80000000",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_CR_CMD_PULSE",
+   "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_CR_SIO_DIAG_IDLE",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_IR_SRC_UART_0",
+   "value": 64,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_IR_SRC_UART_1",
+   "value": 16384,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_IR_SRC_UART_2",
+   "value": 4194304,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_IR_SRC_UART_3",
+   "value": 1073741824,
+   "count": 1,
+   "grade": "inferred"
+  }
+ ]
+}

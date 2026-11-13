@@ -1,0 +1,527 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/bedrock/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="bedrock" prefix="BEDROCK" title="Bedrock (node controller), Origin 3000 family" from="census: loads and stores in the shipped binaries; names from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names)">
+  <doc>Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout. Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000 above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the node-indexed alias (the code adds the node number &lt;&lt; 33); the same register is at offset - 0x800000 in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local alias, where the code reads its neighbours (0x680108 to 0x680120) directly.</doc>
+  <space name="bedrock_boot_space" unit="byte"/>
+  <struct name="HANDLE_CAC_BUSERR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x18" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_1BCF0" size="8" grade="established" from="census: 115 sites, 24 routines" register="yes" offset="0x20" access="rw" reset="unknown">
+  </struct>
+  <struct name="MEMORY_ISCALIAS" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x28" access="rw" reset="unknown">
+  </struct>
+  <struct name="REG_000040" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x40" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_20EE0" size="8" grade="established" from="census: 9 sites, 7 routines" register="yes" offset="0x90" access="w" reset="unknown">
+  </struct>
+  <struct name="SUB_200F0" size="8" grade="established" from="census: 12 sites, 7 routines" register="yes" offset="0x98" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_20250" size="8" grade="established" from="census: 5 sites, 3 routines" register="yes" offset="0xa0" access="r" reset="unknown">
+  </struct>
+  <struct name="REG_000108" size="8" grade="established" from="census: 24 sites, 2 routines" register="yes" offset="0x108" access="w" reset="unknown">
+  </struct>
+  <struct name="STARTKGCLOCK" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x118" access="w" reset="unknown">
+  </struct>
+  <struct name="ACKTMOCLOCK" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x120" access="w" reset="unknown">
+  </struct>
+  <struct name="ACKTMOCLOCK_128" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x128" access="w" reset="unknown">
+  </struct>
+  <struct name="ACKKGCLOCK" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x130" access="w" reset="unknown">
+  </struct>
+  <struct name="ACKKGCLOCK_138" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x138" access="w" reset="unknown">
+  </struct>
+  <struct name="STARTKGCLOCK_150" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x150" access="w" reset="unknown">
+  </struct>
+  <struct name="STARTKGCLOCK_158" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x158" access="w" reset="unknown">
+  </struct>
+  <struct name="HUBPI_EINT_HANDLER" size="8" grade="established" from="census: 14 sites, 4 routines" register="yes" offset="0x400" access="rw" reset="unknown">
+  </struct>
+  <struct name="ERR_INT_BLOCK_MASK" size="8" grade="established" from="census: 10 sites, 6 routines" register="yes" offset="0x408" access="rw" reset="unknown">
+  </struct>
+  <struct name="ERR_INT_BLOCK_MASK_410" size="8" grade="established" from="census: 10 sites, 6 routines" register="yes" offset="0x410" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUBPI_SPOOL_GET_NEXT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x418" access="r" reset="unknown">
+  </struct>
+  <struct name="HUBPI_SPOOL_GET_NEXT_420" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x420" access="r" reset="unknown">
+  </struct>
+  <struct name="HUBPI_SPOOL_GET_NEXT_430" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x430" access="r" reset="unknown">
+  </struct>
+  <struct name="HUBPI_SPOOL_GET_NEXT_440" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x440" access="r" reset="unknown">
+  </struct>
+  <struct name="HUBPI_SPOOL_GET_NEXT_448" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x448" access="w" reset="unknown">
+  </struct>
+  <struct name="HUBPI_SPOOL_GET_NEXT_450" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x450" access="r" reset="unknown">
+  </struct>
+  <struct name="HUBPI_SPOOL_GET_NEXT_460" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x460" access="r" reset="unknown">
+  </struct>
+  <struct name="HUBPI_SPOOL_GET_NEXT_468" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x468" access="w" reset="unknown">
+  </struct>
+  <struct name="HUBPI_EINT_HANDLER_4C8" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x4c8" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUBPI_EINT_HANDLER_4D0" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x4d0" access="rw" reset="unknown">
+  </struct>
+  <struct name="RESTORE_HUB_ERR" size="8" grade="established" from="census: 103 sites, 56 routines" register="yes" offset="0x30100" access="rw" reset="unknown">
+  </struct>
+  <struct name="REG_400110" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x400110" access="w" reset="unknown">
+  </struct>
+  <struct name="REG_400128" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x400128" access="rw" reset="unknown">
+  </struct>
+  <struct name="II_LLP_ERROR_MONITOR" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x400130" access="rw" reset="unknown">
+  </struct>
+  <struct name="SUB_3D1D8" size="8" grade="established" from="census: 4 sites, 2 routines" register="yes" offset="0x4001f8" access="w" reset="unknown">
+  </struct>
+  <struct name="SUB_1BCF0_600000" size="8" grade="established" from="census: 16 sites, 13 routines" register="yes" offset="0x600000" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_1BCF0_604020" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x604020" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_1BCF0_604028" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x604028" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_28E3C" size="8" grade="established" from="census: 67 sites, 36 routines" register="yes" offset="0x604200" access="rw" reset="unknown">
+  </struct>
+  <struct name="REG_608000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x608000" access="w" reset="unknown">
+  </struct>
+  <struct name="REG_608008" size="8" grade="established" from="census: 17 sites, 5 routines" register="yes" offset="0x608008" access="rw" reset="unknown">
+  </struct>
+  <struct name="REG_608010" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x608010" access="rw" reset="unknown">
+  </struct>
+  <struct name="SUB_11984" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x680000" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_10C0" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x680008" access="w" reset="unknown">
+  </struct>
+  <struct name="SUB_10C0_680010" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x680010" access="w" reset="unknown">
+  </struct>
+  <struct name="SUB_18A24" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680108" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_18A24_680110" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680110" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_18A24_680118" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680118" access="r" reset="unknown">
+  </struct>
+  <struct name="NI_LLP_ERROR_MONITOR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680120" access="r" reset="unknown">
+  </struct>
+  <struct name="PART_DISCOVERY" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x681000" access="r" reset="unknown">
+  </struct>
+  <struct name="PART_DISCOVERY_681008" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x681008" access="r" reset="unknown">
+  </struct>
+  <struct name="PART_DISCOVERY_681010" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x681010" access="r" reset="unknown">
+  </struct>
+  <struct name="PART_DISCOVERY_681018" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x681018" access="r" reset="unknown">
+  </struct>
+  <struct name="PART_DISCOVERY_682000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x682000" access="r" reset="unknown">
+  </struct>
+  <struct name="PART_DISCOVERY_682008" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x682008" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_1BCF0_780000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x780000" access="r" reset="unknown">
+  </struct>
+  <struct name="MDIR_XLATE_ADDR_MEM" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x780008" access="r" reset="unknown">
+  </struct>
+  <struct name="REG_790010" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x790010" access="w" reset="unknown">
+  </struct>
+  <struct name="REG_7A0000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7a0000" access="r" reset="unknown">
+  </struct>
+  <struct name="REG_7A0008" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x7a0008" access="rw" reset="unknown">
+  </struct>
+  <struct name="DOACVEC" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7a0038" access="r" reset="unknown">
+  </struct>
+  <struct name="REG_7C0018" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7c0018" access="r" reset="unknown">
+  </struct>
+  <struct name="REG_7E0018" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7e0018" access="r" reset="unknown">
+  </struct>
+  <struct name="INTR_DUMPVEC" size="8" grade="established" from="census: 19 sites, 16 routines" register="yes" offset="0x800000" access="rw" reset="unknown">
+  </struct>
+  <struct name="PART_INIT_NODE" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800010" access="w" reset="unknown">
+  </struct>
+  <struct name="PART_TERMINATE" size="8" grade="established" from="census: 8 sites, 5 routines" register="yes" offset="0x800018" access="rw" reset="unknown">
+  </struct>
+  <struct name="SAVE_HUB_ERR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800020" access="r" reset="unknown">
+  </struct>
+  <struct name="MLRESET" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x800028" access="rw" reset="unknown">
+  </struct>
+  <struct name="PER_HUB_INIT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800038" access="w" reset="unknown">
+  </struct>
+  <struct name="REG_800040" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800040" access="r" reset="unknown">
+  </struct>
+  <struct name="REG_800048" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800048" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_800050" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800050" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_800058" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800058" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_1BCF0_800090" size="8" grade="established" from="census: 9 sites, 8 routines" register="yes" offset="0x800090" access="w" reset="unknown">
+  </struct>
+  <struct name="BRL1_INTR_POLL" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x800098" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_18A24_8000A0" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x8000a0" access="r" reset="unknown">
+  </struct>
+  <struct name="INTR_CLEAR_ALL" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x8000a8" access="w" reset="unknown">
+  </struct>
+  <struct name="INTR_CLEAR_ALL_8000B0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x8000b0" access="w" reset="unknown">
+  </struct>
+  <struct name="INTR_CLEAR_ALL_8000B8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x8000b8" access="w" reset="unknown">
+  </struct>
+  <struct name="DO_INTR_BLOCK_BIT" size="8" grade="established" from="census: 5 sites, 2 routines" register="yes" offset="0x8000c0" access="rw" reset="unknown">
+  </struct>
+  <struct name="PART_ACTIVATE" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x8000c8" access="w" reset="unknown">
+  </struct>
+  <struct name="PART_ACTIVATE_8000D0" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x8000d0" access="w" reset="unknown">
+  </struct>
+  <struct name="PART_INIT_NODE_8000E8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x8000e8" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_8000F0" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x8000f0" access="rw" reset="unknown">
+  </struct>
+  <struct name="SET_TIMER_INTR" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x800108" access="w" reset="unknown">
+  </struct>
+  <struct name="SET_TIMER_INTR_800110" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x800110" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_RTC_INIT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800140" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_RTC_INIT_800148" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800148" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_RTC_INIT_800150" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800150" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_RTC_INIT_800158" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800158" access="w" reset="unknown">
+  </struct>
+  <struct name="SUB_3EC6C" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x800400" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_800408" size="8" grade="established" from="census: 5 sites, 1 routines" register="yes" offset="0x800408" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_800410" size="8" grade="established" from="census: 5 sites, 1 routines" register="yes" offset="0x800410" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_800418" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800418" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_800420" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800420" access="r" reset="unknown">
+  </struct>
+  <struct name="SHOW_HUB_PI_ERR" size="8" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x800428" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800438" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_800448" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800448" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_800458" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800458" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_800468" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x800468" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_8004C8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x8004c8" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_8004D0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x8004d0" access="w" reset="unknown">
+  </struct>
+  <struct name="PART_INIT_NODE_A00000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00000" access="w" reset="unknown">
+  </struct>
+  <struct name="PART_INIT_NODE_A00010" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00010" access="w" reset="unknown">
+  </struct>
+  <struct name="MLRESET_A00018" size="8" grade="established" from="census: 5 sites, 5 routines" register="yes" offset="0xa00018" access="w" reset="unknown">
+  </struct>
+  <struct name="MLRESET_A00028" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00028" access="w" reset="unknown">
+  </struct>
+  <struct name="PER_HUB_INIT_A00038" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00038" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00040" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xa00040" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00048" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xa00048" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00050" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00050" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00058" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00058" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_1BCF0_A00090" size="8" grade="established" from="census: 7 sites, 6 routines" register="yes" offset="0xa00090" access="w" reset="unknown">
+  </struct>
+  <struct name="INTR_CONNECT_LEVEL" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00098" access="r" reset="unknown">
+  </struct>
+  <struct name="INTR_CLEAR_ALL_A000A8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa000a8" access="w" reset="unknown">
+  </struct>
+  <struct name="INTR_CLEAR_ALL_A000B0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa000b0" access="w" reset="unknown">
+  </struct>
+  <struct name="INTR_CLEAR_ALL_A000B8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa000b8" access="w" reset="unknown">
+  </struct>
+  <struct name="DO_INTR_BLOCK_BIT_A000C0" size="8" grade="established" from="census: 5 sites, 2 routines" register="yes" offset="0xa000c0" access="rw" reset="unknown">
+  </struct>
+  <struct name="PART_INIT_NODE_A000E8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa000e8" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A000F0" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xa000f0" access="rw" reset="unknown">
+  </struct>
+  <struct name="SET_TIMER_INTR_A00108" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0xa00108" access="w" reset="unknown">
+  </struct>
+  <struct name="SET_TIMER_INTR_A00110" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0xa00110" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_RTC_INIT_A00140" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00140" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_RTC_INIT_A00148" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00148" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_RTC_INIT_A00150" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00150" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_RTC_INIT_A00158" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00158" access="w" reset="unknown">
+  </struct>
+  <struct name="SUB_3EC6C_A00400" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0xa00400" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00408" size="8" grade="established" from="census: 5 sites, 1 routines" register="yes" offset="0xa00408" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00410" size="8" grade="established" from="census: 5 sites, 1 routines" register="yes" offset="0xa00410" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00418" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00418" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00420" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00420" access="r" reset="unknown">
+  </struct>
+  <struct name="SHOW_HUB_PI_ERR_A00428" size="8" grade="established" from="census: 4 sites, 2 routines" register="yes" offset="0xa00428" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_A00438" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00438" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00448" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00448" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_A00458" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00458" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_INIT_A00468" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa00468" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_A004C8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa004c8" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_A004D0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xa004d0" access="w" reset="unknown">
+  </struct>
+  <struct name="MD_PERF_START_COUNT" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xa10000" access="w" reset="unknown">
+  </struct>
+  <struct name="HUBII_CHECK_WIDGET_DISABLED" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xc00008" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_WIDGET_ID" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xc00020" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_SET_PIOMODE" size="8" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0xc00110" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_DEVICE_INQUIRY" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xc00118" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_WIDGETDEV_ENABLE" size="8" grade="established" from="census: 5 sites, 3 routines" register="yes" offset="0xc00120" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUBII_EINT_INIT" size="8" grade="established" from="census: 6 sites, 5 routines" register="yes" offset="0xc00128" access="rw" reset="unknown">
+  </struct>
+  <struct name="CAPTURE_HUB_STATS" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0xc00130" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_C00138" size="8" grade="established" from="census: 7 sites, 4 routines" register="yes" offset="0xc00138" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_PIOMAP_ALLOC" size="8" grade="established" from="census: 5 sites, 4 routines" register="yes" offset="0xc00160" access="rw" reset="unknown">
+  </struct>
+  <struct name="MLRESET_C00190" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xc00190" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_C00198" size="8" grade="established" from="census: 7 sites, 4 routines" register="yes" offset="0xc00198" access="rw" reset="unknown">
+  </struct>
+  <struct name="BTE_ERROR_HANDLER" size="8" grade="established" from="census: 4 sites, 3 routines" register="yes" offset="0xc001e8" access="rw" reset="unknown">
+  </struct>
+  <struct name="BTE_ERROR_HANDLER_C001F8" size="8" grade="established" from="census: 5 sites, 4 routines" register="yes" offset="0xc001f8" access="rw" reset="unknown">
+  </struct>
+  <struct name="SUB_3DBBC" size="8" grade="established" from="census: 5 sites, 3 routines" register="yes" offset="0xc00200" access="rw" reset="unknown">
+  </struct>
+  <struct name="BTE_ERROR_HANDLER_C00220" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xc00220" access="rw" reset="unknown">
+  </struct>
+  <struct name="BTE_ERROR_HANDLER_C00228" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xc00228" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_DEVENABLE" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xc002c8" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_WIDGET_RESET" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xc00308" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUB_WIDGET_RESET_C00388" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0xc00388" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUBIIO_CRB_FREE" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0xc00390" access="rw" reset="unknown">
+  </struct>
+  <struct name="PER_HUB_INIT_C003A8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xc003a8" access="w" reset="unknown">
+  </struct>
+  <struct name="BTE_CRB_ERROR_HANDLER" size="8" grade="established" from="census: 7 sites, 1 routines" register="yes" offset="0xc003b0" access="rw" reset="unknown">
+  </struct>
+  <struct name="PER_HUB_INIT_C003B8" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xc003b8" access="w" reset="unknown">
+  </struct>
+  <struct name="PER_HUB_INIT_C003C0" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xc003c0" access="w" reset="unknown">
+  </struct>
+  <struct name="HUBIIO_CRB_FREE_C00400" size="8" grade="established" from="census: 8 sites, 6 routines" register="yes" offset="0xc00400" access="rw" reset="unknown">
+  </struct>
+  <struct name="HUBIIO_CRB_ERROR_HANDLER" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0xc00408" access="r" reset="unknown">
+  </struct>
+  <struct name="HUBIIO_CRB_ERROR_HANDLER_C00410" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0xc00410" access="r" reset="unknown">
+  </struct>
+  <struct name="DUMP_CRB" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xc00418" access="r" reset="unknown">
+  </struct>
+  <struct name="IO_PERF_START_COUNT" size="8" grade="established" from="census: 4 sites, 2 routines" register="yes" offset="0xc30000" access="rw" reset="unknown">
+  </struct>
+  <struct name="IO_PERF_START_COUNT_C30008" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xc30008" access="r" reset="unknown">
+  </struct>
+  <struct name="GET_HUB_CHIPREV" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xe00000" access="r" reset="unknown">
+  </struct>
+  <struct name="PART_INIT_NODE_E04000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xe04000" access="w" reset="unknown">
+  </struct>
+  <struct name="PART_INIT_NODE_E04010" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xe04010" access="w" reset="unknown">
+  </struct>
+  <struct name="PART_INIT_NODE_E04020" size="8" grade="established" from="census: 4 sites, 4 routines" register="yes" offset="0xe04020" access="w" reset="unknown">
+  </struct>
+  <struct name="NIC_ACCESS_HUB" size="8" grade="established" from="census: 6 sites, 1 routines" register="yes" offset="0xe04030" access="rw" reset="unknown">
+  </struct>
+  <struct name="BTE_ERROR_HANDLER_E04040" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xe04040" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_E04048" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xe04048" access="w" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_E04050" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xe04050" access="w" reset="unknown">
+  </struct>
+  <struct name="BTE_ERROR_HANDLER_E04058" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xe04058" access="w" reset="unknown">
+  </struct>
+  <struct name="BTE_ERROR_HANDLER_E04060" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xe04060" access="w" reset="unknown">
+  </struct>
+  <struct name="SUB_10C0_E08010" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xe08010" access="w" reset="unknown">
+  </struct>
+  <struct name="VECTOR_WRITE_NODE" size="8" grade="established" from="census: 6 sites, 2 routines" register="yes" offset="0xe0c000" access="rw" reset="unknown">
+  </struct>
+  <struct name="VECTOR_WRITE_NODE_E0C008" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xe0c008" access="w" reset="unknown">
+  </struct>
+  <struct name="VECTOR_WRITE_NODE_E0C010" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xe0c010" access="w" reset="unknown">
+  </struct>
+  <struct name="VECTOR_WRITE_NODE_E0C020" size="8" grade="established" from="census: 4 sites, 2 routines" register="yes" offset="0xe0c020" access="r" reset="unknown">
+  </struct>
+  <struct name="VECTOR_READ_NODE" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xe0c030" access="rw" reset="unknown">
+  </struct>
+  <struct name="VECTOR_WRITE_NODE_E0C038" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xe0c038" access="r" reset="unknown">
+  </struct>
+  <struct name="NI_PORT_DOWN_RESET" size="8" grade="established" from="census: 4 sites, 3 routines" register="yes" offset="0xe80000" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_18A24_E80010" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0xe80010" access="r" reset="unknown">
+  </struct>
+  <struct name="SUB_18A24_E80100" size="8" grade="established" from="census: 8 sites, 4 routines" register="yes" offset="0xe80100" access="rw" reset="unknown">
+  </struct>
+  <struct name="SUB_18A24_E80120" size="8" grade="established" from="census: 13 sites, 6 routines" register="yes" offset="0xe80120" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_F00120" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xf00120" access="w" reset="unknown">
+  </struct>
+  <struct name="MEMORY_READ_ACCESSIBLE" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0xf80000" access="rw" reset="unknown">
+  </struct>
+  <struct name="PART_INIT_NODE_F80008" size="8" grade="established" from="census: 4 sites, 3 routines" register="yes" offset="0xf80008" access="rw" reset="unknown">
+  </struct>
+  <struct name="FETCHOP_FLUSH" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xf80020" access="r" reset="unknown">
+  </struct>
+  <struct name="FETCHOP_FLUSH_F80028" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xf80028" access="r" reset="unknown">
+  </struct>
+  <struct name="LOG_MD_ERRORS" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xf80040" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_F80058" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xf80058" access="r" reset="unknown">
+  </struct>
+  <struct name="CPUPROM_MAP" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xfa0008" access="rw" reset="unknown">
+  </struct>
+  <struct name="PER_HUB_INIT_FA0038" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xfa0038" access="w" reset="unknown">
+  </struct>
+  <struct name="SHOW_DIR_STATE" size="8" grade="established" from="census: 30 sites, 18 routines" register="yes" offset="0xfc0000" access="r" reset="unknown">
+  </struct>
+  <struct name="MEMERROR_SBE_INTR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xfc0010" access="r" reset="unknown">
+  </struct>
+  <struct name="MEMERROR_SBE_INTR_FC0018" size="8" grade="established" from="census: 4 sites, 3 routines" register="yes" offset="0xfc0018" access="r" reset="unknown">
+  </struct>
+  <struct name="HUB_ERROR_CLEAR_FC0028" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xfc0028" access="r" reset="unknown">
+  </struct>
+  <struct name="MIGR_EFFTHRESHOLD_DIFF" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xfc0040" access="w" reset="unknown">
+  </struct>
+  <struct name="SUB_1242C" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0xfc0050" access="rw" reset="unknown">
+  </struct>
+  <struct name="MEMERROR_SBE_INTR_FE0010" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xfe0010" access="r" reset="unknown">
+  </struct>
+  <struct name="MEMERROR_SBE_INTR_FE0018" size="8" grade="established" from="census: 5 sites, 3 routines" register="yes" offset="0xfe0018" access="r" reset="unknown">
+  </struct>
+  <struct name="BOOT_SPACE_OFF_000064" size="4" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x64" access="r" space="bedrock_boot_space" reset="unknown">
+  </struct>
+  <struct name="BOOT_SPACE_NIC_GET_PHASE_BITS" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x78" access="r" space="bedrock_boot_space" reset="unknown">
+  </struct>
+  <struct name="BOOT_SPACE_OFF_000080" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x80" access="r" space="bedrock_boot_space" reset="unknown">
+  </struct>
+  <struct name="BOOT_SPACE_OFF_00008C" size="4" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x8c" access="r" space="bedrock_boot_space" reset="unknown">
+  </struct>
+  <struct name="BOOT_SPACE_OFF_00009C" size="4" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x9c" access="r" space="bedrock_boot_space" reset="unknown">
+  </struct>
+  <struct name="BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD" size="4" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xa0" access="r" space="bedrock_boot_space" reset="unknown">
+  </struct>
+  <struct name="BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD_A4" size="4" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xa4" access="r" space="bedrock_boot_space" reset="unknown">
+  </struct>
+  <constant name="BOOT_SPACE_OFF_000064_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="BOOT_SPACE_OFF_000064_B_8_0" value="0x1ff" grade="inferred"/>
+  <constant name="BRL1_INTR_POLL_B_4" value="0x10" grade="inferred"/>
+  <constant name="BTE_CRB_ERROR_HANDLER_V_800" value="0x800" grade="inferred"/>
+  <constant name="BTE_ERROR_HANDLER_B_0" value="0x1" grade="inferred"/>
+  <constant name="BTE_ERROR_HANDLER_B_4" value="0x10" grade="inferred"/>
+  <constant name="BTE_ERROR_HANDLER_B_4_0" value="0x11" grade="inferred"/>
+  <constant name="BTE_ERROR_HANDLER_B_8" value="0x100" grade="inferred"/>
+  <constant name="BTE_ERROR_HANDLER_C001F8_V_FF0000" value="0xff0000" grade="inferred"/>
+  <constant name="BTE_ERROR_HANDLER_C001F8_V_FFFF" value="0xffff" grade="inferred"/>
+  <constant name="BTE_ERROR_HANDLER_V_101" value="0x101" grade="inferred"/>
+  <constant name="CAPTURE_HUB_STATS_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="DOACVEC_B_0" value="0x1" grade="inferred"/>
+  <constant name="GET_HUB_CHIPREV_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="HUBIIO_CRB_ERROR_HANDLER_B_1_0" value="0x3" grade="inferred"/>
+  <constant name="HUBIIO_CRB_FREE_B_4" value="0x10" grade="inferred"/>
+  <constant name="HUBIIO_CRB_FREE_C00400_B_0" value="0x1" grade="inferred"/>
+  <constant name="HUBIIO_CRB_FREE_C00400_B_2_0" value="0x7" grade="inferred"/>
+  <constant name="HUBIIO_CRB_FREE_C00400_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="HUBIIO_CRB_FREE_C00400_B_4_0" value="0x1f" grade="inferred"/>
+  <constant name="HUBIIO_CRB_FREE_V_10" value="0x10" grade="inferred"/>
+  <constant name="HUBII_EINT_INIT_B_1" value="0x2" grade="inferred"/>
+  <constant name="HUBII_EINT_INIT_B_10_0" value="0x7ff" grade="inferred"/>
+  <constant name="HUBII_EINT_INIT_B_13" value="0x2000" grade="inferred"/>
+  <constant name="HUBPI_EINT_HANDLER_4C8_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="HUB_ERROR_CLEAR_C00138_V_1000000" value="0x1000000" grade="inferred"/>
+  <constant name="HUB_PIOMAP_ALLOC_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="HUB_PIOMAP_ALLOC_B_4_0" value="0x1f" grade="inferred"/>
+  <constant name="HUB_PIOMAP_ALLOC_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="HUB_PIOMAP_ALLOC_V_300" value="0x300" grade="inferred"/>
+  <constant name="HUB_WIDGET_ID_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="HUB_WIDGET_RESET_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="HUB_WIDGET_RESET_C00388_B_4" value="0x10" grade="inferred"/>
+  <constant name="II_LLP_ERROR_MONITOR_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="MDIR_XLATE_ADDR_MEM_B_1_0" value="0x3" grade="inferred"/>
+  <constant name="MEMERROR_SBE_INTR_FE0018_B_0" value="0x1" grade="inferred"/>
+  <constant name="MEMORY_ISCALIAS_V_1" value="0x1" grade="inferred"/>
+  <constant name="NIC_ACCESS_HUB_B_0" value="0x1" grade="inferred"/>
+  <constant name="NIC_ACCESS_HUB_B_1" value="0x2" grade="inferred"/>
+  <constant name="NI_LLP_ERROR_MONITOR_B_3_0" value="0xf" grade="inferred"/>
+  <constant name="NI_PORT_DOWN_RESET_B_1" value="0x2" grade="inferred"/>
+  <constant name="NI_PORT_DOWN_RESET_B_2_1" value="0x6" grade="inferred"/>
+  <constant name="PER_HUB_INIT_C003A8_V_F0" value="0xf0" grade="inferred"/>
+  <constant name="PER_HUB_INIT_C003B8_V_FF" value="0xff" grade="inferred"/>
+  <constant name="PER_HUB_INIT_V_200000" value="0x200000" grade="inferred"/>
+  <constant name="REG_000108_V_1" value="0x1" grade="inferred"/>
+  <constant name="REG_000108_V_2" value="0x2" grade="inferred"/>
+  <constant name="REG_000108_V_2A" value="0x2a" grade="inferred"/>
+  <constant name="REG_000108_V_2B" value="0x2b" grade="inferred"/>
+  <constant name="REG_000108_V_3" value="0x3" grade="inferred"/>
+  <constant name="REG_000108_V_35" value="0x35" grade="inferred"/>
+  <constant name="REG_000108_V_36" value="0x36" grade="inferred"/>
+  <constant name="REG_000108_V_4" value="0x4" grade="inferred"/>
+  <constant name="REG_000108_V_5" value="0x5" grade="inferred"/>
+  <constant name="REG_000108_V_5D" value="0x5d" grade="inferred"/>
+  <constant name="REG_000108_V_5E" value="0x5e" grade="inferred"/>
+  <constant name="REG_000108_V_5F" value="0x5f" grade="inferred"/>
+  <constant name="REG_000108_V_60" value="0x60" grade="inferred"/>
+  <constant name="REG_000108_V_81" value="0x81" grade="inferred"/>
+  <constant name="REG_000108_V_83" value="0x83" grade="inferred"/>
+  <constant name="REG_000108_V_84" value="0x84" grade="inferred"/>
+  <constant name="REG_000108_V_A" value="0xa" grade="inferred"/>
+  <constant name="REG_000108_V_B" value="0xb" grade="inferred"/>
+  <constant name="REG_000108_V_B4" value="0xb4" grade="inferred"/>
+  <constant name="REG_000108_V_C" value="0xc" grade="inferred"/>
+  <constant name="REG_000108_V_E" value="0xe" grade="inferred"/>
+  <constant name="REG_000108_V_F" value="0xf" grade="inferred"/>
+  <constant name="REG_400110_V_FF01" value="0xff01" grade="inferred"/>
+  <constant name="REG_400128_B_13" value="0x2000" grade="inferred"/>
+  <constant name="REG_400128_V_100" value="0x100" grade="inferred"/>
+  <constant name="REG_608008_V_7F80000" value="0x7f80000" grade="inferred"/>
+  <constant name="REG_608010_B_8" value="0x100" grade="inferred"/>
+  <constant name="REG_608010_V_7" value="0x7" grade="inferred"/>
+  <constant name="REG_7A0000_B_11_0" value="0xfff" grade="inferred"/>
+  <constant name="SHOW_DIR_STATE_B_0" value="0x1" grade="inferred"/>
+  <constant name="SUB_10C0_680010_V_1" value="0x1" grade="inferred"/>
+  <constant name="SUB_11984_B_0" value="0x1" grade="inferred"/>
+  <constant name="SUB_18A24_E80120_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="SUB_1BCF0_600000_B_1_0" value="0x3" grade="inferred"/>
+  <constant name="SUB_1BCF0_600000_B_6_0" value="0x7f" grade="inferred"/>
+  <constant name="SUB_1BCF0_600000_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="SUB_1BCF0_800090_V_100" value="0x100" grade="inferred"/>
+  <constant name="SUB_1BCF0_800090_V_64" value="0x64" grade="inferred"/>
+  <constant name="SUB_1BCF0_A00090_V_100" value="0x100" grade="inferred"/>
+  <constant name="SUB_1BCF0_A00090_V_64" value="0x64" grade="inferred"/>
+  <constant name="SUB_1BCF0_B_0" value="0x1" grade="inferred"/>
+  <constant name="SUB_1BCF0_B_1" value="0x2" grade="inferred"/>
+  <constant name="SUB_1BCF0_V_CAFE" value="0xcafe" grade="inferred"/>
+  <constant name="SUB_20250_B_0" value="0x1" grade="inferred"/>
+  <constant name="SUB_20EE0_B_0" value="0x1" grade="inferred"/>
+  <constant name="SUB_20EE0_V_40" value="0x40" grade="inferred"/>
+  <constant name="SUB_20EE0_V_64" value="0x64" grade="inferred"/>
+  <constant name="SUB_20EE0_V_6B" value="0x6b" grade="inferred"/>
+  <constant name="SUB_20EE0_V_7" value="0x7" grade="inferred"/>
+  <constant name="SUB_28E3C_B_13_4" value="0x3ff0" grade="inferred"/>
+  <constant name="SUB_28E3C_B_9_0" value="0x3ff" grade="inferred"/>
+  <constant name="SUB_3D1D8_V_1" value="0x1" grade="inferred"/>
+  <constant name="SUB_3D1D8_V_10000" value="0x10000" grade="inferred"/>
+  <constant name="SUB_3D1D8_V_20000" value="0x20000" grade="inferred"/>
+</genxml>

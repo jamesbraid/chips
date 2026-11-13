@@ -1,0 +1,31 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/mace/registers-extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "mace_extra",
+   "kind": "constant",
+   "name": "ISA_MISC_FLASH_WRITE_ENABLE",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mace_extra",
+   "kind": "constant",
+   "name": "ISA_MISC_NIC_DEASSERT",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mace_extra",
+   "kind": "constant",
+   "name": "ISA_MISC_NIC_SAMPLE",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

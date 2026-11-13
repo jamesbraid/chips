@@ -8,7 +8,7 @@ an 8-input, 6-output switch. The crossbar at crosstalk widget 0 is the XBridge's
 Linux 2.5.40 SN1 crossbar header (`include/asm-ia64/sn/sn1/hubxb.h` and `hubxb_next.h`, read directly). Its
 register names, offsets, field layouts and comments are software definitions, so every register fact is
 **inferred**. None is established. The register list, fields and grades are generated from
-`defs/bedrock_xb.toml` into [gen/docs/bedrock_xb.md](../gen/docs/bedrock_xb.md).
+`devices/bedrock_xb/registers.toml` into [devices/bedrock_xb/registers.md](../devices/bedrock_xb/registers.md).
 
 ## The block
 

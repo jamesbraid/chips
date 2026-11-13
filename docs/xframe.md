@@ -1,6 +1,6 @@
 # Neterion Xframe 10-Gigabit Ethernet controller
 
-The Neterion Xframe, formerly S2io, is a 10-gigabit Ethernet controller on PCI and PCI-X add-in cards. SGI sold one such card as its 10-Gigabit Ethernet Network Adapter. Its register and layout constants are in [gen/docs/xframe.md](../gen/docs/xframe.md), generated from [defs/xframe.toml](../defs/xframe.toml). Each item there carries its grade and its source.
+The Neterion Xframe, formerly S2io, is a 10-gigabit Ethernet controller on PCI and PCI-X add-in cards. SGI sold one such card as its 10-Gigabit Ethernet Network Adapter. Its register and layout constants are in [devices/xframe/registers.md](../devices/xframe/registers.md), generated from [devices/xframe/registers.toml](../devices/xframe/registers.toml). Each item there carries its grade and its source.
 
 This page holds what the constants table cannot: the product boundary, the interrupt chain, link state, the receive path, the byte-order rules, the watchdog the IRIX driver runs, and what is still unknown.
 

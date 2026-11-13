@@ -6,8 +6,8 @@ real-time counter and its compares, the region and cached-alias controls, the pr
 registers and the error capture for its two processors. The census of the shipped kernels names both interfaces and both
 slots by the strings the PROM and kernel print (see [chips/bedrock/README.md](../chips/bedrock/README.md)).
 
-Register layouts, with a grade on each field, are in [defs/bedrock_pi.toml](../defs/bedrock_pi.toml). The generated
-reference is [gen/docs/bedrock_pi.md](../gen/docs/bedrock_pi.md). Offsets in this page and in the reference are inside one
+Register layouts, with a grade on each field, are in [devices/bedrock_pi/registers.toml](../devices/bedrock_pi/registers.toml). The generated
+reference is [devices/bedrock_pi/registers.md](../devices/bedrock_pi/registers.md). Offsets in this page and in the reference are inside one
 interface; PI1 repeats the same layout 2 MiB higher in the node window. The neighbouring units are the
 [local block](bedrock-local-block.md), which drives the real-time clock both interfaces count, and the
 [I/O interface](bedrock-io-interface.md), which routes graphics credits back to a processor.

@@ -4,13 +4,13 @@ The Origin 2000 Hub (SN0) has two block transfer engines, BTE 0 and BTE 1, in it
 Each copies or zero-fills a range of node memory in 128-byte cache lines without the processor
 touching the data. The register map and the decode of the length/status word are in
 [chips/hub/README.md](../chips/hub/README.md) and the generated reference
-[gen/docs/hub.md](../gen/docs/hub.md). The Bedrock (SN1) engines are a separate page,
+[devices/hub/registers.md](../devices/hub/registers.md). The Bedrock (SN1) engines are a separate page,
 [bedrock-io-interface.md](bedrock-io-interface.md).
 
 ## Register slots added from the public header
 
 Chips' census of the shipped IRIX kernel did not reach every engine slot. These are in
-[defs/hub_extra.toml](../defs/hub_extra.toml), with their grades:
+[devices/hub/registers-extra.toml](../devices/hub/registers-extra.toml), with their grades:
 
 - Engine 0 notification address at `0x410020` and engine 0 and engine 1 interrupt addresses at
   `0x410028` and `0x420028` (offsets established from the public Linux mainline SN0 Hub I/O

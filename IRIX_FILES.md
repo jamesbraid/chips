@@ -1,7 +1,7 @@
 # IRIX files this repository reads
 
 Proprietary SGI files, copied by the reader from their own IRIX 6.5.30 install or media into `root/`. They are
-never committed: `root/` is ignored. Paths only; the manifest `scripts/inventory-root.sha256` pins the exact
+never committed: `root/` is ignored. Paths only; the manifest `tools/config/inventory-root.sha256` pins the exact
 bytes the tables were made from, and `retools/tools/inventory.py` fails on any difference.
 
 `root/` holds one tree per build, named by board: `IP27`, `IP30`, `IP32`, `IP35`, each mirroring the IRIX

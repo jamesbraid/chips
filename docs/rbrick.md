@@ -6,11 +6,11 @@ what the published SGI documents say about it: the enclosure, the port letters a
 router's function, the L1 and management paths, the six-port limit, the routed configurations and what
 is still open. It is a product and topology reference. It is not a register contract for the router
 chip. The register facts that the shipped firmware and kernel use are in
-`defs/router_origin3000_rbrick.toml`, graded inferred.
+`devices/router_origin3000_rbrick/registers.toml`, graded inferred.
 
 The Cx-brick's router board carries the same ASIC family, which [the Cx-brick page](cxbrick.md#router-board-and-numalink)
 covers. This page does not assume the two boards share a revision. The router register layout the census
-found is on the [router unit page](../gen/docs/router_origin3000.md).
+found is on the [router unit page](../devices/router_origin3000/registers.md).
 
 ## Labels and sources
 
@@ -409,7 +409,7 @@ describes what software expects. None of it is a measurement of the chip.
 - **Protection.** Each link has a reset-permit bit, the low bits of the protection configuration word. A clear bit
   blocks a reset that arrives on that link. Each link also has a reset mask, which the firmware writes at the link's
   address.
-- **Link addresses.** The eight reset masks sit at the addresses listed in `defs/router_origin3000_rbrick.toml`. Each
+- **Link addresses.** The eight reset masks sit at the addresses listed in `devices/router_origin3000_rbrick/registers.toml`. Each
   link's error status word sits 16 bytes below its reset mask. The addresses are not linear in the link number.
 - **Fence operation.** The firmware fences a router in two calls. A fence clears the bits of a port mask in the protection
   word and in the reset masks. A clear sets the complement of that mask, so the other bits end up set. It takes the lock

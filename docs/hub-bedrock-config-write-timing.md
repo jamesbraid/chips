@@ -52,7 +52,7 @@ not covered (**I** wherever that matters).
 
 Published manuals: none held for either chip ([specs.md](specs.md)). A title and document-number search of the
 reference library for Hub and Bedrock register-level material found none, so what the chips document rests on the
-public header's register comments that `defs/` already imports. **U** whether any 3000-family reference text states a
+public header's register comments that the register maps already import. **U** whether any 3000-family reference text states a
 timing rule; none of the pages the existing PROM question pages cite does.
 
 ## The registers
@@ -60,21 +60,21 @@ timing rule; none of the pages the existing PROM question pages cite does.
 Offsets are the local form (processor interface 0 at +0x0, I/O block +0x400000, local block or network interface
 +0x600000, memory controller +0x200000 on the Hub and +0x780000 on Bedrock). The node alias adds the node number
 shifted left 32 (Hub) or 33 (Bedrock) to a window base. Facts in the last column come from the public header as
-imported in `defs/` and are **E** as statements of the header, not of silicon.
+imported in the register maps and are **E** as statements of the header, not of silicon.
 
 | Chip | Register | Offset | Fields that matter here | chips source |
 |---|---|---|---|---|
-| Hub | `NI_STATUS_REV_ID` | 0x600000 | node number bits 16:8; region size bit 17; chip revision 7:4 | `defs/hub_ni_extra.toml` |
-| Hub | `PI_REGION_PRESENT` | 0x18 | one bit per region | `defs/hub.toml` |
-| Hub | `PI_CALIAS_SIZE` | 0x28 | size code 0 (none), 1 = 4 KB, doubling to 15 = 64 MB | `defs/hub_pi_extra.toml` |
-| Hub | `MD_MEMORY_CONFIG` | 0x200018 | bank size codes 23:0 (3 bits each); directory format bit 28; ignore-ECC bit 29; flash timing 53:44 | `defs/hub_md_extra.toml` |
-| Bedrock | local-block `rev_id` | 0x600000 | node number 39:32; region size 47:46 (0 = one node per region, 1 two, 2 four) | `defs/bedrock_lb.toml` |
-| Bedrock | PI `region_present` | 0x18 and +0x200000 for the second PI | one bit per region; clear bits block speculative coherent reads; not reset by a soft reset (header) | `defs/bedrock_pi.toml` |
-| Bedrock | PI `calias_size` | 0x28 and +0x200000 | size code; "all cached-alias spaces in a system must carry the same size" (header); not reset by a soft reset (header) | `defs/bedrock_pi.toml` |
-| Bedrock | local-block `region_present` | 0x604020 | regions that can receive an invalidate; sampled when an invalidate arrives (header) | `defs/bedrock_lb.toml` |
-| Bedrock | local-block `nodes_absent` | 0x604028 | four 16-bit entries: node in 7:0, valid bit 15 | `defs/bedrock_lb.toml` |
-| Bedrock | memory `memory_config` | 0x780008 | per-DIMM bytes (enables 1:0, width 3, size 7:4); bank select 33:32; survives a soft reset (header) | `defs/bedrock_md.toml` |
-| Bedrock | memory `junk_bus_timing` | 0x7a0008 | flash setup-hold 7:0 and enable 15:8 | `defs/bedrock_md.toml`, [ip35-prom-poll-timing.md](questions/ip35-prom-poll-timing.md) |
+| Hub | `NI_STATUS_REV_ID` | 0x600000 | node number bits 16:8; region size bit 17; chip revision 7:4 | `devices/hub_ni/registers-extra.toml` |
+| Hub | `PI_REGION_PRESENT` | 0x18 | one bit per region | `devices/hub/registers.toml` |
+| Hub | `PI_CALIAS_SIZE` | 0x28 | size code 0 (none), 1 = 4 KB, doubling to 15 = 64 MB | `devices/hub_pi/registers-extra.toml` |
+| Hub | `MD_MEMORY_CONFIG` | 0x200018 | bank size codes 23:0 (3 bits each); directory format bit 28; ignore-ECC bit 29; flash timing 53:44 | `devices/hub_md/registers-extra.toml` |
+| Bedrock | local-block `rev_id` | 0x600000 | node number 39:32; region size 47:46 (0 = one node per region, 1 two, 2 four) | `devices/bedrock_lb/registers.toml` |
+| Bedrock | PI `region_present` | 0x18 and +0x200000 for the second PI | one bit per region; clear bits block speculative coherent reads; not reset by a soft reset (header) | `devices/bedrock_pi/registers.toml` |
+| Bedrock | PI `calias_size` | 0x28 and +0x200000 | size code; "all cached-alias spaces in a system must carry the same size" (header); not reset by a soft reset (header) | `devices/bedrock_pi/registers.toml` |
+| Bedrock | local-block `region_present` | 0x604020 | regions that can receive an invalidate; sampled when an invalidate arrives (header) | `devices/bedrock_lb/registers.toml` |
+| Bedrock | local-block `nodes_absent` | 0x604028 | four 16-bit entries: node in 7:0, valid bit 15 | `devices/bedrock_lb/registers.toml` |
+| Bedrock | memory `memory_config` | 0x780008 | per-DIMM bytes (enables 1:0, width 3, size 7:4); bank select 33:32; survives a soft reset (header) | `devices/bedrock_md/registers.toml` |
+| Bedrock | memory `junk_bus_timing` | 0x7a0008 | flash setup-hold 7:0 and enable 15:8 | `devices/bedrock_md/registers.toml`, [ip35-prom-poll-timing.md](questions/ip35-prom-poll-timing.md) |
 
 ## 1. What the chip documents (U)
 

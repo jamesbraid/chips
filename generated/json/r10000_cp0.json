@@ -1,0 +1,60 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/r10000_cp0/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "r10000_cp0",
+   "kind": "word",
+   "name": "CAUSE_TIMER",
+   "width": 32,
+   "grade": "established",
+   "from": "published R10000 user's manual (the source reading gives no document number)"
+  },
+  {
+   "unit": "r10000_cp0",
+   "kind": "field",
+   "name": "CAUSE_TIMER.ip7",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "published R10000 user's manual (the source reading gives no document number)"
+  },
+  {
+   "unit": "r10000_cp0",
+   "kind": "constant",
+   "name": "R10K_CP0_COMPARE",
+   "value": 11,
+   "count": 1,
+   "grade": "established",
+   "from": "published R10000 user's manual (the source reading gives no document number)"
+  },
+  {
+   "unit": "r10000_cp0",
+   "kind": "constant",
+   "name": "R10K_CP0_COUNT",
+   "value": 9,
+   "count": 1,
+   "grade": "established",
+   "from": "published R10000 user's manual (the source reading gives no document number)"
+  },
+  {
+   "unit": "r10000_cp0",
+   "kind": "constant",
+   "name": "R10K_TLB_ASID_BITS",
+   "value": 8,
+   "count": 1,
+   "grade": "inferred",
+   "from": "IRIX kernel translation-handling reading, one release outside the shipped-binary inventory; the R10000 geometry was not checked against the published manual"
+  },
+  {
+   "unit": "r10000_cp0",
+   "kind": "constant",
+   "name": "R10K_TLB_ENTRIES",
+   "value": 64,
+   "count": 1,
+   "grade": "inferred",
+   "from": "IRIX kernel translation-handling reading, one release outside the shipped-binary inventory; the R10000 geometry was not checked against the published manual"
+  }
+ ]
+}

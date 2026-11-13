@@ -95,7 +95,7 @@ public driver as timing and the current memory address, which no IOC4 path reach
 - `ioc4_pending_intrs` (`0x14c`) reads `0x8`, `0xc`, `0x10` and `0x14`; read for its accesses only.
 - Serial pass-through bits (inferred, OpenBSD): the OpenBSD driver enables only four bits in the serial interrupt word, one per port,
   for the port's own 16550 interrupt: `0x40` (port 0), `0x4000` (port 1), `0x400000` (port 2) and `0x40000000` (port 3). The
-  `SIO_IR_SRC_UART_n` constants in `defs/ioc4_extra.toml` name them. The OpenBSD driver is the only source. That it writes them through
+  `SIO_IR_SRC_UART_n` constants in `devices/ioc4/registers-extra.toml` name them. The OpenBSD driver is the only source. That it writes them through
   the serial enable pair (`0x10` set, `0x18` clear) is inferred, not read from the driver.
 - Keyboard and mouse interrupt (established by the public driver's acknowledge sequence): bit 6 (`0x40`) of the other-interrupt word is
   the keyboard and mouse source. The driver masks and acknowledges it through that word. IOC3 raises the same interrupt from a different
@@ -233,7 +233,7 @@ bit 1 (port 1) to clear; `pckm_restart` (`0x2298`) ORs bit 18 or 19 into it, sto
 receive words are `0x204` (port 0) and `0x208` (port 1), the transmit words `0x20c` and `0x210`, by the displacements `pckm_pollcmd`
 adds. Same structure and constants as IOC3's `0x9c` to `0xac`, at `0x200` to `0x210`.
 
-Control word bits named by the public driver (public-driver naming, not measured; the constants are in `defs/ioc4_extra.toml`):
+Control word bits named by the public driver (public-driver naming, not measured; the constants are in `devices/ioc4/registers-extra.toml`):
 
 - Bits 0 and 1 are keyboard and auxiliary transmit pending (established). The driver waits for each to clear before the next write.
 - Bits 4 and 5 are keyboard and auxiliary data line state, and bits 8 and 9 are keyboard and auxiliary clock line state (established as

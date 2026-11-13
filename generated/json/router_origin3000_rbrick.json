@@ -1,0 +1,1268 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/router_origin3000_rbrick/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "status",
+   "offset": 0,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.link8_state",
+   "hi": 51,
+   "lo": 50,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link8_state.wentdown",
+   "value": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link8_state.resetfail",
+   "value": 1,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link8_state.linkup",
+   "value": 2,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link8_state.notused",
+   "value": 3,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.link7_state",
+   "hi": 49,
+   "lo": 48,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link7_state.wentdown",
+   "value": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link7_state.resetfail",
+   "value": 1,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link7_state.linkup",
+   "value": 2,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link7_state.notused",
+   "value": 3,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.link6_state",
+   "hi": 47,
+   "lo": 46,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link6_state.wentdown",
+   "value": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link6_state.resetfail",
+   "value": 1,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link6_state.linkup",
+   "value": 2,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link6_state.notused",
+   "value": 3,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.link5_state",
+   "hi": 45,
+   "lo": 44,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link5_state.wentdown",
+   "value": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link5_state.resetfail",
+   "value": 1,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link5_state.linkup",
+   "value": 2,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link5_state.notused",
+   "value": 3,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.link4_state",
+   "hi": 43,
+   "lo": 42,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link4_state.wentdown",
+   "value": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link4_state.resetfail",
+   "value": 1,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link4_state.linkup",
+   "value": 2,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link4_state.notused",
+   "value": 3,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.link3_state",
+   "hi": 41,
+   "lo": 40,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link3_state.wentdown",
+   "value": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link3_state.resetfail",
+   "value": 1,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link3_state.linkup",
+   "value": 2,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link3_state.notused",
+   "value": 3,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.link2_state",
+   "hi": 39,
+   "lo": 38,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link2_state.wentdown",
+   "value": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link2_state.resetfail",
+   "value": 1,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link2_state.linkup",
+   "value": 2,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link2_state.notused",
+   "value": 3,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.link1_state",
+   "hi": 37,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link1_state.wentdown",
+   "value": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link1_state.resetfail",
+   "value": 1,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link1_state.linkup",
+   "value": 2,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "enum_value",
+   "name": "status.link1_state.notused",
+   "value": 3,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.rev",
+   "hi": 31,
+   "lo": 28,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "status.chip",
+   "hi": 27,
+   "lo": 12,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "prot_conf",
+   "offset": 16,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "prot_conf.dir_compare_off",
+   "hi": 13,
+   "lo": 13,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "prot_conf.force_local",
+   "hi": 12,
+   "lo": 12,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "prot_conf.meta_id",
+   "hi": 11,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "prot_conf.reset_ok",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "position",
+   "offset": 80,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "position.repeater_flag",
+   "hi": 21,
+   "lo": 21,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "position.meta_flag",
+   "hi": 20,
+   "lo": 20,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "scratch3",
+   "offset": 280,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "scratch3.lock",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "scratch3_setzero",
+   "offset": 1304,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "scratch3_setzero.lock",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "error_link1",
+   "offset": 65544,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link1.power_not_ok",
+   "hi": 38,
+   "lo": 38,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link1.deadlock",
+   "hi": 37,
+   "lo": 37,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link1.warm_reset_rx",
+   "hi": 36,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link1.link_reset_rx",
+   "hi": 35,
+   "lo": 35,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link1.retry_rx_illegal",
+   "hi": 34,
+   "lo": 32,
+   "grade": "unknown",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "reset_mask_link1",
+   "offset": 65560,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "reset_mask_link1.reset_ok",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "error_link2",
+   "offset": 67592,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link2.power_not_ok",
+   "hi": 38,
+   "lo": 38,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link2.deadlock",
+   "hi": 37,
+   "lo": 37,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link2.warm_reset_rx",
+   "hi": 36,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link2.link_reset_rx",
+   "hi": 35,
+   "lo": 35,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link2.retry_rx_illegal",
+   "hi": 34,
+   "lo": 32,
+   "grade": "unknown",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "reset_mask_link2",
+   "offset": 67608,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "reset_mask_link2.reset_ok",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "error_link3",
+   "offset": 131080,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link3.power_not_ok",
+   "hi": 38,
+   "lo": 38,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link3.deadlock",
+   "hi": 37,
+   "lo": 37,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link3.warm_reset_rx",
+   "hi": 36,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link3.link_reset_rx",
+   "hi": 35,
+   "lo": 35,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link3.retry_rx_illegal",
+   "hi": 34,
+   "lo": 32,
+   "grade": "unknown",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "reset_mask_link3",
+   "offset": 131096,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "reset_mask_link3.reset_ok",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "error_link4",
+   "offset": 133128,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link4.power_not_ok",
+   "hi": 38,
+   "lo": 38,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link4.deadlock",
+   "hi": 37,
+   "lo": 37,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link4.warm_reset_rx",
+   "hi": 36,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link4.link_reset_rx",
+   "hi": 35,
+   "lo": 35,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link4.retry_rx_illegal",
+   "hi": 34,
+   "lo": 32,
+   "grade": "unknown",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "reset_mask_link4",
+   "offset": 133144,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "reset_mask_link4.reset_ok",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "error_link5",
+   "offset": 196616,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link5.power_not_ok",
+   "hi": 38,
+   "lo": 38,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link5.deadlock",
+   "hi": 37,
+   "lo": 37,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link5.warm_reset_rx",
+   "hi": 36,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link5.link_reset_rx",
+   "hi": 35,
+   "lo": 35,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link5.retry_rx_illegal",
+   "hi": 34,
+   "lo": 32,
+   "grade": "unknown",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "reset_mask_link5",
+   "offset": 196632,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "reset_mask_link5.reset_ok",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "error_link6",
+   "offset": 198664,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link6.power_not_ok",
+   "hi": 38,
+   "lo": 38,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link6.deadlock",
+   "hi": 37,
+   "lo": 37,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link6.warm_reset_rx",
+   "hi": 36,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link6.link_reset_rx",
+   "hi": 35,
+   "lo": 35,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link6.retry_rx_illegal",
+   "hi": 34,
+   "lo": 32,
+   "grade": "unknown",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "reset_mask_link6",
+   "offset": 198680,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "reset_mask_link6.reset_ok",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "error_link7",
+   "offset": 262152,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link7.power_not_ok",
+   "hi": 38,
+   "lo": 38,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link7.deadlock",
+   "hi": 37,
+   "lo": 37,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link7.warm_reset_rx",
+   "hi": 36,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link7.link_reset_rx",
+   "hi": 35,
+   "lo": 35,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link7.retry_rx_illegal",
+   "hi": 34,
+   "lo": 32,
+   "grade": "unknown",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "reset_mask_link7",
+   "offset": 262168,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "reset_mask_link7.reset_ok",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "error_link8",
+   "offset": 264200,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link8.power_not_ok",
+   "hi": 38,
+   "lo": 38,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link8.deadlock",
+   "hi": 37,
+   "lo": 37,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link8.warm_reset_rx",
+   "hi": 36,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link8.link_reset_rx",
+   "hi": 35,
+   "lo": 35,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "error_link8.retry_rx_illegal",
+   "hi": 34,
+   "lo": 32,
+   "grade": "unknown",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "register",
+   "name": "reset_mask_link8",
+   "offset": 264216,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": "vector",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "field",
+   "name": "reset_mask_link8.reset_ok",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "shipped kernel and firmware readings; names from the public Linux SN1 router header"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "L1_ROUTER_TYPE_META",
+   "value": 14,
+   "count": 1,
+   "grade": "inferred",
+   "from": "shipped firmware reading of the L1 persistent settings"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "L1_ROUTER_TYPE_ORDINARY",
+   "value": 15,
+   "count": 1,
+   "grade": "inferred",
+   "from": "shipped firmware reading of the L1 persistent settings"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "L1_ROUTER_TYPE_REPEATER",
+   "value": 12,
+   "count": 1,
+   "grade": "inferred",
+   "from": "shipped firmware reading of the L1 persistent settings"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "L1_SETTING_ROUTER_TYPE",
+   "value": 60,
+   "count": 1,
+   "grade": "inferred",
+   "from": "shipped firmware reading of the L1 persistent settings"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "ROUTER_CHIP_PART",
+   "value": 12311,
+   "count": 1,
+   "grade": "inferred",
+   "from": "shipped kernel reading of the status word part field"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "ROUTER_DEST_IDS",
+   "value": 512,
+   "count": 1,
+   "grade": "established",
+   "from": "SGI Origin 3000 System Architecture, 108-0240-002, pp. 2-18 to 2-22"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "ROUTER_ENABLED_PORTS_SIX",
+   "value": 6,
+   "count": 1,
+   "grade": "established",
+   "from": "SGI Origin 3000 Series Service Procedures, 108-0301-001, pp. 3-1 and 3-2"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "ROUTER_LOCAL_TABLE_ENTRIES",
+   "value": 16,
+   "count": 1,
+   "grade": "established",
+   "from": "SGI Origin 3000 System Architecture, 108-0240-002, p. 2-22"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "ROUTER_PORTS",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "SGI Origin 3000 Series Owner's Guide, 007-4240-002, pp. 194-196"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "ROUTER_REMOTE_TABLE_ENTRIES",
+   "value": 32,
+   "count": 1,
+   "grade": "established",
+   "from": "SGI Origin 3000 System Architecture, 108-0240-002, p. 2-22"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "ROUTER_USB_PORT_FIRST",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "SGI Origin 3000 Series Technical Configuration Owner's Guide, 007-4311-002, p. 36"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "ROUTER_USB_PORT_LAST",
+   "value": 5,
+   "count": 1,
+   "grade": "established",
+   "from": "SGI Origin 3000 Series Technical Configuration Owner's Guide, 007-4311-002, p. 36"
+  },
+  {
+   "unit": "router_origin3000_rbrick",
+   "kind": "constant",
+   "name": "ROUTER_VCS_PER_PORT",
+   "value": 4,
+   "count": 1,
+   "grade": "established",
+   "from": "SGI Origin 3000 System Architecture, 108-0240-002, pp. 2-18 to 2-22"
+  }
+ ]
+}

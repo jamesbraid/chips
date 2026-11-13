@@ -1,7 +1,7 @@
 # RAD1 audio ASIC: facts outside the register file
 
-The register contract is [defs/rad1.toml](../defs/rad1.toml), published as
-[gen/docs/rad1.md](../gen/docs/rad1.md), with each entry graded. This page keeps
+The register contract is [devices/rad1/registers.toml](../devices/rad1/registers.toml), published as
+[devices/rad1/registers.md](../devices/rad1/registers.md), with each entry graded. This page keeps
 the facts that are not register entries: where the part sits, what its PCI
 configuration shows, how software reaches it, and what differs on the PCI
 audio board (revision `0xd0`, board 13).
@@ -201,7 +201,7 @@ capture settles it.
   routine instead, and says the board 12 reset routine writes nothing to `0x40`.
   A second reading of the IP35 object agrees on the reset routine and gives the
   flag and brick-type conditions above, and it finds no `0x40` write on board 13
-  enable. That is a different build, so the attribution in `defs/rad1.toml` stays
+  enable. That is a different build, so the attribution in `devices/rad1/registers.toml` stays
   until the IP30 routines are read again. The IP35 reading was taken from an
   earlier record and was not re-read for this page.
 - **The `0x50` start value on board 13.** The register file says the driver leaves

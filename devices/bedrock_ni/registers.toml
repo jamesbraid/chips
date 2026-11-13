@@ -1,0 +1,234 @@
+unit = "bedrock_ni"
+prefix = "BEDROCK_NI"
+title = "Bedrock network interface (NI) registers: field layouts, port error bits and routing tables"
+doc = "Offsets are in the node's local alias, the same offsets the census names in devices/bedrock/registers.toml. Register names, offsets, widths and field positions come from the public Linux 2.5.40 SN1 register headers, read directly from that tag, so they are established as header facts. Behaviour the headers give only in their comments is inferred. No Bedrock specification is held. The headers state no reset value, so every reset is unknown, except one software default the headers name without a source."
+from = "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+public_from = ["Linux 2.5.40", "shipped IRIX"]
+
+[c]
+offset_macro = "bare"
+
+[constants]
+PORT_PARMS_HEADER_DEFAULT = { value = 0x7a3ff1bf0, grade = "inferred", doc = "Value the header's reset-defaults macro builds for the port parameters: virtual-channel errors 0xf, first error enabled, maximum retry 0x3ff, null timeout 6, maximum burst 0x3f0. The header names it as the reset default and gives no source for it, so it is a header claim, not a hardware reset value." }
+NI_ERROR_LATCHED_HI = { value = 0x34, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Top bit of the range of latched error bits the kernel tests in port_errors." }
+NI_ERROR_LATCHED_LO = { value = 0x18, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Bottom bit of that range." }
+NI_ERROR_LINK_RESET_BIT = { value = 0x34, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md", doc = "Link reset caused by another partition, with the reset enable word zero; that the chip latches it when a reset is refused is unknown." }
+
+[registers.port_status]
+offset = 0x680000
+access = "r"
+width = 64
+grade = "established"
+doc = "Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown. The shipped IRIX Origin 300/350 kernels test bits 1:0 as the link state, and bits 2:1 equal to 2 (remote power set, link up clear) start a link-reset wait."
+
+[registers.port_status.fields]
+status_bit0 = { bits = [0, 0], grade = "unknown", doc = "Low bit of the two-bit port status. The header gives no meaning for it." }
+link_up = { bits = [1, 1], grade = "inferred", doc = "Named link up by the header. The meaning rests on the name alone." }
+remote_power = { bits = [2, 2], grade = "inferred", doc = "Named remote power by the header. The meaning rests on the name alone." }
+
+[registers.port_reset]
+offset = 0x680008
+access = "w"
+width = 64
+grade = "established"
+doc = "Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link and bit 2 resets the local Bedrock. What the peer does with a link reset is not stated. Reset unknown. The shipped IRIX Origin 300/350 kernels write the value 6 (port reset and local reset)."
+
+[registers.port_reset.fields]
+link_reset_out = { bits = [0, 0], grade = "established", doc = "Link reset sent out. Header comment: sends a link reset." }
+port_reset = { bits = [1, 1], grade = "established", doc = "Port reset. Header comment: sends a warm reset over the link." }
+local_reset = { bits = [2, 2], grade = "established", doc = "Local reset. Header comment: resets this Bedrock." }
+
+[registers.reset_enable]
+offset = 0x680010
+access = "rw"
+width = 64
+grade = "established"
+doc = "Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown. The shipped IRIX Origin 300/350 kernels write 1; bit 0 is the one that matters."
+
+[registers.reset_enable.fields]
+reset_ok = { bits = [0, 0], grade = "inferred", doc = "Lets the link reset the Bedrock. The header comment says so; whether it gates the local reset bit is unknown." }
+
+[registers.diag_parms]
+offset = 0x680018
+access = "rw"
+width = 64
+grade = "established"
+doc = "Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them. Reset unknown."
+
+[registers.diag_parms.fields]
+send_data_error = { bits = [0, 0], grade = "inferred", doc = "Header name: send data error." }
+port_disable = { bits = [1, 1], grade = "inferred", doc = "Header name: port disable." }
+send_err_off = { bits = [2, 2], grade = "inferred", doc = "Header name: disable send error recovery." }
+
+[registers.channel_control]
+offset = 0x680020
+access = "rw"
+width = 64
+grade = "established"
+doc = "Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies. Reset unknown."
+
+[registers.channel_control.fields]
+vch_one_request = { bits = [0, 0], grade = "established" }
+vch_two_request = { bits = [1, 1], grade = "established" }
+vch_nine_request = { bits = [2, 2], grade = "established" }
+vch_vector_request = { bits = [3, 3], grade = "established" }
+vch_one_reply = { bits = [4, 4], grade = "established" }
+vch_two_reply = { bits = [5, 5], grade = "established" }
+vch_nine_reply = { bits = [6, 6], grade = "established" }
+vch_vector_reply = { bits = [7, 7], grade = "established" }
+send_vch_sel = { bits = [8, 8], grade = "established", doc = "Send channel select. The header gives no encoding beyond the name." }
+
+[registers.channel_test]
+offset = 0x680028
+access = "rw"
+width = 64
+grade = "established"
+doc = "Access to the link test logic: seed, mask, data, valid, error and flit fields, plus clear and error-capture controls. The header gives the field layout only. Reset unknown."
+
+[registers.channel_test.fields]
+test_seed = { bits = [19, 0], grade = "established" }
+test_mask = { bits = [27, 20], grade = "established" }
+test_data = { bits = [47, 28], grade = "established" }
+test_valid = { bits = [48, 48], grade = "established" }
+test_cberr = { bits = [49, 49], grade = "established" }
+test_flit = { bits = [52, 50], grade = "established" }
+test_clear = { bits = [53, 53], grade = "established" }
+test_errcapture = { bits = [54, 54], grade = "established" }
+
+[registers.port_parms]
+offset = 0x680030
+access = "rw"
+width = 64
+grade = "established"
+doc = "Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above. Reset unknown."
+
+[registers.port_parms.fields]
+max_burst = { bits = [9, 0], grade = "established" }
+null_timeout = { bits = [15, 10], grade = "established" }
+max_retry = { bits = [25, 16], grade = "established" }
+d_avail_sel = { bits = [27, 26], grade = "established", doc = "Data-available select. The header gives no encoding." }
+first_err_enable = { bits = [29, 29], grade = "established" }
+squash_err_enable = { bits = [30, 30], grade = "established" }
+vch_err_enable = { bits = [34, 31], grade = "established", doc = "One enable per virtual channel." }
+
+[registers.channel_age]
+offset = 0x680038
+access = "rw"
+width = 64
+grade = "established"
+doc = "Age at which request and reply packets enter the fabric. The header's comment says a higher reply age gives replies fixed priority over requests under saturation (inferred from the comment). Reset unknown."
+
+[registers.channel_age.fields]
+request_inject_age = { bits = [7, 0], grade = "established" }
+reply_inject_age = { bits = [15, 8], grade = "established" }
+
+[registers.port_errors]
+offset = 0x680100
+access = "r"
+width = 64
+grade = "established"
+doc = "Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown. The shipped IRIX Origin 300/350 kernels test the latched error bits 52:24 (NI_ERROR_LATCHED_HI and NI_ERROR_LATCHED_LO) and treat bit 52 with the reset enable word zero as a link reset caused by another partition. That the chip latches the bit when a reset is refused is unknown."
+
+[registers.port_errors.fields]
+sn_error_count = { bits = [7, 0], grade = "established", doc = "Sequence-number error count, eight bits." }
+cb_error_count = { bits = [15, 8], grade = "established", doc = "Check-bit error count, eight bits." }
+retry_count = { bits = [23, 16], grade = "established", doc = "Retry count, eight bits." }
+tail_timeout = { bits = [27, 24], grade = "established", doc = "Tail-timeout event count, four bits." }
+fifo_overflow = { bits = [31, 28], grade = "established", doc = "FIFO overflow event count, four bits." }
+external_short = { bits = [35, 32], grade = "established", doc = "External short-packet event count, four bits." }
+external_long = { bits = [39, 36], grade = "established", doc = "External long-packet event count, four bits." }
+external_bad_header = { bits = [43, 40], grade = "established", doc = "External bad-header event count, four bits." }
+internal_short = { bits = [47, 44], grade = "established", doc = "Internal short-packet event count, four bits." }
+internal_long = { bits = [51, 48], grade = "established", doc = "Internal long-packet event count, four bits." }
+link_reset_in = { bits = [52, 52], grade = "established", doc = "Link reset in. The header says bits 52 to 24 assert the network interface interrupt." }
+
+[registers.port_header_a]
+offset = 0x680108
+access = "r"
+width = 64
+grade = "established"
+doc = "First half of the header of an erroring packet, as the header's union lays it out. The header's comment says it holds the captured header. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown."
+
+[registers.port_header_a.fields]
+pha_v = { bits = [0, 0], grade = "established", doc = "Valid bit." }
+pha_age = { bits = [8, 1], grade = "established" }
+pha_direction = { bits = [12, 9], grade = "established" }
+pha_destination = { bits = [20, 13], grade = "established" }
+pha_command = { bits = [31, 24], grade = "established" }
+pha_prexsel = { bits = [34, 32], grade = "established" }
+pha_address_b = { bits = [61, 35], grade = "established" }
+
+[registers.port_header_b]
+offset = 0x680110
+access = "r"
+width = 64
+grade = "established"
+doc = "Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown."
+
+[registers.port_header_b.fields]
+phb_supplemental = { bits = [10, 0], grade = "established" }
+phb_source = { bits = [26, 16], grade = "established" }
+phb_address_a = { bits = [37, 35], grade = "established" }
+phb_address_c = { bits = [45, 38], grade = "established" }
+
+[registers.port_sideband]
+offset = 0x680118
+access = "r"
+width = 64
+grade = "established"
+doc = "Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown."
+
+[registers.port_sideband.fields]
+sideband = { bits = [7, 0], grade = "established" }
+bad_dest = { bits = [8, 8], grade = "established" }
+bad_prexsel = { bits = [9, 9], grade = "established" }
+rcv_error = { bits = [10, 10], grade = "established" }
+bad_message = { bits = [11, 11], grade = "established" }
+squash = { bits = [12, 12], grade = "established" }
+sn_status = { bits = [13, 13], grade = "established" }
+cb_status = { bits = [14, 14], grade = "established" }
+send_error = { bits = [15, 15], grade = "established" }
+vch_active = { bits = [19, 16], grade = "established" }
+
+[registers.port_error_clear]
+offset = 0x680120
+access = "r"
+width = 64
+grade = "established"
+doc = "The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown. The shipped IRIX Origin 300/350 kernels read this word, then store zero to port_errors. Whether the read clears anything is unknown."
+
+[registers.port_error_clear.fields]
+pec_sn_error_count = { bits = [7, 0], grade = "established" }
+pec_cb_error_count = { bits = [15, 8], grade = "established" }
+pec_retry_count = { bits = [23, 16], grade = "established" }
+pec_tail_timeout = { bits = [27, 24], grade = "established" }
+pec_fifo_overflow = { bits = [31, 28], grade = "established" }
+pec_external_short = { bits = [35, 32], grade = "established" }
+pec_external_long = { bits = [39, 36], grade = "established" }
+pec_external_bad_header = { bits = [43, 40], grade = "established" }
+pec_internal_short = { bits = [47, 44], grade = "established" }
+pec_internal_long = { bits = [51, 48], grade = "established" }
+pec_link_reset_in = { bits = [52, 52], grade = "established" }
+
+[registers.local_table]
+offset = 0x681000
+count = 128
+access = "rw"
+width = 64
+grade = "established"
+doc = "Next-hop table for a local destination, one entry per 7-bit local destination at a stride of eight bytes; entry 0 is at the base. The header names the table and gives no access direction. Reset unknown."
+
+[registers.local_table.fields]
+next_exit_port = { bits = [3, 0], grade = "established" }
+next_vch_lsb = { bits = [4, 4], grade = "established", doc = "Low bit of the next virtual channel. The header gives no more than the name." }
+
+[registers.global_table]
+offset = 0x682000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Next-hop table for the one-bit meta destination. The header names the table and gives no access direction. Reset unknown."
+
+[registers.global_table.fields]
+next_exit_port = { bits = [3, 0], grade = "established" }
+next_vch_lsb = { bits = [4, 4], grade = "established", doc = "Low bit of the next virtual channel. The header gives no more than the name." }

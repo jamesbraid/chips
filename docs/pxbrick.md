@@ -4,7 +4,7 @@ The PX-brick is the later PCI and PCI-X I/O enclosure for Origin 3000 and Onyx 3
 systems. It holds three PIC chips, two Xtown2 XIO ports, six two-slot buses and twelve
 card slots. The addendum names no on-board device. The PIC chip, its registers and the Xtown2 port
 speeds are covered in [pic.md](pic.md), [bridge-family.md](bridge-family.md),
-[crosstalk-link.md](crosstalk-link.md) and `defs/pic.toml`. The PX-brick is not the
+[crosstalk-link.md](crosstalk-link.md) and `devices/pic/registers.toml`. The PX-brick is not the
 Origin 350 compute module, which also carries a PIC. Nothing here moves the Origin 350's
 one-PIC topology onto this three-PIC enclosure.
 
@@ -218,7 +218,7 @@ encodings, how the L1 reaches the compute brick's L1, and the slot-power control
 
 A Linux IA-64 header, at a revision not re-read here, names `0x2001`, `0x2002` and `0x2003` as
 "power up", "power down" and "reset" for a PCI slot or bus. The chips request table
-([defs/l1_requests.toml](../defs/l1_requests.toml)) already holds `0x2001` as the system-reset request
+([formats/l1_requests/format.toml](../formats/l1_requests/format.toml)) already holds `0x2001` as the system-reset request
 sent by the Origin 3000 kernel, with an established grade. The two readings disagree about one
 value, so neither is imported here. The mapping from these codes to the PX-brick's slot power is
 **unknown**.

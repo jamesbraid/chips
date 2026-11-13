@@ -1,0 +1,125 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/isp2200/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="isp2200" prefix="ISP2200" title="QLogic ISP2200 Fibre Channel host adapter (PCI 1077:2200), the host interface the public drivers use">
+  <doc>The single-chip Fibre Channel host adapter of the Origin 3000 I-brick (PCI 1077:2200), as the public Linux, OpenBSD and NetBSD drivers use it. Grades say how each item was derived: established means at least two of the public driver trees state the value and agree; inferred means one driver states it, or a driver's own struct or use names it without a second source; unknown means the sources do not settle it. No QLogic programming manual for this part is held, so the register contract rests on driver agreement, and the reset state of every register is unknown. The mailbox opcodes and status values are what the drivers send and read, not measured chip behaviour.</doc>
+  <enum name="hccr_cmd">
+    <value name="noop" value="0" grade="established"/>
+    <value name="reset_risc" value="1" grade="established"/>
+    <value name="pause_risc" value="2" grade="established"/>
+    <value name="release_risc" value="3" grade="established"/>
+    <value name="parity" value="4" grade="established"/>
+    <value name="set_host_int" value="5" grade="established"/>
+    <value name="clear_host_int" value="6" grade="established"/>
+    <value name="clear_risc_int" value="7" grade="established"/>
+  </enum>
+  <struct name="CSR" size="2" grade="established" register="yes" offset="0x6" access="rw" reset="unknown">
+    <doc>Control and status register. Writing bit 0 starts a soft reset. The drivers poll the bit until the adapter clears it. Bits 5 and 4 choose the bank that answers the banked window. Linux and NetBSD disagree on the flash bank bits, so those bits are not named here.</doc>
+    <field name="bank" start="4" size="2" type="uint" grade="established"/>
+    <field name="soft_reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ICR" size="2" grade="established" register="yes" offset="0x8" access="rw" reset="unknown">
+    <doc>Interrupt control. The drivers write 0x8008 to enable and 0 to disable. Other bits are not used by any public driver for this part.</doc>
+    <field name="global_enable" start="15" size="1" type="uint" grade="established"/>
+    <field name="risc_enable" start="3" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ISR" size="2" grade="established" register="yes" offset="0xa" access="r" reset="unknown">
+    <doc>Interrupt status. Drivers test the RISC interrupt bit first. OpenBSD also tests the pending bit before it reads the response ring.</doc>
+    <field name="any_pending" start="15" size="1" type="uint" grade="inferred"/>
+    <field name="risc_pending" start="3" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SEMA" size="2" grade="established" register="yes" offset="0xc" access="rw" reset="unknown">
+    <doc>Semaphore. The adapter sets the lock bit when a mailbox result or asynchronous event waits for the host. The host releases it by writing 0, and the drivers release it last, after reading the mailboxes.</doc>
+    <field name="status" start="1" size="1" type="uint" grade="unknown"/>
+    <field name="lock" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="NVRAM" size="2" grade="established" register="yes" offset="0xe" access="rw" reset="unknown">
+    <doc>Serial EEPROM port. The host bit-bangs the clock, chip select and data lines to read the board NVRAM.</doc>
+    <field name="data_from_eeprom" start="3" size="1" type="uint" grade="established"/>
+    <field name="data_to_eeprom" start="2" size="1" type="uint" grade="established"/>
+    <field name="select" start="1" size="1" type="uint" grade="established"/>
+    <field name="clock" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="MAILBOX" size="2" grade="established" register="yes" offset="0x10" access="rw" count="8" stride="2" reset="unknown">
+    <doc>Mailboxes 0 to 7, two bytes apart. Mailbox 0 carries the command number in and the status out. Mailbox 4 is the request-queue pointer and mailbox 5 the response-queue pointer. The drivers write and read them outside any command, and a write to them does not ring the doorbell.</doc>
+  </struct>
+  <struct name="HCCR" size="2" grade="established" register="yes" offset="0xc0" access="rw" reset="unknown">
+    <doc>Host command and control register. A write carries a command in bits 15 to 12. A read returns status in the bits named below. Reset values are not stated by any source.</doc>
+    <field name="cmd" start="12" size="4" type="hccr_cmd" grade="established"/>
+    <field name="host_int" start="7" size="1" type="uint" grade="established"/>
+    <field name="risc_reset" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="risc_paused" start="5" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="MAILBOX_HI" size="2" grade="inferred" register="yes" offset="0xe0" access="rw" count="16" stride="2" reset="unknown">
+    <doc>Mailboxes 8 to 23. The count of 24 comes from two drivers, but only Linux gives where the upper sixteen sit. Linux writes all 24 on every mailbox command, zeroing the ones the command does not use.</doc>
+  </struct>
+  <constant name="ASYNC_EVENT_FIRST" value="0x8000" grade="established"/>
+  <constant name="ASYNC_EVENT_LAST" value="0xbfff" grade="established"/>
+  <constant name="ASYNC_LIP" value="0x8010" grade="established"/>
+  <constant name="ASYNC_LOOP_DOWN" value="0x8012" grade="established"/>
+  <constant name="ASYNC_LOOP_UP" value="0x8011" grade="established"/>
+  <constant name="ASYNC_PORT_DB_CHANGE" value="0x8014" grade="established"/>
+  <constant name="ASYNC_RESET" value="0x8001" grade="established"/>
+  <constant name="ASYNC_RSCN" value="0x8015" grade="established"/>
+  <constant name="CMD_ENTRY_32" value="0x11" grade="inferred"/>
+  <constant name="CMD_ENTRY_64" value="0x19" grade="established"/>
+  <constant name="CONT_ENTRY_32" value="0x2" grade="inferred"/>
+  <constant name="CONT_ENTRY_64" value="0xa" grade="inferred"/>
+  <constant name="CPL_ABORTED" value="0x5" grade="established"/>
+  <constant name="CPL_COMPLETE" value="0x0" grade="established"/>
+  <constant name="CPL_DATA_OVERRUN" value="0x7" grade="established"/>
+  <constant name="CPL_DATA_UNDERRUN" value="0x15" grade="established"/>
+  <constant name="CPL_DMA_ERROR" value="0x2" grade="established"/>
+  <constant name="CPL_INCOMPLETE" value="0x1" grade="established"/>
+  <constant name="CPL_PORT_BUSY" value="0x2b" grade="established"/>
+  <constant name="CPL_PORT_CONFIG_CHANGED" value="0x2a" grade="established"/>
+  <constant name="CPL_PORT_LOGGED_OUT" value="0x29" grade="established"/>
+  <constant name="CPL_PORT_UNAVAILABLE" value="0x28" grade="established"/>
+  <constant name="CPL_QUEUE_FULL" value="0x1c" grade="established"/>
+  <constant name="CPL_RESET" value="0x4" grade="established"/>
+  <constant name="CPL_TIMEOUT" value="0x6" grade="established"/>
+  <constant name="CPL_TRANSPORT_ERROR" value="0x3" grade="established"/>
+  <constant name="ENTRY_BYTES" value="0x40" grade="established"/>
+  <constant name="FIRMWARE_LENGTH_WORD_INDEX" value="0x3" grade="established"/>
+  <constant name="ICB_BYTES" value="0x60" grade="established"/>
+  <constant name="ICB_VERSION" value="0x1" grade="established"/>
+  <constant name="MAILBOXES_TOTAL" value="0x18" grade="established"/>
+  <constant name="MARKER_ENTRY" value="0x4" grade="established"/>
+  <constant name="MBOX0_BUSY" value="0x4" grade="established"/>
+  <constant name="MBOX_COMPLETION_LAST" value="0x7fff" grade="established"/>
+  <constant name="NVRAM_IMAGE_BYTES" value="0x100" grade="established"/>
+  <constant name="OP_ABOUT_FIRMWARE" value="0x8" grade="established"/>
+  <constant name="OP_DUMP_RAM" value="0x3" grade="inferred"/>
+  <constant name="OP_EXECUTE_FIRMWARE" value="0x2" grade="established"/>
+  <constant name="OP_FIRMWARE_STATUS" value="0x1f" grade="inferred"/>
+  <constant name="OP_GET_FIRMWARE_OPTIONS" value="0x28" grade="inferred"/>
+  <constant name="OP_INIT_FIRMWARE" value="0x60" grade="established"/>
+  <constant name="OP_LOAD_RAM_32" value="0x1" grade="inferred"/>
+  <constant name="OP_LOAD_RAM_DMA" value="0x9" grade="inferred"/>
+  <constant name="OP_LOAD_RAM_EXT" value="0xb" grade="inferred"/>
+  <constant name="OP_MAILBOX_TEST" value="0x6" grade="inferred"/>
+  <constant name="OP_NOOP" value="0x0" grade="established"/>
+  <constant name="OP_READ_RAM_WORD" value="0x5" grade="inferred"/>
+  <constant name="OP_SET_FIRMWARE_OPTIONS" value="0x38" grade="inferred"/>
+  <constant name="OP_VERIFY_CHECKSUM" value="0x7" grade="established"/>
+  <constant name="OP_WRITE_RAM_WORD" value="0x4" grade="established"/>
+  <constant name="PCI_BAR_IO_CONFIG_OFFSET" value="0x10" grade="established"/>
+  <constant name="PCI_BAR_MEM_CONFIG_OFFSET" value="0x14" grade="established"/>
+  <constant name="PCI_CONFIG_BUS_MASTER_BIT" value="0x4" grade="established"/>
+  <constant name="PCI_DEVICE_ID" value="0x2200" grade="established"/>
+  <constant name="PCI_VENDOR_ID" value="0x1077" grade="established"/>
+  <constant name="PRODUCT_ID_MAILBOX1" value="0x4953" grade="established"/>
+  <constant name="PRODUCT_ID_MAILBOX2" value="0x5020" grade="established"/>
+  <constant name="PRODUCT_ID_MAILBOX3" value="0x2020" grade="established"/>
+  <constant name="REGISTER_WINDOW_BYTES" value="0x100" grade="established"/>
+  <constant name="RISC_CODE_ORIGIN_WORD" value="0x1000" grade="established"/>
+  <constant name="ROM_VERSION_MAILBOX7" value="0x4" grade="inferred"/>
+  <constant name="SEGMENT_LIST_ENTRY" value="0x15" grade="inferred"/>
+  <constant name="STATUS_COMMAND_ERROR" value="0x4005" grade="established"/>
+  <constant name="STATUS_COMPLETE" value="0x4000" grade="established"/>
+  <constant name="STATUS_CONT_ENTRY" value="0x10" grade="established"/>
+  <constant name="STATUS_ENTRY" value="0x3" grade="established"/>
+  <constant name="STATUS_HOST_INTERFACE_ERROR" value="0x4002" grade="established"/>
+  <constant name="STATUS_INVALID_COMMAND" value="0x4001" grade="established"/>
+  <constant name="STATUS_PARAMETER_ERROR" value="0x4006" grade="established"/>
+  <constant name="STATUS_TEST_FAILED" value="0x4003" grade="established"/>
+</genxml>

@@ -2,7 +2,7 @@
 
 This page covers the O2's system ROM window as CRIME and MACE expose it, the external flash that MACE drives,
 and the R10000 reset vector that lands in that window. It holds prose facts only. The MACE control bits are in
-[defs/mace_extra.toml](../defs/mace_extra.toml), and the flash part's command protocol is in
+[devices/mace/registers-extra.toml](../devices/mace/registers-extra.toml), and the flash part's command protocol is in
 [at29c040a.md](at29c040a.md).
 
 Sources:
@@ -30,7 +30,7 @@ Sources:
 - Reads may be one to eight bytes wide.
 - Software must set the flash write enable in the MACE control register before writing, and the spec advises
   leaving it clear otherwise. The bit's reset value and its effect on writes are in
-  [defs/mace_extra.toml](../defs/mace_extra.toml) (`ISA_MISC_FLASH_WRITE_ENABLE`, established).
+  [devices/mace/registers-extra.toml](../devices/mace/registers-extra.toml) (`ISA_MISC_FLASH_WRITE_ENABLE`, established).
 
 ## Reset fetch (established for the manual text, transcribed)
 

@@ -2,8 +2,8 @@
 
 The part is a two-port USB host controller with an OpenHCI register interface, PCI vendor `0x11c1`, device `0x5802`.
 The public IRIX hardware inventory of an Origin 300 IO-8 lists it at PCI device 5 and names its interface as OHCI.
-Its register and identity constants are in [gen/docs/lucent_ohci.md](../gen/docs/lucent_ohci.md), generated from
-[defs/lucent_ohci.toml](../defs/lucent_ohci.toml). Each item there carries its grade and its source.
+Its register and identity constants are in [devices/lucent_ohci/registers.md](../devices/lucent_ohci/registers.md), generated from
+[devices/lucent_ohci/registers.toml](../devices/lucent_ohci/registers.toml). Each item there carries its grade and its source.
 
 ## What the contract rests on
 

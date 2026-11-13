@@ -177,7 +177,7 @@ other fixed order. Route: a router register dump or routing table from a real Cx
 unknown: which of the two parallel links is port A and which is port F; which of G and H a
 Cx-to-Cx link uses when no R-brick is present; and whether the Cx router silicon revision matches
 the R-brick's. "Same ASIC" is established, the revision is not. The router's register layout is
-on the [router unit page](../gen/docs/router_origin3000.md), but nothing here shows that the Cx
+on the [router unit page](../devices/router_origin3000/registers.md), but nothing here shows that the Cx
 router is that revision.
 
 ## XIO connectors

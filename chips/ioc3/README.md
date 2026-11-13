@@ -492,7 +492,7 @@ slots of `.srdata` are `spl7`, `ioc3_poll`, the `.rodata` base, `pci_ioc3_enet_v
 ## Hardware-side facts from the published sources
 
 These come from the public driver headers and published SGI manuals, which name the hardware contract the drivers
-expect. Each row's grade is in [defs/ioc3_extra.toml](../../defs/ioc3_extra.toml) (constants `SIO_IR_SRC_*`,
+expect. Each row's grade is in [devices/ioc3/registers-extra.toml](../../devices/ioc3/registers-extra.toml) (constants `SIO_IR_SRC_*`,
 `INT_OUT_*`, `SIO_CR_*`, `PORT_CTL_*`, `GPPR_*`, `GPCR_S_*`). None of them was re-read against its source in this pass,
 so each stays **inferred** until someone checks the named file.
 

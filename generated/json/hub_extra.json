@@ -1,0 +1,428 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/hub/registers-extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_wid",
+   "offset": 4194304,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wid.rev",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wid.part",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wid.mfg",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ilapr",
+   "offset": 4194560,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPR"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ilapo",
+   "offset": 4194568,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPO"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_itte",
+   "offset": 4194656,
+   "access": "rw",
+   "width": 64,
+   "count": 7,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_itte.iospace",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_itte.widget",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_itte.slice",
+   "hi": 4,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ibna_0",
+   "offset": 4259872,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ibia_0",
+   "offset": 4259880,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibia_0.level",
+   "hi": 22,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibia_0.node",
+   "hi": 8,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ibia_1",
+   "offset": 4325416,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibia_1.level",
+   "hi": 22,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibia_1.node",
+   "hi": 8,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IBCT_NOTIFY",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IBCT_POISON",
+   "value": 256,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IBCT_ZFIL_MODE",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IBLS_BUSY",
+   "value": 1048576,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IECLR_BTE0",
+   "value": 131072,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IECLR_BTE1",
+   "value": 262144,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IIDSR_ENB",
+   "value": 16777216,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IIDSR_LVL_MASK",
+   "value": 63,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IIDSR_NODE_MASK",
+   "value": 65280,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_IIDSR_SENT",
+   "value": 268435456,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ILCSR_BM8",
+   "value": 2048,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ILCSR_LLP_EN",
+   "value": 1024,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ILCSR_MAX_BURST_MASK",
+   "value": 4393751543808,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ILCSR_MAX_RETRY_MASK",
+   "value": 67043328,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ILCSR_NULL_TO_MASK",
+   "value": 63,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ILCSR_WARM_RESET",
+   "value": 256,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ILLR_CB_CNT_MASK",
+   "value": 4294901760,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ILLR_SN_CNT_MASK",
+   "value": 65535,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ITTE_BASE",
+   "value": 4194656,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ITTE_INVALID_WIDGET",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_ITTE_IOSP",
+   "value": 4096,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_LLP_CSR_IS_UP",
+   "value": 8192,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_LLP_CSR_LLP_STAT_MASK",
+   "value": 12288,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_WCR_DIR_CON",
+   "value": 131072,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_WCR_WIDGET_ID_MASK",
+   "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_WID_PART_HUB",
+   "value": 49409,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_WSTAT_ECRAZY",
+   "value": 4294967296,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_WSTAT_TXRETRY",
+   "value": 512,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_WSTAT_TXRETRY_MASK",
+   "value": 8323072,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "LNK_STAT_WORKING",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred"
+  }
+ ]
+}

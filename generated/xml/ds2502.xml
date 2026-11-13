@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/ds2502/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="ds2502" prefix="DS2502" title="Maxim DS2502 1 Kbit add-only 1-Wire memory: ROM, commands, memory layout and timing" from="Maxim DS2502 1Kb Add-Only Memory datasheet, document 19-5075, revision 12/11">
+  <doc>The add-only 1-Wire part with a factory-lasered 64-bit ROM, 128 bytes of EPROM in four 32-byte pages and eight status bytes. This unit holds the constants only: the family code, sizes, the CRC polynomial, the command opcodes and the published timing windows. Grades: established means the manufacturer datasheet states the value; inferred means arithmetic on a stated value. The part fitted to any SGI board, and its contents, are not stated by the datasheet and are not listed here.</doc>
+  <constant name="DS2502_CMD_MATCH_ROM" value="0x55" grade="established"/>
+  <constant name="DS2502_CMD_READ_DATA_CRC" value="0xc3" grade="established"/>
+  <constant name="DS2502_CMD_READ_MEMORY" value="0xf0" grade="established"/>
+  <constant name="DS2502_CMD_READ_ROM" value="0x33" grade="established"/>
+  <constant name="DS2502_CMD_READ_STATUS" value="0xaa" grade="established"/>
+  <constant name="DS2502_CMD_SEARCH_ROM" value="0xf0" grade="established"/>
+  <constant name="DS2502_CMD_SKIP_ROM" value="0xcc" grade="established"/>
+  <constant name="DS2502_CMD_WRITE_MEMORY" value="0xf" grade="established"/>
+  <constant name="DS2502_CMD_WRITE_STATUS" value="0x55" grade="established"/>
+  <constant name="DS2502_CRC_INIT" value="0x0" grade="established"/>
+  <constant name="DS2502_CRC_POLY" value="0x31" grade="inferred"/>
+  <constant name="DS2502_EPROM_BYTES" value="0x80" grade="established"/>
+  <constant name="DS2502_FAMILY_CODE" value="0x9" grade="established"/>
+  <constant name="DS2502_PAGE_BYTES" value="0x20" grade="established"/>
+  <constant name="DS2502_PROGRAM_PULSE_US" value="0x1e0" grade="established"/>
+  <constant name="DS2502_ROM_BITS" value="0x40" grade="established"/>
+  <constant name="DS2502_SERIAL_BITS" value="0x30" grade="established"/>
+  <constant name="DS2502_STATUS_BYTES" value="0x8" grade="established"/>
+  <constant name="DS2502_STATUS_FACTORY_LAST" value="0x0" grade="established"/>
+  <constant name="DS2502_T_LOW0_MIN_US" value="0x3c" grade="established"/>
+  <constant name="DS2502_T_LOW1_MAX_US" value="0xf" grade="established"/>
+  <constant name="DS2502_T_LOW1_MIN_US" value="0x1" grade="established"/>
+  <constant name="DS2502_T_PDH_MAX_US" value="0x3c" grade="established"/>
+  <constant name="DS2502_T_PDH_MIN_US" value="0xf" grade="established"/>
+  <constant name="DS2502_T_PDL_MAX_US" value="0xf0" grade="established"/>
+  <constant name="DS2502_T_PDL_MIN_US" value="0x3c" grade="established"/>
+  <constant name="DS2502_T_RDV_US" value="0xf" grade="established"/>
+  <constant name="DS2502_T_REC_MIN_US" value="0x1" grade="established"/>
+  <constant name="DS2502_T_RSTH_MIN_US" value="0x1e0" grade="established"/>
+  <constant name="DS2502_T_RSTL_MAX_US" value="0x3c0" grade="established"/>
+  <constant name="DS2502_T_RSTL_MIN_US" value="0x1e0" grade="established"/>
+  <constant name="DS2502_T_SLOT_MAX_US" value="0x78" grade="established"/>
+  <constant name="DS2502_T_SLOT_MIN_US" value="0x3c" grade="established"/>
+</genxml>

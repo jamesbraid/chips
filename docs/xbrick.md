@@ -5,7 +5,7 @@ chip, two Crosstown2 host ports and four XIO slots. This page records what the m
 topology, its slot and connector wiring as drawn, its rates, the XIO boards its manuals list, its place between a
 C-brick and a G-brick, its L1, and the board identity the IRIX 6.5.30 kernel and PROM expect. It holds no register
 facts, so there is no generated contract for it. The XBridge registers are in [bridge-family.md](bridge-family.md) and
-`defs/bridge.xbridge.toml`. The Crosstown2 port is in [crosstown-ktown.md](crosstown-ktown.md). The one X-brick
+`devices/bridge/registers.xbridge.toml`. The Crosstown2 port is in [crosstown-ktown.md](crosstown-ktown.md). The one X-brick
 inventory held here is the Onyx 3000 capture in [onyx3000-graphics-topology.md](onyx3000-graphics-topology.md).
 No physical X-brick is identified, and no board part number or silicon revision is known for one.
 

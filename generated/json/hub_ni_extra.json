@@ -1,0 +1,858 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/hub_ni/registers-extra.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_return_vector",
+   "offset": 6292232,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_io_protect",
+   "offset": 6292480,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_io_prot_ovrrd",
+   "offset": 6292488,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_age_cpu0_pio",
+   "offset": 6292744,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_age_cpu1_pio",
+   "offset": 6292760,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_age_gbr_memory",
+   "offset": 6292768,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_age_gbr_pio",
+   "offset": 6292776,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_age_io_memory",
+   "offset": 6292784,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_age_io_pio",
+   "offset": 6292792,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_port_parms",
+   "offset": 6324224,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "ni_port_parms.null_timeout",
+   "hi": 15,
+   "lo": 10,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "ni_port_parms.max_burst",
+   "hi": 9,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_meta_entry",
+   "offset": 6520840,
+   "access": "rw",
+   "width": 64,
+   "count": 31,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
+   "name": "ni_local_entry",
+   "offset": 6521096,
+   "access": "rw",
+   "width": 64,
+   "count": 15,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "word",
+   "name": "NI_AGE_FORMAT",
+   "width": 64,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_AGE_FORMAT.vchannel",
+   "hi": 11,
+   "lo": 10,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_AGE_FORMAT.vchannel.channel_a",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_AGE_FORMAT.vchannel.channel_b",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_AGE_FORMAT.vchannel.any",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_AGE_FORMAT.congestion",
+   "hi": 9,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_AGE_FORMAT.age",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "word",
+   "name": "NI_DIAG_PARMS_FORMAT",
+   "width": 64,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NDP_* masks"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_DIAG_PARMS_FORMAT.port_timeout_reset",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NDP_* masks"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_DIAG_PARMS_FORMAT.llp_8bit_mode",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NDP_* masks"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_DIAG_PARMS_FORMAT.port_disable",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NDP_* masks"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_DIAG_PARMS_FORMAT.send_error",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NDP_* masks"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "word",
+   "name": "NI_GLOBAL_PARMS_FORMAT",
+   "width": 64,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NGP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_GLOBAL_PARMS_FORMAT.max_retry",
+   "hi": 57,
+   "lo": 48,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NGP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_GLOBAL_PARMS_FORMAT.tail_timeout_wrap",
+   "hi": 47,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NGP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_GLOBAL_PARMS_FORMAT.credit_timeout",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NGP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_GLOBAL_PARMS_FORMAT.tail_timeout",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NGP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "word",
+   "name": "NI_PORT_ERROR_FORMAT",
+   "width": 64,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.link_reset",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.internal_error",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.bad_message",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.bad_destination",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.queue_overflow",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.credit_timeout_count",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.tail_timeout_count",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.retry_count",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.check_bit_error_count",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_ERROR_FORMAT.sequence_error_count",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "word",
+   "name": "NI_PORT_RESET_FORMAT",
+   "width": 64,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPR_* masks"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_RESET_FORMAT.warm_reset",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPR_* masks"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_RESET_FORMAT.link_reset",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPR_* masks"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PORT_RESET_FORMAT.local_reset",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPR_* masks"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "word",
+   "name": "NI_PROTECTION_FORMAT",
+   "width": 64,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPROT_RESETOK"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_PROTECTION_FORMAT.reset_ok",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NPROT_RESETOK"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "word",
+   "name": "NI_STATUS_FORMAT",
+   "width": 64,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_STATUS_FORMAT.eightbit_mode",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_STATUS_FORMAT.link_up",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_STATUS_FORMAT.down_reason",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_STATUS_FORMAT.more_nodes",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_STATUS_FORMAT.more_nodes.more_memory",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_STATUS_FORMAT.more_nodes.more_nodes",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_STATUS_FORMAT.region_size",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_STATUS_FORMAT.region_size.coarse",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_STATUS_FORMAT.region_size.fine",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_STATUS_FORMAT.node_id",
+   "hi": 16,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_STATUS_FORMAT.chip_rev",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_STATUS_FORMAT.chip_id",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "word",
+   "name": "NI_VECTOR_PARMS_FORMAT",
+   "width": 64,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_PARMS_FORMAT.pio_id",
+   "hi": 49,
+   "lo": 40,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_PARMS_FORMAT.write_id",
+   "hi": 39,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_PARMS_FORMAT.address",
+   "hi": 19,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_PARMS_FORMAT.pio_type",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVP_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_PARMS_FORMAT.pio_type.read",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_PARMS_FORMAT.pio_type.write",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_PARMS_FORMAT.pio_type.undefined",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_PARMS_FORMAT.pio_type.exchange",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "word",
+   "name": "NI_VECTOR_STATUS_FORMAT",
+   "width": 64,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVS_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_STATUS_FORMAT.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVS_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_STATUS_FORMAT.overrun",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVS_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_STATUS_FORMAT.target",
+   "hi": 60,
+   "lo": 51,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVS_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_id",
+   "hi": 49,
+   "lo": 40,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVS_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_STATUS_FORMAT.write_id",
+   "hi": 39,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVS_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_STATUS_FORMAT.address",
+   "hi": 31,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVS_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "field",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_type",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header: NVS_* masks and shifts"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_type.read",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_type.write",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_type.undefined",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_type.exchange",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_type.address_error",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_type.command_error",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_type.protection_error",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "enum_value",
+   "name": "NI_VECTOR_STATUS_FORMAT.pio_type.unknown",
+   "value": 7,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "constant",
+   "name": "NI_LOCAL_ENTRIES",
+   "value": 16,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "constant",
+   "name": "NI_META_ENTRIES",
+   "value": 32,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "constant",
+   "name": "NI_PORT_ERROR_COUNT_MAX",
+   "value": 255,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "constant",
+   "name": "NI_PORT_PARMS_DEFAULTS",
+   "value": 7152,
+   "count": 1,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "constant",
+   "name": "NI_PORT_PARMS_HUB20_DEFAULTS",
+   "value": 2032,
+   "count": 1,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+  }
+ ]
+}

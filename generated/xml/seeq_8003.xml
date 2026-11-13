@@ -1,0 +1,104 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/seeq_8003/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="seeq_8003" prefix="SEEQ_8003" title="SEEQ 8003 and 80C03 Ethernet data link controller (Indy)">
+  <doc>The SEEQ EDLC behind the Indy's HPC3: its eight byte-wide registers, the bank-selected writes and the collision counters of the 80C03 additions, and the receive and transmit command and status bytes. Offsets are byte offsets within the chip, selected by A2 to A0; behind HPC3, register n sits at 4n from the SEEQ window. Grades say how each item was derived: established means read in the SEEQ 8003 data sheet; inferred means the 80C03 additions, which rest on public drivers because the 80C03 data sheet is not held, or a driver's use of a register; unknown means the sources do not settle it. Nothing here was measured on a board. The receive and transmit DMA channels are in the HPC3 unit, and the prose is in docs/seeq-8003.md.</doc>
+  <space name="bank0" unit="byte"/>
+  <space name="bank1" unit="byte"/>
+  <space name="bank2" unit="byte"/>
+  <space name="cmd" unit="byte"/>
+  <space name="rd" unit="byte"/>
+  <enum name="bank_select">
+    <value name="bank0" value="0" grade="inferred"/>
+    <value name="bank1" value="1" grade="inferred"/>
+    <value name="bank2" value="2" grade="inferred"/>
+  </enum>
+  <enum name="receive_match">
+    <value name="receiver_off" value="0" grade="established"/>
+    <value name="all_frames" value="1" grade="established"/>
+    <value name="station_and_broadcast" value="2" grade="established"/>
+    <value name="station_broadcast_and_multicast" value="3" grade="established"/>
+  </enum>
+  <struct name="STATION_ADDRESS" size="1" grade="established" from="SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-5" register="yes" offset="0x0" access="w" count="6" stride="1" space="bank0" reset="unknown">
+    <doc>Station address bytes 0 to 5, one per register. Byte 0 bit 0 is the first bit on the wire. The data sheet's reset list does not name the station address registers, so their reset value is unknown.</doc>
+  </struct>
+  <struct name="MULTICAST_HASH_LOW" size="1" grade="inferred" from="NetBSD SEEQ register header (80C03 bank layout); Linux SEEQ driver header; IRIX driver use" register="yes" offset="0x0" access="w" count="6" stride="1" space="bank1" reset="unknown">
+    <doc>Multicast hash bytes 0 to 5, written with bank 1 selected. Used with the multicast hash filter enable in the control register.</doc>
+  </struct>
+  <struct name="MULTICAST_HASH_HIGH" size="1" grade="inferred" from="NetBSD SEEQ register header (80C03 bank layout); Linux SEEQ driver header; IRIX driver use" register="yes" offset="0x0" access="w" count="2" stride="1" space="bank2" reset="unknown">
+    <doc>Multicast hash bytes 6 and 7, written at bank 2 registers 0 and 1.</doc>
+  </struct>
+  <struct name="INTER_PACKET_GAP" size="1" grade="inferred" from="HPC3 Chip Specification, revision 1.4, p. 14 (SEEQ extended register x02); IRIX driver use; Linux SEEQ driver header; NetBSD SEEQ register header" register="yes" offset="0x2" access="w" space="bank2" reset="unknown">
+    <doc>Inter-packet gap byte. HPC3 writes each transmit descriptor's gap here when its write-control bit is set. The sources read it as the gap, but the encoding of the byte is unknown. The IRIX driver computes it from a tunable, Linux writes zero, and NetBSD's header calls the register reserved and writes zero.</doc>
+  </struct>
+  <struct name="CONTROL" size="1" grade="inferred" from="NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit" register="yes" offset="0x3" access="w" space="bank2" reset="unknown">
+    <doc>Counter, flag and filter control. Writing a zero and then a one to a counter or flag enable clears the counter or flag. The sources do not give the register's reset value.</doc>
+    <field name="no_carrier_flag_enable" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="receive_short_frames" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="multicast_hash_enable" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="sqe_flag_enable" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="total_collision_count_enable" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="tx_collision_count_enable" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CONFIGURATION" size="1" grade="inferred" from="NetBSD SEEQ register header only" register="yes" offset="0x4" access="w" space="bank2" reset="unknown">
+    <doc>80C03 configuration: auto-pad, no preamble, do not receive own frames, no CRC, AutoDUPLEX, CRC to FIFO and fast discard, as NetBSD's header names them. The bit positions are not stated in the sources. No Indy driver writes it; OpenBSD's write is compiled out.</doc>
+  </struct>
+  <struct name="RX_COMMAND" size="1" grade="established" from="SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7" register="yes" offset="0x6" access="w" space="cmd" reset="0x0">
+    <doc>Receive command. Reset clears it. Bits 5 to 0 enable interrupts for each receive condition. Bit 0 also makes overflow frames frames of interest. Bits 7 and 6 set the match mode.</doc>
+    <field name="match_mode" start="6" size="2" type="receive_match" grade="established"/>
+    <field name="int_good_frame" start="5" size="1" type="uint" grade="established"/>
+    <field name="int_end_of_frame" start="4" size="1" type="uint" grade="established"/>
+    <field name="int_short_frame" start="3" size="1" type="uint" grade="established"/>
+    <field name="int_dribble_error" start="2" size="1" type="uint" grade="established"/>
+    <field name="int_crc_error" start="1" size="1" type="uint" grade="established"/>
+    <field name="int_overflow" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="TX_COMMAND" size="1" grade="established" from="SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions" register="yes" offset="0x7" access="w" space="cmd" reset="0x0">
+    <doc>Transmit command. Reset clears it. Bits 3 to 0 enable interrupts for each transmit condition. Bits 6 and 5 select the register bank for writes to registers 0 to 5 on the 80C03.</doc>
+    <field name="bank" start="5" size="2" type="bank_select" grade="inferred"/>
+    <field name="int_success" start="3" size="1" type="uint" grade="established"/>
+    <field name="int_sixteen_collisions" start="2" size="1" type="uint" grade="established"/>
+    <field name="int_collision" start="1" size="1" type="uint" grade="established"/>
+    <field name="int_underflow" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="TX_COLLISIONS_LOW" size="1" grade="inferred" from="NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver, IRIX driver use" register="yes" offset="0x0" access="r" space="rd" reset="0x0">
+    <doc>Transmit collision counter, low byte. With bits 2 to 0 of register 1 it forms an 11-bit count. Reading it after reset with no frames sent gives zero, which the drivers use to tell the 80C03 from the 8003.</doc>
+  </struct>
+  <struct name="TX_COLLISIONS_HIGH" size="1" grade="inferred" from="NetBSD SEEQ register header, Linux SEEQ driver header, IRIX driver use" register="yes" offset="0x1" access="r" space="rd" reset="0x0">
+    <doc>Transmit collision counter, high bits. Only bits 2 to 0 are described; the other bits are unknown.</doc>
+    <field name="count_bits_10_8" start="0" size="3" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="TOTAL_COLLISIONS_LOW" size="1" grade="inferred" from="NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver" register="yes" offset="0x2" access="r" space="rd" reset="0x0">
+    <doc>Total collision counter, low byte. The sources do not give the counter's full width.</doc>
+  </struct>
+  <struct name="TOTAL_COLLISIONS_HIGH" size="1" grade="inferred" from="NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver" register="yes" offset="0x3" access="r" space="rd" reset="0x0">
+    <doc>Total collision counter, high bits. The width and bit layout are not stated: unknown.</doc>
+  </struct>
+  <struct name="TEST_READ" size="1" grade="inferred" from="NetBSD SEEQ register header (80C03 read table)" register="yes" offset="0x4" access="r" space="rd" reset="unknown">
+    <doc>Test register. The sources say do not use it.</doc>
+  </struct>
+  <struct name="SQE_AND_CARRIER" size="1" grade="inferred" from="NetBSD SEEQ register header (80C03 read table); Linux SEEQ driver header" register="yes" offset="0x5" access="r" space="rd" reset="unknown">
+    <doc>Collision-test and carrier flags.</doc>
+    <field name="no_carrier_flag" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="sqe_flag" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="RX_STATUS" size="1" grade="established" from="SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7" register="yes" offset="0x6" access="r" space="rd" reset="0x80">
+    <doc>Receive status for the frame of interest. Reading it clears the receive interrupt. Bit 7 is old/new. Old/new is set on a read or on reset, and cleared when status is loaded for a frame of interest. While it is zero the register is write-protected, and a frame that arrives before it is read is discarded and its status is not loaded.</doc>
+    <field name="old_new" start="7" size="1" type="uint" grade="established"/>
+    <field name="good_frame" start="5" size="1" type="uint" grade="established"/>
+    <field name="end_of_frame" start="4" size="1" type="uint" grade="established"/>
+    <field name="short_frame" start="3" size="1" type="uint" grade="established"/>
+    <field name="dribble_error" start="2" size="1" type="uint" grade="established"/>
+    <field name="crc_error" start="1" size="1" type="uint" grade="established"/>
+    <field name="overflow" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="TX_STATUS" size="1" grade="established" from="SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6" register="yes" offset="0x7" access="r" space="rd" reset="0x80">
+    <doc>Transmit status. Reading it clears the transmit interrupt. Bit 7 is old/new: set on each read and on reset, and cleared when new status is loaded at the end of each transmission or retransmission attempt.</doc>
+    <field name="old_new" start="7" size="1" type="uint" grade="established"/>
+    <field name="success" start="3" size="1" type="uint" grade="established"/>
+    <field name="sixteen_collisions" start="2" size="1" type="uint" grade="established"/>
+    <field name="collision" start="1" size="1" type="uint" grade="established"/>
+    <field name="underflow" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <constant name="FIFO_DEPTH" value="0x10" grade="established"/>
+  <constant name="SERVICE_INTERVAL_NS" value="0x320" grade="established"/>
+</genxml>

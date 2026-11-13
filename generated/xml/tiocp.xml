@@ -1,0 +1,101 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/tiocp/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="tiocp" prefix="TIOCP" title="TIOCP (PCI-X bridge, later family), as the Origin 3000 family Bridge driver reaches it" from="census: loads and stores in the shipped binaries; names from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names)">
+  <doc>Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout.</doc>
+  <struct name="ID" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x0" access="r" reset="unknown">
+  </struct>
+  <struct name="BUS_ERR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x18" access="r" reset="unknown">
+  </struct>
+  <struct name="SSRAM_SIZE" size="8" grade="established" from="census: 25 sites, 6 routines" register="yes" offset="0x20" access="rw" reset="unknown">
+  </struct>
+  <struct name="REQ_TIMEOUT" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x28" access="rw" reset="unknown">
+  </struct>
+  <struct name="INTR_DST_TARGET_ID" size="8" grade="established" from="census: 17 sites, 6 routines" register="yes" offset="0x38" access="rw" reset="unknown">
+  </struct>
+  <struct name="CMDWORD_ERR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x40" access="r" reset="unknown">
+  </struct>
+  <struct name="TFLUSH" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x50" access="r" reset="unknown">
+  </struct>
+  <struct name="LINKSIDE_ERR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x58" access="r" reset="unknown">
+  </struct>
+  <struct name="RESP_ERR_BUF" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x60" access="r" reset="unknown">
+  </struct>
+  <struct name="RESP_ERR_ADDR" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x68" access="r" reset="unknown">
+  </struct>
+  <struct name="LINKSIDE_ERR_ADDR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x78" access="r" reset="unknown">
+  </struct>
+  <struct name="DIRMAP_DIROFF" size="8" grade="established" from="census: 18 sites, 6 routines" register="yes" offset="0x80" access="rw" reset="unknown">
+  </struct>
+  <struct name="SSRAM_PARITY" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x90" access="r" reset="unknown">
+  </struct>
+  <struct name="ARBITRATION" size="8" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0xa0" access="rw" reset="unknown">
+  </struct>
+  <struct name="PARITY_ERR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0xb0" access="r" reset="unknown">
+  </struct>
+  <struct name="TIMEOUT" size="8" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0xc0" access="rw" reset="unknown">
+  </struct>
+  <struct name="TYPE1_CNTR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xc8" access="rw" reset="unknown">
+  </struct>
+  <struct name="PCI_BUS_ADDR_ADDR" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0xd8" access="r" reset="unknown">
+  </struct>
+  <struct name="INTR_STATUS" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x100" access="r" reset="unknown">
+  </struct>
+  <struct name="INTR_ENABLE" size="8" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0x108" access="rw" reset="unknown">
+  </struct>
+  <struct name="INTR_RESET" size="8" grade="established" from="census: 3 sites, 2 routines" register="yes" offset="0x110" access="rw" reset="unknown">
+  </struct>
+  <struct name="INTR_MODE" size="8" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0x118" access="rw" reset="unknown">
+  </struct>
+  <struct name="INTR_DEVICE" size="8" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0x120" access="rw" reset="unknown">
+  </struct>
+  <struct name="INTR_HOST_ERR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x128" access="rw" reset="unknown">
+  </struct>
+  <struct name="INTR_ADDR_VECT" size="8" grade="established" from="census: 12 sites, 6 routines" register="yes" offset="0x130" access="rw" reset="unknown">
+  </struct>
+  <struct name="INTR_VIEW" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x170" access="r" reset="unknown">
+  </struct>
+  <struct name="INTR_MULTIPLE" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x178" access="r" reset="unknown">
+  </struct>
+  <struct name="FORCE_ALWAYS" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x180" access="w" reset="unknown">
+  </struct>
+  <struct name="FORCE_INTR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x1c0" access="w" reset="unknown">
+  </struct>
+  <struct name="DEVICE" size="8" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0x200" access="rw" reset="unknown">
+  </struct>
+  <struct name="WRB_FLUSH" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x240" access="r" reset="unknown">
+  </struct>
+  <struct name="RRB" size="8" grade="established" from="census: 6 sites, 4 routines" register="yes" offset="0x280" access="rw" reset="unknown">
+  </struct>
+  <struct name="RRB_STATUS" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x290" access="r" reset="unknown">
+  </struct>
+  <struct name="RRB_CLEAR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x298" access="w" reset="unknown">
+  </struct>
+  <struct name="PCIX_BUS_ERR_ADDR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x600" access="r" reset="unknown">
+  </struct>
+  <struct name="PCIX_BUS_ERR_ATTR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x608" access="r" reset="unknown">
+  </struct>
+  <struct name="PCIX_BUS_ERR_DATA" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x610" access="r" reset="unknown">
+  </struct>
+  <struct name="PCIX_PIO_SPLIT_ADDR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x618" access="r" reset="unknown">
+  </struct>
+  <struct name="PCIX_PIO_SPLIT_ATTR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x620" access="r" reset="unknown">
+  </struct>
+  <struct name="PCIX_REQ_ERR_ATTR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x628" access="r" reset="unknown">
+  </struct>
+  <struct name="PCIX_REQ_ERR_ADDR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x630" access="r" reset="unknown">
+  </struct>
+  <struct name="INT_ATE" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x10000" access="rw" reset="unknown">
+  </struct>
+  <struct name="EXT_ATE" size="8" grade="established" from="census: 6 sites, 2 routines" register="yes" offset="0x80000" access="rw" reset="unknown">
+  </struct>
+  <constant name="ID_B_10_0" value="0x7ff" grade="inferred"/>
+  <constant name="ID_B_15_0" value="0xffff" grade="inferred"/>
+  <constant name="INTR_ADDR_VECT_B_10_0" value="0x7ff" grade="inferred"/>
+  <constant name="INTR_ADDR_VECT_B_7_0" value="0xff" grade="inferred"/>
+  <constant name="INTR_DST_TARGET_ID_V_A5A5" value="0xa5a5" grade="inferred"/>
+  <constant name="INTR_DST_TARGET_ID_V_A5A50000" value="0xa5a50000" grade="inferred"/>
+  <constant name="INT_ATE_B_10_0" value="0x7ff" grade="inferred"/>
+  <constant name="LINKSIDE_ERR_ADDR_V_BEEF" value="0xbeef" grade="inferred"/>
+  <constant name="RRB_B_10_0" value="0x7ff" grade="inferred"/>
+  <constant name="SSRAM_SIZE_B_5_4" value="0x30" grade="inferred"/>
+</genxml>

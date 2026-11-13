@@ -7,7 +7,7 @@ symbol table, read from the file under `root/`. The chip named for each object f
 and from the chip pages that cite the same file.
 
 Labels: every entry here is inferred. It classifies from symbol names, sizes and imports. No routine body was read in
-full. "In scope" means no exclusion rule of the scope list in `scripts/inventory-config.json` removes the object's
+full. "In scope" means no exclusion rule of the scope list in `tools/config/inventory-config.json` removes the object's
 routines. The rule texts are in the [function scope section](inventory/README.md#function-scope).
 
 ## IP27 build

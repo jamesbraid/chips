@@ -48,7 +48,7 @@ The owner's `hinv -v` output for a BaseIO-G on an Origin 2000 gives the Bridge's
 | 6 | MediaIO IOC3 | `0x10a9:0x0003` | established ([4]) |
 | 7 | RAD1 digital audio ASIC | `0x10a9:0x0005` | established ([4]) |
 
-RAD1 sits at slot 7 on this listing. The register contract in `defs/rad1.toml` names PCI device 5, but that
+RAD1 sits at slot 7 on this listing. The register contract in `devices/rad1/registers.toml` names PCI device 5, but that
 is the device number the IP30 driver registers for its own PCI audio board. It is not a slot number, and this
 page does not change it.
 

@@ -1,0 +1,142 @@
+<!-- generated from devices/ds1685/registers.toml by defs-gen - do not edit, change the source -->
+
+# Dallas DS1685/DS1687 real-time clock and battery-backed RAM (Octane and Octane2 system boards)
+
+The real-time clock and 242 bytes of battery-backed user RAM on the Octane and Octane2 system boards, reached through the IOC3's byte bus. The DS1687 is the same die in a package with its crystal and cell. The register contract here covers what the sources consulted state: the calendar and alarm bytes, the user RAM in its two banks, the bank-1 control and flag bytes that software polls, the extended-RAM ports and the identification bytes. Offsets are byte addresses within a bank. Register A to Register D are not listed: their bit meanings and offsets were not transcribed for this unit, and the bit positions of the bank-1 control bytes are not stated either. Grades say how each item was derived: established means the vendor datasheet text the sources quote, inferred means the public Linux or OpenBSD driver's use of the byte. None of it was measured on a board, and reset values are unknown unless a source states one.
+
+Unit `ds1685`, macro prefix `DS1685`.
+Default source: Maxim DS1685 datasheet, document 19-5215 revision 10/12.
+
+Every item has a grade: established, inferred or unknown. A grade says how the item was derived from its source; it does not claim the item was measured on silicon.
+
+## Address spaces
+
+| Space | Offset unit | Description |
+|---|---|---|
+| common | byte | Calendar, time and alarm bytes. Linux reads them inside its bank-1 window; the sources consulted do not say whether they also answer while bank 0 is selected. |
+| bank0 | byte | Bank 0: the user RAM window. The calendar bytes are not repeated here. |
+| bank1 | byte | Bank 1: the extended registers. Which bank answers is set through the control register A, whose bit meanings are not transcribed in this unit. Software that switches to bank 1 and does not switch back leaves the chip there, and the sources rely on that. |
+
+## Registers
+
+| Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
+|---|---|---|---|---|---|---|---|---|
+| `user_ram` | 0xe | rw | 8 | 114 | bank0 | unknown | inferred | Linux rtc-ds1685 driver, ds1685_nvram_write, which treats the bank-0 bytes as one 114-byte run |
+| `model` | 0x40 | r | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, which reads the model byte only through its sysfs attribute; the position follows the identification group in the datasheet text |
+| `serial` | 0x41 | r | 8 | 6 | bank1 | unknown | inferred | Maxim DS1685 datasheet, identification group, as quoted by the sources consulted |
+| `serial_crc` | 0x47 | r | 8 |  | bank1 | unknown | established | Maxim DS1685 datasheet, identification group, as quoted by the sources consulted |
+| `century` | 0x48 | rw | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, ds1685_rtc_read_time and the probe century restriction; OpenBSD dsrtc driver, ds1687_gettime |
+| `date_alarm` | 0x49 | rw | 8 |  | bank1 | unknown | established | Maxim DS1685 datasheet, wake-up section, as quoted by the sources consulted |
+| `ctrl4a` | 0x4a | rw | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, probe and poweroff paths; OpenBSD power driver, power_intr |
+| `ctrl4b` | 0x4b | rw | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, probe and remove paths |
+| `ext_ram_address` | 0x50 | w | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, extended-RAM read and write paths; the vendor text as quoted by the sources |
+| `ext_ram_data` | 0x53 | rw | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, extended-RAM read and write paths |
+| `seconds` | 0x0 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, ds1685_rtc_read_time, which reads this byte first among the time fields |
+| `alarm_seconds` | 0x1 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, alarm read and write paths |
+| `minutes` | 0x2 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, ds1685_rtc_read_time |
+| `alarm_minutes` | 0x3 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, alarm read and write paths |
+| `hours` | 0x4 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, ds1685_rtc_read_time and its probe, which forces 24-hour mode |
+| `alarm_hours` | 0x5 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, probe conversion of both hours registers |
+| `day_of_week` | 0x6 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, ds1685_rtc_read_time; OpenBSD dsrtc driver, ds1687_settime |
+| `date` | 0x7 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, ds1685_rtc_read_time |
+| `month` | 0x8 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, ds1685_rtc_read_time |
+| `year` | 0x9 | rw | 8 |  | common | unknown | inferred | Linux rtc-ds1685 driver, ds1685_rtc_read_time |
+
+### Register `user_ram`
+
+Bank-0 user RAM, 114 bytes. The driver's write loop covers a 50-byte run from 0Eh and a 64-byte run from 40h, whose sum is 114, so the block runs from 0Eh to 7Fh. The sources do not state a layout inside it; Linux exposes it as unstructured storage.
+
+Array of 114 registers, stride 1.
+
+### Register `model`
+
+Model byte, the first of the seven identification bytes. Probe does not read it, so only the sysfs and proc views show a wrong value.
+
+### Register `serial`
+
+Six serial-number bytes that follow the model byte. Linux exposes them through sysfs and nothing consulted checks them.
+
+Array of 6 registers, stride 1.
+
+### Register `serial_crc`
+
+CRC byte over the seven identification bytes before it. The datasheet text consulted gives no polynomial, so this import cannot reproduce the check. No driver consulted validates it.
+
+### Register `century`
+
+Century, in the same data-mode form as the other calendar bytes. Linux computes the year as the year byte plus the century times 100.
+
+### Register `date_alarm`
+
+Date alarm. The wake-up alarm matches this byte together with the hours, minutes and seconds alarm bytes. Linux also writes it as the alarm date.
+
+### Register `ctrl4a`
+
+Extended control and flag byte. Only the bits named below are positioned here. Its other bits (the wake-up, RAM-clear and valid-battery flags) are read and cleared by the drivers, but their positions are not transcribed in this unit.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 6 | `incr` | inferred |  | Linux rtc-ds1685 driver, which polls this bit without a bound before every access | Increment-in-progress bit. It must read zero outside an update; Linux spins while it reads one and has no timeout. |
+| 3 | `pab` | established |  | Maxim DS1685 datasheet, power-control section, as quoted by the sources consulted | Power-active bit. Zero makes the power pin active low; one puts it in the high-impedance state. Linux writes one to power the machine off, and the write does not return. |
+| 0 | `kickstart_flag` | inferred |  | OpenBSD power driver and NetBSD ds1687 header, which name bit 0 of this byte as the kickstart flag | Kickstart flag. Set by a low-going transition on the kickstart pin while the system is unpowered. Linux clears it to debounce a press; OpenBSD clears it for the same reason. |
+
+### Register `ctrl4b`
+
+Extended enable byte, holding the enables for the wake-up, RAM-clear and kickstart interrupts. Linux writes it at probe and remove. Bit positions are not transcribed in this unit.
+
+### Register `ext_ram_address`
+
+Address for the extended RAM, seven bits. The address does not advance on its own, so software writes it before each byte.
+
+### Register `ext_ram_data`
+
+Extended RAM data at the address in the address register.
+
+### Register `seconds`
+
+Seconds. Binary or BCD according to the data-mode bit, which this unit does not carry.
+
+### Register `alarm_seconds`
+
+Seconds alarm byte. Linux's alarm paths read and write it with the other alarm bytes; the sources consulted do not describe how the match treats a wildcard value.
+
+### Register `minutes`
+
+Minutes. Same data-mode rule as seconds.
+
+### Register `alarm_minutes`
+
+Minutes alarm byte.
+
+### Register `hours`
+
+Hours. Linux forces 24-hour mode at probe and converts the stored value first if the chip was in 12-hour mode.
+
+### Register `alarm_hours`
+
+Hours alarm byte. Probe converts it together with the time hours when it finds 12-hour mode.
+
+### Register `day_of_week`
+
+Day of the week. Linux reads it on the time path and OpenBSD writes it on the set path; OpenBSD's read path does not read it.
+
+### Register `date`
+
+Date of the month.
+
+### Register `month`
+
+Month.
+
+### Register `year`
+
+Year within the century. The century comes from the century byte in bank 1.
+
+## Constants
+
+| Constant | Value | Grade | Source | Description |
+|---|---|---|---|---|
+| `BANK0_RAM_BYTES` | 0x72 | inferred | Linux rtc-ds1685 driver, ds1685_nvram_write bank-0 arithmetic | Bank-0 user RAM bytes. |
+| `EXT_RAM_BYTES` | 0x80 | inferred | Linux rtc-ds1685 driver; the extended address is seven bits | Extended RAM bytes in bank 1, addressed by the seven-bit address register. |
+| `RAM_CLEAR_RECOVERY_MS` | 0x96 | established | Maxim DS1685 datasheet, RAM-clear section and electrical table, as quoted by the sources consulted | Minimum recovery time after a RAM clear, during which all accesses are locked out. Linux sleeps this long after servicing the clear. |
+| `RAM_TOTAL_BYTES` | 0xf2 | established | Maxim DS1685 datasheet, RAM-clear section, as quoted by the sources consulted | Battery-backed user RAM: the bank-0 bytes plus the extended bytes. |

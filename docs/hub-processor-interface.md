@@ -4,7 +4,7 @@ The processor interface (PI) is the Hub block that faces the node's two processo
 below `0x200000` in the Hub register space, and the second processor's set repeats the first at the
 pairing offsets the header gives. The census in [chips/hub/README.md](../chips/hub/README.md) reaches
 the interrupt, real-time counter, error and timer registers. The register list with grades is in
-[gen/docs/hub_pi_extra.md](../gen/docs/hub_pi_extra.md) and [gen/docs/hub.md](../gen/docs/hub.md).
+[devices/hub_pi/registers-extra.md](../devices/hub_pi/registers-extra.md) and [devices/hub/registers.md](../devices/hub/registers.md).
 This page covers what the public Linux SN0 processor-interface header adds, and what stays open.
 
 ## Sources
@@ -16,7 +16,7 @@ This page covers what the public Linux SN0 processor-interface header adds, and 
 
 ## Added from the public header
 
-Registers the census does not reach are in [defs/hub_pi_extra.toml](../defs/hub_pi_extra.toml), graded
+Registers the census does not reach are in [devices/hub_pi/registers-extra.toml](../devices/hub_pi/registers-extra.toml), graded
 inferred as a whole because the header gives no access type. Their access is an assumption, stated in
 each entry.
 
@@ -30,7 +30,7 @@ each entry.
 - **Built-in self-test** registers at `0x200` to `0x230`. The header names them and says nothing of their use.
 - **Graphics page, credit, bias and interrupt counter** for each processor, at `0x300` to `0x340`. Each
   processor's set is `0x28` above the other's. The interrupt compare at `0x320` and `0x348` is already in
-  defs/hub.toml. The header names the counters and gives no field layout beyond the page enable.
+  devices/hub/registers.toml. The header names the counters and gives no field layout beyond the page enable.
 - **Clear-on-read aliases** of error status 0 at `0x438` and `0x458`. The header's comment says a read clears
   the register. The kernel's use of the status 1 alias is recorded in chips/hub/README.md and is not reconciled here.
 - **Spool compare, CRB timeout, forced check bits and negative-acknowledge** registers at `0x470` to `0x4b8`.
@@ -87,7 +87,7 @@ change is not given by the header and is not stated here.
 ## Not imported
 
 - **Reset values and access types from a machine-readable IRIX register table.** That table is not a source
-  this repository accepts. Reset values stay unknown, as they are in defs/hub.toml.
+  this repository accepts. Reset values stay unknown, as they are in devices/hub/registers.toml.
 - **The protection override unlock value.** The public header does not give one. It stays unknown here.
 - **Stock PROM and IRIX kernel behaviour** drawn from binary analysis done outside this checkout: the
   processor rendezvous, the deliberate bus-error probe, the status-record check and the graphics credit
@@ -105,5 +105,5 @@ change is not given by the header and is not stated here.
 - **Sense of the interrupt-modify write.** Bit 8 of the value written to offset `0x90` is the set or clear
   choice in the shipped firmware's posting code. The census in chips/hub/README.md says the sense is not
   read. Reading that store in the firmware image would settle it.
-- **Access types** of every register in [defs/hub_pi_extra.toml](../defs/hub_pi_extra.toml): assumed in
+- **Access types** of every register in [devices/hub_pi/registers-extra.toml](../devices/hub_pi/registers-extra.toml): assumed in
   each entry, unknown until a live read or a specification.

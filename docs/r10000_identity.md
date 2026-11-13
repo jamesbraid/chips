@@ -1,6 +1,6 @@
 # R10000 family processor identity
 
-This page covers the identity word the MIPS R10000 family reports, the revision rule that tells an R14000 from an R16000, and the Config fields that set the secondary cache size and line. It is the processor's own register contract as far as public software describes it, not a chip in the SGI system. The constants are in [defs/r10000_identity.toml](../defs/r10000_identity.toml), generated to [gen/docs/r10000_identity.md](../gen/docs/r10000_identity.md).
+This page covers the identity word the MIPS R10000 family reports, the revision rule that tells an R14000 from an R16000, and the Config fields that set the secondary cache size and line. It is the processor's own register contract as far as public software describes it, not a chip in the SGI system. The constants are in [devices/r10000_identity/registers.toml](../devices/r10000_identity/registers.toml), generated to [devices/r10000_identity/registers.md](../devices/r10000_identity/registers.md).
 
 The family covers the R10000, R12000, R14000 and R16000. Nothing here was read from silicon or from a running machine except the one printed capture named below.
 

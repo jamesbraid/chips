@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<!-- generated from formats/l1_requests/format.toml by defs-gen - do not edit, change the source -->
+<genxml unit="l1_requests" prefix="L1" title="request codes the Origin 3000 kernel sends to the brick controller">
+  <constant name="REQ_ELSC_CONS_NODE" value="0x1003" grade="established"/>
+  <constant name="REQ_ELSC_CONS_SUBCH" value="0x1002" grade="established"/>
+  <constant name="REQ_ELSC_DEBUG_GET" value="0x1" grade="established"/>
+  <constant name="REQ_ELSC_DISPLAY_LINE_1" value="0x1004" grade="established"/>
+  <constant name="REQ_ELSC_DISPLAY_LINE_2" value="0x1005" grade="established"/>
+  <constant name="REQ_ELSC_EVT_UNREG" value="0x100a" grade="established"/>
+  <constant name="REQ_ELSC_LED_SET" value="0x1009" grade="established"/>
+  <constant name="REQ_ELSC_ODY_EXPANDER_GET" value="0x2007" grade="established"/>
+  <constant name="REQ_ELSC_ODY_EXPANDER_SET" value="0x2008" grade="established"/>
+  <constant name="REQ_ELSC_PARTITION_GET" value="0x9" grade="established"/>
+  <constant name="REQ_ELSC_PARTITION_SET" value="0x1006" grade="established"/>
+  <constant name="REQ_ELSC_PWR_CYCLE" value="0x2006" grade="established"/>
+  <constant name="REQ_ELSC_PWR_OFF" value="0x2005" grade="established"/>
+  <constant name="REQ_ELSC_SLAB_GET" value="0xe" grade="established"/>
+  <constant name="REQ_ELSC_SYSTEM_RESET" value="0x2001" grade="established"/>
+  <constant name="REQ_IOBRICK_ATTACHED_BRICKS" value="0xc" grade="established"/>
+  <constant name="REQ_IOBRICK_GET_SYS_SNUM" value="0x8" grade="established"/>
+  <constant name="REQ_RACK_BAY_TYPE_GET" value="0x3" grade="established"/>
+  <constant name="REQ_SC_COMMAND_INTERP" value="0x0" grade="established"/>
+  <constant name="REQ_SC_PORTSPEED_GET" value="0xa" grade="established"/>
+  <constant name="REQ_SC_SET_SYSTEM_STATE" value="0x100c" grade="established"/>
+  <constant name="REQ_SC_VERSION" value="0x5" grade="established"/>
+</genxml>

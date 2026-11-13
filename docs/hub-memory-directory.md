@@ -4,9 +4,9 @@ The Hub's memory and directory unit is its memory controller and the keeper of t
 directory. It sits at offsets `0x200000` to `0x2000ff` in the Hub register space, with the
 performance counters at `0x210000` and the microcontroller/UART blocks, slot identity and indicator
 registers at `0x220000`. The register list, the census reach and the reset-value status are in
-[gen/docs/hub.md](../gen/docs/hub.md). The field layouts added here are in
-[gen/docs/hub_md_extra.md](../gen/docs/hub_md_extra.md), built from
-[defs/hub_md_extra.toml](../defs/hub_md_extra.toml).
+[devices/hub/registers.md](../devices/hub/registers.md). The field layouts added here are in
+[devices/hub_md/registers-extra.md](../devices/hub_md/registers-extra.md), built from
+[devices/hub_md/registers-extra.toml](../devices/hub_md/registers-extra.toml).
 
 ## Added from the public header
 
@@ -65,7 +65,7 @@ register stays unknown and the header's default constants are graded inferred.
 ## One-wire control in the IRIX kernel
 
 The IRIX kernel's one-wire accessor at `0x6a4d0` drives the control register at `0x2000a8`
-(see [gen/docs/hub.md](../gen/docs/hub.md)). Its reads and writes are eight bytes wide (established,
+(see [devices/hub/registers.md](../devices/hub/registers.md)). Its reads and writes are eight bytes wide (established,
 census context). The write is built from shifted fields and stored in one doubleword. The reads then
 loop until bit 1 is set (established, census context, the loop at `0x6a564` to `0x6a5a4`). Bit 1
 is the done bit and bit 0 is the sampled level. Two consequences follow:

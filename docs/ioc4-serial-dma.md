@@ -4,7 +4,7 @@ The IOC4 serial ports move their data through rings in memory. The chip page
 ([chips/ioc4/README.md](../chips/ioc4/README.md)) covers the register map and the
 driver's port set-up. This page adds what the public Linux driver and the IOC3
 notes say about the ring engine the two chips share. The field names and masks
-are in `defs/ioc4_extra.toml`.
+are in `devices/ioc4/registers-extra.toml`.
 
 Grades are established, inferred and unknown. The public driver is a driver
 author's naming of the registers, not a measurement, so its field layouts are

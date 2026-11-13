@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/ics1890/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="ics1890" prefix="ICS1890" title="ICS1890 10Base-T/100Base-TX PHYceiver, MII management registers (Octane base I/O)" from="ICS1890 revision G datasheet">
+  <doc>The MII management registers of the ICS1890 Integrated PHYceiver, the Ethernet transceiver on the Octane and Octane2 base I/O board. The IOC3 Ethernet controller reaches the part through its MII port. Only the registers and bits the ICS1890 revision G datasheet describes here are transcribed: the identifier registers 2 and 3, and bits of the extended control register 16. Offsets are MII register numbers, one per 16-bit register. Grades say how each item was derived from the datasheet; none of it was measured on a board. Reset values are the datasheet's default column.</doc>
+  <space name="mii" unit="reg"/>
+  <enum name="model">
+    <value name="ics1889" value="1" grade="established"/>
+    <value name="ics1890" value="2" grade="established"/>
+  </enum>
+  <enum name="revision">
+    <value name="internal" value="0" grade="established"/>
+    <value name="alpha" value="1" grade="established"/>
+    <value name="general" value="2" grade="established"/>
+    <value name="j_or_later" value="3" grade="established"/>
+  </enum>
+  <struct name="PHY_ID1" size="2" grade="established" from="ICS1890 revision G datasheet, PHY identifier register (register 2), PDF p. 23 (printed p. 23)" register="yes" offset="0x2" access="rw" space="mii" reset="0x15">
+    <doc>PHY identifier, first word: the low 16 bits of the 24-bit OUI. The part resets to the Integrated Circuit Systems OUI. Writes take effect only after the command override bit of register 16 is set, so each write needs that bit set first.</doc>
+    <field name="oui_low" start="0" size="16" type="uint" grade="established" from="ICS1890 revision G datasheet, PDF p. 23 (printed p. 23)"/>
+  </struct>
+  <struct name="PHY_ID2" size="2" grade="established" from="ICS1890 revision G datasheet, PHY identifier register (register 3), PDF p. 24 (printed p. 24)" register="yes" offset="0x3" access="rw" space="mii" reset="0xf423">
+    <doc>PHY identifier, second word: OUI bits 19 to 24, the model number and the revision number. Reset value is the ICS1890 identity. Writes need the command override bit of register 16, as for register 2.</doc>
+    <field name="oui_high" start="10" size="6" type="uint" grade="established" from="ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"/>
+    <field name="model" start="4" size="6" type="model" grade="established" from="ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"/>
+    <field name="revision" start="0" size="4" type="revision" grade="established" from="ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"/>
+  </struct>
+  <struct name="EXT_CTRL" size="2" grade="established" from="ICS1890 revision G datasheet, extended control register (register 16), PDF p. 29 (printed p. 29)" register="yes" offset="0x10" access="rw" space="mii" reset="unknown">
+    <doc>Extended control. Pre-programs the part; reset loads the defaults from the datasheet's table. Only the bits below are transcribed here. Other bits (for example the stream cipher and scrambler controls) are in the datasheet's full table and are not part of this unit yet, so the reset value of the whole register is unknown here.</doc>
+    <field name="command_override" start="15" size="1" type="uint" grade="established" from="ICS1890 revision G datasheet, PDF p. 29 (printed p. 29)"/>
+    <field name="phy_address" start="6" size="5" type="uint" grade="established" from="ICS1890 revision G datasheet, PDF p. 29 (printed p. 29)"/>
+    <field name="reserved_ics_4" start="4" size="1" type="uint" grade="established" from="ICS1890 revision G datasheet, PDF p. 29 (printed p. 29), reserved bits note"/>
+  </struct>
+</genxml>

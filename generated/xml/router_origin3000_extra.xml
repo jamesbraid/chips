@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/router_origin3000/registers-extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="router_origin3000_extra" prefix="ROUTER_ORIGIN3000" title="Network router registers outside the census (Origin 3000 kernel)">
+  <struct name="JBUS1_0" size="8" grade="established" register="yes" offset="0x240" access="rw" reset="unknown">
+  </struct>
+  <struct name="JBUS1_1" size="8" grade="established" register="yes" offset="0x248" access="rw" reset="unknown">
+  </struct>
+  <struct name="JBUS1_2" size="8" grade="established" register="yes" offset="0x250" access="rw" reset="unknown">
+  </struct>
+  <struct name="JBUS1_3" size="8" grade="established" register="yes" offset="0x258" access="rw" reset="unknown">
+  </struct>
+  <struct name="JBUS1_4" size="8" grade="established" register="yes" offset="0x260" access="rw" reset="unknown">
+  </struct>
+  <struct name="JBUS1_5" size="8" grade="established" register="yes" offset="0x268" access="rw" reset="unknown">
+  </struct>
+</genxml>

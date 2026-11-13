@@ -7,7 +7,7 @@ loop attachment, its lack of a system controller, and its enclosure services. It
 and topology reference, not a register contract. No retained capture of a D-brick's loop (a port
 database or an INQUIRY transcript) exists in the sources this repository holds, so every loop
 address, enclosure name and bay-to-loop detail below is either printed in a manual or marked
-unknown. No register facts were added, so `defs/` was not changed.
+unknown. No register facts were added, so the register maps were not changed.
 
 Each fact carries one of three labels, as in the rest of this repository. **Established** means
 a published manual or a public hardware capture states it, with the citation. **Inferred** means

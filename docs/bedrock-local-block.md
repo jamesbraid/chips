@@ -3,8 +3,8 @@
 The local block is the Bedrock unit that holds the node's identity and control registers. It also holds the access
 vectors that govern processor and I/O access to the local registers of the network, crossbar and memory-directory
 units, drives the real-time clock signal that both processor interfaces count, records the block's own errors, and
-carries vector I/O requests across the fabric. Its register layouts, with a grade on each field, are in [defs/bedrock_lb.toml](../defs/bedrock_lb.toml);
-the generated reference is [gen/docs/bedrock_lb.md](../gen/docs/bedrock_lb.md). The neighbouring units are the
+carries vector I/O requests across the fabric. Its register layouts, with a grade on each field, are in [devices/bedrock_lb/registers.toml](../devices/bedrock_lb/registers.toml);
+the generated reference is [devices/bedrock_lb/registers.md](../devices/bedrock_lb/registers.md). The neighbouring units are the
 [I/O interface](bedrock-io-interface.md) and the [internal crossbar](bedrock-crossbar.md).
 
 No Bedrock specification is held. Every field position and the reset statements come from the public Linux 2.5.40

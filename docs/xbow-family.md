@@ -238,7 +238,7 @@ accesses at slot + 4.
 6. Read the clearing alias, then write 0 to both interrupt destination registers and to control.
 
 The PROM takes a crossbar lock before step 1: bit 1 of link `0xf`'s arbitration-upper word
-(offset `0x2d8`, `PROM_CROSSBAR_LOCK_BIT` in `defs/xbow_extra.toml`). It polls up to 500 times,
+(offset `0x2d8`, `PROM_CROSSBAR_LOCK_BIT` in `devices/xbow/registers-extra.toml`). It polls up to 500 times,
 50 microseconds apart, for the bit to clear, and prints "Xbow lock timeout" if it does not.
 It then sets the bit, and prints "Failed to lock xbow" if the bit does not read back set. The
 routine has an exception path that prints "Took an exception" and fails the check. That the

@@ -1,6 +1,6 @@
 # R14000 performance counters
 
-This page covers the CP0 register 25 performance counters that the MIPS R12000, R14000 and R16000 expose: the four control and counter pairs, the control field positions, the counter width and overflow bit, and the event numbers SGI's profiling guide names. The constants are in [defs/r14000_perf_counters.toml](../defs/r14000_perf_counters.toml), generated to [gen/docs/r14000_perf_counters.md](../gen/docs/r14000_perf_counters.md).
+This page covers the CP0 register 25 performance counters that the MIPS R12000, R14000 and R16000 expose: the four control and counter pairs, the control field positions, the counter width and overflow bit, and the event numbers SGI's profiling guide names. The constants are in [devices/r14000_perf_counters/registers.toml](../devices/r14000_perf_counters/registers.toml), generated to [devices/r14000_perf_counters/registers.md](../devices/r14000_perf_counters/registers.md).
 
 Nothing here was read from silicon or from a running machine. The R14000 claims rest on a public driver and on SGI's guide, so most are inferred, and no R14000 processor manual has been checked.
 

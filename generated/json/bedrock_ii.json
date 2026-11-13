@@ -1,0 +1,1369 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/bedrock_ii/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "widget_id",
+   "offset": 4194304,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "widget_id.revision",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "widget_id.part",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "widget_id.manufacturer",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "local_access_protection",
+   "offset": 4194560,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 18446744073709551615,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "local_access_protection.region_enable",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "protection_override",
+   "offset": 4194568,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "outbound_widget_access",
+   "offset": 4194576,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "outbound_widget_access.widgets_8_to_f",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "outbound_widget_access.widget_0",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "inbound_widget_access",
+   "offset": 4194584,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_widget_access.widgets_8_to_f",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_widget_access.widget_0",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "inbound_device_error_mask",
+   "offset": 4194592,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.widget_15",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.widget_14",
+   "hi": 55,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.widget_13",
+   "hi": 47,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.widget_12",
+   "hi": 39,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.widget_11",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.widget_10",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.widget_9",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.widget_8",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "link_control",
+   "offset": 4194600,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "link_control.max_burst",
+   "hi": 41,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "link_control.data_available_select",
+   "hi": 27,
+   "lo": 26,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "link_control.max_retry",
+   "hi": 25,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "link_control.remote_power",
+   "hi": 14,
+   "lo": 14,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "link_control.link_status",
+   "hi": 13,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "link_control.eight_bit_mode",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "link_control.link_enable",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "link_control.warm_reset",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "link_control.null_timeout",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "interrupt_destination",
+   "offset": 4194616,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "interrupt_destination.forwarded_pi1",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "interrupt_destination.forwarded_pi0",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "interrupt_destination.sent",
+   "hi": 28,
+   "lo": 28,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "interrupt_destination.enable",
+   "hi": 24,
+   "lo": 24,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "interrupt_destination.node",
+   "hi": 16,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "interrupt_destination.pi_select",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "interrupt_destination.level",
+   "hi": 6,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "pio_request_buffer_w0",
+   "offset": 4194712,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.multiple_errors",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.spurious_read",
+   "hi": 51,
+   "lo": 51,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.spurious_write",
+   "hi": 50,
+   "lo": 50,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.read_timeout",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.error",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.overflow_count",
+   "hi": 47,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.fire_and_forget",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.mode",
+   "hi": 41,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.nack_counter_b",
+   "hi": 37,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.nack_counter_a",
+   "hi": 21,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w0.credits",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "pio_request_buffer_w8",
+   "offset": 4194720,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.multiple_errors",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.spurious_read",
+   "hi": 51,
+   "lo": 51,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.spurious_write",
+   "hi": 50,
+   "lo": 50,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.read_timeout",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.error",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.overflow_count",
+   "hi": 47,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.fire_and_forget",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.mode",
+   "hi": 41,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.nack_counter_b",
+   "hi": 37,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.nack_counter_a",
+   "hi": 21,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_request_buffer_w8.credits",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "misc_error_mask",
+   "offset": 4194792,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 273,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "misc_error_mask.clear_precise",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "misc_error_mask.bte_1_enable",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "misc_error_mask.bte_0_enable",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "misc_error_mask.widget_0_enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "error_clear",
+   "offset": 4194808,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "error_clear.forwarded_pi1",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "error_clear.forwarded_pi0",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "error_clear.spurious_read_header",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "error_clear.internal",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "error_clear.bte_1",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "error_clear.bte_0",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "error_clear.crazy",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "error_clear.request_buffers_8_to_f",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "error_clear.request_buffer_0",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "pio_read_address",
+   "offset": 4195080,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_read_address.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_read_address.timeout_count",
+   "hi": 62,
+   "lo": 58,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_read_address.widget",
+   "hi": 57,
+   "lo": 54,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_read_address.source",
+   "hi": 51,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_read_address.initiator",
+   "hi": 43,
+   "lo": 41,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "pio_read_address.address",
+   "hi": 40,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "request_buffer_management",
+   "offset": 4195240,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_management.precise",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_management.marks",
+   "hi": 49,
+   "lo": 35,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_management.valid_bits",
+   "hi": 34,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_management.flow_control_count",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_management.clear_pending_bit_13",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_management.clear_pending_bit_12",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_management.count",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_management.read_header",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_management.spurious_message",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "request_buffer_control",
+   "offset": 4195248,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_control.pending",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_control.command",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "request_buffer_control.entry",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "crb_a",
+   "offset": 4195328,
+   "access": "r",
+   "width": 64,
+   "count": 15,
+   "stride": 32,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_a.bit55",
+   "hi": 55,
+   "lo": 55,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_a.type",
+   "hi": 54,
+   "lo": 52,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_a.bit51",
+   "hi": 51,
+   "lo": 51,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_a.bit50",
+   "hi": 50,
+   "lo": 50,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_a.bit49",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_a.bit0",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "crb_b",
+   "offset": 4195336,
+   "access": "r",
+   "width": 64,
+   "count": 15,
+   "stride": 32,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_b.engine_alt",
+   "hi": 58,
+   "lo": 58,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_b.sub",
+   "hi": 42,
+   "lo": 41,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_b.kind",
+   "hi": 32,
+   "lo": 30,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "crb_c",
+   "offset": 4195344,
+   "access": "r",
+   "width": 64,
+   "count": 15,
+   "stride": 32,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "crb_c.bit48",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "bte_length_status",
+   "offset": 4259840,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_length_status.busy",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_length_status.error",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_length_status.length_lines",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "bte_source",
+   "offset": 4259848,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_source.address",
+   "hi": 39,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "bte_destination",
+   "offset": 4259856,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_destination.address",
+   "hi": 39,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "bte_control",
+   "offset": 4259864,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_control.poison",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_control.notify",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_control.zero_fill",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "bte_notification_address",
+   "offset": 4259872,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_notification_address.address",
+   "hi": 39,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "bte_interrupt_address",
+   "offset": 4259880,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_interrupt_address.level",
+   "hi": 22,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_interrupt_address.node",
+   "hi": 8,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "field",
+   "name": "bte_interrupt_address.pi_select",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "constant",
+   "name": "II_WINDOW_BASE",
+   "value": 29360128,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "constant",
+   "name": "MANUFACTURER_BEDROCK",
+   "value": 54,
+   "count": 1,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "constant",
+   "name": "PART_BEDROCK",
+   "value": 49424,
+   "count": 1,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "constant",
+   "name": "PI0_INTERRUPT_PENDING_MODIFY",
+   "value": 25165968,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "constant",
+   "name": "PI1_INTERRUPT_PENDING_MODIFY",
+   "value": 27263120,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "constant",
+   "name": "WIDGET_PART_C104",
+   "value": 49412,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "constant",
+   "name": "WIDGET_PART_C105",
+   "value": 49413,
+   "count": 1,
+   "grade": "established",
+   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+  }
+ ]
+}

@@ -1,9 +1,0 @@
-# generated from defs/ by defs-gen - do not edit, change the source
-[package]
-name = "hwdefs"
-version = "0.1.0"
-edition = "2021"
-publish = false
-
-[lib]
-path = "src/lib.rs"

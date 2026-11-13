@@ -1,6 +1,6 @@
 # R10000 family Diagnostic register (CP0 register 22)
 
-This page covers the CP0 register 22 of the MIPS R10000 family, the branch diagnostic register: its field positions as the R10000 and R12000 manuals give them, the R12000 changes, what the Linux driver does with it, and what is unknown for the R14000 and R16000. The constants are in [defs/r10000_diagnostic.toml](../defs/r10000_diagnostic.toml), generated to [gen/docs/r10000_diagnostic.md](../gen/docs/r10000_diagnostic.md). Nothing here was read from silicon or from a running machine.
+This page covers the CP0 register 22 of the MIPS R10000 family, the branch diagnostic register: its field positions as the R10000 and R12000 manuals give them, the R12000 changes, what the Linux driver does with it, and what is unknown for the R14000 and R16000. The constants are in [devices/r10000_diagnostic/registers.toml](../devices/r10000_diagnostic/registers.toml), generated to [devices/r10000_diagnostic/registers.md](../devices/r10000_diagnostic/registers.md). Nothing here was read from silicon or from a running machine.
 
 The family covers the R10000, R12000, R14000 and R16000. The identity word that tells the R14000 from the R16000 is in [docs/r10000_identity.md](r10000_identity.md).
 

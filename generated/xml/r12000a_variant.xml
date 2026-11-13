@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/r12000a_variant/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="r12000a_variant" prefix="R12KA" title="R12000A mode-bit fields and performance control 0 syndrome field">
+  <doc>Constants for the NEC VR12000A variant of the R12000 as its user's manual describes the differences from the R12000: the SysClkDiv and SCClkDiv fields of the boot mode word, the HSTL output mode field, and the 9-bit read-only syndrome that the variant places in bits 31:23 of CP0 register 25 performance control 0. This unit holds constants only. The capture rule and the open questions are in docs/r12000a_variant.md. Grades: established means the processor manual states it; inferred means a reasoned reading of the manual; unknown items are listed in the page.</doc>
+  <constant name="R12KA_MODE_HSTL_MASK" value="0x60000000" grade="established"/>
+  <constant name="R12KA_MODE_HSTL_SHIFT" value="0x1d" grade="established"/>
+  <constant name="R12KA_MODE_SCCLKDIV_MASK" value="0x380000" grade="established"/>
+  <constant name="R12KA_MODE_SCCLKDIV_SHIFT" value="0x13" grade="established"/>
+  <constant name="R12KA_MODE_SCCLKDIV_TEST_CODE" value="0x7" grade="established"/>
+  <constant name="R12KA_MODE_SYSCLKDIV_CODE_A_ONLY" value="0xc" grade="established"/>
+  <constant name="R12KA_MODE_SYSCLKDIV_MASK" value="0x1e00" grade="established"/>
+  <constant name="R12KA_MODE_SYSCLKDIV_SHIFT" value="0x9" grade="established"/>
+  <constant name="R12KA_PERF_CTL0_SYNDROME_MASK" value="0xff800000" grade="established"/>
+  <constant name="R12KA_PERF_CTL0_SYNDROME_SHIFT" value="0x17" grade="established"/>
+</genxml>

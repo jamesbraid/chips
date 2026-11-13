@@ -2,8 +2,8 @@
 
 The memory and directory unit is the Bedrock's memory controller and coherence directory. Its registers start 7.5 MiB
 into the node's register space, from the current-cell vector through the memory debug selector. Its register
-layouts, with a grade on each field, are in [defs/bedrock_md.toml](../defs/bedrock_md.toml); the generated
-reference is [gen/docs/bedrock_md.md](../gen/docs/bedrock_md.md). The register names and offsets are in the
+layouts, with a grade on each field, are in [devices/bedrock_md/registers.toml](../devices/bedrock_md/registers.toml); the generated
+reference is [devices/bedrock_md/registers.md](../devices/bedrock_md/registers.md). The register names and offsets are in the
 [chip page](../chips/bedrock/README.md), which this page extends and does not repeat.
 
 No Bedrock specification is held. Field positions, access widths and the reset statements come from the public

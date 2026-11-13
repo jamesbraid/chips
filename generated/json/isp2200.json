@@ -1,0 +1,855 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/isp2200/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "isp2200",
+   "kind": "register",
+   "name": "csr",
+   "offset": 6,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "csr.bank",
+   "hi": 5,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "csr.soft_reset",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "register",
+   "name": "icr",
+   "offset": 8,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "icr.global_enable",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "icr.risc_enable",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "register",
+   "name": "isr",
+   "offset": 10,
+   "access": "r",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "isr.any_pending",
+   "hi": 15,
+   "lo": 15,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "isr.risc_pending",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "register",
+   "name": "sema",
+   "offset": 12,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "sema.status",
+   "hi": 1,
+   "lo": 1,
+   "grade": "unknown"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "sema.lock",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "register",
+   "name": "nvram",
+   "offset": 14,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "nvram.data_from_eeprom",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "nvram.data_to_eeprom",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "nvram.select",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "nvram.clock",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "register",
+   "name": "mailbox",
+   "offset": 16,
+   "access": "rw",
+   "width": 16,
+   "count": 8,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "register",
+   "name": "hccr",
+   "offset": 192,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "hccr.cmd",
+   "hi": 15,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "enum_value",
+   "name": "hccr.cmd.noop",
+   "value": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "enum_value",
+   "name": "hccr.cmd.reset_risc",
+   "value": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "enum_value",
+   "name": "hccr.cmd.pause_risc",
+   "value": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "enum_value",
+   "name": "hccr.cmd.release_risc",
+   "value": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "enum_value",
+   "name": "hccr.cmd.parity",
+   "value": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "enum_value",
+   "name": "hccr.cmd.set_host_int",
+   "value": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "enum_value",
+   "name": "hccr.cmd.clear_host_int",
+   "value": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "enum_value",
+   "name": "hccr.cmd.clear_risc_int",
+   "value": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "hccr.host_int",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "hccr.risc_reset",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "field",
+   "name": "hccr.risc_paused",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "register",
+   "name": "mailbox_hi",
+   "offset": 224,
+   "access": "rw",
+   "width": 16,
+   "count": 16,
+   "stride": 2,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ASYNC_EVENT_FIRST",
+   "value": 32768,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ASYNC_EVENT_LAST",
+   "value": 49151,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ASYNC_LIP",
+   "value": 32784,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ASYNC_LOOP_DOWN",
+   "value": 32786,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ASYNC_LOOP_UP",
+   "value": 32785,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ASYNC_PORT_DB_CHANGE",
+   "value": 32788,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ASYNC_RESET",
+   "value": 32769,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ASYNC_RSCN",
+   "value": 32789,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CMD_ENTRY_32",
+   "value": 17,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CMD_ENTRY_64",
+   "value": 25,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CONT_ENTRY_32",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CONT_ENTRY_64",
+   "value": 10,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_ABORTED",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_COMPLETE",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_DATA_OVERRUN",
+   "value": 7,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_DATA_UNDERRUN",
+   "value": 21,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_DMA_ERROR",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_INCOMPLETE",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_PORT_BUSY",
+   "value": 43,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_PORT_CONFIG_CHANGED",
+   "value": 42,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_PORT_LOGGED_OUT",
+   "value": 41,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_PORT_UNAVAILABLE",
+   "value": 40,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_QUEUE_FULL",
+   "value": 28,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_RESET",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_TIMEOUT",
+   "value": 6,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "CPL_TRANSPORT_ERROR",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ENTRY_BYTES",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "FIRMWARE_LENGTH_WORD_INDEX",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ICB_BYTES",
+   "value": 96,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ICB_VERSION",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "MAILBOXES_TOTAL",
+   "value": 24,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "MARKER_ENTRY",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "MBOX0_BUSY",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "MBOX_COMPLETION_LAST",
+   "value": 32767,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "NVRAM_IMAGE_BYTES",
+   "value": 256,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_ABOUT_FIRMWARE",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_DUMP_RAM",
+   "value": 3,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_EXECUTE_FIRMWARE",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_FIRMWARE_STATUS",
+   "value": 31,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_GET_FIRMWARE_OPTIONS",
+   "value": 40,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_INIT_FIRMWARE",
+   "value": 96,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_LOAD_RAM_32",
+   "value": 1,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_LOAD_RAM_DMA",
+   "value": 9,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_LOAD_RAM_EXT",
+   "value": 11,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_MAILBOX_TEST",
+   "value": 6,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_NOOP",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_READ_RAM_WORD",
+   "value": 5,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_SET_FIRMWARE_OPTIONS",
+   "value": 56,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_VERIFY_CHECKSUM",
+   "value": 7,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "OP_WRITE_RAM_WORD",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "PCI_BAR_IO_CONFIG_OFFSET",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "PCI_BAR_MEM_CONFIG_OFFSET",
+   "value": 20,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "PCI_CONFIG_BUS_MASTER_BIT",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "PCI_DEVICE_ID",
+   "value": 8704,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "PCI_VENDOR_ID",
+   "value": 4215,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "PRODUCT_ID_MAILBOX1",
+   "value": 18771,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "PRODUCT_ID_MAILBOX2",
+   "value": 20512,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "PRODUCT_ID_MAILBOX3",
+   "value": 8224,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "REGISTER_WINDOW_BYTES",
+   "value": 256,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "RISC_CODE_ORIGIN_WORD",
+   "value": 4096,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "ROM_VERSION_MAILBOX7",
+   "value": 4,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "SEGMENT_LIST_ENTRY",
+   "value": 21,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "STATUS_COMMAND_ERROR",
+   "value": 16389,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "STATUS_COMPLETE",
+   "value": 16384,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "STATUS_CONT_ENTRY",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "STATUS_ENTRY",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "STATUS_HOST_INTERFACE_ERROR",
+   "value": 16386,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "STATUS_INVALID_COMMAND",
+   "value": 16385,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "STATUS_PARAMETER_ERROR",
+   "value": 16390,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "isp2200",
+   "kind": "constant",
+   "name": "STATUS_TEST_FAILED",
+   "value": 16387,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

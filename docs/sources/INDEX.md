@@ -21,7 +21,7 @@ driver author's naming, not a hardware measurement (see [../published-sources.md
 | `mame` | MAME | `803a05bb5090` | https://github.com/mamedev/mame | `src/mame/sgi`: `crime.cpp`, `mace.cpp` and `o2.cpp` for the O2, the earlier SGI memory and I/O controllers (`mc.cpp`, `hpc3.cpp`, `ioc2.cpp`). Independent model, same caveat. |
 | `arcboot` | arcboot | `15151b5e144d` | https://github.com/agx/arcboot | A published boot loader for IP22 and IP32 that calls the ARCS firmware interface (`arclib`): how a loader finds the machine through the PROM. |
 | `m2c` | m2c (MIPS decompiler, fork with N32 support) | `b3e0876aca1c` | https://github.com/techomancer/m2c | Tool, not a hardware source: decompiles MIPS routines for the census. |
-| `spimdisasm` | spimdisasm | `4b5d4c68eeb9` | https://github.com/Decompollaborate/spimdisasm | Tool, not a hardware source: MIPS disassembly used by `scripts/`. |
+| `spimdisasm` | spimdisasm | `4b5d4c68eeb9` | https://github.com/Decompollaborate/spimdisasm | Tool, not a hardware source: MIPS disassembly used by the tools. |
 
 Pins match the sibling repositories (`gr4`, `odsy`, `kona`, `crime`) wherever they carry the same tree:
 `m2c`, `spimdisasm`, `netbsd`, `openbsd`, `gxemul` and `mame`. `linux` takes the pin the `crime` repository uses.

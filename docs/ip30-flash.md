@@ -2,7 +2,7 @@
 
 The IP30 boot PROM sits in flash that the Bridge chip drives. This page records what the published
 Bridge specification settles about that interface and what it leaves open. The register bits are in
-`defs/bridge_extra.toml`. The fitted flash part is not identified in this repository, and the PROM's
+`devices/bridge/registers-extra.toml`. The fitted flash part is not identified in this repository, and the PROM's
 own flash code has not been read here, so nothing below says how software uses the flash.
 
 Sources: Bridge ASIC specification rev 4.0 (3/27/97), `docs/sources/specs/bridge-asic-specification-rev4.0.pdf`.

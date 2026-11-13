@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/dp83843/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="dp83843" prefix="DP83843" title="National DP83843 PHYTER 10/100 Mb/s transceiver, MII registers (Origin 300 IO-8)" from="DP83843 revision B datasheet">
+  <doc>The MII management registers of the DP83843 transceiver on the Origin 300 IO-8 board. The IOC3 Ethernet controller reaches the part through its MII port, so only the registers a guest can read or write through that port are here. Offsets are MII register numbers, one per 16-bit register. The registers below are the ones the DP83843 datasheet, revision B, describes with bit meanings or reset values; the rest of the register map is not transcribed. The DP83840A that the Origin 200 carries is a different part with its own bit meanings for registers 0x17 and 0x18, and it is not described by this unit. Grades say how each item was derived from the datasheet; none of it was measured on a board, and reset values are unknown unless stated.</doc>
+  <space name="mii" unit="reg"/>
+  <struct name="BMCR" size="2" grade="inferred" from="DP83843 revision B datasheet, basic mode control register; register number from the clause 22 numbering, not re-read against the PDF" register="yes" offset="0x0" access="rw" space="mii" reset="unknown">
+    <doc>Basic mode control. Reset value not stated by the datasheet text consulted.</doc>
+    <field name="loopback" start="14" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6"/>
+    <field name="speed_100" start="13" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 47-48 (printed pp. 46-47), Table 6"/>
+    <field name="an_enable" start="12" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 47-48 (printed pp. 46-47), Table 6"/>
+    <field name="power_down" start="11" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 47 (printed p. 46), Table 6"/>
+    <field name="isolate" start="10" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6, and section 3.9, PDF p. 34 (printed p. 33)"/>
+    <field name="restart_an" start="9" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6"/>
+    <field name="duplex" start="8" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 47-48 (printed pp. 46-47), Table 6"/>
+    <field name="collision_test" start="7" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6"/>
+  </struct>
+  <struct name="BMSR" size="2" grade="inferred" from="DP83843 revision B datasheet, basic mode status register; register number from the clause 22 numbering, not re-read against the PDF" register="yes" offset="0x1" access="r" space="mii" reset="0x7849">
+    <doc>Basic mode status, read only. The reset value is the one the datasheet gives with no link and no completed autonegotiation, not a value read from a running part.</doc>
+    <field name="preamble_suppression" start="6" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 48-49 (printed pp. 47-48), Table 7"/>
+    <field name="an_complete" start="5" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 49 (printed p. 48), Table 7"/>
+    <field name="link_status" start="2" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 49 (printed p. 48), Table 7"/>
+  </struct>
+  <struct name="ANER" size="2" grade="inferred" from="DP83843 revision B datasheet, autonegotiation expansion register; register number from the clause 22 numbering, not re-read against the PDF" register="yes" offset="0x6" access="r" space="mii" reset="0x4">
+    <doc>Autonegotiation expansion, read only. The reset value is the datasheet's value with no completed negotiation.</doc>
+    <field name="next_page_able" start="2" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 53 (printed p. 52)"/>
+  </struct>
+  <struct name="LBR" size="2" grade="established" from="DP83843 revision B datasheet, loopback register, PDF pp. 59-62 (printed pp. 58-61), Table 21" register="yes" offset="0x17" access="rw" space="mii" reset="0x0">
+    <doc>Loopback register. Reset zero is the value in the nominal table for copper, nibble-mode straps. Bits 13 to 7 are bypass bits that the datasheet marks strap-dependent, so the reset of those bits on a board depends on its straps; the board's straps are unverified. Bit 6 is a digital loopback selection that the register table marks reserved and read only, which conflicts with a prose section on the same bit; it has no field here.</doc>
+    <field name="data_path_100" start="7" size="3" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 34 (printed p. 33)"/>
+    <field name="tw_loopback" start="5" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 59-62 (printed pp. 58-61), Table 21"/>
+    <field name="endec_10_loopback" start="4" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 59-62 (printed pp. 58-61), Table 21"/>
+  </struct>
+  <struct name="BTSCR" size="2" grade="established" from="DP83843 revision B datasheet, 10BASE-T status and control register, PDF pp. 59-62 (printed pp. 58-61), Table 21" register="yes" offset="0x18" access="rw" space="mii" reset="0x0">
+    <doc>10BASE-T status and control. Reset zero is the nominal-table value for copper, nibble-mode straps, with the strap-dependent serial bits 12 and 11 left out.</doc>
+    <field name="full_duplex_or_repeater_readback" start="7" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 59-62 (printed pp. 58-61), Table 21"/>
+  </struct>
+</genxml>

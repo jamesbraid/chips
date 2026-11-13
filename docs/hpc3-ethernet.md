@@ -4,8 +4,8 @@ The HPC3 is the peripheral controller on the Indy's GIO64 bus. Its Ethernet port
 main memory and an 8-bit SEEQ Ethernet controller through two DMA channels, one receive and one transmit.
 Each channel is driven by a chain of descriptors in memory. The SEEQ is reached by programmed I/O through
 the HPC3. The register offsets, widths, field bits and reset notes, each with its grade, are in
-[`defs/hpc3_enet.toml`](../defs/hpc3_enet.toml); the generated reference is
-`gen/docs/hpc3_enet.md`. This page holds what the unit does not carry.
+[`devices/hpc3_enet/registers.toml`](../devices/hpc3_enet/registers.toml); the generated reference is
+`devices/hpc3_enet/registers.md`. This page holds what the unit does not carry.
 
 Each fact carries one label. **Established** means the source states it: the HPC3 specification, a public
 driver, or the shipped IRIX driver, read in full for that path. **Inferred** means a reasoned reading, and

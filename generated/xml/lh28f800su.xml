@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/lh28f800su/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="lh28f800su" prefix="LH28F800SU" title="Sharp LH28F800SU 8 Mbit x16 flash: array geometry, command set, identifier and status registers" from="Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)">
+  <doc>The 1 MiB flash part in x16 mode: block geometry, the compatible and extended command opcodes, the identifier words, the typical operation times and the status words read back through the status and extended-status commands. Grades: established means the manufacturer datasheet states the value; inferred means arithmetic on a stated value or a reading of the command table; unknown means the datasheet does not settle it. Which SGI board fits this part, and how its pins are wired, is not stated by the datasheet and is not listed here.</doc>
+  <enum name="bsr_op">
+    <value name="ok_or_running" value="0" grade="established"/>
+    <value name="failure" value="2" grade="established"/>
+    <value name="aborted" value="3" grade="established"/>
+  </enum>
+  <enum name="gsr_op">
+    <value name="ok_or_running" value="0" grade="established"/>
+    <value name="sleep" value="1" grade="established"/>
+    <value name="failure" value="2" grade="established"/>
+    <value name="failure_or_abort" value="3" grade="established"/>
+  </enum>
+  <struct name="BSR" size="1" grade="established" from="Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)">
+    <doc>Block status register, one per block, read through the extended-status mode at the BSR word address of that block. Bits 1 and 0 are reserved.</doc>
+    <field name="block_ready" start="7" size="1" type="uint" grade="established"/>
+    <field name="lock_cleared" start="6" size="1" type="uint" grade="established"/>
+    <field name="op_status" start="4" size="2" type="bsr_op" grade="established"/>
+    <field name="queue_full" start="3" size="1" type="uint" grade="established"/>
+    <field name="low_vpp" start="2" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CSR" size="1" grade="established" from="Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)">
+    <doc>Compatible status register, read after 0x70. Bit 7 is ready when set and busy when clear. Bits 2 to 0 are reserved.</doc>
+    <field name="ready" start="7" size="1" type="uint" grade="established"/>
+    <field name="erase_suspended" start="6" size="1" type="uint" grade="established"/>
+    <field name="erase_error" start="5" size="1" type="uint" grade="established"/>
+    <field name="program_error" start="4" size="1" type="uint" grade="established"/>
+    <field name="low_vpp" start="3" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GSR" size="1" grade="established" from="Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)">
+    <doc>Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 float during status reads (printed p. 4).</doc>
+    <field name="write_ready" start="7" size="1" type="uint" grade="established"/>
+    <field name="suspended" start="6" size="1" type="uint" grade="established"/>
+    <field name="op_status" start="4" size="2" type="gsr_op" grade="established"/>
+    <field name="queue_full" start="3" size="1" type="uint" grade="established"/>
+    <field name="buffer_available" start="2" size="1" type="uint" grade="established"/>
+    <field name="buffer_ready" start="1" size="1" type="uint" grade="established"/>
+    <field name="buffer_select" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <constant name="LH28F800SU_ARRAY_BYTES" value="0x100000" grade="established"/>
+  <constant name="LH28F800SU_BLOCK_BYTES" value="0x10000" grade="inferred"/>
+  <constant name="LH28F800SU_BLOCK_COUNT" value="0x10" grade="established"/>
+  <constant name="LH28F800SU_BLOCK_ERASE_TYP_MS" value="0x2bc" grade="established"/>
+  <constant name="LH28F800SU_BLOCK_WORDS" value="0x8000" grade="established"/>
+  <constant name="LH28F800SU_CMD_BLOCK_LOCK" value="0x77" grade="established"/>
+  <constant name="LH28F800SU_CMD_CLEAR_STATUS" value="0x50" grade="established"/>
+  <constant name="LH28F800SU_CMD_CONFIRM" value="0xd0" grade="established"/>
+  <constant name="LH28F800SU_CMD_ERASE_SETUP" value="0x20" grade="established"/>
+  <constant name="LH28F800SU_CMD_EXT_STATUS" value="0x71" grade="established"/>
+  <constant name="LH28F800SU_CMD_IDENTIFY" value="0x90" grade="established"/>
+  <constant name="LH28F800SU_CMD_PROGRAM" value="0x40" grade="established"/>
+  <constant name="LH28F800SU_CMD_PROGRAM_ALT" value="0x10" grade="established"/>
+  <constant name="LH28F800SU_CMD_READ_ARRAY" value="0xff" grade="established"/>
+  <constant name="LH28F800SU_CMD_READ_STATUS" value="0x70" grade="established"/>
+  <constant name="LH28F800SU_CMD_SUSPEND" value="0xb0" grade="established"/>
+  <constant name="LH28F800SU_CMD_UPLOAD_STATUS" value="0x97" grade="established"/>
+  <constant name="LH28F800SU_ID_WORD0" value="0xb0" grade="established"/>
+  <constant name="LH28F800SU_ID_WORD1" value="0x66a8" grade="established"/>
+  <constant name="LH28F800SU_RP_RECOVERY_NS" value="0x190" grade="established"/>
+  <constant name="LH28F800SU_WORD_PROGRAM_TYP_US" value="0x8" grade="established"/>
+</genxml>

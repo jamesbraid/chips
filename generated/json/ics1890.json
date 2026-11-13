@@ -1,0 +1,160 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/ics1890/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "ics1890",
+   "kind": "register",
+   "name": "phy_id1",
+   "offset": 2,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 1,
+   "space": "mii",
+   "reset": 21,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PHY identifier register (register 2), PDF p. 23 (printed p. 23)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "field",
+   "name": "phy_id1.oui_low",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 23 (printed p. 23)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "register",
+   "name": "phy_id2",
+   "offset": 3,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 1,
+   "space": "mii",
+   "reset": 62499,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PHY identifier register (register 3), PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "field",
+   "name": "phy_id2.oui_high",
+   "hi": 15,
+   "lo": 10,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "field",
+   "name": "phy_id2.model",
+   "hi": 9,
+   "lo": 4,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "enum_value",
+   "name": "phy_id2.model.ics1889",
+   "value": 1,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "enum_value",
+   "name": "phy_id2.model.ics1890",
+   "value": 2,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "field",
+   "name": "phy_id2.revision",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "enum_value",
+   "name": "phy_id2.revision.internal",
+   "value": 0,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "enum_value",
+   "name": "phy_id2.revision.alpha",
+   "value": 1,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "enum_value",
+   "name": "phy_id2.revision.general",
+   "value": 2,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "enum_value",
+   "name": "phy_id2.revision.j_or_later",
+   "value": 3,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 24 (printed p. 24)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "register",
+   "name": "ext_ctrl",
+   "offset": 16,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 1,
+   "space": "mii",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, extended control register (register 16), PDF p. 29 (printed p. 29)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "field",
+   "name": "ext_ctrl.command_override",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 29 (printed p. 29)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "field",
+   "name": "ext_ctrl.phy_address",
+   "hi": 10,
+   "lo": 6,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 29 (printed p. 29)"
+  },
+  {
+   "unit": "ics1890",
+   "kind": "field",
+   "name": "ext_ctrl.reserved_ics_4",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "ICS1890 revision G datasheet, PDF p. 29 (printed p. 29), reserved bits note"
+  }
+ ]
+}

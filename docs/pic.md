@@ -1,6 +1,6 @@
 # PIC: facts outside the register census
 
-The PIC is the PCI-X bridge on the IP53 family: one chip with two PCI-X heads, each with its own register block and bus. Register offsets, widths and access come from the generated contract in [defs/pic.toml](../defs/pic.toml) and the bit constants in [defs/pic_extra.toml](../defs/pic_extra.toml). The family and widget identity are in [bridge-family.md](bridge-family.md). The Tezro widget map is in [questions/tezro-widget-11.md](questions/tezro-widget-11.md), and the IO9 interrupt pins are in [questions/ip35-io9-pci-wiring.md](questions/ip35-io9-pci-wiring.md). This page holds the rest.
+The PIC is the PCI-X bridge on the IP53 family: one chip with two PCI-X heads, each with its own register block and bus. Register offsets, widths and access come from the generated contract in [devices/pic/registers.toml](../devices/pic/registers.toml) and the bit constants in [devices/pic/registers-extra.toml](../devices/pic/registers-extra.toml). The family and widget identity are in [bridge-family.md](bridge-family.md). The Tezro widget map is in [questions/tezro-widget-11.md](questions/tezro-widget-11.md), and the IO9 interrupt pins are in [questions/ip35-io9-pci-wiring.md](questions/ip35-io9-pci-wiring.md). This page holds the rest.
 
 Grades: **established** (a cited manual, a published register header or a captured value), **inferred** (a reading of firmware or driver code, or a sibling part), **unknown** (with the test that would settle it). Firmware reads are static readings of shipped images. Driver code shows what software expects, not what the chip does.
 
@@ -50,7 +50,7 @@ Inferred from the shipped PROM image, for the XBridge and both PIC heads:
 
 The PROM repeats this for number 0 and for numbers 7 to 19. Between levels it writes only bit 3 to the clear register's low word, and it never writes bit 24 to that register.
 
-The public IA64 PIC header marks slot `0x78` read-only. The OpenBSD driver names bit 24 as the invalid-address interrupt, recorded for the Bridge family as `INT_STATUS_INVALID_ADDRESS` in [defs/bridge_extra.toml](../defs/bridge_extra.toml).
+The public IA64 PIC header marks slot `0x78` read-only. The OpenBSD driver names bit 24 as the invalid-address interrupt, recorded for the Bridge family as `INT_STATUS_INVALID_ADDRESS` in [devices/bridge/registers-extra.toml](../devices/bridge/registers-extra.toml).
 
 Established, as printed output: the verbose heavy-diagnostic capture of a real four-processor Tezro, PROM 6.210, shows no status-bit failure message and no interrupt-delivery failure message for either PIC. The capture shows the checks passed. It does not show register values.
 

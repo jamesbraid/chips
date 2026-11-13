@@ -4,7 +4,7 @@ The Origin 300 NUMAlink module is the router enclosure that joins Origin 300 bas
 PCI expansion modules over NUMAlink 3. This page records what the published Origin 300 guides
 say about its population, its power and its port use, and what a public inventory says about its
 router board. It is a product and topology reference, not a register contract. No register facts
-were added, so `defs/` was not changed.
+were added, so the register maps were not changed.
 
 Each fact carries one of three labels, as in the rest of this repository. **Established** means a
 published manual or a public inventory states it, with the citation. **Inferred** means reasoned

@@ -3,9 +3,9 @@
 The Hub network interface is the port onto CrayLink, the fabric that joins nodes. Its registers sit
 in the Hub register space from `0x600000` to `0x638180`: the port parameters and port error registers
 at `0x608000`, and the routing tables at `0x638000`. The register list, the census reach and the
-reset-value status are in [gen/docs/hub.md](../gen/docs/hub.md). The field layouts added here are in
-[gen/docs/hub_ni_extra.md](../gen/docs/hub_ni_extra.md), built from
-[defs/hub_ni_extra.toml](../defs/hub_ni_extra.toml).
+reset-value status are in [devices/hub/registers.md](../devices/hub/registers.md). The field layouts added here are in
+[devices/hub_ni/registers-extra.md](../devices/hub_ni/registers-extra.md), built from
+[devices/hub_ni/registers-extra.toml](../devices/hub_ni/registers-extra.toml).
 
 ## Added from the public header
 

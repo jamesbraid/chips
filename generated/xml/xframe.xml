@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/xframe/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="xframe" prefix="XFRAME" title="Neterion Xframe 10-Gigabit Ethernet controller (SGI 10-Gigabit Ethernet card), the offsets, bits and layouts the held sources establish" from="Linux s2io driver">
+  <doc>The Neterion (formerly S2io) Xframe 10-gigabit Ethernet controller on the SGI 10-Gigabit Ethernet card. Grades say how each item was derived: established means the IRIX xg driver object states it on disassembly, or the card manual gives it; inferred means a software expectation taken from a public Linux or OpenBSD driver, from the IRIX driver's behaviour, or from a card manual value the manual does not put in a register table; unknown means no held source settles the value. The offsets here are the register names the public drivers use, so they are software expectations of the card, not measured silicon behaviour. Reset values are not held anywhere in these sources, so each register's reset is unknown. The prose page holds the interrupt chain, link state, receive path and open questions.</doc>
+  <constant name="ADAPTER_STATUS_RMAC_LOCAL_FAULT" value="0x100000000000000" grade="inferred" from="OpenBSD xge driver (RMAC_LOCAL_FAULT); Linux s2io driver (s2BIT(7))"/>
+  <constant name="ADAPTER_STATUS_RMAC_REMOTE_FAULT" value="0x200000000000000" grade="inferred" from="OpenBSD xge driver (RMAC_REMOTE_FAULT); Linux s2io driver (s2BIT(6))"/>
+  <constant name="DESCRIPTOR_PAGE_BYTES" value="0x1000" grade="inferred" from="Linux s2io driver (descriptor pages)"/>
+  <constant name="DMA_CHANNELS" value="0x10" grade="inferred" from="SGI 10-Gigabit Ethernet card manual, rev 003 (document number not recorded in the held source)"/>
+  <constant name="GENERAL_INT_MASK_ENABLE" value="0x0" grade="inferred" from="Linux s2io driver (general interrupt mask enable value)"/>
+  <constant name="MAC_RMAC_ERR_REG_OFFSET" value="0x2028" grade="inferred" from="OpenBSD xge driver (MAC error register and its acknowledgement)"/>
+  <constant name="MAC_RMAC_LINK_STATE_CHANGE" value="0x100000000" grade="inferred" from="OpenBSD xge driver (MAC error register and its acknowledgement)"/>
+  <constant name="PIC_INT_MASK_OFFSET" value="0x808" grade="inferred" from="Linux s2io driver; IRIX xg driver object (disassembly)"/>
+  <constant name="PIC_INT_TX" value="0x8000000000000000" grade="inferred" from="Linux s2io driver (PIC_INT_TX)"/>
+  <constant name="RING_MODE_1" value="0x0" grade="inferred" from="Linux s2io driver (ring mode values)"/>
+  <constant name="RING_MODE_3" value="0x1" grade="inferred" from="Linux s2io driver (ring mode values)"/>
+  <constant name="RING_MODE_5" value="0x2" grade="inferred" from="Linux s2io driver (ring mode values)"/>
+  <constant name="RXD_FIVE_BUFFER_BYTES" value="0x40" grade="inferred" from="Linux s2io driver (receive descriptor layout)"/>
+  <constant name="RXD_FIVE_BUFFER_CONTROL_WORDS" value="0x3" grade="inferred" from="Linux s2io driver (receive descriptor layout)"/>
+  <constant name="RXD_FIVE_BUFFER_POINTERS" value="0x5" grade="inferred" from="Linux s2io driver (receive descriptor layout)"/>
+  <constant name="SCHEDULED_INT_CTRL_OFFSET" value="0x918" grade="inferred" from="Linux s2io driver (scheduled_int_ctrl); IRIX xg driver object (disassembly)"/>
+  <constant name="SCHED_INT_CTRL_TIMER_EN" value="0x8000000000000000" grade="inferred" from="Linux s2io driver (SCHED_INT_CTRL_TIMER_EN)"/>
+  <constant name="SWAPPER_CTRL_HIGH_OFFSET" value="0x90c" grade="established" from="IRIX xg driver object (disassembly)"/>
+  <constant name="SWAPPER_CTRL_HIGH_VALUE" value="0xffffeaff" grade="established" from="IRIX xg driver object (disassembly)"/>
+  <constant name="SWAPPER_CTRL_LOW_OFFSET" value="0x908" grade="established" from="IRIX xg driver object (disassembly)"/>
+  <constant name="SWAPPER_CTRL_LOW_VALUE" value="0xabffbfff" grade="established" from="IRIX xg driver object (disassembly)"/>
+  <constant name="TXD_WORDS" value="0x4" grade="inferred" from="Linux s2io driver (transmit descriptor layout)"/>
+  <constant name="TXPIC_INT_MASK_OFFSET" value="0x818" grade="inferred" from="Linux s2io driver; IRIX xg driver object (disassembly)"/>
+  <constant name="TXPIC_INT_REG_OFFSET" value="0x810" grade="inferred" from="Linux s2io driver; OpenBSD xge driver; IRIX xg driver object (disassembly)"/>
+  <constant name="WATCHDOG_CHECK_SECONDS" value="0x1" grade="inferred" from="IRIX xg driver object (disassembly)"/>
+  <constant name="WATCHDOG_RESET_COUNT" value="0xf" grade="inferred" from="IRIX xg driver object (disassembly)"/>
+</genxml>

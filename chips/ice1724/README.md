@@ -172,7 +172,7 @@ call and never writes the interrupt mask or status registers, whose reset state 
 Source: IC Ensemble, *ICE1724 PCI Multi-Channel Audio Controller (Envy24HT)*, preliminary, running footer "Rev. 0.91, 11/05/01"
 (one page reads "Rev. 0.9"), 68 pages, marked confidential. The copy is a third-party one from the ALSA project's manual archive.
 Page numbers below are the printed ones ("datasheet p."). The register layout, access types and reset values are in
-`defs/ice1724.toml`, which generates [gen/docs/ice1724.md](../../gen/docs/ice1724.md). This section holds the facts that do not fit a
+`devices/ice1724/registers.toml`, which generates [devices/ice1724/registers.md](../../devices/ice1724/registers.md). This section holds the facts that do not fit a
 register table. Grades: established means the datasheet states it; inferred means a reading the text does not state, with the reason given.
 
 The VIA VT1720 datasheet (Envy24PT, rev. 1.0, 2004) is a sibling part. It is named below only where it is noted as a sibling statement
@@ -314,6 +314,6 @@ Each is something a reader must settle. The working reading is the one the rest 
 
 ## Questions
 
-Register layout, access types and reset values come from the vendor datasheet (see `defs/ice1724.toml`). Still unknown: the
+Register layout, access types and reset values come from the vendor datasheet (see `devices/ice1724/registers.toml`). Still unknown: the
 read side effects the datasheet leaves out, the soft-reset effect on this chip, the MPU-401 command bits, the converter
 rate-code divider for each rate, and the DM8's own EEPROM image and subsystem IDs. See [docs/open-questions.md](../../docs/open-questions.md).

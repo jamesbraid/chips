@@ -39,17 +39,19 @@ report agreement or disagreement, never to supply a fact.
 - `chips/<chip>/README.md`: one page per chip. Register entries with labels. Chips with no entry yet say so.
 - `chips/<chip>/census/`: machine-made census tables (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`).
   Never edit by hand; fix the tool or the config and rerun.
-- `defs/`: the source of hardware facts, in TOML (format and tools: `retools/tools/defs/README.md`). The census units
-  (`defs/<chip>.toml`, `defs/bridge.xbridge.toml`) are written by `retools/tools/chips/gen_headers.py` from the census
-  tables: never edit them, fix the census or its config and rerun. The hand-written units (`*_extra`, `l1_requests`,
-  `xio_fc`, `ice1724`) are edited by hand and each names its source in `from`. Give every item a grade.
-- `gen/`: generated from `defs/` by `retools/tools/defs/defs-gen`, never edited by hand (CI fails on a stale tree).
-  `gen/docs/` holds the reference page for each unit, the published view of the facts. `include/*.h` are forwarding
-  headers that keep the old macro names; they are generated too. After any `defs/` change run `defs-gen`, then
-  `defs-check --build`.
+- `devices/<unit>/registers.toml` and `formats/<name>/format.toml`: the source of hardware facts, in TOML (format and
+  tools: `retools/tools/defs/README.md`). The census units (`devices/<chip>/registers.toml`,
+  `devices/bridge/registers.xbridge.toml`) are written by `retools/tools/chips/gen_headers.py` from the census
+  tables: never edit them, fix the census or its config and rerun. The hand-written units (`registers-extra.toml`,
+  `l1_requests`, `xio_fc`, `ice1724`) are edited by hand and each names its source in `from`. Give every item a grade.
+  `tools/config/defs-check.toml` holds the check settings.
+- `generated/`: generated from the register maps by `retools/tools/defs/defs-gen`, never edited by hand (CI fails on a
+  stale tree). `devices/<unit>/registers.md` is the reference page for each unit, the published view of the facts.
+  `include/*.h` are forwarding headers that keep the old macro names; they are generated too. After any register map
+  change run `defs-gen`, then `defs-check --build`.
 - `docs/inventory/` and `docs/coverage.md`: written by `retools/tools/inventory.py`. Never edit by hand.
-- `tools/`: the census scanner and its configs (one per chip, marked spec-backed or no-spec); `scripts/`: the
-  inventory, disassembly helpers and the unicorn run harness (`mips_shim.py`).
+- `tools/`: the census configs (`tools/configs/`, one per chip, marked spec-backed or no-spec) and the bootstrap
+  stub; `tools/config/`: the inventory configuration, the pinned manifests and the allow-lists the checks read.
 - Commit small. Subjects are lowercase, component-prefixed imperatives (`docs: ...`, `scripts: ...`,
   `tools: ...`); the body says why. No trailers of any kind.
 

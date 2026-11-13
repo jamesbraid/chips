@@ -1,6 +1,6 @@
 # R10000 family secondary-cache error detection and delivery
 
-This page covers how the R10000 detects errors in its secondary cache and what it does when one is found: the check matrix for the secondary data array, how a syndrome is classified, the correction and delivery rules, and the CP0 CacheErr fields that describe the error. The constants for the CacheErr fields are in [defs/r10000_secondary_cache_ecc.toml](../defs/r10000_secondary_cache_ecc.toml), generated to [gen/docs/r10000_secondary_cache_ecc.md](../gen/docs/r10000_secondary_cache_ecc.md). Nothing here was read from silicon or from a running machine.
+This page covers how the R10000 detects errors in its secondary cache and what it does when one is found: the check matrix for the secondary data array, how a syndrome is classified, the correction and delivery rules, and the CP0 CacheErr fields that describe the error. The constants for the CacheErr fields are in [devices/r10000_secondary_cache_ecc/registers.toml](../devices/r10000_secondary_cache_ecc/registers.toml), generated to [devices/r10000_secondary_cache_ecc/registers.md](../devices/r10000_secondary_cache_ecc/registers.md). Nothing here was read from silicon or from a running machine.
 
 The O2 cache page, [docs/o2-cpu-cache.md](o2-cpu-cache.md), already covers which operations write check bits, the SCCorEn read rule, and the Status.DE suppression. This page does not repeat those rules.
 
@@ -66,7 +66,7 @@ The tag array has seven check bits. Its matrix is on printed page 179 and is not
 - Bits 25:24 are the TA field. It identifies a secondary tag error. Established (printed pp. 274–276). The value encoding of TA is not in the source.
 - Bits 22:6 are the secondary block index, SIdx. Its source is PA[22:6] for a 64-byte secondary block or PA[22:7] for a 128-byte block. Established (printed pp. 274–276). The block size of the fitted secondary cache must be known before a test can assert an index value.
 
-The constants for these fields are in [defs/r10000_secondary_cache_ecc.toml](../defs/r10000_secondary_cache_ecc.toml).
+The constants for these fields are in [devices/r10000_secondary_cache_ecc/registers.toml](../devices/r10000_secondary_cache_ecc/registers.toml).
 
 ## Unknown, and what would settle it
 

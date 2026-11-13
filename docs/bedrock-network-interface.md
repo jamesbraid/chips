@@ -2,8 +2,8 @@
 
 The network interface is the Bedrock's NUMAlink port. Its registers sit in the node's register space from `0x680000`
 to `0x682000`: 13 control, status and error registers, one 128-entry local routing table and one global routing entry,
-142 registers in all. Register layouts, with a grade on each field, are in [defs/bedrock_ni.toml](../defs/bedrock_ni.toml);
-the generated reference is [gen/docs/bedrock_ni.md](../gen/docs/bedrock_ni.md). The name map for the port
+142 registers in all. Register layouts, with a grade on each field, are in [devices/bedrock_ni/registers.toml](../devices/bedrock_ni/registers.toml);
+the generated reference is [devices/bedrock_ni/registers.md](../devices/bedrock_ni/registers.md). The name map for the port
 (`LINK (NI)` on the C-brick) is in [interconnect-naming.md](interconnect-naming.md). The neighbouring units are the
 [local block](bedrock-local-block.md), which holds the node's identity and the vector engine, and the
 [I/O interface](bedrock-io-interface.md).

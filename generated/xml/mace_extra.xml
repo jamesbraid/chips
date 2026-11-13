@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/mace/registers-extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="mace_extra" prefix="MACE" title="MACE register bits the census does not name">
+  <constant name="ISA_MISC_FLASH_WRITE_ENABLE" value="0x1" grade="established"/>
+  <constant name="ISA_MISC_NIC_DEASSERT" value="0x4" grade="established"/>
+  <constant name="ISA_MISC_NIC_SAMPLE" value="0x8" grade="established"/>
+</genxml>

@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/isp1040/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="isp1040" prefix="ISP1040" title="QLogic ISP1040 family SCSI host adapter (PCI 1077:1020), register and mailbox contract">
+  <doc>The single-channel QLogic SCSI host adapter on the BaseIO and BaseIO-G boards (PCI 1077:1020), as the public drivers use it. Grades say how each item was derived: established means the public driver file or the published standard states it, and inferred means agreeing driver code, a driver's own default, or a reading of the drivers' use of a value. No QLogic programming manual for this part is held here, so the register contract rests on driver agreement, and the reset state of every register is unknown unless a row says otherwise. The bus-reset and selection timing values are the driver's requests, not measured chip behaviour.</doc>
+  <struct name="ID_L" size="2" grade="established" from="Linux qla1280 driver header device register layout" register="yes" offset="0x0" access="r" reset="unknown">
+    <doc>Low half of the identity word. The reset value is not stated by any source.</doc>
+  </struct>
+  <struct name="ID_H" size="2" grade="established" from="Linux qla1280 driver header device register layout" register="yes" offset="0x2" access="r" reset="unknown">
+    <doc>High half of the identity word. The reset value is not stated by any source.</doc>
+  </struct>
+  <struct name="CFG_0" size="2" grade="established" from="Linux qla1280 driver header device register layout; qla1280 driver hardware revision test" register="yes" offset="0x4" access="r" reset="unknown">
+    <doc>Configuration 0. Its low four bits hold the hardware revision. Linux compares that revision with the 1040A value only, to decide whether to set the FIFO threshold. Linux does not use it to name the part.</doc>
+    <field name="hw_revision" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="CFG_1" size="2" grade="established" from="Linux qla1280 driver header device register layout" register="yes" offset="0x6" access="rw" reset="unknown">
+    <doc>Configuration 1: FIFO threshold and bus burst enable, written by the drivers at start-up.</doc>
+  </struct>
+  <struct name="ICTRL" size="2" grade="established" from="Linux qla1280 driver header device register layout and its use in qla1280 driver" register="yes" offset="0x8" access="rw" reset="unknown">
+    <doc>Bus interface control. It holds the soft reset bit, the interrupt enables and the flash BIOS controls.</doc>
+    <field name="flash_upper" start="9" size="1" type="uint" grade="inferred"/>
+    <field name="flash_enable" start="8" size="1" type="uint" grade="inferred"/>
+    <field name="risc_int_enable" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="int_enable" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="soft_reset" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="ISTATUS" size="2" grade="established" from="Linux qla1280 driver header device register layout" register="yes" offset="0xa" access="r" reset="unknown">
+    <doc>Interface status. Its bit meanings are not described here; the reset value is unknown.</doc>
+  </struct>
+  <struct name="SEMAPHORE" size="2" grade="established" from="Linux qla1280 driver header device register layout" register="yes" offset="0xc" access="rw" reset="unknown">
+    <doc>Semaphore register. Linux names it; its use is not described here.</doc>
+  </struct>
+  <struct name="NVRAM" size="2" grade="established" from="Linux qla1280 driver header device register layout" register="yes" offset="0xe" access="rw" reset="unknown">
+    <doc>Serial NVRAM interface register. Linux names its clock, select, data-out and data-in bits.</doc>
+  </struct>
+  <struct name="FLASH_DATA" size="2" grade="inferred" from="Linux qla1280 driver header and OpenBSD qlw driver header, both naming the flash data word" register="yes" offset="0x10" access="rw" reset="unknown">
+    <doc>Flash BIOS data. Linux and OpenBSD both name it for this part. The NetBSD driver assigns the same offset to request-queue pointers for a later chip generation, so the naming rests on two drivers and is not confirmed by a manual.</doc>
+  </struct>
+  <struct name="FLASH_ADDRESS" size="2" grade="inferred" from="Linux qla1280 driver header and OpenBSD qlw driver header, both naming the flash address word" register="yes" offset="0x12" access="rw" reset="unknown">
+    <doc>Flash BIOS address. The same naming and the same two-driver footing as the flash data word.</doc>
+  </struct>
+  <struct name="MAILBOX" size="2" grade="established" from="Linux qla1280 driver header device register layout (mailbox 0 at 0x70); OpenBSD QLW_MBOX_BASE_PCI" register="yes" offset="0x70" access="rw" count="8" stride="2" reset="unknown">
+    <doc>Eight 16-bit mailbox registers, mailboxes 0 to 7 at 0x70 to 0x7e. Mailbox 0 carries the opcode of each command. The other mailboxes carry its operands and results, and their meaning is given per opcode below.</doc>
+  </struct>
+  <constant name="ASYNC_BUS_RESET" value="0x8001" grade="established" from="Linux qla1280 driver header MBA_BUS_RESET and qla1280 driver; NetBSD isp driver header ASYNC_BUS_RESET"/>
+  <constant name="BUSES" value="0x1" grade="inferred" from="OpenBSD qlw PCI attach sets one bus for each ISP1040 revision"/>
+  <constant name="DRIVER_SELECTION_TIMEOUT_DEFAULT" value="0xfa" grade="inferred" from="Linux qla1280 driver nvram defaults; NetBSD isp driver defaults; OpenBSD qlw driver defaults"/>
+  <constant name="OP_BUS_RESET" value="0x18" grade="established" from="Linux qla1280 driver header MBC_BUS_RESET; NetBSD isp driver header MBOX_BUS_RESET; OpenBSD qlw driver header QLW_MBOX_BUS_RESET"/>
+  <constant name="OP_DUMP_RAM_64" value="0xa" grade="inferred" from="Linux qla1280 driver header MBC_DUMP_RAM_A64_ROM; qla1280 driver selects it for 64-bit DMA builds"/>
+  <constant name="OP_GET_TARGET_PARAMS" value="0x28" grade="established" from="Linux qla1280 driver header MBC_GET_TARGET_PARAMETERS and qla1280 driver; NetBSD mailbox table mask 0x03 in and 0x4f out; OpenBSD qlw driver"/>
+  <constant name="OP_LOAD_RAM_64" value="0x9" grade="inferred" from="Linux qla1280 driver header MBC_LOAD_RAM_A64_ROM; qla1280 driver selects it for 64-bit DMA builds"/>
+  <constant name="OP_SET_RESET_DELAY_PARAMS" value="0x3a" grade="established" from="Linux qla1280 driver header MBC_SET_RESET_DELAY_PARAMETERS; NetBSD isp driver header MBOX_SET_RESET_DELAY_PARAMS; NetBSD mailbox table mask 0x07"/>
+  <constant name="OP_SET_RETRY_COUNT" value="0x32" grade="established" from="Linux qla1280 driver header MBC_SET_RETRY_COUNT and qla1280 driver; NetBSD mailbox table mask 0xc7"/>
+  <constant name="OP_SET_SELECTION_TIMEOUT" value="0x31" grade="established" from="Linux qla1280 driver header MBC_SET_SELECTION_TIMEOUT and qla1280 driver; NetBSD mailbox table mask 0x07; OpenBSD qlw driver"/>
+  <constant name="OP_SET_TARGET_PARAMS" value="0x38" grade="established" from="Linux qla1280 driver header MBC_SET_TARGET_PARAMETERS; NetBSD isp driver header MBOX_SET_TARGET_PARAMS; NetBSD mailbox table mask 0x4f"/>
+  <constant name="PCI_REV_1040" value="0x2" grade="inferred" from="OpenBSD qlw PCI attach revision table"/>
+  <constant name="PCI_REV_1040A" value="0x3" grade="inferred" from="OpenBSD qlw PCI attach revision table"/>
+  <constant name="PCI_REV_1040B" value="0x4" grade="inferred" from="OpenBSD qlw PCI attach revision table"/>
+  <constant name="PCI_REV_1040C" value="0x5" grade="inferred" from="OpenBSD qlw PCI attach revision table, which also maps every higher value to the 1040C"/>
+  <constant name="SCSI2_SELECTION_ABORT_US" value="0xc8" grade="established"/>
+  <constant name="SCSI2_SELECTION_TIMEOUT_MS" value="0xfa" grade="established"/>
+  <constant name="STATE_GOT_BUS" value="0x100" grade="established" from="Linux qla1280 driver header SF_GOT_BUS; NetBSD isp driver header RQSF_GOT_BUS; OpenBSD qlw driver header QLW_STATE_GOT_BUS"/>
+  <constant name="STATE_GOT_SENSE" value="0x2000" grade="inferred" from="Linux qla1280 driver header SF_GOT_SENSE; NetBSD isp driver header RQSF_GOT_SENSE"/>
+  <constant name="STATE_GOT_TARGET" value="0x200" grade="established" from="Linux qla1280 driver header SF_GOT_TARGET and qla1280 driver; NetBSD isp driver header RQSF_GOT_TARGET and isp driver; OpenBSD qlw driver header QLW_STATE_GOT_TARGET"/>
+  <constant name="STATUS_COMP_INCOMPLETE" value="0x1" grade="established" from="Linux qla1280 driver header CS_INCOMPLETE; NetBSD isp driver header RQCS_INCOMPLETE; OpenBSD qlw driver header QLW_IOCB_STATUS_INCOMPLETE"/>
+  <constant name="STATUS_COMP_RESET" value="0x4" grade="established" from="Linux qla1280 driver header CS_RESET; NetBSD isp driver header RQCS_RESET_OCCURRED; OpenBSD qlw driver header QLW_IOCB_STATUS_RESET"/>
+  <constant name="STATUS_ENTRY_COMP_STATUS_OFFSET" value="0xa" grade="established" from="Linux qla1280 driver header struct response; OpenBSD qlw driver header struct qlw_iocb_status"/>
+  <constant name="STATUS_ENTRY_SENSE_LENGTH_OFFSET" value="0x12" grade="established" from="Linux qla1280 driver header struct response (req_sense_length); OpenBSD qlw driver header struct qlw_iocb_status (sense_len)"/>
+  <constant name="STATUS_ENTRY_STATE_FLAGS_OFFSET" value="0xc" grade="established" from="Linux qla1280 driver header struct response; OpenBSD qlw driver header struct qlw_iocb_status"/>
+  <constant name="STATUS_ENTRY_STATUS_FLAGS_OFFSET" value="0xe" grade="established" from="Linux qla1280 driver header struct response; OpenBSD qlw driver header struct qlw_iocb_status"/>
+  <constant name="STATUS_FLAG_SELECTION_TIMEOUT" value="0x40" grade="inferred" from="NetBSD isp driver header RQSTF_TIMEOUT, read by the NetBSD driver for a transport error only"/>
+</genxml>

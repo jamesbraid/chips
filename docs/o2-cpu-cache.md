@@ -3,7 +3,7 @@
 This page covers the R10000 processor's primary and secondary caches as the O2 uses them, and what the
 CRIME 1.5 processor interface tells us about I/O visibility of cached data. The CRIME register map is in the
 [CRIME transcription](sources/specs/crime-1.5-specification-rev0.3.registers.md). None of the cache facts below
-is a memory-mapped register, so there is no `defs/` unit for them.
+is a memory-mapped register, so there is no register map for them.
 
 Sources:
 

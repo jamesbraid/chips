@@ -3,7 +3,7 @@
 The IX-brick is a 4U I/O enclosure that holds three PIC chips, two Xtown2 XIO
 ports, six PCI/PCI-X buses and a base I/O card (IO9). The PIC chip, its registers
 and the Xtown2 port speeds are covered in [bridge-family.md](bridge-family.md),
-[crosstalk-link.md](crosstalk-link.md) and `defs/pic.toml`. This page covers what
+[crosstalk-link.md](crosstalk-link.md) and `devices/pic/registers.toml`. This page covers what
 the enclosure itself carries: slots, the IO9 card, power and management, the USB
 card, physical size and the PIC wiring as drawn. It holds no register facts, so
 there is no generated contract for it.

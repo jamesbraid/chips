@@ -2,8 +2,8 @@
 
 The router is the six-port CrayLink switch that joins the Hubs of an Origin 2000 or
 Onyx2 module and, through cables, other modules. Its register offsets and widths are
-in [gen/docs/router_origin2000.md](../gen/docs/router_origin2000.md), generated from
-[defs/router_origin2000.toml](../defs/router_origin2000.toml). Field layouts and reset
+in [devices/router_origin2000/registers.md](../devices/router_origin2000/registers.md), generated from
+[devices/router_origin2000/registers.toml](../devices/router_origin2000/registers.toml). Field layouts and reset
 values are not in any public source, so they are not here either. The link layer is
 in [crosstalk-link.md](crosstalk-link.md), which covers the 128-bit micropacket and its
 LLP rows for the router network.

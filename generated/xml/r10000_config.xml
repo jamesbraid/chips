@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/r10000_config/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="r10000_config" prefix="R10KCFG" title="R10000 family CP0 Config register field positions and hardwired primary-cache codes">
+  <doc>Constants for the CP0 Config register as the NEC VR10000 and VR12000 user's manual lays it out: the field positions for the boot-loaded clock, endian, reset-mode and secondary-cache fields, the R12000 delayed-speculative-dirty bit, the hardwired primary-cache size codes, and the bits that a reset loads from the mode word. The secondary-cache size and line fields are in the r10000_identity unit. This unit holds constants only; the reset and write rules, and what is unknown for the R14000, are in docs/r14000.md. Grades: established means the processor manual states it for the R10000 and R12000 columns it names; the R14000 is not checked against a processor manual, so its use there is inferred in the page.</doc>
+  <constant name="R10KCFG_BE_BIT" value="0xf" grade="established"/>
+  <constant name="R10KCFG_BE_MASK" value="0x8000" grade="established"/>
+  <constant name="R10KCFG_CACHE_32K_CODE" value="0x3" grade="established"/>
+  <constant name="R10KCFG_DC_MASK" value="0x1c000000" grade="established"/>
+  <constant name="R10KCFG_DC_SHIFT" value="0x1a" grade="established"/>
+  <constant name="R10KCFG_DSD_BIT" value="0x18" grade="established"/>
+  <constant name="R10KCFG_DSD_MASK" value="0x1000000" grade="established"/>
+  <constant name="R10KCFG_EC_MASK" value="0x1e00" grade="established"/>
+  <constant name="R10KCFG_EC_SHIFT" value="0x9" grade="established"/>
+  <constant name="R10KCFG_IC_MASK" value="0xe0000000" grade="established"/>
+  <constant name="R10KCFG_IC_SHIFT" value="0x1d" grade="established"/>
+  <constant name="R10KCFG_MODE_BITS_MASK" value="0x1ffffff" grade="established"/>
+  <constant name="R10KCFG_PM_MASK" value="0x180" grade="established"/>
+  <constant name="R10KCFG_PM_SHIFT" value="0x7" grade="established"/>
+  <constant name="R10KCFG_SC_MASK" value="0x380000" grade="established"/>
+  <constant name="R10KCFG_SC_SHIFT" value="0x13" grade="established"/>
+  <constant name="R10KCFG_SK_BIT" value="0xe" grade="established"/>
+  <constant name="R10KCFG_SK_MASK" value="0x4000" grade="established"/>
+</genxml>

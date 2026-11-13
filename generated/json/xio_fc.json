@@ -1,0 +1,767 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/xio_fc/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "BANK_CODE_STEP",
+   "value": 17,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "CLOCK_STATUS_DIV_1",
+   "value": 190,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "CLOCK_STATUS_DIV_2_A",
+   "value": 46,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "CLOCK_STATUS_DIV_2_B",
+   "value": 254,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "CLOCK_STATUS_DIV_4",
+   "value": 110,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "CLOCK_STATUS_MASK",
+   "value": 252,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "CLOCK_STATUS_OR",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "DONE_HANDLE",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "DONE_PASS",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "DONE_STATUS",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "HOST_CTRL_MASTER_IRQ_EN",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "HOST_CTRL_PAUSE",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "HOST_CTRL_PAUSE_AT_TOP",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "HOST_CTRL_RESET_WRITE",
+   "value": 67,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "INT_BREAKPOINT",
+   "value": 512,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "INT_HARDWARE_ERROR",
+   "value": 16384,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "INT_HOST_COMPLETION",
+   "value": 1024,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "INT_LOOP_ATTENTION",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "INT_PCI_ERROR",
+   "value": 32768,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "INT_SEQ_COMPLETION",
+   "value": 4096,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "INT_SEQ_READY_FOR_LIP",
+   "value": 256,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "INT_SOFTWARE_ERROR",
+   "value": 8192,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "LINK_CTRL_LINK_ENABLE",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "LINK_CTRL_LINK_RESET",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "LINK_CTRL_LOSS_OF_SIGNAL",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "LINK_CTRL_LOSS_OF_SYNC",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_CLASS1_PARAMS",
+   "value": 36,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_CLASS2_PARAMS",
+   "value": 52,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_CLASS3_PARAMS",
+   "value": 68,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_CODE",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_COMMON_PARAMS",
+   "value": 4,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_LENGTH",
+   "value": 116,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_NODE_NAME",
+   "value": 28,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_PORT_NAME",
+   "value": 20,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_RESERVED",
+   "value": 84,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_ACC_VENDOR_VERSION",
+   "value": 100,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_REJECT_EXPLANATION",
+   "value": 6,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PLOGI_REJECT_REASON",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PRLI_ACC_CODE",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PRLI_ACC_FLAGS",
+   "value": 6,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PRLI_ACC_LENGTH",
+   "value": 20,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PRLI_ACC_ORIGINATOR_ASSOC",
+   "value": 8,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PRLI_ACC_PAGE_LENGTH",
+   "value": 1,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PRLI_ACC_PAYLOAD_LENGTH",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PRLI_ACC_RESPONDER_ASSOC",
+   "value": 12,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PRLI_ACC_SERVICE_BYTE",
+   "value": 19,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "PRLI_ACC_TYPE",
+   "value": 4,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "REG_BANK_SELECT",
+   "value": 44,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "REG_CLOCK_STATUS",
+   "value": 99,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "REG_HOST_CONTROL",
+   "value": 34,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "REG_LINK_CONTROL",
+   "value": 225,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "REG_SEQ_CONTROL",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "REG_SERDES_STATUS",
+   "value": 235,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESID_SEGMENT_RESIDUAL",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESID_SG_ELEMENT_INDEX",
+   "value": 12,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESID_SG_PAGE_PTR",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESP_FCP_STATUS_FLAGS",
+   "value": 10,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESP_PAYLOAD",
+   "value": 24,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESP_RESIDUAL",
+   "value": 12,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESP_RESIDUAL_INFO",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESP_RESPONSE_LEN",
+   "value": 20,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESP_SCSI_STATUS",
+   "value": 11,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "RESP_SENSE_LEN",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "SEQ_CTRL_RAM_LOAD",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "SEQ_CTRL_RESET_PC",
+   "value": 2,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "SEQ_CTRL_RUN",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "SEQ_CTRL_START",
+   "value": 66,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "SERDES_FAULT",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "SERDES_LOCK_NOT_IN_USE",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "SERDES_MEDIA_SENSE_MASK",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_CONTROL",
+   "value": 33,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_DATA_LEN",
+   "value": 96,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_DATA_PTR",
+   "value": 76,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_DELIMITER",
+   "value": 9,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_DESC_MODE",
+   "value": 35,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_D_ID",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_FCP_CDB",
+   "value": 48,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_FCP_CNTL",
+   "value": 44,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_FCP_DL",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_FCP_LUN",
+   "value": 36,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_F_CTL0",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_F_CTL1",
+   "value": 17,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_F_CTL2",
+   "value": 14,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_HANDLE_COPY",
+   "value": 104,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_LOOP_FLAGS",
+   "value": 28,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_NEXT",
+   "value": 68,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_OX_ID",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_RESP_PTR",
+   "value": 88,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_RX_ID",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_R_CTL",
+   "value": 7,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_SEQ_CNT",
+   "value": 20,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_SEQ_ID",
+   "value": 19,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_TYPE",
+   "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_UNKNOWN_64",
+   "value": 100,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "xio_fc",
+   "kind": "constant",
+   "name": "TCB_XFER_LEN",
+   "value": 84,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

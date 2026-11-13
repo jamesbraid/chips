@@ -103,8 +103,8 @@ Conflicts and gaps:
 
 The census does not show these tables, and it cannot say whether the kernels reach them through computed indexes. Their positions come from the public header (`include/asm-ia64/sn/router.h` in the
 pinned `linux-2.5.40` submodule, pin `7570df5`), graded established as header positions, as for the other SN1
-units. The machine-readable form is [`defs/router_sn1.toml`](../../defs/router_sn1.toml), generated into
-[gen/docs/router_sn1.md](../../gen/docs/router_sn1.md).
+units. The machine-readable form is [`devices/router_sn1/registers.toml`](../../devices/router_sn1/registers.toml), generated into
+[devices/router_sn1/registers.md](../../devices/router_sn1/registers.md).
 
 - **Port block (E).** The header computes the base of link `L` (1 to 8) as `((L+1) & 0xe) << 15 | ((L+1) & 1) << 11`,
   the same expression the IP35 census inferred from the kernel.

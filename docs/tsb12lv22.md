@@ -1,6 +1,6 @@
 # TI TSB12LV22 PCI-to-IEEE 1394 link controller
 
-The TSB12LV22 is Texas Instruments' PCI-to-1394 link controller. It implements the IEEE 1394 OHCI 1.00 register interface and carries PCI identity `104c:8009`, revision `01`. On the Origin 3000 and Onyx 3000 I-brick it sits on the IO7 board's head F as PCI device 6. Its register and identity constants are in [gen/docs/tsb12lv22.md](../gen/docs/tsb12lv22.md), generated from [defs/tsb12lv22.toml](../defs/tsb12lv22.toml). Each item there carries its grade and its source.
+The TSB12LV22 is Texas Instruments' PCI-to-1394 link controller. It implements the IEEE 1394 OHCI 1.00 register interface and carries PCI identity `104c:8009`, revision `01`. On the Origin 3000 and Onyx 3000 I-brick it sits on the IO7 board's head F as PCI device 6. Its register and identity constants are in [devices/tsb12lv22/registers.md](../devices/tsb12lv22/registers.md), generated from [devices/tsb12lv22/registers.toml](../devices/tsb12lv22/registers.toml). Each item there carries its grade and its source.
 
 This page holds what the register table cannot: the product boundary, PCI configuration, reset rules, interrupt rules, what the datasheet leaves open, and what the shipped I-brick PROM and IRIX driver expect of the part.
 

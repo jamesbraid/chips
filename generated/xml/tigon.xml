@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/tigon/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="tigon" prefix="TIGON" title="Alteon Tigon PCI/Gigabit Ethernet controller (SGI IRIS Gigabit Ethernet board)">
+  <doc>Offsets are byte offsets in the chip's PCI memory window, as the manual's register tables give them. Fields are the bit positions the register descriptions name. Grades say how each item was derived: established means read in the Alteon Tigon/PCI Ethernet Controller manual, revision 1.04; inferred means a public driver's use or a reading the manual does not state. Reset values come only from the manual's reset statements. Nothing here was measured on a board. The prose and the sources the register rules rest on are in docs/tigon.md.</doc>
+  <struct name="MISC_HOST_CTL" size="4" grade="established" register="yes" offset="0x40" access="rw" reset="unknown">
+    <doc>Miscellaneous Host Control. The read-write bits sit in the low byte, so a host that writes a byte-wide No Swap value can copy that byte into every lane. The manual gives no reset value for this register.</doc>
+    <field name="gate_array_revision" start="28" size="4" type="uint" grade="established"/>
+    <field name="mask_pci_interrupt" start="6" size="1" type="uint" grade="established"/>
+    <field name="endian_word_swap" start="5" size="1" type="uint" grade="established"/>
+    <field name="endian_byte_swap" start="4" size="1" type="uint" grade="established"/>
+    <field name="hard_reset" start="3" size="1" type="uint" grade="established"/>
+    <field name="clear_interrupt" start="1" size="1" type="uint" grade="established"/>
+    <field name="interrupt_state" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCI_STATE" size="4" grade="established" register="yes" offset="0x5c" access="rw" reset="0x0">
+    <doc>PCI State. All bits are zero at reset. The Miscellaneous Host Control reset does not change this register. Bit 20 and the bits under it are the ones the host-bus rules turn on.</doc>
+    <field name="default_pci_write_command" start="28" size="4" type="uint" grade="established"/>
+    <field name="default_pci_read_command" start="24" size="4" type="uint" grade="established"/>
+    <field name="assert_all_pbe_on_writes" start="23" size="1" type="uint" grade="established"/>
+    <field name="pci_rom_retry" start="22" size="1" type="uint" grade="established"/>
+    <field name="pci_rom_desired" start="21" size="1" type="uint" grade="established"/>
+    <field name="bus_32bit" start="20" size="1" type="uint" grade="established"/>
+    <field name="pci_66mhz_bus" start="19" size="1" type="uint" grade="established"/>
+    <field name="no_word_swap_dma" start="18" size="1" type="uint" grade="established"/>
+    <field name="use_mem_read_multiple" start="17" size="1" type="uint" grade="established"/>
+    <field name="dma_write_max" start="5" size="3" type="uint" grade="established"/>
+    <field name="dma_read_max" start="2" size="3" type="uint" grade="established"/>
+    <field name="force_reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="DMA_WRITE_STATE" size="4" grade="established" register="yes" offset="0xa0" access="rw" reset="unknown">
+    <doc>DMA Write State, the state of the write channel that moves data from the card to the host. The manual gives no reset value.</doc>
+    <field name="force_32bit_pci" start="3" size="1" type="uint" grade="established"/>
+    <field name="dma_active" start="2" size="1" type="uint" grade="established"/>
+    <field name="dma_no_swap" start="1" size="1" type="uint" grade="established"/>
+    <field name="dma_reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="DMA_READ_STATE" size="4" grade="established" register="yes" offset="0xb0" access="rw" reset="unknown">
+    <doc>DMA Read State, the state of the read channel that moves data from the host to the card. The manual gives no reset value.</doc>
+    <field name="force_32bit_pci" start="3" size="1" type="uint" grade="established"/>
+    <field name="dma_active" start="2" size="1" type="uint" grade="established"/>
+    <field name="dma_no_swap" start="1" size="1" type="uint" grade="established"/>
+    <field name="dma_reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="MAILBOX_0_UPPER" size="4" grade="established" register="yes" offset="0x504" access="w" reset="unknown">
+    <doc>Upper half of mailbox 0. The mailbox area holds 32 eight-byte locations. A write to the upper half of any one raises an event to the internal processor, naming the location. Writing mailbox 0 also deasserts the PCI interrupt pin at once, so a host can clear the interrupt and pass a message in one write. The upper half of mailbox n is eight bytes after the upper half of mailbox n minus one.</doc>
+  </struct>
+</genxml>

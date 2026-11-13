@@ -1,0 +1,175 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/tsb12lv22/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="tsb12lv22" prefix="TSB12LV22" title="TI TSB12LV22 PCI-to-IEEE 1394 OHCI 1.00 link controller (I-brick IO7), the register facts the held sources establish" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)">
+  <doc>The PCI-to-1394 link controller on the Origin 3000 and Onyx 3000 I-brick IO7 board (PCI 104c:8009, IEEE 1394 OHCI 1.00 register interface). Grades say how each item was derived: established means the TI datasheet (SLLS290, July 1998) states it; inferred means a software expectation taken from shipped IRIX or PROM code, or a reading that the datasheet does not state outright; unknown means no source held here settles the value. The reset values of most registers are unknown: the datasheet leaves them unspecified or gives them only in part. Software expectations are what the shipped programs require, not measured chip behaviour, and no PHY, bus or DMA behaviour is part of this unit.</doc>
+  <struct name="VERSION" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x0" access="r" reset="0x10000">
+    <doc>OHCI version. Major version 1 is in bits 23:16 and minor version 0 in bits 7:0, so this is OHCI 1.00. Bit 24 reports whether a configuration ROM is present, sampled from ROM detection. The reset value shown is for the no-ROM case.</doc>
+    <field name="rom_present" start="24" size="1" type="uint" grade="established"/>
+    <field name="major" start="16" size="8" type="uint" grade="established"/>
+    <field name="minor" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="GUID_ROM" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x4" access="rw" reset="unknown">
+    <doc>GUID ROM access. Writing the address-reset bit resets the ROM read address, and the bit clears itself. Writing the read-start bit starts a read, and the byte read appears in the read-data field. The data is unspecified at reset and the command bits read as zero.</doc>
+    <field name="address_reset" start="31" size="1" type="uint" grade="established"/>
+    <field name="read_start" start="25" size="1" type="uint" grade="established"/>
+    <field name="read_data" start="16" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="RETRY_COUNTS" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x8" access="rw" reset="0x0">
+    <doc>Retry counts. Three read-write count fields are defined. The outbound dual-phase retry fields read as zero. The datasheet summary does not name the three count fields, so the field names here are positional.</doc>
+    <field name="dual_phase_retry" start="16" size="16" type="uint" grade="established"/>
+    <field name="count_11_8" start="8" size="4" type="uint" grade="established"/>
+    <field name="count_7_4" start="4" size="4" type="uint" grade="established"/>
+    <field name="count_3_0" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="CSR_DATA" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0xc" access="rw" reset="unknown">
+    <doc>CSR data word for serial bus register transfers. Unspecified at reset.</doc>
+  </struct>
+  <struct name="CSR_COMPARE" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x10" access="rw" reset="unknown">
+    <doc>CSR compare word. Unspecified at reset.</doc>
+  </struct>
+  <struct name="CSR_CONTROL" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x14" access="rw" reset="unknown">
+    <doc>CSR control. Writing clears the done bit, which the controller sets on completion. The resource select is unspecified at reset, and the done bit is set at reset.</doc>
+    <field name="done" start="31" size="1" type="uint" grade="established"/>
+    <field name="resource_select" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="CONFIG_ROM_HEADER" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x18" access="rw" reset="unknown">
+    <doc>Configuration ROM header. The upper 16 bits read as zero at reset. The low 16 bits hold the CRC, which is unspecified without a ROM.</doc>
+  </struct>
+  <struct name="BUS_ID" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x1c" access="r" reset="0x31333934">
+    <doc>Constant BusID. The value is the ASCII text 1394.</doc>
+  </struct>
+  <struct name="BUS_OPTIONS" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x20" access="rw" reset="unknown">
+    <doc>Bus options. Bits 31:27, 23:16, 15:12 and 7:6 are writable. Link speed reads as 2. Bit 27 resets to zero. The max_rec field survives SoftReset with its hardware default of 2048 bytes. Other bits have unspecified reset values.</doc>
+    <field name="max_rec" start="12" size="4" type="uint" grade="established"/>
+    <field name="link_speed" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="GUID_HI" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x24" access="rw" reset="0x0">
+    <doc>GUID high word. It reads as zero before a ROM load. Without a ROM each GUID register can be written once and then locks, and that lock state is separate from the register's value.</doc>
+  </struct>
+  <struct name="GUID_LO" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x28" access="rw" reset="0x0">
+    <doc>GUID low word. The write-once rule for the high word applies here too.</doc>
+  </struct>
+  <struct name="CONFIG_ROM_MAP" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x34" access="rw" reset="0x0">
+    <doc>Configuration ROM mapping address. Bits 31:10 are read-write and reset to zero.</doc>
+  </struct>
+  <struct name="POSTED_WRITE_ERROR" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x38" access="r" count="2" stride="4" reset="unknown">
+    <doc>Posted-write error address and source reporting, read and updated by the controller, at the offset and four bytes above it. The datasheet summary gives the pair as one address and source record and does not split it per word. Unspecified at reset.</doc>
+  </struct>
+  <struct name="VENDOR_SPECIFIC_ID" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x40" access="r" reset="0x0">
+    <doc>OHCI vendor-specific identifier. Read only, reads zero.</doc>
+  </struct>
+  <struct name="HC_CONTROL" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x50" access="rw" reset="unknown">
+    <doc>HCControl. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 30 and 18 are unspecified at reset and the other defined bits reset to zero.</doc>
+    <field name="data_swap" start="30" size="1" type="uint" grade="established"/>
+    <field name="program_phy_enable" start="23" size="1" type="uint" grade="established"/>
+    <field name="aphy_enhance_enable" start="22" size="1" type="uint" grade="established"/>
+    <field name="lps" start="19" size="1" type="uint" grade="established"/>
+    <field name="posted_write_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="link_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="soft_reset" start="16" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELF_ID_BUFFER" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x64" access="rw" reset="unknown">
+    <doc>Self-ID buffer pointer. The address is 2 KiB aligned, so its low 11 bits read as zero. The address is unspecified at reset.</doc>
+    <field name="address" start="11" size="21" type="uint" grade="established"/>
+  </struct>
+  <struct name="SELF_ID_COUNT" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x68" access="r" reset="unknown">
+    <doc>Self-ID count. The error and generation fields are unspecified at reset and the size field resets to zero. The controller updates the fields on bus events.</doc>
+    <field name="error" start="31" size="1" type="uint" grade="established"/>
+    <field name="generation" start="16" size="8" type="uint" grade="established"/>
+    <field name="size" start="2" size="9" type="uint" grade="established"/>
+  </struct>
+  <struct name="RECV_CHANNEL_MASK_LO" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x70" access="rw" reset="unknown">
+    <doc>Receive channel mask, channels 0 to 31. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.</doc>
+  </struct>
+  <struct name="RECV_CHANNEL_MASK_HI" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x78" access="rw" reset="unknown">
+    <doc>Receive channel mask, channels 32 to 63. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.</doc>
+  </struct>
+  <struct name="INT_EVENT" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x80" access="rw" reset="unknown">
+    <doc>Interrupt events. The set and clear addresses form a pair, the clear address four bytes above the set address. Reads of the clear register return the event bits ANDed with the mask. Implemented event bits are unspecified at reset. Bits 7 and 6 are derived summaries and are not independent latches. Bit 30 is vendor-defined and its meaning is not given. Bit 18 is undefined for OHCI 1.00 and must read zero.</doc>
+    <field name="phy_reg_received" start="19" size="1" type="uint" grade="inferred"/>
+    <field name="bus_reset" start="17" size="1" type="uint" grade="inferred"/>
+    <field name="self_id_complete" start="16" size="1" type="uint" grade="inferred"/>
+    <field name="iso_recv_summary" start="7" size="1" type="uint" grade="established"/>
+    <field name="iso_xmit_summary" start="6" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_MASK" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x88" access="rw" reset="unknown">
+    <doc>Interrupt mask. The set and clear addresses form a pair, the clear address four bytes above the set address. Reading either address of the pair returns the mask. Pending event state stays separate from the mask, and the interrupt output must be recomputed when the mask changes. Implemented mask bits are unspecified at reset.</doc>
+    <field name="master_int_enable" start="31" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ISO_XMIT_EVENT" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x90" access="rw" reset="unknown">
+    <doc>Isochronous transmit event, one bit per context. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 7:0 are defined. The low byte is unspecified at reset and the upper bits read as zero.</doc>
+    <field name="contexts" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="ISO_XMIT_MASK" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x98" access="rw" reset="unknown">
+    <doc>Isochronous transmit mask. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 7:0 are defined. The low byte is unspecified at reset and the upper bits read as zero.</doc>
+    <field name="contexts" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="ISO_RECV_EVENT" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0xa0" access="rw" reset="unknown">
+    <doc>Isochronous receive event. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 3:0 are defined, one per context. The low nibble is unspecified at reset and the upper bits read as zero. The datasheet summary does not state the context count, so four contexts is inferred from the bit count.</doc>
+    <field name="contexts" start="0" size="4" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="ISO_RECV_MASK" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0xa8" access="rw" reset="unknown">
+    <doc>Isochronous receive mask. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 3:0 are defined. The low nibble is unspecified at reset and the upper bits read as zero.</doc>
+    <field name="contexts" start="0" size="4" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="FAIRNESS_CONTROL" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0xdc" access="rw" reset="unknown">
+    <doc>Optional fairness control. The low byte is a read-only priority-request limit that resets to zero. The upper bits are unspecified at reset.</doc>
+    <field name="priority_request_limit" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LINK_CONTROL" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0xe0" access="rw" reset="unknown">
+    <doc>Link control. The set and clear addresses form a pair, the clear address four bytes above the set address. The defined bits are unspecified at reset and the other bits in the datasheet's diagram reset to zero.</doc>
+    <field name="cycle_source" start="22" size="1" type="uint" grade="established"/>
+    <field name="cycle_master" start="21" size="1" type="uint" grade="established"/>
+    <field name="cycle_timer_enable" start="20" size="1" type="uint" grade="established"/>
+    <field name="rcv_phy_packets" start="10" size="1" type="uint" grade="established"/>
+    <field name="rcv_self_id_packets" start="9" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="NODE_ID" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0xe8" access="rw" reset="unknown">
+    <doc>Node ID. Validity, root and cable-power status are read and updated by the controller and reset to zero. The bus number resets to all ones. The physical node number is unspecified at reset. The datasheet names a cable-power status bit but its position is not in the summary, so it is not listed as a field.</doc>
+    <field name="id_valid" start="31" size="1" type="uint" grade="established"/>
+    <field name="root" start="30" size="1" type="uint" grade="established"/>
+    <field name="bus_number" start="6" size="10" type="uint" grade="established"/>
+    <field name="node_number" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="PHY_CONTROL" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0xec" access="rw" reset="unknown">
+    <doc>PHY access. A PHY read and a PHY write are mutually exclusive. Command bits read as zero at reset. Data and status fields are largely unspecified at reset. A PHY register transfer received from the PHY sets rdDone and the PHY-register-received event.</doc>
+    <field name="rd_done" start="31" size="1" type="uint" grade="established"/>
+    <field name="rd_addr" start="24" size="4" type="uint" grade="established"/>
+    <field name="rd_data" start="16" size="8" type="uint" grade="established"/>
+    <field name="rd_reg" start="15" size="1" type="uint" grade="established"/>
+    <field name="wr_reg" start="14" size="1" type="uint" grade="established"/>
+    <field name="reg_addr" start="8" size="4" type="uint" grade="established"/>
+    <field name="wr_data" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="CYCLE_TIMER" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0xf0" access="rw" reset="unknown">
+    <doc>Cycle timer. Unspecified at reset. The counter fields count seconds, cycles and offset ticks at 24.576 MHz.</doc>
+    <field name="seconds" start="25" size="7" type="uint" grade="established"/>
+    <field name="count" start="12" size="13" type="uint" grade="established"/>
+    <field name="offset" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="ASYNC_FILTER_HI" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x100" access="rw" reset="0x0">
+    <doc>Asynchronous request source filter, upper node mask. The set and clear addresses form a pair, the clear address four bytes above the set address. Bit 31 enables requests from nonlocal buses.</doc>
+    <field name="nonlocal_enable" start="31" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ASYNC_FILTER_LO" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x108" access="rw" reset="0x0">
+    <doc>Asynchronous request source filter, lower node mask. The set and clear addresses form a pair, the clear address four bytes above the set address.</doc>
+  </struct>
+  <struct name="PHYS_FILTER_HI" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x110" access="rw" reset="0x0">
+    <doc>Physical request source filter, upper node mask. The set and clear addresses form a pair, the clear address four bytes above the set address. The filter applies after the asynchronous filter, and a rejected physical request falls through to asynchronous receive.</doc>
+  </struct>
+  <struct name="PHYS_FILTER_LO" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x118" access="rw" reset="0x0">
+    <doc>Physical request source filter, lower node mask. The set and clear addresses form a pair, the clear address four bytes above the set address.</doc>
+  </struct>
+  <struct name="PHYS_UPPER_BOUND" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x120" access="r" reset="0x0">
+    <doc>Physical upper bound. It is optional and this part does not implement it, so it reads as zero.</doc>
+  </struct>
+  <constant name="BUS_ID_TEXT" value="0x31333934" grade="established"/>
+  <constant name="CYCLE_TIMER_CLOCK_HZ" value="0x1770000" grade="established"/>
+  <constant name="ISO_CHANNELS" value="0x40" grade="established"/>
+  <constant name="MAX_REC_DEFAULT" value="0xa" grade="established"/>
+  <constant name="PCI_DEVICE_ID" value="0x8009" grade="established"/>
+  <constant name="PCI_REVISION" value="0x1" grade="established"/>
+  <constant name="PCI_VENDOR_ID" value="0x104c" grade="established"/>
+  <constant name="PHY_CLOCK_HZ" value="0x2ee0000" grade="established"/>
+  <constant name="SELF_ID_BUFFER_ALIGN" value="0x800" grade="established"/>
+</genxml>

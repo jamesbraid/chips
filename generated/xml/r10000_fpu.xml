@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/r10000_fpu/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="r10000_fpu" prefix="R10K" title="R10000 family floating-point control register cause bits">
+  <doc>Constants for the floating-point control register (FCSR, the NEC manual's FSR) of the MIPS R10000 family, for the Cause E bit that reports an unimplemented operation. The FS and rounding fields are not here: their bit positions were not read for this unit. This unit holds constants only; the rule that sets E is in docs/r10000_fpu.md. Grades: established means the processor manual states it; inferred means a reasoned reading of the manual; unknown items are listed in the page.</doc>
+  <constant name="R10K_FCSR_CAUSE_E_BIT" value="0x11" grade="established"/>
+  <constant name="R10K_FCSR_CAUSE_E_MASK" value="0x20000" grade="established"/>
+</genxml>

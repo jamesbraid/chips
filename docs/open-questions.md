@@ -191,7 +191,7 @@ Corrections found while tagging. These are not fixed here.
   probe `1412:1724`, the SGI note naming the controller. Unknown: the real sub-vendor and sub-device values, the EEPROM bytes,
   the SGI part number, whether SGI changed a component. Next: any public capture of a DM8; a `hinv -vm` line from a DM8 host gives
   the revision only (docs/audio/dm8.md).
-- **ICE1724 register contract.** Offsets, widths, access types, reset values and field layouts come from the preliminary vendor datasheet (defs/ice1724.toml; the facts that do not fit a table are in chips/ice1724/README.md). The rate-to-code table is read in full there.
+- **ICE1724 register contract.** Offsets, widths, access types, reset values and field layouts come from the preliminary vendor datasheet (devices/ice1724/registers.toml; the facts that do not fit a table are in chips/ice1724/README.md). The rate-to-code table is read in full there.
   Answered from the binary and the published manuals, with grades: the 32-bit stores that touch the unassigned CCS `0x1b` and MT `0x17` bytes, BARs 2 and 3, D3hot to D0, the Tezro board's unknown subsystem and codec parts, and the TI PCI2050 upper prefetchable registers are in docs/questions/tezro-ice1724.md.
   Unknown: the DMA size unit against the driver's frame count, the soft-reset effect, the effect of `MT+0x19`
   and `MT+0x05` bit 7 on this chip. Next: re-read `mad_start_dma` (`0xe48`) against the datasheet's dword units.
@@ -365,4 +365,4 @@ Corrections found while tagging. These are not fixed here.
 ## Tigon PCI width (added with docs/tigon.md)
 
 - **Tigon: when bit 20 of the PCI State register shows the host-selected width after reset.** *[route: missing source]* Unknown: the point after reset at which the 32-bit PCI bus flag reflects the host's 64-bit indication. The manual does not say. Next: a later Tigon manual revision that defines the point, or a capture with a stated reset sequence ([docs/tigon.md](docs/tigon.md)).
-- **Tigon: the PCI State register offset.** *[route: missing source]* Unknown: the register's offset in the Tigon register map. The sources used for the Tigon page do not give it. Next: the register map of a Tigon manual revision, which would let the flag enter `defs/` ([docs/tigon.md](docs/tigon.md)).
+- **Tigon: the PCI State register offset.** *[route: missing source]* Unknown: the register's offset in the Tigon register map. The sources used for the Tigon page do not give it. Next: the register map of a Tigon manual revision, which would let the flag enter a register map ([docs/tigon.md](docs/tigon.md)).
