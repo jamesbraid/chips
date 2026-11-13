@@ -121,7 +121,7 @@ seven Origin 350 and Onyx 350 postings with an IO9 board line); the Tezro guides
 
 ## What the TI manual fixes, and two driver steps not yet recorded
 
-Page numbers are the ones the import source gives for TI DS; they were not re-checked against the PDF in this pass.
+Page numbers are the PCI2050 data manual's printed pages (SCPS053B, 2003 edition in the Library); each was re-read against the PDF. The two IRIX driver readings at the end were not re-derived.
 
 - **Device number to IDSEL. Established (TI DS Table 3-2, p. 3-4).** Device `n` on the secondary bus is selected by
   asserting `S_AD(16+n)` as IDSEL, for `n` = 0 to 15. Device 2 is `S_AD18`. Which board routes that line is still unknown.
@@ -133,9 +133,9 @@ Page numbers are the ones the import source gives for TI DS; they were not re-ch
   supports the `060400h` value in item 1 above; the raw config bytes are still unpublished.
 - **Interrupts. Established (TI DS pp. 4-14, 4-15).** The part has no interrupt pin of its own (Interrupt pin reads 0)
   and does not route interrupts. Any INTA route from the controller is set by the board, not by the bridge.
-- **Secondary masters and PCI mode. Established (TI DS; page not recorded in the import source).** The part arbitrates
-  nine secondary-bus masters through an internal arbiter, and the manual describes conventional PCI only, with no
-  PCI-X support. An IO9 head behind it therefore cannot run the bridged path in PCI-X mode (inferred for the head).
+- **Secondary masters and PCI mode. Established (TI DS, feature list, printed p. 1-1).** The part arbitrates
+  nine secondary-bus masters through an internal arbiter. The manual never mentions PCI-X, which is an absence, not a
+  statement that the part lacks it. An IO9 head behind it therefore cannot run the bridged path in PCI-X mode (inferred for the head).
 - **Window granularity in the IRIX bridge driver. Established as driver code, not as chip behaviour.** After the scan
   the driver rounds the bridge's I/O window to 4 KiB and its memory and prefetchable windows to 1 MiB before writing
   the base and limit registers.

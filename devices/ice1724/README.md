@@ -97,8 +97,8 @@ samples in 32-bit words. **Established** for the reads and the shift, **inferred
 The DMA buffer address passed to these registers is the Bridge's bus-address translation of the kernel buffer
 (`Mem_to_PCI_DMA`, `0x1364`, flags `0x2020`). The ring size and alignment are not established.
 The address limit: the datasheet never mentions dual-address cycles, so 32-bit buffer addresses are **inferred**. Two
-public drivers agree. OpenBSD applies its 28-bit DMA limit only to the non-HT Envy24 (`envy.c:1857`). FreeBSD creates a
-32-bit DMA tag for the HT part (`envy24ht.c:2418`-`2432`, `BUS_SPACE_MAXADDR_32BIT`). These are software expectations.
+public drivers agree. OpenBSD applies its 28-bit DMA limit only to the non-HT Envy24 (`envy.c` at the OpenBSD pin `7011342f6a72`: the limit is defined at line 1835 and tested at line 1859). FreeBSD creates a
+32-bit DMA tag for the HT part (`envy24ht.c` on the main branch, lines 2420 to 2432, `BUS_SPACE_MAXADDR_32BIT`). These are software expectations.
 
 ## Converters on the GPIO port (Revolution path)
 
@@ -238,8 +238,8 @@ and never applied to this chip.
 - **Unknown.** The converter output while a stream is stopped, and what stopping mid-buffer does to the address and the count.
 - **Unit (resolved).** The datasheet gives the playback count as dwords less one (p. 4-19). The IRIX driver zeroes `count << 2`
   bytes and programs `count - 1` into the count register, so it uses the same unit. That the zeroed length is the buffer
-  length is **inferred** from the call's byte argument. Linux (`ice1724.c:827-829`), OpenBSD (`envy.c:2137`) and FreeBSD
-  (`envy24ht.c:2082`-`2083`) all write dwords less one. A "frame count" reading is not needed.
+  length is **inferred** from the call's byte argument. Linux (`ice1724.c` v5.3, lines 773 to 779), OpenBSD (`envy.c`, line 2137) and FreeBSD
+  (`envy24ht.c`, lines 2082 to 2083) all write dwords less one. The IRIX `mad_start_dma` reading was not re-derived in the verification pass. A "frame count" reading is not needed.
 - **Inferred.** The IRIX driver never writes a terminal-count register and polls the position instead. The notes show no such write.
 - **Established.** Start and stop are read-modify-write only; the datasheet insists (p. 4-20). Pause and resume are in MT1B (p. 4-21).
 - **Established.** Reading the RDMA0 pointer is only valid after at least two sample frames have elapsed (p. 4-22).
