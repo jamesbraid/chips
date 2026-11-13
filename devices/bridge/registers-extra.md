@@ -32,7 +32,7 @@ The widget identification word as the shipped IRIX kernel reads it for the Bridg
 | `CFG_WINDOW32_OFFSET` | 0x20000 | established | shipped IRIX kernel binaries, per kudzu docs/ip35-pcibr-registers.md | added on the 32-bit layout only, with the register offset first rounded down to a multiple of four |
 | `CONTROL_FLASH_WR_EN` | 0x80000000 | established |  | bit 31, flash write enable; reset 0. Set to allow writes to the flash. Clear, a write to the flash is an error and is not completed; the specification does not say what the requester receives. Specification section 3.2.5, table 11, printed page 21 |
 | `CONTROL_RST_PIN_N` | 0xf000000 | established |  | bits 27:24, the four software reset pins RST_PIN_N(3:0); reset 0xf, every pin released. Writing 1 drives a pin high (released) and 0 drives it low (asserted). Bit n driving the n-th PCI bus reset output is inferred: the specification gives no bit-to-pin table. Which device each pin reaches is board wiring and unknown |
-| `CONTROL_WIDGET_NUMBER` | 0xf | established |  | bits 3:0, the crosstalk widget number this chip answers at; reset 0xf, the specification's not-yet-assigned value. Firmware writes the assigned number |
+| `CONTROL_WIDGET_NUMBER` | 0xf | established |  | bits 3:0, the crosstalk widget number this chip answers at; reset 0xf (Table 11, printed page 23); the specification does not say what 0xf means, so a not-yet-assigned reading is inferred. Firmware writes the assigned number |
 | `DEVICE_BARRIER` | 0x8000 | established |  | bit 15; meaning [I] |
 | `DEVICE_PRECISE` | 0x20000 | established |  | bit 17, precise exception; meaning [I] |
 | `DEVICE_PREFETCH` | 0x40000 | established |  | bit 18; meaning [I] |
