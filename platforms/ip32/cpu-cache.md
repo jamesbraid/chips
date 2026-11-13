@@ -53,8 +53,8 @@ cache facts describe the processor, not a board.
 
 ## Secondary cache
 
-- **Established** (pp. 51, 188): the R10000 needs an external two-way secondary cache with a physical index and
-  tag. Its block is 64 or 128 bytes, chosen at reset.
+- **Established** (p. 51): the R10000 needs an external two-way secondary cache with a physical index and
+  tag. Its block is 64 or 128 bytes (16 or 32 words), selected by the SCBlkSize mode bit.
 - **Established** as the CRIME 1.5 specification's own assumption (printed p. 5-9 [PDF p. 97]): CRIME 1.5 assumes
   a 128-byte block, which is 32 words. It is not a measured block size.
 - **Unknown**: the reset strap that selects the secondary block size on the O2's R10000 secondary module, and
@@ -67,7 +67,8 @@ cache facts describe the processor, not a board.
   takes it from the Config K0 field. xkphys takes it from VA[61:59]. Algorithm 2 bypasses both caches.
   Algorithm 3 is cacheable and noncoherent.
 - **Established** (p. 56): a cached access does not probe the uncached buffer.
-- **Established** (pp. 188, 287): a CACHE operation on an address whose algorithm is 2 has undefined behaviour.
+- **Established** (pp. 188, 287): a CACHE operation on an uncached address has undefined behaviour. Algorithm 2
+  is the uncached algorithm.
 
 - **Established** (R10000 manual p. 53, Table 4-1): the 3-bit cache algorithm field has one encoding wherever it
   is read: the TLB EntryLo fields, CP0 Config K0 for kseg0 and VA[61:59] for xkphys. Value 2 is uncached, 3 is
@@ -97,7 +98,9 @@ cache facts describe the processor, not a board.
 - **Established** (pp. 48, 51, 189): a cached store can leave the newest data in the primary or secondary cache
   while RAM still holds an older value. A primary data writeback goes to the secondary cache first. A secondary
   writeback goes to the system interface.
-- **Established** (p. 190): CACHE operations finish the earlier loads, stores and writebacks before they run.
+- **Established** (p. 190): CACHE instructions run serially. Every earlier load, store and writeback to the
+  external agent must complete before a CACHE instruction graduates, and later loads and stores cannot issue
+  speculatively until it has graduated.
 
 ## CACHE operations
 
@@ -117,9 +120,10 @@ cache facts describe the processor, not a board.
 
 ## Maintenance through mapped addresses
 
-- **Established** (pp. 188–190, 200): a Hit CACHE operation translates its operand address and compares the
-  physical result with the cache tags. A valid TLB-mapped operand with algorithm 3 can therefore select
-  Secondary Hit WriteBack Invalidate (`0x17`).
+- **Established** (pp. 189, 287): a Hit CACHE operation translates its operand address through the TLB and
+  compares the physical result with the cache tags. **Inferred**: a valid TLB-mapped operand with algorithm 3
+  can therefore select Secondary Hit WriteBack Invalidate (`0x17`). The manual makes no statement about
+  algorithm 3 beyond saying the operation is undefined on uncached addresses.
 - **Established** (pp. 188–190, 200): mapped addressing alone does not raise Address Error. CP0 must be usable.
   A missing or invalid TLB entry can raise TLB Refill or TLB Invalid. A privilege violation can raise Address
   Error. A CACHE operation does not raise TLB Modified.
