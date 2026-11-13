@@ -1,7 +1,7 @@
 unit = "hub_ni_extra"
 prefix = "HUB"
 title = "Hub network interface field layouts, port and vector fields, and register offsets outside the census"
-from = "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+from = "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
 public_from = ["public Linux SN0 Hub network interface header", "shipped IRIX"]
 
 # The census has the offsets of most network interface registers and no field layouts. The word
@@ -15,7 +15,7 @@ public_from = ["public Linux SN0 Hub network interface header", "shipped IRIX"]
 width = 64
 grade = "established"
 from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
-doc = "Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The shipped IRIX Origin 200/2000 kernel reads the low 32 bits of this register and takes the node number from bits 16:8."
+doc = "Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The census of the shipped IRIX Origin 200/2000 kernel (the census field table) shows the register read with a shift of 8 and a nine-bit mask for the node number, a shift of 4 for the chip revision and a test of bit 17 for the region size; the header's layout agrees."
 
 [words.NI_STATUS_FORMAT.fields]
 eightbit_mode = { bits = [30, 30], grade = "established", doc = "Eight-bit mode bit, bit 30, named NSRI_8BITMODE. The header gives no further meaning." }

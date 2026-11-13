@@ -3,7 +3,7 @@
 # Hub network interface field layouts, port and vector fields, and register offsets outside the census
 
 Unit `hub_ni_extra`, macro prefix `HUB`.
-Default source: public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants).
+Default source: public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants).
 
 Every item has a grade: established, inferred or unknown. A grade says how the item was derived from its source; it does not claim the item was measured on silicon.
 
@@ -11,18 +11,18 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `ni_return_vector` | 0x600308 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_io_protect` | 0x600400 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_io_prot_ovrrd` | 0x600408 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_age_cpu0_pio` | 0x600508 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_age_cpu1_pio` | 0x600518 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_age_gbr_memory` | 0x600520 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_age_gbr_pio` | 0x600528 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_age_io_memory` | 0x600530 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_age_io_pio` | 0x600538 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_port_parms` | 0x608000 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_meta_entry` | 0x638008 | rw | 64 | 31 |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `ni_local_entry` | 0x638108 | rw | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
+| `ni_return_vector` | 0x600308 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_io_protect` | 0x600400 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_io_prot_ovrrd` | 0x600408 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_cpu0_pio` | 0x600508 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_cpu1_pio` | 0x600518 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_gbr_memory` | 0x600520 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_gbr_pio` | 0x600528 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_io_memory` | 0x600530 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_io_pio` | 0x600538 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_port_parms` | 0x608000 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_meta_entry` | 0x638008 | rw | 64 | 31 |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_local_entry` | 0x638108 | rw | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 
 ### Register `ni_return_vector`
 
@@ -66,8 +66,8 @@ Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 15:10 | `null_timeout` | inferred |  | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) | Null-packet timeout, six bits. The header gives it a shift of 10 and a mask of 0x3f at bit 16, which disagree. The position 15:10 follows the shift and the default constant, and is inferred. |
-| 9:0 | `max_burst` | established |  | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) | Maximum burst, ten bits at 9:0, named NPP_MAXBURST in the header. |
+| 15:10 | `null_timeout` | inferred |  | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Null-packet timeout, six bits. The header gives it a shift of 10 and a mask of 0x3f at bit 16, which disagree. The position 15:10 follows the shift and the default constant, and is inferred. |
+| 9:0 | `max_burst` | established |  | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Maximum burst, ten bits at 9:0, named NPP_MAXBURST in the header. |
 
 ### Register `ni_meta_entry`
 
@@ -164,7 +164,7 @@ Layout of the protection configuration register, ni_protection.
 
 ### Word `NI_STATUS_FORMAT`
 
-Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The shipped IRIX Origin 200/2000 kernel reads the low 32 bits of this register and takes the node number from bits 16:8.
+Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The census of the shipped IRIX Origin 200/2000 kernel (the census field table) shows the register read with a shift of 8 and a nine-bit mask for the node number, a shift of 4 for the chip revision and a test of bit 17 for the region size; the header's layout agrees.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -208,52 +208,52 @@ Layout of the vector routing status register, ni_vector_status. The source field
 
 | Label | Value | Grade | Source |
 |---|---|---|---|
-| `more_memory` | 0 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `more_nodes` | 1 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
+| `more_memory` | 0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `more_nodes` | 1 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 
 ### Enum `ni_pio_request_type`
 
 | Label | Value | Grade | Source |
 |---|---|---|---|
-| `read` | 0 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `write` | 1 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `undefined` | 2 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `exchange` | 3 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
+| `read` | 0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `write` | 1 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `undefined` | 2 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `exchange` | 3 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 
 ### Enum `ni_pio_type`
 
 | Label | Value | Grade | Source |
 |---|---|---|---|
-| `read` | 0 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `write` | 1 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `undefined` | 2 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `exchange` | 3 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `address_error` | 4 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `command_error` | 5 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `protection_error` | 6 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `unknown` | 7 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
+| `read` | 0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `write` | 1 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `undefined` | 2 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `exchange` | 3 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `address_error` | 4 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `command_error` | 5 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `protection_error` | 6 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `unknown` | 7 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 
 ### Enum `ni_region_size`
 
 | Label | Value | Grade | Source |
 |---|---|---|---|
-| `coarse` | 0 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `fine` | 1 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
+| `coarse` | 0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `fine` | 1 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 
 ### Enum `ni_vchannel`
 
 | Label | Value | Grade | Source |
 |---|---|---|---|
-| `channel_a` | 0 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `channel_b` | 1 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
-| `any` | 2 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) |
+| `channel_a` | 0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `channel_b` | 1 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `any` | 2 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 
 ## Constants
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `NI_LOCAL_ENTRIES` | 0x10 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) | Local routing table entry count, named NI_LOCAL_ENTRIES in the public header. |
-| `NI_META_ENTRIES` | 0x20 | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) | Meta routing table entry count, named NI_META_ENTRIES in the public header. |
-| `NI_PORT_ERROR_COUNT_MAX` | 0xff | established | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) | Largest value of an error counter in the port error register, named NPE_COUNT_MAX in the header. |
-| `NI_PORT_PARMS_DEFAULTS` | 0x1bf0 | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) | Composite default of the port parameters register: null timeout 6 at 15:10 and burst 0x3f0. A default the header gives for software to write, not a reset read from hardware. |
-| `NI_PORT_PARMS_HUB20_DEFAULTS` | 0x7f0 | inferred | public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) | Composite default the header gives for the Hub 2.0 port parameters: null timeout 1 at 15:10 and burst 0x3f0. A software default, not a reset read. |
+| `NI_LOCAL_ENTRIES` | 0x10 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Local routing table entry count, named NI_LOCAL_ENTRIES in the public header. |
+| `NI_META_ENTRIES` | 0x20 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Meta routing table entry count, named NI_META_ENTRIES in the public header. |
+| `NI_PORT_ERROR_COUNT_MAX` | 0xff | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Largest value of an error counter in the port error register, named NPE_COUNT_MAX in the header. |
+| `NI_PORT_PARMS_DEFAULTS` | 0x1bf0 | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Composite default of the port parameters register: null timeout 6 at 15:10 and burst 0x3f0. A default the header gives for software to write, not a reset read from hardware. |
+| `NI_PORT_PARMS_HUB20_DEFAULTS` | 0x7f0 | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Composite default the header gives for the Hub 2.0 port parameters: null timeout 1 at 15:10 and burst 0x3f0. A software default, not a reset read. |

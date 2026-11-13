@@ -15,7 +15,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -29,7 +29,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -43,7 +43,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -57,7 +57,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -71,7 +71,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -85,7 +85,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -99,7 +99,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -113,7 +113,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -127,7 +127,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -141,7 +141,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -150,7 +150,7 @@
    "hi": 15,
    "lo": 10,
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -159,7 +159,7 @@
    "hi": 9,
    "lo": 0,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -173,7 +173,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -187,7 +187,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -212,7 +212,7 @@
    "name": "NI_AGE_FORMAT.vchannel.channel_a",
    "value": 0,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -220,7 +220,7 @@
    "name": "NI_AGE_FORMAT.vchannel.channel_b",
    "value": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -228,7 +228,7 @@
    "name": "NI_AGE_FORMAT.vchannel.any",
    "value": 2,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -536,7 +536,7 @@
    "name": "NI_STATUS_FORMAT.more_nodes.more_memory",
    "value": 0,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -544,7 +544,7 @@
    "name": "NI_STATUS_FORMAT.more_nodes.more_nodes",
    "value": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -561,7 +561,7 @@
    "name": "NI_STATUS_FORMAT.region_size.coarse",
    "value": 0,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -569,7 +569,7 @@
    "name": "NI_STATUS_FORMAT.region_size.fine",
    "value": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -648,7 +648,7 @@
    "name": "NI_VECTOR_PARMS_FORMAT.pio_type.read",
    "value": 0,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -656,7 +656,7 @@
    "name": "NI_VECTOR_PARMS_FORMAT.pio_type.write",
    "value": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -664,7 +664,7 @@
    "name": "NI_VECTOR_PARMS_FORMAT.pio_type.undefined",
    "value": 2,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -672,7 +672,7 @@
    "name": "NI_VECTOR_PARMS_FORMAT.pio_type.exchange",
    "value": 3,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -751,7 +751,7 @@
    "name": "NI_VECTOR_STATUS_FORMAT.pio_type.read",
    "value": 0,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -759,7 +759,7 @@
    "name": "NI_VECTOR_STATUS_FORMAT.pio_type.write",
    "value": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -767,7 +767,7 @@
    "name": "NI_VECTOR_STATUS_FORMAT.pio_type.undefined",
    "value": 2,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -775,7 +775,7 @@
    "name": "NI_VECTOR_STATUS_FORMAT.pio_type.exchange",
    "value": 3,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -783,7 +783,7 @@
    "name": "NI_VECTOR_STATUS_FORMAT.pio_type.address_error",
    "value": 4,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -791,7 +791,7 @@
    "name": "NI_VECTOR_STATUS_FORMAT.pio_type.command_error",
    "value": 5,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -799,7 +799,7 @@
    "name": "NI_VECTOR_STATUS_FORMAT.pio_type.protection_error",
    "value": 6,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -807,7 +807,7 @@
    "name": "NI_VECTOR_STATUS_FORMAT.pio_type.unknown",
    "value": 7,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -816,7 +816,7 @@
    "value": 16,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -825,7 +825,7 @@
    "value": 32,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -834,7 +834,7 @@
    "value": 255,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -843,7 +843,7 @@
    "value": 7152,
    "count": 1,
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
    "unit": "hub_ni_extra",
@@ -852,7 +852,7 @@
    "value": 2032,
    "count": 1,
    "grade": "inferred",
-   "from": "public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants)"
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   }
  ]
 }

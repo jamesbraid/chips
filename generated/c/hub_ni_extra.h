@@ -38,61 +38,61 @@
 /*
  * Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. Access is assumed read and write.
  */
-/* ni_return_vector: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_return_vector: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_RETURN_VECTOR_OFFSET                  0x600308u /* inferred */
 
 /*
  * PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. Access is assumed read and write; the header gives neither a field layout nor a reset.
  */
-/* ni_io_protect: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_io_protect: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_IO_PROTECT_OFFSET                     0x600400u /* inferred */
 
 /*
  * PIO protection override, named NI_IO_PROT_OVRRD in the header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only.
  */
-/* ni_io_prot_ovrrd: w64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_io_prot_ovrrd: w64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_IO_PROT_OVRRD_OFFSET                  0x600408u /* inferred */
 
 /*
  * CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_cpu0_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_age_cpu0_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_CPU0_PIO_OFFSET                   0x600508u /* inferred */
 
 /*
  * CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_cpu1_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_age_cpu1_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_CPU1_PIO_OFFSET                   0x600518u /* inferred */
 
 /*
  * Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_gbr_memory: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_age_gbr_memory: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_GBR_MEMORY_OFFSET                 0x600520u /* inferred */
 
 /*
  * Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_gbr_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_age_gbr_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_GBR_PIO_OFFSET                    0x600528u /* inferred */
 
 /*
  * I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_io_memory: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_age_io_memory: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_IO_MEMORY_OFFSET                  0x600530u /* inferred */
 
 /*
  * I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_io_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_age_io_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_IO_PIO_OFFSET                     0x600538u /* inferred */
 
 /*
  * Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header; access is assumed read and write. The fields are graded on their own.
  */
-/* ni_port_parms: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_port_parms: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_PORT_PARMS_OFFSET                     0x608000u /* inferred */
 #define HUB_NI_PORT_PARMS_NULL_TIMEOUT_SHIFT         10 /* inferred */
 #define HUB_NI_PORT_PARMS_NULL_TIMEOUT_MASK          0x3full
@@ -104,7 +104,7 @@
 /*
  * Meta routing table entries 1 to 31, eight bytes apart from the census entry ni_meta_table0. The header gives the stride and the count of 32 entries. Access is assumed read and write. The entry width is not stated in the header and is not imported.
  */
-/* ni_meta_entry: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_meta_entry: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_META_ENTRY_OFFSET                     0x638008u /* inferred */
 #define HUB_NI_META_ENTRY_COUNT                      31
 #define HUB_NI_META_ENTRY_STRIDE                     8
@@ -112,7 +112,7 @@
 /*
  * Local routing table entries 1 to 15, eight bytes apart from the census entry ni_local_table0. The header gives the stride and the count of 16 entries. Access is assumed read and write. The entry width is not stated in the header and is not imported.
  */
-/* ni_local_entry: rw64, reset unknown; public Linux SN0 Hub network interface header, Linux v7.2-rc7 (names, masks, shifts and software default constants) */
+/* ni_local_entry: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_LOCAL_ENTRY_OFFSET                    0x638108u /* inferred */
 #define HUB_NI_LOCAL_ENTRY_COUNT                     15
 #define HUB_NI_LOCAL_ENTRY_STRIDE                    8
@@ -229,7 +229,7 @@
 #define HUB_NI_PROTECTION_FORMAT_RESET_OK_INPLACE    (HUB_NI_PROTECTION_FORMAT_RESET_OK_MASK << HUB_NI_PROTECTION_FORMAT_RESET_OK_SHIFT)
 
 /*
- * Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The shipped IRIX Origin 200/2000 kernel reads the low 32 bits of this register and takes the node number from bits 16:8.
+ * Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The census of the shipped IRIX Origin 200/2000 kernel (the census field table) shows the register read with a shift of 8 and a nine-bit mask for the node number, a shift of 4 for the chip revision and a test of bit 17 for the region size; the header's layout agrees.
  */
 /* word NI_STATUS_FORMAT: 64 bits; public Linux SN0 Hub network interface header: NSRI_* masks and shifts */
 #define HUB_NI_STATUS_FORMAT_WIDTH                   64 /* established */

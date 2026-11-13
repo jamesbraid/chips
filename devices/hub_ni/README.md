@@ -10,7 +10,7 @@ reset-value status are in [devices/hub/registers.md](../hub/registers.md). The f
 ## Added from the public header
 
 The field layouts, enumerations, the offsets the census does not reach, and the software default
-constants come from the public Linux SN0 Hub network interface header (Linux v7.2-rc7). The header
+constants come from the public Linux SN0 Hub network interface header (arch/mips/include/asm/sn/sn0/hubni.h). The header
 gives names, masks and shifts. It gives no access types and no reset values. So the access of each
 register added here is an assumption and is graded inferred, the reset of every register stays
 unknown, and the header's default constants are graded inferred as values software writes.
