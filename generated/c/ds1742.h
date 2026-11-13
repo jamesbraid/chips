@@ -15,9 +15,9 @@
 #define DS1742_RAM_STRIDE                            1
 
 /*
- * The eight clock and calendar bytes at the top of the chip. The sources give their order and bit meanings only through the chip's own register page, which this import did not read, so each byte is named here by offset only.
+ * The eight clock and calendar bytes at the top of the chip. Table 2 (p. 5) gives their order and bit meanings, which the device README transcribes; this entry names each byte by offset only.
  */
-/* clock: rw8, space chip, reset unknown; Dallas DS1742 datasheet, address map (the chip places the clock bytes at offsets 0x7f8 to 0x7ff) */
+/* clock: rw8, space chip, reset unknown; Maxim DS1742 Y2KC datasheet 19-6715 Rev 6/13, Table 2 register map, p. 5 (clock at 0x7f8 to 0x7ff) */
 #define DS1742_CLOCK_OFFSET                          0x7f8u /* established */
 #define DS1742_CLOCK_COUNT                           8
 #define DS1742_CLOCK_STRIDE                          1

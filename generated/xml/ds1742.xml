@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/ds1742/registers.toml by defs-gen - do not edit, change the source -->
 <genxml unit="ds1742" prefix="DS1742" title="Dallas DS1742W nonvolatile timekeeping RAM (Fuel L1 storage part, 3.3 V, 2 KiB)">
-  <doc>The 2,048-byte battery-backed SRAM and clock part identified on a revision B Fuel board. The register contract here covers what the sources state: the clock bytes at the top of the address range and the remaining bytes as RAM. Grades say how each item was derived: established means the manufacturer specification as the source records it, inferred means a public driver, a board marking or arithmetic on an established fact. The clock byte meanings, the reset state and the RAM layout are not stated by the sources and are not listed.</doc>
+  <doc>The 2,048-byte battery-backed SRAM and clock part identified on a revision B Fuel board. The register contract here covers what the sources state: the clock bytes at the top of the address range and the remaining bytes as RAM. Grades say how each item was derived: established means the manufacturer specification as the source records it, inferred means a public driver, a board marking or arithmetic on an established fact. The clock byte meanings are in Table 2 of the datasheet (see the device README); the reset state and the RAM layout are not stated by the sources and are not listed.</doc>
   <space name="chip" unit="byte"/>
   <struct name="RAM" size="1" grade="inferred" register="yes" offset="0x0" access="rw" count="2040" stride="1" space="chip" reset="unknown">
     <doc>Battery-backed RAM below the clock bytes. The sources give no RAM count and no layout inside it. The 2,040 is inferred from the clock placement, not stated by a source.</doc>
   </struct>
-  <struct name="CLOCK" size="1" grade="established" from="Dallas DS1742 datasheet, address map (the chip places the clock bytes at offsets 0x7f8 to 0x7ff)" register="yes" offset="0x7f8" access="rw" count="8" stride="1" space="chip" reset="unknown">
-    <doc>The eight clock and calendar bytes at the top of the chip. The sources give their order and bit meanings only through the chip's own register page, which this import did not read, so each byte is named here by offset only.</doc>
+  <struct name="CLOCK" size="1" grade="established" from="Maxim DS1742 Y2KC datasheet 19-6715 Rev 6/13, Table 2 register map, p. 5 (clock at 0x7f8 to 0x7ff)" register="yes" offset="0x7f8" access="rw" count="8" stride="1" space="chip" reset="unknown">
+    <doc>The eight clock and calendar bytes at the top of the chip. Table 2 (p. 5) gives their order and bit meanings, which the device README transcribes; this entry names each byte by offset only.</doc>
   </struct>
 </genxml>

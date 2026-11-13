@@ -28,7 +28,7 @@
    "space": "chip",
    "reset": "unknown",
    "grade": "established",
-   "from": "Dallas DS1742 datasheet, address map (the chip places the clock bytes at offsets 0x7f8 to 0x7ff)"
+   "from": "Maxim DS1742 Y2KC datasheet 19-6715 Rev 6/13, Table 2 register map, p. 5 (clock at 0x7f8 to 0x7ff)"
   }
  ]
 }

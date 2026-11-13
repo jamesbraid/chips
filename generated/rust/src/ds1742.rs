@@ -9,7 +9,7 @@ pub mod ram {
     pub const COUNT: u32 = 2040;
     pub const STRIDE: u64 = 1;
 }
-/// The eight clock and calendar bytes at the top of the chip. The sources give their order and bit meanings only through the chip's own register page, wh (established)
+/// The eight clock and calendar bytes at the top of the chip. Table 2 (p. 5) gives their order and bit meanings, which the device README transcribes; thi (established)
 pub mod clock {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x7f8;

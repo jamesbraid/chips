@@ -15,17 +15,21 @@ route that would. No fact here was measured on a board.
 ## Sources
 
 - **OpenBSD `sys/arch/sgi/dev/dsrtc.c`**, commit `2df91d80c104636deeef8124252ddd5951b55fbf`: the
-  IOC3 attach (lines 118 to 186), the year base (lines 173 to 174 and 213 to 214), and the clock read
-  and write routines (lines 355 to 428).
+  IOC3 attach (lines 118 to 186; its comment on the `DS1742W` label is lines 124 to 133), the year base (lines 170 to 174 and 210 to 214), and the clock read
+  and write routines (lines 359 to 428).
 - **OpenBSD `sys/arch/sgi/pci/ioc.c`**, same commit, lines 307 to 355: the IP35 branch that attaches
   the clock on IOC3 byte bus 0.
 - **OpenBSD `sys/arch/sgi/pci/iocreg.h`**, same commit, line 211: `IOC3_BYTEBUS_0`.
 - **OpenBSD `sys/dev/ic/mk48txxreg.h`**, same commit, lines 53 to 82: the register indices, the
   control bits and the `MK48T35` clock offset and size.
 - **OpenBSD `sys/sys/time.h`**, same commit, line 367: `POSIX_BASE_YEAR`.
-- **Public owner reports** on the Fuel's part replacement and power-off behaviour: the Hartley
-  replacement experiment and `vvuk` posts 14 and 17. The board revisions in these reports are not
-  stated. The URLs were not recorded in this import.
+- **John Hartley, "SGI NVRAM & Time Keeper Chips"** (web.archive.org snapshot of
+  just.graphica.com.au/tips/sgi-nvram, 2024-12-24) and **IRIXNet thread 2535** (posts 1 and 3). The
+  article says the Tezro, Origin 350 and Fuel each have two independent clock and battery-backed RAM
+  chips: the L1's, and the system's, managed by the PROM and operating system. Its Fuel photograph
+  shows a Snaphat battery module. The earlier draft also cited two posts by another forum user; their
+  thread could not be found again and nothing here rests on them. The board revisions in the
+  article are not stated.
 
 ## Window and byte map (inferred, driver expectation)
 
@@ -55,9 +59,11 @@ expects. They do not identify the fitted part, and no source read here identifie
 
 ## Role (inferred)
 
-- Public owner replacement and power-off observations support a separate, Snaphat-backed assembly on
-  the Fuel that holds the system time and the PROM variables. The same observations do not
-  establish that the DS1742W has no other connection.
+- Hartley's article supports a separate system clock and NVRAM, distinct from the L1's DS1742W, on
+  the Fuel; thread 2535 reports that with a failing Snaphat the machine needed its time reset in
+  single-user mode. That the assembly also holds the PROM variables is the article's general statement
+  for these machines, not a Fuel-specific observation. Neither source establishes that the DS1742W has
+  no other connection.
 - The window placement is in the [DS1742W page](../../devices/ds1742/README.md) as an open question. This page holds the
   byte map and the year base that the driver assumes.
 
