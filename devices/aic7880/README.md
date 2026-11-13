@@ -5,7 +5,7 @@ The O2's onboard SCSI controller is an Adaptec AIC-7880. No AIC-7880 book is hel
 ## Sources and grades
 
 - **The source book:** Adaptec, *AIC-7870 Data Book*, SHA-256 `7f7d155bd5f6290766a4c27bbb18082e879288a01005c349128ede091e1218a5`. No printed revision is established. Page numbers below are PDF pages, with the printed page in parentheses where the source gave it.
-- **Page references were not rechecked.** They come from the note that supplied these facts. The PDF is not held in this repository, so each citation is unverified against the book.
+- **Page references were rechecked against the book in part.** The register offsets, widths and block map (PDF 57, 60, 61, 63, 64), the LHADDR, HCNT, DFCNTRL and DFSTATUS definitions with their bit positions (PDF 139-140, 145-148), the SCBPTR and SCBCNT definitions (PDF 153), FUNCTION1 (PDF 104), the SDONE, DMADONE and SIMODE0 bits (PDF 84, 91), the BRKADRINT and ERROR text (PDF 141-144) and the PDF 130 unassigned-address text matched the cited pages. The remaining page numbers below were not individually checked.
 - **Grade.** Every fact from the AIC-7870 book is graded inferred for the AIC-7880. The AIC-7880 is a sibling chip, and a sibling is not evidence for this chip's registers. A fact moves to established only when an AIC-7880 book or a measurement of this chip settles it.
 - **Exposure.** The author of the note that supplied these facts had read protected Adaptec driver software earlier. These facts come only from the published book. Anyone who writes an implementation or a review from this page should not have read that software.
 
@@ -28,7 +28,7 @@ The device register block runs from 0x00 to 0xff. The sequencer reads and writes
 - SCB array: 0xa0 to 0xbf.
 - 0xc0 to 0xff: reserved (inferred; PDF 57).
 
-Byte 0x8f is reserved. The book says reads return zero and writes are ignored, and that a read of an unassigned device address returns the last value driven on the bus, except at 0x8f, which always returns zero (inferred; PDF 130, 140). The defs unit has no entry for it.
+Byte 0x8f is reserved. The book says reads return zero and writes are ignored, and that a read of an unassigned device address returns the last value driven on the bus, except at 0x8f, which always returns zero (inferred; PDF 130, 140). The register summary on PDF 64 says instead that all unassigned register locations return zero. The book does not reconcile the two, so the read value of an unassigned address is unknown. The defs unit has no entry for it.
 
 ## Error and interrupt registers at 0x91 and 0x92
 
@@ -45,7 +45,7 @@ Byte 0x8f is reserved. The book says reads return zero and writes are ignored, a
 - Loading a nonzero host count clears `HDONE` (inferred; PDF 139–140).
 - `HDONE` means the host count is zero and the last host-block transfer has finished, including any temporary host-block bytes. It does not wait for a full FIFO word (inferred; PDF 139–140, 145–148).
 - Load the address, count and direction while host DMA is stopped, then write `FIFORESET` before setting `HDMAEN` (inferred; PDF 139–140, 145–148). `FIFORESET` empties valid FIFO state, resets the word pointers and takes the byte offset from `LHADDR` bits 2:0.
-- `FIFOFLUSH` has no effect on an empty FIFO, and the book permits one write that sets both `FIFORESET` and `FIFOFLUSH` (inferred; PDF 145–146).
+- `FIFOFLUSH` has no effect on an empty FIFO, and the book says several DFCNTRL functions may be combined into one write (inferred; PDF 145), but it does not name the `FIFORESET` plus `FIFOFLUSH` pair.
 - A full FIFO stops PCI reads. An empty FIFO stops PCI writes (inferred; PDF 145–148).
 - Clearing `HDMAEN` stops further host requests without losing accepted bytes, count or status. Poll for the acknowledgment before reloading registers (inferred; PDF 139, 145–146, 184–185).
 - To resume the same transfer, reuse its saved address, count and FIFO. The book does not allow a different `LHADDR` for the same transfer without reinitialising the FIFO. A new segment can take a new address only after the earlier host transfer has finished and its FIFO bytes are consumed or flushed (inferred; PDF 139, 145–146, 184–185).
@@ -53,7 +53,7 @@ Byte 0x8f is reserved. The book says reads return zero and writes are ignored, a
 - For PCI-to-FIFO with no SCSI transfer, clear `HDMAEN`, poll for the zero acknowledgment, then drain the FIFO through `DFDAT` at 0x99 (inferred; PDF 139, 145–146, 184–185; register table PDF 63).
 - For FIFO-to-PCI, do not enable another FIFO writer while `DFDAT` supplies bytes (inferred; PDF 145–146).
 - Unknown: whether the chip fetches bytes outside the requested interval to fill a partial FIFO word. The book extract does not say.
-- Unknown: whether `FIFOQWDEMP` stays set while valid bytes fewer than a full word are being moved, and whether a six-byte command can run from a partial word. The extract gives the status bit but no timing example.
+- The book says a partially stored quad word of one to seven bytes does not clear `FIFOQWDEMP` (inferred; PDF 147). Still unknown: whether `FIFOQWDEMP` stays set while valid bytes fewer than a full word are being moved, and whether a six-byte command can run from a partial word. The extract gives the status bit but no timing example.
 
 ## SCSI-side DMA
 
