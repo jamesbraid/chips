@@ -52,8 +52,8 @@ Status: draft, not independently reviewed.
 ## Interrupts
 
 - **Inferred.** A card at device 1 reaches Bridge input 1 on INTA and INTC, and Bridge input 5 on INTB and INTD.
-  The software rule is established: IRIX 6.5.30's `pcibr_intr_bits` maps INTA and INTC to the slot's input and
-  INTB and INTD to `slot ^ 4`, as [the IP35 IO9 note](../../questions/ip35-io9-pci-wiring.md) records. What this board
+  The software rule is established: IRIX 6.5.30's `pcibr_intr_bits` (`pcibr.o` 0x7534, read in full) maps INTA and INTC to the slot's input and
+  INTB and INTD to `slot ^ 4`, and the OpenBSD `xbridge.c` interrupt comment states the same rule, as [the IP35 IO9 note](../../questions/ip35-io9-pci-wiring.md) records. What this board
   wires to what has not been traced or captured. The [Cad Duo page](../cad-duo-pci-card/README.md#interrupts) rates the same
   wiring question unknown. That grade stands there until a trace or capture settles it.
 
