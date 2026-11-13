@@ -26,9 +26,10 @@ marking on an Indy board photograph would settle it. Unknown until then.
 - **80C03** data sheet: not held. NetBSD's register header cites an LSI Logic 80c03 data sheet, and the archive and aggregator copies tried were not retrievable. Facts about the 80C03-only registers therefore rest on public driver headers and are
   inferred.
 - **HPC3 Chip Specification**, revision 1.4, pp. 13 to 16, as used in the HPC3 sheet.
-- **Linux** `drivers/net/ethernet/seeq/sgiseeq.c` and `sgiseeq.h` at commit `db2ddb871435`.
-- **NetBSD** `sys/dev/ic/seeq8003reg.h` and `sys/arch/sgimips/hpc/if_sq.c` at commit `07004b2a9dac`.
-- **OpenBSD** `sys/arch/sgi/hpc/if_sq.c` on `origin/sgi-is-alive-at-7.9`.
+- **Linux** `drivers/net/ethernet/seeq/sgiseeq.c` and `sgiseeq.h` at the `references/code/linux` pin (`c339f4010dea`).
+- **NetBSD** `sys/dev/ic/seeq8003reg.h` and `sys/arch/sgimips/hpc/if_sq.c` at the `references/code/netbsd` pin (`0747dc050541`).
+- **OpenBSD** `sys/arch/sgi/hpc/if_sq.c` at the `references/code/openbsd` pin (`7011342f6a72`).
+The commits named in earlier versions of this page were not submodules here and were not checked.
 - **IRIX 6.5 base release**, IP22 Ethernet driver object, as in the HPC3 sheet. The IRIX 6.5.22 driver was not
   read.
 
@@ -83,9 +84,10 @@ undefined.
 
 ## Receive
 
-**Established** (8003 data sheet pp. 4-3, 4-4, 4-7, 4-8). The FIFO is 16 bytes and must be read every 800 ns on
-average; 16 bytes at 800 ns is 12.8 µs, so a frame that arrives while the FIFO goes unread overflows at about
-that point. The frame passes without preamble and FCS. At the end of a frame the status is loaded, subject to
+**Established** (8003 data sheet pp. 4-3, 4-4, 4-7, 4-8). The receive FIFO must be serviced every 800 ns on
+average to avoid overflow. The data sheet does not state the FIFO depth: an earlier version of this page said 16
+bytes and derived 12.8 µs from it, and no page of the data sheet or of the public drivers gives that figure, so
+both are dropped (**unknown**, route: the 80C03 data sheet). The frame passes without preamble and FCS. At the end of a frame the status is loaded, subject to
 the old/new rule, and an interrupt is raised if its condition is enabled.
 
 Receive status (register 6, read) has bits 5 to 0 for overflow, CRC error, dribble error, short frame, end of
@@ -110,7 +112,7 @@ interrupt is enabled in practice.
 
 ## Transmit
 
-**Established** (8003 data sheet pp. 4-3, 4-4, 4-8). The FIFO is 16 bytes and needs a byte every 800 ns. On a
+**Established** (8003 data sheet pp. 4-3, 4-4, 4-8). The transmit FIFO needs a byte every 800 ns on average. On a
 collision the chip sends jam, asserts TxRET, which clears its FIFO, and backs off by a truncated binary
 exponential of up to 2^10 slot times of 51.2 µs. After 16 collisions it sets the 16-collision and collision
 bits. On underflow it stops and sets the underflow bit. Status is loaded after every attempt.

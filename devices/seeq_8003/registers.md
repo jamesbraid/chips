@@ -186,5 +186,4 @@ Transmit status. Reading it clears the transmit interrupt. Bit 7 is old/new: set
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `FIFO_DEPTH` | 0x10 | established |  |  |
 | `SERVICE_INTERVAL_NS` | 0x320 | established |  |  |

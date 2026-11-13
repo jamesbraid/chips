@@ -487,5 +487,4 @@ pub mod tx_status {
         }
     }
 }
-pub const FIFO_DEPTH: u32 = 0x10; // established
 pub const SERVICE_INTERVAL_NS: u32 = 0x320; // established

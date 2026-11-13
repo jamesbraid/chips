@@ -218,7 +218,6 @@
 #define SEEQ_8003_TX_STATUS_UNDERFLOW_MASK           0x1u
 #define SEEQ_8003_TX_STATUS_UNDERFLOW_INPLACE        (SEEQ_8003_TX_STATUS_UNDERFLOW_MASK << SEEQ_8003_TX_STATUS_UNDERFLOW_SHIFT)
 
-#define SEEQ_8003_FIFO_DEPTH                         0x10u /* established */
 #define SEEQ_8003_SERVICE_INTERVAL_NS                0x320u /* established */
 
 #endif /* SEEQ_8003_GEN_H */

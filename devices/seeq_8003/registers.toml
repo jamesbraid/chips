@@ -242,5 +242,4 @@ int_success = { bits = [3, 3], grade = "established", doc = "Interrupt on succes
 bank = { bits = [6, 5], grade = "inferred", enum = "bank_select", doc = "Register bank for writes to registers 0 to 5 (80C03). The value 3 is not described: unknown." }
 
 [constants]
-FIFO_DEPTH = { value = 16, grade = "established" }
 SERVICE_INTERVAL_NS = { value = 800, grade = "established" }

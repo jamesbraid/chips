@@ -99,6 +99,5 @@
     <field name="collision" start="1" size="1" type="uint" grade="established"/>
     <field name="underflow" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <constant name="FIFO_DEPTH" value="0x10" grade="established"/>
   <constant name="SERVICE_INTERVAL_NS" value="0x320" grade="established"/>
 </genxml>

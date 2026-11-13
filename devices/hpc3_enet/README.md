@@ -146,8 +146,8 @@ and after a SEEQ overflow stop settles it.
   on IRIX.
 - **Established:** a frame longer than its buffer sets receive buffer overflow and stops the channel with an
   interrupt (p. 16).
-- **Inferred, strong:** frames that arrive while the channel is inactive are lost, not held. The SEEQ has a
-  16-byte receive FIFO that must be read about every 800 ns on average. HPC3 resets its own FIFO pointers when
+- **Inferred, strong:** frames that arrive while the channel is inactive are lost, not held. The SEEQ receive FIFO must be read about every 800 ns on average (its data sheet gives the service rate, not the FIFO
+  depth). HPC3 resets its own FIFO pointers when
   the channel is set active (p. 13), so nothing buffered before the restart reaches memory. The wire is not
   back-pressured.
 - **Unknown:** whether HPC3 keeps reading the SEEQ FIFO while the channel is inactive, draining and discarding,

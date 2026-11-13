@@ -576,14 +576,6 @@
   {
    "unit": "seeq_8003",
    "kind": "constant",
-   "name": "FIFO_DEPTH",
-   "value": 16,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "seeq_8003",
-   "kind": "constant",
    "name": "SERVICE_INTERVAL_NS",
    "value": 800,
    "count": 1,
