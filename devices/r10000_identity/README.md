@@ -6,8 +6,8 @@ The family covers the R10000, R12000, R14000 and R16000. Nothing here was read f
 
 ## Sources and grades
 
-- Linux 6.6 (tag `v6.6`) `arch/mips/include/asm/cpu.h`, `arch/mips/include/asm/mipsregs.h`, `arch/mips/kernel/cpu-probe.c` and `arch/mips/mm/c-r4k.c`. Read for this page at the tag, not at the pinned `linux` submodule commit. A public driver file is established for what the driver does. A driver shows what software expects, so a driver fact is a statement about software, not a measurement of the chip.
-- NYCBUG dmesgd record 5290, a NetBSD boot log of an O2 with an R12000, from the public archive at `dmesgd.nycbug.org`. A printed boot line is established for the text it prints.
+- Linux 6.6 (tag `v6.6`) `arch/mips/include/asm/cpu.h`, `arch/mips/include/asm/mipsregs.h`, `arch/mips/kernel/cpu-probe.c` and `arch/mips/mm/c-r4k.c`. Read for this page at the tag. A later verification pass re-read the same code at the pinned `linux` submodule commit (`c339f4010dea`): `cpu.h` lines 60 to 77 and 229, `cpu-probe.c` lines 1236 to 1251, `c-r4k.c` lines 1069 to 1083 and 1509 to 1517, and `mipsregs.h` lines 670 to 673. They match. A public driver file is established for what the driver does. A driver shows what software expects, so a driver fact is a statement about software, not a measurement of the chip.
+- NYCBUG dmesgd record 5290, a NetBSD boot log of an O2 with an R12000, from the public archive at `dmesgd.nycbug.org` (re-read in the retained copy of the page). A printed boot line is established for the text it prints.
 
 The processor manuals (NEC VR10000 and VR12000, MIPS R10000) are the usual owner of these fields. They were not read for this page, so every claim below rests on the two sources above.
 
