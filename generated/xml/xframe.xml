@@ -5,7 +5,7 @@
   <constant name="ADAPTER_STATUS_RMAC_LOCAL_FAULT" value="0x100000000000000" grade="inferred" from="OpenBSD xge driver (RMAC_LOCAL_FAULT); Linux s2io driver (s2BIT(7))"/>
   <constant name="ADAPTER_STATUS_RMAC_REMOTE_FAULT" value="0x200000000000000" grade="inferred" from="OpenBSD xge driver (RMAC_REMOTE_FAULT); Linux s2io driver (s2BIT(6))"/>
   <constant name="DESCRIPTOR_PAGE_BYTES" value="0x1000" grade="inferred" from="Linux s2io driver (descriptor pages)"/>
-  <constant name="DMA_CHANNELS" value="0x10" grade="inferred" from="SGI 10-Gigabit Ethernet card manual, rev 003 (document number not recorded in the held source)"/>
+  <constant name="DMA_CHANNELS" value="0x10" grade="established"/>
   <constant name="GENERAL_INT_MASK_ENABLE" value="0x0" grade="inferred" from="Linux s2io driver (general interrupt mask enable value)"/>
   <constant name="MAC_RMAC_ERR_REG_OFFSET" value="0x2028" grade="inferred" from="OpenBSD xge driver (MAC error register and its acknowledgement)"/>
   <constant name="MAC_RMAC_LINK_STATE_CHANGE" value="0x100000000" grade="inferred" from="OpenBSD xge driver (MAC error register and its acknowledgement)"/>

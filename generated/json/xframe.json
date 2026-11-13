@@ -36,8 +36,8 @@
    "name": "DMA_CHANNELS",
    "value": 16,
    "count": 1,
-   "grade": "inferred",
-   "from": "SGI 10-Gigabit Ethernet card manual, rev 003 (document number not recorded in the held source)"
+   "grade": "established",
+   "from": "Linux s2io driver"
   },
   {
    "unit": "xframe",

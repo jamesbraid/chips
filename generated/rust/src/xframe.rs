@@ -5,7 +5,7 @@
 pub const ADAPTER_STATUS_RMAC_LOCAL_FAULT: u64 = 0x100000000000000; // inferred
 pub const ADAPTER_STATUS_RMAC_REMOTE_FAULT: u64 = 0x200000000000000; // inferred
 pub const DESCRIPTOR_PAGE_BYTES: u32 = 0x1000; // inferred
-pub const DMA_CHANNELS: u32 = 0x10; // inferred
+pub const DMA_CHANNELS: u32 = 0x10; // established
 pub const GENERAL_INT_MASK_ENABLE: u32 = 0x0; // inferred
 pub const MAC_RMAC_ERR_REG_OFFSET: u32 = 0x2028; // inferred
 pub const MAC_RMAC_LINK_STATE_CHANGE: u64 = 0x100000000; // inferred

@@ -167,6 +167,6 @@ doc = "Size of one descriptor page. Pages chain to the next page by a physical p
 
 [constants.DMA_CHANNELS]
 value = 16
-grade = "inferred"
-from = "SGI 10-Gigabit Ethernet card manual, rev 003 (document number not recorded in the held source)"
-doc = "Total DMA channels the card manual gives. How the channels split between transmit and receive is unknown."
+grade = "established"
+from = "SGI 10-Gigabit Ethernet Network Adapter User's Guide, 007-4669-003, printed p. 2 (Features)"
+doc = "Total DMA channels the guide gives: 16, eight for reading and eight for writing. The guide says reading and writing, not transmit and receive, so how the channels map onto the card's transmit and receive paths is unknown."

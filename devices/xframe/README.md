@@ -8,15 +8,15 @@ This page holds what the constants table cannot: the product boundary, the inter
 
 - **Public Linux and OpenBSD drivers** for the register names, the descriptor layout, the interrupt masks and the link-state test. Anything taken only from these is a software expectation, graded inferred. The drivers show what software expects of the card. They do not prove what the silicon does.
 - **The IRIX 6.5.30 xg driver object**, read by disassembly. It is the only Xframe driver in the IRIX 6.5.29 and 6.5.30 software sets examined here. Its install rule restricts it to the IP35 board class, and the IP27 kernel builds examined carry no Xframe driver. Its writes and its bring-up sequence are established. The watchdog and the interrupt acknowledgement it implies are graded inferred, because the held analysis describes them as behaviour rather than as a read of the whole code path.
-- **The SGI 10-Gigabit Ethernet card manual**, revision 003 (document number not recorded here), with revision 001 dated May 2004. The manual gives the DMA channel count and the list of supported systems. Its register layout is not held. The Neterion programming manual is not held either.
+- **The SGI 10-Gigabit Ethernet Network Adapter User's Guide**, 007-4669-003. Printed page 1 lists the supported systems and printed page 2 gives the feature list, including the DMA channel count. Its register layout is not held. The Neterion programming manual is not held either.
 
 A software expectation is not a measurement. Where the held sources disagree, or stop short, this page says so and leaves the item unknown.
 
 ## Product and PCI
 
 - The card is a PCI and PCI-X add-in card. The public drivers match it by device ID alone, with no platform check (inferred).
-- The card is universal-voltage and PCI 2.3 compatible, so it can sit in a 5 V slot and negotiate conventional PCI (inferred, from the manual and the drivers).
-- The manual's revision 003 lists these supported systems: Altix XE, Altix 4700, 450, 3000 and 350, Prism, Origin 350, Onyx 4 and 350, Origin 3000 with an IX or PX brick, Onyx 3000 and Tezro. Origin 200 and Origin 2000 are not on the list (inferred, from the manual).
+- The card is universal-voltage and PCI 2.3 compatible, so it can sit in a 5 V slot and negotiate conventional PCI (established for the universal 3.3 V and 5 V signalling and PCI 2.3 compliance by the guide, printed p. 2; the PCI-X negotiation is inferred from the drivers).
+- The guide (007-4669-003, printed p. 1) lists these supported systems: Altix XE, Altix 4700, 450, 3000 and 350, Prism, Origin 350, Onyx 4 and 350, Origin 3000 with an IX or PX brick, Onyx 3000 and Tezro (established). Origin 200 and Origin 2000 are not on the list (established as an absence from that list).
 - The SGI card's subsystem device ID is not established by any held source (unknown).
 - The PCI vendor and device IDs are not carried by this import. The constants table has no entry for them.
 
@@ -62,7 +62,7 @@ The IRIX driver keeps a software idle counter. Each interrupt entry clears it. A
 
 **Descriptors.** A transmit descriptor is four 64-bit words: control word 1, which holds the ownership bit, control word 2, the buffer address, and the host control word (inferred, from the public driver's layout). The Linux driver sets the ownership bit once on the first descriptor of a gather list, not on each one (inferred). A receive descriptor comes in one-, three- and five-buffer forms. Descriptor pages are 4 KB and chain to the next page by a physical pointer (inferred).
 
-**DMA channels.** The manual says the card has 16 DMA channels (inferred). The held sources do not say how many belong to transmit and how many to receive (unknown).
+**DMA channels.** The guide says the card has 16 DMA channels, 8 for reading and 8 for writing (established, 007-4669-003 printed p. 2). The held sources do not say how reading and writing map onto the transmit and receive paths (unknown).
 
 **Five-buffer mode.** The IRIX driver selects ring mode 2, `RING_MODE_5`, when the MTU is set to jumbo size (inferred). A five-buffer descriptor is 64 bytes, with three control words and five buffer pointers (inferred, from the public driver's layout). The public driver supports the general rule that the card splits a frame by protocol layer, and that the payload may run on across the last three buffers (inferred). The exact buffer placement is not corroborated by any held public source, so it is unknown. Ring mode 0 is the one-buffer form. Ring mode 1 is the three-buffer form, which the IRIX driver does not select (inferred).
 

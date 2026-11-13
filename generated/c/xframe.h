@@ -9,7 +9,7 @@
 #define XFRAME_ADAPTER_STATUS_RMAC_LOCAL_FAULT       0x100000000000000ull /* inferred */
 #define XFRAME_ADAPTER_STATUS_RMAC_REMOTE_FAULT      0x200000000000000ull /* inferred */
 #define XFRAME_DESCRIPTOR_PAGE_BYTES                 0x1000u /* inferred */
-#define XFRAME_DMA_CHANNELS                          0x10u /* inferred */
+#define XFRAME_DMA_CHANNELS                          0x10u /* established */
 #define XFRAME_GENERAL_INT_MASK_ENABLE               0x0u /* inferred */
 #define XFRAME_MAC_RMAC_ERR_REG_OFFSET               0x2028u /* inferred */
 #define XFRAME_MAC_RMAC_LINK_STATE_CHANGE            0x100000000ull /* inferred */
