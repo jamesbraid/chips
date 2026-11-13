@@ -17,7 +17,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `R12KA_MODE_SCCLKDIV_MASK` | 0x380000 | established |  | Mask for the three-bit SCClkDiv field, bits 21:19 of the boot mode word. |
 | `R12KA_MODE_SCCLKDIV_SHIFT` | 0x13 | established |  | Lowest bit of the three-bit SCClkDiv field, bits 21:19 of the boot mode word. |
 | `R12KA_MODE_SCCLKDIV_TEST_CODE` | 0x7 | established |  | SCClkDiv code 111, a divisor of 4 that the manual says was added for testing silicon. |
-| `R12KA_MODE_SYSCLKDIV_CODE_A_ONLY` | 0xc | established |  | SysClkDiv code 1100, the only code the variant's table adds. It selects a divisor of 7 between PClk and SysClk. The common R12000 has no entry for it, which the table's title, a change list, implies. The rejection is inferred. |
+| `R12KA_MODE_SYSCLKDIV_CODE_A_ONLY` | 0xc | established |  | SysClkDiv code 1100, the only code the variant's table adds. It selects a divisor of 7 between PClk and SysClk. The R12000 and R12000L list it as reserved (printed page 346, Table B-1). |
 | `R12KA_MODE_SYSCLKDIV_MASK` | 0x1e00 | established |  | Mask for the four-bit SysClkDiv field, bits 12:9 of the boot mode word. |
 | `R12KA_MODE_SYSCLKDIV_SHIFT` | 0x9 | established |  | Lowest bit of the four-bit SysClkDiv field, bits 12:9 of the boot mode word. |
 | `R12KA_PERF_CTL0_SYNDROME_MASK` | 0xff800000 | established |  | Mask for the nine-bit syndrome field, bits 31:23 of CP0 register 25 performance control 0. |

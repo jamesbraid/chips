@@ -12,7 +12,7 @@ The manual's R12000 material covers the R12000 and R12000L together, so a rule a
 
 ## Boot mode fields
 
-The mode word is read at reset. Only its low 25 bits are copied into CP0 Config. The fields below are read from the mode word, not from a new register.
+The mode word is read at reset. Only its low 25 bits are copied into CP0 Config (printed p. 180). The fields below are read from the mode word, not from a new register.
 
 ### SysClkDiv, bits 12:9
 
@@ -34,9 +34,9 @@ The mode word is read at reset. Only its low 25 bits are copied into CP0 Config.
 | 1100 | 7 | legal, new in the R12000A |
 | 1101 to 1111 | none | reserved |
 
-  The codes 3 to 11 are the same divisors the R10000 family uses. Established (Table C-1).
+  The codes 3 to 11 give the same divisors as the R12000's own table. Established (Table C-1 against Table B-1, printed p. 346). The R10000 formula for the field, PClk = SysClk x (SysClkDiv + 1) / 2, gives the same divisors for codes 3 to 11 (printed p. 172).
 - Code 12 is the only code the R12000A adds. Established (Table C-1, which is the list of mode bits changed in the R12000A).
-- The common R12000 has no entry for code 12, and the table title implies it rejects that code. Inferred. The manual does not state the R12000 rule in those words.
+- The R12000 and R12000L list code 1100 as reserved. Established (Table B-1, printed p. 346, which carries a footnote that the code can be set in the R12000A). What the R12000 does with a reserved code is unknown.
 - Code 12 gives 7 rather than the 6.5 that a linear step from code 11 would give. The table states 7, so the step is not linear. Established (Table C-1).
 
 ### SCClkDiv, bits 21:19
@@ -59,7 +59,7 @@ The mode word is read at reset. Only its low 25 bits are copied into CP0 Config.
 - The R12000 and R12000L leave these bits unused, and their figure shows them as zero. Established (figure, printed p. 247).
 - The bits are read only. A write to the control register does not change them. Established (section C.2).
 - The register is not writable by any other means. Established (section C.2).
-- Bit 31 of control 0 is not a counter overflow bit. The overflow interrupt is on counter bit 31, and the manual's text on IP[7] refers to the counter. Established (printed p. 247). Whether the syndrome bit can assert an interrupt is not stated in the manual. Unknown.
+- Bit 31 of control 0 is not a counter overflow bit. The overflow interrupt is on counter bit 31, and the manual's text on IP[7] refers to the counter (printed p. 247). Inferred: the manual states the counter rule and the syndrome placement separately, not this contrast. Whether the syndrome bit can assert an interrupt is not stated in the manual. Unknown.
 
 ### What fills it
 
@@ -82,6 +82,6 @@ The mode word is read at reset. Only its low 25 bits are copied into CP0 Config.
 - **Which error sources fill the register beyond refills and writebacks.** The manual names those two paths. Whether other secondary data events fill it is not stated. Settled by the same fault-injection capture.
 - **Interrupt effect of syndrome bit 31.** The manual does not say whether bit 31 of control 0 can assert or acknowledge an interrupt. Settled by the manual's signal description or a test on the part.
 - **Value after reset, and reset behaviour.** The manual gives only the power-up state. Settled by a capture of the register after each reset kind on a part.
-- **R12000 rejection of SysClkDiv code 12.** Inferred from the table title. Settled by the R12000 user's manual's mode table, or a boot-mode test on an R12000 part.
+- **R12000 behaviour on SysClkDiv code 12.** The manual lists the code as reserved. What the part does when it is set is not stated. Settled by a boot-mode test on an R12000 part.
 - **R14000 and R16000.** This manual does not cover them. Any statement that they carry the same syndrome field is outside this page. Settled by their own manuals or a capture.
 - **Physical measurements.** No capture from a real R12000A part exists in this repository for any field here. The manual states the rules, and a capture would show what a part does.
