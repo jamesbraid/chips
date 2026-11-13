@@ -19,9 +19,9 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `bmcr` | 0x0 | rw | 16 |  | mii | unknown | inferred | DP83843 revision B datasheet, basic mode control register; register number from the clause 22 numbering, not re-read against the PDF |
-| `bmsr` | 0x1 | r | 16 |  | mii | 0x7849 | inferred | DP83843 revision B datasheet, basic mode status register; register number from the clause 22 numbering, not re-read against the PDF |
-| `aner` | 0x6 | r | 16 |  | mii | 0x4 | inferred | DP83843 revision B datasheet, autonegotiation expansion register; register number from the clause 22 numbering, not re-read against the PDF |
+| `bmcr` | 0x0 | rw | 16 |  | mii | unknown | inferred | DP83843 revision B datasheet, basic mode control register; register number from Table 5, PDF p. 46 (printed p. 45) |
+| `bmsr` | 0x1 | r | 16 |  | mii | 0x7849 | inferred | DP83843 revision B datasheet, basic mode status register; register number from Table 5, PDF p. 46 (printed p. 45) |
+| `aner` | 0x6 | r | 16 |  | mii | 0x4 | inferred | DP83843 revision B datasheet, autonegotiation expansion register; register number from Table 5, PDF p. 46 (printed p. 45) |
 | `lbr` | 0x17 | rw | 16 |  | mii | 0x0 | established | DP83843 revision B datasheet, loopback register, PDF pp. 59-62 (printed pp. 58-61), Table 21 |
 | `btscr` | 0x18 | rw | 16 |  | mii | 0x0 | established | DP83843 revision B datasheet, 10BASE-T status and control register, PDF pp. 59-62 (printed pp. 58-61), Table 21 |
 

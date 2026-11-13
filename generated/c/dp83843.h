@@ -9,7 +9,7 @@
 /*
  * Basic mode control. Reset value not stated by the datasheet text consulted.
  */
-/* bmcr: rw16, space mii, reset unknown; DP83843 revision B datasheet, basic mode control register; register number from the clause 22 numbering, not re-read against the PDF */
+/* bmcr: rw16, space mii, reset unknown; DP83843 revision B datasheet, basic mode control register; register number from Table 5, PDF p. 46 (printed p. 45) */
 #define DP83843_BMCR_OFFSET                          0x0u /* inferred */
 #define DP83843_BMCR_LOOPBACK_SHIFT                  14 /* established */
 #define DP83843_BMCR_LOOPBACK_MASK                   0x1u
@@ -39,7 +39,7 @@
 /*
  * Basic mode status, read only. The reset value is the one the datasheet gives with no link and no completed autonegotiation, not a value read from a running part.
  */
-/* bmsr: r16, space mii, reset 0x7849; DP83843 revision B datasheet, basic mode status register; register number from the clause 22 numbering, not re-read against the PDF */
+/* bmsr: r16, space mii, reset 0x7849; DP83843 revision B datasheet, basic mode status register; register number from Table 5, PDF p. 46 (printed p. 45) */
 #define DP83843_BMSR_OFFSET                          0x1u /* inferred */
 #define DP83843_BMSR_PREAMBLE_SUPPRESSION_SHIFT      6 /* established */
 #define DP83843_BMSR_PREAMBLE_SUPPRESSION_MASK       0x1u
@@ -54,7 +54,7 @@
 /*
  * Autonegotiation expansion, read only. The reset value is the datasheet's value with no completed negotiation.
  */
-/* aner: r16, space mii, reset 0x4; DP83843 revision B datasheet, autonegotiation expansion register; register number from the clause 22 numbering, not re-read against the PDF */
+/* aner: r16, space mii, reset 0x4; DP83843 revision B datasheet, autonegotiation expansion register; register number from Table 5, PDF p. 46 (printed p. 45) */
 #define DP83843_ANER_OFFSET                          0x6u /* inferred */
 #define DP83843_ANER_NEXT_PAGE_ABLE_SHIFT            2 /* established */
 #define DP83843_ANER_NEXT_PAGE_ABLE_MASK             0x1u

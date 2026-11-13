@@ -3,7 +3,7 @@
 <genxml unit="dp83843" prefix="DP83843" title="National DP83843 PHYTER 10/100 Mb/s transceiver, MII registers (Origin 300 IO-8)" from="DP83843 revision B datasheet">
   <doc>The MII management registers of the DP83843 transceiver on the Origin 300 IO-8 board. The IOC3 Ethernet controller reaches the part through its MII port, so only the registers a guest can read or write through that port are here. Offsets are MII register numbers, one per 16-bit register. The registers below are the ones the DP83843 datasheet, revision B, describes with bit meanings or reset values; the rest of the register map is not transcribed. The DP83840A that the Origin 200 carries is a different part with its own bit meanings for registers 0x17 and 0x18, and it is not described by this unit. Grades say how each item was derived from the datasheet; none of it was measured on a board, and reset values are unknown unless stated.</doc>
   <space name="mii" unit="reg"/>
-  <struct name="BMCR" size="2" grade="inferred" from="DP83843 revision B datasheet, basic mode control register; register number from the clause 22 numbering, not re-read against the PDF" register="yes" offset="0x0" access="rw" space="mii" reset="unknown">
+  <struct name="BMCR" size="2" grade="inferred" from="DP83843 revision B datasheet, basic mode control register; register number from Table 5, PDF p. 46 (printed p. 45)" register="yes" offset="0x0" access="rw" space="mii" reset="unknown">
     <doc>Basic mode control. Reset value not stated by the datasheet text consulted.</doc>
     <field name="loopback" start="14" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6"/>
     <field name="speed_100" start="13" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 47-48 (printed pp. 46-47), Table 6"/>
@@ -14,13 +14,13 @@
     <field name="duplex" start="8" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 47-48 (printed pp. 46-47), Table 6"/>
     <field name="collision_test" start="7" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 48 (printed p. 47), Table 6"/>
   </struct>
-  <struct name="BMSR" size="2" grade="inferred" from="DP83843 revision B datasheet, basic mode status register; register number from the clause 22 numbering, not re-read against the PDF" register="yes" offset="0x1" access="r" space="mii" reset="0x7849">
+  <struct name="BMSR" size="2" grade="inferred" from="DP83843 revision B datasheet, basic mode status register; register number from Table 5, PDF p. 46 (printed p. 45)" register="yes" offset="0x1" access="r" space="mii" reset="0x7849">
     <doc>Basic mode status, read only. The reset value is the one the datasheet gives with no link and no completed autonegotiation, not a value read from a running part.</doc>
     <field name="preamble_suppression" start="6" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 48-49 (printed pp. 47-48), Table 7"/>
     <field name="an_complete" start="5" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 49 (printed p. 48), Table 7"/>
     <field name="link_status" start="2" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF pp. 49 (printed p. 48), Table 7"/>
   </struct>
-  <struct name="ANER" size="2" grade="inferred" from="DP83843 revision B datasheet, autonegotiation expansion register; register number from the clause 22 numbering, not re-read against the PDF" register="yes" offset="0x6" access="r" space="mii" reset="0x4">
+  <struct name="ANER" size="2" grade="inferred" from="DP83843 revision B datasheet, autonegotiation expansion register; register number from Table 5, PDF p. 46 (printed p. 45)" register="yes" offset="0x6" access="r" space="mii" reset="0x4">
     <doc>Autonegotiation expansion, read only. The reset value is the datasheet's value with no completed negotiation.</doc>
     <field name="next_page_able" start="2" size="1" type="uint" grade="established" from="DP83843 revision B datasheet, PDF p. 53 (printed p. 52)"/>
   </struct>

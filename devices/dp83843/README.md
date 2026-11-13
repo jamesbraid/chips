@@ -19,14 +19,15 @@ would settle it.
 
 - **DP83843 datasheet, revision B** (TI publication SNLS021B), cited as `DP83843 revision B datasheet, PDF p. N
   (printed p. M)`. The chip page for the IOC3 already cites this document for the reserved
-  register ranges. The page numbers here came from an earlier reading of the PDF and were
-  not re-checked for this import. A page cited a few pages off is the first thing to check.
+  register ranges. The page numbers were re-read against the PDF: the PDF page is the printed page plus one
+  (register map Table 5 on PDF p. 46, BMCR Table 6 on pp. 47 to 48, BMSR Table 7 on pp. 48 to 49, ANER Table 12 on
+  p. 53, LBR Table 21 on pp. 59 to 61, 10BTSCR Table 22 on p. 61, loopback prose in section 3.10 on p. 34).
 - **OpenBSD sgi mailing list, "Origin 300 with NUMA link"**, Maurice Janssen, 2014-02-12.
   The post quotes a boot log from a real Origin 300. The same post is already a source for
   the [IOC3 page](../ioc3/README.md), which carries the Origin 300 supplement.
 - **OpenBSD MII device table** (`sys/dev/mii/miidevs`), for the model numbers of the National
-  Semiconductor PHYs. The `openbsd` submodule is not checked out in this repository, so
-  those numbers were not re-read here. Every fact that depends on them is marked inferred.
+  Semiconductor PHYs. Re-read at the OpenBSD pin `7011342f6a72`: `DP83840` is model 0, `DP83843` model 1 and `DP83815` model 2 under the National Semiconductor OUI
+  (`miidevs`, lines 274 to 276). The facts that depend on them stay inferred.
 
 ## Identity and placement
 

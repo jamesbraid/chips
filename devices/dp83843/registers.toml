@@ -16,7 +16,7 @@ access = "rw"
 width = 16
 reset = "unknown"
 grade = "inferred"
-from = "DP83843 revision B datasheet, basic mode control register; register number from the clause 22 numbering, not re-read against the PDF"
+from = "DP83843 revision B datasheet, basic mode control register; register number from Table 5, PDF p. 46 (printed p. 45)"
 doc = "Basic mode control. Reset value not stated by the datasheet text consulted."
 
 [registers.bmcr.fields]
@@ -36,7 +36,7 @@ access = "r"
 width = 16
 reset = 0x7849
 grade = "inferred"
-from = "DP83843 revision B datasheet, basic mode status register; register number from the clause 22 numbering, not re-read against the PDF"
+from = "DP83843 revision B datasheet, basic mode status register; register number from Table 5, PDF p. 46 (printed p. 45)"
 doc = "Basic mode status, read only. The reset value is the one the datasheet gives with no link and no completed autonegotiation, not a value read from a running part."
 
 [registers.bmsr.fields]
@@ -51,7 +51,7 @@ access = "r"
 width = 16
 reset = 0x0004
 grade = "inferred"
-from = "DP83843 revision B datasheet, autonegotiation expansion register; register number from the clause 22 numbering, not re-read against the PDF"
+from = "DP83843 revision B datasheet, autonegotiation expansion register; register number from Table 5, PDF p. 46 (printed p. 45)"
 doc = "Autonegotiation expansion, read only. The reset value is the datasheet's value with no completed negotiation."
 
 [registers.aner.fields]

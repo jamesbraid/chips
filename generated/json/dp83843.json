@@ -15,7 +15,7 @@
    "space": "mii",
    "reset": "unknown",
    "grade": "inferred",
-   "from": "DP83843 revision B datasheet, basic mode control register; register number from the clause 22 numbering, not re-read against the PDF"
+   "from": "DP83843 revision B datasheet, basic mode control register; register number from Table 5, PDF p. 46 (printed p. 45)"
   },
   {
    "unit": "dp83843",
@@ -101,7 +101,7 @@
    "space": "mii",
    "reset": 30793,
    "grade": "inferred",
-   "from": "DP83843 revision B datasheet, basic mode status register; register number from the clause 22 numbering, not re-read against the PDF"
+   "from": "DP83843 revision B datasheet, basic mode status register; register number from Table 5, PDF p. 46 (printed p. 45)"
   },
   {
    "unit": "dp83843",
@@ -142,7 +142,7 @@
    "space": "mii",
    "reset": 4,
    "grade": "inferred",
-   "from": "DP83843 revision B datasheet, autonegotiation expansion register; register number from the clause 22 numbering, not re-read against the PDF"
+   "from": "DP83843 revision B datasheet, autonegotiation expansion register; register number from Table 5, PDF p. 46 (printed p. 45)"
   },
   {
    "unit": "dp83843",
