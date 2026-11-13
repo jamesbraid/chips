@@ -37,6 +37,13 @@ Published manuals, all SGI:
   preliminary and has at least one unresolved editor placeholder. Its statements are graded inferred here.
 - Public sales material: the Origin 3000 data sheet (p. 4) and the NUMAflex white paper (pp. 8 and 9),
   used only to corroborate product-level facts.
+- Verification note: a later pass re-read the enclosure figures and weight (`007-4311-002` pp. 38 and 109), the
+  3.50 in height conflict (`007-4240-002` p. 225), the six-port note and the MetaRouter and repeat-router text
+  (`108-0240-002` pp. 2-20 and 2-23 to 2-25), the `router 6 port` commands (`108-0301-001`) and the `router <type>`
+  command (`007-4240-002` pp. 262 and 263). The other page citations on this page, the preliminary cabling guide and the
+  `hinv` listing were not re-read. The firmware and kernel readings behind
+  `devices/router_origin3000_rbrick/registers.toml` could not be re-read, because the shipped L1 firmware set is not in the
+  checkout the pass used. They stay graded inferred.
 - A public `hinv -vm` listing of a 20-processor Origin 3400, posted in 2009. It is a real-hardware capture
   by someone else, so its inventory lines are graded established. Its port pairing is inferred.
 
