@@ -19,7 +19,7 @@ facts but no source states it. **Unknown** means it is not settled, with the rou
   reading behind this page records no load addresses for them; re-locate them by the quoted text.
 - **IRIX 6.5.30 IP35 kernel**, SHA-256 `8404e226a649c622ebefe452a234566d74cbb81e802d793f22acdcbab518b9a8`.
   Read by disassembly with its symbol table. The routines below are named by role, not by symbol.
-- **SGI Origin 3900 Server User's Guide**, `007-4653-001` p. 62, the board order, as cited by the Cx-brick page.
+- **SGI Origin 3900 Server User's Guide**, `007-4653-001` printed p. 62 (Figure 3-5 and the text above it): IP53 node board 1 is NASID n, board 2 is n+1, board 0 is n+2 and board 3 is n+3. Rechecked.
 - **Public code.** OpenBSD `sginode.c` walks the same node table. The 128-entry size of that table is taken from
   the public Linux IP27 header as the reading states it. Neither public tree is checked out in this clone, so
   neither was re-read for this page.
@@ -42,11 +42,11 @@ This page does not restate them.
 | Fact | Grade | Evidence and limit |
 |---|---|---|
 | The global master computes every hub's NASID itself, from the discovered router graph, before it writes any NASID to a hub. The L1 identity queries the PROM sends (rack, slot, type, serial, position) return no NASID-like value. | established | The step prints "Calculating NASIDs" and fails with "NASID calculation failed". |
-| The calculation walks the discovery table. Each entry's neighbour records (the neighbour's index and the far end's port number) link it to other entries. Routers, metarouters and hubs have separate branches. Its messages include an internal-error message for the walk and "meta ID fixed" for a metarouter. | established | Control flow and messages read in outline. The arithmetic was not traced end to end. |
-| The numbers have a local-bits part and a router part. The PROM's debug output prints the local-bit count and, for a metarouter, its meta ID. | established for the text | Same routine. |
+| The calculation walks the discovery table. Each entry's neighbour records (the neighbour's index and the far end's port number) link it to other entries. Routers, metarouters and hubs have separate branches. Its messages include an internal-error message for the walk and "metaid fixed to %d" for a metarouter. | inferred | The walk and its messages were read in outline, not in full, so the structure is a reading. The messages themselves are in the 6.210 image. The arithmetic was not traced end to end. |
+| The numbers have a local-bits part and a router part. The PROM's debug output prints the local-bit count and, for a metarouter, its meta ID. | established for the text, which is in the 6.210 image | Same routine. |
 | A router's number is its parent's number combined with a weight from a per-topology table, shifted past the local bits. A hub's low bits number it within its router. | inferred | The shift-and-combine pattern is in the routine. Which table entry each port pair selects, and where the low hub index comes from, were not traced. |
-| After discovery, the PROM checks that each hub's NASID agrees with the router port it was found on, and prints a mismatch message if not. | established for the check and its text; inferred that NASID is therefore a function of router position | Same routine. |
-| An optional environment setting adds a fixed offset to the number of every discovery-table entry, hubs and routers alike, after the calculation. The PROM prints a warning when it is set. A bit in the PROM's flag word makes it skip reading this setting and the `force_coarse` setting below. | established for the offset, the warning and the skip | The loop was read in full. Which flag bit, and what sets it, were not traced. |
+| After discovery, the PROM checks that each hub's NASID agrees with the router port it was found on, and prints a mismatch message if not ("nasid %d and router port mismatch during rediscovery" is in the 6.210 image). | inferred (the message text is established; that the check runs after discovery and that NASID is a function of router position are readings) | Same routine, read in outline. |
+| An optional environment setting adds a fixed offset to the number of every discovery-table entry, hubs and routers alike, after the calculation. The PROM prints "*** Warning: NASIDOffset set to %d" when it is set. A bit in the PROM's flag word makes it skip reading this setting and the `force_coarse` setting below. | established for the offset, the warning and the skip | The loop was read in full. Which flag bit, and what sets it, were not traced. |
 | Only entries of type 1 are then tested against 64. Type 1 is taken to mean hub. | established for the test; inferred for the meaning of type 1 | The mapping of type numbers to kinds is not sourced in this repository. |
 | No input to the calculation is a node board number or an L1 position. | inferred | None was seen in the outline read. The L1 queries that carry those values happen at discovery and are stored beside the fields the walk uses, not in them. A full trace would settle it. |
 
@@ -54,7 +54,7 @@ This page does not restate them.
 
 | Fact | Grade | Evidence and limit |
 |---|---|---|
-| If any hub's NASID is 64 or more after the offset, the PROM sets the flag-word bit that selects region size 1, and prints "Note: Setting region size to 1 (coarse mode)". Node-number distribution later writes that size into every hub's node-number word. Region size 1 is the coarse value of the Bedrock local block. | established | The loop that tests each hub against 64, the flag store and the message. The node-number setter's stores to the same register are read in [the write-timing page](../../evidence/hub-bedrock-config-write-timing.md). |
+| If any hub's NASID is 64 or more after the offset, the PROM sets the flag-word bit that selects region size 1, and prints "Note: Setting region size to %d (%s mode)", with the size and the mode name filled in. Node-number distribution later writes that size into every hub's node-number word. Region size 1 is the coarse value of the Bedrock local block. | established | The loop that tests each hub against 64, the flag store and the message. The node-number setter's stores to the same register are read in [the write-timing page](../../evidence/hub-bedrock-config-write-timing.md). |
 | The `force_coarse` setting can force a larger region size. The PROM then prints "*** Warning: force_coarse = %d". | established | Same routine. The switch name is also noted in the write-timing page. |
 
 ## What IRIX does with NASIDs
