@@ -6,8 +6,8 @@ Nothing here was read from silicon or from a running machine. The R14000 claims 
 
 ## Sources and grades
 
-- Linux v5.10, `arch/mips/oprofile/op_model_mipsxx.c` (commit `2c85ebc57b3e1817b6ce1a6b703928e113a90442`). The driver's access wrappers, programming, interrupt handling, counter count and CPU selection. It shows what software expects. A driver fact is inferred for the R14000, not measured.
-- Linux `arch/mips/include/asm/mipsregs.h` (commit `db2ddb87143519e20a95aa36c60b36107b736a58`). The generic control field names and positions.
+- Linux, `arch/mips/kernel/perf_event_mipsxx.c` in the pinned tree (lines 191-207 and 817-824; counter count by CPU, selectors, 32-bit reads). The driver's access wrappers, programming, interrupt handling, counter count and CPU selection. It shows what software expects. A driver fact is inferred for the R14000, not measured.
+- Linux `arch/mips/include/asm/mipsregs.h` in the pinned tree (lines 900-905, 2019-2039). The generic control field names and positions.
 - SGI, *SpeedShop User's Guide*, 007-3311-011, Table 4-3 (printed p. 61). It gives the hardware counter events for the R12000, R14000 and R16000, with event 0 as cycles. Established for the event numbering.
 - NEC, *VR10000 Series 64-/32-bit Microprocessor User's Manual*, March 2001, U10278EJ4V0UM00, printed pages 247 (Figure 11-23, control register format), 248 (Table 11-24, R12000 counter events) and 250 (Table 11-27, control field definitions). Established for the R12000. The same manual is cited in [devices/r12000a_variant/README.md](../r12000a_variant/README.md).
 

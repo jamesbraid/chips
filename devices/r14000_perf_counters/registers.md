@@ -27,8 +27,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `R14KPC_EV_FAILED_SC` | 0x5 | established |  | Failed conditional stores, from SGI's table. |
 | `R14KPC_EV_MISPREDICT` | 0x18 | established |  | Mispredicted branches, from SGI's table. |
 | `R14KPC_EV_PREFETCH_EXEC` | 0x10 | established |  | Executed prefetch instructions. This is the lowest event number that needs bit 9 of the event select. |
-| `R14KPC_EV_RETIRED_FP` | 0x15 | established |  | Retired floating-point instructions, from SGI's table. |
-| `R14KPC_EV_RETIRED_INSTR` | 0xf | established |  | Retired instructions, from SGI's table. The table counts the number retired in a cycle. |
+| `R14KPC_EV_RETIRED_FP` | 0x15 | established |  | Graduated floating-point instructions, from SGI's table. |
+| `R14KPC_EV_RETIRED_INSTR` | 0xf | established |  | Graduated instructions, from SGI's table. SGI calls these graduated instructions. |
 | `R14KPC_EV_SCACHE_ECC_CORRECTABLE` | 0x8 | established |  | Correctable ECC errors on secondary-cache data. The NEC manual and SGI's table both give this numbering. |
 | `R14KPC_EV_TLB_MISS` | 0x17 | established |  | TLB misses, from SGI's table. |
 | `R14KPC_EV_UNIMPLEMENTED` | 0xe | established |  | Entry 14 of SGI's table is marked unimplemented. It is not a usable event. |
