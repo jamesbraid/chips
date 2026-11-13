@@ -69,7 +69,7 @@ Byte 0x8f is reserved. The book says reads return zero and writes are ignored, a
 - `DMADONE` is `HDONE` AND `SDONE` (inferred; PDF 82, 84, 148).
 - These status bits complete transfer blocks. They do not, by themselves, complete a command or a CDB (inferred; PDF 82, 84, 148).
 - Unknown: whether `SDONE` asserts for a zero SCSI count. The cited pages do not settle it.
-- The interrupt enables for `SDONE` and `DMADONE` are the `ENSDONE` and `ENDMADONE` bits of `SIMODE0` (inferred; PDF 91). Their bit positions are not in the extract.
+- The interrupt enables for `SDONE` and `DMADONE` are the `ENSDONE` and `ENDMADONE` bits of `SIMODE0` (inferred; PDF 91). The book's bit summary puts `ENDMADONE` at `SIMODE0` bit 0 and `ENSDONE` at bit 2 (inferred; PDF 65), not yet in the defs unit.
 
 ## COMMAND-phase DMA
 
@@ -118,17 +118,17 @@ The offsets and bit positions are in the defs unit. The pages below were read di
 - `SSTAT1` bit 3 (`BUSFREE`) is set when BSY and SEL have both been negated on the SCSI bus for 400 ns. It is latched, and writing one to `CLRBUSFREE` in `CLRSINT1` clears it. The book says it starts at zero and then follows the bus once 400 ns have passed (inferred; PDF 87, printed 4-18).
 - `CLRSINT1` is at `0x0c` and its `CLRATNO` bit is bit 6 (inferred; PDF 78 and 86). Its other clear bits are not in the pages read here.
 - `SIMODE1` is at 0x11 and is in the defs unit (inferred; PDF 92).
-- Unknown: the offsets of `SSTAT0`, `SSTAT1` and `CLRSINT0` are not in the pages read here, so none is listed in the defs unit.
+- `SSTAT0` and `CLRSINT0` share offset 0x0b, and `SSTAT1` is at 0x0c with `CLRSINT1` (inferred; the book's SCSI register summary, PDF 64 to 66, printed 3-10 and 3-11). None of the three is listed in the defs unit yet.
 
 ## Selection timeout and reselection indication
 
 These facts come from the AIC-7870 book's selection pages (PDF pp. 73, 76 and 84–87) and from the public Linux and OpenBSD timeout handlers (Linux `drivers/scsi/aic7xxx/aic7xxx_core.c` lines 1712 to 1770 and OpenBSD `sys/dev/ic/aic7xxx.c` lines 1212 to 1233, at the commits above). Every fact is inferred for the AIC-7880. The line and page numbers come from the reading that supplied this section; they have not been rechecked against the book or the driver files here.
 
-- The chip sets `SSTAT0.SELINGO` while it waits for the selected target's BSY response. A successful selection clears `SELINGO` and sets `SSTAT0.SELDO`. The bit positions of both are not in the extract.
+- The chip sets `SSTAT0.SELINGO` while it waits for the selected target's BSY response. A successful selection clears `SELINGO` and sets `SSTAT0.SELDO`. `SELINGO` is `SSTAT0` bit 4 and `SELDO` bit 6 in the book's bit summary (inferred; PDF 65), not yet transcribed into the defs unit.
 - `ENSELO` is cleared by software or by reset. A successful selection does not clear it.
 - With the selection timer disabled, a pending selection stays pending until software cancels it.
 - With the timer enabled, expiry releases SEL and sets `SSTAT1.SELTO` once. `SELTO` does not complete a command and does not clear `SELINGO`. Software clears `SELINGO` separately through `CLRSINT0`. The Linux and OpenBSD timeout handlers both make that separate clear.
-- The timer interval is chosen by the two `STIMESEL` bits of `SXFRCTL1`. Neither the register offset nor the bit positions of `STIMESEL` or `ENSTIMER` are in the extract. The public Linux driver documents 256, 128, 64 and 32 ms for `STIMESEL` 0 to 3 (software expectation, inferred; `aic7xxx_osm.c` lines 303 to 311 and 352). The book's scan prints `256 s` for the first entry and `ms` for the other three. Whether the AIC-7880 uses 256 ms or 256 s is unknown.
+- The timer interval is chosen by the two `STIMESEL` bits of `SXFRCTL1`. `SXFRCTL1` is at 0x02, `STIMESEL` is bits 4:3 and `ENSTIMER` bit 2 (PDF 75-76, printed 4-6 and 4-7; inferred for the AIC-7880). The public Linux driver documents 256, 128, 64 and 32 ms for `STIMESEL` 0 to 3 (software expectation, inferred; `aic7xxx_osm.c` lines 303 to 311 and 352). The book's scan prints `256 s` for the first entry and `ms` for the other three. Whether the AIC-7880 uses 256 ms or 256 s is unknown.
 - Unknown: the late-enable behaviour of `ENSTIMER` during a pending selection, and whether changing `STIMESEL` restarts the interval. The book does not settle either.
 - `ENRSELI` enables the reselection indication `SELDI`, which the book shows with `TARGET` clear. The reselection timing and the IDENTIFY hand-off are not in the extract (inferred; PDF 73, 80, 84 and 192).
 
