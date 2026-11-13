@@ -48,8 +48,7 @@ with the evidence that would settle it).
   (`3E3875FB.6000800@brussels.sgi.com`, `3E390BBB.4010606@brussels.sgi.com`,
   `3E392983.7060905@brussels.sgi.com`) are one person's remarks. They support but do not establish.
 
-The manuals and the Usenet posts are not held in this repository. Their page numbers and quotations
-are carried from the source record and were not checked against printed copies. The Linux and
+The manuals and the Usenet posts are not held in this repository. A verification pass re-read these against the published manuals: the P-brick slot, bus and chip assignment (`108-0240-002` pp. 2-30 and 2-31), the PCI bandwidth table (`007-4311-002` p. 49), the 3.3-volt or universal wording (`007-4240-002` p. 137) and the L1 brick-type letter (`007-3938-001`). They matched. The Usenet posts, the datasheet and product-guide lines, the remaining page numbers and the figure-drawn wiring were not re-checked. The Linux and
 OpenBSD line numbers above were checked against the public trees.
 
 ## Physical layout
@@ -89,7 +88,7 @@ Three XBridge chips, U0, U1 and U2. Established:
 - U1 serves buses 1 and 2.
 - U2 serves buses 5 and 6.
 - The two Crosstown2 ports are A (labelled 10) and B (labelled 11), at 1.2 GB/s each way
-  (`007-4311-002 p. 31`, as [crosstown-ktown.md](../../devices/crosstown-ktown/README.md) records). Each ends
+  (`007-4311-002 p. 31`; the bandwidth table on p. 49 says each port is software selectable at 800 or 1200 MB/s, as [crosstown-ktown.md](../../devices/crosstown-ktown/README.md) records). Each ends
   at a host interface card between the chip and the cable. The rear connectors are labelled XIO 10
   and XIO 11. Either can go to a C-brick, and the second can optionally go to another C-brick.
 
