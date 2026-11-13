@@ -89,6 +89,8 @@ These are unknown and block any claim beyond the register stage:
 
 ## Shipped software expectations
 
+Verification note: the register offsets, field bits and reset states in the unit were re-read against SLLS290 (July 1998), whose printed pages equal its PDF pages. Two corrections came out of it: the isochronous receive channel mask at `0x70` is the high register (channels 32 to 63) and `0x78` the low one, and the `0x50` bit 30 field is named for the datasheet's `noByteSwapData`. The PROM and IRIX sequences below were not re-derived in that pass: the constants `0xe064a002` and `0x03aa03f3` could not be located as immediates in the shipped PROM image held for the check, so treat them as unverified readings.
+
 This section records what the shipped I-brick PROM 1394 probe and the IRIX 1394 driver do with the controller. The probe and driver code was read from disassembly. Under the rule for shipped code, these readings are software expectations, so they are graded inferred. The disassembly image addresses for these readings are not recorded in this import, so the citations are incomplete until they are added.
 
 ### PROM probe

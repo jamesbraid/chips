@@ -218,7 +218,7 @@ pub mod vendor_specific_id {
 pub mod hc_control {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x50;
-    pub mod data_swap { // bits 30:30, established
+    pub mod no_byte_swap_data { // bits 30:30, established
         pub const SHIFT: u32 = 30;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -339,13 +339,13 @@ pub mod self_id_count {
         }
     }
 }
-/// Receive channel mask, channels 0 to 31. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at re (established)
-pub mod recv_channel_mask_lo {
+/// Receive channel mask high, channels 32 to 63 (IRChannelMaskHiSet at 0x70 and its clear register at 0x74, Table 20 and Table 32). The set and clear add (established)
+pub mod recv_channel_mask_hi {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x70;
 }
-/// Receive channel mask, channels 32 to 63. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at r (established)
-pub mod recv_channel_mask_hi {
+/// Receive channel mask low, channels 0 to 31 (IRChannelMaskLoSet at 0x78 and its clear register at 0x7c, Table 20). The set and clear addresses form a p (established)
+pub mod recv_channel_mask_lo {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x78;
 }
@@ -353,7 +353,7 @@ pub mod recv_channel_mask_hi {
 pub mod int_event {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x80;
-    pub mod phy_reg_received { // bits 19:19, inferred
+    pub mod phy_reg_received { // bits 19:19, established
         pub const SHIFT: u32 = 19;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -363,7 +363,7 @@ pub mod int_event {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod bus_reset { // bits 17:17, inferred
+    pub mod bus_reset { // bits 17:17, established
         pub const SHIFT: u32 = 17;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -373,7 +373,7 @@ pub mod int_event {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod self_id_complete { // bits 16:16, inferred
+    pub mod self_id_complete { // bits 16:16, established
         pub const SHIFT: u32 = 16;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {

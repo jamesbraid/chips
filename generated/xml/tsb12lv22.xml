@@ -60,7 +60,7 @@
   </struct>
   <struct name="HC_CONTROL" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x50" access="rw" reset="unknown">
     <doc>HCControl. The set and clear addresses form a pair, the clear address four bytes above the set address. Bits 30 and 18 are unspecified at reset and the other defined bits reset to zero.</doc>
-    <field name="data_swap" start="30" size="1" type="uint" grade="established"/>
+    <field name="no_byte_swap_data" start="30" size="1" type="uint" grade="established"/>
     <field name="program_phy_enable" start="23" size="1" type="uint" grade="established"/>
     <field name="aphy_enhance_enable" start="22" size="1" type="uint" grade="established"/>
     <field name="lps" start="19" size="1" type="uint" grade="established"/>
@@ -78,17 +78,17 @@
     <field name="generation" start="16" size="8" type="uint" grade="established"/>
     <field name="size" start="2" size="9" type="uint" grade="established"/>
   </struct>
-  <struct name="RECV_CHANNEL_MASK_LO" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x70" access="rw" reset="unknown">
-    <doc>Receive channel mask, channels 0 to 31. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.</doc>
+  <struct name="RECV_CHANNEL_MASK_HI" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x70" access="rw" reset="unknown">
+    <doc>Receive channel mask high, channels 32 to 63 (IRChannelMaskHiSet at 0x70 and its clear register at 0x74, Table 20 and Table 32). The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.</doc>
   </struct>
-  <struct name="RECV_CHANNEL_MASK_HI" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x78" access="rw" reset="unknown">
-    <doc>Receive channel mask, channels 32 to 63. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.</doc>
+  <struct name="RECV_CHANNEL_MASK_LO" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x78" access="rw" reset="unknown">
+    <doc>Receive channel mask low, channels 0 to 31 (IRChannelMaskLoSet at 0x78 and its clear register at 0x7c, Table 20). The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.</doc>
   </struct>
   <struct name="INT_EVENT" size="4" grade="established" from="TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)" register="yes" offset="0x80" access="rw" reset="unknown">
     <doc>Interrupt events. The set and clear addresses form a pair, the clear address four bytes above the set address. Reads of the clear register return the event bits ANDed with the mask. Implemented event bits are unspecified at reset. Bits 7 and 6 are derived summaries and are not independent latches. Bit 30 is vendor-defined and its meaning is not given. Bit 18 is undefined for OHCI 1.00 and must read zero.</doc>
-    <field name="phy_reg_received" start="19" size="1" type="uint" grade="inferred"/>
-    <field name="bus_reset" start="17" size="1" type="uint" grade="inferred"/>
-    <field name="self_id_complete" start="16" size="1" type="uint" grade="inferred"/>
+    <field name="phy_reg_received" start="19" size="1" type="uint" grade="established"/>
+    <field name="bus_reset" start="17" size="1" type="uint" grade="established"/>
+    <field name="self_id_complete" start="16" size="1" type="uint" grade="established"/>
     <field name="iso_recv_summary" start="7" size="1" type="uint" grade="established"/>
     <field name="iso_xmit_summary" start="6" size="1" type="uint" grade="established"/>
   </struct>

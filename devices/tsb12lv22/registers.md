@@ -30,8 +30,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `hc_control` | 0x50 | rw | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
 | `self_id_buffer` | 0x64 | rw | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
 | `self_id_count` | 0x68 | r | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
-| `recv_channel_mask_lo` | 0x70 | rw | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
-| `recv_channel_mask_hi` | 0x78 | rw | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
+| `recv_channel_mask_hi` | 0x70 | rw | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
+| `recv_channel_mask_lo` | 0x78 | rw | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
 | `int_event` | 0x80 | rw | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
 | `int_mask` | 0x88 | rw | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
 | `iso_xmit_event` | 0x90 | rw | 32 |  |  | unknown | established | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) |
@@ -142,7 +142,7 @@ HCControl. The set and clear addresses form a pair, the clear address four bytes
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 30 | `data_swap` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | Data byte-swap control, the same control the OHCI 1.1 text calls noByteSwapData. Its reset value is unspecified |
+| 30 | `no_byte_swap_data` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | noByteSwapData: controls whether physical accesses to locations outside the controller, and other DMA data accesses, are byte swapped. The name says one means no swap; the table gives no polarity wording beyond the name. Its reset value is unspecified |
 | 23 | `program_phy_enable` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | Software-clearable permission to program the PHY |
 | 22 | `aphy_enhance_enable` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | PHY enhancement enable, needed with the 1394a acceleration bit in PCI configuration |
 | 19 | `lps` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | Link power status. Set it before PHY and link communication |
@@ -168,13 +168,13 @@ Self-ID count. The error and generation fields are unspecified at reset and the 
 | 23:16 | `generation` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | Bus generation the self-ID data belongs to |
 | 10:2 | `size` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | Self-ID buffer size in quadlets, the header included |
 
-### Register `recv_channel_mask_lo`
-
-Receive channel mask, channels 0 to 31. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.
-
 ### Register `recv_channel_mask_hi`
 
-Receive channel mask, channels 32 to 63. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.
+Receive channel mask high, channels 32 to 63 (IRChannelMaskHiSet at 0x70 and its clear register at 0x74, Table 20 and Table 32). The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.
+
+### Register `recv_channel_mask_lo`
+
+Receive channel mask low, channels 0 to 31 (IRChannelMaskLoSet at 0x78 and its clear register at 0x7c, Table 20). The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.
 
 ### Register `int_event`
 
@@ -182,9 +182,9 @@ Interrupt events. The set and clear addresses form a pair, the clear address fou
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 19 | `phy_reg_received` | inferred |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | PHY register transfer received. Bit number from the IRIX 1394 driver (disassembly), which clears it after a PHY register read |
-| 17 | `bus_reset` | inferred |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | Bus reset event. Bit number from the I-brick PROM and IRIX 1394 code (disassembly); the datasheet's bus reset effect is established |
-| 16 | `self_id_complete` | inferred |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | Self-ID complete. Bit number from the I-brick PROM 1394 probe (disassembly); the datasheet's bus reset effect is established |
+| 19 | `phy_reg_received` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | PHY requests an interrupt through a status transfer (field `phy`, TI SLLS290 Table 34, p. 28). The IRIX 1394 driver clears it after a PHY register read |
+| 17 | `bus_reset` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | Bus reset event: the PHY entered bus reset mode (field `busReset`, TI SLLS290 Table 34, p. 28) |
+| 16 | `self_id_complete` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | Self-ID complete: a self-ID packet stream was received (field `selfDcomplete`, TI SLLS290 Table 34, p. 28) |
 | 7 | `iso_recv_summary` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | OR of the isochronous receive event and mask. Software writes to it have no effect |
 | 6 | `iso_xmit_summary` | established |  | TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) | OR of the isochronous transmit event and mask. Software writes to it have no effect |
 

@@ -342,7 +342,7 @@
   {
    "unit": "tsb12lv22",
    "kind": "field",
-   "name": "hc_control.data_swap",
+   "name": "hc_control.no_byte_swap_data",
    "hi": 30,
    "lo": 30,
    "grade": "established",
@@ -469,7 +469,7 @@
   {
    "unit": "tsb12lv22",
    "kind": "register",
-   "name": "recv_channel_mask_lo",
+   "name": "recv_channel_mask_hi",
    "offset": 112,
    "access": "rw",
    "width": 32,
@@ -483,7 +483,7 @@
   {
    "unit": "tsb12lv22",
    "kind": "register",
-   "name": "recv_channel_mask_hi",
+   "name": "recv_channel_mask_lo",
    "offset": 120,
    "access": "rw",
    "width": 32,
@@ -514,7 +514,7 @@
    "name": "int_event.phy_reg_received",
    "hi": 19,
    "lo": 19,
-   "grade": "inferred",
+   "grade": "established",
    "from": "TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)"
   },
   {
@@ -523,7 +523,7 @@
    "name": "int_event.bus_reset",
    "hi": 17,
    "lo": 17,
-   "grade": "inferred",
+   "grade": "established",
    "from": "TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)"
   },
   {
@@ -532,7 +532,7 @@
    "name": "int_event.self_id_complete",
    "hi": 16,
    "lo": 16,
-   "grade": "inferred",
+   "grade": "established",
    "from": "TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item)"
   },
   {

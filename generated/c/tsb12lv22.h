@@ -139,9 +139,9 @@
  */
 /* hc_control: rw32, reset unknown; TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) */
 #define TSB12LV22_HC_CONTROL_OFFSET                  0x50u /* established */
-#define TSB12LV22_HC_CONTROL_DATA_SWAP_SHIFT         30 /* established */
-#define TSB12LV22_HC_CONTROL_DATA_SWAP_MASK          0x1u
-#define TSB12LV22_HC_CONTROL_DATA_SWAP_INPLACE       (TSB12LV22_HC_CONTROL_DATA_SWAP_MASK << TSB12LV22_HC_CONTROL_DATA_SWAP_SHIFT)
+#define TSB12LV22_HC_CONTROL_NO_BYTE_SWAP_DATA_SHIFT 30 /* established */
+#define TSB12LV22_HC_CONTROL_NO_BYTE_SWAP_DATA_MASK  0x1u
+#define TSB12LV22_HC_CONTROL_NO_BYTE_SWAP_DATA_INPLACE (TSB12LV22_HC_CONTROL_NO_BYTE_SWAP_DATA_MASK << TSB12LV22_HC_CONTROL_NO_BYTE_SWAP_DATA_SHIFT)
 #define TSB12LV22_HC_CONTROL_PROGRAM_PHY_ENABLE_SHIFT 23 /* established */
 #define TSB12LV22_HC_CONTROL_PROGRAM_PHY_ENABLE_MASK 0x1u
 #define TSB12LV22_HC_CONTROL_PROGRAM_PHY_ENABLE_INPLACE (TSB12LV22_HC_CONTROL_PROGRAM_PHY_ENABLE_MASK << TSB12LV22_HC_CONTROL_PROGRAM_PHY_ENABLE_SHIFT)
@@ -186,29 +186,29 @@
 #define TSB12LV22_SELF_ID_COUNT_SIZE_INPLACE         (TSB12LV22_SELF_ID_COUNT_SIZE_MASK << TSB12LV22_SELF_ID_COUNT_SIZE_SHIFT)
 
 /*
- * Receive channel mask, channels 0 to 31. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.
- */
-/* recv_channel_mask_lo: rw32, reset unknown; TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) */
-#define TSB12LV22_RECV_CHANNEL_MASK_LO_OFFSET        0x70u /* established */
-
-/*
- * Receive channel mask, channels 32 to 63. The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.
+ * Receive channel mask high, channels 32 to 63 (IRChannelMaskHiSet at 0x70 and its clear register at 0x74, Table 20 and Table 32). The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.
  */
 /* recv_channel_mask_hi: rw32, reset unknown; TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) */
-#define TSB12LV22_RECV_CHANNEL_MASK_HI_OFFSET        0x78u /* established */
+#define TSB12LV22_RECV_CHANNEL_MASK_HI_OFFSET        0x70u /* established */
+
+/*
+ * Receive channel mask low, channels 0 to 31 (IRChannelMaskLoSet at 0x78 and its clear register at 0x7c, Table 20). The set and clear addresses form a pair, the clear address four bytes above the set address. Unspecified at reset.
+ */
+/* recv_channel_mask_lo: rw32, reset unknown; TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) */
+#define TSB12LV22_RECV_CHANNEL_MASK_LO_OFFSET        0x78u /* established */
 
 /*
  * Interrupt events. The set and clear addresses form a pair, the clear address four bytes above the set address. Reads of the clear register return the event bits ANDed with the mask. Implemented event bits are unspecified at reset. Bits 7 and 6 are derived summaries and are not independent latches. Bit 30 is vendor-defined and its meaning is not given. Bit 18 is undefined for OHCI 1.00 and must read zero.
  */
 /* int_event: rw32, reset unknown; TI SLLS290, TSB12LV22 OHCI-Lynx PCI-Based IEEE 1394 Host Controller, July 1998 (pages cited per item) */
 #define TSB12LV22_INT_EVENT_OFFSET                   0x80u /* established */
-#define TSB12LV22_INT_EVENT_PHY_REG_RECEIVED_SHIFT   19 /* inferred */
+#define TSB12LV22_INT_EVENT_PHY_REG_RECEIVED_SHIFT   19 /* established */
 #define TSB12LV22_INT_EVENT_PHY_REG_RECEIVED_MASK    0x1u
 #define TSB12LV22_INT_EVENT_PHY_REG_RECEIVED_INPLACE (TSB12LV22_INT_EVENT_PHY_REG_RECEIVED_MASK << TSB12LV22_INT_EVENT_PHY_REG_RECEIVED_SHIFT)
-#define TSB12LV22_INT_EVENT_BUS_RESET_SHIFT          17 /* inferred */
+#define TSB12LV22_INT_EVENT_BUS_RESET_SHIFT          17 /* established */
 #define TSB12LV22_INT_EVENT_BUS_RESET_MASK           0x1u
 #define TSB12LV22_INT_EVENT_BUS_RESET_INPLACE        (TSB12LV22_INT_EVENT_BUS_RESET_MASK << TSB12LV22_INT_EVENT_BUS_RESET_SHIFT)
-#define TSB12LV22_INT_EVENT_SELF_ID_COMPLETE_SHIFT   16 /* inferred */
+#define TSB12LV22_INT_EVENT_SELF_ID_COMPLETE_SHIFT   16 /* established */
 #define TSB12LV22_INT_EVENT_SELF_ID_COMPLETE_MASK    0x1u
 #define TSB12LV22_INT_EVENT_SELF_ID_COMPLETE_INPLACE (TSB12LV22_INT_EVENT_SELF_ID_COMPLETE_MASK << TSB12LV22_INT_EVENT_SELF_ID_COMPLETE_SHIFT)
 #define TSB12LV22_INT_EVENT_ISO_RECV_SUMMARY_SHIFT   7 /* established */
