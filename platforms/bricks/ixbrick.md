@@ -110,7 +110,7 @@ Established:
 Established:
 
 - The L1 controller and its front display live on the IX-brick. The display shows status and error messages (IX p.6).
-- The front power switch powers the L1 first, and the 12 V LED lights. The front switch, an L2, or the system console then powers the internal 48 V components (IX p.9).
+- The rear power switch powers the L1 controller first, and the 12 V LED lights. The front On/Off switch, an L2 or the system console then powers the rest of the internal components, and the 48 V LED lights (IX pp.7, 9).
 - Three hot-swap fans (IX pp.6-7).
 - The rear panel has a 48 VDC and a 12 VDC LED.
 
@@ -132,5 +132,5 @@ and 698.5 mm). Weight 65 lb (29.5 kg). Power input +48 VDC on a 21-pin connector
 | Head-to-bus-to-slot mapping and INTx wiring | PCI tree capture or board schematic |
 | QLogic revision and part for this product; IOC4 and BCM5701 revisions and subsystem IDs | PCI identification read, `hinv`, or an IO9 parts list |
 | IOC4 pins or functions that drive RTI and RTO; whether the DVD-ROM's IDE link is the IOC4 ATA function | Board schematic or PCI function listing |
-| Default port speed, 800 or 1200 MB/s, and the L1 `XIO` setting for the IX-brick | A configuration guide for the IX-brick, or an L1 capture |
+| Default port speed. The overview says 1200 or 800 MB/s (IX p.2) and the port table lists 1.2 GB/s each direction (IX p.27). The L1 `XIO` setting for the IX-brick | A configuration guide for the IX-brick, or an L1 capture |
 | L1 identity and protocol | L1 console capture |
