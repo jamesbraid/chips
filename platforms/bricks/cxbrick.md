@@ -27,7 +27,8 @@ with the route that would settle it.
 - **IP35 PROM 6.210** (built 26 Aug 2004), SHA-256
   `554924380189a03a512156af2faa38344902f251b49fd5c80c253c23ecaff27b`, and the **IRIX 6.5.30**
   IP35 kernel. Read by disassembly. Cited by PROM address where a routine is named.
-- **Linux v2.6.12** `include/asm-ia64/sn/l1.h`, a public header.
+- **Linux 5.3** `arch/ia64/include/asm/sn/l1.h`, a public header (the `references/code/linux-5.3`
+  pin; the file was moved there from `include/asm-ia64/sn/l1.h`).
 
 ## Composition
 
@@ -73,8 +74,12 @@ control" element beside the Bedrock. The text does not describe it.
 **Established** (`007-4572-001` pp. 3 to 4). Processors come in fours. A node board has no
 two-processor form.
 
-**Established** (`007-4653-001` p. 64). The four processors on one board run at one speed, but
-boards in the same brick may run at different speeds.
+**Established** (`007-4653-001` p. 64). The four processors on one board run at one speed, and the
+guide says the boards in one brick may carry processors of different speeds. **Unknown:** whether
+boards may differ. The addendum's configuration rules say the opposite, "Processor speed must be the
+same for each IP53 node board" (`007-4572-001` p. 13). Both are published. Which one governs a
+shipped brick is not settled. Route: a Cx-brick `hinv` from a brick with mixed boards, or a later
+revision of either document.
 
 **Established** (`3399 p. 2`). The processor family is R16000 or R16000A. The datasheet gives
 no clock, and the addendum says only that the brick "supports MIPS processors" (p. 2).
@@ -124,20 +129,32 @@ board: "the number of available XIO ports is equivalent to the number of IP53 no
 
 ### What the PROM prints for a node with no processors
 
-**Established** (IP35 PROM 6.210 disassembly). For a hub with no processor, the master's setup
+**Established** (IP35 PROM 6.210, unpacked `ip35prom` segment, string search). The PROM carries the
+text `hubii_link_good: No I/O brick attached to module %M.` (outer offset `0x85228`, nested
+offset `0x10fe38`) and `Hub chip's llp interface is down.` (nested offset `0x10de20`).
+
+**Inferred** (not re-read in the verification pass). For a hub with no processor, the master's setup
 loop reads the node's I/O link status word, at the remote form of hub offset `0x400128`, the
 link control and status register in [the Bedrock I/O interface](../../devices/bedrock_ii/README.md). It
 then calls the I/O link probe. When the probe returns zero or less, the PROM stores `0x9b` in
-the hub's diagnostic result if bit 13 of the link word is clear. If bit 13 is set, it stores 0.
-The probe itself prints `hubii_link_good: No I/O brick attached to module %M.` when bit 13 is
-clear. The PROM text for `0x9b` is "Hub chip's llp interface is down."
+the hub's diagnostic result if bit 13 of the link word is clear, and stores 0 if bit 13 is set.
+The probe prints the "No I/O brick attached" line when bit 13 is clear. The text for `0x9b` is
+the "llp interface is down" line. The strings exist, but the register offset, the bit, the stored
+`0x9b` and the pairing of that value with its text were not traced through the routine's code in
+this pass. Route: read the master setup loop and the probe in the nested image in full.
 
-**Established** (IP35 PROM 6.210 disassembly). The boot summary routine (near `0xc0000000130d6af0`
-in the inflated monitor image) prints `ALL DIAGS PASSED.` only when nothing was reported. A hub
-with a nonzero diagnostic result sets a flag that prints nothing, so the summary reads
-`DIAG RESULTS:` and then the end line with no body. A node with no processors counts as a node,
-finds no processor component and sets no flag. A node whose board record is missing prints
-`WARNING: Could not find brd_ptr for nasid = %d`, so an empty body cannot mean a missing record.
+**Established** (IP35 PROM 6.210, nested image, string search). The strings `DIAG RESULTS:`
+(nested offset `0xf2591`), `ALL DIAGS PASSED.` (`0xf27c8`) and `WARNING: Could not find brd_ptr
+for nasid = %d` (`0xf2428`) are present.
+
+**Inferred** (not re-read in the verification pass). The boot summary routine prints `ALL DIAGS
+PASSED.` only when nothing was reported. A hub with a nonzero diagnostic result sets a flag that
+prints nothing, so the summary reads `DIAG RESULTS:` and then the end line with no body. A node with
+no processors counts as a node, finds no processor component and sets no flag. A node whose board
+record is missing prints the `brd_ptr` warning, so an empty body cannot mean a missing record. The
+earlier citation of a routine "near `0xc0000000130d6af0`" is dropped: that address is a function
+entry, but this pass could not tie it to the three strings, so it was not confirmed as the summary
+routine. Route: find the code that loads the three strings and read it in full.
 
 **Unknown.** The real value of bit 13 on a memory-only Cx node with no I/O brick cabled, and so
 whether its boot summary is empty on real hardware. Also unknown: which PROM test skips the probe
@@ -252,26 +269,27 @@ or the module-and-slot path. Route: a Cx-brick inventory with the `slab` paths.
 
 ### Brick type letter 6 in the PROM and kernel
 
-**Established** (public header). Linux v2.6.12 `include/asm-ia64/sn/l1.h` names the brick type
-code `0x36` (letter `6`) "IP53 & ROUTER".
+**Established** (public header). Linux 5.3 `arch/ia64/include/asm/sn/l1.h`, line 18, defines
+`L1_BRICKTYPE_TWISTER` as `0x36` (letter `6`) with the comment "IP53 & ROUTER".
 
-**Established** (IP35 PROM 6.210 and IRIX 6.5.30 IP35 kernel, disassembly). When the local
-L1 answers the type letter `6`, the requester also sends `0x000e` and adds that answer, modulo 4,
-to the slot. An answer of 4 turns the letter into `R` with the slot unchanged. The letter `6` then
-folds to `c` for the module ID. The kernel names the node vertex `module/<id>/node` and an alias
-`module/<id>/slab/<n>/node`, where `<id>` comes from the PROM's board record and `<n>` from
-`0x000e`.
+**Unknown** (regraded in the verification pass). An earlier version said that when the local L1
+answers the type letter `6` the requester also sends `0x000e`, adds that answer modulo 4 to the
+slot, turns an answer of 4 into the letter `R`, folds `6` to `c`, and that the kernel names the node
+vertex `module/<id>/node` with an alias `module/<id>/slab/<n>/node`. None of it could be re-found:
+the strings `slab` and `module/<id>/node` do not occur in the shipped IP35 kernel members or in the
+unpacked PROM segment, and the `0x000e` request is not in the brick-class question page. Route: read
+the PROM's L1 brick-type request routine and the kernel's module and slab naming code in full.
 
-**Established** (same binaries). The letter `6` is not one of the five letters `7`, `8`, `9`, `0`
-and `Q`. Those set a nonzero board class in the PROM's classifier, so IP53 boards that answer `6`
-take the IP35 path. The classifier table is in
+**Established** (IP35 PROM 6.210, in the brick-class question page). The letter `6` is not one of
+the five letters `7`, `8`, `9`, `0` and `Q`. Those set a nonzero board class in the PROM's
+classifier, so IP53 boards that answer `6` take the IP35 path. The classifier table is in
 [the IP35 PROM brick-class question](../../questions/ip35-prom-l1-brick-class.md).
 
-**Inferred.** A Cx-brick L1 answers letter `6` and the brick's own slot on every board link.
-`0x000e` then gives the board position, 0 to 3, on a board link and 4 through the router's L1
-window. A brick at slot 7 would have boards `001c07` to `001c10` and router `001r07`. This fits the
-guide's `001c07` example. It does not say which board takes which position, or whether the real L1
-answers this way.
+**Unknown.** Whether a Cx-brick L1 answers letter `6` with the brick's own slot on every board link,
+and what position values it returns. An earlier version inferred board positions 0 to 3 and a router
+position 4, naming boards `001c07` to `001c10` and a router `001r07`. That depended on the
+`0x000e` request above, which could not be re-found, so the reading is withdrawn. Route: an L1
+transcript from a real Cx-brick.
 
 ## What is not settled
 
