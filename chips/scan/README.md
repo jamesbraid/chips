@@ -1,6 +1,6 @@
 # Router scan-chain tunnel through the L1 (IP35)
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no specification is held). The IP35 kernel can read a router's
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md): no specification is held). The IP35 kernel can read a router's
 registers by a second route that touches no memory window and no vector packet: it asks the brick's L1 system controller to
 shift a bit pattern through the router's scan (JTAG) chain and hands back the bits that come out. The host-visible part is a
 message protocol carried over the L1 link described in [../l1/README.md](../l1/README.md); nothing here is a register
@@ -9,7 +9,7 @@ offset. The other route to the same chip is the vector-packet path in [../router
 Every fact is read from IRIX 6.5.30 objects of the IP35 boot set: the three members of `jtagio.a` (`read_reg.o`,
 `scancmd.o`, `smpl_jtagio.o`), `irouter.o`, and `kernel.o` for the one caller. All are relocatable, so routines are cited
 by offset. The public Linux headers `asm-ia64/sn/ksys/l1.h` and `asm-ia64/sn/router.h` (the pinned `linux-2.5.40`
-submodule, see [docs/sources/INDEX.md](../../docs/sources/INDEX.md)) were read afterwards, for agreement and conflict only.
+submodule, see [references/documents/INDEX.md](../../references/documents/INDEX.md)) were read afterwards, for agreement and conflict only.
 
 Census: [census/](census/) and the config [`tools/configs/scan-tunnel.json`](../../tools/configs/scan-tunnel.json), run with
 [`retools/tools/chips/callargs.py`](../../retools/tools/chips/callargs.py). It finds the **2 call sites** of `read_rr_reg` in the kernel and resolves
@@ -213,5 +213,5 @@ Inferred from strings only; the image's code was not disassembled, and whether i
 
 ## Open
 
-See [../../docs/open-questions.md](../../docs/open-questions.md): the meaning of the selector, the scan-chain
+See [../../docs/open-questions.md](../../questions/README.md): the meaning of the selector, the scan-chain
 state codes, the work done at L1 `0xffe7296c`, and the L2 controller.

@@ -200,7 +200,7 @@ Receiver and video-reference status. The driver reads it only through the status
 
 ### Register `ust_control`
 
-Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see docs/rad1.md).
+Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see devices/rad1/facts-outside-registers.md).
 
 ### Register `adat_in_ctrl`
 
@@ -231,7 +231,7 @@ Analog input channel control. Start value is 0x03000000 on board mode 12 and 0x0
 
 ### Register `adat_out_ctrl`
 
-ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see docs/rad1.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start.
+ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see devices/rad1/facts-outside-registers.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -673,9 +673,9 @@ Slot word at byte offset 0x78 of each status slot. Bits not listed are never rea
 | `STATUS_START_ONESHOT` | 0x40001 | established |  | Value written to the status control register for a single transfer |
 | `STATUS_STOP` | 0x1fffc | established |  | Value written to the status control register to stop the status ring |
 | `UST_BEDROCK_FLAG_MASK` | 0xf000 | established |  | Mask applied to the value read from the Bedrock real-time clock control register (0x604200 in the local block) at load |
-| `UST_BEDROCK_FLAG_VALUE` | 0x4000 | established |  | Masked value that sets the driver's UST flag. Bit 14 of the Bedrock register is undefined in the local block (see docs/bedrock-local-block.md) |
+| `UST_BEDROCK_FLAG_VALUE` | 0x4000 | established |  | Masked value that sets the driver's UST flag. Bit 14 of the Bedrock register is undefined in the local block (see devices/bedrock_lb/README.md) |
 | `UST_MIN_ADVANCE` | 0x3 | established |  | The driver reads the free-running counter twice 10 microseconds apart and reports an alert if it moved by fewer than this |
-| `UST_TICK_NS_FIXED` | 0x3c0 | established |  | Tick period in nanoseconds that the reset routine stores for the counter at 0x30. The other choice is computed from the Bedrock register (see docs/rad1.md). Which choice a given machine gets is unknown |
+| `UST_TICK_NS_FIXED` | 0x3c0 | established |  | Tick period in nanoseconds that the reset routine stores for the counter at 0x30. The other choice is computed from the Bedrock register (see devices/rad1/facts-outside-registers.md). Which choice a given machine gets is unknown |
 
 ## Test vectors
 

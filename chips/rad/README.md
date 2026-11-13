@@ -18,4 +18,4 @@ carrying this driver; the only other PCI audio driver in that build, `mad_dd.o`,
 - **Not read here.** Register offsets, DMA engines, subcode and UST behaviour. The driver is 138 KB and carries ADAT, AES, A/D and
   D/A engines, a Genlock/"ksync" video clock path and a status-DMA path (strings such as `RAD UST not incrementing`,
   `one-shot status dma failed. Try power cycling the machine.`). Bringing it to the label standard needs the full-routine
-  reading `docs/open-questions.md` now lists.
+  reading `questions/README.md` now lists.

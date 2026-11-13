@@ -1,6 +1,6 @@
 # IOC3
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no specification is held). Builds read: IP27 (the primary build: the offsets cited below are its), IP30 and IP35. PCI I/O controller of the Origin
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md): no specification is held). Builds read: IP27 (the primary build: the offsets cited below are its), IP30 and IP35. PCI I/O controller of the Origin
 200/2000 BaseIO, Octane (IP30) and Origin 300-class (IP35) base I/O boards: two serial ports with ring-buffer DMA, a 10/100 Ethernet MAC with an MII, a keyboard and mouse port, a parallel port, a
 one-wire port, general purpose I/O pins and an external interrupt input and output. The three carry byte-different copies of
 the same driver objects; the IP27 offsets are cited (from the `IP27boot` objects) and the other two agree unless a difference is stated.
@@ -106,9 +106,9 @@ is of the role, with the evidence in the row.
 | `0x30` | one-wire control | 4 | rw | `nic_access_mcr32` (below) | established |
 | `0x34` | GPIO control set | 4 | w | `ioc3_attach` writes `0xc0`; `ef_phyunreset` writes `0x20`; `eiattach` writes `0x10000`; `nic_ioc3_vertex_info` and `nic_get_eaddr` store `0x200000` through the pointer they are handed (the window `0x34` address, from the call sites in `ioc3_attach` and `ef_ioc3eaddr`) | inferred |
 | `0x38` | GPIO control clear | 4 | w | `eiattach` writes `0x2` | inferred |
-| `0x3c` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see docs/sources/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | unknown |
+| `0x3c` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see references/documents/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | unknown |
 | `0x40 + 4n` | GPIO pin n | 4 | w, rw | `ef_phyunreset` drives pin 5; `ioc3_set_proto` writes 0 or 1 to a pin number kept in the port's record | inferred |
-| `0x80` to `0x98` | parallel-port DMA: buffer address high and low, count and flags, control (`0x8c`), the same three for context B | 4 | rw | `plp_dma`, `plp_dma_reset`, `plp_stop_dma`, `plpintr` (`ecpplp.o`), read in full; roles in [docs/coverage-ioc3.md](../../docs/coverage-ioc3.md) | established for `0x80` to `0x88` and `0x90` to `0x98`; inferred for the `0x8c` bits |
+| `0x80` to `0x98` | parallel-port DMA: buffer address high and low, count and flags, control (`0x8c`), the same three for context B | 4 | rw | `plp_dma`, `plp_dma_reset`, `plp_stop_dma`, `plpintr` (`ecpplp.o`), read in full; roles in [devices/ioc3/coverage.md](../../devices/ioc3/coverage.md) | established for `0x80` to `0x88` and `0x90` to `0x98`; inferred for the `0x8c` bits |
 | `0x9c` | keyboard and mouse control | 4 | rw | `pckm_attach` stores `0xc00000`; `pckm_sendok` polls bits 0 and 1; `pckm_restart` sets bit 18 or 19 | established |
 | `0xa0`, `0xa4` | keyboard, mouse receive | 4 | r | `pckm_pollcmd` reads one by port and tests bits 31:29 | established |
 | `0xa8`, `0xac` | keyboard, mouse transmit | 4 | w | `pckm_pollcmd` writes the command byte to one by port | established |
@@ -122,7 +122,7 @@ is of the role, with the evidence in the row.
 | `0x2017f` | UART A register 7 | 1 | w | `set_baud_ti` stores a computed value | inferred |
 
 **64 register kinds** (the parallel-port DMA words count as one family, the GPIO pins as one family): **45 established, 15
-inferred, 4 unknown** as graded by the code alone; the coverage pass ([docs/coverage-ioc3.md](../../docs/coverage-ioc3.md)) moves the parallel-port DMA family and `0x2015a` out of unknown. The unknowns left are `0x3c` and `0x124`.
+inferred, 4 unknown** as graded by the code alone; the coverage pass ([devices/ioc3/coverage.md](../../devices/ioc3/coverage.md)) moves the parallel-port DMA family and `0x2015a` out of unknown. The unknowns left are `0x3c` and `0x124`.
 
 ### Interrupt registers (`0x1c`, `0x20`, `0x24`): established
 
@@ -320,7 +320,7 @@ times at 50 microseconds until any of bits 31:29 is set. Port 0 is the keyboard 
 
 On the Onyx 3000 and Origin 3000 I-brick the IOC3 serves serial, Ethernet and the real-time interrupt jacks, and the
 keyboard and mouse are USB devices on a separate OHCI controller; the panel has no PS/2 connector
-([docs/onyx3000-graphics-topology.md](../../docs/onyx3000-graphics-topology.md) question 3).
+([platforms/bricks/graphics-topology.md](../../platforms/bricks/graphics-topology.md) question 3).
 
 ## Routines in the IP27 `ioc3.o` build
 
@@ -505,7 +505,7 @@ so each stays **inferred** until someone checks the named file.
   strobe length is set in the control register. A clock window must be accessed at byte width. On the Origin 200,
   select 0 holds a 32 KB non-volatile RAM with a clock in its top bytes, which the published block diagram labels
   beside the chip. **Inferred.** The Octane's clock uses selects 1 and 2 as address and data ports; see
-  [docs/ds1685.md](../../docs/ds1685.md).
+  [devices/ds1685/README.md](../../devices/ds1685/README.md).
 - **Interrupt sources.** Each port has nine sources, port A at bits 0 to 8 and port B at bits 9 to 17. Bits 18 to 21
   are the parallel port: its pass-through at 18, two DMA contexts at 19 and 20, and a PCI error at 21. Bit 22 is the
   shared keyboard and mouse. Bit 27 is the real-time output pulse and bit 28 the real-time input pulse. The bit
@@ -562,7 +562,7 @@ detail).
 
 Sources: Linux `arch/mips/include/asm/sn/ioc3.h`, `drivers/mfd/ioc3.c`, `drivers/net/ethernet/sgi/ioc3-eth.c` and
 `drivers/tty/serial/8250/8250_ioc3.c` (current pin), and OpenBSD `sys/arch/sgi/pci/ioc.c`, `iocreg.h`, `sys/arch/sgi/dev/if_iec.c`
-and `ioc(4)` (pins in [docs/sources/INDEX.md](../../docs/sources/INDEX.md)). The linux-2.4.37 and linux-2.5.40 trees carry
+and `ioc(4)` (pins in [references/documents/INDEX.md](../../references/documents/INDEX.md)). The linux-2.4.37 and linux-2.5.40 trees carry
 older `ioc3-eth.c` copies that were not compared line by line.
 
 | point | IRIX reading | public drivers | result |
@@ -570,7 +570,7 @@ older `ioc3-eth.c` copies that were not compared line by line.
 | offsets `0x1c` to `0x150` | as in the table | Linux header and OpenBSD `iocreg.h` agree on every offset the census reached, including port A at `0xb8` to `0xd0` and port B at `0xd4` to `0xec` | agree |
 | command write | ORs `0x8146` | Linux names `0x8000` (drop on parity error), `0x100` (SERR), `0x40` (parity response) plus standard bits | agree |
 | control `0x28` | writes `0x7ae5e` at attach | neither driver writes it | IRIX-only; the Linux field layout (bit 0 reset, 7:1 and 14:8 DMA poll bases) is not checked against the value. Grade: established that `ioc3_attach` stores `0x7ae5e` to `0x28` (re-read in the IP35 `ioc3.o`, sha256 `5e69438504a0ae29b9076f965733428688412611a0ec55cfc086d4036d689035`, store at 0x544; the same value is read in the other two builds); inferred for every field reading of the value, which rests on the Linux header alone and is unchecked in this pass because the Linux tree is not checked out; settled by reading the Linux `ioc3.h` control-register field list against the value, bit by bit |
-| UART byte lane | register 3 at UART+3, registers 0 and 1 at +0 and +1 | Linux uses `offset ^ 3`, so line control at +0; OpenBSD gives the UART bases `0x20178` and `0x20170` and applies the same `^ 3` | **agree after the exclusive-or**: the IRIX order is the natural register order seen through a swapped path (see [docs/coverage-ioc3.md](../../docs/coverage-ioc3.md)); which routine sets the swap is unknown |
+| UART byte lane | register 3 at UART+3, registers 0 and 1 at +0 and +1 | Linux uses `offset ^ 3`, so line control at +0; OpenBSD gives the UART bases `0x20178` and `0x20170` and applies the same `^ 3` | **agree after the exclusive-or**: the IRIX order is the natural register order seen through a swapped path (see [devices/ioc3/coverage.md](../../devices/ioc3/coverage.md)); which routine sets the swap is unknown |
 | PHY reset | pin 5 low 10 microseconds, high, 500 microseconds | both name pin 5 PHY reset (mask `0x20`) | agree |
 | MII | busy `0x800`, read trigger `0x400`, phy at bit 5 | same in both | agree |
 | Ethernet setup | `0xfc` threshold, `0x108` = `0x1000000`, `0x114` = 0, bit 0 of `0x12c` set | Linux: threshold 15, barrier `0x100 << 16` (equal to `0x1000000`), `ertr` 0, ring size bit 0 | agree on `0x108`, `0x114`; the threshold is a tunable here |
@@ -588,12 +588,12 @@ control, enables and status); the rest are unknown.
 
 ## Open
 
-Items settled by the coverage pass are in [docs/coverage-ioc3.md](../../docs/coverage-ioc3.md): the byte lane, the inter-frame
+Items settled by the coverage pass are in [devices/ioc3/coverage.md](../../devices/ioc3/coverage.md): the byte lane, the inter-frame
 gap values, the parallel-port DMA registers `0x80` to `0x98` and the error address decode.
 
 - **Why interrupts are polled while the top interrupt bits are enabled** (`ioc3_write_ireg`): the mechanism is read in full; the
   reason is in no string or comment the binary carries. Route: a hardware note.
-- **`0x8c` bit 29** (parallel-port DMA control). The device swap bit question is answered in docs/coverage-ioc3.md: IRIX clears it for the IOC3 window; the remaining question there is why the byte lanes mirror Linux's.
+- **`0x8c` bit 29** (parallel-port DMA control). The device swap bit question is answered in devices/ioc3/coverage.md: IRIX clears it for the IOC3 window; the remaining question there is why the byte lanes mirror Linux's.
 - **Keyboard and mouse bit meanings** in `0x9c` and `0xa0` to `0xac`: from the routines' masks only.
 - **Per-slot subdevice masks**: which board string selects `0x91`.
 - **How a non-console IOC3's serial ports get their numbers.** `ioc3_serial_attach` sets numbers only on the console IOC3, and the

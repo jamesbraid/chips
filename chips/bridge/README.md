@@ -1,6 +1,6 @@
 # Bridge and XBridge
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): the Bridge and XBridge specification scans held in this
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md): the Bridge and XBridge specification scans held in this
 repository have suspended clearance, so nothing on this page cites them). Every fact below was first read from the IRIX
 6.5.30 shipped files: the IP27 and IP30 kernels (`unix`, linked, with symbols), the IP35 driver objects `pcibr.o` and
 `xbridge.o`, the IP30 CPU PROM (`IP30prom.bin`), and the IP27, IP35 and I/O-board PROMs (scanned, no access resolved,
@@ -229,7 +229,7 @@ not a revision 2 Bridge the clear is skipped).
 public header) when its two arguments are equal and sets it otherwise.
 
 Bit 13 (the per-device swap bit in the public header) is written by none of these three routines. See
-docs/open-questions.md for the routine that sets it for the IOC3 window.
+questions/README.md for the routine that sets it for the IOC3 window.
 
 ## IP30 PROM (established for the accesses, role inferred)
 
@@ -356,10 +356,10 @@ response-buffer registers at `0x280` and `0x288` (see "Bridge block") if that po
 - `menet_vmc` (IP27 kernel, IRIX 6.5.30; the object it sits in is not recorded in this import) takes the Bridge vertex and
   matches the prefix `030-0873-`, the MENET board. It sets the subdevice word to `0x31` for PCI devices 0 to 2 and `0x01` for
   device 3, and declares second slots 4 to 7 for devices 0 to 3. Established from the disassembly the source records; not
-  re-read here. The board is on [the MENET page](../../docs/menet.md).
+  re-read here. The board is on [the MENET page](../../devices/menet/README.md).
 - `sn00_vmc` (IP27 kernel, IRIX 6.5.30; object not recorded in this import) matches the five Origin 200 system-board prefixes
   `030-1025-`, `030-1244-`, `030-1291-`, `030-1308-` and `030-1389-`. It sets device 2's subdevice word to `0xff` and declares
-  the second slot at device 3, the dual-slot guest described on [the PCI discovery page](../../docs/pci-discovery.md).
+  the second slot at device 3, the dual-slot guest described on [the PCI discovery page](../../platforms/ip27/pci-discovery.md).
   Established from the disassembly the source records; not re-read here.
 - `pciiox_init` (`IP27/usr/cpu/sysgen/IP27boot/pciiox.o` at 0x0, 32 bytes)
   calls `nic_vmc_add` once with the callback `pciiox_vmc` and the prefix `030-1062-`. Established.
@@ -377,12 +377,12 @@ response-buffer registers at `0x280` and `0x288` (see "Bridge block") if that po
 ## Routines in the IP30 and IP27 kernels
 
 The accessors and the attach routines of the Octane kernel, which serve this chip family through the same `pcireg_*`
-dispatch, are described routine by routine in [docs/ip30-kernel-bridge-routines.md](../../docs/ip30-kernel-bridge-routines.md).
+dispatch, are described routine by routine in [software/kernel/ip30/bridge-routines.md](../../software/kernel/ip30/bridge-routines.md).
 
-The routines of the IP27 kernel that serve the same family are in [docs/ip27-kernel-bridge-routines.md](../../docs/ip27-kernel-bridge-routines.md).
+The routines of the IP27 kernel that serve the same family are in [software/kernel/ip27/bridge-routines.md](../../software/kernel/ip27/bridge-routines.md).
 
 ## Open
 
-See docs/open-questions.md: the units and layout of
+See questions/README.md: the units and layout of
 the response buffer registers; whether any XBridge register lies above `0x298`; the PROMs that reach the chip through
 a run-time window.

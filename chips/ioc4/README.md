@@ -1,6 +1,6 @@
 # IOC4
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no specification is held). PCI I/O controller of IP35-class
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md): no specification is held). PCI I/O controller of IP35-class
 base I/O boards: four serial ports with ring-buffer DMA, an ATA controller, a keyboard and mouse port, general purpose
 I/O pins and an external interrupt input and output. It has no Ethernet, parallel port or one-wire port; IOC3 is the
 earlier chip of the family ([../ioc3/README.md](../ioc3/README.md)).
@@ -61,10 +61,10 @@ constant is itself the fact), **I** inferred, **U** unknown. Widths are 32-bit w
 | `0x10`, `0x14` | serial, other interrupt enable set | 4 | w | `ioc4_write_ireg` | established |
 | `0x18`, `0x1c` | serial, other interrupt enable clear | 4 | w | `ioc4_write_ireg` | established |
 | `0x20` | control: bits 3:0 byte-bus strobe width (rw), 6:4 granted requester, 7 no serial request, 8 no ATA request, 9 ATA won (status) | 4 | rw | `ioc4_attach` writes `0xf`; `hardware_init` polls bit 7; the IP35 PROM writes `0xf`, `8`, and `1` then `0` (see "PROM accesses" below) | polled bit 7 established; nibble role inferred from the public driver's field widths |
-| `0x24` | miscellaneous control: bits 3:0 PCI bus speed (0 is 33 MHz, 1 is 66 MHz) | 4 | rw | `ioc4_attach` read-modify-write (below) | inferred (role from a shipped development header; see [docs/coverage-ioc4.md](../../docs/coverage-ioc4.md)) |
+| `0x24` | miscellaneous control: bits 3:0 PCI bus speed (0 is 33 MHz, 1 is 66 MHz) | 4 | rw | `ioc4_attach` read-modify-write (below) | inferred (role from a shipped development header; see [devices/ioc4/coverage.md](../../devices/ioc4/coverage.md)) |
 | `0x28` | external interrupt output control: bits 15:0 count, 18:16 mode (7 is toggle), 30 diag, 31 output value (public Linux layout) | 4 | rw | `ioc4_eiattach` writes 0; the IP35 PROM reads it and writes it back with bit 30 cleared (see "PROM accesses" below) | inferred |
 | `0x30`, `0x34` | GPIO control set, clear | 4 | w | `ioc4_attach` writes `0x30` to `0x30`; `ioc4_eiattach` writes `0x200` or `0xff00` to `0x30` and 2 to `0x34` | inferred |
-| `0x38` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see docs/sources/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | unknown |
+| `0x38` | GPIO data | 4 | | no routine touches it. Settling test: the GPIO data register definition and any user of it in the public Linux driver for this chip (not checked out in this repository, see references/documents/INDEX.md); absent a user, the end state is unknown with no software dependency in anything held | unknown |
 | `0x40 + 4n` | GPIO pin n | 4 | w | `ioc4_set_proto` writes 0 or 1 to a pin number kept in the port's record | inferred |
 | `0x100` to `0x11c` | ATA command block, 8 words | 4 | rw | `ide.o` (below), index n at `0x100 + 4n` | inferred |
 | `0x120` | ATA control block | 4 | w | `ide.o` (below) | inferred |
@@ -80,7 +80,7 @@ constant is itself the fact), **I** inferred, **U** unknown. Widths are 32-bit w
 
 **59 register kinds** (the GPIO pins as one family; the four serial ports' repeats are not counted again; the ATA command
 block counts eight kinds and the DMA block nine): **32 established, 22 inferred, 5 unknown** as graded by the code alone. The coverage pass
-([docs/coverage-ioc4.md](../../docs/coverage-ioc4.md)) moves `0x24` to inferred and the DMA block roles (indices 1, 2, 5, 6, 7, 8) to
+([devices/ioc4/coverage.md](../../devices/ioc4/coverage.md)) moves `0x24` to inferred and the DMA block roles (indices 1, 2, 5, 6, 7, 8) to
 established by a public driver; the unknowns left are `0x38` (no routine touches it) and DMA indices 0, 3 and 4 (named by the
 public driver as timing and the current memory address, which no IOC4 path reaches).
 
@@ -187,7 +187,7 @@ by effect, addresses low 32 bits). Read as instructions, not run.
   software expects nothing to survive a reset. **Unknown:** whether the chip finishes an in-flight transfer when bit 28 clears, and the
   hardware behaviour at each CTS level with flow control on.
 - **Pause and indices**: as for IOC3 (`ioc4_enable_tx` `0x22ec` stores `0x20000000` to the control register and polls bit 30).
-- **Mode select**: `ioc4_set_proto` (`0x33c4`, returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin is the byte at +0x24 of the port's configuration record, which is 4, 5, 6 and 7 for ports 0 to 3 (extracted from the `.data` of `sio_ioc4.o`; see docs/coverage-ioc4.md, "Serial transceiver select").
+- **Mode select**: `ioc4_set_proto` (`0x33c4`, returns 0 or 1) writes 0 or 1 to `0x40 + 4 * pin`, the pin is the byte at +0x24 of the port's configuration record, which is 4, 5, 6 and 7 for ports 0 to 3 (extracted from the `.data` of `sio_ioc4.o`; see devices/ioc4/coverage.md, "Serial transceiver select").
 - **UART registers**: line control at UART+3, divisor latch at +0 and +1, FIFO control at +2, modem control at +4, line status at +5
   (established, from `hardware_init` and `set_baud_ti`), register 7 as IOC3.
 
@@ -356,10 +356,10 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 ## Open
 
 - **`0x24`**: the role is inferred (bus speed field). Open: why the clear is gated on revision 79 and what values above 1 mean.
-- **ATA DMA block**: roles are established by the Linux driver and the IRIX accesses agree ([docs/coverage-ioc4.md](../../docs/coverage-ioc4.md));
+- **ATA DMA block**: roles are established by the Linux driver and the IRIX accesses agree ([devices/ioc4/coverage.md](../../devices/ioc4/coverage.md));
   index 8 is the end-of-transfer flag area, not a second table. Open: whether IRIX waits on that area, and the request's list layout.
-- **ATA error line**: the interrupt service is read in full (the `xide_intr_clear` entry above): mask 3 on the other-interrupt word, bit 1 the memory error, and the `(low word & 0x1e) == 8` test only selects a debug line. What is left is that the compare value 8 differs from where the public driver's table puts the ATA master (a field that masks to `0x10`). The two request words at +0xa4 and +0xa8 are the leading and trailing byte counts of a block-size rewrite ([docs/coverage-ioc4.md](../../docs/coverage-ioc4.md)).
-- **Ports 1 to 3 GPIO pins** are 5, 6 and 7 (extracted; docs/coverage-ioc4.md). The other words of the 0x28-byte per-port record (nine words before the pin byte) are not read.
+- **ATA error line**: the interrupt service is read in full (the `xide_intr_clear` entry above): mask 3 on the other-interrupt word, bit 1 the memory error, and the `(low word & 0x1e) == 8` test only selects a debug line. What is left is that the compare value 8 differs from where the public driver's table puts the ATA master (a field that masks to `0x10`). The two request words at +0xa4 and +0xa8 are the leading and trailing byte counts of a block-size rewrite ([devices/ioc4/coverage.md](../../devices/ioc4/coverage.md)).
+- **Ports 1 to 3 GPIO pins** are 5, 6 and 7 (extracted; devices/ioc4/coverage.md). The other words of the 0x28-byte per-port record (nine words before the pin byte) are not read.
 - **`ioc4_error_handler` and `ioc4_intr`/`ioc4_intrd`** are read for their accesses only.
 - **Interrupt dispatch**: which `sio_ir` and `other_ir` bits each handler claims is not read.
 - **Keyboard and mouse control bits 2, 3, 14 and 15**: names only (see Keyboard and mouse). Their behaviour is not settled by any source here.

@@ -2,7 +2,7 @@
 
 # R10000 family floating-point control register cause bits
 
-Constants for the floating-point control register (FCSR, the NEC manual's FSR) of the MIPS R10000 family, for the Cause E bit that reports an unimplemented operation. The FS and rounding fields are not here: their bit positions were not read for this unit. This unit holds constants only; the rule that sets E is in docs/r10000_fpu.md. Grades: established means the processor manual states it; inferred means a reasoned reading of the manual; unknown items are listed in the page.
+Constants for the floating-point control register (FCSR, the NEC manual's FSR) of the MIPS R10000 family, for the Cause E bit that reports an unimplemented operation. The FS and rounding fields are not here: their bit positions were not read for this unit. This unit holds constants only; the rule that sets E is in devices/r10000_fpu/README.md. Grades: established means the processor manual states it; inferred means a reasoned reading of the manual; unknown items are listed in the page.
 
 Unit `r10000_fpu`, macro prefix `R10K`.
 

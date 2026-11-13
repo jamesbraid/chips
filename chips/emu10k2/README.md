@@ -17,7 +17,7 @@ Mode: **no-spec**. A stub: the probe and the access shape are read, the rest is 
 - **Inferred.** The part is the EMU10K2 of the Audigy. The hinv string for it is `Iris Audio Processor: version EMU revision %02X, number %d`,
   with revision the PCI revision byte plus `0xa0` (established: `emu_create_subsys` `0x2f0`). Published hinv captures show it on Fuel, Tezro,
   Origin 300, Origin 350 and Onyx 350 with the Audigy FireWire and game-port functions beside it: an add-in Creative card, not the Tezro tower's
-  onboard audio, and absent from IRIX 6.5.22. Detail and sources: [docs/audio/drivers.md](../../docs/audio/drivers.md).
+  onboard audio, and absent from IRIX 6.5.22. Detail and sources: [software/kernel/audio-drivers.md](../../software/kernel/audio-drivers.md).
 - **Unknown.** Every register meaning, the product that carries it, the DMA programming, the interrupt connection (none is
   imported). Route: read `emu_voice_setup`, `emu_start_dma`, `emu_init_efx` in full against the public Linux `emu10k1`
   driver; find the SGI product name for the card.

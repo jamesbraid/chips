@@ -3,8 +3,15 @@
  "siblings": {},
  "docs": {
   "prose": [
-   "docs/*.md",
-   "docs/routines/*.md",
+   "devices/*/*.md",
+   "platforms/*/*.md",
+   "software/kernel/*.md",
+   "software/kernel/*/*.md",
+   "evidence/*.md",
+   "evidence/routines/*.md",
+   "questions/README.md",
+   "references/documents/specs.md",
+   "references/documents/published-sources.md",
    "chips/*/README.md",
    "chips/*/notes/*.md"
   ],
@@ -19,15 +26,29 @@
   "index": [
    "README.md",
    "AGENTS.md",
-   "IRIX_FILES.md",
-   "docs/coverage.md",
-   "docs/open-questions.md",
-   "docs/specs.md",
-   "docs/published-sources.md"
+   "evidence/irix-files.md",
+   "evidence/coverage.md",
+   "questions/README.md",
+   "references/documents/specs.md",
+   "references/documents/published-sources.md"
   ],
   "dumps": [],
   "skip": [
-   "docs/inventory/*"
+   "evidence/inventory/*",
+   "devices/*/registers*.md",
+   "formats/*/format*.md",
+   "devices/dm2/dma.md",
+   "devices/dm2/fpga-load.md",
+   "devices/dm2/gif-registers.md",
+   "devices/dm2/interrupts-status.md",
+   "devices/dm2/pipes-timing.md",
+   "devices/dm2/ust-msc.md",
+   "devices/dm2/vbob.md",
+   "devices/dm8/README.md",
+   "devices/hollywood-dsp/README.md",
+   "software/kernel/audio-drivers.md",
+   "evidence/audio-survey.md",
+   "evidence/reading-brief.md"
   ]
  },
  "prepare": [],
@@ -144,7 +165,14 @@
    "physical": "0x1f100000",
    "docs": [
     "*.h",
-    "docs/*.md"
+    "devices/*/*.md",
+    "platforms/*/*.md",
+    "software/kernel/*.md",
+    "software/kernel/*/*.md",
+    "evidence/*.md",
+    "questions/README.md",
+    "references/documents/specs.md",
+    "references/documents/published-sources.md"
    ]
   },
   {
@@ -153,7 +181,14 @@
    "physical": "0x1f400000",
    "docs": [
     "*.h",
-    "docs/*.md"
+    "devices/*/*.md",
+    "platforms/*/*.md",
+    "software/kernel/*.md",
+    "software/kernel/*/*.md",
+    "evidence/*.md",
+    "questions/README.md",
+    "references/documents/specs.md",
+    "references/documents/published-sources.md"
    ]
   },
   {
@@ -3361,7 +3396,7 @@
   }
  ],
  "review_required": [
-  "docs/routines/t1-*.md",
-  "docs/routines/t2-*.md"
+  "evidence/routines/t1-*.md",
+  "evidence/routines/t2-*.md"
  ]
 }

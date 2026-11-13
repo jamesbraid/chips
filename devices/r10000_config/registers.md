@@ -2,7 +2,7 @@
 
 # R10000 family CP0 Config register field positions and hardwired primary-cache codes
 
-Constants for the CP0 Config register as the NEC VR10000 and VR12000 user's manual lays it out: the field positions for the boot-loaded clock, endian, reset-mode and secondary-cache fields, the R12000 delayed-speculative-dirty bit, the hardwired primary-cache size codes, and the bits that a reset loads from the mode word. The secondary-cache size and line fields are in the r10000_identity unit. This unit holds constants only; the reset and write rules, and what is unknown for the R14000, are in docs/r14000.md. Grades: established means the processor manual states it for the R10000 and R12000 columns it names; the R14000 is not checked against a processor manual, so its use there is inferred in the page.
+Constants for the CP0 Config register as the NEC VR10000 and VR12000 user's manual lays it out: the field positions for the boot-loaded clock, endian, reset-mode and secondary-cache fields, the R12000 delayed-speculative-dirty bit, the hardwired primary-cache size codes, and the bits that a reset loads from the mode word. The secondary-cache size and line fields are in the r10000_identity unit. This unit holds constants only; the reset and write rules, and what is unknown for the R14000, are in devices/r14000/README.md. Grades: established means the processor manual states it for the R10000 and R12000 columns it names; the R14000 is not checked against a processor manual, so its use there is inferred in the page.
 
 Unit `r10000_config`, macro prefix `R10KCFG`.
 

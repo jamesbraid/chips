@@ -2,7 +2,7 @@
 
 # R12000A mode-bit fields and performance control 0 syndrome field
 
-Constants for the NEC VR12000A variant of the R12000 as its user's manual describes the differences from the R12000: the SysClkDiv and SCClkDiv fields of the boot mode word, the HSTL output mode field, and the 9-bit read-only syndrome that the variant places in bits 31:23 of CP0 register 25 performance control 0. This unit holds constants only. The capture rule and the open questions are in docs/r12000a_variant.md. Grades: established means the processor manual states it; inferred means a reasoned reading of the manual; unknown items are listed in the page.
+Constants for the NEC VR12000A variant of the R12000 as its user's manual describes the differences from the R12000: the SysClkDiv and SCClkDiv fields of the boot mode word, the HSTL output mode field, and the 9-bit read-only syndrome that the variant places in bits 31:23 of CP0 register 25 performance control 0. This unit holds constants only. The capture rule and the open questions are in devices/r12000a_variant/README.md. Grades: established means the processor manual states it; inferred means a reasoned reading of the manual; unknown items are listed in the page.
 
 Unit `r12000a_variant`, macro prefix `R12KA`.
 

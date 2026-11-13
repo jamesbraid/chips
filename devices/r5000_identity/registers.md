@@ -2,7 +2,7 @@
 
 # MIPS R5000 family processor identity, reset entries, cache geometry and TLB size
 
-Constants for the R5000 processor line as the NEC VR5000 user's manual and the MIPS R5000 overview describe it: the PRId and FCR0 identity words, the reset vector and the register values a cold reset and a warm entry set, the primary and secondary cache geometry, the joint TLB size and the physical and user address widths. This unit holds constants only; the CP0 and FCR31 field layouts are in the r5000_cp0 unit and the prose is in docs/r5000.md. Grades: established means the cited manual or overview states it; inferred means a value taken from public owner reports rather than a manual; unknown items are listed in the page.
+Constants for the R5000 processor line as the NEC VR5000 user's manual and the MIPS R5000 overview describe it: the PRId and FCR0 identity words, the reset vector and the register values a cold reset and a warm entry set, the primary and secondary cache geometry, the joint TLB size and the physical and user address widths. This unit holds constants only; the CP0 and FCR31 field layouts are in the r5000_cp0 unit and the prose is in devices/r5000/README.md. Grades: established means the cited manual or overview states it; inferred means a value taken from public owner reports rather than a manual; unknown items are listed in the page.
 
 Unit `r5000_identity`, macro prefix `R5K`.
 Default source: NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001.

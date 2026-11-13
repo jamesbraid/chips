@@ -2,8 +2,8 @@
 
 Mode: **no-spec** (the driver-derived facts below come from the binary; the vendor datasheet in the section after them gives the register layout and reset values; the public Linux `sound/pci/ice1712` driver, Linux 7.2-rc7 `envy24ht.h`,
 `ice1724.c` and `revo.c`, was read after the binary and only for names and conflicts). The part is not an SGI chip. It is
-the controller of the SGI DMediaPro DM8 PCI audio option, see [docs/audio/dm8.md](../../docs/audio/dm8.md) for the board,
-and [docs/audio/survey.md](../../docs/audio/survey.md) for where it sits among the audio options.
+the controller of the SGI DMediaPro DM8 PCI audio option, see [devices/dm8/README.md](../../devices/dm8/README.md) for the board,
+and [evidence/audio-survey.md](../../evidence/audio-survey.md) for where it sits among the audio options.
 
 Source of every fact below: the IRIX 6.5.30 driver object `mad_dd.o` of the IP35 build
 (`IP35/usr/cpu/sysgen/IP35boot/mad_dd.o`, SHA-256 `905a72a73b0351378bc32c265ddae66b4f9f696b31e0eb9d65993acba78c1518`),
@@ -27,7 +27,7 @@ compared.
   list; the same value is `0x12143036` in the Linux driver's `revo.h` (the Linux constant holds the EEPROM byte order). The
   IRIX driver never tests the sub-vendor word.
 - **Not established.** What the DM8's own EEPROM and config space read. No capture is held. See the questions in
-  [docs/open-questions.md](../../docs/open-questions.md).
+  [questions/README.md](../../questions/README.md).
 
 ## Windows and byte lanes
 
@@ -164,7 +164,7 @@ manual's connector list (mic, line in, three line outs, headphone) is the Revolu
 On the Tezro tower the controller is inferred to sit behind the TI PCI2050 at IO9 bus 0 device 2, as
 device 2 of the secondary bus; the bridge driver's behaviour, the exact multi-master condition (two or
 more bus masters behind the bridge) and the interrupt swizzle are in
-[docs/questions/tezro-ice1724.md](../../docs/questions/tezro-ice1724.md). The driver imports no interrupt
+[questions/tezro-ice1724.md](../../questions/tezro-ice1724.md). The driver imports no interrupt
 call and never writes the interrupt mask or status registers, whose reset state masks every source.
 
 ## Vendor datasheet facts
@@ -259,7 +259,7 @@ and never applied to this chip.
 - **Established.** GPIO 0 is the AC-link or I2S strap at reset, with AC-link as the default (p. 2-4). GPIO 3 is the EEPROM-present strap, with present as the default (p. 2-4).
 - **Established.** GPIO direction bit 2 is forced to input while the test-enable pin is active (p. 4-9).
 - **Expectation (public Linux board table, inferred for the DM8).** GPIO 1 is the converter serial clock, GPIO 3 the data out, GPIO 5 and 6
-  the active-low chip selects, and GPIO 22 the mute line. The DM8 board wiring is not documented; see [docs/audio/dm8.md](../../docs/audio/dm8.md).
+  the active-low chip selects, and GPIO 22 the mute line. The DM8 board wiring is not documented; see [devices/dm8/README.md](../../devices/dm8/README.md).
 - **Established (converter datasheets, not the ICE1724).** The converter frame is 16 bits: two chip address bits, a fixed write bit, a
   five-bit register address and eight data bits, most significant bit first. Converters take no reads. A write is latched on the rising
   clock edge and takes effect when the select rises. The minimum clock period is 200 ns. The converters ignore writes while their power-down
@@ -316,4 +316,4 @@ Each is something a reader must settle. The working reading is the one the rest 
 
 Register layout, access types and reset values come from the vendor datasheet (see `devices/ice1724/registers.toml`). Still unknown: the
 read side effects the datasheet leaves out, the soft-reset effect on this chip, the MPU-401 command bits, the converter
-rate-code divider for each rate, and the DM8's own EEPROM image and subsystem IDs. See [docs/open-questions.md](../../docs/open-questions.md).
+rate-code divider for each rate, and the DM8's own EEPROM image and subsystem IDs. See [questions/README.md](../../questions/README.md).

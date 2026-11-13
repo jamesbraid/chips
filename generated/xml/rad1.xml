@@ -85,7 +85,7 @@
     <doc>Receiver and video-reference status. The driver reads it only through the status slot copy. The bits are undecoded; use is established, meaning inferred.</doc>
   </struct>
   <struct name="UST_CONTROL" size="4" grade="inferred" register="yes" offset="0x40" access="w" reset="unknown">
-    <doc>Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see docs/rad1.md).</doc>
+    <doc>Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see devices/rad1/facts-outside-registers.md).</doc>
   </struct>
   <struct name="ADAT_IN_CTRL" size="4" grade="established" register="yes" offset="0x44" access="rw" reset="unknown">
     <doc>ADAT input channel control. Start value 0xa0000008 is written unconditionally; the other bits are undecoded. The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
@@ -103,7 +103,7 @@
     <field name="enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="ADAT_OUT_CTRL" size="4" grade="established" register="yes" offset="0x50" access="rw" reset="unknown">
-    <doc>ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see docs/rad1.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
+    <doc>ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see devices/rad1/facts-outside-registers.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start.</doc>
     <field name="enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="AES_OUT_CTRL" size="4" grade="established" register="yes" offset="0x54" access="rw" reset="unknown">

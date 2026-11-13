@@ -2,7 +2,7 @@
 
 # R10000 family CP0 CacheErr fields for secondary-cache errors
 
-Constants for the CP0 CacheErr register as the R10000 reports a secondary-cache error: the unit select in bits 31:30, the uncorrectable data-error way field, the tag-error field and the secondary block index. This unit holds constants only. The delivery rule, the check matrix and the syndrome classification are in docs/r10000_secondary_cache_ecc.md. Grades: established means the processor manual states it; inferred means a reasoned reading of the manual; unknown items are listed in the page.
+Constants for the CP0 CacheErr register as the R10000 reports a secondary-cache error: the unit select in bits 31:30, the uncorrectable data-error way field, the tag-error field and the secondary block index. This unit holds constants only. The delivery rule, the check matrix and the syndrome classification are in devices/r10000_secondary_cache_ecc/README.md. Grades: established means the processor manual states it; inferred means a reasoned reading of the manual; unknown items are listed in the page.
 
 Unit `r10000_secondary_cache_ecc`, macro prefix `R10K`.
 

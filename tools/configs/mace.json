@@ -468,7 +468,7 @@
    "datasheets": [],
    "spec": [
     {
-     "file": "docs/sources/specs/mace-specification.registers.md",
+     "file": "references/documents/specs/mace-specification.registers.md",
      "label": "mace-spec-rev2.0",
      "headings": [
       "^PCI host bridge",

@@ -174,7 +174,7 @@
 #define RAD1_SYNC_STATUS_OFFSET                      0x34u /* inferred */
 
 /*
- * Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see docs/rad1.md).
+ * Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see devices/rad1/facts-outside-registers.md).
  */
 /* ust_control: w32, reset unknown */
 #define RAD1_UST_CONTROL_OFFSET                      0x40u /* inferred */
@@ -216,7 +216,7 @@
 #define RAD1_ANALOG_IN_CTRL_ENABLE_INPLACE           (RAD1_ANALOG_IN_CTRL_ENABLE_MASK << RAD1_ANALOG_IN_CTRL_ENABLE_SHIFT)
 
 /*
- * ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see docs/rad1.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start.
+ * ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see devices/rad1/facts-outside-registers.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start.
  */
 /* adat_out_ctrl: rw32, reset unknown */
 #define RAD1_ADAT_OUT_CTRL_OFFSET                    0x50u /* established */

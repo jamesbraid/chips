@@ -1,7 +1,7 @@
 # Xbow (Crossbow)
 
-Mode: **spec-backed** (see [docs/specs.md](../../docs/specs.md): Crossbow ASIC Specification, revision 12.0; its
-register map is transcribed in `docs/sources/specs/crossbow-asic-specification-rev12.0.registers.md`). Every fact
+Mode: **spec-backed** (see [references/documents/specs.md](../../references/documents/specs.md): Crossbow ASIC Specification, revision 12.0; its
+register map is transcribed in `references/documents/specs/crossbow-asic-specification-rev12.0.registers.md`). Every fact
 below was first read from the IRIX 6.5.30 objects `xbow.o` (IP27, IP30 and IP35 boot directories), the error-save
 routines of the IP27 and IP35 `kernel.o`, and the IP27, IP30, IP35 and I/O-board PROM images. The specification is
 compared afterwards (section "Against the published specification") and never supplies a fact.
@@ -66,14 +66,14 @@ fields: **E** established (the routine that uses it read in full, or an arithmet
 | `0x58` | arbitration reload | 4 | r | `idbg_xbowregs` only | printed | inferred |
 | `0x60` | performance counter A | 4 | rw | `xbow_update_perf_counters`, `xbow_enable_perf_counter`, through a pointer to slot + 4 that `xbow_attach` stores | bits 19:0 count (mask 0xfffff), bits 22:20 link select | established |
 | `0x68` | performance counter B | 4 | rw | same, second pointer | same | established |
-| `0x70` | NIC | - | none | no scanned routine | none; see the reset section | unknown (test: a PROM-monitor read of it on an Octane, listed in `docs/xbow-family.md`) |
+| `0x70` | NIC | - | none | no scanned routine | none; see the reset section | unknown (test: a PROM-monitor read of it on an Octane, listed in `devices/xbow/family.md`) |
 | `0x100` + `0x40` per link (`0x100` link 8 up to `0x2c0` link 15) | link input buffer flush | - | r | no held routine reaches it | a read marks every entry in that link's input buffer and its response is held until those packets have been delivered to their targets; the value read is 0 when the flush finished, 1 when another link's flush is already in progress and this one was refused (retry later); only one flush runs at a time | established (Crossbow ASIC specification rev 12.0, sections 3.1.2 and 3.3.1, printed pp. 70, 71 and 77, and the register map, p. 74); no shipped software is seen using it |
 | `0x108` | link control | 4 | rw | `xbow_attach`, `xbow_errintr_handler`, `xbow_enable_perf_counter`, `xbow_reset_link`; PROM link reset | see the entry below | established |
 | `0x110` | link status | 4 | r | `xbow_link_alive`, `xbow_reset_link`, `xbow_error_handler`, PROM tests | bit 31 is "alive" | established |
 | `0x118` | link arbitration upper | 4 | rw | `xbow_prio_bw_alloc`; PROM link reset writes 0 | four 8-bit lanes with a 5-bit count at the bottom of each, sources 8 to 11 | established |
 | `0x120` | link arbitration lower | 4 | rw | same | same lanes, sources 12 to 15 | established |
 | `0x128` | link status, read-and-clear alias | 4 | r | `xbow_errintr_handler`, `xbow_update_llp_status`, PROM link reset | read to consume errors; bit 31 and the error bits tested | established |
-| `0x130` | link reset | 4 | w | `xbow_reset_link`; IP27, IP30 and I/O-board PROM routines (the IP35 PROM does not write it); the IMPACT driver's direct fallback | the kernel and PROMs write 0, the IMPACT fallback writes 1, so the value is not decoded (inferred); what the widget sees is unknown, see `docs/xbow-family.md` "Link reset: who issues it" | established (register and issuers) |
+| `0x130` | link reset | 4 | w | `xbow_reset_link`; IP27, IP30 and I/O-board PROM routines (the IP35 PROM does not write it); the IMPACT driver's direct fallback | the kernel and PROMs write 0, the IMPACT fallback writes 1, so the value is not decoded (inferred); what the widget sees is unknown, see `devices/xbow/family.md` "Link reset: who issues it" | established (register and issuers) |
 | `0x138` | link auxiliary status | 4 | r | `xbow_widget_present`, `xbow_update_llp_status`, `xbow_error_handler`, PROM tests | bit 5 "widget present"; bits 31:24 and 23:16 summed as two byte counters | established |
 
 Totals: 23 register kinds (15 common, 8 per link; 79 slots with the link family at eight links), graded **18
@@ -164,7 +164,7 @@ scanned routine.
   identification word and, when the part (bits 27:12) is 0xd100 and the manufacturer (bits 11:1) is 0, treat port 15
   as present without reading its auxiliary status. The test is in the IP27 and IP30 objects too, so it is carried by
   every build, not only IP35. The kernel still reads link status bit 31 separately; the IP27 and IP35 PROM routines
-  waive both bits for port 15 and do not test the manufacturer (docs/questions/tezro-widget-11.md records the IP35
+  waive both bits for port 15 and do not test the manufacturer (questions/tezro-widget-11.md records the IP35
   routine).
 - **Inferred.** The part that answers 0xd100 is the integrated crossbar the IP35 PROM and kernel expect on the IP53
   node board. The binaries carry no such name for it beyond the string `pxbow_port_io_enabled` in the IP35 kernel
@@ -173,7 +173,7 @@ scanned routine.
   and 0x138 only).
 - **Unknown.** Whether a PXBOW has registers beyond the Crossbow map or the same map: the specification held here
   predates the part (revision 12.0 gives part 0). The same applies to part 0xd000, which the PROM routes down the
-  crossbar path (docs/questions/tezro-widget-11.md).
+  crossbar path (questions/tezro-widget-11.md).
 
 ## Access sequences
 
@@ -191,7 +191,7 @@ control `0x00080000` (bit 19: the LLP widget credit field 22:18 set to 2, every 
 arbitration registers 0, [IP27 PROM only] write link reset 0, then poll link status bit 31 up to 100 times with a call
 that takes 10. The IP30 PROM routine at `0xbfc6b198` reads link status once, writes control 0 (not 0x80000), both
 arbitration registers 0 and reset 0, and does not poll. The IP35 PROM routine does not write the reset register.
-docs/questions/tezro-widget-11.md reads the same IP35 routine and the credit table that follows it.
+questions/tezro-widget-11.md reads the same IP35 routine and the credit table that follows it.
 
 **Error interrupt (established for the register traffic: `xbow_errintr_handler`).** See `0x50` above. After the reads
 it re-arms by writing 0 to the error command word, handles each link whose request bit is set, and reports through the
@@ -248,7 +248,7 @@ are the printed pages of the Crossbow ASIC Specification, revision 12.0.
   loads and stores at slot + 4. They agree only if the processor-side node controller turns a 32-bit uncached access
   into a double-word packet with enables 0x0f, which is that chip's contract and is **inferred** here, not read.
 - **A bit reused by the PROM.** The I/O-board PROM treats bit 0 of link arbitration upper as an "already claimed"
-  marker (docs/questions/tezro-widget-11.md, established there). In the specification that bit is the least
+  marker (questions/tezro-widget-11.md, established there). In the specification that bit is the least
   significant bit of the link 8 guaranteed-bandwidth count. A use the specification does not describe, not a
   contradiction of the layout.
 - **Not confirmed by the code.** NIC (specification: "not functional", p. 93), input-buffer flush, and the writes of
@@ -321,7 +321,7 @@ open.
    logged until the command word is written; no code reads a second-error case. Route: none from software; a
    measurement or a published erratum.
 6. **PXBOW registers. (unknown.)** Whether the part has the Crossbow's map beyond the identification and link
-   registers the code reaches. Route: the IP35 PROM's large crossbar routines (listed in docs/open-questions.md).
+   registers the code reaches. Route: the IP35 PROM's large crossbar routines (listed in questions/README.md).
 
 ## Routines of the IP27 kernel that keep the widget and switch records (`IP27/unix`)
 
@@ -547,6 +547,6 @@ xswitch_info" (+40) and "_xswitch_id" (+88).
 
 ## Open
 
-See docs/open-questions.md: the PROMs' large crossbar routines (initialisation, credits, arbitration, diagnostics) that
+See questions/README.md: the PROMs' large crossbar routines (initialisation, credits, arbitration, diagnostics) that
 take their window pointer from a record field, the input-buffer flush use, the packet time-out, LLP control and
 arbitration reload values, and the interrupt vector assignment.

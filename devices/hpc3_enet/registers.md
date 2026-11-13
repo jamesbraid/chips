@@ -2,7 +2,7 @@
 
 # SGI HPC3 Ethernet DMA channels (Indy)
 
-The receive and transmit DMA channels of the HPC3 peripheral controller, which move frames between main memory and the SEEQ Ethernet controller, with the layouts of the descriptor words they read and write. Offsets are from the start of the HPC3 register window; the HPC3 of the Indy sits at physical 1fb80000. Grades say how each item was derived: established means read in the HPC3 specification, a public driver or the shipped IRIX driver as the source records; inferred means a reasoned reading, with the reasoning in docs/hpc3-ethernet.md. Registers the specification does not list are marked as such.
+The receive and transmit DMA channels of the HPC3 peripheral controller, which move frames between main memory and the SEEQ Ethernet controller, with the layouts of the descriptor words they read and write. Offsets are from the start of the HPC3 register window; the HPC3 of the Indy sits at physical 1fb80000. Grades say how each item was derived: established means read in the HPC3 specification, a public driver or the shipped IRIX driver as the source records; inferred means a reasoned reading, with the reasoning in devices/hpc3_enet/README.md. Registers the specification does not list are marked as such.
 
 Unit `hpc3_enet`, macro prefix `HPC3_ENET`.
 Default source: HPC3 Chip Specification, revision 1.4, 22 January 1993.
@@ -62,7 +62,7 @@ Receive control and status. The status bits are read only copies of the SEEQ rec
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 11 | `rbo` | established |  | HPC3 Chip Specification, revision 1.4, pp. 39-40 | Receive buffer overflow: a frame was longer than its buffer. How it is cleared is not settled; see docs/hpc3-ethernet.md. |
+| 11 | `rbo` | established |  | HPC3 Chip Specification, revision 1.4, pp. 39-40 | Receive buffer overflow: a frame was longer than its buffer. How it is cleared is not settled; see devices/hpc3_enet/README.md. |
 | 10 | `ch_active_mask` | established |  | HPC3 Chip Specification, revision 1.4, pp. 39-40 | Write only. Written one, it leaves the active bit unchanged in that store. |
 | 9 | `ch_active` | established |  | HPC3 Chip Specification, revision 1.4, pp. 39-40 | One while the channel is active. Software writes one to start it, and HPC3 clears it when the channel stops. A store changes it only when the mask bit is written zero in the same store. Cleared by power-on reset. |
 | 8 | `endian` | established |  | HPC3 Chip Specification, revision 1.4, pp. 39-40 | One for little-endian DMA, zero for big-endian. |
@@ -157,7 +157,7 @@ Transmit FIFO head pointer, diagnostic.
 
 ### Register `rx_cur_desc`
 
-Receive current descriptor pointer. The specification does not list it. The IRIX driver writes it at initialisation with the descriptor it marks end-of-chain, and reads it after the receive channel stops. How the hardware updates it is not settled; see docs/hpc3-ethernet.md.
+Receive current descriptor pointer. The specification does not list it. The IRIX driver writes it at initialisation with the descriptor it marks end-of-chain, and reads it after the receive channel stops. How the hardware updates it is not settled; see devices/hpc3_enet/README.md.
 
 ### Register `tx_first_cur`
 

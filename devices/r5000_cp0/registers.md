@@ -2,7 +2,7 @@
 
 # MIPS R5000 CP0 Config, Status, PageMask and LLAddr field positions, and FCR31 flags
 
-Constants for the R5000 processor's CP0 registers and FCR31 as the NEC VR5000 user's manual lays them out: the Config field positions, the Status fields and the bits a warm entry sets, the PageMask field and its legal page sizes, the LLAddr diagnostic layout, and the FCR31 field positions. This unit holds constants only; the reset, write and exception rules are in docs/r5000.md. Grades: established means the cited manual states it; unknown items are listed in the page.
+Constants for the R5000 processor's CP0 registers and FCR31 as the NEC VR5000 user's manual lays them out: the Config field positions, the Status fields and the bits a warm entry sets, the PageMask field and its legal page sizes, the LLAddr diagnostic layout, and the FCR31 field positions. This unit holds constants only; the reset, write and exception rules are in devices/r5000/README.md. Grades: established means the cited manual states it; unknown items are listed in the page.
 
 Unit `r5000_cp0`, macro prefix `R5KCP0`.
 Default source: NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001.
@@ -39,7 +39,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `R5KCFG_SC_MASK` | 0x20000 | established | NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001 | Mask for Config bit 17, SC. |
 | `R5KCFG_SE_MASK` | 0x1000 | established | NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001 | Config bit 12, SE, the software secondary-cache enable. Its reset value is not defined by the manual. |
 | `R5KCFG_SS_MASK` | 0x300000 | established | NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001 | Mask for the SS field, bits 21:20 of Config. |
-| `R5KCFG_SS_SHIFT` | 0x14 | established | NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001 | Lowest bit of the two-bit SS field, bits 21:20, the secondary cache size. Codes 0, 1 and 2 are 512 KiB, 1 MiB and 2 MiB. Code 3 is unresolved, see docs/r5000.md. |
+| `R5KCFG_SS_SHIFT` | 0x14 | established | NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001 | Lowest bit of the two-bit SS field, bits 21:20, the secondary cache size. Codes 0, 1 and 2 are 512 KiB, 1 MiB and 2 MiB. Code 3 is unresolved, see devices/r5000/README.md. |
 | `R5KFCR_CAUSE_MASK` | 0x3f000 | established | NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001 | Mask for the Cause field, bits 17:12 of FCR31. |
 | `R5KFCR_CAUSE_SHIFT` | 0xc | established | NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001 | Lowest bit of the six-bit Cause field, bits 17:12. |
 | `R5KFCR_CC0_MASK` | 0x800000 | established | NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001 | FCR31 bit 23, condition bit CC0. |

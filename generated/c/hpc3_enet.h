@@ -205,7 +205,7 @@
 #define HPC3_ENET_TX_DEV_OFFSET                      0x1700cu /* established */
 
 /*
- * Receive current descriptor pointer. The specification does not list it. The IRIX driver writes it at initialisation with the descriptor it marks end-of-chain, and reads it after the receive channel stops. How the hardware updates it is not settled; see docs/hpc3-ethernet.md.
+ * Receive current descriptor pointer. The specification does not list it. The IRIX driver writes it at initialisation with the descriptor it marks end-of-chain, and reads it after the receive channel stops. How the hardware updates it is not settled; see devices/hpc3_enet/README.md.
  */
 /* rx_cur_desc: rw32, space hpc3, reset unknown; IRIX 6.5 base-release Ethernet driver object (initialisation and interrupt handler). Not in the HPC3 specification. */
 #define HPC3_ENET_RX_CUR_DESC_OFFSET                 0x18000u /* established */

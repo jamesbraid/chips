@@ -2,7 +2,7 @@
 
 # Alteon Tigon PCI/Gigabit Ethernet controller (SGI IRIS Gigabit Ethernet board)
 
-Offsets are byte offsets in the chip's PCI memory window, as the manual's register tables give them. Fields are the bit positions the register descriptions name. Grades say how each item was derived: established means read in the Alteon Tigon/PCI Ethernet Controller manual, revision 1.04; inferred means a public driver's use or a reading the manual does not state. Reset values come only from the manual's reset statements. Nothing here was measured on a board. The prose and the sources the register rules rest on are in docs/tigon.md.
+Offsets are byte offsets in the chip's PCI memory window, as the manual's register tables give them. Fields are the bit positions the register descriptions name. Grades say how each item was derived: established means read in the Alteon Tigon/PCI Ethernet Controller manual, revision 1.04; inferred means a public driver's use or a reading the manual does not state. Reset values come only from the manual's reset statements. Nothing here was measured on a board. The prose and the sources the register rules rest on are in devices/tigon/README.md.
 
 Unit `tigon`, macro prefix `TIGON`.
 

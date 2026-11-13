@@ -19,7 +19,7 @@
    "value": 5,
    "count": 1,
    "grade": "established",
-   "from": "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in docs/sources/INDEX.md); stock PROM 6.210 SCSI diagnostic"
+   "from": "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in references/documents/INDEX.md); stock PROM 6.210 SCSI diagnostic"
   },
   {
    "unit": "isp12160",
@@ -28,7 +28,7 @@
    "value": 15,
    "count": 1,
    "grade": "established",
-   "from": "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in docs/sources/INDEX.md); stock PROM 6.210 SCSI diagnostic"
+   "from": "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in references/documents/INDEX.md); stock PROM 6.210 SCSI diagnostic"
   },
   {
    "unit": "isp12160",
@@ -118,7 +118,7 @@
    "value": 4630,
    "count": 1,
    "grade": "established",
-   "from": "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in docs/sources/INDEX.md); stock PROM 6.210 SCSI diagnostic"
+   "from": "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in references/documents/INDEX.md); stock PROM 6.210 SCSI diagnostic"
   }
  ]
 }

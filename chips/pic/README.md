@@ -1,6 +1,6 @@
 # PIC
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no specification is held). Every fact below comes from the
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md): no specification is held). Every fact below comes from the
 IRIX 6.5.30 IP35 objects `pic.o` and `pcibr.o`, the IP35 CPU PROM and the IP27/IP30 kernels as cited.
 Hypothesis, not evidence: PIC descends from Bridge and XBridge, so a Bridge-like layout is a guess to test, never a
 fill for a gap. Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`,
@@ -447,7 +447,7 @@ vendor driver's flag routine and what public software sets; no PIC specification
   byte; with bit 19 **clear** it lands at `k ^ 3`.
 - **Unknown, and the one route that settles it for PIC.** No held document or captured run measures a PIC's 32-bit
   direct transfer at either bit value. A physical read is the only remaining route: see the proposal in
-  `docs/open-questions.md` (PIC direct-window lane sense).
+  `questions/README.md` (PIC direct-window lane sense).
 
 ## Reset expectations
 
@@ -509,4 +509,4 @@ with its address list.
 
 ## Open
 
-See docs/open-questions.md: the revision-1-only steps.
+See questions/README.md: the revision-1-only steps.

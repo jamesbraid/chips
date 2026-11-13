@@ -2,7 +2,7 @@
 
 # R10000 family processor identity and secondary-cache configuration fields
 
-Constants for the MIPS R10000 processor family as the public Linux kernel identifies it: the implementation and revision fields of the PRId register, the revision split that separates the R16000 from the R14000, and the Config fields that set the secondary cache size and line. This unit holds constants only; the processor's register layouts are in docs/r10000_identity.md. Grades: established means a public driver file says it; inferred means a reasoned reading; unknown items are listed in the page.
+Constants for the MIPS R10000 processor family as the public Linux kernel identifies it: the implementation and revision fields of the PRId register, the revision split that separates the R16000 from the R14000, and the Config fields that set the secondary cache size and line. This unit holds constants only; the processor's register layouts are in devices/r10000_identity/README.md. Grades: established means a public driver file says it; inferred means a reasoned reading; unknown items are listed in the page.
 
 Unit `r10000_identity`, macro prefix `R10K`.
 Default source: Linux v6.6 MIPS headers and CPU driver.

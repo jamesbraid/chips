@@ -41,9 +41,9 @@ CLOCKGEN_ANALOG_IN = { value = 0, grade = "established", from = "public Linux RA
 CLOCKGEN_ANALOG_OUT = { value = 1, grade = "established", from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog output rate" }
 CLOCKGEN_AES_OUT = { value = 2, grade = "established", from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe", doc = "Clock generator that sets the AES3 output rate" }
 PCI_CLASS_OCTANE = { value = 0, grade = "established", from = "public Linux lspci capture of the onboard RAD, linux-pci-list message 20170213224512.GA8080@bhelgaas-glaptop.roam.corp.google.com (2017-02-13), bus 0 device 3 function 0", doc = "PCI class code of the onboard RAD on the Octane board: the 24-bit class field (config offset 0x08 bits 31:8) reads zero. Revision 0xc0 is the same listing's byte (REV_OCTANE)" }
-UST_TICK_NS_FIXED = { value = 960, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc) rad_reset_ust, board 13 path", doc = "Tick period in nanoseconds that the reset routine stores for the counter at 0x30. The other choice is computed from the Bedrock register (see docs/rad1.md). Which choice a given machine gets is unknown" }
+UST_TICK_NS_FIXED = { value = 960, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc) rad_reset_ust, board 13 path", doc = "Tick period in nanoseconds that the reset routine stores for the counter at 0x30. The other choice is computed from the Bedrock register (see devices/rad1/facts-outside-registers.md). Which choice a given machine gets is unknown" }
 UST_BEDROCK_FLAG_MASK = { value = 0xf000, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), 64-bit load of the Bedrock real-time clock control register at load", doc = "Mask applied to the value read from the Bedrock real-time clock control register (0x604200 in the local block) at load" }
-UST_BEDROCK_FLAG_VALUE = { value = 0x4000, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), same load", doc = "Masked value that sets the driver's UST flag. Bit 14 of the Bedrock register is undefined in the local block (see docs/bedrock-local-block.md)" }
+UST_BEDROCK_FLAG_VALUE = { value = 0x4000, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), same load", doc = "Masked value that sets the driver's UST flag. Bit 14 of the Bedrock register is undefined in the local block (see devices/bedrock_lb/README.md)" }
 STATUS_ONESHOT_POLLS = { value = 100, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), one-shot status routine", doc = "Most times the driver polls the status slot's completion word after starting a one-shot transfer" }
 STATUS_ONESHOT_POLL_US = { value = 5, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), one-shot status routine", doc = "Delay in microseconds between completion-word polls" }
 RBUF_REQUEST_BOARD13 = { value = 2, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), attach path for board 13", doc = "Read-response buffers the driver asks the bridge for on the PCI audio board. Board 12 asks for three" }
@@ -256,7 +256,7 @@ access = "w"
 width = 32
 grade = "inferred"
 from = "IRIX 6.5.30 IP30 rad_dd.o rad_enable_ust .text 0x1070-0x10e0 (board mode 12: 0x0e then 0x0a to enable, 0x02 to disable; modes 7 and 13 write 4 then 0)"
-doc = "Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see docs/rad1.md)."
+doc = "Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see devices/rad1/facts-outside-registers.md)."
 
 [registers.adat_in_ctrl]
 offset = 0x44
@@ -300,7 +300,7 @@ access = "rw"
 width = 32
 grade = "established"
 from = "IRIX 6.5.30 IP30 rad_dd.o rad_start_subsys .text 0x9b8-0x9c0; rad_start_dma"
-doc = "ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see docs/rad1.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start."
+doc = "ADAT output channel control. Start value 0x60000000 on modes 7 and 12; on mode 13 the reading above leaves the earlier value unknown, but a second reading of the shipped drivers finds 0x20000000 written there (see devices/rad1/facts-outside-registers.md, Not settled). The shadow word is written whole; the driver clears the enable at subsystem start."
 
 [registers.adat_out_ctrl.fields]
 enable = { bits = [0, 0], grade = "established", doc = "Channel DMA enable" }

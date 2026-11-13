@@ -171,7 +171,7 @@
    "datasheets": [],
    "spec": [
     {
-     "file": "docs/sources/specs/crime-1.5-specification-rev0.3.registers.md",
+     "file": "references/documents/specs/crime-1.5-specification-rev0.3.registers.md",
      "label": "crime-spec-rev0.3",
      "headings": [
       "^CPU interface registers",

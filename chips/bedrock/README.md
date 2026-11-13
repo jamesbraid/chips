@@ -4,10 +4,10 @@ Mode: **no-spec** (no specification is held for Bedrock; the system-architecture
 register content). Evidence: the IP35 kernel object `kernel.o` and the IP35 boot-directory objects named below,
 IRIX 6.5.30. The IP35 CPU PROM image is in the census since the 2026-11-10 rerun (see "What the PROM adds" below).
 Census: [census/](census/census.md).
-Start-up of several processors by the IP35 PROM (presence bits, rendezvous waits, memory configuration): [docs/questions/ip35-prom-mp-presence-poll.md](../../docs/questions/ip35-prom-mp-presence-poll.md).
-The memory-controller configuration word (bank decode, bank select, size probe) as the PROM and kernel use it: [docs/questions/ip35-prom-memory-bank-config.md](../../docs/questions/ip35-prom-memory-bank-config.md). The reset barrier on local-block scratch 1, the boot-master election, the progress registers and the PROM's check that pending bits reach the processor's interrupt lines: [docs/questions/ip35-prom-reset-barrier.md](../../docs/questions/ip35-prom-reset-barrier.md).
-What the PROM's waits and polls cost in time, how it programs the real-time counter's rate from two flash configuration words, and what the reset barrier's skew margin is: [docs/questions/ip35-prom-poll-timing.md](../../docs/questions/ip35-prom-poll-timing.md). The BCM5701 on the IO9, from transmit doorbell to receive completion: [docs/questions/ip35-bcm5701-completion-latency.md](../../docs/questions/ip35-bcm5701-completion-latency.md).
-The board-identification register at `+0x4000000`, the PROM's processor table and flash configuration block, and the network-interface port status bits the PROM and kernel read: [docs/questions/ip35-board-word-and-config-block.md](../../docs/questions/ip35-board-word-and-config-block.md).
+Start-up of several processors by the IP35 PROM (presence bits, rendezvous waits, memory configuration): [questions/ip35-prom-mp-presence-poll.md](../../questions/ip35-prom-mp-presence-poll.md).
+The memory-controller configuration word (bank decode, bank select, size probe) as the PROM and kernel use it: [questions/ip35-prom-memory-bank-config.md](../../questions/ip35-prom-memory-bank-config.md). The reset barrier on local-block scratch 1, the boot-master election, the progress registers and the PROM's check that pending bits reach the processor's interrupt lines: [questions/ip35-prom-reset-barrier.md](../../questions/ip35-prom-reset-barrier.md).
+What the PROM's waits and polls cost in time, how it programs the real-time counter's rate from two flash configuration words, and what the reset barrier's skew margin is: [questions/ip35-prom-poll-timing.md](../../questions/ip35-prom-poll-timing.md). The BCM5701 on the IO9, from transmit doorbell to receive completion: [questions/ip35-bcm5701-completion-latency.md](../../questions/ip35-bcm5701-completion-latency.md).
+The board-identification register at `+0x4000000`, the PROM's processor table and flash configuration block, and the network-interface port status bits the PROM and kernel read: [questions/ip35-board-word-and-config-block.md](../../questions/ip35-board-word-and-config-block.md).
 
 ## Window and how it is reached
 
@@ -396,7 +396,7 @@ the same two stores (`0x1fc642d0` to `0x1fc642ec`).
   across the store on hardware (proposal required first).
 - Reaching the node's XIO side (Crossbow, PIC, PXBOW, widgets such as the graphics board): **unknown**. The widgets
   keep their own link and board reset registers; every driver and PROM path that resets a widget does so itself
-  (docs/xbow-family.md), which is consistent with the NI reset not reaching them but does not show it (a boot after reset
+  (devices/xbow/family.md), which is consistent with the NI reset not reaching them but does not show it (a boot after reset
   would reset them anyway). Settled by: the Bedrock specification, or the Crossbow specification's statements on a
   warm reset from the Bedrock side, or a before and after read of a widget register on hardware.
 - The warm-reset pattern sent out the network port (`NPR_PORTRESET`), and the effect on a router or neighbouring node:
@@ -415,7 +415,7 @@ the same two stores (`0x1fc642d0` to `0x1fc642ec`).
 bit 5 of the board's Crossbow port (`+0x114`, `+0x13c` above the port base). If either is not set it prints a message
 and repeats from the store, with a counter that rises by 2 and stops at 7: at most four stores. On success it
 restores the port's interrupt masks. The IP35 build has no revision branch and no 0x16d form (the IP30 build does;
-docs/xbow-family.md). So repeated 0x200 stores at +0x100c are this retry loop, and are the driver's own board reset
+devices/xbow/family.md). So repeated 0x200 stores at +0x100c are this retry loop, and are the driver's own board reset
 on IP35, not a consequence of the NI reset. `odsyReset` is the only caller; its callers are `odsy_earlyinit`,
 `odsy_init`, `odsy_attach`, `gf_OdsyInitialize`, `odsy_tpinit` and the diagnostic reset. No shutdown or halt entry
 in the IP35 odyssey archive calls it, so the writes seen "during reboot" are the next start's initialisation
@@ -748,4 +748,4 @@ dependency. A hardware reference or a read on a node controller before the PROM 
 
 ## Open
 
-See docs/open-questions.md: block boundaries, indexed families, the PROM window base, the `window-18` space, and the error-register questions listed there (what a refused widget read latches, the clear semantics of the status registers, the error spool entry layout, the protection-reply types, the interrupt level numbers).
+See questions/README.md: block boundaries, indexed families, the PROM window base, the `window-18` space, and the error-register questions listed there (what a refused widget read latches, the clear semantics of the status registers, the error spool entry layout, the protection-reply types, the interrupt level numbers).

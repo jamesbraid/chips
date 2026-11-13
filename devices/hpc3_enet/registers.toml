@@ -1,7 +1,7 @@
 unit = "hpc3_enet"
 prefix = "HPC3_ENET"
 title = "SGI HPC3 Ethernet DMA channels (Indy)"
-doc = "The receive and transmit DMA channels of the HPC3 peripheral controller, which move frames between main memory and the SEEQ Ethernet controller, with the layouts of the descriptor words they read and write. Offsets are from the start of the HPC3 register window; the HPC3 of the Indy sits at physical 1fb80000. Grades say how each item was derived: established means read in the HPC3 specification, a public driver or the shipped IRIX driver as the source records; inferred means a reasoned reading, with the reasoning in docs/hpc3-ethernet.md. Registers the specification does not list are marked as such."
+doc = "The receive and transmit DMA channels of the HPC3 peripheral controller, which move frames between main memory and the SEEQ Ethernet controller, with the layouts of the descriptor words they read and write. Offsets are from the start of the HPC3 register window; the HPC3 of the Indy sits at physical 1fb80000. Grades say how each item was derived: established means read in the HPC3 specification, a public driver or the shipped IRIX driver as the source records; inferred means a reasoned reading, with the reasoning in devices/hpc3_enet/README.md. Registers the specification does not list are marked as such."
 from = "HPC3 Chip Specification, revision 1.4, 22 January 1993"
 public_from = ["HPC3 Chip Specification", "Linux", "NetBSD", "OpenBSD", "IRIX"]
 
@@ -61,7 +61,7 @@ status_7 = { bits = [7, 7], grade = "established", doc = "Read only copy of the 
 endian = { bits = [8, 8], grade = "established", doc = "One for little-endian DMA, zero for big-endian." }
 ch_active = { bits = [9, 9], grade = "established", doc = "One while the channel is active. Software writes one to start it, and HPC3 clears it when the channel stops. A store changes it only when the mask bit is written zero in the same store. Cleared by power-on reset." }
 ch_active_mask = { bits = [10, 10], grade = "established", doc = "Write only. Written one, it leaves the active bit unchanged in that store." }
-rbo = { bits = [11, 11], grade = "established", doc = "Receive buffer overflow: a frame was longer than its buffer. How it is cleared is not settled; see docs/hpc3-ethernet.md." }
+rbo = { bits = [11, 11], grade = "established", doc = "Receive buffer overflow: a frame was longer than its buffer. How it is cleared is not settled; see devices/hpc3_enet/README.md." }
 
 [registers.rx_gio]
 offset = 0x15008
@@ -229,7 +229,7 @@ width = 32
 reset = "unknown"
 grade = "established"
 from = "IRIX 6.5 base-release Ethernet driver object (initialisation and interrupt handler). Not in the HPC3 specification."
-doc = "Receive current descriptor pointer. The specification does not list it. The IRIX driver writes it at initialisation with the descriptor it marks end-of-chain, and reads it after the receive channel stops. How the hardware updates it is not settled; see docs/hpc3-ethernet.md."
+doc = "Receive current descriptor pointer. The specification does not list it. The IRIX driver writes it at initialisation with the descriptor it marks end-of-chain, and reads it after the receive channel stops. How the hardware updates it is not settled; see devices/hpc3_enet/README.md."
 
 [registers.tx_first_cur]
 offset = 0x1a000

@@ -2,13 +2,13 @@ unit = "isp12160"
 prefix = "ISP12160"
 title = "QLogic ISP12160 dual-channel Ultra2 SCSI host adapter (PCI 1077:1216), the constants the held sources establish"
 doc = "The two-channel QLogic SCSI host adapter on the Origin 300 IO-8 board and the Origin 350 IO9 board (PCI 1077:1216). Grades say how each item was derived: established means a vendor datasheet, a hardware capture or a driver or firmware statement that names the value directly; inferred means a software expectation, a shipped program that uses the value and does not show the chip's own behaviour, or a reading of a value's meaning from one driver's use of it. No register offsets, reset values or mailbox operand layouts beyond those named here are held for this part, so the register map is not in this unit. The mailbox opcodes are the values the shipped programs send, not measured chip behaviour."
-from = "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in docs/sources/INDEX.md); stock PROM 6.210 SCSI diagnostic"
+from = "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in references/documents/INDEX.md); stock PROM 6.210 SCSI diagnostic"
 public_from = ["QLogic ISP12160A data sheet (1999)", "QLogic QLA12160 hardware installation guide (2001)", "IRIX 6.5 Bedrock-class controller object", "IRIX 6.5 Octane SCSI driver object", "Linux qla1280", "NetBSD isp", "OpenBSD qlw", "stock PROM 6.210 SCSI diagnostic", "hinv and boot capture of an Origin 350 IO9 board"]
 
 [constants.PCI_DEVICE_ID]
 value = 0x1216
 grade = "established"
-from = "hinv and OpenBSD boot capture of an Origin 350 IO9 board (docs/questions/ip35-io9-pci-wiring.md); IRIX 6.5 Octane SCSI driver object compares device 0x1216"
+from = "hinv and OpenBSD boot capture of an Origin 350 IO9 board (questions/ip35-io9-pci-wiring.md); IRIX 6.5 Octane SCSI driver object compares device 0x1216"
 doc = "PCI device ID of the ISP12160 under vendor 0x1077. The capture lists it as 0x12161077 on the IO9 board, and the Octane driver object handles this device as well as the ISP1040's 0x1020."
 
 [constants.PCI_CLOCK_MHZ]

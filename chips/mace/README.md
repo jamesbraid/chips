@@ -1,8 +1,8 @@
 # MACE
 
-Mode: **spec-backed** (see [docs/specs.md](../../docs/specs.md): MACE I/O ASIC Specification, chip revision 2.0,
+Mode: **spec-backed** (see [references/documents/specs.md](../../references/documents/specs.md): MACE I/O ASIC Specification, chip revision 2.0,
 31 May 1996; its register tables are transcribed in
-`docs/sources/specs/mace-specification.registers.md`). Every fact below was first read from the IRIX 6.5.30 IP32
+`references/documents/specs/mace-specification.registers.md`). Every fact below was first read from the IRIX 6.5.30 IP32
 objects `kernel.o`, `mace.o`, `pcimh.o`, `ecplp.o`, `a3_dd.o`, `mvp.o`, `rad_dd.o`, `mhpckm.o`, `if_me.o`,
 `if_ecf.o`, `if_rns.o` and the member `sio_ti16550.o`, and from the monitors `symmon.IP32`, `ide.IP32` and
 `sash.ARCS`. The specification, the public Linux header `arch/mips/include/asm/ip32/mace.h` and the NetBSD
@@ -244,7 +244,7 @@ specification.
   (`0xa00`), bit 1 audio volume change (`a3_err_intr`).
 - ISA control (pp. 122 to 124): ring base and reset at 0x00 with bits 31:15 the base, miscellaneous control at 0x08
   with bits 4 and 5 the LED enables and bits 2 and 3 the NIC interface drive and sample bits (table 54, p. 124; see
-  [docs/ds2502.md](../../docs/ds2502.md) for the part on that line), interrupt status at 0x10, mask at 0x18; serial channel controls at `0x318000`,
+  [devices/ds2502/README.md](../../devices/ds2502/README.md) for the part on that line), interrupt status at 0x10, mask at 0x18; serial channel controls at `0x318000`,
   `0x318020`, `0x31c000`, `0x31c020` with bit 9 DMA enable.
 - PS/2 (pp. 140 to 142): receive data at +8, control at +0x10 with bit 3 receive interrupt enable, status at +0x18
   with bit 4 receive buffer full and bit 6 parity error; keyboard at `0x320000`, mouse at `0x320020`.
@@ -268,13 +268,13 @@ specification.
 - **`0x80000` writes.** NetBSD writes 0 to the error address register at attach; the specification says it is
   read-only. No IRIX routine writes it.
 
-**Disagreements and gaps (all in docs/open-questions.md):**
+**Disagreements and gaps (all in questions/README.md):**
 
 - **`0x310000` bit 4** is used as a revision flag (above); the specification says reserved, read as zero.
 - **`0x304018`** is an address inside the peripheral controller's audio block that the specification's register list
   does not have. The specification says the registers that exist are repeated to fill each block (pp. 122 and 181), so it
   aliases `0x300018` (codec status input, read-only) and the writes are discarded: settled in
-  [docs/coverage-mace.md](../../docs/coverage-mace.md).
+  [devices/mace/coverage.md](../../devices/mace/coverage.md).
 - **Calendar-clock user RAM** spacing (above).
 - **PS/2 rev 0 treatment** of status bit 6 (above).
 
@@ -285,7 +285,7 @@ specification.
   timer and audio layouts, the PS/2 port layout (`tx`, `rx`, `control`, `status`) and the calendar clock at
   `isa + 0x20000` agree with the code. **One disagreement:** the header's `struct mace_i2c` puts `config`, `control`
   and `data` at 0, 8 and 0x10 (8-byte members); IRIX and the specification put control and status at `0x10` and data
-  at `0x18` (the specification has a fourth word, an alias of the configuration word, at 8; no Linux driver uses the structure, see [docs/coverage-mace.md](../../docs/coverage-mace.md)). Linux's `ip32-irq.c` comment lists CRIME slot 7 as "PCI bridge errors", as the specification and IRIX do.
+  at `0x18` (the specification has a fourth word, an alias of the configuration word, at 8; no Linux driver uses the structure, see [devices/mace/coverage.md](../../devices/mace/coverage.md)). Linux's `ip32-irq.c` comment lists CRIME slot 7 as "PCI bridge errors", as the specification and IRIX do.
   Linux `ip32-berr.c` prints and stops on a bus error without reading any MACE register.
 - NetBSD `sys/arch/sgimips/mace/pci_mace.c` and `macereg.h` (trunk, retrieved 2026-10-31): the same names. Its PCI
   error handler reads flags then address, ignores master abort without a message (its comment: "more-or-less normal
@@ -457,6 +457,6 @@ length and "branch over SHDR" structure).
 
 ## Open
 
-See docs/open-questions.md and [docs/coverage-mace.md](../../docs/coverage-mace.md): the IP32 PROM census entry, the Ethernet,
+See questions/README.md and [devices/mace/coverage.md](../../devices/mace/coverage.md): the IP32 PROM census entry, the Ethernet,
 serial and video blocks reached by pointer, the failure behaviour above, `0x310000` bit 4 and the PS/2 revision 0 handling,
 and the calendar-clock RAM stride (base register `0x0e` and size 114 established, stride conflicts with the specification).

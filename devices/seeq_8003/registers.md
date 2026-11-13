@@ -2,7 +2,7 @@
 
 # SEEQ 8003 and 80C03 Ethernet data link controller (Indy)
 
-The SEEQ EDLC behind the Indy's HPC3: its eight byte-wide registers, the bank-selected writes and the collision counters of the 80C03 additions, and the receive and transmit command and status bytes. Offsets are byte offsets within the chip, selected by A2 to A0; behind HPC3, register n sits at 4n from the SEEQ window. Grades say how each item was derived: established means read in the SEEQ 8003 data sheet; inferred means the 80C03 additions, which rest on public drivers because the 80C03 data sheet is not held, or a driver's use of a register; unknown means the sources do not settle it. Nothing here was measured on a board. The receive and transmit DMA channels are in the HPC3 unit, and the prose is in docs/seeq-8003.md.
+The SEEQ EDLC behind the Indy's HPC3: its eight byte-wide registers, the bank-selected writes and the collision counters of the 80C03 additions, and the receive and transmit command and status bytes. Offsets are byte offsets within the chip, selected by A2 to A0; behind HPC3, register n sits at 4n from the SEEQ window. Grades say how each item was derived: established means read in the SEEQ 8003 data sheet; inferred means the 80C03 additions, which rest on public drivers because the 80C03 data sheet is not held, or a driver's use of a register; unknown means the sources do not settle it. Nothing here was measured on a board. The receive and transmit DMA channels are in the HPC3 unit, and the prose is in devices/seeq_8003/README.md.
 
 Unit `seeq_8003`, macro prefix `SEEQ_8003`.
 

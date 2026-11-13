@@ -2,7 +2,7 @@
 
 # R10000 family CP0 Diagnostic register (branch diagnostic): field positions
 
-Constants for the CP0 register 22 Diagnostic register of the MIPS R10000 family, as the NEC VR10000 and VR12000 manual lays it out: the branch-table operation and index fields, the branch state and mode fields, the branch return cache disable, the R12000 global-history and branch-target-cache bits. The R14000 and R16000 layouts are not in any cited manual; the R12000 layout is applied to them as an inferred assumption, stated in docs/r10000_diagnostic.md.
+Constants for the CP0 register 22 Diagnostic register of the MIPS R10000 family, as the NEC VR10000 and VR12000 manual lays it out: the branch-table operation and index fields, the branch state and mode fields, the branch return cache disable, the R12000 global-history and branch-target-cache bits. The R14000 and R16000 layouts are not in any cited manual; the R12000 layout is applied to them as an inferred assumption, stated in devices/r10000_diagnostic/README.md.
 
 Unit `r10000_diagnostic`, macro prefix `R10KDIAG`.
 

@@ -1,0 +1,337 @@
+# QLogic ISP2200 Fibre Channel host adapter
+
+The ISP2200 is QLogic's single-chip Fibre Channel host adapter, PCI vendor `0x1077`, device `0x2200`. The Origin 3000 system architecture manual draws one Fibre Channel controller on the I-brick's PCI side, with two disks behind it, and names no bus, slot or function. A public Origin 3200 inventory lists
+`Fibre Channel QL2200A, 33 MHz PCI` at PCI identity `1077:2200`. That `QL2200A` label is a software report, not a
+silicon marking.
+
+The register contract, the constants and the grade of each item are in [devices/isp2200/registers.md](registers.md),
+generated from [devices/isp2200/registers.toml](registers.toml). This page says what the contract rests on, how the drivers
+use the chip, and what is unknown.
+
+## What the contract rests on
+
+No QLogic programming manual for the ISP2200 or ISP2200A is held. The only public chip document found is a short
+QLogic data sheet, 83220-580-00 B. The research that preceded this page found it omits the register map and the
+mailbox commands, and this page does not use it. Everything below comes from three public driver trees and two board
+documents:
+
+- the Linux `qla2xxx` driver, pinned at `db2ddb871435`;
+- the OpenBSD SGI `qla` driver, pinned at `2df91d80c104`;
+- the NetBSD `isp` driver, pinned at `07004b2a9dac`;
+- the QLogic QLA2200 board family installation guide, FC0151103-00 D (2000), which gives board RAM and NVRAM sizes
+  and the interrupt line but no programming detail.
+
+Those are software expectations. A value two drivers agree on is graded established, and that means the drivers
+agree and work against real adapters. It does not prove the reset value, the timing, or any behaviour the drivers
+never exercise. A value one driver uses is inferred.
+
+## Identity and the register window
+
+The part identifies as `1077:2200`. All three drivers match on vendor and device only. The revision byte and the
+class code are not read by any driver for this part, so they are unknown. The pci.ids entry for `1077:0002`
+names a retail QLA2200 board. The I-brick card's subsystem IDs are not known.
+
+BAR0 is an I/O-space BAR and BAR1 a memory-space BAR. The drivers read the same window through either. Linux uses
+memory only, OpenBSD tries memory and then I/O, so both must decode the same registers. The window is `0x100` bytes.
+The drivers access it as 16-bit registers, little-endian on the bus. Whether the chip accepts 8-bit or 32-bit
+accesses is unknown.
+
+Bus mastering matters. The drivers enable it in the PCI command register, and the adapter's DMA depends on that bit.
+The expansion ROM BAR exists, and the drivers clear its enable bit. The board guide describes a 128 KiB flash BIOS
+ROM on the board, which is not the chip.
+
+## Registers
+
+The table in the generated page lists each register with its offset, width, access and grade. In prose:
+
+- **Control and status (`0x06`).** Writing bit 0 starts a soft reset, and the adapter clears it when the reset
+  ends. Bits 5 and 4 select the bank behind the banked window at `0x80` to `0xBF`. The drivers leave it at the RISC
+  bank. The other values select a frame buffer and two FPM diagnostic banks. OpenBSD writes an FPM bank during its reset sequence.
+- **Interrupt control (`0x08`).** The drivers write `0x8008` to enable and `0` to disable. Bit 15 is the global
+  enable and bit 3 the RISC interrupt enable.
+- **Interrupt status (`0x0A`).** Bit 3 is the RISC interrupt pending. Bit 15 is also a pending bit. OpenBSD tests it
+  before it reads the response ring. Linux does not.
+- **Semaphore (`0x0C`).** Bit 0 is the lock. The adapter sets it when a mailbox result or an asynchronous event waits
+  for the host, and the host releases it by writing 0. Bit 1 is named "status" by NetBSD. No driver reads it.
+- **NVRAM (`0x0E`).** A bit-banged serial EEPROM port: clock, chip select, data into the EEPROM and data out of it,
+  on bits 0 to 3. See the NVRAM section below.
+- **Mailboxes 0 to 7 (`0x10` to `0x1E`).** Sixteen-bit mailboxes, two bytes apart. Mailbox 0 carries the command
+  number in and the status out. Mailboxes 1 to 3 carry operands and results. Mailbox 4 is the request-queue pointer
+  and mailbox 5 the response-queue pointer. A write to mailbox 4 or 5 does not ring the doorbell, and a command
+  does not start from it. Linux and OpenBSD both write mailbox 4 as a producer index with no doorbell.
+- **Mailboxes 8 to 23 (`0xE0` to `0xFE`).** The count of 24 is stated by two drivers. Only Linux gives where the
+  upper sixteen sit, so the placement is inferred. Linux writes all 24 mailboxes on every command, putting zero in the
+  ones the command does not use.
+- **Host command and control (`0xC0`).** A write carries a command in bits 15 to 12. A read returns status: bit 7 is
+  the host interrupt set (command pending), bit 5 the RISC paused, and bit 6 the RISC held in reset. NetBSD names bit
+  6 "reset in progress". Whether it clears by itself when a soft reset ends is unknown.
+
+Linux does not describe offsets `0x20` to `0x94`. NetBSD writes DMA-engine reset values to `0x20`, `0x40` and `0x60` right after a soft reset, and that is the only use of the range in the sources. The flash address and data words at the start of the window and the GPIO words at `0xCC` and `0xCE` are named by the drivers and are out of scope for the host interface.
+
+Banked registers at `0x80` to `0xBF` are diagnostic or timing registers and are not described here.
+
+## Reset and RISC control
+
+The drivers start a soft reset by writing CSR bit 0, then poll the bit until it clears. Linux bounds that poll at about
+six million iterations of 5 µs. No consumer needs a particular duration. Linux and OpenBSD both do this, and NetBSD
+does the same from its own reset routine.
+
+After the poll, each driver writes the HCCR reset command and then releases the RISC: - Linux's chip-diagnostic path writes reset then release back to back. Its reset path writes reset, clears the semaphore, then releases.
+- OpenBSD writes reset, clears the semaphore, writes `0x4000`, then releases the RISC.
+- NetBSD writes reset, clears the semaphore, writes `0x4001`, then releases.
+
+The older Linux `qlogicfc` driver writes HCCR reset 100 µs after the soft reset without polling anything.
+
+HCCR commands, from the drivers:
+
+| Command | Meaning | Grade |
+|---|---|---|
+| `0x0` | no-op | established |
+| `0x1` | reset the RISC: held in reset, mailboxes show busy | established |
+| `0x2` | pause the RISC | established |
+| `0x3` | release the RISC: leave reset or pause and boot | established |
+| `0x4` (`0x4000` or `0x4001`) | parity-related; drivers write `0x4001`, and OpenBSD `0x4000` between reset and release | established that drivers write it; the effect is unknown |
+| `0x5` | set host interrupt: the doorbell that hands one mailbox command to the firmware | established |
+| `0x6` | clear host interrupt | established |
+| `0x7` | clear RISC interrupt: clears the latch that a mailbox result or response raised | established |
+
+Some sources name the `0x4000` and `0x4001` words "single step" and "mask parity", and the drivers' names do not
+agree. None of those names is confirmed by a manual. The meaning of each word is unknown, and no driver depends on a
+result from it.
+
+While the RISC is held in reset, mailbox 0 reads `0x0004`. After a release, Linux and NetBSD poll mailbox 0 until it stops reading that value. OpenBSD reads mailboxes 1 to 3 at attach, before any reset, and issues only a RISC release if they do not show the product ID below. That fits a part that comes out of power-on running its ROM with the ID in the mailboxes, but it is not a statement about what a reset leaves. Whether the RISC keeps downloaded code or runs anything after a soft reset is unknown: the default path of each driver reloads the firmware after its reset.
+
+### Product ID and reset mailboxes
+
+Three drivers read mailboxes 1 to 3 after a reset. These are the values they check:
+
+- mailbox 1: `0x4953`, which reads as `IS`;
+- mailbox 2: `0x5020`, which reads as `P ` (OpenBSD requires it; Linux also accepts zero);
+- mailbox 3: `0x2020`, two spaces.
+
+Mailbox 7 reads `0x0004` after reset. Linux takes that as the QLA2200A RISC ROM version and limits firmware transfers to 128 bytes. No other driver reads it, so whether the fitted part is a 2200A is unknown. The drivers do not read mailboxes 4 to 6 or 8 to 23 after reset, so their values there are unknown.
+
+## Mailbox commands
+
+The host writes the input mailboxes in ascending order, mailbox 0 first, then writes HCCR `0x5` to hand the command
+to the firmware. The firmware runs it, writes the outputs, sets mailbox 0 to a status, sets the semaphore lock and
+raises the RISC interrupt.
+
+Status values in mailbox 0 (established): `0x4000` complete, `0x4001` invalid command, `0x4002` host interface error
+(a DMA failed), `0x4003` test failed, `0x4005` command error, `0x4006` parameter error. The sources name these but do
+not say which malformed input returns which value.
+
+The commands the drivers send, with grades:
+
+| Opcode | Command | Grade |
+|---|---|---|
+| `0x0000` | no-op, used as a liveness check | established |
+| `0x0001` | load RAM with a 32-bit host address (NetBSD name; no driver sends it) | inferred |
+| `0x0002` | execute firmware at a RAM address | established |
+| `0x0003` | dump RAM to host memory (NetBSD name) | inferred |
+| `0x0004` | write one RAM word: mailbox 1 address, mailbox 2 data | established |
+| `0x0005` | read one RAM word (NetBSD only) | inferred |
+| `0x0006` | mailbox register test: echo mailboxes 1 to 7 (Linux) | inferred |
+| `0x0007` | verify checksum | established |
+| `0x0008` | about firmware: version in mailboxes 1 to 3, attributes in mailbox 6 | established |
+| `0x0009` | load RAM by DMA, in chunks (Linux only) | inferred |
+| `0x000B` | load RAM by DMA, as `0x0009`, with RAM address bits 31 to 16 in mailbox 8 (Linux only) | inferred |
+| `0x001F` | firmware status; OpenBSD reads the outstanding-command maximum from mailbox 2 | inferred |
+| `0x0028` | get firmware options (Linux, before init) | inferred |
+| `0x0038` | set firmware options in mailboxes 1 to 3 (OpenBSD) | inferred |
+| `0x0060` | initialize firmware from the initialization control block | established |
+
+The drivers also send Fibre Channel commands (loop ID, port database, login, name server, link status and others) that
+belong to the Fibre Channel service, not to the host interface. This page does not cover them.
+
+## Firmware download
+
+A driver downloads RISC code into RAM before it runs it. OpenBSD and NetBSD write the image one word at a time with
+the write-RAM-word command, then verify and execute. Linux sends chunks by DMA. The RISC code starts at RAM word
+`0x1000`, which both Linux and OpenBSD agree on. Word 3 of an image is its length in words, and all three loaders read
+it there.
+
+The verify command returns the checksum in mailbox 1. The drivers treat a zero sum over the length as a match. Execute
+answers with a status. Linux and OpenBSD check it. NetBSD does not check it on this part.
+
+Before execution the RISC answers the load commands: no-op, the register test, the RAM loads and dump, the word read and write, verify, execute and about firmware. The drivers send most of these to load the image. Which other commands it accepts before execution is unknown.
+
+DMA addresses in these commands are split across mailboxes. For the load-by-DMA command, mailboxes 2 and 3 carry the
+low 32 bits of the host address, the high bits go in mailboxes 6 and 7, and the word count goes in mailbox 4. Only
+Linux uses that form for this part, so the split is inferred.
+
+## Initialization control block
+
+INIT FIRMWARE takes the address of a 96-byte, little-endian control block in host memory. Its first byte is the
+version, which the drivers set to 1. The block carries the firmware options, the maximum frame payload, the IOCB
+allocation and the execution throttle. It also carries the retry count and delay, the port and node names, the hard
+address and the login timeout. It holds the request and response queue lengths and their 64-bit base addresses.
+Queue lengths are 16-bit entry counts. The two base addresses are 64-bit little-endian.
+
+The drivers send different input masks with INIT FIRMWARE. Linux sends mailbox 1 as zero, OpenBSD sends mailboxes 4 and 5 as zero, and NetBSD's mask differs again. The address goes in mailboxes 2, 3, 6 and 7 in all three.
+
+The firmware options word in the block (offset 2) has these meanings, the same in all three drivers. Low byte: hard
+loop ID, fairness, full duplex, fast post, target mode, disable initiator mode, ADISC, target inquiry data. High byte:
+PDB change notify, non-participating LIP, descending loop ID search, acquire loop ID in LIPA, stop port queue on full
+status, full login after LIP, node name option, extended block.
+
+The extra firmware options word sets the timer-operation mode for interrupt reduction. The width of that field is
+unknown, because NetBSD and Linux disagree on how many bits it has.
+
+## Request and response rings
+
+Entries are 64 bytes. The host writes request entries and the adapter writes response entries. The queues' pointers
+live in mailboxes: request-in is written to mailbox 4 and request-out read from it, response-out is written to mailbox
+5 and response-in read from it. Reads of those pointers return the adapter's value. OpenBSD reads them as single
+values on the 2200 and notes that the 2100 needs two reads.
+
+Two things about the pointer registers are shown by the driver code and not by a manual:
+
+- Linux and OpenBSD both write mailbox 4 with no doorbell, as a producer update.
+- Linux writes all 24 mailboxes on every command, so mailbox 4 is written as zero inside a command as well.
+
+Whether a pointer write that lands between a mailbox 0 write and the doorbell is taken as a pointer or as a command
+input, and what each outcome does, is unknown. OpenBSD can write a pointer in that window on one CPU, because its mailbox command takes no lock around the mailbox writes and the doorbell, so an interrupt that writes response-out can arrive between them. Linux holds one lock across the mailbox write and the doorbell, and its pointer writes take the same lock, so it cannot produce that window.
+
+The response ring is detected two ways. OpenBSD reads response-in and consumes entries up to it. Linux ignores
+response-in on this part. It walks the ring until it finds an entry whose last four bytes are the signature
+`0xDEADDEAD`, which Linux writes into each entry after it processes it. A sense payload that ends in that signature is
+missed by Linux, which is a Linux limitation.
+
+### Command entry
+
+Request type `0x19` is the command entry for 64-bit segment addresses (established). The layout the drivers agree on
+for the fields they use:
+
+| Offset | Size | Field |
+|---|---|---|
+| 0 | 1 | entry type |
+| 1 | 1 | entry count: this entry plus its continuations |
+| 2 | 1 | system-defined or sequence byte |
+| 3 | 1 | entry status flags (zero on a request) |
+| 4 | 4 | handle, returned unchanged in the status entry |
+| 8 | 2 | target field (layout depends on the firmware attributes) |
+| 10 | 2 | LUN field |
+| 12 | 2 | control flags: head of queue, ordered, simple tag, data read, data write |
+| 16 | 2 | timeout in seconds; zero for the default |
+| 18 | 2 | segment count |
+| 20 | 16 | CDB |
+| 36 | 4 | total byte count |
+| 40 | 24 | two 12-byte segments: 64-bit address, 32-bit length |
+
+Continuations (`0x0A` for 64-bit segments, `0x02` for 32-bit) carry the remaining segments and have no handle. The entry count tells the adapter how many slots a command uses, so it must not dispatch a continuation as a command. The continuation types and the command types `0x11` (32-bit segments) and `0x15` (a pointer to a segment list, OpenBSD only) are each inferred from one driver. The target and LUN layouts differ by driver: Linux puts the target in byte 9, the high byte of the field at offset 8, and OpenBSD
+packs target and LUN one of two ways depending on a firmware attribute. Which form a real firmware uses is unknown.
+
+The drivers post a marker entry (`0x04`) after a LIP, reset or abort. No driver expects a response entry for it, which is inferred.
+
+### Status entry
+
+Response type `0x03` is the status entry (established). It carries the handle from the request, the SCSI status in
+its low byte, a completion code, state and status flags, a response-info length, a sense length, the residual count,
+and up to 32 bytes of sense data in the entry. Status bit 8 says response info is valid, bit 9 sense is valid, bit 10
+residual over, bit 11 residual under.
+
+The completion codes are in [devices/isp2200/registers.md](registers.md). The ones the drivers name are complete,
+incomplete, DMA error, transport error, reset, aborted, timeout, data overrun, data underrun, queue full, port
+unavailable, port logged out, port configuration changed and port busy. The meaning of the state and status flag bits
+is unknown. A status continuation (`0x10`) carries sense data beyond the first 32 bytes. Linux and OpenBSD disagree on
+its capacity.
+
+Response entries have a flags byte with error bits: busy, invalid entry type, invalid parameter, invalid count,
+invalid order and a request-queue DMA error. The drivers name the bits. No source says which malformed request sets
+which bit.
+
+## Semaphore and interrupts
+
+Linux and OpenBSD classify an interrupt the same way (established). The RISC raises the interrupt, and the host reads
+the semaphore:
+
+1. If the lock bit is set, a mailbox result or an asynchronous event is waiting. Linux clears the RISC interrupt with
+   HCCR `0x7`, reads mailbox 0 and the rest, then writes 0 to the semaphore to release it. Codes `0x4000` to `0x7FFF`
+   are command completions and `0x8000` to `0xBFFF` are asynchronous events.
+2. If the lock bit is clear, it is a response-ring interrupt. Linux walks the ring and then clears the RISC interrupt.
+   OpenBSD reads response-in first, consumes entries, writes response-out, then clears.
+
+The semaphore is a hand-off. While the lock is set the firmware should not overwrite the outgoing mailboxes. The
+drivers release it last. Linux's mailbox branch clears the interrupt before it releases the lock, so, reading that handler, a response entry that set the interrupt inside that window would lose its interrupt. Whether the real part posts response entries while the
+interrupt is set is unknown.
+
+NetBSD says the response-in pointer must be read before the RISC interrupt is cleared, and it rechecks the semaphore
+and mailbox 0 when a RISC interrupt arrives with no ring progress. Those are driver precautions, not hardware
+statements.
+
+No source states how the two enables and the latch combine into the interrupt line. The drivers set both enables and read the latch, and that is all that is settled.
+
+Asynchronous events are delivered like mailbox results: the adapter writes mailboxes 0 to 3 and sets the lock. The
+codes the drivers name are the reset (`0x8001`), the loop-down and loop-up pair (`0x8012` and `0x8011`), the LIP
+(`0x8010`), the port database change (`0x8014`) and the RSCN (`0x8015`).
+
+## NVRAM
+
+The board has a 256-byte serial EEPROM. Linux and OpenBSD read it bit by bit through the NVRAM register. For each
+16-bit word, the reading side does this:
+
+1. Clock out eleven command bits, most significant first: a start bit, the read opcode `10`, then the eight address
+   bits.
+2. Clock in sixteen data bits, reading the data-from-EEPROM bit on each clock.
+3. Deselect.
+
+The word is stored little-endian: byte `2i` is the low byte of word `i`. OpenBSD adds an offset of `0x80` words per
+port. The image begins with the bytes `ISP `, has a version of at least 1, and sums to zero over its 256 bytes. OpenBSD
+treats a bad image as corrupt and uses built-in defaults. Linux uses default parameters. The image fields are the port
+and node names, the firmware options, frame payload, throttle, login timeout, hard address, and the ISP2200 subsystem
+vendor and device words.
+
+The EEPROM part is a 256-byte microwire device. Its class, 93C66 or another, is inferred from the command format and
+no part list was read. Whether a real part drives a dummy zero before the first data bit is unknown.
+
+The contents of the I-brick card's own NVRAM are unknown. No public source records them.
+
+## DMA and byte order
+
+The adapter is a PCI bus master. It reads the control block, request entries, descriptor lists, data segments and
+firmware, and writes response entries, status and data. Bus-master enable controls all of it. pci.ids gives the marketing name QLA2200 64-bit Fibre Channel Adapter, but no public source states the width of the card's data phases or how the board wires them. The placement of
+bytes inside a data phase is a board matter, not a chip one.
+
+Linux chooses the 32-bit or the 64-bit command builder from the DMA mask it gets, not from the PCI identity.
+
+## Board and topology
+
+The Origin 3000 system architecture manual places one Fibre Channel controller on the I-brick's PCI side, with two
+disks behind it. It does not name the slot, the interrupt route or the bridge's byte placement for that controller.
+Those are in the I-brick contract, not here.
+
+The QLA2200 board family has 128 KiB of RAM and 256 bytes of NVRAM, and uses interrupt line A on a PC slot. The
+installation guide is about PC boards, so those figures describe the family, not the I-brick card.
+
+## Unknown
+
+- The reset state of every register, the busy duration after a release, and the RISC and mailbox state after a device
+  reset or a soft reset. Whether RISC RAM and the running state survive a soft reset is unknown. The drivers reload
+  the firmware after every reset, so nothing here settles it.
+- Access widths other than 16 bits.
+- Semaphore bit 1 and what a repeated write of 1 does.
+- Mailbox 4 and 5 aliasing: how the chip tells a command input from a pointer write, and what a mailbox command that
+  writes mailbox 4 does while the ring is not empty.
+- Whether mailboxes 8 to 23 do anything beyond the extended RAM load.
+- Which commands the RISC accepts before firmware runs, the exact checksum algorithm and region, whether execute needs
+  a prior verify, and the RAM extent.
+- The meaning of the state and status flag bits, the status continuation capacity, and the per-condition completion
+  codes.
+- The ring minimum and maximum lengths, ring-full behaviour, and whether the part writes response entries under a set
+  interrupt. The maximum number of outstanding commands is not stated.
+- Whether the fitted part is a 2200A, which mailbox 7 would show if it were.
+- Whether the target and LUN layout is the one the firmware uses, and which firmware release reports which attributes.
+- The I-brick card's NVRAM words, its subsystem IDs and its firmware source.
+
+The settling evidence for each would be a manual, or a register capture from a real part taken immediately after each
+kind of reset, or a capture of ring traffic and mailbox commands interleaved.
+
+## Out of scope
+
+- Fibre Channel loop initialisation, AL_PA assignment, logins, the fabric and name server, the port database, link
+  status, and anything behind a loop handle.
+- Response batching, fast post, target mode and immediate notify, IP over Fibre Channel, and the 2300 layouts.
+- The flash BIOS, the expansion ROM, the frame-buffer and FPM banks, GPIO LEDs, parity and breakpoint diagnostics, and
+  manufacturer diagnostic fields.
+- Abort, device reset and bus reset recovery.

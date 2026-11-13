@@ -11,7 +11,7 @@ author or FPGA builder never needs to read the binaries.
   document, revision and page, or the file and version.
 - **inferred**: a reasoned reading. A reading built from call lists, store summaries, a name, a sibling chip or
   a sibling build is inferred. Give the reasoning.
-- **unknown**: not settled. Say what route would settle it and put it in docs/open-questions.md. Anything
+- **unknown**: not settled. Say what route would settle it and put it in questions/README.md. Anything
   unlabelled is unknown. "Unknown: no shipped software or published source depends on it" is a valid end state
   for a fact (such as the reset value of a register no code reads); list the routes tried.
 
@@ -49,7 +49,7 @@ report agreement or disagreement, never to supply a fact.
   stale tree). `devices/<unit>/registers.md` is the reference page for each unit, the published view of the facts.
   `include/*.h` are forwarding headers that keep the old macro names; they are generated too. After any register map
   change run `defs-gen`, then `defs-check --build`.
-- `docs/inventory/` and `docs/coverage.md`: written by `retools/tools/inventory.py`. Never edit by hand.
+- `evidence/inventory/` and `evidence/coverage.md`: written by `retools/tools/inventory.py`. Never edit by hand.
 - `tools/`: the census configs (`tools/configs/`, one per chip, marked spec-backed or no-spec) and the bootstrap
   stub; `tools/config/`: the inventory configuration, the pinned manifests and the allow-lists the checks read.
 - Commit small. Subjects are lowercase, component-prefixed imperatives (`docs: ...`, `scripts: ...`,
@@ -58,10 +58,10 @@ report agreement or disagreement, never to supply a fact.
 ## Done
 
 A chip row is done when every inventory row in its area is `understood` (label, role and hardware effect,
-a derivation specific to the item) or `no-software-dependency`. `docs/inventory/README.md` has the exact
+a derivation specific to the item) or `no-software-dependency`. `evidence/inventory/README.md` has the exact
 grading rules, including the template cap, the scope filter and the unverified label. An independent audit
 samples `understood` rows and re-derives them from the binaries; the result goes in
-`docs/inventory/audits.tsv` (written by hand; the audit procedure is in READING-BRIEF.md).
+`evidence/inventory/audits.tsv` (written by hand; the audit procedure is in evidence/reading-brief.md).
 
 ## Reading MIPS code from the shipped binaries
 
@@ -102,7 +102,7 @@ samples `understood` rows and re-derives them from the binaries; the result goes
 
 ## Procedure for a chip
 
-1. Fill `root/` (IRIX_FILES.md) and run `retools/tools/inventory.py` to see the rows.
+1. Fill `root/` (evidence/irix-files.md) and run `retools/tools/inventory.py` to see the rows.
 2. Write the chip's census config (`tools/configs/<chip>.json`): the images, the seeds that tell the scanner
    which functions receive the chip's window pointer, the chip-type compares, and the literal-pool settings.
 3. `retools/tools/chips/run.sh tools/configs/<chip>.json` (see tools/README.md) and read `chips/<chip>/census/census.md`.

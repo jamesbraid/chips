@@ -271,7 +271,7 @@
    "datasheets": [],
    "spec": [
     {
-     "file": "docs/sources/specs/crossbow-asic-specification-rev12.0.registers.md",
+     "file": "references/documents/specs/crossbow-asic-specification-rev12.0.registers.md",
      "label": "crossbow-spec-rev12.0",
      "headings": [
       "^Common registers",

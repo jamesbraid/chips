@@ -1,6 +1,6 @@
 # L1 and ELSC system controllers (host-visible side)
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no specification is held). The L1 (Origin 3000-class bricks, IP35
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md): no specification is held). The L1 (Origin 3000-class bricks, IP35
 build) and the ELSC (Origin 2000-class modules, IP27 build) are microcontrollers that sit beside the node controller. They
 are not memory-mapped devices of their own; the host sees them through three paths, all read here:
 
@@ -162,5 +162,5 @@ come from a table the pass cannot follow and are an open question.
 
 ## Open
 
-See [../../docs/open-questions.md](../../docs/open-questions.md): the PCI power request codes, the meaning of the local-block
+See [../../docs/open-questions.md](../../questions/README.md): the PCI power request codes, the meaning of the local-block
 interrupt registers, and the L2 addressing.

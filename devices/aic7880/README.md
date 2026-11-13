@@ -1,0 +1,290 @@
+# Adaptec AIC-7880 on the O2: host DMA, COMMAND-phase transfer and SCB storage
+
+The O2's onboard SCSI controller is an Adaptec AIC-7880. No AIC-7880 book is held here. This page collects what the published Adaptec AIC-7870 Data Book says about the host-DMA path, DMA for the SCSI COMMAND phase and the SCB pages, and says how far each fact carries to the AIC-7880. The register offsets and fields are in [devices/aic7880/registers.md](registers.md), generated from `devices/aic7880/registers.toml`.
+
+## Sources and grades
+
+- **The source book:** Adaptec, *AIC-7870 Data Book*, SHA-256 `7f7d155bd5f6290766a4c27bbb18082e879288a01005c349128ede091e1218a5`. No printed revision is established. Page numbers below are PDF pages, with the printed page in parentheses where the source gave it.
+- **Page references were not rechecked.** They come from the note that supplied these facts. The PDF is not held in this repository, so each citation is unverified against the book.
+- **Grade.** Every fact from the AIC-7870 book is graded inferred for the AIC-7880. The AIC-7880 is a sibling chip, and a sibling is not evidence for this chip's registers. A fact moves to established only when an AIC-7880 book or a measurement of this chip settles it.
+- **Exposure.** The author of the note that supplied these facts had read protected Adaptec driver software earlier. These facts come only from the published book. Anyone who writes an implementation or a review from this page should not have read that software.
+
+## Register window
+
+- The host-DMA registers are selected by `HADDLDSEL` bits 1:0 = 0 (inferred; PDF 135). The offset of `HADDLDSEL` is not in the extract, so it is unknown here.
+- Byte registers 0x88 to 0x8b hold the 32-bit host PCI address. Writing it also loads `SHADDR`, the SCSI-side address, which sits at 0x14 to 0x17 with the least significant byte first (inferred; PDF 58–59, 93).
+- Bytes 0x8c to 0x8e hold the 24-bit host count (inferred; PDF 139–140). Byte 0x8f is reserved; see the block map below.
+- `DFCNTRL` (0x93) and `DFSTATUS` (0x94) are described in the defs unit. The bit positions of `DFSTATUS` are not in the extract, so they are unknown.
+- The 64-bit (DAC) address modes and the SFUNCT test modes are outside this page.
+
+## Register block map and reserved bytes
+
+The device register block runs from 0x00 to 0xff. The sequencer reads and writes the same addresses through its own `DS-` alias (inferred; PDF 57).
+
+- SCSI registers: 0x00 to 0x1f.
+- Scratch RAM: 0x20 to 0x5f.
+- Sequencer registers: 0x60 to 0x7f.
+- Host, SCB and data FIFO registers: 0x80 to 0x9f.
+- SCB array: 0xa0 to 0xbf.
+- 0xc0 to 0xff: reserved (inferred; PDF 57).
+
+Byte 0x8f is reserved. The book says reads return zero and writes are ignored, and that a read of an unassigned device address returns the last value driven on the bus, except at 0x8f, which always returns zero (inferred; PDF 130, 140). The defs unit has no entry for it.
+
+## Error and interrupt registers at 0x91 and 0x92
+
+- `INTSTAT` (0x91) and the write side of `CLRINT` (0x92) are in the defs unit, with their bit positions. `CLRINT` bit 4 clears the parity error causes, bit 3 clears `BRKADRINT`, and bits 2 to 0 clear `SCSIINT`, `CMDCMPLT` and `SEQINT` (inferred; PDF 141–144).
+- The read side of 0x92 is `ERROR`: bit 6 `PCIERRSTAT`, bit 5 `MPARERR`, bit 4 `DPARERR`, bit 3 `SQPARERR` and bit 2 `ILLOPCODE`. Bits 1 and 0 read zero. Writing `CHIPRST` clears `ILLOPCODE`, and RST# clears every latched bit. `PCIERRSTAT` clears only when the PCI status causes clear (inferred; PDF 144).
+- `DSPCISTATUS` (0x86) selects the FIFO threshold in bits 7:6. Its bits 5:0 mirror six PCI status bits and writes do not change them (inferred; PDF 136).
+- The queue-in FIFO is at 0x9b and the queue-in count at 0x9c. The book's register table prints the queue-in FIFO at 0x98, but its SCB device-register layout (PDF 69) and the 0x9a to 0x9d sequence put it at 0x9b (inferred; PDF 63, 69).
+- The queue-out count is at 0x9e, read by the host only (inferred; PDF 61). The host address of the queue-out FIFO is not settled: the register table on PDF 61 puts the host read at 0x9c, which the SCB layout on PDF 69 gives to the queue-in count (unknown).
+
+## Host DMA
+
+- Host DMA needs `HDMAEN`, a nonzero host count, the FIFO start condition, PCI command master enable, and I/O or memory decode (inferred; PDF 135–136, 139–140, 145–148, 184–185).
+- A zero host count inhibits host PCI requests. Writing zero to the count, or toggling `HDMAEN` alone, makes no `HDONE` transition (inferred; PDF 139–140).
+- Loading a nonzero host count clears `HDONE` (inferred; PDF 139–140).
+- `HDONE` means the host count is zero and the last host-block transfer has finished, including any temporary host-block bytes. It does not wait for a full FIFO word (inferred; PDF 139–140, 145–148).
+- Load the address, count and direction while host DMA is stopped, then write `FIFORESET` before setting `HDMAEN` (inferred; PDF 139–140, 145–148). `FIFORESET` empties valid FIFO state, resets the word pointers and takes the byte offset from `LHADDR` bits 2:0.
+- `FIFOFLUSH` has no effect on an empty FIFO, and the book permits one write that sets both `FIFORESET` and `FIFOFLUSH` (inferred; PDF 145–146).
+- A full FIFO stops PCI reads. An empty FIFO stops PCI writes (inferred; PDF 145–148).
+- Clearing `HDMAEN` stops further host requests without losing accepted bytes, count or status. Poll for the acknowledgment before reloading registers (inferred; PDF 139, 145–146, 184–185).
+- To resume the same transfer, reuse its saved address, count and FIFO. The book does not allow a different `LHADDR` for the same transfer without reinitialising the FIFO. A new segment can take a new address only after the earlier host transfer has finished and its FIFO bytes are consumed or flushed (inferred; PDF 139, 145–146, 184–185).
+- Changing `DIRECTION` needs every transfer enable clear, with each acknowledgment seen (inferred; PDF 145–146).
+- For PCI-to-FIFO with no SCSI transfer, clear `HDMAEN`, poll for the zero acknowledgment, then drain the FIFO through `DFDAT` at 0x99 (inferred; PDF 139, 145–146, 184–185; register table PDF 63).
+- For FIFO-to-PCI, do not enable another FIFO writer while `DFDAT` supplies bytes (inferred; PDF 145–146).
+- Unknown: whether the chip fetches bytes outside the requested interval to fill a partial FIFO word. The book extract does not say.
+- Unknown: whether `FIFOQWDEMP` stays set while valid bytes fewer than a full word are being moved, and whether a six-byte command can run from a partial word. The extract gives the status bit but no timing example.
+
+## SCSI-side DMA
+
+- `SCSIEN` moves data between the SCSI bus and the SCSI FIFO. `SDMAEN` moves data between the SCSI block and the data FIFO (inferred; PDF 74, 145–146, 168).
+- `SCSIEN` or `SDMAEN` overrides automatic PIO, which may stay enabled (inferred; PDF 74).
+- `WIDEODD` is `DFCNTRL` bit 6. It has no effect except in a wide transfer with an odd byte count. The book warns against a manual `FIFOFLUSH` while `WIDEODD` is active (inferred; PDF 145–146). The public Linux driver's register file labels bit 6 `WIDEODD` as well, which agrees with the book (software expectation, graded inferred; `drivers/scsi/aic7xxx/aic7xxx.reg` lines 969–981 at commit `db2ddb87143519e20a95aa36c60b36107b736a58`).
+- Unknown: whether the AIC-7880 follows the book for a manual `FIFOFLUSH` with `WIDEODD` active. No measurement of the chip settles it.
+- Unknown: the AIC-7880 meaning of `DFCNTRL` bit 7. The public Linux driver labels it `PRELOADEN` for the AIC-7890 only, and the book extract does not define it.
+- `DIRECTION=1` moves data from memory or the FIFO toward the SCSI block (inferred; PDF 145–146).
+- The SCSI count and address are separate from the host count and address. Each accepted SCSI byte advances the SCSI address and decrements the SCSI count once (inferred; PDF 82, 171–172).
+- Loading a nonzero SCSI count, or clearing `SDMAEN`, clears `SDONE` (inferred; PDF 84).
+- `SDONE` means the SCSI block count reached zero with wrapping disabled, and the final transfer finished (inferred; PDF 82, 84, 148).
+- `DMADONE` is `HDONE` AND `SDONE` (inferred; PDF 82, 84, 148).
+- These status bits complete transfer blocks. They do not, by themselves, complete a command or a CDB (inferred; PDF 82, 84, 148).
+- Unknown: whether `SDONE` asserts for a zero SCSI count. The cited pages do not settle it.
+- The interrupt enables for `SDONE` and `DMADONE` are the `ENSDONE` and `ENDMADONE` bits of `SIMODE0` (inferred; PDF 91). Their bit positions are not in the extract.
+
+## COMMAND-phase DMA
+
+- Normal DMA supports asynchronous COMMAND and DATA phases (inferred; PDF 168).
+- `SCSIRATE` has no effect on the COMMAND phase (inferred; PDF 168).
+- With `DIRECTION=1`, `SCSIEN` and `SDMAEN` set, host-supplied bytes can feed the COMMAND phase (inferred; PDF 74, 145–146, 168).
+- The COMMAND byte must match the phase expected by `SCSISIGO`. A mismatch stops the handshake and follows the book's existing phase and status rules (inferred; PDF 86–87, 91–92).
+- Unknown: whether the chip keeps a partial command across a host-count or SCSI-count reload.
+- Unknown: whether a bus-free or SCSI bus reset drops a partial command or the FIFO. The extract says the bus reset is a bus operation, and it does not say what it does to the host-side FIFO or counts.
+
+## FIFO start thresholds
+
+These come from the AIC-7870 book's FIFO pages (PDF pp. 136 and 147–148). Every fact is inferred for the AIC-7880.
+
+- `DSPCISTATUS` bits 7:6 select the FIFO start level. It sits at 0x86 (inferred; PDF 61, 136).
+- The book's example table, for a 32-quadword FIFO, gives four selectors. Selectors 0 to 3 start FIFO-to-memory transfers at 3, 16, 24 and 32 stored complete quadwords, and memory-to-FIFO transfers at 29, 16, 8 and 0 stored quadwords.
+- The same table labels selector 0 as 16 bytes in one column, while its example gives 3 stored quadwords. The conflict is not settled by the extract, so which value the chip uses is unknown.
+- `DFTHRSH` (`DFSTATUS` bit 2) reports the threshold status. It is FIFO status only. It does not need PCI decode or mastering, or `HDMAEN`.
+- The start counts are complete stored quadwords. A partial word does not count toward a receive threshold.
+- A memory-to-FIFO transfer that is newly enabled with an empty FIFO can start at once. The table gives this as an initial-start exception.
+- `MREQPEND` is asserted for the conditions the book lists on PDF p. 148, which include `MASTEREN` and `RMA` and `RTA` not being active. The full condition list is not in the extract.
+
+## Stops, resets and PCI
+
+- Clearing a transfer enable stops that path after its acknowledgment. Bytes already accepted stay put (inferred; PDF 145–146).
+- PCI `RST#` and the `CHIPRST` bit of `HCNTRL` clear `DFCNTRL`, stop transfer work and empty FIFO state (inferred; PDF 145, 147–148).
+- Unknown: whether the AIC-7880 keeps the same register interface as the AIC-7870, and its fitted timing, pipeline depth and chip revisions. Only an AIC-7880 book or a measurement of this chip can settle these.
+
+## SCSI signals, transfer control and PIO
+
+The offsets and bit positions are in the defs unit. The pages below were read directly in the AIC-7870 book this time (PDF 74–75, 77–78, 81, 84, 91 and 93, printed 4-5, 4-6, 4-8, 4.9, 4-12, 4-15, 4-22 and 4-24). Every fact is inferred for the AIC-7880, as the rest of this page.
+
+- `SCSISIGI` (read) and `SCSISIGO` (write) share one offset and one bit map: bits 7 to 0 are CD, IO, MSG, ATN, SEL, BSY, REQ and ACK, in that order (inferred; PDF 77–78).
+- In initiator mode the top three `SCSISIGO` bits are the phase expected on the next REQ pulse (inferred; PDF 78).
+- `REQO` has no effect in initiator mode, and `ACKO` has no effect in target mode (inferred; PDF 78).
+- Writing one to `ATNO` asserts ATN#, and writing zero has no effect. Writing one to `CLRATNO`, bit 6 of `CLRSINT1`, clears it (inferred; PDF 78).
+- `SELO` and `BSYO` assert or negate SEL# and BSY#. Every `SCSISIGO` bit is cleared by chip reset, by a SCSI bus reset and by Bus Free (inferred; PDF 78).
+- `SXFRCTL0` bit 7 (`DFON`) turns on digital filtering of incoming REQ and ACK (inferred; PDF 74).
+- `SXFRCTL0` bit 4 (`CLRSTCNT`) is self-clearing and zeroes `STCNT` and `SHADDR` (inferred; PDF 74).
+- `SXFRCTL0` bit 3 (`SPIOEN`) enables automatic PIO. Each transfer is triggered by a `SCSIDATL` access, and the bit must stay set for the whole PIO transfer. Clearing it stops further PIO transfers without corrupting valid `SCSIDATL` data (inferred; PDF 74).
+- `SXFRCTL0` bit 1 (`CLRCHN`) is self-clearing. It clears the SCSI FIFO and the synchronous REQ/ACK offset counter and resets the transfer control logic. It does not change `STCNT` or `SHADDR`, so it is separate from `CLRSTCNT` (inferred; PDF 75).
+- An access to `SCSIDATL` drives ACK (as initiator) or REQ (as target) during automatic or manual PIO (inferred; PDF 81).
+- `SCSIBUSL` reads the bus directly, and the data is not latched in the SCSI module (inferred; PDF 93).
+- `SSTAT0` bit 1 is SPIORDY. As initiator it is set on the leading edge of REQ. A `SCSIDATL` write (to the bus) or read (from the bus) clears it, as do `CLRSPIORDY` and clearing `SPIOEN`. Setting it also sets `SDONE` (inferred; PDF 84).
+- `SIMODE0` bit 1 (`ENSPIORDY`) lets SPIORDY assert the SCSI interrupt (inferred; PDF 91).
+- `SSTAT1` bit 3 (`BUSFREE`) is set when BSY and SEL have both been negated on the SCSI bus for 400 ns. It is latched, and writing one to `CLRBUSFREE` in `CLRSINT1` clears it. The book says it starts at zero and then follows the bus once 400 ns have passed (inferred; PDF 87, printed 4-18).
+- `CLRSINT1` is at `0x0c` and its `CLRATNO` bit is bit 6 (inferred; PDF 78 and 86). Its other clear bits are not in the pages read here.
+- `SIMODE1` is at 0x11 and is in the defs unit (inferred; PDF 92).
+- Unknown: the offsets of `SSTAT0`, `SSTAT1` and `CLRSINT0` are not in the pages read here, so none is listed in the defs unit.
+
+## Selection timeout and reselection indication
+
+These facts come from the AIC-7870 book's selection pages (PDF pp. 73, 76 and 84–87) and from the public Linux and OpenBSD timeout handlers (Linux `drivers/scsi/aic7xxx/aic7xxx_core.c` lines 1712 to 1770 and OpenBSD `sys/dev/ic/aic7xxx.c` lines 1212 to 1233, at the commits above). Every fact is inferred for the AIC-7880. The line and page numbers come from the reading that supplied this section; they have not been rechecked against the book or the driver files here.
+
+- The chip sets `SSTAT0.SELINGO` while it waits for the selected target's BSY response. A successful selection clears `SELINGO` and sets `SSTAT0.SELDO`. The bit positions of both are not in the extract.
+- `ENSELO` is cleared by software or by reset. A successful selection does not clear it.
+- With the selection timer disabled, a pending selection stays pending until software cancels it.
+- With the timer enabled, expiry releases SEL and sets `SSTAT1.SELTO` once. `SELTO` does not complete a command and does not clear `SELINGO`. Software clears `SELINGO` separately through `CLRSINT0`. The Linux and OpenBSD timeout handlers both make that separate clear.
+- The timer interval is chosen by the two `STIMESEL` bits of `SXFRCTL1`. Neither the register offset nor the bit positions of `STIMESEL` or `ENSTIMER` are in the extract. The public Linux driver documents 256, 128, 64 and 32 ms for `STIMESEL` 0 to 3 (software expectation, inferred; `aic7xxx_osm.c` lines 303 to 311 and 352). The book's scan prints `256 s` for the first entry and `ms` for the other three. Whether the AIC-7880 uses 256 ms or 256 s is unknown.
+- Unknown: the late-enable behaviour of `ENSTIMER` during a pending selection, and whether changing `STIMESEL` restarts the interval. The book does not settle either.
+- `ENRSELI` enables the reselection indication `SELDI`, which the book shows with `TARGET` clear. The reselection timing and the IDENTIFY hand-off are not in the extract (inferred; PDF 73, 80, 84 and 192).
+
+## Request and phase indications
+
+These come from the AIC-7870 book's SCSI status pages (PDF pp. 84 and 87, printed 4-15 and 4-18). Every fact is inferred for the AIC-7880.
+
+- `SSTAT1` bit 0 (`REQINIT`): in asynchronous initiator mode, a leading REQ sets it. A leading ACK, or `CLRSINT1.CLRREQINIT`, clears it.
+- `SSTAT1` bit 4 (`PHASEMIS`): compares the phase sampled with REQ against the phase expected in `SCSISIGO`, and is qualified by `REQINIT`. A matching `SCSISIGO` phase write, or clearing `REQINIT`, clears it.
+- `SSTAT1` bit 1 (`PHASECHG`): a separate phase-change indication that REQ does not qualify. `CLRPHASECHG` clears it.
+- Unknown: the bit positions of `CLRREQINIT` and `CLRPHASECHG` in `CLRSINT1`. The extract does not give them.
+- Unknown: whether `REQINIT`, `PHASEMIS` and `PHASECHG` are cleared by chip or PCI reset. The extract does not say.
+
+## Target and own ID, connection width and SCSI rate
+
+These facts come from the AIC-7870 book's pages on wide selection, read as a sibling description. The page numbers below are unverified, as in the sources above. Public Linux driver commit `db2ddb87143519e20a95aa36c60b36107b736a58` and OpenBSD SGI commit `2df91d80c104636deeef8124252ddd5951b55fbf` supply the software expectations. Every fact is inferred for the AIC-7880, as the rest of this page.
+
+- `SCSIID` (`0x05`) holds the target ID in bits 7:4 and the own ID in bits 3:0. Each field is four bits wide, so the sibling addresses IDs 0 to 15 on a wide connection (inferred; PDF 80). Applying the sibling's four-bit IDs to the AIC-7880 is an inference. The public Linux driver is consistent with it: it advertises sixteen IDs (software expectation, inferred; `aic7xxx_osm.c` lines 1094 to 1099).
+- Chip and PCI reset clear both nibbles (inferred; PDF 80). The own ID is the initiator's address during Selection Out. Public drivers commonly write own ID 7 after reset, and OpenBSD's default configuration uses ID 7 (software expectation, inferred; `sys/dev/pci/ahc_pci.c` lines 1526 to 1541). That is software configuration, not a reset value.
+- `SBLKCTL` (`0x1f`) bit 1 (`SELWIDE`) selects the physical connection. One configures the wide connection with the upper data lines in use. Zero leaves those lines unused (inferred; PDF 80, 96–97).
+- The reset value of `SELWIDE` follows the wide-select pin `WIDEPS#`, sampled at reset. The O2's strap state is not known, so the register has no reset value here (unknown). The public Linux driver reads `SELWIDE` during probe before it marks a channel wide (software expectation, inferred; `aic7xxx_pci.c` lines 2167 to 2183 and `aic7xxx_core.c` lines 4549 to 4615).
+- `SBLKCTL` bits 7:6 (diagnostic LEDs) reset to one, and bit 5 (`AUTOFLUSHDIS`) resets to zero. Bits 4, 2 and 0 read zero. Bit 3 is not described here (inferred; PDF 80, 96–97).
+- `SCSIRATE` (`0x04`) bit 7 (`WIDEXFER`) and `SELWIDE` must both be set for sixteen-bit DATA. Bits 3:0 (`SOFS`) set the DATA timing. Bits 6:4 and the reset value are not in the cited pages (inferred; PDF 79, 97).
+- Unknown: the O2's `WIDEPS#` strap and so the reset value of `SELWIDE`, the reset values of `SCSIRATE` and `SBLKCTL` as a whole, the meaning of `SBLKCTL` bit 3, and `SCSIRATE` bits 6:4. An AIC-7880 book or a measured capture of the O2 controller would settle them.
+
+## SCB storage: the page pointer, the counter and the window
+
+The sequencer and the host reach the chip's command pages (SCBs) through a 32-byte window. This section covers that window and where its pages come from. The register offsets are in [devices/aic7880/registers.toml](registers.toml) and the generated page.
+
+Sources for this section, besides the AIC-7870 book: the public Linux `aic7xxx` driver (`aic7xxx_pci.c`, `aic7xxx_core.c`, `aic7xxx.h`, `aic7xxx.reg`); the public OpenBSD SGI branch `sgi-is-alive-at-7.9` (`sys/dev/pci/ahc_pci.c`, `sys/dev/ic/aic7xxx.c`, `sys/dev/ic/aic7xxxvar.h`); and the public NetBSD `aic7xxx.c`. Driver code shows what software expects. It does not show what the chip does. The page numbers below come from the reading that supplied this section. They have not been rechecked against the book here.
+
+### Where the pages come from
+
+- `RAMPS#` is an active-low pin sampled at PCI `RST#`. It has a pull-up. The read-only status bit `DEVSTATUS.RAMPSM` (PCI configuration offset `0x40`, bit 9) reports the sampled mode: clear for 16 internal SCB pages, set for external SRAM. The chip selects the backing store from this sampled value alone (inferred; PDF 53, 62–64, 129, 180–181).
+- External mode needs SRAM fitted. In that mode the chip still keeps its input and output queues in its internal SCB RAM. The internal RAM is not a second bank of command pages (inferred; PDF 63–64, 129).
+- `DEVSTATUS.MPORTMODE` (bit 10 of the same status word) reads set for stand-alone use and clear for shared use. Shared use needs external `EXTARBREQ#`/`EXTARBACK#` arbitration (inferred; PDF 62–64, 129, 180–181).
+- Public drivers write `DEVCONFIG.SCBRAMSEL` (configuration offset `0x40`, bit 7) while setting up non-Ultra2 controllers. In the AIC-7870 book that bit has no SCB selection function. A driver write to it is not a runtime switch between internal and external SRAM. Its meaning on the AIC-7880 is unknown (inferred; PDF 127–129).
+- `DEVCONFIG.SCBSIZE32` (configuration bit 16) is labelled for the 789x family only in the public drivers. The book defines only 32-byte pages and no 64-byte SCB mode. Treat 64-byte SCBs as unsupported on the AIC-7880 until an AIC-7880 source shows otherwise (inferred; PDF 63–64, 127–129, 153–154).
+
+### Pages and the pointer
+
+- Each page has 32 byte positions. The window is device offsets `0xa0` to `0xbf`. The page is chosen by `SCBPTR` at `0x90` (inferred; PDF 63–64, 153, 180).
+- `SCBPTR` is an eight-bit latch. It reads back all eight bits written, with `RAMPSM` clear or set and whatever SRAM is fitted (inferred; PDF 53, 63–64, 153, 180).
+- The book gives 16 internal pages and up to 256 external pages. It names 4 KiB for 128 pages and 8 KiB for 256 pages, and tells the driver to probe the fitted size, including 1 KiB and 2 KiB (inferred; PDF 53, 63–64, 153, 180).
+- The external port addresses at most 8 KiB. An eight-bit page number over 32-byte pages covers at most 256 pages. That bounds the addressable pages, not the number of commands that can be in flight (inferred; PDF 63–64, 153, 180).
+
+### The memory port and the counter
+
+- The external port has address lines `MA[14:0]`, data lines `MD[7:0]`, an optional parity line, and `RAMCS#` and `MRW` strobes. Host and sequencer accesses move one SCB byte at a time, except the four-byte auto-addressed host write. The register contract does not need pin timing (inferred; PDF 63–64, 141–143, 180–181).
+- `SCBCNT` (`0x9a`) holds `SCBAUTO` in bit 7 and a five-bit byte offset in bits 4:0. With `SCBAUTO` clear, the window offset selects the byte and the counter is not used. With it set, the counter replaces the offset, advances once per completed logical byte access, and wraps within the 32-byte page (inferred; PDF 63–64, 153–154, 176–177, 180).
+- A sequencer read-modify-write of one SCB byte is one logical access. Separate external read and write strobes do not make it two advances. The next sequencer instruction sees the new counter value. The exact edge at which the counter increments is not specified (inferred; PDF 63–64, 153–154, 180).
+- Sequencer accesses are byte wide. Host reads are byte wide. Host writes are byte wide in either mode. A full four-byte host write is accepted only with `SCBAUTO` set. The chip writes the four data bytes to successive positions and advances the counter for each. The PCI contract does not say how those bytes map onto CPU byte order (inferred; PDF 63–64, 153–154, 176–177, 180).
+- External arbitration can stretch a sequencer read-modify-write, which delays the acknowledgment of a pending pause (inferred; PDF 63–64, 141–143, 180–181).
+- Unknown: whether a parity fault on the source read of a sequencer read-modify-write suppresses the write, advances the counter, or pauses before the write strobe. The book's general parity text does not settle the order of those steps.
+
+### Parity on external SCB reads
+
+- An 8-bit SRAM needs its parity input held high and `DEVCONFIG.EXTSCBPEN` (configuration offset `0x40`, bit 4) clear. A 9-bit SRAM stores odd parity generated by the chip on every write (inferred; PDF 63–64, 127–129, 133–134, 180–181).
+- Checking on external SCB reads needs both `EXTSCBPEN` and `DSCOMMAND.MPARCKEN` (device offset `0x84`, bit 5). A mismatch sets `ERROR.MPARERR`. With `SEQCTL.FAILDIS` clear, it also sets `INTSTAT.BRKADRINT` and pauses the sequencer. PCI INTx also needs the host interrupt enables (inferred; PDF 98, 127–130, 141–144, 180–181).
+- Clear the error with `CLRINT.CLRPARERR`, after the stored parity has been corrected. `CLRBRKADRINT` alone does not clear an active parity cause (inferred; PDF 98, 141–144).
+- PCI `RST#` clears `EXTSCBPEN`. Chip reset leaves `EXTSCBPEN` set and clears the device-side `MPARCKEN`. Whether the stored parity bit survives either reset is unknown (inferred; PDF 127–130, 133–134).
+- `DEVCONFIG.EXTSCBTIME` (configuration offset `0x40`, bit 5) doubles the external SRAM access cycle when set (inferred; PDF 127–129, 133–134).
+
+### External-mode queues
+
+- With `RAMPSM` set, `QINFIFO` and `QOUTFIFO` keep the full eight-bit SCB ID. Each holds up to 255 entries, and a zero count means empty (inferred; PDF 63–64, 149–150, 155–156).
+- The host writes `QINFIFO` and the sequencer removes entries. The sequencer writes `QOUTFIFO` and the host removes entries. A full write and an empty read are ignored. `QOUTCNT` reads without pausing the sequencer (inferred; PDF 63–64, 149–150, 155–156).
+- A smaller SRAM does not shorten IDs to four bits. Software has to probe the command-page capacity before it assigns IDs (inferred; PDF 63–64, 149–150, 155–156).
+
+### Reset and retention
+
+- `SCBPTR`, `SCBCNT` and the queue counts start at zero or empty after reset, as the cited book sections describe (inferred; PDF 61–64, 137–138, 149–156).
+- The contents of external SRAM after chip reset, PCI reset or power loss are unknown. Do not read zero-filled memory as an AIC-7880 reset value.
+
+### Observed on O2 controllers
+
+These come from public console captures of real O2 machines. They are driver output, so they are graded inferred and do not show register reads.
+
+- NetBSD on an O2 reports `16/253 SCBs` for each of two controllers ([NYCBUG dmesgd 5290](https://dmesgd.nycbug.org/index.cgi?do=view&id=5290)). The driver finds its count by writing a page, reading it back and checking whether page 0 changed. A page-16 alias and a refused access would look the same to that probe. The count therefore does not show internal array wiring or the chip revision.
+- OpenBSD on an O2 reports AIC-7880 revision `0x00` ([NYCBUG dmesgd 2432](https://dmesgd.nycbug.org/index.cgi?do=view&id=2432)). The other O2 controller's revision is not in that capture.
+
+### Still open for the O2
+
+- The SRAM population, width and capacity fitted to each O2 controller, and the sampled `RAMPSM` value.
+- The `MPORTMODE` and arbitration wiring of each controller.
+- Whether SRAM contents and the stored parity bit survive reset.
+- The AIC-7880 meaning of `SCBRAMSEL` bit 7.
+- Whether the AIC-7880 supports 64-byte SCBs.
+- External access timing and the parity-fault order of a sequencer read-modify-write.
+
+## Sequencer constant and function ports
+
+The ports at `0x69`, `0x6a` and `0x6e` are helpers for sequencer code. The register contract is in the defs unit. Pages 102 to 104 of the source book were read directly to check these facts. Every fact is inferred for the AIC-7880, as the rest of this page.
+
+- `ALLONES` (`0x69`) reads as `0xff`. `ALLZEROS` (`0x6a`) reads as `0x00`. The book lists both as sources for logical and arithmetic functions, and both are readable by the host and by the sequencer (inferred; PDF 102, printed 4-33).
+- The `0x6a` address is also the destination `NONE`. A write there changes no location, so the byte is discarded (inferred; PDF 103, printed 4-34).
+- `FUNCTION1` (`0x6e`) takes its write in bits 6:4. A read returns the one-hot decode of that octal value, so the sequencer can test one bit position without a separate instruction (inferred; PDF 104, printed 4-35).
+- The book does not give the flag or return-stack effects of instructions that name these ports. Those effects stay unknown. The register contract covers only the values the ports return.
+- Unknown: whether a write to `0x69` has any effect, whether `FUNCTION1` keeps bits 7 and 3:0 after a write, and its reset value.
+
+## Sequencer clock, single step and pause
+
+The sequencer clock, its divider, the single-step and reset bits, the pause sources and the instruction-RAM address come from the AIC-7870 book. Every fact here is inferred for the AIC-7880 unless it is marked as an approximation. The offsets and reset values are in the defs unit.
+
+- The sequencer runs one RISC instruction per clock. Its clock is selectable for 8 or 10 MHz operation. Instruction RAM holds 512 words of 29 bits, with byte parity (inferred; PDF 4, printed 1-5).
+- The block diagram shows a 40 MHz input clock to the chip (inferred; PDF 6, printed 1-7). The AIC-7880's own input clock on the O2 is not established.
+- `SEQCTL` bit 4 (`FASTMODE`) divides the input clock by four when set and by five when clear (inferred; PDF 98, printed 4-29). The public Linux driver defines `FASTMODE` and selects it for the fastest operation (software expectation, inferred; `drivers/scsi/aic7xxx/aic7xxx.reg` and `aic7xxx_core.c` lines 4408 to 4413 at commit `db2ddb87143519e20a95aa36c60b36107b736a58`). The same driver gives the AIC-7880 the AIC-7870 feature set plus Ultra transfers (software expectation, inferred; `aic7xxx.h` lines 237 to 238 at that commit).
+- Approximation: with a 40 MHz input and the divider above, one instruction takes 100 ns with `FASTMODE` set and 125 ns with it clear. These are the AIC-7870 divider and input clock applied to a chip whose input clock is not shown. They leave out external SRAM arbitration, PCI stalls and clock phase, so they are not a measured or fitted period. The two resulting rates, 10 and 8 MHz, match the sequencer rates the book lists.
+- `SEQCTL` bit 2 (`STEP`) runs one instruction and then pauses again. The bit stays set until software clears it, and each further single step clears `PAUSE` in `HCNTRL` again (inferred; PDF 98).
+- `HCNTRL` bit 2 (`PAUSE`) requests a latched pause, and reading it gives the pause acknowledge state. RST# assertion and a write to `CHIPRST` also set it. The driver may change `SEQADDR` while the sequencer is paused. Clearing `PAUSE` resumes at the current program counter (inferred; PDF 138, printed 4-69).
+- `SEQCTL` bit 1 (`SEQRESET`) resets the sequencer RAM address pointer to zero. The bit self-clears, and the sequencer must be paused before it is set (inferred; PDF 98).
+- `SEQCTL` bit 0 (`LOADRAM`) lets the host read or write sequencer RAM through `SEQRAM`. Clear it for normal operation, and clear it before switching between reads and writes (inferred; PDF 98 and PDF 99, printed 4-29 and 4-30).
+- `SEQADDR[1:0]` (`0x62` and `0x63`) hold the sequencer RAM address that executes on the next clock edge. Writing them while paused changes where execution resumes. They also give the start address for loading, and the address steps up after every fourth loaded byte. RST# and CHIPRST clear them (inferred; PDF 99, printed 4-30).
+- `INTSTAT` bit 2 (`SCSIINT`) pauses the sequencer at once. A condition in the SCSI section can raise it when its enable in `SIMODE0` or `SIMODE1` is set. The book lists SCSI reset, parity error, selection time-out and unexpected bus free as causes. It stays latched until software clears the cause and writes `CLRSCSIINT` in `CLRINT`. The exception: when the current instruction accesses an SCB address with external SRAM selected, the instruction can stretch while the chip arbitrates for the SRAM, and the pause waits until arbitration finishes (inferred; PDF 142, printed 4-73).
+- `INTSTAT` bit 0 (`SEQINT`) pauses the sequencer at once, so no further instruction runs after the write that sets it. `INTSTAT` bit 1 (`CMDCMPLT`) does not pause the sequencer (inferred; PDF 142, printed 4-73).
+- Unknown: the input clock the AIC-7880 uses on the O2, and so its real instruction period. An AIC-7880 book or a measured capture would settle it.
+- Unknown: whether the AIC-7880 supports the 8 and 10 MHz rates and the divider as the AIC-7870 book describes.
+- Unknown: instruction stalls from external SRAM arbitration and PCI bus activity, and the clock phase against SCSI events.
+
+## Interrupt code and PCI error status
+
+These come from the AIC-7870 book's interrupt and error pages (PDF pp. 136 and 141–144). Every fact is inferred for the AIC-7880.
+
+- `INTSTAT` bits 7:4 hold `INTCODE`. The sequencer supplies the code together with `SEQINT`, and the host reads it without pausing the sequencer. `INTSTAT` is at 0x91 (inferred; PDF 141).
+- `INTCODE` is valid only while `SEQINT` is set. Clearing `SEQINT` clears that validity and does not give the code a defined value.
+- The book treats writing `INTCODE` in the same write as `SEQINT` as a software convention. It does not specify an upper-nibble write rule. Whether a write without `SEQINT` changes `INTCODE` is unknown.
+- Chip and PCI reset clear the register.
+- `ERROR.PCIERRSTAT` is the live OR of the device's `PCISTATUS` bits 5:0, which mirror the PCI configuration status causes. `CHIPRST` and `CLRINT` do not clear it while a PCI cause is still active.
+- The book names illegal opcode, sequencer RAM parity, data parity and memory parity as separate `ERROR` causes. A SCSI event such as a selection timeout, bus reset or parity error reports through the SCSI status and interrupt path, not through `PCIERRSTAT`.
+
+## Sequencer instruction opcodes
+
+The sequencer's instruction word has a 4-bit opcode. The public Linux `aic7xxx` assembler defines the opcode map, and the public driver downloads the compiled program. These facts are software expectations, not chip behaviour, so every item is graded inferred for the AIC-7880. The sources are the public Linux driver at commit `db2ddb87143519e20a95aa36c60b36107b736a58`: `drivers/scsi/aic7xxx/aicasm/aicasm_insformat.h` and `aicasm_gram.y` for the opcode map and operand forms, `aic7xxx_core.c` lines 6928 to 7044 for the download encoding, and `aic7xxx.h` lines 235 to 254 for the chip-family features. The Library copies of these files could not be retrieved while this section was written (the search service refused connections), so the citations are unverified against the files.
+
+- Opcodes `0x0` to `0x4` are OR, AND, XOR, ADD and ADC. ADC adds the incoming carry (inferred; `aicasm_insformat.h`, `aicasm_gram.y`).
+- Opcode `0x5` is the shift and rotate form. The assembler accepts shift counts from 1 to 8, with a special eight-bit encoding for the longer forms (inferred; `aicasm_gram.y`, `format_2_instr`).
+- Opcode `0x6` is BMOV. The driver rewrites a single-element BMOV as an AND with `0xff` on a part without the command channel (inferred; `aic7xxx_core.c`, `aic7xxx.h` lines 235 to 254). The AIC-7880 has no command channel, so BMOV is not used on this chip.
+- Opcode `0x7` has no operation in the public assembler map this section relies on. Its meaning on the AIC-7880 is unknown.
+- Opcode `0x8` is an unconditional jump. Opcode `0xb` is an unconditional call (inferred; `aicasm_gram.y`).
+- Opcode `0x9` is JC, a branch taken when the incoming carry is set. Opcode `0xa` is JNC, taken when the carry is clear (inferred; `aicasm_gram.y`, carry branch forms).
+- Opcodes `0xc` and `0xe` are JNE and JE. They compare the source with a comparison operand and branch on not-equal or equal. Opcodes `0xd` and `0xf` are JNZ and JZ. They AND the source with a test mask and branch on nonzero or zero. The tests use the masked value, not the stored zero flag (inferred; `aicasm_gram.y`, comparison and bit-test branch forms).
+- Pre-Ultra2 instructions are compressed for download. The opcode occupies bits 28:25, the source is eight bits, the branch address is nine bits and the ALU return bit is bit 24 (inferred; `aic7xxx_core.c` lines 6928 to 7044).
+- Unknown: whether the AIC-7880 executes opcode `0x7` and any form the public assembler does not define. The public sources do not settle it, and no AIC-7880 book or measured capture is held.
+
+## Return stack
+
+The sequencer keeps return addresses in a read-only port at `0x6f`, `STACK` (register contract in the defs unit). The book gives the port's read sequence. The call and return forms come from the public driver's assembler and its download code. Every fact is inferred for the AIC-7880, as the rest of this page.
+
+- The port holds four return entries, newest first. Each entry reads as a low byte, then a high byte that carries the high address bit. Each high-byte read advances the read pointer to the next entry, so eight byte reads bring the pointer back to its start (inferred; PDF 105, printed 4-36).
+- The initialised read value is zero. The book does not give reset values for the individual backing words (inferred; PDF 60, printed 3-6).
+- The public Linux driver names `STACK` with four entries and reads them as four low and high byte pairs (software expectation, inferred; `drivers/scsi/aic7xxx/aic7xxx.reg` lines 724 to 731, and `aic7xxx_core.c` lines 7159 to 7161 at commit `db2ddb87143519e20a95aa36c60b36107b736a58`).
+- CALL (opcode `0xb`) is unconditional. Conditional branches do not push a return address. The assembler also accepts a return embedded in an ALU or shift instruction. The old-format ALU return bit 24 is the same bit described above (software expectation, inferred; `aic7xxx_core.c` lines 6928 to 7044 and the assembler grammar in the same driver tree, at the same commit).
+- Unknown: whether CALL and an embedded return move the `STACK` read pointer, and whether the next byte read (low or high) survives them. The book does not say whether `SEQRESET`, a `SEQADDR` write, a pause or a SCSI bus reset changes the stack. Its `SEQRESET` and `SEQADDR` text does not mention it.
+- Unknown: what `STACK` returns after more pushes than it has entries, and whether a popped entry stays readable. The cited pages do not say.
+- Unknown: whether the AIC-7880 uses the same return-stack depth as the AIC-7870. Only an AIC-7880 book or a measured capture can settle it.
+
+## Open items
+
+These are also listed in [questions/README.md](../../questions/README.md).

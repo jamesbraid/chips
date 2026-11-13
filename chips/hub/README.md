@@ -1,6 +1,6 @@
 # Hub
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no Hub specification is held). The IP27 node controller: the
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md): no Hub specification is held). The IP27 node controller: the
 processor interface (PI), the memory and directory controller (MD), the I/O interface (II, "IO" elsewhere) and the network
 interface (NI), plus the registers of the local block (LB) that sit in PI space outside the contiguous map. Every fact below
 comes from two shipped files: the IRIX 6.5.30 IP27 kernel (`unix`, linked, with symbols) and the IP27 CPU PROM
@@ -1830,7 +1830,7 @@ treats 0 as the other driver (`mem_refcnt_*`, from another object) and anything 
 
 ## Open
 
-Graded entries; each ends with the route that would settle it. Collected in [docs/open-questions.md](../../docs/open-questions.md).
+Graded entries; each ends with the route that would settle it. Collected in [questions/README.md](../../questions/README.md).
 
 - **PI write-buffer error bits: which fault sets which (bits 4 to 7, 18, 19).** Established: names, positions, handler class and the
   latched status (above). Inferred: write error = an error response to a write, timeout = no response within the CRB time-out

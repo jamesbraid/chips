@@ -1,0 +1,98 @@
+# QLogic ISP12160 SCSI host adapter
+
+The ISP12160 is QLogic's dual-channel Ultra2 SCSI host adapter. It sits on the Origin 300 IO-8 board and on the
+Origin 350 IO9 board, PCI vendor `0x1077`, device `0x1216`. On a captured Origin 350 the OpenBSD boot output
+lists it at device 2 of the IO9's PIC, revision `0x06` ([the IO9 PCI wiring question](../../questions/ip35-io9-pci-wiring.md)).
+Its mailbox opcodes and the bus constants are in [devices/isp12160/registers.md](registers.md), generated from
+[devices/isp12160/registers.toml](registers.toml). Each item there carries its grade and its source.
+
+No register map for this part is held in this repository. The offsets, bit fields and reset values of the host
+registers, and the mailbox operand layout beyond what the constants name, are unknown here. The sibling
+single-channel part is in [isp1040.md](../isp1040/README.md). It is a different chip with its own register layout, and
+nothing in the ISP1040 register contract transfers to this one.
+
+## What the contract rests on
+
+The chip's own documents held here are a data sheet and a hardware installation guide for a board that carries the
+part. Those give the bus width, the clock, the channel count and the standards it claims to meet. The mailbox
+opcodes and the per-bus operands come from shipped programs that use the chip: the IRIX 6.5.30 controller object
+for the IP35 boards, the IRIX 6.5.30 SCSI driver object for the IP30 machines, and the public Linux, NetBSD and
+OpenBSD drivers. None of those programs is a manual, so a value they all send is inferred, not established, unless
+a vendor document says it too.
+
+## Host bus interface
+
+The ISP12160A data sheet describes a "66-MHz, 64-bit PCI host bus interface" and a 64-bit bus master. The
+constants record that as the data sheet's claim. It does not show what the board wires. Whether the Origin 300
+IO-8's own ISP12160 sits on bus lines that carry the upper 32 bits is unknown. The same is true of any other
+slot the board wires for this part.
+
+The data sheet also claims compliance with PCI Local Bus Specification revision 2.1. It lists memory write and
+invalidate among the PCI cache commands the part supports, and it says the part supplies the minimum power
+management capabilities of revision 1.0, with D0, D3 hot and D3 cold as its power states. It does not say whether
+the power-management capability reports event support, so the event enable bit in that capability is unknown.
+
+## Channels and bus resets
+
+Two channels, each a separate SCSI bus with its own selection timeout, reset delay and target state. The data sheet
+gives the count and the drivers use it. The IRIX IP30 driver sends its per-bus reset command once for each bus, with
+the delay in mailbox 1 and the bus number in mailbox 2. It sends its selection-timeout command with bus 0's value in
+mailbox 1 and bus 1's in mailbox 2. The IP35 controller object builds its bus-reset request with the channel in
+mailbox 2 and a byte it reads from the channel's state in mailbox 1.
+
+The QLA12160 installation guide gives the Fast!UTIL "SCSI bus reset delay" as 0 to 15 seconds per bus, default 5,
+and says that after a bus reset the firmware starts no SCSI activity for that many seconds. That is an established
+statement about the setting. Taking the mailbox-1 value of command `0x0018` as the same hold-off, and the unit as
+seconds, is inferred from the ISP1040 drivers. Whether the chip refuses, holds or fails commands during that time,
+whether it posts an asynchronous reset event for a reset the host asked for, and whether one channel's reset quiets
+the other channel, are all unknown.
+
+The selection-timeout unit is inferred to be milliseconds, as for the ISP1040, and the drivers use 250 as the
+default. What the chip does when that command is never sent is unknown.
+
+## Mailbox commands the shipped programs send
+
+- `0x0001` load RAM and `0x0003` dump RAM. The stock PROM 6.210 SCSI diagnostic prepares both against this chip
+  when it tests DMA. The opcodes and their directions are software expectations, and their operand layout is not
+  recorded here.
+- `0x0016` abort device. Mailbox 1 packs the channel in bit 15, the target in bits 14:8 and the LUN in bits 7:0.
+  Mailboxes 2 and 3 are zero. The IRIX request builder constructs it with that selector and no request handle. It
+  is a different command from the command abort and the target reset, so the three should not be treated as one.
+- `0x0018` bus reset, as above.
+- `0x0031` set selection timeout, as above.
+- Firmware version. The IP30 driver object carries an image with the banner "ISP1216 Firmware Version 10.04",
+  beside images for other QLogic parts. That the image exists is established. Which image the IP30 driver downloads for device `0x1216`, and what that firmware does with the reset delay and
+  the selection timeout, have not been decoded.
+
+The IRIX 6.5.30 IP35 controller object contains a separate ISP12160 controller program of 27,706 bytes, whose image
+header has length word `0x361d` at index 3. The length is recorded as an inferred property of that shipped program.
+It says nothing about how much RAM the chip has.
+
+## What the Octane software does not do
+
+The Octane PROM does not drive this part. Its SCSI attach routine accepts PCI vendor `0x1077` with device `0x1020`
+only, and device `0x1216` does not appear in its image. Resets and selection timeouts in that PROM therefore carry
+no channel word. The IP30 kernel's SCSI driver does handle device `0x1216`. It compares the device ID with both
+`0x1020` and `0x1216` when it sets a controller's defaults.
+
+## Semaphore
+
+The SCSI section of the Origin 300 IO-8 board test writes the semaphore while it is already set and then expects
+bits 0 and 1 to read back as `0x3`, reading bit 1 as "semaphore in use by someone". That is the diagnostic's
+expectation, not a chip fact. The ISP12160A data sheet and the QLogic ISP1000-family data sheets read for this unit do not describe the
+semaphore register, and no public driver read for it states the busy rule. The ISP1040's semaphore is at offset
+`0x0c` in its own register map, and the ISP12160's offset is not known here, so the busy rule is unknown.
+
+## Not known
+
+- The register map, reset values and bank selection for the host registers.
+- The mailbox operand layout for load RAM and dump RAM, and the completion codes they return.
+- Whether the IO-8 on-board bus carries the 64-bit lines to this part.
+- The chip's reset value and capability bytes in PCI configuration space, and whether its Latency Timer is
+  implemented across its full width. The board diagnostic's own writes to configuration space were not decoded
+  here, so those bits are not recorded.
+- The semaphore busy rule.
+- The reset-delay operand layout, the chip's selection timeout when unprogrammed, and whether a non-zero bus-reset
+  delay holds bus activity on the chip itself.
+- The selection-retry count, and whether the firmware retries a selection on its own.
+- Which firmware image the IP30 driver loads for device `0x1216`, and what it does with the reset delay.

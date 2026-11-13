@@ -1,8 +1,8 @@
 # CRIME
 
-Mode: **spec-backed** (see [docs/specs.md](../../docs/specs.md): CRIME 1.5 Specification, revision 0.3; its CPU
+Mode: **spec-backed** (see [references/documents/specs.md](../../references/documents/specs.md): CRIME 1.5 Specification, revision 0.3; its CPU
 interface and memory controller register map is transcribed in
-`docs/sources/specs/crime-1.5-specification-rev0.3.registers.md`). O2 (IP32) memory controller, CPU interface,
+`references/documents/specs/crime-1.5-specification-rev0.3.registers.md`). O2 (IP32) memory controller, CPU interface,
 interrupt controller and timer. This page covers the CPU interface, the error registers, the interrupt registers,
 the timer and the memory controller. The rendering engine (base `0x15000000`) is covered by the separate graphics
 workspace and appears here only as cross-references.
@@ -38,7 +38,7 @@ Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, 
 - The PROM and the diagnostic read the identification word at `+4` and compare it with 0xa0 and 0xa1 only: 0xa0
   selects the path for revision 0, 0xa1 the path for revision 1.1. No shipped routine compares it with another value.
   The PROM's low-level helper at `0xbfc06808` returns `id & 0xf`.
-- Why the kernel reads bits 63:32: the upper word is a minor-revision discriminator of the pre-1.5 parts (0 is 1.1, 1 is 1.3, larger is 1.4), by the IRIX return values and NetBSD's attach text agreeing ([docs/coverage-crime.md](../../docs/coverage-crime.md)). What a 1.5 holds there is **unknown**; the specification's identification register has only bits 7:0
+- Why the kernel reads bits 63:32: the upper word is a minor-revision discriminator of the pre-1.5 parts (0 is 1.1, 1 is 1.3, larger is 1.4), by the IRIX return values and NetBSD's attach text agreeing ([devices/crime/coverage.md](../../devices/crime/coverage.md)). What a 1.5 holds there is **unknown**; the specification's identification register has only bits 7:0
   (ID value 7:4, revision 3:0). See the open entry.
 
 ## Register inventory
@@ -89,7 +89,7 @@ specification's, with the table in brackets, except `0x50` and `0x58`.
 - `0x14000040` (`0x40`): CPU Error Address (spec Table 5-16, p. 5-32). Established.
   Read only, at eight bytes. Touched by `VEC_dbe`, `VEC_ibe`, `ecc_handler`, the save routine at 0xff08 and the monitor.
   `ecc_handler` reads it at 0xda1c and saves it raw to `crm_cpu_error_addr`. `VEC_dbe` reads it at 0x1c2e8 and `VEC_ibe` at 0x20dec. The address is printed as read, not shifted.
-- `0x14000048` (`0x48`): CPU/VICE error status at the CRIME 1.1 location (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 5-17, p. 5-32). Established.
+- `0x14000048` (`0x48`): CPU/VICE error status at the CRIME 1.1 location (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 5-17, p. 5-32). Established.
   Read and written at eight bytes. Touched by `VEC_dbe`, `VEC_ibe`, the `dobuserr` path, the probes, `ecc_handler`, `mlreset` and the monitor.
   `mlreset` stores 0 to it at 0x8760. `badaddr` stores 0 at 0x142a4 and reads it back at 0x142b0. `ecc_handler` reads it at 0xd9ec and clears it with a store of 0 at 0xda64.
   `get_crimerev` picks the layout: a non-zero result selects the three-bit layout, zero the ten-bit one.
@@ -122,7 +122,7 @@ specification's, with the table in brackets, except `0x50` and `0x58`.
   The low word is read at 0xa00f03c8. Bit 8 gives 128 MB or 32 MB.
 - `0x14000240` (`0x240`): Bank 7 control (spec Table 6-14, p. 6-32). Established.
   The diagnostic's sizing routine reads the word at 0xa00f0410, and the bank's own bit 8 sets its size.
-- `0x14000248` (`0x248`): Refresh Counter (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 6-15, p. 6-32). Established from the specification for the name, access and field: bits 10:0 hold the refresh count value, read and write, reset value given as "count value" and not printed. No scanned image reaches it, so the code's use of the count is unknown.
+- `0x14000248` (`0x248`): Refresh Counter (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 6-15, p. 6-32). Established from the specification for the name, access and field: bits 10:0 hold the refresh count value, read and write, reset value given as "count value" and not printed. No scanned image reaches it, so the code's use of the count is unknown.
 - `0x14000250` (`0x250`): Memory Error Status (spec Table 6-16, pp. 6-32 to 6-33). Established.
   Read and written at eight bytes. Touched by `VEC_dbe`, `VEC_ibe`, `dobuserre`, the probes, `ecc_handler`, the scrub routine at 0xff50, `mlreset` and the monitor.
   `ecc_handler` reads it at 0xda04 and tests the hard-error CPU-access bit (0x240000). `mlreset` stores 0 to it at 0x8768.
@@ -139,7 +139,7 @@ specification's, with the table in brackets, except `0x50` and `0x58`.
 - `0x14000270` (`0x270`): ECC Replacement Check Bits (spec Table 6-20, p. 6-35). Inferred.
   Written and read. Touched by the PROM and the monitor.
   The PROM's sloader stores an argument register to it at 0xbfc00208. A monitor routine at 0xa0010538 reads it and prints it as "MEM Ecc Repl". The pairing of the register with that label rests on the monitor's print order.
-- `0x14004048` (`0x4048`): CPU/VICE Error Status, the CRIME 1.5 location (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 5-17, p. 5-32). Established from the specification for the layout: bits 8:3 hold address bits 39:34 of a CPU PIO error, bit 2 is the CPU illegal-address flag, bits 1 and 0 are the two write-parity flags, which the specification says are no longer supported. The bits are set by hardware and cleared by software. No scanned image reaches the register.
+- `0x14004048` (`0x4048`): CPU/VICE Error Status, the CRIME 1.5 location (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 5-17, p. 5-32). Established from the specification for the layout: bits 8:3 hold address bits 39:34 of a CPU PIO error, bit 2 is the CPU illegal-address flag, bits 1 and 0 are the two write-parity flags, which the specification says are no longer supported. The bits are set by hardware and cleared by software. No scanned image reaches the register.
 
 `crm_cpu_error_stat`, `crm_cpu_error_addr`, `crm_vice_error_addr`, `crm_mem_error_stat`, `crm_mem_error_addr`,
 `crm_mem_error_ecc_syn` and `crm_mem_error_ecc_chk` are the kernel's own global symbols; they tie `0x48`, `0x40`,
@@ -880,11 +880,11 @@ at 0x1a44 and 0x1a4c.
   7-15 p. 7-28). Established for the writes.
   `crime_clear_buffer` stores 1 to shadow +0x248 (0xe9c) and then to the register (0xea0); `crmSwapBufd` stores 1 at
   0x1df0. Last of the global group: shadow +0x248 loaded at 0x34e4 and stored at 0x34e8. Its unit is open, as for the source step.
-- `0x15003070` (`0x3070`): `MTE.null`, the engine's null register (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 7-15, p. 7-28). Established from the specification for its name, access and class: write only, 32 bits, non-global. The specification documents no effect beyond the name "null register", and no IP32 member routine stores to it.
+- `0x15003070` (`0x3070`): `MTE.null`, the engine's null register (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 7-15, p. 7-28). Established from the specification for its name, access and class: write only, 32 bits, non-global. The specification documents no effect beyond the name "null register", and no IP32 member routine stores to it.
   No routine read in the IP32 member objects stores or loads it: the two shadow loaders, `crime_clear_buffer`,
   `crmSwapBufd` and `crm_copy_swap_boxes` use the flush register instead, and a scan of all 702 member objects for the
   displacement 12400 finds nothing. Whether the PROM, diagnostic, monitor or an X server module writes it is not
-  settled; docs/open-questions.md lists the routes.
+  settled; questions/README.md lists the routes.
 - `0x15003078` (`0x3078`): `MTE.flush`, the command that drains the engine (CRIME 1.5 Specification rev 0.3, Table 7-15
   p. 7-28). Established for how software writes it, inferred for its effect.
   Software stores zero and then waits for the engine to go idle: `crime_clear_buffer` stores at 0xec4 and calls
@@ -899,9 +899,9 @@ at 0x1a44 and 0x1a4c.
 The first page of the rendering engine (`+0x0`) is the interface buffer. The three registers below are graded from the
 specification (CRIME 1.5 Specification rev 0.3, Table 7-1, pp. 7-7 and 7-8). No scanned image reaches them.
 
-- `0x15000000` (`0x0`): `IntfBuf.data[128]`, the interface buffer data RAM (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 7-1, p. 7-7). Established from the specification for the name, size and access: 128 entries of 64 bits, read and write. The specification's name for the role is "interface buffer register data RAM"; what the engine stores in it is not given.
-- `0x15000200` (`0x200`): `IntfBuf.addr[128]`, the interface buffer address RAM (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 7-1, p. 7-8). Established from the specification for the name, size and access: 128 entries of 64 bits, read and write. The specification's name for the role is "interface buffer register address RAM"; the address each entry holds is not given.
-- `0x15000400` (`0x400`): `IntfBuf.ctl`, the interface buffer control parameters (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 7-1, p. 7-8). Established from the specification for the name, size and access: one 32-bit register, write only. The specification gives no field layout.
+- `0x15000000` (`0x0`): `IntfBuf.data[128]`, the interface buffer data RAM (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 7-1, p. 7-7). Established from the specification for the name, size and access: 128 entries of 64 bits, read and write. The specification's name for the role is "interface buffer register data RAM"; what the engine stores in it is not given.
+- `0x15000200` (`0x200`): `IntfBuf.addr[128]`, the interface buffer address RAM (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 7-1, p. 7-8). Established from the specification for the name, size and access: 128 entries of 64 bits, read and write. The specification's name for the role is "interface buffer register address RAM"; the address each entry holds is not given.
+- `0x15000400` (`0x400`): `IntfBuf.ctl`, the interface buffer control parameters (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 7-1, p. 7-8). Established from the specification for the name, size and access: one 32-bit register, write only. The specification gives no field layout.
 
 ### TLB pages
 
@@ -931,11 +931,11 @@ word is in the status page and is not graded here.
   `+0x16e0` plus 8 for the group number (`sd` at 0x24e4) and clears the buffer. Sixteen halfwords make the four
   doublewords, so every entry is written. The only call is the `jal` at 0x97c in `crime.a(crime.o)`, during start-up. Inferred: each
   doubleword holds four 16-bit tile numbers.
-- `0x15001000` (`0x1000`): `TLB.fbA[64]`, the framebuffer 64 KB tile TLB A (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 64 doublewords, read and write, global. The specification gives no entry layout, and no scanned image reaches the table, so the layout and the tiles it maps are unknown.
-- `0x15001200` (`0x1200`): `TLB.fbB[64]`, the framebuffer 64 KB tile TLB B (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 64 doublewords, read and write, global. Entry layout unknown, as for `TLB.fbA`.
-- `0x15001400` (`0x1400`): `TLB.fbC[64]`, the framebuffer 64 KB tile TLB C (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 64 doublewords, read and write, global. Entry layout unknown, as for `TLB.fbA`.
-- `0x15001700` (`0x1700`): `TLB.linearA[16]`, the linear 4 KB page TLB A (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 16 doublewords, read and write, global. Entry layout unknown, as for `TLB.fbA`.
-- `0x15001780` (`0x1780`): `TLB.linearB[16]`, the linear 4 KB page TLB B (docs/sources/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 16 doublewords, read and write, global. Entry layout unknown, as for `TLB.fbA`.
+- `0x15001000` (`0x1000`): `TLB.fbA[64]`, the framebuffer 64 KB tile TLB A (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 64 doublewords, read and write, global. The specification gives no entry layout, and no scanned image reaches the table, so the layout and the tiles it maps are unknown.
+- `0x15001200` (`0x1200`): `TLB.fbB[64]`, the framebuffer 64 KB tile TLB B (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 64 doublewords, read and write, global. Entry layout unknown, as for `TLB.fbA`.
+- `0x15001400` (`0x1400`): `TLB.fbC[64]`, the framebuffer 64 KB tile TLB C (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 64 doublewords, read and write, global. Entry layout unknown, as for `TLB.fbA`.
+- `0x15001700` (`0x1700`): `TLB.linearA[16]`, the linear 4 KB page TLB A (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 16 doublewords, read and write, global. Entry layout unknown, as for `TLB.fbA`.
+- `0x15001780` (`0x1780`): `TLB.linearB[16]`, the linear 4 KB page TLB B (references/documents/specs/crime-1.5-specification-rev0.3.pdf, Table 7-2, p. 7-8). Established from the specification for the name, size and access: 16 doublewords, read and write, global. Entry layout unknown, as for `TLB.fbA`.
 
 ## Routines in the IP32 build
 
@@ -1113,7 +1113,7 @@ tile index, and the word at +4 counts the tiles the record holds.
 
 ## Open
 
-See [docs/open-questions.md](../../docs/open-questions.md): the identification upper word, the status register location on
+See [questions/README.md](../../questions/README.md): the identification upper word, the status register location on
 CRIME 1.5, the write-error questions above, the unreached registers (refresh counter, replacement select, JUICE field,
 watchdog), the PROM's indexed sizing loops (the census records only the bases) and the diagnostic's stripped CRIME
 routines (the census names them by address only).

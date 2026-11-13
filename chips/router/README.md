@@ -1,13 +1,13 @@
 # Router (SN0 and SN1 network router)
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no specification is held). The router is the crossbar chip
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md): no specification is held). The router is the crossbar chip
 between node controllers in the Origin 200/2000-class and Origin 3000-class machines. It has no memory window. Software
 reaches its registers with a vector packet sent through the node controller's network interface, so the census is a
 census of call arguments: the register numbers the kernel passes to its router accessors. Builds are named by board:
 IP27 (`IP27/unix`, linked) and IP35 (`IP35/usr/cpu/sysgen/IP35boot/kernel.o`, relocatable object, cited by offset).
 
 Every fact below is read from those two kernels. The public Linux `asm-ia64/sn/router.h` (in the pinned `linux-2.4.37`
-submodule, see [docs/sources/INDEX.md](../../docs/sources/INDEX.md)) was read afterwards, to report agreement and
+submodule, see [references/documents/INDEX.md](../../references/documents/INDEX.md)) was read afterwards, to report agreement and
 conflict, never to supply a fact; where a name appears it is that header's name for the same offset.
 
 Census: [census/](census/) (`census.tsv`, `census-sites.tsv`, `call-sites.tsv`, `values.tsv`, `census-symbolic.tsv`,
@@ -126,5 +126,5 @@ selection question; the header cannot.
 
 ## Open
 
-See [../../docs/open-questions.md](../../docs/open-questions.md): the router register map of the IP27 chip, the routing
+See [../../docs/open-questions.md](../../questions/README.md): the router register map of the IP27 chip, the routing
 tables, and the scan-chain path.

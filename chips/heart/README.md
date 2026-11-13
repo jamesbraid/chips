@@ -1,6 +1,6 @@
 # HEART
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md): no specification is held). IP30 system controller:
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md): no specification is held). IP30 system controller:
 memory controller, interrupt controller, timer and the XIO port of the Octane family. Every fact below comes from
 four shipped IP30 files: the IRIX 6.5.30 kernel (`unix`), the CPU PROM (`IP30prom.bin`), the diagnostic program
 (`ide.IP30`) and the symbolic monitor (`symmon.IP30`). The public Linux driver
@@ -533,7 +533,7 @@ and offset `pa & 0x7fff_ffff`; `2^36` to `2^40 - 1` give port `pa >> 36` and off
 What the silicon decodes: unknown for the large window. No published manual held gives HEART's PIO decode, and no measurement
 exists. What is established is the software contract: all three IRIX builds use the large window for any widget mapping whose end
 is past 16 MiB and within 2 GiB, which includes every Bridge PCI memory-space mapping (those widget offsets start at
-`0x4000_0000`, see [bridge-pci-driver-windows.md](../../docs/bridge-pci-driver-windows.md)), and decode it back in
+`0x4000_0000`, see [bridge-pci-driver-windows.md](../../software/kernel/bridge-pci-driver-windows.md)), and decode it back in
 `heart_paddr_to_port`. An Octane that runs those kernels therefore decodes it (inferred, not measured). A public source supports
 the neighbouring 64 GiB window: the Linux IP30 patches place the BaseIO Bridge's PCI resources at `0xf0_8000_0000` and up (widget
 15 times `2^36` plus the Bridge's `0x8000_0000` 64-bit memory window; mail message-id
@@ -566,7 +566,7 @@ writes the saved WID_ERR_TYPE back, reads and writes back CAUSE, does the probed
 ## Open
 
 Graded entries. "Established" lines are read from the files above; "inferred" lines say what they rest on. Each
-entry ends with the route that would settle it. Collected in [docs/open-questions.md](../../docs/open-questions.md).
+entry ends with the route that would settle it. Collected in [questions/README.md](../../questions/README.md).
 
 - **BAD_SYSWR_ERR (CAUSE bit 41): what sets it, what a failed or timed-out uncached store latches.**
   Established: bit 41 is `BadSysWrErr` in the kernel and `SYSAD_WR_ERR` in the monitor; enable bit is MODE bit 10

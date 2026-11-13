@@ -1,6 +1,6 @@
 # TIOCP
 
-Mode: **no-spec** (see [docs/specs.md](../../docs/specs.md)).
+Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md)).
 
 PCI-X bridge of a later system family (the Altix-class SN2 generation, whose crossbar chip is the TIO). Whether any product
 in scope carries it is open. Nothing in the IRIX 6.5.30 builds read here drives it.
@@ -42,7 +42,7 @@ accessor panics with "undefined register", the header leaves padding), and the `
 not exist (`pcireg_ext_ate_get` panics with "not a BRIDGE ASIC" for chip type 3 and for parts `0xe000` and `0xe010`; the
 census row at `+0x80000` credits the Bridge-only read path to the TIOCP variant and is a scanner artifact). The grading,
 the Linux-only facts (54-bit interrupt address, command type in DMA address bits 61:60, the PV907516 flush erratum) and
-the tests that would settle the rest are in [docs/coverage-tiocp.md](../../docs/coverage-tiocp.md).
+the tests that would settle the rest are in [devices/tiocp/coverage.md](../../devices/tiocp/coverage.md).
 
 ## Open
 
