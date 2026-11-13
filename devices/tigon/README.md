@@ -64,7 +64,7 @@ For Tigon revision 5 and later:
   manual says they should normally be initialized to seven and six (Alteon p. 77). Bit 17 selects
   Memory Read Multiple in place of Memory Read Line for DMA reads.
 - **Established.** The DMA maximum fields (PCI State bits 7 to 5 for writes, 4 to 2 for reads) use the
-  same encodings: disable, 4 or 8, 16, 32, 64, 128, 256 and 1k. Encoding five is 128 bytes (Alteon p. 77).
+  same list of boundaries: disable, 4 or 8, 16, 32, 64, 128, 256 and 1k (Alteon p. 77). The manual gives the list but no numeric codes, so reading the field value five as 128 bytes is **inferred** from list order.
 - **Established.** Writing PCI State bit 20 from revision 5 forces 32-bit PCI operation, as in the
   bus-width section above. The manual says every PCI State bit is zero at reset and that the Miscellaneous
   Host Control reset leaves the register alone (Alteon p. 77).
@@ -72,9 +72,12 @@ For Tigon revision 5 and later:
 ## Host mailboxes
 
 - **Established.** The mailbox area is 256 bytes at 0x500 to 0x5ff, holding 32 eight-byte locations
-  (Alteon p. 62, Table 19; section 2.7, printed pp. 20 to 21). A write to the upper half of a location
-  raises an event to the internal processor, naming the location. Each location has its own event bit.
-- **Established.** Mailbox 0 is special. Writing it deasserts the PCI interrupt pin at once, so a host can
+  (Alteon p. 62, Table 19; p. 21; p. 111). The architecture chapter says a write to the upper half of a location
+  raises an event to the internal processor, naming the location, with a separate event bit per location (Alteon p. 21).
+  The register chapter says the opposite: a host write to the least significant word sets the event bit and the most
+  significant word can be written without an event (Alteon p. 111, section 9.12.3). The manual contradicts itself, so
+  which half raises the event is **unknown** here; a Tigon driver's mailbox write order or a trace would settle it.
+- **Established.** Mailbox 0 is special. Writing it deasserts the PCI interrupt pin at once (Alteon p. 21, p. 111), so a host can
   clear the interrupt and pass a message in one write. Software need not use it if it does not need that.
 - **Established.** The Miscellaneous Host Control register has a read-only interrupt-state bit that reflects
   the PCI IntA pin, and a write-only bit that clears the interrupt. Its gate-array field reads three, four or
