@@ -9,7 +9,7 @@
 /*
  * Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the reset is unknown.
  */
-/* iio_wid: r64, reset unknown; public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u */
+/* iio_wid: r64, reset unknown; public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u */
 #define HUB_IIO_WID                                  0x400000 /* inferred */
 #define HUB_IIO_WID_REV_SHIFT                        28 /* established */
 #define HUB_IIO_WID_REV_MASK                         0xfull
@@ -24,19 +24,19 @@
 /*
  * Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. Access is assumed read and write.
  */
-/* iio_ilapr: rw64, reset unknown; public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPR */
+/* iio_ilapr: rw64, reset unknown; public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR */
 #define HUB_IIO_ILAPR                                0x400100 /* inferred */
 
 /*
  * Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only.
  */
-/* iio_ilapo: w64, reset unknown; public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPO */
+/* iio_ilapo: w64, reset unknown; public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO */
 #define HUB_IIO_ILAPO                                0x400108 /* inferred */
 
 /*
  * Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption. Reset is unknown.
  */
-/* iio_itte: rw64, reset unknown; public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE */
+/* iio_itte: rw64, reset unknown; public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE */
 #define HUB_IIO_ITTE                                 0x400160 /* inferred */
 #define HUB_IIO_ITTE_COUNT                           7
 #define HUB_IIO_ITTE_STRIDE                          8

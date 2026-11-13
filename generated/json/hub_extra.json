@@ -15,7 +15,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
   },
   {
    "unit": "hub_extra",
@@ -24,7 +24,7 @@
    "hi": 31,
    "lo": 28,
    "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
   },
   {
    "unit": "hub_extra",
@@ -33,7 +33,7 @@
    "hi": 27,
    "lo": 12,
    "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
   },
   {
    "unit": "hub_extra",
@@ -42,7 +42,7 @@
    "hi": 11,
    "lo": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
   },
   {
    "unit": "hub_extra",
@@ -56,7 +56,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPR"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR"
   },
   {
    "unit": "hub_extra",
@@ -70,7 +70,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPO"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO"
   },
   {
    "unit": "hub_extra",
@@ -84,7 +84,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
   },
   {
    "unit": "hub_extra",
@@ -93,7 +93,7 @@
    "hi": 12,
    "lo": 12,
    "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
   },
   {
    "unit": "hub_extra",
@@ -102,7 +102,7 @@
    "hi": 11,
    "lo": 8,
    "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
   },
   {
    "unit": "hub_extra",
@@ -111,7 +111,7 @@
    "hi": 4,
    "lo": 0,
    "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
   },
   {
    "unit": "hub_extra",

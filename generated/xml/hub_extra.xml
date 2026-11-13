@@ -1,19 +1,19 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hub/registers-extra.toml by defs-gen - do not edit, change the source -->
 <genxml unit="hub_extra" prefix="HUB" title="Hub block transfer engine registers and control bits outside the census">
-  <struct name="IIO_WID" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u" register="yes" offset="0x400000" access="r" reset="unknown">
+  <struct name="IIO_WID" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u" register="yes" offset="0x400000" access="r" reset="unknown">
     <doc>Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the reset is unknown.</doc>
     <field name="rev" start="28" size="4" type="uint" grade="established"/>
     <field name="part" start="12" size="16" type="uint" grade="established"/>
     <field name="mfg" start="1" size="11" type="uint" grade="established"/>
   </struct>
-  <struct name="IIO_ILAPR" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPR" register="yes" offset="0x400100" access="rw" reset="unknown">
+  <struct name="IIO_ILAPR" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR" register="yes" offset="0x400100" access="rw" reset="unknown">
     <doc>Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. Access is assumed read and write.</doc>
   </struct>
-  <struct name="IIO_ILAPO" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPO" register="yes" offset="0x400108" access="w" reset="unknown">
+  <struct name="IIO_ILAPO" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO" register="yes" offset="0x400108" access="w" reset="unknown">
     <doc>Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only.</doc>
   </struct>
-  <struct name="IIO_ITTE" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="unknown">
+  <struct name="IIO_ITTE" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="unknown">
     <doc>Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption. Reset is unknown.</doc>
     <field name="iospace" start="12" size="1" type="uint" grade="established"/>
     <field name="widget" start="8" size="4" type="uint" grade="established"/>

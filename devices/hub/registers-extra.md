@@ -10,10 +10,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `iio_wid` | 0x400000 | r | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u |
-| `iio_ilapr` | 0x400100 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPR |
-| `iio_ilapo` | 0x400108 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPO |
-| `iio_itte` | 0x400160 | rw | 64 | 7 |  | unknown | inferred | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE |
+| `iio_wid` | 0x400000 | r | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u |
+| `iio_ilapr` | 0x400100 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR |
+| `iio_ilapo` | 0x400108 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO |
+| `iio_itte` | 0x400160 | rw | 64 | 7 |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE |
 | `iio_ibna_0` | 0x410020 | rw | 64 |  |  | unknown | inferred |  |
 | `iio_ibia_0` | 0x410028 | rw | 64 |  |  | unknown | inferred |  |
 | `iio_ibia_1` | 0x420028 | rw | 64 |  |  | unknown | inferred |  |
@@ -24,9 +24,9 @@ Widget identification register of the Hub widget. Offset and field layout are fr
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 31:28 | `rev` | established |  | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u | Revision number, bits 31:28, in the header's identification structure. |
-| 27:12 | `part` | established |  | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u | Widget part number, bits 27:12, in the header's identification structure. The header comment gives the Hub's value, IIO_WID_PART_HUB. |
-| 11:1 | `mfg` | established |  | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u | Manufacturer number, bits 11:1, in the header's identification structure. The header comment names a manufacturer; the name is not imported here, and the value is unknown. |
+| 31:28 | `rev` | established |  | public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u | Revision number, bits 31:28, in the header's identification structure. |
+| 27:12 | `part` | established |  | public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u | Widget part number, bits 27:12, in the header's identification structure. The header comment gives the Hub's value, IIO_WID_PART_HUB. |
+| 11:1 | `mfg` | established |  | public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u | Manufacturer number, bits 11:1, in the header's identification structure. The header comment names a manufacturer; the name is not imported here, and the value is unknown. |
 
 ### Register `iio_ilapr`
 
@@ -44,9 +44,9 @@ Array of 7 registers, stride 8.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 12 | `iospace` | established |  | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE | I/O space bit, bit 12 (IIO_ITTE_IOSP). Set selects the widget's I/O space, clear its memory space. |
-| 11:8 | `widget` | established |  | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE | Target widget number, bits 11:8 (IIO_ITTE_WIDGET_MASK, shift 8). |
-| 4:0 | `slice` | established |  | public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE | Slice field, bits 4:0 (IIO_ITTE_OFFSET_MASK in the public header). |
+| 12 | `iospace` | established |  | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE | I/O space bit, bit 12 (IIO_ITTE_IOSP). Set selects the widget's I/O space, clear its memory space. |
+| 11:8 | `widget` | established |  | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE | Target widget number, bits 11:8 (IIO_ITTE_WIDGET_MASK, shift 8). |
+| 4:0 | `slice` | established |  | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE | Slice field, bits 4:0 (IIO_ITTE_OFFSET_MASK in the public header). |
 
 ### Register `iio_ibna_0`
 

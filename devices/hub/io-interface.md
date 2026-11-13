@@ -7,7 +7,7 @@ reaches most of these offsets. The register list and the reset-value status are 
 [devices/hub/registers.md](registers.md). This page covers what the public Linux SN0 Hub I/O header
 adds, and what stays open.
 
-The fields below come from the public Linux SN0 Hub I/O header, Linux 7.2-rc7, as machine-readable
+The fields below come from the public Linux SN0 Hub I/O header, the pinned Linux tree, as machine-readable
 constants in [devices/hub/registers-extra.toml](registers-extra.toml). The header gives names, offsets and
 masks. It gives no access types and no reset values, so every reset here is unknown.
 

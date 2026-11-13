@@ -40,14 +40,14 @@ level = { bits = [22, 16], grade = "established", doc = "Interrupt level: mask 0
 node = { bits = [8, 0], grade = "established", doc = "Destination node number: mask 0x1ff in the public header." }
 
 # Hub I/O registers the census did not reach. Offsets, names and field masks are from the public
-# Linux SN0 Hub I/O header (Linux 7.2-rc7). The
+# Linux SN0 Hub I/O header (pinned linux tree). The
 # header states no access type or reset value, so each register is graded inferred as a whole.
 [registers.iio_wid]
 offset = 0x400000
 access = "r"
 width = 64
 grade = "inferred"
-from = "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_WID and hubii_wid_u"
+from = "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
 doc = "Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the reset is unknown."
 
 [registers.iio_wid.fields]
@@ -60,7 +60,7 @@ offset = 0x400100
 access = "rw"
 width = 64
 grade = "inferred"
-from = "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPR"
+from = "public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR"
 doc = "Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. Access is assumed read and write."
 
 [registers.iio_ilapo]
@@ -68,7 +68,7 @@ offset = 0x400108
 access = "w"
 width = 64
 grade = "inferred"
-from = "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_ILAPO"
+from = "public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO"
 doc = "Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only."
 
 # Big-window translation entries. The header numbers them 0 to 6 and says the hardware manuals
@@ -80,7 +80,7 @@ count = 7
 access = "rw"
 width = 64
 grade = "inferred"
-from = "public Linux SN0 Hub I/O header (Linux 7.2-rc7): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+from = "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
 doc = "Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption. Reset is unknown."
 
 [registers.iio_itte.fields]
