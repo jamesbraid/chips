@@ -248,10 +248,10 @@ Octane, Origin 200 and Origin 2000 run the first; the Origin 350 runs the second
 - **Programmed-I/O byte lanes (inferred).** The OpenBSD PIC attach gives ordinary PCI adapters bus accessors that
   XOR the low address bits for narrow access: byte accesses use address XOR 3, halfword accesses XOR 2. The same
   correction is the Bridge rule above for 1- and 2-byte widths, here applied in software rather than by the chip. The
-  accessors do not byte-swap the value. IOC4 keeps the native XBow accessors, which use the requested address as given,
-  so no XOR applies to it. IOC3 and RAD1 get their own accessors; the driver note does not state their byte rule. The
+  accessors do not byte-swap the value. IOC3, IOC4 and RAD1 all keep the native register-space accessors, which use the requested address as given, so no XOR applies to them
+  (`xbridge.c` at the `references/code/openbsd` pin, `7011342f6a72`: the device list at lines 1143-1146 selects the unswapped tags, the other adapters get the XOR accessors set up at lines 787-830 and defined at lines 1625-1650). The
   mapping functions keep the offset within the short Device-I/O windows and the large PCI memory windows. Source: the
-  public OpenBSD SGI driver at commit `2df91d80c104636deeef8124252ddd5951b55fbf`. These are software expectations
+  public OpenBSD SGI driver, re-read at the pinned commit `7011342f6a72`; the earlier citation of commit `2df91d80c104636deeef8124252ddd5951b55fbf` was not re-read. These are software expectations
   of the driver, not a PIC transaction table from a held specification. What the PIC does for 64-bit data phases,
   for mixed widths and for the device swap bit is unknown. Test: a byte and halfword read and write through an
   ordinary adapter's window and through an IOC4 window on an Origin 350 or Tezro, comparing the bytes that land in
