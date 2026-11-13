@@ -10,7 +10,7 @@
    "value": 2,
    "count": 1,
    "grade": "established",
-   "from": "QLogic ISP12160A data sheet (1999), first page: dual-channel Ultra2 SCSI; IRIX 6.5 Octane SCSI driver object sends per-bus commands for a part with more than one bus"
+   "from": "QLogic ISP12160A data sheet (1999), first page: dual-channel Ultra3 SCSI; IRIX 6.5 Octane SCSI driver object sends per-bus commands for a part with more than one bus"
   },
   {
    "unit": "isp12160",
@@ -55,7 +55,7 @@
    "value": 22,
    "count": 1,
    "grade": "inferred",
-   "from": "IRIX 6.5 Bedrock-class controller object, which constructs this request and calls the recovery helper that issues it"
+   "from": "IRIX 6.5 Bedrock-class controller object, which constructs this request and calls the recovery helper that issues it; the Linux qla1280 driver header names the same opcode"
   },
   {
    "unit": "isp12160",
@@ -64,7 +64,7 @@
    "value": 24,
    "count": 1,
    "grade": "inferred",
-   "from": "IRIX 6.5 Bedrock-class controller object (the request it builds); mailbox placement matches Linux qla1280's bus reset (see the ISP1040 unit's OP_BUS_RESET)"
+   "from": "IRIX 6.5 Bedrock-class controller object (the request it builds); mailbox placement matches Linux qla1280's bus reset (driver header and bus-reset routine) (see the ISP1040 unit's OP_BUS_RESET)"
   },
   {
    "unit": "isp12160",
@@ -91,7 +91,7 @@
    "value": 49,
    "count": 1,
    "grade": "inferred",
-   "from": "Linux qla1280, NetBSD isp and OpenBSD qlw drivers (none has an ISP12160 branch); IRIX 6.5 Octane SCSI driver object for device 0x1216"
+   "from": "Linux qla1280 (its driver header and controller set-up code, a driver for the QLA12160 as well), and the NetBSD isp and OpenBSD qlw drivers; IRIX 6.5 Octane SCSI driver object for device 0x1216"
   },
   {
    "unit": "isp12160",
@@ -109,7 +109,7 @@
    "value": 66,
    "count": 1,
    "grade": "established",
-   "from": "QLogic ISP12160A data sheet (1999), first page: \"66-MHz, 64-bit PCI host bus interface\""
+   "from": "QLogic ISP12160A data sheet (1999), first page: \"66-MHz, 64-bit PCI host bus interface\" (the /66 version; a /33 version also exists)"
   },
   {
    "unit": "isp12160",

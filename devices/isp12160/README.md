@@ -1,6 +1,6 @@
 # QLogic ISP12160 SCSI host adapter
 
-The ISP12160 is QLogic's dual-channel Ultra2 SCSI host adapter. It sits on the Origin 300 IO-8 board and on the
+The ISP12160 is QLogic's dual-channel Ultra3 (Ultra160) SCSI host adapter. The ISP12160A data sheet calls it Ultra3 and the Linux driver header says QLA12160 (Ultra3). It sits on the Origin 300 IO-8 board and on the
 Origin 350 IO9 board, PCI vendor `0x1077`, device `0x1216`. On a captured Origin 350 the OpenBSD boot output
 lists it at device 2 of the IO9's PIC, revision `0x06` ([the IO9 PCI wiring question](../../questions/ip35-io9-pci-wiring.md)).
 Its mailbox opcodes and the bus constants are in [devices/isp12160/registers.md](registers.md), generated from
@@ -22,13 +22,12 @@ a vendor document says it too.
 
 ## Host bus interface
 
-The ISP12160A data sheet describes a "66-MHz, 64-bit PCI host bus interface" and a 64-bit bus master. The
+The ISP12160A data sheet describes a "66-MHz, 64-bit PCI host bus interface" and a 64-bit bus master, in two versions: the /33 and the /66, so the 66 MHz figure is the /66 version's. Which version the IO-8 and IO9 fit is unknown. The
 constants record that as the data sheet's claim. It does not show what the board wires. Whether the Origin 300
 IO-8's own ISP12160 sits on bus lines that carry the upper 32 bits is unknown. The same is true of any other
 slot the board wires for this part.
 
-The data sheet also claims compliance with PCI Local Bus Specification revision 2.1. It lists memory write and
-invalidate among the PCI cache commands the part supports, and it says the part supplies the minimum power
+The data sheet also claims compliance with PCI Local Bus Specification revision 2.1. It lists "support for PCI cache commands" without naming them (the data sheet does not say memory write and invalidate), and it says the part supplies the minimum power
 management capabilities of revision 1.0, with D0, D3 hot and D3 cold as its power states. It does not say whether
 the power-management capability reports event support, so the event enable bit in that capability is unknown.
 
@@ -36,7 +35,7 @@ the power-management capability reports event support, so the event enable bit i
 
 Two channels, each a separate SCSI bus with its own selection timeout, reset delay and target state. The data sheet
 gives the count and the drivers use it. The IRIX IP30 driver sends its per-bus reset command once for each bus, with
-the delay in mailbox 1 and the bus number in mailbox 2. It sends its selection-timeout command with bus 0's value in
+the delay in mailbox 1 and the bus number in mailbox 2, which is also how Linux `qla1280.c` lines 2552-2556 build it for the QLA12160. It sends its selection-timeout command with bus 0's value in
 mailbox 1 and bus 1's in mailbox 2. The IP35 controller object builds its bus-reset request with the channel in
 mailbox 2 and a byte it reads from the channel's state in mailbox 1.
 
@@ -47,13 +46,12 @@ seconds, is inferred from the ISP1040 drivers. Whether the chip refuses, holds o
 whether it posts an asynchronous reset event for a reset the host asked for, and whether one channel's reset quiets
 the other channel, are all unknown.
 
-The selection-timeout unit is inferred to be milliseconds, as for the ISP1040, and the drivers use 250 as the
-default. What the chip does when that command is never sent is unknown.
+The selection-timeout unit is inferred to be milliseconds, as for the ISP1040, and the Linux qla1280 driver (`qla1280.c` line 2046) uses 250 as the default. What the chip does when that command is never sent is unknown.
 
 ## Mailbox commands the shipped programs send
 
 - `0x0001` load RAM and `0x0003` dump RAM. The stock PROM 6.210 SCSI diagnostic prepares both against this chip
-  when it tests DMA. The opcodes and their directions are software expectations, and their operand layout is not
+  when it tests DMA. The opcodes and their directions are software expectations (Linux `qla1280.h` lines 271 and 273 name them for the same driver family), and their operand layout is not
   recorded here.
 - `0x0016` abort device. Mailbox 1 packs the channel in bit 15, the target in bits 14:8 and the LUN in bits 7:0.
   Mailboxes 2 and 3 are zero. The IRIX request builder constructs it with that selector and no request handle. It

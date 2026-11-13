@@ -1,5 +1,5 @@
 """generated from devices/isp12160/registers.toml by defs-gen - do not edit, change the source
-QLogic ISP12160 dual-channel Ultra2 SCSI host adapter (PCI 1077:1216), the constants the held sources establish"""
+QLogic ISP12160 dual-channel Ultra3 SCSI host adapter (PCI 1077:1216), the constants the held sources establish"""
 
 UNIT = 'isp12160'
 REGISTERS = {}
