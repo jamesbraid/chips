@@ -31,7 +31,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `port_status`
 
-Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown. The shipped IRIX Origin 300/350 kernels test bits 1:0 as the link state, and bits 2:1 equal to 2 (remote power set, link up clear) start a link-reset wait.
+Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -41,7 +41,7 @@ Link-level protocol status. The header calls bit 1 link up and bit 2 remote powe
 
 ### Register `port_reset`
 
-Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link and bit 2 resets the local Bedrock. What the peer does with a link reset is not stated. Reset unknown. The shipped IRIX Origin 300/350 kernels write the value 6 (port reset and local reset).
+Writing this register resets the network interface. The header's comments say bit 0 sends a link reset to the peer, bit 1 sends a warm reset over the link and bit 2 resets the local Bedrock. What the peer does with a link reset is not stated. Reset unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -51,7 +51,7 @@ Writing this register resets the network interface. The header's comments say bi
 
 ### Register `reset_enable`
 
-Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown. The shipped IRIX Origin 300/350 kernels write 1; bit 0 is the one that matters.
+Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -123,7 +123,7 @@ Age at which request and reply packets enter the fabric. The header's comment sa
 
 ### Register `port_errors`
 
-Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown. The shipped IRIX Origin 300/350 kernels test the latched error bits 52:24 (NI_ERROR_LATCHED_HI and NI_ERROR_LATCHED_LO) and treat bit 52 with the reset enable word zero as a link reset caused by another partition. That the chip latches the bit when a reset is refused is unknown.
+Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -141,7 +141,7 @@ Latched link-port and problem-message errors. The header's comment says reads do
 
 ### Register `port_header_a`
 
-First half of the header of an erroring packet, as the header's union lays it out. The header's comment says it holds the captured header. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown.
+First half of the header of an erroring packet, as the header's union lays it out. The header's comment says it holds the captured header. Reset unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -155,7 +155,7 @@ First half of the header of an erroring packet, as the header's union lays it ou
 
 ### Register `port_header_b`
 
-Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown.
+Second half of the header of an erroring packet, as the header's union lays it out. Reset unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -166,7 +166,7 @@ Second half of the header of an erroring packet, as the header's union lays it o
 
 ### Register `port_sideband`
 
-Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides. The shipped IRIX Origin 300/350 kernels read it through the local alias and print it in the link error report; its role there is unknown.
+Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -183,7 +183,7 @@ Sideband data for the header registers and extra error data. The header says thi
 
 ### Register `port_error_clear`
 
-The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown. The shipped IRIX Origin 300/350 kernels read this word, then store zero to port_errors. Whether the read clears anything is unknown.
+The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown. Whether the read clears anything is unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -223,7 +223,4 @@ Next-hop table for the one-bit meta destination. The header names the table and 
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `NI_ERROR_LATCHED_HI` | 0x34 | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | Top bit of the range of latched error bits the kernel tests in port_errors. |
-| `NI_ERROR_LATCHED_LO` | 0x18 | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | Bottom bit of that range. |
-| `NI_ERROR_LINK_RESET_BIT` | 0x34 | established | shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md | Link reset caused by another partition, with the reset enable word zero; that the chip latches it when a reset is refused is unknown. |
 | `PORT_PARMS_HEADER_DEFAULT` | 0x7a3ff1bf0 | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Value the header's reset-defaults macro builds for the port parameters: virtual-channel errors 0xf, first error enabled, maximum retry 0x3ff, null timeout 6, maximum burst 0x3f0. The header names it as the reset default and gives no source for it, so it is a header claim, not a hardware reset value. |

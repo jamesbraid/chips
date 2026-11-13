@@ -963,33 +963,6 @@
   {
    "unit": "bedrock_ni",
    "kind": "constant",
-   "name": "NI_ERROR_LATCHED_HI",
-   "value": 52,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ni",
-   "kind": "constant",
-   "name": "NI_ERROR_LATCHED_LO",
-   "value": 24,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ni",
-   "kind": "constant",
-   "name": "NI_ERROR_LINK_RESET_BIT",
-   "value": 52,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ni",
-   "kind": "constant",
    "name": "PORT_PARMS_HEADER_DEFAULT",
    "value": 32816176112,
    "count": 1,

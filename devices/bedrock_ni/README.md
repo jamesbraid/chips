@@ -9,7 +9,8 @@ the generated reference is [devices/bedrock_ni/registers.md](registers.md). The 
 [I/O interface](../bedrock_ii/README.md).
 
 No Bedrock specification is held, and no read of the port on hardware is recorded. The sources are the public Linux
-2.5.40 SN1 register headers, read from the history tree at tag `v2.5.40`. They give register names, offsets, widths and
+2.5.40 SN1 register headers (`include/asm-ia64/sn/sn1/hubni.h` and `hubni_next.h` in the `references/code/linux-2.5.40` pin,
+`7570df54ef8c`; the offsets, field positions and the port-parameters default were re-read there in a later verification pass). They give register names, offsets, widths and
 field positions, and a few comments. The headers state no reset value for any register. So every field is graded from
 the header alone, and a comment's claim about behaviour is graded inferred.
 
@@ -71,6 +72,7 @@ the header alone, and a comment's claim about behaviour is graded inferred.
 - The meaning of port status values 0, 2 and 3, and of status bit 0.
 - What an exit port value means on the port, and what the routing tables do on a direct link.
 - Link training time, and what the far end's port status shows while it is reset.
+- How the shipped IRIX Origin 300 and Origin 350 kernels use these registers: which port-status bits they test, what they write to port reset and reset enable, which latched-error bits (52 to 24, with bit 52 as a link reset from another partition) they test, and what they do with the header and sideband words. An earlier version stated these as established, from a note of another project, and the kernel code was not available to re-read. Route: read the IP35 kernel's Bedrock link-error and link-reset code in full.
 
 A Bedrock network interface specification would settle most of these. Failing that, a read-only trace of a port on
 hardware, with its cable and far-end state recorded, would settle the port status and reset questions.
