@@ -22,10 +22,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
 | `user_ram` | 0xe | rw | 8 | 114 | bank0 | unknown | inferred | Linux rtc-ds1685 driver, ds1685_nvram_write, which treats the bank-0 bytes as one 114-byte run |
-| `model` | 0x40 | r | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, which reads the model byte only through its sysfs attribute; the position follows the identification group in the datasheet text |
-| `serial` | 0x41 | r | 8 | 6 | bank1 | unknown | inferred | Maxim DS1685 datasheet, identification group, as quoted by the sources consulted |
-| `serial_crc` | 0x47 | r | 8 |  | bank1 | unknown | established | Maxim DS1685 datasheet, identification group, as quoted by the sources consulted |
-| `century` | 0x48 | rw | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, ds1685_rtc_read_time and the probe century restriction; OpenBSD dsrtc driver, ds1687_gettime |
+| `model` | 0x40 | r | 8 |  | bank1 | unknown | established | Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): register 40h holds the model number 71h, read-only |
+| `serial` | 0x41 | r | 8 | 6 | bank1 | unknown | established | Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): registers 41h to 46h, unique and read-only |
+| `serial_crc` | 0x47 | r | 8 |  | bank1 | unknown | established | Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): register 47h, CRC over 40h to 46h |
+| `century` | 0x48 | rw | 8 |  | bank1 | unknown | established | Maxim DS1685 datasheet 19-5215 rev 10/12, century register section (bank 1, 48h, binary or BCD); Linux rtc-ds1685 driver, ds1685_rtc_read_time |
 | `date_alarm` | 0x49 | rw | 8 |  | bank1 | unknown | established | Maxim DS1685 datasheet, wake-up section, as quoted by the sources consulted |
 | `ctrl4a` | 0x4a | rw | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, probe and poweroff paths; OpenBSD power driver, power_intr |
 | `ctrl4b` | 0x4b | rw | 8 |  | bank1 | unknown | inferred | Linux rtc-ds1685 driver, probe and remove paths |
@@ -50,7 +50,7 @@ Array of 114 registers, stride 1.
 
 ### Register `model`
 
-Model byte, the first of the seven identification bytes. Probe does not read it, so only the sysfs and proc views show a wrong value.
+Model byte, the first of the eight identification bytes; the datasheet gives the value 71h. Probe does not read it, so only the sysfs and proc views show a wrong value.
 
 ### Register `serial`
 
@@ -60,7 +60,7 @@ Array of 6 registers, stride 1.
 
 ### Register `serial_crc`
 
-CRC byte over the seven identification bytes before it. The datasheet text consulted gives no polynomial, so this import cannot reproduce the check. No driver consulted validates it.
+CRC byte over the seven identification bytes before it. The datasheet text gives no polynomial, so this import cannot reproduce the check. No driver consulted validates it.
 
 ### Register `century`
 
@@ -138,5 +138,5 @@ Year within the century. The century comes from the century byte in bank 1.
 |---|---|---|---|---|
 | `BANK0_RAM_BYTES` | 0x72 | inferred | Linux rtc-ds1685 driver, ds1685_nvram_write bank-0 arithmetic | Bank-0 user RAM bytes. |
 | `EXT_RAM_BYTES` | 0x80 | inferred | Linux rtc-ds1685 driver; the extended address is seven bits | Extended RAM bytes in bank 1, addressed by the seven-bit address register. |
-| `RAM_CLEAR_RECOVERY_MS` | 0x96 | established | Maxim DS1685 datasheet, RAM-clear section and electrical table, as quoted by the sources consulted | Minimum recovery time after a RAM clear, during which all accesses are locked out. Linux sleeps this long after servicing the clear. |
-| `RAM_TOTAL_BYTES` | 0xf2 | established | Maxim DS1685 datasheet, RAM-clear section, as quoted by the sources consulted | Battery-backed user RAM: the bank-0 bytes plus the extended bytes. |
+| `RAM_CLEAR_RECOVERY_MS` | 0x96 | established | Maxim DS1685 datasheet 19-5215 rev 10/12, RAM clear section (page 20) and electrical characteristics (tREC 150 ms) | Minimum recovery time after a RAM clear, during which all accesses are locked out. Linux sleeps this long after servicing the clear. |
+| `RAM_TOTAL_BYTES` | 0xf2 | established | Maxim DS1685 datasheet 19-5215 rev 10/12, features list and RAM clear section (page 20): 242 bytes | Battery-backed user RAM: the bank-0 bytes plus the extended bytes. |

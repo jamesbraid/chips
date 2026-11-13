@@ -19,10 +19,12 @@ not settled, with the route that would settle it. No fact here was measured on a
 ## Sources
 
 - **Maxim DS1685/DS1687 datasheet**, document 19-5215, revision 10/12. Page numbers below are the
-  ones the sources give. They come from the earlier written summary this import drew on, and the
-  PDF itself was not reopened for this page. A page cited off by a few is the first thing to check.
-- **Linux `drivers/rtc/rtc-ds1685.c`** and `include/linux/rtc/ds1685.h`, mainline v7.2-rc7. The
-  IP30 platform data is in `drivers/mfd/ioc3.c` and the IP32 platform data in
+  datasheet's own "N of 34" page footers. The calendar and alarm layout, the 242, 114 and 128 byte RAM
+  counts, the serial number block at 0x40 to 0x47 (model byte 0x71, CRC at 0x47), the 0x4A flag bits,
+  the extended RAM address and data ports at 0x50 and 0x53, the SET-clears-UIE rule (page 12), the PAB
+  and wake-up text (pages 20 and 21), and the 150 ms tREC (electrical table) were rechecked against the PDF.
+- **Linux `drivers/rtc/rtc-ds1685.c`** and `include/linux/rtc/ds1685.h`, the pinned `linux-5.3` submodule for the RTC driver and header. The
+  IP30 platform data is in `drivers/mfd/ioc3.c`, which the pinned trees do not contain, so that placement fact was not rechecked. The IP32 platform data is in
   `arch/mips/sgi-ip32/ip32-platform.c`.
 - **OpenBSD `sys/arch/sgi/dev/dsrtc.c`**, `dsrtcvar.h` and `power.c`, branch 7.9; the bit names
   come from `sys/dev/ic/ds1687reg.h`.
@@ -32,8 +34,8 @@ not settled, with the route that would settle it. No fact here was measured on a
   [coverage-mace.md](../mace/coverage.md) and [mace/README.md](../mace/README.md) (the calendar clock on
   the O2's MACE, a directly mapped part of the same family).
 
-The driver facts above are as the earlier summary recorded them. None of the trees was reopened for
-this import.
+The Linux RTC driver's polling of the increment bit was rechecked in `rtc-ds1685.c`. The OpenBSD and
+NetBSD driver facts were not individually reopened.
 
 ## Placement
 

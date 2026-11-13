@@ -134,9 +134,9 @@ space = "bank1"
 access = "r"
 width = 8
 reset = "unknown"
-grade = "inferred"
-from = "Linux rtc-ds1685 driver, which reads the model byte only through its sysfs attribute; the position follows the identification group in the datasheet text"
-doc = "Model byte, the first of the seven identification bytes. Probe does not read it, so only the sysfs and proc views show a wrong value."
+grade = "established"
+from = "Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): register 40h holds the model number 71h, read-only"
+doc = "Model byte, the first of the eight identification bytes; the datasheet gives the value 71h. Probe does not read it, so only the sysfs and proc views show a wrong value."
 
 [registers.serial]
 offset = 0x41
@@ -145,8 +145,8 @@ count = 6
 access = "r"
 width = 8
 reset = "unknown"
-grade = "inferred"
-from = "Maxim DS1685 datasheet, identification group, as quoted by the sources consulted"
+grade = "established"
+from = "Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): registers 41h to 46h, unique and read-only"
 doc = "Six serial-number bytes that follow the model byte. Linux exposes them through sysfs and nothing consulted checks them."
 
 [registers.serial_crc]
@@ -156,8 +156,8 @@ access = "r"
 width = 8
 reset = "unknown"
 grade = "established"
-from = "Maxim DS1685 datasheet, identification group, as quoted by the sources consulted"
-doc = "CRC byte over the seven identification bytes before it. The datasheet text consulted gives no polynomial, so this import cannot reproduce the check. No driver consulted validates it."
+from = "Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): register 47h, CRC over 40h to 46h"
+doc = "CRC byte over the seven identification bytes before it. The datasheet text gives no polynomial, so this import cannot reproduce the check. No driver consulted validates it."
 
 [registers.century]
 offset = 0x48
@@ -165,8 +165,8 @@ space = "bank1"
 access = "rw"
 width = 8
 reset = "unknown"
-grade = "inferred"
-from = "Linux rtc-ds1685 driver, ds1685_rtc_read_time and the probe century restriction; OpenBSD dsrtc driver, ds1687_gettime"
+grade = "established"
+from = "Maxim DS1685 datasheet 19-5215 rev 10/12, century register section (bank 1, 48h, binary or BCD); Linux rtc-ds1685 driver, ds1685_rtc_read_time"
 doc = "Century, in the same data-mode form as the other calendar bytes. Linux computes the year as the year byte plus the century times 100."
 
 [registers.date_alarm]
@@ -225,7 +225,7 @@ from = "Linux rtc-ds1685 driver, extended-RAM read and write paths"
 doc = "Extended RAM data at the address in the address register."
 
 [constants]
-RAM_TOTAL_BYTES = { value = 242, grade = "established", from = "Maxim DS1685 datasheet, RAM-clear section, as quoted by the sources consulted", doc = "Battery-backed user RAM: the bank-0 bytes plus the extended bytes." }
+RAM_TOTAL_BYTES = { value = 242, grade = "established", from = "Maxim DS1685 datasheet 19-5215 rev 10/12, features list and RAM clear section (page 20): 242 bytes", doc = "Battery-backed user RAM: the bank-0 bytes plus the extended bytes." }
 BANK0_RAM_BYTES = { value = 114, grade = "inferred", from = "Linux rtc-ds1685 driver, ds1685_nvram_write bank-0 arithmetic", doc = "Bank-0 user RAM bytes." }
 EXT_RAM_BYTES = { value = 128, grade = "inferred", from = "Linux rtc-ds1685 driver; the extended address is seven bits", doc = "Extended RAM bytes in bank 1, addressed by the seven-bit address register." }
-RAM_CLEAR_RECOVERY_MS = { value = 150, grade = "established", from = "Maxim DS1685 datasheet, RAM-clear section and electrical table, as quoted by the sources consulted", doc = "Minimum recovery time after a RAM clear, during which all accesses are locked out. Linux sleeps this long after servicing the clear." }
+RAM_CLEAR_RECOVERY_MS = { value = 150, grade = "established", from = "Maxim DS1685 datasheet 19-5215 rev 10/12, RAM clear section (page 20) and electrical characteristics (tREC 150 ms)", doc = "Minimum recovery time after a RAM clear, during which all accesses are locked out. Linux sleeps this long after servicing the clear." }

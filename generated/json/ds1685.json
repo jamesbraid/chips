@@ -28,8 +28,8 @@
    "stride": 1,
    "space": "bank1",
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "Linux rtc-ds1685 driver, which reads the model byte only through its sysfs attribute; the position follows the identification group in the datasheet text"
+   "grade": "established",
+   "from": "Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): register 40h holds the model number 71h, read-only"
   },
   {
    "unit": "ds1685",
@@ -42,8 +42,8 @@
    "stride": 1,
    "space": "bank1",
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "Maxim DS1685 datasheet, identification group, as quoted by the sources consulted"
+   "grade": "established",
+   "from": "Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): registers 41h to 46h, unique and read-only"
   },
   {
    "unit": "ds1685",
@@ -57,7 +57,7 @@
    "space": "bank1",
    "reset": "unknown",
    "grade": "established",
-   "from": "Maxim DS1685 datasheet, identification group, as quoted by the sources consulted"
+   "from": "Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): register 47h, CRC over 40h to 46h"
   },
   {
    "unit": "ds1685",
@@ -70,8 +70,8 @@
    "stride": 1,
    "space": "bank1",
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "Linux rtc-ds1685 driver, ds1685_rtc_read_time and the probe century restriction; OpenBSD dsrtc driver, ds1687_gettime"
+   "grade": "established",
+   "from": "Maxim DS1685 datasheet 19-5215 rev 10/12, century register section (bank 1, 48h, binary or BCD); Linux rtc-ds1685 driver, ds1685_rtc_read_time"
   },
   {
    "unit": "ds1685",
@@ -335,7 +335,7 @@
    "value": 150,
    "count": 1,
    "grade": "established",
-   "from": "Maxim DS1685 datasheet, RAM-clear section and electrical table, as quoted by the sources consulted"
+   "from": "Maxim DS1685 datasheet 19-5215 rev 10/12, RAM clear section (page 20) and electrical characteristics (tREC 150 ms)"
   },
   {
    "unit": "ds1685",
@@ -344,7 +344,7 @@
    "value": 242,
    "count": 1,
    "grade": "established",
-   "from": "Maxim DS1685 datasheet, RAM-clear section, as quoted by the sources consulted"
+   "from": "Maxim DS1685 datasheet 19-5215 rev 10/12, features list and RAM clear section (page 20): 242 bytes"
   }
  ]
 }

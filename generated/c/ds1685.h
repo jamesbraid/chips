@@ -15,30 +15,30 @@
 #define DS1685_USER_RAM_STRIDE                       1
 
 /*
- * Model byte, the first of the seven identification bytes. Probe does not read it, so only the sysfs and proc views show a wrong value.
+ * Model byte, the first of the eight identification bytes; the datasheet gives the value 71h. Probe does not read it, so only the sysfs and proc views show a wrong value.
  */
-/* model: r8, space bank1, reset unknown; Linux rtc-ds1685 driver, which reads the model byte only through its sysfs attribute; the position follows the identification group in the datasheet text */
-#define DS1685_MODEL_OFFSET                          0x40u /* inferred */
+/* model: r8, space bank1, reset unknown; Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): register 40h holds the model number 71h, read-only */
+#define DS1685_MODEL_OFFSET                          0x40u /* established */
 
 /*
  * Six serial-number bytes that follow the model byte. Linux exposes them through sysfs and nothing consulted checks them.
  */
-/* serial: r8, space bank1, reset unknown; Maxim DS1685 datasheet, identification group, as quoted by the sources consulted */
-#define DS1685_SERIAL_OFFSET                         0x41u /* inferred */
+/* serial: r8, space bank1, reset unknown; Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): registers 41h to 46h, unique and read-only */
+#define DS1685_SERIAL_OFFSET                         0x41u /* established */
 #define DS1685_SERIAL_COUNT                          6
 #define DS1685_SERIAL_STRIDE                         1
 
 /*
- * CRC byte over the seven identification bytes before it. The datasheet text consulted gives no polynomial, so this import cannot reproduce the check. No driver consulted validates it.
+ * CRC byte over the seven identification bytes before it. The datasheet text gives no polynomial, so this import cannot reproduce the check. No driver consulted validates it.
  */
-/* serial_crc: r8, space bank1, reset unknown; Maxim DS1685 datasheet, identification group, as quoted by the sources consulted */
+/* serial_crc: r8, space bank1, reset unknown; Maxim DS1685 datasheet 19-5215 rev 10/12, silicon serial number section (page 18): register 47h, CRC over 40h to 46h */
 #define DS1685_SERIAL_CRC_OFFSET                     0x47u /* established */
 
 /*
  * Century, in the same data-mode form as the other calendar bytes. Linux computes the year as the year byte plus the century times 100.
  */
-/* century: rw8, space bank1, reset unknown; Linux rtc-ds1685 driver, ds1685_rtc_read_time and the probe century restriction; OpenBSD dsrtc driver, ds1687_gettime */
-#define DS1685_CENTURY_OFFSET                        0x48u /* inferred */
+/* century: rw8, space bank1, reset unknown; Maxim DS1685 datasheet 19-5215 rev 10/12, century register section (bank 1, 48h, binary or BCD); Linux rtc-ds1685 driver, ds1685_rtc_read_time */
+#define DS1685_CENTURY_OFFSET                        0x48u /* established */
 
 /*
  * Date alarm. The wake-up alarm matches this byte together with the hours, minutes and seconds alarm bytes. Linux also writes it as the alarm date.

@@ -9,24 +9,24 @@ pub mod user_ram {
     pub const COUNT: u32 = 114;
     pub const STRIDE: u64 = 1;
 }
-/// Model byte, the first of the seven identification bytes. Probe does not read it, so only the sysfs and proc views show a wrong value. (inferred)
+/// Model byte, the first of the eight identification bytes; the datasheet gives the value 71h. Probe does not read it, so only the sysfs and proc views s (established)
 pub mod model {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x40;
 }
-/// Six serial-number bytes that follow the model byte. Linux exposes them through sysfs and nothing consulted checks them. (inferred)
+/// Six serial-number bytes that follow the model byte. Linux exposes them through sysfs and nothing consulted checks them. (established)
 pub mod serial {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x41;
     pub const COUNT: u32 = 6;
     pub const STRIDE: u64 = 1;
 }
-/// CRC byte over the seven identification bytes before it. The datasheet text consulted gives no polynomial, so this import cannot reproduce the check. N (established)
+/// CRC byte over the seven identification bytes before it. The datasheet text gives no polynomial, so this import cannot reproduce the check. No driver c (established)
 pub mod serial_crc {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x47;
 }
-/// Century, in the same data-mode form as the other calendar bytes. Linux computes the year as the year byte plus the century times 100. (inferred)
+/// Century, in the same data-mode form as the other calendar bytes. Linux computes the year as the year byte plus the century times 100. (established)
 pub mod century {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x48;
