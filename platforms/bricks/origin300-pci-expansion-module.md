@@ -21,12 +21,11 @@ The NUMAlink module that joins base and expansion modules is on [origin300-numal
   [references/documents/specs/xbridge-asic-specification-rev0.5.pdf](../../references/documents/specs/xbridge-asic-specification-rev0.5.pdf)
   and cited by printed page. It is a design-stage specification, so its statements are plans
   until silicon confirms them.
-- **Public Linux SN1 `pcibr.c`**, at commit `7570df54ef8c`, lines 262 to 272, the widget-to-bus
-  table. The Linux tree is an uninitialised submodule in this clone, so this table is cited from
-  the source record and was not re-read for this page.
+- **Public Linux SN1 `pcibr.c`**, `arch/ia64/sn/io/sn1/pcibr.c` in the `references/code/linux-2.5.40`
+  pin (`7570df54ef8c`), lines 262 to 273, the widget-to-bus table.
 
-The guide pages above are not held in this repository, and their page numbers have not been checked
-against the printed guides. The Xbridge pages were read in the held PDF.
+The guide page numbers and the Linux table were re-read in a later verification pass against the
+retained guide text and the pinned source. The Xbridge pages were read in the held PDF.
 
 ## Physical topology
 
@@ -34,8 +33,11 @@ against the printed guides. The Xbridge pages were read in the held PDF.
 straight to the expansion module's NI connection.
 
 **Established** (`007-4499-001` and `007-4499-002`, printed p. 13). Routed operation is supported on
-NUMAlink ports 2 to 5. The module does not work on ports 1, 6, 7 or 8. The guides give no reason for
-the port restriction, which is also on the [NUMAlink module page](origin300-numalink-module.md).
+NUMAlink ports 2 to 5. The module does not work on ports 1, 6, 7 or 8. The product-description
+chapters give the reason: ports 2 to 5 carry USB signals, and the module has no external USB port, so
+it talks to the L2 controller through the NUMAlink module's port and USB hub (`007-4499-001` p. 48,
+`007-4499-002` p. 52). An earlier version of this page said the guides give no reason. The
+restriction is also on the [NUMAlink module page](origin300-numalink-module.md).
 
 ## Chip composition and PCI heads
 
