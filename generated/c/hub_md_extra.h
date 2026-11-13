@@ -341,7 +341,6 @@
 #define HUB_HUB_MD_REFCNT_COUNT_MASK_PREMIUM         0x7ffffu /* established */
 #define HUB_HUB_MD_REFCNT_COUNT_MASK_STANDARD        0x7ffu /* established */
 #define HUB_HUB_MD_REFCNT_COUNT_SHIFT                0x5u /* established */
-#define HUB_HUB_MD_REFCNT_NODE_STRIDE                0x8u /* established */
 #define HUB_HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS    0x400u /* inferred */
 #define HUB_HUB_MD_SIZE_128MB                        0x5u /* established */
 #define HUB_HUB_MD_SIZE_16MB                         0x2u /* established */
@@ -354,6 +353,5 @@
 #define HUB_HUB_MD_SIZE_64MB                         0x4u /* established */
 #define HUB_HUB_MD_SIZE_8MB                          0x1u /* established */
 #define HUB_HUB_MD_SIZE_EMPTY                        0x0u /* established */
-#define HUB_HUB_MD_WINDOW_BASE                       0x1a00000u /* established */
 
 #endif /* HUB_GEN_H */

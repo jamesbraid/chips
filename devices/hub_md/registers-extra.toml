@@ -1,7 +1,7 @@
 unit = "hub_md_extra"
 prefix = "HUB"
 title = "Hub memory and directory register layouts and constants outside the census"
-from = "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+from = "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
 public_from = ["public Linux SN0 Hub memory/directory header", "shipped IRIX"]
 
 # The census has the offsets of the memory and directory registers at 0x200000 to 0x2000a8 and
@@ -169,8 +169,8 @@ doc = "Layout of the page migration candidate. The header's initiator and node-n
 valid = { bits = [63, 63], grade = "established", doc = "Candidate valid bit." }
 type = { bits = [30, 30], grade = "established", doc = "Candidate type bit, named MD_MIG_CANDIDATE_TYPE in the header. Its meaning is not stated there." }
 overrun = { bits = [29, 29], grade = "established", doc = "Candidate overrun bit." }
-node = { bits = [28, 20], grade = "inferred", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Node number of the requester as the kernel reads it, nine bits at 28:20. The header's initiator mask overlaps these bits; the kernel's use is what is recorded." }
-page = { bits = [17, 0], grade = "inferred", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Page index within the node, eighteen bits at 17:0, as the kernel reads it." }
+node = { bits = [28, 20], grade = "inferred", from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE_NODEID_MASK (0x1ff at shift 20)", doc = "Node number of the requester, nine bits at 28:20, from the header's node-id mask. The header's initiator mask (11 bits at shift 18) overlaps these bits, so the layout is graded inferred." }
+page = { bits = [17, 0], grade = "inferred", from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE_ADDR_MASK (0x3ffff)", doc = "Page index within the node, eighteen bits at 17:0, from the header's address mask. The header's own comment says the address starts at bit 14, which disagrees with the mask, so the position is graded inferred." }
 
 [words.MD_DIMM_INIT_FORMAT]
 width = 64
@@ -243,8 +243,6 @@ HUB_MD_DIR_BUSY_SHARED = { value = 0x3, grade = "established", doc = "Directory 
 HUB_MD_DIR_BUSY_EXCL = { value = 0x4, grade = "established", doc = "Directory state busy exclusive, from the header's state constants." }
 HUB_MD_DIR_WAIT = { value = 0x5, grade = "established", doc = "Directory state wait, from the header's state constants." }
 HUB_MD_DIR_UNOWNED = { value = 0x7, grade = "established", doc = "Directory state unowned, from the header's state constants." }
-HUB_MD_REFCNT_COUNT_MASK_PREMIUM = { value = 0x7ffff, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Nineteen-bit reference count mask, premium memory; which memory is premium is inferred." }
-HUB_MD_REFCNT_COUNT_MASK_STANDARD = { value = 0x7ff, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Eleven-bit reference count mask, standard memory." }
-HUB_MD_REFCNT_COUNT_SHIFT = { value = 5, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Bit position of the count in a node's reference word." }
-HUB_MD_REFCNT_NODE_STRIDE = { value = 8, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Bytes between the words of consecutive nodes for one page." }
-HUB_MD_WINDOW_BASE = { value = 0x1a00000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Physical base of the memory and directory block for node 0." }
+HUB_MD_REFCNT_COUNT_MASK_PREMIUM = { value = 0x7ffff, grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT, MD_PPROT_REFCNT_WIDTH", doc = "Nineteen-bit reference count mask, premium memory; which memory is premium is inferred." }
+HUB_MD_REFCNT_COUNT_MASK_STANDARD = { value = 0x7ff, grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_SPROT_REFCNT_SHFT, MD_SPROT_REFCNT_WIDTH", doc = "Eleven-bit reference count mask, standard memory." }
+HUB_MD_REFCNT_COUNT_SHIFT = { value = 5, grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT and MD_SPROT_REFCNT_SHFT", doc = "Bit position of the count in a node's reference word." }

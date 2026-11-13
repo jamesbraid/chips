@@ -392,7 +392,7 @@
    "hi": 28,
    "lo": 20,
    "grade": "inferred",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE_NODEID_MASK (0x1ff at shift 20)"
   },
   {
    "unit": "hub_md_extra",
@@ -401,7 +401,7 @@
    "hi": 17,
    "lo": 0,
    "grade": "inferred",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE_ADDR_MASK (0x3ffff)"
   },
   {
    "unit": "hub_md_extra",
@@ -815,7 +815,7 @@
    "value": 3758096384,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -824,7 +824,7 @@
    "value": 29,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -833,7 +833,7 @@
    "value": 1,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -842,7 +842,7 @@
    "value": 0,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -851,7 +851,7 @@
    "value": 4,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -860,7 +860,7 @@
    "value": 3,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -869,7 +869,7 @@
    "value": 2,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -878,7 +878,7 @@
    "value": 1,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -887,7 +887,7 @@
    "value": 0,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -896,7 +896,7 @@
    "value": 7,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -905,7 +905,7 @@
    "value": 5,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -914,7 +914,7 @@
    "value": 8584695805640703,
    "count": 1,
    "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -923,7 +923,7 @@
    "value": 8,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -932,7 +932,7 @@
    "value": 4,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -941,7 +941,7 @@
    "value": 8,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -950,7 +950,7 @@
    "value": 6628048896,
    "count": 1,
    "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -959,7 +959,7 @@
    "value": 12818,
    "count": 1,
    "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -968,7 +968,7 @@
    "value": 524287,
    "count": 1,
    "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+   "from": "public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT, MD_PPROT_REFCNT_WIDTH"
   },
   {
    "unit": "hub_md_extra",
@@ -977,7 +977,7 @@
    "value": 2047,
    "count": 1,
    "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+   "from": "public Linux SN0 Hub memory/directory header: MD_SPROT_REFCNT_SHFT, MD_SPROT_REFCNT_WIDTH"
   },
   {
    "unit": "hub_md_extra",
@@ -986,16 +986,7 @@
    "value": 5,
    "count": 1,
    "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "constant",
-   "name": "HUB_MD_REFCNT_NODE_STRIDE",
-   "value": 8,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+   "from": "public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT and MD_SPROT_REFCNT_SHFT"
   },
   {
    "unit": "hub_md_extra",
@@ -1004,7 +995,7 @@
    "value": 1024,
    "count": 1,
    "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1013,7 +1004,7 @@
    "value": 5,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1022,7 +1013,7 @@
    "value": 2,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1031,7 +1022,7 @@
    "value": 8,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1040,7 +1031,7 @@
    "value": 6,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1049,7 +1040,7 @@
    "value": 9,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1058,7 +1049,7 @@
    "value": 3,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1067,7 +1058,7 @@
    "value": 10,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1076,7 +1067,7 @@
    "value": 7,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1085,7 +1076,7 @@
    "value": 4,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1094,7 +1085,7 @@
    "value": 1,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",
@@ -1103,16 +1094,7 @@
    "value": 0,
    "count": 1,
    "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "constant",
-   "name": "HUB_MD_WINDOW_BASE",
-   "value": 27262976,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   }
  ]
 }

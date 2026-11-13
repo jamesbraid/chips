@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hub_md/registers-extra.toml by defs-gen - do not edit, change the source -->
-<genxml unit="hub_md_extra" prefix="HUB" title="Hub memory and directory register layouts and constants outside the census" from="public Linux SN0 Hub memory/directory header, Linux v7.2-rc7 (field masks, shifts and default constants)">
+<genxml unit="hub_md_extra" prefix="HUB" title="Hub memory and directory register layouts and constants outside the census" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)">
   <struct name="MD_DIMM_INIT_FORMAT" size="8" grade="established" from="public Linux SN0 Hub memory/directory header: MDI_* masks">
     <doc>Layout of the memory and directory DIMM mode initialisation registers. Both registers share this layout.</doc>
     <field name="select" start="32" size="4" type="uint" grade="established"/>
@@ -53,8 +53,8 @@
     <field name="valid" start="63" size="1" type="uint" grade="established"/>
     <field name="type" start="30" size="1" type="uint" grade="established"/>
     <field name="overrun" start="29" size="1" type="uint" grade="established"/>
-    <field name="node" start="20" size="9" type="uint" grade="inferred" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
-    <field name="page" start="0" size="18" type="uint" grade="inferred" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
+    <field name="node" start="20" size="9" type="uint" grade="inferred" from="public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE_NODEID_MASK (0x1ff at shift 20)"/>
+    <field name="page" start="0" size="18" type="uint" grade="inferred" from="public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE_ADDR_MASK (0x3ffff)"/>
   </struct>
   <struct name="MD_MIG_THRESH_FORMAT" size="8" grade="established" from="public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks">
     <doc>Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting the valid bit (bit 63) and clears the bit to disarm it while a candidate is handled.</doc>
@@ -137,10 +137,9 @@
   <constant name="HUB_MD_MLAN_CTL_ACCESS_BYTES" value="0x8" grade="established"/>
   <constant name="HUB_MD_MLAN_CTL_RESET_DEFAULTS" value="0x18b100000" grade="inferred"/>
   <constant name="HUB_MD_MOQ_SIZE_RESET_DEFAULTS" value="0x3212" grade="inferred"/>
-  <constant name="HUB_MD_REFCNT_COUNT_MASK_PREMIUM" value="0x7ffff" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
-  <constant name="HUB_MD_REFCNT_COUNT_MASK_STANDARD" value="0x7ff" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
-  <constant name="HUB_MD_REFCNT_COUNT_SHIFT" value="0x5" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
-  <constant name="HUB_MD_REFCNT_NODE_STRIDE" value="0x8" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
+  <constant name="HUB_MD_REFCNT_COUNT_MASK_PREMIUM" value="0x7ffff" grade="established" from="public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT, MD_PPROT_REFCNT_WIDTH"/>
+  <constant name="HUB_MD_REFCNT_COUNT_MASK_STANDARD" value="0x7ff" grade="established" from="public Linux SN0 Hub memory/directory header: MD_SPROT_REFCNT_SHFT, MD_SPROT_REFCNT_WIDTH"/>
+  <constant name="HUB_MD_REFCNT_COUNT_SHIFT" value="0x5" grade="established" from="public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT and MD_SPROT_REFCNT_SHFT"/>
   <constant name="HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS" value="0x400" grade="inferred"/>
   <constant name="HUB_MD_SIZE_128MB" value="0x5" grade="established"/>
   <constant name="HUB_MD_SIZE_16MB" value="0x2" grade="established"/>
@@ -153,5 +152,4 @@
   <constant name="HUB_MD_SIZE_64MB" value="0x4" grade="established"/>
   <constant name="HUB_MD_SIZE_8MB" value="0x1" grade="established"/>
   <constant name="HUB_MD_SIZE_EMPTY" value="0x0" grade="established"/>
-  <constant name="HUB_MD_WINDOW_BASE" value="0x1a00000" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
 </genxml>

@@ -55,7 +55,8 @@ register stays unknown and the header's default constants are graded inferred.
   reset values are not stated.
 - **Migration thresholds.** Both thresholds have a valid bit at 63 and a twenty-bit value at 19:0.
   The candidate register has valid, type and overrun bits at 63, 30 and 29. Its initiator and
-  node-number masks overlap at 28:20, so those fields are not imported.
+  node-number masks overlap at 28:20, so the node field (28:20) and the page field (17:0, from the
+  address mask; the header's comment says the address starts at bit 14) are graded inferred.
 - **Performance counters.** The select register has an enable bit at 3 and a three-bit event select
   at 2:0. Each counter holds twenty bits at 19:0. These bit positions follow the order in which the
   header's structures list fields, so they are inferred.
