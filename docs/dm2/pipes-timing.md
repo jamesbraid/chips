@@ -1,6 +1,6 @@
 # DM2 pipes: when they run, the stream counter, field parity, output timing
 
-Status: **draft, not independently reviewed.** Part of the [DM2 scoping datasheet](../xio-dmediapro-dm2.md). The VBOB side of the same flow is in the [VBOB message note](vbob.md); the DMA programming is in the [DMA note](dma.md) and the status ring in the [interrupt note](interrupts-status.md). This page adds the library's start sequence, the stream counter's start value, the field-parity rules and the arithmetic behind the VBOB timing record. It does not repeat the DMA register reading.
+Status: **draft, not independently reviewed.** Part of the [DM2 scoping datasheet](../xio-dmediapro-dm2.md). The VBOB side of the same flow is in the [VBOB message note](vbob.md); the DMA programming is in the [DMA note](dma.md) and the status ring in the [interrupt note](interrupts-status.md). Where each completed buffer's UST and MSC come from, and what the confidence test expects of them, is in the [UST and MSC note](ust-msc.md). This page adds the library's start sequence, the stream counter's start value, the field-parity rules and the arithmetic behind the VBOB timing record. It does not repeat the DMA register reading.
 Grades: **E** established (read in disassembly or the object's own tables), **I** inferred, **U** unknown, each with what would settle it. Decompiler output was used for navigation only.
 
 ## Sources

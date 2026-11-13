@@ -142,6 +142,8 @@ code only works if bits 31:24 read as zero (**I**; not checked by the driver). T
 driver's own strings call it the device MSC ("pipe device UST/MSC", "Resyncing device MSC") and the descriptor field is named `msc`.
 The field is the same on both pipes' rings (E, one code path).
 
+**Correction.** The completion routine uses this extended word, multiplied by 12 and added to a host clock sample, as the UST of a completed buffer, and takes the MSC from the field counter at pipe + 0xaa0, so the "MSC" reading above is wrong; see the [UST and MSC note](ust-msc.md) section 2.
+
 **What the record does not carry.** The scoping datasheet section 4 says the interrupt reads a "device UST/MSC" back from the status
 record. Only the MSC half comes from the record. The timestamp stored at +0xac8 is the host's own clock sampled by the
 service routine at the field interrupt (E: call to the host time functions at 0x38338-0x38364, no ring load feeds it).
