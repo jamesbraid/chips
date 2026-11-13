@@ -313,8 +313,6 @@
   <constant name="ECC_BACKDOOR_EIGHTHS" value="0x5" grade="established"/>
   <constant name="INTR_CORRECTABLE_MEM_BIT" value="0x3d" grade="established"/>
   <constant name="INTR_UNCORRECTABLE_MEM_BIT" value="0x18" grade="established"/>
-  <constant name="MD_WINDOW_BASE_UNITS" value="0x1fc" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
-  <constant name="MD_WINDOW_BASE_UNIT_SHIFT" value="0x10" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/page-migration.md"/>
   <constant name="PAGE_COUNTER_OFFSET" value="0x8" grade="established"/>
   <constant name="PHYSICAL_BANKS_PER_DIMM" value="0x2" grade="established"/>
   <constant name="PROTECTION_ENTRY_OFFSET" value="0x408" grade="established"/>

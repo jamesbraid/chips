@@ -100,35 +100,13 @@ order of each pair's bits in one place only, so the pair order in the defs file 
 record follows the same rule. Its valid bits are explicit in the header: 63 uncorrectable, 62 double-bit
 protection, 61 correctable and 60 correctable protection, with the overrun bits 59 to 56 in the same order.
 
-**Memory check code.** The unit stores one check byte per doubleword and checks it on reads. The code is the
-boot firmware's memory diagnostic's own table, read from that shipped image. It is inferred to be the hardware
-code, because the diagnostic checks the hardware against it. Its 72 columns, in order from data bit 0 through
-data bit 63 and then the eight check bits, are:
-
-```text
-13 23 43 83 2f f1 0d 07 d0 70 4f f8 61 62 64 68
-1c 2c 4c 8c 15 25 45 85 19 29 49 89 1a 2a 4a 8a
-51 52 54 58 91 92 94 98 a1 a2 a4 a8 31 32 34 38
-16 26 46 86 1f f2 0b 0e b0 e0 8f f4 c1 c2 c4 c8
-01 02 04 08 10 20 40 80
-```
-
-Every column is distinct and of odd weight, so this is a single-error-correcting, double-error-detecting code. A
-single-bit error is named by its syndrome. A double-bit error has a nonzero syndrome that names no bit.
-
-**Directory check code.** The premium flavor's directory word carries seven check bits at 37:32 and 48. The
-standard flavor carries six check bits at 21:16. The diagnostic's columns are inferred to be the hardware's. For the
-premium flavor there is one column per word bit, in four rows of sixteen:
-
-```text
-1f 2f 37 3b 3d 3e 07 0b 0d 0e 13 15 16 19 1a 1c
-7f 4f 57 5b 5d 5e 67 6b 6d 6e 73 75 76 79 7a 7c
-01 02 04 08 10 20 23 25 26 29 2a 2c 31 32 34 38
-40 43 45 46 49 4a 4c 51 52 54 58 61 62 64 68 70
-```
-
-The standard flavor's 32 columns are two rows: the premium table's first row, then its third row. The columns
-exclusive-or to zero, so the all-ones word is a codeword.
+**Memory and directory check codes (unknown).** The unit stores one check byte per doubleword and checks it on reads, and the
+directory word carries check bits (premium flavor: seven bits at 37:32 and 48; standard flavor: six bits at 21:16). The
+column tables for both codes that an earlier version of this page listed were said to be the boot firmware's memory
+diagnostic's own tables. They could not be reproduced: neither table, as bytes, halfwords or words, is in any of the shipped
+firmware images or IRIX objects held for this check, so the lists are removed rather than left as unverified facts. Route:
+disassemble the memory diagnostic (the table may be built by code rather than stored) or find a published check-matrix
+page for the Bedrock memory and directory unit.
 
 **Checking on a read.** The header gives the error records. The behaviour that makes them fire is inferred from the
 diagnostics:

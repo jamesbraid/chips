@@ -35,8 +35,6 @@ INTR_CORRECTABLE_MEM_BIT = { value = 61, grade = "established", doc = "Level-1 i
 INTR_UNCORRECTABLE_MEM_BIT = { value = 24, grade = "established", doc = "Error-interrupt pending bit that the processor-interface header assigns to memory and directory errors (the header comment says it must be cleared in the MD unit). The line that raises it on Bedrock is inferred." }
 PTR_NODE_SHIFT = { value = 3, grade = "established", doc = "A directory pointer carries the node number above three device bits." }
 PTR_DEVICE_MASK = { value = 7, grade = "established", doc = "Mask of the three device bits in a directory pointer. Device bit 1 marks an I/O owner; a processor's slice is device bit 0 plus device bit 2 shifted down." }
-MD_WINDOW_BASE_UNITS = { value = 0x1fc, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Physical base of the memory and directory block for node 0, in units of 1 << MD_WINDOW_BASE_UNIT_SHIFT bytes; split because the full value is also a boot-region address the publish check refuses." }
-MD_WINDOW_BASE_UNIT_SHIFT = { value = 0x10, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/page-migration.md", doc = "Shift for MD_WINDOW_BASE_UNITS." }
 
 [registers.current_cell]
 offset = 0x780000

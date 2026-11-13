@@ -742,8 +742,6 @@
 #define BEDROCK_MD_ECC_BACKDOOR_EIGHTHS              0x5u /* established */
 #define BEDROCK_MD_INTR_CORRECTABLE_MEM_BIT          0x3du /* established */
 #define BEDROCK_MD_INTR_UNCORRECTABLE_MEM_BIT        0x18u /* established */
-#define BEDROCK_MD_MD_WINDOW_BASE_UNITS              0x1fcu /* established */
-#define BEDROCK_MD_MD_WINDOW_BASE_UNIT_SHIFT         0x10u /* established */
 #define BEDROCK_MD_PAGE_COUNTER_OFFSET               0x8u /* established */
 #define BEDROCK_MD_PHYSICAL_BANKS_PER_DIMM           0x2u /* established */
 #define BEDROCK_MD_PROTECTION_ENTRY_OFFSET           0x408u /* established */

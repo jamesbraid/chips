@@ -2289,24 +2289,6 @@
   {
    "unit": "bedrock_md",
    "kind": "constant",
-   "name": "MD_WINDOW_BASE_UNITS",
-   "value": 508,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
-  },
-  {
-   "unit": "bedrock_md",
-   "kind": "constant",
-   "name": "MD_WINDOW_BASE_UNIT_SHIFT",
-   "value": 16,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/page-migration.md"
-  },
-  {
-   "unit": "bedrock_md",
-   "kind": "constant",
    "name": "PAGE_COUNTER_OFFSET",
    "value": 8,
    "count": 1,
