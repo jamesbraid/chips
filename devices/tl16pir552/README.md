@@ -13,12 +13,11 @@ sources do not settle it. No fact here was measured on a board.
 ## Sources
 
 - **Texas Instruments, *TL16PIR552 Dual UART and IEEE 1284 Parallel Port*, SLLS222A**, December 1995,
-  revised August 1996. Page references are the ones the import used (parallel-port tables on pp. 43 to
-  45, FIFO and reset text on pp. 1, 5, 40 to 41). The page numbers and the register bit positions were
-  carried from a prior transcription and were not re-read against the PDF for this import; the PDF was
-  not reachable at the time.
+  revised August 1996. Page numbers are the datasheet's printed pages, which equal the PDF pages: register tables
+  on pp. 43 to 45, mode descriptions and the 16-byte FIFO on pp. 40 to 41, the reset pin on p. 5.
+  Register offsets, bit positions and mode values were checked against these pages.
 - **SGI, *Fuel Visual Workstation Hardware User's Guide*, 007-4480-001.** Describes a 25-pin ECP and EPP
-  capable parallel connector on the IP34 board. It does not name the controller.
+  capable parallel connector on the IP34 board. It does not name the controller. The parallel port is described on printed p. 125 (IEEE 1284-A, EPP and ECP modes) and the 25-pin ECP port on p. 28; the L1 diagnostic port label is on p. 6 and the USB-B maintenance note on p. 130. Re-read for this verification.
 - **Public board photographs.** A revision B Fuel system board (`030-1707-005`) and an Origin 200 IP29
   system board. Both show the TL16PIR552PH marking. The Origin 200 board revision is not established.
 
@@ -40,15 +39,15 @@ the unit. These facts describe the TI part alone.
   address ranges.
 - Reset: the active-high RESET input clears the UART and parallel-port internal registers. The reset
   value of each register is not stated per register and is **unknown** here.
-- The FIFO holds 16 bytes. Reads return bytes in insertion order. A write while full overruns the FIFO
-  rather than stalling, and a read while empty does not stall. The TI datasheet does not define which
-  byte remains after a full write.
+- The FIFO holds 16 bytes (p. 40). In FIFO test mode the FIFO does not stop accepting or sending data
+  when full or empty, and its read and write address counters wrap (p. 41); test-mode reads return bytes
+  in the order written (p. 45). The datasheet states no such overrun behaviour for the other modes, and
+  does not define which byte remains after a write to a full FIFO.
 - CNFGA reads `0x1f`: implementation ID `0001` in the top nibble, low nibble reserved and read as ones.
 - CNFGB reports compression unsupported, samples the IRQ line, reports IRQ7 and DMA channel 3. The IRQ
   sample depends on the board, so its reset value is **unknown**.
-- The DCR bit positions for the four control lines are an **inferred** reading of the datasheet's list
-  in bit order 3 to 0. The DSR bit positions are not stated in the sources consulted, so DSR is listed
-  as a whole register.
+- The DCR and DSR bit positions are established from Tables 17 and 16 (pp. 44 and 43). DCR INIT is
+  active low.
 
 ## Interrupts and DMA
 

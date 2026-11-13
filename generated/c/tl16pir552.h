@@ -101,10 +101,31 @@
 #define TL16PIR552_DATA_OFFSET                       0x0u /* established */
 
 /*
- * Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. The bit positions are not stated in the sources consulted and are not listed.
+ * Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. Bit positions are in the fields below.
  */
 /* dsr: r8, space ppcs, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
 #define TL16PIR552_DSR_OFFSET                        0x1u /* established */
+#define TL16PIR552_DSR_BUSY_SHIFT                    7 /* established */
+#define TL16PIR552_DSR_BUSY_MASK                     0x1u
+#define TL16PIR552_DSR_BUSY_INPLACE                  (TL16PIR552_DSR_BUSY_MASK << TL16PIR552_DSR_BUSY_SHIFT)
+#define TL16PIR552_DSR_ACK_SHIFT                     6 /* established */
+#define TL16PIR552_DSR_ACK_MASK                      0x1u
+#define TL16PIR552_DSR_ACK_INPLACE                   (TL16PIR552_DSR_ACK_MASK << TL16PIR552_DSR_ACK_SHIFT)
+#define TL16PIR552_DSR_PERROR_SHIFT                  5 /* established */
+#define TL16PIR552_DSR_PERROR_MASK                   0x1u
+#define TL16PIR552_DSR_PERROR_INPLACE                (TL16PIR552_DSR_PERROR_MASK << TL16PIR552_DSR_PERROR_SHIFT)
+#define TL16PIR552_DSR_SELECT_IN_SHIFT               4 /* established */
+#define TL16PIR552_DSR_SELECT_IN_MASK                0x1u
+#define TL16PIR552_DSR_SELECT_IN_INPLACE             (TL16PIR552_DSR_SELECT_IN_MASK << TL16PIR552_DSR_SELECT_IN_SHIFT)
+#define TL16PIR552_DSR_FAULT_SHIFT                   3 /* established */
+#define TL16PIR552_DSR_FAULT_MASK                    0x1u
+#define TL16PIR552_DSR_FAULT_INPLACE                 (TL16PIR552_DSR_FAULT_MASK << TL16PIR552_DSR_FAULT_SHIFT)
+#define TL16PIR552_DSR_PRINT_INTR_SHIFT              2 /* established */
+#define TL16PIR552_DSR_PRINT_INTR_MASK               0x1u
+#define TL16PIR552_DSR_PRINT_INTR_INPLACE            (TL16PIR552_DSR_PRINT_INTR_MASK << TL16PIR552_DSR_PRINT_INTR_SHIFT)
+#define TL16PIR552_DSR_TIMEOUT_SHIFT                 0 /* established */
+#define TL16PIR552_DSR_TIMEOUT_MASK                  0x1u
+#define TL16PIR552_DSR_TIMEOUT_INPLACE               (TL16PIR552_DSR_TIMEOUT_MASK << TL16PIR552_DSR_TIMEOUT_SHIFT)
 
 /*
  * Parallel control register.
@@ -117,16 +138,16 @@
 #define TL16PIR552_DCR_IRQ_ON_ACK_SHIFT              4 /* established */
 #define TL16PIR552_DCR_IRQ_ON_ACK_MASK               0x1u
 #define TL16PIR552_DCR_IRQ_ON_ACK_INPLACE            (TL16PIR552_DCR_IRQ_ON_ACK_MASK << TL16PIR552_DCR_IRQ_ON_ACK_SHIFT)
-#define TL16PIR552_DCR_SELECT_CTL_SHIFT              3 /* inferred */
+#define TL16PIR552_DCR_SELECT_CTL_SHIFT              3 /* established */
 #define TL16PIR552_DCR_SELECT_CTL_MASK               0x1u
 #define TL16PIR552_DCR_SELECT_CTL_INPLACE            (TL16PIR552_DCR_SELECT_CTL_MASK << TL16PIR552_DCR_SELECT_CTL_SHIFT)
-#define TL16PIR552_DCR_INIT_CTL_SHIFT                2 /* inferred */
+#define TL16PIR552_DCR_INIT_CTL_SHIFT                2 /* established */
 #define TL16PIR552_DCR_INIT_CTL_MASK                 0x1u
 #define TL16PIR552_DCR_INIT_CTL_INPLACE              (TL16PIR552_DCR_INIT_CTL_MASK << TL16PIR552_DCR_INIT_CTL_SHIFT)
-#define TL16PIR552_DCR_AUTOFD_CTL_SHIFT              1 /* inferred */
+#define TL16PIR552_DCR_AUTOFD_CTL_SHIFT              1 /* established */
 #define TL16PIR552_DCR_AUTOFD_CTL_MASK               0x1u
 #define TL16PIR552_DCR_AUTOFD_CTL_INPLACE            (TL16PIR552_DCR_AUTOFD_CTL_MASK << TL16PIR552_DCR_AUTOFD_CTL_SHIFT)
-#define TL16PIR552_DCR_STROBE_CTL_SHIFT              0 /* inferred */
+#define TL16PIR552_DCR_STROBE_CTL_SHIFT              0 /* established */
 #define TL16PIR552_DCR_STROBE_CTL_MASK               0x1u
 #define TL16PIR552_DCR_STROBE_CTL_INPLACE            (TL16PIR552_DCR_STROBE_CTL_MASK << TL16PIR552_DCR_STROBE_CTL_SHIFT)
 

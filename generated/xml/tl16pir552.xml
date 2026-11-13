@@ -59,16 +59,23 @@
     <doc>Parallel data port in standard and bidirectional modes. A write drives the data lines and a read returns their value. In the other modes offset 0 of this chip select is a different register; see the ECP-mode and FIFO spaces.</doc>
   </struct>
   <struct name="DSR" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x1" access="r" space="ppcs" reset="unknown">
-    <doc>Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. The bit positions are not stated in the sources consulted and are not listed.</doc>
+    <doc>Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. Bit positions are in the fields below.</doc>
+    <field name="busy" start="7" size="1" type="uint" grade="established"/>
+    <field name="ack" start="6" size="1" type="uint" grade="established"/>
+    <field name="perror" start="5" size="1" type="uint" grade="established"/>
+    <field name="select_in" start="4" size="1" type="uint" grade="established"/>
+    <field name="fault" start="3" size="1" type="uint" grade="established"/>
+    <field name="print_intr" start="2" size="1" type="uint" grade="established"/>
+    <field name="timeout" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="DCR" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x2" access="rw" space="ppcs" reset="unknown">
     <doc>Parallel control register.</doc>
     <field name="direction" start="5" size="1" type="uint" grade="established"/>
     <field name="irq_on_ack" start="4" size="1" type="uint" grade="established"/>
-    <field name="select_ctl" start="3" size="1" type="uint" grade="inferred"/>
-    <field name="init_ctl" start="2" size="1" type="uint" grade="inferred"/>
-    <field name="autofd_ctl" start="1" size="1" type="uint" grade="inferred"/>
-    <field name="strobe_ctl" start="0" size="1" type="uint" grade="inferred"/>
+    <field name="select_ctl" start="3" size="1" type="uint" grade="established"/>
+    <field name="init_ctl" start="2" size="1" type="uint" grade="established"/>
+    <field name="autofd_ctl" start="1" size="1" type="uint" grade="established"/>
+    <field name="strobe_ctl" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="EPP_ADDR" size="1" grade="established" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)" register="yes" offset="0x3" access="rw" space="ppcs" reset="unknown">
     <doc>EPP address. An access generates the EPP address strobe automatically.</doc>

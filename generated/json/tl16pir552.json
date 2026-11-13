@@ -305,6 +305,69 @@
   },
   {
    "unit": "tl16pir552",
+   "kind": "field",
+   "name": "dsr.busy",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+  },
+  {
+   "unit": "tl16pir552",
+   "kind": "field",
+   "name": "dsr.ack",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+  },
+  {
+   "unit": "tl16pir552",
+   "kind": "field",
+   "name": "dsr.perror",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+  },
+  {
+   "unit": "tl16pir552",
+   "kind": "field",
+   "name": "dsr.select_in",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+  },
+  {
+   "unit": "tl16pir552",
+   "kind": "field",
+   "name": "dsr.fault",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+  },
+  {
+   "unit": "tl16pir552",
+   "kind": "field",
+   "name": "dsr.print_intr",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+  },
+  {
+   "unit": "tl16pir552",
+   "kind": "field",
+   "name": "dsr.timeout",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+  },
+  {
+   "unit": "tl16pir552",
    "kind": "register",
    "name": "dcr",
    "offset": 2,
@@ -341,7 +404,7 @@
    "name": "dcr.select_ctl",
    "hi": 3,
    "lo": 3,
-   "grade": "inferred",
+   "grade": "established",
    "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
   },
   {
@@ -350,7 +413,7 @@
    "name": "dcr.init_ctl",
    "hi": 2,
    "lo": 2,
-   "grade": "inferred",
+   "grade": "established",
    "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
   },
   {
@@ -359,7 +422,7 @@
    "name": "dcr.autofd_ctl",
    "hi": 1,
    "lo": 1,
-   "grade": "inferred",
+   "grade": "established",
    "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
   },
   {
@@ -368,7 +431,7 @@
    "name": "dcr.strobe_ctl",
    "hi": 0,
    "lo": 0,
-   "grade": "inferred",
+   "grade": "established",
    "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
   },
   {

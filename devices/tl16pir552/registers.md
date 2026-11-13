@@ -89,7 +89,17 @@ Parallel data port in standard and bidirectional modes. A write drives the data 
 
 ### Register `dsr`
 
-Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. The bit positions are not stated in the sources consulted and are not listed.
+Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. Bit positions are in the fields below.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 7 | `busy` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Inverse of the BUSY input. |
+| 6 | `ack` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | The ACK input. |
+| 5 | `perror` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | The PERROR input. |
+| 4 | `select_in` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | The SELECT input. |
+| 3 | `fault` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | The FAULT input. |
+| 2 | `print_intr` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Print interrupt. Cleared by the rising edge of ACK, set by a read of this register. |
+| 0 | `timeout` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Set when the 10 microsecond EPP timeout occurs, if enabled. Cleared by any write to this register. |
 
 ### Register `dcr`
 
@@ -99,10 +109,10 @@ Parallel control register.
 |---|---|---|---|---|---|
 | 5 | `direction` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Direction. Puts the data lines in high impedance (reverse) when set. It has no effect in standard mode or in the parallel FIFO mode. |
 | 4 | `irq_on_ack` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Enables an interrupt on a rising ACK. |
-| 3 | `select_ctl` | inferred |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the SELECT control line. |
-| 2 | `init_ctl` | inferred |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the INIT control line. |
-| 1 | `autofd_ctl` | inferred |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the AUTOFD control line. |
-| 0 | `strobe_ctl` | inferred |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the STROBE control line. |
+| 3 | `select_ctl` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the SELECT control line. |
+| 2 | `init_ctl` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the INIT control line. Active low: 0 drives INIT active, 1 inactive. |
+| 1 | `autofd_ctl` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the AUTOFD control line. |
+| 0 | `strobe_ctl` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the STROBE control line. |
 
 ### Register `epp_addr`
 

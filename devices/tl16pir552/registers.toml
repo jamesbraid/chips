@@ -70,7 +70,16 @@ width = 8
 reset = "unknown"
 grade = "established"
 from = "TI TL16PIR552 datasheet, p. 43"
-doc = "Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. The bit positions are not stated in the sources consulted and are not listed."
+doc = "Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. Bit positions are in the fields below."
+
+[registers.dsr.fields]
+busy = { bits = [7, 7], grade = "established", from = "TI TL16PIR552 datasheet, Table 16, p. 43", doc = "Inverse of the BUSY input." }
+ack = { bits = [6, 6], grade = "established", from = "TI TL16PIR552 datasheet, Table 16, p. 43", doc = "The ACK input." }
+perror = { bits = [5, 5], grade = "established", from = "TI TL16PIR552 datasheet, Table 16, p. 43", doc = "The PERROR input." }
+select_in = { bits = [4, 4], grade = "established", from = "TI TL16PIR552 datasheet, Table 16, p. 43", doc = "The SELECT input." }
+fault = { bits = [3, 3], grade = "established", from = "TI TL16PIR552 datasheet, Table 16, p. 43", doc = "The FAULT input." }
+print_intr = { bits = [2, 2], grade = "established", from = "TI TL16PIR552 datasheet, Table 16, p. 43", doc = "Print interrupt. Cleared by the rising edge of ACK, set by a read of this register." }
+timeout = { bits = [0, 0], grade = "established", from = "TI TL16PIR552 datasheet, Table 16, p. 43", doc = "Set when the 10 microsecond EPP timeout occurs, if enabled. Cleared by any write to this register." }
 
 [registers.dcr]
 offset = 2
@@ -85,10 +94,10 @@ doc = "Parallel control register."
 [registers.dcr.fields]
 direction = { bits = [5, 5], grade = "established", from = "TI TL16PIR552 datasheet, p. 44", doc = "Direction. Puts the data lines in high impedance (reverse) when set. It has no effect in standard mode or in the parallel FIFO mode." }
 irq_on_ack = { bits = [4, 4], grade = "established", from = "TI TL16PIR552 datasheet, p. 44", doc = "Enables an interrupt on a rising ACK." }
-select_ctl = { bits = [3, 3], grade = "inferred", from = "TI TL16PIR552 datasheet, p. 44; bit order read from the datasheet's list of the four controls, not confirmed against the PDF", doc = "Drives the SELECT control line." }
-init_ctl = { bits = [2, 2], grade = "inferred", from = "TI TL16PIR552 datasheet, p. 44; bit order read from the datasheet's list of the four controls, not confirmed against the PDF", doc = "Drives the INIT control line." }
-autofd_ctl = { bits = [1, 1], grade = "inferred", from = "TI TL16PIR552 datasheet, p. 44; bit order read from the datasheet's list of the four controls, not confirmed against the PDF", doc = "Drives the AUTOFD control line." }
-strobe_ctl = { bits = [0, 0], grade = "inferred", from = "TI TL16PIR552 datasheet, p. 44; bit order read from the datasheet's list of the four controls, not confirmed against the PDF", doc = "Drives the STROBE control line." }
+select_ctl = { bits = [3, 3], grade = "established", from = "TI TL16PIR552 datasheet, Table 17, p. 44", doc = "Drives the SELECT control line." }
+init_ctl = { bits = [2, 2], grade = "established", from = "TI TL16PIR552 datasheet, Table 17, p. 44", doc = "Drives the INIT control line. Active low: 0 drives INIT active, 1 inactive." }
+autofd_ctl = { bits = [1, 1], grade = "established", from = "TI TL16PIR552 datasheet, Table 17, p. 44", doc = "Drives the AUTOFD control line." }
+strobe_ctl = { bits = [0, 0], grade = "established", from = "TI TL16PIR552 datasheet, Table 17, p. 44", doc = "Drives the STROBE control line." }
 
 [registers.epp_addr]
 offset = 3
@@ -118,7 +127,7 @@ access = "rw"
 width = 8
 reset = "unknown"
 grade = "established"
-from = "TI TL16PIR552 datasheet, pp. 43-44"
+from = "TI TL16PIR552 datasheet, Table 15 p. 43 and ECPDFIFO text p. 44"
 doc = "ECP data FIFO. A forward write enqueues data. A reverse read receives peripheral data through the ECP handshake."
 
 [registers.pp_fifo]
@@ -138,7 +147,7 @@ access = "rw"
 width = 8
 reset = "unknown"
 grade = "established"
-from = "TI TL16PIR552 datasheet, p. 45"
+from = "TI TL16PIR552 datasheet, TFIFO text p. 45; test-mode description p. 41"
 doc = "Test FIFO with no parallel-port protocol handshake. FIFO state stays reflected by the FULL and EMPTY bits. Overflow and underrun do not stall. Read and write counters wrap in test mode."
 
 [registers.cnfga]
