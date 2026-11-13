@@ -28,7 +28,7 @@
    "value": 8976,
    "count": 1,
    "grade": "inferred",
-   "from": "Public owner reports of O2 PRId and FCR0 words (Usenet)"
+   "from": "Public hinv capture of an O2 (R5000 180 MHz): CPU Chip Revision 2.1, FPU Revision 1.0"
   },
   {
    "unit": "r5000_identity",
@@ -73,7 +73,7 @@
    "value": 8993,
    "count": 1,
    "grade": "inferred",
-   "from": "Public owner reports of O2 PRId and FCR0 words (Usenet)"
+   "from": "Public hinv capture of an O2 (R5000 180 MHz): CPU Chip Revision 2.1, FPU Revision 1.0"
   },
   {
    "unit": "r5000_identity",

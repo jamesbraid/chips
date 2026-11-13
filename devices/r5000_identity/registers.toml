@@ -6,7 +6,7 @@ from = "NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0U
 public_from = [
   "NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001",
   "MIPS Technologies, MIPS R5000 Microprocessor Technical Backgrounder (undated overview)",
-  "Public owner reports of O2 PRId and FCR0 words (Usenet)",
+  "Public hinv capture of an O2 (R5000 180 MHz): CPU Chip Revision 2.1, FPU Revision 1.0",
 ]
 
 [constants]
@@ -14,8 +14,8 @@ R5K_PRID_IMP_SHIFT = { value = 8, grade = "established", from = "NEC VR5000/VR50
 R5K_PRID_IMP_MASK = { value = 0xff00, grade = "established", from = "NEC VR5000/VR5000A user's manual, U11761EJ6V0UM00, sixth edition, CP0 PRId description", doc = "Mask for the implementation byte of PRId, bits 15:8." }
 R5K_PRID_REV_MASK = { value = 0x00ff, grade = "established", from = "NEC VR5000/VR5000A user's manual, U11761EJ6V0UM00, sixth edition, CP0 PRId description", doc = "Mask for the revision byte of PRId, bits 7:0." }
 R5K_IMP_VR5000 = { value = 0x23, grade = "established", from = "NEC VR5000/VR5000A user's manual, U11761EJ6V0UM00, sixth edition, CP0 PRId description", doc = "Implementation byte the manual gives for this processor line, bits 15:8 of PRId. It names the line, not a revision." }
-R5K_PRID_OBSERVED = { value = 0x2321, grade = "inferred", from = "Public owner reports of O2 PRId and FCR0 words (Usenet)", doc = "Complete PRId word reported for O2 systems by their owners. It is graded inferred because the packet records it from owner reports, not from a manual or a documented capture, and the message identifiers are not recorded here. Bits 15:8 agree with the manual's implementation byte. This is one observed tuple, not a promise for every part." }
-R5K_FCR0_OBSERVED = { value = 0x2310, grade = "inferred", from = "Public owner reports of O2 PRId and FCR0 words (Usenet)", doc = "Complete FCR0 word reported for O2 systems by their owners. The packet calls FCR0 the read-only floating-point identity register. Graded inferred for the same reason as the PRId word. No field layout for FCR0 is taken from this source." }
+R5K_PRID_OBSERVED = { value = 0x2321, grade = "inferred", from = "Public hinv capture of an O2 (R5000 180 MHz): CPU Chip Revision 2.1, FPU Revision 1.0", doc = "Complete PRId word for the O2 capture: the capture prints only the revision byte, and the implementation byte is the manual's, so the word is composed, not read. It is graded inferred. Bits 15:8 are the manual's implementation byte. This is one capture, not a promise for every part." }
+R5K_FCR0_OBSERVED = { value = 0x2310, grade = "inferred", from = "Public hinv capture of an O2 (R5000 180 MHz): CPU Chip Revision 2.1, FPU Revision 1.0", doc = "Complete FCR0 word for the O2 capture, composed the same way as the PRId word from the printed FPU revision and the manual's implementation byte. FCR0 is the read-only floating-point identity register. No field layout for FCR0 is taken from this source." }
 
 R5K_RESET_VECTOR = { value = 0xffffffffbfc00000, grade = "established", from = "NEC VR5000/VR5000A user's manual, U11761EJ6V0UM00, sixth edition, reset description (pages 161-163)", doc = "Cold reset address. It is unmapped and uncached. Soft reset and NMI also enter at this vector." }
 R5K_COLD_WIRED = { value = 0, grade = "established", from = "NEC VR5000/VR5000A user's manual, U11761EJ6V0UM00, sixth edition, reset description (pages 161-163)", doc = "Wired is initialised to zero by a cold reset." }

@@ -2,29 +2,29 @@
 
 This page covers the MIPS R5000 processor line as the NEC VR5000 and VR5000A user's manual and the MIPS overview describe it: the identity words, the reset entries, the Config, Status, PageMask, LLAddr and FCR31 fields, the caches and their CACHE operations, and what is unknown. The constants are in [devices/r5000_identity/registers.toml](../r5000_identity/registers.toml) and [devices/r5000_cp0/registers.toml](../r5000_cp0/registers.toml), generated to [devices/r5000_identity/registers.md](../r5000_identity/registers.md) and [devices/r5000_cp0/registers.md](../r5000_cp0/registers.md).
 
-This is the processor's interface, not an SGI board's. Nothing here was read from silicon or from a running machine. The observed identity words come from owner reports of O2 systems and are graded inferred.
+This is the processor's interface, not an SGI board's. Nothing here was read from silicon or from a running machine. The observed identity words come from one public `hinv` capture of an O2 and are graded inferred.
 
 ## Sources and grades
 
 - NEC, *VR5000/VR5000A 64-/32-bit Microprocessor User's Manual*, U11761EJ6V0UM00, sixth edition, April 2001. It covers the µPD30500 and µPD30500A. Page numbers below are from that edition. Its facts are established for those parts. Whether a given SGI assembly carries one of them is not established. A legible part marking or a primary fitment record would settle that.
 - MIPS Technologies, *MIPS R5000 Microprocessor Technical Backgrounder*, an undated 13-page overview. Its pages 1 to 9 agree with the manual on the core, cache, TLB, ISA and clock interface facts on this page.
 - *MIPS IV Instruction Set*, revision 3.2, SGI 007-2597-001, September 1995. Only its identity was checked. Per-instruction rounding and exception cases are not taken from it.
-- Public owner reports of O2 PRId and FCR0 words (Usenet). Graded inferred. The message identifiers are not recorded here.
+- One public `hinv` capture of an O2 (R5000 180 MHz): `CPU: MIPS R5000 Processor Chip Revision: 2.1` and `FPU: ... Revision: 1.0`. It prints revision numbers only, so the full PRId and FCR0 words are composed with the manual's implementation byte and graded inferred. The earlier text cited Usenet owner reports with no message identifiers; those could not be found and are not relied on.
 
 Facts in this page are the manual's or the overview's unless marked otherwise. An inferred grade means a reported value, not a manual statement.
 
 ## Identity
 
 - PRId is CP0 register 15. Its implementation byte, bits 15:8, is `0x23` in the manual. Established. The revision byte is bits 7:0, a major nibble and a minor nibble. Established. The manual reserves bits 31:16. Established.
-- O2 owner reports give PRId `0x00002321` and FCR0 `0x00002310`. Inferred. FCR0 is the read-only floating-point identity register. The reports do not give its field layout, so none is taken from them. These are one observed tuple, not a promise for every part.
+- The O2 `hinv` capture gives chip revision 2.1 and FPU revision 1.0, which with the implementation byte `0x23` compose to PRId `0x00002321` and FCR0 `0x00002310`. Inferred. FCR0 is the read-only floating-point identity register. The capture does not give its field layout, so none is taken from it. This is one capture, not a promise for every part.
 - The manual's revision numbers do not identify die changes. Unknown: the silicon errata publication the manual's history refers to has not been located, so the observed revision's errata status is open.
 
 ## Address space, ISA and clocks
 
-- The ISA is MIPS IV, with MIPS I to III compatibility and 64-bit integer registers. Established (overview).
+- The ISA is MIPS IV, with MIPS I to III compatibility (manual section 6.2.2, printed page 104) and 64-bit integer registers. Established (manual).
 - The physical address space is 36 bits. Extended user addressing covers 40 bits. With extended addressing off, the 32-bit segment and privilege view applies. Privileged and unmapped segment encodings follow the manual's chapter 6, not a blanket mask. Established (manual).
-- The overview describes a 200 MHz core and a system interface up to 100 MHz. Established. That is the processor's interface limit, not an O2 bus clock.
-- The overview says multiprocessor hooks exist, but the first production version lacks that support. Established (overview).
+- The manual's feature list gives a 200 MHz core for the µPD30500-200 (250 MHz for the 30500A-250) and an external bus up to 100 MHz (printed page 2). Established (manual). That is the processor's interface limit, not an O2 bus clock.
+- The overview says multiprocessor hooks exist, but the first production version lacks that support. Overview only; the overview could not be located in the Library for this verification, so this is unverified.
 - The manual's EC field gives processor-to-system divisors of codes 0 to 6 as 2 to 8. The overview describes multipliers of 2, 3 and 4. The two sources do not agree on the later ratios, so only the manual's table is recorded as its own claim. Unknown for ratios above 4 until a source settles them.
 
 ## Joint TLB
@@ -83,7 +83,7 @@ The manual's Config fields, with bits and meaning. Each field is in [devices/r50
 ## Status
 
 - Implemented fields, with their bits: XX 31, CU2:0 30:28, FR 26, RE 25, BEV 22, SR 20, CE 17, DE 16, IM7:0 15:8, KX 7, SX 6, UX 5, KSU 4:3, ERL 2, EXL 1, IE 0. Their union is `0xf653ffff`. Bits 27, 24:23, 21 and 19:18 are reserved. Established (manual pages 143–146, Tables 7-3 and 7-4).
-- **XX** is the user-mode MIPS IV enable. With XX clear in user mode, every MIPS IV operation is disabled. That includes the floating-point extensions in both COP1 and COP1X encodings. Admission is refused before operand execution, address translation or any operand memory access. Established (manual page 144). XX does not disable MIPS IV in kernel mode. Pre-MIPS-IV floating-point operations are not disabled by XX.
+- **XX** is the user-mode MIPS IV enable (Table 6-1, printed page 103; section 6.2.3, page 104; Table 7-3, page 144). Page 104 adds that in kernel mode all instructions are always valid, so XX does not disable MIPS IV there. Established. The earlier text said that with XX clear every MIPS IV operation is refused, in both COP1 and COP1X encodings, before operand execution, translation or any operand access. The manual pages read do not say any of that, so it is dropped. Which instructions count as MIPS IV, and the order of that refusal against translation, are unknown.
 - Unknown: the exception type the manual raises for a disabled floating-point operation. The manual establishes that the operation is refused, but does not settle which exception it raises.
 - IM1 and IM0 are the software interrupts. IM7 to IM2 are the six external inputs. Established.
 
@@ -112,7 +112,7 @@ LLAddr is a 32-bit read/write diagnostic register. It holds physical address bit
 - Primary instruction and data caches: 32 KiB each, two-way, 32-byte lines, 512 sets each. Established (manual and overview).
 - Primary Index operations take the set from virtual address bits 13:5 and the way from bit 14. Established (manual pages 72–74).
 - The secondary cache is direct-mapped, with 32-byte lines and the sizes in the Config table above. Established (manual).
-- The overview says the secondary cache can run write-through or write-back. Established (overview, page 7).
+- The secondary cache can run write-through or write-back. The manual has a secondary cache write-through protocol (section 16.5, printed page 285); the overview's page 7 statement could not be re-read.
 - The CACHE table includes primary index invalidate and writeback-invalidate, index load and store of the tag, create-dirty-exclusive, hit invalidate and writeback, instruction fill, secondary flash invalidate, secondary tag operations, and a 128-line page invalidate. Established (manual CACHE table; the packet did not record its page).
 - The 128-line page invalidate covers 4 KiB, 128 lines of 32 bytes, and needs alignment. Established.
 - Secondary Index Store Tag takes its tag from the effective address. The primary tag operations do not. Established (manual CACHE table).
