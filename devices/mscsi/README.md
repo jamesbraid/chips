@@ -67,6 +67,8 @@ read as that byte here. What each controller's revision byte is: **unknown**.
 
 ## Sources
 
+Verification note: the parts catalog page and the Origin 2000 listing in Nekochan thread 16727716 were re-read in their retained copies and match. The Higher Intellect wiki page, thread 16731033 and the 2001 Usenet inventory were not reachable when this page was checked, so the Origin 200 rows, the revision list and the differential-bus count that rest on them are unverified.
+
 - SGI HMM-408-B, *Origin2000/Onyx2 Illustrated Parts Catalog*, printed and PDF page 33, "XIO Options".
 - Real listings, each a public `hinv` output:
   - the Higher Intellect wiki's Origin 200 page, a one-module GIGAchannel `hinv -vm`;
