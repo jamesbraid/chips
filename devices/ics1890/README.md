@@ -1,8 +1,11 @@
 # ICS1890 Ethernet PHY (Octane base I/O)
 
 The ICS1890 is Integrated Circuit Systems' 10Base-T/100Base-TX PHYceiver, the
-Ethernet transceiver on the Octane and Octane2 base I/O board. The IOC3 Ethernet
-controller reaches it through the MII management port. The register contract is
+Ethernet transceiver on the Octane and Octane2 base I/O board (inferred: neither
+the datasheet nor a public driver names that board; the public Linux `meth.c` driver
+names this part, identifier `0x0015F42`, for the O2's MACE Ethernet, which agrees with
+the identity register below). The IOC3 Ethernet controller reaches it through the MII
+management port. The register contract is
 in `devices/ics1890/registers.toml` and its reference page is `devices/ics1890/registers.md`.
 
 ## Source
@@ -36,14 +39,15 @@ The address comes from the LED pin connections (register 16 bits 10 to 6,
 datasheet p. 29), so a board sets it in hardware and software can only read it.
 The datasheet does not say which address a given board uses.
 
-That the Octane's PHY sits at MII address 1, with identity `0x15f42` (model 2,
-revision 3), is **observed** in three public Linux boot captures from Octane
-systems. This import did not re-read those captures, so their message references
-are not reproduced here. The chips grades have no separate observed label, so the
-fact stays in this prose rather than in the defs unit. Transfer of the address to
-the Octane2 is **inferred**: one capture reports the frontplane identifier, and a
-newer capture is on HEART F with Bridge D. No capture of the PHY package or its
-strap settings on an Octane2 is on record.
+Which MII address the Octane's PHY answers at, and whether it reads back identity
+`0x15f42` (model 2, revision 3), is **unknown** here. An earlier version of this page
+recorded it as observed in three public Linux boot captures, but those captures are
+not held in this repository and could not be re-read, so the claim rested only on a
+note from another project. The route that settles it is a public Octane boot log
+that prints the PHY address and identifier, kept with its source. The datasheet
+values above show what the part reports by default, which is consistent with
+model 2, revision 3, but do not show what an Octane board's part does. Transfer of
+any such address to the Octane2 is likewise unknown.
 
 The Origin 200 and Origin 300 use other PHYs, the DP83840A and DP83843, which
 [devices/dp83843/README.md](../dp83843/README.md) covers. Their identities differ from this part's.
