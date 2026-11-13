@@ -37,9 +37,9 @@ MUX_PROBE_PASSES = { value = 0x400, grade = "inferred", from = "IRIX 6.5.30 IP27
 GAIN_BIAS = { value = 0x48, grade = "established", from = "IRIX 6.5.30 IP30 rad_dd.o rad_set_analog_out_if_params", doc = "Added to a driver dB-to-register value to form a gain byte in the gain register; zero means mute" }
 GAIN_BRINGUP = { value = 0xd6d6d6d6, grade = "established", from = "IRIX 6.5.30 IP30 rad_dd.o rad_start_subsys .text 0xae8-0xaf8", doc = "Value the driver writes to the gain register at start on the analog-capable boards" }
 CLOCKGEN_COUNT = { value = 4, grade = "inferred", from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31)", doc = "Number of clock generators; select bit 28 + n of the clock load register loads generator n" }
-CLOCKGEN_ANALOG_IN = { value = 0, grade = "established", from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog input rate" }
-CLOCKGEN_ANALOG_OUT = { value = 1, grade = "established", from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog output rate" }
-CLOCKGEN_AES_OUT = { value = 2, grade = "established", from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe", doc = "Clock generator that sets the AES3 output rate" }
+CLOCKGEN_ANALOG_IN = { value = 0, grade = "established", from = "public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog input rate" }
+CLOCKGEN_ANALOG_OUT = { value = 1, grade = "established", from = "public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog output rate" }
+CLOCKGEN_AES_OUT = { value = 2, grade = "established", from = "public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe", doc = "Clock generator that sets the AES3 output rate" }
 PCI_CLASS_OCTANE = { value = 0, grade = "established", from = "public Linux lspci capture of the onboard RAD, linux-pci-list message 20170213224512.GA8080@bhelgaas-glaptop.roam.corp.google.com (2017-02-13), bus 0 device 3 function 0", doc = "PCI class code of the onboard RAD on the Octane board: the 24-bit class field (config offset 0x08 bits 31:8) reads zero. Revision 0xc0 is the same listing's byte (REV_OCTANE)" }
 UST_TICK_NS_FIXED = { value = 960, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc) rad_reset_ust, board 13 path", doc = "Tick period in nanoseconds that the reset routine stores for the counter at 0x30. The other choice is computed from the Bedrock register (see devices/rad1/facts-outside-registers.md). Which choice a given machine gets is unknown" }
 UST_BEDROCK_FLAG_MASK = { value = 0xf000, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), 64-bit load of the Bedrock real-time clock control register at load", doc = "Mask applied to the value read from the Bedrock real-time clock control register (0x604200 in the local block) at load" }
@@ -255,7 +255,7 @@ offset = 0x40
 access = "w"
 width = 32
 grade = "inferred"
-from = "IRIX 6.5.30 IP30 rad_dd.o rad_enable_ust .text 0x1070-0x10e0 (board mode 12: 0x0e then 0x0a to enable, 0x02 to disable; modes 7 and 13 write 4 then 0)"
+from = "IRIX 6.5.30 IP30 rad_dd.o rad_enable_ust .text 0x1050 (board modes other than 7 and 13: 0x0e then 0x0a to enable), rad_disable_ust 0x1084 (0x02 to disable) and rad_reset_ust 0x10ac (modes 7 and 13: 4 then 0)"
 doc = "Controls the counter on the Octane board. The bit meanings, whether the writes are pulses, and whether the counter resets are unknown. On the PCI audio board (mode 13) the reset routine writes 6 then 2 when the Bedrock flag is set or the brick type is 55, 56, 57, 69 or 81, and 4 then 0 otherwise (see devices/rad1/facts-outside-registers.md)."
 
 [registers.adat_in_ctrl]

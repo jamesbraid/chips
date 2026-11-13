@@ -384,9 +384,9 @@
     <field name="adat_present" start="6" size="1" type="uint" grade="inferred"/>
   </struct>
   <constant name="BAR0_SIZE" value="0x2000" grade="inferred"/>
-  <constant name="CLOCKGEN_AES_OUT" value="0x2" grade="established" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"/>
-  <constant name="CLOCKGEN_ANALOG_IN" value="0x0" grade="established" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"/>
-  <constant name="CLOCKGEN_ANALOG_OUT" value="0x1" grade="established" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"/>
+  <constant name="CLOCKGEN_AES_OUT" value="0x2" grade="established" from="public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"/>
+  <constant name="CLOCKGEN_ANALOG_IN" value="0x0" grade="established" from="public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"/>
+  <constant name="CLOCKGEN_ANALOG_OUT" value="0x1" grade="established" from="public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"/>
   <constant name="CLOCKGEN_COUNT" value="0x4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31)"/>
   <constant name="DESC_ENTRIES" value="0x10" grade="inferred"/>
   <constant name="DESC_ENTRY_BYTES" value="0xc" grade="established"/>

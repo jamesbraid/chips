@@ -44,7 +44,7 @@ audio board (revision `0xd0`, board 13).
 - OpenBSD's Bridge code gives `10a9:0005` the native, non-swapping bus space tag,
   and its resource setup keeps the programmed-I/O swap bit the PROM left in
   place while it changes the DMA swap bits. **Established** as a public driver's
-  choice (`sys/arch/sgi/xbow/xbridge.c` on the `sgi-is-alive-at-7.9` branch,
+  choice (`sys/arch/sgi/xbow/xbridge.c` at the `references/code/openbsd` pin, `7011342f6a72`,
   lines 1138 to 1150 and 2445 to 2509). OpenBSD attaches no audio driver on the
   captured Octane, so the tag is a driver choice and not a read of the chip.
 - The Bridge's rule for narrow and aligned accesses through a device window is in
@@ -53,11 +53,13 @@ audio board (revision `0xd0`, board 13).
 
 ## DMA request
 
-- The IP30 driver's memory-to-PCI helper (`Mem_to_PCI_DMA`, `.text` `0x7268` to
-  `0x72ac`) takes a physical buffer address, asks the PCI I/O layer for a DMA
-  translation with flags `0x50`, and writes the returned PCI address into the
-  descriptor's low and high words. **Established** from the IP30 `rad_dd.o`
-  object. The Bridge decides the translation that actually applies (direct,
+- The IP30 driver's memory-to-PCI helper (`Mem_to_PCI_DMA`, `.text` `0x4fb0` to
+  `0x4ff4`, which is file offsets `0x7268` to `0x72ac`; an earlier version gave the file
+  offsets as `.text` offsets) converts a kernel address to a physical address, asks the
+  PCI I/O layer for a DMA translation with flags `0x50` (`pciio_dmatrans_addr`), and
+  returns the result. **Established** from the IP30 `rad_dd.o` object. The helper does not
+  itself write the descriptor. That its callers store the returned address in the
+  descriptor's low and high words is **inferred**, not re-read here. The Bridge decides the translation that actually applies (direct,
   ATE-translated or 64-bit), as [bridge-family.md](../bridge/family.md) describes.
 
 ## PCI Digital Audio Board (revision `0xd0`, board 13)
@@ -195,15 +197,13 @@ capture settles it.
 
 ## Not settled
 
-- **The `0x40` writes on board 13.** The IP30 object's board 7 and board 13 `4`
-  then `0` writes are attributed to the enable routine in the register file,
-  `rad_enable_ust`. A second reading of the same object places them in the reset
-  routine instead, and says the board 12 reset routine writes nothing to `0x40`.
-  A second reading of the IP35 object agrees on the reset routine and gives the
-  flag and brick-type conditions above, and it finds no `0x40` write on board 13
-  enable. That is a different build, so the attribution in `devices/rad1/registers.toml` stays
-  until the IP30 routines are read again. The IP35 reading was taken from an
-  earlier record and was not re-read for this page.
+- **The `0x40` writes on board 13.** Settled for the IP30 object in the verification pass:
+  `rad_enable_ust` (`.text` `0x1050`) writes `0x0e` then `0x0a` to `0x40` only when the board
+  is neither 7 nor 13, `rad_disable_ust` (`0x1084`) writes `0x02` under the same test, and
+  the `4` then `0` writes for boards 7 and 13 are in `rad_reset_ust` (`0x10ac`). The board 12
+  reset routine writes nothing to `0x40` because the board test skips it. The register file's
+  `ust_control` attribution to `rad_enable_ust` for the `4`-then-`0` pair was wrong and is corrected
+  there. The IP35 reading above was taken from an earlier record and was not re-read.
 - **The `0x50` start value on board 13.** The register file says the driver leaves
   an unknown earlier value. The second reading of the IP27 and IP35 objects finds
   `0x20000000` written. Whether the IP30 object differs or the two readings disagree

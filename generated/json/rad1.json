@@ -1608,7 +1608,7 @@
    "value": 2,
    "count": 1,
    "grade": "established",
-   "from": "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"
+   "from": "public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"
   },
   {
    "unit": "rad1",
@@ -1617,7 +1617,7 @@
    "value": 0,
    "count": 1,
    "grade": "established",
-   "from": "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"
+   "from": "public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"
   },
   {
    "unit": "rad1",
@@ -1626,7 +1626,7 @@
    "value": 1,
    "count": 1,
    "grade": "established",
-   "from": "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_setrate_pipe"
+   "from": "public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"
   },
   {
    "unit": "rad1",
