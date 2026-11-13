@@ -619,3 +619,7 @@ entry ends with the route that would settle it. Collected in [questions/README.m
 - **Small-data pointers.** The census follows loads of the widget-block pointers the kernel keeps in its small-data
   area only where the word holds an address inside a configured window; a pointer held in a register across a call
   is not followed. A widget-block access through such a pointer in a routine not listed above would be missed.
+
+## Used by
+
+- [HEART error, timer and reset routines of the IP30 kernel](../../software/kernel/ip30/heart-routines.md)

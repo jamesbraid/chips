@@ -550,3 +550,7 @@ xswitch_info" (+40) and "_xswitch_id" (+88).
 See questions/README.md: the PROMs' large crossbar routines (initialisation, credits, arbitration, diagnostics) that
 take their window pointer from a record field, the input-buffer flush use, the packet time-out, LLP control and
 arbitration reload values, and the interrupt vector assignment.
+
+## Used by
+
+- [Xbow routines of the IP30 kernel](../../software/kernel/ip30/xbow-routines.md)

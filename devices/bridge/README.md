@@ -386,3 +386,9 @@ The routines of the IP27 kernel that serve the same family are in [software/kern
 See questions/README.md: the units and layout of
 the response buffer registers; whether any XBridge register lies above `0x298`; the PROMs that reach the chip through
 a run-time window.
+
+## Used by
+
+- [Bridge and XBridge: the PCI windows and swap controls IRIX drives](../../software/kernel/bridge-pci-driver-windows.md)
+- [Routines of the IP27 kernel that serve the Bridge family](../../software/kernel/ip27/bridge-routines.md)
+- [Bridge-family accessors and attach routines of the IP30 kernel](../../software/kernel/ip30/bridge-routines.md)

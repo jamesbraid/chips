@@ -19,3 +19,7 @@ carrying this driver; the only other PCI audio driver in that build, `mad_dd.o`,
   D/A engines, a Genlock/"ksync" video clock path and a status-DMA path (strings such as `RAD UST not incrementing`,
   `one-shot status dma failed. Try power cycling the machine.`). Bringing it to the label standard needs the full-routine
   reading `questions/README.md` now lists.
+
+## Used by
+
+- [Audio drivers in IRIX 6.5.30 and 6.5.22](../../software/kernel/audio-drivers.md)

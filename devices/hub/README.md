@@ -1846,3 +1846,7 @@ Graded entries; each ends with the route that would settle it. Collected in [que
 - **Router vector access.** Inferred end to end (`vector_*_node`). Next: read the three routines in full and the router strings.
 - **PROM images beyond the CPU PROM.** The I/O-board PROM (`io6prom.img`) and the IP35 PROM reach Hub-class registers through
   the same windows but are not in this census (the IP35 PROM belongs to the Bedrock page).
+
+## Used by
+
+- [Kernel routines that read the Hub real-time counter for entropy (IP27 build)](../../software/kernel/ip27/entropy-readers.md)
