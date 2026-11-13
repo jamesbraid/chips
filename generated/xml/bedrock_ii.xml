@@ -37,7 +37,7 @@
     <field name="widget_8" start="0" size="8" type="uint" grade="established"/>
   </struct>
   <struct name="LINK_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400128" access="rw" reset="unknown">
-    <doc>Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text. The shipped IRIX Origin 300/350 early widget probe tests bit 13 and, with it clear, reports the part, revision and manufacturer as -1 without touching the widget. That the bit means link up is inferred from how the I/O error interrupt set-up uses it.</doc>
+    <doc>Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text. That the bit means link up is inferred from how the I/O error interrupt set-up uses it.</doc>
     <field name="max_burst" start="32" size="10" type="uint" grade="established"/>
     <field name="data_available_select" start="26" size="2" type="uint" grade="established"/>
     <field name="max_retry" start="16" size="10" type="uint" grade="established"/>
@@ -87,7 +87,7 @@
     <field name="credits" start="0" size="8" type="uint" grade="established"/>
   </struct>
   <struct name="MISC_ERROR_MASK" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001e8" access="rw" reset="0x111">
-    <doc>Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit. The shipped IRIX Origin 300/350 error path reads this register and goes on to the widget error handler only when bit 4 or bit 0 is set; the role of the two bits there is unknown.</doc>
+    <doc>Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit.</doc>
     <field name="clear_precise" start="12" size="1" type="uint" grade="established"/>
     <field name="bte_1_enable" start="8" size="1" type="uint" grade="established"/>
     <field name="bte_0_enable" start="4" size="1" type="uint" grade="established"/>
@@ -132,22 +132,12 @@
     <field name="command" start="8" size="8" type="uint" grade="established"/>
     <field name="entry" start="0" size="4" type="uint" grade="established"/>
   </struct>
-  <struct name="CRB_A" size="8" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md" register="yes" offset="0x400400" access="r" count="15" stride="32" reset="unknown">
-    <doc>First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i; the shipped IRIX Origin 300/350 I/O error scan reads all fifteen entries in order.</doc>
-    <field name="bit55" start="55" size="1" type="uint" grade="established"/>
-    <field name="type" start="52" size="3" type="uint" grade="established"/>
-    <field name="bit51" start="51" size="1" type="uint" grade="established"/>
-    <field name="bit50" start="50" size="1" type="uint" grade="established"/>
-    <field name="bit49" start="49" size="1" type="uint" grade="established"/>
-    <field name="bit0" start="0" size="1" type="uint" grade="established"/>
+  <struct name="CRB_A" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400400" access="r" count="15" stride="32" reset="unknown">
+    <doc>First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The header names the fourth word of each entry, crb_d, as well; the field meanings of the entry words are not given by any source held here.</doc>
   </struct>
-  <struct name="CRB_B" size="8" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md" register="yes" offset="0x400408" access="r" count="15" stride="32" reset="unknown">
-    <field name="engine_alt" start="58" size="1" type="uint" grade="established"/>
-    <field name="sub" start="41" size="2" type="uint" grade="established"/>
-    <field name="kind" start="30" size="3" type="uint" grade="established"/>
+  <struct name="CRB_B" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400408" access="r" count="15" stride="32" reset="unknown">
   </struct>
-  <struct name="CRB_C" size="8" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md" register="yes" offset="0x400410" access="r" count="15" stride="32" reset="unknown">
-    <field name="bit48" start="48" size="1" type="uint" grade="established"/>
+  <struct name="CRB_C" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400410" access="r" count="15" stride="32" reset="unknown">
   </struct>
   <struct name="BTE_LENGTH_STATUS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410000" access="rw" count="2" stride="65536" reset="unknown">
     <doc>One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end. Reset unknown.</doc>
@@ -179,11 +169,8 @@
     <field name="node" start="1" size="8" type="uint" grade="established"/>
     <field name="pi_select" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <constant name="II_WINDOW_BASE" value="0x1c00000" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"/>
   <constant name="MANUFACTURER_BEDROCK" value="0x36" grade="inferred"/>
   <constant name="PART_BEDROCK" value="0xc110" grade="inferred"/>
   <constant name="PI0_INTERRUPT_PENDING_MODIFY" value="0x1800090" grade="established"/>
   <constant name="PI1_INTERRUPT_PENDING_MODIFY" value="0x1a00090" grade="established"/>
-  <constant name="WIDGET_PART_C104" value="0xc104" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"/>
-  <constant name="WIDGET_PART_C105" value="0xc105" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"/>
 </genxml>

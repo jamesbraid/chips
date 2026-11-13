@@ -989,62 +989,8 @@
    "stride": 32,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_a.bit55",
-   "hi": 55,
-   "lo": 55,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_a.type",
-   "hi": 54,
-   "lo": 52,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_a.bit51",
-   "hi": 51,
-   "lo": 51,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_a.bit50",
-   "hi": 50,
-   "lo": 50,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_a.bit49",
-   "hi": 49,
-   "lo": 49,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_a.bit0",
-   "hi": 0,
-   "lo": 0,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
   },
   {
    "unit": "bedrock_ii",
@@ -1057,35 +1003,8 @@
    "stride": 32,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_b.engine_alt",
-   "hi": 58,
-   "lo": 58,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_b.sub",
-   "hi": 42,
-   "lo": 41,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_b.kind",
-   "hi": 32,
-   "lo": 30,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
   },
   {
    "unit": "bedrock_ii",
@@ -1098,17 +1017,8 @@
    "stride": 32,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "field",
-   "name": "crb_c.bit48",
-   "hi": 48,
-   "lo": 48,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
   },
   {
    "unit": "bedrock_ii",
@@ -1305,15 +1215,6 @@
   {
    "unit": "bedrock_ii",
    "kind": "constant",
-   "name": "II_WINDOW_BASE",
-   "value": 29360128,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "constant",
    "name": "MANUFACTURER_BEDROCK",
    "value": 54,
    "count": 1,
@@ -1346,24 +1247,6 @@
    "count": 1,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "constant",
-   "name": "WIDGET_PART_C104",
-   "value": 49412,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
-  },
-  {
-   "unit": "bedrock_ii",
-   "kind": "constant",
-   "name": "WIDGET_PART_C105",
-   "value": 49413,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/ip35-hub-errors.md"
   }
  ]
 }

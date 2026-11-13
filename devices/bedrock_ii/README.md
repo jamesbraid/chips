@@ -10,8 +10,12 @@ No Bedrock specification is held. The sources are the SN1 register headers in th
 public Linux ia64 consumers, OpenBSD's SGI crossbar code, the out-of-tree Linux MIPS IP35 port, and two SGI
 manuals (the Origin 3000 System Architecture, 108-0240-002, for the unit's role, and the Origin 300 field
 diagnostics, 108-0264-004, for its vocabulary). IRIX 6.5.30 kernel behaviour and the stock IP35 PROM 6.210 come
-from disassembly, which is a software expectation and not a hardware read. Every fact below is graded in the defs
-file or here.
+from disassembly, which is a software expectation and not a hardware read. The verification pass re-read the register
+offsets against the Linux 2.5.40 header (`include/asm-ia64/sn/sn1/hubio.h` in the `references/code/linux-2.5.40` pin) and
+did not re-read the disassembly statements below, which are therefore unverified. The widget part numbers `0xc104` and
+`0xc105`, the window base `0x1c00000` and the request-buffer field meanings were removed because their only basis was a note
+of another project, not a binary read here. Route for those: read the IP35 kernel's I/O error scan and widget probe in full.
+Every fact below is graded in the defs file or here.
 
 ## Block transfer engines
 
