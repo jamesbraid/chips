@@ -53,17 +53,17 @@ The tag array has seven check bits. Its matrix is on printed page 179 and is not
 
 - In correction mode, a correctable secondary data error is repaired inline. The processor signals the external agent for one SysClk cycle. Established (printed pp. 171–172).
 - An uncorrectable secondary data error posts a Cache Error. It records the data-error field and the secondary index in the local CacheErr. Established (printed pp. 171–172).
-- When the error is posted, the processor copies the local CacheErr to CP0 CacheErr, sets Status.ERL, records the next ungraduated instruction in ErrorEPC and enters the uncached Cache Error vector. The vector is chosen by Status.BEV. Established (printed pp. 274–276).
+- When the error is posted, the processor copies the local CacheErr to CP0 CacheErr, sets Status.ERL, records the next ungraduated instruction in ErrorEPC and enters the uncached Cache Error vector. The vector is chosen by Status.BEV. Established (printed p. 171, section 9.4; the CacheErr register pages 274 to 276 describe only the fields).
 - Status.DE stops future posting and local CacheErr updates. Covered on the O2 cache page.
-- While Status.ERL is set, a nested Cache Error delivery is ignored. The processor still detects errors and may post more of them. Established (printed pp. 274–276).
-- Index Load Tag and Index Store Tag, like Index Load Data and Index Store Data, suppress uncorrectable-error protection during the diagnostic operation itself. Established (printed pp. 274–276). A test that wants detection must follow the operation with an ordinary cached access. Inferred from the suppression rule.
+- While Status.ERL is set, a nested Cache Error delivery is ignored. The processor still detects errors and may post more of them. Established (printed p. 171).
+- Index Load Tag and Index Store Tag, like Index Load Data and Index Store Data, suppress uncorrectable-error protection during the diagnostic operation itself. Established (printed p. 172). A test that wants detection must follow the operation with an ordinary cached access. Inferred from the suppression rule.
 - A single bad bit is not a valid test for an exception without first classifying its syndrome. Inferred from the classification above.
 
 ## CP0 CacheErr for a secondary error
 
 - Bits 31:30 are the unit select. For a secondary-cache error they are binary `10`. Established (printed pp. 274–276).
-- Bits 27:26 are the D field. It identifies an uncorrectable secondary data error by way. Established (printed pp. 274–276). The value encoding of D is not in the source. See the unknowns.
-- Bits 25:24 are the TA field. It identifies a secondary tag error. Established (printed pp. 274–276). The value encoding of TA is not in the source.
+- Bits 27:26 are the D field, uncorrectable secondary data error, written `way1 || way0` in the manual, so one bit per way with way 1 in bit 27 and way 0 in bit 26. Established (printed p. 276, Figure 14-26). The manual does not say which stored value means a bad way; see the unknowns.
+- Bits 25:24 are the TA field, uncorrectable tag address array error, also `way1 || way0`. Established (printed p. 276, Figure 14-26). The value encoding is not in the source.
 - Bits 22:6 are the secondary block index, SIdx. Its source is PA[22:6] for a 64-byte secondary block or PA[22:7] for a 128-byte block. Established (printed pp. 274–276). The block size of the fitted secondary cache must be known before a test can assert an index value.
 
 The constants for these fields are in [devices/r10000_secondary_cache_ecc/registers.toml](registers.toml).
@@ -74,7 +74,7 @@ The constants for these fields are in [devices/r10000_secondary_cache_ecc/regist
 - **Parity-bit-only error.** The manual does not say which signal results when only ECC[9] is wrong and the nine-bit syndrome is zero. Settled by the manual's signal description or a capture.
 - **SCCorEn on a given system.** Whether SysAD[14] is wired, and to which value, on any particular processor module. Settled by the module's schematic or its reset capture.
 - **Secondary block size.** The block size of the fitted secondary cache sets which index width the SIdx field carries. Settled by the cache size and line configuration of the system.
-- **D and TA encodings.** The manual gives the meaning of the D and TA fields and not the value for each way or tag condition. Settled by a capture of CacheErr after a known fault.
+- **D and TA bit values.** The manual gives the way layout of the D and TA fields (`way1 || way0`) and not what value marks a failing way or tag condition. Settled by a capture of CacheErr after a known fault.
 - **Tag matrix.** The seven-bit tag matrix on printed page 179 is not imported here. Settled by importing that matrix from the same page, with its own check against the printed counts.
 - **R12000.** Whether the R12000 uses the same matrix, delivery rule and CacheErr layout. Settled by the R12000 processor manual or a capture from an R12000 part.
 - **Physical capture.** No CacheErr capture from a real part for a secondary error exists in this repository. The manual states the rules, and a capture would show what a part does under a known fault.
