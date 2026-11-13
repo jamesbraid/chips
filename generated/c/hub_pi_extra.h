@@ -277,14 +277,14 @@
 #define HUB_PI_NACK_CMP_OFFSET                       0x4b8u /* inferred */
 
 /*
- * Layout of the interrupt pending modify register, pi_int_pend_mod, as the shipped IRIX kernel writes it: a set bit and a 7-bit interrupt level. The kernel only writes the register. A processor whose slice number has bit 1 set reaches it at PI_INT_PEND_MOD_ALT_OFFSET in place of 0x90.
+ * Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded.
  */
-/* word PI_INT_PEND_MOD_FORMAT: 64 bits; shipped IRIX kernel binaries, per kudzu docs/interrupts.md */
+/* word PI_INT_PEND_MOD_FORMAT: 64 bits; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_INT_PEND_MOD_FORMAT_WIDTH             64 /* inferred */
 #define HUB_PI_INT_PEND_MOD_FORMAT_SET_SHIFT         8 /* inferred */
 #define HUB_PI_INT_PEND_MOD_FORMAT_SET_MASK          0x1ull
 #define HUB_PI_INT_PEND_MOD_FORMAT_SET_INPLACE       (HUB_PI_INT_PEND_MOD_FORMAT_SET_MASK << HUB_PI_INT_PEND_MOD_FORMAT_SET_SHIFT)
-#define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_SHIFT       0 /* established */
+#define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_SHIFT       0 /* inferred */
 #define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_MASK        0x7full
 #define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_INPLACE     (HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_MASK << HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_SHIFT)
 
@@ -331,7 +331,6 @@
 #define HUB_PI_CALIAS_SIZE_64M                       0xfu /* established */
 #define HUB_PI_CALIAS_SIZE_8K                        0x2u /* established */
 #define HUB_PI_CALIAS_SIZE_8M                        0xcu /* established */
-#define HUB_PI_INT_PEND_MOD_ALT_OFFSET               0x200090u /* established */
 #define HUB_PI_LOCAL_WINDOW_BASE                     0x1000000u /* established */
 #define HUB_PI_NODE_SHIFT                            0x20u /* established */
 #define HUB_PI_NODE_WINDOW_BASE                      0x1800000u /* established */

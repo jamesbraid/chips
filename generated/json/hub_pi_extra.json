@@ -663,7 +663,7 @@
    "name": "PI_INT_PEND_MOD_FORMAT",
    "width": 64,
    "grade": "inferred",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
   {
    "unit": "hub_pi_extra",
@@ -672,7 +672,7 @@
    "hi": 8,
    "lo": 8,
    "grade": "inferred",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
   {
    "unit": "hub_pi_extra",
@@ -680,8 +680,8 @@
    "name": "PI_INT_PEND_MOD_FORMAT.level",
    "hi": 6,
    "lo": 0,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
   {
    "unit": "hub_pi_extra",
@@ -937,20 +937,11 @@
   {
    "unit": "hub_pi_extra",
    "kind": "constant",
-   "name": "PI_INT_PEND_MOD_ALT_OFFSET",
-   "value": 2097296,
-   "count": 1,
-   "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "constant",
    "name": "PI_LOCAL_WINDOW_BASE",
    "value": 16777216,
    "count": 1,
    "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
   {
    "unit": "hub_pi_extra",
@@ -959,7 +950,7 @@
    "value": 32,
    "count": 1,
    "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
   {
    "unit": "hub_pi_extra",
@@ -968,7 +959,7 @@
    "value": 25165824,
    "count": 1,
    "grade": "established",
-   "from": "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   }
  ]
 }

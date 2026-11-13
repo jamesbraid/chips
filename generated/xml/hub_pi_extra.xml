@@ -130,10 +130,10 @@
   <struct name="PI_NACK_CMP" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4b8" access="rw" reset="unknown">
     <doc>Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. Access is assumed read and write.</doc>
   </struct>
-  <struct name="PI_INT_PEND_MOD_FORMAT" size="8" grade="inferred" from="shipped IRIX kernel binaries, per kudzu docs/interrupts.md">
-    <doc>Layout of the interrupt pending modify register, pi_int_pend_mod, as the shipped IRIX kernel writes it: a set bit and a 7-bit interrupt level. The kernel only writes the register. A processor whose slice number has bit 1 set reaches it at PI_INT_PEND_MOD_ALT_OFFSET in place of 0x90.</doc>
+  <struct name="PI_INT_PEND_MOD_FORMAT" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)">
+    <doc>Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded.</doc>
     <field name="set" start="8" size="1" type="uint" grade="inferred"/>
-    <field name="level" start="0" size="7" type="uint" grade="established"/>
+    <field name="level" start="0" size="7" type="uint" grade="inferred"/>
   </struct>
   <struct name="PI_RT_LOCAL_CTRL_FORMAT" size="8" grade="established" from="public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions">
     <doc>Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it.</doc>
@@ -165,8 +165,7 @@
   <constant name="PI_CALIAS_SIZE_64M" value="0xf" grade="established"/>
   <constant name="PI_CALIAS_SIZE_8K" value="0x2" grade="established"/>
   <constant name="PI_CALIAS_SIZE_8M" value="0xc" grade="established"/>
-  <constant name="PI_INT_PEND_MOD_ALT_OFFSET" value="0x200090" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/interrupts.md"/>
-  <constant name="PI_LOCAL_WINDOW_BASE" value="0x1000000" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/interrupts.md"/>
-  <constant name="PI_NODE_SHIFT" value="0x20" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/interrupts.md"/>
-  <constant name="PI_NODE_WINDOW_BASE" value="0x1800000" grade="established" from="shipped IRIX kernel binaries, per kudzu docs/interrupts.md"/>
+  <constant name="PI_LOCAL_WINDOW_BASE" value="0x1000000" grade="established"/>
+  <constant name="PI_NODE_SHIFT" value="0x20" grade="established"/>
+  <constant name="PI_NODE_WINDOW_BASE" value="0x1800000" grade="established"/>
 </genxml>

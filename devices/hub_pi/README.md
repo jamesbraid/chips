@@ -88,6 +88,7 @@ change is not given by the header and is not stated here.
 
 - **Reset values and access types from a machine-readable IRIX register table.** That table is not a source
   this repository accepts. Reset values stay unknown, as they are in devices/hub/registers.toml.
+- **The second interrupt-modify offset.** An earlier version recorded `0x200090` as the offset a processor with slice bit 1 set uses for the pending-modify register, on the word of a note from another project. No public source states it and it was not re-read from the kernel binaries, so it is removed. The window bases and node shift are now cited to the Linux address headers.
 - **The protection override unlock value.** The public header does not give one. It stays unknown here.
 - **Stock PROM and IRIX kernel behaviour** drawn from binary analysis done outside this checkout: the
   processor rendezvous, the deliberate bus-error probe, the status-record check and the graphics credit

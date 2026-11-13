@@ -349,18 +349,17 @@ PI_CALIAS_SIZE_8M = { value = 12, grade = "established", doc = "Cached-alias siz
 PI_CALIAS_SIZE_16M = { value = 13, grade = "established", doc = "Cached-alias size code 13: 16 MB, per the header." }
 PI_CALIAS_SIZE_32M = { value = 14, grade = "established", doc = "Cached-alias size code 14: 32 MB, per the header." }
 PI_CALIAS_SIZE_64M = { value = 15, grade = "established", doc = "Cached-alias size code 15: 64 MB, per the header." }
-PI_INT_PEND_MOD_ALT_OFFSET = { value = 0x200090, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md", doc = "A processor whose slice number has bit 1 set reaches int_pend_mod at this offset in place of 0x90." }
-PI_LOCAL_WINDOW_BASE = { value = 0x1000000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md", doc = "Physical base of the processor's own hub window; no node shift." }
-PI_NODE_WINDOW_BASE = { value = 0x1800000, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md", doc = "Physical base of a named node's window." }
-PI_NODE_SHIFT = { value = 0x20, grade = "established", from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md", doc = "Physical node number shift of the Origin 200/2000 hub." }
+PI_LOCAL_WINDOW_BASE = { value = 0x1000000, grade = "established", from = "Linux arch/mips/include/asm/sn/addrs.h at the references/code/linux pin: LOCAL_HUB_ADDR is IALIAS_BASE plus the offset, IALIAS_BASE is hub register widget 1 with 24-bit windows (HUB_REGISTER_WIDGET, SWIN_SIZE_BITS)", doc = "Physical base of the processor's own hub window; no node shift." }
+PI_NODE_WINDOW_BASE = { value = 0x1800000, grade = "established", from = "Linux arch/mips/include/asm/sn/addrs.h at the references/code/linux pin: REMOTE_HUB_ADDR is widget 1 plus 0x800000 within the named node; arch/mips/sgi-ip27/ip27-xtalk.c line 85 adds 0x01800000 to PI_INT_PEND_MOD", doc = "Physical base of a named node's window." }
+PI_NODE_SHIFT = { value = 0x20, grade = "established", from = "Linux arch/mips/include/asm/sn/sn0/addrs.h at the references/code/linux pin: NASID_SHFT is 32 in one configuration and 31 in the other (lines 58 and 72); the 32 case is recorded", doc = "Physical node number shift of the Origin 200/2000 hub in the 32-bit-node-number configuration." }
 
 [words.PI_INT_PEND_MOD_FORMAT]
 width = 64
 grade = "inferred"
-from = "shipped IRIX kernel binaries, per kudzu docs/interrupts.md"
-doc = "Layout of the interrupt pending modify register, pi_int_pend_mod, as the shipped IRIX kernel writes it: a set bit and a 7-bit interrupt level. The kernel only writes the register. A processor whose slice number has bit 1 set reaches it at PI_INT_PEND_MOD_ALT_OFFSET in place of 0x90."
+from = "Linux arch/mips/include/asm/sn/intr.h at the references/code/linux pin: LOCAL_HUB_SEND_INTR writes 0x100 | level to PI_INT_PEND_MOD and LOCAL_HUB_CLR_INTR writes the bare level"
+doc = "Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded."
 notes = "The Origin 300 hub's version of this register (bedrock_pi int_pend_mod) splits the same low seven bits into a register select (bit 6) and a bit select (5:0) and names bit 8 ipm_value. The two layouts agree on the bit ranges; they differ only in how finely the level is named. Kept the finer Origin 300 names there and the kernel's single level field here."
 
 [words.PI_INT_PEND_MOD_FORMAT.fields]
-set = { bits = [8, 8], grade = "inferred", doc = "set the level (1) or clear it (0); the role is read from how the kernel builds the word" }
-level = { bits = [6, 0], grade = "established", doc = "interrupt level number, 0 to 127" }
+set = { bits = [8, 8], grade = "inferred", doc = "set the level (1) or clear it (0); the role is read from how Linux builds the word" }
+level = { bits = [6, 0], grade = "inferred", doc = "interrupt level number; Linux ORs the level into the word unmasked. The 0 to 127 range is inferred from the width of the sibling Bedrock layout" }
