@@ -28,8 +28,9 @@ it. **Unknown** means the sources do not settle it. The open items are listed in
 - Public IRIX forum captures of an Onyx 350 with InfiniteReality4 (`gfxinfo`, plain, `-v` and `-vv`,
   posted 2021). Thread addresses were not recorded at import.
 
-The page numbers below are the ones recorded when these facts were imported. The manuals were not
-reopened for this page.
+The graphics guide, IR4 addendum and architecture manual page cites were rechecked against the PDFs (see the
+corrections noted in the texture memory entries). The Onyx 300 guide cites and the forum captures were not
+reopened.
 
 ## Enclosure
 
@@ -73,8 +74,9 @@ Three points here are not:
 
 - **Established** (architecture manual p. 2-38; Onyx 300 guide p. 12): each pipe has one Ktown2
   connection, one GE16-4, RM10 boards and one DG5. The Onyx 300 guide gives an RM9 for the IR2 set.
-- **Established** (architecture manual p. 2-38; IR4 addendum p. 4): each RM10 board has 256 MB of texture
-  memory. The addendum gives 80 MB of raster memory for IR3.
+- **Established** (architecture manual p. 2-38): each RM10 board has 256 MB of texture memory. The IR4
+  addendum (p. 4) gives 80 MB of raster memory for IR3, and says texture memory rises from 256 MB to
+  1024 MB "per pipe", a wording that does not say whether 256 MB is per pipe or per RM10 board.
 - **Established** for the rack capture: the Onyx2 rack capture reports the IR3 raster manager part
   `030-1402-001` and texture part `030-1588-001`, and the GE16-4 part `030-1398-001`.
 - **Established** (graphics guide p. 43, Table 2-1): the DG5 comes as DG5-2 (two monitor outputs),
@@ -87,10 +89,12 @@ Three points here are not:
 
 - **Established** (IR4 addendum pp. 3 to 4): an IR4 pipe is a GE16-4, a DG5 of at least two channels
   (DG5-2) and the RM11. It sits in the same enclosure, with the same Ktown2 between the pipes. Compared
-  with IR3, texture memory per RM11 board grows from 256 MB to 1024 MB and raster memory per board from
-  80 MB to 2.5 GB. Upgrading is done at the pipe-component level and needs IRIX 6.5.17 or later.
-- **Inferred**: the addendum's 1024 MB figure is per RM11 board, as the IR3 figure is per RM10 board. So a
-  pipe's texture total is the board count times 1024 MB. That product is not printed in any source.
+  with IR3, the addendum says texture memory grows from 256 MB to 1024 MB per pipe and raster memory from
+  80 MB to 2.5 GB per RM11 board. Upgrading is done at the pipe-component level and needs IRIX 6.5.17 or later.
+- **Conflict, unknown**: the addendum states 1024 MB texture "per pipe", while each Onyx 350 capture below lists
+  1024 MB on every RM11 board (one, two or four boards). The captures read as 1024 MB per board; the
+  addendum's wording is the opposite unit. Which is meant by the addendum, and whether the captures'
+  figure is a per-board figure or a pipe total repeated on each board, is not settled by these sources.
 - **Established for the Onyx 350 captures** (another topology, behind a Ktown2 on the Onyx 350):
 
   | Report | RM11 boards | Texture per board | Chip words |
