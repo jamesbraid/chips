@@ -31,11 +31,12 @@ the page data during page migration and replication, after the operating system 
 move or replicate a page (section "Page Migration and Replication", printed page 49). This is
 the only use of the engine that the manual gives.
 
-The same manual describes directory poisoning (printed page 50). In that scheme the copy sets the
-Poisoned state in the source page's directory entry, so a stale translation faults and the
-operating system then shoots down that one TLB entry. The manual labels directory poisoning
-"an architectural feature which is being proposed for future implementations". Where poisoning is
-not available, the operating system does a conventional TLB shootdown instead.
+The same manual's directory-state list (printed page 45) says a Poisoned entry means the page has been migrated to
+another node, and any access to it causes a bus error that tells the operating system the translation must be
+updated. Printed page 50 holds only a note, under the heading "Directory Poisoning", that this is "an architectural
+feature which is being proposed for future implementations" and that where it is unavailable the operating system
+does a conventional TLB shootdown. The manual does not say that the BTE copy sets the Poisoned state; that
+the copy sets it in the source page's directory entry is inferred from the control bit's name.
 
 So the poison bit's effect is documented only as a proposal. Whether a shipped Hub revision
 implements it is unknown. Chips has the kernel's poison-copy routine (see the Hub README's
