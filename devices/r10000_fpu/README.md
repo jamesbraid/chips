@@ -30,19 +30,19 @@ Every fact below marked established is stated by that manual. Cause-bit exclusiv
 
 ## R12000 with FS set, other operations
 
-The manual also describes these R12000 rules with FS set. They are recorded here as facts. Nothing here was checked on a part. The page numbers were carried from an earlier reading of the manual and have not been re-checked against it.
+The manual also describes these R12000 rules with FS set. They are recorded here as facts. Nothing here was checked on a part. Each page number below was checked against the manual's printed pages.
 
 - ABS, NEG and compare flush a denormal input. Established (NEC UM p. 349).
-- Floating-point to integer conversion flushes a denormal input and sets Inexact. Established (NEC UM p. 349).
+- Floating-point to integer conversion flushes a denormal input and sets Inexact. Established (NEC UM p. 350).
 - A quiet NaN input produces the standard quiet NaN, whatever its payload. Established (NEC UM p. 349).
 - A denormal produced by an operation is handled as on the R10000, whatever FS says. Established (NEC UM p. 349).
 - MOV and conditional MOV never trap. Established (NEC UM p. 349).
 
 ## Conversion to long (CVT.L)
 
-- The R10000 takes Unimplemented Operation when CVT.L cannot represent its result in 51 bits. Its manual's CVT.L text says "only up to 51 bits". The corrected wording (from 52) is in the manual's v1.1 errata. Established for the R10000 text (MIPS R10000 User's Manual, v2.0, p. 312, with the errata correction on p. 288). This page does not check the errata text itself.
+- The R10000 takes Unimplemented Operation when CVT.L cannot represent its result in 51 bits. Its manual's CVT.L text says "only up to 51 bits". The corrected wording (from 52) is in the manual's v1.1 errata. Established for the R10000 text (MIPS R10000 User's Manual, v2.0, p. 312, where the paragraph is marked as an erratum). The v1.1 errata sheet, for the v1.1 manual's p. 288, changes "52 bits" to "51 bits".
 - Whether "51 bits" means magnitude below 2^51, and where the negative boundary falls, is not stated. Unknown.
-- The R12000 manual keeps the trap for unrepresentable conversions but gives no bit count. Established (NEC UM p. 350). The R12000 bound is unknown.
+- The NEC manual keeps the trap for unrepresentable conversions but gives no bit count. Established (NEC UM p. 350). The R12000 bound is unknown.
 - The R14000 and R16000 bounds are unknown.
 
 ## R16000 (inferred)
