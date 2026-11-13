@@ -5,8 +5,11 @@ counterpart of the serial pair on the [BaseIO](../baseio/README.md), with no Eth
 [IOC3 page](../ioc3/README.md) holds the routines that set its subdevice word and choose its interrupt line.
 This page holds the rest.
 
-Status: draft, imported from published sources. The routine facts come from a disassembly the source record cites.
-This checkout has no IRIX tree, so those routines were not re-read here. Re-read them before relying on them.
+Status: draft, imported from published sources, then re-checked in a verification pass. In the IP27 `ioc3.o`,
+`pci_ioc3_sio_vmc` calls `ioc3_subdev_enables` with `0x30`, `ioc3_init` registers it through `nic_vmc_add` for the strings
+`030-1657-` and `030-1664-`, and `ioc3_intb_needed` returns true only when the enable word has a bit in `0xfa`. OpenBSD's
+`ioc.c` entry (lines 235 to 240) matches. The PROM routines at `0x1fc3f410`, `0x1fc41e5c`, `0x1fc374bc`, `0x1fc27bdc`,
+`0x1fc27ae0` and `0x1fc3f1a8` and the line-B reading in `ioc3_attach` were not re-read, so their rows are unverified.
 
 Grades follow [AGENTS.md](../../AGENTS.md): **established** means a routine read in full, a manual, a real listing or
 a stock list states the fact; **inferred** means a reasoned reading or a public driver's expectation; **unknown**

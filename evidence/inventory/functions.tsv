@@ -289,7 +289,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000254c8	532	sys_critical_graph_init	dwarf	
 IP27/unix	kernel	n64	.text	0xc0000000000256dc	184	baseio_ctlr_num_set	dwarf	d7eeaf67461c		out:5	named-only	evidence/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc000000000025794	452	sn00_rrb_alloc	dwarf+symtab	127ad818b402		out:5	named-only	evidence/routines/t1-chips-b000.md#tier-1-reading-batch-0-of-chips-routine-role-statements	Tier-1 reading, batch 0 of chips: routine role statements
 IP27/unix	kernel	n64	.text	0xc000000000025958	64	xbox_vmc	dwarf	fd8b3fa347e0		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc000000000025998	200	sn00_vmc	dwarf	968610e93063		in	named-only	devices/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
+IP27/unix	kernel	n64	.text	0xc000000000025998	200	sn00_vmc	dwarf	968610e93063		in	named-only	evidence/instruction-readings-chips-g3.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc000000000025a60	136	do_init_hub_provider	dwarf+symtab	790360b06ec6		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000025ae8	252	do_init_hub_provider_pebrick	dwarf+symtab	0912b909e9be		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc000000000025be4	84	init_hub_provider	dwarf+symtab	a1ab80c6013d		out:5	named-only	evidence/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -2049,7 +2049,7 @@ IP27/unix	kernel	n64	.text	0xc000000000089f08	132	mio_vmc	dwarf	35f46e57c91c		ou
 IP27/unix	kernel	n64	.text	0xc000000000089f8c	64	io6_init	dwarf+symtab	18a4dafb7135		out:5	named-only	evidence/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64	.text	0xc000000000089fcc	260	io6_vmc	dwarf	4fcfe67ea120		out:5	named-only	devices/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP27/unix	kernel	n64	.text	0xc00000000008a0d0	32	menet_init	dwarf+symtab	eb88cf37c38d		out:5	undocumented		
-IP27/unix	kernel	n64	.text	0xc00000000008a0f0	324	menet_vmc	dwarf	8e5863f26a63		out:5	named-only	devices/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
+IP27/unix	kernel	n64	.text	0xc00000000008a0f0	324	menet_vmc	dwarf	8e5863f26a63		out:5	named-only	devices/menet/README.md#menet-the-four-port-fast-ethernet-and-asynchronous-serial-xio-board	MENET: the four-port Fast Ethernet and asynchronous serial XIO board
 IP27/unix	kernel	n64	.text	0xc00000000008a234	8	ude_info_dev_set	dwarf	64e6db95e41a		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000008a23c	8	ude_info_provider_set	dwarf	3dbfbe7bacb0		out:5	undocumented		
 IP27/unix	kernel	n64	.text	0xc00000000008a244	8	ude_info_provider_fastinfo_set	dwarf	4577810647d3		out:5	undocumented		
@@ -2366,10 +2366,10 @@ IP27/unix	kernel	n64	.text	0xc000000000094ef8	32	ioc3_mlreset	dwarf+symtab	fa2fc
 IP27/unix	kernel	n64	.text	0xc000000000094f18	140	ioc3_poll	dwarf	9222bb9b9374		in	named-only	devices/ioc3/README.md#interrupt-registers-0x1c-0x20-0x24-established	Interrupt registers (`0x1c`, `0x20`, `0x24`): established
 IP27/unix	kernel	n64	.text	0xc000000000094fa4	408	ioc3_write_ireg	dwarf+symtab	e58984f0c07d		in	named-only	devices/ioc3/README.md#graded-register-table	Graded register table
 IP27/unix	kernel	n64	.text	0xc00000000009513c	92	ioc3_pending_intrs	dwarf	e94f7ba57d48		in	named-only	devices/ioc3/README.md#graded-register-table	Graded register table
-IP27/unix	kernel	n64	.text	0xc000000000095198	88	ioc3_init	dwarf+symtab	dd4f2bef1b28		in	named-only	devices/dual-serial-pci-card/README.md#facts	Facts
+IP27/unix	kernel	n64	.text	0xc000000000095198	88	ioc3_init	dwarf+symtab	dd4f2bef1b28		in	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
 IP27/unix	kernel	n64	.text	0xc0000000000951f0	28	pci_ioc3_enet_vmc	dwarf	b0f15c199f9f		out:5	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
-IP27/unix	kernel	n64	.text	0xc00000000009520c	28	pci_ioc3_sio_vmc	dwarf	8a64793cf344		out:5	named-only	devices/dual-serial-pci-card/README.md#facts	Facts
-IP27/unix	kernel	n64	.text	0xc000000000095228	1208	ioc3_attach	dwarf+symtab	a08b58820d25		in	named-only	devices/dual-serial-pci-card/README.md#facts	Facts
+IP27/unix	kernel	n64	.text	0xc00000000009520c	28	pci_ioc3_sio_vmc	dwarf	8a64793cf344		out:5	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
+IP27/unix	kernel	n64	.text	0xc000000000095228	1208	ioc3_attach	dwarf+symtab	a08b58820d25		in	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
 IP27/unix	kernel	n64	.text	0xc0000000000956e0	632	ioc3_intr_connect	dwarf+symtab	34196c216a02		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP27/unix	kernel	n64	.text	0xc000000000095958	356	ioc3_intr_disconnect	dwarf+symtab	25a287225249		in	named-only	evidence/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64	.text	0xc000000000095abc	28	ioc3_intr	dwarf+symtab	059ae2f160f8		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
@@ -2382,7 +2382,7 @@ IP27/unix	kernel	n64	.text	0xc000000000096080	128	ioc3_intrd_setup	dwarf	d33bade
 IP27/unix	kernel	n64	.text	0xc000000000096100	24	ioc3_console_vhdl_get	dwarf+symtab	12230f02b039		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP27/unix	kernel	n64	.text	0xc000000000096118	188	ioc3_subdev_ptr	dwarf	51613daabba7		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP27/unix	kernel	n64	.text	0xc0000000000961d4	72	ioc3_subdev_enabled	dwarf+symtab	67e1372b1a52		in	named-only	devices/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
-IP27/unix	kernel	n64	.text	0xc00000000009621c	44	ioc3_subdev_enables	dwarf+symtab	55cbef0841b2		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
+IP27/unix	kernel	n64	.text	0xc00000000009621c	44	ioc3_subdev_enables	dwarf+symtab	55cbef0841b2		in	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
 IP27/unix	kernel	n64	.text	0xc000000000096248	68	ioc3_subdev_enable	dwarf+symtab	e39510c99440		in	named-only	evidence/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP27/unix	kernel	n64	.text	0xc00000000009628c	72	ioc3_subdev_disable	dwarf+symtab	2fd905a5ab6a		in	named-only	devices/ioc4/README.md#routines-in-the-ip35-ioc4o-build	Routines in the IP35 `ioc4.o` build
 IP27/unix	kernel	n64	.text	0xc0000000000962d4	60	ioc3_intb_needed	dwarf	4c9a58f1ac33		in	named-only	devices/cad-duo-pci-card/README.md#interrupts	Interrupts
@@ -3686,7 +3686,7 @@ IP27/unix	kernel	n64	.text	0xc0000000000fc81c	84	rad_close	dwarf+symtab	d7b5d34e
 IP27/unix	kernel	n64	.text	0xc0000000000fc870	2212	rad_start_subsys	dwarf+symtab	c2e306100de0		out:5	named-only	evidence/binaries-scope-chip-drivers.md#ip27-build	IP27 build
 IP27/unix	kernel	n64	.text	0xc0000000000fd114	52	rad_enable_ust	dwarf+symtab	7199a97cb868		out:5	located	evidence/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc0000000000fd148	40	rad_disable_ust	dwarf+symtab	3af608ae52d0		out:5	located	evidence/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
-IP27/unix	kernel	n64	.text	0xc0000000000fd170	248	rad_reset_ust	dwarf+symtab	6610ee2533b9		out:5	named-only		
+IP27/unix	kernel	n64	.text	0xc0000000000fd170	248	rad_reset_ust	dwarf+symtab	6610ee2533b9		out:5	named-only	devices/rad1/facts-outside-registers.md#not-settled	Not settled
 IP27/unix	kernel	n64	.text	0xc0000000000fd268	104	rad_set_ust_offset	dwarf+symtab	9b663f258b5f		out:5	named-only		
 IP27/unix	kernel	n64	.text	0xc0000000000fd2d0	1280	rad_create_device	dwarf	fedfd26ecba1		out:5	named-only	evidence/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
 IP27/unix	kernel	n64	.text	0xc0000000000fd7d0	144	rad_start_device	dwarf	8fe23629de17		out:5	located	evidence/instruction-readings-chips-g1.md#instruction-readings-from-hostfacts	Instruction readings from hostfacts
@@ -33735,7 +33735,7 @@ IP30/unix	kernel	n64	.text	0xa80000002005b94c	132	mio_vmc	dwarf	2b77cfcf7730		ou
 IP30/unix	kernel	n64	.text	0xa80000002005b9d0	64	io6_init	dwarf+symtab	76cfd2103841		out:8	named-only	evidence/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa80000002005ba10	236	io6_vmc	dwarf	dd431146ab8e		out:8	named-only	devices/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP30/unix	kernel	n64	.text	0xa80000002005bafc	32	menet_init	dwarf+symtab	ef302b06d562		out:8	undocumented		
-IP30/unix	kernel	n64	.text	0xa80000002005bb1c	324	menet_vmc	dwarf	d0ff0d263034		out:8	named-only	devices/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
+IP30/unix	kernel	n64	.text	0xa80000002005bb1c	324	menet_vmc	dwarf	d0ff0d263034		out:8	named-only	devices/menet/README.md#menet-the-four-port-fast-ethernet-and-asynchronous-serial-xio-board	MENET: the four-port Fast Ethernet and asynchronous serial XIO board
 IP30/unix	kernel	n64	.text	0xa80000002005bc60	28	gioio_piomap_alloc	dwarf+symtab	b1b2787d895c		out:8	named-only	evidence/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa80000002005bc7c	28	gioio_piomap_free	dwarf+symtab	3c1f560e8b18		out:8	undocumented		
 IP30/unix	kernel	n64	.text	0xa80000002005bc98	40	gioio_piomap_addr	dwarf+symtab	87af77c4e23d		out:8	undocumented		
@@ -33935,10 +33935,10 @@ IP30/unix	kernel	n64	.text	0xa800000020060838	8	ioc3_intr_cpu_get	dwarf+symtab	e
 IP30/unix	kernel	n64	.text	0xa800000020060840	32	ioc3_mlreset	dwarf+symtab	afc3b1346837		in	named-only	devices/hub/README.md#further-routines-of-the-ip27-kernel-ip27unix	Further routines of the IP27 kernel (`IP27/unix`)
 IP30/unix	kernel	n64	.text	0xa800000020060860	124	ioc3_write_ireg	dwarf+symtab	2930794ba6ed		in	named-only	devices/ioc3/README.md#graded-register-table	Graded register table
 IP30/unix	kernel	n64	.text	0xa8000000200608dc	80	ioc3_pending_intrs	dwarf	5812da14bcf9		in	named-only	devices/ioc3/README.md#graded-register-table	Graded register table
-IP30/unix	kernel	n64	.text	0xa80000002006092c	88	ioc3_init	dwarf+symtab	979056c8cac3		in	named-only	devices/dual-serial-pci-card/README.md#facts	Facts
+IP30/unix	kernel	n64	.text	0xa80000002006092c	88	ioc3_init	dwarf+symtab	979056c8cac3		in	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
 IP30/unix	kernel	n64	.text	0xa800000020060984	28	pci_ioc3_enet_vmc	dwarf	4f8a9b3c0029		out:8	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
-IP30/unix	kernel	n64	.text	0xa8000000200609a0	28	pci_ioc3_sio_vmc	dwarf	118ca1b0bd3c		out:8	named-only	devices/dual-serial-pci-card/README.md#facts	Facts
-IP30/unix	kernel	n64	.text	0xa8000000200609bc	1196	ioc3_attach	dwarf+symtab	9053a9d4662a		in	named-only	devices/dual-serial-pci-card/README.md#facts	Facts
+IP30/unix	kernel	n64	.text	0xa8000000200609a0	28	pci_ioc3_sio_vmc	dwarf	118ca1b0bd3c		out:8	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
+IP30/unix	kernel	n64	.text	0xa8000000200609bc	1196	ioc3_attach	dwarf+symtab	9053a9d4662a		in	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
 IP30/unix	kernel	n64	.text	0xa800000020060e68	632	ioc3_intr_connect	dwarf+symtab	d624f1fcd7ca		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP30/unix	kernel	n64	.text	0xa8000000200610e0	356	ioc3_intr_disconnect	dwarf+symtab	426c5a7d9ee2		in	named-only	evidence/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa800000020061244	396	ioc3_intr	dwarf+symtab	c8c79f2ff57c		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
@@ -33949,7 +33949,7 @@ IP30/unix	kernel	n64	.text	0xa80000002006175c	72	ioc3_intrd	dwarf	42ea2430817d		
 IP30/unix	kernel	n64	.text	0xa8000000200617a4	128	ioc3_intrd_setup	dwarf	e8fb5b99a8a0		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP30/unix	kernel	n64	.text	0xa800000020061824	192	ioc3_subdev_ptr	dwarf	edb1a8fa5323		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP30/unix	kernel	n64	.text	0xa8000000200618e4	72	ioc3_subdev_enabled	dwarf+symtab	17fbbaf99a1a		in	named-only	devices/ioc3/README.md#what-identifies-the-chip-established	What identifies the chip (established)
-IP30/unix	kernel	n64	.text	0xa80000002006192c	44	ioc3_subdev_enables	dwarf+symtab	ed6e85aedf2a		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
+IP30/unix	kernel	n64	.text	0xa80000002006192c	44	ioc3_subdev_enables	dwarf+symtab	ed6e85aedf2a		in	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
 IP30/unix	kernel	n64	.text	0xa800000020061958	68	ioc3_subdev_enable	dwarf+symtab	8a6f00c918a7		in	named-only	evidence/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/unix	kernel	n64	.text	0xa80000002006199c	72	ioc3_subdev_disable	dwarf+symtab	8cbd622f9d22		in	named-only	devices/ioc4/README.md#routines-in-the-ip35-ioc4o-build	Routines in the IP35 `ioc4.o` build
 IP30/unix	kernel	n64	.text	0xa8000000200619e4	60	ioc3_intb_needed	dwarf	1dfaf5707413		in	named-only	devices/cad-duo-pci-card/README.md#interrupts	Interrupts
@@ -49299,10 +49299,10 @@ IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0x0	8	ioc3_intr_cpu_
 IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0x8	32	ioc3_mlreset	dwarf+symtab	2dc397ef703b		in	understood	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0x28	124	ioc3_write_ireg	dwarf+symtab	844719694d88		in	named-only	devices/ioc3/README.md#graded-register-table	Graded register table
 IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0xa4	80	ioc3_pending_intrs	dwarf+symtab	3aeba3f93281		in	named-only	devices/ioc3/README.md#graded-register-table	Graded register table
-IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0xf4	88	ioc3_init	dwarf+symtab	da8acf6a328d		in	named-only	devices/dual-serial-pci-card/README.md#facts	Facts
+IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0xf4	88	ioc3_init	dwarf+symtab	da8acf6a328d		in	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
 IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0x14c	28	pci_ioc3_enet_vmc	dwarf+symtab	ccb7b9434299		in	understood	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0x168	28	pci_ioc3_sio_vmc	dwarf+symtab	6f695ba67fcd		in	understood	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
-IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0x184	1196	ioc3_attach	dwarf+symtab	c5aaf48be94d		in	named-only	devices/dual-serial-pci-card/README.md#facts	Facts
+IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0x184	1196	ioc3_attach	dwarf+symtab	c5aaf48be94d		in	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
 IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0x630	632	ioc3_intr_connect	dwarf+symtab	fb14de3b29a7		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0x8a8	356	ioc3_intr_disconnect	dwarf+symtab	2fdd0780b399		in	named-only	evidence/binaries-scope-chip-drivers.md#ip30-build	IP30 build
 IP30/usr/cpu/sysgen/IP30boot/ioc3.o	kernel-object	n64	.text	0xa0c	396	ioc3_intr	dwarf+symtab	a64a4a3b6105		in	named-only	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
@@ -82519,7 +82519,7 @@ IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-object	n64	.text	0x2a0	92	ioc3_pendin
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-object	n64	.text	0x2fc	88	ioc3_init	dwarf+symtab	ffc6997a8e22		in	understood	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-object	n64	.text	0x354	28	pci_ioc3_enet_vmc	dwarf+symtab	ccb7b9434299		in	understood	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-object	n64	.text	0x370	28	pci_ioc3_sio_vmc	dwarf+symtab	6f695ba67fcd		in	understood	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
-IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-object	n64	.text	0x38c	1340	ioc3_attach	dwarf+symtab	440cb011c66e		in	named-only	devices/dual-serial-pci-card/README.md#facts	Facts
+IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-object	n64	.text	0x38c	1340	ioc3_attach	dwarf+symtab	440cb011c66e		in	named-only	devices/dual-serial-pci-card/README.md#dual-serial-pci-card-030-1657	Dual-serial PCI card (030-1657)
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-object	n64	.text	0x8c8	632	ioc3_intr_connect	dwarf+symtab	ed73fa55eaf2		in	understood	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-object	n64	.text	0xb40	356	ioc3_intr_disconnect	dwarf+symtab	15929cc4688b		in	understood	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build
 IP35/usr/cpu/sysgen/IP35boot/ioc3.o	kernel-object	n64	.text	0xca4	28	ioc3_intr	dwarf+symtab	12a18864d05c		in	understood	devices/ioc3/README.md#routines-in-the-ip27-ioc3o-build	Routines in the IP27 `ioc3.o` build

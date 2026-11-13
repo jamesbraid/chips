@@ -7,9 +7,11 @@ prefixes. The Bridge and IOC3 contracts are on [the Bridge page](../bridge/READM
 [the IOC3 page](../ioc3/README.md). This page holds the board's composition, the IRIX words it sets, its
 interrupt wiring and its identity record.
 
-Status: draft, imported from published sources. The IRIX routine facts come from a disassembly the source
-record cites. This checkout has no IRIX tree, so those routines were not re-read here. Re-read them before
-relying on them.
+Status: draft, imported from published sources, then re-checked in a verification pass. `menet_vmc` was
+re-read in `IP27boot/menet.o` (324 bytes at `.text` `0x20`): it calls `pcibr_hints_dualslot` for devices 0 to 3 with
+slots 4 to 7 and `pcibr_hints_subdevs` with `0x31`, `0x31`, `0x31` and `0x01`, as the table below says. `ioc3_attach` and
+`ioc3_intb_needed` were not re-read, so the inferred interrupt rows stay inferred. The Usenet postings and the
+owner's `hinv` pages cited below were checked only for the Onyx2 deskside posting of 5 June 2004.
 
 Grades follow [AGENTS.md](../../AGENTS.md): **established** means the manual, a real listing or a routine read in
 full states it; **inferred** means a reasoned reading, including what a public driver expects; **unknown** means

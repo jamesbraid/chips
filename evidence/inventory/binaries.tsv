@@ -313,7 +313,7 @@ IP27/usr/cpu/sysgen/IP27boot/mad_dd.o	kernel-IP27	kernel-object	object	n64	61480
 IP27/usr/cpu/sysgen/IP27boot/magellan.o	kernel-IP27	kernel-object	object	n64	30720	3b68ee3a8dcb36ed		16	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mem.o	kernel-IP27	kernel-object	object	n64	15088	72c3627ae740c81c		12	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mem_alloc.o	kernel-IP27	kernel-object	object	n64	59880	50ba445471e7c2af		23	symtab	0	0	undocumented		
-IP27/usr/cpu/sysgen/IP27boot/menet.o	kernel-IP27	kernel-object	object	n64	6864	cb10fe2ed5c89988		2	symtab	0	0	undocumented		
+IP27/usr/cpu/sysgen/IP27boot/menet.o	kernel-IP27	kernel-object	object	n64	6864	cb10fe2ed5c89988		2	symtab	0	0	named-only	devices/bridge/README.md#routines-in-the-ip27-io6o-pciioxo-and-xbridgeo-builds	Routines in the IP27 `io6.o`, `pciiox.o` and `xbridge.o` builds
 IP27/usr/cpu/sysgen/IP27boot/mio.o	kernel-IP27	kernel-object	object	n64	6296	638c95bd3f710c02		2	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mloadidbg.o	kernel-IP27	kernel-object	object	n64	42528	41c06ecc19b8ebc2		10	symtab	0	0	undocumented		
 IP27/usr/cpu/sysgen/IP27boot/mouse.a(pcmouse.o)	kernel-IP27	kernel-object	object	n64	14916	7d5d999592db31ea		5	symtab	0	0	named-only	evidence/irix-files.md#how-the-tree-is-filled	How the tree is filled
