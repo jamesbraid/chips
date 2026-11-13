@@ -292,8 +292,8 @@ pub mod dma_read_state {
         }
     }
 }
-/// Upper half of mailbox 0. The mailbox area holds 32 eight-byte locations. A write to the upper half of any one raises an event to the internal processo (established)
-pub mod mailbox_0_upper {
+/// Word of mailbox 0 that raises the mailbox event, read as the least significant word at the higher address. Inferred: the manual contradicts itself. Se (inferred)
+pub mod mailbox_0_low {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x504;
 }

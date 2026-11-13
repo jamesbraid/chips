@@ -16,7 +16,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pci_state` | 0x5c | rw | 32 |  |  | 0x0 | established |  |
 | `dma_write_state` | 0xa0 | rw | 32 |  |  | unknown | established |  |
 | `dma_read_state` | 0xb0 | rw | 32 |  |  | unknown | established |  |
-| `mailbox_0_upper` | 0x504 | w | 32 |  |  | unknown | established |  |
+| `mailbox_0_low` | 0x504 | rw | 32 |  |  | unknown | inferred |  |
 
 ### Register `misc_host_ctl`
 
@@ -47,8 +47,8 @@ PCI State. All bits are zero at reset. The Miscellaneous Host Control reset does
 | 19 | `pci_66mhz_bus` | established |  |  | Read-only. One when the bus runs between 33 and 66 MHz, zero for 33 MHz or less. Before Tigon revision 5 this bit behaved like bit 18, for the write DMA channel only. |
 | 18 | `no_word_swap_dma` | established |  |  | Disables word swapping for all DMA transactions. Before Tigon revision 5 it affected only the read DMA channel. |
 | 17 | `use_mem_read_multiple` | established |  |  | Uses the Memory Read Multiple PCI command in place of Memory Read Line for DMA reads. |
-| 7:5 | `dma_write_max` | established |  |  | Forces termination of PCI write operations at a byte boundary. Encodings in order: disable, 4 or 8 (one bus width), 16, 32, 64, 128, 256, 1k. Encoding five is 128 bytes. |
-| 4:2 | `dma_read_max` | established |  |  | Forces termination of PCI read operations at a byte boundary, with the same encodings as the write field. Encoding five is 128 bytes. |
+| 7:5 | `dma_write_max` | established |  |  | Forces termination of PCI write operations at a byte boundary. Boundaries the manual lists: disable, 4 or 8 (one bus width), 16, 32, 64, 128, 256, 1k. The manual gives no numeric encodings; the public Linux Alteon driver (v2.4.37) defines the write limits as 0x01 through 0x07 shifted into bits 7 to 5, which puts 128 bytes at encoding five. |
+| 4:2 | `dma_read_max` | established |  |  | Forces termination of PCI read operations at a byte boundary, with the same boundary list as the write field. The public Linux Alteon driver (v2.4.37) likewise puts 128 bytes at encoding five. |
 | 0 | `force_reset` | established |  |  | Write-only and self-clearing. Forces an immediate reset of the PCI interface and loses its state. |
 
 ### Register `dma_write_state`
@@ -73,6 +73,6 @@ DMA Read State, the state of the read channel that moves data from the host to t
 | 1 | `dma_no_swap` | established |  |  | Disables the endian byte swap on data received from the PCI bus. The swap is normally applied in groups of four bytes. |
 | 0 | `dma_reset` | established |  |  | Write-only. Clears the read FIFO and the read DMA. |
 
-### Register `mailbox_0_upper`
+### Register `mailbox_0_low`
 
-Upper half of mailbox 0. The mailbox area holds 32 eight-byte locations. A write to the upper half of any one raises an event to the internal processor, naming the location. Writing mailbox 0 also deasserts the PCI interrupt pin at once, so a host can clear the interrupt and pass a message in one write. The upper half of mailbox n is eight bytes after the upper half of mailbox n minus one.
+Word of mailbox 0 that raises the mailbox event, read as the least significant word at the higher address. Inferred: the manual contradicts itself. Section 2.7 says a write to the upper half of one of the 32 eight-byte locations raises the event, and section 9.12.3 says a write to the least significant word does and a write to the most significant word does not. The Linux driver writes its producer indexes to the words at offset 4 of each location, which matches 9.12.3 if the least significant word sits at the higher address. Writing mailbox 0 also deasserts the PCI interrupt pin at once, so a host can clear the interrupt and pass a message in one write. The manual says a mailbox may be read back as often as needed. The same word of mailbox n is eight bytes after that of mailbox n minus one.

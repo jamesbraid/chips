@@ -58,13 +58,13 @@ For Tigon revision 5 and later:
   revision 5 it affected only the read channel (Alteon p. 77, Table 31).
 - **Established.** Before Tigon revision 5, PCI State bit 19 behaved like bit 18 for the write DMA
   channel only. From revision 5 it reads the bus speed: one for 33 to 66 MHz, zero for 33 MHz or less
-  (Alteon p. 77, Table 31). Public drivers name bit 19 as a no-swap bit and as a 66 MHz bit. The manual
+  (Alteon p. 77, Table 31). Public drivers name bit 19 both ways: Linux acenic.h as a 66 MHz bit, OpenBSD sys/dev/ic/tireg.h as a write-DMA no-swap bit and as a 66 MHz bit. The manual
   defines it as the second, and records the no-swap meaning only for revisions before 5.
 - **Established.** PCI State bits 31 to 28 and 27 to 24 are the default write and read commands. The
   manual says they should normally be initialized to seven and six (Alteon p. 77). Bit 17 selects
   Memory Read Multiple in place of Memory Read Line for DMA reads.
 - **Established.** The DMA maximum fields (PCI State bits 7 to 5 for writes, 4 to 2 for reads) use the
-  same list of boundaries: disable, 4 or 8, 16, 32, 64, 128, 256 and 1k (Alteon p. 77). The manual gives the list but no numeric codes, so reading the field value five as 128 bytes is **inferred** from list order.
+  same list of boundaries: disable, 4 or 8, 16, 32, 64, 128, 256 and 1k (Alteon p. 77). The manual gives the list but no numeric codes, so reading the field value five as 128 bytes comes from the Linux acenic driver (drivers/net/acenic.h v2.4.37, lines 236 to 249), a software expectation.
 - **Established.** Writing PCI State bit 20 from revision 5 forces 32-bit PCI operation, as in the
   bus-width section above. The manual says every PCI State bit is zero at reset and that the Miscellaneous
   Host Control reset leaves the register alone (Alteon p. 77).
@@ -75,8 +75,10 @@ For Tigon revision 5 and later:
   (Alteon p. 62, Table 19; p. 21; p. 111). The architecture chapter says a write to the upper half of a location
   raises an event to the internal processor, naming the location, with a separate event bit per location (Alteon p. 21).
   The register chapter says the opposite: a host write to the least significant word sets the event bit and the most
-  significant word can be written without an event (Alteon p. 111, section 9.12.3). The manual contradicts itself, so
-  which half raises the event is **unknown** here; a Tigon driver's mailbox write order or a trace would settle it.
+  significant word can be written without an event (Alteon p. 111, section 9.12.3). The manual contradicts itself.
+  The Linux acenic driver (drivers/net/acenic.h v2.4.37) writes its producer indexes to the word at offset 4 of
+  each location, which supports the register chapter if the least significant word is at the higher address.
+  That reading is **inferred**; the unit lists 0x504 as the event word of mailbox 0 on that basis.
 - **Established.** Mailbox 0 is special. Writing it deasserts the PCI interrupt pin at once (Alteon p. 21, p. 111), so a host can
   clear the interrupt and pass a message in one write. Software need not use it if it does not need that.
 - **Established.** The Miscellaneous Host Control register has a read-only interrupt-state bit that reflects

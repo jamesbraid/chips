@@ -274,15 +274,15 @@
   {
    "unit": "tigon",
    "kind": "register",
-   "name": "mailbox_0_upper",
+   "name": "mailbox_0_low",
    "offset": 1284,
-   "access": "w",
+   "access": "rw",
    "width": 32,
    "count": 1,
    "stride": 4,
    "space": null,
    "reset": "unknown",
-   "grade": "established"
+   "grade": "inferred"
   }
  ]
 }

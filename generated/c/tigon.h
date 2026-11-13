@@ -112,9 +112,9 @@
 #define TIGON_DMA_READ_STATE_DMA_RESET_INPLACE       (TIGON_DMA_READ_STATE_DMA_RESET_MASK << TIGON_DMA_READ_STATE_DMA_RESET_SHIFT)
 
 /*
- * Upper half of mailbox 0. The mailbox area holds 32 eight-byte locations. A write to the upper half of any one raises an event to the internal processor, naming the location. Writing mailbox 0 also deasserts the PCI interrupt pin at once, so a host can clear the interrupt and pass a message in one write. The upper half of mailbox n is eight bytes after the upper half of mailbox n minus one.
+ * Word of mailbox 0 that raises the mailbox event, read as the least significant word at the higher address. Inferred: the manual contradicts itself. Section 2.7 says a write to the upper half of one of the 32 eight-byte locations raises the event, and section 9.12.3 says a write to the least significant word does and a write to the most significant word does not. The Linux driver writes its producer indexes to the words at offset 4 of each location, which matches 9.12.3 if the least significant word sits at the higher address. Writing mailbox 0 also deasserts the PCI interrupt pin at once, so a host can clear the interrupt and pass a message in one write. The manual says a mailbox may be read back as often as needed. The same word of mailbox n is eight bytes after that of mailbox n minus one.
  */
-/* mailbox_0_upper: w32, reset unknown */
-#define TIGON_MAILBOX_0_UPPER_OFFSET                 0x504u /* established */
+/* mailbox_0_low: rw32, reset unknown */
+#define TIGON_MAILBOX_0_LOW_OFFSET                   0x504u /* inferred */
 
 #endif /* TIGON_GEN_H */
