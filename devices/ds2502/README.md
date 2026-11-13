@@ -14,17 +14,20 @@ software uses the part. **Unknown** means the sources do not settle it.
 ## Sources
 
 - **Maxim DS2502 1Kb Add-Only Memory datasheet**, document 19-5075, revision 12/11. The timing table and the ROM,
-  memory and status sections are the basis of the constants. Page numbers are not recorded in this import.
+  memory and status sections are the basis of the constants. A later verification pass re-read it in full. The 64-bit ROM
+  and its CRC are on pages 3 and 4, the status bytes on page 5, Read Memory on page 10, Write Status on page 12, the ROM
+  commands on pages 14 to 17, the timing figures on page 18 and the timing table on page 21.
 - **SGI MACE I/O ASIC Specification**, chip revision 2.0, July 16, 1996
   ([references/documents/specs](../../references/documents/specs/mace-specification.pdf)). Table 54 (Flash-ROM/NIC control register, printed
   page 124) gives the NIC bits at `0x310008`. The chip feature summary names a "Number-In-a-Can serial PROM" interface
   and a calendar clock module with a serial number and Ethernet address.
-- **Public NetBSD** at `07004b2a9dac23a1cdd33b76dc45b65be56c6f1f`: `sys/arch/sgimips/mace/mace.c` (the MACE match
-  function, which accepts only the O2 machine type) and `sys/arch/sgimips/mace/if_mec.c` (the Ethernet address setup,
-  with a comment about the DS2502 on the PCI riser).
-- **Public Linux** at `db2ddb87143519e20a95aa36c60b36107b736a58`: `arch/mips/sgi-ip32/ip32-setup.c`, which takes the
-  Ethernet address from the firmware `eaddr` variable.
-- **Public OpenBSD** SGI port reads the same firmware variable. Its files were not re-read for this page.
+- **Public NetBSD** at the `references/code/netbsd` pin (`0747dc050541`): `sys/arch/sgimips/mace/mace.c` (line 126, the
+  MACE match function, which accepts only the O2 machine type) and `sys/arch/sgimips/mace/if_mec.c` (lines 512 to 516, the
+  comment about the DS2502 on the PCI riser). The commit named in earlier versions, `07004b2a9dac`, is not a submodule here and was not checked.
+- **Public Linux** at the `references/code/linux` pin (`c339f4010dea`): `arch/mips/sgi-ip32/ip32-setup.c` (lines 82 to 83),
+  which takes the Ethernet address from the firmware `eaddr` variable.
+- **Public OpenBSD** SGI port, at the `references/code/openbsd` pin (`7011342f6a72`), reads the same firmware variable:
+  `sys/arch/sgi/sgi/machdep.c` line 223.
 
 ## The part (established)
 
