@@ -5,7 +5,7 @@
 The crossbar's 21 control, debug and error registers at the start of its block, the 14 error-clear registers and the first-error register. The census has only the block's row in the dump table. Names, offsets and field layouts come from the public Linux header; that header states no access direction, reset value or side effect, so every item is inferred and the reset values are unknown. Access is recorded as rw for the control and error registers, r for the first-error register and w for the clear registers: the first two are assumed from the header's wording, the first-error register is what the header says (not writable). Clear registers take the field layout of the register they clear. Bit positions are the little-endian layout the header gives first.
 
 Unit `bedrock_xb`, macro prefix `BEDROCK`.
-Default source: Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts.
+Default source: Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS.
 
 Every item has a grade: established, inferred or unknown. A grade says how the item was derived from its source; it does not claim the item was measured on silicon.
 
@@ -13,42 +13,42 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `xb_parms` | 0x700000 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_slow_gnt` | 0x700008 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_spew_control` | 0x700010 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_ioq_arb_trigger` | 0x700018 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_poq0_error` | 0x700020 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_piq0_error` | 0x700028 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_poq1_error` | 0x700030 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_piq1_error` | 0x700038 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_mp0_error` | 0x700040 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_mp1_error` | 0x700048 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_mmq_error` | 0x700050 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_miq_error` | 0x700058 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_noq_error` | 0x700060 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_niq_error` | 0x700068 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_ioq_error` | 0x700070 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_iiq_error` | 0x700078 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_loq_error` | 0x700080 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_liq_error` | 0x700088 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_first_error` | 0x700090 | r | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_debug_data_ctl` | 0x700098 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_debug_arb_ctl` | 0x7000a0 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_poq0_error_clear` | 0x700120 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_piq0_error_clear` | 0x700128 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_poq1_error_clear` | 0x700130 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_piq1_error_clear` | 0x700138 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_mp0_error_clear` | 0x700140 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_mp1_error_clear` | 0x700148 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_mmq_error_clear` | 0x700150 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_miq_error_clear` | 0x700158 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_noq_error_clear` | 0x700160 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_niq_error_clear` | 0x700168 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_ioq_error_clear` | 0x700170 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_iiq_error_clear` | 0x700178 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_loq_error_clear` | 0x700180 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_liq_error_clear` | 0x700188 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `xb_first_error_clear` | 0x700190 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
+| `xb_parms` | 0x700000 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_slow_gnt` | 0x700008 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_spew_control` | 0x700010 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_ioq_arb_trigger` | 0x700018 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_poq0_error` | 0x700020 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_piq0_error` | 0x700028 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_poq1_error` | 0x700030 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_piq1_error` | 0x700038 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_mp0_error` | 0x700040 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_mp1_error` | 0x700048 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_mmq_error` | 0x700050 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_miq_error` | 0x700058 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_noq_error` | 0x700060 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_niq_error` | 0x700068 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_ioq_error` | 0x700070 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_iiq_error` | 0x700078 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_loq_error` | 0x700080 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_liq_error` | 0x700088 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_first_error` | 0x700090 | r | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_debug_data_ctl` | 0x700098 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_debug_arb_ctl` | 0x7000a0 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_poq0_error_clear` | 0x700120 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_piq0_error_clear` | 0x700128 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_poq1_error_clear` | 0x700130 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_piq1_error_clear` | 0x700138 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_mp0_error_clear` | 0x700140 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_mp1_error_clear` | 0x700148 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_mmq_error_clear` | 0x700150 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_miq_error_clear` | 0x700158 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_noq_error_clear` | 0x700160 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_niq_error_clear` | 0x700168 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_ioq_error_clear` | 0x700170 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_iiq_error_clear` | 0x700178 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_loq_error_clear` | 0x700180 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_liq_error_clear` | 0x700188 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `xb_first_error_clear` | 0x700190 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
 
 ### Register `xb_parms`
 
@@ -56,10 +56,10 @@ Crossbar-wide parameters. The header gives the bypass enable and three wrap peri
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 51:32 | `tail_wrap` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 31:12 | `deadlock_wrap` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 11:4 | `age_wrap` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 0 | `byp_en` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 51:32 | `tail_wrap` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 31:12 | `deadlock_wrap` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 11:4 | `age_wrap` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 0 | `byp_en` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_slow_gnt`
 
@@ -67,14 +67,14 @@ Wavefront grant period per unit: the number of cycles between grant opportunitie
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 31:28 | `pi0` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 27:24 | `pi1` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 23:20 | `mp0` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 19:16 | `mp1` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 15:12 | `mmq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 11:8 | `ni` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 7:4 | `ii` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 3:0 | `lb` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 31:28 | `pi0` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 27:24 | `pi1` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 23:20 | `mp0` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 19:16 | `mp1` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 15:12 | `mmq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 11:8 | `ni` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 7:4 | `ii` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 3:0 | `lb` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_spew_control`
 
@@ -82,17 +82,17 @@ Snoop selector for internal crossbar traffic, sent to the PI1 port. The header s
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 10 | `snoop_poq0` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 9 | `snoop_mp0` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 8 | `snoop_mmq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 7 | `snoop_noq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 6 | `snoop_ioq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 5 | `snoop_loq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 4 | `snoop_piq0` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 3 | `snoop_miq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 2 | `snoop_niq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 1 | `snoop_iiq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 0 | `snoop_liq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 10 | `snoop_poq0` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 9 | `snoop_mp0` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 8 | `snoop_mmq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 7 | `snoop_noq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 6 | `snoop_ioq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 5 | `snoop_loq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 4 | `snoop_piq0` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 3 | `snoop_miq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 2 | `snoop_niq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 1 | `snoop_iiq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 0 | `snoop_liq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_ioq_arb_trigger`
 
@@ -100,7 +100,7 @@ Clocks the I/O output queue waits before crossbar arbitration starts, so the slo
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 3:0 | `clocks` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 3:0 | `clocks` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_poq0_error`
 
@@ -108,10 +108,10 @@ Error record for the PI0 output queue. The header says software may write it to 
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 13:12 | `tail_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 9:8 | `underflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 5:4 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 1:0 | `invalid_xsel` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 13:12 | `tail_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 9:8 | `underflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 5:4 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 1:0 | `invalid_xsel` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_piq0_error`
 
@@ -119,8 +119,8 @@ Error record for the PI0 input queue. The header says the processor-interface in
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 5:4 | `deadlock_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 1:0 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 5:4 | `deadlock_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 1:0 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_poq1_error`
 
@@ -136,9 +136,9 @@ Error record for the memory-to-PI0 output queue. The header notes the crossbar s
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 13:12 | `tail_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 9:8 | `underflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 5:4 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 13:12 | `tail_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 9:8 | `underflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 5:4 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_mp1_error`
 
@@ -154,7 +154,7 @@ Error record for the memory input queue. The header says further errors of this 
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 7:4 | `deadlock_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 7:4 | `deadlock_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_noq_error`
 
@@ -162,9 +162,9 @@ Error record for the NI output queue. The header defines three separate 4-bit co
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 15:12 | `tail_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 11:8 | `underflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 7:4 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 15:12 | `tail_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 11:8 | `underflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 7:4 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_niq_error`
 
@@ -184,9 +184,9 @@ Error record for the LB output queue.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 13:12 | `tail_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 9:8 | `underflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 1:0 | `invalid_xsel` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 13:12 | `tail_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 9:8 | `underflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 1:0 | `invalid_xsel` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_liq_error`
 
@@ -194,8 +194,8 @@ Error record for the LB input queue. The header says it records only request-cha
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 4 | `deadlock_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 0 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 4 | `deadlock_timeout` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 0 | `overflow` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_first_error`
 
@@ -203,10 +203,10 @@ The first crossbar error latched. It latches when the valid bit is clear and an 
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 12 | `valid` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 11:8 | `source` | inferred | first_error_source (liq=2, loq=3, iiq=4, ioq=5, niq=6, noq=7, miq=8, mmq=9, mp1=10, mp0=11, piq1=12, poq1=13, piq0=14, poq0=15) | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 7:4 | `channel` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 3:0 | `err_type` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 12 | `valid` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 11:8 | `source` | inferred | first_error_source (liq=2, loq=3, iiq=4, ioq=5, niq=6, noq=7, miq=8, mmq=9, mp1=10, mp0=11, piq1=12, poq1=13, piq0=14, poq0=15) | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 7:4 | `channel` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 3:0 | `err_type` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_debug_data_ctl`
 
@@ -214,22 +214,22 @@ Selects which queue observation points drive debug output. The header says more 
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 15 | `observe_lodata` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 14 | `observe_source_field` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 13 | `observe_poq0` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 12 | `observe_poq1` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 11 | `observe_mmq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 10 | `observe_mp0` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 9 | `observe_mp1` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 8 | `observe_noq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 7 | `observe_ioq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 6 | `observe_loq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 5 | `observe_piq0` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 4 | `observe_piq1` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 3 | `observe_miq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 2 | `observe_niq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 1 | `observe_iiq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
-| 0 | `observe_liq` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 15 | `observe_lodata` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 14 | `observe_source_field` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 13 | `observe_poq0` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 12 | `observe_poq1` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 11 | `observe_mmq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 10 | `observe_mp0` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 9 | `observe_mp1` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 8 | `observe_noq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 7 | `observe_ioq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 6 | `observe_loq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 5 | `observe_piq0` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 4 | `observe_piq1` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 3 | `observe_miq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 2 | `observe_niq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 1 | `observe_iiq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
+| 0 | `observe_liq` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_debug_arb_ctl`
 
@@ -237,7 +237,7 @@ Three-bit select for the debug mux of the crossbar's queues and arbiter. The hea
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 2:0 | `select` | inferred |  | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |  |
+| 2:0 | `select` | inferred |  | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |  |
 
 ### Register `xb_poq0_error_clear`
 
@@ -305,24 +305,24 @@ Clears the first-error register. The header says it is cleared after the error r
 
 | Label | Value | Grade | Source |
 |---|---|---|---|
-| `liq` | 2 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `loq` | 3 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `iiq` | 4 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `ioq` | 5 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `niq` | 6 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `noq` | 7 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `miq` | 8 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `mmq` | 9 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `mp1` | 10 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `mp0` | 11 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `piq1` | 12 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `poq1` | 13 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `piq0` | 14 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
-| `poq0` | 15 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts |
+| `liq` | 2 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `loq` | 3 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `iiq` | 4 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `ioq` | 5 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `niq` | 6 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `noq` | 7 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `miq` | 8 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `mmq` | 9 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `mp1` | 10 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `mp0` | 11 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `piq1` | 12 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `poq1` | 13 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `piq0` | 14 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
+| `poq0` | 15 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS |
 
 ## Constants
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `XB_PARMS_ACTIVE_DEFAULTS` | 0x80000fffff021 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts | Software constant named as the active defaults in the same public header. Same as the reset constant except the deadlock period has all 20 bits set. Whether software writes this value is unknown. |
-| `XB_PARMS_RESET_DEFAULTS` | 0x8000080000021 | inferred | Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts | Software constant named as the reset defaults in the Linux 2.5.40 public SN1 crossbar header. It is what software writes, not a hardware reset value, and the reset value is unknown. Decodes to bypass on, age period 2, and deadlock and tail periods with only the top bit of their 20-bit fields set. |
+| `XB_PARMS_ACTIVE_DEFAULTS` | 0x80000fffff021 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS | Software constant named as the active defaults in the same public header. Same as the reset constant except the deadlock period has all 20 bits set. Whether software writes this value is unknown. |
+| `XB_PARMS_RESET_DEFAULTS` | 0x8000080000021 | inferred | Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS | Software constant named as the reset defaults in the Linux 2.5.40 public SN1 crossbar header. It is what software writes, not a hardware reset value, and the reset value is unknown. Decodes to bypass on, age period 2, and deadlock and tail periods with only the top bit of their 20-bit fields set. |

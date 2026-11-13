@@ -25,7 +25,7 @@
 /*
  * Crossbar-wide parameters. The header gives the bypass enable and three wrap periods (age, deadlock, tail). It does not say what the periods count or how the crossbar uses them.
  */
-/* xb_parms: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_parms: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_PARMS                             0x700000 /* inferred */
 #define BEDROCK_XB_PARMS_TAIL_WRAP_SHIFT             32 /* inferred */
 #define BEDROCK_XB_PARMS_TAIL_WRAP_MASK              0xfffffull
@@ -43,7 +43,7 @@
 /*
  * Wavefront grant period per unit: the number of cycles between grant opportunities. The all-ones value gives no grants, and one less than all ones the slowest rate. Used to apply backpressure to a unit's output queues. Bypass grants are not affected.
  */
-/* xb_slow_gnt: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_slow_gnt: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_SLOW_GNT                          0x700008 /* inferred */
 #define BEDROCK_XB_SLOW_GNT_PI0_SHIFT                28 /* inferred */
 #define BEDROCK_XB_SLOW_GNT_PI0_MASK                 0xfull
@@ -73,7 +73,7 @@
 /*
  * Snoop selector for internal crossbar traffic, sent to the PI1 port. The header says only one selector should be set, and any set selector takes PI1 away from every use except this debug connection. Separate from the debug data select register.
  */
-/* xb_spew_control: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_spew_control: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_SPEW_CONTROL                      0x700010 /* inferred */
 #define BEDROCK_XB_SPEW_CONTROL_SNOOP_POQ0_SHIFT     10 /* inferred */
 #define BEDROCK_XB_SPEW_CONTROL_SNOOP_POQ0_MASK      0x1ull
@@ -112,7 +112,7 @@
 /*
  * Clocks the I/O output queue waits before crossbar arbitration starts, so the slower I/O data rate can catch up in the queue buffer.
  */
-/* xb_ioq_arb_trigger: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_ioq_arb_trigger: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_IOQ_ARB_TRIGGER                   0x700018 /* inferred */
 #define BEDROCK_XB_IOQ_ARB_TRIGGER_CLOCKS_SHIFT      0 /* inferred */
 #define BEDROCK_XB_IOQ_ARB_TRIGGER_CLOCKS_MASK       0xfull
@@ -121,7 +121,7 @@
 /*
  * Error record for the PI0 output queue. The header says software may write it to test error handling, and the write raises an interrupt.
  */
-/* xb_poq0_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_poq0_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_POQ0_ERROR                        0x700020 /* inferred */
 #define BEDROCK_XB_POQ0_ERROR_TAIL_TIMEOUT_SHIFT     12 /* inferred */
 #define BEDROCK_XB_POQ0_ERROR_TAIL_TIMEOUT_MASK      0x3ull
@@ -139,7 +139,7 @@
 /*
  * Error record for the PI0 input queue. The header says the processor-interface input cannot underflow, so no underflow field is defined.
  */
-/* xb_piq0_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_piq0_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_PIQ0_ERROR                        0x700028 /* inferred */
 #define BEDROCK_XB_PIQ0_ERROR_DEADLOCK_TIMEOUT_SHIFT 4 /* inferred */
 #define BEDROCK_XB_PIQ0_ERROR_DEADLOCK_TIMEOUT_MASK  0x3ull
@@ -151,19 +151,19 @@
 /*
  * Error record for the PI1 output queue. The header gives no field layout for it.
  */
-/* xb_poq1_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_poq1_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_POQ1_ERROR                        0x700030 /* inferred */
 
 /*
  * Error record for the PI1 input queue. The header gives no field layout for it.
  */
-/* xb_piq1_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_piq1_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_PIQ1_ERROR                        0x700038 /* inferred */
 
 /*
  * Error record for the memory-to-PI0 output queue. The header notes the crossbar select is decoded on the memory side of this queue, so no invalid-select field is defined.
  */
-/* xb_mp0_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_mp0_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_MP0_ERROR                         0x700040 /* inferred */
 #define BEDROCK_XB_MP0_ERROR_TAIL_TIMEOUT_SHIFT      12 /* inferred */
 #define BEDROCK_XB_MP0_ERROR_TAIL_TIMEOUT_MASK       0x3ull
@@ -178,19 +178,19 @@
 /*
  * Error record for the memory-to-PI1 output queue. The header gives no field layout for it.
  */
-/* xb_mp1_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_mp1_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_MP1_ERROR                         0x700048 /* inferred */
 
 /*
  * Error record for the memory output queue that carries miscellaneous traffic to LB, NI and II. The header gives no field layout for it.
  */
-/* xb_mmq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_mmq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_MMQ_ERROR                         0x700050 /* inferred */
 
 /*
  * Error record for the memory input queue. The header says further errors of this queue are logged in the memory unit's input error registers.
  */
-/* xb_miq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_miq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_MIQ_ERROR                         0x700058 /* inferred */
 #define BEDROCK_XB_MIQ_ERROR_DEADLOCK_TIMEOUT_SHIFT  4 /* inferred */
 #define BEDROCK_XB_MIQ_ERROR_DEADLOCK_TIMEOUT_MASK   0xfull
@@ -199,7 +199,7 @@
 /*
  * Error record for the NI output queue. The header defines three separate 4-bit counters for it.
  */
-/* xb_noq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_noq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_NOQ_ERROR                         0x700060 /* inferred */
 #define BEDROCK_XB_NOQ_ERROR_TAIL_TIMEOUT_SHIFT      12 /* inferred */
 #define BEDROCK_XB_NOQ_ERROR_TAIL_TIMEOUT_MASK       0xfull
@@ -214,25 +214,25 @@
 /*
  * Error record for the NI input queue. The header gives no field layout for it.
  */
-/* xb_niq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_niq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_NIQ_ERROR                         0x700068 /* inferred */
 
 /*
  * Error record for the I/O output queue. The header gives no field layout for it.
  */
-/* xb_ioq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_ioq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_IOQ_ERROR                         0x700070 /* inferred */
 
 /*
  * Error record for the I/O input queue. The header gives no field layout for it.
  */
-/* xb_iiq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_iiq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_IIQ_ERROR                         0x700078 /* inferred */
 
 /*
  * Error record for the LB output queue.
  */
-/* xb_loq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_loq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_LOQ_ERROR                         0x700080 /* inferred */
 #define BEDROCK_XB_LOQ_ERROR_TAIL_TIMEOUT_SHIFT      12 /* inferred */
 #define BEDROCK_XB_LOQ_ERROR_TAIL_TIMEOUT_MASK       0x3ull
@@ -247,7 +247,7 @@
 /*
  * Error record for the LB input queue. The header says it records only request-channel errors: the reply channel has no flow control and cannot overflow or deadlock.
  */
-/* xb_liq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_liq_error: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_LIQ_ERROR                         0x700088 /* inferred */
 #define BEDROCK_XB_LIQ_ERROR_DEADLOCK_TIMEOUT_SHIFT  4 /* inferred */
 #define BEDROCK_XB_LIQ_ERROR_DEADLOCK_TIMEOUT_MASK   0x1ull
@@ -259,7 +259,7 @@
 /*
  * The first crossbar error latched. It latches when the valid bit is clear and an error occurs. Any set valid bit interrupts both processor interfaces. The interrupt stays until the error register that captured the error is cleared, then this register is cleared, in that order. The header says the register is not writable but is set whenever software writes any error register.
  */
-/* xb_first_error: r64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_first_error: r64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_FIRST_ERROR                       0x700090 /* inferred */
 #define BEDROCK_XB_FIRST_ERROR_VALID_SHIFT           12 /* inferred */
 #define BEDROCK_XB_FIRST_ERROR_VALID_MASK            0x1ull
@@ -277,7 +277,7 @@
 /*
  * Selects which queue observation points drive debug output. The header says more than one selected point makes the debug output undefined. The output formats are not in the header.
  */
-/* xb_debug_data_ctl: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_debug_data_ctl: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_DEBUG_DATA_CTL                    0x700098 /* inferred */
 #define BEDROCK_XB_DEBUG_DATA_CTL_OBSERVE_LODATA_SHIFT 15 /* inferred */
 #define BEDROCK_XB_DEBUG_DATA_CTL_OBSERVE_LODATA_MASK 0x1ull
@@ -331,7 +331,7 @@
 /*
  * Three-bit select for the debug mux of the crossbar's queues and arbiter. The header does not give the output each value selects.
  */
-/* xb_debug_arb_ctl: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_debug_arb_ctl: rw64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_DEBUG_ARB_CTL                     0x7000a0 /* inferred */
 #define BEDROCK_XB_DEBUG_ARB_CTL_SELECT_SHIFT        0 /* inferred */
 #define BEDROCK_XB_DEBUG_ARB_CTL_SELECT_MASK         0x7ull
@@ -340,91 +340,91 @@
 /*
  * Clears the PI0 output queue error record. The header does not say whether a write clears by any value or only by set bits, so the mechanism is unknown. Field layout as the base register.
  */
-/* xb_poq0_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_poq0_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_POQ0_ERROR_CLEAR                  0x700120 /* inferred */
 
 /*
  * Clears the PI0 input queue error record. The write mechanism is unknown; field layout as the base register.
  */
-/* xb_piq0_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_piq0_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_PIQ0_ERROR_CLEAR                  0x700128 /* inferred */
 
 /*
  * Clears the PI1 output queue error record. The write mechanism is unknown.
  */
-/* xb_poq1_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_poq1_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_POQ1_ERROR_CLEAR                  0x700130 /* inferred */
 
 /*
  * Clears the PI1 input queue error record. The write mechanism is unknown.
  */
-/* xb_piq1_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_piq1_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_PIQ1_ERROR_CLEAR                  0x700138 /* inferred */
 
 /*
  * Clears the memory-to-PI0 output queue error record. The write mechanism is unknown.
  */
-/* xb_mp0_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_mp0_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_MP0_ERROR_CLEAR                   0x700140 /* inferred */
 
 /*
  * Clears the memory-to-PI1 output queue error record. The write mechanism is unknown.
  */
-/* xb_mp1_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_mp1_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_MP1_ERROR_CLEAR                   0x700148 /* inferred */
 
 /*
  * Clears the memory output queue error record. The write mechanism is unknown.
  */
-/* xb_mmq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_mmq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_MMQ_ERROR_CLEAR                   0x700150 /* inferred */
 
 /*
  * Clears the memory input queue error record. The header names this register with an extra XM_ in the macro, and its comment says it clears the MIQ error register. The write mechanism is unknown.
  */
-/* xb_miq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_miq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_MIQ_ERROR_CLEAR                   0x700158 /* inferred */
 
 /*
  * Clears the NI output queue error record. The write mechanism is unknown.
  */
-/* xb_noq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_noq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_NOQ_ERROR_CLEAR                   0x700160 /* inferred */
 
 /*
  * Clears the NI input queue error record. The write mechanism is unknown.
  */
-/* xb_niq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_niq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_NIQ_ERROR_CLEAR                   0x700168 /* inferred */
 
 /*
  * Clears the I/O output queue error record. The write mechanism is unknown.
  */
-/* xb_ioq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_ioq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_IOQ_ERROR_CLEAR                   0x700170 /* inferred */
 
 /*
  * Clears the I/O input queue error record. The write mechanism is unknown.
  */
-/* xb_iiq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_iiq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_IIQ_ERROR_CLEAR                   0x700178 /* inferred */
 
 /*
  * Clears the LB output queue error record. The write mechanism is unknown.
  */
-/* xb_loq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_loq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_LOQ_ERROR_CLEAR                   0x700180 /* inferred */
 
 /*
  * Clears the LB input queue error record. The write mechanism is unknown.
  */
-/* xb_liq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_liq_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_LIQ_ERROR_CLEAR                   0x700188 /* inferred */
 
 /*
  * Clears the first-error register. The header says it is cleared after the error register that captured the error. The write mechanism is unknown.
  */
-/* xb_first_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts */
+/* xb_first_error_clear: w64, reset unknown; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_FIRST_ERROR_CLEAR                 0x700190 /* inferred */
 
 #define BEDROCK_XB_PARMS_ACTIVE_DEFAULTS             0x80000fffff021ull /* inferred */

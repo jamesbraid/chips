@@ -2,7 +2,7 @@ unit = "bedrock_xb"
 prefix = "BEDROCK"
 title = "Bedrock internal crossbar (XB) registers outside the census"
 doc = "The crossbar's 21 control, debug and error registers at the start of its block, the 14 error-clear registers and the first-error register. The census has only the block's row in the dump table. Names, offsets and field layouts come from the public Linux header; that header states no access direction, reset value or side effect, so every item is inferred and the reset values are unknown. Access is recorded as rw for the control and error registers, r for the first-error register and w for the clear registers: the first two are assumed from the header's wording, the first-error register is what the header says (not writable). Clear registers take the field layout of the register they clear. Bit positions are the little-endian layout the header gives first."
-from = "Linux 2.5.40 public SN1 crossbar register header: register names, offsets and field layouts"
+from = "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
 public_from = ["Linux 2.5.40"]
 
 [c]
