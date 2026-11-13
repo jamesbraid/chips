@@ -305,7 +305,7 @@
    "name": "ASYNC_EVENT_LAST",
    "value": 49151,
    "count": 1,
-   "grade": "established"
+   "grade": "inferred"
   },
   {
    "unit": "isp2200",
@@ -561,7 +561,7 @@
    "name": "MBOX_COMPLETION_LAST",
    "value": 32767,
    "count": 1,
-   "grade": "established"
+   "grade": "inferred"
   },
   {
    "unit": "isp2200",

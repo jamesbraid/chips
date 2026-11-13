@@ -261,7 +261,7 @@ pub mod mailbox_hi {
     pub const STRIDE: u64 = 2;
 }
 pub const ASYNC_EVENT_FIRST: u32 = 0x8000; // established
-pub const ASYNC_EVENT_LAST: u32 = 0xbfff; // established
+pub const ASYNC_EVENT_LAST: u32 = 0xbfff; // inferred
 pub const ASYNC_LIP: u32 = 0x8010; // established
 pub const ASYNC_LOOP_DOWN: u32 = 0x8012; // established
 pub const ASYNC_LOOP_UP: u32 = 0x8011; // established
@@ -293,7 +293,7 @@ pub const ICB_VERSION: u32 = 0x1; // established
 pub const MAILBOXES_TOTAL: u32 = 0x18; // established
 pub const MARKER_ENTRY: u32 = 0x4; // established
 pub const MBOX0_BUSY: u32 = 0x4; // established
-pub const MBOX_COMPLETION_LAST: u32 = 0x7fff; // established
+pub const MBOX_COMPLETION_LAST: u32 = 0x7fff; // inferred
 pub const NVRAM_IMAGE_BYTES: u32 = 0x100; // established
 pub const OP_ABOUT_FIRMWARE: u32 = 0x8; // established
 pub const OP_DUMP_RAM: u32 = 0x3; // inferred

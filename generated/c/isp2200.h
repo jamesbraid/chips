@@ -117,7 +117,7 @@
 #define ISP2200_MAILBOX_HI_STRIDE                    2
 
 #define ISP2200_ASYNC_EVENT_FIRST                    0x8000u /* established */
-#define ISP2200_ASYNC_EVENT_LAST                     0xbfffu /* established */
+#define ISP2200_ASYNC_EVENT_LAST                     0xbfffu /* inferred */
 #define ISP2200_ASYNC_LIP                            0x8010u /* established */
 #define ISP2200_ASYNC_LOOP_DOWN                      0x8012u /* established */
 #define ISP2200_ASYNC_LOOP_UP                        0x8011u /* established */
@@ -149,7 +149,7 @@
 #define ISP2200_MAILBOXES_TOTAL                      0x18u /* established */
 #define ISP2200_MARKER_ENTRY                         0x4u /* established */
 #define ISP2200_MBOX0_BUSY                           0x4u /* established */
-#define ISP2200_MBOX_COMPLETION_LAST                 0x7fffu /* established */
+#define ISP2200_MBOX_COMPLETION_LAST                 0x7fffu /* inferred */
 #define ISP2200_NVRAM_IMAGE_BYTES                    0x100u /* established */
 #define ISP2200_OP_ABOUT_FIRMWARE                    0x8u /* established */
 #define ISP2200_OP_DUMP_RAM                          0x3u /* inferred */

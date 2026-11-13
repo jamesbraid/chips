@@ -248,7 +248,7 @@ the semaphore:
 
 1. If the lock bit is set, a mailbox result or an asynchronous event is waiting. Linux clears the RISC interrupt with
    HCCR `0x7`, reads mailbox 0 and the rest, then writes 0 to the semaphore to release it. Codes `0x4000` to `0x7FFF`
-   are command completions and `0x8000` to `0xBFFF` are asynchronous events.
+   are command completions and `0x8000` to `0xBFFF` are asynchronous events (the Linux driver is the only one that tests the upper bounds, `qla_isr.c` lines 97 and 100, so those two bounds are graded inferred; the `0x8000` start is also in NetBSD).
 2. If the lock bit is clear, it is a response-ring interrupt. Linux walks the ring and then clears the RISC interrupt.
    OpenBSD reads response-in first, consumes entries, writes response-out, then clears.
 

@@ -111,7 +111,7 @@ Array of 16 registers, stride 2.
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
 | `ASYNC_EVENT_FIRST` | 0x8000 | established |  | The codes from this value to 0xBFFF in mailbox 0 are asynchronous events, delivered like a mailbox result. |
-| `ASYNC_EVENT_LAST` | 0xbfff | established |  | Last code in the asynchronous event range. |
+| `ASYNC_EVENT_LAST` | 0xbfff | inferred |  | Last code in the asynchronous event range. |
 | `ASYNC_LIP` | 0x8010 | established |  | Asynchronous event: a loop initialization primitive occurred. |
 | `ASYNC_LOOP_DOWN` | 0x8012 | established |  | Asynchronous event: the loop went down. |
 | `ASYNC_LOOP_UP` | 0x8011 | established |  | Asynchronous event: the loop came up. |
@@ -143,7 +143,7 @@ Array of 16 registers, stride 2.
 | `MAILBOXES_TOTAL` | 0x18 | established |  | Number of 16-bit mailboxes. Only the first eight are used by the OpenBSD driver. Linux writes all of them on every command. |
 | `MARKER_ENTRY` | 0x4 | established |  | Request entry the host posts after a loop reset, abort or LIP to resynchronise the firmware. It produces no response entry. |
 | `MBOX0_BUSY` | 0x4 | established |  | Mailbox 0 reads this value while the RISC is held in reset or paused, and the drivers wait until it stops reading it. |
-| `MBOX_COMPLETION_LAST` | 0x7fff | established |  | The codes from 0x4000 to this value in mailbox 0 are command completions. The drivers test the range rather than single codes. |
+| `MBOX_COMPLETION_LAST` | 0x7fff | inferred |  | The codes from 0x4000 to this value in mailbox 0 are command completions. The drivers test the range rather than single codes. |
 | `NVRAM_IMAGE_BYTES` | 0x100 | established |  | Size of the serial EEPROM image the drivers read through the NVRAM register. |
 | `OP_ABOUT_FIRMWARE` | 0x8 | established |  | Return the firmware version in mailboxes 1 to 3 and the attributes word in mailbox 6. |
 | `OP_DUMP_RAM` | 0x3 | inferred |  | Dump RAM to host memory, the inverse of the 32-bit load. The operand layout follows the load command. |

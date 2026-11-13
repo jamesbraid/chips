@@ -53,7 +53,7 @@
     <doc>Mailboxes 8 to 23. The count of 24 comes from two drivers, but only Linux gives where the upper sixteen sit. Linux writes all 24 on every mailbox command, zeroing the ones the command does not use.</doc>
   </struct>
   <constant name="ASYNC_EVENT_FIRST" value="0x8000" grade="established"/>
-  <constant name="ASYNC_EVENT_LAST" value="0xbfff" grade="established"/>
+  <constant name="ASYNC_EVENT_LAST" value="0xbfff" grade="inferred"/>
   <constant name="ASYNC_LIP" value="0x8010" grade="established"/>
   <constant name="ASYNC_LOOP_DOWN" value="0x8012" grade="established"/>
   <constant name="ASYNC_LOOP_UP" value="0x8011" grade="established"/>
@@ -85,7 +85,7 @@
   <constant name="MAILBOXES_TOTAL" value="0x18" grade="established"/>
   <constant name="MARKER_ENTRY" value="0x4" grade="established"/>
   <constant name="MBOX0_BUSY" value="0x4" grade="established"/>
-  <constant name="MBOX_COMPLETION_LAST" value="0x7fff" grade="established"/>
+  <constant name="MBOX_COMPLETION_LAST" value="0x7fff" grade="inferred"/>
   <constant name="NVRAM_IMAGE_BYTES" value="0x100" grade="established"/>
   <constant name="OP_ABOUT_FIRMWARE" value="0x8" grade="established"/>
   <constant name="OP_DUMP_RAM" value="0x3" grade="inferred"/>

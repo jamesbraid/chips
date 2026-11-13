@@ -145,20 +145,20 @@ doc = "Mailbox 0 status for a bad parameter. The sources name the value but not 
 
 [constants.MBOX_COMPLETION_LAST]
 value = 0x7fff
-grade = "established"
-from = "Linux qla2xxx semaphore handling"
+grade = "inferred"
+from = "linux-5.3 drivers/scsi/qla2xxx/qla_isr.c line 97 (mb[0] > 0x3fff && mb[0] < 0x8000); no other driver tested the upper bound"
 doc = "The codes from 0x4000 to this value in mailbox 0 are command completions. The drivers test the range rather than single codes."
 
 [constants.ASYNC_EVENT_FIRST]
 value = 0x8000
 grade = "established"
-from = "Linux qla2xxx semaphore handling"
+from = "linux-5.3 qla_isr.c line 100 (mb[0] > 0x7fff); NetBSD isp.c line 5027 (mailbox 0 bit 0x8000 marks an asynchronous event)"
 doc = "The codes from this value to 0xBFFF in mailbox 0 are asynchronous events, delivered like a mailbox result."
 
 [constants.ASYNC_EVENT_LAST]
 value = 0xbfff
-grade = "established"
-from = "Linux qla2xxx semaphore handling"
+grade = "inferred"
+from = "linux-5.3 drivers/scsi/qla2xxx/qla_isr.c line 100 (mb[0] > 0x7fff && mb[0] < 0xc000); no other driver tested the upper bound"
 doc = "Last code in the asynchronous event range."
 
 [constants.ASYNC_RESET]
