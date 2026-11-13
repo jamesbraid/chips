@@ -89,16 +89,26 @@ cold-start check below), so the two must agree for boot to continue.
   A mode word cannot change them. Bits 31:25 of the 32-bit word are not loaded into Config.
 - **Established** (same manual, printed p. 165): Config bits 18:16 give the secondary-cache size, with value one for 1 MB and value three for 4 MB.
 - **Established** (*Hardware Quick-reference Booklet (Origin and Onyx2 Series)*,
-  HMQ-380-C, printed p. 93): the IP27 node-board assemblies are a 1 MB assembly with a
-  180 MHz processor and a 4 MB assembly with a 195 MHz processor. The booklet does not
-  document a 195 MHz board with 1 MB, or a 180 MHz board with 4 MB.
+  HMQ-380-C, printed p. 93, midplane jumper settings): the node-board assemblies for
+  midplane revision AB and earlier are a 1 MB assembly with a 180 MHz processor (HEMM) and a
+  4 MB assembly with a 195 MHz processor (HTMM). The same page, and printed p. 94 for the
+  Onyx2 deskside, also list 1 MB and 4 MB HIMM assemblies for later midplanes without
+  giving a clock. The booklet does not document a 195 MHz board with 1 MB, or a 180 MHz board
+  with 4 MB, but its HIMM clocks are not stated either. The scanned text of the page is
+  garbled around the 180 MHz figure ("80 Mhz"), so that figure rests on the Diagnostic
+  Roadmap above.
 
 ## Cold-start mode-word check
 
 The stock PROM checks the flash mode word against the processor's Config register
-early in the cold start. This is a software expectation read from the PROM 6.11 image,
-SHA-256 `14e0d0a77b92154e3b33573f30608f241ded249db6060fba9f97bfd00b2145b2`.
-The reading comes from static decoding of payload offsets `0xc00` to `0xe3f`. It shows
+early in the cold start. This is a software expectation. It was read from the PROM 6.11
+image, SHA-256 `14e0d0a77b92154e3b33573f30608f241ded249db6060fba9f97bfd00b2145b2`, and
+the verification pass re-decoded the same payload offsets, `0xc00` to `0xe3f`, in the
+PROM 6.156 payload, where the code is the same: the mode-word loads at `0x10000064`, the
+two Config compares, the `0xb4` stores, the machine-type word at `0x10000090` and the stores
+to `0x01220050`, `0x01220080` and `0x01220008` all read as described below. The 6.11 image
+was not available to re-check.
+The reading comes from static decoding of those payload offsets. It shows
 which accesses and comparisons the code makes. It does not show which branch a given
 boot took, so the grades below are inferred.
 
@@ -109,8 +119,10 @@ boot took, so the grades below are inferred.
 - **Inferred**: the processor writes the word into CP0 Config, reads Config back, and
   compares bits 15:0 with the word. It then rereads the flash word, reads Config again,
   and compares bits 24:16. Both halves must agree under mask `0x01ffffff`. Bits 31:25
-  are not compared. The check does not copy the whole word into an ordinary writable
-  register, because reset-configuration and hardwired Config fields keep their meanings.
+  are not compared. The code writes the whole 32-bit flash word to CP0 Config with `mtc0`
+  before reading Config back. Fields that Config hardwires, such as the primary-cache sizes,
+  are not changed by the write, and the R10000 manual says bits 24:0 hold the loaded mode
+  (printed pp. 164, 256). That is the likely reason only bits 24:0 are compared.
 - **Inferred**: a mismatch in either half enters a failure path. That path writes `0xb4`
   to the slice's progress location, reads the machine-type word at `0x10000090`, and
   writes `0xb4` to an LED location chosen by that type: `0x01220050 + 8 × slice` for
