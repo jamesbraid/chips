@@ -9,7 +9,7 @@ The family covers the R10000, R12000, R14000 and R16000. The identity word that 
 - NEC, *VR10000 Series 64-/32-bit Microprocessor User's Manual*, fourth edition, March 2001, U10278EJ4V0UM00. The register is described on printed pages 235 to 237. Cited below as "the NEC manual". Established means that manual states the fact for the part it names.
 - Linux `arch/mips/include/asm/mipsregs.h` and `arch/mips/kernel/cpu-probe.c` at commit `db2ddb87143519e20a95aa36c60b36107b736a58`, read in full for the register names and the init code. Inferred means a driver's use of a bit is a software expectation, not a statement of what the part does.
 
-The NEC page numbers and field wording were carried over from an earlier reading and have not been re-checked against the manual. The manual was not available to this import. Re-check them against the manual before this page is cited for a rule.
+The NEC page numbers and field positions were re-read against the manual: Figure 11-21 is on printed p. 235, Table 11-18 on p. 236 and the R12000 additions on p. 237 (printed and PDF page numbers agree).
 
 ## Fields on the R10000
 
@@ -31,8 +31,8 @@ The NEC page numbers and field wording were carried over from an earlier reading
 
 No cited manual describes the Diagnostic register on the R14000 or R16000. What is known comes from the Linux driver and from an assumption.
 
-- **Driver use (inferred).** Linux ORs bit 26 into the register at init on the R12000, and on implementation `0x0f` the same way. Implementation `0x0f` with a revision major above 2 is the R16000 (see [devices/r10000_identity/README.md](../r10000_identity/README.md)). This is a software expectation. It shows the driver's intent, not that the part honours the bit.
-- **Layout assumption (inferred).** Assuming the R16000 keeps the R12000 layout, its writable control fields would be BPOp 1:0, BPIdx 13:3, BPState 15:14, BPMode 17:16, DBRC 22, global history 26:23 and branch target address cache disable 27. The reason is that Linux drives bits 26 and 27 with the same names on implementation `0x0e` and `0x0f`. The writability of DBRC is inferred from its description as a disable control.
+- **Driver use (inferred).** Linux ORs bit 26 (`R10K_DIAG_E_GHIST`) into the register at init on the R12000 and, in the shared branch for implementation `0x0f`, on the R14000 and R16000 alike (cpu-probe.c, lines 1225 to 1251). Implementation `0x0f` with a revision major above 2 is the R16000 (see [devices/r10000_identity/README.md](../r10000_identity/README.md)). This is a software expectation. It shows the driver's intent, not that the part honours the bit.
+- **Layout assumption (inferred).** Assuming the R16000 keeps the R12000 layout, its writable control fields would be BPOp 1:0, BPIdx 13:3, BPState 15:14, BPMode 17:16, DBRC 22, global history 26:23 and branch target address cache disable 27. The only support is that Linux sets bit 26 with the R12000 name on implementation `0x0e` and `0x0f`. Linux defines bit 27 (`R10K_DIAG_D_BTAC`) but never writes it, so the driver says nothing about bit 27 or the other fields on the later parts. The writability of DBRC is inferred from its description as a disable control.
 - **Not established.** Whether the R14000 keeps the R12000 layout is not settled by any cited source either.
 
 ## Unknown, and what would settle it
