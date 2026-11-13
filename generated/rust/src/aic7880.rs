@@ -292,13 +292,23 @@ pub mod scsisig {
         }
     }
 }
-/// SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. Bits 6 to 4 are not in the cited pages  (inferred)
+/// SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. The sibling's page shows every bit of t (inferred)
 pub mod scsirate {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x4;
     pub mod wide { // bits 7:7, inferred
         pub const SHIFT: u32 = 7;
         pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sxfr { // bits 6:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u32 = 0x7;
         pub const fn get(v: u32) -> u32 {
             (v >> SHIFT) & MASK
         }
@@ -515,6 +525,16 @@ pub mod sblkctl {
     }
     pub mod autoflushdis { // bits 5:5, inferred
         pub const SHIFT: u32 = 5;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod selbusb { // bits 3:3, inferred
+        pub const SHIFT: u32 = 3;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
             (v >> SHIFT) & MASK

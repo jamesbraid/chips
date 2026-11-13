@@ -17,7 +17,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `sxfrctl0` | 0x1 | rw | 8 |  |  | unknown | inferred | Adaptec AIC-7870 Data Book, PDF pp. 74-75 (printed 4-5 and 4-6); sibling |
 | `sxfrctl1` | 0x2 | rw | 8 |  |  | 0x0 | inferred | Adaptec AIC-7870 Data Book, PDF pp. 75-76 (printed 4-6 and 4-7); sibling |
 | `scsisig` | 0x3 | rw | 8 |  |  | unknown | inferred | Adaptec AIC-7870 Data Book, PDF pp. 77-78 (printed 4-8 and 4.9); sibling |
-| `scsirate` | 0x4 | rw | 8 |  |  | unknown | inferred | Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling |
+| `scsirate` | 0x4 | rw | 8 |  |  | 0x0 | inferred | Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling |
 | `scsiid` | 0x5 | rw | 8 |  |  | 0x0 | inferred | Adaptec AIC-7870 Data Book, PDF p. 80; sibling |
 | `scsidatl` | 0x6 | rw | 8 |  |  | unknown | inferred | Adaptec AIC-7870 Data Book, PDF p. 81 (printed 4-12); sibling |
 | `clrsint1` | 0xc | w | 8 |  |  | unknown | inferred | Adaptec AIC-7870 Data Book, PDF pp. 78 and 86; sibling; Linux aic7xxx.reg (db2ddb87143519e20a95aa36c60b36107b736a58) |
@@ -115,12 +115,13 @@ SCSI control signals. The read side returns the state of the bus control signals
 
 ### Register `scsirate`
 
-SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. Bits 6 to 4 are not in the cited pages and the reset value is not stated, so both stay unknown. Read-back is not stated.
+SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. The sibling's page shows every bit of the register resetting to zero. Bits 6 to 4 select the synchronous transfer rate. Read-back is not stated.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 7 | `wide` | inferred |  | Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling | WIDEXFER: sixteen-bit DATA transfer, which also needs SELWIDE set in SBLKCTL |
-| 3:0 | `sofs` | inferred |  | Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling | SOFS: synchronous offset that sets DATA timing |
+| 6:4 | `sxfr` | inferred |  | Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling | SXFR: synchronous transfer rate select for DATA. The sibling's table gives, for a 40 MHz clock with period T, request and acknowledge widths of 2T for values 0 to 3 and 4T for values 4 to 7, and periods from 4T at value 0 to 11T at value 7. The AIC-7880's clock and table are not stated. |
+| 3:0 | `sofs` | inferred |  | Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling | SOFS: synchronous offset that sets DATA timing. Zero selects asynchronous transfers. The sibling allows 1 to 8 for wide transfers and 1 to 15 for narrow ones. |
 
 ### Register `scsiid`
 
@@ -187,12 +188,13 @@ Selection and reselection ID. Holds the ID of the device that selected or resele
 
 ### Register `sblkctl`
 
-Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 2 and 0 read zero. Bit 3 is not described here.
+Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 3, 2 and 0 read zero.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 7:6 | `diagled` | inferred |  | Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling | diagnostic LED control; resets to one |
-| 5 | `autoflushdis` | inferred |  | Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling | resets to zero; the function is not in the cited pages |
+| 5 | `autoflushdis` | inferred |  | Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling | resets to zero. Set, it stops the SCSI hardware from flushing the data FIFO to host memory by itself when the SCSI phase changes unexpectedly or the transfer completes (the sibling's PHASEMIS and SDONE conditions). DFCNTRL FIFOFLUSH then flushes on request. |
+| 3 | `selbusb` | inferred |  | Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling | always reads zero, and a write has no effect |
 | 1 | `selwide` | inferred |  | Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling | 1 configures the wide physical connection with the upper data lines in use; 0 leaves them unused |
 
 ### Register `seqctl`

@@ -312,7 +312,7 @@
    "count": 1,
    "stride": 1,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling"
   },
@@ -322,6 +322,15 @@
    "name": "scsirate.wide",
    "hi": 7,
    "lo": 7,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "scsirate.sxfr",
+   "hi": 6,
+   "lo": 4,
    "grade": "inferred",
    "from": "Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling"
   },
@@ -601,6 +610,15 @@
    "name": "sblkctl.autoflushdis",
    "hi": 5,
    "lo": 5,
+   "grade": "inferred",
+   "from": "Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling"
+  },
+  {
+   "unit": "aic7880",
+   "kind": "field",
+   "name": "sblkctl.selbusb",
+   "hi": 3,
+   "lo": 3,
    "grade": "inferred",
    "from": "Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling"
   },

@@ -231,13 +231,15 @@ addr8 = { bits = [0, 0], grade = "inferred", doc = "bit 8 of the sequencer RAM a
 offset = 0x04
 access = "rw"
 width = 8
+reset = 0x0
 grade = "inferred"
 from = "Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling"
-doc = "SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. Bits 6 to 4 are not in the cited pages and the reset value is not stated, so both stay unknown. Read-back is not stated."
+doc = "SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. The sibling's page shows every bit of the register resetting to zero. Bits 6 to 4 select the synchronous transfer rate. Read-back is not stated."
 
 [registers.scsirate.fields]
 wide = { bits = [7, 7], grade = "inferred", doc = "WIDEXFER: sixteen-bit DATA transfer, which also needs SELWIDE set in SBLKCTL" }
-sofs = { bits = [3, 0], grade = "inferred", doc = "SOFS: synchronous offset that sets DATA timing" }
+sxfr = { bits = [6, 4], grade = "inferred", doc = "SXFR: synchronous transfer rate select for DATA. The sibling's table gives, for a 40 MHz clock with period T, request and acknowledge widths of 2T for values 0 to 3 and 4T for values 4 to 7, and periods from 4T at value 0 to 11T at value 7. The AIC-7880's clock and table are not stated." }
+sofs = { bits = [3, 0], grade = "inferred", doc = "SOFS: synchronous offset that sets DATA timing. Zero selects asynchronous transfers. The sibling allows 1 to 8 for wide transfers and 1 to 15 for narrow ones." }
 
 [registers.scsiid]
 offset = 0x05
@@ -258,11 +260,12 @@ access = "rw"
 width = 8
 grade = "inferred"
 from = "Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling"
-doc = "Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 2 and 0 read zero. Bit 3 is not described here."
+doc = "Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 3, 2 and 0 read zero."
 
 [registers.sblkctl.fields]
 diagled      = { bits = [7, 6], grade = "inferred", doc = "diagnostic LED control; resets to one" }
-autoflushdis = { bits = [5, 5], grade = "inferred", doc = "resets to zero; the function is not in the cited pages" }
+autoflushdis = { bits = [5, 5], grade = "inferred", doc = "resets to zero. Set, it stops the SCSI hardware from flushing the data FIFO to host memory by itself when the SCSI phase changes unexpectedly or the transfer completes (the sibling's PHASEMIS and SDONE conditions). DFCNTRL FIFOFLUSH then flushes on request." }
+selbusb      = { bits = [3, 3], grade = "inferred", doc = "always reads zero, and a write has no effect" }
 selwide      = { bits = [1, 1], grade = "inferred", doc = "1 configures the wide physical connection with the upper data lines in use; 0 leaves them unused" }
 
 [registers.scsiseq]

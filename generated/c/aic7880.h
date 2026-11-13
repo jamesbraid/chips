@@ -112,13 +112,16 @@
 #define AIC7880_SCSISIG_ACK_INPLACE                  (AIC7880_SCSISIG_ACK_MASK << AIC7880_SCSISIG_ACK_SHIFT)
 
 /*
- * SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. Bits 6 to 4 are not in the cited pages and the reset value is not stated, so both stay unknown. Read-back is not stated.
+ * SCSI rate control for DATA. Wide DATA needs this register's WIDEXFER bit and the SBLKCTL SELWIDE bit both set. The sibling's page shows every bit of the register resetting to zero. Bits 6 to 4 select the synchronous transfer rate. Read-back is not stated.
  */
-/* scsirate: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling */
+/* scsirate: rw8, reset 0x0; Adaptec AIC-7870 Data Book, PDF pp. 79 and 97; sibling */
 #define AIC7880_SCSIRATE_OFFSET                      0x4u /* inferred */
 #define AIC7880_SCSIRATE_WIDE_SHIFT                  7 /* inferred */
 #define AIC7880_SCSIRATE_WIDE_MASK                   0x1u
 #define AIC7880_SCSIRATE_WIDE_INPLACE                (AIC7880_SCSIRATE_WIDE_MASK << AIC7880_SCSIRATE_WIDE_SHIFT)
+#define AIC7880_SCSIRATE_SXFR_SHIFT                  4 /* inferred */
+#define AIC7880_SCSIRATE_SXFR_MASK                   0x7u
+#define AIC7880_SCSIRATE_SXFR_INPLACE                (AIC7880_SCSIRATE_SXFR_MASK << AIC7880_SCSIRATE_SXFR_SHIFT)
 #define AIC7880_SCSIRATE_SOFS_SHIFT                  0 /* inferred */
 #define AIC7880_SCSIRATE_SOFS_MASK                   0xfu
 #define AIC7880_SCSIRATE_SOFS_INPLACE                (AIC7880_SCSIRATE_SOFS_MASK << AIC7880_SCSIRATE_SOFS_SHIFT)
@@ -216,7 +219,7 @@
 #define AIC7880_SELID_ONEBIT_INPLACE                 (AIC7880_SELID_ONEBIT_MASK << AIC7880_SELID_ONEBIT_SHIFT)
 
 /*
- * Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 2 and 0 read zero. Bit 3 is not described here.
+ * Block control. The SELWIDE bit selects the physical SCSI connection width. Its reset value follows the wide-select pin WIDEPS# sampled at reset, and the O2's strap state is unknown, so the register has no reset value here. Bits 7 and 6 reset to one, bit 5 resets to zero, and bits 4, 3, 2 and 0 read zero.
  */
 /* sblkctl: rw8, reset unknown; Adaptec AIC-7870 Data Book, PDF pp. 80 and 96-97; sibling */
 #define AIC7880_SBLKCTL_OFFSET                       0x1fu /* inferred */
@@ -226,6 +229,9 @@
 #define AIC7880_SBLKCTL_AUTOFLUSHDIS_SHIFT           5 /* inferred */
 #define AIC7880_SBLKCTL_AUTOFLUSHDIS_MASK            0x1u
 #define AIC7880_SBLKCTL_AUTOFLUSHDIS_INPLACE         (AIC7880_SBLKCTL_AUTOFLUSHDIS_MASK << AIC7880_SBLKCTL_AUTOFLUSHDIS_SHIFT)
+#define AIC7880_SBLKCTL_SELBUSB_SHIFT                3 /* inferred */
+#define AIC7880_SBLKCTL_SELBUSB_MASK                 0x1u
+#define AIC7880_SBLKCTL_SELBUSB_INPLACE              (AIC7880_SBLKCTL_SELBUSB_MASK << AIC7880_SBLKCTL_SELBUSB_SHIFT)
 #define AIC7880_SBLKCTL_SELWIDE_SHIFT                1 /* inferred */
 #define AIC7880_SBLKCTL_SELWIDE_MASK                 0x1u
 #define AIC7880_SBLKCTL_SELWIDE_INPLACE              (AIC7880_SBLKCTL_SELWIDE_MASK << AIC7880_SBLKCTL_SELWIDE_SHIFT)
