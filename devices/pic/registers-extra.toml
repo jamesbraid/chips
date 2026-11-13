@@ -1,7 +1,7 @@
 unit = "pic_extra"
 prefix = "PIC"
 title = "PIC bits outside the census"
-from = "public SGI PIC register header (Linux IA64 SN2, GPL); public Linux and OpenBSD PIC driver flag tables; shipped IRIX 6.5.30 IP35 pcibr flag routine (static reading)"
+from = "public SGI PIC register header (include/asm-ia64/sn/pci/pic.h, pinned linux-2.4.37 tree, GPL); public Linux and OpenBSD PIC driver flag tables; shipped IRIX 6.5.30 IP35 pcibr flag routine (static reading)"
 public_from = ["census:"]
 
 [c]

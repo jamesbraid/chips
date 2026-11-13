@@ -101,7 +101,7 @@ Unknown: whether a refused or NACKed packet returns a response, and whether any 
 
 Established, from the Origin 350 user's guide and the Onyx 350 guide. The Origin 350 guide is *Origin 350 Server System User's Guide*, 007-4566-001, printed pages 70, 87 to 89, 110, 119, 125 and 141. The Onyx 350 guide is *Onyx 350 Visualization System User's Guide*, 007-4632-001, pages 53 and 57.
 
-Each compute module has four 64-bit 3.3 V PCI or PCI-X slots, on two buses, labelled PCI 1 to PCI 4 from the bottom. The IO9 card sits in bus 1 slot 1, the lowest slot of the base module. Bus 1 slot 2 shares the IO9's bus, so it runs PCI mode at 66 MHz or slower (page 110). An MPX module has four slots with the same labels and no IO9. It has its own node, interface board and PIC (page 141). A PCI expansion module has six buses of two slots each, which the [Origin 300 expansion module sheet](../../platforms/bricks/origin300-pci-expansion-module.md) owns.
+Each compute module has four 64-bit 3.3 V PCI or PCI-X slots, on two buses, labelled PCI 1 to PCI 4 from the bottom. The IO9 card sits in bus 1 slot 1, the lowest slot of the base module. Bus 1 slot 2 shares the IO9's bus, so it runs PCI mode at 66 MHz or slower (page 110). An MPX module has four slots with the same labels and no IO9. It has its own IP53 node board, interface board and a PCI riser card that carries the PIC (printed pages 135 and 138); the same pages and 141 show the PCI 1 to PCI 4 labels, and the guide does not say whether an IO9 is fitted, so the absence of an IO9 is inferred. A PCI expansion module has six buses of two slots each, which the [Origin 300 expansion module sheet](../../platforms/bricks/origin300-pci-expansion-module.md) owns.
 
 | Chassis label | IRIX label | PIC head | Device | INTA and INTC input | INTB and INTD input |
 | --- | --- | --- | --- | --- | --- |
@@ -116,9 +116,10 @@ Unknown: whether head 1 is bus 2 on every module. The captures that print a bus 
 
 ## Sources
 
-- Public SGI PIC register header, Linux IA64 SN2 `pic.h` and `bridge.h` (GPL): register bit names and force-register layout.
+- Public SGI PIC register header, `include/asm-ia64/sn/pci/pic.h` and `bridge.h` in the pinned `linux-2.4.37` submodule (GPL): register bit names and force-register layout.
 - Public SN2 PIC driver (`pcibr_intr.c`, `pcibr_dvr.c`): force-write timing, byte-stream flags and the Device bit mapping.
 - Shipped IP35 PROM 6.210 and IRIX 6.5.30 IP35 kernel objects, static readings only. No symbol names or source text are carried here.
+- Spot checks of the PROM readings against the 6.210 image (`ip35prom.img`): a store of `0x41` to offset `0x114` of a head at image offset `0x2d388`, and the `0xdeadbeef` store to offset `0x7c` at image offset `0x4dd9c`. The rest of the PROM sequences were not re-derived and stay inferred.
 - Captures: the verbose heavy-diagnostic Tezro PROM output with no failure messages, and the Tezro `hinv` captures named in [questions/tezro-widget-11.md](../../questions/tezro-widget-11.md).
 - *IRIX Device Driver Programmer's Guide*, 007-0911-210 (2003), printed pages 718 to 719.
 - Broadcom, *BCM57XX Programmer's Guide*, 57XX-PG105-R (2008), printed pages 232 to 234.
