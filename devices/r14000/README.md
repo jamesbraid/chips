@@ -25,7 +25,7 @@ The Config layout is the one the VR10000 manual gives for the R10000 and R12000 
 
 ## Uncached narrow stores, big-endian
 
-For uncached stores of one byte or one halfword, the valid SysAD lanes depend on the address and on the MemEnd mode bit, which is Config bit 15. With MemEnd set, the byte or halfword is placed at its big-endian lane. The manual gives the data-cycle lane rule, with an example at address offset 1, in its system interface encoding (printed pages 119 and 120). The instruction manual gives the Store Byte and Store Halfword pseudocode, which takes the low 8 or 16 bits of the source register. Combining the two gives this table, for big-endian mode.
+For uncached stores of one byte or one halfword, the valid SysAD lanes depend on the address and on the MemEnd mode bit, which is Config bit 15. With MemEnd set, the byte or halfword is placed at its big-endian lane. The manual gives the data-cycle lane rule only as a worked example at address offset 1, in its system interface encoding (printed page 120). The instruction manual gives the Store Byte and Store Halfword pseudocode, which takes the low 8 or 16 bits of the source register. Combining the two gives this table, for big-endian mode.
 
 | Address modulo 8 | SB valid lane | SH valid lanes |
 |---:|---:|---|
@@ -38,7 +38,7 @@ For uncached stores of one byte or one halfword, the valid SysAD lanes depend on
 | 6 | 15:8 | 15:0 |
 | 7 | 7:0 | unaligned |
 
-The SB lane carries the source register's bits 7:0. The SH lanes carry bits 15:8 and then 7:0. Established for the R10000 and R12000 family. Inferred for the R14000. No R14000 bus capture was checked.
+The SB lane carries the source register's bits 7:0. The SH lanes carry bits 15:8 and then 7:0. The VR10000 manual states the lane rule only through its one example, a byte at address modulo 8 equal to 1 (lane 55:48 big endian, 15:8 little endian, printed page 120). The other rows extend that example by the lane-per-byte pattern, so they are inferred for the R10000 and R12000, and again inferred for the R14000. No R14000 bus capture was checked.
 
 ## Partial LWR in 64-bit mode
 
