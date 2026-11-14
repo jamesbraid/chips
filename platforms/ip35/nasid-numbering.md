@@ -19,7 +19,7 @@ facts but no source states it. **Unknown** means it is not settled, with the rou
   unpacked segment `554924380189a03a512156af2faa38344902f251b49fd5c80c253c23ecaff27b`. Read by disassembly.
   The routines were found by their console text and by the string-pool base the PROM sets at reset. The
   reading behind this page records no load addresses for them; re-locate them by the quoted text.
-- **IRIX 6.5.30 IP35 kernel**, SHA-256 `8404e226a649c622ebefe452a234566d74cbb81e802d793f22acdcbab518b9a8`.
+- **IRIX 6.5.30 IP35 kernel**, SHA-256 `412a1aae553a348376bc30cacbaf65044de1745d30222f02ec5f88297dcb1dfa`.
   Read by disassembly with its symbol table. The routines below are named by role, not by symbol.
 - **SGI Origin 3900 Server User's Guide**, `007-4653-001` printed p. 62 (Figure 3-5 and the text above it): IP53 node board 1 is NASID n, board 2 is n+1, board 0 is n+2 and board 3 is n+3. Rechecked.
 - **Public code.** OpenBSD `sginode.c` walks the same node table. The 128-entry size of that table is taken from
