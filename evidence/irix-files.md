@@ -635,9 +635,18 @@ extracted; the name of the container file each was extracted from was not record
 | `snprom-10.40-62478/boot/efi/efi/sgi/snprom/shub1snprom.bin` | snprom 10.40 build 62478 | 6291456 | `26170cc83c3db243601da8f55610bcdd6bb408136c3b3d19b7c4823e491b9a06` |
 | `snprom-10.40-62478/boot/efi/efi/sgi/snprom/shub2snprom.bin` | snprom 10.40 build 62478 | 12582912 | `1c8144e3d318f71a7633dddc268c3ebd0f64febb87c2f234a9a917df0673dd77` |
 | `snprom-10.11-52277/boot/efi/efi/sgi/ip65prom.bin` | snprom 10.11 build 52277 | 12582912 | `372e74f7201d35e56ef871c330ccbd66fda9f921376ae5dd3045cf4ae6319199` |
+| `snprom-3.32-30085/boot/efi/snprom.bin` | snprom 3.32 build 30085 | 6291456 | `cce7adf38c0bb5b50d7c48c571fa4194f5b714d5c46e0e6519b2a64b2b34e0d6` |
+| `snprom-4.20-40503/boot/efi/snprom.bin` | snprom 4.20 build 40503 | 6291456 | `0fdd129ecc2efdcfb875c873d67c9e18e57bc75b4500d6c1e72a1d9ca8dfa866` |
+| `snprom-10.54-70399/boot/efi/efi/sgi/snprom/shub1snprom.bin` | snprom 10.54 build 70399 | 6291456 | `51ccf9ad830b85ee6c88d6d73d2512322a86454e63db51c57454679283a34617` |
+| `snprom-10.54-70399/boot/efi/efi/sgi/snprom/shub2snprom.bin` | snprom 10.54 build 70399 | 12582912 | `3ea833181fda8968a5297043f2260d2fc255983ecca1d418292ee008b5e2c793` |
+| `snprom-10.54-70399/boot/efi/efi/sgi/snprom/README.snprom` | snprom 10.54 build 70399, SGI's package note | 6112 | `00f0a21d82c4b3a392043b52ec77d357c84ed74bfc0eb1cf5cb76c552571bcb0` |
 | `kernel-sn2-2.6.5-7.244/boot/vmlinuz-2.6.5-7.244-sn2` | SLES 9 SP3 SN2 kernel 2.6.5-7.244 (gzip-compressed vmlinux) | 3559796 | `39131bd96291fa395389c5c280b99f33a1a9d7599f1e9871fb1b812d0b51803a` |
 | `kernel-sn2-2.6.5-7.244/boot/System.map-2.6.5-7.244-sn2` | same | 918159 | `ede6ed582ac6ee3e28e39cceb002b3cb63fa463d0de0cde91aca9ad648123fd8` |
 | `kernel-sn2-2.6.5-7.244/boot/config-2.6.5-7.244-sn2` | same | 46258 | `ccafef299a48c8ec7be64923f9144c8b006c930d9c1f65d34c5d5d90fda30290` |
+| `kernel-2.4.21-sgi300r3/boot/System.map-2.4.21-sgi300r3` | SGI Altix 2.4.21 kernel `2.4.21-sgi300r3` (symbol map only) | 980666 | `fab6f81ab66e3bd73159994573c6c488f69c741bafa2578ebffcd7a4c23e02ad` |
+
+`root/sn2/prism-t2/` also exists: a community Linux build for IA-64 with its own `SHA256SUMS`, carrying no SGI firmware
+([evidence/sn2-holdings.md](sn2-holdings.md)). It is not listed above.
 
 The tooling to read the images is the `ia64-linux-gnu-objdump`, `-readelf` and `-nm` in the retools container image
 (`retools/tools/re-run ia64-linux-gnu-objdump ...`; a raw flash image is read with `-b binary -m ia64 --adjust-vma=`

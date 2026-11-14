@@ -1,8 +1,9 @@
 # SN2 system firmware: the snprom images
 
-What the four SGI Altix and Prism firmware images in hand are made of, which machines they target, what the
-processor does before the EFI console appears, which SAL calls they answer, and which SHub registers the first stage
-writes. Source for every statement: the shipped images themselves, read with a binutils 2.44 `ia64-linux-gnu-objdump`
+What the SGI Altix and Prism firmware images in hand are made of (four read in full, four more builds listed, one of
+them read from reset to the EFI console), which machines they target, what the processor does before the EFI console appears, which SAL
+calls they answer, and which SHub registers the first stage writes. The path an Altix 350 or Prism node takes from reset
+to the EFI console, read in the newest SHub 1 image, is in the SAL 5.04 boot-path reading to follow. Source for every statement: the shipped images themselves, read with a binutils 2.44 `ia64-linux-gnu-objdump`
 built in the retools toolchain image. Nothing here is copied from the images: names are function and string names the
 binaries carry, addresses and numbers are quoted as facts.
 
@@ -14,7 +15,7 @@ source); the SLES 9 SP3 kernel `2.6.5-7.244-sn2` in the same root confirms which
 
 ## The images
 
-All four are flash images that end at 4 GiB: the file maps to the top of the 32-bit physical space (a 6 MiB file
+The four images below are flash images that end at 4 GiB: the file maps to the top of the 32-bit physical space (a 6 MiB file
 at `0xffa00000`, a 12 MiB file at `0xff400000`). Files are listed in
 [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels) with sizes and sha256.
 
@@ -24,6 +25,12 @@ at `0xffa00000`, a 12 MiB file at `0xff400000`). Files are listed in
 | `shub1snprom.bin` | snprom-10.40-62478 | SAL 4.90, built 2007-12-17 | IP41 | SHub 1 | Same line as `snprom.bin`, later build |
 | `shub2snprom.bin` | snprom-10.40-62478 | SAL 1.40, built 2007-12-17 | IP65 | SHub 2.0 | NUMAlink 4 only; says SHub 2 has no XIO |
 | `ip65prom.bin` | snprom-10.11-52277 | SAL 1.11, built 2006-10-18 | IP65 | SHub 2.0 | Earlier build of the `shub2snprom.bin` line |
+
+Four more images are in the root and listed in [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels):
+`snprom.bin` from snprom 3.32 (SAL 3.32) and 4.20 (SAL 4.20), both IP41 and SHub 1, and `shub1snprom.bin` (SAL 5.04, built
+2008-11-11, IP41, SHub 1) and `shub2snprom.bin` (not read) from snprom 10.54. The SAL 5.04 image is the newest SHub 1
+build held and is the one SGI's own `README.snprom` says boots the Altix 350 and both Prism models; its FIT and first
+stage are read in the SAL 5.04 boot-path reading to follow. The component tables below are for the first four.
 
 **How an image says which SHub it targets (established).** Three independent places agree in each image. The SAL_A
 (first-stage) component starts with a banner string `SGI SAL Version <major>.<minor> rel<yymmdd> IP41|IP65 built ...`;
@@ -178,10 +185,14 @@ The images do not carry a product catalogue. They name **CPU board classes**, **
 by what the hardware reports.
 
 - **CPU board name (established):** `IP41` in the 4.43 and 4.90 images, `IP65` in the 1.11 and 1.40 images, as the
-  string, the SAL banner and the build definition. No other `IPnn` appears in any image: `IP57`, the node board the
-  Altix 350 guide names ([altix-350](../../../platforms/sn2/altix-350.md)), is not in any of the four. Which product
-  each board name belongs to is not in the images (unknown from the images; the held L1 guide ties the Altix 4700 to SHub 2, and the Altix
-  3000 is SHub 1 by the kernel's fallback defaults, inferred). The SAL_B of all four also
+  string, the SAL banner and the build definition. No other `IPnn` appears in any of the eight snprom images in the root: `IP57`,
+  the node board the Altix 350 guide names ([altix-350](../../../platforms/sn2/altix-350.md)), is in none of them, nor
+  in `README.snprom`. Which product each image serves is stated by SGI's `README.snprom` (package 10.54, below), not by
+  the images: `shub1snprom.bin` supports the Altix 330, 350, 3300, 3700, 3700 Bx2 and both Prism models,
+  `shub2snprom.bin` the Altix 4700 and 450 (established as SGI's statement of intent; see
+  [evidence/sn2-holdings.md](../../../evidence/sn2-holdings.md#system-firmware)). So the SHub 1 image's `IP41` is a
+  build target covering boards the string does not name, and how it tells an IP57 from an IP41 at run time is a
+  question for the SAL 5.04 boot-path reading to follow. The SAL_B of all four also
   contains a literal board identity string `Part:030-1604-001;Name:IP41;...` and an `IBRICK` one (a built-in default
   or test record; used when EEPROM info is missing, inferred from the "Could not retrieve EEPROM info" messages next
   to it).
@@ -203,35 +214,32 @@ by what the hardware reports.
 
 ## Which image to boot first
 
-**Recommendation: `shub2snprom.bin`, SAL 1.40, package snprom-10.40-62478, sha256
-`1c8144e3d318f71a7633dddc268c3ebd0f64febb87c2f234a9a917df0673dd77`.** Reasons, each from this page:
+**Recommendation for an Altix 350 or Prism model: `shub1snprom.bin`, SAL 5.04, package snprom-10.54-70399, sha256
+`51ccf9ad830b85ee6c88d6d73d2512322a86454e63db51c57454679283a34617`.** Reasons:
 
-1. It is the SHub 2 generation, which the held L1/L2 guide ties to the Altix 4700 ("SHub 2.x based" blades,
-   [altix-4700](../../../platforms/sn2/altix-4700.md)). The Prism's node chip is not named in any held manual
-   ([prism-deskside](../../../platforms/sn2/prism-deskside.md)), so whether the Prism is a SHub 2 machine is
-   **unknown**; this choice is the best available for the Altix 4700 line and an open bet for Prism.
-2. It is the newest of the four (2007-12-17) and carries the full set of calls the shipped kernels use, including
-   `SN_SAL_BTE_RECOVER`, the feature-set calls and the ACPI-path I/O call; the 4.43 image lacks three of them.
-3. Its first stage is short (12 KiB), needs no memory and no controller, and was read in full; the register list above
-   is complete for it.
-4. Its symbols are the most complete (1095 runtime and 2603 EFI names), which matters for every later step.
+1. SGI's `README.snprom` (shipped in the snprom package from 10.20; the 10.54 copy is held) says `shub1snprom.bin`
+   supports the Altix 330, 350, 3300, 3700, 3700 Bx2, Prism Rackmount and Prism Deskside, and `shub2snprom.bin` the
+   Altix 4700 and 450. That is the vendor's statement of intent (established as such; that this exact image boots a
+   given machine has not been shown by running it). The [Altix 350 page](../../../platforms/sn2/altix-350.md)
+   leaves the SHub generation of its IP57 board unknown; `README.snprom` puts the machine on the SHub 1 image, so the
+   Altix 350 is a SHub 1 machine (inferred from that statement and the SHub 2 image's "no XIO" string).
+2. It is the newest SHub 1 build held (2008-11-11) and the last of its line in the root.
+3. Its first stage was read in full (the SAL 5.04 boot-path reading to follow).
 
-**What this choice does not settle.** The documented minimal systems are not all SHub 2: the Altix 350 module has a PIC
-on an "XIO" link from the SHub ([altix-350](../../../platforms/sn2/altix-350.md)), and the PROM says SHub 2 has no XIO
-(established string), so the Altix 350 is a SHub 1 machine (inferred from the two). Its board, IP57, is named in none
-of the four images (the SHub 1 images name IP41 only), so no held PROM is shown to support it. An Altix 3000 C-brick
-is IP41 (`shub1snprom.bin`, SAL 4.90, sha256 `26170cc83c3db243601da8f55610bcdd6bb408136c3b3d19b7c4823e491b9a06`) but needs an
-I/O brick to be a working system. For Prism the images name no Prism board or brick, and TIO support is in both families, so
-the PROM image for Prism cannot be chosen from these four.
+**What this does not settle.** The SHub 2 images (`shub2snprom.bin`, `ip65prom.bin`) are for the Altix 4700 and 450 and
+are not a candidate for a one-node Altix 350 or Prism: the 1.40 image says "SHUB2 does not support XIO I/O.", and the
+Altix 350's I/O is a PIC on an XIO link from the SHub ([altix-350](../../../platforms/sn2/altix-350.md)). An
+earlier version of this page recommended `shub2snprom.bin` before `README.snprom` was in hand; that reading is
+withdrawn. The SHub 2 images stay documented here because the SHub 2 first stage is read in full and the Altix 4700 and
+450 are later targets.
 
-`ip65prom.bin` (SAL 1.11, sha256 `372e74f7201d35e56ef871c330ccbd66fda9f921376ae5dd3045cf4ae6319199`) is the fallback if 1.40
-misbehaves: same family, older, still has the two PCI configuration calls the SHub 1 images have.
-`snprom.bin` (4.43, sha256 `035274812b5065bde3f1b3227a23c05637d8a13f7cab7736ddde4718d46f02eb`) is the oldest SHub 1 build
-and the one to avoid.
+Fallbacks, in order: `shub1snprom.bin` from snprom 10.40 (SAL 4.90, sha256
+`26170cc83c3db243601da8f55610bcdd6bb408136c3b3d19b7c4823e491b9a06`), the previous build of the same line; then
+`snprom.bin` from snprom 4.43 (SAL 4.43, sha256 `035274812b5065bde3f1b3227a23c05637d8a13f7cab7736ddde4718d46f02eb`), which
+predates `README.snprom` and lacks `SN_SAL_BTE_RECOVER` and the feature-set calls.
 
-**Images that would help (requested, not required to start):** an earlier SHub 1 package that names IP57 if one exists
-(earlier packages such as the 3.32 and 4.20 releases; whether any names IP57 is unknown), and any
-package whose notes name Prism or an Altix 4700 board other than IP65.
+**Images that would help (requested, not required to start):** a package whose notes or strings name IP57, if one
+exists (3.32, 4.20 and 10.54 do not), and any package naming a Prism board.
 
 ## Entry and initialisation order
 
@@ -240,28 +248,50 @@ function names below come from matching normalised instruction sequences against
 are inferred, not read from SAL_B.
 
 1. **Processor reset to PAL_A to SAL_A (established for the pointers).** The reset path ends in SAL_A at the address
-   stored at `0xFFFFFFE8`. SAL_A receives a reason code in `r20`: values 0 and 3 run the first-stage initialisation
-   below; other values skip it and go to the FIT scan.
+   stored at `0xFFFFFFE8`. SAL_A receives a reason code in the low byte of `r20`. Reasons 0 and 3 run the first-stage
+   initialisation below, reasons 1 and 2 skip it and go to the FIT scan, and any reason above 3 hangs with progress code
+   177. The meaning of each reason is not in the image (reason 3 is the one that picks the PAL pair and returns to PAL,
+   reason 0 the one that goes on to SAL_B, from what each does).
 2. **SAL_A, SHub 2 build (1.40, `0xff67c000`), read in full (established; the 1.11 build touches the same registers, constants compared).**
-   It needs no memory, no L1 controller, no I2C and no PCI. In order:
-   - Selects a PAL pair and checks `cpuid[3]` against the stepping table (above).
-   - Sets a PSR control bit, reads SHub 2 MMR `0x2_1003_8200` and tests bit 39 of it; the code then either skips ahead or spins on a bit of a
-     saved register (the register is in the SHub 2 junk-bus block; the same offset is the "simulation data" window of
-     the SHub 2 system-controller link code, below).
-   - Writes `0xffffffff0003` to SHub 2 MMR `0x2_1002_0000`; reads `0x2_2011_0000` (the register the
-     PROM reads before any other) as an index into a table in SAL_A and writes the 32-bit table entry (with bit 63 set) to
-     `0x2_101d_0c00`, the register the PROM later reads as its NASID. Register names unknown; the table is in the image.
-   - Local master election: writes slice-number-plus-one to `0x2_101d_0088`, reads `0x2_101d_0080` and compares. The
-     winner (the processor whose value reads back) then zeroes `0x2_101d_0300`, `0x2_101d_0280` and `0x2_101d_0380`
+   It needs no memory, no L1 controller, no I2C and no PCI. The words PAL hands over in `r33` to `r37` are used but
+   not defined in the image. For reasons 0 and 3, in this order:
+   - **PSR and PAL call (the PSR step for both reasons, the rest for reason 3 only).** Sets PSR bit 24 (`psr.db`). For
+     reason 3 only: reads `0x2_1003_8200` and tests bit 39 (the register is in the SHub 2 junk-bus block; the same offset
+     is the "simulation data" window of the system-controller link code, below); if the bit is set and bit 3 of `r33`
+     is also set it spins forever, otherwise it makes one static PAL call with index 528 (the implementation-specific
+     static range) and argument 1, or 5 when bit 39 was set. What that PAL call does is unknown.
+   - **Node identity.** Writes `0xffffffff0003` to SHub 2 MMR `0x2_1002_0000`; reads V from `0x2_2011_0000` (the
+     register the PROM reads before any other) as an index into a table in SAL_A and writes the 32-bit table entry,
+     with bit 63 set, to `0x2_101d_0c00`, the register the PROM later reads as its NASID. Register names unknown; the
+     table is in the image.
+   - **Error path.** If bit 2 of `r35` is set and the low two bits of `r35` are not zero: writes progress code 176,
+     clears bits 29:26 of `0x2_101d_0300`, ORs `0x280_0000_0000` (bits 41 and 39) into `0x2_101d_0080`, writes
+     `0x1_0001_0000_0000` to `0x2_2000_0000`, and spins at a code address with bit 63 clear. What `r35` carries is
+     not in the image (inferred: a PAL-reported fault).
+   - **Reason sanity.** Byte 1 of `r20` must be 0 or 7; anything else is the fatal hang with progress code 178.
+   - **Reason 3 ends here.** Selects the PAL pair: reads `cpuid[3]`, masks it to architecture revision, family and model,
+     looks the row up in a table in SAL_A, then walks a second table keyed by the full `cpuid[3]` value that
+     carries version limits (the "Minimum PAL A" strings show they are checked); ORs a field of the chosen row (shifted right 16) into `r37` and returns to PAL through `b6 = r36`. No more
+     register writes. The pair is therefore chosen only on reason 3 and after the identity writes above, not first.
+   - **Reason 0 only, the processor-location word.** Saves PAL's `r33` to `r37` and `r20` in the bank-0 registers
+     (`r16` to `r22`). Reads `0x2_2011_0010`; when it reads 0 takes bits 2:1 of `r33`, otherwise bits 3:2, swaps the
+     two bits and writes them to bits 24:23 of `cr.lid`. This is the read the earlier version of this page missed.
+   - **Reason 0 only, the local master election.** Each processor writes its slice number plus one (slice is
+     `cr.lid` bits 25:23) to `0x2_101d_0088` and reads `0x2_101d_0080`. The processor whose value reads back equal is
+     the winner (the first-writer-wins reading is inferred from the store-then-compare shape; the reset value of
+     `0x2_101d_0080` is not known). Only the winner then zeroes `0x2_101d_0300`, `0x2_101d_0280` and `0x2_101d_0380`
      (the firmware flag, an unnamed one and the DIP-switch register of the chipset code), writes `2` to `0x2_0001_00d8`,
      writes `1` to `SH2_IPI_ACCESS0` (`0x2_1006_0c00`) and `0` to `SH2_IPI_ACCESS1..3` (`0x2_1006_0c80`, `0d00`,
-     `0d80`). The losers instead set bits 41:39 of `0x2_101d_0100` to 7 (a different path, read in full; meaning of the
-     field unknown). Whether "winner" is the right word is inferred from the store-then-compare shape.
-   - Writes a one-halfword progress code to `0x2_f000_0000 + (slice << 16)` at each step: 176, 177, 178 (the fatal
-     "FIT not found" hang) here, then 179 and 49, 53, 180 in SAL_B. A model can ignore these stores; software never
-     reads them back in SAL_A (established for SAL_A).
-   - Finds SAL_B through the FIT (matching `_FIT_   `, walking entries until type 0x11), reads
-     `[0x2_1003_0000 + slice*128]` into `r31`, and branches to SAL_B offset 0, 0x20 or 0x10 for reason 0, 1 or 2.
+     `0d80`). Then (the same winner, not the losers as an earlier version said) it reads `0x2_101d_0080` again, finds
+     its own slice plus one and sets bits 41:39 of `0x2_101d_0100` to 7, meaning unknown. Processors that lose do
+     neither and fall through to the FIT scan.
+   - **FIT scan and hand-off, reasons 0, 1 and 2.** Finds SAL_B through the FIT (checking `_FIT_   `, requiring a type 0
+     header, walking entries until type 0x11, hanging with 178 if it fails), writes the progress code 48, 56 or 59 for
+     reason 0, 1 or 2 (a halfword at `0x2_f000_0000 + (slice << 16)`), reads `[0x2_1003_0000 + slice*128]` into `r31`
+     and branches to SAL_B offset 0, 0x20 or 0x10 for reason 0, 1 or 2.
+   - **Progress codes in SAL_A, complete (established).** 48, 56 and 59 (hand-off for reasons 0, 1, 2), 176 (the error
+     path), 177 (reason above 3: spin) and 178 (fatal hang: bad `r20` byte 1, FIT not found). SAL_B writes 179 and 49,
+     53, 180 later. A model can ignore these stores; software never reads them back in SAL_A.
 3. **SAL_B reset entry (`0xff42fbb0` in 1.40; established for the first 100 instructions).** Writes progress codes,
    sets `gp`, makes six calls (not named, the first runs before RAM is needed) then reads PROM data at **physical RAM**
    `0x1000010`, `0x1000038` and `0x1000000` (a per-processor table at 16 MiB, so DRAM must be initialised and sized by
@@ -274,12 +304,16 @@ are inferred, not read from SAL_B.
    them from `main_early_disable` on (CPU presence and an environment lookup). An unreachable controller is reported
    ("System controller communication init failed"; "Critical system controller transaction failed"); whether boot
    stalls or continues is **unknown** (the failing path is in SAL_B, not traced).
-5. **Simulator escape (inferred).** `sysctl_probe` returns 0 only when `cpuid[2]` equals `0xaeeeeeee8badbeef` and 1
-   otherwise. The system-controller link then has `*_sim_data` routines that build the rack, bay, node and slab
-   fields from a SHub register block (offset `0x1003_8200`, read with the fabric vector accessor) instead of talking
-   to hardware. This is the likely route SGI's own simulator used; the kernel's `SN_SAL_FAKE_PROM` call and a
-   `CONFIG_IA64_SGI_SN_SIM` kernel option point the same way. An emulator can use it only if it presents that CPUID
-   signature, which is a project decision.
+5. **`sysctl_probe` and the simulator signature (the function bodies are established, what the callers do with the
+   result is inferred).** Every build compares `cpuid[2]` with `0xaeeeeeee8badbeef`; equal returns 0. What differs is
+   the other case. SAL 1.11, 1.40, 4.90 and 5.04 return 1 without touching hardware. SAL 3.32 and 4.20 call
+   `sysctl_version` once and return 1 only if it succeeds. SAL 4.43 really probes: it retries `sysctl_version` while it
+   answers -30, until 2,000,000 ticks of `chipset_rtc_time` have passed, and returns 1 only if the call succeeds,
+   otherwise 0 (so on 4.43 a missing controller reads the same as the simulator). The system-controller link has
+   `*_sim_data` routines that build the rack, bay, node and slab fields from a SHub register block (offset
+   `0x1003_8200`, read with the fabric vector accessor) instead of talking to hardware. This is the likely route SGI's
+   own simulator used; the kernel's `SN_SAL_FAKE_PROM` call and a `CONFIG_IA64_SGI_SN_SIM` kernel option point the same
+   way. An emulator can use it only if it presents that CPUID signature, which is a project decision.
 6. **Memory (inferred).** Names: `memctl_get_bank_sizes`, `memctl_memory_present`, `run_mbist`,
    `load_and_arm_fill_bist_mmrs`, `mdir_create_presence_vec`, a warning about "tRCD ... SHUB max of 4" and "SHUB min of
    2". DIMM data comes through the SHub's own registers (the `memctl_*` functions use only `chipset_load_mmr`), so the
@@ -295,7 +329,8 @@ are inferred, not read from SAL_B.
    `chipset_arbitrate_lmaster`: multi-node boot has a node-barrier protocol over per-node flag registers; a single
    node with no router skips it (the one-module Altix 350 case; not verified by running).
 
-**What an emulated node must answer to reach EFI (summary):** the SHub identification and node-identity registers, the
+**What an emulated node must answer to reach EFI (summary, SHub 2 build; the SHub 1 Altix 350 version is in
+the SAL 5.04 boot-path reading to follow):** the SHub identification and node-identity registers, the
 SAL_A registers above (accepting writes is enough), DRAM at physical `0x1000000` with working sizing, a CFI-compatible
 flash or an error the PROM tolerates, an L1 (or the simulator escape), one working console path. PIC, TIO and IOC4
 are needed for I/O (EFI's console is the system controller or a serial UART in an IOC4), not for reaching the PROM
@@ -304,31 +339,36 @@ prompt. Everything beyond SAL_A is a **reading** and has not been run.
 ## SHub registers the first stage writes (SHub 2 SAL_A, established)
 
 Offsets are the SHub 2 local-window addresses the code uses (`0x2_0000_0000 + offset`; bit 63 set means uncached).
-A read after the PROM ran is not a reset value; these are the PROM's writes.
+A read after the PROM ran is not a reset value; these are the PROM's accesses, in program order for reason 0 (the
+ordered account is the first-stage walk above).
 
 | Address | Access in SAL_A | Value | Name |
 |---|---|---|---|
+| `0x2_1003_8200` | read (reason 3 only) | bit 39 tested | junk-bus block; unnamed |
 | `0x2_1002_0000` | write | `0xffffffff0003` | unnamed |
 | `0x2_2011_0000` | read | V, a small node-configuration value | unnamed; the same register sets the NASID width and shift that `SN_SAL_GET_SN_INFO` reports |
 | `0x2_101d_0c00` | write | table entry for that identity | read back by the PROM as its NASID; unnamed |
+| `0x2_2011_0010` | read (reason 0) | selects which bits of `r33` become `cr.lid` bits 24:23 | unnamed |
 | `0x2_101d_0088` | write | slice number + 1 | unnamed |
-| `0x2_101d_0080` | read | compared with the value written | unnamed |
-| `0x2_101d_0300` | write | 0 | firmware flag register (`chipset_flag_*`); unnamed |
-| `0x2_101d_0280` | write | 0 | unnamed |
-| `0x2_101d_0380` | write | 0 | DIP-switch register (`chipset_dipsw_*`); unnamed |
-| `0x2_0001_00d8` | write | 2 | unnamed |
-| `0x2_1006_0c00` | write | 1 | `SH2_IPI_ACCESS0` (kernel header) |
-| `0x2_1006_0c80`, `0d00`, `0d80` | write | 0 | `SH2_IPI_ACCESS1..3` (kernel header) |
-| `0x2_101d_0100` | read-modify-write on the losers | bits 41:39 = 7 | unnamed |
-| `0x2_1003_8200` | read | bit 39 tested | junk-bus block; unnamed |
+| `0x2_101d_0080` | read, twice | compared with slice + 1 | unnamed |
+| `0x2_101d_0300` | write on the election winner | 0 | firmware flag register (`chipset_flag_*`); unnamed |
+| `0x2_101d_0280` | write on the election winner | 0 | unnamed |
+| `0x2_101d_0380` | write on the election winner | 0 | DIP-switch register (`chipset_dipsw_*`); unnamed |
+| `0x2_0001_00d8` | write on the election winner | 2 | unnamed |
+| `0x2_1006_0c00` | write on the election winner | 1 | `SH2_IPI_ACCESS0` (kernel header) |
+| `0x2_1006_0c80`, `0d00`, `0d80` | write on the election winner | 0 | `SH2_IPI_ACCESS1..3` (kernel header) |
+| `0x2_101d_0100` | read-modify-write on the election winner | bits 41:39 = 7 | unnamed |
 | `0x2_1003_0000 + slice*128` | read | passed to SAL_B in `r31` | unnamed |
-| `0x2_f000_0000 + slice<<16` | write (16-bit) | progress codes | unnamed |
+| `0x2_f000_0000 + slice<<16` | write (16-bit) | progress codes 48, 56, 59, 176, 177, 178 | unnamed |
+| `0x2_101d_0300` | read-modify-write, error path only | bits 29:26 cleared | as above |
+| `0x2_101d_0080` | read-modify-write, error path only | `\|= 0x280_0000_0000` | as above |
+| `0x2_2000_0000` | write, error path only | `0x1_0001_0000_0000` | unnamed |
 
 For SHub 1 (`snprom.bin`, `shub1snprom.bin`) the SAL_A constants are the `0x81_xxxx_xxxx` forms: `0x81_1002_0000`,
 `0x81_101d_0080`, `0x81_101d_0088`, `0x81_101d_0100`, `0x81_1006_0480` (`SH1_IPI_ACCESS` in the kernel header),
-`0x81_2001_0100`, `0x81_5003_1500` to `0x81_5003_1560`, and the window `0x87_fed0_0000` to `0x87_fed3_0000`; these are listed from the
-instruction constants, not read in order: **inferred** only. A full ordered reading of the SHub 1 SAL_A and of both
-SAL_B init paths is the main open item ([question](../../../questions/sn2-prom-open.md)).
+`0x81_2001_0100`, `0x81_5003_1500` to `0x81_5003_1560`, and the window `0x87_fed0_0000` to `0x87_fed3_0000`; the constants in the 4.43 and 4.90 builds were listed
+from the instructions only (**inferred**). The SAL 5.04 SHub 1 first stage has since been read in full, in order, in
+the SAL 5.04 reading to follow, which supersedes this list for that build.
 
 Further SHub 2 locations the symbolised code uses, with what the PROM does at each (inferred from function names and
 the constants in them): `0x2_1006_0f00` and `0x2_101d_0c00` (read for the node's NASID, `chipset_get_nasid`),
@@ -478,7 +518,7 @@ on that PROM takes the "not implemented" path the SAL README documents. `0x5f` (
   11 and 9 for the two logs, `NASID / 512` for the domain, the region size from five bits (52:48) of SHub 1 MMR
   `0x81_1006_0580`, and the constant `0x2607ff` (mask 0x7ff, shift 38). The 1.40 SHub 2 build gives chip 1 and computes
   the rest from two registers instead of constants: with V the value read from `0x2_2011_0000`, the maximum-node log2
-  is V + 10, the region size is `1 << (V & 7)`, the mask is `(1 << (V + 10)) - 1` and the shift is `40 - V`; the
+  is V + 10, the region size is `1 << (X & 7)` with X read from `0x2_0003_0000` (an earlier version took it from V; re-read in the 1.40 function), the mask is `(1 << (V + 10)) - 1` and the shift is `40 - V`; the
   sharing-domain log2 is 9 when bit 54 of `0x2_1006_0f00` is clear and 11 when it is set, and the coherency domain is
   `NASID / 512` or `NASID / 2048` by the same bit. What value V has on hardware is unknown, so the numbers the
   kernel sees on a real SHub 2 are not known from this reading; they depend on those two registers.
@@ -520,8 +560,8 @@ What the 2.6.5 SN2 kernel looks for (`efi_init`, `ia64_sal_init`, `acpi_boot_ini
 
 ## What is not covered
 
-Ordered reading of both SAL_B init paths, SHub 1 SAL_A order, which EFI configuration tables are installed, and the
-exact register accesses of memory sizing are open; see [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md).
+The ordered reading of both SAL_B init paths, which EFI configuration tables are installed, and the exact register
+accesses of memory sizing are the open items of the SAL 5.04 boot-path reading to follow for SAL 5.04; see [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md).
 The images, the root layout and the kernel in use are listed in [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels).
 
 ## Review
