@@ -1,4 +1,5 @@
 # Open questions
+<!-- keep -->
 
 Each entry: the question, the routes already tried, the next route. When answered, the fact moves into its
 chip page and the entry is deleted.
