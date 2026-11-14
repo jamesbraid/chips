@@ -1,6 +1,7 @@
 # chips
 
-Register maps for the chips inside SGI's MIPS machines: O2, Octane, Origin, Onyx, Fuel and Tezro.
+Register maps for the chips inside SGI's MIPS machines (O2, Octane, Origin, Onyx, Fuel and Tezro) and its
+IA-64 Altix and Prism machines.
 
 Most of SGI's own silicon has no public datasheet, so this is worked out the long way. IRIX 6.5.30's kernels,
 PROMs and diags, the public IRIX source, old SGI manuals and the Linux and BSD drivers all get read, and every
@@ -15,13 +16,15 @@ What comes out the other end is headers you can build against, in C, Rust, Pytho
 - **Origin 200, Origin 2000, Onyx2:** the Hub, the routers, and the XIO boards (MENET, MSCSI, the PCI shoebox
   and shoehorn).
 - **Origin 300, Origin 3000, Fuel, Tezro:** the Bedrock, PIC, the routers and the L1.
+- **Altix 350, 330, 3000, 3700, 4700, 450 and Prism (SN2):** the SHub, the TIO bridges, PIC, IOC4 and the routers. So
+  far there are machine pages and cross-checks of the I/O chips against SGI's Linux code; the SHub has no register map yet.
 - **Crosstalk and I/O:** the XIO link, Crossbow, Bridge, XBridge, IOC3 and IOC4.
 - **CPUs:** the R5000, and the R10000 family through to the R16000.
 - **The rest:** SCSI, Ethernet, USB, FireWire and audio controllers, clocks, NVRAM, flash, and the Indy's
   Ethernet while we were there.
 
 Every chip has a page under [devices/](devices/README.md). Machines and bricks are under
-[platforms/](platforms/README.md).
+[platforms/](platforms/README.md); the Altix and Prism machines are in [platforms/sn2/](platforms/sn2/README.md).
 
 ## How they fit together
 
