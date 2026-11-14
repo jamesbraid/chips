@@ -376,3 +376,9 @@ Corrections found while tagging. These are not fixed here.
 - **SHub 1 I/O interface: reset values and the unused registers.** *[route: missing source]* Unknown: reset values and the role of the roughly 150 registers the kernel never touches. Next: the same sources as above. Page: [shub-ii-reset-and-roles.md](shub-ii-reset-and-roles.md).
 - **SN2 address map: SHub 2 field values, memory layout and the GET space.** *[route: missing source]* Unknown: SHub 2's NASID mask and shift, how it splits local and global MMR space, the memory layout inside a node, what address space 1 is. Next: a SHub 2 PROM or a captured topology line. Page: [sn2-address-map-open.md](sn2-address-map-open.md).
 - **SN2 SAL: PROM behaviour behind each call.** *[route: missing source]* Unknown: what the PROM does inside every SN call, the KLCONFIG layout, the pointer kinds inside its descriptors. Next: `klconfig.h` in the same kernel tree, ProPack binaries, a PROM. Page: [sn2-sal-open.md](sn2-sal-open.md).
+
+## SN1 on IA-64 (added with platforms/sn1-ia64)
+
+- **Synergy beyond the interrupt-mask and performance registers.** *[route: missing source]* Unknown: the other registers of the Itanium processor-bus ASIC, their resets, and the remote write and read offset difference. Next: a Synergy specification or an SN1 IA-64 PROM. See [questions/sn1-ia64-synergy-registers.md](sn1-ia64-synergy-registers.md).
+- **SN1 IA-64: where the Bedrock UART sits.** *[route: missing source]* Unknown: whether the port's console UART at remote register space +0x80 is a simulator model or hardware. See [questions/sn1-ia64-bedrock-uart-location.md](sn1-ia64-bedrock-uart-location.md).
+- **SN1 IA-64: did the node ship.** *[route: missing source]* Unknown: whether any Bedrock Itanium system was sold and which Itanium stepping it used. See [questions/sn1-ia64-shipped-or-prototype.md](sn1-ia64-shipped-or-prototype.md).
