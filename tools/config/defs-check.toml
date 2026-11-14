@@ -65,6 +65,10 @@ prose_offsets = false
 group = "router_origin3000.h"
 prose_offsets = false
 
+[units.tio]
+group = "tio.h"
+prose_offsets = false
+
 [units.tiocp]
 group = "tiocp.h"
 prose_offsets = false
@@ -225,3 +229,6 @@ base = 0x680000
 
 [gen.export.units.bedrock_xb]
 base = 0x700000
+
+[allowlists]
+leak = "tools/config/defs-leak-allow.txt"

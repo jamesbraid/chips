@@ -1,0 +1,184 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/tio/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "tio",
+   "kind": "register",
+   "name": "node_id",
+   "offset": 2416316032,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "node_id.rev",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "node_id.part",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "node_id.mfg",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "register",
+   "name": "ice_frz_cfg",
+   "offset": 2952823040,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "ice_frz_cfg.disable_conveyor",
+   "hi": 61,
+   "lo": 61,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "register",
+   "name": "itte",
+   "offset": 2952824832,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "itte.valid",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "itte.widget",
+   "hi": 13,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "itte.offset",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "register",
+   "name": "ice_pmi_tx_cfg",
+   "offset": 2952835328,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "register",
+   "name": "ice_pmi_tx_dyn_credit_stat_cb3",
+   "offset": 2952838680,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "ice_pmi_tx_dyn_credit_stat_cb3.credit_count",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "BIG_WINDOW_SIZE_BITS",
+   "value": 30,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "CE_PART_NUMBER",
+   "value": 52736,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "ERROR_VECTOR",
+   "value": 54,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "FPGA_CORELET",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "SMALL_WINDOW_SIZE_BITS",
+   "value": 28,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "WIDGET_ID_OFFSET",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

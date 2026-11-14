@@ -80,6 +80,7 @@
 | [scan/](scan/README.md) | Router scan-chain tunnel through the L1 (IP35) | Mode: no-spec (see references/documents/specs.md: no specification is held). |
 | [seeq_8003/](seeq_8003/README.md) | SEEQ 8003 and 80C03 Ethernet controller | The SEEQ 8003 is an 8-bit Ethernet data link controller. |
 | [tigon/](tigon/README.md) | Tigon Ethernet controller: PCI data width | The Alteon Tigon/PCI is the Ethernet controller on SGI's IRIS Gigabit Ethernet board. |
+| [tio/](tio/README.md) | TIO | Mode: no-spec. |
 | [tiocp/](tiocp/README.md) | TIOCP | Mode: no-spec (see references/documents/specs.md). |
 | [tl16pir552/](tl16pir552/README.md) | TI TL16PIR552 parallel port (Fuel and Origin 200) | The TL16PIR552 is a dual UART and IEEE 1284 parallel-port controller with ECP and EPP support, with a 16-byte... |
 | [tsb12lv22/](tsb12lv22/README.md) | TI TSB12LV22 PCI-to-IEEE 1394 link controller | The TSB12LV22 is Texas Instruments' PCI-to-1394 link controller. |

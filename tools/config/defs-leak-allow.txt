@@ -1,0 +1,1 @@
+0x90060e80	TIO identification word offset from the SGI Altix Linux header; a node offset, not a kernel virtual address

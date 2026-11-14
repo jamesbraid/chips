@@ -1,0 +1,70 @@
+unit = "tio"
+prefix = "TIO"
+title = "TIO (NUMAlink I/O node ASIC of the Altix generation), as SGI's Linux platform code names its registers"
+doc = "Offsets, field positions and constants are software definitions from SGI's Linux Altix platform code (header and driver, v5.3); the TIO's own register specification is not held. Only five registers are named by that code. Reset values are unknown throughout. Offsets are node offsets inside the TIO's address space, not CPU addresses."
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e: arch/ia64/sn/include/tio.h, arch/ia64/include/asm/sn/tiocx.h, arch/ia64/sn/kernel/tiocx.c, arch/ia64/sn/pci/pcibr/pcibr_dma.c"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+
+[registers.node_id]
+offset = 0x90060e80
+access = "r"
+width = 64
+grade = "established"
+doc = "Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads it as a 32-bit value and splits it with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1)."
+
+[registers.node_id.fields]
+rev = { bits = [31, 28], grade = "established", doc = "Revision. 1 is the revision the TIOCP flush erratum applies to." }
+part = { bits = [27, 12], grade = "established" }
+mfg = { bits = [11, 1], grade = "established" }
+
+[registers.itte]
+offset = 0xb0008800
+count = 8
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Big-window translation table entries (`TIO_ITTE_BASE`, one entry per big window number 0 to 7). An entry maps one 1 GiB window of the TIO's address space onto a widget. The kernel defines a store macro (`TIO_ITTE_PUT`) and reads a firmware-held copy of the entries to find the widget for a window; no code read writes the register itself. The field positions are the macro's."
+
+[registers.itte.fields]
+offset = { bits = [7, 0], grade = "established", doc = "Window offset: address bits 37:30 of the target, from `(addr >> 30) & 0xff`." }
+widget = { bits = [13, 12], grade = "established", doc = "Target widget, 0 to 3." }
+valid = { bits = [16, 16], grade = "established" }
+
+[registers.ice_frz_cfg]
+offset = 0xb0008100
+access = "rw"
+width = 64
+grade = "established"
+doc = "ICE chiplet freeze configuration (`TIO_ICE_FRZ_CFG`). Bit 61 disables the conveyor of the FPGA port: the FPGA-port driver clears it to enable and sets it to disable, reading before writing and skipping the write when the bit is already right. Other bits are not read by any code."
+
+[registers.ice_frz_cfg.fields]
+disable_conveyor = { bits = [61, 61], grade = "established", doc = "Named `disable_cb` in the driver. 1 disables the conveyor." }
+
+[registers.ice_pmi_tx_cfg]
+offset = 0xb000b100
+access = "rw"
+width = 64
+grade = "established"
+doc = "ICE port-module interface transmit configuration (`TIO_ICE_PMI_TX_CFG`). The FPGA-port driver resets corelet n by writing a one in bit n, waiting 2 ms, writing zero, then waiting 2 ms. The FPGA corelet is number 3."
+
+[registers.ice_pmi_tx_dyn_credit_stat_cb3]
+offset = 0xb000be18
+access = "r"
+width = 64
+grade = "established"
+doc = "Dynamic transmit credit status of channel buffer 3 (`TIO_ICE_PMI_TX_DYN_CREDIT_STAT_CB3`). The driver treats a credit count of 15 as proof that an FPGA bitstream is loaded and the port is running."
+
+[registers.ice_pmi_tx_dyn_credit_stat_cb3.fields]
+credit_count = { bits = [3, 0], grade = "established" }
+
+[constants]
+WIDGET_ID_OFFSET = { value = 0x0, grade = "established", doc = "Every widget behind the TIO, including the FPGA port, has its identification word (revision 31:28, part 27:12, manufacturer 11:1) at offset 0 of its small window." }
+BIG_WINDOW_SIZE_BITS = { value = 30, grade = "established", from = "SGI Linux platform code, arch/ia64/include/asm/sn/addrs.h (TIO_BWIN_SIZE_BITS)", doc = "Big windows are 1 GiB; the window number is three bits above that." }
+SMALL_WINDOW_SIZE_BITS = { value = 28, grade = "established", from = "SGI Linux platform code, arch/ia64/include/asm/sn/addrs.h (TIO_SWIN_SIZE_BITS, TIO_SWIN_WIDGET_MASK)", doc = "Small windows are 256 MiB, one per widget, selected by two address bits, so a TIO has four small-window widgets (0 to 3)." }
+FPGA_CORELET = { value = 3, grade = "established", from = "SGI Linux platform code, arch/ia64/include/asm/sn/tiocx.h (TIOCX_CORELET)", doc = "Widget (corelet) number of the FPGA port." }
+CE_PART_NUMBER = { value = 0xce00, grade = "established", from = "SGI Linux platform code, arch/ia64/include/asm/sn/tiocx.h and tioce.h (TIO_CE_ASIC_PARTNUM, TIOCE_PART_NUM)", doc = "Widget part number of the TIOCE, which can sit on the FPGA port's widget." }
+ERROR_VECTOR = { value = 0x36, grade = "established", from = "SGI Linux platform code, arch/ia64/include/asm/sn/intr.h (SGI_TIO_ERROR)", doc = "Kernel interrupt vector of the TIO error interrupt, shared by every TIO. The handler's only action is a firmware call." }

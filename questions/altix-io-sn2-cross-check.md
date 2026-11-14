@@ -30,3 +30,11 @@ which carry the TIO FPGA port (TIOCX) is not stated by any SGI Linux file read; 
 and by the type the firmware reports. The Library holds the Altix user's guides (007-4579-001, 007-4377-002, 007-4660-001,
 007-4790-001, 007-4823-001) but its search does not index their text and none has been read for I/O topology. A search
 of the Linux mail archive for TIOCP and Altix 350 returned nothing. Next: read the I/O blade and brick sections of those guides.
+
+## TIO chiplet field
+
+[missing source] The SGI address header says the chiplet field of a TIO address is 0 for `LB` (MMR access) and 1 for `ICE`
+(coretalk space). The kernel's TIO MMR accessor on SHub2 sets chiplet 1 for every MMR (identification word at an `LB`-looking
+offset included), while the widget small windows it uses are built with chiplet 0. Either the comment names the chiplets the
+other way round, or "MMR" and "coretalk" mean something finer than registers versus widgets. Next: a TIO register
+specification, or the SHub2 TIO address macros in a later SGI tree.
