@@ -40,10 +40,32 @@ Altix UV (x86): `arch/x86/include/asm/uv/uv_hub.h` and `uv_mmrs.h`, `arch/x86/pl
 has no UV5 section.
 
 Shipped binaries: SGI ProPack 4 and 6 ia64 kernels and modules, some with debug information
-([kudzu formats/xvm](https://github.com/jamesbraid/kudzu) reads one). No Altix PROM, SAL or system firmware image is
-held.
+([kudzu formats/xvm](https://github.com/jamesbraid/kudzu) reads one), and SGI's SN2 system firmware. Corrected on
+2026-11-14: an earlier version of this page said no Altix PROM was held. That came from a bounded search and was wrong.
 
-Mail: the linux-ia64 list carries SN2 bring-up, SHub and TIO threads from 2003 to 2019, including the removal series.
+## System firmware
+
+SGI shipped the SN2 PROM (PAL, SAL and EFI in one flash image) as the `snprom` package on ProPack media. The images
+below are read by [software/firmware/snprom](../software/firmware/snprom/README.md); the files are copied into `root/`
+and never committed ([evidence/irix-files.md](irix-files.md) lists them with checksums).
+
+| Image | snprom package | SAL build | Board named in the image | Size (bytes) | sha256 | Container |
+|---|---|---|---|---:|---|---|
+| `snprom.bin` | 4.43 build 44607 | 4.43 | IP41 (SHub 1) | 6291456 | `035274812b5065bde3f1b3227a23c05637d8a13f7cab7736ddde4718d46f02eb` | `snprom-4.43-44607.ia64.rpm`, ProPack 4 SP3 CD 2 |
+| `shub1snprom.bin` | 10.40 build 62478 | 4.90 | IP41 (SHub 1) | 6291456 | `26170cc83c3db243601da8f55610bcdd6bb408136c3b3d19b7c4823e491b9a06` | `snprom-10.40-62478.ia64.rpm`, ProPack 4 SP4 CD 2 |
+| `shub2snprom.bin` | 10.40 build 62478 | 1.40 | IP65 (SHub 2) | 12582912 | `1c8144e3d318f71a7633dddc268c3ebd0f64febb87c2f234a9a917df0673dd77` | as above |
+| `ip65prom.bin` | 10.11 build 52277 | 1.11 | IP65 (SHub 2) | 12582912 | `372e74f7201d35e56ef871c330ccbd66fda9f921376ae5dd3045cf4ae6319199` | `snprom-10.11-52277.ia64.rpm`, a ProPack 4 package mirror |
+
+Other snprom packages are held but not yet read: 3.32, 4.04, 4.20 to 4.33, and 10.5 to 10.54. None of the four images
+above names IP57, the Altix 350 node board that the Prism guides also show, so which package supports the Altix 350 and
+Prism is still open. A Prism system disk image is held and may carry its own firmware.
+
+No L1, L2 or L3 controller firmware package for the SN2 bricks has been found under those names. sysco's readings of
+the controller firmware shipped with IRIX include SN2 brick routines, so that firmware may cover some SN2 bricks.
+
+The SN1 IA-64 prototype never shipped a PROM. For that one target the repository owner accepted SGI's simulator fake
+PROM from the Linux 2.5 tree as its firmware ([platforms/sn1-ia64/bring-up.md](../platforms/sn1-ia64/bring-up.md)).
+Every shipped SN2 machine is to boot real SGI firmware.
 
 ## Manuals
 
@@ -76,7 +98,7 @@ Prism guides (007-4772 deskside, 007-4701 Power and Team, 007-4774 Extreme) are 
 ## Gaps
 
 - No contract yet for SHub, SHub 2, TIO, TIOCA, TIOCE, TIOCX or the NUMAlink 4 router, and no SN2 machine or brick page.
-- No firmware: a machine model needs a synthetic SAL implementing exactly the `sn_sal.h` calls its kernel makes.
+- Firmware for the Altix 350 and Prism: no held PROM image names their node board (IP57) yet.
 - No manual describes SHub, TIO or NUMAlink 4 at register level; the Linux code is the main source.
 - No manual found for the Altix 450, IA-64 on SN1, or UV hardware.
 - Prism graphics boards per model are not yet identified.
