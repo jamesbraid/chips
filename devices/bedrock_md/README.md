@@ -37,6 +37,11 @@ Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as 
 - The header says software must ask the system controller whether a DIMM is x4 or x8/x16 before it sets the
   width. The header gives no encoding of the width bit.
 
+- IA-64 view (established, SGI's Linux port for the Itanium node, Linux v2.5.0; [platforms/sn1-ia64](../../platforms/sn1-ia64/README.md)):
+  the same eight 1 GB software banks per node and the same size codes (1 to 5 for 64 MB to 1 GB, two banks per size
+  nibble) appear in `mmzone_sn1.h`, and the port's fake firmware builds its memory map from them. The Itanium node's
+  junk bus also carries the Synergy processor-bus ASIC that the timing register's `synergy_*` fields name.
+
 ## Backdoors into the directory and the ECC
 
 The public SN1 address header defines carriers that software uses to reach the unit's storage through ordinary

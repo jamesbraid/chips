@@ -20,6 +20,10 @@ Names, with where each comes from (the naming audit is [interconnect-naming.md](
 - **PIC**: SGI hardware term, "PCI interface chip", in 007-4377-001: printed p67 for the IX-brick, p78 for the PX-brick. Both bricks carry three PICs, which together give two
   Xtown2 XIO ports (800 or 1200 MB/s) and six PCI-X buses of two slots each. SGI's Origin 300 guides call the Origin
   300 chip Xbridge, so "PIC" does not mean "Xbridge".
+- IA-64 view (established): SGI's Linux port for the Bedrock Itanium node (SN1, v2.5.0 to v2.5.72) handles `BRIDGE`
+  (`0xc002`) and `XBRIDGE` (`0xd002`) only, with the XBridge's crossbar part `0xd000`. It has no `PIC` part. The
+  PIC enters SGI's Linux code with the later SN2 port. See [platforms/sn1-ia64](../../platforms/sn1-ia64/README.md).
+
 - Part-number tables in the public drivers call the three `BRIDGE` (`0xc002`), `XBRIDGE` (`0xd002`) and `PIC`
   (`0xd102`): OpenBSD `sys/arch/sgi/xbow/xbowdevs`. Mainline Linux (`arch/mips/include/asm/pci/bridge.h` and
   `xtalk/xwidget.h`) lists only `0xc002` and `0xd002`. The out-of-tree IP35 Linux tree
