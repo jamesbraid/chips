@@ -9,4 +9,11 @@ Bedrock register alias, or the real device?
 Routes tried: the port's source only. Its own comment calls the arrangement a hack in the serial code and
 the same file defines `IS_RUNNING_ON_SIMULATOR`, so a simulator-only mapping is plausible, but no file says so. How the remote register window's offset 0 relates to hub register offsets is not stated either.
 
-Next route: the SN1 IA-64 PROM or a hardware note, neither held; or the Medusa simulator documentation.
+Added: the simulator run script sets `tsconsole on` and `uart_echo on`, so the simulator provided a console UART of its own,
+which makes a simulator-only mapping more likely; the first-generation hardware's console is not described (SGI's account of
+the power-on says the PROM, not the kernel, was the first code to run, and says nothing about the console). See
+[platforms/sn1-ia64/bring-up.md](../platforms/sn1-ia64/bring-up.md).
+
+Next route: the SN1 IA-64 PROM or a hardware note, neither held; or the Medusa simulator documentation. A route in the held
+sources: open `drivers/char/serial.c` and `kernel/printk.c` at the v2.5.0 commit (the hack the comment names), which the
+Library's text index does not cover but `read_library` opens by commit id.
