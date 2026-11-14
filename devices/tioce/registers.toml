@@ -1,0 +1,2311 @@
+unit = "tioce"
+prefix = "TIOCE"
+title = "TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it"
+doc = "Names and offsets are the definitions of SGI's Linux Altix platform code (header and provider, v5.3). The TIOCE's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one. Bit masks the header defines are listed as constants with the comment that precedes them, not attached to registers."
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e: arch/ia64/include/asm/sn/tioce.h, tioce_provider.h, arch/ia64/sn/pci/tioce_provider.c"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+
+[registers.adm_id]
+offset = 0x0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Widget identification word: part 0xce00, source id 1, revision A = 1 (header constants). Revision A needs the access workaround described on the unit page. Name and offset are the vendor header's definition (struct member ce_adm_id). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_dyn_credit_status]
+offset = 0x10
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_last_credit_status]
+offset = 0x18
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_last_credit_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_credit_limit]
+offset = 0x20
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_credit_limit). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_force_credit]
+offset = 0x28
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_force_credit). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_control]
+offset = 0x30
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_control). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_mmr_chn_timeout]
+offset = 0x38
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_mmr_chn_timeout). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_ure_timeout]
+offset = 0x40
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_ure_timeout). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_dre_timeout]
+offset = 0x48
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_dre_timeout). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_debug_sel]
+offset = 0x50
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_int_status]
+offset = 0x58
+access = "rw"
+width = 64
+grade = "established"
+doc = "Interrupt status. Bit n is the interrupt source named by the header (error, link 1 and 2 errors, PCIe error, hot-plug events per port, INTA to INTD of each port, message slots 0 to 3, power-management events). The provider reads it on revision A before forcing an interrupt. Name and offset are the vendor header's definition (struct member ce_adm_int_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_int_status_alias]
+offset = 0x60
+access = "rw"
+width = 64
+grade = "established"
+doc = "Interrupt status alias. The provider sets every bit through it at attach to clear transients (the alias is the write path to clear; role from that use). Name and offset are the vendor header's definition (struct member ce_adm_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_int_mask]
+offset = 0x68
+access = "rw"
+width = 64
+grade = "established"
+doc = "Interrupt mask. The provider sets a source bit, writes its destination, then clears the bit, so a set bit blocks the source while the destination is rewritten. Name and offset are the vendor header's definition (struct member ce_adm_int_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_int_pending]
+offset = 0x70
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_int_pending). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_force_int]
+offset = 0x78
+access = "rw"
+width = 64
+grade = "established"
+doc = "Force interrupt. Bits 0 to 7 force INTA to INTD of port 1 then port 2; bit 8 forces always. The bit numbering differs from the status register, and the provider maps explicitly. Revision A does not use it (workaround). Name and offset are the vendor header's definition (struct member ce_adm_force_int). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ure_ups_buf_barrier_flush]
+offset = 0x80
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ure_ups_buf_barrier_flush). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_int_dest]
+offset = 0x88
+count = 15
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Interrupt destination, one per source (the header declares fifteen). The provider writes the kernel vector in bits 63:56 (shift INTR_VECTOR_SHFT) ORed with the destination coretalk address of the target CPU, indexed by interrupt source bit. Name and offset are the vendor header's definition (struct member ce_adm_int_dest). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_error_summary]
+offset = 0x100
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_error_summary). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_error_summary_alias]
+offset = 0x108
+access = "rw"
+width = 64
+grade = "established"
+doc = "Error summary alias. The provider sets every bit through it at attach to clear transient errors. Name and offset are the vendor header's definition (struct member ce_adm_error_summary_alias). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_error_mask]
+offset = 0x110
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_error_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_first_error]
+offset = 0x118
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_first_error). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_error_overflow]
+offset = 0x120
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_error_overflow). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_error_overflow_alias]
+offset = 0x128
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_error_overflow_alias). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_tnum_error]
+offset = 0x140
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_tnum_error). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_mmr_err_detail]
+offset = 0x148
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_mmr_err_detail). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_msg_sram_perr_detail]
+offset = 0x150
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_msg_sram_perr_detail). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_bap_sram_perr_detail]
+offset = 0x158
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_bap_sram_perr_detail). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ce_sram_perr_detail]
+offset = 0x160
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ce_sram_perr_detail). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ce_credit_oflow_detail]
+offset = 0x168
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ce_credit_oflow_detail). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_tx_link_idle_max_timer]
+offset = 0x170
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_tx_link_idle_max_timer). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_pcie_debug_sel]
+offset = 0x178
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_pcie_debug_sel_top]
+offset = 0x200
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_sel_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_pcie_debug_lat_sel_lo_top]
+offset = 0x208
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_pcie_debug_lat_sel_hi_top]
+offset = 0x210
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_pcie_debug_trig_sel_top]
+offset = 0x218
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_trig_sel_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_pcie_debug_trig_lat_sel_lo_top]
+offset = 0x220
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_trig_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_pcie_debug_trig_lat_sel_hi_top]
+offset = 0x228
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_trig_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_pcie_trig_compare_top]
+offset = 0x230
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_pcie_trig_compare_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_pcie_trig_compare_en_top]
+offset = 0x238
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_pcie_trig_compare_en_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_debug_sel_top]
+offset = 0x240
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_sel_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_debug_lat_sel_lo_top]
+offset = 0x248
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_debug_lat_sel_hi_top]
+offset = 0x250
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_debug_trig_sel_top]
+offset = 0x258
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_trig_sel_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_debug_trig_lat_sel_lo_top]
+offset = 0x260
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_trig_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_debug_trig_lat_sel_hi_top]
+offset = 0x268
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_trig_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_trig_compare_top]
+offset = 0x270
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_trig_compare_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_ssp_trig_compare_en_top]
+offset = 0x278
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ssp_trig_compare_en_top). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_bap_ctrl]
+offset = 0x400
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_bap_ctrl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.msg_buf_data63_0]
+offset = 0x800
+count = 35
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_msg_buf_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.msg_buf_data127_64]
+offset = 0xa00
+count = 35
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_msg_buf_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.msg_buf_parity]
+offset = 0xc00
+count = 35
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_msg_buf_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lpu_id]
+offset = 0x2000
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lpu_id). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rst]
+offset = 0x2008
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rst). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_dbg_stat]
+offset = 0x2010
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_dbg_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_dbg_cfg]
+offset = 0x2018
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_dbg_cfg). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_ctrl]
+offset = 0x2020
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_ctrl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_stat]
+offset = 0x2028
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_int_and_stat]
+offset = 0x2040
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_int_and_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_int_mask]
+offset = 0x2048
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_int_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_perf_cnt_sel]
+offset = 0x2100
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_perf_cnt_ctrl]
+offset = 0x2110
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt_ctrl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_perf_cnt1]
+offset = 0x2120
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_perf_cnt1_test]
+offset = 0x2128
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt1_test). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_perf_cnt2]
+offset = 0x2130
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_perf_cnt2_test]
+offset = 0x2138
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt2_test). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_lyr_cfg]
+offset = 0x2200
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_lyr_cfg). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_lyr_status]
+offset = 0x2208
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_lyr_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_lyr_int_stat]
+offset = 0x2210
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_lyr_int_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_ly_int_stat_test]
+offset = 0x2218
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_ly_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_lk_ly_int_stat_mask]
+offset = 0x2220
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_lk_ly_int_stat_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_fc_upd_ctl]
+offset = 0x2240
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_fc_upd_ctl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_flw_ctl_upd_to_timer]
+offset = 0x2260
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_flw_ctl_upd_to_timer). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_flw_ctl_upd_timer0]
+offset = 0x2268
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_flw_ctl_upd_timer0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_flw_ctl_upd_timer1]
+offset = 0x2270
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_flw_ctl_upd_timer1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_freq_nak_lat_thrsh]
+offset = 0x2400
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_freq_nak_lat_thrsh). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ack_nak_lat_tmr]
+offset = 0x2408
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ack_nak_lat_tmr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rply_tmr_thr]
+offset = 0x2410
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rply_tmr_thr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rply_tmr]
+offset = 0x2418
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rply_tmr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rply_num_stat]
+offset = 0x2420
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rply_num_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rty_buf_max_addr]
+offset = 0x2428
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rty_buf_max_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rty_fifo_ptr]
+offset = 0x2430
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rty_fifo_ptr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rty_fifo_rd_wr_ptr]
+offset = 0x2438
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rty_fifo_rd_wr_ptr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rty_fifo_cred]
+offset = 0x2440
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rty_fifo_cred). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_seq_cnt]
+offset = 0x2448
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ack_sent_seq_num]
+offset = 0x2450
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ack_sent_seq_num). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_seq_cnt_fifo_max_addr]
+offset = 0x2458
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt_fifo_max_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_seq_cnt_fifo_ptr]
+offset = 0x2460
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt_fifo_ptr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_seq_cnt_rd_wr_ptr]
+offset = 0x2468
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt_rd_wr_ptr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_tx_lk_ts_ctl]
+offset = 0x2470
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_tx_lk_ts_ctl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_mem_addr_ctl]
+offset = 0x2480
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_mem_addr_ctl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_mem_d_ld0]
+offset = 0x2488
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_mem_d_ld1]
+offset = 0x2490
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_mem_d_ld2]
+offset = 0x2498
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_mem_d_ld3]
+offset = 0x24a0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld3). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_mem_d_ld4]
+offset = 0x24a8
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld4). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rty_d_cnt]
+offset = 0x24c0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rty_d_cnt). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_seq_buf_cnt]
+offset = 0x24c8
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_seq_buf_cnt). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_seq_buf_bt_d]
+offset = 0x24d0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_seq_buf_bt_d). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ack_lat_thr]
+offset = 0x24e0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ack_lat_thr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_nxt_rcv_seq_1_cntr]
+offset = 0x2500
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_nxt_rcv_seq_1_cntr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_unsp_dllp_rcvd]
+offset = 0x2508
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_unsp_dllp_rcvd). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rcv_lk_ts_ctl]
+offset = 0x2510
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rcv_lk_ts_ctl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_phy_lyr_cfg]
+offset = 0x2600
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_cfg). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_phy_lyr_int_stat]
+offset = 0x2610
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_int_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_phy_lyr_int_stat_test]
+offset = 0x2618
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_phy_lyr_int_mask]
+offset = 0x2620
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_int_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rcv_phy_cfg]
+offset = 0x2680
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_cfg). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rcv_phy_stat1]
+offset = 0x2688
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_stat1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rcv_phy_stat2]
+offset = 0x2690
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_stat2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rcv_phy_stat3]
+offset = 0x2698
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_stat3). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rcv_phy_int_stat]
+offset = 0x26a0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_int_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rcv_phy_int_stat_test]
+offset = 0x26a8
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_rcv_phy_int_mask]
+offset = 0x26b0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_int_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_tx_phy_cfg]
+offset = 0x2700
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_cfg). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_tx_phy_stat]
+offset = 0x2708
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_tx_phy_int_stat]
+offset = 0x2710
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_int_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_tx_phy_int_stat_test]
+offset = 0x2718
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_tx_phy_int_mask]
+offset = 0x2720
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_int_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_tx_phy_stat2]
+offset = 0x2728
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_stat2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_cfg1]
+offset = 0x2780
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_cfg2]
+offset = 0x2788
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_cfg3]
+offset = 0x2790
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg3). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_cfg4]
+offset = 0x2798
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg4). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_cfg5]
+offset = 0x27a0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg5). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_stat1]
+offset = 0x27a8
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_stat2]
+offset = 0x27b0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_int_stat]
+offset = 0x27b8
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_int_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_int_stat_test]
+offset = 0x27c0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_int_mask]
+offset = 0x27c8
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_int_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_ltssm_stat_wr_en]
+offset = 0x27d0
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat_wr_en). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_cfg1]
+offset = 0x2800
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_cfg2]
+offset = 0x2808
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_cfg3]
+offset = 0x2810
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg3). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_cfg4]
+offset = 0x2818
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg4). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_stat]
+offset = 0x2820
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_int_stat]
+offset = 0x2828
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_int_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_int_stat_test]
+offset = 0x2830
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_int_mask]
+offset = 0x2838
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_int_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_pwr_dn1]
+offset = 0x2840
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_pwr_dn1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.lsi_gb_pwr_dn2]
+offset = 0x2848
+count = 2
+stride = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_pwr_dn2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.crm_debug_mux]
+offset = 0x4050
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_crm_debug_mux). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.crm_ssp_err_cmd_wrd]
+offset = 0x4060
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_crm_ssp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.crm_ssp_err_addr]
+offset = 0x4068
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_crm_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.crm_ssp_err_syn]
+offset = 0x4070
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_crm_ssp_err_syn). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.cxm_dyn_credit_status]
+offset = 0x5010
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_cxm_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.cxm_last_credit_status]
+offset = 0x5018
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_cxm_last_credit_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.cxm_credit_limit]
+offset = 0x5020
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_cxm_credit_limit). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.cxm_force_credit]
+offset = 0x5028
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_cxm_force_credit). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.cxm_disable_bypass]
+offset = 0x5030
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_cxm_disable_bypass). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.cxm_debug_mux]
+offset = 0x5050
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_cxm_debug_mux). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dtl_dtdr_credit_limit]
+offset = 0x6000
+count = 2
+stride = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dtl_dtdr_credit_limit). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dtl_dtdr_credit_force]
+offset = 0x6008
+count = 2
+stride = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dtl_dtdr_credit_force). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dtl_dyn_credit_status]
+offset = 0x6010
+count = 2
+stride = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dtl_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dtl_dtl_last_credit_stat]
+offset = 0x6018
+count = 2
+stride = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dtl_dtl_last_credit_stat). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dtl_dtl_ctrl]
+offset = 0x6020
+count = 2
+stride = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dtl_dtl_ctrl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dtl_debug_sel]
+offset = 0x6050
+count = 2
+stride = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dtl_debug_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.utl_utl_ctrl]
+offset = 0x7000
+count = 2
+stride = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_utl_utl_ctrl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.utl_debug_sel]
+offset = 0x7008
+count = 2
+stride = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_utl_debug_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_dyn_credit_status]
+offset = 0xb010
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_last_credit_status]
+offset = 0xb018
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_last_credit_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_credit_limit]
+offset = 0xb020
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_credit_limit). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_control]
+offset = 0xb030
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_control). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_status]
+offset = 0xb038
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_debug_sel]
+offset = 0xb050
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_debug_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie_debug_sel]
+offset = 0xb058
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie_debug_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_ssp_err_cmd_wrd]
+offset = 0xb060
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_ssp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_ssp_err_addr]
+offset = 0xb068
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_page_map]
+offset = 0xb070
+access = "rw"
+width = 64
+grade = "established"
+doc = "Upstream request engine page size map. The provider clears the page-size field and sets it to the 256 KiB encoding (4) at attach, the largest the code uses; the 32/40-bit entries are then 256 KiB pages. Name and offset are the vendor header's definition (struct member ce_ure_page_map). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_dir_map]
+offset = 0xb078
+count = 2
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Upstream request engine direct map, one per port. For 32-bit direct DMA the provider stores the target's coretalk address with the low 30 bits cleared (a 1 GiB-aligned base), reads it back to flush, and refcounts users: a second user needs the same base. Name and offset are the vendor header's definition (struct member ce_ure_dir_map). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pipe_sel1]
+offset = 0xb088
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pipe_mask1]
+offset = 0xb090
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pipe_sel2]
+offset = 0xb098
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pipe_mask2]
+offset = 0xb0a0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie1_credits_sent]
+offset = 0xb0a8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credits_sent). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie1_credits_used]
+offset = 0xb0b0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credits_used). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie1_credit_limit]
+offset = 0xb0b8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credit_limit). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie2_credits_sent]
+offset = 0xb0c0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie2_credits_sent). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie2_credits_used]
+offset = 0xb0c8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie2_credits_used). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie2_credit_limit]
+offset = 0xb0d0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie2_credit_limit). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie_force_credit]
+offset = 0xb0d8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie_force_credit). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_rd_tnum_val]
+offset = 0xb0e0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_val). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_rd_tnum_rsp_rcvd]
+offset = 0xb0e8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_rsp_rcvd). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_rd_tnum_esent_timer]
+offset = 0xb0f0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_esent_timer). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_rd_tnum_error]
+offset = 0xb0f8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_error). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_rd_tnum_first_cl]
+offset = 0xb100
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_first_cl). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_rd_tnum_link_buf]
+offset = 0xb108
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_link_buf). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_wr_tnum_val]
+offset = 0xb110
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_wr_tnum_val). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_sram_err_addr0]
+offset = 0xb118
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_sram_err_addr0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_sram_err_addr1]
+offset = 0xb120
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_sram_err_addr1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_sram_err_addr2]
+offset = 0xb128
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_sram_err_addr2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_sram_rd_addr0]
+offset = 0xb130
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_sram_rd_addr0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_sram_rd_addr1]
+offset = 0xb138
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_sram_rd_addr1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_sram_rd_addr2]
+offset = 0xb140
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_sram_rd_addr2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_sram_wr_addr0]
+offset = 0xb148
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_sram_wr_addr0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_sram_wr_addr1]
+offset = 0xb150
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_sram_wr_addr1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_sram_wr_addr2]
+offset = 0xb158
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_sram_wr_addr2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_buf_flush10]
+offset = 0xb160
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_buf_flush10). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_buf_flush11]
+offset = 0xb168
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_buf_flush11). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_buf_flush12]
+offset = 0xb170
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_buf_flush12). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_buf_flush13]
+offset = 0xb178
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_buf_flush13). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_buf_flush20]
+offset = 0xb180
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_buf_flush20). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_buf_flush21]
+offset = 0xb188
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_buf_flush21). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_buf_flush22]
+offset = 0xb190
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_buf_flush22). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_buf_flush23]
+offset = 0xb198
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_buf_flush23). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie_control1]
+offset = 0xb1a0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie_control1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_pcie_control2]
+offset = 0xb1a8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie_control2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_dat1_data63_0]
+offset = 0xc000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_dat1_data127_64]
+offset = 0xd000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_dat1_parity]
+offset = 0xe000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_hdr1_data63_0]
+offset = 0xf000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr1_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_hdr1_data127_64]
+offset = 0x10000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr1_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_hdr1_parity]
+offset = 0x11000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr1_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_dat2_data63_0]
+offset = 0x12000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat2_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_dat2_data127_64]
+offset = 0x13000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat2_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_dat2_parity]
+offset = 0x14000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat2_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_hdr2_data63_0]
+offset = 0x15000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr2_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_hdr2_data127_64]
+offset = 0x16000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr2_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_ups_hdr2_parity]
+offset = 0x17000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr2_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_dns_dat_data63_0]
+offset = 0x18000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_dat_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_dns_dat_data127_64]
+offset = 0x19000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_dat_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_dns_dat_parity]
+offset = 0x1a000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_dat_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_dns_hdr_data31_0]
+offset = 0x1b000
+count = 64
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_hdr_data31_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_dns_hdr_data95_32]
+offset = 0x1b200
+count = 64
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_hdr_data95_32). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_dns_hdr_parity]
+offset = 0x1b400
+count = 64
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_hdr_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_rci_data41_0]
+offset = 0x1b600
+count = 64
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_rci_data41_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_rci_data69_42]
+offset = 0x1b800
+count = 64
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_rci_data69_42). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_maint_rspq]
+offset = 0x1ba00
+count = 64
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_maint_rspq). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_maint_bap_buf_data63_0]
+offset = 0x24000
+count = 258
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_maint_bap_buf_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_maint_bap_buf_data127_64]
+offset = 0x24810
+count = 258
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_maint_bap_buf_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.adm_maint_bap_buf_parity]
+offset = 0x25020
+count = 258
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_maint_bap_buf_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_ate40]
+offset = 0x30000
+count = 4096
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Upstream request engine 40-bit address translation entries, 4096 entries. The provider uses 64 MiB pages: bus address 0x4000000000 plus index times 64 MiB. Entry bit 63 valid, bit 62 message-signalled interrupt (not capable here), the rest the page-aligned coretalk address. Name and offset are the vendor header's definition (struct member ce_ure_ate40). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.ure_ate3240]
+offset = 0x38000
+count = 2048
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Upstream request engine 32/40-bit address translation entries, 2048 entries. Entries 0 to 31 serve port 1 and 32 to 63 port 2 for 16 GiB super-page mappings; entries 64 and up map the 32-bit window in 256 KiB pages from bus address 0. Same entry layout as ce_ure_ate40, and message-signalled interrupt capable. Name and offset are the vendor header's definition (struct member ce_ure_ate3240). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_dyn_credit_status1]
+offset = 0x40010
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_dyn_credit_status1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_dyn_credit_status2]
+offset = 0x40018
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_dyn_credit_status2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_last_credit_status1]
+offset = 0x40020
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_last_credit_status1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_last_credit_status2]
+offset = 0x40028
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_last_credit_status2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_credit_limit1]
+offset = 0x40030
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_credit_limit1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_credit_limit2]
+offset = 0x40038
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_credit_limit2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_force_credit1]
+offset = 0x40040
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_force_credit1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_force_credit2]
+offset = 0x40048
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_force_credit2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_debug_mux1]
+offset = 0x40050
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_debug_mux1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_debug_mux2]
+offset = 0x40058
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_debug_mux2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_ssp_err_cmd_wrd]
+offset = 0x40060
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_ssp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_ssp_err_addr]
+offset = 0x40068
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_comp_err_cmd_wrd]
+offset = 0x40070
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_comp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_comp_err_addr]
+offset = 0x40078
+access = "rw"
+width = 64
+grade = "established"
+doc = "Downstream request engine completion error address. The provider writes zero to it at attach, after clearing the interrupt and error summaries. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_req_status]
+offset = 0x40080
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_req_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_config1]
+offset = 0x40088
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_config1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_config2]
+offset = 0x40090
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_config2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_config_req_status]
+offset = 0x40098
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_config_req_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_dyn_fifo]
+offset = 0x40100
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_dyn_fifo). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_last_fifo]
+offset = 0x40120
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_last_fifo). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_ds_head_q_data63_0]
+offset = 0x40200
+count = 32
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_head_q_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_ds_head_q_data127_64]
+offset = 0x40300
+count = 32
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_head_q_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_ds_head_q_parity]
+offset = 0x40400
+count = 32
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_head_q_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_ds_data_q_data63_0]
+offset = 0x41000
+count = 256
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_data_q_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_ds_data_q_data127_64]
+offset = 0x42000
+count = 256
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_data_q_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_ds_data_q_parity]
+offset = 0x43000
+count = 256
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_data_q_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_ure_us_rsp_q_data63_0]
+offset = 0x44000
+count = 8
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_ure_us_rsp_q_data63_0). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_ure_us_rsp_q_data127_64]
+offset = 0x44100
+count = 8
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_ure_us_rsp_q_data127_64). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_ure_us_rsp_q_parity]
+offset = 0x44200
+count = 8
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_ure_us_rsp_q_parity). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.dre_maint_us_wrt_rsp]
+offset = 0x44300
+count = 32
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_us_wrt_rsp). The header gives no access direction or reset value; access rw is a placeholder."
+
+[constants]
+PART_NUM = { value = 0xce00, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_PART_NUM)", doc = "Header comment: CE ASIC part & mfgr information" }
+SRC_ID = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_SRC_ID)", doc = "Header comment: CE ASIC part & mfgr information" }
+REV_A = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_REV_A)", doc = "Header comment: CE ASIC part & mfgr information" }
+VIRT_PPB_VENDOR_ID = { value = 0x10a9, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_VIRT_PPB_VENDOR_ID)", doc = "Header comment: CE Virtual PPB Vendor/Device IDs" }
+VIRT_PPB_DEVICE_ID = { value = 0x4002, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_VIRT_PPB_DEVICE_ID)", doc = "Header comment: CE Virtual PPB Vendor/Device IDs" }
+HOST_BRIDGE_VENDOR_ID = { value = 0x10a9, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_HOST_BRIDGE_VENDOR_ID)", doc = "Header comment: CE Host Bridge Vendor/Device IDs" }
+HOST_BRIDGE_DEVICE_ID = { value = 0x4001, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_HOST_BRIDGE_DEVICE_ID)", doc = "Header comment: CE Host Bridge Vendor/Device IDs" }
+NUM_M40_ATES = { value = 0x1000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_M40_ATES)", doc = "Header comment: array extents" }
+NUM_M3240_ATES = { value = 0x800, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_M3240_ATES)", doc = "Header comment: array extents" }
+NUM_PORTS = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_PORTS)", doc = "Header comment: array extents" }
+LSI_GB_CFG1_RXL0S_THS_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_THS_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RXL0S_THS_MASK = { value = 0xff, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_THS_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RXL0S_SMP_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_SMP_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RXL0S_SMP_MASK = { value = 0xf00, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_SMP_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RXL0S_ADJ_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_ADJ_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RXL0S_ADJ_MASK = { value = 0x7000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_ADJ_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RXL0S_FLT_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_FLT_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RXL0S_FLT_MASK = { value = 0x8000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_FLT_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_LPBK_SEL_SHFT = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_LPBK_SEL_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_LPBK_SEL_MASK = { value = 0x30000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_LPBK_SEL_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_LPBK_EN_SHFT = { value = 0x12, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_LPBK_EN_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_LPBK_EN_MASK = { value = 0x40000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_LPBK_EN_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RVRS_LB_SHFT = { value = 0x13, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RVRS_LB_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RVRS_LB_MASK = { value = 0x80000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RVRS_LB_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RVRS_CLK_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RVRS_CLK_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_RVRS_CLK_MASK = { value = 0x300000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RVRS_CLK_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_SLF_TS_SHFT = { value = 0x18, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_SLF_TS_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+LSI_GB_CFG1_SLF_TS_MASK = { value = 0xf000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_SLF_TS_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
+ADM_INT_CE_ERROR_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_CE_ERROR_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_LSI1_IP_ERROR_SHFT = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_LSI1_IP_ERROR_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_LSI2_IP_ERROR_SHFT = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_LSI2_IP_ERROR_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_ERROR_SHFT = { value = 0x3, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_ERROR_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PORT1_HOTPLUG_EVENT_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PORT1_HOTPLUG_EVENT_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PORT2_HOTPLUG_EVENT_SHFT = { value = 0x5, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PORT2_HOTPLUG_EVENT_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_PORT1_DEV_A_SHFT = { value = 0x6, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT1_DEV_A_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_PORT1_DEV_B_SHFT = { value = 0x7, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT1_DEV_B_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_PORT1_DEV_C_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT1_DEV_C_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_PORT1_DEV_D_SHFT = { value = 0x9, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT1_DEV_D_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_PORT2_DEV_A_SHFT = { value = 0xa, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT2_DEV_A_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_PORT2_DEV_B_SHFT = { value = 0xb, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT2_DEV_B_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_PORT2_DEV_C_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT2_DEV_C_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_PORT2_DEV_D_SHFT = { value = 0xd, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT2_DEV_D_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_MSG_SHFT = { value = 0xe, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_MSG_SLOT_0_SHFT = { value = 0xe, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SLOT_0_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_MSG_SLOT_1_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SLOT_1_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_MSG_SLOT_2_SHFT = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SLOT_2_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PCIE_MSG_SLOT_3_SHFT = { value = 0x11, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SLOT_3_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PORT1_PM_PME_MSG_SHFT = { value = 0x16, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PORT1_PM_PME_MSG_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_INT_PORT2_PM_PME_MSG_SHFT = { value = 0x17, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PORT2_PM_PME_MSG_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
+ADM_FORCE_INT_PCIE_PORT1_DEV_A_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT1_DEV_A_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
+ADM_FORCE_INT_PCIE_PORT1_DEV_B_SHFT = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT1_DEV_B_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
+ADM_FORCE_INT_PCIE_PORT1_DEV_C_SHFT = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT1_DEV_C_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
+ADM_FORCE_INT_PCIE_PORT1_DEV_D_SHFT = { value = 0x3, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT1_DEV_D_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
+ADM_FORCE_INT_PCIE_PORT2_DEV_A_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT2_DEV_A_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
+ADM_FORCE_INT_PCIE_PORT2_DEV_B_SHFT = { value = 0x5, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT2_DEV_B_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
+ADM_FORCE_INT_PCIE_PORT2_DEV_C_SHFT = { value = 0x6, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT2_DEV_C_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
+ADM_FORCE_INT_PCIE_PORT2_DEV_D_SHFT = { value = 0x7, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT2_DEV_D_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
+ADM_FORCE_INT_ALWAYS_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_ALWAYS_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
+INTR_VECTOR_SHFT = { value = 0x38, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (INTR_VECTOR_SHFT)", doc = "Header comment: ce_adm_int_dest register bit masks & shifts" }
+ADM_ERR_CRM_SSP_REQ_INVALID = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_CRM_SSP_REQ_INVALID)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_REQ_HEADER = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_HEADER)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_RSP_HEADER = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_HEADER)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_PROTOCOL_ERROR = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_PROTOCOL_ERROR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_SBE = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_SBE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_MBE = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_MBE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_CXM_CREDIT_OFLOW = { value = 0x40, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_CXM_CREDIT_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DRE_SSP_REQ_INVAL = { value = 0x80, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DRE_SSP_REQ_INVAL)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_REQ_LONG = { value = 0x100, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_LONG)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_REQ_OFLOW = { value = 0x200, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_REQ_SHORT = { value = 0x400, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_SHORT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_REQ_SIDEBAND = { value = 0x800, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_SIDEBAND)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_REQ_ADDR_ERR = { value = 0x1000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_ADDR_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_REQ_BAD_BE = { value = 0x2000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_BAD_BE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_PCIE_COMPL_TIMEOUT = { value = 0x4000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PCIE_COMPL_TIMEOUT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_PCIE_UNEXP_COMPL = { value = 0x8000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PCIE_UNEXP_COMPL)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_PCIE_ERR_COMPL = { value = 0x10000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PCIE_ERR_COMPL)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DRE_CREDIT_OFLOW = { value = 0x20000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DRE_CREDIT_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DRE_SRAM_PE = { value = 0x40000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DRE_SRAM_PE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_RSP_INVALID = { value = 0x80000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_INVALID)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_RSP_LONG = { value = 0x100000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_LONG)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_RSP_SHORT = { value = 0x200000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_SHORT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_SSP_RSP_SIDEBAND = { value = 0x400000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_SIDEBAND)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_URE_SSP_RSP_UNEXP = { value = 0x800000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_SSP_RSP_UNEXP)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_URE_SSP_WR_REQ_TIMEOUT = { value = 0x1000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_SSP_WR_REQ_TIMEOUT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_URE_SSP_RD_REQ_TIMEOUT = { value = 0x2000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_SSP_RD_REQ_TIMEOUT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_URE_ATE3240_PAGE_FAULT = { value = 0x4000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_ATE3240_PAGE_FAULT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_URE_ATE40_PAGE_FAULT = { value = 0x8000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_ATE40_PAGE_FAULT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_URE_CREDIT_OFLOW = { value = 0x10000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_CREDIT_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_URE_SRAM_PE = { value = 0x20000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_SRAM_PE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_ADM_SSP_RSP_UNEXP = { value = 0x40000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_ADM_SSP_RSP_UNEXP)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_ADM_SSP_REQ_TIMEOUT = { value = 0x80000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_ADM_SSP_REQ_TIMEOUT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_MMR_ACCESS_ERROR = { value = 0x100000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_MMR_ACCESS_ERROR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_MMR_ADDR_ERROR = { value = 0x200000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_MMR_ADDR_ERROR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_ADM_CREDIT_OFLOW = { value = 0x400000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_ADM_CREDIT_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_ADM_SRAM_PE = { value = 0x800000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_ADM_SRAM_PE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_MIN_PDATA_CREDIT_ERR = { value = 0x1000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_MIN_PDATA_CREDIT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_INF_COMPL_CRED_UPDT_ERR = { value = 0x2000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_INF_COMPL_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_INF_POSTED_CRED_UPDT_ERR = { value = 0x4000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_INF_POSTED_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_INF_NPOSTED_CRED_UPDT_ERR = { value = 0x8000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_INF_NPOSTED_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_COMP_HD_CRED_MAX_ERR = { value = 0x10000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_COMP_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_COMP_D_CRED_MAX_ERR = { value = 0x20000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_COMP_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_NPOSTED_HD_CRED_MAX_ERR = { value = 0x40000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_NPOSTED_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_NPOSTED_D_CRED_MAX_ERR = { value = 0x80000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_NPOSTED_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_POSTED_HD_CRED_MAX_ERR = { value = 0x100000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_POSTED_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL1_POSTED_D_CRED_MAX_ERR = { value = 0x200000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_POSTED_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_MIN_PDATA_CREDIT_ERR = { value = 0x400000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_MIN_PDATA_CREDIT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_INF_COMPL_CRED_UPDT_ERR = { value = 0x800000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_INF_COMPL_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_INF_POSTED_CRED_UPDT_ERR = { value = 0x1000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_INF_POSTED_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_INF_NPOSTED_CRED_UPDT_ERR = { value = 0x2000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_INF_NPOSTED_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_COMP_HD_CRED_MAX_ERR = { value = 0x4000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_COMP_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_COMP_D_CRED_MAX_ERR = { value = 0x8000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_COMP_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_NPOSTED_HD_CRED_MAX_ERR = { value = 0x10000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_NPOSTED_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_NPOSTED_D_CRED_MAX_ERR = { value = 0x20000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_NPOSTED_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_POSTED_HD_CRED_MAX_ERR = { value = 0x40000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_POSTED_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_DTL2_POSTED_D_CRED_MAX_ERR = { value = 0x80000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_POSTED_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_PORT1_PCIE_COR_ERR = { value = 0x100000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT1_PCIE_COR_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_PORT1_PCIE_NFAT_ERR = { value = 0x200000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT1_PCIE_NFAT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_PORT1_PCIE_FAT_ERR = { value = 0x400000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT1_PCIE_FAT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_PORT2_PCIE_COR_ERR = { value = 0x800000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT2_PCIE_COR_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_PORT2_PCIE_NFAT_ERR = { value = 0x1000000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT2_PCIE_NFAT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+ADM_ERR_PORT2_PCIE_FAT_ERR = { value = 0x2000000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT2_PCIE_FAT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
+DRE_RO_ENABLE = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_RO_ENABLE)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
+DRE_DYN_RO_ENABLE = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_DYN_RO_ENABLE)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
+DRE_SUP_CONFIG_COMP_ERROR = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_SUP_CONFIG_COMP_ERROR)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
+DRE_SUP_IO_COMP_ERROR = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_SUP_IO_COMP_ERROR)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
+DRE_ADDR_MODE_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_ADDR_MODE_SHFT)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
+DRE_LAST_CONFIG_COMPLETION = { value = 0x7, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_LAST_CONFIG_COMPLETION)", doc = "Header comment: ce_dre_config_req_status register bit masks" }
+DRE_DOWNSTREAM_CONFIG_ERROR = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_DOWNSTREAM_CONFIG_ERROR)", doc = "Header comment: ce_dre_config_req_status register bit masks" }
+DRE_CONFIG_COMPLETION_VALID = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_CONFIG_COMPLETION_VALID)", doc = "Header comment: ce_dre_config_req_status register bit masks" }
+DRE_CONFIG_REQUEST_ACTIVE = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_CONFIG_REQUEST_ACTIVE)", doc = "Header comment: ce_dre_config_req_status register bit masks" }
+URE_RD_MRG_ENABLE = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_RD_MRG_ENABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_WRT_MRG_ENABLE1 = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_WRT_MRG_ENABLE1)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_WRT_MRG_ENABLE2 = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_WRT_MRG_ENABLE2)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_WRT_MRG_TIMER_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_WRT_MRG_TIMER_SHFT)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_RSPQ_BYPASS_DISABLE = { value = 0x1000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_RSPQ_BYPASS_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_UPS_DAT1_PAR_DISABLE = { value = 0x100000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UPS_DAT1_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_UPS_HDR1_PAR_DISABLE = { value = 0x200000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UPS_HDR1_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_UPS_DAT2_PAR_DISABLE = { value = 0x400000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UPS_DAT2_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_UPS_HDR2_PAR_DISABLE = { value = 0x800000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UPS_HDR2_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_ATE_PAR_DISABLE = { value = 0x1000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ATE_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_RCI_PAR_DISABLE = { value = 0x2000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_RCI_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_RSPQ_PAR_DISABLE = { value = 0x4000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_RSPQ_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_DNS_DAT_PAR_DISABLE = { value = 0x8000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_DNS_DAT_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_DNS_HDR_PAR_DISABLE = { value = 0x10000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_DNS_HDR_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_MALFORM_DISABLE = { value = 0x100000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MALFORM_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_UNSUP_DISABLE = { value = 0x200000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UNSUP_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
+URE_ATE3240_ENABLE = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ATE3240_ENABLE)", doc = "Header comment: ce_ure_page_map register bit masks & shifts" }
+URE_ATE40_ENABLE = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ATE40_ENABLE)", doc = "Header comment: ce_ure_page_map register bit masks & shifts" }
+URE_PAGESIZE_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PAGESIZE_SHFT)", doc = "Header comment: ce_ure_page_map register bit masks & shifts" }
+PKT_TRAFIC_SHRT = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (PKT_TRAFIC_SHRT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
+BUS_SRC_ID_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (BUS_SRC_ID_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
+DEV_SRC_ID_SHFT = { value = 0x3, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (DEV_SRC_ID_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
+FNC_SRC_ID_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (FNC_SRC_ID_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
+URE_SEL1_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SEL1_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
+URE_SEL2_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SEL2_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
+URE_SEL3_SHFT = { value = 0x28, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SEL3_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
+URE_MASK1_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MASK1_SHFT)", doc = "Header comment: ce_ure_pipe_mask register bit masks & shifts" }
+URE_MASK2_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MASK2_SHFT)", doc = "Header comment: ce_ure_pipe_mask register bit masks & shifts" }
+URE_MASK3_SHFT = { value = 0x28, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MASK3_SHFT)", doc = "Header comment: ce_ure_pipe_mask register bit masks & shifts" }
+URE_SI = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SI)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
+URE_ELAL_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ELAL_SHFT)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
+URE_ELAL1_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ELAL1_SHFT)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
+URE_SCC = { value = 0x1000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SCC)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
+URE_PN1_SHFT = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PN1_SHFT)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
+URE_PN2_SHFT = { value = 0x18, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PN2_SHFT)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
+URE_ABP = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ABP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_PCP = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PCP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_MSP = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MSP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_AIP = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_AIP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_PIP = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PIP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_HPS = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_HPS)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_HPC = { value = 0x40, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_HPC)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_SPLV_SHFT = { value = 0x7, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SPLV_SHFT)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_SPLS_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SPLS_SHFT)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_PSN1_SHFT = { value = 0x13, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PSN1_SHFT)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+URE_PSN2_SHFT = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PSN2_SHFT)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
+PIO_MMR = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_MMR)", doc = "Header comment: Local CE Registers Space" }
+PIO_MMR_LEN = { value = 0x4000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_MMR_LEN)", doc = "Header comment: Local CE Registers Space" }
+PIO_CONFIG_SPACE = { value = 0x4000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_CONFIG_SPACE)", doc = "Header comment: PCI Compatible Config Space" }
+PIO_CONFIG_SPACE_LEN = { value = 0x4000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_CONFIG_SPACE_LEN)", doc = "Header comment: PCI Compatible Config Space" }
+PIO_IO_SPACE_ALIAS = { value = 0x8000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_IO_SPACE_ALIAS)", doc = "Header comment: PCI I/O Space Alias" }
+PIO_IO_SPACE_ALIAS_LEN = { value = 0x8000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_IO_SPACE_ALIAS_LEN)", doc = "Header comment: PCI I/O Space Alias" }
+PIO_E_CONFIG_SPACE = { value = 0x10000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_E_CONFIG_SPACE)", doc = "Header comment: PCI Enhanced Config Space" }
+PIO_E_CONFIG_SPACE_LEN = { value = 0x10000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_E_CONFIG_SPACE_LEN)", doc = "Header comment: PCI Enhanced Config Space" }
+PIO_IO_SPACE = { value = 0x100000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_IO_SPACE)", doc = "Header comment: PCI I/O Space" }
+PIO_IO_SPACE_LEN = { value = 0x100000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_IO_SPACE_LEN)", doc = "Header comment: PCI I/O Space" }
+PIO_MEM_SPACE = { value = 0x200000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_MEM_SPACE)", doc = "Header comment: PCI MEM Space" }
+E_CONFIG_BUS_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_BUS_SHFT)", doc = "Header comment: PCI MEM Space" }
+E_CONFIG_DEVICE_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_DEVICE_SHFT)", doc = "Header comment: PCI MEM Space" }
+E_CONFIG_FUNC_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_FUNC_SHFT)", doc = "Header comment: PCI MEM Space" }

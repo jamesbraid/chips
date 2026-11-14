@@ -66,6 +66,7 @@ pub mod shub_ii;
 pub mod tigon;
 pub mod tio;
 pub mod tioca;
+pub mod tioce;
 pub mod tiocp;
 pub mod tl16pir552;
 pub mod tsb12lv22;

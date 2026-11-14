@@ -1,0 +1,981 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/tioce/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="tioce" prefix="TIOCE" title="TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it">
+  <doc>Names and offsets are the definitions of SGI's Linux Altix platform code (header and provider, v5.3). The TIOCE's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one. Bit masks the header defines are listed as constants with the comment that precedes them, not attached to registers.</doc>
+  <struct name="ADM_ID" size="8" grade="established" register="yes" offset="0x0" access="rw" reset="unknown">
+    <doc>Widget identification word: part 0xce00, source id 1, revision A = 1 (header constants). Revision A needs the access workaround described on the unit page. Name and offset are the vendor header's definition (struct member ce_adm_id). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_DYN_CREDIT_STATUS" size="8" grade="established" register="yes" offset="0x10" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_LAST_CREDIT_STATUS" size="8" grade="established" register="yes" offset="0x18" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_last_credit_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_CREDIT_LIMIT" size="8" grade="established" register="yes" offset="0x20" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_FORCE_CREDIT" size="8" grade="established" register="yes" offset="0x28" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_force_credit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_CONTROL" size="8" grade="established" register="yes" offset="0x30" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_control). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_MMR_CHN_TIMEOUT" size="8" grade="established" register="yes" offset="0x38" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_mmr_chn_timeout). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_URE_TIMEOUT" size="8" grade="established" register="yes" offset="0x40" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_ure_timeout). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_DRE_TIMEOUT" size="8" grade="established" register="yes" offset="0x48" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_dre_timeout). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_DEBUG_SEL" size="8" grade="established" register="yes" offset="0x50" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_INT_STATUS" size="8" grade="established" register="yes" offset="0x58" access="rw" reset="unknown">
+    <doc>Interrupt status. Bit n is the interrupt source named by the header (error, link 1 and 2 errors, PCIe error, hot-plug events per port, INTA to INTD of each port, message slots 0 to 3, power-management events). The provider reads it on revision A before forcing an interrupt. Name and offset are the vendor header's definition (struct member ce_adm_int_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_INT_STATUS_ALIAS" size="8" grade="established" register="yes" offset="0x60" access="rw" reset="unknown">
+    <doc>Interrupt status alias. The provider sets every bit through it at attach to clear transients (the alias is the write path to clear; role from that use). Name and offset are the vendor header's definition (struct member ce_adm_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_INT_MASK" size="8" grade="established" register="yes" offset="0x68" access="rw" reset="unknown">
+    <doc>Interrupt mask. The provider sets a source bit, writes its destination, then clears the bit, so a set bit blocks the source while the destination is rewritten. Name and offset are the vendor header's definition (struct member ce_adm_int_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_INT_PENDING" size="8" grade="established" register="yes" offset="0x70" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_int_pending). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_FORCE_INT" size="8" grade="established" register="yes" offset="0x78" access="rw" reset="unknown">
+    <doc>Force interrupt. Bits 0 to 7 force INTA to INTD of port 1 then port 2; bit 8 forces always. The bit numbering differs from the status register, and the provider maps explicitly. Revision A does not use it (workaround). Name and offset are the vendor header's definition (struct member ce_adm_force_int). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_URE_UPS_BUF_BARRIER_FLUSH" size="8" grade="established" register="yes" offset="0x80" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ure_ups_buf_barrier_flush). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_INT_DEST" size="8" grade="established" register="yes" offset="0x88" access="rw" count="15" stride="8" reset="unknown">
+    <doc>Interrupt destination, one per source (the header declares fifteen). The provider writes the kernel vector in bits 63:56 (shift INTR_VECTOR_SHFT) ORed with the destination coretalk address of the target CPU, indexed by interrupt source bit. Name and offset are the vendor header's definition (struct member ce_adm_int_dest). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_ERROR_SUMMARY" size="8" grade="established" register="yes" offset="0x100" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_error_summary). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_ERROR_SUMMARY_ALIAS" size="8" grade="established" register="yes" offset="0x108" access="rw" reset="unknown">
+    <doc>Error summary alias. The provider sets every bit through it at attach to clear transient errors. Name and offset are the vendor header's definition (struct member ce_adm_error_summary_alias). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_ERROR_MASK" size="8" grade="established" register="yes" offset="0x110" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_error_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_FIRST_ERROR" size="8" grade="established" register="yes" offset="0x118" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_first_error). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_ERROR_OVERFLOW" size="8" grade="established" register="yes" offset="0x120" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_error_overflow). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_ERROR_OVERFLOW_ALIAS" size="8" grade="established" register="yes" offset="0x128" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_error_overflow_alias). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_TNUM_ERROR" size="8" grade="established" register="yes" offset="0x140" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_tnum_error). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_MMR_ERR_DETAIL" size="8" grade="established" register="yes" offset="0x148" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_mmr_err_detail). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_MSG_SRAM_PERR_DETAIL" size="8" grade="established" register="yes" offset="0x150" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_msg_sram_perr_detail). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_BAP_SRAM_PERR_DETAIL" size="8" grade="established" register="yes" offset="0x158" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_bap_sram_perr_detail). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_CE_SRAM_PERR_DETAIL" size="8" grade="established" register="yes" offset="0x160" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ce_sram_perr_detail). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_CE_CREDIT_OFLOW_DETAIL" size="8" grade="established" register="yes" offset="0x168" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ce_credit_oflow_detail). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_TX_LINK_IDLE_MAX_TIMER" size="8" grade="established" register="yes" offset="0x170" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_tx_link_idle_max_timer). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_PCIE_DEBUG_SEL" size="8" grade="established" register="yes" offset="0x178" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_PCIE_DEBUG_SEL_TOP" size="8" grade="established" register="yes" offset="0x200" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_sel_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_PCIE_DEBUG_LAT_SEL_LO_TOP" size="8" grade="established" register="yes" offset="0x208" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_PCIE_DEBUG_LAT_SEL_HI_TOP" size="8" grade="established" register="yes" offset="0x210" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_PCIE_DEBUG_TRIG_SEL_TOP" size="8" grade="established" register="yes" offset="0x218" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_trig_sel_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_PCIE_DEBUG_TRIG_LAT_SEL_LO_TOP" size="8" grade="established" register="yes" offset="0x220" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_trig_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_PCIE_DEBUG_TRIG_LAT_SEL_HI_TOP" size="8" grade="established" register="yes" offset="0x228" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_pcie_debug_trig_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_PCIE_TRIG_COMPARE_TOP" size="8" grade="established" register="yes" offset="0x230" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_pcie_trig_compare_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_PCIE_TRIG_COMPARE_EN_TOP" size="8" grade="established" register="yes" offset="0x238" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_pcie_trig_compare_en_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_DEBUG_SEL_TOP" size="8" grade="established" register="yes" offset="0x240" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_sel_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_DEBUG_LAT_SEL_LO_TOP" size="8" grade="established" register="yes" offset="0x248" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_DEBUG_LAT_SEL_HI_TOP" size="8" grade="established" register="yes" offset="0x250" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_DEBUG_TRIG_SEL_TOP" size="8" grade="established" register="yes" offset="0x258" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_trig_sel_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_DEBUG_TRIG_LAT_SEL_LO_TOP" size="8" grade="established" register="yes" offset="0x260" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_trig_lat_sel_lo_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_DEBUG_TRIG_LAT_SEL_HI_TOP" size="8" grade="established" register="yes" offset="0x268" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_trig_lat_sel_hi_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_TRIG_COMPARE_TOP" size="8" grade="established" register="yes" offset="0x270" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_trig_compare_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_SSP_TRIG_COMPARE_EN_TOP" size="8" grade="established" register="yes" offset="0x278" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_trig_compare_en_top). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_BAP_CTRL" size="8" grade="established" register="yes" offset="0x400" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_bap_ctrl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="MSG_BUF_DATA63_0" size="8" grade="established" register="yes" offset="0x800" access="rw" count="35" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_msg_buf_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="MSG_BUF_DATA127_64" size="8" grade="established" register="yes" offset="0xa00" access="rw" count="35" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_msg_buf_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="MSG_BUF_PARITY" size="8" grade="established" register="yes" offset="0xc00" access="rw" count="35" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_msg_buf_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LPU_ID" size="8" grade="established" register="yes" offset="0x2000" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lpu_id). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RST" size="8" grade="established" register="yes" offset="0x2008" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rst). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_DBG_STAT" size="8" grade="established" register="yes" offset="0x2010" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_dbg_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_DBG_CFG" size="8" grade="established" register="yes" offset="0x2018" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_dbg_cfg). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_CTRL" size="8" grade="established" register="yes" offset="0x2020" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_ctrl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_STAT" size="8" grade="established" register="yes" offset="0x2028" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_INT_AND_STAT" size="8" grade="established" register="yes" offset="0x2040" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_int_and_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_INT_MASK" size="8" grade="established" register="yes" offset="0x2048" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_int_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_PERF_CNT_SEL" size="8" grade="established" register="yes" offset="0x2100" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_PERF_CNT_CTRL" size="8" grade="established" register="yes" offset="0x2110" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt_ctrl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_PERF_CNT1" size="8" grade="established" register="yes" offset="0x2120" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_PERF_CNT1_TEST" size="8" grade="established" register="yes" offset="0x2128" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt1_test). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_PERF_CNT2" size="8" grade="established" register="yes" offset="0x2130" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_PERF_CNT2_TEST" size="8" grade="established" register="yes" offset="0x2138" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_perf_cnt2_test). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_LYR_CFG" size="8" grade="established" register="yes" offset="0x2200" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_lyr_cfg). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_LYR_STATUS" size="8" grade="established" register="yes" offset="0x2208" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_lyr_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_LYR_INT_STAT" size="8" grade="established" register="yes" offset="0x2210" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_lyr_int_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_LY_INT_STAT_TEST" size="8" grade="established" register="yes" offset="0x2218" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_ly_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LK_LY_INT_STAT_MASK" size="8" grade="established" register="yes" offset="0x2220" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_lk_ly_int_stat_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_FC_UPD_CTL" size="8" grade="established" register="yes" offset="0x2240" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_fc_upd_ctl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_FLW_CTL_UPD_TO_TIMER" size="8" grade="established" register="yes" offset="0x2260" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_flw_ctl_upd_to_timer). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_FLW_CTL_UPD_TIMER0" size="8" grade="established" register="yes" offset="0x2268" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_flw_ctl_upd_timer0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_FLW_CTL_UPD_TIMER1" size="8" grade="established" register="yes" offset="0x2270" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_flw_ctl_upd_timer1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_FREQ_NAK_LAT_THRSH" size="8" grade="established" register="yes" offset="0x2400" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_freq_nak_lat_thrsh). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_ACK_NAK_LAT_TMR" size="8" grade="established" register="yes" offset="0x2408" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ack_nak_lat_tmr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RPLY_TMR_THR" size="8" grade="established" register="yes" offset="0x2410" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rply_tmr_thr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RPLY_TMR" size="8" grade="established" register="yes" offset="0x2418" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rply_tmr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RPLY_NUM_STAT" size="8" grade="established" register="yes" offset="0x2420" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rply_num_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RTY_BUF_MAX_ADDR" size="8" grade="established" register="yes" offset="0x2428" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rty_buf_max_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RTY_FIFO_PTR" size="8" grade="established" register="yes" offset="0x2430" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rty_fifo_ptr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RTY_FIFO_RD_WR_PTR" size="8" grade="established" register="yes" offset="0x2438" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rty_fifo_rd_wr_ptr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RTY_FIFO_CRED" size="8" grade="established" register="yes" offset="0x2440" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rty_fifo_cred). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_SEQ_CNT" size="8" grade="established" register="yes" offset="0x2448" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_ACK_SENT_SEQ_NUM" size="8" grade="established" register="yes" offset="0x2450" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ack_sent_seq_num). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_SEQ_CNT_FIFO_MAX_ADDR" size="8" grade="established" register="yes" offset="0x2458" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt_fifo_max_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_SEQ_CNT_FIFO_PTR" size="8" grade="established" register="yes" offset="0x2460" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt_fifo_ptr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_SEQ_CNT_RD_WR_PTR" size="8" grade="established" register="yes" offset="0x2468" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_seq_cnt_rd_wr_ptr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_TX_LK_TS_CTL" size="8" grade="established" register="yes" offset="0x2470" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_tx_lk_ts_ctl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_MEM_ADDR_CTL" size="8" grade="established" register="yes" offset="0x2480" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_mem_addr_ctl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_MEM_D_LD0" size="8" grade="established" register="yes" offset="0x2488" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_MEM_D_LD1" size="8" grade="established" register="yes" offset="0x2490" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_MEM_D_LD2" size="8" grade="established" register="yes" offset="0x2498" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_MEM_D_LD3" size="8" grade="established" register="yes" offset="0x24a0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld3). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_MEM_D_LD4" size="8" grade="established" register="yes" offset="0x24a8" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_mem_d_ld4). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RTY_D_CNT" size="8" grade="established" register="yes" offset="0x24c0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rty_d_cnt). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_SEQ_BUF_CNT" size="8" grade="established" register="yes" offset="0x24c8" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_seq_buf_cnt). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_SEQ_BUF_BT_D" size="8" grade="established" register="yes" offset="0x24d0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_seq_buf_bt_d). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_ACK_LAT_THR" size="8" grade="established" register="yes" offset="0x24e0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ack_lat_thr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_NXT_RCV_SEQ_1_CNTR" size="8" grade="established" register="yes" offset="0x2500" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_nxt_rcv_seq_1_cntr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_UNSP_DLLP_RCVD" size="8" grade="established" register="yes" offset="0x2508" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_unsp_dllp_rcvd). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RCV_LK_TS_CTL" size="8" grade="established" register="yes" offset="0x2510" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rcv_lk_ts_ctl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_PHY_LYR_CFG" size="8" grade="established" register="yes" offset="0x2600" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_cfg). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_PHY_LYR_INT_STAT" size="8" grade="established" register="yes" offset="0x2610" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_int_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_PHY_LYR_INT_STAT_TEST" size="8" grade="established" register="yes" offset="0x2618" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_PHY_LYR_INT_MASK" size="8" grade="established" register="yes" offset="0x2620" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_phy_lyr_int_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RCV_PHY_CFG" size="8" grade="established" register="yes" offset="0x2680" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_cfg). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RCV_PHY_STAT1" size="8" grade="established" register="yes" offset="0x2688" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_stat1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RCV_PHY_STAT2" size="8" grade="established" register="yes" offset="0x2690" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_stat2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RCV_PHY_STAT3" size="8" grade="established" register="yes" offset="0x2698" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_stat3). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RCV_PHY_INT_STAT" size="8" grade="established" register="yes" offset="0x26a0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_int_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RCV_PHY_INT_STAT_TEST" size="8" grade="established" register="yes" offset="0x26a8" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_RCV_PHY_INT_MASK" size="8" grade="established" register="yes" offset="0x26b0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_rcv_phy_int_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_TX_PHY_CFG" size="8" grade="established" register="yes" offset="0x2700" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_cfg). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_TX_PHY_STAT" size="8" grade="established" register="yes" offset="0x2708" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_TX_PHY_INT_STAT" size="8" grade="established" register="yes" offset="0x2710" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_int_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_TX_PHY_INT_STAT_TEST" size="8" grade="established" register="yes" offset="0x2718" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_TX_PHY_INT_MASK" size="8" grade="established" register="yes" offset="0x2720" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_int_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_TX_PHY_STAT2" size="8" grade="established" register="yes" offset="0x2728" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_tx_phy_stat2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_CFG1" size="8" grade="established" register="yes" offset="0x2780" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_CFG2" size="8" grade="established" register="yes" offset="0x2788" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_CFG3" size="8" grade="established" register="yes" offset="0x2790" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg3). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_CFG4" size="8" grade="established" register="yes" offset="0x2798" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg4). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_CFG5" size="8" grade="established" register="yes" offset="0x27a0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_cfg5). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_STAT1" size="8" grade="established" register="yes" offset="0x27a8" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_STAT2" size="8" grade="established" register="yes" offset="0x27b0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_INT_STAT" size="8" grade="established" register="yes" offset="0x27b8" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_int_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_INT_STAT_TEST" size="8" grade="established" register="yes" offset="0x27c0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_INT_MASK" size="8" grade="established" register="yes" offset="0x27c8" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_int_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_LTSSM_STAT_WR_EN" size="8" grade="established" register="yes" offset="0x27d0" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat_wr_en). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_CFG1" size="8" grade="established" register="yes" offset="0x2800" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_CFG2" size="8" grade="established" register="yes" offset="0x2808" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_CFG3" size="8" grade="established" register="yes" offset="0x2810" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg3). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_CFG4" size="8" grade="established" register="yes" offset="0x2818" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg4). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_STAT" size="8" grade="established" register="yes" offset="0x2820" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_INT_STAT" size="8" grade="established" register="yes" offset="0x2828" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_int_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_INT_STAT_TEST" size="8" grade="established" register="yes" offset="0x2830" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_int_stat_test). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_INT_MASK" size="8" grade="established" register="yes" offset="0x2838" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_int_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_PWR_DN1" size="8" grade="established" register="yes" offset="0x2840" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_pwr_dn1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="LSI_GB_PWR_DN2" size="8" grade="established" register="yes" offset="0x2848" access="rw" count="2" stride="4096" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_pwr_dn2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CRM_DEBUG_MUX" size="8" grade="established" register="yes" offset="0x4050" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_crm_debug_mux). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CRM_SSP_ERR_CMD_WRD" size="8" grade="established" register="yes" offset="0x4060" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_crm_ssp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CRM_SSP_ERR_ADDR" size="8" grade="established" register="yes" offset="0x4068" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_crm_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CRM_SSP_ERR_SYN" size="8" grade="established" register="yes" offset="0x4070" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_crm_ssp_err_syn). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CXM_DYN_CREDIT_STATUS" size="8" grade="established" register="yes" offset="0x5010" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_cxm_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CXM_LAST_CREDIT_STATUS" size="8" grade="established" register="yes" offset="0x5018" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_cxm_last_credit_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CXM_CREDIT_LIMIT" size="8" grade="established" register="yes" offset="0x5020" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_cxm_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CXM_FORCE_CREDIT" size="8" grade="established" register="yes" offset="0x5028" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_cxm_force_credit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CXM_DISABLE_BYPASS" size="8" grade="established" register="yes" offset="0x5030" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_cxm_disable_bypass). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CXM_DEBUG_MUX" size="8" grade="established" register="yes" offset="0x5050" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_cxm_debug_mux). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DTL_DTDR_CREDIT_LIMIT" size="8" grade="established" register="yes" offset="0x6000" access="rw" count="2" stride="8192" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dtl_dtdr_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DTL_DTDR_CREDIT_FORCE" size="8" grade="established" register="yes" offset="0x6008" access="rw" count="2" stride="8192" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dtl_dtdr_credit_force). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DTL_DYN_CREDIT_STATUS" size="8" grade="established" register="yes" offset="0x6010" access="rw" count="2" stride="8192" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dtl_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DTL_DTL_LAST_CREDIT_STAT" size="8" grade="established" register="yes" offset="0x6018" access="rw" count="2" stride="8192" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dtl_dtl_last_credit_stat). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DTL_DTL_CTRL" size="8" grade="established" register="yes" offset="0x6020" access="rw" count="2" stride="8192" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dtl_dtl_ctrl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DTL_DEBUG_SEL" size="8" grade="established" register="yes" offset="0x6050" access="rw" count="2" stride="8192" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dtl_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="UTL_UTL_CTRL" size="8" grade="established" register="yes" offset="0x7000" access="rw" count="2" stride="8192" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_utl_utl_ctrl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="UTL_DEBUG_SEL" size="8" grade="established" register="yes" offset="0x7008" access="rw" count="2" stride="8192" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_utl_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_DYN_CREDIT_STATUS" size="8" grade="established" register="yes" offset="0xb010" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_dyn_credit_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_LAST_CREDIT_STATUS" size="8" grade="established" register="yes" offset="0xb018" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_last_credit_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_CREDIT_LIMIT" size="8" grade="established" register="yes" offset="0xb020" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_CONTROL" size="8" grade="established" register="yes" offset="0xb030" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_control). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_STATUS" size="8" grade="established" register="yes" offset="0xb038" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_DEBUG_SEL" size="8" grade="established" register="yes" offset="0xb050" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE_DEBUG_SEL" size="8" grade="established" register="yes" offset="0xb058" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SSP_ERR_CMD_WRD" size="8" grade="established" register="yes" offset="0xb060" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_ssp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SSP_ERR_ADDR" size="8" grade="established" register="yes" offset="0xb068" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PAGE_MAP" size="8" grade="established" register="yes" offset="0xb070" access="rw" reset="unknown">
+    <doc>Upstream request engine page size map. The provider clears the page-size field and sets it to the 256 KiB encoding (4) at attach, the largest the code uses; the 32/40-bit entries are then 256 KiB pages. Name and offset are the vendor header's definition (struct member ce_ure_page_map). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_DIR_MAP" size="8" grade="established" register="yes" offset="0xb078" access="rw" count="2" stride="8" reset="unknown">
+    <doc>Upstream request engine direct map, one per port. For 32-bit direct DMA the provider stores the target's coretalk address with the low 30 bits cleared (a 1 GiB-aligned base), reads it back to flush, and refcounts users: a second user needs the same base. Name and offset are the vendor header's definition (struct member ce_ure_dir_map). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PIPE_SEL1" size="8" grade="established" register="yes" offset="0xb088" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PIPE_MASK1" size="8" grade="established" register="yes" offset="0xb090" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PIPE_SEL2" size="8" grade="established" register="yes" offset="0xb098" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PIPE_MASK2" size="8" grade="established" register="yes" offset="0xb0a0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE1_CREDITS_SENT" size="8" grade="established" register="yes" offset="0xb0a8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credits_sent). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE1_CREDITS_USED" size="8" grade="established" register="yes" offset="0xb0b0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credits_used). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE1_CREDIT_LIMIT" size="8" grade="established" register="yes" offset="0xb0b8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE2_CREDITS_SENT" size="8" grade="established" register="yes" offset="0xb0c0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie2_credits_sent). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE2_CREDITS_USED" size="8" grade="established" register="yes" offset="0xb0c8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie2_credits_used). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE2_CREDIT_LIMIT" size="8" grade="established" register="yes" offset="0xb0d0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie2_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE_FORCE_CREDIT" size="8" grade="established" register="yes" offset="0xb0d8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie_force_credit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_RD_TNUM_VAL" size="8" grade="established" register="yes" offset="0xb0e0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_val). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_RD_TNUM_RSP_RCVD" size="8" grade="established" register="yes" offset="0xb0e8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_rsp_rcvd). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_RD_TNUM_ESENT_TIMER" size="8" grade="established" register="yes" offset="0xb0f0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_esent_timer). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_RD_TNUM_ERROR" size="8" grade="established" register="yes" offset="0xb0f8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_error). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_RD_TNUM_FIRST_CL" size="8" grade="established" register="yes" offset="0xb100" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_first_cl). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_RD_TNUM_LINK_BUF" size="8" grade="established" register="yes" offset="0xb108" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_rd_tnum_link_buf). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_WR_TNUM_VAL" size="8" grade="established" register="yes" offset="0xb110" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_wr_tnum_val). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SRAM_ERR_ADDR0" size="8" grade="established" register="yes" offset="0xb118" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_sram_err_addr0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SRAM_ERR_ADDR1" size="8" grade="established" register="yes" offset="0xb120" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_sram_err_addr1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SRAM_ERR_ADDR2" size="8" grade="established" register="yes" offset="0xb128" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_sram_err_addr2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SRAM_RD_ADDR0" size="8" grade="established" register="yes" offset="0xb130" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_sram_rd_addr0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SRAM_RD_ADDR1" size="8" grade="established" register="yes" offset="0xb138" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_sram_rd_addr1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SRAM_RD_ADDR2" size="8" grade="established" register="yes" offset="0xb140" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_sram_rd_addr2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SRAM_WR_ADDR0" size="8" grade="established" register="yes" offset="0xb148" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_sram_wr_addr0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SRAM_WR_ADDR1" size="8" grade="established" register="yes" offset="0xb150" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_sram_wr_addr1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_SRAM_WR_ADDR2" size="8" grade="established" register="yes" offset="0xb158" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_sram_wr_addr2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_BUF_FLUSH10" size="8" grade="established" register="yes" offset="0xb160" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_buf_flush10). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_BUF_FLUSH11" size="8" grade="established" register="yes" offset="0xb168" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_buf_flush11). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_BUF_FLUSH12" size="8" grade="established" register="yes" offset="0xb170" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_buf_flush12). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_BUF_FLUSH13" size="8" grade="established" register="yes" offset="0xb178" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_buf_flush13). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_BUF_FLUSH20" size="8" grade="established" register="yes" offset="0xb180" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_buf_flush20). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_BUF_FLUSH21" size="8" grade="established" register="yes" offset="0xb188" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_buf_flush21). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_BUF_FLUSH22" size="8" grade="established" register="yes" offset="0xb190" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_buf_flush22). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_BUF_FLUSH23" size="8" grade="established" register="yes" offset="0xb198" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_buf_flush23). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE_CONTROL1" size="8" grade="established" register="yes" offset="0xb1a0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie_control1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_PCIE_CONTROL2" size="8" grade="established" register="yes" offset="0xb1a8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie_control2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_DAT1_DATA63_0" size="8" grade="established" register="yes" offset="0xc000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_DAT1_DATA127_64" size="8" grade="established" register="yes" offset="0xd000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_DAT1_PARITY" size="8" grade="established" register="yes" offset="0xe000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_HDR1_DATA63_0" size="8" grade="established" register="yes" offset="0xf000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr1_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_HDR1_DATA127_64" size="8" grade="established" register="yes" offset="0x10000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr1_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_HDR1_PARITY" size="8" grade="established" register="yes" offset="0x11000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr1_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_DAT2_DATA63_0" size="8" grade="established" register="yes" offset="0x12000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat2_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_DAT2_DATA127_64" size="8" grade="established" register="yes" offset="0x13000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat2_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_DAT2_PARITY" size="8" grade="established" register="yes" offset="0x14000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat2_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_HDR2_DATA63_0" size="8" grade="established" register="yes" offset="0x15000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr2_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_HDR2_DATA127_64" size="8" grade="established" register="yes" offset="0x16000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr2_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_UPS_HDR2_PARITY" size="8" grade="established" register="yes" offset="0x17000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_hdr2_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_DNS_DAT_DATA63_0" size="8" grade="established" register="yes" offset="0x18000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_dat_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_DNS_DAT_DATA127_64" size="8" grade="established" register="yes" offset="0x19000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_dat_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_DNS_DAT_PARITY" size="8" grade="established" register="yes" offset="0x1a000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_dat_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_DNS_HDR_DATA31_0" size="8" grade="established" register="yes" offset="0x1b000" access="rw" count="64" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_hdr_data31_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_DNS_HDR_DATA95_32" size="8" grade="established" register="yes" offset="0x1b200" access="rw" count="64" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_hdr_data95_32). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_DNS_HDR_PARITY" size="8" grade="established" register="yes" offset="0x1b400" access="rw" count="64" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_dns_hdr_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_RCI_DATA41_0" size="8" grade="established" register="yes" offset="0x1b600" access="rw" count="64" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_rci_data41_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_RCI_DATA69_42" size="8" grade="established" register="yes" offset="0x1b800" access="rw" count="64" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_rci_data69_42). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_MAINT_RSPQ" size="8" grade="established" register="yes" offset="0x1ba00" access="rw" count="64" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_rspq). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_MAINT_BAP_BUF_DATA63_0" size="8" grade="established" register="yes" offset="0x24000" access="rw" count="258" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_maint_bap_buf_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_MAINT_BAP_BUF_DATA127_64" size="8" grade="established" register="yes" offset="0x24810" access="rw" count="258" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_maint_bap_buf_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ADM_MAINT_BAP_BUF_PARITY" size="8" grade="established" register="yes" offset="0x25020" access="rw" count="258" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_maint_bap_buf_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_ATE40" size="8" grade="established" register="yes" offset="0x30000" access="rw" count="4096" stride="8" reset="unknown">
+    <doc>Upstream request engine 40-bit address translation entries, 4096 entries. The provider uses 64 MiB pages: bus address 0x4000000000 plus index times 64 MiB. Entry bit 63 valid, bit 62 message-signalled interrupt (not capable here), the rest the page-aligned coretalk address. Name and offset are the vendor header's definition (struct member ce_ure_ate40). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="URE_ATE3240" size="8" grade="established" register="yes" offset="0x38000" access="rw" count="2048" stride="8" reset="unknown">
+    <doc>Upstream request engine 32/40-bit address translation entries, 2048 entries. Entries 0 to 31 serve port 1 and 32 to 63 port 2 for 16 GiB super-page mappings; entries 64 and up map the 32-bit window in 256 KiB pages from bus address 0. Same entry layout as ce_ure_ate40, and message-signalled interrupt capable. Name and offset are the vendor header's definition (struct member ce_ure_ate3240). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_DYN_CREDIT_STATUS1" size="8" grade="established" register="yes" offset="0x40010" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_dyn_credit_status1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_DYN_CREDIT_STATUS2" size="8" grade="established" register="yes" offset="0x40018" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_dyn_credit_status2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_LAST_CREDIT_STATUS1" size="8" grade="established" register="yes" offset="0x40020" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_last_credit_status1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_LAST_CREDIT_STATUS2" size="8" grade="established" register="yes" offset="0x40028" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_last_credit_status2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_CREDIT_LIMIT1" size="8" grade="established" register="yes" offset="0x40030" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_credit_limit1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_CREDIT_LIMIT2" size="8" grade="established" register="yes" offset="0x40038" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_credit_limit2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_FORCE_CREDIT1" size="8" grade="established" register="yes" offset="0x40040" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_force_credit1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_FORCE_CREDIT2" size="8" grade="established" register="yes" offset="0x40048" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_force_credit2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_DEBUG_MUX1" size="8" grade="established" register="yes" offset="0x40050" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_debug_mux1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_DEBUG_MUX2" size="8" grade="established" register="yes" offset="0x40058" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_debug_mux2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_SSP_ERR_CMD_WRD" size="8" grade="established" register="yes" offset="0x40060" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_ssp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_SSP_ERR_ADDR" size="8" grade="established" register="yes" offset="0x40068" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_COMP_ERR_CMD_WRD" size="8" grade="established" register="yes" offset="0x40070" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_comp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_COMP_ERR_ADDR" size="8" grade="established" register="yes" offset="0x40078" access="rw" reset="unknown">
+    <doc>Downstream request engine completion error address. The provider writes zero to it at attach, after clearing the interrupt and error summaries. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_REQ_STATUS" size="8" grade="established" register="yes" offset="0x40080" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_req_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_CONFIG1" size="8" grade="established" register="yes" offset="0x40088" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_config1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_CONFIG2" size="8" grade="established" register="yes" offset="0x40090" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_config2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_CONFIG_REQ_STATUS" size="8" grade="established" register="yes" offset="0x40098" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_config_req_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_DYN_FIFO" size="8" grade="established" register="yes" offset="0x40100" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_dyn_fifo). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_LAST_FIFO" size="8" grade="established" register="yes" offset="0x40120" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_last_fifo). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_DS_HEAD_Q_DATA63_0" size="8" grade="established" register="yes" offset="0x40200" access="rw" count="32" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_head_q_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_DS_HEAD_Q_DATA127_64" size="8" grade="established" register="yes" offset="0x40300" access="rw" count="32" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_head_q_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_DS_HEAD_Q_PARITY" size="8" grade="established" register="yes" offset="0x40400" access="rw" count="32" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_head_q_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_DS_DATA_Q_DATA63_0" size="8" grade="established" register="yes" offset="0x41000" access="rw" count="256" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_data_q_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_DS_DATA_Q_DATA127_64" size="8" grade="established" register="yes" offset="0x42000" access="rw" count="256" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_data_q_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_DS_DATA_Q_PARITY" size="8" grade="established" register="yes" offset="0x43000" access="rw" count="256" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_ds_data_q_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_URE_US_RSP_Q_DATA63_0" size="8" grade="established" register="yes" offset="0x44000" access="rw" count="8" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_ure_us_rsp_q_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_URE_US_RSP_Q_DATA127_64" size="8" grade="established" register="yes" offset="0x44100" access="rw" count="8" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_ure_us_rsp_q_data127_64). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_URE_US_RSP_Q_PARITY" size="8" grade="established" register="yes" offset="0x44200" access="rw" count="8" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_ure_us_rsp_q_parity). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DRE_MAINT_US_WRT_RSP" size="8" grade="established" register="yes" offset="0x44300" access="rw" count="32" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_us_wrt_rsp). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <constant name="ADM_ERR_ADM_CREDIT_OFLOW" value="0x400000000" grade="established"/>
+  <constant name="ADM_ERR_ADM_SRAM_PE" value="0x800000000" grade="established"/>
+  <constant name="ADM_ERR_ADM_SSP_REQ_TIMEOUT" value="0x80000000" grade="established"/>
+  <constant name="ADM_ERR_ADM_SSP_RSP_UNEXP" value="0x40000000" grade="established"/>
+  <constant name="ADM_ERR_CRM_SSP_REQ_INVALID" value="0x1" grade="established"/>
+  <constant name="ADM_ERR_CXM_CREDIT_OFLOW" value="0x40" grade="established"/>
+  <constant name="ADM_ERR_DRE_CREDIT_OFLOW" value="0x20000" grade="established"/>
+  <constant name="ADM_ERR_DRE_SRAM_PE" value="0x40000" grade="established"/>
+  <constant name="ADM_ERR_DRE_SSP_REQ_INVAL" value="0x80" grade="established"/>
+  <constant name="ADM_ERR_DTL1_COMP_D_CRED_MAX_ERR" value="0x20000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL1_COMP_HD_CRED_MAX_ERR" value="0x10000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL1_INF_COMPL_CRED_UPDT_ERR" value="0x2000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL1_INF_NPOSTED_CRED_UPDT_ERR" value="0x8000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL1_INF_POSTED_CRED_UPDT_ERR" value="0x4000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL1_MIN_PDATA_CREDIT_ERR" value="0x1000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL1_NPOSTED_D_CRED_MAX_ERR" value="0x80000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL1_NPOSTED_HD_CRED_MAX_ERR" value="0x40000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL1_POSTED_D_CRED_MAX_ERR" value="0x200000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL1_POSTED_HD_CRED_MAX_ERR" value="0x100000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_COMP_D_CRED_MAX_ERR" value="0x8000000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_COMP_HD_CRED_MAX_ERR" value="0x4000000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_INF_COMPL_CRED_UPDT_ERR" value="0x800000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_INF_NPOSTED_CRED_UPDT_ERR" value="0x2000000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_INF_POSTED_CRED_UPDT_ERR" value="0x1000000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_MIN_PDATA_CREDIT_ERR" value="0x400000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_NPOSTED_D_CRED_MAX_ERR" value="0x20000000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_NPOSTED_HD_CRED_MAX_ERR" value="0x10000000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_POSTED_D_CRED_MAX_ERR" value="0x80000000000000" grade="established"/>
+  <constant name="ADM_ERR_DTL2_POSTED_HD_CRED_MAX_ERR" value="0x40000000000000" grade="established"/>
+  <constant name="ADM_ERR_MMR_ACCESS_ERROR" value="0x100000000" grade="established"/>
+  <constant name="ADM_ERR_MMR_ADDR_ERROR" value="0x200000000" grade="established"/>
+  <constant name="ADM_ERR_PCIE_COMPL_TIMEOUT" value="0x4000" grade="established"/>
+  <constant name="ADM_ERR_PCIE_ERR_COMPL" value="0x10000" grade="established"/>
+  <constant name="ADM_ERR_PCIE_UNEXP_COMPL" value="0x8000" grade="established"/>
+  <constant name="ADM_ERR_PORT1_PCIE_COR_ERR" value="0x100000000000000" grade="established"/>
+  <constant name="ADM_ERR_PORT1_PCIE_FAT_ERR" value="0x400000000000000" grade="established"/>
+  <constant name="ADM_ERR_PORT1_PCIE_NFAT_ERR" value="0x200000000000000" grade="established"/>
+  <constant name="ADM_ERR_PORT2_PCIE_COR_ERR" value="0x800000000000000" grade="established"/>
+  <constant name="ADM_ERR_PORT2_PCIE_FAT_ERR" value="0x2000000000000000" grade="established"/>
+  <constant name="ADM_ERR_PORT2_PCIE_NFAT_ERR" value="0x1000000000000000" grade="established"/>
+  <constant name="ADM_ERR_SSP_MBE" value="0x20" grade="established"/>
+  <constant name="ADM_ERR_SSP_PROTOCOL_ERROR" value="0x8" grade="established"/>
+  <constant name="ADM_ERR_SSP_REQ_ADDR_ERR" value="0x1000" grade="established"/>
+  <constant name="ADM_ERR_SSP_REQ_BAD_BE" value="0x2000" grade="established"/>
+  <constant name="ADM_ERR_SSP_REQ_HEADER" value="0x2" grade="established"/>
+  <constant name="ADM_ERR_SSP_REQ_LONG" value="0x100" grade="established"/>
+  <constant name="ADM_ERR_SSP_REQ_OFLOW" value="0x200" grade="established"/>
+  <constant name="ADM_ERR_SSP_REQ_SHORT" value="0x400" grade="established"/>
+  <constant name="ADM_ERR_SSP_REQ_SIDEBAND" value="0x800" grade="established"/>
+  <constant name="ADM_ERR_SSP_RSP_HEADER" value="0x4" grade="established"/>
+  <constant name="ADM_ERR_SSP_RSP_INVALID" value="0x80000" grade="established"/>
+  <constant name="ADM_ERR_SSP_RSP_LONG" value="0x100000" grade="established"/>
+  <constant name="ADM_ERR_SSP_RSP_SHORT" value="0x200000" grade="established"/>
+  <constant name="ADM_ERR_SSP_RSP_SIDEBAND" value="0x400000" grade="established"/>
+  <constant name="ADM_ERR_SSP_SBE" value="0x10" grade="established"/>
+  <constant name="ADM_ERR_URE_ATE3240_PAGE_FAULT" value="0x4000000" grade="established"/>
+  <constant name="ADM_ERR_URE_ATE40_PAGE_FAULT" value="0x8000000" grade="established"/>
+  <constant name="ADM_ERR_URE_CREDIT_OFLOW" value="0x10000000" grade="established"/>
+  <constant name="ADM_ERR_URE_SRAM_PE" value="0x20000000" grade="established"/>
+  <constant name="ADM_ERR_URE_SSP_RD_REQ_TIMEOUT" value="0x2000000" grade="established"/>
+  <constant name="ADM_ERR_URE_SSP_RSP_UNEXP" value="0x800000" grade="established"/>
+  <constant name="ADM_ERR_URE_SSP_WR_REQ_TIMEOUT" value="0x1000000" grade="established"/>
+  <constant name="ADM_FORCE_INT_ALWAYS_SHFT" value="0x8" grade="established"/>
+  <constant name="ADM_FORCE_INT_PCIE_PORT1_DEV_A_SHFT" value="0x0" grade="established"/>
+  <constant name="ADM_FORCE_INT_PCIE_PORT1_DEV_B_SHFT" value="0x1" grade="established"/>
+  <constant name="ADM_FORCE_INT_PCIE_PORT1_DEV_C_SHFT" value="0x2" grade="established"/>
+  <constant name="ADM_FORCE_INT_PCIE_PORT1_DEV_D_SHFT" value="0x3" grade="established"/>
+  <constant name="ADM_FORCE_INT_PCIE_PORT2_DEV_A_SHFT" value="0x4" grade="established"/>
+  <constant name="ADM_FORCE_INT_PCIE_PORT2_DEV_B_SHFT" value="0x5" grade="established"/>
+  <constant name="ADM_FORCE_INT_PCIE_PORT2_DEV_C_SHFT" value="0x6" grade="established"/>
+  <constant name="ADM_FORCE_INT_PCIE_PORT2_DEV_D_SHFT" value="0x7" grade="established"/>
+  <constant name="ADM_INT_CE_ERROR_SHFT" value="0x0" grade="established"/>
+  <constant name="ADM_INT_LSI1_IP_ERROR_SHFT" value="0x1" grade="established"/>
+  <constant name="ADM_INT_LSI2_IP_ERROR_SHFT" value="0x2" grade="established"/>
+  <constant name="ADM_INT_PCIE_ERROR_SHFT" value="0x3" grade="established"/>
+  <constant name="ADM_INT_PCIE_MSG_SHFT" value="0xe" grade="established"/>
+  <constant name="ADM_INT_PCIE_MSG_SLOT_0_SHFT" value="0xe" grade="established"/>
+  <constant name="ADM_INT_PCIE_MSG_SLOT_1_SHFT" value="0xf" grade="established"/>
+  <constant name="ADM_INT_PCIE_MSG_SLOT_2_SHFT" value="0x10" grade="established"/>
+  <constant name="ADM_INT_PCIE_MSG_SLOT_3_SHFT" value="0x11" grade="established"/>
+  <constant name="ADM_INT_PCIE_PORT1_DEV_A_SHFT" value="0x6" grade="established"/>
+  <constant name="ADM_INT_PCIE_PORT1_DEV_B_SHFT" value="0x7" grade="established"/>
+  <constant name="ADM_INT_PCIE_PORT1_DEV_C_SHFT" value="0x8" grade="established"/>
+  <constant name="ADM_INT_PCIE_PORT1_DEV_D_SHFT" value="0x9" grade="established"/>
+  <constant name="ADM_INT_PCIE_PORT2_DEV_A_SHFT" value="0xa" grade="established"/>
+  <constant name="ADM_INT_PCIE_PORT2_DEV_B_SHFT" value="0xb" grade="established"/>
+  <constant name="ADM_INT_PCIE_PORT2_DEV_C_SHFT" value="0xc" grade="established"/>
+  <constant name="ADM_INT_PCIE_PORT2_DEV_D_SHFT" value="0xd" grade="established"/>
+  <constant name="ADM_INT_PORT1_HOTPLUG_EVENT_SHFT" value="0x4" grade="established"/>
+  <constant name="ADM_INT_PORT1_PM_PME_MSG_SHFT" value="0x16" grade="established"/>
+  <constant name="ADM_INT_PORT2_HOTPLUG_EVENT_SHFT" value="0x5" grade="established"/>
+  <constant name="ADM_INT_PORT2_PM_PME_MSG_SHFT" value="0x17" grade="established"/>
+  <constant name="BUS_SRC_ID_SHFT" value="0x8" grade="established"/>
+  <constant name="DEV_SRC_ID_SHFT" value="0x3" grade="established"/>
+  <constant name="DRE_ADDR_MODE_SHFT" value="0x4" grade="established"/>
+  <constant name="DRE_CONFIG_COMPLETION_VALID" value="0x10" grade="established"/>
+  <constant name="DRE_CONFIG_REQUEST_ACTIVE" value="0x20" grade="established"/>
+  <constant name="DRE_DOWNSTREAM_CONFIG_ERROR" value="0x8" grade="established"/>
+  <constant name="DRE_DYN_RO_ENABLE" value="0x2" grade="established"/>
+  <constant name="DRE_LAST_CONFIG_COMPLETION" value="0x7" grade="established"/>
+  <constant name="DRE_RO_ENABLE" value="0x1" grade="established"/>
+  <constant name="DRE_SUP_CONFIG_COMP_ERROR" value="0x4" grade="established"/>
+  <constant name="DRE_SUP_IO_COMP_ERROR" value="0x8" grade="established"/>
+  <constant name="E_CONFIG_BUS_SHFT" value="0x14" grade="established"/>
+  <constant name="E_CONFIG_DEVICE_SHFT" value="0xf" grade="established"/>
+  <constant name="E_CONFIG_FUNC_SHFT" value="0xc" grade="established"/>
+  <constant name="FNC_SRC_ID_SHFT" value="0x0" grade="established"/>
+  <constant name="HOST_BRIDGE_DEVICE_ID" value="0x4001" grade="established"/>
+  <constant name="HOST_BRIDGE_VENDOR_ID" value="0x10a9" grade="established"/>
+  <constant name="INTR_VECTOR_SHFT" value="0x38" grade="established"/>
+  <constant name="LSI_GB_CFG1_LPBK_EN_MASK" value="0x40000" grade="established"/>
+  <constant name="LSI_GB_CFG1_LPBK_EN_SHFT" value="0x12" grade="established"/>
+  <constant name="LSI_GB_CFG1_LPBK_SEL_MASK" value="0x30000" grade="established"/>
+  <constant name="LSI_GB_CFG1_LPBK_SEL_SHFT" value="0x10" grade="established"/>
+  <constant name="LSI_GB_CFG1_RVRS_CLK_MASK" value="0x300000" grade="established"/>
+  <constant name="LSI_GB_CFG1_RVRS_CLK_SHFT" value="0x14" grade="established"/>
+  <constant name="LSI_GB_CFG1_RVRS_LB_MASK" value="0x80000" grade="established"/>
+  <constant name="LSI_GB_CFG1_RVRS_LB_SHFT" value="0x13" grade="established"/>
+  <constant name="LSI_GB_CFG1_RXL0S_ADJ_MASK" value="0x7000" grade="established"/>
+  <constant name="LSI_GB_CFG1_RXL0S_ADJ_SHFT" value="0xc" grade="established"/>
+  <constant name="LSI_GB_CFG1_RXL0S_FLT_MASK" value="0x8000" grade="established"/>
+  <constant name="LSI_GB_CFG1_RXL0S_FLT_SHFT" value="0xf" grade="established"/>
+  <constant name="LSI_GB_CFG1_RXL0S_SMP_MASK" value="0xf00" grade="established"/>
+  <constant name="LSI_GB_CFG1_RXL0S_SMP_SHFT" value="0x8" grade="established"/>
+  <constant name="LSI_GB_CFG1_RXL0S_THS_MASK" value="0xff" grade="established"/>
+  <constant name="LSI_GB_CFG1_RXL0S_THS_SHFT" value="0x0" grade="established"/>
+  <constant name="LSI_GB_CFG1_SLF_TS_MASK" value="0xf000000" grade="established"/>
+  <constant name="LSI_GB_CFG1_SLF_TS_SHFT" value="0x18" grade="established"/>
+  <constant name="NUM_M3240_ATES" value="0x800" grade="established"/>
+  <constant name="NUM_M40_ATES" value="0x1000" grade="established"/>
+  <constant name="NUM_PORTS" value="0x2" grade="established"/>
+  <constant name="PART_NUM" value="0xce00" grade="established"/>
+  <constant name="PIO_CONFIG_SPACE" value="0x4000000" grade="established"/>
+  <constant name="PIO_CONFIG_SPACE_LEN" value="0x4000000" grade="established"/>
+  <constant name="PIO_E_CONFIG_SPACE" value="0x10000000" grade="established"/>
+  <constant name="PIO_E_CONFIG_SPACE_LEN" value="0x10000000" grade="established"/>
+  <constant name="PIO_IO_SPACE" value="0x100000000" grade="established"/>
+  <constant name="PIO_IO_SPACE_ALIAS" value="0x8000000" grade="established"/>
+  <constant name="PIO_IO_SPACE_ALIAS_LEN" value="0x8000000" grade="established"/>
+  <constant name="PIO_IO_SPACE_LEN" value="0x100000000" grade="established"/>
+  <constant name="PIO_MEM_SPACE" value="0x200000000" grade="established"/>
+  <constant name="PIO_MMR" value="0x0" grade="established"/>
+  <constant name="PIO_MMR_LEN" value="0x4000000" grade="established"/>
+  <constant name="PKT_TRAFIC_SHRT" value="0x10" grade="established"/>
+  <constant name="REV_A" value="0x1" grade="established"/>
+  <constant name="SRC_ID" value="0x1" grade="established"/>
+  <constant name="URE_ABP" value="0x1" grade="established"/>
+  <constant name="URE_AIP" value="0x8" grade="established"/>
+  <constant name="URE_ATE3240_ENABLE" value="0x1" grade="established"/>
+  <constant name="URE_ATE40_ENABLE" value="0x2" grade="established"/>
+  <constant name="URE_ATE_PAR_DISABLE" value="0x1000000000" grade="established"/>
+  <constant name="URE_DNS_DAT_PAR_DISABLE" value="0x8000000000" grade="established"/>
+  <constant name="URE_DNS_HDR_PAR_DISABLE" value="0x10000000000" grade="established"/>
+  <constant name="URE_ELAL1_SHFT" value="0x8" grade="established"/>
+  <constant name="URE_ELAL_SHFT" value="0x4" grade="established"/>
+  <constant name="URE_HPC" value="0x40" grade="established"/>
+  <constant name="URE_HPS" value="0x20" grade="established"/>
+  <constant name="URE_MALFORM_DISABLE" value="0x100000000000" grade="established"/>
+  <constant name="URE_MASK1_SHFT" value="0x0" grade="established"/>
+  <constant name="URE_MASK2_SHFT" value="0x14" grade="established"/>
+  <constant name="URE_MASK3_SHFT" value="0x28" grade="established"/>
+  <constant name="URE_MSP" value="0x4" grade="established"/>
+  <constant name="URE_PAGESIZE_SHFT" value="0x4" grade="established"/>
+  <constant name="URE_PCP" value="0x2" grade="established"/>
+  <constant name="URE_PIP" value="0x10" grade="established"/>
+  <constant name="URE_PN1_SHFT" value="0x10" grade="established"/>
+  <constant name="URE_PN2_SHFT" value="0x18" grade="established"/>
+  <constant name="URE_PSN1_SHFT" value="0x13" grade="established"/>
+  <constant name="URE_PSN2_SHFT" value="0x20" grade="established"/>
+  <constant name="URE_RCI_PAR_DISABLE" value="0x2000000000" grade="established"/>
+  <constant name="URE_RD_MRG_ENABLE" value="0x1" grade="established"/>
+  <constant name="URE_RSPQ_BYPASS_DISABLE" value="0x1000000" grade="established"/>
+  <constant name="URE_RSPQ_PAR_DISABLE" value="0x4000000000" grade="established"/>
+  <constant name="URE_SCC" value="0x1000" grade="established"/>
+  <constant name="URE_SEL1_SHFT" value="0x0" grade="established"/>
+  <constant name="URE_SEL2_SHFT" value="0x14" grade="established"/>
+  <constant name="URE_SEL3_SHFT" value="0x28" grade="established"/>
+  <constant name="URE_SI" value="0x1" grade="established"/>
+  <constant name="URE_SPLS_SHFT" value="0xf" grade="established"/>
+  <constant name="URE_SPLV_SHFT" value="0x7" grade="established"/>
+  <constant name="URE_UNSUP_DISABLE" value="0x200000000000" grade="established"/>
+  <constant name="URE_UPS_DAT1_PAR_DISABLE" value="0x100000000" grade="established"/>
+  <constant name="URE_UPS_DAT2_PAR_DISABLE" value="0x400000000" grade="established"/>
+  <constant name="URE_UPS_HDR1_PAR_DISABLE" value="0x200000000" grade="established"/>
+  <constant name="URE_UPS_HDR2_PAR_DISABLE" value="0x800000000" grade="established"/>
+  <constant name="URE_WRT_MRG_ENABLE1" value="0x10" grade="established"/>
+  <constant name="URE_WRT_MRG_ENABLE2" value="0x20" grade="established"/>
+  <constant name="URE_WRT_MRG_TIMER_SHFT" value="0xc" grade="established"/>
+  <constant name="VIRT_PPB_DEVICE_ID" value="0x4002" grade="established"/>
+  <constant name="VIRT_PPB_VENDOR_ID" value="0x10a9" grade="established"/>
+</genxml>
