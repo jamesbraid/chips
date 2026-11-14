@@ -48,10 +48,10 @@ generation: 4.x for the SHub 1 PROM, 1.x for the SHub 2 PROM.
 
 ### Fixed addresses at the top of the image (established)
 
-Every image has the same final 32 bytes. `0xFFFFFFE0` holds `0x80000000_<start of file>`, the address of the Firmware
+Every image has the same layout in its final 32 bytes. `0xFFFFFFE0` holds `0x80000000_<start of file>`, the address of the Firmware
 Interface Table (FIT), which is at the start of the file (signature `_FIT_   ` at file offset 0).
 `0xFFFFFFE8` holds `0x80000000_<SAL_A address>`, the first-stage SAL entry (the SAL_A component in the FIT; bit 63 is
-set in both). The last 16 bytes (`0xFFFFFFF0`) are the same in all four images and look like an x86 reset vector (a far
+set in both). The last 16 bytes (`0xFFFFFFF0`) are byte-identical in all four images and look like an x86 reset vector (a far
 jump followed by a date string "11/02/99" and a model byte). What reads them, if anything, is unknown.
 
 ### The FIT (established)
@@ -340,7 +340,7 @@ structure was not decoded here.
 ## SAL dispatch
 
 The PROM answers SAL by function id through two tables. In **virtual mode** the SAL runtime's `salruntime_entry` scans
-a table of 16-byte entries (id, flags, handler descriptor) in the ELF's data (`salruntime_functab`, 95 to 106 entries),
+a table of 16-byte entries (id, flags, handler descriptor) in the ELF's data (`salruntime_functab`, 96 to 106 entries including the terminator and four non-SAL entries),
 and runs the handler; for ids whose handler is `salruntime_phys_call`, it switches the processor to physical mode and
 calls the physical-mode handler through a pointer found in a table the PROM keeps at physical RAM `0x1000038`. In
 **physical mode** SAL_B has an equivalent table of (id, descriptor pointer) pairs (descriptors are code address and
@@ -348,8 +348,8 @@ gp). Both tables are established by reading them in full from each of the four i
 are the ones the runtime table forwards to SAL_B; "runtime and physical" ids have a handler on both sides.
 
 One handler serves many ids: ids `0x02000051` to `0x02000060` and `0x02000064` are cases of a single I/O interface
-dispatcher in SAL_B (a switch on `id - 0x02000051`), so they are implemented, not stubs; `0x5b`, `0x62` and `0x63` fall
-to its default in the 1.40 image. Unlisted ids (including the SN ids the kernel header defines but the PROM does not,
+dispatcher in SAL_B (a switch on `id - 0x02000051`), so they are implemented, not stubs; `0x61`, `0x62` and `0x63` fall
+to its default in the 1.40 image (`0x5b` has a case of its own). Unlisted ids (including the SN ids the kernel header defines but the PROM does not,
 such as `SN_SAL_WATCHLIST_ALLOC` `0x02000070`, `SN_SAL_FAKE_PROM` `0x02009999`, `SN_SAL_SYSTEM_RESET`
 `0x02000002` aside from its table slot) answer `-1` through `salruntime_unimplemented_function_code`.
 
@@ -458,8 +458,8 @@ The first four columns of presence are in the order 4.43, 4.90, 1.40, 1.11.
 | `02000065` | SN_SAL_GET_PROM_FEATURE_SET |  | physical only | . x x x |
 | `02000066` | SN_SAL_SET_OS_FEATURE_SET |  | physical only | . x x x |
 | `02000067` | SN_SAL_INJECT_ERROR |  | physical only | . x x x |
-| `02000068` | SN_SAL_SET_CPU_NUMBER | `os_cpu_number` | runtime only | . x x x |
-| `02000069` | SN_SAL_KERNEL_LAUNCH_EVENT | `kexec` | runtime only | . x x . |
+| `02000068` | SN_SAL_SET_CPU_NUMBER | `os_cpu_number` | runtime and physical | . x x x |
+| `02000069` | SN_SAL_KERNEL_LAUNCH_EVENT | `kexec` | runtime and physical | . x x . |
 
 Reading of the table (established unless said): the 2.6.5 SN2 kernel (SLES 9 SP3, `System.map` and disassembly) makes
 SAL calls with these ids in its text: `0x01` and `0x03`, `0x04` (master nasid), `0x05` (KLCONFIG), `0x06`, `0x12`,
@@ -523,3 +523,24 @@ What the 2.6.5 SN2 kernel looks for (`efi_init`, `ia64_sal_init`, `acpi_boot_ini
 Ordered reading of both SAL_B init paths, SHub 1 SAL_A order, which EFI configuration tables are installed, and the
 exact register accesses of memory sizing are open; see [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md).
 The images, the root layout and the kernel in use are listed in [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels).
+
+## Review
+
+Independent review of chips commits `98bcb20..fe7f0ae` (this page, [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md), the SN2 firmware section of [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels) and the PROM-view lines on the SHub, SN2 address-map and SAL pages), examined at `a399d6d`. The reviewer did not write the page. Method: parse the FIT and unpack the components with a fresh script, then re-read the binaries with the retools `ia64-linux-gnu-objdump`, `-readelf` and `-nm`. Nothing in the page was taken from its own tables.
+
+**Checks and results.**
+
+- **Checksums and sizes in irix-files.md:** all seven sha256 values match `root/sn2/SHA256SUMS` (which verifies clean) and the listed sizes match the files. Pass. The root also holds four packages the page does not list (snprom 3.32, 4.20 and 10.54 with its `README.snprom`, and kernel 2.4.21-sgi300r3); the list is stale against the root.
+- **Image layout:** FIT address, offset, length, version, checksum flag and form checked for every entry of all four images; gzip expanded sizes and the tar/ELF forms checked by unpacking. All rows match. The header entry count includes trailing empty (type 0x7f) entries (14, 15, 17, 16), which the page does not say. The `0xFFFFFFF0` reset-vector bytes are identical across the four images; `0xFFFFFFE0` and `0xFFFFFFE8` differ per image as the page describes.
+- **Product compatibility:** `IP57` does not occur in any of the eight snprom images now in the root (including 3.32, 4.20 and 10.54), nor in `README.snprom`. `IP65` occurs only in the SHub 2 images. `IP41` is the CPU board name in the SHub 1 banners and build definitions, but the string `IP41` also occurs in the SHub 2 images (the klconfig board-type list, the literal `Part:030-1604-001;Name:IP41` record and "update_klcfg_cpuinfo: Can't find IP41"); "IP41 only in SHub 1 images" holds for the banner and `CPUBOARD` define, not for the string. `SHub 1.1/1.2/1.x`, `NL3Router` only in the SHub 1 images, `SHub 2.0` and `SHUB2 does not support XIO I/O.` only in the SHub 2 images, `TIO 1.x` in all four: pass. Build definitions in 4.43 and 1.11 and their absence in 4.90 and 1.40: pass.
+- **SAL dispatch:** the runtime `salruntime_functab` and the SAL_B table were parsed in all four images (the runtime handlers through the relocation records) and compared with every row of the table. Presence in all four columns, the "physical only" versus "runtime and physical" split and every PROM function name match. Two rows were wrong and are fixed: `0x02000068` and `0x02000069` have their own SAL_B handlers in 4.90, 1.40 and 1.11 (1.11 has only `0x68`), so they are runtime and physical. The dispatcher claim holds: one descriptor serves 17 ids (`0x51` to `0x60`, `0x64`) in 1.40 and 11 in 4.43, and its switch is on `id - 0x02000051` over 20 cases. In 1.40 the cases for `0x61`, `0x62` and `0x63` go to the default; `0x5b` has a distinct case (the page said `0x5b`, fixed). The ids 4.43 lacks match the table (`0x5a` to `0x5f`, `0x61`, `0x65` to `0x69`). The kernel call-id list was re-derived from the 2.6.5 kernel text and matches exactly. Header names for the 20 ids spot-checked against Linux v5.3 `sn_sal.h` agree.
+- **`SN_SAL_GET_SN_INFO`:** read in full in 4.43 and 1.40 and checked in 4.90 and 1.11. SHub 1: chip 0, 11, 9, `NASID / 512`, bits 52:48 of `0x81_1006_0580`, constant `0x2607ff`: pass. SHub 2: chip 1, maximum-node log2 `V + 10`, mask `(1 << (V + 10)) - 1`, shift `40 - V`, sharing domain 9 or 11 from bit 54 of `0x2_1006_0f00`, coherency domain `NASID / 512` or `/ 2048`: pass. **Wrong:** the region size is `1 << (X & 7)` where X is read from `0x2_0003_0000`, not from V (`0x2_2011_0000`). Not fixed here; the page and its summary row need the author's correction.
+- **`sysctl_probe` and `cpuid[2]`:** in 1.40 the function loads `0xaeeeeeee8badbeef`, compares it with `cpuid[2]` and returns 0 on equal, 1 otherwise: pass. In 4.43 it is a different function: the equal case returns 0, but otherwise it polls the controller (`sysctl_version`, a 2,000,000-tick wait on `chipset_rtc_time`) and returns 1 only if that succeeds. The page states the 1.40 behaviour as if general. `sc_shub2_sim_data` reads `0x1003_8200` through the vector accessor: pass. The simulator reading stays inferred.
+- **SHub 2 SAL_A (1.40) register list and order:** every listed address, value and order of the election and flag writes was found in the code, and the PAL stepping tables (15 rows in 1.40, 13 in 1.11) are as described. Problems, none fixed: (1) the list is not complete. SAL_A also reads `0x2_2011_0010` (a helper whose result is written to `cr.lid`), and an error path writes progress code 176 and then clears bits 29:26 of `0x2_101d_0300`, ORs `0x280_0000_0000` into `0x2_101d_0080`, writes `0x1_0001_0000_0000` to `0x2_2000_0000` and spins. (2) The "losers" reading is backwards: the routine that sets bits 41:39 of `0x2_101d_0100` to 7 returns early when its slice+1 differs from `0x2_101d_0080`, so it runs on the processor whose value matches, the same one the election writes belong to. (3) Progress codes in SAL_A are 48, 56 and 59 (reasons 0, 1, 2), 177 (a reason above 3), 176 (the error path) and 178 (the fatal hang); the page lists 176 to 178 only. (4) The PAL pair is selected only for reason 3, after the `0x2_1002_0000` and NASID-table writes, not first as the numbered list reads. The SHub 1 constants list matches the 4.43 and 4.90 code.
+- **Boot-first recommendation:** the root's `snprom-10.54-70399/.../README.snprom` (vendor package note) says `shub1snprom.bin` supports the Altix 330, 350, 3300, 3700, 3700 Bx2 and both Prism models, and `shub2snprom.bin` supports the Altix 4700 and 450. That settles the Altix 350 (SHub 1, IP41 family) and puts Prism on the SHub 1 image. The page's choice of `shub2snprom.bin` for Prism, its "Prism chip unknown" and "no held PROM supports the 350" statements, and the question entries on the board-to-product mapping predate that file and need revising. Not fixed.
+
+**Mechanical fixes made in this review:** the "same final 32 bytes" wording, the two table cells, the `0x5b` mention and the runtime-table entry count.
+
+**Grades.** The layout, FIT, component forms, product strings, dispatch tables, kernel call list, the SHub 1 `GET_SN_INFO`, the SHub 2 mask, shift and sharing-domain parts, and the 1.40 `sysctl_probe` test are correctly **established**. "Established" should not stand for the SHub 2 SAL_A list as complete or ordered, the "losers" statement or the region-size source until corrected. Statements marked inferred (SAL_B names by signature, SHub 1 SAL_A order, memory, console and simulator readings) were not re-derived and are not cleared. `SAL_B` reset-entry offsets and the first calls were spot-checked only.
+
+**Cleared scope:** the image layout tables, checksums, product-compatibility strings (with the `IP41` qualification), the dispatch table and kernel call comparison, and the `SN_SAL_GET_SN_INFO` handler except region size. **Not cleared:** the SHub 2 SAL_A register list as a complete ordered account, the region-size source, the boot-first recommendation and Prism or Altix 350 statements, and the list in irix-files.md as the root's full contents. The three PROM-view lines on the other pages are cleared for the mask, shift and sharing-domain content they state and for the `SH2_IPI_ACCESS` writes; the address-map line attributes the global window `0x3_0000_0000` to the first-stage firmware, but the first stage does not use it (the runtime does), so reword it when the page is corrected.
