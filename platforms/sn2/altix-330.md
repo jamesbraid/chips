@@ -46,3 +46,4 @@ Findings:
 
 Cleared scope: the 330 facts in "What is established" and the NUMAlink wording. Not cleared: the 350 comparison column for the later machine (finding 1).
 
+Findings addressed in 9995be1; renewed review needed for the changed claims.

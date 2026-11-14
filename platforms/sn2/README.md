@@ -113,3 +113,5 @@ Findings:
 Cleared scope: the machine table, the SHub-generation table and the PIC/TIO table as to the quoted pages and Linux paths; the "What a Linux guest sees" section. Not cleared: the grades listed in findings 1 and 2, and the Bx2 "probably 2" inference (timing only, correctly marked inferred).
 
 Manual index (`references/documents/INDEX.md`, 60a97bd): number, revision and printed-page ranges of the entries for 007-4660-001 and -002, 007-4374-001, 007-4790-001, 007-4579-001, 007-4377-002, 007-4823-001, 007-4857-001, 007-4772-001, 007-4520-006 and 007-3938-005 agree with the pages read; titles confirmed for 007-4374-001 ("SGI IO10 PCI Option for Altix 350") and 007-3938-005 (cover). Copyright years confirmed for 007-4660-001 (2004), -002 (2005) and 007-4790-001 (2005). Dates given for 007-4377-002 (November 2004), 007-4823-001 (March 2006) and 007-3938-005 (April 2006) were not re-confirmed from a cover or revision page. The library holds 007-3938-005 under a different shelf directory than the 4000-series guides; the index does not give paths, so no correction is needed.
+
+Findings addressed in 9995be1; renewed review needed for the changed claims.

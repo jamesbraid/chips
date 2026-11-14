@@ -70,3 +70,4 @@ Findings:
 
 Cleared scope: the 4700 and 450 population, topology and blade facts as cited; the SHub 2 claim for the 4700 compute blades. Not cleared: anything about the 450's SHub generation (correctly left unknown).
 
+Findings addressed in 9995be1; renewed review needed for the changed claims.

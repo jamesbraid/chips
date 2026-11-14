@@ -46,3 +46,4 @@ Findings:
 
 Cleared scope: all board, slot and memory facts above. Not cleared: the slot-order wording (finding 2).
 
+Findings addressed in 9995be1; renewed review needed for the changed claims.

@@ -45,3 +45,4 @@ Findings:
 
 Cleared scope: the CR-brick facts and the model notes. Not cleared: the wording in finding 2.
 
+Findings addressed in 9995be1; renewed review needed for the changed claims.

@@ -53,3 +53,4 @@ Findings:
 
 Cleared scope: the C-brick, R-brick, model-limit and SC-brick facts as cited. Not cleared: the PIC grade (finding 1) and the 17U rack figure.
 
+Findings addressed in 9995be1; renewed review needed for the changed claims.

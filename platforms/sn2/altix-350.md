@@ -164,3 +164,4 @@ Findings:
 
 Cleared scope: every manual-derived fact on this page (modules, limits, IP57, SHub block list, IO10 versus IO9, ring and router topology, console and L1 ports). Not cleared: the `established` grade on the IO10 and IO9 chip rows (finding 1) until relabelled or confirmed.
 
+Findings addressed in 9995be1; renewed review needed for the changed claims.
