@@ -1,13 +1,13 @@
 # Silicon Graphics Prism, deskside
 
-The Prism is SGI's Linux visualization system on the Altix platform. This page records the deskside system only: the
-single-enclosure form. The rackmount and scalable Prism guides (`007-4701`, `007-4774`) were read to their contents and
-are not summarised here beyond the rack's "XG2N and compute modules" and NUMAlink cabling chapter titles. It holds no
-register facts.
+The Silicon Graphics Prism Deskside is the single-enclosure Prism: one node board in a tower with one or two AGP graphics
+boards. The rackmount guides are on [Power and Team](prism-power-team.md) and [Extreme](prism-extreme.md); the product
+line, graphics attachment, firmware and Linux side are on [the Prism overview](prism.md). The page holds no register facts.
 
-Sources: SGI, *Silicon Graphics Prism Deskside Visualization System Hardware User's Guide*, `007-4772-001`, printed
-pages; SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (adds the Prism at revision 004, July
-2005). Grades: see [the SN2 README](README.md). Read: contents and pp.19 to 21, 25, 27.
+Sources: SGI, *Silicon Graphics Prism Deskside Visualization System Hardware User's Guide*, `007-4772-001` (Apr 2005),
+printed pages, and its second edition `007-4772-002` (Oct 2005, ProPack 4 Service Pack 2) for the diagnostics and XF86Config
+chapter; SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (adds the Prism at revision 004, July
+2005). Grades: see [the SN2 README](README.md). Read: contents and pp.7 to 10, 17, 19 to 21, 25 to 27, 32, 33; -002 pp.120 to 122, 166.
 
 ## Established (007-4772-001)
 
@@ -22,6 +22,18 @@ pages; SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (ad
 - Eight 64-bit PCI-X slots on four buses; bus 1 has no free slot, buses 2 to 4 have two each, up to 133 MHz (p.27).
 - Two AGP slots, AGP-5 and AGP-6, for the graphics boards at the centre rear (pp.19, 25).
 - Two internal disks (disk 1 holds Linux), one DVD-ROM bay (p.25).
+- Processors: "one or two 64-bit Intel processors" in different clock speeds and cache sizes; an upgrade replaces the whole
+  node board (pp.17, 20, 32). The guide never says Itanium; the `-002` diagnostics example runs `ia64` Linux 2.4.21-sgi305a8
+  (p.120), so Itanium 2 is inferred. No SHub is named; that is unknown, see [the open questions](../../questions/prism-open.md).
+- The rear view (Figure 2-2, p.19) shows no NUMAlink connector; the node board "connects to the interface board via two
+  connectors on its underside" (p.19). So the deskside is not cabled into a ring or router: established as the absence of any
+  NUMAlink label or text in the pages read; whether the node board has NUMAlink ports that are not brought out is unknown.
+- Graphics: "one or (optionally) two graphics boards (pipes)" at the centre rear (p.7, 25). The board has dual DVI-I
+  connectors, DDR memory, full-scene anti-aliasing and AGP 4X/8X (p.26); the Linux side offers 8x only (see the overview). Some
+  boards bring an Image Sync connection for optional Image Sync PCI cards (p.26), while the static I/O daughter card provides
+  `IS IN` and `IS REPEAT` (p.19). The guide gives no board name; the XF86Config chapter of -002 lists the same sections (stereo,
+  anti-aliasing, dual channel, genlock, multiple X servers) as the [Power and Team](prism-power-team.md) guide (-002 contents). Displays offered: a flat panel with DVI-D, or a CRT with a DVI-I to VGA
+  cable (p.33). An optional compositor needs its cable on the left connector as seen from the rear (p.10).
 
 ## Chips
 
@@ -30,8 +42,12 @@ pages; SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (ad
 - The AGP slots imply an AGP bridge. In Linux the AGP bridge is the TIOCA (`v5.3:arch/ia64/include/asm/sn/tioca.h`),
   and the L1 firmware names a "TIO Test Card" type. Inferred, not stated by any held manual.
 
-Not covered: the graphics boards and the rackmount
-modules.
+The Linux AGP bridge (TIOCA) for the two AGP slots, the part number `0xE020` and the 8x-only backend are on
+[the overview](prism.md#graphics-attachment). Whether the deskside's four PCI-X buses sit behind one PIC (two buses) and a
+second part, or something else, is unknown: the Altix 350 module has a PIC with two buses of two slots
+([altix-350.md](altix-350.md)).
+
+Not covered: the maintenance chapter (pp.35 to 89), the cooling and power sections, and the -002 regulatory chapters.
 
 ## Review
 
