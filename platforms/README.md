@@ -6,6 +6,7 @@
 |---|---|---|
 | [decode-mapped-uncached-and-region.md](decode-mapped-uncached-and-region.md) | Mapped uncached accesses, the region-present register and the memory configuration word: what the manuals, the PROMs and IRIX show about address decode | Questions answered, for the Origin 2000/Onyx2 node controller (Hub, IP27) and the Origin 300/3000 node controller... |
 | [decode-reset-and-kseg1.md](decode-reset-and-kseg1.md) | Reset fetch, the compatibility segment and the Bedrock node number: what the PROMs and IRIX show about address decode | Questions answered, for the Origin 2000/Onyx2 node controller (Hub, IP27) and the Origin 300/3000 node controller... |
+| [sn2/](sn2/README.md) | SN2: the IA-64 Altix and Prism machines | SN2 is SGI's name, in the Linux platform code, for the NUMAflex generation that pairs Intel Itanium 2 processors... |
 
 ## bricks
 
