@@ -11,8 +11,8 @@ see [the SN2 README](README.md). Read: contents, pp.49, 65, 67, 72, 74. The firs
 
 - The architecture is "fourth-generation NUMAflex DSM ... NUMAlink-4"; the CR-brick holds up to four processor nodes,
   each a SHub and two processors, and "two router switches" (p.49). A single rack scales to 64 processors; the single
-  system image is 256 processors at first release, with 512 processors and 6 TB described as the future limit
-  (p.49).
+  system image is 256 processors at first release, and the guide gives "up to 6 TB" for a 512-processor system and
+  says larger single-system-image configurations may be offered later (p.49).
 - The CR-brick is 4U (6.67 in), 48 VDC and about 1300 W (p.74). It has up to eight Itanium 2 processors, 48 DIMM slots
   (12 per node), eight internal and eight external NUMAlink channels, two 1.2 GB/s (each direction) Xtown2 I/O
   channels, a USB port to the system controller, a serial console port, one L1 with an LCD display, and three

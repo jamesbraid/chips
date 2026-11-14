@@ -23,12 +23,12 @@ Grades: see [the SN2 README](README.md). Only the contents, the architecture tex
 |---|---|---|
 | Enclosure | 1U | 2U |
 | PCI slots | 1 | 4 |
-| Disks | SATA or SAS | SCSI through the IO9 |
-| Base I/O | two Ethernet, two USB, SAS/SATA connector on the module | the IO9 PCI card |
+| Disks | SATA or SAS | -001: SCSI through the IO9. -002: serial ATA through the standard IO10, SCSI only with the optional IO9 |
+| Base I/O | two Ethernet, two USB, SAS/SATA connector on the module | -001: the IO9 PCI card. -002: the IO10 PCI card as standard, the IO9 optional |
 | NUMAlink ports | 1 | 2 |
 | Routerless topology | module to module (two) or router | ring |
 
-All established from the two guides. The 330 guide does not name an IO9 or IOC4; the base I/O chips of the 330 are
+All established from the 330 guide and the two 350 guides (007-4660-001 and -002; see [the 350 page](altix-350.md)). The 330 guide does not name an IO9 or IOC4; the base I/O chips of the 330 are
 **unknown** (route: the 330 guide's internal-components pages, printed pp.75 to 80, read in full, or a PCI tree from a
 330). Whether the 330's SHub, PIC and L1 firmware match the 350's is unknown; the L1 packages that name an IP node
 board for it are not tied to the 330 (sysco `sn2-brick-packages.md`).

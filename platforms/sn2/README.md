@@ -57,7 +57,7 @@ node with its own NASID (`v5.3:arch/ia64/sn/kernel/setup.c` line 706, node types
 | Machine | I/O bridge | Grade and source |
 |---|---|---|
 | Altix 350, 330 | PIC, on the PCI riser or board, behind an XIO link from the SHub | established for the 350: "PCI riser card provides ... PIC ASIC" (007-4660-001 p.105) and the logic diagram on p.99 |
-| Altix 3000, Bx2 IX- and PX-brick | PIC, three per brick | established: the driver guide's IX-brick figure shows three "PCI-X host bridge adapters" (007-4520-006 p.19); chips already holds [IX-brick](../bricks/ixbrick.md) |
+| Altix 3000, Bx2 IX- and PX-brick | PIC, three per brick | established: the IX-brick Addendum's block diagram is titled "Three PIC ASICs" and labels each "PIC ASIC" (007-4604-001 p.4), and the PX-brick Addendum draws the same three (007-4605-001 p.3). The Altix driver guide's figure (007-4520-006 p.19) calls them "PCI-X Host Bridge Adapter" and never says PIC, so the Altix guide alone would give only inferred. See [IX-brick](../bricks/ixbrick.md) |
 | Altix 4700 PCIe and PCI-X expansion blades | TIO bridges | inferred: the blade list has PCIe and PCI-X blades (007-4823-001 p.53; 007-3938-005 p.51) and the controller's board codes `IC`, `ID`, `IE` (PCIe 2-slot, PCI-X 3-slot, PCI-X plus PCIe 4-slot) in `v5.3:arch/ia64/include/asm/sn/l1.h`; no manual here names the bridge chip |
 | Prism deskside | AGP slots, PCI-X buses | established for the slots (007-4772-001 pp.19, 27); inferred TIOCA for AGP from the chip's name and function |
 
@@ -66,7 +66,7 @@ NVRAM and the time-of-day clock (007-4660-001 p.104; 007-4520-006 p.18 lists ser
 interrupt ports too). The later Altix 350 and the IX-brick generation also use the **IO10** card, a SATA variant: the
 Linux IOC4 driver names IO9, IO10 and PCI-RT as the three IOC4 card variants (`linux-history:drivers/misc/ioc4.c`,
 `ioc4_variant`), with a QLogic SCSI controller on IO9 and a Vitesse VSC 7174 SATA controller on IO10 (007-4660-002
-pp.72, 112 to 114 for the guide side). The IOC4 driver is not in v5.3.
+pp.72, 112 to 114 for the guide side). The IOC4 driver is not in v5.3. The IOC4, QLogic ISP12160 and Vitesse VSC7174 facts taken from it are `established`: `drivers/misc/ioc4.c` is SGI-written Linux code for these machines, which the evidence order now counts as SGI's Linux platform code (sgi-retools c50bfeb). The guides do not name these chips.
 
 **NUMAlink 3 versus 4.** The guides disagree with the usual naming and with each other, so take the table as what
 each says, not as a clean split:

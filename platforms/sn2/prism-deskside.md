@@ -14,11 +14,11 @@ pages; SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (ad
 - One scalable **system node board** holds one or two 64-bit Intel processors and memory: at least four DIMMs (2 GB),
   at most twelve (24 GB), DDR SDRAM in groups of four, group 0 required (pp.19 to 21). The same group structure as the
   [Altix 350](altix-350.md); the guide says these DIMMs do not fit the earlier SGI machines.
-- A **base I/O board**, a full-length PCI card in the top slot (bus 1 slot 1), provides IDE for the DVD-ROM, serial ATA
+- A **base I/O board**, a full-length PCI card in bus 1 slot 1, provides IDE for the DVD-ROM, serial ATA
   for the disks, an external serial connector, real-time interrupt in and out (not supported under Linux), 10/100/1000
-  Ethernet, and the NVRAM and time-of-day clock (p.21).
+  Ethernet, and the NVRAM and time-of-day clock (p.21). The guide is inconsistent about the slot: p.21 calls it "PCI slot 1, (the top PCI slot)" while p.27 puts the daughter board in the top slot (bus 1 slot 2) and this card in bus 1 slot 1. Take bus 1 slot 1 from p.27; the p.21 wording is the guide's own conflict.
 - A **static I/O daughter board** in bus 1 slot 2 carries USB, an L1 USB uplink, the serial console and the ImageSync
-  ports (p.27; the rear view shows "L1 UPLINK", "CONSOLE", "IS IN" and "IS REPEAT", p.19).
+  ports (pp.23, 27; the connector list is on p.23; the rear view shows "L1 UPLINK", "CONSOLE", "IS IN" and "IS REPEAT", p.19).
 - Eight 64-bit PCI-X slots on four buses; bus 1 has no free slot, buses 2 to 4 have two each, up to 133 MHz (p.27).
 - Two AGP slots, AGP-5 and AGP-6, for the graphics boards at the centre rear (pp.19, 25).
 - Two internal disks (disk 1 holds Linux), one DVD-ROM bay (p.25).

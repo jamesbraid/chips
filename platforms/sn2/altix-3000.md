@@ -1,7 +1,7 @@
 # Altix 3000 (3300 and 3700)
 
 The Altix 3000 family is the first IA-64 NUMA generation: C-bricks of two nodes, R-brick routers, IX- and PX-brick I/O
-bricks, power bays, in 17U or 40U racks. This page records what the 2003 guide prints about the machine; the I/O
+bricks and power bays, the 3700 in 40U racks (p.79). This page records what the 2003 guide prints about the machine; the I/O
 bricks are on [the Origin 3000 brick pages](../bricks/ixbrick.md) because the same enclosures serve both families. It
 holds no register facts.
 
@@ -30,7 +30,7 @@ README](README.md). Read: contents, pp.79 to 82 (models and architecture), pp.99
 | Chip | Grade and source |
 |---|---|
 | SHub, two per C-brick | established. Generation unknown (README) |
-| PIC on the IX- and PX-brick | established: IX-brick is a PX-brick plus the base I/O card (IOC4, Ethernet chipset, SCSI), three PIC host bridge adapters, six PCI-X buses (007-4520-006 pp.18 to 19) |
+| PIC on the IX- and PX-brick | established: IX-brick is a PX-brick plus the base I/O card (IOC4, Ethernet chipset, SCSI), three host bridge adapters, six PCI-X buses (007-4520-006 pp.18 to 19). The Altix guide's figure labels the adapters "PCI-X Host Bridge Adapter"; the name PIC comes from the IX-brick and PX-brick addenda, which label them "PIC ASIC" (007-4604-001 p.4, 007-4605-001 p.3) |
 | Router (8-port) | established as a part in the R-brick; its register map is not held |
 
 ## Open

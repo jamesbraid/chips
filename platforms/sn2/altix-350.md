@@ -15,7 +15,7 @@ A page number with no revision tag is a -001 page.
 16 processors and the IO9 base I/O card, and calls the fabric "NUMAlink". -002 (pages 66 to 72 and 105 to 114 read)
 says the standard base I/O card is the **IO10** and the IO9 is optional, names the interconnect "NUMAlink-4" and the
 node chip "Super Hub (SHub)", adds one or two NUMAlink-4 routers ("R-bricks") that join eight to sixteen modules into up
-to 32 processors, up to 384 GB and 64 PCI/PCI-X slots (-002 pp.66, 68, 69). A model of the machine as first shipped (2004)
+to 32 processors and 64 PCI/PCI-X slots (-002 pp.66, 68, 69). The guide prints the memory limit as 192 GB (p.66) and 384 GB (p.68); see the Memory row below. A model of the machine as first shipped (2004)
 is the -001 one; a model of the later machine is -002.
 
 ## Modules
