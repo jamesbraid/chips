@@ -1,0 +1,642 @@
+unit = "tioca"
+prefix = "TIOCA"
+title = "TIOCA (TIO AGP bridge), as SGI's Linux Altix platform code defines it"
+doc = "Names, offsets and bit fields are the definitions of SGI's Linux Altix platform code (header, AGP and PCI provider, v5.3). The TIOCA's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one."
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e: arch/ia64/include/asm/sn/tioca.h, tioca_provider.h, arch/ia64/sn/pci/tioca_provider.c"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+
+[registers.id]
+offset = 0x0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Widget identification word (part 0xe020, manufacturer 0x24, revision A = 1 per the header constants). The kernel keeps the revision the firmware reports in the bus record, not a value read here, and uses it to select four workarounds named in the provider header. Name and offset are the vendor header's definition (struct member ca_id). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.control1]
+offset = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable, workaround for PV895469) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.control1.fields]
+sys_big_end = { bits = [0, 0], grade = "established" }
+dma_agp_swap = { bits = [1, 1], grade = "established" }
+dma_pci_swap = { bits = [2, 2], grade = "established" }
+pio_io_swap = { bits = [3, 3], grade = "established" }
+pio_mem_swap = { bits = [4, 4], grade = "established" }
+gfx_wr_swap = { bits = [5, 5], grade = "established" }
+agp_fw_enable = { bits = [6, 6], grade = "established" }
+agp_cal_cycle = { bits = [9, 7], grade = "established" }
+agp_cal_prscl_byp = { bits = [10, 10], grade = "established" }
+agp_init_cal_enb = { bits = [11, 11], grade = "established" }
+inj_addr_perr = { bits = [12, 12], grade = "established" }
+inj_data_perr = { bits = [13, 13], grade = "established" }
+pcim_io_nbe_ad = { bits = [18, 16], grade = "established" }
+pcim_fast_btb_enb = { bits = [19, 19], grade = "established" }
+pio_addr_offset = { bits = [31, 24], grade = "established" }
+agpdma_op_combdelay = { bits = [40, 36], grade = "established" }
+agpdma_op_enb_combdelay = { bits = [42, 42], grade = "established" }
+pci_int_lpcnt = { bits = [51, 44], grade = "established" }
+
+[registers.control2]
+offset = 0x10
+access = "rw"
+width = 64
+grade = "established"
+doc = "Control 2. The provider programs GART memory parameter 2 (cached, coherent GART table), clears both GART prefetch enables, and sets the GART TLB flush bit (36) to flush explicitly. On revision A hardware it pulses the flush with the memory parameter cleared first (PV910244: the flush is ignored while the table is cached), then restores the parameter. Name and offset are the vendor header's definition (struct member ca_control2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.control2.fields]
+agp_latency_to = { bits = [7, 0], grade = "established" }
+pci_latency_to = { bits = [15, 8], grade = "established" }
+pci_max_retry = { bits = [25, 16], grade = "established" }
+rt_int_en = { bits = [29, 28], grade = "established" }
+msi_int_enb = { bits = [30, 30], grade = "established" }
+pci_arb_err_enb = { bits = [31, 31], grade = "established" }
+gart_mem_param = { bits = [33, 32], grade = "established" }
+gart_rd_prefetch_enb = { bits = [34, 34], grade = "established" }
+gart_wr_prefetch_enb = { bits = [35, 35], grade = "established" }
+gart_flush_tlb = { bits = [36, 36], grade = "established" }
+crm_tnumto_period = { bits = [52, 40], grade = "established" }
+crm_tnumto_enb = { bits = [56, 56], grade = "established" }
+crm_prescaler_byp = { bits = [57, 57], grade = "established" }
+crm_max_credit = { bits = [62, 60], grade = "established" }
+
+[registers.status1]
+offset = 0x18
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_status1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.status1.fields]
+corelet_id = { bits = [1, 0], grade = "established" }
+inta_n = { bits = [2, 2], grade = "established" }
+intb_n = { bits = [3, 3], grade = "established" }
+crm_credit_avail = { bits = [6, 4], grade = "established" }
+crm_space_avail = { bits = [14, 8], grade = "established" }
+gart_tlb_val = { bits = [23, 16], grade = "established" }
+
+[registers.status2]
+offset = 0x20
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_status2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.status2.fields]
+gfx_credit_avail = { bits = [7, 0], grade = "established" }
+gfx_opq_avail = { bits = [15, 8], grade = "established" }
+gfx_wrbuff_avail = { bits = [23, 16], grade = "established" }
+adma_opq_avail = { bits = [31, 24], grade = "established" }
+adma_wrbuff_avail = { bits = [39, 32], grade = "established" }
+adma_rdbuff_avail = { bits = [46, 40], grade = "established" }
+pci_pio_op_stat = { bits = [47, 47], grade = "established" }
+pdma_opq_avail = { bits = [51, 48], grade = "established" }
+pdma_wrbuff_avail = { bits = [55, 52], grade = "established" }
+pdma_rdbuff_avail = { bits = [57, 56], grade = "established" }
+
+[registers.gart_aperature]
+offset = 0x28
+access = "rw"
+width = 64
+grade = "established"
+doc = "GART aperture. The provider writes size, page-size and enable bits plus the bus base in one 64-bit store: size field 0x3ff for 4 MiB, one bit fewer set per doubling down to 0x000 for 4 GiB (the field is the complement of the size in 4 MiB units); bit 1 set when the kernel page is 16 KiB; enable bits 0 (AGP) and 2 (PCI); the bus base ORed in unshifted (the base field starts at bit 22, and the base 0x80000000 falls inside it). The name is spelled aperature in the header. Name and offset are the vendor header's definition (struct member ca_gart_aperature). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.gart_aperature.fields]
+gart_ap_enb_agp = { bits = [0, 0], grade = "established" }
+gart_page_size = { bits = [1, 1], grade = "established" }
+gart_ap_enb_pci = { bits = [2, 2], grade = "established" }
+gart_ap_size = { bits = [21, 12], grade = "established" }
+gart_ap_base = { bits = [63, 22], grade = "established" }
+
+[registers.gfx_detach]
+offset = 0x30
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_gfx_detach). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.inta_dest_addr]
+offset = 0x38
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_inta_dest_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.inta_dest_addr.fields]
+int_dest_addr = { bits = [53, 3], grade = "established" }
+int_dest_vect = { bits = [63, 56], grade = "established" }
+
+[registers.intb_dest_addr]
+offset = 0x40
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_intb_dest_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.intb_dest_addr.fields]
+int_dest_addr = { bits = [53, 3], grade = "established" }
+int_dest_vect = { bits = [63, 56], grade = "established" }
+
+[registers.err_int_dest_addr]
+offset = 0x48
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_err_int_dest_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.err_int_dest_addr.fields]
+int_dest_addr = { bits = [53, 3], grade = "established" }
+int_dest_vect = { bits = [63, 56], grade = "established" }
+
+[registers.int_status]
+offset = 0x50
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_int_status). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.int_status.fields]
+pci_err = { bits = [0, 0], grade = "established" }
+gart_fetch_err = { bits = [4, 4], grade = "established" }
+gfx_wr_ovflw = { bits = [5, 5], grade = "established" }
+pio_req_ovflw = { bits = [6, 6], grade = "established" }
+crm_pkterr = { bits = [7, 7], grade = "established" }
+crm_dverr = { bits = [8, 8], grade = "established" }
+tnumto = { bits = [9, 9], grade = "established" }
+cxm_rsp_cred_ovflw = { bits = [10, 10], grade = "established" }
+cxm_req_cred_ovflw = { bits = [11, 11], grade = "established" }
+pio_invalid_addr = { bits = [12, 12], grade = "established" }
+pci_arb_to = { bits = [13, 13], grade = "established" }
+agp_req_oflow = { bits = [14, 14], grade = "established" }
+sba_type1_err = { bits = [15, 15], grade = "established" }
+inta = { bits = [17, 17], grade = "established" }
+intb = { bits = [18, 18], grade = "established" }
+mult_inta = { bits = [19, 19], grade = "established" }
+mult_intb = { bits = [20, 20], grade = "established" }
+gfx_credit_ovflw = { bits = [21, 21], grade = "established" }
+
+[registers.int_status_alias]
+offset = 0x58
+access = "rw"
+width = 64
+grade = "established"
+doc = "Interrupt status write alias. The provider writes the GART fetch error bit here to clear it (the alias is the write-to-clear form of ca_int_status; the name says alias, the clear role is the provider's use). Name and offset are the vendor header's definition (struct member ca_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.int_status_alias.fields]
+pci_err = { bits = [0, 0], grade = "established" }
+gart_fetch_err = { bits = [4, 4], grade = "established" }
+gfx_wr_ovflw = { bits = [5, 5], grade = "established" }
+pio_req_ovflw = { bits = [6, 6], grade = "established" }
+crm_pkterr = { bits = [7, 7], grade = "established" }
+crm_dverr = { bits = [8, 8], grade = "established" }
+tnumto = { bits = [9, 9], grade = "established" }
+cxm_rsp_cred_ovflw = { bits = [10, 10], grade = "established" }
+cxm_req_cred_ovflw = { bits = [11, 11], grade = "established" }
+pio_invalid_addr = { bits = [12, 12], grade = "established" }
+pci_arb_to = { bits = [13, 13], grade = "established" }
+agp_req_oflow = { bits = [14, 14], grade = "established" }
+sba_type1_err = { bits = [15, 15], grade = "established" }
+inta = { bits = [17, 17], grade = "established" }
+intb = { bits = [18, 18], grade = "established" }
+mult_inta = { bits = [19, 19], grade = "established" }
+mult_intb = { bits = [20, 20], grade = "established" }
+gfx_credit_ovflw = { bits = [21, 21], grade = "established" }
+
+[registers.mult_error]
+offset = 0x60
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_mult_error). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.mult_error.fields]
+pci_err = { bits = [0, 0], grade = "established" }
+gart_fetch_err = { bits = [4, 4], grade = "established" }
+gfx_wr_ovflw = { bits = [5, 5], grade = "established" }
+pio_req_ovflw = { bits = [6, 6], grade = "established" }
+crm_pkterr = { bits = [7, 7], grade = "established" }
+crm_dverr = { bits = [8, 8], grade = "established" }
+tnumto = { bits = [9, 9], grade = "established" }
+cxm_rsp_cred_ovflw = { bits = [10, 10], grade = "established" }
+cxm_req_cred_ovflw = { bits = [11, 11], grade = "established" }
+pio_invalid_addr = { bits = [12, 12], grade = "established" }
+pci_arb_to = { bits = [13, 13], grade = "established" }
+agp_req_oflow = { bits = [14, 14], grade = "established" }
+sba_type1_err = { bits = [15, 15], grade = "established" }
+inta = { bits = [17, 17], grade = "established" }
+intb = { bits = [18, 18], grade = "established" }
+mult_inta = { bits = [19, 19], grade = "established" }
+mult_intb = { bits = [20, 20], grade = "established" }
+gfx_credit_ovflw = { bits = [21, 21], grade = "established" }
+
+[registers.mult_error_alias]
+offset = 0x68
+access = "rw"
+width = 64
+grade = "established"
+doc = "Multiple-error write alias. The provider writes the GART fetch error bit here to clear it, together with the status alias. Name and offset are the vendor header's definition (struct member ca_mult_error_alias). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.mult_error_alias.fields]
+pci_err = { bits = [0, 0], grade = "established" }
+gart_fetch_err = { bits = [4, 4], grade = "established" }
+gfx_wr_ovflw = { bits = [5, 5], grade = "established" }
+pio_req_ovflw = { bits = [6, 6], grade = "established" }
+crm_pkterr = { bits = [7, 7], grade = "established" }
+crm_dverr = { bits = [8, 8], grade = "established" }
+tnumto = { bits = [9, 9], grade = "established" }
+cxm_rsp_cred_ovflw = { bits = [10, 10], grade = "established" }
+cxm_req_cred_ovflw = { bits = [11, 11], grade = "established" }
+pio_invalid_addr = { bits = [12, 12], grade = "established" }
+pci_arb_to = { bits = [13, 13], grade = "established" }
+agp_req_oflow = { bits = [14, 14], grade = "established" }
+sba_type1_err = { bits = [15, 15], grade = "established" }
+inta = { bits = [17, 17], grade = "established" }
+intb = { bits = [18, 18], grade = "established" }
+mult_inta = { bits = [19, 19], grade = "established" }
+mult_intb = { bits = [20, 20], grade = "established" }
+gfx_credit_ovflw = { bits = [21, 21], grade = "established" }
+
+[registers.first_error]
+offset = 0x70
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_first_error). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.first_error.fields]
+pci_err = { bits = [0, 0], grade = "established" }
+gart_fetch_err = { bits = [4, 4], grade = "established" }
+gfx_wr_ovflw = { bits = [5, 5], grade = "established" }
+pio_req_ovflw = { bits = [6, 6], grade = "established" }
+crm_pkterr = { bits = [7, 7], grade = "established" }
+crm_dverr = { bits = [8, 8], grade = "established" }
+tnumto = { bits = [9, 9], grade = "established" }
+cxm_rsp_cred_ovflw = { bits = [10, 10], grade = "established" }
+cxm_req_cred_ovflw = { bits = [11, 11], grade = "established" }
+pio_invalid_addr = { bits = [12, 12], grade = "established" }
+pci_arb_to = { bits = [13, 13], grade = "established" }
+agp_req_oflow = { bits = [14, 14], grade = "established" }
+sba_type1_err = { bits = [15, 15], grade = "established" }
+inta = { bits = [17, 17], grade = "established" }
+intb = { bits = [18, 18], grade = "established" }
+mult_inta = { bits = [19, 19], grade = "established" }
+mult_intb = { bits = [20, 20], grade = "established" }
+gfx_credit_ovflw = { bits = [21, 21], grade = "established" }
+
+[registers.int_mask]
+offset = 0x78
+access = "rw"
+width = 64
+grade = "established"
+doc = "Interrupt mask. The provider clears the GART fetch error bit (enables it); the sense of the mask bit is the provider's use. Name and offset are the vendor header's definition (struct member ca_int_mask). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.int_mask.fields]
+pci_err = { bits = [0, 0], grade = "established" }
+gart_fetch_err = { bits = [4, 4], grade = "established" }
+gfx_wr_ovflw = { bits = [5, 5], grade = "established" }
+pio_req_ovflw = { bits = [6, 6], grade = "established" }
+crm_pkterr = { bits = [7, 7], grade = "established" }
+crm_dverr = { bits = [8, 8], grade = "established" }
+tnumto = { bits = [9, 9], grade = "established" }
+cxm_rsp_cred_ovflw = { bits = [10, 10], grade = "established" }
+cxm_req_cred_ovflw = { bits = [11, 11], grade = "established" }
+pio_invalid_addr = { bits = [12, 12], grade = "established" }
+pci_arb_to = { bits = [13, 13], grade = "established" }
+agp_req_oflow = { bits = [14, 14], grade = "established" }
+sba_type1_err = { bits = [15, 15], grade = "established" }
+inta = { bits = [17, 17], grade = "established" }
+intb = { bits = [18, 18], grade = "established" }
+mult_inta = { bits = [19, 19], grade = "established" }
+mult_intb = { bits = [20, 20], grade = "established" }
+gfx_credit_ovflw = { bits = [21, 21], grade = "established" }
+
+[registers.crm_pkterr_type]
+offset = 0x80
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.crm_pkterr_type.fields]
+crm_pkterr_sberr_hdr = { bits = [0, 0], grade = "established" }
+crm_pkterr_didn = { bits = [1, 1], grade = "established" }
+crm_pkterr_pactype = { bits = [2, 2], grade = "established" }
+crm_pkterr_inv_tnum = { bits = [3, 3], grade = "established" }
+crm_pkterr_addr_rng = { bits = [4, 4], grade = "established" }
+crm_pkterr_addr_algn = { bits = [5, 5], grade = "established" }
+crm_pkterr_hdr_param = { bits = [6, 6], grade = "established" }
+crm_pkterr_cw_err = { bits = [7, 7], grade = "established" }
+crm_pkterr_sberr_nh = { bits = [8, 8], grade = "established" }
+crm_pkterr_early_term = { bits = [9, 9], grade = "established" }
+crm_pkterr_early_tail = { bits = [10, 10], grade = "established" }
+crm_pkterr_mssng_tail = { bits = [11, 11], grade = "established" }
+crm_pkterr_mssng_hdr = { bits = [12, 12], grade = "established" }
+first_crm_pkterr_sberr_hdr = { bits = [16, 16], grade = "established" }
+first_crm_pkterr_didn = { bits = [17, 17], grade = "established" }
+first_crm_pkterr_pactype = { bits = [18, 18], grade = "established" }
+first_crm_pkterr_inv_tnum = { bits = [19, 19], grade = "established" }
+first_crm_pkterr_addr_rng = { bits = [20, 20], grade = "established" }
+first_crm_pkterr_addr_algn = { bits = [21, 21], grade = "established" }
+first_crm_pkterr_hdr_param = { bits = [22, 22], grade = "established" }
+first_crm_pkterr_cw_err = { bits = [23, 23], grade = "established" }
+first_crm_pkterr_sberr_nh = { bits = [24, 24], grade = "established" }
+first_crm_pkterr_early_term = { bits = [25, 25], grade = "established" }
+first_crm_pkterr_early_tail = { bits = [26, 26], grade = "established" }
+first_crm_pkterr_mssng_tail = { bits = [27, 27], grade = "established" }
+first_crm_pkterr_mssng_hdr = { bits = [28, 28], grade = "established" }
+
+[registers.crm_pkterr_type_alias]
+offset = 0x88
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type_alias). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.crm_pkterr_type_alias.fields]
+crm_pkterr_sberr_hdr = { bits = [0, 0], grade = "established" }
+crm_pkterr_didn = { bits = [1, 1], grade = "established" }
+crm_pkterr_pactype = { bits = [2, 2], grade = "established" }
+crm_pkterr_inv_tnum = { bits = [3, 3], grade = "established" }
+crm_pkterr_addr_rng = { bits = [4, 4], grade = "established" }
+crm_pkterr_addr_algn = { bits = [5, 5], grade = "established" }
+crm_pkterr_hdr_param = { bits = [6, 6], grade = "established" }
+crm_pkterr_cw_err = { bits = [7, 7], grade = "established" }
+crm_pkterr_sberr_nh = { bits = [8, 8], grade = "established" }
+crm_pkterr_early_term = { bits = [9, 9], grade = "established" }
+crm_pkterr_early_tail = { bits = [10, 10], grade = "established" }
+crm_pkterr_mssng_tail = { bits = [11, 11], grade = "established" }
+crm_pkterr_mssng_hdr = { bits = [12, 12], grade = "established" }
+first_crm_pkterr_sberr_hdr = { bits = [16, 16], grade = "established" }
+first_crm_pkterr_didn = { bits = [17, 17], grade = "established" }
+first_crm_pkterr_pactype = { bits = [18, 18], grade = "established" }
+first_crm_pkterr_inv_tnum = { bits = [19, 19], grade = "established" }
+first_crm_pkterr_addr_rng = { bits = [20, 20], grade = "established" }
+first_crm_pkterr_addr_algn = { bits = [21, 21], grade = "established" }
+first_crm_pkterr_hdr_param = { bits = [22, 22], grade = "established" }
+first_crm_pkterr_cw_err = { bits = [23, 23], grade = "established" }
+first_crm_pkterr_sberr_nh = { bits = [24, 24], grade = "established" }
+first_crm_pkterr_early_term = { bits = [25, 25], grade = "established" }
+first_crm_pkterr_early_tail = { bits = [26, 26], grade = "established" }
+first_crm_pkterr_mssng_tail = { bits = [27, 27], grade = "established" }
+first_crm_pkterr_mssng_hdr = { bits = [28, 28], grade = "established" }
+
+[registers.crm_ct_error_detail_1]
+offset = 0x90
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_1). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.crm_ct_error_detail_1.fields]
+pkt_type = { bits = [3, 0], grade = "established" }
+src_id = { bits = [5, 4], grade = "established" }
+data_sz = { bits = [7, 6], grade = "established" }
+tnum = { bits = [15, 8], grade = "established" }
+dw_data_en = { bits = [23, 16], grade = "established" }
+gfx_cred = { bits = [31, 24], grade = "established" }
+mem_rd_param = { bits = [33, 32], grade = "established" }
+pio_op = { bits = [34, 34], grade = "established" }
+cw_err = { bits = [35, 35], grade = "established" }
+valid = { bits = [63, 63], grade = "established" }
+
+[registers.crm_ct_error_detail_2]
+offset = 0x98
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_2). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.crm_ct_error_detail_2.fields]
+pkt_addr = { bits = [55, 3], grade = "established" }
+
+[registers.crm_tnumto]
+offset = 0xa0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_crm_tnumto). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.crm_tnumto.fields]
+crm_tnumto_val = { bits = [7, 0], grade = "established" }
+crm_tnumto_wr = { bits = [8, 8], grade = "established" }
+
+[registers.gart_err]
+offset = 0xa8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_gart_err). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.gart_err.fields]
+gart_err_source = { bits = [1, 0], grade = "established" }
+gart_err_addr = { bits = [39, 4], grade = "established" }
+
+[registers.pcierr_type]
+offset = 0xb0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_pcierr_type). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.pcierr_type.fields]
+pcierr_data = { bits = [31, 0], grade = "established" }
+pcierr_enb = { bits = [35, 32], grade = "established" }
+pcierr_cmd = { bits = [39, 36], grade = "established" }
+pcierr_a64 = { bits = [40, 40], grade = "established" }
+pcierr_slv_serr = { bits = [41, 41], grade = "established" }
+pcierr_slv_wr_perr = { bits = [42, 42], grade = "established" }
+pcierr_slv_rd_perr = { bits = [43, 43], grade = "established" }
+pcierr_mst_serr = { bits = [44, 44], grade = "established" }
+pcierr_mst_wr_perr = { bits = [45, 45], grade = "established" }
+pcierr_mst_rd_perr = { bits = [46, 46], grade = "established" }
+pcierr_mst_mabt = { bits = [47, 47], grade = "established" }
+pcierr_mst_tabt = { bits = [48, 48], grade = "established" }
+pcierr_mst_retry_tout = { bits = [49, 49], grade = "established" }
+
+[registers.pcierr_addr]
+offset = 0xb8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_pcierr_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.pci_rd_buf_flush]
+offset = 0xd8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_pci_rd_buf_flush). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.pci_dma_addr_extn]
+offset = 0xe0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_pci_dma_addr_extn). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.pci_dma_addr_extn.fields]
+upper_node_offset = { bits = [5, 0], grade = "established" }
+chiplet_id = { bits = [9, 8], grade = "established" }
+pci_dma_node_id = { bits = [27, 12], grade = "established" }
+pci_dma_pio_mem_type = { bits = [28, 28], grade = "established" }
+
+[registers.agp_dma_addr_extn]
+offset = 0xe8
+access = "rw"
+width = 64
+grade = "established"
+doc = "AGP DMA address extension. The 48-bit direct AGP DMA path reads it and requires its node-id field to equal the upper node bits of the target; the node-id field is 16 bits wide at bit 20, which overlaps the pio-mem-type bit 28 the header also names (see the unit page). Name and offset are the vendor header's definition (struct member ca_agp_dma_addr_extn). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.agp_dma_addr_extn.fields]
+agp_dma_node_id = { bits = [35, 20], grade = "established" }
+
+[registers.force_inta]
+offset = 0xf0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_force_inta). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.force_intb]
+offset = 0xf8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_force_intb). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.debug_vector_sel]
+offset = 0x100
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_debug_vector_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.debug_vector_sel.fields]
+debug_mn_vsel = { bits = [3, 0], grade = "established" }
+debug_pp_vsel = { bits = [7, 4], grade = "established" }
+debug_gw_vsel = { bits = [11, 8], grade = "established" }
+debug_gt_vsel = { bits = [15, 12], grade = "established" }
+debug_pd_vsel = { bits = [19, 16], grade = "established" }
+debug_ad_vsel = { bits = [23, 20], grade = "established" }
+debug_cx_vsel = { bits = [27, 24], grade = "established" }
+debug_cr_vsel = { bits = [31, 28], grade = "established" }
+debug_ba_vsel = { bits = [35, 32], grade = "established" }
+debug_pe_vsel = { bits = [39, 36], grade = "established" }
+debug_bo_vsel = { bits = [43, 40], grade = "established" }
+debug_bi_vsel = { bits = [47, 44], grade = "established" }
+debug_as_vsel = { bits = [51, 48], grade = "established" }
+debug_ps_vsel = { bits = [55, 52], grade = "established" }
+debug_pm_vsel = { bits = [59, 56], grade = "established" }
+
+[registers.debug_mux_core_sel]
+offset = 0x108
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_debug_mux_core_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.debug_mux_core_sel.fields]
+debug_msel0 = { bits = [2, 0], grade = "established" }
+debug_nsel0 = { bits = [6, 4], grade = "established" }
+debug_msel1 = { bits = [10, 8], grade = "established" }
+debug_nsel1 = { bits = [14, 12], grade = "established" }
+debug_msel2 = { bits = [18, 16], grade = "established" }
+debug_nsel2 = { bits = [22, 20], grade = "established" }
+debug_msel3 = { bits = [26, 24], grade = "established" }
+debug_nsel3 = { bits = [30, 28], grade = "established" }
+debug_msel4 = { bits = [34, 32], grade = "established" }
+debug_nsel4 = { bits = [38, 36], grade = "established" }
+debug_msel5 = { bits = [42, 40], grade = "established" }
+debug_nsel5 = { bits = [46, 44], grade = "established" }
+debug_msel6 = { bits = [50, 48], grade = "established" }
+debug_nsel6 = { bits = [54, 52], grade = "established" }
+debug_msel7 = { bits = [58, 56], grade = "established" }
+debug_nsel7 = { bits = [62, 60], grade = "established" }
+
+[registers.debug_mux_pci_sel]
+offset = 0x110
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_debug_mux_pci_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.debug_mux_pci_sel.fields]
+debug_msel0 = { bits = [2, 0], grade = "established" }
+debug_nsel0 = { bits = [6, 4], grade = "established" }
+debug_msel1 = { bits = [10, 8], grade = "established" }
+debug_nsel1 = { bits = [14, 12], grade = "established" }
+debug_msel2 = { bits = [18, 16], grade = "established" }
+debug_nsel2 = { bits = [22, 20], grade = "established" }
+debug_msel3 = { bits = [26, 24], grade = "established" }
+debug_nsel3 = { bits = [30, 28], grade = "established" }
+debug_msel4 = { bits = [34, 32], grade = "established" }
+debug_nsel4 = { bits = [38, 36], grade = "established" }
+debug_msel5 = { bits = [42, 40], grade = "established" }
+debug_nsel5 = { bits = [46, 44], grade = "established" }
+debug_msel6 = { bits = [50, 48], grade = "established" }
+debug_nsel6 = { bits = [54, 52], grade = "established" }
+debug_msel7 = { bits = [58, 56], grade = "established" }
+debug_nsel7 = { bits = [62, 60], grade = "established" }
+
+[registers.debug_domain_sel]
+offset = 0x118
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_debug_domain_sel). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.debug_domain_sel.fields]
+debug_domain_l = { bits = [0, 0], grade = "established" }
+debug_domain_h = { bits = [1, 1], grade = "established" }
+
+[registers.gart_ptr_table]
+offset = 0x200
+access = "rw"
+width = 64
+grade = "established"
+doc = "GART table pointer. The provider stores the coretalk address of the page table ORed with 1 (bit 0 valid). Table entries are 8 bytes: the coretalk page address shifted right 12, with bit 63 set for valid. Name and offset are the vendor header's definition (struct member ca_gart_ptr_table). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.gart_ptr_table.fields]
+gart_ptr_val = { bits = [0, 0], grade = "established" }
+gart_ptr_addr = { bits = [55, 12], grade = "established" }
+
+[registers.gart_tlb_addr]
+offset = 0x208
+count = 8
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Name and offset are the vendor header's definition (struct member ca_gart_tlb_addr). The header gives no access direction or reset value; access rw is a placeholder."
+
+[registers.gart_tlb_addr.fields]
+gart_tlb_addr = { bits = [55, 0], grade = "established" }
+gart_tlb_entry_val = { bits = [63, 63], grade = "established" }
+
+[constants]
+PART_NUMBER = { value = 0xe020, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (TIOCA_PART_NUM)", doc = "Widget part number of the TIOCA. Manufacturer number 0x24, revision A is 1." }
+PCI32_DIRECT_BASE = { value = 0xc0000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PCI32_DIRECT_BASE)", doc = "Start of the 32-bit direct DMA window. The provider sets its size to zero, so the window is unused: the header says an addressing flaw makes 32-bit direct DMA unusable below 3 GiB, and all 32-bit DMA goes through the GART." }
+PCI32_MAPPED_BASE = { value = 0xc0000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PCI32_MAPPED_BASE)", doc = "Start of the PCI 32-bit GART-mapped window (the upper half of the aperture)." }
+PCI32_MAPPED_SIZE = { value = 0x40000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PCI32_MAPPED_SIZE)", doc = "Size of the PCI GART-mapped window, 1 GiB (the header comment says 2 GB)." }
+AGP_MAPPED_BASE = { value = 0x80000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_AGP_MAPPED_BASE)", doc = "Start of the graphics aperture, the part of the GART the AGP driver owns; also the base of the whole aperture." }
+AGP_MAPPED_SIZE = { value = 0x40000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_AGP_MAPPED_SIZE)", doc = "Size of the graphics aperture, 1 GiB. Aperture total is 2 GiB." }
+AGP_DIRECT_BASE = { value = 0x40000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_AGP_DIRECT_BASE)", doc = "Start of the 48-bit AGP direct window, up to 0xffffffffffff. Direct DMA below this base is PIO space." }
+PIO_ADMIN = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PIO_ADMIN, _LEN 0x10000)", doc = "PIO window of the internal registers, 64 KiB." }
+PIO_GFX = { value = 0x10000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PIO_GFX)", doc = "Graphics write buffer, diagnostics, 64 KiB." }
+PIO_AGP_DMAWRITE = { value = 0x20000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PIO_AGP_DMAWRITE)", doc = "AGP DMA write buffer, diagnostics, 64 KiB." }
+PIO_AGP_DMAREAD = { value = 0x30000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PIO_AGP_DMAREAD)", doc = "AGP DMA read buffer, diagnostics, 64 KiB." }
+PIO_PCI_TYPE0_CONFIG = { value = 0x1000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PIO_PCI_TYPE0_CONFIG, _LEN 0x1000000)", doc = "PCI type 0 configuration window, 16 MiB." }
+PIO_PCI_TYPE1_CONFIG = { value = 0x2000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PIO_PCI_TYPE1_CONFIG, _LEN 0x1000000)", doc = "PCI type 1 configuration window, 16 MiB." }
+PIO_PCI_IO = { value = 0x3000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PIO_PCI_IO, _LEN 0x5000000)", doc = "PCI I/O cycles, mapped to PCI addresses 0 to 0x04ffffff." }
+PIO_PCI_MEM_OFFSET = { value = 0x8000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PIO_PCI_MEM_OFFSET, _LEN 0x8000000)", doc = "PCI memory cycles at the address offset held in the PIO address offset field of control 1." }
+PIO_PCI_MEM = { value = 0x40000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PIO_PCI_MEM, _LEN 0xc0000000)", doc = "PCI memory cycles mapped to PCI addresses 0 to 0xbfffffff." }
+AGP_DMA_PIO_MEM_TYPE = { value = 0x10000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_AGP_DMA_PIO_MEM_TYPE)", doc = "Bit 28 of the AGP DMA address extension, named PIO memory type. It overlaps the 16-bit node-id field the header places at bit 20; the header comment says bits 27:26 are unused." }
+PCI_DMA_PIO_MEM_TYPE = { value = 0x10000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca.h (CA_PCI_DMA_PIO_MEM_TYPE)", doc = "Bit 28 of the PCI DMA address extension, named PIO memory type." }
+DIRECT64_COHERENT = { value = 0x1000000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca_provider.c (tioca_dma_d64)", doc = "Packet type 1 (coherent memory get and put) in bits 63:60 of a 64-bit direct DMA address. Type 2 would be non-coherent PIO; the provider always uses 1. Bits 53:0 are the coretalk address." }
+GART_ENTRY_VALID = { value = 0x8000000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioca_provider.h (tioca_paddr_to_gart)", doc = "Bit 63 of a GART entry: valid. The rest is the coretalk page address shifted right 12." }
+ERROR_VECTOR = { value = 0x35, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/intr.h (SGI_TIOCA_ERROR)", doc = "Kernel interrupt vector of the TIOCA error interrupt. The handler makes one firmware call and does not read TIOCA registers." }

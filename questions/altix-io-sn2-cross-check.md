@@ -52,3 +52,15 @@ Next: the chapter on the base compute module in the 350 guide, and the 4700 guid
 offset included), while the widget small windows it uses are built with chiplet 0. Either the comment names the chiplets the
 other way round, or "MMR" and "coretalk" mean something finer than registers versus widgets. Next: a TIO register
 specification, or the SHub2 TIO address macros in a later SGI tree.
+
+## TIOCA AGP DMA extension overlap
+
+[missing source] In the TIOCA header, `ca_agp_dma_addr_extn` has a 16-bit node-id field at bits 35:20 and a one-bit "PIO memory type" at bit 28 inside it, while a
+comment says bits 27:26 are unused. The 48-bit direct AGP path compares the field with the target's upper node bits (at most 64, so seven bits). Either the node-id field
+is narrower than the header says or the PIO memory type bit lives elsewhere. Next: a TIOCA register specification.
+
+## TIOCE M40S window
+
+[missing source] The TIOCE provider gives the 40-bit super-page mappings the bus window `0x8000000000` to `0xffffffffff` (512 GiB) but allocates 32 entries per port of 16 GiB and
+computes the bus address as the window base plus the global entry index times 16 GiB. For port 2 (entries 32 to 63) that is at or past the end of the window. Either the window is
+larger than the constants say, port 2 maps differently, or the allocation is wrong for port 2. Next: a TIOCE register specification.

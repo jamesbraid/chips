@@ -69,6 +69,10 @@ prose_offsets = false
 group = "tio.h"
 prose_offsets = false
 
+[units.tioca]
+group = "tioca.h"
+prose_offsets = false
+
 [units.tiocp]
 group = "tiocp.h"
 prose_offsets = false

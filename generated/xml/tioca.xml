@@ -1,0 +1,436 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/tioca/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="tioca" prefix="TIOCA" title="TIOCA (TIO AGP bridge), as SGI's Linux Altix platform code defines it">
+  <doc>Names, offsets and bit fields are the definitions of SGI's Linux Altix platform code (header, AGP and PCI provider, v5.3). The TIOCA's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one.</doc>
+  <struct name="ID" size="8" grade="established" register="yes" offset="0x0" access="rw" reset="unknown">
+    <doc>Widget identification word (part 0xe020, manufacturer 0x24, revision A = 1 per the header constants). The kernel keeps the revision the firmware reports in the bus record, not a value read here, and uses it to select four workarounds named in the provider header. Name and offset are the vendor header's definition (struct member ca_id). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="CONTROL1" size="8" grade="established" register="yes" offset="0x8" access="rw" reset="unknown">
+    <doc>Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable, workaround for PV895469) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="pci_int_lpcnt" start="44" size="8" type="uint" grade="established"/>
+    <field name="agpdma_op_enb_combdelay" start="42" size="1" type="uint" grade="established"/>
+    <field name="agpdma_op_combdelay" start="36" size="5" type="uint" grade="established"/>
+    <field name="pio_addr_offset" start="24" size="8" type="uint" grade="established"/>
+    <field name="pcim_fast_btb_enb" start="19" size="1" type="uint" grade="established"/>
+    <field name="pcim_io_nbe_ad" start="16" size="3" type="uint" grade="established"/>
+    <field name="inj_data_perr" start="13" size="1" type="uint" grade="established"/>
+    <field name="inj_addr_perr" start="12" size="1" type="uint" grade="established"/>
+    <field name="agp_init_cal_enb" start="11" size="1" type="uint" grade="established"/>
+    <field name="agp_cal_prscl_byp" start="10" size="1" type="uint" grade="established"/>
+    <field name="agp_cal_cycle" start="7" size="3" type="uint" grade="established"/>
+    <field name="agp_fw_enable" start="6" size="1" type="uint" grade="established"/>
+    <field name="gfx_wr_swap" start="5" size="1" type="uint" grade="established"/>
+    <field name="pio_mem_swap" start="4" size="1" type="uint" grade="established"/>
+    <field name="pio_io_swap" start="3" size="1" type="uint" grade="established"/>
+    <field name="dma_pci_swap" start="2" size="1" type="uint" grade="established"/>
+    <field name="dma_agp_swap" start="1" size="1" type="uint" grade="established"/>
+    <field name="sys_big_end" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CONTROL2" size="8" grade="established" register="yes" offset="0x10" access="rw" reset="unknown">
+    <doc>Control 2. The provider programs GART memory parameter 2 (cached, coherent GART table), clears both GART prefetch enables, and sets the GART TLB flush bit (36) to flush explicitly. On revision A hardware it pulses the flush with the memory parameter cleared first (PV910244: the flush is ignored while the table is cached), then restores the parameter. Name and offset are the vendor header's definition (struct member ca_control2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="crm_max_credit" start="60" size="3" type="uint" grade="established"/>
+    <field name="crm_prescaler_byp" start="57" size="1" type="uint" grade="established"/>
+    <field name="crm_tnumto_enb" start="56" size="1" type="uint" grade="established"/>
+    <field name="crm_tnumto_period" start="40" size="13" type="uint" grade="established"/>
+    <field name="gart_flush_tlb" start="36" size="1" type="uint" grade="established"/>
+    <field name="gart_wr_prefetch_enb" start="35" size="1" type="uint" grade="established"/>
+    <field name="gart_rd_prefetch_enb" start="34" size="1" type="uint" grade="established"/>
+    <field name="gart_mem_param" start="32" size="2" type="uint" grade="established"/>
+    <field name="pci_arb_err_enb" start="31" size="1" type="uint" grade="established"/>
+    <field name="msi_int_enb" start="30" size="1" type="uint" grade="established"/>
+    <field name="rt_int_en" start="28" size="2" type="uint" grade="established"/>
+    <field name="pci_max_retry" start="16" size="10" type="uint" grade="established"/>
+    <field name="pci_latency_to" start="8" size="8" type="uint" grade="established"/>
+    <field name="agp_latency_to" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="STATUS1" size="8" grade="established" register="yes" offset="0x18" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_status1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gart_tlb_val" start="16" size="8" type="uint" grade="established"/>
+    <field name="crm_space_avail" start="8" size="7" type="uint" grade="established"/>
+    <field name="crm_credit_avail" start="4" size="3" type="uint" grade="established"/>
+    <field name="intb_n" start="3" size="1" type="uint" grade="established"/>
+    <field name="inta_n" start="2" size="1" type="uint" grade="established"/>
+    <field name="corelet_id" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="STATUS2" size="8" grade="established" register="yes" offset="0x20" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_status2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="pdma_rdbuff_avail" start="56" size="2" type="uint" grade="established"/>
+    <field name="pdma_wrbuff_avail" start="52" size="4" type="uint" grade="established"/>
+    <field name="pdma_opq_avail" start="48" size="4" type="uint" grade="established"/>
+    <field name="pci_pio_op_stat" start="47" size="1" type="uint" grade="established"/>
+    <field name="adma_rdbuff_avail" start="40" size="7" type="uint" grade="established"/>
+    <field name="adma_wrbuff_avail" start="32" size="8" type="uint" grade="established"/>
+    <field name="adma_opq_avail" start="24" size="8" type="uint" grade="established"/>
+    <field name="gfx_wrbuff_avail" start="16" size="8" type="uint" grade="established"/>
+    <field name="gfx_opq_avail" start="8" size="8" type="uint" grade="established"/>
+    <field name="gfx_credit_avail" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="GART_APERATURE" size="8" grade="established" register="yes" offset="0x28" access="rw" reset="unknown">
+    <doc>GART aperture. The provider writes size, page-size and enable bits plus the bus base in one 64-bit store: size field 0x3ff for 4 MiB, one bit fewer set per doubling down to 0x000 for 4 GiB (the field is the complement of the size in 4 MiB units); bit 1 set when the kernel page is 16 KiB; enable bits 0 (AGP) and 2 (PCI); the bus base ORed in unshifted (the base field starts at bit 22, and the base 0x80000000 falls inside it). The name is spelled aperature in the header. Name and offset are the vendor header's definition (struct member ca_gart_aperature). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gart_ap_base" start="22" size="42" type="uint" grade="established"/>
+    <field name="gart_ap_size" start="12" size="10" type="uint" grade="established"/>
+    <field name="gart_ap_enb_pci" start="2" size="1" type="uint" grade="established"/>
+    <field name="gart_page_size" start="1" size="1" type="uint" grade="established"/>
+    <field name="gart_ap_enb_agp" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GFX_DETACH" size="8" grade="established" register="yes" offset="0x30" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_gfx_detach). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="INTA_DEST_ADDR" size="8" grade="established" register="yes" offset="0x38" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_inta_dest_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="int_dest_vect" start="56" size="8" type="uint" grade="established"/>
+    <field name="int_dest_addr" start="3" size="51" type="uint" grade="established"/>
+  </struct>
+  <struct name="INTB_DEST_ADDR" size="8" grade="established" register="yes" offset="0x40" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_intb_dest_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="int_dest_vect" start="56" size="8" type="uint" grade="established"/>
+    <field name="int_dest_addr" start="3" size="51" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERR_INT_DEST_ADDR" size="8" grade="established" register="yes" offset="0x48" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_err_int_dest_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="int_dest_vect" start="56" size="8" type="uint" grade="established"/>
+    <field name="int_dest_addr" start="3" size="51" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_STATUS" size="8" grade="established" register="yes" offset="0x50" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_int_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gfx_credit_ovflw" start="21" size="1" type="uint" grade="established"/>
+    <field name="mult_intb" start="20" size="1" type="uint" grade="established"/>
+    <field name="mult_inta" start="19" size="1" type="uint" grade="established"/>
+    <field name="intb" start="18" size="1" type="uint" grade="established"/>
+    <field name="inta" start="17" size="1" type="uint" grade="established"/>
+    <field name="sba_type1_err" start="15" size="1" type="uint" grade="established"/>
+    <field name="agp_req_oflow" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_arb_to" start="13" size="1" type="uint" grade="established"/>
+    <field name="pio_invalid_addr" start="12" size="1" type="uint" grade="established"/>
+    <field name="cxm_req_cred_ovflw" start="11" size="1" type="uint" grade="established"/>
+    <field name="cxm_rsp_cred_ovflw" start="10" size="1" type="uint" grade="established"/>
+    <field name="tnumto" start="9" size="1" type="uint" grade="established"/>
+    <field name="crm_dverr" start="8" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr" start="7" size="1" type="uint" grade="established"/>
+    <field name="pio_req_ovflw" start="6" size="1" type="uint" grade="established"/>
+    <field name="gfx_wr_ovflw" start="5" size="1" type="uint" grade="established"/>
+    <field name="gart_fetch_err" start="4" size="1" type="uint" grade="established"/>
+    <field name="pci_err" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_STATUS_ALIAS" size="8" grade="established" register="yes" offset="0x58" access="rw" reset="unknown">
+    <doc>Interrupt status write alias. The provider writes the GART fetch error bit here to clear it (the alias is the write-to-clear form of ca_int_status; the name says alias, the clear role is the provider's use). Name and offset are the vendor header's definition (struct member ca_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gfx_credit_ovflw" start="21" size="1" type="uint" grade="established"/>
+    <field name="mult_intb" start="20" size="1" type="uint" grade="established"/>
+    <field name="mult_inta" start="19" size="1" type="uint" grade="established"/>
+    <field name="intb" start="18" size="1" type="uint" grade="established"/>
+    <field name="inta" start="17" size="1" type="uint" grade="established"/>
+    <field name="sba_type1_err" start="15" size="1" type="uint" grade="established"/>
+    <field name="agp_req_oflow" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_arb_to" start="13" size="1" type="uint" grade="established"/>
+    <field name="pio_invalid_addr" start="12" size="1" type="uint" grade="established"/>
+    <field name="cxm_req_cred_ovflw" start="11" size="1" type="uint" grade="established"/>
+    <field name="cxm_rsp_cred_ovflw" start="10" size="1" type="uint" grade="established"/>
+    <field name="tnumto" start="9" size="1" type="uint" grade="established"/>
+    <field name="crm_dverr" start="8" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr" start="7" size="1" type="uint" grade="established"/>
+    <field name="pio_req_ovflw" start="6" size="1" type="uint" grade="established"/>
+    <field name="gfx_wr_ovflw" start="5" size="1" type="uint" grade="established"/>
+    <field name="gart_fetch_err" start="4" size="1" type="uint" grade="established"/>
+    <field name="pci_err" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="MULT_ERROR" size="8" grade="established" register="yes" offset="0x60" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_mult_error). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gfx_credit_ovflw" start="21" size="1" type="uint" grade="established"/>
+    <field name="mult_intb" start="20" size="1" type="uint" grade="established"/>
+    <field name="mult_inta" start="19" size="1" type="uint" grade="established"/>
+    <field name="intb" start="18" size="1" type="uint" grade="established"/>
+    <field name="inta" start="17" size="1" type="uint" grade="established"/>
+    <field name="sba_type1_err" start="15" size="1" type="uint" grade="established"/>
+    <field name="agp_req_oflow" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_arb_to" start="13" size="1" type="uint" grade="established"/>
+    <field name="pio_invalid_addr" start="12" size="1" type="uint" grade="established"/>
+    <field name="cxm_req_cred_ovflw" start="11" size="1" type="uint" grade="established"/>
+    <field name="cxm_rsp_cred_ovflw" start="10" size="1" type="uint" grade="established"/>
+    <field name="tnumto" start="9" size="1" type="uint" grade="established"/>
+    <field name="crm_dverr" start="8" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr" start="7" size="1" type="uint" grade="established"/>
+    <field name="pio_req_ovflw" start="6" size="1" type="uint" grade="established"/>
+    <field name="gfx_wr_ovflw" start="5" size="1" type="uint" grade="established"/>
+    <field name="gart_fetch_err" start="4" size="1" type="uint" grade="established"/>
+    <field name="pci_err" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="MULT_ERROR_ALIAS" size="8" grade="established" register="yes" offset="0x68" access="rw" reset="unknown">
+    <doc>Multiple-error write alias. The provider writes the GART fetch error bit here to clear it, together with the status alias. Name and offset are the vendor header's definition (struct member ca_mult_error_alias). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gfx_credit_ovflw" start="21" size="1" type="uint" grade="established"/>
+    <field name="mult_intb" start="20" size="1" type="uint" grade="established"/>
+    <field name="mult_inta" start="19" size="1" type="uint" grade="established"/>
+    <field name="intb" start="18" size="1" type="uint" grade="established"/>
+    <field name="inta" start="17" size="1" type="uint" grade="established"/>
+    <field name="sba_type1_err" start="15" size="1" type="uint" grade="established"/>
+    <field name="agp_req_oflow" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_arb_to" start="13" size="1" type="uint" grade="established"/>
+    <field name="pio_invalid_addr" start="12" size="1" type="uint" grade="established"/>
+    <field name="cxm_req_cred_ovflw" start="11" size="1" type="uint" grade="established"/>
+    <field name="cxm_rsp_cred_ovflw" start="10" size="1" type="uint" grade="established"/>
+    <field name="tnumto" start="9" size="1" type="uint" grade="established"/>
+    <field name="crm_dverr" start="8" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr" start="7" size="1" type="uint" grade="established"/>
+    <field name="pio_req_ovflw" start="6" size="1" type="uint" grade="established"/>
+    <field name="gfx_wr_ovflw" start="5" size="1" type="uint" grade="established"/>
+    <field name="gart_fetch_err" start="4" size="1" type="uint" grade="established"/>
+    <field name="pci_err" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="FIRST_ERROR" size="8" grade="established" register="yes" offset="0x70" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_first_error). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gfx_credit_ovflw" start="21" size="1" type="uint" grade="established"/>
+    <field name="mult_intb" start="20" size="1" type="uint" grade="established"/>
+    <field name="mult_inta" start="19" size="1" type="uint" grade="established"/>
+    <field name="intb" start="18" size="1" type="uint" grade="established"/>
+    <field name="inta" start="17" size="1" type="uint" grade="established"/>
+    <field name="sba_type1_err" start="15" size="1" type="uint" grade="established"/>
+    <field name="agp_req_oflow" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_arb_to" start="13" size="1" type="uint" grade="established"/>
+    <field name="pio_invalid_addr" start="12" size="1" type="uint" grade="established"/>
+    <field name="cxm_req_cred_ovflw" start="11" size="1" type="uint" grade="established"/>
+    <field name="cxm_rsp_cred_ovflw" start="10" size="1" type="uint" grade="established"/>
+    <field name="tnumto" start="9" size="1" type="uint" grade="established"/>
+    <field name="crm_dverr" start="8" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr" start="7" size="1" type="uint" grade="established"/>
+    <field name="pio_req_ovflw" start="6" size="1" type="uint" grade="established"/>
+    <field name="gfx_wr_ovflw" start="5" size="1" type="uint" grade="established"/>
+    <field name="gart_fetch_err" start="4" size="1" type="uint" grade="established"/>
+    <field name="pci_err" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_MASK" size="8" grade="established" register="yes" offset="0x78" access="rw" reset="unknown">
+    <doc>Interrupt mask. The provider clears the GART fetch error bit (enables it); the sense of the mask bit is the provider's use. Name and offset are the vendor header's definition (struct member ca_int_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gfx_credit_ovflw" start="21" size="1" type="uint" grade="established"/>
+    <field name="mult_intb" start="20" size="1" type="uint" grade="established"/>
+    <field name="mult_inta" start="19" size="1" type="uint" grade="established"/>
+    <field name="intb" start="18" size="1" type="uint" grade="established"/>
+    <field name="inta" start="17" size="1" type="uint" grade="established"/>
+    <field name="sba_type1_err" start="15" size="1" type="uint" grade="established"/>
+    <field name="agp_req_oflow" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_arb_to" start="13" size="1" type="uint" grade="established"/>
+    <field name="pio_invalid_addr" start="12" size="1" type="uint" grade="established"/>
+    <field name="cxm_req_cred_ovflw" start="11" size="1" type="uint" grade="established"/>
+    <field name="cxm_rsp_cred_ovflw" start="10" size="1" type="uint" grade="established"/>
+    <field name="tnumto" start="9" size="1" type="uint" grade="established"/>
+    <field name="crm_dverr" start="8" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr" start="7" size="1" type="uint" grade="established"/>
+    <field name="pio_req_ovflw" start="6" size="1" type="uint" grade="established"/>
+    <field name="gfx_wr_ovflw" start="5" size="1" type="uint" grade="established"/>
+    <field name="gart_fetch_err" start="4" size="1" type="uint" grade="established"/>
+    <field name="pci_err" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRM_PKTERR_TYPE" size="8" grade="established" register="yes" offset="0x80" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="first_crm_pkterr_mssng_hdr" start="28" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_mssng_tail" start="27" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_early_tail" start="26" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_early_term" start="25" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_sberr_nh" start="24" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_cw_err" start="23" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_hdr_param" start="22" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_addr_algn" start="21" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_addr_rng" start="20" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_inv_tnum" start="19" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_pactype" start="18" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_didn" start="17" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_sberr_hdr" start="16" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_mssng_hdr" start="12" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_mssng_tail" start="11" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_early_tail" start="10" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_early_term" start="9" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_sberr_nh" start="8" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_cw_err" start="7" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_hdr_param" start="6" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_addr_algn" start="5" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_addr_rng" start="4" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_inv_tnum" start="3" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_pactype" start="2" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_didn" start="1" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_sberr_hdr" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRM_PKTERR_TYPE_ALIAS" size="8" grade="established" register="yes" offset="0x88" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type_alias). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="first_crm_pkterr_mssng_hdr" start="28" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_mssng_tail" start="27" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_early_tail" start="26" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_early_term" start="25" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_sberr_nh" start="24" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_cw_err" start="23" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_hdr_param" start="22" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_addr_algn" start="21" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_addr_rng" start="20" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_inv_tnum" start="19" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_pactype" start="18" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_didn" start="17" size="1" type="uint" grade="established"/>
+    <field name="first_crm_pkterr_sberr_hdr" start="16" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_mssng_hdr" start="12" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_mssng_tail" start="11" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_early_tail" start="10" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_early_term" start="9" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_sberr_nh" start="8" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_cw_err" start="7" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_hdr_param" start="6" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_addr_algn" start="5" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_addr_rng" start="4" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_inv_tnum" start="3" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_pactype" start="2" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_didn" start="1" size="1" type="uint" grade="established"/>
+    <field name="crm_pkterr_sberr_hdr" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRM_CT_ERROR_DETAIL_1" size="8" grade="established" register="yes" offset="0x90" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="cw_err" start="35" size="1" type="uint" grade="established"/>
+    <field name="pio_op" start="34" size="1" type="uint" grade="established"/>
+    <field name="mem_rd_param" start="32" size="2" type="uint" grade="established"/>
+    <field name="gfx_cred" start="24" size="8" type="uint" grade="established"/>
+    <field name="dw_data_en" start="16" size="8" type="uint" grade="established"/>
+    <field name="tnum" start="8" size="8" type="uint" grade="established"/>
+    <field name="data_sz" start="6" size="2" type="uint" grade="established"/>
+    <field name="src_id" start="4" size="2" type="uint" grade="established"/>
+    <field name="pkt_type" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRM_CT_ERROR_DETAIL_2" size="8" grade="established" register="yes" offset="0x98" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="pkt_addr" start="3" size="53" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRM_TNUMTO" size="8" grade="established" register="yes" offset="0xa0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_crm_tnumto). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="crm_tnumto_wr" start="8" size="1" type="uint" grade="established"/>
+    <field name="crm_tnumto_val" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="GART_ERR" size="8" grade="established" register="yes" offset="0xa8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_gart_err). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gart_err_addr" start="4" size="36" type="uint" grade="established"/>
+    <field name="gart_err_source" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCIERR_TYPE" size="8" grade="established" register="yes" offset="0xb0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_pcierr_type). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="pcierr_mst_retry_tout" start="49" size="1" type="uint" grade="established"/>
+    <field name="pcierr_mst_tabt" start="48" size="1" type="uint" grade="established"/>
+    <field name="pcierr_mst_mabt" start="47" size="1" type="uint" grade="established"/>
+    <field name="pcierr_mst_rd_perr" start="46" size="1" type="uint" grade="established"/>
+    <field name="pcierr_mst_wr_perr" start="45" size="1" type="uint" grade="established"/>
+    <field name="pcierr_mst_serr" start="44" size="1" type="uint" grade="established"/>
+    <field name="pcierr_slv_rd_perr" start="43" size="1" type="uint" grade="established"/>
+    <field name="pcierr_slv_wr_perr" start="42" size="1" type="uint" grade="established"/>
+    <field name="pcierr_slv_serr" start="41" size="1" type="uint" grade="established"/>
+    <field name="pcierr_a64" start="40" size="1" type="uint" grade="established"/>
+    <field name="pcierr_cmd" start="36" size="4" type="uint" grade="established"/>
+    <field name="pcierr_enb" start="32" size="4" type="uint" grade="established"/>
+    <field name="pcierr_data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCIERR_ADDR" size="8" grade="established" register="yes" offset="0xb8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_pcierr_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="PCI_RD_BUF_FLUSH" size="8" grade="established" register="yes" offset="0xd8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_pci_rd_buf_flush). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="PCI_DMA_ADDR_EXTN" size="8" grade="established" register="yes" offset="0xe0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_pci_dma_addr_extn). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="pci_dma_pio_mem_type" start="28" size="1" type="uint" grade="established"/>
+    <field name="pci_dma_node_id" start="12" size="16" type="uint" grade="established"/>
+    <field name="chiplet_id" start="8" size="2" type="uint" grade="established"/>
+    <field name="upper_node_offset" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="AGP_DMA_ADDR_EXTN" size="8" grade="established" register="yes" offset="0xe8" access="rw" reset="unknown">
+    <doc>AGP DMA address extension. The 48-bit direct AGP DMA path reads it and requires its node-id field to equal the upper node bits of the target; the node-id field is 16 bits wide at bit 20, which overlaps the pio-mem-type bit 28 the header also names (see the unit page). Name and offset are the vendor header's definition (struct member ca_agp_dma_addr_extn). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="agp_dma_node_id" start="20" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="FORCE_INTA" size="8" grade="established" register="yes" offset="0xf0" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_force_inta). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="FORCE_INTB" size="8" grade="established" register="yes" offset="0xf8" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_force_intb). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+  </struct>
+  <struct name="DEBUG_VECTOR_SEL" size="8" grade="established" register="yes" offset="0x100" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_debug_vector_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="debug_pm_vsel" start="56" size="4" type="uint" grade="established"/>
+    <field name="debug_ps_vsel" start="52" size="4" type="uint" grade="established"/>
+    <field name="debug_as_vsel" start="48" size="4" type="uint" grade="established"/>
+    <field name="debug_bi_vsel" start="44" size="4" type="uint" grade="established"/>
+    <field name="debug_bo_vsel" start="40" size="4" type="uint" grade="established"/>
+    <field name="debug_pe_vsel" start="36" size="4" type="uint" grade="established"/>
+    <field name="debug_ba_vsel" start="32" size="4" type="uint" grade="established"/>
+    <field name="debug_cr_vsel" start="28" size="4" type="uint" grade="established"/>
+    <field name="debug_cx_vsel" start="24" size="4" type="uint" grade="established"/>
+    <field name="debug_ad_vsel" start="20" size="4" type="uint" grade="established"/>
+    <field name="debug_pd_vsel" start="16" size="4" type="uint" grade="established"/>
+    <field name="debug_gt_vsel" start="12" size="4" type="uint" grade="established"/>
+    <field name="debug_gw_vsel" start="8" size="4" type="uint" grade="established"/>
+    <field name="debug_pp_vsel" start="4" size="4" type="uint" grade="established"/>
+    <field name="debug_mn_vsel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="DEBUG_MUX_CORE_SEL" size="8" grade="established" register="yes" offset="0x108" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_debug_mux_core_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="debug_nsel7" start="60" size="3" type="uint" grade="established"/>
+    <field name="debug_msel7" start="56" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel6" start="52" size="3" type="uint" grade="established"/>
+    <field name="debug_msel6" start="48" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel5" start="44" size="3" type="uint" grade="established"/>
+    <field name="debug_msel5" start="40" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel4" start="36" size="3" type="uint" grade="established"/>
+    <field name="debug_msel4" start="32" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel3" start="28" size="3" type="uint" grade="established"/>
+    <field name="debug_msel3" start="24" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel2" start="20" size="3" type="uint" grade="established"/>
+    <field name="debug_msel2" start="16" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel1" start="12" size="3" type="uint" grade="established"/>
+    <field name="debug_msel1" start="8" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel0" start="4" size="3" type="uint" grade="established"/>
+    <field name="debug_msel0" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="DEBUG_MUX_PCI_SEL" size="8" grade="established" register="yes" offset="0x110" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_debug_mux_pci_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="debug_nsel7" start="60" size="3" type="uint" grade="established"/>
+    <field name="debug_msel7" start="56" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel6" start="52" size="3" type="uint" grade="established"/>
+    <field name="debug_msel6" start="48" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel5" start="44" size="3" type="uint" grade="established"/>
+    <field name="debug_msel5" start="40" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel4" start="36" size="3" type="uint" grade="established"/>
+    <field name="debug_msel4" start="32" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel3" start="28" size="3" type="uint" grade="established"/>
+    <field name="debug_msel3" start="24" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel2" start="20" size="3" type="uint" grade="established"/>
+    <field name="debug_msel2" start="16" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel1" start="12" size="3" type="uint" grade="established"/>
+    <field name="debug_msel1" start="8" size="3" type="uint" grade="established"/>
+    <field name="debug_nsel0" start="4" size="3" type="uint" grade="established"/>
+    <field name="debug_msel0" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="DEBUG_DOMAIN_SEL" size="8" grade="established" register="yes" offset="0x118" access="rw" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_debug_domain_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="debug_domain_h" start="1" size="1" type="uint" grade="established"/>
+    <field name="debug_domain_l" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GART_PTR_TABLE" size="8" grade="established" register="yes" offset="0x200" access="rw" reset="unknown">
+    <doc>GART table pointer. The provider stores the coretalk address of the page table ORed with 1 (bit 0 valid). Table entries are 8 bytes: the coretalk page address shifted right 12, with bit 63 set for valid. Name and offset are the vendor header's definition (struct member ca_gart_ptr_table). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gart_ptr_addr" start="12" size="44" type="uint" grade="established"/>
+    <field name="gart_ptr_val" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GART_TLB_ADDR" size="8" grade="established" register="yes" offset="0x208" access="rw" count="8" stride="8" reset="unknown">
+    <doc>Name and offset are the vendor header's definition (struct member ca_gart_tlb_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <field name="gart_tlb_entry_val" start="63" size="1" type="uint" grade="established"/>
+    <field name="gart_tlb_addr" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <constant name="AGP_DIRECT_BASE" value="0x40000000" grade="established"/>
+  <constant name="AGP_DMA_PIO_MEM_TYPE" value="0x10000000" grade="established"/>
+  <constant name="AGP_MAPPED_BASE" value="0x80000000" grade="established"/>
+  <constant name="AGP_MAPPED_SIZE" value="0x40000000" grade="established"/>
+  <constant name="DIRECT64_COHERENT" value="0x1000000000000000" grade="established"/>
+  <constant name="ERROR_VECTOR" value="0x35" grade="established"/>
+  <constant name="GART_ENTRY_VALID" value="0x8000000000000000" grade="established"/>
+  <constant name="PART_NUMBER" value="0xe020" grade="established"/>
+  <constant name="PCI32_DIRECT_BASE" value="0xc0000000" grade="established"/>
+  <constant name="PCI32_MAPPED_BASE" value="0xc0000000" grade="established"/>
+  <constant name="PCI32_MAPPED_SIZE" value="0x40000000" grade="established"/>
+  <constant name="PCI_DMA_PIO_MEM_TYPE" value="0x10000000" grade="established"/>
+  <constant name="PIO_ADMIN" value="0x0" grade="established"/>
+  <constant name="PIO_AGP_DMAREAD" value="0x30000" grade="established"/>
+  <constant name="PIO_AGP_DMAWRITE" value="0x20000" grade="established"/>
+  <constant name="PIO_GFX" value="0x10000" grade="established"/>
+  <constant name="PIO_PCI_IO" value="0x3000000" grade="established"/>
+  <constant name="PIO_PCI_MEM" value="0x40000000" grade="established"/>
+  <constant name="PIO_PCI_MEM_OFFSET" value="0x8000000" grade="established"/>
+  <constant name="PIO_PCI_TYPE0_CONFIG" value="0x1000000" grade="established"/>
+  <constant name="PIO_PCI_TYPE1_CONFIG" value="0x2000000" grade="established"/>
+</genxml>

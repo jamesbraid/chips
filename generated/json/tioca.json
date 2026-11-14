@@ -1,0 +1,3070 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/tioca/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "id",
+   "offset": 0,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "control1",
+   "offset": 8,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.pci_int_lpcnt",
+   "hi": 51,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.agpdma_op_enb_combdelay",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.agpdma_op_combdelay",
+   "hi": 40,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.pio_addr_offset",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.pcim_fast_btb_enb",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.pcim_io_nbe_ad",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.inj_data_perr",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.inj_addr_perr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.agp_init_cal_enb",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.agp_cal_prscl_byp",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.agp_cal_cycle",
+   "hi": 9,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.agp_fw_enable",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.gfx_wr_swap",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.pio_mem_swap",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.pio_io_swap",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.dma_pci_swap",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.dma_agp_swap",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control1.sys_big_end",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "control2",
+   "offset": 16,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.crm_max_credit",
+   "hi": 62,
+   "lo": 60,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.crm_prescaler_byp",
+   "hi": 57,
+   "lo": 57,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.crm_tnumto_enb",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.crm_tnumto_period",
+   "hi": 52,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.gart_flush_tlb",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.gart_wr_prefetch_enb",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.gart_rd_prefetch_enb",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.gart_mem_param",
+   "hi": 33,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.pci_arb_err_enb",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.msi_int_enb",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.rt_int_en",
+   "hi": 29,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.pci_max_retry",
+   "hi": 25,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.pci_latency_to",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "control2.agp_latency_to",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "status1",
+   "offset": 24,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status1.gart_tlb_val",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status1.crm_space_avail",
+   "hi": 14,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status1.crm_credit_avail",
+   "hi": 6,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status1.intb_n",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status1.inta_n",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status1.corelet_id",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "status2",
+   "offset": 32,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.pdma_rdbuff_avail",
+   "hi": 57,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.pdma_wrbuff_avail",
+   "hi": 55,
+   "lo": 52,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.pdma_opq_avail",
+   "hi": 51,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.pci_pio_op_stat",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.adma_rdbuff_avail",
+   "hi": 46,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.adma_wrbuff_avail",
+   "hi": 39,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.adma_opq_avail",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.gfx_wrbuff_avail",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.gfx_opq_avail",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "status2.gfx_credit_avail",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "gart_aperature",
+   "offset": 40,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_aperature.gart_ap_base",
+   "hi": 63,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_aperature.gart_ap_size",
+   "hi": 21,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_aperature.gart_ap_enb_pci",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_aperature.gart_page_size",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_aperature.gart_ap_enb_agp",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "gfx_detach",
+   "offset": 48,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "inta_dest_addr",
+   "offset": 56,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "inta_dest_addr.int_dest_vect",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "inta_dest_addr.int_dest_addr",
+   "hi": 53,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "intb_dest_addr",
+   "offset": 64,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "intb_dest_addr.int_dest_vect",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "intb_dest_addr.int_dest_addr",
+   "hi": 53,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "err_int_dest_addr",
+   "offset": 72,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "err_int_dest_addr.int_dest_vect",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "err_int_dest_addr.int_dest_addr",
+   "hi": 53,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "int_status",
+   "offset": 80,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.gfx_credit_ovflw",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.mult_intb",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.mult_inta",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.intb",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.inta",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.sba_type1_err",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.agp_req_oflow",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.pci_arb_to",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.pio_invalid_addr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.cxm_req_cred_ovflw",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.cxm_rsp_cred_ovflw",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.tnumto",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.crm_dverr",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.crm_pkterr",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.pio_req_ovflw",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.gfx_wr_ovflw",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.gart_fetch_err",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status.pci_err",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "int_status_alias",
+   "offset": 88,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.gfx_credit_ovflw",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.mult_intb",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.mult_inta",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.intb",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.inta",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.sba_type1_err",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.agp_req_oflow",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.pci_arb_to",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.pio_invalid_addr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.cxm_req_cred_ovflw",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.cxm_rsp_cred_ovflw",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.tnumto",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.crm_dverr",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.crm_pkterr",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.pio_req_ovflw",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.gfx_wr_ovflw",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.gart_fetch_err",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_status_alias.pci_err",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "mult_error",
+   "offset": 96,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.gfx_credit_ovflw",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.mult_intb",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.mult_inta",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.intb",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.inta",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.sba_type1_err",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.agp_req_oflow",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.pci_arb_to",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.pio_invalid_addr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.cxm_req_cred_ovflw",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.cxm_rsp_cred_ovflw",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.tnumto",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.crm_dverr",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.crm_pkterr",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.pio_req_ovflw",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.gfx_wr_ovflw",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.gart_fetch_err",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error.pci_err",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "mult_error_alias",
+   "offset": 104,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.gfx_credit_ovflw",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.mult_intb",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.mult_inta",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.intb",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.inta",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.sba_type1_err",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.agp_req_oflow",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.pci_arb_to",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.pio_invalid_addr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.cxm_req_cred_ovflw",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.cxm_rsp_cred_ovflw",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.tnumto",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.crm_dverr",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.crm_pkterr",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.pio_req_ovflw",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.gfx_wr_ovflw",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.gart_fetch_err",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "mult_error_alias.pci_err",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "first_error",
+   "offset": 112,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.gfx_credit_ovflw",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.mult_intb",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.mult_inta",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.intb",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.inta",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.sba_type1_err",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.agp_req_oflow",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.pci_arb_to",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.pio_invalid_addr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.cxm_req_cred_ovflw",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.cxm_rsp_cred_ovflw",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.tnumto",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.crm_dverr",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.crm_pkterr",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.pio_req_ovflw",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.gfx_wr_ovflw",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.gart_fetch_err",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "first_error.pci_err",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "int_mask",
+   "offset": 120,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.gfx_credit_ovflw",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.mult_intb",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.mult_inta",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.intb",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.inta",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.sba_type1_err",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.agp_req_oflow",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.pci_arb_to",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.pio_invalid_addr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.cxm_req_cred_ovflw",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.cxm_rsp_cred_ovflw",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.tnumto",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.crm_dverr",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.crm_pkterr",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.pio_req_ovflw",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.gfx_wr_ovflw",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.gart_fetch_err",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "int_mask.pci_err",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "crm_pkterr_type",
+   "offset": 128,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_mssng_hdr",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_mssng_tail",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_early_tail",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_early_term",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_sberr_nh",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_cw_err",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_hdr_param",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_addr_algn",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_addr_rng",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_inv_tnum",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_pactype",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_didn",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.first_crm_pkterr_sberr_hdr",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_mssng_hdr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_mssng_tail",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_early_tail",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_early_term",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_sberr_nh",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_cw_err",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_hdr_param",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_addr_algn",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_addr_rng",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_inv_tnum",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_pactype",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_didn",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type.crm_pkterr_sberr_hdr",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "crm_pkterr_type_alias",
+   "offset": 136,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_mssng_hdr",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_mssng_tail",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_early_tail",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_early_term",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_sberr_nh",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_cw_err",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_hdr_param",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_addr_algn",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_addr_rng",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_inv_tnum",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_pactype",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_didn",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.first_crm_pkterr_sberr_hdr",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_mssng_hdr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_mssng_tail",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_early_tail",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_early_term",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_sberr_nh",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_cw_err",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_hdr_param",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_addr_algn",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_addr_rng",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_inv_tnum",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_pactype",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_didn",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_pkterr_type_alias.crm_pkterr_sberr_hdr",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "crm_ct_error_detail_1",
+   "offset": 144,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.cw_err",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.pio_op",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.mem_rd_param",
+   "hi": 33,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.gfx_cred",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.dw_data_en",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.tnum",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.data_sz",
+   "hi": 7,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.src_id",
+   "hi": 5,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_1.pkt_type",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "crm_ct_error_detail_2",
+   "offset": 152,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_ct_error_detail_2.pkt_addr",
+   "hi": 55,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "crm_tnumto",
+   "offset": 160,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_tnumto.crm_tnumto_wr",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "crm_tnumto.crm_tnumto_val",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "gart_err",
+   "offset": 168,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_err.gart_err_addr",
+   "hi": 39,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_err.gart_err_source",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "pcierr_type",
+   "offset": 176,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_mst_retry_tout",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_mst_tabt",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_mst_mabt",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_mst_rd_perr",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_mst_wr_perr",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_mst_serr",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_slv_rd_perr",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_slv_wr_perr",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_slv_serr",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_a64",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_cmd",
+   "hi": 39,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_enb",
+   "hi": 35,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pcierr_type.pcierr_data",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "pcierr_addr",
+   "offset": 184,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "pci_rd_buf_flush",
+   "offset": 216,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "pci_dma_addr_extn",
+   "offset": 224,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pci_dma_addr_extn.pci_dma_pio_mem_type",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pci_dma_addr_extn.pci_dma_node_id",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pci_dma_addr_extn.chiplet_id",
+   "hi": 9,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "pci_dma_addr_extn.upper_node_offset",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "agp_dma_addr_extn",
+   "offset": 232,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "agp_dma_addr_extn.agp_dma_node_id",
+   "hi": 35,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "force_inta",
+   "offset": 240,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "force_intb",
+   "offset": 248,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "debug_vector_sel",
+   "offset": 256,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_pm_vsel",
+   "hi": 59,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_ps_vsel",
+   "hi": 55,
+   "lo": 52,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_as_vsel",
+   "hi": 51,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_bi_vsel",
+   "hi": 47,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_bo_vsel",
+   "hi": 43,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_pe_vsel",
+   "hi": 39,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_ba_vsel",
+   "hi": 35,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_cr_vsel",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_cx_vsel",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_ad_vsel",
+   "hi": 23,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_pd_vsel",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_gt_vsel",
+   "hi": 15,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_gw_vsel",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_pp_vsel",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_vector_sel.debug_mn_vsel",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "debug_mux_core_sel",
+   "offset": 264,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_nsel7",
+   "hi": 62,
+   "lo": 60,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_msel7",
+   "hi": 58,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_nsel6",
+   "hi": 54,
+   "lo": 52,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_msel6",
+   "hi": 50,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_nsel5",
+   "hi": 46,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_msel5",
+   "hi": 42,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_nsel4",
+   "hi": 38,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_msel4",
+   "hi": 34,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_nsel3",
+   "hi": 30,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_msel3",
+   "hi": 26,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_nsel2",
+   "hi": 22,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_msel2",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_nsel1",
+   "hi": 14,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_msel1",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_nsel0",
+   "hi": 6,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_core_sel.debug_msel0",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "debug_mux_pci_sel",
+   "offset": 272,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_nsel7",
+   "hi": 62,
+   "lo": 60,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_msel7",
+   "hi": 58,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_nsel6",
+   "hi": 54,
+   "lo": 52,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_msel6",
+   "hi": 50,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_nsel5",
+   "hi": 46,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_msel5",
+   "hi": 42,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_nsel4",
+   "hi": 38,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_msel4",
+   "hi": 34,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_nsel3",
+   "hi": 30,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_msel3",
+   "hi": 26,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_nsel2",
+   "hi": 22,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_msel2",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_nsel1",
+   "hi": 14,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_msel1",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_nsel0",
+   "hi": 6,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_mux_pci_sel.debug_msel0",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "debug_domain_sel",
+   "offset": 280,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_domain_sel.debug_domain_h",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "debug_domain_sel.debug_domain_l",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "gart_ptr_table",
+   "offset": 512,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_ptr_table.gart_ptr_addr",
+   "hi": 55,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_ptr_table.gart_ptr_val",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "register",
+   "name": "gart_tlb_addr",
+   "offset": 520,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_tlb_addr.gart_tlb_entry_val",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "field",
+   "name": "gart_tlb_addr.gart_tlb_addr",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "AGP_DIRECT_BASE",
+   "value": 1073741824,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "AGP_DMA_PIO_MEM_TYPE",
+   "value": 268435456,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "AGP_MAPPED_BASE",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "AGP_MAPPED_SIZE",
+   "value": 1073741824,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "DIRECT64_COHERENT",
+   "value": 1152921504606846976,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "ERROR_VECTOR",
+   "value": 53,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "GART_ENTRY_VALID",
+   "value": 9223372036854775808,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PART_NUMBER",
+   "value": 57376,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PCI32_DIRECT_BASE",
+   "value": 3221225472,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PCI32_MAPPED_BASE",
+   "value": 3221225472,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PCI32_MAPPED_SIZE",
+   "value": 1073741824,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PCI_DMA_PIO_MEM_TYPE",
+   "value": 268435456,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PIO_ADMIN",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PIO_AGP_DMAREAD",
+   "value": 196608,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PIO_AGP_DMAWRITE",
+   "value": 131072,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PIO_GFX",
+   "value": 65536,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PIO_PCI_IO",
+   "value": 50331648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PIO_PCI_MEM",
+   "value": 1073741824,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PIO_PCI_MEM_OFFSET",
+   "value": 134217728,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PIO_PCI_TYPE0_CONFIG",
+   "value": 16777216,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioca",
+   "kind": "constant",
+   "name": "PIO_PCI_TYPE1_CONFIG",
+   "value": 33554432,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}
