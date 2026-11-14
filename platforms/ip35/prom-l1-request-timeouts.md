@@ -32,7 +32,7 @@ So, for the questions as asked: **retry count 0 (one send, one wait); wait per t
 
 | Item | Why open |
 |---|---|
-| Wall-clock length of a timer unit | needs the content of `0x9200000001604200` at run time; the PROM assumes the formula of item 3 |
+| Wall-clock length of a timer unit | needs the content of `0x9200000001604200` at run time; the PROM assumes the formula of item 3. Every constant-address use of that register found in the listing is a load (the timer routines at `0x1fc6b630` to `0x1fc6b7c0` and one use at `0x1fc0dd3c`), so the PROM does not set it on the paths read; stores through computed addresses were not excluded |
 | The conditions around requests after step 6 of the main path and the totals beyond 16 s | later call sites not traced |
 | What the PROM does if the reply arrives after the 2 s limit | the late frame is dropped by the slot that was released (inferred from the release at `0x1fc63e18`); not traced through the frame parser |
 | Whether any caller outside the main path retries a failed request | the 27 call sites of the primitive were listed; only the six above and the console routines were read |
