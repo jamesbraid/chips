@@ -25,11 +25,25 @@ chip type and revision each PROM routine runs on; the erratum text names no revi
 
 ## PIC versus TIO by product
 
-[missing source] Which Altix models carry a PIC behind a SHub widget, which carry a TIO with a TIOCP, TIOCA or TIOCE, and
-which carry the TIO FPGA port (TIOCX) is not stated by any SGI Linux file read; the code distinguishes by NASID parity
-and by the type the firmware reports. The Library holds the Altix user's guides (007-4579-001, 007-4377-002, 007-4660-001,
-007-4790-001, 007-4823-001) but its search does not index their text and none has been read for I/O topology. A search
-of the Linux mail archive for TIOCP and Altix 350 returned nothing. Next: read the I/O blade and brick sections of those guides.
+[missing source] Which Altix models carry a PIC behind a SHub widget, which carry a TIO with a TIOCP, TIOCA or TIOCE,
+and which carry the TIO FPGA port (TIOCX) is not stated by any SGI Linux file read; the code distinguishes by NASID parity
+and by the type the firmware reports.
+
+What is settled for the Altix 350 (Altix 350 System User's Guide 007-4660-002, printed pages 72 and 73): a base compute
+module holds one SHub, one or two Itanium 2 processors, four PCI/PCI-X slots, and a factory-installed base I/O PCI card in the
+lowest slot; the card has a real-time interrupt input and output, an Ethernet port, and either serial (IO10) or SCSI
+(IO9). The pages read here give only the serial and SCSI split and do not say which board is standard (not checked beyond them). The guide does not name the bridge behind the four slots. SGI's Linux code supports both a PIC and a TIOCP there, so which the 350 uses is **unknown**.
+
+What the Linux driver says about the boards ([IOC4 page](../devices/ioc4/README.md)): the master driver names IO9
+(IOC4 plus a QLogic ISP12160 SCSI controller at slot 3 of the same bus), IO10 (IOC4 plus a Vitesse VSC7174 serial-ATA controller at slot 3) and
+PCI-RT (IOC4 alone). So an IO10 carries an IOC4: the IO10 serial port and the real-time interrupt pins are IOC4 functions. The
+IO9 is the board the Origin 350 also carries (the IOC4 page records its use there). Whether the IO10's IOC4 runs behind a PIC or a
+TIOCP follows the bridge question above and is unknown.
+
+Not read for I/O topology: Altix 3000 (007-4579-001), 3700 Bx2 (007-4377-002), 330 (007-4790-001), 4700 (007-4823-001) and
+the IX-brick and PX-brick pages ([ixbrick](../platforms/bricks/ixbrick.md), [pxbrick](../platforms/bricks/pxbrick.md) already
+tie the PIC to those bricks from the 3000 and Bx2 guides). A search of the Linux mail archive for TIOCP and Altix 350 returned nothing.
+Next: the chapter on the base compute module in the 350 guide, and the 4700 guide's blade I/O sections.
 
 ## TIO chiplet field
 
