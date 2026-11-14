@@ -2,6 +2,11 @@
 // IOC4 registers outside the census
 #![allow(dead_code)]
 
+/// Generic pin data word. The SGI header defines it at 0x38 with bits 7:0 holding the state of the eight generic pins. Offset and name are established by (established)
+pub mod gpdr {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x38;
+}
 /// (established)
 pub mod km_rx_kbd {
     pub const WIDTH: u32 = 32;
@@ -36,6 +41,17 @@ pub const ATA_DMA_END_AREA: u32 = 0x160; // inferred
 pub const ATA_DMA_LIST_HIGH: u32 = 0x148; // inferred
 pub const ATA_DMA_LIST_LOW: u32 = 0x144; // inferred
 pub const ATA_DMA_TIMING: u32 = 0x140; // inferred
+pub const EXTINT_COUNT_DIVISOR: u32 = 0x208; // established
+pub const GPCR_DIR_MASK: u32 = 0xff; // established
+pub const GPCR_EDGE_MASK: u32 = 0xff00; // established
+pub const GPCR_INT_OUT_EN: u32 = 0x100000; // established
+pub const GPIO_PIN_EXT_INT_OUT: u32 = 0x0; // established
+pub const GPIO_PIN_SERIAL_MODE_0: u32 = 0x4; // established
+pub const INT_OUT_COUNT_MASK: u32 = 0xffff; // established
+pub const INT_OUT_DIAG: u32 = 0x40000000; // established
+pub const INT_OUT_MODE_MASK: u32 = 0x70000; // established
+pub const INT_OUT_MODE_TOGGLE: u32 = 0x70000; // established
+pub const INT_OUT_VALUE: u32 = 0x80000000; // established
 pub const KM_CSR_AUX_CLOCK_LINE: u32 = 0x200; // established
 pub const KM_CSR_AUX_DATA_LINE: u32 = 0x100; // established
 pub const KM_CSR_AUX_WRITE_PENDING: u32 = 0x2; // established
@@ -44,7 +60,16 @@ pub const KM_CSR_KBD_CLOCK_LINE: u32 = 0x20; // established
 pub const KM_CSR_KBD_DATA_LINE: u32 = 0x10; // established
 pub const KM_CSR_KBD_WRITE_PENDING: u32 = 0x1; // established
 pub const KM_CSR_LAST_WRITE_LINE_B_3_2: u32 = 0xc; // inferred
+pub const OTHER_IR_ATA_INT: u32 = 0x1; // established
+pub const OTHER_IR_ATA_MEMERR: u32 = 0x2; // established
+pub const OTHER_IR_GEN_INT: u32 = 0xff000000; // established
 pub const OTHER_IR_KBM: u32 = 0x40; // established
+pub const OTHER_IR_RT_INT: u32 = 0x800000; // established
+pub const OTHER_IR_SER_MEMERR_0: u32 = 0x4; // established
+pub const OTHER_IR_SER_MEMERR_1: u32 = 0x8; // established
+pub const OTHER_IR_SER_MEMERR_2: u32 = 0x10; // established
+pub const OTHER_IR_SER_MEMERR_3: u32 = 0x20; // established
+pub const PCI_CLASS_CODE: u32 = 0xb4000; // established
 pub const SERIAL_RING_PTR_B_9_3: u32 = 0x3f8; // inferred
 pub const SERIAL_RX_TIMER_COUNT_B_27_16: u32 = 0xfff0000; // inferred
 pub const SERIAL_RX_TIMER_RELOAD_B_11_0: u32 = 0xfff; // inferred
@@ -55,9 +80,12 @@ pub const SERIAL_SHADOW_DDCD_V_80000: u32 = 0x80000; // inferred
 pub const SERIAL_SHADOW_OUTPUTS_B_28_24: u32 = 0x1f000000; // inferred
 pub const SERIAL_SHADOW_RX_FLAGS_B_7_0: u32 = 0xff; // inferred
 pub const SERIAL_SRCIR_TIMER_ARM_V_80000000: u32 = 0x80000000; // inferred
+pub const SIO_CR_ARB_DIAG: u32 = 0x70; // established
+pub const SIO_CR_ATA_DIAG_ACTIVE: u32 = 0x200; // established
+pub const SIO_CR_ATA_DIAG_IDLE: u32 = 0x100; // established
 pub const SIO_CR_CMD_PULSE: u32 = 0xf; // established
 pub const SIO_CR_SIO_DIAG_IDLE: u32 = 0x80; // established
-pub const SIO_IR_SRC_UART_0: u32 = 0x40; // inferred
-pub const SIO_IR_SRC_UART_1: u32 = 0x4000; // inferred
-pub const SIO_IR_SRC_UART_2: u32 = 0x400000; // inferred
-pub const SIO_IR_SRC_UART_3: u32 = 0x40000000; // inferred
+pub const SIO_IR_SRC_UART_0: u32 = 0x40; // established
+pub const SIO_IR_SRC_UART_1: u32 = 0x4000; // established
+pub const SIO_IR_SRC_UART_2: u32 = 0x400000; // established
+pub const SIO_IR_SRC_UART_3: u32 = 0x40000000; // established

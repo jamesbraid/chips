@@ -6,6 +6,19 @@
   {
    "unit": "ioc4_extra",
    "kind": "register",
+   "name": "gpdr",
+   "offset": 56,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
    "name": "km_rx_kbd",
    "offset": 516,
    "access": "r",
@@ -170,6 +183,94 @@
   {
    "unit": "ioc4_extra",
    "kind": "constant",
+   "name": "EXTINT_COUNT_DIVISOR",
+   "value": 520,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "GPCR_DIR_MASK",
+   "value": 255,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "GPCR_EDGE_MASK",
+   "value": 65280,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "GPCR_INT_OUT_EN",
+   "value": 1048576,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "GPIO_PIN_EXT_INT_OUT",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "GPIO_PIN_SERIAL_MODE_0",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "INT_OUT_COUNT_MASK",
+   "value": 65535,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "INT_OUT_DIAG",
+   "value": 1073741824,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "INT_OUT_MODE_MASK",
+   "value": 458752,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "INT_OUT_MODE_TOGGLE",
+   "value": 458752,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "INT_OUT_VALUE",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
    "name": "KM_CSR_AUX_CLOCK_LINE",
    "value": 512,
    "count": 1,
@@ -234,8 +335,80 @@
   {
    "unit": "ioc4_extra",
    "kind": "constant",
+   "name": "OTHER_IR_ATA_INT",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "OTHER_IR_ATA_MEMERR",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "OTHER_IR_GEN_INT",
+   "value": 4278190080,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
    "name": "OTHER_IR_KBM",
    "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "OTHER_IR_RT_INT",
+   "value": 8388608,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "OTHER_IR_SER_MEMERR_0",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "OTHER_IR_SER_MEMERR_1",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "OTHER_IR_SER_MEMERR_2",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "OTHER_IR_SER_MEMERR_3",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "PCI_CLASS_CODE",
+   "value": 737280,
    "count": 1,
    "grade": "established"
   },
@@ -322,6 +495,30 @@
   {
    "unit": "ioc4_extra",
    "kind": "constant",
+   "name": "SIO_CR_ARB_DIAG",
+   "value": 112,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_CR_ATA_DIAG_ACTIVE",
+   "value": 512,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
+   "name": "SIO_CR_ATA_DIAG_IDLE",
+   "value": 256,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "constant",
    "name": "SIO_CR_CMD_PULSE",
    "value": 15,
    "count": 1,
@@ -341,7 +538,7 @@
    "name": "SIO_IR_SRC_UART_0",
    "value": 64,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "ioc4_extra",
@@ -349,7 +546,7 @@
    "name": "SIO_IR_SRC_UART_1",
    "value": 16384,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "ioc4_extra",
@@ -357,7 +554,7 @@
    "name": "SIO_IR_SRC_UART_2",
    "value": 4194304,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "ioc4_extra",
@@ -365,7 +562,7 @@
    "name": "SIO_IR_SRC_UART_3",
    "value": 1073741824,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   }
  ]
 }

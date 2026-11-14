@@ -1,6 +1,9 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/ioc4/registers-extra.toml by defs-gen - do not edit, change the source -->
 <genxml unit="ioc4_extra" prefix="IOC4" title="IOC4 registers outside the census">
+  <struct name="GPDR" size="4" grade="established" register="yes" offset="0x38" access="rw" reset="unknown">
+    <doc>Generic pin data word. The SGI header defines it at 0x38 with bits 7:0 holding the state of the eight generic pins. Offset and name are established by the header and the PROM store; no Linux driver code read touches it, and what a write does is unknown.</doc>
+  </struct>
   <struct name="KM_RX_KBD" size="4" grade="established" register="yes" offset="0x204" access="r" reset="unknown">
   </struct>
   <struct name="KM_RX_MOUSE" size="4" grade="established" register="yes" offset="0x208" access="r" reset="unknown">
@@ -23,6 +26,17 @@
   <constant name="ATA_DMA_LIST_HIGH" value="0x148" grade="inferred"/>
   <constant name="ATA_DMA_LIST_LOW" value="0x144" grade="inferred"/>
   <constant name="ATA_DMA_TIMING" value="0x140" grade="inferred"/>
+  <constant name="EXTINT_COUNT_DIVISOR" value="0x208" grade="established"/>
+  <constant name="GPCR_DIR_MASK" value="0xff" grade="established"/>
+  <constant name="GPCR_EDGE_MASK" value="0xff00" grade="established"/>
+  <constant name="GPCR_INT_OUT_EN" value="0x100000" grade="established"/>
+  <constant name="GPIO_PIN_EXT_INT_OUT" value="0x0" grade="established"/>
+  <constant name="GPIO_PIN_SERIAL_MODE_0" value="0x4" grade="established"/>
+  <constant name="INT_OUT_COUNT_MASK" value="0xffff" grade="established"/>
+  <constant name="INT_OUT_DIAG" value="0x40000000" grade="established"/>
+  <constant name="INT_OUT_MODE_MASK" value="0x70000" grade="established"/>
+  <constant name="INT_OUT_MODE_TOGGLE" value="0x70000" grade="established"/>
+  <constant name="INT_OUT_VALUE" value="0x80000000" grade="established"/>
   <constant name="KM_CSR_AUX_CLOCK_LINE" value="0x200" grade="established"/>
   <constant name="KM_CSR_AUX_DATA_LINE" value="0x100" grade="established"/>
   <constant name="KM_CSR_AUX_WRITE_PENDING" value="0x2" grade="established"/>
@@ -31,7 +45,16 @@
   <constant name="KM_CSR_KBD_DATA_LINE" value="0x10" grade="established"/>
   <constant name="KM_CSR_KBD_WRITE_PENDING" value="0x1" grade="established"/>
   <constant name="KM_CSR_LAST_WRITE_LINE_B_3_2" value="0xc" grade="inferred"/>
+  <constant name="OTHER_IR_ATA_INT" value="0x1" grade="established"/>
+  <constant name="OTHER_IR_ATA_MEMERR" value="0x2" grade="established"/>
+  <constant name="OTHER_IR_GEN_INT" value="0xff000000" grade="established"/>
   <constant name="OTHER_IR_KBM" value="0x40" grade="established"/>
+  <constant name="OTHER_IR_RT_INT" value="0x800000" grade="established"/>
+  <constant name="OTHER_IR_SER_MEMERR_0" value="0x4" grade="established"/>
+  <constant name="OTHER_IR_SER_MEMERR_1" value="0x8" grade="established"/>
+  <constant name="OTHER_IR_SER_MEMERR_2" value="0x10" grade="established"/>
+  <constant name="OTHER_IR_SER_MEMERR_3" value="0x20" grade="established"/>
+  <constant name="PCI_CLASS_CODE" value="0xb4000" grade="established"/>
   <constant name="SERIAL_RING_PTR_B_9_3" value="0x3f8" grade="inferred"/>
   <constant name="SERIAL_RX_TIMER_COUNT_B_27_16" value="0xfff0000" grade="inferred"/>
   <constant name="SERIAL_RX_TIMER_RELOAD_B_11_0" value="0xfff" grade="inferred"/>
@@ -42,10 +65,13 @@
   <constant name="SERIAL_SHADOW_OUTPUTS_B_28_24" value="0x1f000000" grade="inferred"/>
   <constant name="SERIAL_SHADOW_RX_FLAGS_B_7_0" value="0xff" grade="inferred"/>
   <constant name="SERIAL_SRCIR_TIMER_ARM_V_80000000" value="0x80000000" grade="inferred"/>
+  <constant name="SIO_CR_ARB_DIAG" value="0x70" grade="established"/>
+  <constant name="SIO_CR_ATA_DIAG_ACTIVE" value="0x200" grade="established"/>
+  <constant name="SIO_CR_ATA_DIAG_IDLE" value="0x100" grade="established"/>
   <constant name="SIO_CR_CMD_PULSE" value="0xf" grade="established"/>
   <constant name="SIO_CR_SIO_DIAG_IDLE" value="0x80" grade="established"/>
-  <constant name="SIO_IR_SRC_UART_0" value="0x40" grade="inferred"/>
-  <constant name="SIO_IR_SRC_UART_1" value="0x4000" grade="inferred"/>
-  <constant name="SIO_IR_SRC_UART_2" value="0x400000" grade="inferred"/>
-  <constant name="SIO_IR_SRC_UART_3" value="0x40000000" grade="inferred"/>
+  <constant name="SIO_IR_SRC_UART_0" value="0x40" grade="established"/>
+  <constant name="SIO_IR_SRC_UART_1" value="0x4000" grade="established"/>
+  <constant name="SIO_IR_SRC_UART_2" value="0x400000" grade="established"/>
+  <constant name="SIO_IR_SRC_UART_3" value="0x40000000" grade="established"/>
 </genxml>

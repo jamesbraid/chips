@@ -305,6 +305,33 @@ exists. The PIC and Bedrock side of IP35 is in [../pic/README.md](../pic/README.
 | ATA DMA words | 32-bit stores at indices 1, 2 and 8 and at 7 (the accessor is named for a byte, but on this part it stores the whole word) in `xide_pktDMA_start`; reads of 5, 6 and 7 in `xide_pktDMA_complete` | `IOC4_DMA_PTR_L 1`, `PTR_H 2`, `DMA_CTRL 7`, `BC_DEV 5`, `BC_MEM 6`, `ADDR_H 4`, `TIMING 0` | agree on 1, 2, 5, 6 and 7; IRIX also writes index 8, which is not in the names read; indices 0 and 4 are not touched on this chip |
 | DMA error read of index 4 | `xide_intr_clear` reads index 4 after index 0 and only prints it, labelled the high word | high word is at `0x4` (index 1) | **differ**; the read has no effect except a debug line, so the contract is unaffected (the routine is read in full) |
 
+## Against SGI's Altix Linux code (linux-5.3 pin 4d856f72c10e)
+
+SGI wrote the Linux IOC4 driver for its Altix I/O boards, where the chip sits behind a PIC. Under the evidence rule for the
+Altix generation (SGI's own platform code defines what it declares) the names and layouts below are established as
+software definitions, never as measurements of silicon. Files read in full: `include/linux/ioc4.h` (the
+miscellaneous register block), `drivers/misc/ioc4.c` (the master driver), and the register definitions and attach path
+of `drivers/tty/serial/ioc4_serial.c`.
+
+| point | this page | SGI Linux v5.3 | result |
+|---|---|---|---|
+| register block extent | window 0 from `0x0`, 928 bytes | `struct ioc4_misc_regs` covers `0x0` to `0x5c`: error address low and high, serial and other interrupt status, enable set and clear pairs, control, one unused word at `0x24`, external interrupt output at `0x28`, an unused word at `0x2c`, pin control set and clear, **pin data at `0x38`**, an unused word at `0x3c`, eight pin words from `0x40` | agree on every offset; `0x38` gains the name `gpdr` (register entry `gpdr` in the extra unit); `0x24`, `0x2c` and `0x3c` are unused in the SGI header (the IRIX bus-speed use of `0x24` is not in any SGI Linux file) |
+| attach order | clear all enables, acknowledge both status words, write `0x146` to the command word | `ioc4_probe`: enable device and bus master (memory and master bits), then set parity-error and system-error response in the command word, then write all ones to other and serial enable-clear, then all ones to other and serial status | agree; `0x146` is the three bits Linux sets by two routes (`0x140` explicit, `0x6` through enable and master): inferred equal |
+| control word | `ioc4_attach` stores `0xf` to `0x20` | `ioc4_serial.c` stores `0xf << 0` to the control word on attach | agree; the field is `cmd_pulse`, bits 3:0, the byte-bus strobe width |
+| pin control | `ioc4_attach` stores `0x30` to the set word; the PROM stores `0x1000f0` | `ioc4_serial.c` sets direction bits 7:4 (`0xf0`) for the four transceiver-select pins; `ioc4_clock_calibrate` sets direction bit 0 and bit 20 | the PROM value is direction `0xf0` plus bit 20 (`GPCR_INT_OUT_EN`), the same pins as Linux; the IRIX kernel value `0x30` sets only pins 4 and 5, which is narrower than Linux's four (not a conflict: the kernel serial driver there may set the other two elsewhere; not read). Pin roles are now established (`GPIO_PIN_*` constants) |
+| transceiver select | pin number byte 4 to 7 per port, 0 or 1 written to `0x40 + 4n` | `ioc4_set_proto` writes 0 (RS-232) or 1 (RS-422) to pin word `rs422_select_pin`, pins 4 to 7 | agree, and the 0 and 1 senses are now established |
+| other interrupt bits | bit 6 keyboard and mouse (OpenBSD); IRIX writes `0xff800000` to acknowledge in the external-interrupt attach | `ioc4_other_int`: bit 0 ATA pass-through, 1 ATA memory error, 5:2 one serial memory error per port, 6 keyboard and mouse, 22:7 reserved, 23 external-interrupt output latch, 31:24 generic pins | agree on bit 6; the IRIX value is exactly bits 31:23, the latch plus the eight pin interrupts, so the external-interrupt attach acknowledges the output section and every pin; `OTHER_IR_*` constants carry the layout |
+| serial interrupt bits | four UART pass-through bits at `0x40`, `0x4000`, `0x400000`, `0x40000000` (inferred from OpenBSD) | each port owns one byte: bit 0 TX empty, 1 RX full, 2 RX high-water, 3 RX timer, 4 delta DCD, 5 delta CTS, **6 pass-through**, 7 explicit TX complete | the four bits are the pass-through bit of each port byte: **inferred upgraded to established** for the role (`SIO_IR_SRC_UART_n`) |
+| external interrupt output | count 15:0, mode 18:16 with 7 toggle, bit 30 diagnostic, bit 31 value | `ioc4_clock_calibrate`: sets direction bit 0 and bit 20 in the pin control word, writes zero to the output word, then count 63 with mode 7, and polls bit 31 for rising edges over 256 cycles; one count tick is 520 PCI clocks and a half cycle lasts count plus 1 ticks | agree; new established facts: the tick length (`EXTINT_COUNT_DIVISOR`), that bit 31 reads back the live output, and that writing zero is how the driver returns the block to its power-on state |
+| card variants | none | `ioc4_variant` names three boards by what shares the bus: a QLogic ISP12160 at PCI slot 3 on the same bus (IO9), a Vitesse VSC7174 at slot 3 (IO10), neither (PCI-RT, with no ATA or SCSI function wired); the id table also matches PCI class code `0x0b4000` | new; which Altix or Origin products carry which board is not stated in the code. The IRIX serial and ATA paths do not branch on any of this. |
+| serial ring base | high word then low word ORed with 1 | writes the high word then the low word ORed with `IOC4_SBBR_L_SIZE` for 4 KB rings | agree (also stated above) |
+| error address, master field | bit 1 RX or TX word, bits 4:2 port number, ATA test `(low & 0x1e) == 8` | `master_id` bits 4:1: 0 and 1 serial port 0 TX and RX, up to 6 and 7 for port 3, **8 ATA**, 9 to 15 undefined | **question** ([Altix I/O cross-check questions](../../questions/altix-io-sn2-cross-check.md#ioc4-error-master-id)): the Linux table agrees with IRIX on port and word but puts the ATA master at field value 8, which is `(low & 0x1e) == 0x10`, where the IRIX test compares with 8 (serial port 2 TX in the Linux table) |
+| DMA byte swap | IRIX leaves Device bit 19 clear; earlier 2.4 Linux asked the PIC to swap | v5.3 `ioc4.c` and `sgiioc4.c` carry no endian call; the PIC provider only turns the swap bit on in a 32-bit mapped address when the Device register it was given by the PROM already has bit 19 set, and never sets the 64-bit swap attribute | agrees with the section below that the sense is a PROM-owned Device register value the kernel does not choose; what the Altix PROM programs for an IOC4 slot is unknown |
+
+Unchanged by the files read here: the keyboard and mouse registers (none of them drives these), the reset values, and
+the field behaviour behind every `cmd_pulse` and `diag` name. The ATA block was compared against `sgiioc4.c` in the
+previous section.
+
 ## IOC4 behind a PIC: how its DMA bytes are numbered (public Linux)
 
 Labels as above. Question: does the IOC4 take its DMA bytes in plain address order, or does it number them as an IOC3
@@ -368,5 +395,7 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
 - **`ioc4_error_handler` and `ioc4_intr`/`ioc4_intrd`** are read for their accesses only.
 - **Interrupt dispatch**: which `sio_ir` and `other_ir` bits each handler claims is not read.
 - **Keyboard and mouse control bits 2, 3, 14 and 15**: names only (see Keyboard and mouse). Their behaviour is not settled by any source here.
-- **Serial pass-through bits**: the OpenBSD driver names the register word as the serial enable pair. That the chip treats them as UART
-  passthrough interrupts is the driver's comment only. A published register description would settle it.
+- **Serial pass-through bits**: the role is now established by the SGI header (`intr_pass`, bit 6 of each port byte; see the
+  section on SGI's Altix Linux code). Open: whether the chip raises the bit from the UART interrupt level or latches it; a
+  published register description would settle it.
+- **Error address master field**: [Altix I/O cross-check questions](../../questions/altix-io-sn2-cross-check.md#ioc4-error-master-id).
