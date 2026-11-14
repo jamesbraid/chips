@@ -27,6 +27,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `cpu_enable_b` | 0x58 | rw | 64 |  |  | 0x1 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `nmi_a` | 0x70 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `nmi_b` | 0x78 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `ipi_a` | 0x80 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `ipi_b` | 0x88 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `int_pend_mod` | 0x90 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `int_pend0` | 0x98 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `int_pend1` | 0xa0 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
@@ -206,6 +208,14 @@ A write issues a non-maskable interrupt to CPU A. The header gives no predicate 
 ### Register `nmi_b`
 
 A write issues a non-maskable interrupt to CPU B. The header gives no predicate on the written value, no latch behaviour and no reset value.
+
+### Register `ipi_a`
+
+Inter-processor interrupt delivery for the Itanium processor in slot A of this interface (IA-64 nodes only). A store of (delivery mode << 8) | vector, 64 bits wide, raises that vector on the processor. The Linux code stores to this offset of PI0 for slice 0 and PI1 for slice 2, from the node's hub register window. The MIPS headers do not define the offset and no MIPS software is known to use it. The register's reset, read behaviour and any mode beyond the written value are unknown.
+
+### Register `ipi_b`
+
+Inter-processor interrupt delivery for the Itanium processor in slot B of this interface (IA-64 nodes only), same use as ipi_a: slice 1 on PI0, slice 3 on PI1.
 
 ### Register `int_pend_mod`
 

@@ -57,6 +57,12 @@
   <struct name="NMI_B" size="8" grade="established" from="Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts" register="yes" offset="0x78" access="w" reset="unknown">
     <doc>A write issues a non-maskable interrupt to CPU B. The header gives no predicate on the written value, no latch behaviour and no reset value.</doc>
   </struct>
+  <struct name="IPI_A" size="8" grade="established" from="Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts" register="yes" offset="0x80" access="w" reset="unknown">
+    <doc>Inter-processor interrupt delivery for the Itanium processor in slot A of this interface (IA-64 nodes only). A store of (delivery mode &lt;&lt; 8) | vector, 64 bits wide, raises that vector on the processor. The Linux code stores to this offset of PI0 for slice 0 and PI1 for slice 2, from the node's hub register window. The MIPS headers do not define the offset and no MIPS software is known to use it. The register's reset, read behaviour and any mode beyond the written value are unknown.</doc>
+  </struct>
+  <struct name="IPI_B" size="8" grade="established" from="Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts" register="yes" offset="0x88" access="w" reset="unknown">
+    <doc>Inter-processor interrupt delivery for the Itanium processor in slot B of this interface (IA-64 nodes only), same use as ipi_a: slice 1 on PI0, slice 3 on PI1.</doc>
+  </struct>
   <struct name="INT_PEND_MOD" size="8" grade="established" from="Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts" register="yes" offset="0x90" access="w" reset="unknown">
     <doc>Sets or clears one bit of an interrupt pending bank. It is the only pending-register write an I/O-issued write may make, and I/O protect checks it. Processor writes are checked against CPU protect. The header gives no reset value.</doc>
     <field name="ipm_value" start="8" size="1" type="uint" grade="established"/>

@@ -171,6 +171,22 @@ width = 64
 grade = "established"
 doc = "A write issues a non-maskable interrupt to CPU B. The header gives no predicate on the written value, no latch behaviour and no reset value."
 
+[registers.ipi_a]
+offset = 0x80
+access = "w"
+width = 64
+grade = "established"
+from = "Linux ia64 SN1 (v2.5.0 snapshot): arch/ia64/sn/sn1/smp.c, sn1_send_IPI; not defined in the SN1 register headers"
+doc = "Inter-processor interrupt delivery for the Itanium processor in slot A of this interface (IA-64 nodes only). A store of (delivery mode << 8) | vector, 64 bits wide, raises that vector on the processor. The Linux code stores to this offset of PI0 for slice 0 and PI1 for slice 2, from the node's hub register window. The MIPS headers do not define the offset and no MIPS software is known to use it. The register's reset, read behaviour and any mode beyond the written value are unknown."
+
+[registers.ipi_b]
+offset = 0x88
+access = "w"
+width = 64
+grade = "established"
+from = "Linux ia64 SN1 (v2.5.0 snapshot): arch/ia64/sn/sn1/smp.c, sn1_send_IPI; not defined in the SN1 register headers"
+doc = "Inter-processor interrupt delivery for the Itanium processor in slot B of this interface (IA-64 nodes only), same use as ipi_a: slice 1 on PI0, slice 3 on PI1."
+
 [registers.int_pend_mod]
 offset = 0x90
 access = "w"

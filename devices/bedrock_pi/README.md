@@ -42,6 +42,12 @@ Mapped uncached accesses, the region-present register and the Hub memory configu
 - The NMI registers raise a non-maskable interrupt to their processor when written. The header gives no predicate on the
   written value and no latch behaviour, so what a given stored value does is unknown.
 
+- IA-64 view (established, from SGI's Linux port for the Itanium node, Linux v2.5.0 and v2.5.40; see
+  [platforms/sn1-ia64](../../platforms/sn1-ia64/README.md)): the two processors of an interface are Itaniums on one
+  front-side bus behind a Synergy ASIC, and the port's slice number is `interface << 1 | slot`, the same two bits the CPU
+  number register reports. Inter-processor interrupts there are 64-bit stores to `ipi_a` (`0x80`) and `ipi_b` (`0x88`), which
+  the register headers do not define; they are listed in the registers file with that source.
+
 ## Protection and regions
 
 - The CPU protection register has one bit per region. A denied access to a local register gets an error reply to a

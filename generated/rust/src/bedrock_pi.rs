@@ -202,6 +202,16 @@ pub mod nmi_b {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x78;
 }
+/// Inter-processor interrupt delivery for the Itanium processor in slot A of this interface (IA-64 nodes only). A store of (delivery mode << 8) | vector, (established)
+pub mod ipi_a {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x80;
+}
+/// Inter-processor interrupt delivery for the Itanium processor in slot B of this interface (IA-64 nodes only), same use as ipi_a: slice 1 on PI0, slice  (established)
+pub mod ipi_b {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x88;
+}
 /// Sets or clears one bit of an interrupt pending bank. It is the only pending-register write an I/O-issued write may make, and I/O protect checks it. Pr (established)
 pub mod int_pend_mod {
     pub const WIDTH: u32 = 64;

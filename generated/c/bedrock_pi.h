@@ -130,6 +130,18 @@
 #define BEDROCK_PI_NMI_B                             0x000078 /* established */
 
 /*
+ * Inter-processor interrupt delivery for the Itanium processor in slot A of this interface (IA-64 nodes only). A store of (delivery mode << 8) | vector, 64 bits wide, raises that vector on the processor. The Linux code stores to this offset of PI0 for slice 0 and PI1 for slice 2, from the node's hub register window. The MIPS headers do not define the offset and no MIPS software is known to use it. The register's reset, read behaviour and any mode beyond the written value are unknown.
+ */
+/* ipi_a: w64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+#define BEDROCK_PI_IPI_A                             0x000080 /* established */
+
+/*
+ * Inter-processor interrupt delivery for the Itanium processor in slot B of this interface (IA-64 nodes only), same use as ipi_a: slice 1 on PI0, slice 3 on PI1.
+ */
+/* ipi_b: w64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+#define BEDROCK_PI_IPI_B                             0x000088 /* established */
+
+/*
  * Sets or clears one bit of an interrupt pending bank. It is the only pending-register write an I/O-issued write may make, and I/O protect checks it. Processor writes are checked against CPU protect. The header gives no reset value.
  */
 /* int_pend_mod: w64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
