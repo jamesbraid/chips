@@ -4,6 +4,8 @@ How an Altix (SN2) processor, SHub or TIO forms and decodes an address: the node
 
 The shape is the same family as the Origin 3000's Bedrock node (a NASID in the high bits, a per-node offset below it), but the field positions, the window offsets and the chip are different; do not carry Bedrock numbers over ([ip35 address map notes](../ip35/nasid-numbering.md) are a separate machine). See [../../devices/shub/README.md](../../devices/shub/README.md) for the chip.
 
+**PROM view.** The SHub 2 first-stage firmware uses the local MMR window (`0x2_0000_0000 + offset`, with bit 63 set for uncached access in physical mode) and, for the fabric accessor, the global window (`0x3_0000_0000`); the SHub 1 firmware uses `0x80_0000_0000 + offset`. `SN_SAL_GET_SN_INFO` in the SHub 2 build computes the NASID width and shift from the register at `0x2_2011_0000`: mask `(1 << (V + 10)) - 1`, shift `40 - V` (read in full; what V is on hardware is unknown): [software/firmware/snprom](../../software/firmware/snprom/README.md).
+
 ## What software is told, and what it assumes
 
 The kernel does not hard-code the node number field. It asks firmware once per CPU (SAL call `SN_SAL_GET_SN_INFO`, see [../../software/sal/README.md](../../software/sal/README.md)) and keeps the answer in a small per-CPU record:
