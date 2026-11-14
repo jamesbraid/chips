@@ -70,6 +70,16 @@ documentation of intent, graded established for what SGI says each image is for;
 machine is not yet shown. So the newest SHub 1 image held, SAL 5.04 from snprom 10.54, is the firmware for the Altix 350
 and both Prism variants. The 3.x and 4.x packages predate the README and name no machine.
 
+Published boot logs from real machines support the SHub 1 lineage. Two serial-console logs from an SGI Prism (one node,
+two processors, about 8 GB), posted on the irixnet forum, thread 849, post 12, on 2019-01-27
+(<https://forums.irixnet.org/thread-849.html>), both print EFI version 1.10, "SGI SAL version 4.65" with the SAL
+revision 3.2 header, the SAL platform feature ITC_Drift, the console `ttySG0` as an "SGI SN L1", and ACPI tables with
+OEM table ids XSDTSN2, APICSN2, SRATSN2, SLITSN2, FACPSN2 and DSDTSN2. Neither prints a PROM banner, SHub revision or
+board number. Established as an observation of that machine. SAL 4.65 is a SHub 1 build number in the same series as
+the held images (4.43 and 4.90); the 4.65 image itself is not held. An Altix 350 owner's notes on
+<https://nsafran.com/> state SHub 1.2 and SAL 4.56 for a one-node, two-processor machine; that is the owner's
+statement, not a captured log, so it is graded inferred.
+
 Still held but not extracted: snprom 4.04, 4.20 build 41216, 4.31 to 4.33 and the other 10.x builds. The Prism disk image
 held turned out to be a recent community Linux build for IA-64, not a factory system, and carries no SGI firmware.
 
