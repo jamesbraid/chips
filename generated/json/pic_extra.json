@@ -5,11 +5,436 @@
  "rows": [
   {
    "unit": "pic_extra",
+   "kind": "register",
+   "name": "wid_stat",
+   "offset": 8,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "wid_err_upper",
+   "offset": 16,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "wid_int_upper",
+   "offset": 48,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "wid_tst_pin_ctrl",
+   "offset": 112,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "pci_err_upper",
+   "offset": 208,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "buf_addr_match",
+   "offset": 768,
+   "access": "rw",
+   "width": 64,
+   "count": 32,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "buf_flush_w_touch",
+   "offset": 1024,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 64,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "buf_flush_wo_touch",
+   "offset": 1032,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 64,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "buf_inflight",
+   "offset": 1040,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 64,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "buf_prefetch",
+   "offset": 1048,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 64,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "buf_total_pci_retry",
+   "offset": 1056,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 64,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "buf_max_pci_retry",
+   "offset": 1064,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 64,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "buf_max_latency",
+   "offset": 1072,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 64,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "buf_clear_all",
+   "offset": 1080,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 64,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "pcix_timeout",
+   "offset": 1592,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "pcix_read_buf_addr",
+   "offset": 2560,
+   "access": "rw",
+   "width": 64,
+   "count": 16,
+   "stride": 16,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "pcix_read_buf_attr",
+   "offset": 2568,
+   "access": "rw",
+   "width": 64,
+   "count": 16,
+   "stride": 16,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "pcix_write_buf_addr",
+   "offset": 2816,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 32,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "pcix_write_buf_attr",
+   "offset": 2824,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 32,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "pcix_write_buf_valid",
+   "offset": 2832,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 32,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "register",
+   "name": "int_ate_mp",
+   "offset": 73728,
+   "access": "rw",
+   "width": 64,
+   "count": 1024,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "ATE_ADDR_SHIFT",
+   "value": 12,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "ATE_BARRIER",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "ATE_COHERENT",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "ATE_MSI",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "ATE_PREFETCH",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "ATE_TARGET_SHIFT",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "ATE_VALID",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "CFG_TYPE0_BASE",
+   "value": 131072,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "CFG_TYPE1_BASE",
+   "value": 163840,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "CONTROL_PAGE_SIZE_16K",
+   "value": 2097152,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
    "kind": "constant",
    "name": "DEVICE_SWAP_DIRECT",
    "value": 524288,
    "count": 1,
    "grade": "inferred"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "DIRECT64_ATTR_BARRIER",
+   "value": 72057594037927936,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "DIRECT64_ATTR_PRECISE",
+   "value": 288230376151711744,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "DIRECT64_ATTR_PREFETCH",
+   "value": 576460752303423488,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "DIRECT64_ATTR_SWAP",
+   "value": 36028797018963968,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "DIRECT64_ATTR_TARGET_SHIFT",
+   "value": 60,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "DIRECT64_ATTR_VIRTUAL",
+   "value": 144115188075855872,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "DIRECT64_ATTR_VIRTUAL1",
+   "value": 18014398509481984,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "HOST_INTR_ADDR_MASK",
+   "value": 281474976710655,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "INTR_FLUSH_WAIT_VALUE",
+   "value": 271,
+   "count": 1,
+   "grade": "established"
   },
   {
    "unit": "pic_extra",
@@ -32,6 +457,46 @@
    "kind": "constant",
    "name": "INTR_RESET_MULTIPLE_CLEAR",
    "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "PCI32_DIRECT_BASE",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "PCI32_MAPPED_BASE",
+   "value": 1073741824,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "PCI32_MAPPED_SWAP",
+   "value": 536870912,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "PCIX_SPECIAL_CYCLE_BASE",
+   "value": 262144,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "PCI_IACK_BASE",
+   "value": 196608,
    "count": 1,
    "grade": "established"
   }

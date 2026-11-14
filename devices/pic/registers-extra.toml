@@ -7,8 +7,232 @@ public_from = ["census:"]
 [c]
 offset_macro = "bare"
 
+[registers.wid_stat]
+offset = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Widget status, the second word of the standard widget configuration block (`p_wid_stat`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.wid_err_upper]
+offset = 0x10
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Widget error address, upper word (`p_wid_err_upper`); the lower word is the census register `bus_err`. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.wid_int_upper]
+offset = 0x30
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Widget interrupt destination, upper word (`p_wid_int_upper`); the lower word is the census register `intr_dst_target_id`. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.wid_tst_pin_ctrl]
+offset = 0x70
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Test pin control (`p_wid_tst_pin_ctrl`), the one slot of the bridge-specific block between the response words and the address-lock error register. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.pci_err_upper]
+offset = 0xd0
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "PCI bus error address, upper word (`p_pci_err_upper`); the lower word is the census register `pci_bus_addr`. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.buf_addr_match]
+offset = 0x300
+count = 32
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Buffer address match registers: sixteen pairs, upper word then lower word, sixteen bytes per pair (`p_buf_addr_match[n].upper` and `.lower`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.buf_flush_w_touch]
+offset = 0x400
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Performance monitor block n, word 0 (`p_buf_count[n].flush_w_touch`): eight blocks of eight words, 0x40 bytes apart. The header comment marks them even-numbered buffers only. The register names are the only description. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.buf_flush_wo_touch]
+offset = 0x408
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Performance monitor block n, word 1 (`flush_wo_touch`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.buf_inflight]
+offset = 0x410
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Performance monitor block n, word 2 (`inflight`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.buf_prefetch]
+offset = 0x418
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Performance monitor block n, word 3 (`prefetch`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.buf_total_pci_retry]
+offset = 0x420
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Performance monitor block n, word 4 (`total_pci_retry`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.buf_max_pci_retry]
+offset = 0x428
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Performance monitor block n, word 5 (`max_pci_retry`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.buf_max_latency]
+offset = 0x430
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Performance monitor block n, word 6 (`max_latency`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.buf_clear_all]
+offset = 0x438
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Performance monitor block n, word 7 (`clear_all`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.pcix_timeout]
+offset = 0x638
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "PCI-X timeout (`p_pcix_timeout`), the eighth word of the PCI-X register block that follows the seven census registers. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.pcix_read_buf_addr]
+offset = 0xa00
+count = 16
+stride = 0x10
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "PCI-X read buffer n, address word (`p_pcix_read_buf_64[n].p_buf_addr`); the attribute word of the same buffer follows it. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.pcix_read_buf_attr]
+offset = 0xa08
+count = 16
+stride = 0x10
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "PCI-X read buffer n, attribute word (`p_buf_attr`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.pcix_write_buf_addr]
+offset = 0xb00
+count = 8
+stride = 0x20
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "PCI-X write buffer n, address word (`p_pcix_write_buf_64[n].p_buf_addr`); the attribute, valid and one unused word follow at eight-byte steps. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.pcix_write_buf_attr]
+offset = 0xb08
+count = 8
+stride = 0x20
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "PCI-X write buffer n, attribute word (`p_buf_attr`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.pcix_write_buf_valid]
+offset = 0xb10
+count = 8
+stride = 0x20
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "PCI-X write buffer n, valid word (`p_buf_valid`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
+[registers.int_ate_mp]
+offset = 0x12000
+count = 1024
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pic.h (struct pic)"
+doc = "Second copy of the internal translation entries with manual parity generation (`p_int_ate_ram_mp`); the census register `int_ate` is the automatic-parity copy. No IRIX routine reaches this range. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown."
+
 [constants]
 INTR_PCI_MASTER_TIMEOUT = { value = 0x800, grade = "established", doc = "bit 11 of the interrupt status register (0x100) and of the error view (0x170). The view records a master timeout whether or not the enable bit is set; status records it only when bit 11 of the enable register (0x108) is also set. An unclaimed configuration cycle is the usual source (inferred, see devices/pic/facts-outside-census.md)" }
 INTR_PCIX_MASTER_TIMEOUT = { value = 0x400000000, grade = "established", doc = "bit 34 of the interrupt status register (0x100), the PCI-X master timeout. Which bit a bus in PCI-X mode sets for an unclaimed configuration cycle is not stated by any source read (unknown)" }
 INTR_RESET_MULTIPLE_CLEAR = { value = 0x40, grade = "established", doc = "bit 6 of the reset register (0x110), the multiple-error clear. Bits 8:7 and 5:0 have no PIC field. A one written at an error bit's own position clears that bit and rearms the error registers, and any write to 0x110 also clears the error view" }
 DEVICE_SWAP_DIRECT = { value = 0x80000, grade = "inferred", doc = "bit 19 of the device register (0x200 plus 8n), named swap_direct in the public PIC header. Set selects the address-preserving byte map for the 32-bit direct window; clear selects the lane-preserving map. The bit position comes from the public SN2 driver's byte-stream flag mapping onto this bit; no PIC measurement confirms the lane sense (open question in open-questions.md)" }
+
+# ---- constants from SGI Linux v5.3 PCI bridge provider (arch/ia64/include/asm/sn/pcibr_provider.h, pic.h; arch/ia64/sn/pci/pcibr/)
+CONTROL_PAGE_SIZE_16K = { value = 0x200000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCIBR_CTRL_PAGE_SIZE) and pcibr_provider.c (pcibr_bus_fixup)", doc = "Bit 21 of the control register: translation page size. The kernel clears it for 4 KiB I/O pages and sets it when its page size is 16 KiB or more. The shipped IRIX attach sets it unconditionally, which agrees with 16 KiB pages." }
+ATE_VALID = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI32_ATE_V)", doc = "Bit 0 of an internal translation entry: valid." }
+ATE_COHERENT = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI32_ATE_CO, comment PIC ASIC ONLY)", doc = "Bit 1 of a translation entry on the PIC: coherent. The same bit position is the programmed-I/O bit on the TIOCP." }
+ATE_MSI = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI32_ATE_MSI) and pcibr_dma.c (pcibr_dmamap_ate32)", doc = "Bit 2: the mapping is for a message-signalled interrupt write." }
+ATE_PREFETCH = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI32_ATE_PREF) and pcibr_dma.c", doc = "Bit 3: prefetch. The kernel clears it in PCI-X mode because prefetch is not supported there." }
+ATE_BARRIER = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI32_ATE_BAR)", doc = "Bit 4: barrier, requested for consistent (coherent-memory) mappings." }
+ATE_TARGET_SHIFT = { value = 8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (PIC_ATE_TARGETID_SHFT) and pcibr_dma.c", doc = "Shift of the target widget number in a PIC translation entry: the kernel ORs the hub's Crosstalk widget id left by 8. Entry bits from 12 up carry the page address (shift PCI32_ATE_ADDR_SHFT 12)." }
+ATE_ADDR_SHIFT = { value = 12, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI32_ATE_ADDR_SHFT)", doc = "Translation entry bit 12 is the lowest page-address bit; the kernel stores the page-aligned address in place with the low bits as flags, whatever the I/O page size." }
+DIRECT64_ATTR_TARGET_SHIFT = { value = 60, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (PIC_PCI64_ATTR_TARG_SHFT) and pcibr_dma.c (pcibr_dmatrans_direct64)", doc = "Shift of the target widget number in a 64-bit direct PCI address. Same placement as the other PIC page, now also named by the SGI Altix provider." }
+DIRECT64_ATTR_PREFETCH = { value = 0x800000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI64_ATTR_PREF)", doc = "Bit 59 of a 64-bit direct address: prefetch. Cleared by the kernel in PCI-X mode. Used for streaming mappings." }
+DIRECT64_ATTR_PRECISE = { value = 0x400000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI64_ATTR_PREC)", doc = "Bit 58: precise. Defined; no SGI Altix provider code read sets it." }
+DIRECT64_ATTR_VIRTUAL = { value = 0x200000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI64_ATTR_VIRTUAL) and pcibr_dma.c", doc = "Bit 57: second virtual channel. In conventional PCI mode the kernel sets it for every function except function 0, so function 0 uses channel 0 and other functions channel 1. Not set in PCI-X mode." }
+DIRECT64_ATTR_BARRIER = { value = 0x100000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI64_ATTR_BAR) and pcibr_dma.c (pcibr_dma_map_consistent)", doc = "Bit 56: barrier. Set for consistent mappings." }
+DIRECT64_ATTR_SWAP = { value = 0x80000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI64_ATTR_SWAP)", doc = "Bit 55: byte swap. Defined, but no SGI Altix provider code read ever sets it." }
+DIRECT64_ATTR_VIRTUAL1 = { value = 0x40000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI64_ATTR_VIRTUAL1)", doc = "Bit 54: defined next to the virtual-channel bit; no provider code read sets it." }
+PCI32_MAPPED_BASE = { value = 0x40000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI32_MAPPED_BASE, IS_PCI32_MAPPED)", doc = "Start of the translated 32-bit window: PCI addresses from here up to PCI32_DIRECT_BASE go through the internal translation entries, index (address minus base) shifted by the I/O page shift." }
+PCI32_DIRECT_BASE = { value = 0x80000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (PCI32_DIRECT_BASE) and pcibr_dma.c (pcibr_dmatrans_direct32)", doc = "Start of the 2 GiB direct-mapped 32-bit window, offset from the base the direct-map register holds. Not used in PCI-X mode." }
+PCI32_MAPPED_SWAP = { value = 0x20000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_provider.h (ATE_SWAPSHIFT 29, ATE_SWAP_ON) and pcibr_dma.c (pcibr_dmamap_ate32)", doc = "Bit 29 of a translated-window PCI address: the kernel sets it only when the device's Device register copy it was handed already has the swap bit (bit 19) set." }
+HOST_INTR_ADDR_MASK = { value = 0xffffffffffff, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (PIC_HOST_INTR_ADDR)", doc = "Mask of the destination address field of a per-pin interrupt address register, 48 bits. The kernel clears this field and ORs the new address in; the TIOCP uses a 54-bit field." }
+INTR_FLUSH_WAIT_VALUE = { value = 0x10f, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pcibr_dma.c (sn_dma_flush)", doc = "The value the kernel's read-ordering flush waits to see at the memory word it armed as an interrupt target after forcing a pin interrupt. As a packet shape, 0x100 plus vector 0x0f, it matches the shape the shipped IRIX path is inferred to wait for; the kernel names no meaning for bit 8." }
+CFG_TYPE0_BASE = { value = 0x20000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (p_type0_cfg_dev[8])", doc = "Base of eight type-0 configuration windows of 0x1000 bytes each (eight functions of 0x100 bytes). Internal device n is reached through window n + 1 because the PIC takes device 0: the first device sits one window up. The kernel derives the internal device as PCI slot minus 1." }
+CFG_TYPE1_BASE = { value = 0x28000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (p_type1_cfg)", doc = "Base of the 0x1000-byte type-1 configuration window." }
+PCI_IACK_BASE = { value = 0x30000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (p_pci_iack)", doc = "Eight-byte PCI interrupt acknowledge cycle window. No code read uses it." }
+PCIX_SPECIAL_CYCLE_BASE = { value = 0x40000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (p_pcix_cycle)", doc = "Eight-byte PCI-X special cycle window. No code read uses it." }

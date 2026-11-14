@@ -1,8 +1,95 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/pic/registers-extra.toml by defs-gen - do not edit, change the source -->
 <genxml unit="pic_extra" prefix="PIC" title="PIC bits outside the census">
+  <struct name="WID_STAT" size="8" grade="established" register="yes" offset="0x8" access="rw" reset="unknown">
+    <doc>Widget status, the second word of the standard widget configuration block (`p_wid_stat`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="WID_ERR_UPPER" size="8" grade="established" register="yes" offset="0x10" access="rw" reset="unknown">
+    <doc>Widget error address, upper word (`p_wid_err_upper`); the lower word is the census register `bus_err`. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="WID_INT_UPPER" size="8" grade="established" register="yes" offset="0x30" access="rw" reset="unknown">
+    <doc>Widget interrupt destination, upper word (`p_wid_int_upper`); the lower word is the census register `intr_dst_target_id`. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="WID_TST_PIN_CTRL" size="8" grade="established" register="yes" offset="0x70" access="rw" reset="unknown">
+    <doc>Test pin control (`p_wid_tst_pin_ctrl`), the one slot of the bridge-specific block between the response words and the address-lock error register. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCI_ERR_UPPER" size="8" grade="established" register="yes" offset="0xd0" access="rw" reset="unknown">
+    <doc>PCI bus error address, upper word (`p_pci_err_upper`); the lower word is the census register `pci_bus_addr`. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_ADDR_MATCH" size="8" grade="established" register="yes" offset="0x300" access="rw" count="32" stride="8" reset="unknown">
+    <doc>Buffer address match registers: sixteen pairs, upper word then lower word, sixteen bytes per pair (`p_buf_addr_match[n].upper` and `.lower`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_FLUSH_W_TOUCH" size="8" grade="established" register="yes" offset="0x400" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor block n, word 0 (`p_buf_count[n].flush_w_touch`): eight blocks of eight words, 0x40 bytes apart. The header comment marks them even-numbered buffers only. The register names are the only description. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_FLUSH_WO_TOUCH" size="8" grade="established" register="yes" offset="0x408" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor block n, word 1 (`flush_wo_touch`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_INFLIGHT" size="8" grade="established" register="yes" offset="0x410" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor block n, word 2 (`inflight`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_PREFETCH" size="8" grade="established" register="yes" offset="0x418" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor block n, word 3 (`prefetch`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_TOTAL_PCI_RETRY" size="8" grade="established" register="yes" offset="0x420" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor block n, word 4 (`total_pci_retry`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_MAX_PCI_RETRY" size="8" grade="established" register="yes" offset="0x428" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor block n, word 5 (`max_pci_retry`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_MAX_LATENCY" size="8" grade="established" register="yes" offset="0x430" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor block n, word 6 (`max_latency`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_CLEAR_ALL" size="8" grade="established" register="yes" offset="0x438" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor block n, word 7 (`clear_all`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_TIMEOUT" size="8" grade="established" register="yes" offset="0x638" access="rw" reset="unknown">
+    <doc>PCI-X timeout (`p_pcix_timeout`), the eighth word of the PCI-X register block that follows the seven census registers. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_READ_BUF_ADDR" size="8" grade="established" register="yes" offset="0xa00" access="rw" count="16" stride="16" reset="unknown">
+    <doc>PCI-X read buffer n, address word (`p_pcix_read_buf_64[n].p_buf_addr`); the attribute word of the same buffer follows it. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_READ_BUF_ATTR" size="8" grade="established" register="yes" offset="0xa08" access="rw" count="16" stride="16" reset="unknown">
+    <doc>PCI-X read buffer n, attribute word (`p_buf_attr`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_WRITE_BUF_ADDR" size="8" grade="established" register="yes" offset="0xb00" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PCI-X write buffer n, address word (`p_pcix_write_buf_64[n].p_buf_addr`); the attribute, valid and one unused word follow at eight-byte steps. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_WRITE_BUF_ATTR" size="8" grade="established" register="yes" offset="0xb08" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PCI-X write buffer n, attribute word (`p_buf_attr`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_WRITE_BUF_VALID" size="8" grade="established" register="yes" offset="0xb10" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PCI-X write buffer n, valid word (`p_buf_valid`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="INT_ATE_MP" size="8" grade="established" register="yes" offset="0x12000" access="rw" count="1024" stride="8" reset="unknown">
+    <doc>Second copy of the internal translation entries with manual parity generation (`p_int_ate_ram_mp`); the census register `int_ate` is the automatic-parity copy. No IRIX routine reaches this range. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
+  </struct>
+  <constant name="ATE_ADDR_SHIFT" value="0xc" grade="established"/>
+  <constant name="ATE_BARRIER" value="0x10" grade="established"/>
+  <constant name="ATE_COHERENT" value="0x2" grade="established"/>
+  <constant name="ATE_MSI" value="0x4" grade="established"/>
+  <constant name="ATE_PREFETCH" value="0x8" grade="established"/>
+  <constant name="ATE_TARGET_SHIFT" value="0x8" grade="established"/>
+  <constant name="ATE_VALID" value="0x1" grade="established"/>
+  <constant name="CFG_TYPE0_BASE" value="0x20000" grade="established"/>
+  <constant name="CFG_TYPE1_BASE" value="0x28000" grade="established"/>
+  <constant name="CONTROL_PAGE_SIZE_16K" value="0x200000" grade="established"/>
   <constant name="DEVICE_SWAP_DIRECT" value="0x80000" grade="inferred"/>
+  <constant name="DIRECT64_ATTR_BARRIER" value="0x100000000000000" grade="established"/>
+  <constant name="DIRECT64_ATTR_PRECISE" value="0x400000000000000" grade="established"/>
+  <constant name="DIRECT64_ATTR_PREFETCH" value="0x800000000000000" grade="established"/>
+  <constant name="DIRECT64_ATTR_SWAP" value="0x80000000000000" grade="established"/>
+  <constant name="DIRECT64_ATTR_TARGET_SHIFT" value="0x3c" grade="established"/>
+  <constant name="DIRECT64_ATTR_VIRTUAL" value="0x200000000000000" grade="established"/>
+  <constant name="DIRECT64_ATTR_VIRTUAL1" value="0x40000000000000" grade="established"/>
+  <constant name="HOST_INTR_ADDR_MASK" value="0xffffffffffff" grade="established"/>
+  <constant name="INTR_FLUSH_WAIT_VALUE" value="0x10f" grade="established"/>
   <constant name="INTR_PCIX_MASTER_TIMEOUT" value="0x400000000" grade="established"/>
   <constant name="INTR_PCI_MASTER_TIMEOUT" value="0x800" grade="established"/>
   <constant name="INTR_RESET_MULTIPLE_CLEAR" value="0x40" grade="established"/>
+  <constant name="PCI32_DIRECT_BASE" value="0x80000000" grade="established"/>
+  <constant name="PCI32_MAPPED_BASE" value="0x40000000" grade="established"/>
+  <constant name="PCI32_MAPPED_SWAP" value="0x20000000" grade="established"/>
+  <constant name="PCIX_SPECIAL_CYCLE_BASE" value="0x40000" grade="established"/>
+  <constant name="PCI_IACK_BASE" value="0x30000" grade="established"/>
 </genxml>

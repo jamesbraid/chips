@@ -452,6 +452,105 @@ vendor driver's flag routine and what public software sets; no PIC specification
   direct transfer at either bit value. A physical read is the only remaining route: see the proposal in
   `questions/README.md` (PIC direct-window lane sense).
 
+## Against SGI's Altix Linux code (linux-5.3 pin 4d856f72c10e)
+
+The PIC is also the PCI-X bridge of the Altix 3000 generation, and SGI wrote its Linux provider for it. Under the evidence
+rule for that generation (SGI's own platform code defines what it declares) the register names and layouts below are
+established as software definitions, not measurements. Files read in full: `arch/ia64/include/asm/sn/pic.h`
+(`struct pic`), `pcibr_provider.h`, `pcibus_provider_defs.h`, and `arch/ia64/sn/pci/pcibr/` (`pcibr_provider.c`,
+`pcibr_reg.c`, `pcibr_dma.c`, `pcibr_ate.c`). An earlier section of this page cites a 2.4-era tree of the same code;
+v5.3 is the last release before the Altix tree was removed and differs from it only where noted.
+
+**Where the PIC sits in an Altix.** The provider treats the PIC and the TIOCP as two bridge kinds behind one interface
+(`pcibr_init_provider` registers the same functions for both) and tells them apart only by the type the PROM reports.
+A PIC hangs off a Crosstalk widget of a SHub (an even NASID: `sn_dma_flush` looks its widget up through the SHub's
+translation table), a TIOCP off a TIO (an odd NASID; see [../tio/README.md](../tio/README.md)). The code
+names no product. Which Altix models use which (and which have a TIO at all) is [an open question](../../questions/altix-io-sn2-cross-check.md#pic-versus-tio-by-product).
+
+**Register names.** Every offset the census reaches has a register of the same offset in SGI's `struct pic`, so the
+offsets are confirmed by a second, independent software reading. The shipped accessor names the census uses are the
+older IRIX spellings; the SGI names are:
+
+| census name | offset | SGI Linux name | notes |
+|---|---:|---|---|
+| `pcibr_bridge_ptr` | `0x0` | `p_wid_id` | widget identification word |
+| `bus_err` | `0x18` | `p_wid_err_lower` | widget error address, lower half; `0x10` is the upper half |
+| `ssram_size` | `0x20` | `p_wid_control` | the **control** register; the census name came from an accessor that sets the SSRAM size field of it |
+| `req_timeout` | `0x28` | `p_wid_req_timeout` | |
+| `intr_dst_target_id` | `0x38` | `p_wid_int_lower` | widget interrupt destination, lower half; `0x30` is the upper half |
+| `cmdword_err` | `0x40` | `p_wid_err_cmdword` | |
+| `llp_cfg` | `0x48` | `p_wid_llp` | link-layer protocol; absent on the TIOCP |
+| `tflush` | `0x50` | `p_wid_tflush` | read returns zero; the kernel reads it after writing translation entries to wait for the writes |
+| `linkside_err` | `0x58` | `p_wid_aux_err` | |
+| `resp_err_buf`, `resp_err` | `0x60`, `0x68` | `p_wid_resp_upper`, `p_wid_resp_lower` | |
+| `linkside_err_addr` | `0x78` | `p_wid_addr_lkerr` | `0x70` is `p_wid_tst_pin_ctrl` |
+| `dirmap_wid` | `0x80` | `p_dir_map` | direct map |
+| `ssram_parity` | `0x90` | `p_map_fault` | |
+| `arbitration` | `0xa0` | `p_arb` | |
+| `parity_err` | `0xb0` | `p_ate_parity_err` | |
+| `timeout` | `0xc0` | `p_bus_timeout` | |
+| `type1_cntr` | `0xc8` | `p_pci_cfg` | |
+| `pci_bus_addr` | `0xd8` | `p_pci_err_lower` | PCI error address, lower half; `0xd0` is the upper half |
+| `intr_status` to `intr_host_err` | `0x100` to `0x128` | `p_int_status`, `p_int_enable`, `p_int_rst_stat`, `p_int_mode`, `p_int_device`, `p_int_host_err` | |
+| `intr_addr_vect` | `0x130` + 8n | `p_int_addr[8]` | per-pin destination address |
+| `intr_view`, `intr_multiple` | `0x170`, `0x178` | `p_err_int_view`, `p_mult_int` | |
+| `force_always`, `force_intr` | `0x180` + 8n, `0x1c0` + 8n | `p_force_always[8]`, `p_force_pin[8]` | |
+| `device` | `0x200` + 8n | `p_device[4]` | four devices, not eight |
+| `wrb_flush` | `0x240` + 8n | `p_wr_req_buf[4]` | |
+| `rrb` | `0x280`, `0x288` | `p_rrb_map[2]` (`p_even_resp`, `p_odd_resp`) | |
+| `rrb_status`, `rrb_clear` | `0x290`, `0x298` | `p_resp_status`, `p_resp_clear` | |
+| `pcix_bus_err_addr` to `pcix_req_err_addr` | `0x600` to `0x630` | `p_pcix_bus_err_addr`, `_attr`, `_data`, `p_pcix_pio_split_addr`, `_attr`, `p_pcix_dma_req_err_attr`, `_addr` | the census name `pcix_req_err_*` is the SGI `pcix_dma_req_err_*` |
+| `int_ate` | `0x10000` | `p_int_ate_ram[1024]` | automatic parity copy |
+| `pic_attach2*` | `0x18000`, `0x18800`, `0x19000` | `p_wr_req_lower[256]`, `p_wr_req_upper[256]`, `p_wr_req_parity[256]` | **the SGI header names the three banks the attach clears: the write request RAM, in lower-data, upper-data and parity banks.** Established as a naming; what the RAM does beyond buffering requests is unknown |
+| `ext_ate` | `0x80000` | none | no SGI Altix register exists here, which agrees with the census note that this is a Bridge-only path |
+
+Registers SGI's header defines that the census never reaches are now present as the extra unit's registers: widget
+status, the upper halves of the widget error, interrupt and PCI error addresses, test pin control, the sixteen
+buffer address match pairs, the eight performance-monitor blocks, `p_pcix_timeout`, the PCI-X read and write buffer
+words, and the manual-parity copy of the translation entries (`int_ate_mp`). The constants cover the translation
+entry, 64-bit attribute and window layouts below.
+
+**What the provider confirms or adds** (S = SGI Linux v5.3):
+
+- **Control bit 21 is the I/O page size.** S clears it for 4 KiB pages and sets it for 16 KiB pages (`pcibr_bus_fixup`). The
+  IRIX attach sets it unconditionally (established above), so the IRIX I/O page is 16 KiB (inferred from the bit's meaning in S). Agree.
+- **Every register write is a full 64-bit write** (the header's note on erratum PV854697: the chip does not accept a
+  write of just bits 31:0 of a 64-bit register). S implements set and clear of bits as read-modify-write of the whole
+  doubleword (`__sn_setq_relaxed`). This is a rule an emulator must obey, and it agrees with the IRIX path, which does 64-bit
+  accesses everywhere except the PROM's 32-bit sequences, which are a conflict: see the question
+  [PIC erratum against the PROM's 32-bit accesses](../../questions/altix-io-sn2-cross-check.md#pic-32-bit-register-writes).
+- **Translation entry layout** (S, `pcibr_dmamap_ate32`, 1024 entries, `PCI32_ATE_*`): bit 0 valid, bit 1 coherent (PIC
+  only; the same bit is programmed-I/O on the TIOCP), bit 2 message-signalled interrupt, bit 3 prefetch, bit 4 barrier, the target widget from bit 8
+  (the hub's Crosstalk widget id; four bits is inferred from the page address starting at bit 12), bits 12 and up the page-aligned address in the DMA view (`PHYS_TO_DMA`: the NASID bits
+  shifted down two places, the address-space bits squeezed out). The census never decodes an entry, so each bit is new.
+- **32-bit PCI map** (S, `pcibr_provider.h`): `0` to `0x3fffffff` is the local window, `0x40000000` to `0x7fffffff` goes through the
+  translation entries (index = (address minus the base) shifted by the I/O page shift), `0x80000000` upward is the direct
+  window offset from the direct-map register. Bit 29 of a translated address selects swap and is set only when the
+  device's Device register copy already has bit 19 set. The kernel never writes Device bit 19 or the 64-bit swap attribute
+  itself; the Device register values come from the PROM (`pbi_devreg`), so on this platform the sense of bit 19 is a PROM choice.
+- **PCI-X mode limits** (S): the PIC cannot page-map 32-bit addresses in PCI-X mode, the direct 32-bit window and prefetch
+  are not available there, and a PCI-mode function other than 0 uses the second virtual channel. A bus's mode comes
+  from the PROM's description (`pbi_bridge_mode` bit 0), not from a register read by the kernel.
+- **Device numbering is off by one** (S, header comment and `pcibr_dmamap_ate32`): the PIC is PCI device 0 on its bus, so
+  PCI slot n is internal device n minus 1 and configuration window n + 1. Agrees with the four-slot numbering recorded
+  in the identification section. Four devices only (`p_device[4]`).
+- **Interrupt retargeting** (S, `pcibr_target_interrupt`): clear the pin's enable bit, replace the 48-bit address field of
+  its per-pin address register (clear the field, then OR the address in), set the enable bit, then force the pin. Forcing is
+  a 64-bit write of 1 to the force-with-pin word of that pin. Agrees with the force-with-pin semantics above.
+- **Read ordering by forced interrupt** (S, `sn_dma_flush`): after a programmed-I/O read from a PIC device, the kernel stores
+  the 32-bit value 1 to a PROM-supplied force address, then spins until a PROM-supplied memory word equals `0x10f`. That is
+  the packet the interrupt write deposits, and `0x10f` is `0x100 | 0x0f`, the same `0x100 | vector` shape this page infers from the shipped
+  routine ("Does the enable bit gate a forced packet?" above, which inferred `0x1ed` for another vector). One more independent
+  reading of the shape; still not a hardware measurement. The force store is 32 bits wide, which meets the same erratum question.
+- **PCI error handling is in the PROM.** The bridge error interrupt (`SGI_PCIASIC_ERROR`, vector `0x33`) calls a firmware
+  routine through the platform's firmware call interface and panics on a negative result; the kernel never reads the PIC error
+  registers. So the SN2 code says nothing about error-register semantics.
+- **Identity numbers**: the provider's ASIC type numbers (`PIC` 2, `TIOCP` 3) and the bridge-type numbers it keeps (also 2
+  and 3) equal the halfword at bridge record +114 in IRIX (2 PIC, 3 the fourth chip). All three schemes are software choices; the provider
+  code never reads the identification register, so it adds nothing on part numbers `0xd102` and `0xe000`.
+- **Bus-visible DMA addressing differs by bridge**: a PIC uses the DMA view with the NASID bits shifted down two places; a TIOCP uses
+  a view with the NASID in bits 53:40 and a network address below (`PHYS_TO_TIODMA`). See [../tio/README.md](../tio/README.md).
+
 ## Reset expectations
 
 Unknown for every register: no routine reads a register before writing it in the attach sequence, apart from
