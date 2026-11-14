@@ -403,7 +403,10 @@ vendor driver's flag routine and what public software sets; no PIC specification
 - **Public SGI code carries the same convention in words (established as the authors' statement).** Linux 2.4 at
   `8ef7d46c94d54ae907217463caf30ad4de88211b`, `arch/ia64/sn/io/sn2/pcibr/pcibr_dvr.c` lines 379 to 384 (byte stream sets
   `BRIDGE_DEV_SWAP_DIR` for XBridge and PIC, bits 20:19 for Bridge; word values clears), lines 2766 to 2772 (the
-  64-bit path, bit 55), and `include/asm-ia64/sn/pci/pciio.h` lines 115 to 184: the byte-stream flag asks for the swappers to be set so a sequence of bytes arrives in memory in its written order; the word-values flag is for a little-endian device that moves multi-byte quantities, keeps 32-bit units intact, and makes the CPU flip the low address bits when it touches halfwords or single bytes of such a structure (the header gives the flip as 2 and 3). That
+  64-bit path, bit 55), and `include/asm-ia64/sn/pci/pciio.h` lines 115 to 184: the byte-stream flag asks for the
+  swappers to be set so a sequence of bytes arrives in memory in its written order; the word-values flag is for a
+  little-endian device that moves multi-byte quantities, keeps 32-bit units intact, and makes the CPU flip the low
+  address bits when it touches halfwords or single bytes of such a structure (the header gives the flip as 2 and 3). That
   matches the lane maps above in both directions.
 - **Public consumers (established as software expectation, not silicon).** Linux `linux-ip35` at
   `9f613a321ea03fb91bd9947cca7dda2888ccb447`, `arch/mips/pci/pci-sgipic.c` line 257 sets bit 19 and coherent on each PIC

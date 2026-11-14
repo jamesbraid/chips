@@ -188,7 +188,7 @@ the IP27 PROM is known to make (0x1fc01140), so something later wrote it: the re
 
 | Evidence | Statement | Grade |
 |---|---|---|
-| Public Linux v7.2 `ip27-memory.c` `mlreset` (lines 294 to 300), Hub | the comment explains why bit 0 is always set: cached-alias addresses resolve to node 0, so without it they fault;, then `PI_REGION_PRESENT = region_mask \| 1` for every node | E for the text, I for the hardware behaviour |
+| Public Linux v7.2 `ip27-memory.c` `mlreset` (lines 294 to 300), Hub | the comment explains why bit 0 is always set: cached-alias addresses resolve to node 0, so without it they fault; then `PI_REGION_PRESENT = region_mask \| 1` for every node | E for the text, I for the hardware behaviour |
 | IRIX Hub `mlreset` | forces bit 0 on every node (above); consistent with the Linux comment | E for the code, I for the reason |
 | Public Linux 2.5.40 SN1 processor-interface header comments (as imported in [Bedrock processor interface](../devices/bedrock_pi/README.md)), Bedrock | a clear bit blocks speculative coherent reads to the region; a coherent read to an absent region gets an error reply and no error register changes; partial accesses are not checked; cached-alias accesses are not affected | E for the text, I for silicon |
 | IRIX Bedrock `mlreset` | does not force bit 0, consistent with "cached-alias accesses are not affected" | E for the code, I for the link |
