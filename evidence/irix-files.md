@@ -620,3 +620,26 @@ root/IP35/usr/cpu/sysgen/IP35boot/xvmstubs.a root/IP35/members
 
 ```links
 ```
+
+## SN2 firmware and kernels
+
+Proprietary Altix firmware images and an Altix kernel, read by the SN2 firmware pages
+([software/firmware/snprom](../software/firmware/snprom/README.md)). Not IRIX files, listed here because this is the
+repository's list of binaries it reads. They are copied into `root/sn2/`, one directory per package, keeping the package
+layout; never committed. Each package directory is named for the vendor's package name, version and build number as
+extracted; the name of the container file each was extracted from was not recorded here. `root/sn2/SHA256SUMS` pins the bytes.
+
+| File under `root/sn2/` | Package | Size (bytes) | sha256 |
+|---|---|---|---|
+| `snprom-4.43-44607/boot/efi/snprom.bin` | snprom 4.43 build 44607 | 6291456 | `035274812b5065bde3f1b3227a23c05637d8a13f7cab7736ddde4718d46f02eb` |
+| `snprom-10.40-62478/boot/efi/efi/sgi/snprom/shub1snprom.bin` | snprom 10.40 build 62478 | 6291456 | `26170cc83c3db243601da8f55610bcdd6bb408136c3b3d19b7c4823e491b9a06` |
+| `snprom-10.40-62478/boot/efi/efi/sgi/snprom/shub2snprom.bin` | snprom 10.40 build 62478 | 12582912 | `1c8144e3d318f71a7633dddc268c3ebd0f64febb87c2f234a9a917df0673dd77` |
+| `snprom-10.11-52277/boot/efi/efi/sgi/ip65prom.bin` | snprom 10.11 build 52277 | 12582912 | `372e74f7201d35e56ef871c330ccbd66fda9f921376ae5dd3045cf4ae6319199` |
+| `kernel-sn2-2.6.5-7.244/boot/vmlinuz-2.6.5-7.244-sn2` | SLES 9 SP3 SN2 kernel 2.6.5-7.244 (gzip-compressed vmlinux) | 3559796 | `39131bd96291fa395389c5c280b99f33a1a9d7599f1e9871fb1b812d0b51803a` |
+| `kernel-sn2-2.6.5-7.244/boot/System.map-2.6.5-7.244-sn2` | same | 918159 | `ede6ed582ac6ee3e28e39cceb002b3cb63fa463d0de0cde91aca9ad648123fd8` |
+| `kernel-sn2-2.6.5-7.244/boot/config-2.6.5-7.244-sn2` | same | 46258 | `ccafef299a48c8ec7be64923f9144c8b006c930d9c1f65d34c5d5d90fda30290` |
+
+The tooling to read the images is the `ia64-linux-gnu-objdump`, `-readelf` and `-nm` in the retools container image
+(`retools/tools/re-run ia64-linux-gnu-objdump ...`; a raw flash image is read with `-b binary -m ia64 --adjust-vma=`
+the address the file is mapped at). The images contain gzip-compressed IA-64 ELF components (`gzip -dc` after the
+FIT gives their offsets; see the firmware page).
