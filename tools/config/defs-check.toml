@@ -2,8 +2,8 @@
 name = "chips"
 
 [checks]
-address_bits = 32
-max_reg_offset = 4294967295
+address_bits = 36
+max_reg_offset = 68719476735
 
 [units.bedrock]
 group = "bedrock.h"
@@ -171,6 +171,18 @@ prose_offsets = false
 
 [units.seeq_8003]
 group = "seeq_8003.h"
+prose_offsets = false
+
+[units.shub]
+group = "shub.h"
+prose_offsets = false
+
+[units.shub2]
+group = "shub2.h"
+prose_offsets = false
+
+[units.shub_ii]
+group = "shub_ii.h"
 prose_offsets = false
 
 [units.router_sn1]

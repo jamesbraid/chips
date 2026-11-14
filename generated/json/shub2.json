@@ -1,0 +1,618 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/shub/registers.shub2.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "ipi_int",
+   "offset": 268436352,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ipi_int.send",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ipi_int.idx",
+   "hi": 59,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ipi_int.base",
+   "hi": 49,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ipi_int.pid",
+   "hi": 19,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ipi_int.agent",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ipi_int.type",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "rtc_int_config",
+   "offset": 268440704,
+   "access": "rw",
+   "width": 64,
+   "count": 3,
+   "stride": 256,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "rtc_int_config.idx",
+   "hi": 59,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "rtc_int_config.base",
+   "hi": 49,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "rtc_int_config.pid",
+   "hi": 19,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "rtc_int_config.agent",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "rtc_int_config.type",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "rtc_int_enable",
+   "offset": 268440832,
+   "access": "rw",
+   "width": 64,
+   "count": 3,
+   "stride": 256,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "rtc_int_enable.enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "event_occurred",
+   "offset": 268500992,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.ii_int1",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.ii_int0",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.ipi_int",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.rtc3_int",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.rtc2_int",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.rtc1_int",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.uart_int",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "event_occurred_alias",
+   "offset": 268501000,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "ipi_access",
+   "offset": 268831744,
+   "access": "rw",
+   "width": 64,
+   "count": 4,
+   "stride": 128,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "int_cmp",
+   "offset": 270205056,
+   "access": "rw",
+   "width": 64,
+   "count": 3,
+   "stride": 128,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "int_cmp.compare",
+   "hi": 54,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "pio_write_status",
+   "offset": 537330176,
+   "access": "r",
+   "width": 64,
+   "count": 4,
+   "stride": 128,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "pio_write_status.pending_write_count",
+   "hi": 61,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "pio_write_status.write_deadlock",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "pio_write_status_alias",
+   "offset": 537330184,
+   "access": "w",
+   "width": 64,
+   "count": 4,
+   "stride": 128,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "bt_eng_csr",
+   "offset": 805568512,
+   "access": "rw",
+   "width": 64,
+   "count": 4,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "bt_eng_csr.error_code",
+   "hi": 41,
+   "lo": 36,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "bt_eng_csr.notify",
+   "hi": 28,
+   "lo": 28,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "bt_eng_csr.zero_fill",
+   "hi": 24,
+   "lo": 24,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "bt_eng_csr.busy",
+   "hi": 20,
+   "lo": 20,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "bt_eng_csr.error",
+   "hi": 16,
+   "lo": 16,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "bt_eng_csr.length",
+   "hi": 15,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "bt_eng_src",
+   "offset": 805568640,
+   "access": "rw",
+   "width": 64,
+   "count": 4,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "bt_eng_dest",
+   "offset": 805568768,
+   "access": "rw",
+   "width": 64,
+   "count": 4,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "bt_eng_notify",
+   "offset": 805568896,
+   "access": "rw",
+   "width": 64,
+   "count": 4,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "junk_bus_led",
+   "offset": 4026531840,
+   "access": "w",
+   "width": 16,
+   "count": 4,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "ptc",
+   "offset": 6174015488,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ptc.start",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ptc.address",
+   "hi": 60,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ptc.ps",
+   "hi": 3,
+   "lo": 2,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "ptc.type_bit",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "register",
+   "name": "rtc",
+   "offset": 8860205056,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "rtc.counter",
+   "hi": 54,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "EVENT_OCCURRED_EXTIO_INT2",
+   "value": 8589934592,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "EVENT_OCCURRED_EXTIO_INT3",
+   "value": 17179869184,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "IPI_BASE_VALUE",
+   "value": 4078,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "PIO_WRITE_STATUS_ALIAS_CLEAR",
+   "value": 7,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "PIO_WRITE_STATUS_IDLE",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "PI_CAM_WAR_VALUE",
+   "value": 9223372036854775824,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "RTC_CONFIG_MASK",
+   "value": 1149543804885270527,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "RTC_ENABLE_MASK",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "RTC_MASK",
+   "value": 36028797018963967,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "constant",
+   "name": "SHUB_1_1_MAX_REVISION",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  }
+ ]
+}

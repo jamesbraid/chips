@@ -1,0 +1,96 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source -->
+<genxml unit="shub2" prefix="SHUB2" title="SHub 2 registers outside the I/O interface, differences from SHub 1" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver">
+  <doc>SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips.</doc>
+  <struct name="IPI_INT" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10000380" access="w" reset="unknown">
+    <doc>Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR window with send set, the target's physical processor id, a delivery type, a vector and a fixed base. The kernel stores through uncached physical mode with release ordering, after a memory barrier. On a SHub 1 revision 2 or lower it holds a global lock around the store and waits for the PIO write status to drain.</doc>
+    <field name="send" start="63" size="1" type="uint" grade="established"/>
+    <field name="idx" start="52" size="8" type="uint" grade="established"/>
+    <field name="base" start="21" size="29" type="uint" grade="established"/>
+    <field name="pid" start="4" size="16" type="uint" grade="established"/>
+    <field name="agent" start="3" size="1" type="uint" grade="established"/>
+    <field name="type" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="RTC_INT_CONFIG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10001480" access="rw" count="3" stride="256" reset="0x0">
+    <doc>Where the comparator interrupt of RTC 1, 2 and 3 is sent: type, target processor id, vector area and vector. The mmtimer driver writes the vector and processor id fields and leaves type, agent and base zero. The register has the same layout as the IPI message, without the send bit. A fourth comparator (RTC 0) exists; the driver comment says firmware uses it, and the header defines nothing for it.</doc>
+    <field name="idx" start="52" size="8" type="uint" grade="established"/>
+    <field name="base" start="21" size="29" type="uint" grade="established"/>
+    <field name="pid" start="4" size="16" type="uint" grade="established"/>
+    <field name="agent" start="3" size="1" type="uint" grade="established"/>
+    <field name="type" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="RTC_INT_ENABLE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10001500" access="rw" count="3" stride="256" reset="0x0">
+    <doc>Enable for the comparator interrupt of RTC 1, 2 and 3. The mmtimer driver disables it, sets the comparator to all ones, clears the pending bit, writes the configuration, enables, and only then writes the real expiry, in that order.</doc>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="EVENT_OCCURRED" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10010000" access="r" reset="unknown">
+    <doc>Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them. Only bits the header names are recorded; the others are unknown.</doc>
+    <field name="ii_int1" start="30" size="1" type="uint" grade="established"/>
+    <field name="ii_int0" start="29" size="1" type="uint" grade="established"/>
+    <field name="ipi_int" start="28" size="1" type="uint" grade="established"/>
+    <field name="rtc3_int" start="26" size="1" type="uint" grade="established"/>
+    <field name="rtc2_int" start="25" size="1" type="uint" grade="established"/>
+    <field name="rtc1_int" start="24" size="1" type="uint" grade="established"/>
+    <field name="uart_int" start="20" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="EVENT_OCCURRED_ALIAS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10010008" access="w" reset="unknown">
+    <doc>Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns.</doc>
+  </struct>
+  <struct name="IPI_ACCESS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10060c00" access="rw" count="4" stride="128" reset="unknown">
+    <doc>Which processors may send interprocessor interrupts to this one: four registers, one per processor slice (SH2_IPI_ACCESS0 to 3). Defined by the header; the kernel files read never touch them, so the layout is unknown.</doc>
+  </struct>
+  <struct name="INT_CMP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101b0080" access="rw" count="3" stride="128" reset="0x0">
+    <doc>Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for processor B, C, D'). The interrupt fires when the clock reaches the value. The comparator for RTC 0 would sit 0x80 below these and is not defined in the header (unknown).</doc>
+    <field name="compare" start="0" size="55" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIO_WRITE_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20070200" access="r" count="4" stride="128" reset="unknown">
+    <doc>PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones.</doc>
+    <field name="pending_write_count" start="56" size="6" type="uint" grade="established"/>
+    <field name="write_deadlock" start="1" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIO_WRITE_STATUS_ALIAS" size="8" grade="inferred" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20070208" access="w" count="4" stride="128" reset="unknown">
+    <doc>Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2.</doc>
+  </struct>
+  <struct name="BT_ENG_CSR" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30040000" access="rw" count="4" stride="65536" reset="unknown">
+    <doc>Block transfer engine control and status, one per engine, SHub 2 (four engines, SH2_BT_ENG_CSR_0 to 3). Unlike SHub 1 the kernel starts a transfer with one store here: busy, the mode shifted left by 24, and the length in cache lines in the low bits. The kernel reads it for busy and error; the engine's error code sits in bits 41:36 (kernel's BTE_ERR_BITS).</doc>
+    <field name="error_code" start="36" size="6" type="uint" grade="inferred"/>
+    <field name="notify" start="28" size="1" type="uint" grade="inferred"/>
+    <field name="zero_fill" start="24" size="1" type="uint" grade="inferred"/>
+    <field name="busy" start="20" size="1" type="uint" grade="inferred"/>
+    <field name="error" start="16" size="1" type="uint" grade="inferred"/>
+    <field name="length" start="0" size="16" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="BT_ENG_SRC" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30040080" access="rw" count="4" stride="65536" reset="unknown">
+    <doc>BTE source address, per engine. The kernel converts the physical address to the network address form first (nasid moved to bit 40 upward, the bank-select bits moved to bit 36).</doc>
+  </struct>
+  <struct name="BT_ENG_DEST" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30040100" access="rw" count="4" stride="65536" reset="unknown">
+    <doc>BTE destination address, per engine; same conversion as the source.</doc>
+  </struct>
+  <struct name="BT_ENG_NOTIFY" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30040180" access="rw" count="4" stride="65536" reset="unknown">
+    <doc>BTE notification address, per engine; same conversion.</doc>
+  </struct>
+  <struct name="JUNK_BUS_LED" size="2" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0xf0000000" access="w" count="4" stride="65536" reset="unknown">
+    <doc>Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps a 16-bit LED state per processor and stores it with a 16-bit write at LED0 plus slice times 64 KiB: bit 0 is the heartbeat, toggled twice a second from the timer interrupt, bit 1 an activity flag. The junk bus also holds the UART whose interrupt is event_occurred bit 20.</doc>
+  </struct>
+  <struct name="PTC" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x170000000" access="w" reset="unknown">
+    <doc>Purge translation cache message, SHub 2 (header SH2_PTC). One 64-bit store per target node replaces SHub 1's two. The region id and region number do not go in the data: the kernel adds them, shifted left by four, to the register's address. The data carries the type bit, the page size and the start bit, and the virtual address in bits 60:12. How wide the address-encoded part is, and so how large the register window is, is unknown. The kernel only waits on the PIO write status afterwards; on a deadlock it reads the status alias instead of clearing it.</doc>
+    <field name="start" start="63" size="1" type="uint" grade="established"/>
+    <field name="address" start="12" size="49" type="uint" grade="established"/>
+    <field name="ps" start="2" size="2" type="uint" grade="inferred"/>
+    <field name="type_bit" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="RTC" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x2101c0000" access="r" reset="unknown">
+    <doc>Real-time clock: a 55-bit counter, read by the kernel as its clock source (clock source rating 450, mask 55 bits) and for microsecond delays, because the CPU cycle counters are not synchronised across processors. The frequency is not in a register; the kernel asks firmware for it. The driver comment says the clock registers sit alone on a 64 KiB page, which is what lets user space map it read-only.</doc>
+    <field name="counter" start="0" size="55" type="uint" grade="established"/>
+  </struct>
+  <constant name="EVENT_OCCURRED_EXTIO_INT2" value="0x200000000" grade="established"/>
+  <constant name="EVENT_OCCURRED_EXTIO_INT3" value="0x400000000" grade="established"/>
+  <constant name="IPI_BASE_VALUE" value="0xfee" grade="established"/>
+  <constant name="PIO_WRITE_STATUS_ALIAS_CLEAR" value="0x7" grade="established"/>
+  <constant name="PIO_WRITE_STATUS_IDLE" value="0x0" grade="established"/>
+  <constant name="PI_CAM_WAR_VALUE" value="0x8000000000000010" grade="established"/>
+  <constant name="RTC_CONFIG_MASK" value="0xff3ffffffefffff" grade="established"/>
+  <constant name="RTC_ENABLE_MASK" value="0x1" grade="established"/>
+  <constant name="RTC_MASK" value="0x7fffffffffffff" grade="established"/>
+  <constant name="SHUB_1_1_MAX_REVISION" value="0x2" grade="established"/>
+</genxml>

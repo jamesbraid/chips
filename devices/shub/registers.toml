@@ -1,0 +1,214 @@
+unit = "shub"
+prefix = "SHUB"
+title = "SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs"
+doc = "SHub 1 offsets as the SGI Linux ia64 platform header defines them (SH1_ names), relative to the node's register space; the SHub 2 overlay changes them. Every register is 64 bits wide unless noted, because the kernel reaches all of them with 64-bit loads and stores. The header gives neither the unit a register belongs to nor reset values; the unit named in each doc is inferred from the register's name prefix and address block. Reset values are unknown except where the header's INIT macro names a value, which is recorded as inferred. Roles are paraphrased from the header comments and the kernel's use."
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+public_from = ["Linux v5.3 SGI SN2 platform", "Linux v4.9 SGI real-time clock driver"]
+
+[c]
+offset_macro = "bare"
+
+[constants]
+RTC_MASK = { value = 0x7fffffffffffff, grade = "established", doc = "Valid bits of the real-time clock and of each comparator: 55 bits. The mmtimer driver reports 55 as the clock width." }
+RTC_CONFIG_MASK = { value = 0x0ff3ffffffefffff, grade = "established", doc = "Valid bits of an RTC interrupt configuration register (header SH_RTC1_INT_CONFIG_MASK): bits 59:52 and 49:0 except bit 20." }
+RTC_ENABLE_MASK = { value = 1, grade = "established", doc = "Valid bits of an RTC interrupt enable register." }
+PIO_WRITE_STATUS_IDLE = { value = 0x3f00000000000000, grade = "established", doc = "What the kernel waits for the masked pending-write count to equal on SHub 1: all six bits set, not zero. The kernel comment points at a defect number for this behaviour; the defect text is not in the sources read. The SHub 2 overlay sets zero." }
+PIO_WRITE_STATUS_ALIAS_CLEAR = { value = 7, grade = "established", doc = "Value the kernel's TLB-purge deadlock recovery writes to the alias on SHub 1 to clear the deadlock, write error and multiple write error bits (assembly comment)." }
+IPI_BASE_VALUE = { value = 0xfee, grade = "established", doc = "Constant the kernel puts in the base field of every IPI message: 0xfee in units of the field, i.e. the 0xfee00000 interrupt area of IA-64 platform conventions. Used with the vector in the idx field." }
+PI_CAM_WAR_VALUE = { value = 0x8000000000000010, grade = "established", doc = "Value the kernel writes to the PI CAM control register from every timer tick on a SHub 1 of revision 2 or lower. Meaning not stated by the sources." }
+SHUB_1_1_MAX_REVISION = { value = 2, grade = "established", doc = "Revision field value at or below which the kernel enables its SHub 1.1 workarounds." }
+
+[registers.ipi_int]
+offset = 0x110000380
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR window with send set, the target's physical processor id, a delivery type, a vector and a fixed base. The kernel stores through uncached physical mode with release ordering, after a memory barrier. On a SHub 1 revision 2 or lower it holds a global lock around the store and waits for the PIO write status to drain."
+
+[registers.ipi_int.fields]
+type = { bits = [2, 0], grade = "established", doc = "Interrupt type: 0 interrupt, 2 platform management interrupt, 4 NMI, 5 INIT." }
+agent = { bits = [3, 3], grade = "established", doc = "Must be zero for SHub." }
+pid = { bits = [19, 4], grade = "established", doc = "Processor id, the same value the target processor's SAPIC id holds." }
+base = { bits = [49, 21], grade = "established", doc = "Optional interrupt vector area, 2 MiB aligned. The kernel always puts 0xfee here." }
+idx = { bits = [59, 52], grade = "established", doc = "Interrupt vector delivered to the target processor." }
+send = { bits = [63, 63], grade = "established", doc = "Sending the message; the header says it generates a pulse." }
+
+[registers.ipi_access]
+offset = 0x110060480
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown."
+
+[registers.event_occurred]
+offset = 0x110010000
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them. Only bits the header names are recorded; the others are unknown."
+
+[registers.event_occurred.fields]
+uart_int = { bits = [20, 20], grade = "established", doc = "Pending junk-bus UART interrupt." }
+rtc1_int = { bits = [24, 24], grade = "established", doc = "Pending RTC comparator 1 interrupt." }
+rtc2_int = { bits = [25, 25], grade = "established", doc = "Pending RTC comparator 2 interrupt." }
+rtc3_int = { bits = [26, 26], grade = "established", doc = "Pending RTC comparator 3 interrupt." }
+ipi_int = { bits = [28, 28], grade = "established", doc = "Pending IPI interrupt." }
+ii_int0 = { bits = [29, 29], grade = "established", doc = "Pending I/O interface interrupt 0." }
+ii_int1 = { bits = [30, 30], grade = "established", doc = "Pending I/O interface interrupt 1." }
+
+[registers.event_occurred_alias]
+offset = 0x110010008
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns."
+
+[registers.shub_id]
+offset = 0x110060580
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header."
+
+[registers.shub_id.fields]
+revision = { bits = [31, 28], grade = "established", doc = "Chip revision. The kernel treats 2 or lower as SHub 1.1." }
+nodes_per_bit = { bits = [52, 48], grade = "established", doc = "Nodes per bit (the kernel's name for the region size). The positions come from macros in the SAL header; the role is the kernel's use of the value as the region size in its old-PROM fallback." }
+
+[registers.rtc]
+offset = 0x1101c0000
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Real-time clock: a 55-bit counter, read by the kernel as its clock source (clock source rating 450, mask 55 bits) and for microsecond delays, because the CPU cycle counters are not synchronised across processors. The frequency is not in a register; the kernel asks firmware for it. The driver comment says the clock registers sit alone on a 64 KiB page, which is what lets user space map it read-only."
+
+[registers.rtc.fields]
+counter = { bits = [54, 0], grade = "established" }
+
+[registers.rtc_int_config]
+offset = 0x110001480
+count = 3
+stride = 0x100
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "the header's SH_RTC1_INT_CONFIG_INIT macro, value zero; the macro name says initial value, no source states a power-on default"
+doc = "Where the comparator interrupt of RTC 1, 2 and 3 is sent: type, target processor id, vector area and vector. The mmtimer driver writes the vector and processor id fields and leaves type, agent and base zero. The register has the same layout as the IPI message, without the send bit. A fourth comparator (RTC 0) exists; the driver comment says firmware uses it, and the header defines nothing for it."
+
+[registers.rtc_int_config.fields]
+type = { bits = [2, 0], grade = "established" }
+agent = { bits = [3, 3], grade = "established" }
+pid = { bits = [19, 4], grade = "established" }
+base = { bits = [49, 21], grade = "established" }
+idx = { bits = [59, 52], grade = "established" }
+
+[registers.rtc_int_enable]
+offset = 0x110001500
+count = 3
+stride = 0x100
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "the header's SH_RTC1_INT_ENABLE_INIT macro, value zero"
+doc = "Enable for the comparator interrupt of RTC 1, 2 and 3. The mmtimer driver disables it, sets the comparator to all ones, clears the pending bit, writes the configuration, enables, and only then writes the real expiry, in that order."
+
+[registers.rtc_int_enable.fields]
+enable = { bits = [0, 0], grade = "established" }
+
+[registers.int_cmp]
+offset = 0x1101b0080
+count = 3
+stride = 0x80
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "the header's SH_INT_CMPB_INIT, SH_INT_CMPC_INIT and SH_INT_CMPD_INIT macros, value zero"
+doc = "Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for processor B, C, D'). The interrupt fires when the clock reaches the value. The comparator for RTC 0 would sit 0x80 below these and is not defined in the header (unknown)."
+
+[registers.int_cmp.fields]
+compare = { bits = [54, 0], grade = "established" }
+
+[registers.pio_write_status]
+offset = 0x120070200
+count = 2
+stride = 0x80
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O write barrier spins until the pending write count shows idle. The kernel stores the address of the instance for its slice (the slice is the processor's position within the node) in its per-processor data."
+
+[registers.pio_write_status.fields]
+write_deadlock = { bits = [1, 1], grade = "established", doc = "A deadlock response was detected for a PIO write." }
+pending_write_count = { bits = [61, 56], grade = "established", doc = "Count of PIO writes still in flight. On SHub 1 the kernel treats all ones as idle (see PIO_WRITE_STATUS_IDLE); the header gives no reason." }
+
+[registers.pio_write_status_alias]
+offset = 0x120070208
+count = 2
+stride = 0x80
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+doc = "Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2."
+
+[registers.pi_cam_control]
+offset = 0x120050300
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown."
+
+[registers.ptc]
+offset = 0x1101a0000
+count = 2
+stride = 0x80
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Purge translation cache message, SHub 1 (header SH1_PTC_0 and SH1_PTC_1). To purge a virtual address range on every processor of a node the kernel writes the two registers of that node's global window back to back with interrupts and interruption collection off, the first with a type bit, the page-size exponent, the region id and a start bit, the second with the virtual address and a start bit; both stores are in one atomic assembly sequence. It does this once per page of the range, after taking a global lock, for every node that has the mm's processors, except the local node which uses the processor's own global purge instruction instead. Entry 0 is the control word and entry 1 the address word. After a batch of nodes it waits on the PIO write status."
+
+[registers.ptc.fields]
+type_bit = { bits = [0, 0], grade = "inferred", doc = "Header title: type. The kernel always writes 1; no other value is known." }
+ps = { bits = [7, 2], grade = "inferred", doc = "Page size as a power of two. The field is six bits wide only by inference: the kernel passes a value below 64 and the next field starts at bit 8." }
+rid = { bits = [62, 8], grade = "inferred", doc = "Region identifier and region number: the kernel passes the mm's context shifted left by three, ORed with the region number of the address. The upper bound is inferred from bit 63 being the start bit." }
+start = { bits = [63, 63], grade = "established", doc = "Start. Set in the first write; entry 1 has its own start bit at the same position." }
+
+[registers.md_dqlp_dir_privilege_vector]
+offset = 0x100030300
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege vector for acc=0'). Defined by the header; no use in any kernel file read. Layout and role unknown."
+
+[registers.md_dqrp_dir_privilege_vector]
+offset = 0x100050300
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of DQLP and DQRP as left and right ports is inferred from the names."
+
+[registers.junk_bus_led]
+offset = 0x7fed00000
+count = 4
+stride = 0x10000
+access = "w"
+width = 16
+grade = "established"
+reset = "unknown"
+doc = "Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps a 16-bit LED state per processor and stores it with a 16-bit write at LED0 plus slice times 64 KiB: bit 0 is the heartbeat, toggled twice a second from the timer interrupt, bit 1 an activity flag. The junk bus also holds the UART whose interrupt is event_occurred bit 20."

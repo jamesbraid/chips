@@ -1,0 +1,524 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/shub_ii/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="shub_ii" prefix="SHUB_II" title="SHub 1 I/O interface (II): Crosstalk port, access protection, CRBs and block transfer engines" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code">
+  <doc>Offsets are node-relative, the same numbers the SGI Linux ia64 header uses: the II starts 4 MiB into the node's register space. Field positions are the header's bitfield unions read least-significant first, which agrees with the header's own shift and mask macros wherever it has both. The header is the vendor platform source, so offsets and field positions are established as definitions. Role text is a paraphrase of the header's comments and is inferred. Reset values are unknown unless a source states one, and none does. The kernel files read use few of these registers; the access note in each register says whether the kernel touches it.</doc>
+  <struct name="WIDGET_ID" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400000" access="r" reset="unknown">
+    <doc>Crosstalk widget identification. Echoes the revision and manufacturer fields of the local block's revision register and carries the part number SGI assigned to SHub. Also visible to a widget on the link at its own offset 0. Header name IIO_WID.</doc>
+    <field name="rev_num" start="28" size="4" type="uint" grade="established"/>
+    <field name="part_num" start="12" size="16" type="uint" grade="established"/>
+    <field name="mfg_num" start="1" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="WIDGET_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400008" access="rw" reset="unknown">
+    <doc>Widget status: error flags the II sets on a Crosstalk credit timeout, tail timeout, retry limit and similar link faults, plus a pending count. Cleared by the mechanisms the header lists per field. Header name IIO_WSTAT.</doc>
+    <field name="crazy" start="32" size="1" type="uint" grade="established"/>
+    <field name="llp_tx_cnt" start="16" size="8" type="uint" grade="established"/>
+    <field name="tx_mx_rty" start="9" size="1" type="uint" grade="established"/>
+    <field name="xt_tail_to" start="5" size="1" type="uint" grade="established"/>
+    <field name="xt_crd_to" start="4" size="1" type="uint" grade="established"/>
+    <field name="pending" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="WIDGET_CONTROL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400020" access="rw" reset="unknown">
+    <doc>Widget control: Crosstalk flow control. Holds the widget id the II answers to, tag mode, destination credit count, a force-bad-packet debug bit, the direct-connect bit and the elasticity threshold. Header name IIO_WCR.</doc>
+    <field name="e_thresh" start="18" size="5" type="uint" grade="established"/>
+    <field name="dir_con" start="17" size="1" type="uint" grade="established"/>
+    <field name="f_bad_pkt" start="16" size="1" type="uint" grade="established"/>
+    <field name="dst_crd" start="13" size="3" type="uint" grade="established"/>
+    <field name="tag" start="4" size="1" type="uint" grade="established"/>
+    <field name="wid" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="LOCAL_ACCESS_PROTECTION" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400100" access="rw" reset="unknown">
+    <doc>Local access protection: one bit per region of nodes. A PIO read or write is performed only if the requester's region bit is set; reset value permits every node. The header says it is also reachable through an alias window for the local processors. Header name IIO_ILAPR.</doc>
+    <field name="region" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="LOCAL_ACCESS_OVERRIDE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400108" access="w" reset="unknown">
+    <doc>Protection override: writing the 64-bit ASCII string SGIrules sets the requester's region bit in the local access protection register; any other value is ignored. Header name IIO_ILAPO.</doc>
+    <field name="io_ovrride" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="OUTBOUND_WIDGET_ACCESS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400110" access="rw" reset="unknown">
+    <doc>Outbound widget access: one bit per widget qualifying PIO and graphics writes the SHub launches toward that widget, on top of the local access protection register. Header name IIO_IOWA.</doc>
+    <field name="wx_oac" start="8" size="8" type="uint" grade="established"/>
+    <field name="w0_oac" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="INBOUND_WIDGET_ACCESS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400118" access="rw" reset="unknown">
+    <doc>Inbound widget access: qualifies requests a widget sends toward the SHub. Meant for software to fence off a misbehaving widget. Header name IIO_IIWA.</doc>
+    <field name="wx_iac" start="8" size="8" type="uint" grade="established"/>
+    <field name="w0_iac" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="INBOUND_DEVICE_ERROR_MASK" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400120" access="rw" reset="unknown">
+    <doc>Inbound device error mask: per-device (up to eight per widget) enable bits for DMA masters. The SHub clears a device's bit when it detects an error that requires the device to be shut off. Header name IIO_IIDEM.</doc>
+    <field name="wf_dxs" start="56" size="8" type="uint" grade="established"/>
+    <field name="we_dxs" start="48" size="8" type="uint" grade="established"/>
+    <field name="wd_dxs" start="40" size="8" type="uint" grade="established"/>
+    <field name="wc_dxs" start="32" size="8" type="uint" grade="established"/>
+    <field name="wb_dxs" start="24" size="8" type="uint" grade="established"/>
+    <field name="wa_dxs" start="16" size="8" type="uint" grade="established"/>
+    <field name="w9_dxs" start="8" size="8" type="uint" grade="established"/>
+    <field name="w8_dxs" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LLP_CONTROL_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400128" access="rw" reset="unknown">
+    <doc>LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR.</doc>
+    <field name="maxbrst" start="32" size="10" type="uint" grade="established"/>
+    <field name="d_avail_sel" start="26" size="2" type="uint" grade="established"/>
+    <field name="maxrtry" start="16" size="10" type="uint" grade="established"/>
+    <field name="remote_power" start="14" size="1" type="uint" grade="established"/>
+    <field name="llp_stat" start="12" size="2" type="uint" grade="established"/>
+    <field name="bm8" start="11" size="1" type="uint" grade="established"/>
+    <field name="llp_en" start="10" size="1" type="uint" grade="established"/>
+    <field name="wrmrst" start="8" size="1" type="uint" grade="established"/>
+    <field name="nullto" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="LLP_LOG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400130" access="rw" reset="unknown">
+    <doc>LLP log: status of the link error rate. Header name IIO_ILLR.</doc>
+    <field name="cb_cnt" start="16" size="16" type="uint" grade="established"/>
+    <field name="sn_cnt" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="INTERRUPT_DESTINATION" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400138" access="rw" reset="unknown">
+    <doc>Interrupt destination for II-detected non-BTE error interrupts: vector level, target PI unit, target node, an enable bit and a sent state. Which processor interface receives the packet is fixed in hardware: PI0 register 0x1800090 or PI1 register 0x1a00090 of the target node (header text). Header name IIO_IIDSR.</doc>
+    <field name="pi1_forward_int" start="33" size="1" type="uint" grade="established"/>
+    <field name="pi0_forward_int" start="32" size="1" type="uint" grade="established"/>
+    <field name="int_sent" start="28" size="2" type="uint" grade="established"/>
+    <field name="enable" start="24" size="1" type="uint" grade="established"/>
+    <field name="node" start="9" size="11" type="uint" grade="established"/>
+    <field name="pi_id" start="8" size="1" type="uint" grade="established"/>
+    <field name="level" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="GRAPHICS_MAP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400140" access="rw" count="2" stride="8" reset="unknown">
+    <doc>Graphics node and widget map: matches write responses coming back from a graphics widget to the processor that issued the write, so the response can be turned into a flow-control credit for that processor. Two instances. Header name IIO_IGFX.</doc>
+    <field name="p_num" start="17" size="1" type="uint" grade="established"/>
+    <field name="n_num" start="5" size="12" type="uint" grade="established"/>
+    <field name="pi_id" start="4" size="1" type="uint" grade="established"/>
+    <field name="w_num" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400150" access="rw" count="2" stride="8" reset="unknown">
+    <doc>Scratch register for software. Two instances, no hardware effect. Header name IIO_ISCR.</doc>
+    <field name="scratch" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="ITTE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="unknown">
+    <doc>Translation table entry mapping one SHub big window to a Crosstalk address: a 5-bit offset joined to the window-relative address bits, a 4-bit widget number and an I/O space bit. The header numbers the entries 1 to 7; the kernel numbers them 0 to 6, and uses the top big window as a stand-in for small window 0 to work around a defect on the processor-interface side. Header names IIO_ITTE1 to IIO_ITTE7.</doc>
+    <field name="iosp" start="12" size="1" type="uint" grade="established"/>
+    <field name="w_num" start="8" size="4" type="uint" grade="established"/>
+    <field name="offset" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PRB" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400198" access="rw" count="9" stride="8" reset="unknown">
+    <doc>PIO request buffer for one widget (widget 0 and widgets 8 to F): the state the II keeps to manage PIO flow control on Crosstalk and toward the router network, including a spurious-read and spurious-write indicator. Nine entries, widget 0 first and widgets 8 to F after it, at an 8-byte stride (header names IIO_IPRB0, IIO_IPRB8 to IIO_IPRBF).</doc>
+    <field name="mult_err" start="63" size="1" type="uint" grade="established"/>
+    <field name="spur_rd" start="51" size="1" type="uint" grade="established"/>
+    <field name="spur_wr" start="50" size="1" type="uint" grade="established"/>
+    <field name="rd_to" start="49" size="1" type="uint" grade="established"/>
+    <field name="error" start="48" size="1" type="uint" grade="established"/>
+    <field name="of_cnt" start="43" size="5" type="uint" grade="established"/>
+    <field name="f_bit" start="42" size="1" type="uint" grade="established"/>
+    <field name="m_bit" start="40" size="2" type="uint" grade="established"/>
+    <field name="nb" start="24" size="14" type="uint" grade="established"/>
+    <field name="na" start="8" size="14" type="uint" grade="established"/>
+    <field name="c_bit" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="CROSSTALK_CREDIT_TIMEOUT" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x4001e0" access="rw" reset="unknown">
+    <doc>Crosstalk credit timeout threshold: how long, counted in 128 II clocks, outbound Crosstalk credits may stay below the threshold before a credit timeout is flagged. Header name IIO_IXCC.</doc>
+    <field name="time_out" start="0" size="26" type="uint" grade="established"/>
+  </struct>
+  <struct name="MISC_ERROR_MASK" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x4001e8" access="rw" reset="unknown">
+    <doc>Miscellaneous error mask: enable bits for widget 0 and the two BTE streams; the SHub clears a bit when it shuts that source down after an error. Software sets it again by writing a one. The kernel's BTE recovery sets the two BTE bits. Kernel: read, BTE 0 and BTE 1 bits set, written back after a BTE error. Header name IIO_IMEM.</doc>
+    <field name="clr_precise" start="12" size="1" type="uint" grade="established"/>
+    <field name="b1_esd" start="8" size="1" type="uint" grade="established"/>
+    <field name="b0_esd" start="4" size="1" type="uint" grade="established"/>
+    <field name="w0_esd" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CROSSTALK_TIMEOUT_THRESHOLD" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x4001f0" access="rw" reset="unknown">
+    <doc>Crosstalk timeout threshold: read response timeout, its prescaler and the tail-flit timeout, after which the II raises an error interrupt. Header name IIO_IXTT.</doc>
+    <field name="rrsp_to" start="55" size="5" type="uint" grade="established"/>
+    <field name="rrsp_ps" start="32" size="23" type="uint" grade="established"/>
+    <field name="tail_to" start="0" size="26" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERROR_CLEAR" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x4001f8" access="w" reset="unknown">
+    <doc>Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR.</doc>
+    <field name="xn_ii_invalid_cmd" start="42" size="1" type="uint" grade="established"/>
+    <field name="ii_xn_invalid_cmd" start="41" size="1" type="uint" grade="established"/>
+    <field name="ii_xn_req_cred_overflow" start="40" size="1" type="uint" grade="established"/>
+    <field name="ii_xn_rep_cred_overflow" start="39" size="1" type="uint" grade="established"/>
+    <field name="iiq_req_overflow" start="38" size="1" type="uint" grade="established"/>
+    <field name="iiq_rep_overflow" start="37" size="1" type="uint" grade="established"/>
+    <field name="ioq_req_overflow" start="36" size="1" type="uint" grade="established"/>
+    <field name="ioq_rep_overflow" start="35" size="1" type="uint" grade="established"/>
+    <field name="ioq_req_underflow" start="34" size="1" type="uint" grade="established"/>
+    <field name="ioq_rep_underflow" start="33" size="1" type="uint" grade="established"/>
+    <field name="cam_read_miss" start="32" size="1" type="uint" grade="established"/>
+    <field name="cam_overflow" start="31" size="1" type="uint" grade="established"/>
+    <field name="cam_intr_to" start="30" size="1" type="uint" grade="established"/>
+    <field name="spur_rd_hdr" start="29" size="1" type="uint" grade="established"/>
+    <field name="e_bte_1" start="18" size="1" type="uint" grade="established"/>
+    <field name="e_bte_0" start="17" size="1" type="uint" grade="established"/>
+    <field name="e_crazy" start="16" size="1" type="uint" grade="established"/>
+    <field name="e_prb_f" start="15" size="1" type="uint" grade="established"/>
+    <field name="e_prb_e" start="14" size="1" type="uint" grade="established"/>
+    <field name="e_prb_d" start="13" size="1" type="uint" grade="established"/>
+    <field name="e_prb_c" start="12" size="1" type="uint" grade="established"/>
+    <field name="e_prb_b" start="11" size="1" type="uint" grade="established"/>
+    <field name="e_prb_a" start="10" size="1" type="uint" grade="established"/>
+    <field name="e_prb_9" start="9" size="1" type="uint" grade="established"/>
+    <field name="e_prb_8" start="8" size="1" type="uint" grade="established"/>
+    <field name="e_prb_0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="BTE_COMMON_CONTROL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400200" access="rw" reset="unknown">
+    <doc>BTE control, shared by both engines: the combined count of CRBs the two engines may use (which sets their bandwidth) and a soft reset used to recover after an error. Kernel: read, soft reset set, written back to reinitialise both BTE state machines after an error. Header name IIO_IBCR.</doc>
+    <field name="soft_reset" start="8" size="1" type="uint" grade="established"/>
+    <field name="count" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="SPURIOUS_MESSAGE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400208" access="r" reset="unknown">
+    <doc>Header of a spurious read response from Crosstalk, captured together with the spurious-sideband register. Header name IIO_IXSM.</doc>
+    <field name="didn" start="60" size="4" type="uint" grade="established"/>
+    <field name="sidn" start="56" size="4" type="uint" grade="established"/>
+    <field name="pactyp" start="52" size="4" type="uint" grade="established"/>
+    <field name="tnum" start="47" size="5" type="uint" grade="established"/>
+    <field name="ct" start="46" size="1" type="uint" grade="established"/>
+    <field name="ds" start="44" size="2" type="uint" grade="established"/>
+    <field name="gbr" start="43" size="1" type="uint" grade="established"/>
+    <field name="vbpm" start="42" size="1" type="uint" grade="established"/>
+    <field name="error" start="41" size="1" type="uint" grade="established"/>
+    <field name="bo" start="40" size="1" type="uint" grade="established"/>
+    <field name="alt_pactyp" start="36" size="4" type="uint" grade="established"/>
+    <field name="tag" start="33" size="3" type="uint" grade="established"/>
+    <field name="byte_en" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="SPURIOUS_SIDEBAND" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400210" access="rw" reset="unknown">
+    <doc>Spurious sideband and valid flag for the capture in the spurious-message register. Header name IIO_IXSS.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="sideband" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LLP_CHANNEL_TEST" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400218" access="rw" reset="unknown">
+    <doc>LLP channel test: access to the LLP's test port. Header name IIO_ILCT.</doc>
+    <field name="test_err_capture" start="54" size="1" type="uint" grade="established"/>
+    <field name="test_clear" start="53" size="1" type="uint" grade="established"/>
+    <field name="test_flit" start="50" size="3" type="uint" grade="established"/>
+    <field name="test_cberr" start="49" size="1" type="uint" grade="established"/>
+    <field name="test_valid" start="48" size="1" type="uint" grade="established"/>
+    <field name="test_data" start="28" size="20" type="uint" grade="established"/>
+    <field name="test_mask" start="20" size="8" type="uint" grade="established"/>
+    <field name="test_seed" start="0" size="20" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERROR_PACKET_HEADER_1" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400220" access="rw" reset="unknown">
+    <doc>Header, part 1, of an illegal incoming network packet, with a valid flag, an overrun flag and an error type (short or long request or reply). Header name IIO_IIEPH1.</doc>
+    <field name="valid" start="50" size="1" type="uint" grade="established"/>
+    <field name="overrun" start="46" size="1" type="uint" grade="established"/>
+    <field name="err_type" start="38" size="4" type="uint" grade="established"/>
+    <field name="source" start="23" size="14" type="uint" grade="established"/>
+    <field name="suppl" start="8" size="14" type="uint" grade="established"/>
+    <field name="command" start="0" size="7" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERROR_PACKET_HEADER_2" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400228" access="rw" reset="unknown">
+    <doc>Header, part 2, of an illegal incoming network packet. Header name IIO_IIEPH2.</doc>
+    <field name="tail" start="60" size="1" type="uint" grade="established"/>
+    <field name="address" start="3" size="47" type="uint" grade="established"/>
+  </struct>
+  <struct name="SXB_ACCESS_PROTECTION" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400230" access="rw" reset="unknown">
+    <doc>Local access protection for the SXB. Same scheme as the main local access protection register. Header name IIO_ISLAPR.</doc>
+    <field name="region" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="SXB_ACCESS_OVERRIDE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400238" access="w" reset="unknown">
+    <doc>Override for the SXB access protection register. Header name IIO_ISLAPO.</doc>
+    <field name="io_sbx_ovrride" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="WRAPPER_INTERRUPT" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400240" access="rw" reset="unknown">
+    <doc>Wrapper interrupt: how long the II wrapper waits for an issued interrupt before it times it out and drops it. Header name IIO_IWI.</doc>
+    <field name="intrpt_retry_period" start="48" size="8" type="uint" grade="established"/>
+    <field name="timeout" start="32" size="8" type="uint" grade="established"/>
+    <field name="prescale" start="0" size="24" type="uint" grade="established"/>
+  </struct>
+  <struct name="WRAPPER_ERROR_LOG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400248" access="rw" reset="unknown">
+    <doc>Wrapper error log. Header name IIO_IWEL.</doc>
+    <field name="xn_ii_invalid_cmd" start="33" size="1" type="uint" grade="established"/>
+    <field name="ii_xn_invalid_cmd" start="32" size="1" type="uint" grade="established"/>
+    <field name="ii_xn_req_cred_over_under" start="25" size="1" type="uint" grade="established"/>
+    <field name="ii_xn_rep_cred_over_under" start="24" size="1" type="uint" grade="established"/>
+    <field name="iiq_req_overflow" start="17" size="1" type="uint" grade="established"/>
+    <field name="iiq_rep_overflow" start="16" size="1" type="uint" grade="established"/>
+    <field name="ioq_req_overflow" start="15" size="1" type="uint" grade="established"/>
+    <field name="ioq_rep_overflow" start="14" size="1" type="uint" grade="established"/>
+    <field name="ioq_req_underflow" start="13" size="1" type="uint" grade="established"/>
+    <field name="ioq_rep_underflow" start="12" size="1" type="uint" grade="established"/>
+    <field name="cam_read_miss" start="9" size="1" type="uint" grade="established"/>
+    <field name="cam_overflow" start="8" size="1" type="uint" grade="established"/>
+    <field name="intr_timed_out" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="WRAPPER_CONTROL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400250" access="rw" reset="unknown">
+    <doc>Wrapper control. Header name IIO_IWC.</doc>
+    <field name="force_req_cred" start="63" size="1" type="uint" grade="established"/>
+    <field name="force_rep_cred" start="62" size="1" type="uint" grade="established"/>
+    <field name="iiq_depth" start="44" size="6" type="uint" grade="established"/>
+    <field name="xn_req_iq_depth" start="36" size="5" type="uint" grade="established"/>
+    <field name="xn_rep_iq_depth" start="28" size="5" type="uint" grade="established"/>
+    <field name="ii_xn_cred_over_under_log" start="8" size="1" type="uint" grade="established"/>
+    <field name="cam_read_lines_reset" start="4" size="1" type="uint" grade="established"/>
+    <field name="dma_byte_swap" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="WRAPPER_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400258" access="rw" reset="unknown">
+    <doc>Wrapper status. Header name IIO_IWS.</doc>
+    <field name="xn_req_iq_credits" start="8" size="5" type="uint" grade="established"/>
+    <field name="xn_rep_iq_credits" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="WRAPPER_ERROR_INTERRUPT_MASK" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400260" access="rw" reset="unknown">
+    <doc>Wrapper error interrupt mask. Header name IIO_IWEIM.</doc>
+    <field name="xn_ii_invalid_cmd" start="33" size="1" type="uint" grade="established"/>
+    <field name="ii_xn_invalid_cmd" start="32" size="1" type="uint" grade="established"/>
+    <field name="ii_xn_req_cred_overflow" start="25" size="1" type="uint" grade="established"/>
+    <field name="ii_xn_rep_cred_overflow" start="24" size="1" type="uint" grade="established"/>
+    <field name="iiq_req_overflow" start="17" size="1" type="uint" grade="established"/>
+    <field name="iiq_rep_overflow" start="16" size="1" type="uint" grade="established"/>
+    <field name="ioq_req_overflow" start="15" size="1" type="uint" grade="established"/>
+    <field name="ioq_rep_overflow" start="14" size="1" type="uint" grade="established"/>
+    <field name="ioq_req_underflow" start="13" size="1" type="uint" grade="established"/>
+    <field name="ioq_rep_underflow" start="12" size="1" type="uint" grade="established"/>
+    <field name="cam_read_miss" start="9" size="1" type="uint" grade="established"/>
+    <field name="cam_overflow" start="8" size="1" type="uint" grade="established"/>
+    <field name="intr_timed_out" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PRB_COUNTER_ADJUST" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400300" access="w" reset="unknown">
+    <doc>PRB counter adjust: a write moves a field of the matching widget's PRB entry up or down by one. For recovery after errors and resets. Header name IIO_IPCA.</doc>
+    <field name="field" start="8" size="2" type="uint" grade="established"/>
+    <field name="adjust" start="4" size="1" type="uint" grade="established"/>
+    <field name="wid" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIO_READ_ENTRY_A" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400308" access="rw" count="8" stride="8" reset="unknown">
+    <doc>PIO read table entry, part A: what the II remembers about an outstanding PIO read so it can build the network reply when Crosstalk answers. Eight entries. Header names IIO_IPRTE0_A to IIO_IPRTE7_A.</doc>
+    <field name="vld" start="63" size="1" type="uint" grade="established"/>
+    <field name="to_cnt" start="58" size="5" type="uint" grade="established"/>
+    <field name="widget" start="54" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIO_READ_ENTRY_B" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400348" access="rw" count="8" stride="8" reset="unknown">
+    <doc>PIO read table entry, part B. Eight entries. Header names IIO_IPRTE0_B to IIO_IPRTE7_B.</doc>
+    <field name="source" start="53" size="11" type="uint" grade="established"/>
+    <field name="init" start="50" size="3" type="uint" grade="established"/>
+    <field name="address" start="3" size="47" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIO_DEALLOCATE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400388" access="w" reset="unknown">
+    <doc>PIO deallocation: a write frees one outstanding-read entry after a read response timeout. Kept for compatibility; SHub cleans up read timeouts itself. Header name IIO_IPDR.</doc>
+    <field name="init_rpcnt" start="5" size="1" type="uint" grade="established"/>
+    <field name="pnd" start="4" size="1" type="uint" grade="established"/>
+    <field name="te" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_DEALLOCATE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400390" access="rw" reset="unknown">
+    <doc>CRB entry deallocation: after software has handled an error captured in a CRB entry and cleared its mark bit, it writes the CRB number plus the pending bit here to return the entry to the free list. The pending bit reads back until the hardware has finished. Kernel: written to free a CRB, then polled until the pending bit clears. Header name IIO_ICDR.</doc>
+    <field name="pnd" start="4" size="1" type="uint" grade="established"/>
+    <field name="crb_num" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="IOQ_FIFO_DEPTH" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400398" access="rw" reset="unknown">
+    <doc>Debug access to the depth of two internal II queues. Header name IIO_IFDR.</doc>
+    <field name="set_ioq_rp" start="15" size="1" type="uint" grade="established"/>
+    <field name="ioq_max_rp" start="8" size="7" type="uint" grade="established"/>
+    <field name="set_ioq_rq" start="7" size="1" type="uint" grade="established"/>
+    <field name="ioq_max_rq" start="0" size="7" type="uint" grade="established"/>
+  </struct>
+  <struct name="IIQ_ARBITRATION" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x4003a0" access="rw" reset="unknown">
+    <doc>Inbound queue arbitration: a slow-drain mode for stress testing. Header name IIO_IIAP.</doc>
+    <field name="rp_mls" start="8" size="6" type="uint" grade="established"/>
+    <field name="rq_mls" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_MANAGEMENT" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x4003a8" access="rw" reset="unknown">
+    <doc>CRB management: valid and error-mark bit vectors for the 15 CRBs, the spurious-message flag and tuning fields. The header warns that writing it while the CRBs are active is dangerous. The kernel reads it to find marked or valid CRBs before cleaning up BTE errors. Kernel: read-only, to see which CRBs are valid or marked before BTE cleanup. Header name IIO_ICMR.</doc>
+    <field name="precise" start="52" size="1" type="uint" grade="established"/>
+    <field name="crb_mark" start="35" size="15" type="uint" grade="established"/>
+    <field name="crb_vld" start="20" size="15" type="uint" grade="established"/>
+    <field name="fc_cnt" start="16" size="4" type="uint" grade="established"/>
+    <field name="clr_rppd" start="13" size="1" type="uint" grade="established"/>
+    <field name="clr_rqpd" start="12" size="1" type="uint" grade="established"/>
+    <field name="c_cnt" start="4" size="4" type="uint" grade="established"/>
+    <field name="rd_hdr" start="1" size="1" type="uint" grade="established"/>
+    <field name="sp_msg" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_CONTROL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x4003b0" access="rw" reset="unknown">
+    <doc>CRB control: software control of the CRB table logic; takes priority over incoming Crosstalk and BTE requests. Header name IIO_ICCR.</doc>
+    <field name="pending" start="16" size="1" type="uint" grade="established"/>
+    <field name="cmd" start="8" size="8" type="uint" grade="established"/>
+    <field name="crb_num" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_TIMEOUT" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x4003b8" access="rw" reset="unknown">
+    <doc>CRB timeout: the maximum timeout value. Header name IIO_ICTO.</doc>
+    <field name="timeout" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_TIMEOUT_PRESCALER" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x4003c0" access="rw" reset="unknown">
+    <doc>CRB timeout prescaler: how often the per-CRB timeout counters advance. Header name IIO_ICTP.</doc>
+    <field name="prescale" start="0" size="24" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_A" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400400" access="rw" count="15" stride="48" reset="unknown">
+    <doc>CRB entry doubleword A (header IIO_ICRB0_A to IIO_ICRBE_A). Fifteen entries at a 0x30 stride; entry 0 is the base.</doc>
+    <field name="sidn" start="54" size="4" type="uint" grade="established"/>
+    <field name="tnum" start="49" size="5" type="uint" grade="established"/>
+    <field name="addr" start="2" size="47" type="uint" grade="established"/>
+    <field name="vld" start="1" size="1" type="uint" grade="established"/>
+    <field name="iow" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_B" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400408" access="rw" count="15" stride="48" reset="unknown">
+    <doc>CRB entry doubleword B (header IIO_ICRB0_B to IIO_ICRBE_B): holds the mark bit that flags an error entry, the 3-bit error code, the initiator and the incoming message type. The kernel reads it for every CRB when an II error interrupt arrives, clears the mark and then frees the entry through the deallocation register. Fifteen entries at a 0x30 stride; entry 0 is the base.</doc>
+    <field name="use_old" start="52" size="1" type="uint" grade="established"/>
+    <field name="imsgtype" start="50" size="2" type="uint" grade="established"/>
+    <field name="imsg" start="42" size="8" type="uint" grade="established"/>
+    <field name="init" start="39" size="3" type="uint" grade="established"/>
+    <field name="exc" start="34" size="5" type="uint" grade="established"/>
+    <field name="ack_cnt" start="16" size="11" type="uint" grade="established"/>
+    <field name="resp" start="15" size="1" type="uint" grade="established"/>
+    <field name="ack" start="14" size="1" type="uint" grade="established"/>
+    <field name="hold" start="13" size="1" type="uint" grade="established"/>
+    <field name="wb" start="12" size="1" type="uint" grade="established"/>
+    <field name="intvn" start="11" size="1" type="uint" grade="established"/>
+    <field name="stall_ib" start="10" size="1" type="uint" grade="established"/>
+    <field name="stall_intr" start="9" size="1" type="uint" grade="established"/>
+    <field name="stall_bte_0" start="8" size="1" type="uint" grade="established"/>
+    <field name="stall_bte_1" start="7" size="1" type="uint" grade="established"/>
+    <field name="error" start="6" size="1" type="uint" grade="established"/>
+    <field name="errcode" start="3" size="3" type="uint" grade="established"/>
+    <field name="ln_uce" start="2" size="1" type="uint" grade="established"/>
+    <field name="mark" start="1" size="1" type="uint" grade="established"/>
+    <field name="xt_err" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_C" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400410" access="rw" count="15" stride="48" reset="unknown">
+    <doc>CRB entry doubleword C (header IIO_ICRB0_C to IIO_ICRBE_C): the kernel reads the BTE number from it when the entry belongs to a BTE operation. Fifteen entries at a 0x30 stride; entry 0 is the base.</doc>
+    <field name="suppl" start="22" size="15" type="uint" grade="established"/>
+    <field name="bo" start="21" size="1" type="uint" grade="established"/>
+    <field name="resprqd" start="20" size="1" type="uint" grade="established"/>
+    <field name="gbr" start="19" size="1" type="uint" grade="established"/>
+    <field name="bte_num" start="18" size="1" type="uint" grade="established"/>
+    <field name="ct" start="17" size="1" type="uint" grade="established"/>
+    <field name="size" start="15" size="2" type="uint" grade="established"/>
+    <field name="source" start="0" size="15" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_D" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400418" access="rw" count="15" stride="48" reset="unknown">
+    <doc>CRB entry doubleword D (header IIO_ICRB0_D to IIO_ICRBE_D): carries the BTE-operation flag the kernel tests to tell BTE entries from others, and the per-entry timeout counter. Fifteen entries at a 0x30 stride; entry 0 is the base.</doc>
+    <field name="sleep" start="52" size="1" type="uint" grade="established"/>
+    <field name="pr_cnt" start="48" size="4" type="uint" grade="established"/>
+    <field name="pr_psc" start="44" size="4" type="uint" grade="established"/>
+    <field name="bte_op" start="43" size="1" type="uint" grade="established"/>
+    <field name="pa_be" start="0" size="43" type="uint" grade="established"/>
+  </struct>
+  <struct name="CRB_E" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400420" access="rw" count="15" stride="48" reset="unknown">
+    <doc>CRB entry doubleword E (header IIO_ICRB0_E to IIO_ICRBE_E): read by the error handler together with the other four. Fifteen entries at a 0x30 stride; entry 0 is the base.</doc>
+    <field name="cvld" start="25" size="1" type="uint" grade="established"/>
+    <field name="tvld" start="24" size="1" type="uint" grade="established"/>
+    <field name="context" start="8" size="15" type="uint" grade="established"/>
+    <field name="timeout" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SPURIOUS_CRB_MESSAGE_LOW" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400700" access="rw" reset="unknown">
+    <doc>Spurious message header, low 64 bits; valid when the spurious flag in the CRB management register is set. Header name IIO_ICSML.</doc>
+    <field name="overflow" start="63" size="1" type="uint" grade="established"/>
+    <field name="newsuppl_ex" start="47" size="14" type="uint" grade="established"/>
+    <field name="tt_addr" start="0" size="47" type="uint" grade="established"/>
+  </struct>
+  <struct name="SPURIOUS_CRB_MESSAGE_MID" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400708" access="rw" reset="unknown">
+    <doc>Spurious message header, middle 64 bits. Header name IIO_ICSMM.</doc>
+    <field name="tt_ack_cnt" start="0" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="SPURIOUS_CRB_MESSAGE_HIGH" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400710" access="rw" reset="unknown">
+    <doc>Spurious message header, high bits. Header name IIO_ICSMH.</doc>
+    <field name="tt_init" start="56" size="3" type="uint" grade="established"/>
+    <field name="tt_device" start="49" size="7" type="uint" grade="established"/>
+    <field name="rqcnt_ge_2" start="48" size="1" type="uint" grade="established"/>
+    <field name="rqcnt_lt_2" start="47" size="1" type="uint" grade="established"/>
+    <field name="rqcnt_ge_18" start="46" size="1" type="uint" grade="established"/>
+    <field name="rqcnt_lt_18" start="45" size="1" type="uint" grade="established"/>
+    <field name="rpcnt_ge_2" start="44" size="1" type="uint" grade="established"/>
+    <field name="rpcnt_lt_2" start="43" size="1" type="uint" grade="established"/>
+    <field name="rpcnt_ge_18" start="42" size="1" type="uint" grade="established"/>
+    <field name="rpcnt_lt_18" start="41" size="1" type="uint" grade="established"/>
+    <field name="rpcnt_ge_34" start="40" size="1" type="uint" grade="established"/>
+    <field name="rpcnt_lt_34" start="39" size="1" type="uint" grade="established"/>
+    <field name="match" start="38" size="1" type="uint" grade="established"/>
+    <field name="cbn" start="37" size="1" type="uint" grade="established"/>
+    <field name="tt_bte_num" start="36" size="1" type="uint" grade="established"/>
+    <field name="tt_respreqd" start="35" size="1" type="uint" grade="established"/>
+    <field name="tt_use_old" start="34" size="1" type="uint" grade="established"/>
+    <field name="tt_imsgtype" start="32" size="2" type="uint" grade="established"/>
+    <field name="tt_imsg" start="24" size="8" type="uint" grade="established"/>
+    <field name="g_stall_ib" start="23" size="1" type="uint" grade="established"/>
+    <field name="g_stall_il" start="22" size="1" type="uint" grade="established"/>
+    <field name="g_stall_bte0" start="21" size="1" type="uint" grade="established"/>
+    <field name="g_stall_bte1" start="20" size="1" type="uint" grade="established"/>
+    <field name="tt_intvn" start="19" size="1" type="uint" grade="established"/>
+    <field name="tt_resp" start="18" size="1" type="uint" grade="established"/>
+    <field name="tt_ack" start="17" size="1" type="uint" grade="established"/>
+    <field name="tt_hold" start="16" size="1" type="uint" grade="established"/>
+    <field name="tt_wb" start="15" size="1" type="uint" grade="established"/>
+    <field name="tt_exc" start="10" size="5" type="uint" grade="established"/>
+    <field name="plusg" start="9" size="1" type="uint" grade="established"/>
+    <field name="plusz" start="8" size="1" type="uint" grade="established"/>
+    <field name="mnusz" start="7" size="1" type="uint" grade="established"/>
+    <field name="mnusg" start="6" size="1" type="uint" grade="established"/>
+    <field name="sync" start="5" size="1" type="uint" grade="established"/>
+    <field name="ft_active_o" start="4" size="1" type="uint" grade="established"/>
+    <field name="ft_wact_o" start="3" size="1" type="uint" grade="established"/>
+    <field name="ft_cwact_o" start="2" size="1" type="uint" grade="established"/>
+    <field name="xerr" start="1" size="1" type="uint" grade="established"/>
+    <field name="tt_vld" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="DEBUG_SUBMENU_SELECT" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x400718" access="rw" reset="unknown">
+    <doc>Debug submenu select: selects what the SHub debug unit shows from the II. Header name IIO_IDBSS.</doc>
+    <field name="iioclk_menu" start="16" size="5" type="uint" grade="established"/>
+    <field name="fsbclk_wrapper_submenu" start="8" size="3" type="uint" grade="established"/>
+    <field name="iioclk_core_submenu" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="BTE_LENGTH_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x410000" access="rw" count="2" stride="65536" reset="unknown">
+    <doc>BTE length and status, one block per engine (engine 1 is 64 KiB above engine 0). Length is in 128-byte cache lines. A write loads the length, sets busy and clears error; the engine counts the length down and clears busy at the end. On SHub 1 the kernel writes the length first and the control register second, which starts the transfer. Header names IIO_IBLS0 and IIO_IBLS1. Kernel: written with the length, read to see busy and error.</doc>
+    <field name="busy" start="20" size="1" type="uint" grade="established"/>
+    <field name="error" start="16" size="1" type="uint" grade="established"/>
+    <field name="length" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="BTE_SOURCE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x410008" access="rw" count="2" stride="65536" reset="unknown">
+    <doc>BTE source physical address, cache-line aligned. One per engine. Header names IIO_IBSA0 and IIO_IBSA1. Kernel: written with the source physical address, AS bits removed.</doc>
+    <field name="addr" start="7" size="42" type="uint" grade="established"/>
+  </struct>
+  <struct name="BTE_DESTINATION" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x410010" access="rw" count="2" stride="65536" reset="unknown">
+    <doc>BTE destination physical address, cache-line aligned. One per engine. Header names IIO_IBDA0 and IIO_IBDA1. Kernel: written with the destination physical address, AS bits removed.</doc>
+    <field name="addr" start="7" size="42" type="uint" grade="established"/>
+  </struct>
+  <struct name="BTE_CONTROL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x410018" access="rw" count="2" stride="65536" reset="unknown">
+    <doc>BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode.</doc>
+    <field name="poison" start="8" size="1" type="uint" grade="established"/>
+    <field name="notify" start="4" size="1" type="uint" grade="established"/>
+    <field name="zerofill" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="BTE_NOTIFY" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x410020" access="rw" count="2" stride="65536" reset="unknown">
+    <doc>BTE notification address: a cache-line-aligned address that receives the completion write (the header calls it a write-invalidate) carrying the final length and status. Header names IIO_IBNA0 and IIO_IBNA1. Kernel: written with the physical address of a notification word.</doc>
+    <field name="addr" start="7" size="42" type="uint" grade="established"/>
+  </struct>
+  <struct name="BTE_INTERRUPT" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x410028" access="rw" count="2" stride="65536" reset="unknown">
+    <doc>BTE interrupt address: programmable level, node and PI unit of the processor to interrupt on completion. The kernel never uses it. Header names IIO_IBIA0 and IIO_IBIA1.</doc>
+    <field name="level" start="16" size="7" type="uint" grade="established"/>
+    <field name="node_id" start="1" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_CONTROL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x430000" access="rw" reset="unknown">
+    <doc>I/O performance control: selects which of 17 quantities each of the two performance counters measures. Header name IIO_IPCR.</doc>
+    <field name="icct" start="8" size="8" type="uint" grade="established"/>
+    <field name="ippr1_c" start="4" size="4" type="uint" grade="established"/>
+    <field name="ippr0_c" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_PROFILE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code" register="yes" offset="0x430008" access="rw" reset="unknown">
+    <doc>I/O performance profiling: the counter values. Header name IIO_IPPR.</doc>
+    <field name="ippr1" start="32" size="32" type="uint" grade="established"/>
+    <field name="ippr0" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <constant name="BTE_ENGINES" value="0x2" grade="established"/>
+  <constant name="BTE_LEN_BITS" value="0x10" grade="established"/>
+  <constant name="BTE_LINE_BYTES" value="0x80" grade="inferred"/>
+  <constant name="CRB_STRIDE" value="0x30" grade="established"/>
+  <constant name="HUB_WIDGET_ID_MAX" value="0xf" grade="established"/>
+  <constant name="ICRB_ECODE_AERR" value="0x3" grade="established"/>
+  <constant name="ICRB_ECODE_DERR" value="0x0" grade="established"/>
+  <constant name="ICRB_ECODE_PERR" value="0x1" grade="established"/>
+  <constant name="ICRB_ECODE_PRERR" value="0x5" grade="established"/>
+  <constant name="ICRB_ECODE_PWERR" value="0x4" grade="established"/>
+  <constant name="ICRB_ECODE_TOUT" value="0x6" grade="established"/>
+  <constant name="ICRB_ECODE_WERR" value="0x2" grade="established"/>
+  <constant name="ICRB_ECODE_XTERR" value="0x7" grade="established"/>
+  <constant name="ICRB_IMSGT_BTE" value="0x1" grade="established"/>
+  <constant name="ICRB_IMSGT_CRB" value="0x3" grade="established"/>
+  <constant name="ICRB_IMSGT_SN1NET" value="0x2" grade="established"/>
+  <constant name="ICRB_IMSGT_XTALK" value="0x0" grade="established"/>
+  <constant name="ICRB_INIT_BTE0" value="0x1" grade="established"/>
+  <constant name="ICRB_INIT_BTE1" value="0x5" grade="established"/>
+  <constant name="ICRB_INIT_CRB" value="0x3" grade="established"/>
+  <constant name="ICRB_INIT_NET" value="0x2" grade="established"/>
+  <constant name="ICRB_INIT_XTALK" value="0x0" grade="established"/>
+  <constant name="NUM_BIG_WINDOWS" value="0x6" grade="established"/>
+  <constant name="NUM_CRBS" value="0xf" grade="established"/>
+  <constant name="NUM_ITTES" value="0x7" grade="established"/>
+  <constant name="PROTECTION_OVERRIDE_KEY" value="0x53474972756c6573" grade="established"/>
+  <constant name="WARM_RESET" value="0x100" grade="established"/>
+</genxml>

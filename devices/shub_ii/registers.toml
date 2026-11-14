@@ -1,0 +1,925 @@
+unit = "shub_ii"
+prefix = "SHUB_II"
+title = "SHub 1 I/O interface (II): Crosstalk port, access protection, CRBs and block transfer engines"
+doc = "Offsets are node-relative, the same numbers the SGI Linux ia64 header uses: the II starts 4 MiB into the node's register space. Field positions are the header's bitfield unions read least-significant first, which agrees with the header's own shift and mask macros wherever it has both. The header is the vendor platform source, so offsets and field positions are established as definitions. Role text is a paraphrase of the header's comments and is inferred. Reset values are unknown unless a source states one, and none does. The kernel files read use few of these registers; the access note in each register says whether the kernel touches it."
+from = "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+public_from = ["Linux v5.3 SGI SN2 platform"]
+
+[c]
+offset_macro = "bare"
+
+[constants]
+NUM_CRBS = { value = 15, grade = "established", doc = "Number of CRB entries, numbered 0 to 14 (the header's IIO_NUM_CRBS)." }
+CRB_STRIDE = { value = 0x30, grade = "established", doc = "Distance between CRB entries: each entry takes six 8-byte slots, of which five (A to E) are registers (header macro IIO_ICRB_A: base plus 6 times 8 times the index)." }
+NUM_ITTES = { value = 7, grade = "established", doc = "Number of big-window translation entries. The header's manual numbering is 1 to 7, the kernel's 0 to 6." }
+NUM_BIG_WINDOWS = { value = 6, grade = "established", doc = "Big windows the kernel treats as real; the seventh entry stands in for small window 0 (header comment: a permanent workaround for a processor-interface defect)." }
+HUB_WIDGET_ID_MAX = { value = 0xf, grade = "established", doc = "Highest widget number." }
+WARM_RESET = { value = 0x100, grade = "established", doc = "Bit 8 of the LLP control and status register; the header names it ILCSR_WARM_RESET. Same position as the warm_reset field." }
+BTE_ENGINES = { value = 2, grade = "established", doc = "Engines in the II; SHub 2 has four, in a different block (see the SHub 2 overlay of devices/shub)." }
+BTE_LEN_BITS = { value = 16, grade = "established", doc = "Width of the length field of the BTE status register; the kernel's longest transfer is 65535 cache lines (BTE_LEN_MASK shifted by the line size)." }
+BTE_LINE_BYTES = { value = 128, grade = "inferred", doc = "BTE unit of transfer. The kernel shifts the byte length by the L1 cache line size of the CPU (128 bytes on Itanium 2); the header's own text says lines are 128 bytes." }
+ICRB_ECODE_DERR = { value = 0, grade = "established", doc = "CRB error code: directory error caused by an II access." }
+ICRB_ECODE_PERR = { value = 1, grade = "established", doc = "CRB error code: poison error on an I/O access." }
+ICRB_ECODE_WERR = { value = 2, grade = "established", doc = "CRB error code: write error, for example an invalidate to a read-only line." }
+ICRB_ECODE_AERR = { value = 3, grade = "established", doc = "CRB error code: access (protection) error." }
+ICRB_ECODE_PWERR = { value = 4, grade = "established", doc = "CRB error code: partial write error." }
+ICRB_ECODE_PRERR = { value = 5, grade = "established", doc = "CRB error code: partial read error." }
+ICRB_ECODE_TOUT = { value = 6, grade = "established", doc = "CRB error code: timeout before deallocation." }
+ICRB_ECODE_XTERR = { value = 7, grade = "established", doc = "CRB error code: incoming Crosstalk packet had its error bit set." }
+ICRB_IMSGT_XTALK = { value = 0, grade = "established", doc = "CRB incoming message type: from Crosstalk." }
+ICRB_IMSGT_BTE = { value = 1, grade = "established", doc = "CRB incoming message type: from a BTE." }
+ICRB_IMSGT_SN1NET = { value = 2, grade = "established", doc = "CRB incoming message type: from the network. The header names it for SN1; whether SHub reuses the value for NUMAlink is not stated." }
+ICRB_IMSGT_CRB = { value = 3, grade = "established", doc = "CRB incoming message type 3. The header marks it with question marks." }
+ICRB_INIT_XTALK = { value = 0, grade = "established", doc = "CRB initiator: Crosstalk." }
+ICRB_INIT_BTE0 = { value = 1, grade = "established", doc = "CRB initiator: BTE 0." }
+ICRB_INIT_NET = { value = 2, grade = "established", doc = "CRB initiator: the network (the header calls it SN1net)." }
+ICRB_INIT_CRB = { value = 3, grade = "established", doc = "CRB initiator 3; the header marks it with a question mark." }
+ICRB_INIT_BTE1 = { value = 5, grade = "established", doc = "CRB initiator: BTE 1. Bit 2 of the initiator is the BTE number (kernel hub error code)." }
+PROTECTION_OVERRIDE_KEY = { value = 0x53474972756c6573, grade = "established", doc = "Value written to the local access protection override register: the ASCII string SGIrules (header text)." }
+
+
+[registers.widget_id]
+offset = 0x400000
+access = "r"
+width = 64
+grade = "established"
+doc = "Crosstalk widget identification. Echoes the revision and manufacturer fields of the local block's revision register and carries the part number SGI assigned to SHub. Also visible to a widget on the link at its own offset 0. Header name IIO_WID."
+
+[registers.widget_id.fields]
+mfg_num = { bits = [11, 1], grade = "established" }
+part_num = { bits = [27, 12], grade = "established" }
+rev_num = { bits = [31, 28], grade = "established" }
+
+[registers.widget_status]
+offset = 0x400008
+access = "rw"
+width = 64
+grade = "established"
+doc = "Widget status: error flags the II sets on a Crosstalk credit timeout, tail timeout, retry limit and similar link faults, plus a pending count. Cleared by the mechanisms the header lists per field. Header name IIO_WSTAT."
+
+[registers.widget_status.fields]
+pending = { bits = [3, 0], grade = "established" }
+xt_crd_to = { bits = [4, 4], grade = "established" }
+xt_tail_to = { bits = [5, 5], grade = "established" }
+tx_mx_rty = { bits = [9, 9], grade = "established" }
+llp_tx_cnt = { bits = [23, 16], grade = "established" }
+crazy = { bits = [32, 32], grade = "established" }
+
+[registers.widget_control]
+offset = 0x400020
+access = "rw"
+width = 64
+grade = "established"
+doc = "Widget control: Crosstalk flow control. Holds the widget id the II answers to, tag mode, destination credit count, a force-bad-packet debug bit, the direct-connect bit and the elasticity threshold. Header name IIO_WCR."
+
+[registers.widget_control.fields]
+wid = { bits = [3, 0], grade = "established" }
+tag = { bits = [4, 4], grade = "established" }
+dst_crd = { bits = [15, 13], grade = "established" }
+f_bad_pkt = { bits = [16, 16], grade = "established" }
+dir_con = { bits = [17, 17], grade = "established" }
+e_thresh = { bits = [22, 18], grade = "established" }
+
+[registers.local_access_protection]
+offset = 0x400100
+access = "rw"
+width = 64
+grade = "established"
+doc = "Local access protection: one bit per region of nodes. A PIO read or write is performed only if the requester's region bit is set; reset value permits every node. The header says it is also reachable through an alias window for the local processors. Header name IIO_ILAPR."
+
+[registers.local_access_protection.fields]
+region = { bits = [63, 0], grade = "established" }
+
+[registers.local_access_override]
+offset = 0x400108
+access = "w"
+width = 64
+grade = "established"
+doc = "Protection override: writing the 64-bit ASCII string SGIrules sets the requester's region bit in the local access protection register; any other value is ignored. Header name IIO_ILAPO."
+
+[registers.local_access_override.fields]
+io_ovrride = { bits = [63, 0], grade = "established" }
+
+[registers.outbound_widget_access]
+offset = 0x400110
+access = "rw"
+width = 64
+grade = "established"
+doc = "Outbound widget access: one bit per widget qualifying PIO and graphics writes the SHub launches toward that widget, on top of the local access protection register. Header name IIO_IOWA."
+
+[registers.outbound_widget_access.fields]
+w0_oac = { bits = [0, 0], grade = "established" }
+wx_oac = { bits = [15, 8], grade = "established" }
+
+[registers.inbound_widget_access]
+offset = 0x400118
+access = "rw"
+width = 64
+grade = "established"
+doc = "Inbound widget access: qualifies requests a widget sends toward the SHub. Meant for software to fence off a misbehaving widget. Header name IIO_IIWA."
+
+[registers.inbound_widget_access.fields]
+w0_iac = { bits = [0, 0], grade = "established" }
+wx_iac = { bits = [15, 8], grade = "established" }
+
+[registers.inbound_device_error_mask]
+offset = 0x400120
+access = "rw"
+width = 64
+grade = "established"
+doc = "Inbound device error mask: per-device (up to eight per widget) enable bits for DMA masters. The SHub clears a device's bit when it detects an error that requires the device to be shut off. Header name IIO_IIDEM."
+
+[registers.inbound_device_error_mask.fields]
+w8_dxs = { bits = [7, 0], grade = "established" }
+w9_dxs = { bits = [15, 8], grade = "established" }
+wa_dxs = { bits = [23, 16], grade = "established" }
+wb_dxs = { bits = [31, 24], grade = "established" }
+wc_dxs = { bits = [39, 32], grade = "established" }
+wd_dxs = { bits = [47, 40], grade = "established" }
+we_dxs = { bits = [55, 48], grade = "established" }
+wf_dxs = { bits = [63, 56], grade = "established" }
+
+[registers.llp_control_status]
+offset = 0x400128
+access = "rw"
+width = 64
+grade = "established"
+doc = "LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR."
+
+[registers.llp_control_status.fields]
+nullto = { bits = [5, 0], grade = "established" }
+wrmrst = { bits = [8, 8], grade = "established" }
+llp_en = { bits = [10, 10], grade = "established" }
+bm8 = { bits = [11, 11], grade = "established" }
+llp_stat = { bits = [13, 12], grade = "established" }
+remote_power = { bits = [14, 14], grade = "established" }
+maxrtry = { bits = [25, 16], grade = "established" }
+d_avail_sel = { bits = [27, 26], grade = "established" }
+maxbrst = { bits = [41, 32], grade = "established" }
+
+[registers.llp_log]
+offset = 0x400130
+access = "rw"
+width = 64
+grade = "established"
+doc = "LLP log: status of the link error rate. Header name IIO_ILLR."
+
+[registers.llp_log.fields]
+sn_cnt = { bits = [15, 0], grade = "established" }
+cb_cnt = { bits = [31, 16], grade = "established" }
+
+[registers.interrupt_destination]
+offset = 0x400138
+access = "rw"
+width = 64
+grade = "established"
+doc = "Interrupt destination for II-detected non-BTE error interrupts: vector level, target PI unit, target node, an enable bit and a sent state. Which processor interface receives the packet is fixed in hardware: PI0 register 0x1800090 or PI1 register 0x1a00090 of the target node (header text). Header name IIO_IIDSR."
+
+[registers.interrupt_destination.fields]
+level = { bits = [7, 0], grade = "established" }
+pi_id = { bits = [8, 8], grade = "established" }
+node = { bits = [19, 9], grade = "established" }
+enable = { bits = [24, 24], grade = "established" }
+int_sent = { bits = [29, 28], grade = "established" }
+pi0_forward_int = { bits = [32, 32], grade = "established" }
+pi1_forward_int = { bits = [33, 33], grade = "established" }
+
+[registers.graphics_map]
+offset = 0x400140
+count = 2
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Graphics node and widget map: matches write responses coming back from a graphics widget to the processor that issued the write, so the response can be turned into a flow-control credit for that processor. Two instances. Header name IIO_IGFX."
+
+[registers.graphics_map.fields]
+w_num = { bits = [3, 0], grade = "established" }
+pi_id = { bits = [4, 4], grade = "established" }
+n_num = { bits = [16, 5], grade = "established" }
+p_num = { bits = [17, 17], grade = "established" }
+
+[registers.scratch]
+offset = 0x400150
+count = 2
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Scratch register for software. Two instances, no hardware effect. Header name IIO_ISCR."
+
+[registers.scratch.fields]
+scratch = { bits = [63, 0], grade = "established" }
+
+[registers.itte]
+offset = 0x400160
+count = 7
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Translation table entry mapping one SHub big window to a Crosstalk address: a 5-bit offset joined to the window-relative address bits, a 4-bit widget number and an I/O space bit. The header numbers the entries 1 to 7; the kernel numbers them 0 to 6, and uses the top big window as a stand-in for small window 0 to work around a defect on the processor-interface side. Header names IIO_ITTE1 to IIO_ITTE7."
+
+[registers.itte.fields]
+offset = { bits = [4, 0], grade = "established" }
+w_num = { bits = [11, 8], grade = "established" }
+iosp = { bits = [12, 12], grade = "established" }
+
+[registers.prb]
+offset = 0x400198
+count = 9
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "PIO request buffer for one widget (widget 0 and widgets 8 to F): the state the II keeps to manage PIO flow control on Crosstalk and toward the router network, including a spurious-read and spurious-write indicator. Nine entries, widget 0 first and widgets 8 to F after it, at an 8-byte stride (header names IIO_IPRB0, IIO_IPRB8 to IIO_IPRBF)."
+
+[registers.prb.fields]
+c_bit = { bits = [7, 0], grade = "established" }
+na = { bits = [21, 8], grade = "established" }
+nb = { bits = [37, 24], grade = "established" }
+m_bit = { bits = [41, 40], grade = "established" }
+f_bit = { bits = [42, 42], grade = "established" }
+of_cnt = { bits = [47, 43], grade = "established" }
+error = { bits = [48, 48], grade = "established" }
+rd_to = { bits = [49, 49], grade = "established" }
+spur_wr = { bits = [50, 50], grade = "established" }
+spur_rd = { bits = [51, 51], grade = "established" }
+mult_err = { bits = [63, 63], grade = "established" }
+
+[registers.crosstalk_credit_timeout]
+offset = 0x4001e0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Crosstalk credit timeout threshold: how long, counted in 128 II clocks, outbound Crosstalk credits may stay below the threshold before a credit timeout is flagged. Header name IIO_IXCC."
+
+[registers.crosstalk_credit_timeout.fields]
+time_out = { bits = [25, 0], grade = "established" }
+
+[registers.misc_error_mask]
+offset = 0x4001e8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Miscellaneous error mask: enable bits for widget 0 and the two BTE streams; the SHub clears a bit when it shuts that source down after an error. Software sets it again by writing a one. The kernel's BTE recovery sets the two BTE bits. Kernel: read, BTE 0 and BTE 1 bits set, written back after a BTE error. Header name IIO_IMEM."
+
+[registers.misc_error_mask.fields]
+w0_esd = { bits = [0, 0], grade = "established" }
+b0_esd = { bits = [4, 4], grade = "established" }
+b1_esd = { bits = [8, 8], grade = "established" }
+clr_precise = { bits = [12, 12], grade = "established" }
+
+[registers.crosstalk_timeout_threshold]
+offset = 0x4001f0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Crosstalk timeout threshold: read response timeout, its prescaler and the tail-flit timeout, after which the II raises an error interrupt. Header name IIO_IXTT."
+
+[registers.crosstalk_timeout_threshold.fields]
+tail_to = { bits = [25, 0], grade = "established" }
+rrsp_ps = { bits = [54, 32], grade = "established" }
+rrsp_to = { bits = [59, 55], grade = "established" }
+
+[registers.error_clear]
+offset = 0x4001f8
+access = "w"
+width = 64
+grade = "established"
+doc = "Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR."
+
+[registers.error_clear.fields]
+e_prb_0 = { bits = [0, 0], grade = "established" }
+e_prb_8 = { bits = [8, 8], grade = "established" }
+e_prb_9 = { bits = [9, 9], grade = "established" }
+e_prb_a = { bits = [10, 10], grade = "established" }
+e_prb_b = { bits = [11, 11], grade = "established" }
+e_prb_c = { bits = [12, 12], grade = "established" }
+e_prb_d = { bits = [13, 13], grade = "established" }
+e_prb_e = { bits = [14, 14], grade = "established" }
+e_prb_f = { bits = [15, 15], grade = "established" }
+e_crazy = { bits = [16, 16], grade = "established" }
+e_bte_0 = { bits = [17, 17], grade = "established" }
+e_bte_1 = { bits = [18, 18], grade = "established" }
+spur_rd_hdr = { bits = [29, 29], grade = "established" }
+cam_intr_to = { bits = [30, 30], grade = "established" }
+cam_overflow = { bits = [31, 31], grade = "established" }
+cam_read_miss = { bits = [32, 32], grade = "established" }
+ioq_rep_underflow = { bits = [33, 33], grade = "established" }
+ioq_req_underflow = { bits = [34, 34], grade = "established" }
+ioq_rep_overflow = { bits = [35, 35], grade = "established" }
+ioq_req_overflow = { bits = [36, 36], grade = "established" }
+iiq_rep_overflow = { bits = [37, 37], grade = "established" }
+iiq_req_overflow = { bits = [38, 38], grade = "established" }
+ii_xn_rep_cred_overflow = { bits = [39, 39], grade = "established" }
+ii_xn_req_cred_overflow = { bits = [40, 40], grade = "established" }
+ii_xn_invalid_cmd = { bits = [41, 41], grade = "established" }
+xn_ii_invalid_cmd = { bits = [42, 42], grade = "established" }
+
+[registers.bte_common_control]
+offset = 0x400200
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE control, shared by both engines: the combined count of CRBs the two engines may use (which sets their bandwidth) and a soft reset used to recover after an error. Kernel: read, soft reset set, written back to reinitialise both BTE state machines after an error. Header name IIO_IBCR."
+
+[registers.bte_common_control.fields]
+count = { bits = [3, 0], grade = "established" }
+soft_reset = { bits = [8, 8], grade = "established" }
+
+[registers.spurious_message]
+offset = 0x400208
+access = "r"
+width = 64
+grade = "established"
+doc = "Header of a spurious read response from Crosstalk, captured together with the spurious-sideband register. Header name IIO_IXSM."
+
+[registers.spurious_message.fields]
+byte_en = { bits = [31, 0], grade = "established" }
+tag = { bits = [35, 33], grade = "established" }
+alt_pactyp = { bits = [39, 36], grade = "established" }
+bo = { bits = [40, 40], grade = "established" }
+error = { bits = [41, 41], grade = "established" }
+vbpm = { bits = [42, 42], grade = "established" }
+gbr = { bits = [43, 43], grade = "established" }
+ds = { bits = [45, 44], grade = "established" }
+ct = { bits = [46, 46], grade = "established" }
+tnum = { bits = [51, 47], grade = "established" }
+pactyp = { bits = [55, 52], grade = "established" }
+sidn = { bits = [59, 56], grade = "established" }
+didn = { bits = [63, 60], grade = "established" }
+
+[registers.spurious_sideband]
+offset = 0x400210
+access = "rw"
+width = 64
+grade = "established"
+doc = "Spurious sideband and valid flag for the capture in the spurious-message register. Header name IIO_IXSS."
+
+[registers.spurious_sideband.fields]
+sideband = { bits = [7, 0], grade = "established" }
+valid = { bits = [63, 63], grade = "established" }
+
+[registers.llp_channel_test]
+offset = 0x400218
+access = "rw"
+width = 64
+grade = "established"
+doc = "LLP channel test: access to the LLP's test port. Header name IIO_ILCT."
+
+[registers.llp_channel_test.fields]
+test_seed = { bits = [19, 0], grade = "established" }
+test_mask = { bits = [27, 20], grade = "established" }
+test_data = { bits = [47, 28], grade = "established" }
+test_valid = { bits = [48, 48], grade = "established" }
+test_cberr = { bits = [49, 49], grade = "established" }
+test_flit = { bits = [52, 50], grade = "established" }
+test_clear = { bits = [53, 53], grade = "established" }
+test_err_capture = { bits = [54, 54], grade = "established" }
+
+[registers.error_packet_header_1]
+offset = 0x400220
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header, part 1, of an illegal incoming network packet, with a valid flag, an overrun flag and an error type (short or long request or reply). Header name IIO_IIEPH1."
+
+[registers.error_packet_header_1.fields]
+command = { bits = [6, 0], grade = "established" }
+suppl = { bits = [21, 8], grade = "established" }
+source = { bits = [36, 23], grade = "established" }
+err_type = { bits = [41, 38], grade = "established" }
+overrun = { bits = [46, 46], grade = "established" }
+valid = { bits = [50, 50], grade = "established" }
+
+[registers.error_packet_header_2]
+offset = 0x400228
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header, part 2, of an illegal incoming network packet. Header name IIO_IIEPH2."
+
+[registers.error_packet_header_2.fields]
+address = { bits = [49, 3], grade = "established" }
+tail = { bits = [60, 60], grade = "established" }
+
+[registers.sxb_access_protection]
+offset = 0x400230
+access = "rw"
+width = 64
+grade = "established"
+doc = "Local access protection for the SXB. Same scheme as the main local access protection register. Header name IIO_ISLAPR."
+
+[registers.sxb_access_protection.fields]
+region = { bits = [63, 0], grade = "established" }
+
+[registers.sxb_access_override]
+offset = 0x400238
+access = "w"
+width = 64
+grade = "established"
+doc = "Override for the SXB access protection register. Header name IIO_ISLAPO."
+
+[registers.sxb_access_override.fields]
+io_sbx_ovrride = { bits = [55, 0], grade = "established" }
+
+[registers.wrapper_interrupt]
+offset = 0x400240
+access = "rw"
+width = 64
+grade = "established"
+doc = "Wrapper interrupt: how long the II wrapper waits for an issued interrupt before it times it out and drops it. Header name IIO_IWI."
+
+[registers.wrapper_interrupt.fields]
+prescale = { bits = [23, 0], grade = "established" }
+timeout = { bits = [39, 32], grade = "established" }
+intrpt_retry_period = { bits = [55, 48], grade = "established" }
+
+[registers.wrapper_error_log]
+offset = 0x400248
+access = "rw"
+width = 64
+grade = "established"
+doc = "Wrapper error log. Header name IIO_IWEL."
+
+[registers.wrapper_error_log.fields]
+intr_timed_out = { bits = [0, 0], grade = "established" }
+cam_overflow = { bits = [8, 8], grade = "established" }
+cam_read_miss = { bits = [9, 9], grade = "established" }
+ioq_rep_underflow = { bits = [12, 12], grade = "established" }
+ioq_req_underflow = { bits = [13, 13], grade = "established" }
+ioq_rep_overflow = { bits = [14, 14], grade = "established" }
+ioq_req_overflow = { bits = [15, 15], grade = "established" }
+iiq_rep_overflow = { bits = [16, 16], grade = "established" }
+iiq_req_overflow = { bits = [17, 17], grade = "established" }
+ii_xn_rep_cred_over_under = { bits = [24, 24], grade = "established" }
+ii_xn_req_cred_over_under = { bits = [25, 25], grade = "established" }
+ii_xn_invalid_cmd = { bits = [32, 32], grade = "established" }
+xn_ii_invalid_cmd = { bits = [33, 33], grade = "established" }
+
+[registers.wrapper_control]
+offset = 0x400250
+access = "rw"
+width = 64
+grade = "established"
+doc = "Wrapper control. Header name IIO_IWC."
+
+[registers.wrapper_control.fields]
+dma_byte_swap = { bits = [0, 0], grade = "established" }
+cam_read_lines_reset = { bits = [4, 4], grade = "established" }
+ii_xn_cred_over_under_log = { bits = [8, 8], grade = "established" }
+xn_rep_iq_depth = { bits = [32, 28], grade = "established" }
+xn_req_iq_depth = { bits = [40, 36], grade = "established" }
+iiq_depth = { bits = [49, 44], grade = "established" }
+force_rep_cred = { bits = [62, 62], grade = "established" }
+force_req_cred = { bits = [63, 63], grade = "established" }
+
+[registers.wrapper_status]
+offset = 0x400258
+access = "rw"
+width = 64
+grade = "established"
+doc = "Wrapper status. Header name IIO_IWS."
+
+[registers.wrapper_status.fields]
+xn_rep_iq_credits = { bits = [4, 0], grade = "established" }
+xn_req_iq_credits = { bits = [12, 8], grade = "established" }
+
+[registers.wrapper_error_interrupt_mask]
+offset = 0x400260
+access = "rw"
+width = 64
+grade = "established"
+doc = "Wrapper error interrupt mask. Header name IIO_IWEIM."
+
+[registers.wrapper_error_interrupt_mask.fields]
+intr_timed_out = { bits = [0, 0], grade = "established" }
+cam_overflow = { bits = [8, 8], grade = "established" }
+cam_read_miss = { bits = [9, 9], grade = "established" }
+ioq_rep_underflow = { bits = [12, 12], grade = "established" }
+ioq_req_underflow = { bits = [13, 13], grade = "established" }
+ioq_rep_overflow = { bits = [14, 14], grade = "established" }
+ioq_req_overflow = { bits = [15, 15], grade = "established" }
+iiq_rep_overflow = { bits = [16, 16], grade = "established" }
+iiq_req_overflow = { bits = [17, 17], grade = "established" }
+ii_xn_rep_cred_overflow = { bits = [24, 24], grade = "established" }
+ii_xn_req_cred_overflow = { bits = [25, 25], grade = "established" }
+ii_xn_invalid_cmd = { bits = [32, 32], grade = "established" }
+xn_ii_invalid_cmd = { bits = [33, 33], grade = "established" }
+
+[registers.prb_counter_adjust]
+offset = 0x400300
+access = "w"
+width = 64
+grade = "established"
+doc = "PRB counter adjust: a write moves a field of the matching widget's PRB entry up or down by one. For recovery after errors and resets. Header name IIO_IPCA."
+
+[registers.prb_counter_adjust.fields]
+wid = { bits = [3, 0], grade = "established" }
+adjust = { bits = [4, 4], grade = "established" }
+field = { bits = [9, 8], grade = "established" }
+
+[registers.pio_read_entry_a]
+offset = 0x400308
+count = 8
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "PIO read table entry, part A: what the II remembers about an outstanding PIO read so it can build the network reply when Crosstalk answers. Eight entries. Header names IIO_IPRTE0_A to IIO_IPRTE7_A."
+
+[registers.pio_read_entry_a.fields]
+widget = { bits = [57, 54], grade = "established" }
+to_cnt = { bits = [62, 58], grade = "established" }
+vld = { bits = [63, 63], grade = "established" }
+
+[registers.pio_read_entry_b]
+offset = 0x400348
+count = 8
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+doc = "PIO read table entry, part B. Eight entries. Header names IIO_IPRTE0_B to IIO_IPRTE7_B."
+
+[registers.pio_read_entry_b.fields]
+address = { bits = [49, 3], grade = "established" }
+init = { bits = [52, 50], grade = "established" }
+source = { bits = [63, 53], grade = "established" }
+
+[registers.pio_deallocate]
+offset = 0x400388
+access = "w"
+width = 64
+grade = "established"
+doc = "PIO deallocation: a write frees one outstanding-read entry after a read response timeout. Kept for compatibility; SHub cleans up read timeouts itself. Header name IIO_IPDR."
+
+[registers.pio_deallocate.fields]
+te = { bits = [2, 0], grade = "established" }
+pnd = { bits = [4, 4], grade = "established" }
+init_rpcnt = { bits = [5, 5], grade = "established" }
+
+[registers.crb_deallocate]
+offset = 0x400390
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB entry deallocation: after software has handled an error captured in a CRB entry and cleared its mark bit, it writes the CRB number plus the pending bit here to return the entry to the free list. The pending bit reads back until the hardware has finished. Kernel: written to free a CRB, then polled until the pending bit clears. Header name IIO_ICDR."
+
+[registers.crb_deallocate.fields]
+crb_num = { bits = [3, 0], grade = "established" }
+pnd = { bits = [4, 4], grade = "established" }
+
+[registers.ioq_fifo_depth]
+offset = 0x400398
+access = "rw"
+width = 64
+grade = "established"
+doc = "Debug access to the depth of two internal II queues. Header name IIO_IFDR."
+
+[registers.ioq_fifo_depth.fields]
+ioq_max_rq = { bits = [6, 0], grade = "established" }
+set_ioq_rq = { bits = [7, 7], grade = "established" }
+ioq_max_rp = { bits = [14, 8], grade = "established" }
+set_ioq_rp = { bits = [15, 15], grade = "established" }
+
+[registers.iiq_arbitration]
+offset = 0x4003a0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Inbound queue arbitration: a slow-drain mode for stress testing. Header name IIO_IIAP."
+
+[registers.iiq_arbitration.fields]
+rq_mls = { bits = [5, 0], grade = "established" }
+rp_mls = { bits = [13, 8], grade = "established" }
+
+[registers.crb_management]
+offset = 0x4003a8
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB management: valid and error-mark bit vectors for the 15 CRBs, the spurious-message flag and tuning fields. The header warns that writing it while the CRBs are active is dangerous. The kernel reads it to find marked or valid CRBs before cleaning up BTE errors. Kernel: read-only, to see which CRBs are valid or marked before BTE cleanup. Header name IIO_ICMR."
+
+[registers.crb_management.fields]
+sp_msg = { bits = [0, 0], grade = "established" }
+rd_hdr = { bits = [1, 1], grade = "established" }
+c_cnt = { bits = [7, 4], grade = "established" }
+clr_rqpd = { bits = [12, 12], grade = "established" }
+clr_rppd = { bits = [13, 13], grade = "established" }
+fc_cnt = { bits = [19, 16], grade = "established" }
+crb_vld = { bits = [34, 20], grade = "established" }
+crb_mark = { bits = [49, 35], grade = "established" }
+precise = { bits = [52, 52], grade = "established" }
+
+[registers.crb_control]
+offset = 0x4003b0
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB control: software control of the CRB table logic; takes priority over incoming Crosstalk and BTE requests. Header name IIO_ICCR."
+
+[registers.crb_control.fields]
+crb_num = { bits = [3, 0], grade = "established" }
+cmd = { bits = [15, 8], grade = "established" }
+pending = { bits = [16, 16], grade = "established" }
+
+[registers.crb_timeout]
+offset = 0x4003b8
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB timeout: the maximum timeout value. Header name IIO_ICTO."
+
+[registers.crb_timeout.fields]
+timeout = { bits = [7, 0], grade = "established" }
+
+[registers.crb_timeout_prescaler]
+offset = 0x4003c0
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB timeout prescaler: how often the per-CRB timeout counters advance. Header name IIO_ICTP."
+
+[registers.crb_timeout_prescaler.fields]
+prescale = { bits = [23, 0], grade = "established" }
+
+[registers.crb_a]
+offset = 0x400400
+count = 15
+stride = 0x30
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB entry doubleword A (header IIO_ICRB0_A to IIO_ICRBE_A). Fifteen entries at a 0x30 stride; entry 0 is the base."
+
+[registers.crb_a.fields]
+iow = { bits = [0, 0], grade = "established" }
+vld = { bits = [1, 1], grade = "established" }
+addr = { bits = [48, 2], grade = "established" }
+tnum = { bits = [53, 49], grade = "established" }
+sidn = { bits = [57, 54], grade = "established" }
+
+[registers.crb_b]
+offset = 0x400408
+count = 15
+stride = 0x30
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB entry doubleword B (header IIO_ICRB0_B to IIO_ICRBE_B): holds the mark bit that flags an error entry, the 3-bit error code, the initiator and the incoming message type. The kernel reads it for every CRB when an II error interrupt arrives, clears the mark and then frees the entry through the deallocation register. Fifteen entries at a 0x30 stride; entry 0 is the base."
+
+[registers.crb_b.fields]
+xt_err = { bits = [0, 0], grade = "established" }
+mark = { bits = [1, 1], grade = "established" }
+ln_uce = { bits = [2, 2], grade = "established" }
+errcode = { bits = [5, 3], grade = "established" }
+error = { bits = [6, 6], grade = "established" }
+stall_bte_1 = { bits = [7, 7], grade = "established" }
+stall_bte_0 = { bits = [8, 8], grade = "established" }
+stall_intr = { bits = [9, 9], grade = "established" }
+stall_ib = { bits = [10, 10], grade = "established" }
+intvn = { bits = [11, 11], grade = "established" }
+wb = { bits = [12, 12], grade = "established" }
+hold = { bits = [13, 13], grade = "established" }
+ack = { bits = [14, 14], grade = "established" }
+resp = { bits = [15, 15], grade = "established" }
+ack_cnt = { bits = [26, 16], grade = "established" }
+exc = { bits = [38, 34], grade = "established" }
+init = { bits = [41, 39], grade = "established" }
+imsg = { bits = [49, 42], grade = "established" }
+imsgtype = { bits = [51, 50], grade = "established" }
+use_old = { bits = [52, 52], grade = "established" }
+
+[registers.crb_c]
+offset = 0x400410
+count = 15
+stride = 0x30
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB entry doubleword C (header IIO_ICRB0_C to IIO_ICRBE_C): the kernel reads the BTE number from it when the entry belongs to a BTE operation. Fifteen entries at a 0x30 stride; entry 0 is the base."
+
+[registers.crb_c.fields]
+source = { bits = [14, 0], grade = "established" }
+size = { bits = [16, 15], grade = "established" }
+ct = { bits = [17, 17], grade = "established" }
+bte_num = { bits = [18, 18], grade = "established" }
+gbr = { bits = [19, 19], grade = "established" }
+resprqd = { bits = [20, 20], grade = "established" }
+bo = { bits = [21, 21], grade = "established" }
+suppl = { bits = [36, 22], grade = "established" }
+
+[registers.crb_d]
+offset = 0x400418
+count = 15
+stride = 0x30
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB entry doubleword D (header IIO_ICRB0_D to IIO_ICRBE_D): carries the BTE-operation flag the kernel tests to tell BTE entries from others, and the per-entry timeout counter. Fifteen entries at a 0x30 stride; entry 0 is the base."
+
+[registers.crb_d.fields]
+pa_be = { bits = [42, 0], grade = "established" }
+bte_op = { bits = [43, 43], grade = "established" }
+pr_psc = { bits = [47, 44], grade = "established" }
+pr_cnt = { bits = [51, 48], grade = "established" }
+sleep = { bits = [52, 52], grade = "established" }
+
+[registers.crb_e]
+offset = 0x400420
+count = 15
+stride = 0x30
+access = "rw"
+width = 64
+grade = "established"
+doc = "CRB entry doubleword E (header IIO_ICRB0_E to IIO_ICRBE_E): read by the error handler together with the other four. Fifteen entries at a 0x30 stride; entry 0 is the base."
+
+[registers.crb_e.fields]
+timeout = { bits = [7, 0], grade = "established" }
+context = { bits = [22, 8], grade = "established" }
+tvld = { bits = [24, 24], grade = "established" }
+cvld = { bits = [25, 25], grade = "established" }
+
+[registers.bte_length_status]
+offset = 0x410000
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE length and status, one block per engine (engine 1 is 64 KiB above engine 0). Length is in 128-byte cache lines. A write loads the length, sets busy and clears error; the engine counts the length down and clears busy at the end. On SHub 1 the kernel writes the length first and the control register second, which starts the transfer. Header names IIO_IBLS0 and IIO_IBLS1. Kernel: written with the length, read to see busy and error."
+
+[registers.bte_length_status.fields]
+length = { bits = [15, 0], grade = "established" }
+error = { bits = [16, 16], grade = "established" }
+busy = { bits = [20, 20], grade = "established" }
+
+[registers.bte_source]
+offset = 0x410008
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE source physical address, cache-line aligned. One per engine. Header names IIO_IBSA0 and IIO_IBSA1. Kernel: written with the source physical address, AS bits removed."
+
+[registers.bte_source.fields]
+addr = { bits = [48, 7], grade = "established" }
+
+[registers.bte_destination]
+offset = 0x410010
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE destination physical address, cache-line aligned. One per engine. Header names IIO_IBDA0 and IIO_IBDA1. Kernel: written with the destination physical address, AS bits removed."
+
+[registers.bte_destination.fields]
+addr = { bits = [48, 7], grade = "established" }
+
+[registers.bte_control]
+offset = 0x410018
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode."
+
+[registers.bte_control.fields]
+zerofill = { bits = [0, 0], grade = "established" }
+notify = { bits = [4, 4], grade = "established" }
+poison = { bits = [8, 8], grade = "established" }
+
+[registers.bte_notify]
+offset = 0x410020
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE notification address: a cache-line-aligned address that receives the completion write (the header calls it a write-invalidate) carrying the final length and status. Header names IIO_IBNA0 and IIO_IBNA1. Kernel: written with the physical address of a notification word."
+
+[registers.bte_notify.fields]
+addr = { bits = [48, 7], grade = "established" }
+
+[registers.bte_interrupt]
+offset = 0x410028
+count = 2
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE interrupt address: programmable level, node and PI unit of the processor to interrupt on completion. The kernel never uses it. Header names IIO_IBIA0 and IIO_IBIA1."
+
+[registers.bte_interrupt.fields]
+node_id = { bits = [11, 1], grade = "established" }
+level = { bits = [22, 16], grade = "established" }
+
+[registers.perf_control]
+offset = 0x430000
+access = "rw"
+width = 64
+grade = "established"
+doc = "I/O performance control: selects which of 17 quantities each of the two performance counters measures. Header name IIO_IPCR."
+
+[registers.perf_control.fields]
+ippr0_c = { bits = [3, 0], grade = "established" }
+ippr1_c = { bits = [7, 4], grade = "established" }
+icct = { bits = [15, 8], grade = "established" }
+
+[registers.perf_profile]
+offset = 0x430008
+access = "rw"
+width = 64
+grade = "established"
+doc = "I/O performance profiling: the counter values. Header name IIO_IPPR."
+
+[registers.perf_profile.fields]
+ippr0 = { bits = [31, 0], grade = "established" }
+ippr1 = { bits = [63, 32], grade = "established" }
+
+[registers.spurious_crb_message_low]
+offset = 0x400700
+access = "rw"
+width = 64
+grade = "established"
+doc = "Spurious message header, low 64 bits; valid when the spurious flag in the CRB management register is set. Header name IIO_ICSML."
+
+[registers.spurious_crb_message_low.fields]
+tt_addr = { bits = [46, 0], grade = "established" }
+newsuppl_ex = { bits = [60, 47], grade = "established" }
+overflow = { bits = [63, 63], grade = "established" }
+
+[registers.spurious_crb_message_mid]
+offset = 0x400708
+access = "rw"
+width = 64
+grade = "established"
+doc = "Spurious message header, middle 64 bits. Header name IIO_ICSMM."
+
+[registers.spurious_crb_message_mid.fields]
+tt_ack_cnt = { bits = [10, 0], grade = "established" }
+
+[registers.spurious_crb_message_high]
+offset = 0x400710
+access = "rw"
+width = 64
+grade = "established"
+doc = "Spurious message header, high bits. Header name IIO_ICSMH."
+
+[registers.spurious_crb_message_high.fields]
+tt_vld = { bits = [0, 0], grade = "established" }
+xerr = { bits = [1, 1], grade = "established" }
+ft_cwact_o = { bits = [2, 2], grade = "established" }
+ft_wact_o = { bits = [3, 3], grade = "established" }
+ft_active_o = { bits = [4, 4], grade = "established" }
+sync = { bits = [5, 5], grade = "established" }
+mnusg = { bits = [6, 6], grade = "established" }
+mnusz = { bits = [7, 7], grade = "established" }
+plusz = { bits = [8, 8], grade = "established" }
+plusg = { bits = [9, 9], grade = "established" }
+tt_exc = { bits = [14, 10], grade = "established" }
+tt_wb = { bits = [15, 15], grade = "established" }
+tt_hold = { bits = [16, 16], grade = "established" }
+tt_ack = { bits = [17, 17], grade = "established" }
+tt_resp = { bits = [18, 18], grade = "established" }
+tt_intvn = { bits = [19, 19], grade = "established" }
+g_stall_bte1 = { bits = [20, 20], grade = "established" }
+g_stall_bte0 = { bits = [21, 21], grade = "established" }
+g_stall_il = { bits = [22, 22], grade = "established" }
+g_stall_ib = { bits = [23, 23], grade = "established" }
+tt_imsg = { bits = [31, 24], grade = "established" }
+tt_imsgtype = { bits = [33, 32], grade = "established" }
+tt_use_old = { bits = [34, 34], grade = "established" }
+tt_respreqd = { bits = [35, 35], grade = "established" }
+tt_bte_num = { bits = [36, 36], grade = "established" }
+cbn = { bits = [37, 37], grade = "established" }
+match = { bits = [38, 38], grade = "established" }
+rpcnt_lt_34 = { bits = [39, 39], grade = "established" }
+rpcnt_ge_34 = { bits = [40, 40], grade = "established" }
+rpcnt_lt_18 = { bits = [41, 41], grade = "established" }
+rpcnt_ge_18 = { bits = [42, 42], grade = "established" }
+rpcnt_lt_2 = { bits = [43, 43], grade = "established" }
+rpcnt_ge_2 = { bits = [44, 44], grade = "established" }
+rqcnt_lt_18 = { bits = [45, 45], grade = "established" }
+rqcnt_ge_18 = { bits = [46, 46], grade = "established" }
+rqcnt_lt_2 = { bits = [47, 47], grade = "established" }
+rqcnt_ge_2 = { bits = [48, 48], grade = "established" }
+tt_device = { bits = [55, 49], grade = "established" }
+tt_init = { bits = [58, 56], grade = "established" }
+
+[registers.debug_submenu_select]
+offset = 0x400718
+access = "rw"
+width = 64
+grade = "established"
+doc = "Debug submenu select: selects what the SHub debug unit shows from the II. Header name IIO_IDBSS."
+
+[registers.debug_submenu_select.fields]
+iioclk_core_submenu = { bits = [2, 0], grade = "established" }
+fsbclk_wrapper_submenu = { bits = [10, 8], grade = "established" }
+iioclk_menu = { bits = [20, 16], grade = "established" }

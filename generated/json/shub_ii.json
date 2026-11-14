@@ -1,0 +1,3898 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/shub_ii/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "widget_id",
+   "offset": 4194304,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_id.rev_num",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_id.part_num",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_id.mfg_num",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "widget_status",
+   "offset": 4194312,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_status.crazy",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_status.llp_tx_cnt",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_status.tx_mx_rty",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_status.xt_tail_to",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_status.xt_crd_to",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_status.pending",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "widget_control",
+   "offset": 4194336,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_control.e_thresh",
+   "hi": 22,
+   "lo": 18,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_control.dir_con",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_control.f_bad_pkt",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_control.dst_crd",
+   "hi": 15,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_control.tag",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "widget_control.wid",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "local_access_protection",
+   "offset": 4194560,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "local_access_protection.region",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "local_access_override",
+   "offset": 4194568,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "local_access_override.io_ovrride",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "outbound_widget_access",
+   "offset": 4194576,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "outbound_widget_access.wx_oac",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "outbound_widget_access.w0_oac",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "inbound_widget_access",
+   "offset": 4194584,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_widget_access.wx_iac",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_widget_access.w0_iac",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "inbound_device_error_mask",
+   "offset": 4194592,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.wf_dxs",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.we_dxs",
+   "hi": 55,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.wd_dxs",
+   "hi": 47,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.wc_dxs",
+   "hi": 39,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.wb_dxs",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.wa_dxs",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.w9_dxs",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "inbound_device_error_mask.w8_dxs",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "llp_control_status",
+   "offset": 4194600,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_control_status.maxbrst",
+   "hi": 41,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_control_status.d_avail_sel",
+   "hi": 27,
+   "lo": 26,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_control_status.maxrtry",
+   "hi": 25,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_control_status.remote_power",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_control_status.llp_stat",
+   "hi": 13,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_control_status.bm8",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_control_status.llp_en",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_control_status.wrmrst",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_control_status.nullto",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "llp_log",
+   "offset": 4194608,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_log.cb_cnt",
+   "hi": 31,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_log.sn_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "interrupt_destination",
+   "offset": 4194616,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "interrupt_destination.pi1_forward_int",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "interrupt_destination.pi0_forward_int",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "interrupt_destination.int_sent",
+   "hi": 29,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "interrupt_destination.enable",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "interrupt_destination.node",
+   "hi": 19,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "interrupt_destination.pi_id",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "interrupt_destination.level",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "graphics_map",
+   "offset": 4194624,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "graphics_map.p_num",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "graphics_map.n_num",
+   "hi": 16,
+   "lo": 5,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "graphics_map.pi_id",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "graphics_map.w_num",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "scratch",
+   "offset": 4194640,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "scratch.scratch",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "itte",
+   "offset": 4194656,
+   "access": "rw",
+   "width": 64,
+   "count": 7,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "itte.iosp",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "itte.w_num",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "itte.offset",
+   "hi": 4,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "prb",
+   "offset": 4194712,
+   "access": "rw",
+   "width": 64,
+   "count": 9,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.mult_err",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.spur_rd",
+   "hi": 51,
+   "lo": 51,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.spur_wr",
+   "hi": 50,
+   "lo": 50,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.rd_to",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.error",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.of_cnt",
+   "hi": 47,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.f_bit",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.m_bit",
+   "hi": 41,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.nb",
+   "hi": 37,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.na",
+   "hi": 21,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb.c_bit",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crosstalk_credit_timeout",
+   "offset": 4194784,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crosstalk_credit_timeout.time_out",
+   "hi": 25,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "misc_error_mask",
+   "offset": 4194792,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "misc_error_mask.clr_precise",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "misc_error_mask.b1_esd",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "misc_error_mask.b0_esd",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "misc_error_mask.w0_esd",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crosstalk_timeout_threshold",
+   "offset": 4194800,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crosstalk_timeout_threshold.rrsp_to",
+   "hi": 59,
+   "lo": 55,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crosstalk_timeout_threshold.rrsp_ps",
+   "hi": 54,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crosstalk_timeout_threshold.tail_to",
+   "hi": 25,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "error_clear",
+   "offset": 4194808,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.xn_ii_invalid_cmd",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.ii_xn_invalid_cmd",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.ii_xn_req_cred_overflow",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.ii_xn_rep_cred_overflow",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.iiq_req_overflow",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.iiq_rep_overflow",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.ioq_req_overflow",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.ioq_rep_overflow",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.ioq_req_underflow",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.ioq_rep_underflow",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.cam_read_miss",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.cam_overflow",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.cam_intr_to",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.spur_rd_hdr",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_bte_1",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_bte_0",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_crazy",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_prb_f",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_prb_e",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_prb_d",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_prb_c",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_prb_b",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_prb_a",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_prb_9",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_prb_8",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_clear.e_prb_0",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "bte_common_control",
+   "offset": 4194816,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_common_control.soft_reset",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_common_control.count",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "spurious_message",
+   "offset": 4194824,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.didn",
+   "hi": 63,
+   "lo": 60,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.sidn",
+   "hi": 59,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.pactyp",
+   "hi": 55,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.tnum",
+   "hi": 51,
+   "lo": 47,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.ct",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.ds",
+   "hi": 45,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.gbr",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.vbpm",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.error",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.bo",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.alt_pactyp",
+   "hi": 39,
+   "lo": 36,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.tag",
+   "hi": 35,
+   "lo": 33,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_message.byte_en",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "spurious_sideband",
+   "offset": 4194832,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_sideband.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_sideband.sideband",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "llp_channel_test",
+   "offset": 4194840,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_channel_test.test_err_capture",
+   "hi": 54,
+   "lo": 54,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_channel_test.test_clear",
+   "hi": 53,
+   "lo": 53,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_channel_test.test_flit",
+   "hi": 52,
+   "lo": 50,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_channel_test.test_cberr",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_channel_test.test_valid",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_channel_test.test_data",
+   "hi": 47,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_channel_test.test_mask",
+   "hi": 27,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "llp_channel_test.test_seed",
+   "hi": 19,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "error_packet_header_1",
+   "offset": 4194848,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_packet_header_1.valid",
+   "hi": 50,
+   "lo": 50,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_packet_header_1.overrun",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_packet_header_1.err_type",
+   "hi": 41,
+   "lo": 38,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_packet_header_1.source",
+   "hi": 36,
+   "lo": 23,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_packet_header_1.suppl",
+   "hi": 21,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_packet_header_1.command",
+   "hi": 6,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "error_packet_header_2",
+   "offset": 4194856,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_packet_header_2.tail",
+   "hi": 60,
+   "lo": 60,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "error_packet_header_2.address",
+   "hi": 49,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "sxb_access_protection",
+   "offset": 4194864,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "sxb_access_protection.region",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "sxb_access_override",
+   "offset": 4194872,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "sxb_access_override.io_sbx_ovrride",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "wrapper_interrupt",
+   "offset": 4194880,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_interrupt.intrpt_retry_period",
+   "hi": 55,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_interrupt.timeout",
+   "hi": 39,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_interrupt.prescale",
+   "hi": 23,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "wrapper_error_log",
+   "offset": 4194888,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.xn_ii_invalid_cmd",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.ii_xn_invalid_cmd",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.ii_xn_req_cred_over_under",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.ii_xn_rep_cred_over_under",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.iiq_req_overflow",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.iiq_rep_overflow",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.ioq_req_overflow",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.ioq_rep_overflow",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.ioq_req_underflow",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.ioq_rep_underflow",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.cam_read_miss",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.cam_overflow",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_log.intr_timed_out",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "wrapper_control",
+   "offset": 4194896,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_control.force_req_cred",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_control.force_rep_cred",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_control.iiq_depth",
+   "hi": 49,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_control.xn_req_iq_depth",
+   "hi": 40,
+   "lo": 36,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_control.xn_rep_iq_depth",
+   "hi": 32,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_control.ii_xn_cred_over_under_log",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_control.cam_read_lines_reset",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_control.dma_byte_swap",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "wrapper_status",
+   "offset": 4194904,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_status.xn_req_iq_credits",
+   "hi": 12,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_status.xn_rep_iq_credits",
+   "hi": 4,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "wrapper_error_interrupt_mask",
+   "offset": 4194912,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.xn_ii_invalid_cmd",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.ii_xn_invalid_cmd",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.ii_xn_req_cred_overflow",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.ii_xn_rep_cred_overflow",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.iiq_req_overflow",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.iiq_rep_overflow",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.ioq_req_overflow",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.ioq_rep_overflow",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.ioq_req_underflow",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.ioq_rep_underflow",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.cam_read_miss",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.cam_overflow",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "wrapper_error_interrupt_mask.intr_timed_out",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "prb_counter_adjust",
+   "offset": 4195072,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb_counter_adjust.field",
+   "hi": 9,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb_counter_adjust.adjust",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "prb_counter_adjust.wid",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "pio_read_entry_a",
+   "offset": 4195080,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "pio_read_entry_a.vld",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "pio_read_entry_a.to_cnt",
+   "hi": 62,
+   "lo": 58,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "pio_read_entry_a.widget",
+   "hi": 57,
+   "lo": 54,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "pio_read_entry_b",
+   "offset": 4195144,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "pio_read_entry_b.source",
+   "hi": 63,
+   "lo": 53,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "pio_read_entry_b.init",
+   "hi": 52,
+   "lo": 50,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "pio_read_entry_b.address",
+   "hi": 49,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "pio_deallocate",
+   "offset": 4195208,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "pio_deallocate.init_rpcnt",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "pio_deallocate.pnd",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "pio_deallocate.te",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_deallocate",
+   "offset": 4195216,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_deallocate.pnd",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_deallocate.crb_num",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "ioq_fifo_depth",
+   "offset": 4195224,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "ioq_fifo_depth.set_ioq_rp",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "ioq_fifo_depth.ioq_max_rp",
+   "hi": 14,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "ioq_fifo_depth.set_ioq_rq",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "ioq_fifo_depth.ioq_max_rq",
+   "hi": 6,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "iiq_arbitration",
+   "offset": 4195232,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "iiq_arbitration.rp_mls",
+   "hi": 13,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "iiq_arbitration.rq_mls",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_management",
+   "offset": 4195240,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_management.precise",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_management.crb_mark",
+   "hi": 49,
+   "lo": 35,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_management.crb_vld",
+   "hi": 34,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_management.fc_cnt",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_management.clr_rppd",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_management.clr_rqpd",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_management.c_cnt",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_management.rd_hdr",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_management.sp_msg",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_control",
+   "offset": 4195248,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_control.pending",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_control.cmd",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_control.crb_num",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_timeout",
+   "offset": 4195256,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_timeout.timeout",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_timeout_prescaler",
+   "offset": 4195264,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_timeout_prescaler.prescale",
+   "hi": 23,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_a",
+   "offset": 4195328,
+   "access": "rw",
+   "width": 64,
+   "count": 15,
+   "stride": 48,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_a.sidn",
+   "hi": 57,
+   "lo": 54,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_a.tnum",
+   "hi": 53,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_a.addr",
+   "hi": 48,
+   "lo": 2,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_a.vld",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_a.iow",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_b",
+   "offset": 4195336,
+   "access": "rw",
+   "width": 64,
+   "count": 15,
+   "stride": 48,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.use_old",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.imsgtype",
+   "hi": 51,
+   "lo": 50,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.imsg",
+   "hi": 49,
+   "lo": 42,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.init",
+   "hi": 41,
+   "lo": 39,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.exc",
+   "hi": 38,
+   "lo": 34,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.ack_cnt",
+   "hi": 26,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.resp",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.ack",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.hold",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.wb",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.intvn",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.stall_ib",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.stall_intr",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.stall_bte_0",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.stall_bte_1",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.error",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.errcode",
+   "hi": 5,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.ln_uce",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.mark",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_b.xt_err",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_c",
+   "offset": 4195344,
+   "access": "rw",
+   "width": 64,
+   "count": 15,
+   "stride": 48,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_c.suppl",
+   "hi": 36,
+   "lo": 22,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_c.bo",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_c.resprqd",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_c.gbr",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_c.bte_num",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_c.ct",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_c.size",
+   "hi": 16,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_c.source",
+   "hi": 14,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_d",
+   "offset": 4195352,
+   "access": "rw",
+   "width": 64,
+   "count": 15,
+   "stride": 48,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_d.sleep",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_d.pr_cnt",
+   "hi": 51,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_d.pr_psc",
+   "hi": 47,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_d.bte_op",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_d.pa_be",
+   "hi": 42,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "crb_e",
+   "offset": 4195360,
+   "access": "rw",
+   "width": 64,
+   "count": 15,
+   "stride": 48,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_e.cvld",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_e.tvld",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_e.context",
+   "hi": 22,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "crb_e.timeout",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "spurious_crb_message_low",
+   "offset": 4196096,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_low.overflow",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_low.newsuppl_ex",
+   "hi": 60,
+   "lo": 47,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_low.tt_addr",
+   "hi": 46,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "spurious_crb_message_mid",
+   "offset": 4196104,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_mid.tt_ack_cnt",
+   "hi": 10,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "spurious_crb_message_high",
+   "offset": 4196112,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_init",
+   "hi": 58,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_device",
+   "hi": 55,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rqcnt_ge_2",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rqcnt_lt_2",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rqcnt_ge_18",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rqcnt_lt_18",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rpcnt_ge_2",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rpcnt_lt_2",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rpcnt_ge_18",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rpcnt_lt_18",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rpcnt_ge_34",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.rpcnt_lt_34",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.match",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.cbn",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_bte_num",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_respreqd",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_use_old",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_imsgtype",
+   "hi": 33,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_imsg",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.g_stall_ib",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.g_stall_il",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.g_stall_bte0",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.g_stall_bte1",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_intvn",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_resp",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_ack",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_hold",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_wb",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_exc",
+   "hi": 14,
+   "lo": 10,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.plusg",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.plusz",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.mnusz",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.mnusg",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.sync",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.ft_active_o",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.ft_wact_o",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.ft_cwact_o",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.xerr",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "spurious_crb_message_high.tt_vld",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "debug_submenu_select",
+   "offset": 4196120,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "debug_submenu_select.iioclk_menu",
+   "hi": 20,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "debug_submenu_select.fsbclk_wrapper_submenu",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "debug_submenu_select.iioclk_core_submenu",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "bte_length_status",
+   "offset": 4259840,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_length_status.busy",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_length_status.error",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_length_status.length",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "bte_source",
+   "offset": 4259848,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_source.addr",
+   "hi": 48,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "bte_destination",
+   "offset": 4259856,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_destination.addr",
+   "hi": 48,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "bte_control",
+   "offset": 4259864,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_control.poison",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_control.notify",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_control.zerofill",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "bte_notify",
+   "offset": 4259872,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_notify.addr",
+   "hi": 48,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "bte_interrupt",
+   "offset": 4259880,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_interrupt.level",
+   "hi": 22,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "bte_interrupt.node_id",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "perf_control",
+   "offset": 4390912,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "perf_control.icct",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "perf_control.ippr1_c",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "perf_control.ippr0_c",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "register",
+   "name": "perf_profile",
+   "offset": 4390920,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "perf_profile.ippr1",
+   "hi": 63,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "field",
+   "name": "perf_profile.ippr0",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "BTE_ENGINES",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "BTE_LEN_BITS",
+   "value": 16,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "BTE_LINE_BYTES",
+   "value": 128,
+   "count": 1,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "CRB_STRIDE",
+   "value": 48,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "HUB_WIDGET_ID_MAX",
+   "value": 15,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_ECODE_AERR",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_ECODE_DERR",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_ECODE_PERR",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_ECODE_PRERR",
+   "value": 5,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_ECODE_PWERR",
+   "value": 4,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_ECODE_TOUT",
+   "value": 6,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_ECODE_WERR",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_ECODE_XTERR",
+   "value": 7,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_IMSGT_BTE",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_IMSGT_CRB",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_IMSGT_SN1NET",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_IMSGT_XTALK",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_INIT_BTE0",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_INIT_BTE1",
+   "value": 5,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_INIT_CRB",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_INIT_NET",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ICRB_INIT_XTALK",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "NUM_BIG_WINDOWS",
+   "value": 6,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "NUM_CRBS",
+   "value": 15,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "NUM_ITTES",
+   "value": 7,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "PROTECTION_OVERRIDE_KEY",
+   "value": 6000845784439612787,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "WARM_RESET",
+   "value": 256,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  }
+ ]
+}

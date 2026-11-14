@@ -1,0 +1,117 @@
+# SHub 2 overlay on devices/shub/registers.toml. Offsets are the SH2_ names of
+# the SGI Linux ia64 header shub_mmr.h (v5.3); registers the header gives no SH2_
+# name for are removed rather than assumed.
+
+remove = ["registers.shub_id", "registers.pi_cam_control", "registers.ptc", "registers.md_dqlp_dir_privilege_vector", "registers.md_dqrp_dir_privilege_vector"]
+
+[override]
+unit = "shub2"
+prefix = "SHUB2"
+title = "SHub 2 registers outside the I/O interface, differences from SHub 1"
+doc = "SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips."
+
+[patch."registers.ipi_int"]
+offset = 0x10000380
+
+[patch."registers.event_occurred"]
+offset = 0x10010000
+
+[patch."registers.event_occurred_alias"]
+offset = 0x10010008
+
+[add.constants]
+EVENT_OCCURRED_EXTIO_INT2 = { value = 0x200000000, grade = "established", doc = "Bit 33 of the event register: pending SHub 2 external I/O interrupt 2 (header SH2_EVENT_OCCURRED_EXTIO_INT2). The base unit's field table has no entry for it because overlays cannot add fields." }
+EVENT_OCCURRED_EXTIO_INT3 = { value = 0x400000000, grade = "established", doc = "Bit 34 of the event register: pending SHub 2 external I/O interrupt 3." }
+
+[patch."registers.rtc"]
+offset = 0x2101c0000
+
+[patch."registers.rtc_int_config"]
+offset = 0x10001480
+
+[patch."registers.rtc_int_enable"]
+offset = 0x10001500
+
+[patch."registers.int_cmp"]
+offset = 0x101b0080
+
+[patch."registers.ipi_access"]
+offset = 0x10060c00
+count = 4
+stride = 0x80
+doc = "Which processors may send interprocessor interrupts to this one: four registers, one per processor slice (SH2_IPI_ACCESS0 to 3). Defined by the header; the kernel files read never touch them, so the layout is unknown."
+
+[patch."registers.pio_write_status"]
+offset = 0x20070200
+count = 4
+stride = 0x80
+doc = "PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones."
+
+[patch."registers.pio_write_status_alias"]
+offset = 0x20070208
+count = 4
+stride = 0x80
+
+[patch."registers.junk_bus_led"]
+offset = 0xf0000000
+
+[patch."constants.PIO_WRITE_STATUS_IDLE"]
+value = 0
+doc = "What the kernel waits for the masked pending-write count to equal on SHub 2: zero."
+
+[add.registers.ptc]
+offset = 0x170000000
+access = "w"
+width = 64
+grade = "established"
+doc = "Purge translation cache message, SHub 2 (header SH2_PTC). One 64-bit store per target node replaces SHub 1's two. The region id and region number do not go in the data: the kernel adds them, shifted left by four, to the register's address. The data carries the type bit, the page size and the start bit, and the virtual address in bits 60:12. How wide the address-encoded part is, and so how large the register window is, is unknown. The kernel only waits on the PIO write status afterwards; on a deadlock it reads the status alias instead of clearing it."
+
+[add.registers.ptc.fields]
+type_bit = { bits = [0, 0], grade = "inferred", doc = "Header title: type; the kernel always writes 1." }
+ps = { bits = [3, 2], grade = "inferred", doc = "Page size as a power of two. The width is a guess from the next field starting at bit 4; the kernel passes a value that may need more bits, so the width is unknown." }
+address = { bits = [60, 12], grade = "established", doc = "Virtual address to purge (header SH2_PTC_ADDR_MASK 0x1ffffffffffff000)." }
+start = { bits = [63, 63], grade = "established" }
+
+[add.registers.bt_eng_csr]
+offset = 0x30040000
+count = 4
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Block transfer engine control and status, one per engine, SHub 2 (four engines, SH2_BT_ENG_CSR_0 to 3). Unlike SHub 1 the kernel starts a transfer with one store here: busy, the mode shifted left by 24, and the length in cache lines in the low bits. The kernel reads it for busy and error; the engine's error code sits in bits 41:36 (kernel's BTE_ERR_BITS)."
+
+[add.registers.bt_eng_csr.fields]
+length = { bits = [15, 0], grade = "inferred", doc = "Length in cache lines, as in the SHub 1 status register. The kernel keeps one length width for both chips (BTE_LEN_MASK, 16 bits)." }
+error = { bits = [16, 16], grade = "inferred", doc = "Error flag: the kernel tests the same IBLS_ERROR bit position on both chips." }
+busy = { bits = [20, 20], grade = "inferred", doc = "Busy: same position as SHub 1's status register in the kernel's macros." }
+zero_fill = { bits = [24, 24], grade = "inferred", doc = "The kernel shifts its mode word left by 24; its zero-fill mode bit is bit 0, so it lands here." }
+notify = { bits = [28, 28], grade = "inferred", doc = "The kernel's notify mode bit is bit 4, so it lands at bit 28. The kernel always sets it." }
+error_code = { bits = [41, 36], grade = "inferred", doc = "Six-bit error code; non-zero means error. Bits: 1 short response, 2 long response, 4 (RESP_DSP), 8 access, 0x10 CRB timeout, 0x20 NACK limit (kernel BTEFAIL_SH2_* names). Whether the hardware also sets the error flag at bit 16 when this field is non-zero is unknown: the kernel's SHub 2 status decode ORs the flag in itself when the code is non-zero." }
+
+[add.registers.bt_eng_src]
+offset = 0x30040080
+count = 4
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE source address, per engine. The kernel converts the physical address to the network address form first (nasid moved to bit 40 upward, the bank-select bits moved to bit 36)."
+
+[add.registers.bt_eng_dest]
+offset = 0x30040100
+count = 4
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE destination address, per engine; same conversion as the source."
+
+[add.registers.bt_eng_notify]
+offset = 0x30040180
+count = 4
+stride = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+doc = "BTE notification address, per engine; same conversion."

@@ -79,6 +79,8 @@
 | [router_sn1/](router_sn1/registers.md) | SN1 network router: port block, local routing table and remote reset mask (public header positions) | Addresses are port-relative: a port's block starts at the base the header computes from the link number L (1 to 8)... |
 | [scan/](scan/README.md) | Router scan-chain tunnel through the L1 (IP35) | Mode: no-spec (see references/documents/specs.md: no specification is held). |
 | [seeq_8003/](seeq_8003/README.md) | SEEQ 8003 and 80C03 Ethernet controller | The SEEQ 8003 is an 8-bit Ethernet data link controller. |
+| [shub/](shub/README.md) | SHub (SN2 node controller), SHub 1 and SHub 2 | SHub is the node controller of the Altix 3000 family and its successors (SGI's SN2 platform): one chip per node that... |
+| [shub_ii/](shub_ii/README.md) | SHub 1 I/O interface (II) | The II is the part of SHub 1 that talks to Crosstalk: the unit that processor loads and stores to widgets leave... |
 | [tigon/](tigon/README.md) | Tigon Ethernet controller: PCI data width | The Alteon Tigon/PCI is the Ethernet controller on SGI's IRIS Gigabit Ethernet board. |
 | [tio/](tio/README.md) | TIO | Mode: no-spec. |
 | [tiocp/](tiocp/README.md) | TIOCP | Mode: no-spec (see references/documents/specs.md). |
