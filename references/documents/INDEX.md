@@ -51,6 +51,47 @@ Not vendored: the upstream is gone, is a tarball, or duplicates code that a subm
 Considered and not added: `sgi-demos/sgi-docs` (the other repositories carry it) holds only IRIS GL manual pages,
 nothing on these chips.
 
+## SGI manuals for the SN2 machines (Altix and Prism)
+
+Published SGI guides for the IA-64 Altix and Silicon Graphics Prism machines. None is a chip specification: they
+describe enclosures, modules, cabling and operation, and the SHub, PIC, IOC4 and NUMAlink parts appear only by name
+and block list. Cited by document number and revision with the printed page. "Read" says how much was opened; a
+contents list read is not a content audit. The platform pages under [../../platforms/sn2/](../../platforms/sn2/README.md)
+use them. The facts column is what the pages read state.
+
+| Document (revision) | Title | Read | What it establishes |
+|---|---|---|---|
+| 007-4660-001 (001, 2004) | SGI Altix 350 System User's Guide | contents; printed pp. 53, 58, 67-72, 96-112, 197 | The Altix 350 module set (base compute, CPU expansion, CMPX), IP57 node board, SHub block list, PIC on the PCI riser, IO9 card with IOC4, ring of up to eight modules, 3.2 GB/s per direction NUMAlink, console and L1 ports. The only guide read that prints the node board name (IP57). |
+| 007-4660-002 (002) | SGI Altix 350 System User's Guide | contents; printed pp.66 to 72, 105 to 107, 111 to 114 | Later and fuller than -001: the standard base I/O card is the IO10 (serial ATA, serial ports) and the IO9 (SCSI) is optional, the fabric is NUMAlink-4, one or two routers join up to sixteen modules and 32 processors, "Super Hub (SHub)". |
+| 007-4417-001, -002 | SGI Altix 350 Quick Start Guide | not read | Setup card for the Altix 350. |
+| 007-4374-001 | Important Note: SGI IO10 PCI Option for Altix 350 | pp.1 to 2 | The IO10: full-size PCI card for the lower slot, serial ATA disks and DVD-ROM, a 36-pin MDR connector carrying four modem-control serial ports (S0 to S3), one Ethernet port, two unlabeled RT interrupt connectors that Linux does not support; no SCSI disks. Names no chips. |
+| 007-4579-001 (001, 2003) | SGI Altix 3000 User's Guide | contents; printed pp. 79-82, 99-100, 108 | The 3300 and 3700 models, C-brick (two nodes, 16 DIMM slots each), R-brick router, IX-, PX-brick, power bay, 40U rack, L2 touch display. Calls the node chip "Super-Bedrock" and its internal link "NUMAlink 4". |
+| 007-4377-002 (002, Nov 2004) | SGI Altix 3700 Bx2 User's Guide | contents; printed pp. 49, 65, 67, 72, 74 | CR-brick (up to four SHub nodes, two NL4 routers), Xtown2 I/O ports on nodes 1 and 3, IX- and PX-brick, L1 and the L2 emulator. Names the fabric "NUMAlink-4". |
+| 007-4377-001 (001) | SGI Altix 3700Bx2 User's Guide | not read | Earlier revision. |
+| 007-4823-001 (001, Mar 2006) | SGI Altix 4700 System User's Guide | contents; printed pp. 44-47, 53-55, 87, 116 | IRU of ten blade slots, four routers per IRU, compute/memory blade (SHub with one or two sockets), memory-only blade, PCI-X and PCIe expansion blades, IA blade as base I/O, optional dense router, no hardware L2. |
+| 007-4823-002, -003 | SGI Altix 4700 System User's Guide | not read | Later revisions. |
+| 007-4857-001 (001), -002, -003 | SGI Altix 450 System User's Guide | contents; printed pp. 64, 66 (001) | Five-blade 5U IRU, two internal routers, SHub nodes of one or two sockets, NUMAlink 4, up to 76 cores in a rack. The only held Altix 450 guide. |
+| 007-4954-001 | SGI Altix 4700 and Altix 450 3D Graphics Option User's Guide | not read | Graphics option shared by both. |
+| 007-4790-001 (001, 2005) | SGI Altix 330 System User's Guide | contents; printed pp. 57-58, 70, 79 | 1U base compute module, one PCI/PCI-X slot, SAS or SATA disks, one NUMAlink-4 port, optional router for up to eight modules, SHub block list. |
+| 007-4805-001 | Connecting a System Console to an SGI Altix 330 System | not read | Console connection note for the 330. |
+| 007-4637-001 | Site Planning Guide for the Altix 3300 and the Altix 3700 Supercluster | not read | Site planning for the 3000 family. |
+| 007-4520-006 (006, Jul 2005) | Linux Device Driver Programmer's Guide, Porting to SGI Altix Systems | contents; revision record; printed pp. 15-19 | SC-brick (two SHub nodes, four Itanium 2, sixteen DIMM slots per SHub), IX-brick as a PX-brick plus BaseIO card (IOC4, Ethernet, SCSI), PX-brick with six PCI-X buses; contents list the SHub physical address map, global MMR space and AMO space. Revisions 001 (Feb 2003) to 006 follow ProPack releases 2.2 to 3 SP6. |
+| 007-4520-001, -003, -007 | same title (Altix 3000 in -001 and -003) | not read | Other revisions. |
+| 007-4763-001 (001, Aug 2005) | SGI Altix Architecture Considerations for Linux Device Drivers | contents | Shorter driver note with the same chapter list as the porting guide. |
+| 007-3938-005 (005, Apr 2006) | SGI L1 and L2 Controller Software User's Guide | contents; revision record; printed pp. 3, 48-51 | L1 and L2 operation and command list. Revision log: 003 May 2004 adds the Altix 350, 004 July 2005 adds the 3700 Bx2 and the Prism, 005 Apr 2006 adds the 4700. Brick naming (`003c01`), the valid blade types of the 4700 ("SHub 2.x based" compute blades), the 4700 L2 as an application. |
+| 007-3938-001 to -004, -006 | same title | not read | -006 is cited by the Origin 3000 pages. |
+| 007-4772-001 (001) | Silicon Graphics Prism Deskside Visualization System Hardware User's Guide | contents; printed pp. 19-21, 25, 27 | Deskside node board with one or two processors, base I/O board in PCI slot 1, two AGP graphics slots, eight PCI-X slots on four buses. |
+| 007-4701-001 to -004 | Silicon Graphics Prism Visualization System User's Guide (Power and Team scalable in -003, -004) | -001 contents | The rackmount Prism with XG2N and compute modules. |
+| 007-4774-001, -002 | Silicon Graphics Prism Visualization System User's Guide for Extreme Scalable Configurations | -001 contents | Large Prism configurations. |
+| 007-4712-001 | SGI Altix PA Expansion Module User's Guide | not read | A PA expansion module for Altix systems (title only). |
+| 007-4426-001 | Partitioning Guide for Systems That Contain Cx-bricks | not read | Cx-brick partitioning (Origin 3000, Altix 3000 not confirmed). |
+| 007-4572-001 | Cx-brick Addendum | not read | Already cited by the Origin 3000 Cx-brick page. |
+| 007-4604-001, 007-4605-001 | IX-brick Addendum, PX-brick Addendum | not re-read | Cited by the IX- and PX-brick pages. |
+
+Not held as manuals: any guide for the Altix 3700 as a model apart from the 3000 guide, the
+IR- and M-brick, a NUMAlink 3 or NUMAlink 4 specification, and any SHub, TIO or router datasheet. The Altix UV guides
+and the RASC guide (007-4718-007) are outside this list.
+
 ## Published specifications held in this repository
 
 Committed under [specs/](specs/), described with revisions and coverage in [../specs.md](specs.md): Bridge
