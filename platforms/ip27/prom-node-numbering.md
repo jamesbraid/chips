@@ -5,6 +5,8 @@ region-present and region-size fields, and where are the other processors (the s
 node, and the processors of the other nodes) at each of those writes? Is the "other processor waits in its own
 node's memory" reading right?
 
+What the region-present register does to the decode, how mapped uncached pages reach the Hub and what the memory configuration word decodes: [decode-mapped-uncached-and-region.md](../decode-mapped-uncached-and-region.md).
+
 Short answer. The node number is written once per node, by that node's first processor, after the whole
 machine has agreed on a numbering; the second processor of the node is held in a software delay while it
 happens. Every processor in the machine runs PROM code, and keeps its stack, in a RAM copy of the PROM that sits in its
@@ -86,7 +88,7 @@ whether processor B leaves reset at the same moment as A is **U**.
 | 3 | 0x1fc01140 | **PI_CALIAS_SIZE** (PI 0x28) | **1** (4 KB by the code table in [hub-processor-interface.md](../../devices/hub_pi/README.md)) | all, once, after the TLB set-up at 0x1fc05914 | E |
 | 4 | 0x1fc4d718 | NI_SCRATCH_REG1 of the global master | bits 15:0 replaced by the node number the PROM chose for this node (entry 0 of its topology table, field at +34); upper bits kept | global master only | E |
 | 5 | 0x1fc4d800 (headless Hubs, flag 0x10000 in the table entry) and 0x1fc4d878 (all others), both by vector write | for a headless Hub (no processor), **NI_STATUS_REV_ID** (0x600000); for every other Hub, NI_SCRATCH_REG1 (0x600108) | headless: old value with bits 16:8 replaced by the node number (mask 0xfffe00ff); others: old value with bits 15:0 replaced by the node number | global master, for every other Hub in the topology table, one after another, in table order | E |
-| 6 | 0x1fc4d4c0 (local) and 0x1fc4d5b0 (every other Hub, vector write) | **NI_STATUS_REV_ID bit 17 (region size)** | cleared (mask 0xfffdffff). For a headless Hub the same write also replaces bits 16:8 with the node number first (0x1fc4d554 to 0x1fc4d594) | global master, only when some Hub's node number plus the `NASIDOffset` environment value is 64 or more (flag set at 0x1fc51de0 to 0x1fc51df0), or the `force_coarse` environment variable is nonzero (0x1fc4d420) | E for the stores and conditions. I for the polarity: the PROM's text calls the cleared state "coarse" ("Set coarse mode at Hub"); the header gives no polarity |
+| 6 | 0x1fc4d4c0 (local) and 0x1fc4d5b0 (every other Hub, vector write) | **NI_STATUS_REV_ID bit 17 (region size)** | cleared (mask 0xfffdffff). For a headless Hub the same write also replaces bits 16:8 with the node number first (0x1fc4d554 to 0x1fc4d594) | global master, only when some Hub's node number plus the `NASIDOffset` environment value is 64 or more (flag set at 0x1fc51de0 to 0x1fc51df0), or the `force_coarse` environment variable is nonzero (0x1fc4d420) | E for the stores and conditions. E for the polarity: the public Linux Hub header defines bit 17 set as fine (region = node) and cleared as coarse (eight nodes per region), which matches the PROM's own text ("Set coarse mode at Hub"); see [decode-mapped-uncached-and-region.md](../decode-mapped-uncached-and-region.md) |
 | 7 | 0x1fc4d37c (three stores in one loop, 0x1fc4d370 to 0x1fc4d398) | **NI_STATUS_REV_ID bits 16:8 (node number)** | the old value, the old value again, then the old value with bits 16:8 replaced by the node number (a0 << 8, no masking of the argument). Each store sits between a `sync` before and a `sync` after, followed by a 20-count busy loop (0x1fc045bc) | every local master, on its own node, called from 0x1fc520dc | E |
 | 8 | 0x1fc25b28 | same routine as step 7 | the number typed | the monitor's node-ID command, user driven | I (call site only) |
 
@@ -276,7 +278,7 @@ other processor's wait both run from that RAM copy while the node number changes
   area at 0x9600000000003000 + (node << 32), plus 64 for processor B; the slave loop reads eight bits (0x1fc04858).
 - Whether processor B leaves reset together with A. Route: PI enable registers, not touched by the PROM before main.
 - The node numbers the PROM computes for a multi-node machine (0x1fc4def0, 0x1fc4dd10).
-- The polarity of region-size bit 17, the meaning of bit 51 of the mailbox, and whether the monitor ELF writes
+- The meaning of bit 51 of the mailbox (the polarity of region-size bit 17 is settled: set is fine, see [decode-mapped-uncached-and-region.md](../decode-mapped-uncached-and-region.md)), and whether the monitor ELF writes
   PI_REGION_PRESENT or node numbers (route: inflate the ELF and read it).
 - What the Hub does with node-0-numbered physical addresses after the node number changes.
 - PROM 6.11 behaviour.

@@ -7,6 +7,8 @@ the interrupt, real-time counter, error and timer registers. The register list w
 [devices/hub_pi/registers-extra.md](registers-extra.md) and [devices/hub/registers.md](../hub/registers.md).
 This page covers what the public Linux SN0 processor-interface header adds, and what stays open.
 
+Mapped uncached accesses, the region-present register and the memory configuration word, as the PROMs and IRIX use them: [platforms/decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md).
+
 ## Sources
 
 - The public Linux SN0 Hub processor-interface header at tag v4.0 (`arch/mips/include/asm/sn/sn0/hubpi.h`).
@@ -22,6 +24,7 @@ each entry.
 
 - **Protection.** The CPU protection register at offset 0, the protection override at 8 and the
   interrupt-pending protection register at 16. The header names the override and gives no unlock value.
+- **Region present** at `0x18` is in the census ([devices/hub/registers.md](../hub/registers.md)), not in the extra list. The header's comment says only "indicates whether region exists". One bit per region, a region being a node or, in coarse mode, eight nodes. IRIX stores the mask of regions holding a probed node ORed with 1 on every node and reads it only to explain a cached bus error. A clear bit makes a cached access to that region fail with an error reply (inferred); its reset value is unknown. The evidence is in [decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md).
 - **Reply level** at `0x60`, **non-maskable interrupt to processor B** at `0x78`, and **soft reset**
   at `0x80`. The header's comment says the soft reset goes to both processors.
 - **Cross-call pending** set, clear and mask registers at `0xc8` to `0xe8`. Processor B sits eight

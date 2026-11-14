@@ -7,6 +7,8 @@ boards of a Cx-brick the NASID order 1, 2, 0, 3 by board, and does not say how t
 register contract. No Cx-brick capture exists in this repository, so statements about a real Cx-brick are
 either printed in a manual or unknown.
 
+What the region-present register does to the decode, and how mapped uncached pages reach the Bedrock: [decode-mapped-uncached-and-region.md](../decode-mapped-uncached-and-region.md).
+
 Each fact carries one grade, as elsewhere in the repository. **Established** means a published document, a
 shipped binary or a public driver states it, with the citation. **Inferred** means it follows from established
 facts but no source states it. **Unknown** means it is not settled, with the route that would settle it.

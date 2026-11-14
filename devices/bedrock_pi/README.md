@@ -20,6 +20,8 @@ describes is graded inferred, and every reset is unknown.
 
 Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
 
+Mapped uncached accesses, the region-present register and the Hub memory configuration word, as the PROMs and IRIX use them: [platforms/decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md).
+
 ## Access and reset
 
 - Every register is 64 bits wide.
@@ -50,7 +52,8 @@ Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as 
   bit in the CPU protection register. The header does not give the pattern.
 - Region present has one bit per region. A clear bit blocks speculative coherent reads to that region. A coherent read to
   an absent region gets an error reply, and no error register changes. Partial accesses are not checked, and cached-alias
-  accesses are not affected.
+  accesses are not affected. These sentences are the header's comment. IRIX writes the region set to both interfaces without forcing bit 0, and reads the
+  register only in its cached bus-error handler, to say that a faulting address lay in an absent region ([platforms/decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md)).
 - The cached-alias size is a four-bit code. The header says every cached-alias space in a system must use the same size,
   and it does not say what each code means.
 

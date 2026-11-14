@@ -8,6 +8,8 @@ registers at `0x220000`. The register list, the census reach and the reset-value
 [devices/hub_md/registers-extra.md](registers-extra.md), built from
 [devices/hub_md/registers-extra.toml](registers-extra.toml).
 
+Mapped uncached accesses, the region-present register and the memory configuration word, as the PROMs and IRIX use them: [platforms/decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md).
+
 ## Added from the public header
 
 The field layouts, bank-size codes and default constants come from the public Linux SN0 Hub
@@ -20,7 +22,10 @@ register stays unknown and the header's default constants are graded inferred.
   name and no stated meaning. The I/O protection enable is bit 31. The header also gives a DIMM 0
   select at 33:32 and four five-bit timing fields: the write and cycle timings of the boot flash at
   48:44 and 53:49, and a second pair the header calls UCTLR at 38:34 and 43:39. Their meanings are
-  inferred from the names.
+  inferred from the names, except the DIMM select: the IP27 PROM sets it to 2 while it exchanges the size codes of
+  bank pairs (0,1), (2,3), (4,5) and (6,7), and the IRIX kernel XORs it with address bits 31:29 to name a failing
+  module (both established; that the select permutes which DIMM serves a bank window is inferred). See
+  [platforms/decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md).
 - **Bank size codes.** Code 0 is empty. Codes 1 to 10 are 8 MB, 16 MB, 32 MB, 64 MB, 128 MB, 256
   MB, 512 MB, 1 GB, 2 GB and 4 GB. The bank size in bytes is 4 MB shifted left by the code. The
   header annotates codes 0, 4, 5 and 7 as valid in the memory configuration register, and code 3
@@ -92,21 +97,27 @@ and are not evidence for this bus.
   the header states neither.
 - The reset value of the one-wire done bit, the physical meaning of the one-wire phase, pulse and
   sample fields, and the part class on the one-wire bus.
-- The meaning of bit 30 of the memory configuration, the DIMM 0 select values and the timing fields
-  beyond their names.
+- The meaning of bit 30 of the memory configuration, what the DIMM 0 select does beyond the PROM's
+  bank-pair exchange, and the timing fields beyond their names.
+- What the chip does for an address beyond a bank's populated size or inside an empty bank window, and the
+  IP27 PROM's DIMM size probe, which was not found.
 - The meaning of the candidate initiator and node fields, which overlap in the header.
 - Whether the header's default constants match a hardware reset. They describe what software writes.
 
 ## Left out
 
 The following were checked against the source material and not imported. They rest on sources the
-reference rules do not allow here: vendor kernel and PROM source text, a firmware disassembly that
-this repository does not hold, a published manual whose copy was not available to check at this
-step, and behaviour that is not evidence from hardware.
+reference rules do not allow here: vendor kernel and PROM source text, a published manual whose copy
+was not available to check at this step, and behaviour that is not evidence from hardware. At the
+time of that import no firmware disassembly was held; the IP27 PROM 6.156 now is, and the items
+below that it bears on say what has since been read.
 
 - The bank population of the Origin 200 board, its DIMM pairs and the mandatory bank 0.
 - The premium-directory probe at boot, the firmware's writes to the memory configuration and the
-  reading of the directory-format bit back.
+  reading of the directory-format bit back. Read in part: the PROM's bank-pair exchange, its stores that set
+  bits 28 and 29, and its flash-timing store are in
+  [platforms/decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md); the size
+  probe and the full order of writes are not read.
 - The read-miss, write and invalidation sequences of the directory protocol.
 - The boot flash address decode and its uncached and cached views.
 - The one-wire responder roles and the PIMM record.

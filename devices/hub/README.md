@@ -11,6 +11,8 @@ compared afterwards (see the last section). Census: [census/](census/census.md) 
 
 Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
 
+Mapped uncached accesses, the region-present register and the Hub memory configuration word, as the PROMs and IRIX use them: [platforms/decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md).
+
 ## Addresses (established)
 
 - The kernel and the PROM reach the Hub's own register file through two aliases of the same offsets:
@@ -55,7 +57,7 @@ reset value, except where a section says otherwise).
 
 | Offset | Name | Width | Access | Alias | Grade | What the held code shows |
 |---|---|---|---|---|---|---|
-| `0x18` | `PI_REGION_PRESENT` | 8 | rw | local/node | inferred | Region-present mask. `mlreset` stores a constant through the node alias; `handle_cac_buserr` reads it. Role from the name only. |
+| `0x18` | `PI_REGION_PRESENT` | 8 | rw | local/node | inferred | One bit per region (a node, or eight nodes in coarse mode). `mlreset` stores the mask of regions holding a probed node ORed with 1 through the node alias on every node (6.5.22 `0x26138`, 6.5.30 `0x2638c`); `handle_cac_buserr` is the only reader and uses it to report a cached bus error in an absent region. The census shows the register as read-only because it lists the node-alias store as a separate indexed row. A clear bit turns a cached access to that region into an error reply (inferred); see [decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md). |
 | `0x20` | `PI_CPU_NUM` | 8 | rw | local | established | Processor number within the node. `get_slice` (at 0xc00000000001d680) returns the low word of this register; the kernel tests `slice == 0` to pick the A-side registers below. The PROM reads it on every boot path. The PROM also stores three values (the cause, the exception PC and the bad address) to this address in its exception path (`0x1fc02998`); why a store goes to a processor-number register is not read: unknown. |
 | `0x28` | `PI_CALIAS_SIZE` | 8 | rw | local/node | inferred | Cached-alias size. `mlreset` stores sizes (1 and 2 seen), `memory_iscalias` and `page_local_calias` read it to decide whether an address falls in the cached alias. Role from the routine names; the stored encoding is not read. |
 | `0x30` | `PI_MAX_CRB_TIMEOUT` | 8 | w | node | inferred | CRB timeout limit, written by `per_hub_init` from kernel variables. The unit is not read. |
@@ -110,7 +112,7 @@ reset value, except where a section says otherwise).
 
 | Offset | Name | Width | Access | Alias | Grade | What the held code shows |
 |---|---|---|---|---|---|---|
-| `0x200018` | `MD_MEMORY_CONFIG` | 8 | rw | local/node | inferred | Memory configuration, read by the directory access routines (`check_dir_access`, `get_dir_ent`, `show_dir_state`), `cpuprom_map` and `kf_memory_bank_disable`; written through the node alias. Field layout not read. |
+| `0x200018` | `MD_MEMORY_CONFIG` | 8 | rw | local/node | inferred | Memory configuration, read by the directory access routines (`check_dir_access`, `get_dir_ent`, `show_dir_state`), `cpuprom_map` and `kf_memory_bank_disable`; written through the node alias. Bit 28 selects the directory entry format, bits 33:32 are a DIMM select that the PROM sets to 2 while exchanging bank-pair size codes, and the kernel's module naming XORs them with address bits 31:29; the layout is in [hub_md](../hub_md/README.md) and the decode effects in [decode-mapped-uncached-and-region.md](../../platforms/decode-mapped-uncached-and-region.md). |
 | `0x200020` | `MD_REFRESH_CONTROL` | 8 | r | local | inferred | Refresh control. Read once by a PROM routine (0x1fc04700); no kernel access. |
 | `0x200028` | `MD_FANDOP_CAC_STAT` | 8 | r | node | inferred | Fetch-and-op cache status, read by `fetchop_flush`. |
 | `0x200030` | `MD_MIG_DIFF_THRESH` | 8 | rw | node | inferred | Page migration difference threshold: `migr_effthreshold_diff_set`, the migration interrupt handler and its prologue read and write it. |

@@ -156,6 +156,7 @@ Routine readings from the kernels and PROMs:
 - [software/kernel/ip27/bridge-routines.md](software/kernel/ip27/bridge-routines.md): Routines of the IP27 kernel that serve the Bridge family.
 - [software/kernel/ip27/entropy-readers.md](software/kernel/ip27/entropy-readers.md): Kernel routines that read the Hub real-time counter for entropy (IP27 build).
 - [software/kernel/ip27/xconn.md](software/kernel/ip27/xconn.md): The xconn.o pairing driver of the IP27 build.
+- [platforms/decode-mapped-uncached-and-region.md](platforms/decode-mapped-uncached-and-region.md): Mapped uncached accesses (where the R10000's uncached attribute comes from, how IRIX builds the pages), what the region-present register does on the Hub and Bedrock, and what the Hub memory configuration word decodes, with the PROM and kernel addresses.
 - [platforms/ip27/prom-node-numbering.md](platforms/ip27/prom-node-numbering.md): IP27 PROM 6.156: the order of its writes to the Hub node number, cached-alias size, region-present and region-size fields, and what the other processors do at each write, including the slave loop and launch handshake.
 - [software/kernel/ip30/bridge-routines.md](software/kernel/ip30/bridge-routines.md): Bridge-family accessors and attach routines of the IP30 kernel.
 - [software/kernel/ip30/heart-routines.md](software/kernel/ip30/heart-routines.md): HEART error, timer and reset routines of the IP30 kernel.
