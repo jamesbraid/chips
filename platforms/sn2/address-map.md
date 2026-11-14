@@ -124,3 +124,26 @@ Firmware describes node memory to the kernel through the standard EFI memory map
 - Established: the AS values and names; the field shift relation `AS shift = NASID shift - 2`; the local and global MMR offsets for both chips; the window sizes; the DMA conversion macros; the fallback field values.
 - Inferred: the node-field reading of AS = 0 on SHub 1; what AS 1 (GET) is; why the II lands at 0x1c00000; the TIO AS-bit reading on SHub 2.
 - Unknown: the SHub 2 nasid shift and mask; how SHub 2 splits local and global MMR; the memory layout inside a node's offset.
+
+## Review
+
+Independent review of this page at chips commit 788b7be against Linux v5.3 `addrs.h`, `arch.h`, `shubio.h`, the SN2 setup, BTE, I/O and driver code that uses them, and `mspec.c`. The reviewer did not write the page.
+
+**Checked, every formula.**
+- Field relation `AS shift = NASID shift - 2`, the 2-bit AS mask, AS values 1, 2 and 3 and their macros, `TO_PHYS_MASK`, `CAC_BASE`, `AMO_BASE`, `IS_TIO_NASID` (bit 0), `NODE_OFFSET` and the 64 GiB size at shift 38.
+- `SH1_LOCAL_MMR_OFFSET` 0x80_0000_0000, `SH2_LOCAL_MMR_OFFSET` 0x2_0000_0000, `SH1_GLOBAL_MMR_OFFSET` 0x8_0000_0000, `SH2_GLOBAL_MMR_OFFSET` 0x3_0000_0000, the uncached region and the region 4 (bit 63) base for physical mode. All exact. The "node field value 2 at shift 38" and "top bit of a 36-bit offset" readings of the SHub 1 values are arithmetic-consistent and graded inferred.
+- Register address macros: local, global, global physical, the `SH1_IS_BIG_WINDOW_ADDR` split on bit 32, small window 1 plus 0x800000 for II offsets, direct global for offsets with bit 32 set, and the SHub 2 TIO form with `1 << (NASID_SHIFT - 2)`.
+- The 0x1c00000 arithmetic: small window 1 is global base plus (1 << 24); plus 0x800000; plus the II block start 0x400000 = 0x1c00000. Correct. (The phrase "puts the II registers 0x1c00000 into a window" means the block starts there; register N sits at 0x1800000 + N.)
+- Window sizes and masks: small windows 24 bits, widget mask 0xf; big windows 29 bits, window mask 0x7; `NODE_BWIN_BASE0` = global base plus 512 MiB; TIO small windows 28 bits, mask 3; TIO big windows 30 bits, mask 7; `TIO_HWIN_SHIFT_BITS` 33; coretalk nasid at 40 (mask 0x3fff), chiplet at 38, offset mask 0x3fffffffff; seven translation entries and the big window 6 stand-in for small window 0.
+- DMA formulas: `PHYS_TO_DMA`, `SH1_TIO_PHYS_TO_DMA`, `SH2_TIO_PHYS_TO_DMA` with the N-4 bit offset and the two bank bits moved to 37:36; the BTE source and destination conversion.
+- AMO encodings (load 0/8/16/24, store 0/24/32, cache clear 56, 64-byte variables), the SHub 2 four-line AMO cache flush (in `mspec_zero_block`, before a zero-fill BTE copy), the `SN_SAL_GET_SN_INFO` bit positions and the header comment's 23:15 versus the code's 23:16, the fallback values (mask 0x7ff, shift 38, size 10, sharing 8, coherency = NASID >> 9), and the two simulator I/O bases and port formula.
+
+**Grades.** Constants, macros and formulas are established as definitions, as stated; hardware meaning is marked inferred. No fact is graded above what the source defines, with the exceptions below.
+
+**Findings (judgement or wording, not changed).**
+1. The AMO table is headed "established as the encodings the kernel issues". The offsets and the macro names are established; the operation meanings (increment, decrement, clear, AND, OR, clear cached copy) are read from the macro names and the header comment's description and should be graded inferred.
+2. The big window reach "16 GiB of a widget" is the header's M-mode figure (five offset bits plus 29). The same header comment gives an N-mode figure of 8 GiB (28 bits plus five, plus an I/O space bit). The page does not say which mode applies to the fallback layout.
+3. The DSDT OEM revision threshold 0x20101 is in `acpi.h`. The code that fills `sn_acpi_rev` from the table was not found in the files fetched; the "decided by the DSDT's OEM revision" statement (on the SAL page) is therefore plausible but not verified here.
+4. The page quotes two header comment fragments (the "low NASID bit is 0" line and the local-memory space id); both are short and attributed, no longer passages are copied.
+
+**Cleared:** every address macro, constant and formula listed above (all were read against the source), and the inferred 0x1c00000 arithmetic. **Not cleared:** the node-field reading of AS = 0 on SHub 1 (inferred, no second source), the meaning of GET space and of the TIO chiplet ids (inferred from names), any SHub 2 NASID shift (unknown, correctly), and the memory layout inside a node (unknown).

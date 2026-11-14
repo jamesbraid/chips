@@ -85,3 +85,22 @@ is a hypothesis from a sibling chip and fills no field here; every entry rests o
 ## Open questions
 
 See [questions/shub-ii-reset-and-roles.md](../../questions/shub-ii-reset-and-roles.md).
+
+## Review
+
+Independent review of this page and [registers.toml](registers.toml) at chips commit 87e1291, against Linux v5.3 `shubio.h` and the SN2 BTE, BTE error and hub error code. The reviewer did not write the page.
+
+**Checked.**
+- All 60 register entries (166 register instances after counts and strides) were compared by script with the header's `IIO_` offsets: every offset matches, every repeated register's count and stride matches (CRB 15 x 0x30, BTE 2 x 0x10000, translation table 7, partial-read and PRB tables), and no offset in the file is absent from the header. The header defines no register outside the 166 that the file does not carry (the two other numeric `IIO_` constants at or above 0x400000 are field masks).
+- All 312 field positions were compared by script with the header's bitfield unions read from bit 0 up: all match (widget id, status and control, protection, LLP, translation entries, CRB A to E, BTE, error and wrapper registers included).
+- "The kernel touches fifteen of them" recounts to 15: five BTE registers (status, source, destination, control, notify; the interrupt address is never used), CRB management, CRB A to E, miscellaneous error mask, error clear, BTE common control, CRB deallocate.
+- The 0x1c00000 arithmetic: `SH1_REMOTE_SWIN_MMR` is small window 1 base (global node base plus 1 << 24) plus 0x800000 plus the register offset, used for any offset without bit 32. For the II block start 0x400000 that is 0x1000000 + 0x800000 + 0x400000 = 0x1c00000 from the global node base. Correct and correctly graded inferred (nothing was read from hardware).
+- BTE: the engine register order and 64 KiB engine stride, busy at bit 20, error flag at bit 16, length mask 16 bits, the two mode bits (zero fill bit 0, notify bit 4), cache-line length units, source and destination address-space bit clearing, the SHub 1 start order (length write, then control), the CRB error codes and the kernel's add-one convention. All match.
+
+**Grades.** Offsets and field positions established as header definitions; role text inferred; resets unknown. No issue.
+
+**Findings (wording, not changed).**
+1. "Clear the notification word in memory" is not what `bte_copy` does: it stores the busy marker (every bit set except bit 21), and waits until the word changes. A model must see that marker, not zero, before the transfer completes.
+2. The page's claim of 109 of 119 Bedrock offsets in common was not re-derived (it needs the Bedrock page); it is graded as a hypothesis and fills no field, so it does not affect clearance.
+
+**Cleared:** offsets, counts, strides and field positions of all 60 entries; the fifteen-register use count; the 0x1c00000 arithmetic; the BTE sequence apart from finding 1. **Not cleared:** role and "inferred" text (inferred by design), the Bedrock overlap figure, and any behaviour of the BTE or CRBs on real hardware.
