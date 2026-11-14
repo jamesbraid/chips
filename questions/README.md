@@ -378,6 +378,8 @@ Corrections found while tagging. These are not fixed here.
 - **SN2 SAL: PROM behaviour behind each call.** *[route: missing source]* Unknown: what the PROM does inside every SN call, the KLCONFIG layout, the pointer kinds inside its descriptors. Next: `klconfig.h` in the same kernel tree, ProPack binaries, a PROM. Page: [sn2-sal-open.md](sn2-sal-open.md).
 - **SN2 PROM: init path and hardware answers.** *[route: software now]* Unknown: the ordered init path of SAL_B, whether boot continues without a system controller, the SHub 1 first-stage order, register names, which EFI tables the PROM installs. Next: follow the SAL_B call graph with the symbolised runtime as a name key. Page: [sn2-prom-open.md](sn2-prom-open.md).
 
+- **Silicon Graphics Prism: SHub generation, TIOCA wiring, GPU part, PROM.** *[route: missing source]* Unknown: the SHub generation of each shape (the Extreme figure says 1.2), how many TIOCAs an XG2N carries and how they attach, the ATI chip and PCI IDs of the X2PRO-256 and X3-256, the PROM that supports Prism. See [questions/prism-open.md](prism-open.md).
+
 ## SN1 on IA-64 (added with platforms/sn1-ia64)
 
 - **Synergy beyond the interrupt-mask and performance registers.** *[route: missing source]* Unknown: the registers of the Itanium processor-bus ASIC beyond the 17 offsets known (the 0x450 write is now recorded), their resets, and the remote write and read offset difference. Next: a Synergy specification or an SN1 IA-64 PROM. See [questions/sn1-ia64-synergy-registers.md](sn1-ia64-synergy-registers.md).
