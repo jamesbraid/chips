@@ -37,6 +37,11 @@ pub mod widget_id {
         }
     }
 }
+/// Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded he (inferred)
+pub mod widget_control {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400020;
+}
 /// One enable bit per processor region. The header states the reset value: every region is permitted. A processor PIO is performed only when the requeste (established)
 pub mod local_access_protection {
     pub const WIDTH: u32 = 64;
@@ -287,6 +292,11 @@ pub mod link_control {
         }
     }
 }
+/// IO LLP log register: the link-level protocol log, next to link_control. The header states no access type, so rw is assumed. No field layout is recorde (inferred)
+pub mod llp_log {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400130;
+}
 /// Destination of every II-detected non-BTE error interrupt. The header's struct puts the node at bits 16:9 and the PI select at bit 8; its companion mac (established)
 pub mod interrupt_destination {
     pub const WIDTH: u32 = 64;
@@ -361,6 +371,27 @@ pub mod interrupt_destination {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// IO graphics node-widget map, two registers (0 and 1) eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorde (inferred)
+pub mod graphics_map {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400140;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 8;
+}
+/// IO scratch registers 0 and 1, eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here. (inferred)
+pub mod scratch {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400150;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 8;
+}
+/// IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is r (inferred)
+pub mod translation_table_entry {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400160;
+    pub const COUNT: u32 = 7;
+    pub const STRIDE: u64 = 8;
 }
 /// Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written a (established)
 pub mod pio_request_buffer_w0 {
@@ -594,6 +625,11 @@ pub mod pio_request_buffer_w8 {
         }
     }
 }
+/// IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here. (inferred)
+pub mod credit_count_timeout {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x4001e0;
+}
 /// Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that s (inferred)
 pub mod misc_error_mask {
     pub const WIDTH: u32 = 64;
@@ -638,6 +674,11 @@ pub mod misc_error_mask {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here. (inferred)
+pub mod crosstalk_timeout_threshold {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x4001f0;
 }
 /// Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero. Reset u (established)
 pub mod error_clear {
@@ -733,6 +774,11 @@ pub mod error_clear {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no acc (inferred)
+pub mod bte_global_control {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400200;
 }
 /// Outstanding-read table that the read-response timeout works on. Access direction is not stated by the header. No consumer is recorded. (established)
 pub mod pio_read_address {
@@ -931,6 +977,16 @@ pub mod request_buffer_control {
         }
     }
 }
+/// IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here. (inferred)
+pub mod crb_timeout {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x4003b8;
+}
+/// IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here. (inferred)
+pub mod crb_timeout_prescaler {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x4003c0;
+}
 /// First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The head (inferred)
 pub mod crb_a {
     pub const WIDTH: u32 = 64;
@@ -949,6 +1005,13 @@ pub mod crb_b {
 pub mod crb_c {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400410;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
+}
+/// Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_ (inferred)
+pub mod crb_d {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400418;
     pub const COUNT: u32 = 15;
     pub const STRIDE: u64 = 32;
 }
@@ -1118,3 +1181,4 @@ pub const MANUFACTURER_BEDROCK: u32 = 0x36; // inferred
 pub const PART_BEDROCK: u32 = 0xc110; // inferred
 pub const PI0_INTERRUPT_PENDING_MODIFY: u32 = 0x1800090; // established
 pub const PI1_INTERRUPT_PENDING_MODIFY: u32 = 0x1a00090; // established
+pub const PROTECTION_OVERRIDE_KEY: u64 = 0x53474972756c6573; // established

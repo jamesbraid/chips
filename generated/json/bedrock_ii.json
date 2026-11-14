@@ -47,6 +47,20 @@
   {
    "unit": "bedrock_ii",
    "kind": "register",
+   "name": "widget_control",
+   "offset": 4194336,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
    "name": "local_access_protection",
    "offset": 4194560,
    "access": "rw",
@@ -329,6 +343,20 @@
   {
    "unit": "bedrock_ii",
    "kind": "register",
+   "name": "llp_log",
+   "offset": 4194608,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset)"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
    "name": "interrupt_destination",
    "offset": 4194616,
    "access": "rw",
@@ -402,6 +430,48 @@
    "lo": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "graphics_map",
+   "offset": 4194624,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset)"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "scratch",
+   "offset": 4194640,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset)"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "translation_table_entry",
+   "offset": 4194656,
+   "access": "rw",
+   "width": 64,
+   "count": 7,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)"
   },
   {
    "unit": "bedrock_ii",
@@ -632,6 +702,20 @@
   {
    "unit": "bedrock_ii",
    "kind": "register",
+   "name": "credit_count_timeout",
+   "offset": 4194784,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
    "name": "misc_error_mask",
    "offset": 4194792,
    "access": "rw",
@@ -678,6 +762,20 @@
    "lo": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "crosstalk_timeout_threshold",
+   "offset": 4194800,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)"
   },
   {
    "unit": "bedrock_ii",
@@ -773,6 +871,20 @@
    "lo": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "bte_global_control",
+   "offset": 4194816,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset)"
   },
   {
    "unit": "bedrock_ii",
@@ -981,6 +1093,34 @@
   {
    "unit": "bedrock_ii",
    "kind": "register",
+   "name": "crb_timeout",
+   "offset": 4195256,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "crb_timeout_prescaler",
+   "offset": 4195264,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
    "name": "crb_a",
    "offset": 4195328,
    "access": "r",
@@ -1019,6 +1159,20 @@
    "reset": "unknown",
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "register",
+   "name": "crb_d",
+   "offset": 4195352,
+   "access": "r",
+   "width": 64,
+   "count": 15,
+   "stride": 32,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)"
   },
   {
    "unit": "bedrock_ii",
@@ -1244,6 +1398,15 @@
    "kind": "constant",
    "name": "PI1_INTERRUPT_PENDING_MODIFY",
    "value": 27263120,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "constant",
+   "name": "PROTECTION_OVERRIDE_KEY",
+   "value": 6000845784439612787,
    "count": 1,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"

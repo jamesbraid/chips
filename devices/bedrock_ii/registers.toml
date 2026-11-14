@@ -11,6 +11,7 @@ offset_macro = "bare"
 [constants]
 PART_BEDROCK = { value = 0xc110, grade = "inferred", doc = "Crosstalk part the SN1 header assigns to the Bedrock. The same value is named Bedrock in OpenBSD's device table. No consumer tests it and no read on silicon is recorded." }
 MANUFACTURER_BEDROCK = { value = 0x36, grade = "inferred", doc = "Manufacturer field value for Bedrock in the OpenBSD device table and in mainline Linux's widget table. Read on silicon unknown." }
+PROTECTION_OVERRIDE_KEY = { value = 0x53474972756c6573, grade = "established", doc = "The 64-bit key the SN1 tree names for protection_override: the ASCII string SGIrules." }
 PI0_INTERRUPT_PENDING_MODIFY = { value = 0x1800090, grade = "established", doc = "Hard-coded target of an II interrupt packet from PI select 0, at this offset in PI0's register space on the named node (the header's interrupt-destination logic)." }
 PI1_INTERRUPT_PENDING_MODIFY = { value = 0x1a00090, grade = "established", doc = "Hard-coded target of an II interrupt packet from PI select 1, at this offset in PI1's register space on the named node (the header's interrupt-destination logic)." }
 
@@ -345,3 +346,101 @@ stride = 0x20
 grade = "inferred"
 from = "Linux 2.5.40 SN1 register headers: offsets and stride only"
 
+# Registers the header names that the first reading missed. The header gives each a name, an offset and a
+# one-line description and no access type, so the access is an assumption and each is graded inferred.
+
+[registers.widget_control]
+offset = 0x400020
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)"
+doc = "Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.llp_log]
+offset = 0x400130
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset)"
+doc = "IO LLP log register: the link-level protocol log, next to link_control. The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.graphics_map]
+offset = 0x400140
+access = "rw"
+width = 64
+count = 2
+stride = 0x8
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset)"
+doc = "IO graphics node-widget map, two registers (0 and 1) eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.scratch]
+offset = 0x400150
+access = "rw"
+width = 64
+count = 2
+stride = 0x8
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset)"
+doc = "IO scratch registers 0 and 1, eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.translation_table_entry]
+offset = 0x400160
+access = "rw"
+width = 64
+count = 7
+stride = 0x8
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)"
+doc = "IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.credit_count_timeout]
+offset = 0x4001e0
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)"
+doc = "IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.crosstalk_timeout_threshold]
+offset = 0x4001f0
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)"
+doc = "IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.bte_global_control]
+offset = 0x400200
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset)"
+doc = "IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.crb_timeout]
+offset = 0x4003b8
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)"
+doc = "IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.crb_timeout_prescaler]
+offset = 0x4003c0
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)"
+doc = "IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here."
+
+[registers.crb_d]
+offset = 0x400418
+access = "r"
+width = 64
+count = 15
+stride = 0x20
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)"
+doc = "Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred."
