@@ -20,6 +20,7 @@ driver author's naming, not a hardware measurement (see [../published-sources.md
 | `gxemul` | GXemul (mirror) | `234a181a1711` | https://github.com/retroprom/gxemul | Device models for the O2 (`dev_sgi_ip32.c`: CRIME, MACE), the Octane (`dev_sgi_ip30.c`) and GBE (`dev_sgi_gbe.c`). An independent model to compare a reading against, never a fact source. |
 | `mame` | MAME | `803a05bb5090` | https://github.com/mamedev/mame | `src/mame/sgi`: `crime.cpp`, `mace.cpp` and `o2.cpp` for the O2, the earlier SGI memory and I/O controllers (`mc.cpp`, `hpc3.cpp`, `ioc2.cpp`). Independent model, same caveat. |
 | `arcboot` | arcboot | `15151b5e144d` | https://github.com/agx/arcboot | A published boot loader for IP22 and IP32 that calls the ARCS firmware interface (`arclib`): how a loader finds the machine through the PROM. |
+| `irix-657m-src` | calmsacibis995, public IRIX 6.5.7m source tree | `822f4fcb9952` | https://github.com/calmsacibis995/irix-657m-src | The IRIX source the evidence order cites first, by path in the tree. An older release than the 6.5.30 and 6.5.22 binaries: a hint for the shipped images, never a fact for them on its own. |
 | `m2c` | m2c (MIPS decompiler, fork with N32 support) | `b3e0876aca1c` | https://github.com/techomancer/m2c | Tool, not a hardware source: decompiles MIPS routines for the census. |
 | `spimdisasm` | spimdisasm | `4b5d4c68eeb9` | https://github.com/Decompollaborate/spimdisasm | Tool, not a hardware source: MIPS disassembly used by the tools. |
 

@@ -218,7 +218,7 @@ Published sources and specifications:
                        the other audits, irix-files.md and reading-brief.md
     references/        documents/ (specs.md, published-sources.md, INDEX.md and the committed specification PDFs)
                        and code/ (m2c spimdisasm linux linux-5.3 linux-2.5.40 linux-2.4.37 linux-ip30 netbsd openbsd
-                       gxemul mame arcboot: public submodules, pinned and shallow, init only what you need)
+                       gxemul mame arcboot irix-657m-src: public submodules, pinned and shallow, init only what you need)
     tools/             configs/ (one census config per chip), setup-clone.sh (the bootstrap stub), config/
                        (inventory-config.json, inventory-siblings.json, inventory-root.sha256, defs-check.toml and
                        the allow-lists the checks read) and ghidra/ (this workspace's Ghidra processors, import and

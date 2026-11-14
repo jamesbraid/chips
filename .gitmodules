@@ -47,6 +47,10 @@
 	path = references/code/arcboot
 	url = https://github.com/agx/arcboot.git
 	shallow = true
+[submodule "references/code/irix-657m-src"]
+	path = references/code/irix-657m-src
+	url = https://github.com/calmsacibis995/irix-657m-src.git
+	shallow = true
 [submodule "retools"]
 	path = retools
 	url = ../sgi-retools.git
