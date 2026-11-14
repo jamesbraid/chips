@@ -46,3 +46,13 @@ Findings:
 Cleared scope: the CR-brick facts and the model notes. Not cleared: the wording in finding 2.
 
 Findings addressed in 9995be1; renewed review needed for the changed claims.
+
+### Renewed review
+
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Checked against the printed pages in the Library (`techpubs` root); PDF page = printed page plus the offset noted per document. 
+
+**Checked.** 007-4377-002 printed p.49 (PDF 73): "a maximum of 256 processors on a single-system image (SSI) at initial release. Larger SSI configurations may be offered in the future", and "up to 6 TB (terabytes) for a 512 processor system". The new wording reproduces this without calling 512 the future limit. Right.
+
+**Findings.** None.
+
+**Cleared:** the 6 TB wording.

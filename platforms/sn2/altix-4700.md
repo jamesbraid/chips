@@ -71,3 +71,13 @@ Findings:
 Cleared scope: the 4700 and 450 population, topology and blade facts as cited; the SHub 2 claim for the 4700 compute blades. Not cleared: anything about the 450's SHub generation (correctly left unknown).
 
 Findings addressed in 9995be1; renewed review needed for the changed claims.
+
+### Renewed review
+
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Checked against the printed pages in the Library (`techpubs` root); PDF page = printed page plus the offset noted per document. 
+
+**Checked.** No claim on this page changed in 9995be1; the page is untouched by the fixing commit. Nothing to renew.
+
+**Findings.** None.
+
+**Cleared:** nothing new; the first review's scope stands.

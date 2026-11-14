@@ -47,3 +47,13 @@ Findings:
 Cleared scope: all board, slot and memory facts above. Not cleared: the slot-order wording (finding 2).
 
 Findings addressed in 9995be1; renewed review needed for the changed claims.
+
+### Renewed review
+
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Checked against the printed pages in the Library (`techpubs` root); PDF page = printed page plus the offset noted per document. 
+
+**Checked.** 007-4772-001 (PDF page = printed page + 22). p.21 (PDF 43): "installed in PCI slot 1, (the top PCI slot)". p.27 (PDF 49): "The system's base I/O board always occupies bus 1, slot 1, and the static I/O daughter board is permanently installed in the top slot (bus 1, slot 2)". The page records both and takes bus 1 slot 1; right. p.23 (PDF 45): the daughter-card connector list (four USB A, L1 diagnostic USB-B, L1 console DB9, IS IN and IS Repeat). The page now cites pp.23, 27. Right.
+
+**Findings.** None.
+
+**Cleared:** the slot conflict note and the connector citation.

@@ -45,7 +45,7 @@ Below, N is the nasid shift (38 in the fallback), A = N - 2 is the address-space
 
 ### AMO space (AS = 2)
 
-Each atomic variable takes a 64-byte line of which the first eight bytes are the variable; the remaining address bits select the operation (kernel header for the special-memory driver). The offsets and macro names are established as the encodings the kernel issues; the operation column is **inferred** from the macro names and the header comment's description:
+Each atomic variable takes a 64-byte line of which the first eight bytes are the variable; the remaining address bits select the operation (kernel header for the special-memory driver). The offsets and macro names are established as the encodings the kernel issues; the operation column is **inferred** from the macro names (the header comment describes only the variable layout):
 
 | Access | Offset added to the address | Operation |
 |---|---|---|
@@ -149,3 +149,13 @@ Independent review of this page at chips commit 788b7be against Linux v5.3 `addr
 **Cleared:** every address macro, constant and formula listed above (all were read against the source), and the inferred 0x1c00000 arithmetic. **Not cleared:** the node-field reading of AS = 0 on SHub 1 (inferred, no second source), the meaning of GET space and of the TIO chiplet ids (inferred from names), any SHub 2 NASID shift (unknown, correctly), and the memory layout inside a node (unknown).
 
 Findings 1-8 addressed in the commit "docs: address the SN2 SHub review findings"; renewed review needed for the changed claims.
+
+### Renewed review
+
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Sources were fetched as single files from Linux v5.3 into scratch and compared with the changed text. 
+
+**Checked.**
+- AMO table: the offsets and names (`FETCHOP_LOAD` 0, `_INCREMENT` 8, `_DECREMENT` 16, `_CLEAR` 24, `_STORE` 0, `_AND` 24, `_OR` 32, `_CLEAR_CACHE` 56) are in `mspec.h`; that header's comment describes only the 64-byte variable layout and the aliasing hazard, not the operations. The operation column is therefore inferred from the names alone. The page said "and the header comment's description"; corrected (mechanical).
+- Big window reach: the translation-table comment in `shubio.h` gives 16 GiB per widget for M-mode (five offset bits with SysAD[28:0]) and, for N-mode, five bits with SysAD[27:0] plus the IOSP bit as Crosstalk[47], 8 GiB. The page's wording matches.
+
+**Findings.** One mechanical wording fix, made. **Cleared:** findings 1 and 2 of the first review as now worded. **Not cleared:** as before (finding 3, the AS = 0 node-field reading, GET space, SHub 2 NASID shift).

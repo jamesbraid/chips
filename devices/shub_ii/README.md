@@ -106,3 +106,13 @@ Independent review of this page and [registers.toml](registers.toml) at chips co
 **Cleared:** offsets, counts, strides and field positions of all 60 entries; the fifteen-register use count; the 0x1c00000 arithmetic; the BTE sequence apart from finding 1. **Not cleared:** role and "inferred" text (inferred by design), the Bedrock overlap figure, and any behaviour of the BTE or CRBs on real hardware.
 
 Findings 1-8 addressed in the commit "docs: address the SN2 SHub review findings"; renewed review needed for the changed claims.
+
+### Renewed review
+
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Sources were fetched as single files from Linux v5.3 into scratch and compared with the changed text. 
+
+**Checked.** `bte_copy` stores `BTE_WORD_BUSY` (`~BTE_WORD_AVAILABLE`, where `BTE_WORD_AVAILABLE` is `IBLS_BUSY << 1` and `IBLS_BUSY` is bit 20 in `shubio.h`) in the notification word before programming the engine, then loops while the word equals that value. "Every bit set except bit 21" and "leave the marker in place until the transfer completes" are right.
+
+**Findings.** None.
+
+**Cleared:** the BTE sequence wording. **Not cleared:** as in the first review (Bedrock overlap figure, real-hardware behaviour).

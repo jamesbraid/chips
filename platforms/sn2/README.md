@@ -115,3 +115,16 @@ Cleared scope: the machine table, the SHub-generation table and the PIC/TIO tabl
 Manual index (`references/documents/INDEX.md`, 60a97bd): number, revision and printed-page ranges of the entries for 007-4660-001 and -002, 007-4374-001, 007-4790-001, 007-4579-001, 007-4377-002, 007-4823-001, 007-4857-001, 007-4772-001, 007-4520-006 and 007-3938-005 agree with the pages read; titles confirmed for 007-4374-001 ("SGI IO10 PCI Option for Altix 350") and 007-3938-005 (cover). Copyright years confirmed for 007-4660-001 (2004), -002 (2005) and 007-4790-001 (2005). Dates given for 007-4377-002 (November 2004), 007-4823-001 (March 2006) and 007-3938-005 (April 2006) were not re-confirmed from a cover or revision page. The library holds 007-3938-005 under a different shelf directory than the 4000-series guides; the index does not give paths, so no correction is needed.
 
 Findings addressed in 9995be1; renewed review needed for the changed claims.
+
+### Renewed review
+
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Checked against the printed pages in the Library (`techpubs` root); PDF page = printed page plus the offset noted per document. 
+
+**Checked.**
+- IOC4, ISP12160, VSC7174 graded established: `drivers/misc/ioc4.c` (linux-history, copyright Silicon Graphics, Inc. 2005-2006) is named in the Evidence order paragraph at c50bfeb among the SGI-written Linux files that count wherever they live, so the grade follows the rule. Old finding 1 is settled.
+- PIC on the IX- and PX-brick: 007-4604-001 p.4 is Figure 2, "Block Diagram of Three PIC ASICs (IX-brick)", with three blocks labelled "PIC ASIC"; 007-4605-001 p.3 is Figure 2, "Block Diagram of PX-brick", with the same three "PIC ASIC" blocks. The citation and the established grade are right. The PX figure's title does not say "three PIC ASICs"; the text says "draws the same three", which is accurate.
+- Linux v5.3 files cited earlier were not re-checked beyond the ones above.
+
+**Findings.** None.
+
+**Cleared:** the IOC4-family grade (old finding 1) and the PIC grade (old finding 2). The other Not-cleared items of the first review (the unverified mailing-list date and the revision log) were out of scope here and remain open.

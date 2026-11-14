@@ -100,3 +100,20 @@ Independent review of this page, [registers.toml](registers.toml) and [registers
 **Cleared:** offsets and field positions of all 16 SHub 1 and 16 SHub 2 register entries (by script against the header) and of the behaviours listed above, including the SHub 1 versus SHub 2 test. **Not cleared:** the unit assignment column, every role text (inferred by design), the SHub 2 block transfer field layout beyond offsets and the error code position (inferred), the finding 1 to 3 wording until the author settles it, and anything outside the cited Linux files (the page's "unknown" list is consistent with them, but absence in the sources was checked only in the SN2 directories and the drivers that include the SN SAL header).
 
 Findings 1-8 addressed in the commit "docs: address the SN2 SHub review findings"; renewed review needed for the changed claims.
+
+### Renewed review
+
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Sources were fetched as single files from Linux v5.3 into scratch and compared with the changed text. 
+
+**Checked.**
+- IPI order against `sn_send_IPI_phys` (`arch/ia64/sn/kernel/sn2/sn2_smp.c`): memory barrier, take the global lock (SHub 1.1 only), `pio_phys_write_mmr`, `wait_piowc`, release. The page now says lock, store, drain, unlock. Match.
+- `IPI_BASE_VALUE`: the code ORs `0x000fee << SH_IPI_INT_BASE_SHFT` and the shift is 21 in `shub_mmr.h`; 0xfee << 21 is 0x1_fdc0_0000. `IA64_IPI_DEFAULT_BASE_ADDR` is 0xfee00000 in `arch/ia64/include/asm/hw_irq.h`. The corrected text, graded as inferred arithmetic, is right.
+- Reset values: `shub_mmr.h` carries `_INIT` macros for exactly three families (RTC 1 to 3 interrupt configuration, RTC 1 to 3 interrupt enable, `SH_INT_CMPB/C/D`), all zero. "Three" is right.
+- LED: `pda.h` has `u8 led_state` and `volatile short *led_address`, so an 8-bit state with a 16-bit store. Match.
+- `SH2_PTC_ADDR_SHFT` is 4 (line 220, under the `SH2_PTC_ADDR_RID` comment), `SH2_PTC_ADDR_MASK` is 0x1ffffffffffff000 (bits 60:12), and `sn2_smp.c` uses `SH2_PTC_RID_SHFT`. The register file's note is right. That no other kernel code uses `SH2_PTC_ADDR_SHFT` was checked only in the fetched files.
+- BTE error code: `BTE_GET_ERROR_STATUS` decodes bits 41:36 of the notification word in `bte_copy`, and `bte_error_handler` (`bte_error.c`) applies `BTE_SHUB2_ERROR` to the control and status register value. Both uses exist.
+- Boot-processor double `GET_SN_INFO`: `sn_cpu_init` is called by `cpu_init` (ia64 `setup.c` line 592, before `platform_setup` at 617) and again at the end of `sn_setup` (line 481). Match.
+
+**Findings.** None.
+
+**Cleared:** the six wording changes above. **Not cleared:** what the first review left uncleared (unit column, role texts, the SHub 2 BTE field layout beyond offsets and the error code).

@@ -165,3 +165,13 @@ Findings:
 Cleared scope: every manual-derived fact on this page (modules, limits, IP57, SHub block list, IO10 versus IO9, ring and router topology, console and L1 ports). Not cleared: the `established` grade on the IO10 and IO9 chip rows (finding 1) until relabelled or confirmed.
 
 Findings addressed in 9995be1; renewed review needed for the changed claims.
+
+### Renewed review
+
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Checked against the printed pages in the Library (`techpubs` root); PDF page = printed page plus the offset noted per document. 
+
+**Checked.** 007-4660-002 printed p.66 (PDF 94): "up to 192 GB of memory" with 32 processors, one or two routers and 64 slots; p.68 (PDF 96): the NUMAlink "create a single contiguous memory in the system of up to 384 GB". The introduction now gives both figures and points to the Memory row, which already marks the limit unknown. Right. (p.66 also mentions 17U and 39U racks; the page does not use them.)
+
+**Findings.** None.
+
+**Cleared:** the memory wording. The IOC4, VSC 7174 and ISP 12160 rows stay established under the rule, as recorded in the SN2 README's renewed review.
