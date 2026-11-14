@@ -9,7 +9,7 @@ Sources read for this page: IRIX 6.5.30 IP35 `pcibr.o` (the shared Bridge-family
 the IRIX 6.5.30 IP35 `space.o` debug types, and the public Linux ia64 SN code of the 2.6.33 era
 (`arch/ia64/include/asm/sn/tiocp.h`, `pic.h`, `pcibr_provider.h`, `pcibus_provider_defs.h`;
 `arch/ia64/sn/pci/pcibr/pcibr_reg.c`, `pcibr_dma.c`), read from a history tree (merge commit `981a2edd1922`,
-2010-01-27). The pinned v5.3 tree of [references/documents/INDEX.md](../../references/documents/INDEX.md) was not read.
+2010-01-27). The pinned v5.3 tree of [references/documents/INDEX.md](../../references/documents/INDEX.md) was read afterwards for the same headers and provider files; its `tiocp.h` and provider files have the same layout, so the grades below stand, with the v5.3 names now established as the vendor's definitions (see [the chip page](README.md)).
 
 ## Which product carries a TIOCP
 

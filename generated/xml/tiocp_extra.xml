@@ -1,0 +1,122 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/tiocp/registers-extra.toml by defs-gen - do not edit, change the source -->
+<genxml unit="tiocp_extra" prefix="TIOCP" title="TIOCP registers and constants outside the census">
+  <doc>SGI's Linux Altix platform code (v5.3) defines the TIOCP register block as struct tiocp. The census unit holds the offsets the shipped IRIX accessors reach; this unit holds what the header defines beyond them and the constants of the provider. Names, offsets and layouts are software definitions.</doc>
+  <struct name="STAT" size="8" grade="established" register="yes" offset="0x8" access="rw" reset="unknown">
+    <doc>Widget status (`cp_stat`), second word of the standard widget block. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="ERR_UPPER" size="8" grade="established" register="yes" offset="0x10" access="rw" reset="unknown">
+    <doc>Widget error address, upper word (`cp_err_upper`); the lower word is the census register `bus_err`. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="INTR_UPPER" size="8" grade="established" register="yes" offset="0x30" access="rw" reset="unknown">
+    <doc>Widget interrupt destination, upper word (`cp_intr_upper`); the lower word is the census register `intr_dst_target_id`. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="TST_PIN_CTRL" size="8" grade="established" register="yes" offset="0x70" access="rw" reset="unknown">
+    <doc>Test pin control (`cp_tst_pin_ctrl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCI_ERR_UPPER" size="8" grade="established" register="yes" offset="0xd0" access="rw" reset="unknown">
+    <doc>PCI error address, upper word (`cp_pci_err_upper`); the lower word is the census register `pci_bus_addr`. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_ADDR_MATCH_UPPER" size="8" grade="established" register="yes" offset="0x300" access="rw" count="16" stride="16" reset="unknown">
+    <doc>Buffer address match registers: sixteen pairs, upper word then lower word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_ADDR_MATCH_LOWER" size="8" grade="established" register="yes" offset="0x308" access="rw" count="16" stride="16" reset="unknown">
+    <doc>Buffer address match, lower words (second word of each pair). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_COUNT_FLUSH_W_TOUCH" size="8" grade="established" register="yes" offset="0x400" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor word `flush_w_touch` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_COUNT_FLUSH_WO_TOUCH" size="8" grade="established" register="yes" offset="0x408" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor word `flush_wo_touch` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_COUNT_INFLIGHT" size="8" grade="established" register="yes" offset="0x410" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor word `inflight` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_COUNT_PREFETCH" size="8" grade="established" register="yes" offset="0x418" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor word `prefetch` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_COUNT_TOTAL_PCI_RETRY" size="8" grade="established" register="yes" offset="0x420" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor word `total_pci_retry` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_COUNT_MAX_PCI_RETRY" size="8" grade="established" register="yes" offset="0x428" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor word `max_pci_retry` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_COUNT_MAX_LATENCY" size="8" grade="established" register="yes" offset="0x430" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor word `max_latency` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BUF_COUNT_CLEAR_ALL" size="8" grade="established" register="yes" offset="0x438" access="rw" count="8" stride="64" reset="unknown">
+    <doc>Performance monitor word `clear_all` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_TIMEOUT" size="8" grade="established" register="yes" offset="0x638" access="rw" reset="unknown">
+    <doc>PCI-X timeout (`cp_pcix_timeout`), eighth word of the PCI-X block. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="CT_DEBUG_CTL" size="8" grade="established" register="yes" offset="0x700" access="rw" reset="unknown">
+    <doc>Coretalk debug control (`cp_ct_debug_ctl`). The debug registers exist on the TIOCP only; the PIC leaves this range as padding. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="BR_DEBUG_CTL" size="8" grade="established" register="yes" offset="0x708" access="rw" reset="unknown">
+    <doc>Bridge debug control (`cp_br_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="MUX3_DEBUG_CTL" size="8" grade="established" register="yes" offset="0x710" access="rw" reset="unknown">
+    <doc>Debug mux control (`cp_mux3_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="MUX4_DEBUG_CTL" size="8" grade="established" register="yes" offset="0x718" access="rw" reset="unknown">
+    <doc>Debug mux control (`cp_mux4_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="MUX5_DEBUG_CTL" size="8" grade="established" register="yes" offset="0x720" access="rw" reset="unknown">
+    <doc>Debug mux control (`cp_mux5_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="MUX6_DEBUG_CTL" size="8" grade="established" register="yes" offset="0x728" access="rw" reset="unknown">
+    <doc>Debug mux control (`cp_mux6_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="MUX7_DEBUG_CTL" size="8" grade="established" register="yes" offset="0x730" access="rw" reset="unknown">
+    <doc>Debug mux control (`cp_mux7_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_READ_BUF_64_CP_BUF_ADDR" size="8" grade="established" register="yes" offset="0xa00" access="rw" count="16" stride="16" reset="unknown">
+    <doc>PCI-X read buffer n, address word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_READ_BUF_64_CP_BUF_ATTR" size="8" grade="established" register="yes" offset="0xa08" access="rw" count="16" stride="16" reset="unknown">
+    <doc>PCI-X read buffer n, attribute word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_WRITE_BUF_64_CP_BUF_ADDR" size="8" grade="established" register="yes" offset="0xb00" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PCI-X write buffer n, address word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_WRITE_BUF_64_CP_BUF_ATTR" size="8" grade="established" register="yes" offset="0xb08" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PCI-X write buffer n, attribute word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="PCIX_WRITE_BUF_64_CP_BUF_VALID" size="8" grade="established" register="yes" offset="0xb10" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PCI-X write buffer n, valid word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="INT_ATE_MP" size="8" grade="established" register="yes" offset="0x14000" access="rw" count="1024" stride="8" reset="unknown">
+    <doc>Internal translation entries with manual parity generation (`cp_int_ate_ram_mp`); the automatic-parity copy is the census register `int_ate`. No IRIX routine reaches it. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="WR_REQ_LOWER" size="8" grade="established" register="yes" offset="0x18000" access="rw" count="256" stride="8" reset="unknown">
+    <doc>Write request RAM, lower data bank (`cp_wr_req_lower`). Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="WR_REQ_UPPER" size="8" grade="established" register="yes" offset="0x18800" access="rw" count="256" stride="8" reset="unknown">
+    <doc>Write request RAM, upper data bank (`cp_wr_req_upper`). Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="WR_REQ_PARITY" size="8" grade="established" register="yes" offset="0x19000" access="rw" count="256" stride="8" reset="unknown">
+    <doc>Write request RAM, parity bank (`cp_wr_req_parity`). Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="RD_RESP_LOWER" size="8" grade="established" register="yes" offset="0x1c000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Read response RAM, lower data bank (`cp_rd_resp_lower`). The PIC has no read response RAM. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="RD_RESP_UPPER" size="8" grade="established" register="yes" offset="0x1d000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Read response RAM, upper data bank. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <struct name="RD_RESP_PARITY" size="8" grade="established" register="yes" offset="0x1e000" access="rw" count="512" stride="8" reset="unknown">
+    <doc>Read response RAM, parity bank. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
+  </struct>
+  <constant name="ATE_MSI" value="0x4" grade="established"/>
+  <constant name="ATE_PIO" value="0x2" grade="established"/>
+  <constant name="CFG_TYPE0_BASE" value="0x21000" grade="established"/>
+  <constant name="CFG_TYPE1_BASE" value="0x28000" grade="established"/>
+  <constant name="DEVIO_BASE" value="0x200000" grade="established"/>
+  <constant name="DEVIO_FLUSH_BASE" value="0xa00000" grade="established"/>
+  <constant name="HOST_INTR_ADDR_MASK" value="0x3fffffffffffff" grade="established"/>
+  <constant name="PCI64_CMDTYPE_MEM" value="0x1000000000000000" grade="established"/>
+  <constant name="PCI64_CMDTYPE_MSI" value="0x3000000000000000" grade="established"/>
+  <constant name="PCIX_SPECIAL_CYCLE_BASE" value="0x40000" grade="established"/>
+  <constant name="PCI_IACK_BASE" value="0x30000" grade="established"/>
+  <constant name="WAR_PV907516" value="0x2" grade="established"/>
+</genxml>

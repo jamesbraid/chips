@@ -44,9 +44,43 @@ census row at `+0x80000` credits the Bridge-only read path to the TIOCP variant 
 the Linux-only facts (54-bit interrupt address, command type in DMA address bits 61:60, the PV907516 flush erratum) and
 the tests that would settle the rest are in [devices/tiocp/coverage.md](coverage.md).
 
+## Against SGI's Altix Linux code (linux-5.3 pin 4d856f72c10e)
+
+The PIC page records the provider and its checks ([../pic/README.md](../pic/README.md)); this section is the TIOCP half. Under the evidence rule
+for the Altix generation, SGI's own header and provider define names and layouts, so each name below is **established** as a software definition (the
+IRIX accessor names the census carries stay inferred; the two readings agree on every offset, which the coverage page tabulates). Files read in full:
+`tiocp.h`, `pcibr_provider.h`, `pcibus_provider_defs.h`, `pcibr_reg.c`, `pcibr_dma.c`, `pcibr_ate.c`, `pcibr_provider.c`.
+
+**Names.** The census registers map to the same SGI names as the PIC's, with a `cp_` prefix in place of `p_wid_` or `p_`: `+0x0` `cp_id`,
+`+0x18` `cp_err_lower`, `+0x20` `cp_control` (the census name `ssram_size` came from the accessor that sets the SSRAM size field of it), `+0x28`
+`cp_req_timeout`, `+0x38` `cp_intr_lower`, `+0x40` `cp_err_cmdword`, `+0x50` `cp_tflush`, `+0x58` `cp_aux_err`, `+0x60` `cp_resp_upper`, `+0x68`
+`cp_resp_lower`, `+0x78` `cp_addr_lkerr`, `+0x80` `cp_dir_map`, `+0x90` `cp_map_fault`, `+0xa0` `cp_arb`, `+0xb0` `cp_ate_parity_err`, `+0xc0`
+`cp_bus_timeout`, `+0xc8` `cp_pci_cfg`, `+0xd8` `cp_pci_err_lower`, the interrupt block `+0x100` to `+0x1f8`
+(`cp_int_status`, `_enable`, `_rst_stat`, `_mode`, `_device`, `_host_err`, `cp_int_addr[8]`, `cp_err_int_view`, `cp_mult_int`, `cp_force_always[8]`, `cp_force_pin[8]`),
+`cp_device[4]`, `cp_wr_req_buf[4]` (`+0x240`), `cp_rrb_map[2]`, `cp_resp_status`, `cp_resp_clear`, the PCI-X block `+0x600` to `+0x630`, and `cp_int_ate_ram[1024]` at `+0x10000`.
+The PIC's `+0x48` link-layer register has no TIOCP counterpart (the header leaves padding). The full table of the shared names is on the [PIC page](../pic/README.md).
+
+**Registers the header adds** (extra unit `tiocp_extra`, all unreached by IRIX): the upper halves of the widget error, interrupt and PCI error addresses, widget status,
+test pin control, the buffer address match pairs, the performance monitor blocks, `cp_pcix_timeout`, the **debug control registers at `+0x700` to `+0x730`** (TIOCP only), the PCI-X
+read and write buffers, the manual-parity translation copy at `+0x14000`, the **write request RAM** (`+0x18000`, three banks) and the **read response RAM** (`+0x1c000`, three banks).
+The PIC has the write request RAM too, at the same offsets, and no read response RAM or debug registers.
+
+**What the provider adds** (S = SGI Linux v5.3; the PIC differences are in the PIC section):
+
+- **Window layout differs from the PIC.** Seven type-0 configuration windows from `+0x21000` (the first window below is the unused host device),
+  device I/O windows of 1 MiB from `+0x200000` and the same again with flush from `+0xa00000`; device n uses window 2n for n below 2 and n + 2 otherwise.
+  The PIC has eight configuration windows from `+0x20000` and no device I/O windows.
+- **DMA addresses.** A 64-bit direct address carries a command type in bits 61:60 (1 memory, 3 message-signalled interrupt) where the PIC carries a
+  target widget in bits 63:60. The DMA view of memory is `PHYS_TO_TIODMA`, not the PIC's.
+- **Translation entries.** Bit 1 is programmed-I/O (the PIC's coherent bit). For a message-signalled mapping the kernel sets both bit 2 and bit 1. No target widget field.
+- **Interrupt address field is 54 bits** (mask `0x003fffffffffffff`) against the PIC's 48.
+- **Read ordering (erratum PV907516).** Instead of forcing an interrupt and waiting, S reads the per-device write-request flush register `cp_wr_req_buf[slot - 1]`, which "ensures the data has entered the
+  coherence domain, unlike the PIC's". On a TIO whose identification revision is 1 the kernel does not read it and returns without ordering at all (the kernel's choice; what the hardware does on revision 1 is unknown).
+- **No part number.** The v5.3 headers define part numbers for the TIOCA (`0xe020`) and TIOCE (`0xce00`) but none for the TIOCP, so `0xe000` and `0xe010` as TIOCP remain IRIX-accessor evidence only (inferred).
+
 ## Open
 
 - Which product carries a TIOCP. No shipped software here instantiates one (inferred, same page); a published hardware
-  overview of the Altix-class generation would settle it.
+  overview of the Altix-class generation would settle it ([question](../../questions/altix-io-sn2-cross-check.md#pic-versus-tio-by-product)).
 - The `+0x14000` manual-parity translation RAM and the `+0x18000` and `+0x1c000` write-request and read-response RAMs
-  exist only in the public header. No IRIX accessor reaches them.
+  exist only in the public header. No IRIX accessor reaches them. They are now named registers of the extra unit.

@@ -81,6 +81,10 @@ prose_offsets = false
 group = "tiocp.h"
 prose_offsets = false
 
+[units.tiocp_extra]
+group = "tiocp_extra.h"
+prose_offsets = false
+
 [units.vice]
 group = "vice.h"
 prose_offsets = false

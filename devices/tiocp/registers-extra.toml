@@ -1,0 +1,347 @@
+unit = "tiocp_extra"
+prefix = "TIOCP"
+title = "TIOCP registers and constants outside the census"
+doc = "SGI's Linux Altix platform code (v5.3) defines the TIOCP register block as struct tiocp. The census unit holds the offsets the shipped IRIX accessors reach; this unit holds what the header defines beyond them and the constants of the provider. Names, offsets and layouts are software definitions."
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e: arch/ia64/include/asm/sn/tiocp.h, pcibr_provider.h, arch/ia64/sn/pci/pcibr/"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+
+[registers.stat]
+offset = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Widget status (`cp_stat`), second word of the standard widget block. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.err_upper]
+offset = 0x10
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Widget error address, upper word (`cp_err_upper`); the lower word is the census register `bus_err`. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.intr_upper]
+offset = 0x30
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Widget interrupt destination, upper word (`cp_intr_upper`); the lower word is the census register `intr_dst_target_id`. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.tst_pin_ctrl]
+offset = 0x70
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Test pin control (`cp_tst_pin_ctrl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.pci_err_upper]
+offset = 0xd0
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "PCI error address, upper word (`cp_pci_err_upper`); the lower word is the census register `pci_bus_addr`. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_addr_match_upper]
+offset = 0x300
+count = 16
+stride = 0x10
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Buffer address match registers: sixteen pairs, upper word then lower word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_addr_match_lower]
+offset = 0x308
+count = 16
+stride = 0x10
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Buffer address match, lower words (second word of each pair). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_count_flush_w_touch]
+offset = 0x400
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Performance monitor word `flush_w_touch` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_count_flush_wo_touch]
+offset = 0x408
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Performance monitor word `flush_wo_touch` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_count_inflight]
+offset = 0x410
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Performance monitor word `inflight` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_count_prefetch]
+offset = 0x418
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Performance monitor word `prefetch` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_count_total_pci_retry]
+offset = 0x420
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Performance monitor word `total_pci_retry` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_count_max_pci_retry]
+offset = 0x428
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Performance monitor word `max_pci_retry` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_count_max_latency]
+offset = 0x430
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Performance monitor word `max_latency` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.buf_count_clear_all]
+offset = 0x438
+count = 8
+stride = 0x40
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Performance monitor word `clear_all` of block n; eight blocks, 0x40 bytes apart. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.pcix_timeout]
+offset = 0x638
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "PCI-X timeout (`cp_pcix_timeout`), eighth word of the PCI-X block. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.ct_debug_ctl]
+offset = 0x700
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Coretalk debug control (`cp_ct_debug_ctl`). The debug registers exist on the TIOCP only; the PIC leaves this range as padding. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.br_debug_ctl]
+offset = 0x708
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Bridge debug control (`cp_br_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.mux3_debug_ctl]
+offset = 0x710
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Debug mux control (`cp_mux3_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.mux4_debug_ctl]
+offset = 0x718
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Debug mux control (`cp_mux4_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.mux5_debug_ctl]
+offset = 0x720
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Debug mux control (`cp_mux5_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.mux6_debug_ctl]
+offset = 0x728
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Debug mux control (`cp_mux6_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.mux7_debug_ctl]
+offset = 0x730
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Debug mux control (`cp_mux7_debug_ctl`). Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.pcix_read_buf_64_cp_buf_addr]
+offset = 0xa00
+count = 16
+stride = 0x10
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "PCI-X read buffer n, address word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.pcix_read_buf_64_cp_buf_attr]
+offset = 0xa08
+count = 16
+stride = 0x10
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "PCI-X read buffer n, attribute word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.pcix_write_buf_64_cp_buf_addr]
+offset = 0xb00
+count = 8
+stride = 0x20
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "PCI-X write buffer n, address word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.pcix_write_buf_64_cp_buf_attr]
+offset = 0xb08
+count = 8
+stride = 0x20
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "PCI-X write buffer n, attribute word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.pcix_write_buf_64_cp_buf_valid]
+offset = 0xb10
+count = 8
+stride = 0x20
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "PCI-X write buffer n, valid word. Offset, width and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.int_ate_mp]
+offset = 0x14000
+count = 1024
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Internal translation entries with manual parity generation (`cp_int_ate_ram_mp`); the automatic-parity copy is the census register `int_ate`. No IRIX routine reaches it. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.wr_req_lower]
+offset = 0x18000
+count = 256
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Write request RAM, lower data bank (`cp_wr_req_lower`). Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.wr_req_upper]
+offset = 0x18800
+count = 256
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Write request RAM, upper data bank (`cp_wr_req_upper`). Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.wr_req_parity]
+offset = 0x19000
+count = 256
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Write request RAM, parity bank (`cp_wr_req_parity`). Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.rd_resp_lower]
+offset = 0x1c000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Read response RAM, lower data bank (`cp_rd_resp_lower`). The PIC has no read response RAM. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.rd_resp_upper]
+offset = 0x1d000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Read response RAM, upper data bank. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[registers.rd_resp_parity]
+offset = 0x1e000
+count = 512
+stride = 0x8
+access = "rw"
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
+doc = "Read response RAM, parity bank. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
+
+[constants]
+HOST_INTR_ADDR_MASK = { value = 0x3fffffffffffff, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (TIOCP_HOST_INTR_ADDR)", doc = "Mask of the destination address field of a per-pin interrupt address register: 54 bits on the TIOCP, 48 on the PIC." }
+PCI64_CMDTYPE_MEM = { value = 0x1000000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (TIOCP_PCI64_CMDTYPE_MEM)", doc = "Command type 1, memory, in bits 61:60 of a 64-bit direct address. Instead of the PIC's target widget field." }
+PCI64_CMDTYPE_MSI = { value = 0x3000000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (TIOCP_PCI64_CMDTYPE_MSI)", doc = "Command type 3, message-signalled interrupt, in bits 61:60." }
+ATE_PIO = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pcibr_provider.h (PCI32_ATE_PIO, comment TIOCP ASIC ONLY)", doc = "Bit 1 of a translation entry on the TIOCP: programmed I/O. The kernel sets it together with the MSI bit when mapping for a message-signalled interrupt. The same bit is \"coherent\" on the PIC." }
+ATE_MSI = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pcibr_provider.h (PCI32_ATE_MSI)", doc = "Bit 2 of a translation entry: message-signalled interrupt." }
+WAR_PV907516 = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pcibr_provider.h (PV907516)", doc = "Workaround mask keyed by the TIO's revision number (one bit per revision): on revision 1 the kernel must not read the per-device write-request flush register (cp_wr_req_buf) for read-ordering. On other revisions that read is the ordering primitive." }
+CFG_TYPE0_BASE = { value = 0x21000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (cp_type0_cfg_dev[7])", doc = "Base of seven type-0 configuration windows of 0x1000 bytes (eight functions of 0x100 each); the 0x1000 bytes just below it are the host device window, marked not used. The PIC has eight windows from the lower base." }
+CFG_TYPE1_BASE = { value = 0x28000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (cp_type1_cfg)", doc = "Base of the 0x1000-byte type-1 configuration window." }
+PCI_IACK_BASE = { value = 0x30000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (cp_pci_iack)", doc = "Eight-byte PCI interrupt acknowledge window." }
+PCIX_SPECIAL_CYCLE_BASE = { value = 0x40000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (cp_pcix_cycle)", doc = "Eight-byte PCI-X special cycle window." }
+DEVIO_BASE = { value = 0x200000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (cp_devio_raw[6], cp_devio(n))", doc = "Six device I/O spaces of 1 MiB from here to 0x7fffff. Device n uses raw window 2n for n below 2 and n + 2 otherwise, so devices 0 to 3 are windows 0, 2, 4, 5." }
+DEVIO_FLUSH_BASE = { value = 0xa00000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (cp_devio_raw_flush[6], cp_devio_flush(n))", doc = "The same six spaces again with flush, 1 MiB each from here to 0xbfffff, same window numbering." }
