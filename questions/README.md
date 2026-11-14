@@ -376,6 +376,7 @@ Corrections found while tagging. These are not fixed here.
 - **SHub 1 I/O interface: reset values and the unused registers.** *[route: missing source]* Unknown: reset values and the role of the roughly 150 registers the kernel never touches. Next: the same sources as above. Page: [shub-ii-reset-and-roles.md](shub-ii-reset-and-roles.md).
 - **SN2 address map: SHub 2 field values, memory layout and the GET space.** *[route: missing source]* Unknown: SHub 2's NASID mask and shift, how it splits local and global MMR space, the memory layout inside a node, what address space 1 is. Next: a SHub 2 PROM or a captured topology line. Page: [sn2-address-map-open.md](sn2-address-map-open.md).
 - **SN2 SAL: PROM behaviour behind each call.** *[route: missing source]* Unknown: what the PROM does inside every SN call, the KLCONFIG layout, the pointer kinds inside its descriptors. Next: `klconfig.h` in the same kernel tree, ProPack binaries, a PROM. Page: [sn2-sal-open.md](sn2-sal-open.md).
+- **SN2 PROM: init path and hardware answers.** *[route: software now]* Unknown: the ordered init path of SAL_B, whether boot continues without a system controller, the SHub 1 first-stage order, register names, which EFI tables the PROM installs. Next: follow the SAL_B call graph with the symbolised runtime as a name key. Page: [sn2-prom-open.md](sn2-prom-open.md).
 
 ## SN1 on IA-64 (added with platforms/sn1-ia64)
 
