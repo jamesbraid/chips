@@ -12,10 +12,10 @@ offset_macro = "bare"
 # ---- PI: processor interface, 8-byte slots (identity, interrupts, real-time clock, error latches)
 [registers.pi_region_present]
 offset = 0x18
-access = "r"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
 
 [registers.pi_cpu_num]
 offset = 0x20
@@ -29,7 +29,7 @@ offset = 0x28
 access = "rw"
 width = 64
 grade = "established"
-from = "census: 3 sites, 3 routines"
+from = "census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed)"
 
 [registers.pi_max_crb_timeout]
 offset = 0x30
@@ -85,21 +85,21 @@ offset = 0x90
 access = "w"
 width = 64
 grade = "established"
-from = "census: 9 sites, 8 routines"
+from = "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
 
 [registers.pi_int_pend0]
 offset = 0x98
 access = "r"
 width = 64
 grade = "established"
-from = "census: 11 sites, 8 routines"
+from = "census: 11 sites, 8 routines (r); census: 2 sites, 2 routines (r, indexed)"
 
 [registers.pi_int_pend1]
 offset = 0xa0
 access = "r"
 width = 64
 grade = "established"
-from = "census: 5 sites, 4 routines"
+from = "census: 5 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)"
 
 [registers.pi_int_mask0_a]
 offset = 0xa8
@@ -197,14 +197,14 @@ offset = 0x150
 access = "w"
 width = 64
 grade = "established"
-from = "census: 2 sites, 2 routines"
+from = "census: 2 sites, 2 routines (w); census: 1 sites, 1 routines (w, indexed)"
 
 [registers.pi_prof_en_b]
 offset = 0x158
 access = "w"
 width = 64
 grade = "established"
-from = "census: 2 sites, 2 routines"
+from = "census: 2 sites, 2 routines (w); census: 1 sites, 1 routines (w, indexed)"
 
 [registers.pi_rt_local_ctrl]
 offset = 0x160
@@ -232,28 +232,28 @@ offset = 0x400
 access = "rw"
 width = 64
 grade = "established"
-from = "census: 13 sites, 5 routines"
+from = "census: 13 sites, 5 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
 
 [registers.pi_err_int_mask_a]
 offset = 0x408
 access = "rw"
 width = 64
 grade = "established"
-from = "census: 5 sites, 2 routines"
+from = "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
 
 [registers.pi_err_int_mask_b]
 offset = 0x410
 access = "rw"
 width = 64
 grade = "established"
-from = "census: 5 sites, 2 routines"
+from = "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
 
 [registers.pi_err_stack_addr_a]
 offset = 0x418
-access = "r"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 4 sites, 3 routines"
+from = "census: 4 sites, 3 routines (r); census: 2 sites, 1 routines (w, indexed)"
 
 [registers.pi_err_stack_addr_b]
 offset = 0x420
@@ -267,7 +267,7 @@ offset = 0x428
 access = "r"
 width = 64
 grade = "established"
-from = "census: 2 sites, 1 routines"
+from = "census: 2 sites, 1 routines (r); census: 2 sites, 1 routines (r, indexed)"
 
 [registers.pi_err_status0_a]
 offset = 0x430
@@ -329,10 +329,10 @@ from = "census: 161 sites, 80 routines"
 # ---- MD: memory and directory (configuration, migration, error latches)
 [registers.md_memory_config]
 offset = 0x200018
-access = "r"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 3 sites, 3 routines"
+from = "census: 3 sites, 3 routines (r); census: 13 sites, 12 routines (rw, indexed)"
 
 [registers.md_refresh_control]
 offset = 0x200020
@@ -374,14 +374,14 @@ offset = 0x200050
 access = "r"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
 
 [registers.md_dir_error_clr]
 offset = 0x200058
 access = "r"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 4 sites, 3 routines (r, indexed)"
 
 [registers.md_protocol_error]
 offset = 0x200060
@@ -402,14 +402,14 @@ offset = 0x200070
 access = "r"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
 
 [registers.md_mem_error_clr]
 offset = 0x200078
 access = "r"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 5 sites, 3 routines (r, indexed)"
 
 [registers.md_misc_error]
 offset = 0x200080
@@ -485,31 +485,31 @@ from = "census: 1 sites, 1 routines"
 # ---- MD junk-bus block: microcontroller registers, slot id, LEDs
 [registers.md_ureg0_0]
 offset = 0x220000
-access = "w"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 6 sites, 2 routines"
+from = "census: 6 sites, 2 routines (w); census: 22 sites, 6 routines (rw, indexed)"
 
 [registers.md_ureg0_1]
 offset = 0x220008
-access = "w"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 9 sites, 2 routines"
+from = "census: 9 sites, 2 routines (w); census: 36 sites, 5 routines (rw, indexed)"
 
 [registers.md_slotid_ustat]
 offset = 0x220048
 access = "r"
 width = 64
 grade = "established"
-from = "census: 2 sites, 2 routines"
+from = "census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed)"
 
 [registers.md_led0]
 offset = 0x220050
 access = "w"
 width = 64
 grade = "established"
-from = "census: 4 sites, 1 routines"
+from = "census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed)"
 
 [registers.md_ureg1_0]
 offset = 0x220080
@@ -524,7 +524,7 @@ offset = 0x400008
 access = "r"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
 
 [registers.iio_wcr]
 offset = 0x400020
@@ -559,14 +559,14 @@ offset = 0x400128
 access = "rw"
 width = 64
 grade = "established"
-from = "census: 2 sites, 1 routines"
+from = "census: 2 sites, 1 routines (rw); census: 6 sites, 4 routines (rw, indexed)"
 
 [registers.iio_illr]
 offset = 0x400130
 access = "rw"
 width = 64
 grade = "established"
-from = "census: 2 sites, 1 routines"
+from = "census: 2 sites, 1 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
 
 [registers.iio_iidsr]
 offset = 0x400138
@@ -612,10 +612,10 @@ from = "census: 4 sites, 3 routines"
 
 [registers.iio_ieclr]
 offset = 0x4001f8
-access = "w"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 2 sites, 1 routines"
+from = "census: 2 sites, 1 routines (w); census: 5 sites, 4 routines (rw, indexed)"
 
 [registers.iio_ibcn]
 offset = 0x400200
@@ -725,10 +725,10 @@ from = "census: 1 sites, 1 routines"
 # ---- II block transfer engines 0 and 1
 [registers.iio_ibls_0]
 offset = 0x410000
-access = "r"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
 
 [registers.iio_ibsa_0]
 offset = 0x410008
@@ -753,24 +753,24 @@ from = "census: 1 sites, 1 routines"
 
 [registers.iio_ibls_1]
 offset = 0x420000
-access = "r"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 3 sites, 1 routines (rw, indexed)"
 
 [registers.iio_ibsa_1]
 offset = 0x420008
-access = "r"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
 
 [registers.iio_ibda_1]
 offset = 0x420010
-access = "r"
+access = "rw"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
 
 [registers.iio_ibct_1]
 offset = 0x420018
@@ -807,7 +807,7 @@ offset = 0x600000
 access = "r"
 width = 64
 grade = "established"
-from = "census: 18 sites, 16 routines"
+from = "census: 18 sites, 16 routines (r); census: 5 sites, 4 routines (r, indexed)"
 
 [registers.ni_port_reset]
 offset = 0x600008
@@ -849,7 +849,7 @@ offset = 0x600110
 access = "rw"
 width = 64
 grade = "established"
-from = "census: 2 sites, 1 routines"
+from = "census: 2 sites, 1 routines (rw); census: 2 sites, 1 routines (rw, indexed)"
 
 [registers.ni_vector_parms]
 offset = 0x600200
@@ -877,7 +877,7 @@ offset = 0x600300
 access = "r"
 width = 64
 grade = "established"
-from = "census: 1 sites, 1 routines"
+from = "census: 1 sites, 1 routines (r); census: 7 sites, 3 routines (r, indexed)"
 
 [registers.ni_vector_read_data]
 offset = 0x600310
@@ -912,14 +912,14 @@ offset = 0x608008
 access = "r"
 width = 64
 grade = "established"
-from = "census: 4 sites, 4 routines"
+from = "census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)"
 
 [registers.ni_port_error_clear]
 offset = 0x608088
 access = "r"
 width = 64
 grade = "established"
-from = "census: 10 sites, 4 routines"
+from = "census: 10 sites, 4 routines (r); census: 3 sites, 3 routines (r, indexed)"
 
 [registers.ni_meta_table0]
 offset = 0x638000

@@ -1,4 +1,4 @@
-# Written by retools/tools/chips/gen_headers.py from devices/tiocp/census/. Do not edit: fix the census or its config and rerun.
+# Written by retools/tools/chips/gen_headers.py from devices/pic/census/. Do not edit: fix the census or its config and rerun.
 unit = "tiocp"
 prefix = "TIOCP"
 title = "TIOCP (PCI-X bridge, later family), as the Origin 3000 family Bridge driver reaches it"

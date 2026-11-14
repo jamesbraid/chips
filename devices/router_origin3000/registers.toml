@@ -1,4 +1,4 @@
-# Written by retools/tools/chips/gen_headers.py from chips/router_origin3000/census/. Do not edit: fix the census or its config and rerun.
+# Written by retools/tools/chips/gen_headers.py from devices/router/census/. Do not edit: fix the census or its config and rerun.
 unit = "router_origin3000"
 prefix = "ROUTER_ORIGIN3000"
 title = "network router as the Origin 3000 kernel reaches it (register numbers of a vector access)"

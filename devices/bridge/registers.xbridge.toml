@@ -6,7 +6,6 @@ remove = ["constants.INT_STATUS_B_5", "constants.INT_STATUS_B_6"]
 unit = "xbridge"
 prefix = "XBRIDGE"
 title = "XBridge (XIO-to-PCI bridge, later), Origin 2000 and Octane"
-c = { offset_macro = "bare" }
 
 [patch."registers.wid_id"]
 from = "census: 14 sites, 3 routines"

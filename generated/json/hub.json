@@ -8,14 +8,14 @@
    "kind": "register",
    "name": "pi_region_present",
    "offset": 24,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
   },
   {
    "unit": "hub",
@@ -43,7 +43,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 3 sites, 3 routines"
+   "from": "census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed)"
   },
   {
    "unit": "hub",
@@ -155,7 +155,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 9 sites, 8 routines"
+   "from": "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
   },
   {
    "unit": "hub",
@@ -169,7 +169,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 11 sites, 8 routines"
+   "from": "census: 11 sites, 8 routines (r); census: 2 sites, 2 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -183,7 +183,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 5 sites, 4 routines"
+   "from": "census: 5 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -379,7 +379,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 2 sites, 2 routines"
+   "from": "census: 2 sites, 2 routines (w); census: 1 sites, 1 routines (w, indexed)"
   },
   {
    "unit": "hub",
@@ -393,7 +393,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 2 sites, 2 routines"
+   "from": "census: 2 sites, 2 routines (w); census: 1 sites, 1 routines (w, indexed)"
   },
   {
    "unit": "hub",
@@ -449,7 +449,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 13 sites, 5 routines"
+   "from": "census: 13 sites, 5 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
   },
   {
    "unit": "hub",
@@ -463,7 +463,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 5 sites, 2 routines"
+   "from": "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
   },
   {
    "unit": "hub",
@@ -477,21 +477,21 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 5 sites, 2 routines"
+   "from": "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
   },
   {
    "unit": "hub",
    "kind": "register",
    "name": "pi_err_stack_addr_a",
    "offset": 1048,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 4 sites, 3 routines"
+   "from": "census: 4 sites, 3 routines (r); census: 2 sites, 1 routines (w, indexed)"
   },
   {
    "unit": "hub",
@@ -519,7 +519,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 2 sites, 1 routines"
+   "from": "census: 2 sites, 1 routines (r); census: 2 sites, 1 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -638,14 +638,14 @@
    "kind": "register",
    "name": "md_memory_config",
    "offset": 2097176,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 3 sites, 3 routines"
+   "from": "census: 3 sites, 3 routines (r); census: 13 sites, 12 routines (rw, indexed)"
   },
   {
    "unit": "hub",
@@ -729,7 +729,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -743,7 +743,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 4 sites, 3 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -785,7 +785,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -799,7 +799,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 5 sites, 3 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -946,28 +946,28 @@
    "kind": "register",
    "name": "md_ureg0_0",
    "offset": 2228224,
-   "access": "w",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 6 sites, 2 routines"
+   "from": "census: 6 sites, 2 routines (w); census: 22 sites, 6 routines (rw, indexed)"
   },
   {
    "unit": "hub",
    "kind": "register",
    "name": "md_ureg0_1",
    "offset": 2228232,
-   "access": "w",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 9 sites, 2 routines"
+   "from": "census: 9 sites, 2 routines (w); census: 36 sites, 5 routines (rw, indexed)"
   },
   {
    "unit": "hub",
@@ -981,7 +981,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 2 sites, 2 routines"
+   "from": "census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -995,7 +995,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 4 sites, 1 routines"
+   "from": "census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed)"
   },
   {
    "unit": "hub",
@@ -1023,7 +1023,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -1093,7 +1093,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 2 sites, 1 routines"
+   "from": "census: 2 sites, 1 routines (rw); census: 6 sites, 4 routines (rw, indexed)"
   },
   {
    "unit": "hub",
@@ -1107,7 +1107,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 2 sites, 1 routines"
+   "from": "census: 2 sites, 1 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
   },
   {
    "unit": "hub",
@@ -1198,14 +1198,14 @@
    "kind": "register",
    "name": "iio_ieclr",
    "offset": 4194808,
-   "access": "w",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 2 sites, 1 routines"
+   "from": "census: 2 sites, 1 routines (w); census: 5 sites, 4 routines (rw, indexed)"
   },
   {
    "unit": "hub",
@@ -1422,14 +1422,14 @@
    "kind": "register",
    "name": "iio_ibls_0",
    "offset": 4259840,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
   },
   {
    "unit": "hub",
@@ -1478,42 +1478,42 @@
    "kind": "register",
    "name": "iio_ibls_1",
    "offset": 4325376,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 3 sites, 1 routines (rw, indexed)"
   },
   {
    "unit": "hub",
    "kind": "register",
    "name": "iio_ibsa_1",
    "offset": 4325384,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
   },
   {
    "unit": "hub",
    "kind": "register",
    "name": "iio_ibda_1",
    "offset": 4325392,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
   },
   {
    "unit": "hub",
@@ -1583,7 +1583,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 18 sites, 16 routines"
+   "from": "census: 18 sites, 16 routines (r); census: 5 sites, 4 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -1667,7 +1667,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 2 sites, 1 routines"
+   "from": "census: 2 sites, 1 routines (rw); census: 2 sites, 1 routines (rw, indexed)"
   },
   {
    "unit": "hub",
@@ -1723,7 +1723,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 1 sites, 1 routines"
+   "from": "census: 1 sites, 1 routines (r); census: 7 sites, 3 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -1793,7 +1793,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 4 sites, 4 routines"
+   "from": "census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -1807,7 +1807,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "census: 10 sites, 4 routines"
+   "from": "census: 10 sites, 4 routines (r); census: 3 sites, 3 routines (r, indexed)"
   },
   {
    "unit": "hub",
