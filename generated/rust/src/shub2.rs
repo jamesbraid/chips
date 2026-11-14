@@ -367,7 +367,7 @@ pub mod bt_eng_notify {
     pub const COUNT: u32 = 4;
     pub const STRIDE: u64 = 65536;
 }
-/// Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps a 16-bit LED state per processor  (established)
+/// Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor  (established)
 pub mod junk_bus_led {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0xf0000000;

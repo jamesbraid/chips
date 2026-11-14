@@ -22,15 +22,16 @@ In order of first use. A failure of the ones marked *fatal* stops the kernel.
 | # | Call | Failure |
 |---|---|---|
 | 1 | SAL system table entry point (not an SN call) | `failed to find SAL entry point` printed; console dead |
-| 2 | `SN_SAL_GET_SN_INFO` (per CPU) | *fatal* (BUG) unless "not implemented", which selects SHub 1 defaults |
-| 3 | `SN_SAL_SET_OS_FEATURE_SET` x4, `SN_SAL_SET_ERROR_HANDLING_FEATURES` | ignored |
-| 4 | generic `SAL_FREQ_BASE` for the real-time clock | guesses 33.3 MHz (1e12/30000) if it fails or reports under 100 kHz |
-| 5 | `SN_SAL_GET_SAPIC_INFO` (per CPU) | *fatal* (BUG) unless "not implemented", which selects a fixed decoding |
-| 6 | `SN_SAL_GET_KLCONFIG_ADDR` per node | *fatal* (BUG on NULL) unless the PROM answers `SN_SAL_FAKE_PROM` |
-| 7 | `SN_SAL_GET_PROM_FEATURE_SET` set 0, 1 | stops at the first failure; absent features read false |
-| 8 | `SN_SAL_IOIF_INIT` (ACPI-capable PROM) or `SN_SAL_IOIF_GET_HUBDEV_INFO`, `GET_PCIBUS_INFO`, `GET_PCIDEV_INFO` (older PROM) | ACPI path: panic; older path: BUG |
-| 9 | console calls (`SN_SAL_CONSOLE_*`) | no console |
-| 10 | `SN_SAL_IOIF_INTERRUPT` per interrupt | device without interrupt |
+| 2 | `SN_SAL_GET_SN_INFO` and `SN_SAL_SET_CPU_NUMBER` (first processor initialisation of the boot CPU, before platform setup) | `GET_SN_INFO`: *fatal* (BUG) unless "not implemented", which selects SHub 1 defaults; `SET_CPU_NUMBER` ignored |
+| 3 | `SN_SAL_SET_ERROR_HANDLING_FEATURES`, then `SN_SAL_SET_OS_FEATURE_SET` x4 (start of platform setup) | ignored |
+| 4 | `SN_SAL_GET_KLCONFIG_ADDR` per node (building the compact node tables) | *fatal* (BUG on NULL) unless the PROM answers `SN_SAL_FAKE_PROM` |
+| 5 | generic `SAL_FREQ_BASE` for the real-time clock | guesses 33.3 MHz (1e12/30000) if it fails or reports under 100 kHz |
+| 6 | second processor initialisation of the boot CPU, after platform setup: `SN_SAL_GET_SN_INFO` again, `SN_SAL_GET_PROM_FEATURE_SET` set 0, 1, then `SN_SAL_GET_SAPIC_INFO` | `GET_SN_INFO` as row 2; feature sets stop at the first failure and absent features read false; `GET_SAPIC_INFO` *fatal* (BUG) unless "not implemented", which selects a fixed decoding |
+| 7 | `SN_SAL_IOIF_INIT` (ACPI-capable PROM) or `SN_SAL_IOIF_GET_HUBDEV_INFO`, `GET_PCIBUS_INFO`, `GET_PCIDEV_INFO` (older PROM) | ACPI path: panic; older path: BUG |
+| 8 | console calls (`SN_SAL_CONSOLE_*`) | no console |
+| 9 | `SN_SAL_IOIF_INTERRUPT` per interrupt | device without interrupt |
+
+The boot CPU runs the per-processor routine twice (the architecture calls processor initialisation twice on CPU 0): once early, which makes the `GET_SN_INFO` and `SET_CPU_NUMBER` calls, and once after platform setup, which repeats `GET_SN_INFO` and adds the feature-set and SAPIC calls. Other CPUs make all of them once. Order checked against `sn_setup` and `sn_cpu_init` in `arch/ia64/sn/kernel/setup.c`, Linux v5.3.
 
 Which I/O path the kernel takes (ACPI or the older direct path) is decided by the DSDT's OEM revision: 0x20101 or higher selects the ACPI path. The PROM hands the kernel its data structures through ACPI "vendor typed" resources (below).
 
@@ -40,8 +41,8 @@ Which I/O path the kernel takes (ACPI or the older direct path) is decided by th
 
 | Number | Name | Arguments | Results | Kernel use |
 |---|---|---|---|---|
-| `0x0200001e` | `SN_SAL_GET_SN_INFO` | a1 = 0 (other values reserved) | v0: bits 7:0 chip (0 SHub 1, 1 SHub 2); 15:8 log2 maximum nodes in the system (C-bricks, I-bricks and so on); 23:16 log2 nodes per sharing domain; 31:24 partition id; 39:32 coherency domain id; 47:40 region size. v1: bits 15:0 NASID mask (0x7ff for 11 bits); bits 23:16 the NASID field's low bit (the header comment says 23:15; the code uses 23:16). | Once per CPU. Fills the per-CPU chip record and the system size, sharing domain, partition, coherency and region values. Fallback when the call returns not implemented: SHub 1, mask 0x7ff, shift 38, system size 10, sharing size 8, partition from `SN_SAL_SYSCTL_PARTITION_GET`, coherency = NASID >> 9, region size from the SHub 1 identification register ([shub](../../devices/shub/README.md)). |
-| `0x0200001d` | `SN_SAL_GET_SAPIC_INFO` | a1 = SAPIC id (the local id register's id and eid, `lid >> 16`) | v0 NASID, v1 subnode, v2 slice | Once per CPU, and at early start of secondary CPUs when the NASID is not yet known. Fallback if not implemented: NASID = id & 0xfff, slice = (id >> 12) & 3, subnode = (id >> 13) & 1. |
+| `0x0200001e` | `SN_SAL_GET_SN_INFO` | a1 = 0 (other values reserved) | v0: bits 7:0 chip (0 SHub 1, 1 SHub 2); 15:8 log2 maximum nodes in the system (C-bricks, I-bricks and so on); 23:16 log2 nodes per sharing domain; 31:24 partition id; 39:32 coherency domain id; 47:40 region size. v1: bits 15:0 NASID mask (0x7ff for 11 bits); bits 23:16 the NASID field's low bit (the header comment says 23:15; the code uses 23:16). | Once per CPU, and a second time on the boot CPU after platform setup. Fills the per-CPU chip record and the system size, sharing domain, partition, coherency and region values. Fallback when the call returns not implemented: SHub 1, mask 0x7ff, shift 38, system size 10, sharing size 8, partition from `SN_SAL_SYSCTL_PARTITION_GET`, coherency = NASID >> 9, region size from the SHub 1 identification register ([shub](../../devices/shub/README.md)). |
+| `0x0200001d` | `SN_SAL_GET_SAPIC_INFO` | a1 = SAPIC id (the local id register's id and eid, `lid >> 16`) | v0 NASID, v1 subnode, v2 slice | Once per CPU (the boot CPU calls it in its second processor initialisation, after platform setup), and at early start of secondary CPUs when the NASID is not yet known. Fallback if not implemented: NASID = id & 0xfff, slice = (id >> 12) & 3, subnode = (id >> 13) & 1. |
 | `0x02000005` | `SN_SAL_GET_KLCONFIG_ADDR` | a1 = NASID | v0 = physical address of that node's firmware hardware inventory header (KLCONFIG), 0 if none | The kernel walks the board list from it to find TIOs and headless or memoryless nodes, and gives each a compact node number. |
 | `0x02000004` | `SN_SAL_GET_MASTER_NASID` | none | v0 = NASID of the node with the master console | Console routing and the hardware performance interface. status < 0 means the call failed, the kernel then uses the negative value as an invalid NASID. |
 | `0x0200003c` | `SN_SAL_GET_MASTER_BASEIO_NASID` | none | v0 = NASID of the master base I/O node | Wrapper defined, no caller in the files read. |
@@ -64,7 +65,7 @@ Console I/O on an Altix is through SAL (the "ttySG" console), not a serial port 
 
 | Number | Name | Arguments | Results | Notes |
 |---|---|---|---|---|
-| `0x02000021` | `CONSOLE_PUTC` | a1 = character | status | one character out |
+| `0x02000021` | `CONSOLE_PUTC` | a1 = character | status | one character out; wrapper defined, no caller in the files read (output uses `PUTB` and `XMIT_CHARS`) |
 | `0x02000022` | `CONSOLE_GETC` | none | v0 = character | one character in |
 | `0x0200002b` | `CONSOLE_READC` | none | v0 = character | read after a poll or interrupt said one is there |
 | `0x02000026` | `CONSOLE_POLL` | none | v0 = nonzero if input is available | |
@@ -153,8 +154,8 @@ These carry the driver of the system controller (L1/L2), which opens one subchan
 | `0x0200003d` | `SN_SAL_COHERENCE` | a1 = pointer to the new coherence domain, a2 = pointer to the old one (bit arrays, one bit per CPU NASID) | status | wrapper defined, no caller |
 | `0x0200003e` | `SN_SAL_MEMPROTECT` | a1 = physical address, a2 = length, a3 = pointer (unused on Altix), a4 = access class | status | cross-partition code opens and closes a memory range to other partitions: class 1 (`0x2520c2`) opens, class 0 (`0x14a080`) closes; other defined classes: 2 `0x14a1ca`, 3 `0x14a290`, 6 `0x084080`, 7 `0x021080` |
 | `0x02000009` | `SN_SAL_GET_PARTITION_ADDR` | a1 = cookie, a2 = address (first call: the NASID of the partition), a3 = buffer, a4 = length | status 1 means call again; v0 cookie, v1 address, v2 length, which are passed back unchanged on the next call; at status 0 `addr` is the physical address of the partition's reserved page | cross-partition code, iterating until done |
-| `0x02000070` | `SN_SAL_WATCHLIST_ALLOC` | a1 = address of a message queue, a2 = blade (bits 15:0) and size (bits 47:16), a3 = pointer to receive the interrupt MMR offset, a4 = pointer to receive the watchlist number | status >= 0 means ok | message queue watch lists; no caller in the files read |
-| `0x02000071` | `SN_SAL_WATCHLIST_FREE` | a1 = blade, a2 = watchlist number | status | |
+| `0x02000070` | `SN_SAL_WATCHLIST_ALLOC` | a1 = address of a message queue, a2 = blade (bits 15:0) and size (bits 47:16), a3 = pointer to receive the interrupt MMR offset, a4 = pointer to receive the watchlist number | status >= 0 means ok | message queue watch lists; the only callers are `sn_mq_watchlist_alloc` and `_free` in `xpc_uv.c`, built only for the UV platform (`CONFIG_IA64_SGI_UV` or generic), so no caller on an SN2 SHub machine |
+| `0x02000071` | `SN_SAL_WATCHLIST_FREE` | a1 = blade, a2 = watchlist number | status | called only from the UV-only `xpc_uv.c` (see `WATCHLIST_ALLOC`); no caller on SN2 |
 | `0x02000069` | `SN_SAL_KERNEL_LAUNCH_EVENT` | none | status | told to PROM when kexec starts a new kernel; non-zero prints a "KEXEC not supported" message |
 | `0x0200003b` | `SN_SAL_SYSTEM_POWER_DOWN` | none | none (does not return) | power off |
 
@@ -207,3 +208,5 @@ Independent review of this page at chips commit 40866b2 against Linux v5.3 `sn_s
 6. Not verified: that the kernel passes kernel-virtual addresses for the hardware performance and probe calls and physical addresses for the discovery calls, beyond the ones read (`IOIF_INTERRUPT`, `PCI_SAFE`, discovery calls use `__pa`); and the code that sets the DSDT OEM revision which selects the ACPI path (only the 0x20101 threshold was found).
 
 **Cleared:** the call numbers (all), the arguments and results of the 28 calls read, the never-called and no-caller lists against the fetched files, and the chip-type test. **Not cleared:** the boot order (finding 1); the claim that no file outside the fetched set calls these (a full tree search was not run, as Linux was not cloned); the structures section (`sn_irq_info`, `hubdev_info`, `geoid_t`, the LP64 layout arithmetic), which was not re-derived; what the PROM does in any call.
+
+Findings 1-8 addressed in the commit "docs: address the SN2 SHub review findings"; renewed review needed for the changed claims.

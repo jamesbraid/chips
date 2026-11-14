@@ -45,7 +45,7 @@ Below, N is the nasid shift (38 in the fallback), A = N - 2 is the address-space
 
 ### AMO space (AS = 2)
 
-Each atomic variable takes a 64-byte line of which the first eight bytes are the variable; the remaining address bits select the operation (kernel header for the special-memory driver). Established as the encodings the kernel issues:
+Each atomic variable takes a 64-byte line of which the first eight bytes are the variable; the remaining address bits select the operation (kernel header for the special-memory driver). The offsets and macro names are established as the encodings the kernel issues; the operation column is **inferred** from the macro names and the header comment's description:
 
 | Access | Offset added to the address | Operation |
 |---|---|---|
@@ -83,7 +83,7 @@ A node's global window also carries the I/O space (all in `global node base`, wh
 | Big windows | 512 MiB each (`BWIN_SIZE_BITS` 29) | base + 512 MiB + window << 29 | seven translation entries in the II map them; window number is three bits |
 | Small window 0 | 16 MiB | stands in via the top big window | the kernel treats `HUB_NUM_BIG_WINDOW` (6) as the surrogate for small window 0, to work around a processor-interface defect (header comment) |
 
-The II translation table (see [../../devices/shub_ii/README.md](../../devices/shub_ii/README.md)) maps each big window to a 48-bit Crosstalk address: the header text says five offset bits are joined to the 29 window-relative bits, so a big window reaches 16 GiB of a widget, of which only a fraction is addressable. A bridge's registers are in its widget's small window; the PROM hands the kernel the ready-made base (`bs_base` in the bus record) and the kernel does not compute it.
+The II translation table (see [../../devices/shub_ii/README.md](../../devices/shub_ii/README.md)) maps each big window to a 48-bit Crosstalk address: the header text says five offset bits are joined to the 29 window-relative bits, so a big window reaches 16 GiB of a widget in the header's M-mode figure (the same comment gives 8 GiB for N-mode: 28 bits plus five, plus an I/O space bit; which mode applies to the fallback layout is unknown), of which only a fraction is addressable. A bridge's registers are in its widget's small window; the PROM hands the kernel the ready-made base (`bs_base` in the bus record) and the kernel does not compute it.
 
 ## TIO address space (the SHub 2 formula; SHub 1 TIO uses the global form above)
 
@@ -147,3 +147,5 @@ Independent review of this page at chips commit 788b7be against Linux v5.3 `addr
 4. The page quotes two header comment fragments (the "low NASID bit is 0" line and the local-memory space id); both are short and attributed, no longer passages are copied.
 
 **Cleared:** every address macro, constant and formula listed above (all were read against the source), and the inferred 0x1c00000 arithmetic. **Not cleared:** the node-field reading of AS = 0 on SHub 1 (inferred, no second source), the meaning of GET space and of the TIO chiplet ids (inferred from names), any SHub 2 NASID shift (unknown, correctly), and the memory layout inside a node (unknown).
+
+Findings 1-8 addressed in the commit "docs: address the SN2 SHub review findings"; renewed review needed for the changed claims.

@@ -64,7 +64,7 @@ offset = 0x170000000
 access = "w"
 width = 64
 grade = "established"
-doc = "Purge translation cache message, SHub 2 (header SH2_PTC). One 64-bit store per target node replaces SHub 1's two. The region id and region number do not go in the data: the kernel adds them, shifted left by four, to the register's address. The data carries the type bit, the page size and the start bit, and the virtual address in bits 60:12. How wide the address-encoded part is, and so how large the register window is, is unknown. The kernel only waits on the PIO write status afterwards; on a deadlock it reads the status alias instead of clearing it."
+doc = "Purge translation cache message, SHub 2 (header SH2_PTC). One 64-bit store per target node replaces SHub 1's two. The region id and region number do not go in the data: the kernel adds them, shifted left by four, to the register's address. (The header's `SH2_PTC_ADDR_SHFT` is 4 but sits under a region-id comment and no kernel code uses it, which uses `SH2_PTC_RID_SHFT`; the data's address field is `SH2_PTC_ADDR_MASK`, which starts at bit 12, and that is what this file uses.) The data carries the type bit, the page size and the start bit, and the virtual address in bits 60:12. How wide the address-encoded part is, and so how large the register window is, is unknown. The kernel only waits on the PIO write status afterwards; on a deadlock it reads the status alias instead of clearing it."
 
 [add.registers.ptc.fields]
 type_bit = { bits = [0, 0], grade = "inferred", doc = "Header title: type; the kernel always writes 1." }

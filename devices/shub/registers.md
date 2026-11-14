@@ -160,7 +160,7 @@ Array of 2 registers, stride 128.
 
 ### Register `junk_bus_led`
 
-Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps a 16-bit LED state per processor and stores it with a 16-bit write at LED0 plus slice times 64 KiB: bit 0 is the heartbeat, toggled twice a second from the timer interrupt, bit 1 an activity flag. The junk bus also holds the UART whose interrupt is event_occurred bit 20.
+Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor and stores it with a 16-bit write at LED0 plus slice times 64 KiB: bit 0 is the heartbeat, toggled twice a second from the timer interrupt, bit 1 an activity flag. The junk bus also holds the UART whose interrupt is event_occurred bit 20.
 
 Array of 4 registers, stride 65536.
 
@@ -168,7 +168,7 @@ Array of 4 registers, stride 65536.
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `IPI_BASE_VALUE` | 0xfee | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Constant the kernel puts in the base field of every IPI message: 0xfee in units of the field, i.e. the 0xfee00000 interrupt area of IA-64 platform conventions. Used with the vector in the idx field. |
+| `IPI_BASE_VALUE` | 0xfee | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Constant the kernel puts in the base field of every IPI message: 0xfee in units of the field (2 MiB, from bit 21), which is 0x1_fdc0_0000 as an address (0xfee << 21; inferred arithmetic). It is not the 0xfee00000 of the kernel's generic interrupt base constant: that equivalence does not follow from the field position. Used with the vector in the idx field. |
 | `PIO_WRITE_STATUS_ALIAS_CLEAR` | 0x7 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Value the kernel's TLB-purge deadlock recovery writes to the alias on SHub 1 to clear the deadlock, write error and multiple write error bits (assembly comment). |
 | `PIO_WRITE_STATUS_IDLE` | 0x3f00000000000000 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | What the kernel waits for the masked pending-write count to equal on SHub 1: all six bits set, not zero. The kernel comment points at a defect number for this behaviour; the defect text is not in the sources read. The SHub 2 overlay sets zero. |
 | `PI_CAM_WAR_VALUE` | 0x8000000000000010 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Value the kernel writes to the PI CAM control register from every timer tick on a SHub 1 of revision 2 or lower. Meaning not stated by the sources. |
