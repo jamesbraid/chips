@@ -164,3 +164,50 @@ prose_offsets = false
 [units.router_sn1]
 group = "router_sn1.h"
 prose_offsets = false
+
+# Constants-and-macros exports of the Hub and Bedrock register maps (see retools/tools/defs/defslib/gen_export.py).
+# `base` is where the unit's registers start in the node's register space: OFFSET in the export is the unit's
+# own offset minus it. The Bedrock bases are the first register of each unit (every offset the unit records
+# is already node-relative); the Hub units, and the census and Linux-header units of both chips that span
+# several blocks, stay at base 0, so their OFFSET is the node-relative offset.
+[gen.export]
+profiles = ["rust-consts", "c-regfields"]
+
+[gen.export.units.hub]
+base = 0x0
+
+[gen.export.units.hub_extra]
+base = 0x0
+
+[gen.export.units.hub_md_extra]
+base = 0x0
+
+[gen.export.units.hub_ni_extra]
+base = 0x0
+
+[gen.export.units.hub_pi_extra]
+base = 0x0
+
+[gen.export.units.bedrock]
+base = 0x0
+
+[gen.export.units.bedrock_extra]
+base = 0x0
+
+[gen.export.units.bedrock_pi]
+base = 0x0
+
+[gen.export.units.bedrock_ii]
+base = 0x400000
+
+[gen.export.units.bedrock_lb]
+base = 0x600000
+
+[gen.export.units.bedrock_md]
+base = 0x780000
+
+[gen.export.units.bedrock_ni]
+base = 0x680000
+
+[gen.export.units.bedrock_xb]
+base = 0x700000
