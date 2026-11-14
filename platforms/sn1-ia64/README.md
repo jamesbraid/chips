@@ -6,7 +6,7 @@ the Bedrock's processor interfaces and the Itanium buses. The Linux code calls i
 IP35 (the headers also say IP37). This page says what the code establishes about that machine and how its view of the
 chips differs from the MIPS view the rest of this repository takes. The files and their versions are listed in
 [evidence/sn1-ia64-sources.md](../../evidence/sn1-ia64-sources.md); paths below are from the Linux v2.5.0 snapshot
-unless a version is given. The processor-bus ASIC has its own page: [synergy.md](synergy.md).
+unless a version is given. The processor-bus ASIC has its own page: [synergy.md](synergy.md). What it would take to boot Linux on an emulated node, with SGI's simulator fake PROM as the firmware, is in [bring-up.md](bring-up.md).
 
 Grades follow the repository rules. SGI's own Linux platform code is vendor source, so what it defines is
 `established`; what it only implies is `inferred`. Where the code is the only witness and it is written for a
@@ -19,7 +19,7 @@ simulator, the line says so.
 | Node controller | One Bedrock per node. Chip part `0x3012` (`LRI_CHIPID`), crosstalk widget part `0xc110` for its I/O interface (`HUB_WIDGET_PART_NUM`). Both agree with the values the Bedrock pages already carry from the MIPS side. | established |
 | Processor interfaces | Two PIs per Bedrock, two processors per PI: `NUM_SUBNODES 2`, `SUBNODE_SHFT 1` in `sn1/arch.h`, "4 cpus per node" in `arch.h`. The code calls a processor's position its slice (0 to 3). Slices 0 and 1 sit on PI0, 2 and 3 on PI1 (`cpuid_to_subnode`). | established |
 | Processor bus | Each PI faces one Synergy ASIC. Each Synergy has one front-side bus with two Itanium slots. `sn_cpuid.h` draws it: CPU, slice, FSB slot, Synergy, Bedrock. The processor's LID register carries the NASID in `id` (bits 31:24) and the slice in `eid`: bit 17 selects the Synergy, bit 16 the FSB slot. | established |
-| Processor | Itanium. `arch/ia64/config.in` offers Itanium and McKinley as processor types, and the 128-byte cache-line alignment (`CONFIG_IA64_L1_CACHE_SHIFT 7`) is written under the SN1 and Itanium branch, matching the Bedrock's 128-byte line. Which Itanium stepping was used is not stated (the code only says A1-step support was dropped from the ia64 tree in December 2000). | established for the 128-byte line; unknown for the stepping |
+| Processor | Itanium. `arch/ia64/config.in` offers Itanium and McKinley as processor types, and the 128-byte cache-line alignment (`CONFIG_IA64_L1_CACHE_SHIFT 7`) is written under the SN1 and Itanium branch, matching the Bedrock's 128-byte line. The hardware was first-generation Itanium (Merced): SGI's own account says its prototype hardware used first-generation Itanium processors (see "Product or prototype"). Which stepping is not stated (the code only says A1-step support was dropped from the ia64 tree in December 2000; the simulator ran with `cpu_stepping A`). | established for the 128-byte line; established for first-generation Itanium on the prototypes (source does not name SN1); unknown for the stepping |
 | Memory | Eight banks per node, bank `n` starts at node offset `n` GB. Bank sizes 64 MB, 128, 256, 512 MB and 1 GB (size nibble 1 to 5), banks paired two per size nibble (`node_memmap_t`). A node's address space is 8 GB (`NODE_SIZE_BITS 33`). The same memory-bank encoding the Bedrock memory page already records. `SN1_MIN_BANK_SIZE_SHIFT` is 64 MB. The fake PROM README says SN1 supports no smaller DIMMs; the simulator build accepts 8 to 32 MB nodes for faster boots. | established |
 | I/O | Crosstalk widgets through the Bedrock's I/O interface, reached by 16 MB small windows (`SWIN_SIZE_BITS 24`) and big windows. The code handles an XBow crossbar (part `0x0`), Bridge (`0xc002`) and XBridge (`0xd002`; its crossbar part is `0xd000`). IOC3 is the on-board I/O chip (`ioc3.h`). No PIC, no TIO and no IOC4 appear anywhere in the SN1 files. | established |
 | Network | Bedrock NI to SN1 routers, up to eight ports per router (`MAX_ROUTER_PORTS`), meta-routers and repeater routers present in the KLCONFIG class list. The router register layout in `sn1/router.h` is the one the router page records. | established |
@@ -73,8 +73,9 @@ The Linux tree contains no PROM source for the Itanium node; the firmware is the
 - Secondary processors are started through the SAL OS boot rendezvous vector (`SAL_VECTOR_OS_BOOT_RENDEZ`).
 - The only firmware in the tree is a fake PROM for SGI's Medusa simulator (`arch/ia64/sn/fprom/`, renamed `fakeprom` in
   2.5.7). It reports 500 MHz as the platform base frequency and 700 MHz for the interval timer, 128 nodes and 512 CPUs at most,
-  four CPUs per node, two per FSB, and builds the memory map from per-node bank words. Its own README says it will be replaced by the
-  real PROM. What a real SN1 PROM returned for these values is unknown.
+  four CPUs per node, two per FSB, and builds the memory map from a per-node bank table the simulator writes into memory. Its own README says it will be replaced by the
+  real PROM. What a real SN1 PROM returned for these values is unknown. For the SN1 IA-64 bring-up target the fake PROM
+  is accepted as the firmware; what it does, builds and expects is in [bring-up.md](bring-up.md).
 
 ## How this differs from the MIPS view
 
@@ -91,25 +92,51 @@ The Linux tree contains no PROM source for the Itanium node; the firmware is the
 
 ## Product or prototype
 
-The sources do not settle it. Evidence on each side:
+Answer: a prototype and development platform. Prototype hardware existed and ran Linux; no source found says any unit was
+sold. The evidence, newest reading first:
 
-- Prototype or bring-up: the ia64 Kconfig help for the SN1 choice read "SN1-simulator For the SGI SN1 simulator"
-  (quoted in mail of 2003-05-19). The only firmware shipped in the tree is a simulator fake PROM whose source says "we
-  need this in the simulator only. Once we run on real hw, this can all go away." The kernel README boots only under
-  Medusa. Platform set-up carries `BRINGUP` conditionals. The error handler panics on most error interrupts with
-  the comment "this is bring up".
-- Real hardware was in view: the L1 console protocol, the SAL PTC-domain query, the Synergy performance-counter
-  sampling (counters multiplexed from the timer, a `/proc/synergy` file) and a note about statistics from "a running
-  system" are all hardware-facing. Mail of December 2000 reports "various SGI SN1 updates" in the ia64 patch.
-- SGI's later IA-64 machine, called SN2 in the code, replaced SN1 in the same directory by mid-2003, and the Kconfig help for
-  the choice changed from the simulator to "SGI Altix systems". No file or mail held here says SN1 hardware was sold.
+- SGI's own engineering account (S. Neuner, SGI Linux engineering, "Scaling Linux to New Heights: the SGI Altix 3000 System",
+  Linux Journal, 2003-02-01, linuxjournal.com/article/6440, fetched 2026-11-14). SGI "developed and used simulators extensively
+  for both the system firmware and kernel development"; kernel work used "the first-generation Itanium processors for
+  making the CPU scaling, I/O performance and other changes"; "By early 2001, we had succeeded in running a
+  32-processor Itanium-based system - the first of its kind"; "When the original prototype hardware based on first-generation
+  Itanium processors arrived, it was time for power-on", ending in "taking a processor out of reset, then fetching and
+  executing the first instructions from PROM". The article does not say SN1 or Merced. That this hardware is the Bedrock-and-Synergy node is
+  inferred: the SN1 code is the only SGI Itanium platform code of that period and runs with the first-generation
+  processor. Grade: established that prototype Itanium 1 hardware existed and ran Linux; inferred that it was SN1.
+- Press, secondhand. HPCwire 2003-01-10, "SGI Ups the Ante in High-Performance Linux Computing", reported through a search
+  result because the page refused a direct fetch (HTTP 403): "An SN1 version of Altix, based on Itanium 1 (Merced) and Linux,
+  never made it to market because of the Intel chip's weak performance, and instead was used for software development." Enterprise Systems Journal, 2003-01-09
+  (esj.com/articles/2003/01/09/sgi-unveils-64way-linux-supercomputers.aspx): SGI "also introduced a system based on Intel's
+  first-generation Itanium processor", and "its Itanium 1 system was developed for the most part as a prototype". Grade: inferred;
+  these are journalists' summaries and the second leaves open that a handful of units were announced or placed.
+- Plans and delays. Computerworld, 2001-03-16 ("SGI to offer Linux-based IA-64 Origin computer", computerworld.com/article/1450041):
+  the chief executive says SGI will offer the Origin 3000 with an Itanium and Linux "once Intel has Itanium IA-64 in the market
+  under general availability". No date; the piece names no prototype. A former SGI product manager's 2009 retrospective
+  (HPCwire 2009-04-10, "How It All Went Wrong for SGI in HPC") says the follow-on to the Origin 3000 was "our first systems
+  based on Itanium chips. First-generation Itanium chips", that Intel "delayed it, then delayed it again" and "We retooled
+  for McKinley, also delayed", without naming SN1. An anonymous Slashdot comment of 2001-12-29 (comment 2761768) says "SN-IA is
+  still a product on the roadmap, but nobody is working on it" and "maybe after McKinley"; unattributed, so it is weak
+  support for the same picture.
+- SGI's kernel work. The ia64 maintainer's mail of 2000-12-14 lists "various SGI SN1 updates"; the SN1 option in the
+  Linux ia64 config menu read "SN1-simulator For the SGI SN1 simulator" until its removal (mail of 2003-05-19, `marc-linux-ia64-105590723705952`); the only firmware in the tree is the
+  simulator's fake PROM, whose source says "we need this in the simulator only. Once we run on real hw, this can all go away"; the kernel carries `BRINGUP`
+  conditionals and an error handler that panics on most error interrupts with the comment "this is bring up". By 2003-02-05 the 2.4 `MAINTAINERS` entry for the
+  Itanium SN sub-platform pointed to SGI's Altix web page (mail of that date). SN2 replaced SN1 in the same directory by mid-2003 and the Kconfig help changed from the simulator to "SGI Altix systems".
+- What shipped instead: SGI Altix 3000 (SN2: Itanium 2 and the SHub controller), announced
+  2003-01-07 (CBR/Tech Monitor, 2003-01-07, "SGI launches 64-Way Linux-Itanium super for big clusters"; the SN2 pages
+  under [../sn2/](../sn2/README.md) carry the machine itself).
 
-So: the code is a vendor Linux port that was exercised in a simulator and probably on prototype hardware. Whether any
-customer shipped is unknown. A question names what would settle it.
+Not found anywhere: a price list, an order, a customer, a serial number, or a field report of an SN1 IA-64 system outside SGI. The
+first-person SGI account makes "prototype" safe; "never sold" rests on a secondhand sentence and on absence, so it stays
+inferred. A detailed question remains in
+[questions/sn1-ia64-shipped-or-prototype.md](../../questions/sn1-ia64-shipped-or-prototype.md).
 
 ## Open items
 
 - Synergy register contract beyond the few registers the kernel touches: [synergy.md](synergy.md) and
   [questions/sn1-ia64-synergy-registers.md](../../questions/sn1-ia64-synergy-registers.md).
 - Where the Bedrock UART sits on real hardware: [questions/sn1-ia64-bedrock-uart-location.md](../../questions/sn1-ia64-bedrock-uart-location.md).
-- Whether SN1 IA-64 hardware shipped, and which Itanium revision it used: [questions/sn1-ia64-shipped-or-prototype.md](../../questions/sn1-ia64-shipped-or-prototype.md).
+- Whether any SN1 IA-64 unit left SGI, and which Itanium stepping the prototypes used: [questions/sn1-ia64-shipped-or-prototype.md](../../questions/sn1-ia64-shipped-or-prototype.md).
+- What the simulator answered for the Bridge and XBridge during the kernel's I/O initialisation, and the other unknowns of a
+  bring-up: [bring-up.md](bring-up.md#7-open-points-most-blocking-first).
