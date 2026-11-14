@@ -57,3 +57,16 @@ shared graphics option guide `007-4954-001` covers both, not read).
 - The IA blade's chips and the way its SAS/SATA and Ethernet attach (guide prints connectors only).
 - Whether the 4700 and 450 carry TIO nodes as separate NASIDs in the hardware map the kernel reads (Linux can show it;
   README).
+
+## Review
+
+Independent review, 2026-11-14, by a reviewer who did not write these pages. Reviewed chips revision 15a5a4e (pages as of 54d699c, db2c26d, 939a0d4; manual index 60a97bd).
+
+Checks against 007-4823-001: p.44 (10U IRU, ten single-wide or two double-wide plus eight single-wide blades, four routers each with two external NUMAlink 4 ports, 42U rack, 64 processors per rack, 512 maximum, one IA blade per 512 cores), p.46 and p.47 (fourth-generation NUMAflex, NUMAlink 4, SHub and one or two processors per node), p.53 (rack holds four IRUs plus a 2U router space; blade list including the IA blade; PCI Express "may not be immediately available"), p.87 (PCIe "will be available as an option"), p.116 (20.6 kW per rack): all confirmed. 007-4857-001 pp.64 and 66 (five blades, two internal routers, 5U, four IRUs in a rack, 76 cores, NUMAlink 4, Super-Hub with one or two processors): confirmed. "SHub 2.x based" for C1 and C2 and the blade list with the misprinted "14E" confirmed at 007-3938-005 pp.50 to 51; the claim covers the 4700 compute blades only and the page limits it that way. The L2-as-application statement (p.3 of the L1 guide) was not re-read.
+
+Findings:
+1. "Established" for SHub generation 2 rests on a controller guide, a published manual (fourth step), not on Linux platform code; that is a fair grade for a manual statement but the page should keep saying the generation is the 4700 blades' only.
+2. The IA blade is "double-wide" on p.53 and "double-height" in the L1 guide (p.51); the page uses the first. Fine.
+
+Cleared scope: the 4700 and 450 population, topology and blade facts as cited; the SHub 2 claim for the 4700 compute blades. Not cleared: anything about the 450's SHub generation (correctly left unknown).
+

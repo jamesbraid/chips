@@ -126,7 +126,7 @@ guide's wording (-002 p.105), a separate enclosure with its own chapter (Chapter
 Established from Linux v5.3: PCI device interrupts come through the bridge provider and the shared vector space (0x3c to
 0xe6) allocated by the PROM (`sn_intr_alloc` in `v5.3:arch/ia64/sn/kernel/irq.c`; the vector layout is in the
 README). A PIC raises an error on 0x33 (`SGI_PCIASIC_ERROR`) and the SHub I/O interface on 0x31 (`SGI_II_ERROR`).
-Which SHub interrupt register a given PIC pin lands in is a stream A and B question and is not settled here.
+Which SHub interrupt register a given PIC pin lands in is not settled here.
 
 ## What to build against
 
@@ -143,3 +143,24 @@ calls. No network ports are needed for one module. Its SHub generation is the fi
 - The router chapter of -002 (printed Chapter 6) and the cabling chapter of both guides.
 - The router or link chip, if any, between the two NUMAlink connectors and the SHub (the guide draws two NUMAlink
   blocks beside the SHub on -001 p.99 and -002 p.107 and says nothing about a router).
+
+## Review
+
+Independent review, 2026-11-14, by a reviewer who did not write these pages. Reviewed chips revision 15a5a4e (pages as of 54d699c, db2c26d, 939a0d4; manual index 60a97bd).
+
+Checks, against 007-4660-001 and -002 at the cited printed pages:
+- IO10 standard, IO9 optional: -002 p.112 ("standard IO10 ... or the optional IO9"), p.113 (standard IO10 card), p.114 (optional IO9) confirmed. -001 p.104 says the IO9 "is required" at initial release and p.69 calls it factory-installed. The page's -001 and -002 split is right. IO10 disks serial ATA, no SCSI drives; IO9 no SATA (p.112) confirmed. 007-4374-001 pp.1 to 2: 36-pin MDR connector, four modem-control ports S0 to S3, Ethernet port, no SCSI disks, no chips named: confirmed.
+- Memory: -001 p.71 Table 2-1 says 96 GB; -001 p.68 says "up to 192 GB"; -002 p.66 says 192 GB and p.68 says 384 GB. The page records exactly this conflict and marks the limit unknown. Per-module 24 GB (-001 pp.70, 96, 102) confirmed. Note: the introduction's "up to 384 GB" for -002 gives only one of the two printed figures; the Memory row is the accurate statement.
+- NUMAlink: -001 never numbers it (pp.69, 109, 112 say "NUMAlink", 3.2 GB/s each direction per port, 6.4 GB/s full duplex); -002 pp.68, 69 say "NUMAlink-4" and "Super Hub (SHub)". Confirmed. -002 pp.66 to 69: routers join eight to sixteen modules, up to 32 processors, 64 slots, single-plane and dual-plane port wording confirmed.
+- Table 2-1 (p.71) minimums and maximums (modules 8, processors 16, slots 32, compute rack and L2 "None"), ring and Table 2-2 (p.72), base module contents (pp.96, 99, 100 to 106), SHub block list (-001 p.104; -002 p.112), PCI riser with PIC ASIC (p.105), IOC-4 on the IO9 with IDE, NVRAM and time-of-day (p.104; -002 p.114), IP57 board with twelve DIMM slots in groups of four and group 0 required (pp.100, 102 to 103), caches (p.101 Table 3-1), bandwidths (p.112 Table 3-2): all confirmed.
+- Chips on the IO10 and IO9: the only silicon claims beyond the guides are the IOC4 (all three card variants), the Vitesse VSC 7174 and the QLogic ISP 12160, all taken from the IOC4 driver's `ioc4_variant` and labelled as such; no other chip is claimed. The Ethernet controller is correctly `unknown`. The 2008 patch message cited for the IO10 SATA driver was not retrieved.
+- "Bedrock" sentence on -001 p.101 is correctly treated as not evidence of a Bedrock.
+- Linux v5.3: `sn_sal.h` lines 40 to 49 (console calls), `sn_console.c` ttySG0, `intr.h` vectors, `sn_intr_alloc` in `arch/ia64/sn/kernel/irq.c`: confirmed.
+
+Findings:
+1. Grade finding (not edited, owner to decide): the grading rule in the shared tooling's evidence order puts SGI's Linux platform code (`arch/ia64/sn/`, `arch/ia64/include/asm/sn/`) first. `drivers/misc/ioc4.c` is outside those trees, so facts taken only from it (an IOC4 on the IO10, the Vitesse VSC 7174 on the IO10, the QLogic ISP 12160 on the IO9) sit at the public-driver step and are `inferred` until IRIX or platform source confirms them, not `established`.
+2. The "Interrupts" section's sentence about "a stream A and B question" was internal process wording and was removed (mechanical).
+3. The module table row for the CPU expansion module cites p.70; the statement is also on -002 p.100. No correction needed.
+
+Cleared scope: every manual-derived fact on this page (modules, limits, IP57, SHub block list, IO10 versus IO9, ring and router topology, console and L1 ports). Not cleared: the `established` grade on the IO10 and IO9 chip rows (finding 1) until relabelled or confirmed.
+

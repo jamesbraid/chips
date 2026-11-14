@@ -66,7 +66,7 @@ NVRAM and the time-of-day clock (007-4660-001 p.104; 007-4520-006 p.18 lists ser
 interrupt ports too). The later Altix 350 and the IX-brick generation also use the **IO10** card, a SATA variant: the
 Linux IOC4 driver names IO9, IO10 and PCI-RT as the three IOC4 card variants (`linux-history:drivers/misc/ioc4.c`,
 `ioc4_variant`), with a QLogic SCSI controller on IO9 and a Vitesse VSC 7174 SATA controller on IO10 (007-4660-002
-pp.72, 112 to 114 for the guide side). The IOC4 driver is not in v5.3; stream B cross-checks it.
+pp.72, 112 to 114 for the guide side). The IOC4 driver is not in v5.3.
 
 **NUMAlink 3 versus 4.** The guides disagree with the usual naming and with each other, so take the table as what
 each says, not as a clean split:
@@ -92,3 +92,24 @@ I/O interface error, Crosstalk error, PCI-ASIC error, ACPI SCI, TIOCA error, TIO
 timer, and 0xe7 for XPC notify; device vectors run 0x3c to 0xe6 (`v5.3:arch/ia64/include/asm/sn/intr.h` lines 18 to 30).
 The node physical address map is [address-map.md](address-map.md) and the SAL calls the kernel makes are in
 [../../software/sal/](../../software/sal/README.md).
+
+## Review
+
+Independent review, 2026-11-14, by a reviewer who did not write these pages. Reviewed chips revision 15a5a4e (pages as of 54d699c, db2c26d, 939a0d4; manual index 60a97bd).
+
+Checks:
+- Machine table rows against each guide's cited pages (-001 pp.69, 71, 109, 112; -002 pp.66, 69; 007-4790-001 p.57; 007-4579-001 p.81; 007-4377-002 p.49; 007-4823-001 pp.47, 53; 007-4857-001 p.64; 007-4772-001 pp.19 to 27): all match.
+- "SHub 2.x based" for the Altix 4700: 007-3938-005 p.50 table 2-1 prints it for blade types C1 and C2 only. Matches; the grade `established` for the 4700 compute blades is fair, and the table correctly leaves other machines `unknown`.
+- Super-Bedrock (007-4579-001 p.81) against Super Hub (007-4377-002 p.49, 007-4823-001 p.47, 007-4660-002 p.68, 007-4790-001 p.57): as stated. The 3000's "NUMAlink 4" for the internal C-brick channel is printed on p.81 as quoted.
+- Linux v5.3 claims: `ia64_sn_get_sn_info` at `arch/ia64/sn/kernel/setup.c` line 594 and the TIO/SNIA node test at line 706 confirmed; `intr.h` vector list (0x30 to 0x38, 0xe7, 0x3c to 0xe6, `SGI_UART_VECTOR` 0xe9) confirmed; `ttySG0` at `sn_console.c` lines 59 to 60 confirmed. The `is_shub1()`/`is_shub2()` line ranges were not re-counted.
+- IOC4 variants: the function is `ioc4_variant` in the Linux history tree (line 225 comment) and the same text exists at v4.14 `drivers/misc/ioc4.c` lines 224 to 264; slot 3 detection of QLogic ISP12160 (IO9) and Vitesse VSC7174 (IO10) confirmed.
+- No copied manual text beyond short quoted phrases; no internal names or paths. One leftover process phrase ("stream B cross-checks it") was removed.
+
+Findings:
+1. Grade finding (not edited, owner to decide): the grading rule in the shared tooling's evidence order puts SGI's Linux platform code (`arch/ia64/sn/`, `arch/ia64/include/asm/sn/`) first. `drivers/misc/ioc4.c` is outside those trees, so facts taken only from it (an IOC4 on the IO10, the Vitesse VSC 7174 on the IO10, the QLogic ISP 12160 on the IO9) sit at the public-driver step and are `inferred` until IRIX or platform source confirms them, not `established`.
+2. The 3000 table in this README and in altix-3000.md says PIC is `established` on the IX- and PX-brick from the driver guide's figure; that figure (007-4520-006 p.19) labels three "PCI-X Host Bridge Adapter" blocks and never says PIC. The PIC identification comes from the chips repository's own IX-brick page, so on this page it is `inferred` (not edited).
+3. Not verified: the linux-ia64 list message `20041201203852.GA26131@sgi.com` dating the SHub 2 patch series (no mail archive was searched); the 007-3938-005 revision log (the record-of-revision page has no extractable text).
+
+Cleared scope: the machine table, the SHub-generation table and the PIC/TIO table as to the quoted pages and Linux paths; the "What a Linux guest sees" section. Not cleared: the grades listed in findings 1 and 2, and the Bx2 "probably 2" inference (timing only, correctly marked inferred).
+
+Manual index (`references/documents/INDEX.md`, 60a97bd): number, revision and printed-page ranges of the entries for 007-4660-001 and -002, 007-4374-001, 007-4790-001, 007-4579-001, 007-4377-002, 007-4823-001, 007-4857-001, 007-4772-001, 007-4520-006 and 007-3938-005 agree with the pages read; titles confirmed for 007-4374-001 ("SGI IO10 PCI Option for Altix 350") and 007-3938-005 (cover). Copyright years confirmed for 007-4660-001 (2004), -002 (2005) and 007-4790-001 (2005). Dates given for 007-4377-002 (November 2004), 007-4823-001 (March 2006) and 007-3938-005 (April 2006) were not re-confirmed from a cover or revision page. The library holds 007-3938-005 under a different shelf directory than the 4000-series guides; the index does not give paths, so no correction is needed.

@@ -17,8 +17,8 @@ see [the SN2 README](README.md). Read: contents, pp.49, 65, 67, 72, 74. The firs
   (12 per node), eight internal and eight external NUMAlink channels, two 1.2 GB/s (each direction) Xtown2 I/O
   channels, a USB port to the system controller, a serial console port, one L1 with an LCD display, and three
   hot-pluggable fans (pp.65, 67).
-- Inside, the node electronics join two **NL4 router ASICs**; each router ASIC reaches four external NUMAlink
-  connectors, eight in all. Two XIO ports, from node boards 1 and 3, come out at the rear (p.72). The rear-panel figure labels
+- Inside, the node electronics join two **NL4 router ASICs**; each router ASIC reaches four rear-panel connectors
+  (the guide calls them "Dnet connectors"), eight in all. Two XIO ports, from node boards 1 and 3, come out at the rear (p.72). The rear-panel figure labels
   ports F, G, H and A in an upper and a lower row, and the two XIO outputs "Node 1 XIO" and "Node 3 XIO" (p.72
   Figure 5-4).
 - Processors in a brick share a frequency; DIMMs go in groups of four per node board (p.74).
@@ -32,3 +32,16 @@ see [the SN2 README](README.md). Read: contents, pp.49, 65, 67, 72, 74. The firs
 - The CR-brick is the first brick in these guides with two I/O ports (nodes 1 and 3) from four nodes; the other nodes
   have no external I/O port. Established as drawn.
 - Whether the CR-brick's SHub is generation 2 is not stated (README: inferred from timing only).
+
+## Review
+
+Independent review, 2026-11-14, by a reviewer who did not write these pages. Reviewed chips revision 15a5a4e (pages as of 54d699c, db2c26d, 939a0d4; manual index 60a97bd).
+
+Checks against 007-4377-002 (printed pages): p.49 (fourth-generation NUMAflex, NUMAlink-4, two router switches per CR-brick, up to four nodes of SHub plus two processors, 64 processors per rack, 256 at first release, "up to 6 TB" for a 512-processor system), p.65 (4U), p.67 (eight processors, 48 DIMM slots, eight internal and eight external NUMAlink channels, two 1.2-GB/s Xtown2 channels, USB, console, L1 with LCD, three fans), p.72 (two NL4 router ASICs, XIO ports from nodes 1 and 3, Figure 5-4 labels), p.74 (4U 6.67 in, 48 VDC about 1300 W, groups of four DIMMs per node board, same processor frequency): all confirmed.
+
+Findings:
+1. The guide calls the eight rear connectors "Dnet connectors" (p.72); the page said "external NUMAlink connectors". Reworded to quote the guide (mechanical).
+2. "6 TB described as the future limit" is a mild reading: p.49 gives 6 TB for a 512-processor system and says larger single-system-image configurations may be offered later; it does not call 512 a future limit. Not edited.
+
+Cleared scope: the CR-brick facts and the model notes. Not cleared: the wording in finding 2.
+
