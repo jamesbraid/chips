@@ -90,4 +90,5 @@ the shared vector `SGI_UART_VECTOR` (0xe9) (`v5.3:drivers/tty/serial/sn_console.
 `v5.3:arch/ia64/include/asm/sn/intr.h` line 15). The platform reserves vectors 0x30 to 0x38 for XPC activation,
 I/O interface error, Crosstalk error, PCI-ASIC error, ACPI SCI, TIOCA error, TIO error, TIOCX error and the SHub
 timer, and 0xe7 for XPC notify; device vectors run 0x3c to 0xe6 (`v5.3:arch/ia64/include/asm/sn/intr.h` lines 18 to 30).
-The address map and SAL calls belong to the SHub and node pages.
+The node physical address map is [address-map.md](address-map.md) and the SAL calls the kernel makes are in
+[../../software/sal/](../../software/sal/README.md).
