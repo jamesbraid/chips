@@ -7,7 +7,7 @@ pub mod id {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x0;
 }
-/// Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable, workaround for PV895469) when it initialises the GART, and sets bit 6 ( (established)
+/// Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable; a provider comment ties it to PV895469 with a question mark) when it in (established)
 pub mod control1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x8;

@@ -738,7 +738,7 @@
     <doc>Name and offset are the vendor header's definition (struct member ce_dre_comp_err_cmd_wrd). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="DRE_COMP_ERR_ADDR" size="8" grade="established" register="yes" offset="0x40078" access="rw" reset="unknown">
-    <doc>Downstream request engine completion error address. The provider writes zero to it at attach, after clearing the interrupt and error summaries. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Downstream request engine completion error address. The provider ORs zero into it at attach, after setting the interrupt and error summary alias bits, so the value is read and written back unchanged. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="DRE_REQ_STATUS" size="8" grade="established" register="yes" offset="0x40080" access="rw" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_dre_req_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>

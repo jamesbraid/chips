@@ -2,7 +2,7 @@
 // TIO (NUMAlink I/O node ASIC of the Altix generation), as SGI's Linux platform code names its registers
 #![allow(dead_code)]
 
-/// Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads it as a 32-bit value and splits it with the same macros it uses  (established)
+/// Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them (established)
 pub mod node_id {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x90060e80;

@@ -399,3 +399,19 @@ None read. `ioc4_attach` writes the control, GPIO control, enables and both stat
   section on SGI's Altix Linux code). Open: whether the chip raises the bit from the UART interrupt level or latches it; a
   published register description would settle it.
 - **Error address master field**: [Altix I/O cross-check questions](../../questions/altix-io-sn2-cross-check.md#ioc4-error-master-id).
+
+## Review
+
+Independent review on 2026-11-14 by a reviewer who did not write these pages. Revisions: chips commits 4924130..b536f7d, read at main 15a5a4e484. Grading rule: the SN2 paragraph of the evidence order in `retools/tools/README-analysis.md` (SGI's Linux platform code ranks first for this generation, and a fact it defines is `established` as a software definition). Sources: the Linux v5.3 files the page cites, fetched singly from the tagged tree (`drivers/misc/ioc4.c` and `include/linux/ioc4.h` at v4.19, where they still exist).
+
+**Reviewed commits.** The one changed row of the interrupt and error comparison table ("card variants"), in e7a9bc0, and the whole `questions/altix-io-sn2-cross-check.md` as of b536f7d.
+
+**Checked.** `ioc4_variant` in `drivers/misc/ioc4.c` (v4.19): IO9 is an IOC4 card with a QLogic ISP 12160 at slot 3 of the same bus, IO10 is one with a Vitesse VSC 7174 at slot 3, PCI-RT has neither; the class code in the id table is `0x0b4000` under mask `0xffffff`; the sgiioc4 module is requested for every variant but PCI-RT. These match the row and the claims in the cross-check questions file. The error master-id question was also checked against `include/linux/ioc4.h` (v4.19): the field is bits 4:1 and value 8 for ATA is `(low & 0x1e) == 0x10`, as stated. The questions file's other entries were checked against their sources too: master-id (above), the PV854697 header note, the TIO chiplet comment against the SHub 2 macro, the TIOCA overlap and the TIOCE M40S window; the PROM-side claims of the 32-bit write question were not re-read. The Altix 350 guide pages cited in the row were not re-read: the Library holds them as a different printed range (`references/documents/INDEX.md` lists printed pp. 66 to 72 for revision 002), so the "pages 72 and 73" citation is unchecked here.
+
+**Meaning of MIPS-side entries.** Unchanged: the diff is a single table cell that gains the Altix 350 sentence; the IRIX column and every other row are untouched.
+
+**Findings.**
+- Judgement, left: the row says the guide fits "IOC4 behind both" IO10 and IO9. The driver supports that for the IOC4 plus companion-chip pairing, not for the guide; the row already says the guide does not name the chip. Wording is accurate.
+- Judgement, left: the INDEX lists pp. 66 to 72 and 105 to 107 for 007-4660-002; the question file cites pp. 72 and 73. One of them should be reconciled by whoever next opens the guide.
+
+**Cleared scope.** The card-variant row and the driver claims it makes. Not cleared: the guide page citation.

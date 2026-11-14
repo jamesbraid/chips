@@ -16,9 +16,12 @@ layouts and so grades **established** as software definitions, never as silicon 
 - **The kernel treats it as a PCI bus with an AGP aperture.** Firmware reports the bus (asic type 4, a revision, the NASID of
   the closest node); the provider maps the registers (`sizeof` of the common record, as for other bridges), builds a GART, registers the
   PCI DMA interface and the error interrupt (vector `0x35`, whose handler makes one firmware call), and exposes the aperture to the
-  AGP driver. Only four workarounds are named, by erratum number, all selected by the firmware-reported revision: PV907908 (freezer loses a PIO data credit on a read
+  AGP driver. The provider header names four erratum workarounds as masks of affected revisions: PV907908 (freezer loses a PIO data credit on a read
   response with a coretalk error), PV908234 (ATI configuration-space trouble after BIOS execution), PV895469 (AGP DMA write data mismatch with
-  a merged cache line) and PV910244 (TLB invalidate of written GART entries may not happen on revision A).
+  a merged cache line) and PV910244 (TLB invalidate of written GART entries may not happen on revision A). Only PV910244 is tested against the
+  firmware-reported revision in the code read; the other three masks are defined and never referenced. The provider's `control1` bit 42 write
+  is marked with that erratum number and a question mark, so tying the bit to it is a guess, and it disables GART prefetch citing a fifth erratum, PV930029,
+  unconditionally.
 
 ## Bus address map (established, `tioca.h`)
 
@@ -51,3 +54,19 @@ PCI offset held in control 1 bits 31:24, one fixed to PCI 0 to `0xbfffffff`).
 - Which Altix product carries a TIOCA (graphics, an AGP slot): [PIC versus TIO by product](../../questions/altix-io-sn2-cross-check.md#pic-versus-tio-by-product).
   The error interrupt name in the interrupt header is a TIOCA-specific vector, so the platform expected the chip in the field.
 - Reset values, access directions and every behaviour the header does not describe are **unknown**.
+
+## Review
+
+Independent review on 2026-11-14 by a reviewer who did not write these pages. Revisions: chips commits 4924130..b536f7d, read at main 15a5a4e484. Grading rule: the SN2 paragraph of the evidence order in `retools/tools/README-analysis.md` (SGI's Linux platform code ranks first for this generation, and a fact it defines is `established` as a software definition). Sources: the Linux v5.3 files the page cites, fetched singly from the tagged tree (`drivers/misc/ioc4.c` and `include/linux/ioc4.h` at v4.19, where they still exist).
+
+**Reviewed commits.** be8fde2 (tioca), the TIOCA half of e7a9bc0.
+
+**Checked.** All 35 register offsets against `struct tioca` by script (the one apparent disagreement is the header's own comment for `ca_gart_tlb_addr`, `0x2{08..40}`; the computed offset 0x208 and the eight-entry stride match the TOML). 305 of the 306 header-named fields: bit positions exact against the mask and shift macros, including the alias sections that share one macro block across several registers (`ca_inta_dest_addr`, `ca_intb_dest_addr`, `ca_err_int_dest_addr`; the five status, error and mask registers). The one field not attached, `ca_agp_dma_addr_extn` bit 28, is the deliberate omission the page records as an open question (the node-id field's 35:20 span overlaps it). All numeric constants match their header values, including the PIO windows and DMA map bases; the provider-derived ones (64-bit packet type at bit 60, GART valid bit 63, error vector 0x35) match `tioca_provider.c`, `tioca_provider.h` and `intr.h`. Prose checked: the aperture size encodings, page size and enable bits, the GART table pointer or-with-1, the revision A flush sequence, the 48-bit direct address layout, fast-write and combining-delay settings. No reset value is claimed and no behaviour is graded established beyond what the provider does.
+
+**Findings.**
+- Fixed (mechanical): the page said four erratum workarounds are "all selected by the firmware-reported revision". In the code read only PV910244 is tested against the revision; PV907908, PV908234 and PV895469 are defined as masks and never referenced, and the provider's tie of `control1` bit 42 to PV895469 is marked with a question mark. A fifth erratum, PV930029, is the stated reason for turning GART prefetch off, unconditionally. The page text and the `control1` register doc now say this.
+- Judgement, left: every register is `grade = "established"` with `access = "rw"` as a stated placeholder. The grade covers name and offset only, as the docs say; a consumer reading `access` should not treat it as hardware. Consistent with the evidence rule, not a grading error.
+- Judgement, left: `PCI32_MAPPED_SIZE` and `AGP_MAPPED_SIZE` follow the header values (1 GiB) over its comments (2 GB); the doc says so. Good.
+- No copied comments: only short erratum descriptions are paraphrased closely (the PV907908 and PV910244 lines); the identifiers and the "TIO AEGIS" document title appear as in the public header. No internal names.
+
+**Cleared scope.** Register names, offsets, field positions, constants and the provider-derived behaviours listed above. Not cleared: that the TIOCA is present in any shipped product, and anything about reset or access direction.

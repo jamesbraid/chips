@@ -54,7 +54,7 @@ Widget identification word (part 0xe020, manufacturer 0x24, revision A = 1 per t
 
 ### Register `control1`
 
-Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable, workaround for PV895469) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). The header gives no access direction or reset value; access rw is a placeholder.
+Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable; a provider comment ties it to PV895469 with a question mark) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). The header gives no access direction or reset value; access rw is a placeholder.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|

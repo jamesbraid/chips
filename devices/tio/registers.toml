@@ -13,7 +13,7 @@ offset = 0x90060e80
 access = "r"
 width = 64
 grade = "established"
-doc = "Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads it as a 32-bit value and splits it with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1)."
+doc = "Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1)."
 
 [registers.node_id.fields]
 rev = { bits = [31, 28], grade = "established", doc = "Revision. 1 is the revision the TIOCP flush erratum applies to." }

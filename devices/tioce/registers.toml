@@ -1984,7 +1984,7 @@ offset = 0x40078
 access = "rw"
 width = 64
 grade = "established"
-doc = "Downstream request engine completion error address. The provider writes zero to it at attach, after clearing the interrupt and error summaries. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Downstream request engine completion error address. The provider ORs zero into it at attach, after setting the interrupt and error summary alias bits, so the value is read and written back unchanged. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder."
 
 [registers.dre_req_status]
 offset = 0x40080
@@ -2126,9 +2126,9 @@ VIRT_PPB_VENDOR_ID = { value = 0x10a9, grade = "established", from = "SGI Linux 
 VIRT_PPB_DEVICE_ID = { value = 0x4002, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_VIRT_PPB_DEVICE_ID)", doc = "Header comment: CE Virtual PPB Vendor/Device IDs" }
 HOST_BRIDGE_VENDOR_ID = { value = 0x10a9, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_HOST_BRIDGE_VENDOR_ID)", doc = "Header comment: CE Host Bridge Vendor/Device IDs" }
 HOST_BRIDGE_DEVICE_ID = { value = 0x4001, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_HOST_BRIDGE_DEVICE_ID)", doc = "Header comment: CE Host Bridge Vendor/Device IDs" }
-NUM_M40_ATES = { value = 0x1000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_M40_ATES)", doc = "Header comment: array extents" }
-NUM_M3240_ATES = { value = 0x800, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_M3240_ATES)", doc = "Header comment: array extents" }
-NUM_PORTS = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_PORTS)", doc = "Header comment: array extents" }
+NUM_M40_ATES = { value = 0x1000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_M40_ATES)", doc = "Array extent of a register array in the header struct; the header has no comment here" }
+NUM_M3240_ATES = { value = 0x800, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_M3240_ATES)", doc = "Array extent of a register array in the header struct; the header has no comment here" }
+NUM_PORTS = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_PORTS)", doc = "Array extent of a register array in the header struct; the header has no comment here" }
 LSI_GB_CFG1_RXL0S_THS_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_THS_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
 LSI_GB_CFG1_RXL0S_THS_MASK = { value = 0xff, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_THS_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
 LSI_GB_CFG1_RXL0S_SMP_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_SMP_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
@@ -2306,6 +2306,6 @@ PIO_E_CONFIG_SPACE_LEN = { value = 0x10000000, grade = "established", from = "SG
 PIO_IO_SPACE = { value = 0x100000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_IO_SPACE)", doc = "Header comment: PCI I/O Space" }
 PIO_IO_SPACE_LEN = { value = 0x100000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_IO_SPACE_LEN)", doc = "Header comment: PCI I/O Space" }
 PIO_MEM_SPACE = { value = 0x200000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_MEM_SPACE)", doc = "Header comment: PCI MEM Space" }
-E_CONFIG_BUS_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_BUS_SHFT)", doc = "Header comment: PCI MEM Space" }
-E_CONFIG_DEVICE_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_DEVICE_SHFT)", doc = "Header comment: PCI MEM Space" }
-E_CONFIG_FUNC_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_FUNC_SHFT)", doc = "Header comment: PCI MEM Space" }
+E_CONFIG_BUS_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_BUS_SHFT)", doc = "Header comment: CE PCI Enhanced Config Space shifts & masks" }
+E_CONFIG_DEVICE_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_DEVICE_SHFT)", doc = "Header comment: CE PCI Enhanced Config Space shifts & masks" }
+E_CONFIG_FUNC_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_FUNC_SHFT)", doc = "Header comment: CE PCI Enhanced Config Space shifts & masks" }

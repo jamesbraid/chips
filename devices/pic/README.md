@@ -612,3 +612,20 @@ with its address list.
 ## Open
 
 See questions/README.md: the revision-1-only steps.
+
+## Review
+
+Independent review on 2026-11-14 by a reviewer who did not write these pages. Revisions: chips commits 4924130..b536f7d, read at main 15a5a4e484. Grading rule: the SN2 paragraph of the evidence order in `retools/tools/README-analysis.md` (SGI's Linux platform code ranks first for this generation, and a fact it defines is `established` as a software definition). Sources: the Linux v5.3 files the page cites, fetched singly from the tagged tree (`drivers/misc/ioc4.c` and `include/linux/ioc4.h` at v4.19, where they still exist).
+
+**Reviewed commits.** 5595b2f (pic cross-check): 99 README lines, 164 generated table lines and 224 TOML lines added, none removed.
+
+**Checked.** The IRIX-to-SGI name table, every row, against `struct pic` and the census registers' offsets: all offsets and SGI names are right (including the `p_wid_err_lower` and `_upper` halves, `p_wid_tst_pin_ctrl` at 0x70, `p_device[4]`, `p_wr_req_buf[4]`, the three write-request RAM banks at 0x18000, 0x18800, 0x19000, and the `pcix_dma_req_err_*` rename). All 21 extra registers: offset, count and stride exact. Constants sampled well past 15 (control page-size bit 21, the translation entry bits 0 to 4 and the target shift 8, the 64-bit attribute bits 54 to 59, the 32-bit window bases, bit 29 swap, the 48-bit interrupt address mask, `0x10f`, the configuration window bases). Provider claims: the read-ordering sequence, device numbering, forced-interrupt retargeting, PCI-X limits, vector 0x33, ASIC type numbers 2 and 3, PV854697 as a header note. Grades: nothing graded established as hardware behaviour from a header; the existing `inferred` DEVICE_SWAP_DIRECT stays inferred.
+
+**Meaning of MIPS-side entries.** Unchanged. The PIC diff is additions only (README section at the end, new registers and constants in the extra unit); the census `registers.toml` and every earlier README paragraph are untouched. The IOC4 diff is one table cell; see that page's review.
+
+**Findings.**
+- Judgement, left: the extra unit's file-level `from` still names only the 2.4.37 tree and IRIX; the per-register and per-constant `from` entries carry the v5.3 citation. The file-level line is stale rather than wrong.
+- Judgement, left: the page calls the SGI Linux reading "independent". It confirms offsets against the IRIX accessor census, but both descend from SGI's own definitions; for grading under the evidence rule it is first-ranked source for this generation, not a second line of evidence for the IRIX reading.
+- All registers are `established` by name and offset with an `rw` placeholder access; the docs state it.
+
+**Cleared scope.** The Altix section of the README and the extra unit's registers and constants, as pinned to Linux v5.3. Not cleared: error-register semantics (the page correctly says SN2 code has none), PIC reset values, access directions.

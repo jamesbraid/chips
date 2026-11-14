@@ -1483,7 +1483,7 @@ pub mod dre_comp_err_cmd_wrd {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x40070;
 }
-/// Downstream request engine completion error address. The provider writes zero to it at attach, after clearing the interrupt and error summaries. Name a (established)
+/// Downstream request engine completion error address. The provider ORs zero into it at attach, after setting the interrupt and error summary alias bits, (established)
 pub mod dre_comp_err_addr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x40078;

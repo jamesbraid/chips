@@ -1513,7 +1513,7 @@ Name and offset are the vendor header's definition (struct member ce_dre_comp_er
 
 ### Register `dre_comp_err_addr`
 
-Downstream request engine completion error address. The provider writes zero to it at attach, after clearing the interrupt and error summaries. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.
+Downstream request engine completion error address. The provider ORs zero into it at attach, after setting the interrupt and error summary alias bits, so the value is read and written back unchanged. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.
 
 ### Register `dre_req_status`
 
@@ -1706,9 +1706,9 @@ Array of 32 registers, stride 8.
 | `DRE_RO_ENABLE` | 0x1 | established |  | Header comment: ce_dre_config1 register bit masks and shifts |
 | `DRE_SUP_CONFIG_COMP_ERROR` | 0x4 | established |  | Header comment: ce_dre_config1 register bit masks and shifts |
 | `DRE_SUP_IO_COMP_ERROR` | 0x8 | established |  | Header comment: ce_dre_config1 register bit masks and shifts |
-| `E_CONFIG_BUS_SHFT` | 0x14 | established |  | Header comment: PCI MEM Space |
-| `E_CONFIG_DEVICE_SHFT` | 0xf | established |  | Header comment: PCI MEM Space |
-| `E_CONFIG_FUNC_SHFT` | 0xc | established |  | Header comment: PCI MEM Space |
+| `E_CONFIG_BUS_SHFT` | 0x14 | established |  | Header comment: CE PCI Enhanced Config Space shifts & masks |
+| `E_CONFIG_DEVICE_SHFT` | 0xf | established |  | Header comment: CE PCI Enhanced Config Space shifts & masks |
+| `E_CONFIG_FUNC_SHFT` | 0xc | established |  | Header comment: CE PCI Enhanced Config Space shifts & masks |
 | `FNC_SRC_ID_SHFT` | 0x0 | established |  | Header comment: ce_ure_pipe_sel register bit masks & shifts |
 | `HOST_BRIDGE_DEVICE_ID` | 0x4001 | established |  | Header comment: CE Host Bridge Vendor/Device IDs |
 | `HOST_BRIDGE_VENDOR_ID` | 0x10a9 | established |  | Header comment: CE Host Bridge Vendor/Device IDs |
@@ -1731,9 +1731,9 @@ Array of 32 registers, stride 8.
 | `LSI_GB_CFG1_RXL0S_THS_SHFT` | 0x0 | established |  | Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts |
 | `LSI_GB_CFG1_SLF_TS_MASK` | 0xf000000 | established |  | Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts |
 | `LSI_GB_CFG1_SLF_TS_SHFT` | 0x18 | established |  | Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts |
-| `NUM_M3240_ATES` | 0x800 | established |  | Header comment: array extents |
-| `NUM_M40_ATES` | 0x1000 | established |  | Header comment: array extents |
-| `NUM_PORTS` | 0x2 | established |  | Header comment: array extents |
+| `NUM_M3240_ATES` | 0x800 | established |  | Array extent of a register array in the header struct; the header has no comment here |
+| `NUM_M40_ATES` | 0x1000 | established |  | Array extent of a register array in the header struct; the header has no comment here |
+| `NUM_PORTS` | 0x2 | established |  | Array extent of a register array in the header struct; the header has no comment here |
 | `PART_NUM` | 0xce00 | established |  | Header comment: CE ASIC part & mfgr information |
 | `PIO_CONFIG_SPACE` | 0x4000000 | established |  | Header comment: PCI Compatible Config Space |
 | `PIO_CONFIG_SPACE_LEN` | 0x4000000 | established |  | Header comment: PCI Compatible Config Space |

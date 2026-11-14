@@ -3,7 +3,7 @@
 <genxml unit="tio" prefix="TIO" title="TIO (NUMAlink I/O node ASIC of the Altix generation), as SGI's Linux platform code names its registers">
   <doc>Offsets, field positions and constants are software definitions from SGI's Linux Altix platform code (header and driver, v5.3); the TIO's own register specification is not held. Only five registers are named by that code. Reset values are unknown throughout. Offsets are node offsets inside the TIO's address space, not CPU addresses.</doc>
   <struct name="NODE_ID" size="8" grade="established" register="yes" offset="0x90060e80" access="r" reset="unknown">
-    <doc>Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads it as a 32-bit value and splits it with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1).</doc>
+    <doc>Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1).</doc>
     <field name="rev" start="28" size="4" type="uint" grade="established"/>
     <field name="part" start="12" size="16" type="uint" grade="established"/>
     <field name="mfg" start="1" size="11" type="uint" grade="established"/>

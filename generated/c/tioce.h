@@ -1733,7 +1733,7 @@
 #define TIOCE_DRE_COMP_ERR_CMD_WRD                   0x040070 /* established */
 
 /*
- * Downstream request engine completion error address. The provider writes zero to it at attach, after clearing the interrupt and error summaries. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Downstream request engine completion error address. The provider ORs zero into it at attach, after setting the interrupt and error summary alias bits, so the value is read and written back unchanged. Name and offset are the vendor header's definition (struct member ce_dre_comp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.
  */
 /* dre_comp_err_addr: rw64, reset unknown */
 #define TIOCE_DRE_COMP_ERR_ADDR                      0x040078 /* established */

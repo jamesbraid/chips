@@ -52,3 +52,20 @@ straight to the destination address with an ordinary store.
 
 PCIe configuration space (the header lists a PCI compatible window from `0x04000000` and an enhanced window from `0x10000000`, constants `PIO_*`), the link-training states and every debug register: the
 header names them; nothing is read. Reset values and access directions are **unknown**. Which Altix model carries a TIOCE: [question](../../questions/altix-io-sn2-cross-check.md#pic-versus-tio-by-product).
+
+## Review
+
+Independent review on 2026-11-14 by a reviewer who did not write these pages. Revisions: chips commits 4924130..b536f7d, read at main 15a5a4e484. Grading rule: the SN2 paragraph of the evidence order in `retools/tools/README-analysis.md` (SGI's Linux platform code ranks first for this generation, and a fact it defines is `established` as a software definition). Sources: the Linux v5.3 files the page cites, fetched singly from the tagged tree (`drivers/misc/ioc4.c` and `include/linux/ioc4.h` at v4.19, where they still exist).
+
+**Reviewed commits.** b93619a (tioce).
+
+**Checked.** All 262 register entries against the nested `struct tioce` by script: offset, array count and (for the `ce_lsi` and `ce_dtl_utl` blocks) the 0x1000 stride, with the nested buffer windows (`ups_dat1` through `bap_buf`, `ds_head_q` to `us_rsp_q`) checked for offset and element count by hand (512, 64, 258, 32, 256 and 8 entries, as declared). 190 constants against their header values: no mismatch. Prose: the five DMA modes and their bus windows (`TIOCE_D64_MIN` to `TIOCE_M40S_MAX`), per-port ATE pools (first 64 of the 32/40-bit pool reserved, 32 super-page entries per port), entry format (bits 63 and 62), the D32 direct map and its refcount, the revision A register-access workaround offsets (0x45000 limit; 0xc0, 0x28, 0x158; 0x38 after 0x100; 0xb050 after all), the interrupt retarget sequence and the PV945826 force path, the page-map write (256 KiB, encoding 4), the secondary-bus port test, vector 0x33 and the M40S port-2 overflow question (32 entries times 16 GiB per port against a 512 GiB window).
+
+**Findings.**
+- Fixed (mechanical): three constants (`E_CONFIG_BUS_SHFT`, `E_CONFIG_DEVICE_SHFT`, `E_CONFIG_FUNC_SHFT`) named the wrong header section ("PCI MEM Space"); they sit under the enhanced-config shifts and masks comment. Fixed. The three array-extent constants claimed a header comment that is not there; reworded.
+- Fixed (mechanical): `dre_comp_err_addr` said the provider writes zero at attach; the code ORs zero in (read, then write back unchanged). Also says the alias registers are set, not that errors were cleared first. Generated files regenerated.
+- Judgement, left: 37 header defines (besides the include guard) are not in the constants table: the eight `FLUSH_SEL_*_SHFT` shifts, the `_MASK` and page-size macros that are written in terms of another macro (`CE_URE_*_MASK`, `CE_URE_*_PAGESIZE`), `CE_PIO_MEM_SPACE_LEN` (defined as `TIO_HWIN_SIZE`, a symbol not in the files read) and the three `CE_E_CONFIG_*_MASK`. The register file's `doc` says the header's bit masks are listed as constants, which reads as complete; it is not. A model that wants the field widths of those registers will find only the shifts.
+- Judgement, left: bit masks are constants tagged with the header's section comment, not fields of their register, so the register-to-field link is by label only. The page says so. Register `access = "rw"` is a stated placeholder.
+- No copied comments beyond short section labels quoted as "Header comment: ..." in constant docs; those are two to six words of header text. Acceptable, but a later pass could drop the quoting.
+
+**Cleared scope.** Register names, offsets, counts and strides; the 190 constants; the DMA, workaround and interrupt descriptions. Not cleared: the omitted macros above, reset values, access direction, and the PCIe configuration windows' behaviour (the page marks them not covered).

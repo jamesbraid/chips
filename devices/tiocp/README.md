@@ -84,3 +84,18 @@ The PIC has the write request RAM too, at the same offsets, and no read response
   overview of the Altix-class generation would settle it ([question](../../questions/altix-io-sn2-cross-check.md#pic-versus-tio-by-product)).
 - The `+0x14000` manual-parity translation RAM and the `+0x18000` and `+0x1c000` write-request and read-response RAMs
   exist only in the public header. No IRIX accessor reaches them. They are now named registers of the extra unit.
+
+## Review
+
+Independent review on 2026-11-14 by a reviewer who did not write these pages. Revisions: chips commits 4924130..b536f7d, read at main 15a5a4e484. Grading rule: the SN2 paragraph of the evidence order in `retools/tools/README-analysis.md` (SGI's Linux platform code ranks first for this generation, and a fact it defines is `established` as a software definition). Sources: the Linux v5.3 files the page cites, fetched singly from the tagged tree (`drivers/misc/ioc4.c` and `include/linux/ioc4.h` at v4.19, where they still exist).
+
+**Reviewed commits.** b536f7d (tiocp), including its one-line change to `coverage.md`.
+
+**Checked.** All 35 registers of `registers-extra.toml` against `struct tiocp`: offset, count and stride, exact (including the debug control registers 0x700 to 0x730, the manual-parity copy at 0x14000 and the read response RAM at 0x1c000, 0x1d000 and 0x1e000 with 512 entries). All 12 constants against `tiocp.h` and `pcibr_provider.h`. Every offset in the README's name paragraph against the struct, the PIC and TIOCP differences (seven type-0 windows from 0x21000, device windows 2n or n + 2, command type in bits 61:60, 54-bit interrupt address mask, no link-layer register), and the PV907516 read-ordering description against `sn_dma_flush`.
+
+**Findings.**
+- Judgement, left: the PV907516 constant and the page say the kernel must not read the per-device flush register on revision 1. The header comment says "do not write", the code skips a *read*, and the page already notes that what the hardware does on revision 1 is unknown. Read this as the kernel's behaviour, not a hardware rule.
+- Judgement, left: the one-line change in `coverage.md` says the v5.3 `tiocp.h` and provider files "have the same layout" as the 2.6.33-era files read before. I confirmed the v5.3 layout and offsets against the census; I did not have the 2.6.33 tree and cannot confirm the equality claim itself. It changes the page's statement of what was read, not a register fact.
+- The earlier TIOCP content (census registers, inferred grades) is unchanged apart from added citations and the two appended "Open" sentences.
+
+**Cleared scope.** The extra unit's registers and constants and the README's Altix section. Not cleared: the coverage statement above, TIOCP revision behaviour, and which product carries a TIOCP.

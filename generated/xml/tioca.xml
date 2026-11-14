@@ -6,7 +6,7 @@
     <doc>Widget identification word (part 0xe020, manufacturer 0x24, revision A = 1 per the header constants). The kernel keeps the revision the firmware reports in the bus record, not a value read here, and uses it to select four workarounds named in the provider header. Name and offset are the vendor header's definition (struct member ca_id). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="CONTROL1" size="8" grade="established" register="yes" offset="0x8" access="rw" reset="unknown">
-    <doc>Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable, workaround for PV895469) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable; a provider comment ties it to PV895469 with a question mark) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
     <field name="pci_int_lpcnt" start="44" size="8" type="uint" grade="established"/>
     <field name="agpdma_op_enb_combdelay" start="42" size="1" type="uint" grade="established"/>
     <field name="agpdma_op_combdelay" start="36" size="5" type="uint" grade="established"/>

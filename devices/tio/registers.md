@@ -20,7 +20,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `node_id`
 
-Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads it as a 32-bit value and splits it with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1).
+Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
