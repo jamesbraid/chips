@@ -2,6 +2,96 @@
 // Hub memory and directory register layouts and constants outside the census
 #![allow(dead_code)]
 
+/// Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_mem_dimm_init {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200090;
+}
+/// Directory DIMM mode initialisation. Same layout as the memory register. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_dir_dimm_init {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200098;
+}
+/// Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and (inferred)
+pub mod md_led1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220058;
+}
+/// Microcontroller and UART 1 register 1 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220088;
+}
+/// Microcontroller and UART 1 register 2 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_2 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220090;
+}
+/// Microcontroller and UART 1 register 3 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_3 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220098;
+}
+/// Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_4 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200a0;
+}
+/// Microcontroller and UART 1 register 5 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_5 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200a8;
+}
+/// Microcontroller and UART 1 register 6 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_6 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200b0;
+}
+/// Microcontroller and UART 1 register 7 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_7 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200b8;
+}
+/// Microcontroller and UART 1 register 8 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_8 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200c0;
+}
+/// Microcontroller and UART 1 register 9 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_9 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200c8;
+}
+/// Microcontroller and UART 1 register 10 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_10 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200d0;
+}
+/// Microcontroller and UART 1 register 11 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_11 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200d8;
+}
+/// Microcontroller and UART 1 register 12 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_12 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200e0;
+}
+/// Microcontroller and UART 1 register 13 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_13 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200e8;
+}
+/// Microcontroller and UART 1 register 14 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_14 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200f0;
+}
+/// Microcontroller and UART 1 register 15 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_15 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200f8;
+}
 /// Layout of the memory and directory DIMM mode initialisation registers. Both registers share this layout. (established)
 pub mod md_dimm_init_format {
     pub const WIDTH: u32 = 64;

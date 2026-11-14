@@ -7,6 +7,101 @@ Default source: public Linux SN0 Hub memory/directory header, pinned linux tree 
 
 Every item has a grade: established, inferred or unknown. A grade says how the item was derived from its source; it does not claim the item was measured on silicon.
 
+## Registers
+
+| Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
+|---|---|---|---|---|---|---|---|---|
+| `md_mem_dimm_init` | 0x200090 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_MEM_DIMM_INIT (offset and name) |
+| `md_dir_dimm_init` | 0x200098 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_DIR_DIMM_INIT (offset and name) |
+| `md_led1` | 0x220058 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_LED1 (offset, name and the description eight-bit LED for the second processor) |
+| `md_ureg1_1` | 0x220088 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name) |
+| `md_ureg1_2` | 0x220090 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_2 (offset and name) |
+| `md_ureg1_3` | 0x220098 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_3 (offset and name) |
+| `md_ureg1_4` | 0x2200a0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name) |
+| `md_ureg1_5` | 0x2200a8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_5 (offset and name) |
+| `md_ureg1_6` | 0x2200b0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_6 (offset and name) |
+| `md_ureg1_7` | 0x2200b8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_7 (offset and name) |
+| `md_ureg1_8` | 0x2200c0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_8 (offset and name) |
+| `md_ureg1_9` | 0x2200c8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_9 (offset and name) |
+| `md_ureg1_10` | 0x2200d0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_10 (offset and name) |
+| `md_ureg1_11` | 0x2200d8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_11 (offset and name) |
+| `md_ureg1_12` | 0x2200e0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_12 (offset and name) |
+| `md_ureg1_13` | 0x2200e8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_13 (offset and name) |
+| `md_ureg1_14` | 0x2200f0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_14 (offset and name) |
+| `md_ureg1_15` | 0x2200f8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name) |
+
+### Register `md_mem_dimm_init`
+
+Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The header gives no access type, so rw is assumed.
+
+### Register `md_dir_dimm_init`
+
+Directory DIMM mode initialisation. Same layout as the memory register. The header gives no access type, so rw is assumed.
+
+### Register `md_led1`
+
+Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and is inferred.
+
+### Register `md_ureg1_1`
+
+Microcontroller and UART 1 register 1 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_2`
+
+Microcontroller and UART 1 register 2 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_3`
+
+Microcontroller and UART 1 register 3 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_4`
+
+Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_5`
+
+Microcontroller and UART 1 register 5 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_6`
+
+Microcontroller and UART 1 register 6 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_7`
+
+Microcontroller and UART 1 register 7 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_8`
+
+Microcontroller and UART 1 register 8 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_9`
+
+Microcontroller and UART 1 register 9 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_10`
+
+Microcontroller and UART 1 register 10 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_11`
+
+Microcontroller and UART 1 register 11 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_12`
+
+Microcontroller and UART 1 register 12 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_13`
+
+Microcontroller and UART 1 register 13 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_14`
+
+Microcontroller and UART 1 register 14 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
+### Register `md_ureg1_15`
+
+Microcontroller and UART 1 register 15 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+
 ## Words
 
 | Word | Width | Grade | Source |

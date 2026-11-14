@@ -88,6 +88,78 @@ slice = { bits = [4, 0], grade = "established", doc = "Slice field, bits 4:0 (II
 widget = { bits = [11, 8], grade = "established", doc = "Target widget number, bits 11:8 (IIO_ITTE_WIDGET_MASK, shift 8)." }
 iospace = { bits = [12, 12], grade = "established", doc = "I/O space bit, bit 12 (IIO_ITTE_IOSP). Set selects the widget's I/O space, clear its memory space." }
 
+# Registers named by the public header that the census does not reach. The header states no access type,
+# so every access here is an assumption and each register is graded inferred. No reset value is stated.
+[registers.iio_igfx_1]
+offset = 0x400148
+access = "rw"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name)"
+doc = "Graphics node and widget register 1, the twin of iio_igfx_0 in the census. The header gives both the same field layout: widget number in bits 3:0, node number in bits 12:4, processor number at bit 16 and a valid bit at bit 20. The header gives no access type, so rw is assumed."
+
+[registers.iio_igfx_1.fields]
+widget = { bits = [3, 0], grade = "established", doc = "Widget number: four bits at shift 0 in the header." }
+node = { bits = [12, 4], grade = "established", doc = "Node number: nine bits at shift 4 in the header." }
+processor = { bits = [16, 16], grade = "established", doc = "Processor number: one bit at shift 16 in the header." }
+valid = { bits = [20, 20], grade = "established", doc = "Valid: one bit at shift 20 in the header." }
+
+[registers.iio_scratch_reg0]
+offset = 0x400150
+access = "rw"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name)"
+doc = "Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The header gives no access type, so rw is assumed."
+
+[registers.iio_scratch_reg1]
+offset = 0x400158
+access = "rw"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name)"
+doc = "Scratch register 1, the twin of register 0. The header gives no access type, so rw is assumed."
+
+[registers.iio_icrb_a]
+offset = 0x400400
+access = "rw"
+width = 64
+count = 15
+stride = 0x20
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_A(x) macro, 15 entries (IIO_NUM_CRBS) four words apart"
+doc = "Word A of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred."
+
+[registers.iio_icrb_b]
+offset = 0x400408
+access = "rw"
+width = 64
+count = 15
+stride = 0x20
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_B(x) macro, 15 entries (IIO_NUM_CRBS) four words apart"
+doc = "Word B of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred."
+
+[registers.iio_icrb_c]
+offset = 0x400410
+access = "r"
+width = 64
+count = 15
+stride = 0x20
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_C(x) macro, 15 entries (IIO_NUM_CRBS) four words apart"
+doc = "Word C of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred."
+
+[registers.iio_icrb_d]
+offset = 0x400418
+access = "r"
+width = 64
+count = 15
+stride = 0x20
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_D(x) macro, 15 entries (IIO_NUM_CRBS) four words apart"
+doc = "Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred."
+
 [constants]
 # Control/terminate bits. The census carries the notify value (0x10) only as an inferred
 # constant. The names and the zero-fill and poison bits are from the public header.

@@ -13,7 +13,14 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `iio_wid` | 0x400000 | r | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u |
 | `iio_ilapr` | 0x400100 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR |
 | `iio_ilapo` | 0x400108 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO |
+| `iio_igfx_1` | 0x400148 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name) |
+| `iio_scratch_reg0` | 0x400150 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name) |
+| `iio_scratch_reg1` | 0x400158 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name) |
 | `iio_itte` | 0x400160 | rw | 64 | 7 |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE |
+| `iio_icrb_a` | 0x400400 | rw | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_A(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
+| `iio_icrb_b` | 0x400408 | rw | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_B(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
+| `iio_icrb_c` | 0x400410 | r | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_C(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
+| `iio_icrb_d` | 0x400418 | r | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_D(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
 | `iio_ibna_0` | 0x410020 | rw | 64 |  |  | unknown | inferred |  |
 | `iio_ibia_0` | 0x410028 | rw | 64 |  |  | unknown | inferred |  |
 | `iio_ibia_1` | 0x420028 | rw | 64 |  |  | unknown | inferred |  |
@@ -36,6 +43,25 @@ Local access protection register, named and placed by the public header. The hea
 
 Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only.
 
+### Register `iio_igfx_1`
+
+Graphics node and widget register 1, the twin of iio_igfx_0 in the census. The header gives both the same field layout: widget number in bits 3:0, node number in bits 12:4, processor number at bit 16 and a valid bit at bit 20. The header gives no access type, so rw is assumed.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 20 | `valid` | established |  | public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name) | Valid: one bit at shift 20 in the header. |
+| 16 | `processor` | established |  | public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name) | Processor number: one bit at shift 16 in the header. |
+| 12:4 | `node` | established |  | public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name) | Node number: nine bits at shift 4 in the header. |
+| 3:0 | `widget` | established |  | public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name) | Widget number: four bits at shift 0 in the header. |
+
+### Register `iio_scratch_reg0`
+
+Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The header gives no access type, so rw is assumed.
+
+### Register `iio_scratch_reg1`
+
+Scratch register 1, the twin of register 0. The header gives no access type, so rw is assumed.
+
 ### Register `iio_itte`
 
 Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption. Reset is unknown.
@@ -47,6 +73,30 @@ Array of 7 registers, stride 8.
 | 12 | `iospace` | established |  | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE | I/O space bit, bit 12 (IIO_ITTE_IOSP). Set selects the widget's I/O space, clear its memory space. |
 | 11:8 | `widget` | established |  | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE | Target widget number, bits 11:8 (IIO_ITTE_WIDGET_MASK, shift 8). |
 | 4:0 | `slice` | established |  | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE | Slice field, bits 4:0 (IIO_ITTE_OFFSET_MASK in the public header). |
+
+### Register `iio_icrb_a`
+
+Word A of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.
+
+Array of 15 registers, stride 32.
+
+### Register `iio_icrb_b`
+
+Word B of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.
+
+Array of 15 registers, stride 32.
+
+### Register `iio_icrb_c`
+
+Word C of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.
+
+Array of 15 registers, stride 32.
+
+### Register `iio_icrb_d`
+
+Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.
+
+Array of 15 registers, stride 32.
 
 ### Register `iio_ibna_0`
 

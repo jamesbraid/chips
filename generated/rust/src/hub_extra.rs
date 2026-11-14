@@ -47,6 +47,61 @@ pub mod iio_ilapo {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400108;
 }
+/// Graphics node and widget register 1, the twin of iio_igfx_0 in the census. The header gives both the same field layout: widget number in bits 3:0, nod (inferred)
+pub mod iio_igfx_1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400148;
+    pub mod valid { // bits 20:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod processor { // bits 16:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod node { // bits 12:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod widget { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The header gives no a (inferred)
+pub mod iio_scratch_reg0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400150;
+}
+/// Scratch register 1, the twin of register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod iio_scratch_reg1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400158;
+}
 /// Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assu (inferred)
 pub mod iio_itte {
     pub const WIDTH: u32 = 64;
@@ -83,6 +138,34 @@ pub mod iio_itte {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// Word A of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individu (inferred)
+pub mod iio_icrb_a {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400400;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
+}
+/// Word B of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individu (inferred)
+pub mod iio_icrb_b {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400408;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
+}
+/// Word C of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individu (inferred)
+pub mod iio_icrb_c {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400410;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
+}
+/// Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individu (inferred)
+pub mod iio_icrb_d {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400418;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
 }
 /// Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The header gives no access  (inferred)
 pub mod iio_ibna_0 {

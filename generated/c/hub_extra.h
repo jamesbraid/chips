@@ -34,6 +34,36 @@
 #define HUB_IIO_ILAPO                                0x400108 /* inferred */
 
 /*
+ * Graphics node and widget register 1, the twin of iio_igfx_0 in the census. The header gives both the same field layout: widget number in bits 3:0, node number in bits 12:4, processor number at bit 16 and a valid bit at bit 20. The header gives no access type, so rw is assumed.
+ */
+/* iio_igfx_1: rw64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name) */
+#define HUB_IIO_IGFX_1                               0x400148 /* inferred */
+#define HUB_IIO_IGFX_1_VALID_SHIFT                   20 /* established */
+#define HUB_IIO_IGFX_1_VALID_MASK                    0x1ull
+#define HUB_IIO_IGFX_1_VALID_INPLACE                 (HUB_IIO_IGFX_1_VALID_MASK << HUB_IIO_IGFX_1_VALID_SHIFT)
+#define HUB_IIO_IGFX_1_PROCESSOR_SHIFT               16 /* established */
+#define HUB_IIO_IGFX_1_PROCESSOR_MASK                0x1ull
+#define HUB_IIO_IGFX_1_PROCESSOR_INPLACE             (HUB_IIO_IGFX_1_PROCESSOR_MASK << HUB_IIO_IGFX_1_PROCESSOR_SHIFT)
+#define HUB_IIO_IGFX_1_NODE_SHIFT                    4 /* established */
+#define HUB_IIO_IGFX_1_NODE_MASK                     0x1ffull
+#define HUB_IIO_IGFX_1_NODE_INPLACE                  (HUB_IIO_IGFX_1_NODE_MASK << HUB_IIO_IGFX_1_NODE_SHIFT)
+#define HUB_IIO_IGFX_1_WIDGET_SHIFT                  0 /* established */
+#define HUB_IIO_IGFX_1_WIDGET_MASK                   0xfull
+#define HUB_IIO_IGFX_1_WIDGET_INPLACE                (HUB_IIO_IGFX_1_WIDGET_MASK << HUB_IIO_IGFX_1_WIDGET_SHIFT)
+
+/*
+ * Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The header gives no access type, so rw is assumed.
+ */
+/* iio_scratch_reg0: rw64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name) */
+#define HUB_IIO_SCRATCH_REG0                         0x400150 /* inferred */
+
+/*
+ * Scratch register 1, the twin of register 0. The header gives no access type, so rw is assumed.
+ */
+/* iio_scratch_reg1: rw64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name) */
+#define HUB_IIO_SCRATCH_REG1                         0x400158 /* inferred */
+
+/*
  * Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption. Reset is unknown.
  */
 /* iio_itte: rw64, reset unknown; public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE */
@@ -49,6 +79,38 @@
 #define HUB_IIO_ITTE_SLICE_SHIFT                     0 /* established */
 #define HUB_IIO_ITTE_SLICE_MASK                      0x1full
 #define HUB_IIO_ITTE_SLICE_INPLACE                   (HUB_IIO_ITTE_SLICE_MASK << HUB_IIO_ITTE_SLICE_SHIFT)
+
+/*
+ * Word A of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.
+ */
+/* iio_icrb_a: rw64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_A(x) macro, 15 entries (IIO_NUM_CRBS) four words apart */
+#define HUB_IIO_ICRB_A                               0x400400 /* inferred */
+#define HUB_IIO_ICRB_A_COUNT                         15
+#define HUB_IIO_ICRB_A_STRIDE                        32
+
+/*
+ * Word B of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.
+ */
+/* iio_icrb_b: rw64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_B(x) macro, 15 entries (IIO_NUM_CRBS) four words apart */
+#define HUB_IIO_ICRB_B                               0x400408 /* inferred */
+#define HUB_IIO_ICRB_B_COUNT                         15
+#define HUB_IIO_ICRB_B_STRIDE                        32
+
+/*
+ * Word C of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.
+ */
+/* iio_icrb_c: r64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_C(x) macro, 15 entries (IIO_NUM_CRBS) four words apart */
+#define HUB_IIO_ICRB_C                               0x400410 /* inferred */
+#define HUB_IIO_ICRB_C_COUNT                         15
+#define HUB_IIO_ICRB_C_STRIDE                        32
+
+/*
+ * Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.
+ */
+/* iio_icrb_d: r64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_D(x) macro, 15 entries (IIO_NUM_CRBS) four words apart */
+#define HUB_IIO_ICRB_D                               0x400418 /* inferred */
+#define HUB_IIO_ICRB_D_COUNT                         15
+#define HUB_IIO_ICRB_D_STRIDE                        32
 
 /*
  * Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The header gives no access type, so rw is assumed.
