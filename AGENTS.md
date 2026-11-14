@@ -6,9 +6,9 @@ author or FPGA builder never needs to read the binaries.
 
 ## Labels
 
-- **established**: read in full from the shipped binary (the whole function, table or code path), or from a
-  published specification page, or from a public driver file. Cite the build, function and address, or the
-  document, revision and page, or the file and version.
+- **established**: read in full from the shipped binary (the whole function, table or code path), or from a published
+  specification page, or from a public driver file, or from the public IRIX source tree (see Evidence order). Cite the
+  build, function and address, or the document, revision and page, or the file and version.
 - **inferred**: a reasoned reading. A reading built from call lists, store summaries, a name, a sibling chip or
   a sibling build is inferred. Give the reasoning.
 - **unknown**: not settled. Say what route would settle it and put it in questions/README.md. Anything
@@ -21,9 +21,10 @@ best, and never fills a field.
 
 ## Sources
 
-Allowed: shipped IRIX binaries and PROM images; published specifications (cited by title, document number and
-revision); public Linux, OpenBSD and NetBSD drivers (by file and version); published patents; published `hinv`
-and PROM-console captures, described generically with counts; Usenet posts by message-id.
+Allowed: shipped IRIX binaries and PROM images; the public IRIX source tree, cited by path (see Evidence order);
+published specifications (cited by title, document number and revision); public Linux, OpenBSD and NetBSD drivers (by
+file and version); published patents; published `hinv` and PROM-console captures, described generically with counts;
+Usenet posts by message-id.
 
 Not allowed in this repository, in any file, commit message or entry: vendor source text or internal
 identifiers beyond the function, symbol and string names the shipped binaries themselves carry; paths into
@@ -31,8 +32,22 @@ any private store or document library; names of the emulator projects or people 
 repository; machine nicknames from private archives. Findings are written in your own words. Proprietary
 binaries live in `root/` (ignored) and are never committed.
 
-Facts come from reading the binaries. A datasheet or note from another project may be used afterwards, to
-report agreement or disagreement, never to supply a fact.
+Facts come from reading the binaries or, under Evidence order, the public IRIX source tree. A datasheet or note from
+another project may be used afterwards, to report agreement or disagreement, never to supply a fact.
+
+## Evidence order
+
+For a register or behaviour fact, take it from the highest source that states it and grade it by that source:
+
+1. IRIX source (public `irix-657m-src` tree): read it, write the fact in your own words, never copy source text, cite the path in the tree. A fact it defines is `established`.
+2. Shipped binaries (PROMs, kernels, libraries): confirm the source matches what shipped, and the release differences (6.5.7 source, 6.5.22 and 6.5.30 binaries).
+3. Public Linux, OpenBSD and NetBSD headers and drivers: `established` once the IRIX source confirms them.
+4. Published SGI and vendor manuals.
+5. Notes from other projects (Origami datasheets, QEMU manual pages, emulator code): may confirm or contradict, never supply a fact. A fact resting only on one stays `unknown`, with the note named.
+
+Reset values: `established` when the source states a power-on default or PROM code relies on a reset state; `inferred` when the PROM depends on a value before its first write (cite the PROM address); a read after firmware initialisation is not a reset value and can only rule values out; otherwise `unknown`. A physical hardware read is a last resort, needs the repository owner's approval, and counts as a reset value only for a register firmware provably never writes. Emulator runs are model behaviour, never hardware evidence.
+
+Full text and the checks that enforce it: `retools/tools/README-analysis.md#evidence-order`.
 
 ## Where things go
 
