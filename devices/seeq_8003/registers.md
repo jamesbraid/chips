@@ -28,16 +28,16 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `inter_packet_gap` | 0x2 | w | 8 |  | bank2 | unknown | inferred | HPC3 Chip Specification, revision 1.4, p. 14 (SEEQ extended register x02); IRIX driver use; Linux SEEQ driver header; NetBSD SEEQ register header |
 | `control` | 0x3 | w | 8 |  | bank2 | unknown | inferred | NetBSD SEEQ register header and Linux SEEQ driver header, which agree on every bit |
 | `configuration` | 0x4 | w | 8 |  | bank2 | unknown | inferred | NetBSD SEEQ register header only |
-| `rx_command` | 0x6 | w | 8 |  | cmd | 0x0 | established | SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7 |
-| `tx_command` | 0x7 | w | 8 |  | cmd | 0x0 | established | SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions |
+| `rx_command` | 0x6 | w | 8 |  | cmd | 0x0 (SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7) | established | SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-6, 4-7 |
+| `tx_command` | 0x7 | w | 8 |  | cmd | 0x0 (SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions) | established | SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6; bank bits from the 80C03 additions |
 | `tx_collisions_low` | 0x0 | r | 8 |  | rd | 0x0 | inferred | NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver, IRIX driver use |
 | `tx_collisions_high` | 0x1 | r | 8 |  | rd | 0x0 | inferred | NetBSD SEEQ register header, Linux SEEQ driver header, IRIX driver use |
 | `total_collisions_low` | 0x2 | r | 8 |  | rd | 0x0 | inferred | NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver |
 | `total_collisions_high` | 0x3 | r | 8 |  | rd | 0x0 | inferred | NetBSD SEEQ register header, Linux SEEQ driver header, OpenBSD sq driver |
 | `test_read` | 0x4 | r | 8 |  | rd | unknown | inferred | NetBSD SEEQ register header (80C03 read table) |
 | `sqe_and_carrier` | 0x5 | r | 8 |  | rd | unknown | inferred | NetBSD SEEQ register header (80C03 read table); Linux SEEQ driver header |
-| `rx_status` | 0x6 | r | 8 |  | rd | 0x80 | established | SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7 |
-| `tx_status` | 0x7 | r | 8 |  | rd | 0x80 | established | SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6 |
+| `rx_status` | 0x6 | r | 8 |  | rd | 0x80 (SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7) | established | SEEQ 8003 EDLC data sheet, MD400024/B, p. 4-7 |
+| `tx_status` | 0x7 | r | 8 |  | rd | 0x80 (SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6) | established | SEEQ 8003 EDLC data sheet, MD400024/B, pp. 4-5, 4-6 |
 
 ### Register `station_address`
 

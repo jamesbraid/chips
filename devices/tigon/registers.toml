@@ -30,6 +30,7 @@ offset = 0x05c
 access = "rw"
 width = 32
 reset = 0x00000000
+reset_from = "Alteon manual, Table 20 (offset 0x05c, printed p. 63) and Table 31, printed p. 77"
 grade = "established"
 from = "Alteon manual, Table 20 (offset 0x05c, printed p. 63) and Table 31, printed p. 77"
 doc = "PCI State. All bits are zero at reset. The Miscellaneous Host Control reset does not change this register. Bit 20 and the bits under it are the ones the host-bus rules turn on."

@@ -156,6 +156,7 @@ space = "ecpcs_cfg"
 access = "r"
 width = 8
 reset = 0x1f
+reset_from = "TI TL16PIR552 datasheet, p. 44"
 grade = "established"
 from = "TI TL16PIR552 datasheet, p. 44"
 doc = "Configuration register A, read only. It reads the constant with the implementation ID in the top nibble and the low nibble reserved and read as ones."

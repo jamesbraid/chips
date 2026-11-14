@@ -19,8 +19,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `phy_id1` | 0x2 | rw | 16 |  | mii | 0x15 | established | ICS1890 revision G datasheet, PHY identifier register (register 2), PDF p. 23 (printed p. 23) |
-| `phy_id2` | 0x3 | rw | 16 |  | mii | 0xf423 | established | ICS1890 revision G datasheet, PHY identifier register (register 3), PDF p. 24 (printed p. 24) |
+| `phy_id1` | 0x2 | rw | 16 |  | mii | 0x15 (ICS1890 revision G datasheet, PHY identifier register (register 2), PDF p. 23 (printed p. 23)) | established | ICS1890 revision G datasheet, PHY identifier register (register 2), PDF p. 23 (printed p. 23) |
+| `phy_id2` | 0x3 | rw | 16 |  | mii | 0xf423 (ICS1890 revision G datasheet, PHY identifier register (register 3), PDF p. 24 (printed p. 24)) | established | ICS1890 revision G datasheet, PHY identifier register (register 3), PDF p. 24 (printed p. 24) |
 | `ext_ctrl` | 0x10 | rw | 16 |  | mii | unknown | established | ICS1890 revision G datasheet, extended control register (register 16), PDF p. 29 (printed p. 29) |
 
 ### Register `phy_id1`
